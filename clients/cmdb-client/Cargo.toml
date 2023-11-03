@@ -2,6 +2,12 @@
 name = "cmdb-client"
 version = "0.1.0"
 edition = "2021"
+rust-version = "1.70"
+
+readme = "../../README.md"
+license = "MIT"
+repository = "https://github.com/marvin-hansen/quant-engine"
+authors = ["Marvin Hansen <marvin.hansen@gmail.com>"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
