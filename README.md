@@ -3,10 +3,15 @@
 ![Audit][audit-url]
 ![Clippy][clippy-url]
 ![Tests][test-url]
+[![codecov][codecov-badge]][codecov-url]
 
 [audit-url]: https://github.com/marvin-hansen/quant-engine/actions/workflows/audit.yml/badge.svg
 
 [clippy-url]: https://github.com/marvin-hansen/quant-engine/actions/workflows/rust-clippy.yml/badge.svg
+
+[codecov-badge]: https://codecov.io/gh/marvin-hansen/quant-engine/graph/badge.svg?token=21Z5EN77FP
+
+[codecov-url]: https://codecov.io/gh/marvin-hansen/quant-engine
 
 [test-url]: https://github.com/marvin-hansen/quant-engine/actions/workflows/run_tests.yml/badge.svg
 
