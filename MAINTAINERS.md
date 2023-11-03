@@ -17,7 +17,3 @@ They have admin access to the repo and provide support reviewing issues and pull
 
 Contributors  (sorted alphabetically)
 -------------------------------------
-
-- [micrypt](https://github.com/micrypt) Seyi Ogunyemi
-
-To contributors: please add your name to the list when you submit a patch to the project.
