@@ -1,5 +1,8 @@
+use std::fmt::{Debug, Display, Formatter};
+
 use rsmgclient::SSLMode;
 
+#[derive(Eq, PartialEq)]
 pub struct MemGraphConfig {
     /// Port number to connect to at the server host. Default port is 7687.
     port: u16,
@@ -38,7 +41,7 @@ pub struct MemGraphConfig {
     autocommit: bool,
 }
 
-
+// constructors
 impl MemGraphConfig {
     pub fn new_unsecure(port: u16, host: Option<String>) -> Self {
         Self { port, host, sslmode: SSLMode::Disable, ..Default::default() }
@@ -68,6 +71,74 @@ impl Default for MemGraphConfig {
     }
 }
 
+impl MemGraphConfig {
+    pub fn to_string(&self) -> String {
+        let mut s = String::new();
+
+        s.push_str(&self.client_name);
+
+        s.push_str(&format!(" {}", self.port));
+
+        if let Some(ref host) = self.host {
+            s.push_str(&format!(" {}", host));
+        }
+        if let Some(ref address) = self.address {
+            s.push_str(&format!(" {}", address));
+        }
+        if let Some(ref username) = self.username {
+            s.push_str(&format!(" {}", username));
+        }
+        if let Some(ref password) = self.password {
+            s.push_str(&format!(" {}", password));
+        }
+
+        s.push_str(&format!(" {}", ssl_mode_to_string(&self.sslmode)));
+
+        if let Some(ref sslcert) = self.sslcert {
+            s.push_str(&format!(" {}", sslcert));
+        }
+
+        s.push_str(&format!(" {}", &self.lazy));
+
+        s.push_str(&format!(" {}", &self.autocommit));
+
+        s
+    }
+}
+
+fn ssl_mode_to_string(sslmode: &SSLMode) -> String {
+    match sslmode {
+        SSLMode::Disable => String::from("Disable"),
+        SSLMode::Require => String::from("Require"),
+    }
+}
+
+impl Debug for MemGraphConfig {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("MemGraphConfig")
+            .field("port", &self.port)
+            .field("host", &self.host)
+            .field("address", &self.address)
+            .field("username", &self.username)
+            .field("password", &self.password)
+            .field("client_name", &self.client_name)
+            // .field("sslmode", ssl_mode_to_string(self.sslmode))
+            .field("sslcert", &self.sslcert)
+            .field("sslkey", &self.sslkey)
+            .field("trust_callback", &self.trust_callback)
+            .field("lazy", &self.lazy)
+            .field("autocommit", &self.autocommit)
+            .finish()
+    }
+}
+
+impl Display for MemGraphConfig {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(&self.to_string(), f)
+    }
+}
+
+// getters
 impl MemGraphConfig {
     pub fn port(&self) -> u16 {
         self.port
@@ -105,6 +176,10 @@ impl MemGraphConfig {
     pub fn autocommit(&self) -> bool {
         self.autocommit
     }
+}
+
+// setters
+impl MemGraphConfig {
     pub fn set_port(&mut self, port: u16) {
         self.port = port;
     }
