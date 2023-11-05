@@ -21,6 +21,7 @@ After all dependencies have been installed, the following commands are ready to 
     make format         Formats call code according to cargo fmt style
     make install        Tests and installs all make script dependencies
     make start          Starts the dev day with updating rust, pulling from git remote, and build the project
+    make run            Runs the binary defined in scripts/run.sh.
     make test           Runs all tests across all crates.
 ```
 
