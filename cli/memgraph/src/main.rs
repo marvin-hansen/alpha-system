@@ -1,4 +1,4 @@
-use rsmgclient::{Connection, ConnectionStatus, ConnectParams, SSLMode, Value};
+use rsmgclient::{ConnectParams, Connection, ConnectionStatus, SSLMode, Value};
 
 const DELETE_ONLY: bool = false;
 
@@ -22,20 +22,30 @@ fn main() {
         println!("Connection established with status: {:?}", status);
     }
 
-    connection.execute_without_results("MATCH (n) DETACH DELETE n;").unwrap();
+    connection
+        .execute_without_results("MATCH (n) DETACH DELETE n;")
+        .unwrap();
     if let Err(e) = connection.commit() {
         println!("Error: {}", e);
     }
     println!("Graph has been cleared!");
 
-    connection.execute_without_results("DROP INDEX ON :Developer(id);").unwrap();
-    connection.execute_without_results("DROP INDEX ON :Developer(name);").unwrap();
+    connection
+        .execute_without_results("DROP INDEX ON :Developer(id);")
+        .unwrap();
+    connection
+        .execute_without_results("DROP INDEX ON :Developer(name);")
+        .unwrap();
     if let Err(e) = connection.commit() {
         println!("Error: {}", e);
     }
 
-    connection.execute_without_results("DROP INDEX ON :Technology(id);").unwrap();
-    connection.execute_without_results("DROP INDEX ON :Technology(name);").unwrap();
+    connection
+        .execute_without_results("DROP INDEX ON :Technology(id);")
+        .unwrap();
+    connection
+        .execute_without_results("DROP INDEX ON :Technology(name);")
+        .unwrap();
     if let Err(e) = connection.commit() {
         println!("Error: {}", e);
     }

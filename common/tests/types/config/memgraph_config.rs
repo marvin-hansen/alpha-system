@@ -10,7 +10,12 @@ fn test_new_unsecure() {
 
 #[test]
 fn test_new_with_authentication() {
-    let config = MemGraphConfig::new_with_authentication(7687, Some("localhost".to_string()), Some("username".to_string()), Some("password".to_string()));
+    let config = MemGraphConfig::new_with_authentication(
+        7687,
+        Some("localhost".to_string()),
+        Some("username".to_string()),
+        Some("password".to_string()),
+    );
 
     assert_eq!(config.port(), 7687);
     assert_eq!(config.host(), &Some("localhost".to_string()));
@@ -33,6 +38,6 @@ fn test_default() {
     assert_eq!(d.sslcert(), &None);
     assert_eq!(d.sslkey(), &None);
     // assert_eq!(d.trust_callback(), None);
-    assert_eq!(d.lazy(), true);
-    assert_eq!(d.autocommit(), false);
+    assert!(d.lazy());
+    assert!(d.autocommit());
 }
