@@ -8,5 +8,9 @@ readme.workspace = true
 repository.workspace = true
 authors.workspace = true
 
+[dependencies.common]
+path = "../../common"
+version = "0.1.0"
+
 [dependencies]
 rsmgclient = { workspace = true }

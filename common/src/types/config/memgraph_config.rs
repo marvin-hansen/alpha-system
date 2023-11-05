@@ -2,6 +2,8 @@ use std::fmt::{Debug, Display, Formatter};
 
 use rsmgclient::SSLMode;
 
+pub type CallbackType = Option<*const dyn Fn(&String, &String, &String, &String) -> i32>;
+
 #[derive(Eq, PartialEq)]
 pub struct MemGraphConfig {
     /// Port number to connect to at the server host. Default port is 7687.
@@ -33,7 +35,7 @@ pub struct MemGraphConfig {
     /// the hostname, IP address, public key type and fingerprint and user provided data. If the
     /// function returns a non-zero value, SSL connection will be immediately terminated. This can
     /// be used to implement TOFU (trust on first use) mechanism.
-    trust_callback: Option<*const dyn Fn(&String, &String, &String, &String) -> i32>,
+    trust_callback: CallbackType,
     /// Initial value of `lazy` field, defaults to true, Can be changed using `Connection::set_lazy`.
     lazy: bool,
     /// Initial value of `autocommit` field, defaults to false. Can be changed using
@@ -72,7 +74,7 @@ impl Default for MemGraphConfig {
 }
 
 impl MemGraphConfig {
-    pub fn to_string(&self) -> String {
+    pub fn convert_to_string(&self) -> String {
         let mut s = String::new();
 
         s.push_str(&self.client_name);
@@ -122,6 +124,7 @@ impl Debug for MemGraphConfig {
             .field("username", &self.username)
             .field("password", &self.password)
             .field("client_name", &self.client_name)
+            // `SSLMode` cannot be formatted using `{:?}` because it doesn't implement `Debug`
             // .field("sslmode", ssl_mode_to_string(self.sslmode))
             .field("sslcert", &self.sslcert)
             .field("sslkey", &self.sslkey)
@@ -134,7 +137,7 @@ impl Debug for MemGraphConfig {
 
 impl Display for MemGraphConfig {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        std::fmt::Display::fmt(&self.to_string(), f)
+        std::fmt::Display::fmt(&self.convert_to_string(), f)
     }
 }
 
@@ -167,7 +170,7 @@ impl MemGraphConfig {
     pub fn sslkey(&self) -> &Option<String> {
         &self.sslkey
     }
-    pub fn trust_callback(&self) -> Option<*const dyn Fn(&String, &String, &String, &String) -> i32> {
+    pub fn trust_callback(&self) -> CallbackType {
         self.trust_callback
     }
     pub fn lazy(&self) -> bool {
@@ -207,7 +210,7 @@ impl MemGraphConfig {
     pub fn set_sslkey(&mut self, sslkey: Option<String>) {
         self.sslkey = sslkey;
     }
-    pub fn set_trust_callback(&mut self, trust_callback: Option<*const dyn Fn(&String, &String, &String, &String) -> i32>) {
+    pub fn set_trust_callback(&mut self, trust_callback: CallbackType) {
         self.trust_callback = trust_callback;
     }
     pub fn set_lazy(&mut self, lazy: bool) {
