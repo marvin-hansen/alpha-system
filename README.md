@@ -1,4 +1,4 @@
-# Quant-Engine 
+# Quant-Engine
 
 ![Audit][audit-url]
 ![Clippy][clippy-url]
@@ -14,6 +14,22 @@
 [codecov-url]: https://codecov.io/gh/marvin-hansen/quant-engine
 
 [test-url]: https://github.com/marvin-hansen/quant-engine/actions/workflows/run_tests.yml/badge.svg
+
+## Memgraph
+
+### Create new memgraaph container
+
+docker run -it -p 7687:7687 -p 7444:7444 -p 3000:3000 --name memgraph memgraph/memgraph-platform
+
+### Start / stop memgraaph
+
+docker start memgraph
+
+docker stop memgraph
+
+### web console
+
+http://localhost:3000/
 
 ## 🛠️ Cargo & Make
 

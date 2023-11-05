@@ -1,6 +1,6 @@
-use rsmgclient::{ConnectParams, Connection, ConnectionStatus, SSLMode, Value};
+use rsmgclient::{Connection, ConnectionStatus, ConnectParams, SSLMode, Value};
 
-const DELETE_ONLY: bool = false;
+const DELETE_ONLY: bool = true;
 
 fn main() {
     // Connect to Memgraph
