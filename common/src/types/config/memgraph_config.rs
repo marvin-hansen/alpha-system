@@ -46,11 +46,28 @@ pub struct MemGraphConfig {
 // constructors
 impl MemGraphConfig {
     pub fn new_unsecure(port: u16, host: Option<String>) -> Self {
-        Self { port, host, sslmode: SSLMode::Disable, ..Default::default() }
+        Self {
+            port,
+            host,
+            sslmode: SSLMode::Disable,
+            ..Default::default()
+        }
     }
 
-    pub fn new_with_authentication(port: u16, host: Option<String>, username: Option<String>, password: Option<String>) -> Self {
-        Self { port, host, username, password, sslmode: SSLMode::Disable, ..Default::default() }
+    pub fn new_with_authentication(
+        port: u16,
+        host: Option<String>,
+        username: Option<String>,
+        password: Option<String>,
+    ) -> Self {
+        Self {
+            port,
+            host,
+            username,
+            password,
+            sslmode: SSLMode::Disable,
+            ..Default::default()
+        }
     }
 }
 
