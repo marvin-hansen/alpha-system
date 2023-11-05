@@ -1,11 +1,28 @@
 [workspace]
 resolver = "2"
+
 members = [
     "cli/*",
     "clients/*",
-    "components/common/*",
+    "common",
+    "components",
+    #    "gateways/*",
     "services/*",
 ]
+
+
+[workspace.package]
+# https://doc.rust-lang.org/cargo/reference/workspaces.html
+edition = "2021"
+rust-version = "1.70"
+readme = "README.md"
+repository = "https://github.com/marvin-hansen/quant-engine"
+authors = ["Marvin Hansen <marvin.hansen@gmail.com>"]
+
+
+[workspace.dependencies]
+rsmgclient = "2.0"
+
 
 # Optimize all crates
 [profile.release]
