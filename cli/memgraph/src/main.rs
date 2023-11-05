@@ -1,5 +1,6 @@
 use rsmgclient::{Connection, ConnectionStatus, ConnectParams, SSLMode, Value};
 
+// Replace with enum from config to remove commit error messages
 const DELETE_ONLY: bool = true;
 
 fn main() {

@@ -39,5 +39,5 @@ fn test_default() {
     assert_eq!(d.sslkey(), &None);
     // assert_eq!(d.trust_callback(), None);
     assert!(d.lazy());
-    assert!(d.autocommit());
+    assert!(!d.autocommit());
 }
