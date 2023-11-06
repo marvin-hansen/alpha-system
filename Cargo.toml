@@ -3,7 +3,6 @@ resolver = "2"
 
 members = [
     "cli/*",
-    "clients/*",
     "common",
     "components",
     #    "gateways/*",
