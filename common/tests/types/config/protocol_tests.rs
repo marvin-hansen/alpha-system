@@ -14,8 +14,8 @@ fn test_debug() {
     let e2 = Protocol::HTTP;
     assert_eq!(format!("{:?}", e2), "HTTP");
 
-    let e3 = Protocol::SBE;
-    assert_eq!(format!("{:?}", e3), "SBE");
+    let e3 = Protocol::UDP;
+    assert_eq!(format!("{:?}", e3), "UDP");
 }
 
 #[test]
@@ -26,6 +26,6 @@ fn test_display() {
     let e2 = Protocol::HTTP;
     assert_eq!(format!("{}", e2), "HTTP");
 
-    let e3 = Protocol::SBE;
-    assert_eq!(format!("{}", e3), "SBE");
+    let e3 = Protocol::UDP;
+    assert_eq!(format!("{}", e3), "UDP");
 }

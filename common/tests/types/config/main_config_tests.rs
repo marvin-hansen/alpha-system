@@ -20,17 +20,17 @@ fn test_new() {
 fn test_default() {
     let config = MainConfig::default();
 
-    assert_eq!(config.id(), &String::from("id"));
-    assert_eq!(config.name(), &String::from("name"));
-    assert_eq!(config.port(), 80);
-    assert_eq!(config.protocol(), &Protocol::HTTP);
+    assert_eq!(config.id(), &String::from(""));
+    assert_eq!(config.name(), &String::from(""));
+    assert_eq!(config.port(), 0);
+    assert_eq!(config.protocol(), &Protocol::GRPC);
 }
 
 #[test]
 fn test_debug() {
     let config = MainConfig::default();
 
-    let expected = "MainConfig { id: \"id\", name: \"name\", port: 80, protocol: HTTP }";
+    let expected = "MainConfig { id: \"\", name: \"\", port: 0, protocol: GRPC }";
     let actual = format!("{:?}", config);
     assert_eq!(expected, actual);
 }
@@ -39,7 +39,7 @@ fn test_debug() {
 fn test_display() {
     let config = MainConfig::default();
 
-    let expected = "MainConfig { id: \"id\", name: \"name\", port: 80, protocol: HTTP }";
+    let expected = "MainConfig { id: \"\", name: \"\", port: 0, protocol: GRPC }";
     let actual = config.to_string();
     assert_eq!(expected, actual);
 }

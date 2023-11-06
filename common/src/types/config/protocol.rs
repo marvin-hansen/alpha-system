@@ -1,16 +1,11 @@
 use std::fmt::{Display, Formatter};
 
-#[derive(Debug, Eq, PartialEq)]
+#[derive(Debug, Default, Eq, PartialEq)]
 pub enum Protocol {
+    #[default]
     GRPC,
     HTTP,
-    SBE,
-}
-
-impl Default for Protocol {
-    fn default() -> Self {
-        Protocol::GRPC
-    }
+    UDP,
 }
 
 impl Display for Protocol {
@@ -18,7 +13,7 @@ impl Display for Protocol {
         match self {
             Protocol::GRPC => write!(f, "GRPC"),
             Protocol::HTTP => write!(f, "HTTP"),
-            Protocol::SBE => write!(f, "SBE"),
+            Protocol::UDP => write!(f, "UDP"),
         }
     }
 }
