@@ -98,6 +98,9 @@ impl Default for MemGraphConfig {
 
 impl Display for MemGraphConfig {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        std::fmt::Display::fmt(&self, f)
+        write!(f,
+               "MemGraphConfig {{ port: {}, host: {:?}, username: {:?}, password: {:?}, client_name: {:?} }}",
+               self.port, self.host, self.username, self.password, self.client_name
+        )
     }
 }
