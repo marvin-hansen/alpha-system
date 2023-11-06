@@ -64,7 +64,6 @@ fn test_default() {
 
     assert_eq!(config.port(), 7687);
     assert_eq!(config.host(), &None);
-    assert_eq!(config.address(), &None);
     assert_eq!(config.username(), &None);
     assert_eq!(config.password(), &None);
     assert_eq!(config.client_name(), "rsmgclient/2.0.2");
@@ -79,7 +78,7 @@ fn test_display() {
         Some("password".to_string()),
     );
 
-    let expected = "MemGraphConfig { port: 7687, host: Some(\"localhost\"), address: None, username: Some(\"username\"), password: Some(\"password\"), client_name: \"rsmgclient/2.0.2\" }";
+    let expected = "MemGraphConfig { port: 7687, host: Some(\"localhost\"), username: Some(\"username\"), password: Some(\"password\"), client_name: \"rsmgclient/2.0.2\" }";
     let actual = format!("{:?}", config);
     assert_eq!(expected, actual);
 }
