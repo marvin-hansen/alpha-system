@@ -6,6 +6,11 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
+# Code formatting
+# This prevents Clippy from reporting formatting errors
+# https://github.com/rust-lang/rustfmt
+command cargo fmt --all
+
 # Check for outdated dependencies
 # https://github.com/kbknapp/cargo-outdated
 command cargo outdated --workspace
