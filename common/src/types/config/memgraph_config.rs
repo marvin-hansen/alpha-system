@@ -11,10 +11,6 @@ pub struct MemGraphConfig {
     /// DNS resolvable name of host to connect to. Exactly one of host and address parameters must
     /// be specified.
     host: Option<String>,
-    /// Numeric IP address of host to connect to. This should be in the standard IPv4 address
-    /// format. You can also use IPv6 if your machine supports it. Exactly one of host and address
-    /// parameters must be specified.
-    address: Option<String>,
     /// Username to connect as.
     username: Option<String>,
     /// Password to be used if the server demands password authentication.
@@ -77,9 +73,6 @@ impl MemGraphConfig {
     pub fn host(&self) -> &Option<String> {
         &self.host
     }
-    pub fn address(&self) -> &Option<String> {
-        &self.address
-    }
     pub fn username(&self) -> &Option<String> {
         &self.username
     }
@@ -96,7 +89,6 @@ impl Default for MemGraphConfig {
         Self {
             port: 7687,
             host: None,
-            address: None,
             username: None,
             password: None,
             client_name: String::from(CLIENT_NAME),
