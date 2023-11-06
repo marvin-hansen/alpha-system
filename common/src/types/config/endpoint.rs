@@ -3,7 +3,7 @@ use std::fmt::{Display, Formatter};
 use crate::types::config::encoding::Encoding;
 use crate::types::config::protocol::Protocol;
 
-#[derive(Debug, Default, Eq, PartialEq)]
+#[derive(Debug, Default, Clone, Eq, PartialEq)]
 pub struct Endpoint {
     endpoint_name: String,
     endpoint_version: u8,

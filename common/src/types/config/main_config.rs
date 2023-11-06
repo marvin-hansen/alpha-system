@@ -2,7 +2,7 @@ use std::fmt::{Display, Formatter};
 
 use crate::types::config::protocol::Protocol;
 
-#[derive(Debug, Default, Eq, PartialEq)]
+#[derive(Debug, Default, Clone, Eq, PartialEq)]
 pub struct MainConfig {
     id: String,
     name: String,

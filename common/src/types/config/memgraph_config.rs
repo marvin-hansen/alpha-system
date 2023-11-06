@@ -4,7 +4,7 @@ use rsmgclient::{ConnectParams, SSLMode};
 
 const CLIENT_NAME: &str = "rsmgclient/2.0.2";
 
-#[derive(Debug, Eq, PartialEq)]
+#[derive(Debug, Eq, Clone, PartialEq)]
 pub struct MemGraphConfig {
     /// Port number to connect to at the server host. Default port is 7687.
     port: u16,
