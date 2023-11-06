@@ -1,31 +1,31 @@
-use common::prelude::Protocol;
+use common::prelude::ProtocolType;
 
 #[test]
 fn test_default() {
-    let protocol = Protocol::default();
-    assert_eq!(protocol, Protocol::GRPC);
+    let protocol = ProtocolType::default();
+    assert_eq!(protocol, ProtocolType::GRPC);
 }
 
 #[test]
 fn test_debug() {
-    let e1 = Protocol::GRPC;
+    let e1 = ProtocolType::GRPC;
     assert_eq!(format!("{:?}", e1), "GRPC");
 
-    let e2 = Protocol::HTTP;
+    let e2 = ProtocolType::HTTP;
     assert_eq!(format!("{:?}", e2), "HTTP");
 
-    let e3 = Protocol::UDP;
+    let e3 = ProtocolType::UDP;
     assert_eq!(format!("{:?}", e3), "UDP");
 }
 
 #[test]
 fn test_display() {
-    let e1 = Protocol::GRPC;
+    let e1 = ProtocolType::GRPC;
     assert_eq!(format!("{}", e1), "GRPC");
 
-    let e2 = Protocol::HTTP;
+    let e2 = ProtocolType::HTTP;
     assert_eq!(format!("{}", e2), "HTTP");
 
-    let e3 = Protocol::UDP;
+    let e3 = ProtocolType::UDP;
     assert_eq!(format!("{}", e3), "UDP");
 }

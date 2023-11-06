@@ -1,4 +1,4 @@
-use common::prelude::{Encoding, Endpoint, Protocol};
+use common::prelude::{Encoding, Endpoint, ProtocolType};
 
 #[test]
 fn test_new() {
@@ -7,7 +7,7 @@ fn test_new() {
     let description = String::from("description");
     let uri = String::from("/");
     let port = 8080;
-    let protocol = Protocol::GRPC;
+    let protocol = ProtocolType::GRPC;
     let encoding = Encoding::Protobuf;
 
     let endpoint = Endpoint::new(name, version, description, uri, port, protocol, encoding);
@@ -17,7 +17,7 @@ fn test_new() {
     assert_eq!(endpoint.description(), &String::from("description"));
     assert_eq!(endpoint.uri(), &String::from("/"));
     assert_eq!(endpoint.port(), 8080);
-    assert_eq!(endpoint.protocol(), &Protocol::GRPC);
+    assert_eq!(endpoint.protocol(), &ProtocolType::GRPC);
     assert_eq!(endpoint.encoding(), &Encoding::Protobuf);
 }
 
@@ -30,7 +30,7 @@ fn test_default() {
     assert_eq!(endpoint.description(), &String::from(""));
     assert_eq!(endpoint.uri(), &String::from(""));
     assert_eq!(endpoint.port(), 0);
-    assert_eq!(endpoint.protocol(), &Protocol::GRPC);
+    assert_eq!(endpoint.protocol(), &ProtocolType::GRPC);
     assert_eq!(endpoint.encoding(), &Encoding::Protobuf);
 }
 
@@ -41,7 +41,7 @@ fn test_display() {
     let description = String::from("description");
     let uri = String::from("/");
     let port = 8080;
-    let protocol = Protocol::GRPC;
+    let protocol = ProtocolType::GRPC;
     let encoding = Encoding::Protobuf;
 
     let endpoint = Endpoint::new(name, version, description, uri, port, protocol, encoding);

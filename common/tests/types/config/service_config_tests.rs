@@ -1,4 +1,4 @@
-use common::prelude::{Endpoint, Protocol, ServiceConfig, ServiceID, ServiceType};
+use common::prelude::{Endpoint, ProtocolType, ServiceConfig, ServiceID, ServiceType};
 
 #[test]
 fn test_new() {
@@ -75,7 +75,7 @@ fn test_get_main_config() {
     assert_eq!(main_config.id(), &ServiceID::SMDB);
     assert_eq!(main_config.name(), String::from("SMDB"));
     assert_eq!(main_config.port(), 0);
-    assert_eq!(main_config.protocol(), &Protocol::GRPC);
+    assert_eq!(main_config.protocol(), &ProtocolType::GRPC);
 }
 
 #[test]

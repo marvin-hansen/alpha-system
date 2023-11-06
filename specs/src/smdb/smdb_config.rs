@@ -1,5 +1,5 @@
 use common::prelude::{
-    Encoding, Endpoint, MainConfig, Protocol, ServiceConfig, ServiceID, ServiceType,
+    Encoding, Endpoint, MainConfig, ProtocolType, ServiceConfig, ServiceID, ServiceType,
 };
 
 pub fn smdb_main_config() -> MainConfig {
@@ -39,7 +39,7 @@ fn get_endpoint() -> Endpoint {
         String::from("Access to the SMDB service registry via gRPC on baseUri:5050");
     let endpoint_uri = String::from("/");
     let endpoint_port = 5050;
-    let endpoint_protocol = Protocol::GRPC;
+    let endpoint_protocol = ProtocolType::GRPC;
     let endpoint_encoding = Encoding::Protobuf;
 
     Endpoint::new(

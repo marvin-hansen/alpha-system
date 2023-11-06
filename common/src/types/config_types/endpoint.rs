@@ -1,6 +1,6 @@
 use std::fmt::{Display, Formatter};
 
-use crate::prelude::{Encoding, Protocol};
+use crate::prelude::{Encoding, ProtocolType};
 
 #[derive(Debug, Default, Clone, Eq, PartialEq)]
 pub struct Endpoint {
@@ -9,7 +9,7 @@ pub struct Endpoint {
     description: String,
     uri: String,
     port: u16,
-    protocol: Protocol,
+    protocol: ProtocolType,
     encoding: Encoding,
 }
 
@@ -20,7 +20,7 @@ impl Endpoint {
         description: String,
         uri: String,
         port: u16,
-        protocol: Protocol,
+        protocol: ProtocolType,
         encoding: Encoding,
     ) -> Self {
         Self {
@@ -51,7 +51,7 @@ impl Endpoint {
     pub fn port(&self) -> u16 {
         self.port
     }
-    pub fn protocol(&self) -> &Protocol {
+    pub fn protocol(&self) -> &ProtocolType {
         &self.protocol
     }
     pub fn encoding(&self) -> &Encoding {
