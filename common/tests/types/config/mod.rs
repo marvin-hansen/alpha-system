@@ -1,7 +1,17 @@
 #[cfg(test)]
-mod main_config;
+mod main_config_tests;
 
 #[cfg(test)]
-mod memgraph_config;
+mod encoding_tests;
 #[cfg(test)]
-mod protocol;
+mod endpoint_tests;
+#[cfg(test)]
+mod memgraph_config_tests;
+#[cfg(test)]
+mod protocol_tests;
+#[cfg(test)]
+mod service_config_tests;
+#[cfg(test)]
+mod service_name_tests;
+#[cfg(test)]
+mod service_type_tests;

@@ -2,7 +2,7 @@ use std::fmt::{Display, Formatter};
 
 use crate::types::config::protocol::Protocol;
 
-#[derive(Debug, Eq, PartialEq)]
+#[derive(Debug, Default, Eq, PartialEq)]
 pub struct MainConfig {
     id: String,
     name: String,
@@ -33,17 +33,6 @@ impl MainConfig {
     }
     pub fn protocol(&self) -> &Protocol {
         &self.protocol
-    }
-}
-
-impl Default for MainConfig {
-    fn default() -> Self {
-        Self {
-            id: String::from("id"),
-            name: String::from("name"),
-            port: 80,
-            protocol: Protocol::HTTP,
-        }
     }
 }
 
