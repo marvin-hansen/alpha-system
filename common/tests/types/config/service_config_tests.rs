@@ -33,11 +33,17 @@ fn test_new() {
     assert_eq!(service_config.id(), String::from("id"));
     assert_eq!(service_config.name(), String::from("name"));
     assert_eq!(service_config.version(), 1);
-    assert_eq!(service_config.online(), true);
+    assert!(service_config.online());
     assert_eq!(service_config.description(), String::from("description"));
-    assert_eq!(service_config.health_check_uri(), String::from("health_check_uri"));
+    assert_eq!(
+        service_config.health_check_uri(),
+        String::from("health_check_uri")
+    );
     assert_eq!(service_config.base_uri(), String::from("base_uri"));
-    assert_eq!(service_config.dependencies().len(), vec![ServiceName::default()].len());
+    assert_eq!(
+        service_config.dependencies().len(),
+        vec![ServiceName::default()].len()
+    );
     assert_eq!(service_config.exposure(), &ServiceType::default());
     assert_eq!(service_config.endpoint(), &Endpoint::default());
 }
@@ -75,7 +81,6 @@ fn test_get_main_config() {
     assert_eq!(main_config.port(), 0);
     assert_eq!(main_config.protocol(), &Protocol::GRPC);
 }
-
 
 #[test]
 fn test_default() {
