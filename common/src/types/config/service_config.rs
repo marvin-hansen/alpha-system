@@ -1,10 +1,11 @@
 use std::fmt::{Display, Formatter};
 
 use crate::types::config::endpoint::Endpoint;
+use crate::types::config::main_config::MainConfig;
 use crate::types::config::service_name::ServiceName;
 use crate::types::config::service_type::ServiceType;
 
-#[derive(Debug, Default, Eq, PartialEq)]
+#[derive(Debug, Default, Clone, Eq, PartialEq)]
 pub struct ServiceConfig {
     id: String,
     name: String,
@@ -47,6 +48,18 @@ impl ServiceConfig {
         }
     }
 }
+
+
+impl ServiceConfig {
+    pub fn get_main_config(&self) -> MainConfig {
+        MainConfig::new(
+            String::from(self.id()),
+            String::from(self.name()),
+            self.endpoint().endpoint_port(),
+            *self.endpoint().endpoint_protocol())
+    }
+}
+
 
 impl ServiceConfig {
     pub fn id(&self) -> &str {
