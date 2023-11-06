@@ -60,12 +60,26 @@ fn test_get_connect_params() {
 
 #[test]
 fn test_default() {
-    let d = MemGraphConfig::default();
+    let config = MemGraphConfig::default();
 
-    assert_eq!(d.port(), 7687);
-    assert_eq!(d.host(), &None);
-    assert_eq!(d.address(), &None);
-    assert_eq!(d.username(), &None);
-    assert_eq!(d.password(), &None);
-    assert_eq!(d.client_name(), "rsmgclient/2.0.2");
+    assert_eq!(config.port(), 7687);
+    assert_eq!(config.host(), &None);
+    assert_eq!(config.address(), &None);
+    assert_eq!(config.username(), &None);
+    assert_eq!(config.password(), &None);
+    assert_eq!(config.client_name(), "rsmgclient/2.0.2");
+}
+
+#[test]
+fn test_display() {
+    let config = MemGraphConfig::new_connection_with_authentication(
+        7687,
+        Some("localhost".to_string()),
+        Some("username".to_string()),
+        Some("password".to_string()),
+    );
+
+    let expected = "MemGraphConfig { port: 7687, host: Some(\"localhost\"), address: None, username: Some(\"username\"), password: Some(\"password\"), client_name: \"rsmgclient/2.0.2\" }";
+    let actual = format!("{:?}", config);
+    assert_eq!(expected, actual);
 }
