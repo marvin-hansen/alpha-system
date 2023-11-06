@@ -1,3 +1,4 @@
+pub mod dns_config;
 pub mod encoding;
 pub mod endpoint;
 pub mod main_config;
