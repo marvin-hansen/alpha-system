@@ -39,7 +39,8 @@ pub fn smdb_service_config() -> ServiceConfig {
 fn get_endpoint() -> Endpoint {
     let endpoint_name = String::from("service-registry");
     let endpoint_version = 1;
-    let endpoint_description = String::from("Access to the SMDB service registry via gRPC on baseUri:5050");
+    let endpoint_description =
+        String::from("Access to the SMDB service registry via gRPC on baseUri:5050");
     let endpoint_uri = String::from("/");
     let endpoint_port = 5050;
     let endpoint_protocol = Protocol::GRPC;
