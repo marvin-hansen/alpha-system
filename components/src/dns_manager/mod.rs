@@ -51,7 +51,6 @@ impl DnsManager {
             res = self.extern_dns.clone();
         }
 
-
         // Implement with dns resolver using a custom DNS server
         Ok(res)
     }
@@ -68,9 +67,10 @@ impl DnsManager {
 
 impl Display for DnsManager {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f,
-               "DnsManager {{ internal_dns: {}, extern_dns: {} }}",
-               self.internal_dns, self.extern_dns
+        write!(
+            f,
+            "DnsManager {{ internal_dns: {}, extern_dns: {} }}",
+            self.internal_dns, self.extern_dns
         )
     }
 }

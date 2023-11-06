@@ -13,7 +13,10 @@ impl CtxManager {
     pub fn new() -> Self {
         let env_type = get_env_type();
         let int_dns_server = get_int_dns_server();
-        Self { env_type, int_dns_server }
+        Self {
+            env_type,
+            int_dns_server,
+        }
     }
 }
 
@@ -28,13 +31,13 @@ impl CtxManager {
 
 impl Display for CtxManager {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f,
-               "CtxManager {{ env_type: {:?}, int_dns_server: {:?} }}",
-               self.env_type, self.int_dns_server
+        write!(
+            f,
+            "CtxManager {{ env_type: {:?}, int_dns_server: {:?} }}",
+            self.env_type, self.int_dns_server
         )
     }
 }
-
 
 fn get_env_type() -> EnvironmentType {
     // Check if the environment variable is set. If not, return the default value UnknownEnv.
@@ -57,10 +60,13 @@ fn get_int_dns_server() -> Option<String> {
     let dns_server_var = match env::var("DNS_SERVER") {
         Ok(val) => val,
         Err(e) => {
-            println!("Failed to read DNS_SERVER env. Ensure DNS_SERVER is set in deployment.yaml:m {}", e);
+            println!(
+                "Failed to read DNS_SERVER env. Ensure DNS_SERVER is set in deployment.yaml:m {}",
+                e
+            );
             return None;
         }
     };
 
-    return Some(dns_server_var);
+    Some(dns_server_var)
 }

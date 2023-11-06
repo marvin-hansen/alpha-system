@@ -10,7 +10,6 @@ fn test_new() {
     assert_eq!(ctm.int_dns_server(), &None);
 }
 
-
 #[test]
 fn test_new_local() {
     let key = "ENV";
@@ -52,5 +51,8 @@ fn test_int_dns_server() {
 #[test]
 fn test_display() {
     let ctm = CtxManager::new();
-    assert_eq!(ctm.to_string(), "CtxManager { env_type: UnknownEnv, int_dns_server: None }");
+    assert_eq!(
+        ctm.to_string(),
+        "CtxManager { env_type: UnknownEnv, int_dns_server: None }"
+    );
 }
