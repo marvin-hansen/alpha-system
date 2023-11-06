@@ -1,10 +1,6 @@
-use common::types::config::encoding::Encoding;
-use common::types::config::endpoint::Endpoint;
-use common::types::config::main_config::MainConfig;
-use common::types::config::protocol::Protocol;
-use common::types::config::service_config::ServiceConfig;
-use common::types::config::service_id::ServiceID;
-use common::types::config::service_type::ServiceType;
+use common::prelude::{
+    Encoding, Endpoint, MainConfig, Protocol, ServiceConfig, ServiceID, ServiceType,
+};
 
 pub fn smdb_main_config() -> MainConfig {
     smdb_service_config().get_main_config()

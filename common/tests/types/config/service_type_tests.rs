@@ -1,4 +1,4 @@
-use common::types::config::service_type::ServiceType;
+use common::prelude::ServiceType;
 
 #[test]
 fn test_default() {

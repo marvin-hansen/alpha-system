@@ -1,4 +1,4 @@
-use common::types::config::encoding::Encoding;
+use common::prelude::Encoding;
 
 #[test]
 fn test_default() {

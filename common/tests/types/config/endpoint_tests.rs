@@ -1,6 +1,4 @@
-use common::types::config::encoding::Encoding;
-use common::types::config::endpoint::Endpoint;
-use common::types::config::protocol::Protocol;
+use common::prelude::{Encoding, Endpoint, Protocol};
 
 #[test]
 fn test_new() {

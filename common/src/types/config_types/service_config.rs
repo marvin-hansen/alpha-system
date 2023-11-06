@@ -1,9 +1,6 @@
 use std::fmt::{Display, Formatter};
 
-use crate::types::config::endpoint::Endpoint;
-use crate::types::config::main_config::MainConfig;
-use crate::types::config::service_id::ServiceID;
-use crate::types::config::service_type::ServiceType;
+use crate::prelude::{Endpoint, MainConfig, ServiceID, ServiceType};
 
 #[derive(Debug, Default, Clone, Eq, PartialEq)]
 pub struct ServiceConfig {

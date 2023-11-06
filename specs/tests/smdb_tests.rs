@@ -1,7 +1,4 @@
-use common::types::config::encoding::Encoding;
-use common::types::config::protocol::Protocol;
-use common::types::config::service_id::ServiceID;
-use common::types::config::service_type::ServiceType;
+use common::prelude::{Encoding, Protocol, ServiceID, ServiceType};
 use specs::prelude::{smdb_main_config, smdb_service_config};
 
 #[test]

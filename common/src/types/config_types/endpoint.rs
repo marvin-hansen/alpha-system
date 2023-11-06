@@ -1,7 +1,6 @@
 use std::fmt::{Display, Formatter};
 
-use crate::types::config::encoding::Encoding;
-use crate::types::config::protocol::Protocol;
+use crate::prelude::{Encoding, Protocol};
 
 #[derive(Debug, Default, Clone, Eq, PartialEq)]
 pub struct Endpoint {
