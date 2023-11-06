@@ -12,7 +12,6 @@ pub enum Traited {
     DnsManagerImpl,
 }
 
-
 pub struct DnsManagerImpl {
     cluster_dns: String,
     extern_dns: String,
@@ -20,7 +19,6 @@ pub struct DnsManagerImpl {
 
 impl DnsManagerImpl {
     pub fn new(dns_config: DnsConfig, env_type: EnvironmentType) -> Self {
-
         // Build the external DNS address
         let external_dns_host = dns_config.dns_host_external();
         let external_dns_port = dns_config.dns_port_external();
@@ -57,7 +55,17 @@ impl DnsManager for DnsManagerImpl {
 }
 
 impl DnsManagerImpl {
-    fn resolve_dns(&self, hostname: &str, cluster: bool) -> Result<String, Error> {
+    fn resolve_dns(&self, _hostname: &str, _cluster: bool) -> Result<String, Error> {
+        // Implement with dns resolver using a custom DNS server
         Ok("127.0.0.1:53".to_string())
+    }
+}
+
+impl DnsManagerImpl {
+    pub fn cluster_dns(&self) -> &str {
+        &self.cluster_dns
+    }
+    pub fn extern_dns(&self) -> &str {
+        &self.extern_dns
     }
 }
