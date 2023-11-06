@@ -17,5 +17,4 @@ version = "0.1.0"
 
 
 [dependencies]
-enum_dispatch = "0.3"
 #hickory-resolver = { version = "0.24", features = ["dns-over-rustls"] }

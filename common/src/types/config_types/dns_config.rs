@@ -42,9 +42,9 @@ impl<'l> Default for DnsConfig<'l> {
     fn default() -> Self {
         Self {
             dns_host_external: "1.1.1.1",
-            dns_port_external: ":53",
+            dns_port_external: "53",
             dns_host_internal: "", // determined dynamically based on context
-            dns_port_internal: ":53",
+            dns_port_internal: "53",
         }
     }
 }
