@@ -1,17 +1,18 @@
 use std::fmt::{Display, Formatter};
 
 use crate::types::config::protocol::Protocol;
+use crate::types::config::service_id::ServiceID;
 
 #[derive(Debug, Default, Clone, Eq, PartialEq)]
 pub struct MainConfig {
-    id: String,
+    id: ServiceID,
     name: String,
     port: u16,
     protocol: Protocol,
 }
 
 impl MainConfig {
-    pub fn new(id: String, name: String, port: u16, protocol: Protocol) -> Self {
+    pub fn new(id: ServiceID, name: String, port: u16, protocol: Protocol) -> Self {
         Self {
             id,
             name,
@@ -22,7 +23,7 @@ impl MainConfig {
 }
 
 impl MainConfig {
-    pub fn id(&self) -> &str {
+    pub fn id(&self) -> &ServiceID {
         &self.id
     }
     pub fn name(&self) -> &str {

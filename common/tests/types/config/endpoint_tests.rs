@@ -14,29 +14,29 @@ fn test_new() {
 
     let endpoint = Endpoint::new(name, version, description, uri, port, protocol, encoding);
 
-    assert_eq!(endpoint.endpoint_name(), &String::from("name"));
-    assert_eq!(endpoint.endpoint_version(), 1);
+    assert_eq!(endpoint.name(), &String::from("name"));
+    assert_eq!(endpoint.version(), 1);
     assert_eq!(
-        endpoint.endpoint_description(),
+        endpoint.description(),
         &String::from("description")
     );
-    assert_eq!(endpoint.endpoint_uri(), &String::from("/"));
-    assert_eq!(endpoint.endpoint_port(), 8080);
-    assert_eq!(endpoint.endpoint_protocol(), &Protocol::GRPC);
-    assert_eq!(endpoint.endpoint_encoding(), &Encoding::Protobuf);
+    assert_eq!(endpoint.uri(), &String::from("/"));
+    assert_eq!(endpoint.port(), 8080);
+    assert_eq!(endpoint.protocol(), &Protocol::GRPC);
+    assert_eq!(endpoint.encoding(), &Encoding::Protobuf);
 }
 
 #[test]
 fn test_default() {
     let endpoint = Endpoint::default();
 
-    assert_eq!(endpoint.endpoint_name(), &String::from(""));
-    assert_eq!(endpoint.endpoint_version(), 0);
-    assert_eq!(endpoint.endpoint_description(), &String::from(""));
-    assert_eq!(endpoint.endpoint_uri(), &String::from(""));
-    assert_eq!(endpoint.endpoint_port(), 0);
-    assert_eq!(endpoint.endpoint_protocol(), &Protocol::GRPC);
-    assert_eq!(endpoint.endpoint_encoding(), &Encoding::Protobuf);
+    assert_eq!(endpoint.name(), &String::from(""));
+    assert_eq!(endpoint.version(), 0);
+    assert_eq!(endpoint.description(), &String::from(""));
+    assert_eq!(endpoint.uri(), &String::from(""));
+    assert_eq!(endpoint.port(), 0);
+    assert_eq!(endpoint.protocol(), &Protocol::GRPC);
+    assert_eq!(endpoint.encoding(), &Encoding::Protobuf);
 }
 
 #[test]
@@ -52,5 +52,5 @@ fn test_display() {
     let endpoint = Endpoint::new(name, version, description, uri, port, protocol, encoding);
 
     assert_eq!(endpoint.to_string(),
-               "endpoint_name: name, endpoint_version: 1, endpoint_port: 8080, endpoint_description: description, endpoint_uri: /, endpoint_protocol: GRPC, endpoint_encoding: Protobuf");
+               "name: name,  version: 1,  port: 8080,  description: description,  uri: /,  protocol: GRPC,  encoding: Protobuf");
 }
