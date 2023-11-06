@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package cmdb;
+
+import  "proto/cmdb/Shared.proto";
+
+// Request message definitions
+// https://developers.google.com/protocol-buffers/docs/proto3#simple
+service SymbolDataConfiguration {
+  rpc RegisterSymbolData(SymbolData) returns (Response) {}
+  rpc DeleteSymbolData(SymbolRequest) returns (Response) {}
+  rpc QuerySymbolData(SymbolRequest) returns (QuerySymbolDataResponse) {}
+}
+
+message SymbolData{
+  string id = 1;
+  string key = 2;
+  string exchange_id = 3;
+  string symbol_id_coinapi = 4;
+  string symbol_id_exchange = 5;
+  string asset_id_base_exchange = 6;
+  string asset_id_quote_exchange = 7;
+  string asset_id_base_coinapi = 8;
+  string asset_id_quote_coinapi = 9;
+  double price_precision = 10;
+  double size_precision = 11;
+}
+
+message SymbolRequest {
+  string  symbol_id = 1;
+}
+
+// Generic Response defined in Shared.proto
+
+message QuerySymbolDataResponse {
+  STATUS_ENUM status_code = 1;
+  string   status_message = 2;
+  SymbolData symbol_data = 3;
+}
