@@ -5,8 +5,8 @@ members = [
     "cli/*",
     "common",
     "components",
-    #    "gateways/*",
     "services/*",
+    "specs"
 ]
 
 
