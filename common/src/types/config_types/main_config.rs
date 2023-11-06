@@ -1,7 +1,6 @@
 use std::fmt::{Display, Formatter};
 
-use crate::types::config::protocol::Protocol;
-use crate::types::config::service_id::ServiceID;
+use crate::prelude::{Protocol, ServiceID};
 
 #[derive(Debug, Default, Clone, Eq, PartialEq)]
 pub struct MainConfig {

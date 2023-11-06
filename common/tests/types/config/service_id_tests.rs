@@ -1,4 +1,4 @@
-use common::types::config::service_id::ServiceID;
+use common::prelude::ServiceID;
 
 #[test]
 fn test_debug() {

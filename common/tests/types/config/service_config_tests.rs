@@ -1,8 +1,4 @@
-use common::types::config::endpoint::Endpoint;
-use common::types::config::protocol::Protocol;
-use common::types::config::service_config::ServiceConfig;
-use common::types::config::service_id::ServiceID;
-use common::types::config::service_type::ServiceType;
+use common::prelude::{Endpoint, Protocol, ServiceConfig, ServiceID, ServiceType};
 
 #[test]
 fn test_new() {

@@ -1,6 +1,4 @@
-use common::types::config::main_config::MainConfig;
-use common::types::config::protocol::Protocol;
-use common::types::config::service_id::ServiceID;
+use common::prelude::{MainConfig, Protocol, ServiceID};
 
 #[test]
 fn test_new() {

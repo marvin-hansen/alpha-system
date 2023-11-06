@@ -1,4 +1,4 @@
-use common::types::config::memgraph_config::MemGraphConfig;
+use common::prelude::MemGraphConfig;
 
 #[test]
 fn test_new_connection() {
