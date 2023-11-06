@@ -7,7 +7,12 @@ fn test_new() {
     let dns_host_internal = "";
     let dns_port_internal = ":53";
 
-    let config = DnsConfig::new(dns_host_external, dns_port_external, dns_host_internal, dns_port_internal);
+    let config = DnsConfig::new(
+        dns_host_external,
+        dns_port_external,
+        dns_host_internal,
+        dns_port_internal,
+    );
     assert_eq!(config.dns_host_external(), dns_host_external);
     assert_eq!(config.dns_port_external(), dns_port_external);
     assert_eq!(config.dns_host_internal(), dns_host_internal);
@@ -30,6 +35,11 @@ fn test_display() {
     let dns_host_internal = "";
     let dns_port_internal = ":53";
 
-    let config = DnsConfig::new(dns_host_external, dns_port_external, dns_host_internal, dns_port_internal);
+    let config = DnsConfig::new(
+        dns_host_external,
+        dns_port_external,
+        dns_host_internal,
+        dns_port_internal,
+    );
     assert_eq!(format!("{}", config), format!("DnsConfig {{ dns_host_external: {}, dns_port_external: {}, dns_host_internal: {}, dns_port_internal: {} }}", dns_host_external, dns_port_external, dns_host_internal, dns_port_internal));
 }

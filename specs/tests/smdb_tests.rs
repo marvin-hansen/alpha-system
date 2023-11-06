@@ -1,4 +1,4 @@
-use common::prelude::{Encoding, Protocol, ServiceID, ServiceType};
+use common::prelude::{Encoding, ProtocolType, ServiceID, ServiceType};
 use specs::prelude::{smdb_main_config, smdb_service_config};
 
 #[test]
@@ -7,7 +7,7 @@ fn test_smdb_main_config() {
     assert_eq!(main_config.id(), &ServiceID::SMDB);
     assert_eq!(main_config.name(), "smdbv1");
     assert_eq!(main_config.port(), 5050);
-    assert_eq!(main_config.protocol(), &Protocol::GRPC);
+    assert_eq!(main_config.protocol(), &ProtocolType::GRPC);
 }
 
 #[test]
@@ -45,6 +45,6 @@ fn test_smdb_service_config() {
     );
     assert_eq!(endpoint.uri(), String::from("/"));
     assert_eq!(endpoint.port(), 5050);
-    assert_eq!(endpoint.protocol(), &Protocol::GRPC);
+    assert_eq!(endpoint.protocol(), &ProtocolType::GRPC);
     assert_eq!(endpoint.encoding(), &Encoding::Protobuf);
 }

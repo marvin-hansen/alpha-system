@@ -1,19 +1,19 @@
 use std::fmt::{Display, Formatter};
 
 #[derive(Debug, Copy, Clone, Default, Eq, PartialEq)]
-pub enum Protocol {
+pub enum ProtocolType {
     #[default]
     GRPC,
     HTTP,
     UDP,
 }
 
-impl Display for Protocol {
+impl Display for ProtocolType {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
-            Protocol::GRPC => write!(f, "GRPC"),
-            Protocol::HTTP => write!(f, "HTTP"),
-            Protocol::UDP => write!(f, "UDP"),
+            ProtocolType::GRPC => write!(f, "GRPC"),
+            ProtocolType::HTTP => write!(f, "HTTP"),
+            ProtocolType::UDP => write!(f, "UDP"),
         }
     }
 }
