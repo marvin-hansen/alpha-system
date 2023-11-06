@@ -16,10 +16,7 @@ fn test_new() {
 
     assert_eq!(endpoint.name(), &String::from("name"));
     assert_eq!(endpoint.version(), 1);
-    assert_eq!(
-        endpoint.description(),
-        &String::from("description")
-    );
+    assert_eq!(endpoint.description(), &String::from("description"));
     assert_eq!(endpoint.uri(), &String::from("/"));
     assert_eq!(endpoint.port(), 8080);
     assert_eq!(endpoint.protocol(), &Protocol::GRPC);
