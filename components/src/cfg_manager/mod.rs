@@ -64,5 +64,6 @@ fn get_service_config(svc: ServiceID) -> ServiceConfig {
         ServiceID::MEMGRAPH => memgraph_service_config(),
         ServiceID::SMDB => smdb_service_config(),
         ServiceID::CMDB => cmdb_service_config(),
+        ServiceID::Default => ServiceConfig::default()
     }
 }

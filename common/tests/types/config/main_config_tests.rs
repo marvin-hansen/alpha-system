@@ -19,7 +19,7 @@ fn test_new() {
 fn test_default() {
     let config = MainConfig::default();
 
-    assert_eq!(config.id(), &ServiceID::SMDB);
+    assert_eq!(config.id(), &ServiceID::Default);
     assert_eq!(config.name(), &String::from(""));
     assert_eq!(config.port(), 0);
     assert_eq!(config.protocol(), &ProtocolType::GRPC);
@@ -29,7 +29,7 @@ fn test_default() {
 fn test_debug() {
     let config = MainConfig::default();
 
-    let expected = "MainConfig { id: SMDB, name: \"\", port: 0, protocol: GRPC }";
+    let expected = "MainConfig { id: Default, name: \"\", port: 0, protocol: GRPC }";
     let actual = format!("{:?}", config);
     assert_eq!(expected, actual);
 }
@@ -38,7 +38,7 @@ fn test_debug() {
 fn test_display() {
     let config = MainConfig::default();
 
-    let expected = "MainConfig { id: SMDB, name: \"\", port: 0, protocol: GRPC }";
+    let expected = "MainConfig { id: Default, name: \"\", port: 0, protocol: GRPC }";
     let actual = config.to_string();
     assert_eq!(expected, actual);
 }
