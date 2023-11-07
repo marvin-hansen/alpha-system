@@ -9,8 +9,6 @@ use components::prelude::{CtxManager, DnsManager};
 // it was decided to test for the cluster environment as this is most critical.
 // Please ensure the following is added to the CI test GH action:
 
-//       - name: Run tests
-//         run: cargo test --verbose
 //         env:
 //           ENV: CLUSTER
 //           DNS_SERVER: 175.24.54.1
@@ -59,19 +57,18 @@ fn test_resolve_internal_dns() {
 
 #[test]
 fn test_display() {
-    let key = "ENV";
-    let value = "LOCAL";
-    env::set_var(key, value);
+    env::set_var("ENV", "CLUSTER");
+    env::set_var("DNS_SERVER", "175.24.54.1");
 
     let ctm = CtxManager::new();
-    assert_eq!(ctm.env_type(), EnvironmentType::LOCAL);
-    assert_eq!(ctm.int_dns_server(), &None);
+    assert_eq!(ctm.env_type(), EnvironmentType::CLUSTER);
+    assert_eq!(ctm.int_dns_server(), &Some("175.24.54.1".to_string()));
 
     let dnm = DnsManager::new(DnsConfig::default(), &ctm);
-    assert_eq!(dnm.internal_dns(), "127.0.0.1:53");
+    assert_eq!(dnm.internal_dns(), "175.24.54.1:53");
     assert_eq!(dnm.extern_dns(), "1.1.1.1:53");
 
-    let expected = "DnsManager { internal_dns: 127.0.0.1:53, extern_dns: 1.1.1.1:53 }";
+    let expected = "DnsManager { internal_dns: 175.24.54.1:53, extern_dns: 1.1.1.1:53 }";
     let actual = format!("{}", dnm);
     assert_eq!(actual, expected);
 }
