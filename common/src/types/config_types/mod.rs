@@ -1,4 +1,3 @@
-pub mod dns_config;
 pub mod encoding;
 pub mod endpoint;
 pub mod environment_type;

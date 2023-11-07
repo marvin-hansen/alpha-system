@@ -8,7 +8,7 @@ on: [ pull_request, push ]
 env:
   CARGO_TERM_COLOR: always
   ENV: CLUSTER
-  DNS_SERVER: 175.24.54.1
+  DNS_SERVER: 9.9.9.9
 
 jobs:
   coverage:

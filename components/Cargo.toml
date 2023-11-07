@@ -17,4 +17,4 @@ version = "0.1.0"
 
 
 [dependencies]
-#hickory-resolver = { version = "0.24", features = ["dns-over-rustls"] }
+hickory-resolver = { version = "*", default-features = false, features = ["tokio-runtime"] }

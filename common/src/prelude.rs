@@ -1,4 +1,3 @@
-pub use crate::types::config_types::dns_config::*;
 pub use crate::types::config_types::encoding::*;
 pub use crate::types::config_types::endpoint::*;
 pub use crate::types::config_types::environment_type::*;
@@ -8,3 +7,4 @@ pub use crate::types::config_types::protocol_type::*;
 pub use crate::types::config_types::service_config::*;
 pub use crate::types::config_types::service_id::*;
 pub use crate::types::config_types::service_type::*;
+
