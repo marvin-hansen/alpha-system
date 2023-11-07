@@ -16,5 +16,10 @@ path = "../common"
 version = "0.1.0"
 
 
+[dependencies.specs]
+path = "../specs"
+version = "0.1.0"
+
+
 [dependencies]
 hickory-resolver = { version = "*", default-features = false, features = ["tokio-runtime"] }
