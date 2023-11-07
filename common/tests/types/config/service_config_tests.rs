@@ -70,7 +70,7 @@ fn test_get_main_config() {
         endpoint,
     );
 
-    let main_config = service_config.get_main_config();
+    let main_config = service_config.main_config();
 
     assert_eq!(main_config.id(), &ServiceID::SMDB);
     assert_eq!(main_config.name(), String::from("SMDB"));

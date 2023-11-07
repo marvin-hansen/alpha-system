@@ -72,7 +72,7 @@ impl ServiceConfig {
 
 impl ServiceConfig {
     /// Returns the main configuration for the service.
-    pub fn get_main_config(&self) -> MainConfig {
+    pub fn main_config(&self) -> MainConfig {
         MainConfig::new(
             *self.id(),
             String::from(self.name()),
