@@ -1,5 +1,6 @@
 pub mod encoding;
 pub mod endpoint;
+pub mod endpoint_host;
 pub mod environment_type;
 pub mod main_config;
 pub mod memgraph_config;
@@ -7,5 +8,4 @@ pub mod protocol_type;
 pub mod service_config;
 pub mod service_id;
 pub mod service_type;
-pub mod endpoint_host;
 pub mod svc_env_config;

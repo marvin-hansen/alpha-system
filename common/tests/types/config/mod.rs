@@ -1,6 +1,8 @@
 #[cfg(test)]
 mod encoding_tests;
 #[cfg(test)]
+mod endpoint_host_tests;
+#[cfg(test)]
 mod endpoint_tests;
 #[cfg(test)]
 mod environment_type_tests;
@@ -16,5 +18,3 @@ mod service_config_tests;
 mod service_id_tests;
 #[cfg(test)]
 mod service_type_tests;
-#[cfg(test)]
-mod endpoint_host_tests;
