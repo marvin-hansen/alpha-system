@@ -17,9 +17,6 @@ impl SvcEnvConfig {
 }
 
 impl SvcEnvConfig {
-    pub fn service_id(&self) -> ServiceID {
-        self.service_id
-    }
     pub fn cluster_host(&self) -> &str {
         &self.cluster_host
     }
