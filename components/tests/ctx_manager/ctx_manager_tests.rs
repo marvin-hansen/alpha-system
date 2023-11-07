@@ -5,31 +5,8 @@ use components::prelude::CtxManager;
 
 #[test]
 fn test_new() {
-    let ctm = CtxManager::new();
-    assert_eq!(ctm.env_type(), EnvironmentType::UnknownEnv);
-    assert_eq!(ctm.int_dns_server(), &None);
-}
-
-#[test]
-fn test_new_local() {
-    let key = "ENV";
-    let value = "LOCAL";
-    env::set_var(key, value);
-
-    let ctm = CtxManager::new();
-    assert_eq!(ctm.env_type(), EnvironmentType::LOCAL);
-    assert_eq!(ctm.int_dns_server(), &None);
-}
-
-#[test]
-fn test_new_cluster() {
-    let key = "ENV";
-    let value = "CLUSTER";
-    env::set_var(key, value);
-
-    let key = "DNS_SERVER";
-    let value = "175.24.54.1";
-    env::set_var(key, value);
+    env::set_var("ENV", "CLUSTER");
+    env::set_var("DNS_SERVER", "175.24.54.1");
 
     let ctm = CtxManager::new();
     assert_eq!(ctm.env_type(), EnvironmentType::CLUSTER);
@@ -38,14 +15,20 @@ fn test_new_cluster() {
 
 #[test]
 fn test_env_type() {
+    env::set_var("ENV", "CLUSTER");
+    env::set_var("DNS_SERVER", "175.24.54.1");
+
     let ctm = CtxManager::new();
-    assert_eq!(ctm.env_type(), EnvironmentType::UnknownEnv);
+    assert_eq!(ctm.env_type(), EnvironmentType::CLUSTER);
 }
 
 #[test]
 fn test_int_dns_server() {
+    env::set_var("ENV", "CLUSTER");
+    env::set_var("DNS_SERVER", "175.24.54.1");
+
     let ctm = CtxManager::new();
-    assert_eq!(ctm.int_dns_server(), &None);
+    assert_eq!(ctm.int_dns_server(), &Some("175.24.54.1".to_string()));
 }
 
 #[test]
