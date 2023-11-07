@@ -47,7 +47,6 @@ fn test_resolve_internal_dns() {
     assert_eq!(actual.to_string(), expected);
 }
 
-
 #[test]
 fn test_resolve_external_dns() {
     let internal = false;

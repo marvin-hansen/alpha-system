@@ -93,13 +93,13 @@ impl DnsManager {
      * Resolves a hostname using the appropriate DNS resolver (internal or external).
      */
     pub fn resolve_dns(&self, host: &str, internal: bool) -> Result<IpAddr, ResolveError> {
-        return if internal {
+        if internal {
             // resolve host name using the internal (cluster) DNS server
             resolve_address(&self.internal_resolver, host)
         } else {
             // resolve host name using the external DNS server
             resolve_address(&self.external_resolver, host)
-        };
+        }
     }
 }
 
@@ -129,7 +129,7 @@ fn build_cloudflare_resolver_config() -> ResolverConfig {
 /**
  * Builds a ResolverConfig for a custom DNS resolution.
  */
-fn build_custom_resolver_config(address: &String) -> ResolverConfig {
+fn build_custom_resolver_config(address: &str) -> ResolverConfig {
     let socket_addr: SocketAddr = match address.parse() {
         Ok(addr) => addr,
         Err(e) => panic!("Failed to parse DNS SERVER address: {}", e),
