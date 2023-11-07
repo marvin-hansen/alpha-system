@@ -5,6 +5,11 @@ name: Code Coverage
 
 on: [ pull_request, push ]
 
+env:
+  CARGO_TERM_COLOR: always
+  ENV: CLUSTER
+  DNS_SERVER: 175.24.54.1
+
 jobs:
   coverage:
     runs-on: ubuntu-latest
