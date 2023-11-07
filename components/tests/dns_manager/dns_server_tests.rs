@@ -15,13 +15,8 @@ use components::prelude::{CtxManager, DnsManager};
 
 #[test]
 fn test_new() {
-    let key = "ENV";
-    let value = "CLUSTER";
-    env::set_var(key, value);
-
-    let key = "DNS_SERVER";
-    let value = "175.24.54.1";
-    env::set_var(key, value);
+    env::set_var("ENV", "CLUSTER");
+    env::set_var("DNS_SERVER", "175.24.54.1");
 
     let ctm = CtxManager::new();
     assert_eq!(ctm.env_type(), EnvironmentType::CLUSTER);
@@ -34,13 +29,8 @@ fn test_new() {
 
 #[test]
 fn test_resolve_internal_dns() {
-    let key = "ENV";
-    let value = "CLUSTER";
-    env::set_var(key, value);
-
-    let key = "DNS_SERVER";
-    let value = "175.24.54.1";
-    env::set_var(key, value);
+    env::set_var("ENV", "CLUSTER");
+    env::set_var("DNS_SERVER", "175.24.54.1");
 
     let ctm = CtxManager::new();
     assert_eq!(ctm.env_type(), EnvironmentType::CLUSTER);

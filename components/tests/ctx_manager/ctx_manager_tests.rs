@@ -13,7 +13,6 @@ use components::prelude::CtxManager;
 //           ENV: CLUSTER
 //           DNS_SERVER: 175.24.54.1
 
-
 #[test]
 fn test_new() {
     env::set_var("ENV", "CLUSTER");
