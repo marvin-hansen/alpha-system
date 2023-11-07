@@ -27,7 +27,7 @@ impl DnsManager {
                     panic!("Failed to find cluster DNS_SERVER env. Ensure DNS_SERVER is set in deployment.yaml");
                 }
             }.to_string(),
-            EnvironmentType::UnknownEnv => "1.1.1.1:53".to_string(),
+            EnvironmentType::UnknownEnv => "1.1.1.1".to_string(),
         };
 
         let internal_dns = format!("{}:{}", internal_dns_host, internal_dns_port);
