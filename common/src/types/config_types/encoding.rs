@@ -1,5 +1,11 @@
 use std::fmt::{Display, Formatter};
 
+/// An Enum representing the encoding format used for a message.
+///
+/// # Variants
+///
+/// * `Protobuf`: The Protobuf encoding format.
+/// * `SBE`: The SBE (Simple Binary Encoding) format.
 #[derive(Debug, Copy, Clone, Default, Eq, PartialEq)]
 pub enum Encoding {
     #[default]

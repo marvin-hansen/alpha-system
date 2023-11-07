@@ -4,23 +4,34 @@ use rsmgclient::{ConnectParams, SSLMode};
 
 const CLIENT_NAME: &str = "rsmgclient/2.0.2";
 
+/// MemGraphConfig represents the configuration for connecting to a Memgraph instance.
+///
+/// # Fields
+///
+/// * `port`: The port number to connect to at the server host. The default port is 7687.
+/// * `host`: The DNS resolvable name of the host to connect to. Exactly one of `host` and `address`
+/// parameters must be specified.
+/// * `username`: The username to connect as.
+/// * `password`: The password to be used if the server demands password authentication.
+/// * `client_name`: The alternate name and version of the client to send to the server. The default
+/// is "MemgraphBolt/0.1".
 #[derive(Debug, Eq, Clone, PartialEq)]
 pub struct MemGraphConfig {
-    /// Port number to connect to at the server host. Default port is 7687.
+    /// Port number to connect to at the server host. The default port is 7687.
     port: u16,
-    /// DNS resolvable name of host to connect to. Exactly one of host and address parameters must
-    /// be specified.
+    /// DNS resolvable name of the host to connect to. Exactly one of `host` and `address` parameters
+    /// must be specified.
     host: Option<String>,
     /// Username to connect as.
     username: Option<String>,
     /// Password to be used if the server demands password authentication.
     password: Option<String>,
-    /// Alternate name and version of the client to send to server. Default is
-    /// "MemgraphBolt/0.1".
+    /// Alternate name and version of the client to send to server. The default is "MemgraphBolt/0.1".
     client_name: String,
 }
 
 impl MemGraphConfig {
+    /// Creates a new MemGraphConfig for a connection without authentication.
     pub fn new_connection(port: u16, host: Option<String>) -> Self {
         Self {
             port,
@@ -29,6 +40,7 @@ impl MemGraphConfig {
         }
     }
 
+    /// Creates a new MemGraphConfig for authentication.
     pub fn new_authentication(username: Option<String>, password: Option<String>) -> Self {
         Self {
             username,
@@ -37,6 +49,7 @@ impl MemGraphConfig {
         }
     }
 
+    /// Creates a new MemGraphConfig for a connection with authentication.
     pub fn new_connection_with_authentication(
         port: u16,
         host: Option<String>,
@@ -52,6 +65,7 @@ impl MemGraphConfig {
         }
     }
 
+    /// Returns the ConnectParams for connecting to Memgraph.
     pub fn get_connect_params(&self) -> ConnectParams {
         ConnectParams {
             host: self.host.clone(),
@@ -67,24 +81,34 @@ impl MemGraphConfig {
 
 // getters
 impl MemGraphConfig {
+    /// Returns the port number to connect to at the server host.
     pub fn port(&self) -> u16 {
         self.port
     }
+
+    /// Returns the DNS resolvable name of the host to connect to.
     pub fn host(&self) -> &Option<String> {
         &self.host
     }
+
+    /// Returns the username to connect as.
     pub fn username(&self) -> &Option<String> {
         &self.username
     }
+
+    /// Returns the password to be used if the server demands password authentication.
     pub fn password(&self) -> &Option<String> {
         &self.password
     }
+
+    /// Returns the alternate name and version of the client to send to server.
     pub fn client_name(&self) -> &str {
         &self.client_name
     }
 }
 
 impl Default for MemGraphConfig {
+    /// Returns the default MemGraphConfig.
     fn default() -> Self {
         Self {
             port: 7687,
@@ -97,6 +121,7 @@ impl Default for MemGraphConfig {
 }
 
 impl Display for MemGraphConfig {
+    /// Formats the MemGraphConfig as a string.
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         write!(f,
                "MemGraphConfig {{ port: {}, host: {:?}, username: {:?}, password: {:?}, client_name: {:?} }}",

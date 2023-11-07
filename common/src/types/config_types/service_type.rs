@@ -1,9 +1,17 @@
 use std::fmt::{Display, Formatter};
 
+/// A ServiceType represents the type of service.
+///
+/// # Variants
+///
+/// * `ENDPOINT`: An endpoint service type.
+/// * `CHANNEL`: The channel service type.
 #[derive(Debug, Default, Copy, Clone, Eq, PartialEq)]
 pub enum ServiceType {
+    /// The endpoint service type.
     #[default]
     ENDPOINT,
+    /// The channel service type.
     CHANNEL,
 }
 

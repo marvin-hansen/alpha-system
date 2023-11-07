@@ -1,10 +1,20 @@
 use std::fmt::{Display, Formatter};
 
+/// An EnvironmentType represents the environment type of the application.
+///
+/// # Variants
+///
+/// * `UnknownEnv`: The unknown environment type.
+/// * `LOCAL`: The local environment type.
+/// * `CLUSTER`: The cluster environment type.
 #[derive(Debug, Copy, Clone, Default, Eq, PartialEq)]
 pub enum EnvironmentType {
+    /// The unknown environment type.
     #[default]
     UnknownEnv,
+    /// The local environment type.
     LOCAL,
+    /// The cluster environment type.
     CLUSTER,
 }
 

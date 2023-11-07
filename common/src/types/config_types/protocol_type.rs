@@ -1,10 +1,20 @@
 use std::fmt::{Display, Formatter};
 
+/// A ProtocolType represents the protocol type used for communication.
+///
+/// # Variants
+///
+/// * `GRPC`: The gRPC protocol.
+/// * `HTTP`: The HTTP protocol.
+/// * `UDP`: The UDP protocol.
 #[derive(Debug, Copy, Clone, Default, Eq, PartialEq)]
 pub enum ProtocolType {
+    /// The gRPC protocol.
     #[default]
     GRPC,
+    /// The HTTP protocol.
     HTTP,
+    /// The UDP protocol.
     UDP,
 }
 
