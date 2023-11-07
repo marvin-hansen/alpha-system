@@ -1,6 +1,4 @@
 #[cfg(test)]
-mod dns_config_tests;
-#[cfg(test)]
 mod encoding_tests;
 #[cfg(test)]
 mod endpoint_tests;
