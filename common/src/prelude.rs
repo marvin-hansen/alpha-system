@@ -1,3 +1,6 @@
+// Errors
+pub use crate::errors::InitError;
+// Types
 pub use crate::types::config_types::encoding::*;
 pub use crate::types::config_types::endpoint::*;
 pub use crate::types::config_types::endpoint_host::*;
