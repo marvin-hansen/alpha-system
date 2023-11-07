@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - name: Test Environment
-        run: echo "ENVIRONMENT IS $env.ENV! DNS SERVER IS $env.DNS_SERVER!"
+        run: echo "ENVIRONMENT IS  ${{ env.ENV }} DNS SERVER IS ${{ env.DNS_SERVER }}"
 
       - uses: actions/checkout@v4
       - name: Build
