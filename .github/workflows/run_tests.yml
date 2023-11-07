@@ -6,24 +6,19 @@ on: [ pull_request, push ]
 
 env:
   CARGO_TERM_COLOR: always
+  ENV: CLUSTER
+  DNS_SERVER: 175.24.54.1
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Test Environment
-        run: echo "ENVIRONMENT IS  ${{ env.ENV }} DNS SERVER IS ${{ env.DNS_SERVER }}"
+        run: echo "ENVIRONMENT IS  $env.ENV DNS SERVER IS ${{ env.DNS_SERVER }}"
 
       - uses: actions/checkout@v4
       - name: Build
         run: cargo build --verbose
-        env:
-          ENV: ${{ env.ENV }}
-          DNS_SERVER: ${{ env.DNS_SERVER }}
 
       - name: Run tests
         run: cargo test --verbose
-        env:
-          ENV: ${{ env.ENV }}
-          DNS_SERVER: ${{ env.DNS_SERVER }}
