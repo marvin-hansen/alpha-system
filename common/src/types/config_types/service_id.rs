@@ -9,8 +9,9 @@ use std::fmt::{Display, Formatter};
 /// * `CMDB`: The CMDB service.
 #[derive(Debug, Default, Copy, Clone, Eq, PartialEq)]
 pub enum ServiceID {
-    MEMGRAPH,
     #[default]
+    Default,
+    MEMGRAPH,
     SMDB,
     CMDB,
 }
@@ -18,6 +19,7 @@ pub enum ServiceID {
 impl Display for ServiceID {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
+            ServiceID::Default => write!(f, "Default"),
             ServiceID::MEMGRAPH => write!(f, "MEMGRAPH"),
             ServiceID::SMDB => write!(f, "SMDB"),
             ServiceID::CMDB => write!(f, "CMDB"),

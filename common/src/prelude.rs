@@ -1,5 +1,6 @@
 pub use crate::types::config_types::encoding::*;
 pub use crate::types::config_types::endpoint::*;
+pub use crate::types::config_types::endpoint_host::*;
 pub use crate::types::config_types::environment_type::*;
 pub use crate::types::config_types::main_config::*;
 pub use crate::types::config_types::memgraph_config::*;

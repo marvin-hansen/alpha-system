@@ -82,7 +82,7 @@ fn test_get_main_config() {
 fn test_default() {
     let service_config = ServiceConfig::default();
 
-    assert_eq!(service_config.id(), &ServiceID::SMDB);
+    assert_eq!(service_config.id(), &ServiceID::Default);
     assert_eq!(service_config.name(), &String::from(""));
     assert_eq!(service_config.version(), 0);
     assert!(!service_config.online());
