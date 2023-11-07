@@ -19,11 +19,11 @@ jobs:
       - name: Build
         run: cargo build --verbose
         env:
-          ENV: ${{ env.CLUSTER }}
+          ENV: ${{ env.ENV }}
           DNS_SERVER: ${{ env.DNS_SERVER }}
 
       - name: Run tests
         run: cargo test --verbose
         env:
-          ENV: ${{ env.CLUSTER }}
+          ENV: ${{ env.ENV }}
           DNS_SERVER: ${{ env.DNS_SERVER }}
