@@ -3,8 +3,7 @@ use std::env;
 use common::prelude::{EnvironmentType, ServiceConfig, ServiceID};
 use components::cfg_manager::CfgManager;
 use components::prelude::CtxManager;
-use specs::memgraph::memgraph_service_config;
-use specs::prelude::{cmdb_service_config, smdb_service_config};
+use specs::prelude::{cmdb_service_config, memgraph_service_config, smdb_service_config};
 
 #[test]
 fn new_config_manager_default() {
@@ -56,7 +55,6 @@ fn new_config_manager_cmdb() {
     );
     assert_eq!(config_manager.svc_config(), &cmdb_service_config());
 }
-
 
 #[test]
 fn new_config_manager() {

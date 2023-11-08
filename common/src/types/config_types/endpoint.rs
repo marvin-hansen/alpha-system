@@ -1,6 +1,6 @@
 use std::fmt::{Display, Formatter};
 
-use crate::prelude::{Encoding, ProtocolType};
+use crate::prelude::{Encoding, HostEndpoint, ProtocolType};
 
 /// An Endpoint represents a single endpoint of a service.
 ///
@@ -79,6 +79,12 @@ impl Endpoint {
     /// Returns the encoding type of the endpoint.
     pub fn encoding(&self) -> &Encoding {
         &self.encoding
+    }
+}
+
+impl Endpoint {
+    pub fn host_endpoint(&self) -> HostEndpoint {
+        HostEndpoint::new(self.uri().to_string(), self.port())
     }
 }
 

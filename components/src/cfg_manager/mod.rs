@@ -1,7 +1,7 @@
-use common::prelude::{EnvironmentType, MainConfig, ServiceConfig, ServiceID};
-use specs::memgraph::memgraph_service_config;
-use specs::prelude::cmdb_service_config;
-use specs::smdb::smdb_service_config;
+use common::prelude::{
+    Endpoint, EnvironmentType, HostEndpoint, MainConfig, ServiceConfig, ServiceID,
+};
+use specs::prelude::{cmdb_service_config, memgraph_service_config, smdb_service_config};
 
 use crate::prelude::CtxManager;
 
@@ -55,6 +55,18 @@ impl CfgManager {
     /// Returns a reference to the service-specific configuration.
     pub fn svc_config(&self) -> &ServiceConfig {
         &self.svc_config
+    }
+
+    pub fn get_svc_config(&self, svc_id: ServiceID) -> ServiceConfig {
+        get_service_config(svc_id)
+    }
+
+    pub fn get_svc_endpoint(&self, svc_id: ServiceID) -> Endpoint {
+        get_service_config(svc_id).endpoint().clone()
+    }
+
+    pub fn get_svc_host_endpoint(&self, svc_id: ServiceID) -> HostEndpoint {
+        self.get_svc_endpoint(svc_id).clone().host_endpoint()
     }
 }
 
