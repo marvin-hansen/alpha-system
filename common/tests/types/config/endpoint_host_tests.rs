@@ -1,7 +1,7 @@
 use common::prelude::HostEndpoint;
 
 #[test]
-fn new() {
+fn test_new() {
     let host_uri = "http://localhost".to_string();
     let port = 8080;
     let host_endpoint = HostEndpoint::new(host_uri, port);
@@ -11,7 +11,7 @@ fn new() {
 }
 
 #[test]
-fn host_uri() {
+fn test_host_uri() {
     let host_uri = "http://localhost".to_string();
     let port = 8080;
     let host_endpoint = HostEndpoint::new(host_uri, port);
@@ -20,10 +20,20 @@ fn host_uri() {
 }
 
 #[test]
-fn port() {
+fn test_port() {
     let host_uri = "http://localhost".to_string();
     let port = 8080;
     let host_endpoint = HostEndpoint::new(host_uri.clone(), port);
 
     assert_eq!(host_endpoint.port(), 8080);
+}
+
+#[test]
+fn test_display() {
+    let host_uri = "http://localhost".to_string();
+    let port = 8080;
+    let host_endpoint = HostEndpoint::new(host_uri.clone(), port);
+
+    assert_eq!(host_endpoint.to_string(),
+               "host_uri: http://localhost,  port: 8080");
 }

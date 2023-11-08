@@ -18,3 +18,5 @@ mod service_config_tests;
 mod service_id_tests;
 #[cfg(test)]
 mod service_type_tests;
+#[cfg(test)]
+mod svc_env_config_tests;
