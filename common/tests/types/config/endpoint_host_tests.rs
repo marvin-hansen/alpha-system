@@ -34,6 +34,8 @@ fn test_display() {
     let port = 8080;
     let host_endpoint = HostEndpoint::new(host_uri.clone(), port);
 
-    assert_eq!(host_endpoint.to_string(),
-               "host_uri: http://localhost,  port: 8080");
+    assert_eq!(
+        host_endpoint.to_string(),
+        "host_uri: http://localhost,  port: 8080"
+    );
 }
