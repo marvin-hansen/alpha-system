@@ -1,7 +1,7 @@
 use std::env;
 
-use common::prelude::{EnvironmentType, HostEndpoint};
-use components::env_manager::EnvironmentManager;
+use common::prelude::{EnvironmentType, HostEndpoint, ServiceID};
+use components::env_manager::SvcEnvManager;
 use components::prelude::{CtxManager, DnsManager};
 
 // LOCAL and unknown environment cannot really be tested otherwise CI test runs breaks
@@ -27,11 +27,11 @@ fn test_new() {
     assert_eq!(dnm.internal_dns(), "9.9.9.9:53");
     assert_eq!(dnm.external_dns(), "1.1.1.1:53");
 
-    let env_manager = EnvironmentManager::new(&ctm, &dnm);
+    let env_manager = SvcEnvManager::new(&ctm, &dnm);
     // These return errors because the corresponding init function has not been called.
-    assert!(env_manager.get_cmdb_host().is_err());
-    assert!(env_manager.get_smdb_host().is_err());
-    assert!(env_manager.get_memgraph_host().is_err());
+    assert!(env_manager.get_svc_host(ServiceID::SMDB).is_err());
+    assert!(env_manager.get_svc_host(ServiceID::CMDB).is_err());
+    assert!(env_manager.get_svc_host(ServiceID::MEMGRAPH).is_err());
 }
 
 #[test]
@@ -47,9 +47,9 @@ fn test_init_smdb_env() {
     assert_eq!(dnm.internal_dns(), "9.9.9.9:53");
     assert_eq!(dnm.external_dns(), "1.1.1.1:53");
 
-    let mut env_manager = EnvironmentManager::new(&ctm, &dnm);
+    let mut env_manager = SvcEnvManager::new(&ctm, &dnm);
     let endpoint = HostEndpoint::new("example.com".to_string(), 8080);
-    assert!(env_manager.init_smdb_env(endpoint).is_ok());
+    assert!(env_manager.init_svc_env(ServiceID::SMDB, endpoint).is_ok());
 }
 
 #[test]
@@ -65,9 +65,9 @@ fn test_init_cmdb_env() {
     assert_eq!(dnm.internal_dns(), "9.9.9.9:53");
     assert_eq!(dnm.external_dns(), "1.1.1.1:53");
 
-    let mut env_manager = EnvironmentManager::new(&ctm, &dnm);
+    let mut env_manager = SvcEnvManager::new(&ctm, &dnm);
     let endpoint = HostEndpoint::new("example.com".to_string(), 8080);
-    assert!(env_manager.init_cmdb_env(endpoint).is_ok());
+    assert!(env_manager.init_svc_env(ServiceID::CMDB, endpoint).is_ok());
 }
 
 #[test]
@@ -83,9 +83,11 @@ fn test_init_memgraph_env() {
     assert_eq!(dnm.internal_dns(), "9.9.9.9:53");
     assert_eq!(dnm.external_dns(), "1.1.1.1:53");
 
-    let mut env_manager = EnvironmentManager::new(&ctm, &dnm);
+    let mut env_manager = SvcEnvManager::new(&ctm, &dnm);
     let endpoint = HostEndpoint::new("example.com".to_string(), 8080);
-    assert!(env_manager.init_memgraph_env(endpoint).is_ok());
+    assert!(env_manager
+        .init_svc_env(ServiceID::MEMGRAPH, endpoint)
+        .is_ok());
 }
 
 #[test]
@@ -101,12 +103,12 @@ fn test_get_cmdb_host() {
     assert_eq!(dnm.internal_dns(), "9.9.9.9:53");
     assert_eq!(dnm.external_dns(), "1.1.1.1:53");
 
-    let mut env_manager = EnvironmentManager::new(&ctm, &dnm);
+    let mut env_manager = SvcEnvManager::new(&ctm, &dnm);
 
     let endpoint = HostEndpoint::new("localhost".to_string(), 7070);
-    assert!(env_manager.init_cmdb_env(endpoint).is_ok());
+    assert!(env_manager.init_svc_env(ServiceID::CMDB, endpoint).is_ok());
 
-    let host = env_manager.get_cmdb_host().unwrap();
+    let host = env_manager.get_svc_host(ServiceID::CMDB).unwrap();
     assert_eq!(host, "127.0.0.1:7070");
 }
 
@@ -123,12 +125,12 @@ fn test_get_smdb_host() {
     assert_eq!(dnm.internal_dns(), "9.9.9.9:53");
     assert_eq!(dnm.external_dns(), "1.1.1.1:53");
 
-    let mut env_manager = EnvironmentManager::new(&ctm, &dnm);
+    let mut env_manager = SvcEnvManager::new(&ctm, &dnm);
 
     let endpoint = HostEndpoint::new("localhost".to_string(), 8080);
-    assert!(env_manager.init_smdb_env(endpoint).is_ok());
+    assert!(env_manager.init_svc_env(ServiceID::SMDB, endpoint).is_ok());
 
-    let host = env_manager.get_smdb_host().unwrap();
+    let host = env_manager.get_svc_host(ServiceID::SMDB).unwrap();
     assert_eq!(host, "127.0.0.1:8080");
 }
 
@@ -145,11 +147,13 @@ fn test_get_memgraph_host() {
     assert_eq!(dnm.internal_dns(), "9.9.9.9:53");
     assert_eq!(dnm.external_dns(), "1.1.1.1:53");
 
-    let mut env_manager = EnvironmentManager::new(&ctm, &dnm);
+    let mut env_manager = SvcEnvManager::new(&ctm, &dnm);
 
     let endpoint = HostEndpoint::new("localhost".to_string(), 9090);
-    assert!(env_manager.init_memgraph_env(endpoint).is_ok());
+    assert!(env_manager
+        .init_svc_env(ServiceID::MEMGRAPH, endpoint)
+        .is_ok());
 
-    let host = env_manager.get_memgraph_host().unwrap();
+    let host = env_manager.get_svc_host(ServiceID::MEMGRAPH).unwrap();
     assert_eq!(host, "127.0.0.1:9090");
 }
