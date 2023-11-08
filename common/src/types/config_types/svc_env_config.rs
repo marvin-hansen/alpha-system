@@ -43,6 +43,10 @@ impl SvcEnvConfig {
     pub fn port(&self) -> &str {
         &self.port
     }
+    /// Returns the service ID
+    pub fn service_id(&self) -> ServiceID {
+        self.service_id
+    }
 }
 
 impl Display for SvcEnvConfig {
