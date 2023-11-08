@@ -7,7 +7,7 @@ use crate::prelude::CtxManager;
 
 /// Struct that holds the configuration for a specific service.
 #[derive(Debug, Clone, Default, Eq, PartialEq)]
-pub struct ConfigManager {
+pub struct CfgManager {
     /// ID of the service.
     svc: ServiceID,
     /// Type of the environment (e.g., development, testing, production).
@@ -18,7 +18,7 @@ pub struct ConfigManager {
     svc_config: ServiceConfig,
 }
 
-impl ConfigManager {
+impl CfgManager {
     /// Creates a new `ConfigManager` instance for the given service ID.
     ///
     /// # Arguments
@@ -39,7 +39,7 @@ impl ConfigManager {
     }
 }
 
-impl ConfigManager {
+impl CfgManager {
     /// Returns the ID of the service.
     pub fn svc(&self) -> ServiceID {
         self.svc
