@@ -89,7 +89,7 @@ impl<'l> ServiceConfig<'l> {
     }
     /// Returns the service name.
     pub fn name(&self) -> &str {
-        &self.name
+        self.name
     }
     /// Returns the service version.
     pub fn version(&self) -> u8 {
@@ -101,15 +101,15 @@ impl<'l> ServiceConfig<'l> {
     }
     /// Returns the service description.
     pub fn description(&self) -> &str {
-        &self.description
+        self.description
     }
     /// Returns the health check URI.
     pub fn health_check_uri(&self) -> &str {
-        &self.health_check_uri
+        self.health_check_uri
     }
     /// Returns the base URI.
     pub fn base_uri(&self) -> &str {
-        &self.base_uri
+        self.base_uri
     }
     /// Returns the service dependencies.
     pub fn dependencies(&self) -> &Vec<ServiceID> {

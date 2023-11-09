@@ -49,7 +49,7 @@ impl<'l> SvcEnvManager<'l> {
     }
 
     // initializes CMDB. The cmdb_env field stores the configuration for the CMDB service.
-    fn init_cmdb_env<'a>(&mut self, endpoint: HostEndpoint) -> Result<(), InitError> {
+    fn init_cmdb_env(&mut self, endpoint: HostEndpoint) -> Result<(), InitError> {
         let cmdb_env = self.get_svc_env_config(ServiceID::CMDB, endpoint);
 
         self.cmdb_env = Some(cmdb_env);

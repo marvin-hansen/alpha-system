@@ -1,6 +1,4 @@
-use common::prelude::{
-    EnvironmentType, MainConfig, ServiceConfig, ServiceID,
-};
+use common::prelude::{EnvironmentType, MainConfig, ServiceConfig, ServiceID};
 use specs::prelude::{cmdb_service_config, memgraph_service_config, smdb_service_config};
 
 use crate::prelude::CtxManager;
@@ -65,4 +63,3 @@ impl<'l> CfgManager<'l> {
         self.service_config(svc_id)
     }
 }
-

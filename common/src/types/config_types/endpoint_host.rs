@@ -22,7 +22,7 @@ impl<'l> HostEndpoint<'l> {
 
     /// Returns the host URI.
     pub fn host_uri(&self) -> &str {
-        &self.host_uri
+        self.host_uri
     }
 
     /// Returns the port number.

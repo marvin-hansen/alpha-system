@@ -25,8 +25,24 @@ pub struct Endpoint<'l> {
 }
 
 impl<'l> Endpoint<'l> {
-    pub fn new(name: &'l str, version: u8, description: &'l str, uri: &'l str, port: u16, protocol: ProtocolType, encoding: Encoding) -> Self {
-        Self { name, version, description, uri, port, protocol, encoding }
+    pub fn new(
+        name: &'l str,
+        version: u8,
+        description: &'l str,
+        uri: &'l str,
+        port: u16,
+        protocol: ProtocolType,
+        encoding: Encoding,
+    ) -> Self {
+        Self {
+            name,
+            version,
+            description,
+            uri,
+            port,
+            protocol,
+            encoding,
+        }
     }
 }
 
@@ -53,7 +69,6 @@ impl<'l> Endpoint<'l> {
         self.encoding
     }
 }
-
 
 impl<'l> Endpoint<'l> {
     pub fn host_endpoint(&self) -> HostEndpoint {
