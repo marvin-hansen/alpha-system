@@ -41,6 +41,6 @@ fn test_memgraph_service_config() {
     );
     assert_eq!(endpoint.uri(), String::from("/"));
     assert_eq!(endpoint.port(), 7687);
-    assert_eq!(endpoint.protocol(), &ProtocolType::HTTP);
-    assert_eq!(endpoint.encoding(), &Encoding::Binary);
+    assert_eq!(endpoint.protocol(), ProtocolType::HTTP);
+    assert_eq!(endpoint.encoding(), Encoding::Binary);
 }

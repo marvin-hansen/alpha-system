@@ -48,7 +48,7 @@ fn test_init_smdb_env() {
     assert_eq!(dnm.external_dns(), "1.1.1.1:53");
 
     let mut env_manager = SvcEnvManager::new(&ctm, &dnm);
-    let endpoint = HostEndpoint::new("example.com".to_string(), 8080);
+    let endpoint = HostEndpoint::new("example.com", 8080);
     assert!(env_manager.init_svc_env(ServiceID::SMDB, endpoint).is_ok());
 }
 
@@ -66,7 +66,7 @@ fn test_init_cmdb_env() {
     assert_eq!(dnm.external_dns(), "1.1.1.1:53");
 
     let mut env_manager = SvcEnvManager::new(&ctm, &dnm);
-    let endpoint = HostEndpoint::new("example.com".to_string(), 8080);
+    let endpoint = HostEndpoint::new("example.com", 8080);
     assert!(env_manager.init_svc_env(ServiceID::CMDB, endpoint).is_ok());
 }
 
@@ -84,7 +84,7 @@ fn test_init_memgraph_env() {
     assert_eq!(dnm.external_dns(), "1.1.1.1:53");
 
     let mut env_manager = SvcEnvManager::new(&ctm, &dnm);
-    let endpoint = HostEndpoint::new("example.com".to_string(), 8080);
+    let endpoint = HostEndpoint::new("example.com", 8080);
     assert!(env_manager
         .init_svc_env(ServiceID::MEMGRAPH, endpoint)
         .is_ok());
@@ -105,7 +105,7 @@ fn test_get_cmdb_host() {
 
     let mut env_manager = SvcEnvManager::new(&ctm, &dnm);
 
-    let endpoint = HostEndpoint::new("localhost".to_string(), 7070);
+    let endpoint = HostEndpoint::new("localhost", 7070);
     assert!(env_manager.init_svc_env(ServiceID::CMDB, endpoint).is_ok());
 
     let host = env_manager.get_svc_host(ServiceID::CMDB).unwrap();
@@ -127,7 +127,7 @@ fn test_get_smdb_host() {
 
     let mut env_manager = SvcEnvManager::new(&ctm, &dnm);
 
-    let endpoint = HostEndpoint::new("localhost".to_string(), 8080);
+    let endpoint = HostEndpoint::new("localhost", 8080);
     assert!(env_manager.init_svc_env(ServiceID::SMDB, endpoint).is_ok());
 
     let host = env_manager.get_svc_host(ServiceID::SMDB).unwrap();
@@ -149,7 +149,7 @@ fn test_get_memgraph_host() {
 
     let mut env_manager = SvcEnvManager::new(&ctm, &dnm);
 
-    let endpoint = HostEndpoint::new("localhost".to_string(), 9090);
+    let endpoint = HostEndpoint::new("localhost", 9090);
     assert!(env_manager
         .init_svc_env(ServiceID::MEMGRAPH, endpoint)
         .is_ok());

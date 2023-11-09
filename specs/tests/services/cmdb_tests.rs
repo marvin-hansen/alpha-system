@@ -47,6 +47,6 @@ fn test_cmdb_service_config() {
     );
     assert_eq!(endpoint.uri(), String::from("/"));
     assert_eq!(endpoint.port(), 7070);
-    assert_eq!(endpoint.protocol(), &ProtocolType::GRPC);
-    assert_eq!(endpoint.encoding(), &Encoding::Protobuf);
+    assert_eq!(endpoint.protocol(), ProtocolType::GRPC);
+    assert_eq!(endpoint.encoding(), Encoding::Protobuf);
 }

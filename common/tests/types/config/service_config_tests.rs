@@ -3,12 +3,12 @@ use common::prelude::{Endpoint, ProtocolType, ServiceConfig, ServiceID, ServiceT
 #[test]
 fn test_new() {
     let id = ServiceID::SMDB;
-    let name = String::from("name");
+    let name = "name";
     let version = 1;
     let online = true;
-    let description = String::from("description");
-    let health_check_uri = String::from("health_check_uri");
-    let base_uri = String::from("base_uri");
+    let description = "description";
+    let health_check_uri = "health_check_uri";
+    let base_uri = "base_uri";
     let dependencies = vec![ServiceID::MEMGRAPH];
     let exposure = ServiceType::default();
     let endpoint = Endpoint::default();
@@ -41,18 +41,18 @@ fn test_new() {
         vec![ServiceID::MEMGRAPH].len()
     );
     assert_eq!(service_config.exposure(), &ServiceType::default());
-    assert_eq!(service_config.endpoint(), &Endpoint::default());
+    assert_eq!(service_config.endpoint(), Endpoint::default());
 }
 
 #[test]
 fn test_get_main_config() {
     let id = ServiceID::SMDB;
-    let name = ServiceID::SMDB.to_string();
+    let name = "SMDB";
     let version = 1;
     let online = true;
-    let description = String::from("description");
-    let health_check_uri = String::from("health_check_uri");
-    let base_uri = String::from("base_uri");
+    let description = "description";
+    let health_check_uri = "health_check_uri";
+    let base_uri = "base_uri";
     let dependencies = vec![ServiceID::MEMGRAPH];
     let exposure = ServiceType::default();
     let endpoint = Endpoint::default();
@@ -91,18 +91,18 @@ fn test_default() {
     assert_eq!(service_config.base_uri(), &String::from(""));
     assert_eq!(service_config.dependencies(), &Vec::new());
     assert_eq!(service_config.exposure(), &ServiceType::default());
-    assert_eq!(service_config.endpoint(), &Endpoint::default());
+    assert_eq!(service_config.endpoint(), Endpoint::default());
 }
 
 #[test]
 fn test_display() {
     let id = ServiceID::SMDB;
-    let name = ServiceID::SMDB.to_string();
+    let name = "SMDB";
     let version = 1;
     let online = true;
-    let description = String::from("description");
-    let health_check_uri = String::from("health_check_uri");
-    let base_uri = String::from("base_uri");
+    let description = "description";
+    let health_check_uri = "health_check_uri";
+    let base_uri = "base_uri";
     let dependencies = vec![ServiceID::MEMGRAPH];
     let exposure = ServiceType::default();
     let endpoint = Endpoint::default();

@@ -44,8 +44,8 @@ fn test_smdb_service_config() {
         endpoint.description(),
         "Access to the SMDB service registry via gRPC on baseUri:5050"
     );
-    assert_eq!(endpoint.uri(), String::from("/"));
+    assert_eq!(endpoint.uri(), "/");
     assert_eq!(endpoint.port(), 5050);
-    assert_eq!(endpoint.protocol(), &ProtocolType::GRPC);
-    assert_eq!(endpoint.encoding(), &Encoding::Protobuf);
+    assert_eq!(endpoint.protocol(), ProtocolType::GRPC);
+    assert_eq!(endpoint.encoding(), Encoding::Protobuf);
 }
