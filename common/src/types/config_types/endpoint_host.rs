@@ -1,22 +1,22 @@
 use std::fmt::{Display, Formatter};
 
 /// Struct that represents a host endpoint.
-#[derive(Debug, Default, Clone, Eq, PartialEq)]
-pub struct HostEndpoint {
+#[derive(Debug, Default, Clone, Copy, Eq, PartialEq)]
+pub struct HostEndpoint<'l> {
     /// Host URI.
-    host_uri: String,
+    host_uri: &'l str,
     /// Port number.
     port: u16,
 }
 
-impl HostEndpoint {
+impl<'l> HostEndpoint<'l> {
     /// Creates a new `HostEndpoint` instance.
     ///
     /// # Arguments
     ///
     /// * `host_uri` - Host URI.
     /// * `port` - Port number.
-    pub fn new(host_uri: String, port: u16) -> Self {
+    pub fn new(host_uri: &'l str, port: u16) -> Self {
         Self { host_uri, port }
     }
 
@@ -31,7 +31,7 @@ impl HostEndpoint {
     }
 }
 
-impl Display for HostEndpoint {
+impl<'l> Display for HostEndpoint<'l> {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         write!(f, "host_uri: {},  port: {}", self.host_uri, self.port)
     }

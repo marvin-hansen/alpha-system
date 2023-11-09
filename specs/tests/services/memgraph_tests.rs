@@ -1,9 +1,11 @@
 use common::prelude::{Encoding, ProtocolType, ServiceID, ServiceType};
-use specs::prelude::{memgraph_main_config, memgraph_service_config};
+use specs::prelude::memgraph_service_config;
 
 #[test]
 fn test_memgraph_main_config() {
-    let main_config = memgraph_main_config();
+    let service_config = memgraph_service_config();
+
+    let main_config = service_config.main_config();
     assert_eq!(main_config.id(), &ServiceID::MEMGRAPH);
     assert_eq!(main_config.name(), "memgraphv1");
     assert_eq!(main_config.port(), 7687);

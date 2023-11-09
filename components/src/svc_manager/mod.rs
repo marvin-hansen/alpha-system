@@ -8,8 +8,7 @@ const ONLINE: bool = true;
 const OFFLINE: bool = false;
 
 pub struct ServiceManager<'l> {
-    cfg_manager: &'l CfgManager,
-    // consider interior mutability here to remove the mutable reference
+    cfg_manager: &'l CfgManager<'l>,
     svm_manager: &'l mut SvcEnvManager<'l>,
     online: bool,
 }
@@ -42,32 +41,38 @@ impl<'l> ServiceManager<'l> {
 }
 
 impl<'l> ServiceManager<'l> {
+    /// Returns true if the service is online and can reach the SMDB registry
     pub fn is_online(&self) -> bool {
         self.online
     }
 
-    pub fn get_service_main_config(&self) -> &MainConfig {
+    /// Returns a reference to the main configuration of the service.
+    pub fn get_service_main_config(&self) -> MainConfig {
         self.cfg_manager.main_config()
     }
-    pub fn get_service_config(&self) -> &ServiceConfig {
+
+    /// Returns a reference to the service-specific configuration of the service.
+    pub fn get_service_config(&self) -> ServiceConfig {
         self.cfg_manager.svc_config()
     }
 }
 
 impl<'l> ServiceManager<'l> {
-    pub fn init_service_requirements(
+    pub fn init_service_dependencies(
         &mut self,
         dependencies: Vec<ServiceID>,
     ) -> Result<(), InitError> {
-        for d in dependencies {
-            self.init_service(d)?
+        for svc_id in dependencies {
+            self.init_service(svc_id)?
         }
 
         Ok(())
     }
 
     fn init_service(&mut self, svc_id: ServiceID) -> Result<(), InitError> {
-        let endpoint = self.cfg_manager.get_svc_host_endpoint(svc_id).to_owned();
+        let svc_config = self.cfg_manager.get_svc_config(svc_id).to_owned();
+        let binding = svc_config.endpoint();
+        let endpoint = binding.host_endpoint();
         self.svm_manager.init_svc_env(svc_id, endpoint)
     }
 }
