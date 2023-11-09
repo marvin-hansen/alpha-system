@@ -1,6 +1,4 @@
-use common::prelude::{
-    Encoding, Endpoint, ProtocolType, ServiceConfig, ServiceID, ServiceType,
-};
+use common::prelude::{Encoding, Endpoint, ProtocolType, ServiceConfig, ServiceID, ServiceType};
 
 pub fn smdb_service_config<'l>() -> ServiceConfig<'l> {
     let id = ServiceID::SMDB;
