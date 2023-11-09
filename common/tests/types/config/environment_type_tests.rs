@@ -16,6 +16,9 @@ fn test_debug() {
 
     let e3 = EnvironmentType::CLUSTER;
     assert_eq!(format!("{:?}", e3), "CLUSTER");
+
+    let e4 = EnvironmentType::CI;
+    assert_eq!(format!("{:?}", e4), "CI");
 }
 
 #[test]
@@ -28,4 +31,7 @@ fn test_display() {
 
     let e3 = EnvironmentType::CLUSTER;
     assert_eq!(format!("{}", e3), "CLUSTER");
+
+    let e4 = EnvironmentType::CI;
+    assert_eq!(format!("{}", e4), "CI");
 }

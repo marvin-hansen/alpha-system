@@ -16,6 +16,8 @@ pub enum EnvironmentType {
     LOCAL,
     /// The cluster environment type.
     CLUSTER,
+    /// Continuous Integration (CI) environment type.
+    CI,
 }
 
 impl Display for EnvironmentType {
@@ -24,6 +26,7 @@ impl Display for EnvironmentType {
             EnvironmentType::UnknownEnv => write!(f, "UnknownEnv"),
             EnvironmentType::LOCAL => write!(f, "LOCAL"),
             EnvironmentType::CLUSTER => write!(f, "CLUSTER"),
+            EnvironmentType::CI => write!(f, "CI"),
         }
     }
 }
