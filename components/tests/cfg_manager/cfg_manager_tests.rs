@@ -17,9 +17,9 @@ fn new_config_manager_default() {
     assert_eq!(config_manager.env_type(), EnvironmentType::CLUSTER);
     assert_eq!(
         config_manager.main_config(),
-        &ServiceConfig::default().main_config()
+        ServiceConfig::default().main_config()
     );
-    assert_eq!(config_manager.svc_config(), &ServiceConfig::default());
+    assert_eq!(config_manager.svc_config(), ServiceConfig::default());
 }
 
 #[test]
@@ -34,9 +34,9 @@ fn new_config_manager_smdb() {
     assert_eq!(config_manager.env_type(), EnvironmentType::CLUSTER);
     assert_eq!(
         config_manager.main_config(),
-        &smdb_service_config().main_config()
+        smdb_service_config().main_config()
     );
-    assert_eq!(config_manager.svc_config(), &smdb_service_config());
+    assert_eq!(config_manager.svc_config(), smdb_service_config());
 }
 
 #[test]
@@ -51,9 +51,9 @@ fn new_config_manager_cmdb() {
     assert_eq!(config_manager.env_type(), EnvironmentType::CLUSTER);
     assert_eq!(
         config_manager.main_config(),
-        &cmdb_service_config().main_config()
+        cmdb_service_config().main_config()
     );
-    assert_eq!(config_manager.svc_config(), &cmdb_service_config());
+    assert_eq!(config_manager.svc_config(), cmdb_service_config());
 }
 
 #[test]
@@ -68,7 +68,7 @@ fn new_config_manager() {
     assert_eq!(config_manager.env_type(), EnvironmentType::CLUSTER);
     assert_eq!(
         config_manager.main_config(),
-        &memgraph_service_config().main_config()
+        memgraph_service_config().main_config()
     );
-    assert_eq!(config_manager.svc_config(), &memgraph_service_config());
+    assert_eq!(config_manager.svc_config(), memgraph_service_config());
 }
