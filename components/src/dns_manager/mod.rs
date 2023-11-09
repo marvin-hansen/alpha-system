@@ -46,6 +46,7 @@ impl DnsManager {
         // Build the internal cluster DNS resolver
         let internal_dns_host = match ctx.env_type() {
             EnvironmentType::LOCAL => "127.0.0.1",
+            EnvironmentType::CI => "127.0.0.1",
             EnvironmentType::CLUSTER => match ctx.int_dns_server() {
                 Some(cluster_dns_server) => cluster_dns_server,
                 None => {

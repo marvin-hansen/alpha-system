@@ -4,13 +4,13 @@ use common::prelude::{MainConfig, ServiceConfig, ServiceID};
 use crate::env_manager::SvcEnvManager;
 use crate::prelude::CfgManager;
 
-const ONLINE: bool = true;
-const OFFLINE: bool = false;
+const ONLINE: &bool = &true;
+const OFFLINE: &bool = &false;
 
 pub struct ServiceManager<'l> {
     cfg_manager: &'l CfgManager<'l>,
     svm_manager: &'l SvcEnvManager<'l>,
-    online: bool,
+    online: &'l bool,
 }
 
 impl<'l> ServiceManager<'l> {
@@ -42,7 +42,7 @@ impl<'l> ServiceManager<'l> {
 
 impl<'l> ServiceManager<'l> {
     /// Returns true if the service is online and can reach the SMDB registry
-    pub fn is_online(&self) -> bool {
+    pub fn is_online(&self) -> &bool {
         self.online
     }
 
@@ -58,6 +58,14 @@ impl<'l> ServiceManager<'l> {
 }
 
 impl<'l> ServiceManager<'l> {
+    pub fn get_dependency_svc_host(&self, svc_id: ServiceID) -> Result<String, InitError> {
+        self.svm_manager.get_svc_host(svc_id)
+    }
+
+    pub fn is_service_dependency_initialized(&self, dependency: ServiceID) -> bool {
+        self.svm_manager.is_svc_env_initialized(dependency)
+    }
+
     pub fn init_service_dependencies(&self, dependencies: Vec<ServiceID>) -> Result<(), InitError> {
         for svc_id in dependencies {
             self.init_service(svc_id)?

@@ -61,6 +61,7 @@ fn get_env_type() -> EnvironmentType {
     // Convert the environment variable to an EnvironmentType enum value.
     return match env_var.as_str() {
         "LOCAL" => EnvironmentType::LOCAL,
+        "CI" => EnvironmentType::CI,
         "CLUSTER" => EnvironmentType::CLUSTER,
         "UNKNOWN" => EnvironmentType::UnknownEnv,
         _ => EnvironmentType::UnknownEnv,

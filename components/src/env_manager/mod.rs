@@ -27,6 +27,16 @@ impl<'l> SvcEnvManager<'l> {
 }
 
 impl<'l> SvcEnvManager<'l> {
+    pub fn is_svc_env_initialized(&self, svc_id: ServiceID) -> bool {
+        match svc_id {
+            ServiceID::CMDB => self.cmdb_env.borrow().is_some(),
+            ServiceID::SMDB => self.smdb_env.borrow().is_some(),
+            ServiceID::MEMGRAPH => self.memgraph_env.borrow().is_some(),
+            ServiceID::Default => false,
+        }
+    }
+
+
     /// Initializes the service environment based on the given service ID and host endpoint.
     ///
     /// # Arguments
@@ -72,11 +82,12 @@ impl<'l> SvcEnvManager<'l> {
     // Initializes SvcEnvConfig fields.
     // The functions take a HostEndpoint struct as an argument, which contains the hostname and port of the respective service.
     fn get_svc_env_config(&self, service_id: ServiceID, endpoint: HostEndpoint) -> SvcEnvConfig {
-        let local_host = "localhost".to_string();
+        let local_host = "127.0.0.1".to_string();
         let cluster_host = endpoint.host_uri().to_string();
+        let ci_host = "127.0.0.1".to_string();
         let port = endpoint.port().to_string();
 
-        SvcEnvConfig::new(service_id, cluster_host, local_host, port)
+        SvcEnvConfig::new(service_id, cluster_host, ci_host, local_host, port)
     }
 }
 
@@ -130,10 +141,14 @@ impl<'l> SvcEnvManager<'l> {
     // If the environment type is cluster, it returns the hostname of the service running in the cluster.
     // If the environment type is unknown, it returns an error.
     fn get_host(&self, svc_env_config: &SvcEnvConfig) -> Result<String, InitError> {
-        let host = match self.ctx_manager.env_type() {
-            EnvironmentType::LOCAL => Ok(svc_env_config.local_host().to_string()),
+        let port = svc_env_config.port();
+        let host = match self.ctx_manager.env_type()
+        {
+            EnvironmentType::LOCAL => Ok(format!("{}:{}", svc_env_config.local_host().to_string(), port)),
+
+            EnvironmentType::CI => Ok(format!("{}:{}", svc_env_config.local_host().to_string(), port)),
+
             EnvironmentType::CLUSTER => {
-                let port = svc_env_config.port();
                 let host = match self
                     .dns_manager
                     .resolve_dns(svc_env_config.cluster_host(), true)
