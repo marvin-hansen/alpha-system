@@ -7,10 +7,10 @@ use components::prelude::{CfgManager, CtxManager, DnsManager, ServiceManager, Sv
 fn test_new_online_service_manager() {
     let svc = ServiceID::SMDB;
     let ctx_manager = &CtxManager::new();
-    let dns_manager = &DnsManager::new(&ctx_manager);
-    let cfg_manager = &CfgManager::new(svc, &ctx_manager);
-    let svm_manager = &SvcEnvManager::new(&ctx_manager, &dns_manager);
-    let service_manager = ServiceManager::new_online_service_manager(&cfg_manager, &svm_manager);
+    let dns_manager = &DnsManager::new(ctx_manager);
+    let cfg_manager = &CfgManager::new(svc, ctx_manager);
+    let svm_manager = &SvcEnvManager::new(ctx_manager, dns_manager);
+    let service_manager = ServiceManager::new_online_service_manager(cfg_manager, svm_manager);
     assert_eq!(service_manager.is_online(), &true);
 }
 
@@ -18,10 +18,10 @@ fn test_new_online_service_manager() {
 fn test_new_offline_service_manager() {
     let svc = ServiceID::SMDB;
     let ctx_manager = &CtxManager::new();
-    let dns_manager = &DnsManager::new(&ctx_manager);
-    let cfg_manager = &CfgManager::new(svc, &ctx_manager);
-    let svm_manager = &SvcEnvManager::new(&ctx_manager, &dns_manager);
-    let service_manager = ServiceManager::new_offline_service_manager(&cfg_manager, &svm_manager);
+    let dns_manager = &DnsManager::new(ctx_manager);
+    let cfg_manager = &CfgManager::new(svc, ctx_manager);
+    let svm_manager = &SvcEnvManager::new(ctx_manager, dns_manager);
+    let service_manager = ServiceManager::new_offline_service_manager(cfg_manager, svm_manager);
     assert_eq!(service_manager.is_online(), &false);
 }
 
@@ -29,10 +29,10 @@ fn test_new_offline_service_manager() {
 fn test_is_online() {
     let svc = ServiceID::SMDB;
     let ctx_manager = &CtxManager::new();
-    let dns_manager = &DnsManager::new(&ctx_manager);
-    let cfg_manager = &CfgManager::new(svc, &ctx_manager);
-    let svm_manager = &SvcEnvManager::new(&ctx_manager, &dns_manager);
-    let service_manager = ServiceManager::new_online_service_manager(&cfg_manager, &svm_manager);
+    let dns_manager = &DnsManager::new(ctx_manager);
+    let cfg_manager = &CfgManager::new(svc, ctx_manager);
+    let svm_manager = &SvcEnvManager::new(ctx_manager, dns_manager);
+    let service_manager = ServiceManager::new_online_service_manager(cfg_manager, svm_manager);
     assert_eq!(service_manager.is_online(), &true);
 
     let service_manager = ServiceManager::new_offline_service_manager(cfg_manager, svm_manager);
@@ -43,9 +43,9 @@ fn test_is_online() {
 fn test_get_service_main_config() {
     let svc = ServiceID::SMDB;
     let ctx_manager = &CtxManager::new();
-    let dns_manager = &DnsManager::new(&ctx_manager);
-    let cfg_manager = &CfgManager::new(svc, &ctx_manager);
-    let svm_manager = &SvcEnvManager::new(&ctx_manager, &dns_manager);
+    let dns_manager = &DnsManager::new(ctx_manager);
+    let cfg_manager = &CfgManager::new(svc, ctx_manager);
+    let svm_manager = &SvcEnvManager::new(ctx_manager, dns_manager);
 
     let service_manager = ServiceManager::new_offline_service_manager(cfg_manager, svm_manager);
     assert_eq!(service_manager.is_online(), &false);
@@ -61,9 +61,9 @@ fn test_get_service_main_config() {
 fn test_get_service_config() {
     let svc = ServiceID::SMDB;
     let ctx_manager = &CtxManager::new();
-    let dns_manager = &DnsManager::new(&ctx_manager);
-    let cfg_manager = &CfgManager::new(svc, &ctx_manager);
-    let svm_manager = &SvcEnvManager::new(&ctx_manager, &dns_manager);
+    let dns_manager = &DnsManager::new(ctx_manager);
+    let cfg_manager = &CfgManager::new(svc, ctx_manager);
+    let svm_manager = &SvcEnvManager::new(ctx_manager, dns_manager);
 
     let service_manager = ServiceManager::new_offline_service_manager(cfg_manager, svm_manager);
     assert_eq!(service_manager.is_online(), &false);
@@ -108,9 +108,9 @@ fn test_get_service_config() {
 fn test_init_service_dependencies() {
     let svc = ServiceID::SMDB;
     let ctx_manager = &CtxManager::new();
-    let dns_manager = &DnsManager::new(&ctx_manager);
-    let cfg_manager = &CfgManager::new(svc, &ctx_manager);
-    let svm_manager = &SvcEnvManager::new(&ctx_manager, &dns_manager);
+    let dns_manager = &DnsManager::new(ctx_manager);
+    let cfg_manager = &CfgManager::new(svc, ctx_manager);
+    let svm_manager = &SvcEnvManager::new(ctx_manager, dns_manager);
 
     let service_manager = ServiceManager::new_offline_service_manager(cfg_manager, svm_manager);
     assert_eq!(service_manager.is_online(), &false);
@@ -141,9 +141,9 @@ fn test_get_dependency_svc_host() {
 
     let svc = ServiceID::SMDB;
     let ctx_manager = &CtxManager::new();
-    let dns_manager = &DnsManager::new(&ctx_manager);
-    let cfg_manager = &CfgManager::new(svc, &ctx_manager);
-    let svm_manager = &SvcEnvManager::new(&ctx_manager, &dns_manager);
+    let dns_manager = &DnsManager::new(ctx_manager);
+    let cfg_manager = &CfgManager::new(svc, ctx_manager);
+    let svm_manager = &SvcEnvManager::new(ctx_manager, dns_manager);
 
     let service_manager = ServiceManager::new_offline_service_manager(cfg_manager, svm_manager);
     assert_eq!(service_manager.is_online(), &false);
