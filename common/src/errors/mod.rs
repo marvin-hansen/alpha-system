@@ -11,3 +11,14 @@ impl fmt::Display for InitError {
         write!(f, "InitError: {}", self.0)
     }
 }
+
+#[derive(Debug)]
+pub struct MemGraphError(pub String);
+
+impl Error for MemGraphError {}
+
+impl fmt::Display for MemGraphError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "MemGraphError: {}", self.0)
+    }
+}
