@@ -13,82 +13,55 @@ use crate::prelude::{Encoding, HostEndpoint, ProtocolType};
 /// * `port`: The port number of the endpoint.
 /// * `protocol`: The protocol type of the endpoint.
 /// * `encoding`: The encoding type of the endpoint.
-#[derive(Debug, Default, Clone, Eq, PartialEq)]
-pub struct Endpoint {
-    name: String,
+#[derive(Debug, Default, Clone, Copy, Eq, PartialEq)]
+pub struct Endpoint<'l> {
+    name: &'l str,
     version: u8,
-    description: String,
-    uri: String,
+    description: &'l str,
+    uri: &'l str,
     port: u16,
     protocol: ProtocolType,
     encoding: Encoding,
 }
 
-impl Endpoint {
-    /// Creates a new Endpoint with the given fields.
-    pub fn new(
-        name: String,
-        version: u8,
-        description: String,
-        uri: String,
-        port: u16,
-        protocol: ProtocolType,
-        encoding: Encoding,
-    ) -> Self {
-        Self {
-            name,
-            version,
-            description,
-            uri,
-            port,
-            protocol,
-            encoding,
-        }
+impl<'l> Endpoint<'l> {
+    pub fn new(name: &'l str, version: u8, description: &'l str, uri: &'l str, port: u16, protocol: ProtocolType, encoding: Encoding) -> Self {
+        Self { name, version, description, uri, port, protocol, encoding }
     }
+}
 
-    /// Returns the name of the endpoint.
-    pub fn name(&self) -> &str {
-        &self.name
+impl<'l> Endpoint<'l> {
+    pub fn name(&self) -> &'l str {
+        self.name
     }
-
-    /// Returns the version of the endpoint.
     pub fn version(&self) -> u8 {
         self.version
     }
-
-    /// Returns the description of the endpoint.
-    pub fn description(&self) -> &str {
-        &self.description
+    pub fn description(&self) -> &'l str {
+        self.description
     }
-
-    /// Returns the URI of the endpoint.
-    pub fn uri(&self) -> &str {
-        &self.uri
+    pub fn uri(&self) -> &'l str {
+        self.uri
     }
-
-    /// Returns the port number of the endpoint.
     pub fn port(&self) -> u16 {
         self.port
     }
-
-    /// Returns the protocol type of the endpoint.
-    pub fn protocol(&self) -> &ProtocolType {
-        &self.protocol
+    pub fn protocol(&self) -> ProtocolType {
+        self.protocol
     }
-
-    /// Returns the encoding type of the endpoint.
-    pub fn encoding(&self) -> &Encoding {
-        &self.encoding
+    pub fn encoding(&self) -> Encoding {
+        self.encoding
     }
 }
 
-impl Endpoint {
+
+impl<'l> Endpoint<'l> {
     pub fn host_endpoint(&self) -> HostEndpoint {
-        HostEndpoint::new(self.uri().to_string(), self.port())
+        HostEndpoint::new(self.uri(), self.port())
     }
 }
 
-impl Display for Endpoint {
+impl<'l> Display for Endpoint<'l> {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         write!(f,
                "name: {},  version: {},  port: {},  description: {},  uri: {},  protocol: {},  encoding: {}",

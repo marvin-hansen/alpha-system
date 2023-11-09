@@ -1,9 +1,10 @@
 use common::prelude::{Encoding, ProtocolType, ServiceID, ServiceType};
-use specs::prelude::{smdb_main_config, smdb_service_config};
+use specs::prelude::smdb_service_config;
 
 #[test]
 fn test_smdb_main_config() {
-    let main_config = smdb_main_config();
+    let service_config = smdb_service_config();
+    let main_config = service_config.main_config();
     assert_eq!(main_config.id(), &ServiceID::SMDB);
     assert_eq!(main_config.name(), "smdbv1");
     assert_eq!(main_config.port(), 5050);

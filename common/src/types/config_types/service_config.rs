@@ -3,30 +3,30 @@ use std::fmt::{Display, Formatter};
 use crate::prelude::{Endpoint, MainConfig, ServiceID, ServiceType};
 
 #[derive(Debug, Default, Clone, Eq, PartialEq)]
-pub struct ServiceConfig {
+pub struct ServiceConfig<'l> {
     /// Unique Service ID.
     id: ServiceID,
     /// Service name.
-    name: String,
+    name: &'l str,
     /// Service version.
     version: u8,
     /// Whether the service is online.
     online: bool,
     /// Service description.
-    description: String,
+    description: &'l str,
     /// Health check URI.
-    health_check_uri: String,
+    health_check_uri: &'l str,
     /// Base URI.
-    base_uri: String,
+    base_uri: &'l str,
     /// Service dependencies.
     dependencies: Vec<ServiceID>,
     /// Service exposure type.
     exposure: ServiceType,
     /// Service endpoint.
-    endpoint: Endpoint,
+    endpoint: Endpoint<'l>,
 }
 
-impl ServiceConfig {
+impl<'l> ServiceConfig<'l> {
     /// Creates a new `ServiceConfig` instance.
     ///
     /// # Arguments
@@ -45,15 +45,15 @@ impl ServiceConfig {
     #[allow(clippy::too_many_arguments)]
     pub fn new(
         id: ServiceID,
-        name: String,
+        name: &'l str,
         version: u8,
         online: bool,
-        description: String,
-        health_check_uri: String,
-        base_uri: String,
+        description: &'l str,
+        health_check_uri: &'l str,
+        base_uri: &'l str,
         dependencies: Vec<ServiceID>,
         exposure: ServiceType,
-        endpoint: Endpoint,
+        endpoint: Endpoint<'l>,
     ) -> Self {
         Self {
             id,
@@ -70,19 +70,19 @@ impl ServiceConfig {
     }
 }
 
-impl ServiceConfig {
+impl<'l> ServiceConfig<'l> {
     /// Returns the main configuration for the service.
     pub fn main_config(&self) -> MainConfig {
         MainConfig::new(
             *self.id(),
             String::from(self.name()),
             self.endpoint().port(),
-            *self.endpoint().protocol(),
+            self.endpoint().protocol(),
         )
     }
 }
 
-impl ServiceConfig {
+impl<'l> ServiceConfig<'l> {
     /// Returns the service ID.
     pub fn id(&self) -> &ServiceID {
         &self.id
@@ -120,12 +120,12 @@ impl ServiceConfig {
         &self.exposure
     }
     /// Returns the service endpoint.
-    pub fn endpoint(&self) -> &Endpoint {
-        &self.endpoint
+    pub fn endpoint(&self) -> Endpoint {
+        self.endpoint.to_owned()
     }
 }
 
-impl Display for ServiceConfig {
+impl<'l> Display for ServiceConfig<'l> {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         write!(f,
                "ServiceConfig {{ id: {}, name: {}, version: {}, online: {}, description: {}, health_check_uri: {}, base_uri: {}, dependencies: {:?}, exposure: {}, endpoint: {} }}",
