@@ -47,7 +47,7 @@ fn test_init_smdb_env() {
     assert_eq!(dnm.internal_dns(), "9.9.9.9:53");
     assert_eq!(dnm.external_dns(), "1.1.1.1:53");
 
-    let mut env_manager = SvcEnvManager::new(&ctm, &dnm);
+    let env_manager = SvcEnvManager::new(&ctm, &dnm);
     let endpoint = HostEndpoint::new("example.com", 8080);
     assert!(env_manager.init_svc_env(ServiceID::SMDB, endpoint).is_ok());
 }
@@ -65,7 +65,7 @@ fn test_init_cmdb_env() {
     assert_eq!(dnm.internal_dns(), "9.9.9.9:53");
     assert_eq!(dnm.external_dns(), "1.1.1.1:53");
 
-    let mut env_manager = SvcEnvManager::new(&ctm, &dnm);
+    let env_manager = SvcEnvManager::new(&ctm, &dnm);
     let endpoint = HostEndpoint::new("example.com", 8080);
     assert!(env_manager.init_svc_env(ServiceID::CMDB, endpoint).is_ok());
 }
@@ -83,7 +83,7 @@ fn test_init_memgraph_env() {
     assert_eq!(dnm.internal_dns(), "9.9.9.9:53");
     assert_eq!(dnm.external_dns(), "1.1.1.1:53");
 
-    let mut env_manager = SvcEnvManager::new(&ctm, &dnm);
+    let env_manager = SvcEnvManager::new(&ctm, &dnm);
     let endpoint = HostEndpoint::new("example.com", 8080);
     assert!(env_manager
         .init_svc_env(ServiceID::MEMGRAPH, endpoint)
@@ -103,7 +103,7 @@ fn test_get_cmdb_host() {
     assert_eq!(dnm.internal_dns(), "9.9.9.9:53");
     assert_eq!(dnm.external_dns(), "1.1.1.1:53");
 
-    let mut env_manager = SvcEnvManager::new(&ctm, &dnm);
+    let env_manager = SvcEnvManager::new(&ctm, &dnm);
 
     let endpoint = HostEndpoint::new("localhost", 7070);
     assert!(env_manager.init_svc_env(ServiceID::CMDB, endpoint).is_ok());
@@ -125,7 +125,7 @@ fn test_get_smdb_host() {
     assert_eq!(dnm.internal_dns(), "9.9.9.9:53");
     assert_eq!(dnm.external_dns(), "1.1.1.1:53");
 
-    let mut env_manager = SvcEnvManager::new(&ctm, &dnm);
+    let env_manager = SvcEnvManager::new(&ctm, &dnm);
 
     let endpoint = HostEndpoint::new("localhost", 8080);
     assert!(env_manager.init_svc_env(ServiceID::SMDB, endpoint).is_ok());
@@ -147,7 +147,7 @@ fn test_get_memgraph_host() {
     assert_eq!(dnm.internal_dns(), "9.9.9.9:53");
     assert_eq!(dnm.external_dns(), "1.1.1.1:53");
 
-    let mut env_manager = SvcEnvManager::new(&ctm, &dnm);
+    let env_manager = SvcEnvManager::new(&ctm, &dnm);
 
     let endpoint = HostEndpoint::new("localhost", 9090);
     assert!(env_manager
