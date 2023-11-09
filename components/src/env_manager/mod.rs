@@ -1,3 +1,5 @@
+use std::cell::RefCell;
+
 use common::prelude::{EnvironmentType, HostEndpoint, InitError, ServiceID, SvcEnvConfig};
 
 use crate::prelude::{CtxManager, DnsManager};
@@ -5,9 +7,11 @@ use crate::prelude::{CtxManager, DnsManager};
 pub struct SvcEnvManager<'l> {
     ctx_manager: &'l CtxManager,
     dns_manager: &'l DnsManager,
-    cmdb_env: Option<SvcEnvConfig>,
-    smdb_env: Option<SvcEnvConfig>,
-    memgraph_env: Option<SvcEnvConfig>,
+    // interior mutability to keep the public API immutable
+    // https://doc.rust-lang.org/book/ch15-05-interior-mutability.html
+    cmdb_env: RefCell<Option<SvcEnvConfig>>,
+    smdb_env: RefCell<Option<SvcEnvConfig>>,
+    memgraph_env: RefCell<Option<SvcEnvConfig>>,
 }
 
 impl<'l> SvcEnvManager<'l> {
@@ -15,9 +19,9 @@ impl<'l> SvcEnvManager<'l> {
         Self {
             ctx_manager,
             dns_manager,
-            cmdb_env: None,
-            smdb_env: None,
-            memgraph_env: None,
+            cmdb_env: RefCell::new(None),
+            smdb_env: RefCell::new(None),
+            memgraph_env: RefCell::new(None),
         }
     }
 }
@@ -35,11 +39,7 @@ impl<'l> SvcEnvManager<'l> {
     /// `Result<(), InitError>` containing a
     /// * `InitError` in case of an error
     /// * `Ok(())` if the service environment was successfully initialized.
-    pub fn init_svc_env(
-        &mut self,
-        svc_id: ServiceID,
-        endpoint: HostEndpoint,
-    ) -> Result<(), InitError> {
+    pub fn init_svc_env(&self, svc_id: ServiceID, endpoint: HostEndpoint) -> Result<(), InitError> {
         match svc_id {
             ServiceID::CMDB => self.init_cmdb_env(endpoint),
             ServiceID::SMDB => self.init_smdb_env(endpoint),
@@ -49,24 +49,23 @@ impl<'l> SvcEnvManager<'l> {
     }
 
     // initializes CMDB. The cmdb_env field stores the configuration for the CMDB service.
-    fn init_cmdb_env(&mut self, endpoint: HostEndpoint) -> Result<(), InitError> {
+    fn init_cmdb_env(&self, endpoint: HostEndpoint) -> Result<(), InitError> {
         let cmdb_env = self.get_svc_env_config(ServiceID::CMDB, endpoint);
-
-        self.cmdb_env = Some(cmdb_env);
+        *self.cmdb_env.borrow_mut() = Some(cmdb_env);
         Ok(())
     }
 
     // initializes SMDB. The smdb_env field stores the configuration for the SMDB service.
-    fn init_smdb_env(&mut self, endpoint: HostEndpoint) -> Result<(), InitError> {
+    fn init_smdb_env(&self, endpoint: HostEndpoint) -> Result<(), InitError> {
         let smdb_env = self.get_svc_env_config(ServiceID::SMDB, endpoint);
-        self.smdb_env = Some(smdb_env);
+        *self.smdb_env.borrow_mut() = Some(smdb_env);
         Ok(())
     }
 
     // initializes MEMGRAPH. The memgraph_env field stores the configuration for the MEMGRAPH service.
-    fn init_memgraph_env(&mut self, endpoint: HostEndpoint) -> Result<(), InitError> {
+    fn init_memgraph_env(&self, endpoint: HostEndpoint) -> Result<(), InitError> {
         let memgraph_env = self.get_svc_env_config(ServiceID::MEMGRAPH, endpoint);
-        self.memgraph_env = Some(memgraph_env);
+        *self.memgraph_env.borrow_mut() = Some(memgraph_env);
         Ok(())
     }
 
@@ -97,35 +96,32 @@ impl<'l> SvcEnvManager<'l> {
     }
 
     fn get_cmdb_host(&self) -> Result<String, InitError> {
-        if self.cmdb_env.is_none() {
+        if self.cmdb_env.borrow().is_none() {
             Err(InitError(
                 "CMDB Env. Not Initialized. Call init_cmdb_env()".to_string(),
             ))
         } else {
-            let svc_env_config = self.cmdb_env.as_ref().unwrap();
-            self.get_host(svc_env_config)
+            self.get_host(self.cmdb_env.borrow().as_ref().unwrap())
         }
     }
 
     fn get_smdb_host(&self) -> Result<String, InitError> {
-        if self.smdb_env.is_none() {
+        if self.smdb_env.borrow().is_none() {
             Err(InitError(
                 "CMDB Env. Not Initialized. Call init_smdb_env()".to_string(),
             ))
         } else {
-            let svc_env_config = self.smdb_env.as_ref().unwrap();
-            self.get_host(svc_env_config)
+            self.get_host(self.smdb_env.borrow().as_ref().unwrap())
         }
     }
 
     fn get_memgraph_host(&self) -> Result<String, InitError> {
-        if self.memgraph_env.is_none() {
+        if self.memgraph_env.borrow().is_none() {
             Err(InitError(
                 "CMDB Env. Not Initialized. Call init_memgraph_env()".to_string(),
             ))
         } else {
-            let svc_env_config = self.memgraph_env.as_ref().unwrap();
-            self.get_host(svc_env_config)
+            self.get_host(self.memgraph_env.borrow().as_ref().unwrap())
         }
     }
 

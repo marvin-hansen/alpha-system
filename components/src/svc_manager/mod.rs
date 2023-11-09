@@ -9,7 +9,7 @@ const OFFLINE: bool = false;
 
 pub struct ServiceManager<'l> {
     cfg_manager: &'l CfgManager<'l>,
-    svm_manager: &'l mut SvcEnvManager<'l>,
+    svm_manager: &'l SvcEnvManager<'l>,
     online: bool,
 }
 
@@ -17,7 +17,7 @@ impl<'l> ServiceManager<'l> {
     /// new_online_service_manager creates a normal service manager for usage in all services that register with the SMDB
     pub fn new_online_service_manager(
         cfg_manager: &'l CfgManager,
-        svm_manager: &'l mut SvcEnvManager<'l>,
+        svm_manager: &'l SvcEnvManager<'l>,
     ) -> Self {
         Self {
             cfg_manager,
@@ -30,7 +30,7 @@ impl<'l> ServiceManager<'l> {
     /// required to implement SMDB service registry.
     pub fn new_offline_service_manager(
         cfg_manager: &'l CfgManager,
-        svm_manager: &'l mut SvcEnvManager<'l>,
+        svm_manager: &'l SvcEnvManager<'l>,
     ) -> Self {
         Self {
             cfg_manager,
@@ -58,10 +58,7 @@ impl<'l> ServiceManager<'l> {
 }
 
 impl<'l> ServiceManager<'l> {
-    pub fn init_service_dependencies(
-        &mut self,
-        dependencies: Vec<ServiceID>,
-    ) -> Result<(), InitError> {
+    pub fn init_service_dependencies(&self, dependencies: Vec<ServiceID>) -> Result<(), InitError> {
         for svc_id in dependencies {
             self.init_service(svc_id)?
         }
@@ -69,7 +66,7 @@ impl<'l> ServiceManager<'l> {
         Ok(())
     }
 
-    fn init_service(&mut self, svc_id: ServiceID) -> Result<(), InitError> {
+    fn init_service(&self, svc_id: ServiceID) -> Result<(), InitError> {
         let svc_config = self.cfg_manager.get_svc_config(svc_id).to_owned();
         let binding = svc_config.endpoint();
         let endpoint = binding.host_endpoint();
