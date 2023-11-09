@@ -1,8 +1,7 @@
 use std::env;
 
 use common::prelude::{EnvironmentType, ServiceConfig, ServiceID};
-use components::cfg_manager::CfgManager;
-use components::prelude::CtxManager;
+use components::prelude::{CfgManager, CtxManager};
 use specs::prelude::{cmdb_service_config, memgraph_service_config, smdb_service_config};
 
 #[test]

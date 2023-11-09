@@ -18,8 +18,20 @@ pub struct SvcEnvConfig {
 impl SvcEnvConfig {
     /// Creates a new `SvcEnvConfig` with the given parameters
 
-    pub fn new(service_id: ServiceID, cluster_host: String, ci_host: String, local_host: String, port: String) -> Self {
-        Self { service_id, cluster_host, ci_host, local_host, port }
+    pub fn new(
+        service_id: ServiceID,
+        cluster_host: String,
+        ci_host: String,
+        local_host: String,
+        port: String,
+    ) -> Self {
+        Self {
+            service_id,
+            cluster_host,
+            ci_host,
+            local_host,
+            port,
+        }
     }
 }
 
