@@ -1,5 +1,6 @@
 // Errors
 pub use crate::errors::InitError;
+pub use crate::errors::MemGraphError;
 // Types
 pub use crate::types::config_types::encoding::*;
 pub use crate::types::config_types::endpoint::*;
