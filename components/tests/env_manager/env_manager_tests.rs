@@ -1,8 +1,7 @@
 use std::env;
 
 use common::prelude::{EnvironmentType, HostEndpoint, ServiceID};
-use components::env_manager::SvcEnvManager;
-use components::prelude::{CtxManager, DnsManager};
+use components::prelude::{CtxManager, DnsManager, SvcEnvManager};
 
 // LOCAL and unknown environment cannot really be tested otherwise CI test runs breaks
 // because the environment variable must be set in the CI environment (not in the test)

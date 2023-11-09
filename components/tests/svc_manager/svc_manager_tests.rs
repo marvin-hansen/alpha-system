@@ -115,17 +115,22 @@ fn test_init_service_dependencies() {
     let service_manager = ServiceManager::new_offline_service_manager(cfg_manager, svm_manager);
     assert_eq!(service_manager.is_online(), &false);
 
-
     let dependencies = vec![ServiceID::CMDB];
-    service_manager.init_service_dependencies(dependencies).unwrap();
+    service_manager
+        .init_service_dependencies(dependencies)
+        .unwrap();
     assert!(service_manager.is_service_dependency_initialized(ServiceID::CMDB));
 
     let dependencies = vec![ServiceID::SMDB];
-    service_manager.init_service_dependencies(dependencies).unwrap();
+    service_manager
+        .init_service_dependencies(dependencies)
+        .unwrap();
     assert!(service_manager.is_service_dependency_initialized(ServiceID::SMDB));
 
     let dependencies = vec![ServiceID::MEMGRAPH];
-    service_manager.init_service_dependencies(dependencies).unwrap();
+    service_manager
+        .init_service_dependencies(dependencies)
+        .unwrap();
     assert!(service_manager.is_service_dependency_initialized(ServiceID::MEMGRAPH));
 }
 
@@ -143,14 +148,17 @@ fn test_get_dependency_svc_host() {
     let service_manager = ServiceManager::new_offline_service_manager(cfg_manager, svm_manager);
     assert_eq!(service_manager.is_online(), &false);
 
-
     let dependencies = vec![ServiceID::CMDB];
-    service_manager.init_service_dependencies(dependencies).unwrap();
+    service_manager
+        .init_service_dependencies(dependencies)
+        .unwrap();
     assert!(service_manager.is_service_dependency_initialized(ServiceID::CMDB));
 
     // We can't really test this, because the CI can't resolve the DNS server of the cluster host.
     // The root cause is that the CI can only have one ENV variable and it's alerady set to CLUSTER.
-    assert!(service_manager.get_dependency_svc_host(ServiceID::CMDB).is_err());
+    assert!(service_manager
+        .get_dependency_svc_host(ServiceID::CMDB)
+        .is_err());
 
     // assert_eq!(
     //     service_manager.get_dependency_svc_host(ServiceID::CMDB).unwrap(),
@@ -158,10 +166,14 @@ fn test_get_dependency_svc_host() {
     // );
 
     let dependencies = vec![ServiceID::SMDB];
-    service_manager.init_service_dependencies(dependencies).unwrap();
+    service_manager
+        .init_service_dependencies(dependencies)
+        .unwrap();
     assert!(service_manager.is_service_dependency_initialized(ServiceID::SMDB));
     assert!(service_manager.is_service_dependency_initialized(ServiceID::SMDB));
-    assert!(service_manager.get_dependency_svc_host(ServiceID::SMDB).is_err());
+    assert!(service_manager
+        .get_dependency_svc_host(ServiceID::SMDB)
+        .is_err());
 
     // assert_eq!(
     //     service_manager.get_dependency_svc_host(ServiceID::SMDB).unwrap(),
@@ -169,11 +181,15 @@ fn test_get_dependency_svc_host() {
     // );
 
     let dependencies = vec![ServiceID::MEMGRAPH];
-    service_manager.init_service_dependencies(dependencies).unwrap();
+    service_manager
+        .init_service_dependencies(dependencies)
+        .unwrap();
     assert!(service_manager.is_service_dependency_initialized(ServiceID::MEMGRAPH));
 
     assert!(service_manager.is_service_dependency_initialized(ServiceID::MEMGRAPH));
-    assert!(service_manager.get_dependency_svc_host(ServiceID::MEMGRAPH).is_err());
+    assert!(service_manager
+        .get_dependency_svc_host(ServiceID::MEMGRAPH)
+        .is_err());
 
     // assert_eq!(
     //     service_manager.get_dependency_svc_host(ServiceID::MEMGRAPH).unwrap(),

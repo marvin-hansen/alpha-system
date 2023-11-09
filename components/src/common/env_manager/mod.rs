@@ -36,7 +36,6 @@ impl<'l> SvcEnvManager<'l> {
         }
     }
 
-
     /// Initializes the service environment based on the given service ID and host endpoint.
     ///
     /// # Arguments
@@ -142,11 +141,18 @@ impl<'l> SvcEnvManager<'l> {
     // If the environment type is unknown, it returns an error.
     fn get_host(&self, svc_env_config: &SvcEnvConfig) -> Result<String, InitError> {
         let port = svc_env_config.port();
-        let host = match self.ctx_manager.env_type()
-        {
-            EnvironmentType::LOCAL => Ok(format!("{}:{}", svc_env_config.local_host().to_string(), port)),
+        let host = match self.ctx_manager.env_type() {
+            EnvironmentType::LOCAL => Ok(format!(
+                "{}:{}",
+                svc_env_config.local_host().to_string(),
+                port
+            )),
 
-            EnvironmentType::CI => Ok(format!("{}:{}", svc_env_config.local_host().to_string(), port)),
+            EnvironmentType::CI => Ok(format!(
+                "{}:{}",
+                svc_env_config.local_host().to_string(),
+                port
+            )),
 
             EnvironmentType::CLUSTER => {
                 let host = match self

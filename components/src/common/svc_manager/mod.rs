@@ -1,8 +1,8 @@
 use common::errors::InitError;
 use common::prelude::{MainConfig, ServiceConfig, ServiceID};
 
-use crate::env_manager::SvcEnvManager;
 use crate::prelude::CfgManager;
+use crate::prelude::SvcEnvManager;
 
 const ONLINE: &bool = &true;
 const OFFLINE: &bool = &false;
