@@ -81,6 +81,29 @@ impl<'l> ServiceConfig<'l> {
 
         Ok(json)
     }
+
+    pub fn to_memgraph(&self) -> String {
+        // "{id: 1, name:'Memgraph', description: 'Fastest graph DB in the world!', createdAt: Date()})",
+
+        let s = format!("{{id: {}, name: '{}', version: {}, online: {}, description: '{}', \
+        health_check_uri: '{}', base_uri: '{}', dependencies: {}, exposure: '{}', endpoint: {}}}",
+                        self.id.to_uint(), self.name, self.version, self.online, self.description,
+                        self.health_check_uri, self.base_uri, format_dependencies(&self.dependencies),
+                        self.exposure, self.endpoint.to_memgraph());
+
+        s
+    }
+}
+
+fn format_dependencies(dependencies: &Vec<ServiceID>) -> String {
+    let mut s = String::new();
+    s.push_str("[");
+    for dependency in dependencies {
+        let value = dependency.to_string();
+        s.push_str(&format!("'{}'", value));
+    }
+    s.push_str("]");
+    s
 }
 
 impl<'l> ServiceConfig<'l> {

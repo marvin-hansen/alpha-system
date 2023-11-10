@@ -50,6 +50,15 @@ impl<'l> Endpoint<'l> {
 }
 
 impl<'l> Endpoint<'l> {
+    pub fn to_memgraph(&self) -> String {
+        format!("{{name: '{}', version: {}, description: '{}', uri: '{}', port: {}, protocol: '{}', encoding: '{}'}}",
+                self.name, self.version, self.description, self.uri, self.port,
+                self.protocol, self.encoding)
+    }
+}
+
+
+impl<'l> Endpoint<'l> {
     pub fn name(&self) -> &'l str {
         self.name
     }
