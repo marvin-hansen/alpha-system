@@ -1,7 +1,10 @@
 use std::fmt::{Display, Formatter};
 
+use serde::{Deserialize, Serialize};
+
 use crate::prelude::{Endpoint, MainConfig, ServiceID, ServiceType};
 
+#[derive(Serialize, Deserialize)]
 #[derive(Debug, Default, Clone, Eq, PartialEq)]
 pub struct ServiceConfig<'l> {
     /// Unique Service ID.
@@ -67,6 +70,16 @@ impl<'l> ServiceConfig<'l> {
             exposure,
             endpoint,
         }
+    }
+}
+
+impl<'l> ServiceConfig<'l> {
+    pub fn to_json(&self) -> Result<String, serde_json::Error> {
+        // https://github.com/serde-rs/json
+        let json = serde_json::to_string(&self)
+            .expect("Failed to serialize ServiceConfig to JSON");
+
+        Ok(json)
     }
 }
 

@@ -1,5 +1,7 @@
 use std::fmt::{Display, Formatter};
 
+use serde::{Deserialize, Serialize};
+
 /// A ProtocolType represents the protocol type used for communication.
 ///
 /// # Variants
@@ -7,6 +9,7 @@ use std::fmt::{Display, Formatter};
 /// * `GRPC`: The gRPC protocol.
 /// * `HTTP`: The HTTP protocol.
 /// * `UDP`: The UDP protocol.
+#[derive(Serialize, Deserialize)]
 #[derive(Debug, Copy, Clone, Default, Eq, PartialEq)]
 pub enum ProtocolType {
     /// The gRPC protocol.

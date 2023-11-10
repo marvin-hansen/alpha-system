@@ -1,5 +1,7 @@
 use std::fmt::{Display, Formatter};
 
+use serde::{Deserialize, Serialize};
+
 use crate::prelude::{Encoding, HostEndpoint, ProtocolType};
 
 /// An Endpoint represents a single endpoint of a service.
@@ -13,6 +15,7 @@ use crate::prelude::{Encoding, HostEndpoint, ProtocolType};
 /// * `port`: The port number of the endpoint.
 /// * `protocol`: The protocol type of the endpoint.
 /// * `encoding`: The encoding type of the endpoint.
+#[derive(Serialize, Deserialize)]
 #[derive(Debug, Default, Clone, Copy, Eq, PartialEq)]
 pub struct Endpoint<'l> {
     name: &'l str,
