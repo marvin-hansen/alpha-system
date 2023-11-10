@@ -1,20 +1,49 @@
+use rsmgclient::{Connection, ConnectionStatus, ConnectParams};
+
 use common::prelude::{MemGraphError, ServiceConfig, ServiceID};
 
-// Implement with
+// Implemented with
 // memgraph client: https://memgraph.com/docs/client-libraries/rust
 // cypher-dto https://crates.io/crates/cypher-dto/0.1.0
 
-#[derive(Debug, Default, Clone, Copy, Eq, PartialEq)]
-pub struct SmdbDataManager {}
+pub struct SmdbDataManager {
+    connection: Connection,
+}
 
 impl SmdbDataManager {
-    /// Creates a new instance of the SMDb data manager.
-    pub fn new() -> Self {
-        Self {}
+    /// Creates a new SmdbDataManager and connects to the MEMGRAPH database
+    pub fn new(connect_params: &ConnectParams) -> Self {
+
+        // Connect to Memgraph
+        let connection = Connection::connect(connect_params)
+            .expect("[SmdbDataManager]: Failed to connect to Memgraph");
+
+        // Check if connection is established.
+        let status = connection.status();
+
+        // Check if connection is ready.
+        if status != ConnectionStatus::Ready {
+            panic!("[SmdbDataManager]: Connection to Memgraph failed with status: {:?}", status);
+        }
+
+        Self {
+            connection
+        }
     }
 }
 
 impl SmdbDataManager {
+    /// Returns the current connection status.
+    pub fn get_connection_status(&self) -> Result<ConnectionStatus, MemGraphError> {
+        Ok(self.connection.status())
+    }
+
+    /// Closes the connection 
+    pub fn close_connection(&mut self) -> Result<(), MemGraphError> {
+        self.connection.close();
+        Ok(())
+    }
+
     /// Gets all services from the data store.
     pub fn get_all_services(&self) -> Result<Vec<ServiceConfig>, MemGraphError> {
         let services: Vec<ServiceConfig> = Vec::new();
