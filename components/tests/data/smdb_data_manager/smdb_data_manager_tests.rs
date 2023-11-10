@@ -30,7 +30,7 @@ fn test_get_all_services() {
 #[test]
 fn test_get_service() {
     let connect_params = get_memgraph_config().get_connect_params();
-    let mut data_manager = SmdbDataManager::new(&connect_params);
+    let data_manager = SmdbDataManager::new(&connect_params);
 
     let result = data_manager.get_service(&ServiceID::default());
     assert!(result.is_ok());

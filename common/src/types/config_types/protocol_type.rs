@@ -9,8 +9,7 @@ use serde::{Deserialize, Serialize};
 /// * `GRPC`: The gRPC protocol.
 /// * `HTTP`: The HTTP protocol.
 /// * `UDP`: The UDP protocol.
-#[derive(Serialize, Deserialize)]
-#[derive(Debug, Copy, Clone, Default, Eq, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, Copy, Clone, Default, Eq, PartialEq)]
 pub enum ProtocolType {
     /// The gRPC protocol.
     #[default]

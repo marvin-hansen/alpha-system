@@ -8,24 +8,12 @@ use serde::{Deserialize, Serialize};
 ///
 /// * `Protobuf`: The Protobuf encoding format.
 /// * `SBE`: The SBE (Simple Binary Encoding) format.
-#[derive(Serialize, Deserialize)]
-#[derive(Debug, Copy, Clone, Default, Eq, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, Copy, Clone, Default, Eq, PartialEq)]
 pub enum Encoding {
     Binary,
     #[default]
     Protobuf,
     SBE,
-}
-
-impl Encoding {
-    pub fn from_str(s: &str) -> Option<Encoding> {
-        match s {
-            "BINARY" => Some(Encoding::Binary),
-            "PROTOBUF" => Some(Encoding::Protobuf),
-            "SBE" => Some(Encoding::SBE),
-            _ => None,
-        }
-    }
 }
 
 impl Display for Encoding {

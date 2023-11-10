@@ -8,24 +8,13 @@ use serde::{Deserialize, Serialize};
 ///
 /// * `ENDPOINT`: An endpoint service type.
 /// * `CHANNEL`: The channel service type.
-#[derive(Serialize, Deserialize)]
-#[derive(Debug, Default, Copy, Clone, Eq, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, Default, Copy, Clone, Eq, PartialEq)]
 pub enum ServiceType {
     /// The endpoint service type.
     #[default]
     ENDPOINT,
     /// The channel service type.
     CHANNEL,
-}
-
-impl ServiceType {
-    pub fn from_str(s: &str) -> Option<ServiceType> {
-        match s {
-            "ENDPOINT" => Some(ServiceType::ENDPOINT),
-            "CHANNEL" => Some(ServiceType::CHANNEL),
-            _ => None,
-        }
-    }
 }
 
 impl Display for ServiceType {
