@@ -1,46 +1,19 @@
-use rsmgclient::{Connection, ConnectionStatus, ConnectParams};
+use rsmgclient::ConnectParams;
 
 use common::prelude::{MemGraphError, ServiceConfig, ServiceID};
 
-// Implemented with
-// memgraph client: https://memgraph.com/docs/client-libraries/rust
-// cypher-dto https://crates.io/crates/cypher-dto/0.1.0
-
-pub struct SmdbDataManager {
-    connection: Connection,
-}
+pub struct SmdbDataManager {}
 
 impl SmdbDataManager {
     /// Creates a new SmdbDataManager and connects to the MEMGRAPH database
-    pub fn new(connect_params: &ConnectParams) -> Self {
-
-        // Connect to Memgraph
-        let connection = Connection::connect(connect_params)
-            .expect("[SmdbDataManager]: Failed to connect to Memgraph");
-
-        // Check if connection is established.
-        let status = connection.status();
-
-        // Check if connection is ready.
-        if status != ConnectionStatus::Ready {
-            panic!("[SmdbDataManager]: Connection to Memgraph failed with status: {:?}", status);
-        }
-
-        Self {
-            connection
-        }
+    pub fn new(_connect_params: &ConnectParams) -> Self {
+        Self {}
     }
 }
 
 impl SmdbDataManager {
-    /// Returns the current connection status.
-    pub fn get_connection_status(&self) -> Result<ConnectionStatus, MemGraphError> {
-        Ok(self.connection.status())
-    }
-
-    /// Closes the connection 
+    /// Closes the connection
     pub fn close_connection(&mut self) -> Result<(), MemGraphError> {
-        self.connection.close();
         Ok(())
     }
 
@@ -91,13 +64,8 @@ impl SmdbDataManager {
     }
 
     /// Creates a service in the data store.
-    pub fn create_service(&mut self, service_config: &ServiceConfig) -> Result<(), MemGraphError> {
-        let query = self.build_create_service_query(service_config);
-        self.connection.execute_without_results(&query).unwrap();
-        match self.connection.commit() {
-            Ok(_) => Ok(()),
-            Err(e) => Err(MemGraphError(format!("Error: {}", e)))
-        }
+    pub fn create_service(&mut self, _service_config: &ServiceConfig) -> Result<(), MemGraphError> {
+        Ok(())
     }
 
     /// Checks if a service exists in the data store.
@@ -123,11 +91,5 @@ impl SmdbDataManager {
     /// Deregisters a service with the data manager.
     pub fn deregister_service(&self, _service: &ServiceID) -> Result<(), MemGraphError> {
         Ok(())
-    }
-}
-
-impl SmdbDataManager {
-    fn build_create_service_query(&self, service_config: &ServiceConfig) -> String {
-        format!("CREATE (n:Service {});", service_config.to_memgraph())
     }
 }

@@ -15,8 +15,7 @@ use crate::prelude::{Encoding, HostEndpoint, ProtocolType};
 /// * `port`: The port number of the endpoint.
 /// * `protocol`: The protocol type of the endpoint.
 /// * `encoding`: The encoding type of the endpoint.
-#[derive(Serialize, Deserialize)]
-#[derive(Debug, Default, Clone, Copy, Eq, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, Default, Clone, Copy, Eq, PartialEq)]
 pub struct Endpoint<'l> {
     name: &'l str,
     version: u8,
@@ -56,7 +55,6 @@ impl<'l> Endpoint<'l> {
                 self.protocol, self.encoding)
     }
 }
-
 
 impl<'l> Endpoint<'l> {
     pub fn name(&self) -> &'l str {

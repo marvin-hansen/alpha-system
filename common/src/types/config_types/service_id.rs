@@ -9,8 +9,7 @@ use serde::{Deserialize, Serialize};
 /// * `MEMGRAPH`: The Memgraph service.
 /// * `SMDB`: The SMDb service.
 /// * `CMDB`: The CMDB service.
-#[derive(Serialize, Deserialize)]
-#[derive(Debug, Default, Copy, Clone, Eq, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, Default, Copy, Clone, Eq, PartialEq)]
 pub enum ServiceID {
     #[default]
     Default,
@@ -20,26 +19,16 @@ pub enum ServiceID {
 }
 
 impl ServiceID {
-    pub fn to_uint(&self) -> u8 {
-        match self {
-            ServiceID::Default => 0,
-            ServiceID::MEMGRAPH => 1,
-            ServiceID::SMDB => 2,
-            ServiceID::CMDB => 3,
-        }
-    }
-
-    pub fn from_uint(n: u8) -> Option<ServiceID> {
+    pub fn from_string(n: &str) -> Option<ServiceID> {
         match n {
-            0 => Some(ServiceID::Default),
-            1 => Some(ServiceID::MEMGRAPH),
-            2 => Some(ServiceID::SMDB),
-            3 => Some(ServiceID::CMDB),
+            "Default" => Some(ServiceID::Default),
+            "MEMGRAPH" => Some(ServiceID::MEMGRAPH),
+            "SMDB" => Some(ServiceID::SMDB),
+            "CMDB" => Some(ServiceID::CMDB),
             _ => None,
         }
     }
 }
-
 
 impl Display for ServiceID {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {

@@ -76,37 +76,6 @@ fn test_to_json() {
 }
 
 #[test]
-fn to_memgraph() {
-    let id = ServiceID::SMDB;
-    let name = "name";
-    let version = 1;
-    let online = true;
-    let description = "description";
-    let health_check_uri = "health_check_uri";
-    let base_uri = "base_uri";
-    let dependencies = vec![ServiceID::MEMGRAPH];
-    let exposure = ServiceType::default();
-    let endpoint = Endpoint::default();
-
-    let service_config = ServiceConfig::new(
-        id,
-        name,
-        version,
-        online,
-        description,
-        health_check_uri,
-        base_uri,
-        dependencies,
-        exposure,
-        endpoint,
-    );
-
-    let actual = service_config.to_memgraph();
-    let expected = "{id: 2, name: 'name', version: 1, online: true, description: 'description', health_check_uri: 'health_check_uri', base_uri: 'base_uri', dependencies: ['MEMGRAPH'], exposure: 'ENDPOINT', endpoint: {name: '', version: 0, description: '', uri: '', port: 0, protocol: 'GRPC', encoding: 'Protobuf'}}";
-    assert_eq!(expected, actual)
-}
-
-#[test]
 fn test_get_main_config() {
     let id = ServiceID::SMDB;
     let name = "SMDB";

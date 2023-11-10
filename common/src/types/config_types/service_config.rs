@@ -4,8 +4,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::prelude::{Endpoint, MainConfig, ServiceID, ServiceType};
 
-#[derive(Serialize, Deserialize)]
-#[derive(Debug, Default, Clone, Eq, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, Default, Clone, Eq, PartialEq)]
 pub struct ServiceConfig<'l> {
     /// Unique Service ID.
     id: ServiceID,
@@ -76,34 +75,10 @@ impl<'l> ServiceConfig<'l> {
 impl<'l> ServiceConfig<'l> {
     pub fn to_json(&self) -> Result<String, serde_json::Error> {
         // https://github.com/serde-rs/json
-        let json = serde_json::to_string(&self)
-            .expect("Failed to serialize ServiceConfig to JSON");
+        let json = serde_json::to_string(&self).expect("Failed to serialize ServiceConfig to JSON");
 
         Ok(json)
     }
-
-    pub fn to_memgraph(&self) -> String {
-        // "{id: 1, name:'Memgraph', description: 'Fastest graph DB in the world!', createdAt: Date()})",
-
-        let s = format!("{{id: {}, name: '{}', version: {}, online: {}, description: '{}', \
-        health_check_uri: '{}', base_uri: '{}', dependencies: {}, exposure: '{}', endpoint: {}}}",
-                        self.id.to_uint(), self.name, self.version, self.online, self.description,
-                        self.health_check_uri, self.base_uri, format_dependencies(&self.dependencies),
-                        self.exposure, self.endpoint.to_memgraph());
-
-        s
-    }
-}
-
-fn format_dependencies(dependencies: &Vec<ServiceID>) -> String {
-    let mut s = String::new();
-    s.push_str("[");
-    for dependency in dependencies {
-        let value = dependency.to_string();
-        s.push_str(&format!("'{}'", value));
-    }
-    s.push_str("]");
-    s
 }
 
 impl<'l> ServiceConfig<'l> {
