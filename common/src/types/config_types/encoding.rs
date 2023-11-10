@@ -1,11 +1,14 @@
 use std::fmt::{Display, Formatter};
 
+use serde::{Deserialize, Serialize};
+
 /// An Enum representing the encoding format used for network communication.
 ///
 /// # Variants
 ///
 /// * `Protobuf`: The Protobuf encoding format.
 /// * `SBE`: The SBE (Simple Binary Encoding) format.
+#[derive(Serialize, Deserialize)]
 #[derive(Debug, Copy, Clone, Default, Eq, PartialEq)]
 pub enum Encoding {
     Binary,

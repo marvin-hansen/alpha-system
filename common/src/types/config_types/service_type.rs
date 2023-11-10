@@ -1,11 +1,14 @@
 use std::fmt::{Display, Formatter};
 
+use serde::{Deserialize, Serialize};
+
 /// A ServiceType represents the type of service.
 ///
 /// # Variants
 ///
 /// * `ENDPOINT`: An endpoint service type.
 /// * `CHANNEL`: The channel service type.
+#[derive(Serialize, Deserialize)]
 #[derive(Debug, Default, Copy, Clone, Eq, PartialEq)]
 pub enum ServiceType {
     /// The endpoint service type.

@@ -1,5 +1,7 @@
 use std::fmt::{Display, Formatter};
 
+use serde::{Deserialize, Serialize};
+
 /// An Enum that represents the unique ID of a service.
 ///
 /// # Variants
@@ -7,6 +9,7 @@ use std::fmt::{Display, Formatter};
 /// * `MEMGRAPH`: The Memgraph service.
 /// * `SMDB`: The SMDb service.
 /// * `CMDB`: The CMDB service.
+#[derive(Serialize, Deserialize)]
 #[derive(Debug, Default, Copy, Clone, Eq, PartialEq)]
 pub enum ServiceID {
     #[default]
