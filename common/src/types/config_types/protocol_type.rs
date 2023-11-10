@@ -21,6 +21,17 @@ pub enum ProtocolType {
     UDP,
 }
 
+impl ProtocolType {
+    pub fn from_string(s: &str) -> Option<ProtocolType> {
+        match s {
+            "GRPC" => Some(ProtocolType::GRPC),
+            "HTTP" => Some(ProtocolType::HTTP),
+            "UDP" => Some(ProtocolType::UDP),
+            _ => None,
+        }
+    }
+}
+
 impl Display for ProtocolType {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {

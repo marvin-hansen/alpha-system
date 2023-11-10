@@ -91,8 +91,13 @@ impl SmdbDataManager {
     }
 
     /// Creates a service in the data store.
-    pub fn create_service(&self, _service_config: &ServiceConfig) -> Result<(), MemGraphError> {
-        Ok(())
+    pub fn create_service(&mut self, service_config: &ServiceConfig) -> Result<(), MemGraphError> {
+        let query = self.build_create_service_query(service_config);
+        self.connection.execute_without_results(&query).unwrap();
+        match self.connection.commit() {
+            Ok(_) => Ok(()),
+            Err(e) => Err(MemGraphError(format!("Error: {}", e)))
+        }
     }
 
     /// Checks if a service exists in the data store.
@@ -118,5 +123,11 @@ impl SmdbDataManager {
     /// Deregisters a service with the data manager.
     pub fn deregister_service(&self, _service: &ServiceID) -> Result<(), MemGraphError> {
         Ok(())
+    }
+}
+
+impl SmdbDataManager {
+    fn build_create_service_query(&self, service_config: &ServiceConfig) -> String {
+        format!("CREATE (n:Service {});", service_config.to_memgraph())
     }
 }

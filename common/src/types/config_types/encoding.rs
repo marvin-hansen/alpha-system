@@ -17,6 +17,17 @@ pub enum Encoding {
     SBE,
 }
 
+impl Encoding {
+    pub fn from_str(s: &str) -> Option<Encoding> {
+        match s {
+            "BINARY" => Some(Encoding::Binary),
+            "PROTOBUF" => Some(Encoding::Protobuf),
+            "SBE" => Some(Encoding::SBE),
+            _ => None,
+        }
+    }
+}
+
 impl Display for Encoding {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {

@@ -18,6 +18,16 @@ pub enum ServiceType {
     CHANNEL,
 }
 
+impl ServiceType {
+    pub fn from_str(s: &str) -> Option<ServiceType> {
+        match s {
+            "ENDPOINT" => Some(ServiceType::ENDPOINT),
+            "CHANNEL" => Some(ServiceType::CHANNEL),
+            _ => None,
+        }
+    }
+}
+
 impl Display for ServiceType {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
