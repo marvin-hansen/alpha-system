@@ -11,6 +11,5 @@ authors.workspace = true
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-rsmgclient = { workspace = true }
-serde_json = "1.0"
-serde = { version = "1.0.192", features = ["derive"] }
+serde_json = { workspace = true }
+serde = { workspace = true }

@@ -1,12 +1,11 @@
-use rsmgclient::ConnectParams;
-
 use common::prelude::{MemGraphError, ServiceConfig, ServiceID};
 
+#[derive(Debug, Default)]
 pub struct SmdbDataManager {}
 
 impl SmdbDataManager {
     /// Creates a new SmdbDataManager and connects to the MEMGRAPH database
-    pub fn new(_connect_params: &ConnectParams) -> Self {
+    pub fn new() -> Self {
         Self {}
     }
 }
