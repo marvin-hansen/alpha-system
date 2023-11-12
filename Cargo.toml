@@ -22,8 +22,6 @@ authors = ["Marvin Hansen <marvin.hansen@gmail.com>"]
 [workspace.dependencies]
 serde_json = "1.0"
 serde = { version = "1.0", features = ["derive"] }
-surrealdb = "1.0"
-
 
 # Optimize all crates
 [profile.release]
