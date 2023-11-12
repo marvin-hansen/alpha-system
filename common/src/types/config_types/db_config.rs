@@ -1,7 +1,5 @@
 use std::fmt::{Debug, Display, Formatter};
 
-use rsmgclient::{ConnectParams, SSLMode};
-
 const CLIENT_NAME: &str = "rsmgclient/2.0.2";
 
 /// MemGraphConfig represents the configuration for connecting to a Memgraph instance.
@@ -16,7 +14,7 @@ const CLIENT_NAME: &str = "rsmgclient/2.0.2";
 /// * `client_name`: The alternate name and version of the client to send to the server. The default
 /// is "MemgraphBolt/0.1".
 #[derive(Debug, Eq, Clone, PartialEq)]
-pub struct MemGraphConfig {
+pub struct DBConfig {
     /// Port number to connect to at the server host. The default port is 7687.
     port: u16,
     /// DNS resolvable name of the host to connect to. Exactly one of `host` and `address` parameters
@@ -30,7 +28,7 @@ pub struct MemGraphConfig {
     client_name: String,
 }
 
-impl MemGraphConfig {
+impl DBConfig {
     /// Creates a new MemGraphConfig for a connection without authentication.
     pub fn new_connection(port: u16, host: Option<String>) -> Self {
         Self {
@@ -64,23 +62,10 @@ impl MemGraphConfig {
             ..Default::default()
         }
     }
-
-    /// Returns the ConnectParams for connecting to Memgraph.
-    pub fn get_connect_params(&self) -> ConnectParams {
-        ConnectParams {
-            host: self.host.clone(),
-            port: self.port,
-            sslmode: SSLMode::Disable,
-            username: self.username.clone(),
-            password: self.password.clone(),
-            client_name: self.client_name.clone(),
-            ..Default::default()
-        }
-    }
 }
 
 // getters
-impl MemGraphConfig {
+impl DBConfig {
     /// Returns the port number to connect to at the server host.
     pub fn port(&self) -> u16 {
         self.port
@@ -107,7 +92,7 @@ impl MemGraphConfig {
     }
 }
 
-impl Default for MemGraphConfig {
+impl Default for DBConfig {
     /// Returns the default MemGraphConfig.
     fn default() -> Self {
         Self {
@@ -120,11 +105,11 @@ impl Default for MemGraphConfig {
     }
 }
 
-impl Display for MemGraphConfig {
+impl Display for DBConfig {
     /// Formats the MemGraphConfig as a string.
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         write!(f,
-               "MemGraphConfig {{ port: {}, host: {:?}, username: {:?}, password: {:?}, client_name: {:?} }}",
+               "DBConfig {{ port: {}, host: {:?}, username: {:?}, password: {:?}, client_name: {:?} }}",
                self.port, self.host, self.username, self.password, self.client_name
         )
     }
