@@ -32,7 +32,7 @@ impl<'l> CfgManager<'l> {
 }
 
 impl<'l> CfgManager<'l> {
-    fn service_config(&self, svc: ServiceID) -> ServiceConfig<'l> {
+    fn service_config(&self, svc: ServiceID) -> ServiceConfig {
         match svc {
             ServiceID::MEMGRAPH => memgraph_service_config(),
             ServiceID::SMDB => smdb_service_config(),

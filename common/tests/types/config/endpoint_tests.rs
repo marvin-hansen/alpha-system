@@ -2,10 +2,10 @@ use common::prelude::{Encoding, Endpoint, ProtocolType};
 
 #[test]
 fn test_new() {
-    let name = "name";
+    let name = "name".to_string();
     let version = 1;
-    let description = "description";
-    let uri = "/";
+    let description = "description".to_string();
+    let uri = "/".to_string();
     let port = 8080;
     let protocol = ProtocolType::GRPC;
     let encoding = Encoding::Protobuf;
@@ -36,10 +36,10 @@ fn test_default() {
 
 #[test]
 fn test_display() {
-    let name = "name";
+    let name = "name".to_string();
     let version = 1;
-    let description = "description";
-    let uri = "/";
+    let description = "description".to_string();
+    let uri = "/".to_string();
     let port = 8080;
     let protocol = ProtocolType::GRPC;
     let encoding = Encoding::Protobuf;

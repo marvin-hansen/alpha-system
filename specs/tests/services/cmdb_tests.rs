@@ -16,7 +16,7 @@ fn test_smdb_main_config() {
 fn test_cmdb_service_config() {
     let service_config = cmdb_service_config();
 
-    assert_eq!(service_config.id(), &ServiceID::CMDB);
+    assert_eq!(service_config.svc_id(), &ServiceID::CMDB);
     assert_eq!(service_config.name(), "cmdbv1");
     assert_eq!(service_config.version(), 1);
     assert!(!service_config.online());

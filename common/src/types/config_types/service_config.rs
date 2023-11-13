@@ -1,34 +1,37 @@
 use std::fmt::{Display, Formatter};
 
 use serde::{Deserialize, Serialize};
+use surrealdb::sql::Thing;
 
 use crate::prelude::{Endpoint, MainConfig, ServiceID, ServiceType};
 
 #[derive(Serialize, Deserialize, Debug, Default, Clone, Eq, PartialEq)]
-pub struct ServiceConfig<'l> {
+pub struct ServiceConfig {
+    // DB ID
+    id: Option<Thing>,
     /// Unique Service ID.
-    id: ServiceID,
+    svc_id: ServiceID,
     /// Service name.
-    name: &'l str,
+    name: String,
     /// Service version.
     version: u8,
     /// Whether the service is online.
     online: bool,
     /// Service description.
-    description: &'l str,
+    description: String,
     /// Health check URI.
-    health_check_uri: &'l str,
+    health_check_uri: String,
     /// Base URI.
-    base_uri: &'l str,
+    base_uri: String,
     /// Service dependencies.
     dependencies: Vec<ServiceID>,
     /// Service exposure type.
     exposure: ServiceType,
     /// Service endpoint.
-    endpoint: Endpoint<'l>,
+    endpoint: Endpoint,
 }
 
-impl<'l> ServiceConfig<'l> {
+impl ServiceConfig {
     /// Creates a new `ServiceConfig` instance.
     ///
     /// # Arguments
@@ -46,19 +49,20 @@ impl<'l> ServiceConfig<'l> {
     // https://rust-lang.github.io/rust-clippy/master/index.html#/too_many_arguments
     #[allow(clippy::too_many_arguments)]
     pub fn new(
-        id: ServiceID,
-        name: &'l str,
+        svc_id: ServiceID,
+        name: String,
         version: u8,
         online: bool,
-        description: &'l str,
-        health_check_uri: &'l str,
-        base_uri: &'l str,
+        description: String,
+        health_check_uri: String,
+        base_uri: String,
         dependencies: Vec<ServiceID>,
         exposure: ServiceType,
-        endpoint: Endpoint<'l>,
+        endpoint: Endpoint,
     ) -> Self {
         Self {
-            id,
+            id: None,
+            svc_id,
             name,
             version,
             online,
@@ -72,7 +76,7 @@ impl<'l> ServiceConfig<'l> {
     }
 }
 
-impl<'l> ServiceConfig<'l> {
+impl ServiceConfig {
     pub fn to_json(&self) -> Result<String, serde_json::Error> {
         // https://github.com/serde-rs/json
         let json = serde_json::to_string(&self).expect("Failed to serialize ServiceConfig to JSON");
@@ -81,11 +85,11 @@ impl<'l> ServiceConfig<'l> {
     }
 }
 
-impl<'l> ServiceConfig<'l> {
+impl ServiceConfig {
     /// Returns the main configuration for the service.
     pub fn main_config(&self) -> MainConfig {
         MainConfig::new(
-            *self.id(),
+            *self.svc_id(),
             String::from(self.name()),
             self.endpoint().port(),
             self.endpoint().protocol(),
@@ -93,14 +97,14 @@ impl<'l> ServiceConfig<'l> {
     }
 }
 
-impl<'l> ServiceConfig<'l> {
+impl ServiceConfig {
     /// Returns the service ID.
-    pub fn id(&self) -> &ServiceID {
-        &self.id
+    pub fn svc_id(&self) -> &ServiceID {
+        &self.svc_id
     }
     /// Returns the service name.
     pub fn name(&self) -> &str {
-        self.name
+        &self.name
     }
     /// Returns the service version.
     pub fn version(&self) -> u8 {
@@ -112,15 +116,15 @@ impl<'l> ServiceConfig<'l> {
     }
     /// Returns the service description.
     pub fn description(&self) -> &str {
-        self.description
+        &self.description
     }
     /// Returns the health check URI.
     pub fn health_check_uri(&self) -> &str {
-        self.health_check_uri
+        &self.health_check_uri
     }
     /// Returns the base URI.
     pub fn base_uri(&self) -> &str {
-        self.base_uri
+        &self.base_uri
     }
     /// Returns the service dependencies.
     pub fn dependencies(&self) -> &Vec<ServiceID> {
@@ -136,11 +140,11 @@ impl<'l> ServiceConfig<'l> {
     }
 }
 
-impl<'l> Display for ServiceConfig<'l> {
+impl Display for ServiceConfig {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         write!(f,
-               "ServiceConfig {{ id: {}, name: {}, version: {}, online: {}, description: {}, health_check_uri: {}, base_uri: {}, dependencies: {:?}, exposure: {}, endpoint: {} }}",
-               self.id, self.name, self.version, self.online, self.description, self.health_check_uri, self.base_uri, self.dependencies, self.exposure, self.endpoint
+               "ServiceConfig {{ svc_id: {}, name: {}, version: {}, online: {}, description: {}, health_check_uri: {}, base_uri: {}, dependencies: {:?}, exposure: {}, endpoint: {} }}",
+               self.svc_id, self.name, self.version, self.online, self.description, self.health_check_uri, self.base_uri, self.dependencies, self.exposure, self.endpoint
         )
     }
 }

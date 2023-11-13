@@ -5,4 +5,6 @@ ignore = [
     # is to avoid using the default oldtime feature dependency of the chrono crate
     # by disabling its default-features and manually specifying the required features instead.
     # https://rustsec.org/advisories/RUSTSEC-2020-0071.html
+    "RUSTSEC-2023-0065",
+    # DOS in tungstenite. Reported. Awaiting clarification on mitigation.
 ]
