@@ -15,7 +15,7 @@ fn test_smdb_main_config() {
 fn test_smdb_service_config() {
     let service_config = smdb_service_config();
 
-    assert_eq!(service_config.id(), &ServiceID::SMDB);
+    assert_eq!(service_config.svc_id(), &ServiceID::SMDB);
     assert_eq!(service_config.name(), "smdbv1");
     assert_eq!(service_config.version(), 1);
     assert!(!service_config.online());

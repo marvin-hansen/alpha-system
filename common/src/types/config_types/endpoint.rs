@@ -15,23 +15,23 @@ use crate::prelude::{Encoding, HostEndpoint, ProtocolType};
 /// * `port`: The port number of the endpoint.
 /// * `protocol`: The protocol type of the endpoint.
 /// * `encoding`: The encoding type of the endpoint.
-#[derive(Serialize, Deserialize, Debug, Default, Clone, Copy, Eq, PartialEq)]
-pub struct Endpoint<'l> {
-    name: &'l str,
+#[derive(Serialize, Deserialize, Debug, Default, Clone, Eq, PartialEq)]
+pub struct Endpoint {
+    name: String,
     version: u8,
-    description: &'l str,
-    uri: &'l str,
+    description: String,
+    uri: String,
     port: u16,
     protocol: ProtocolType,
     encoding: Encoding,
 }
 
-impl<'l> Endpoint<'l> {
+impl Endpoint {
     pub fn new(
-        name: &'l str,
+        name: String,
         version: u8,
-        description: &'l str,
-        uri: &'l str,
+        description: String,
+        uri: String,
         port: u16,
         protocol: ProtocolType,
         encoding: Encoding,
@@ -48,7 +48,7 @@ impl<'l> Endpoint<'l> {
     }
 }
 
-impl<'l> Endpoint<'l> {
+impl Endpoint {
     pub fn to_memgraph(&self) -> String {
         format!("{{name: '{}', version: {}, description: '{}', uri: '{}', port: {}, protocol: '{}', encoding: '{}'}}",
                 self.name, self.version, self.description, self.uri, self.port,
@@ -56,18 +56,18 @@ impl<'l> Endpoint<'l> {
     }
 }
 
-impl<'l> Endpoint<'l> {
-    pub fn name(&self) -> &'l str {
-        self.name
+impl Endpoint {
+    pub fn name(&self) -> &str {
+        &self.name
     }
     pub fn version(&self) -> u8 {
         self.version
     }
-    pub fn description(&self) -> &'l str {
-        self.description
+    pub fn description(&self) -> &str {
+        &self.description
     }
-    pub fn uri(&self) -> &'l str {
-        self.uri
+    pub fn uri(&self) -> &str {
+        &self.uri
     }
     pub fn port(&self) -> u16 {
         self.port
@@ -80,13 +80,13 @@ impl<'l> Endpoint<'l> {
     }
 }
 
-impl<'l> Endpoint<'l> {
+impl Endpoint {
     pub fn host_endpoint(&self) -> HostEndpoint {
         HostEndpoint::new(self.uri(), self.port())
     }
 }
 
-impl<'l> Display for Endpoint<'l> {
+impl Display for Endpoint {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         write!(f,
                "name: {},  version: {},  port: {},  description: {},  uri: {},  protocol: {},  encoding: {}",

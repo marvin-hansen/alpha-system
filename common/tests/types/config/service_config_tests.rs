@@ -3,12 +3,12 @@ use common::prelude::{Endpoint, ProtocolType, ServiceConfig, ServiceID, ServiceT
 #[test]
 fn test_new() {
     let id = ServiceID::SMDB;
-    let name = "name";
+    let name = "name".to_string();
     let version = 1;
     let online = true;
-    let description = "description";
-    let health_check_uri = "health_check_uri";
-    let base_uri = "base_uri";
+    let description = "description".to_string();
+    let health_check_uri = "health_check_uri".to_string();
+    let base_uri = "base_uri".to_string();
     let dependencies = vec![ServiceID::MEMGRAPH];
     let exposure = ServiceType::default();
     let endpoint = Endpoint::default();
@@ -26,7 +26,7 @@ fn test_new() {
         endpoint,
     );
 
-    assert_eq!(service_config.id(), &ServiceID::SMDB);
+    assert_eq!(service_config.svc_id(), &ServiceID::SMDB);
     assert_eq!(service_config.name(), String::from("name"));
     assert_eq!(service_config.version(), 1);
     assert!(service_config.online());
@@ -47,12 +47,12 @@ fn test_new() {
 #[test]
 fn test_to_json() {
     let id = ServiceID::SMDB;
-    let name = "name";
+    let name = "name".to_string();
     let version = 1;
     let online = true;
-    let description = "description";
-    let health_check_uri = "health_check_uri";
-    let base_uri = "base_uri";
+    let description = "description".to_string();
+    let health_check_uri = "health_check_uri".to_string();
+    let base_uri = "base_uri".to_string();
     let dependencies = vec![ServiceID::MEMGRAPH];
     let exposure = ServiceType::default();
     let endpoint = Endpoint::default();
@@ -71,19 +71,19 @@ fn test_to_json() {
     );
 
     let actual = service_config.to_json().unwrap();
-    let expected = "{\"id\":\"SMDB\",\"name\":\"name\",\"version\":1,\"online\":true,\"description\":\"description\",\"health_check_uri\":\"health_check_uri\",\"base_uri\":\"base_uri\",\"dependencies\":[\"MEMGRAPH\"],\"exposure\":\"ENDPOINT\",\"endpoint\":{\"name\":\"\",\"version\":0,\"description\":\"\",\"uri\":\"\",\"port\":0,\"protocol\":\"GRPC\",\"encoding\":\"Protobuf\"}}";
+    let expected = "{\"id\":null,\"svc_id\":\"SMDB\",\"name\":\"name\",\"version\":1,\"online\":true,\"description\":\"description\",\"health_check_uri\":\"health_check_uri\",\"base_uri\":\"base_uri\",\"dependencies\":[\"MEMGRAPH\"],\"exposure\":\"ENDPOINT\",\"endpoint\":{\"name\":\"\",\"version\":0,\"description\":\"\",\"uri\":\"\",\"port\":0,\"protocol\":\"GRPC\",\"encoding\":\"Protobuf\"}}";
     assert_eq!(expected, actual)
 }
 
 #[test]
 fn test_get_main_config() {
     let id = ServiceID::SMDB;
-    let name = "SMDB";
+    let name = "SMDB".to_string();
     let version = 1;
     let online = true;
-    let description = "description";
-    let health_check_uri = "health_check_uri";
-    let base_uri = "base_uri";
+    let description = "description".to_string();
+    let health_check_uri = "health_check_uri".to_string();
+    let base_uri = "base_uri".to_string();
     let dependencies = vec![ServiceID::MEMGRAPH];
     let exposure = ServiceType::default();
     let endpoint = Endpoint::default();
@@ -113,7 +113,7 @@ fn test_get_main_config() {
 fn test_default() {
     let service_config = ServiceConfig::default();
 
-    assert_eq!(service_config.id(), &ServiceID::Default);
+    assert_eq!(service_config.svc_id(), &ServiceID::Default);
     assert_eq!(service_config.name(), &String::from(""));
     assert_eq!(service_config.version(), 0);
     assert!(!service_config.online());
@@ -128,12 +128,12 @@ fn test_default() {
 #[test]
 fn test_display() {
     let id = ServiceID::SMDB;
-    let name = "SMDB";
+    let name = "SMDB".to_string();
     let version = 1;
     let online = true;
-    let description = "description";
-    let health_check_uri = "health_check_uri";
-    let base_uri = "base_uri";
+    let description = "description".to_string();
+    let health_check_uri = "health_check_uri".to_string();
+    let base_uri = "base_uri".to_string();
     let dependencies = vec![ServiceID::MEMGRAPH];
     let exposure = ServiceType::default();
     let endpoint = Endpoint::default();
@@ -151,7 +151,7 @@ fn test_display() {
         endpoint,
     );
 
-    let expected = "ServiceConfig { id: SMDB, name: SMDB, version: 1, online: true, description: description, health_check_uri: health_check_uri, base_uri: base_uri, dependencies: [MEMGRAPH], exposure: ENDPOINT, endpoint: name: ,  version: 0,  port: 0,  description: ,  uri: ,  protocol: GRPC,  encoding: Protobuf }";
+    let expected = "ServiceConfig { svc_id: SMDB, name: SMDB, version: 1, online: true, description: description, health_check_uri: health_check_uri, base_uri: base_uri, dependencies: [MEMGRAPH], exposure: ENDPOINT, endpoint: name: ,  version: 0,  port: 0,  description: ,  uri: ,  protocol: GRPC,  encoding: Protobuf }".to_string();
     let actual = service_config.to_string();
     assert_eq!(actual, expected);
 }

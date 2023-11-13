@@ -1,19 +1,19 @@
 use common::prelude::{Encoding, Endpoint, ProtocolType, ServiceConfig, ServiceID, ServiceType};
 
-pub fn smdb_service_config<'l>() -> ServiceConfig<'l> {
-    let id = ServiceID::SMDB;
-    let name = "smdbv1";
+pub fn smdb_service_config() -> ServiceConfig {
+    let svc_id = ServiceID::SMDB;
+    let name = "smdbv1".to_string();
     let version = 1;
     let online = false;
-    let description = "SMDB Service Management Database";
-    let health_check_uri = "smdb-service.default.svc.cluster.local:5050/health";
-    let base_uri = "smdb-service.default.svc.cluster.local";
+    let description = "SMDB Service Management Database".to_string();
+    let health_check_uri = "smdb-service.default.svc.cluster.local:5050/health".to_string();
+    let base_uri = "smdb-service.default.svc.cluster.local".to_string();
     let dependencies = vec![ServiceID::MEMGRAPH];
     let exposure = ServiceType::ENDPOINT;
     let endpoint = get_endpoint();
 
     ServiceConfig::new(
-        id,
+        svc_id,
         name,
         version,
         online,
@@ -26,11 +26,12 @@ pub fn smdb_service_config<'l>() -> ServiceConfig<'l> {
     )
 }
 
-fn get_endpoint<'l>() -> Endpoint<'l> {
-    let endpoint_name = "service-registry";
+fn get_endpoint() -> Endpoint {
+    let endpoint_name = "service-registry".to_string();
     let endpoint_version = 1;
-    let endpoint_description = "Access to the SMDB service registry via gRPC on baseUri:5050";
-    let endpoint_uri = "/";
+    let endpoint_description =
+        "Access to the SMDB service registry via gRPC on baseUri:5050".to_string();
+    let endpoint_uri = "/".to_string();
     let endpoint_port = 5050;
     let endpoint_protocol = ProtocolType::GRPC;
     let endpoint_encoding = Encoding::Protobuf;

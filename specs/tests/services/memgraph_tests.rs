@@ -16,7 +16,7 @@ fn test_memgraph_main_config() {
 fn test_memgraph_service_config() {
     let service_config = memgraph_service_config();
 
-    assert_eq!(service_config.id(), &ServiceID::MEMGRAPH);
+    assert_eq!(service_config.svc_id(), &ServiceID::MEMGRAPH);
     assert_eq!(service_config.name(), "memgraphv1");
     assert_eq!(service_config.version(), 1);
     assert!(!service_config.online());
