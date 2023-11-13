@@ -161,7 +161,7 @@ impl<'l> SvcEnvManager<'l> {
             }
             EnvironmentType::UnknownEnv => Err(InitError("Unknown Environment".to_string())),
         }
-        .expect("Failed to get host");
+            .expect("Failed to get host");
 
         Ok(host.to_string())
     }
