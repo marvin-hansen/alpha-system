@@ -14,7 +14,6 @@ async fn main() -> anyhow::Result<()> {
     // config and any Transport as input.
     // let client = WorldClient::new(client::Config::default(), transport.await?).spawn();
 
-
     // Let the background span processor finish.
     // sleep(Duration::from_micros(10)).await;
 

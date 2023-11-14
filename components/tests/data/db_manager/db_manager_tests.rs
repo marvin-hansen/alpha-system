@@ -14,7 +14,6 @@ async fn get_dbm() -> Result<DBManager, Error> {
     Ok(dbm)
 }
 
-
 #[tokio::test]
 async fn test_create_service() {
     let dbm = get_dbm().await.unwrap();

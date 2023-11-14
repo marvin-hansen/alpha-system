@@ -33,8 +33,14 @@ impl DBGatewayServer {
 #[tarpc::server]
 impl DBGateway for DBGatewayServer {
     async fn create_service(self, _: Context, data: ServiceConfig) -> bool {
-        let created = self.dbm.create_service(data).await.unwrap();
-        created
+        let created: Result<bool, Error> = self.dbm.create_service(data).await;
+        match created {
+            Ok(created) => created,
+            Err(e) => {
+                println!("Error: {:?}", e);
+                false
+            }
+        }
     }
 
     async fn read_all_services(self, _: Context) -> Option<Vec<ServiceConfig>> {
@@ -48,10 +54,7 @@ impl DBGateway for DBGatewayServer {
     async fn read_record_by_id(self, _: Context, id: ServiceID) -> Option<ServiceConfig> {
         let record: Result<Option<ServiceConfig>, Error> = self.dbm.read_record_by_id(&id).await;
         match record {
-            Ok(res) => match res {
-                None => None,
-                Some(record) => Some(record),
-            }
+            Ok(res) => res,
             Err(_) => None,
         }
     }
@@ -59,10 +62,7 @@ impl DBGateway for DBGatewayServer {
     async fn update_service(self, _: Context, data: ServiceConfig) -> Option<ServiceConfig> {
         let updated: Result<Option<ServiceConfig>, Error> = self.dbm.update_service(data).await;
         match updated {
-            Ok(res) => match res {
-                None => None,
-                Some(record) => Some(record),
-            }
+            Ok(res) => res,
             Err(_) => None,
         }
     }
