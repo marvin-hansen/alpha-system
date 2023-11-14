@@ -24,7 +24,6 @@ async fn get_dbm() -> Result<DBManager, Error> {
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
-
     //  add autoconfig to obtain contextual service id, ip and port
 
     // Build a new db manager
@@ -58,4 +57,3 @@ async fn main() -> anyhow::Result<()> {
 
     Ok(())
 }
-

@@ -14,9 +14,7 @@ pub struct DBManager {
 impl DBManager {
     pub fn new(db: Surreal<local::Db>) -> Self {
         // local DB is either in memory or flat file on disk so it's always connected
-        Self {
-            db,
-        }
+        Self { db }
     }
 }
 
