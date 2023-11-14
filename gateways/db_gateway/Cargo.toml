@@ -10,6 +10,25 @@ authors.workspace = true
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 
+[[bin]]
+name = "client"
+path = "src/client.rs"
+
+[[bin]]
+name = "dbgateway"
+path = "src/dbgateway.rs"
+
+
+[lib]
+name = "service"
+path = "src/lib.rs"
+
+
+[dependencies.common]
+path = "../../common"
+version = "0.1.0"
+
+
 [dependencies.components]
 path = "../../components"
 version = "0.1.0"
@@ -20,3 +39,13 @@ serde_json = { workspace = true }
 serde = { workspace = true }
 surrealdb = { workspace = true }
 tokio = { workspace = true }
+#
+#
+anyhow = "1.0"
+log = "0.4"
+futures = "0.3"
+rand = "0.8"
+tarpc = { version = "0.33", features = ["full"] }
+tracing = { version = "0.1" }
+tracing-opentelemetry = "0.17"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }

@@ -47,6 +47,11 @@ install:
 	@source scripts/install_deps.sh
 
 
+.PHONY: release
+release:
+	@source scripts/release.sh
+
+
 .PHONY: run
 run:
 	@source scripts/run.sh

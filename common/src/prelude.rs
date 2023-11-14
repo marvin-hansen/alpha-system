@@ -13,4 +13,7 @@ pub use crate::types::config_types::service_config::*;
 pub use crate::types::config_types::service_id::*;
 pub use crate::types::config_types::service_type::*;
 pub use crate::types::config_types::svc_env_config::*;
+// utils
+pub use crate::utils::print_utils;
+pub use crate::utils::time_utils;
 
