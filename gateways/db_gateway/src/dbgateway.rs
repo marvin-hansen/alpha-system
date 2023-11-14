@@ -5,14 +5,14 @@ use surrealdb::engine::local;
 use surrealdb::Error;
 use surrealdb::Surreal;
 use tarpc::server;
-use tarpc::server::Channel;
 use tarpc::server::incoming::Incoming;
+use tarpc::server::Channel;
 use tarpc::tokio_serde::formats::Bincode;
 
 use common::prelude::{print_utils, ServiceID};
 use components::prelude::DBManager;
-use service::{DBGatewayServer, PORT};
 use service::DBGateway;
+use service::{DBGatewayServer, PORT};
 
 async fn get_dbm() -> Result<DBManager, Error> {
     let db: Surreal<local::Db> = Surreal::new::<local::Mem>(()).await.unwrap();
