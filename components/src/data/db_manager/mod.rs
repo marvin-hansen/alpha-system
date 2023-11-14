@@ -1,25 +1,14 @@
-use std::cell::RefCell;
-
-use serde::{Deserialize, Serialize};
 use surrealdb::engine::local;
 use surrealdb::Error;
 use surrealdb::Surreal;
 
 use common::prelude::{ServiceConfig, ServiceID};
 
-#[derive(Debug, Copy, Clone, PartialEq, Eq, Serialize, Deserialize)]
-pub enum Status {
-    Disconnected,
-    Connected,
-    Degraded,
-    Error,
-}
-
 const SERVICE_TABLE: &str = "service";
 
+#[derive(Clone)]
 pub struct DBManager {
     db: Surreal<local::Db>,
-    status: RefCell<Status>,
 }
 
 impl DBManager {
@@ -27,14 +16,7 @@ impl DBManager {
         // local DB is either in memory or flat file on disk so it's always connected
         Self {
             db,
-            status: RefCell::new(Status::Connected),
         }
-    }
-}
-
-impl DBManager {
-    pub async fn status(&self) -> Result<Status, Error> {
-        Ok(*self.status.borrow())
     }
 }
 

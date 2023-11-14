@@ -3,7 +3,7 @@ use surrealdb::Error;
 use surrealdb::Surreal;
 
 use common::prelude::{ServiceConfig, ServiceID};
-use components::prelude::{DBManager, Status};
+use components::prelude::DBManager;
 use specs::prelude::{cmdb_service_config, smdb_service_config};
 
 async fn get_dbm() -> Result<DBManager, Error> {
@@ -14,22 +14,10 @@ async fn get_dbm() -> Result<DBManager, Error> {
     Ok(dbm)
 }
 
-#[tokio::test]
-async fn test_new() {
-    let dbm = get_dbm().await.unwrap();
-
-    let expected = Status::Connected;
-    let actual = dbm.status().await.unwrap();
-    assert_eq!(actual, expected);
-}
 
 #[tokio::test]
 async fn test_create_service() {
     let dbm = get_dbm().await.unwrap();
-
-    let expected = Status::Connected;
-    let actual = dbm.status().await.unwrap();
-    assert_eq!(actual, expected);
 
     let data = smdb_service_config();
     let created = dbm.create_service(data).await.unwrap();
@@ -39,10 +27,6 @@ async fn test_create_service() {
 #[tokio::test]
 async fn test_read_all_services() {
     let dbm = get_dbm().await.unwrap();
-
-    let expected = Status::Connected;
-    let actual = dbm.status().await.unwrap();
-    assert_eq!(actual, expected);
 
     let data = smdb_service_config();
     let created = dbm.create_service(data).await.unwrap();
@@ -60,10 +44,6 @@ async fn test_read_all_services() {
 async fn test_read_service_by_id() {
     let dbm = get_dbm().await.unwrap();
 
-    let expected = Status::Connected;
-    let actual = dbm.status().await.unwrap();
-    assert_eq!(actual, expected);
-
     let data = smdb_service_config();
     let created = dbm.create_service(data).await.unwrap();
     assert!(created);
@@ -75,10 +55,6 @@ async fn test_read_service_by_id() {
 #[tokio::test]
 async fn test_update_service() {
     let dbm = get_dbm().await.unwrap();
-
-    let expected = Status::Connected;
-    let actual = dbm.status().await.unwrap();
-    assert_eq!(actual, expected);
 
     let data = smdb_service_config();
     let created = dbm.create_service(data).await.unwrap();
@@ -92,10 +68,6 @@ async fn test_update_service() {
 #[tokio::test]
 async fn test_delete_service() {
     let dbm = get_dbm().await.unwrap();
-
-    let expected = Status::Connected;
-    let actual = dbm.status().await.unwrap();
-    assert_eq!(actual, expected);
 
     let data = smdb_service_config();
     let created = dbm.create_service(data).await.unwrap();
