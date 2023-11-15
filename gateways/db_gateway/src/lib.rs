@@ -68,7 +68,10 @@ impl DBGateway for DBGatewayServer {
         let updated: Result<Option<ServiceConfig>, Error> = self.dbm.update_service(data).await;
         match updated {
             Ok(res) => match res {
-                None => Err(DBGatewayError(format!("Failed to update service id {}", id))),
+                None => Err(DBGatewayError(format!(
+                    "Failed to update service id {}",
+                    id
+                ))),
                 Some(_) => Ok(true),
             },
             Err(e) => Err(DBGatewayError(e.to_string())),

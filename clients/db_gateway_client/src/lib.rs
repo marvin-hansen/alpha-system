@@ -1,10 +1,10 @@
 use std::net::IpAddr;
 use std::str::FromStr;
 
-use tarpc::{client, context};
 use tarpc::tokio_serde::formats::Bincode;
+use tarpc::{client, context};
 
-use common::prelude::{DBConfig, DBGatewayError, ServiceConfig, ServiceID};
+use common::prelude::{DBGatewayError, HostEndpoint, ServiceConfig, ServiceID};
 use service::DBGatewayClient as DBGWClient;
 
 pub struct DBGatewayClient {
@@ -12,14 +12,11 @@ pub struct DBGatewayClient {
 }
 
 impl DBGatewayClient {
-    pub async fn new(config: DBConfig) -> Self {
+    pub async fn new(config: HostEndpoint<'_>) -> Self {
         let port = config.port();
-        let host = config
-            .host()
-            .clone()
-            .expect("Failed to get host from DBConfig");
+        let host = config.host_uri();
 
-        let ip_addr = IpAddr::from_str(&host).expect("Failed to parse IP address from DBConfig");
+        let ip_addr = IpAddr::from_str(host).expect("Failed to parse IP address from DBConfig");
         let server_addr = ((ip_addr), port);
         let codec_fn = Bincode::default;
 
