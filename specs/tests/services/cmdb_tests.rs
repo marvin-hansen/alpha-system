@@ -2,17 +2,6 @@ use common::prelude::{Encoding, ProtocolType, ServiceID, ServiceType};
 use specs::prelude::cmdb_service_config;
 
 #[test]
-fn test_smdb_main_config() {
-    let service_config = cmdb_service_config();
-
-    let main_config = service_config.main_config();
-    assert_eq!(main_config.id(), &ServiceID::CMDB);
-    assert_eq!(main_config.name(), "cmdbv1");
-    assert_eq!(main_config.port(), 7070);
-    assert_eq!(main_config.protocol(), &ProtocolType::GRPC);
-}
-
-#[test]
 fn test_cmdb_service_config() {
     let service_config = cmdb_service_config();
 
@@ -43,7 +32,7 @@ fn test_cmdb_service_config() {
     assert_eq!(endpoint.version(), 1);
     assert_eq!(
         endpoint.description(),
-        "Access to the configuration service via gRPC on baseUri:7070"
+        "Access to the configuration service via gRPC on baseUri:8080"
     );
     assert_eq!(endpoint.uri(), String::from("/"));
     assert_eq!(endpoint.port(), 8080);

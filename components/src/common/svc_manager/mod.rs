@@ -1,5 +1,5 @@
 use common::errors::InitError;
-use common::prelude::{Endpoint, MainConfig, ServiceConfig, ServiceID};
+use common::prelude::{Endpoint, ServiceConfig, ServiceID};
 
 use crate::prelude::CfgManager;
 use crate::prelude::SvcEnvManager;
@@ -44,11 +44,6 @@ impl<'l> ServiceManager<'l> {
     /// Returns true if the service is online and can reach the SMDB registry
     pub fn is_online(&self) -> &bool {
         self.online
-    }
-
-    /// Returns a reference to the main configuration of the service.
-    pub fn get_service_main_config(&self) -> MainConfig {
-        self.cfg_manager.main_config()
     }
 
     /// Returns a reference to the service-specific configuration of the service.

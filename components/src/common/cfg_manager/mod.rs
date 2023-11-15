@@ -1,4 +1,4 @@
-use common::prelude::{EnvironmentType, MainConfig, ServiceConfig, ServiceID};
+use common::prelude::{EnvironmentType, ServiceConfig, ServiceID};
 use specs::prelude::{cmdb_service_config, dbgw_service_config, smdb_service_config};
 
 use crate::prelude::CtxManager;
@@ -50,10 +50,6 @@ impl<'l> CfgManager<'l> {
     /// Returns the type of the environment.
     pub fn env_type(&self) -> EnvironmentType {
         self.env_type
-    }
-    /// Returns a reference to the main configuration for the service.
-    pub fn main_config(&self) -> MainConfig {
-        self.service_config(&self.svc).clone().main_config()
     }
     /// Returns a reference to the service-specific configuration.
     pub fn svc_config(&self) -> ServiceConfig {

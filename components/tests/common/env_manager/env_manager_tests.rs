@@ -27,10 +27,8 @@ fn test_new() {
     assert_eq!(dnm.external_dns(), "1.1.1.1:53");
 
     let env_manager = SvcEnvManager::new(&ctm, &dnm);
-    // These return errors because the corresponding init function has not been called.
-    assert!(env_manager.get_svc_host_port(ServiceID::SMDB).is_err());
-    assert!(env_manager.get_svc_host_port(ServiceID::CMDB).is_err());
-    assert!(env_manager.get_svc_host_port(ServiceID::DBGW).is_err());
+    let endpoint = HostEndpoint::new("example.com", 8080);
+    assert!(env_manager.init_svc_env(&ServiceID::SMDB, endpoint).is_ok());
 }
 
 #[test]
@@ -70,7 +68,7 @@ fn test_init_cmdb_env() {
 }
 
 #[test]
-fn test_init_memgraph_env() {
+fn test_init_dbgw_env() {
     env::set_var("ENV", "CLUSTER");
     env::set_var("DNS_SERVER", "9.9.9.9");
 

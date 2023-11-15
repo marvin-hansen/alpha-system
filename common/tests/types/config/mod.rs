@@ -9,8 +9,6 @@ mod endpoint_tests;
 #[cfg(test)]
 mod environment_type_tests;
 #[cfg(test)]
-mod main_config_tests;
-#[cfg(test)]
 mod protocol_type_tests;
 #[cfg(test)]
 mod service_config_tests;

@@ -3,7 +3,7 @@ use std::fmt::{Display, Formatter};
 use serde::{Deserialize, Serialize};
 use surrealdb::sql::Thing;
 
-use crate::prelude::{Endpoint, MainConfig, ServiceID, ServiceType};
+use crate::prelude::{Endpoint, ServiceID, ServiceType};
 
 #[derive(Serialize, Deserialize, Debug, Default, Clone, Eq, PartialEq)]
 pub struct ServiceConfig {
@@ -82,18 +82,6 @@ impl ServiceConfig {
         let json = serde_json::to_string(&self).expect("Failed to serialize ServiceConfig to JSON");
 
         Ok(json)
-    }
-}
-
-impl ServiceConfig {
-    /// Returns the main configuration for the service.
-    pub fn main_config(&self) -> MainConfig {
-        MainConfig::new(
-            *self.svc_id(),
-            String::from(self.name()),
-            self.endpoint().port(),
-            self.endpoint().protocol(),
-        )
     }
 }
 

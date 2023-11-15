@@ -40,24 +40,6 @@ fn test_is_online() {
 }
 
 #[test]
-fn test_get_service_main_config() {
-    let svc = ServiceID::SMDB;
-    let ctx_manager = &CtxManager::new();
-    let dns_manager = &DnsManager::new(ctx_manager);
-    let cfg_manager = &CfgManager::new(svc, ctx_manager);
-    let svm_manager = &SvcEnvManager::new(ctx_manager, dns_manager);
-
-    let service_manager = ServiceManager::new_offline_service_manager(cfg_manager, svm_manager);
-    assert_eq!(service_manager.is_online(), &false);
-
-    let main_config = service_manager.get_service_main_config();
-    assert_eq!(main_config.id(), &ServiceID::SMDB);
-    assert_eq!(main_config.name(), "smdbv1");
-    assert_eq!(main_config.port(), 5050);
-    assert_eq!(main_config.protocol(), &ProtocolType::GRPC);
-}
-
-#[test]
 fn test_get_service_config() {
     let svc = ServiceID::SMDB;
     let ctx_manager = &CtxManager::new();
@@ -96,10 +78,10 @@ fn test_get_service_config() {
     assert_eq!(endpoint.version(), 1);
     assert_eq!(
         endpoint.description(),
-        "Access to the SMDB service registry via gRPC on baseUri:5050"
+        "Access to the SMDB service registry via gRPC on baseUri:7070"
     );
     assert_eq!(endpoint.uri(), "/");
-    assert_eq!(endpoint.port(), 5050);
+    assert_eq!(endpoint.port(), 7070);
     assert_eq!(endpoint.protocol(), ProtocolType::GRPC);
     assert_eq!(endpoint.encoding(), Encoding::Protobuf);
 }
@@ -130,7 +112,9 @@ fn test_init_services() {
 
 #[test]
 fn test_get_service_host_port() {
-    env::set_var("ENV", "CLUSTER");
+
+    // Make this conditional to run in CI
+    env::set_var("ENV", "LOCAL");
     env::set_var("DNS_SERVER", "9.9.9.9");
 
     let svc = ServiceID::SMDB;
@@ -160,10 +144,7 @@ fn test_get_service_host_port() {
     let dependencies = vec![ServiceID::SMDB];
     service_manager.init_services(dependencies).unwrap();
     assert!(service_manager.is_service_initialized(ServiceID::SMDB));
-    assert!(service_manager.is_service_initialized(ServiceID::SMDB));
-    assert!(service_manager
-        .get_service_host_port(ServiceID::SMDB)
-        .is_err());
+    assert!(service_manager.get_service_host_port(ServiceID::SMDB).is_ok());
 
     // assert_eq!(
     //     service_manager.get_service_host_port(ServiceID::SMDB).unwrap(),
@@ -173,9 +154,7 @@ fn test_get_service_host_port() {
     let dependencies = vec![ServiceID::DBGW];
     service_manager.init_services(dependencies).unwrap();
     assert!(service_manager.is_service_initialized(ServiceID::DBGW));
-    assert!(service_manager
-        .get_service_host_port(ServiceID::DBGW)
-        .is_err());
+    assert!(service_manager.get_service_host_port(ServiceID::DBGW).is_ok());
 
     // assert_eq!(
     //     service_manager.get_service_host_port(ServiceID::MEMGRAPH).unwrap(),

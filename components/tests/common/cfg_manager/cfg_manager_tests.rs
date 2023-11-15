@@ -14,10 +14,6 @@ fn new_config_manager_default() {
 
     assert_eq!(config_manager.svc(), ServiceID::Default);
     assert_eq!(config_manager.env_type(), EnvironmentType::CLUSTER);
-    assert_eq!(
-        config_manager.main_config(),
-        ServiceConfig::default().main_config()
-    );
     assert_eq!(config_manager.svc_config(), ServiceConfig::default());
 }
 
@@ -31,10 +27,6 @@ fn new_config_manager_smdb() {
 
     assert_eq!(config_manager.svc(), ServiceID::SMDB);
     assert_eq!(config_manager.env_type(), EnvironmentType::CLUSTER);
-    assert_eq!(
-        config_manager.main_config(),
-        smdb_service_config().main_config()
-    );
     assert_eq!(config_manager.svc_config(), smdb_service_config());
 }
 
@@ -48,10 +40,6 @@ fn new_config_manager_cmdb() {
 
     assert_eq!(config_manager.svc(), ServiceID::CMDB);
     assert_eq!(config_manager.env_type(), EnvironmentType::CLUSTER);
-    assert_eq!(
-        config_manager.main_config(),
-        cmdb_service_config().main_config()
-    );
     assert_eq!(config_manager.svc_config(), cmdb_service_config());
 }
 
@@ -65,9 +53,5 @@ fn new_config_manager_dbgw() {
 
     assert_eq!(config_manager.svc(), ServiceID::DBGW);
     assert_eq!(config_manager.env_type(), EnvironmentType::CLUSTER);
-    assert_eq!(
-        config_manager.main_config(),
-        dbgw_service_config().main_config()
-    );
     assert_eq!(config_manager.svc_config(), dbgw_service_config());
 }
