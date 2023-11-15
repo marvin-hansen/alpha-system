@@ -47,5 +47,5 @@ futures = "0.3"
 rand = "0.8"
 tarpc = { version = "0.33", features = ["full"] }
 tracing = { version = "0.1" }
-tracing-opentelemetry = "0.17"
+tracing-opentelemetry = "0.22.0"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
