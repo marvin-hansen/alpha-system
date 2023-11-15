@@ -15,7 +15,7 @@ mod utils;
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
-    let svc_id = ServiceID::MEMGRAPH;
+    let svc_id = ServiceID::DBGW;
     let ctx_manager = CtxManager::new();
     let dns_manager = DnsManager::new(&ctx_manager);
     let cfg_manager = CfgManager::new(svc_id, &ctx_manager);
@@ -35,7 +35,7 @@ async fn main() -> anyhow::Result<()> {
     // Build a new db manager
     let dbm = utils::get_dbm().await.unwrap();
 
-    print_utils::print_start_header(&ServiceID::MEMGRAPH, port);
+    print_utils::print_start_header(&svc_id, port);
 
     // JSON transport is provided by the json_transport tarpc module. It makes it easy
     // to start up a serde-powered json serialization strategy over TCP.

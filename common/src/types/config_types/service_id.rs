@@ -13,18 +13,18 @@ use serde::{Deserialize, Serialize};
 pub enum ServiceID {
     #[default]
     Default,
-    MEMGRAPH,
     SMDB,
     CMDB,
+    DBGW,
 }
 
 impl ServiceID {
     pub fn from_string(n: &str) -> Option<ServiceID> {
         match n {
             "Default" => Some(ServiceID::Default),
-            "MEMGRAPH" => Some(ServiceID::MEMGRAPH),
             "SMDB" => Some(ServiceID::SMDB),
             "CMDB" => Some(ServiceID::CMDB),
+            "DBGW" => Some(ServiceID::DBGW),
             _ => None,
         }
     }
@@ -34,9 +34,9 @@ impl Display for ServiceID {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
             ServiceID::Default => write!(f, "Default"),
-            ServiceID::MEMGRAPH => write!(f, "MEMGRAPH"),
             ServiceID::SMDB => write!(f, "SMDB"),
             ServiceID::CMDB => write!(f, "CMDB"),
+            ServiceID::DBGW => write!(f, "DBGW"),
         }
     }
 }

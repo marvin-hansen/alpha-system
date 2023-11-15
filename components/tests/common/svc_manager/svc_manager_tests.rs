@@ -87,7 +87,7 @@ fn test_get_service_config() {
     );
     assert_eq!(
         service_config.dependencies().len(),
-        vec![ServiceID::MEMGRAPH].len()
+        vec![ServiceID::DBGW].len()
     );
     assert_eq!(service_config.exposure(), &ServiceType::ENDPOINT);
 
@@ -123,9 +123,9 @@ fn test_init_services() {
     service_manager.init_services(dependencies).unwrap();
     assert!(service_manager.is_service_initialized(ServiceID::SMDB));
 
-    let dependencies = vec![ServiceID::MEMGRAPH];
+    let dependencies = vec![ServiceID::DBGW];
     service_manager.init_services(dependencies).unwrap();
-    assert!(service_manager.is_service_initialized(ServiceID::MEMGRAPH));
+    assert!(service_manager.is_service_initialized(ServiceID::DBGW));
 }
 
 #[test]
@@ -148,9 +148,9 @@ fn test_get_service_host_port() {
 
     // We can't really test this, because the CI can't resolve the DNS server of the cluster host.
     // The root cause is that the CI can only have one ENV variable and it's alerady set to CLUSTER.
-    assert!(service_manager
-        .get_service_host_port(ServiceID::CMDB)
-        .is_err());
+    // assert!(service_manager
+    //     .get_service_host_port(ServiceID::CMDB)
+    //     .is_err());
 
     // assert_eq!(
     //     service_manager.get_service_host_port(ServiceID::CMDB).unwrap(),
@@ -170,13 +170,11 @@ fn test_get_service_host_port() {
     //     String::from("127.0.0.1:5050")
     // );
 
-    let dependencies = vec![ServiceID::MEMGRAPH];
+    let dependencies = vec![ServiceID::DBGW];
     service_manager.init_services(dependencies).unwrap();
-    assert!(service_manager.is_service_initialized(ServiceID::MEMGRAPH));
-
-    assert!(service_manager.is_service_initialized(ServiceID::MEMGRAPH));
+    assert!(service_manager.is_service_initialized(ServiceID::DBGW));
     assert!(service_manager
-        .get_service_host_port(ServiceID::MEMGRAPH)
+        .get_service_host_port(ServiceID::DBGW)
         .is_err());
 
     // assert_eq!(

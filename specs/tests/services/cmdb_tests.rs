@@ -34,7 +34,7 @@ fn test_cmdb_service_config() {
     );
     assert_eq!(
         service_config.dependencies().len(),
-        vec![ServiceID::MEMGRAPH, ServiceID::SMDB].len()
+        vec![ServiceID::DBGW, ServiceID::SMDB].len()
     );
     assert_eq!(service_config.exposure(), &ServiceType::ENDPOINT);
 
@@ -46,7 +46,7 @@ fn test_cmdb_service_config() {
         "Access to the configuration service via gRPC on baseUri:7070"
     );
     assert_eq!(endpoint.uri(), String::from("/"));
-    assert_eq!(endpoint.port(), 7070);
+    assert_eq!(endpoint.port(), 8080);
     assert_eq!(endpoint.protocol(), ProtocolType::GRPC);
     assert_eq!(endpoint.encoding(), Encoding::Protobuf);
 }

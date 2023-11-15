@@ -1,13 +1,13 @@
 use common::prelude::{Encoding, Endpoint, ProtocolType, ServiceConfig, ServiceID, ServiceType};
 
-pub fn memgraph_service_config() -> ServiceConfig {
-    let id = ServiceID::MEMGRAPH;
-    let name = "memgraphv1".to_string();
+pub fn dbgw_service_config() -> ServiceConfig {
+    let id = ServiceID::DBGW;
+    let name = "dbgwv1".to_string();
     let version = 1;
-    let online = false;
-    let description = "graph database service".to_string();
-    let health_check_uri = "memgraph-service.default.svc.cluster.local:5050/health".to_string();
-    let base_uri = "memgraph-service.default.svc.cluster.local".to_string();
+    let online = true;
+    let description = "DBGW gives access to surreal DB".to_string();
+    let health_check_uri = "dbgw-service.default.svc.cluster.local:5050/health".to_string();
+    let base_uri = "dbgw-service.default.svc.cluster.local".to_string();
     let dependencies = vec![];
     let exposure = ServiceType::ENDPOINT;
     let endpoint = get_endpoint();
@@ -27,13 +27,13 @@ pub fn memgraph_service_config() -> ServiceConfig {
 }
 
 fn get_endpoint() -> Endpoint {
-    let endpoint_name = "memgraph DB Endpoint".to_string();
+    let endpoint_name = "dbgw Endpoint".to_string();
     let endpoint_version = 1;
-    let endpoint_description = "Access to the memgraph via its client on baseUri:7687".to_string();
+    let endpoint_description = "Access to surreal DB via gRPC on baseUri:6060".to_string();
     let endpoint_uri = "/".to_string();
-    let endpoint_port = 7687;
-    let endpoint_protocol = ProtocolType::HTTP;
-    let endpoint_encoding = Encoding::Binary;
+    let endpoint_port = 6060;
+    let endpoint_protocol = ProtocolType::GRPC;
+    let endpoint_encoding = Encoding::Protobuf;
 
     Endpoint::new(
         endpoint_name,

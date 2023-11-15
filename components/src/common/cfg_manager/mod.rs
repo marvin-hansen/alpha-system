@@ -1,5 +1,5 @@
 use common::prelude::{EnvironmentType, MainConfig, ServiceConfig, ServiceID};
-use specs::prelude::{cmdb_service_config, memgraph_service_config, smdb_service_config};
+use specs::prelude::{cmdb_service_config, dbgw_service_config, smdb_service_config};
 
 use crate::prelude::CtxManager;
 
@@ -34,9 +34,9 @@ impl<'l> CfgManager<'l> {
 impl<'l> CfgManager<'l> {
     fn service_config(&self, svc: &ServiceID) -> ServiceConfig {
         match svc {
-            ServiceID::MEMGRAPH => memgraph_service_config(),
             ServiceID::SMDB => smdb_service_config(),
             ServiceID::CMDB => cmdb_service_config(),
+            ServiceID::DBGW => dbgw_service_config(),
             ServiceID::Default => ServiceConfig::default(),
         }
     }

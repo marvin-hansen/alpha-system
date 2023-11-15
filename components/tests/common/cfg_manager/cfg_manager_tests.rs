@@ -2,7 +2,7 @@ use std::env;
 
 use common::prelude::{EnvironmentType, ServiceConfig, ServiceID};
 use components::prelude::{CfgManager, CtxManager};
-use specs::prelude::{cmdb_service_config, memgraph_service_config, smdb_service_config};
+use specs::prelude::{cmdb_service_config, dbgw_service_config, smdb_service_config};
 
 #[test]
 fn new_config_manager_default() {
@@ -56,18 +56,18 @@ fn new_config_manager_cmdb() {
 }
 
 #[test]
-fn new_config_manager() {
+fn new_config_manager_dbgw() {
     env::set_var("ENV", "CLUSTER");
     env::set_var("DNS_SERVER", "175.24.54.1");
 
     let ctx = CtxManager::new();
-    let config_manager = CfgManager::new(ServiceID::MEMGRAPH, &ctx);
+    let config_manager = CfgManager::new(ServiceID::DBGW, &ctx);
 
-    assert_eq!(config_manager.svc(), ServiceID::MEMGRAPH);
+    assert_eq!(config_manager.svc(), ServiceID::DBGW);
     assert_eq!(config_manager.env_type(), EnvironmentType::CLUSTER);
     assert_eq!(
         config_manager.main_config(),
-        memgraph_service_config().main_config()
+        dbgw_service_config().main_config()
     );
-    assert_eq!(config_manager.svc_config(), memgraph_service_config());
+    assert_eq!(config_manager.svc_config(), dbgw_service_config());
 }

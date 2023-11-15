@@ -30,7 +30,7 @@ fn test_new() {
     // These return errors because the corresponding init function has not been called.
     assert!(env_manager.get_svc_host_port(ServiceID::SMDB).is_err());
     assert!(env_manager.get_svc_host_port(ServiceID::CMDB).is_err());
-    assert!(env_manager.get_svc_host_port(ServiceID::MEMGRAPH).is_err());
+    assert!(env_manager.get_svc_host_port(ServiceID::DBGW).is_err());
 }
 
 #[test]
@@ -84,9 +84,7 @@ fn test_init_memgraph_env() {
 
     let env_manager = SvcEnvManager::new(&ctm, &dnm);
     let endpoint = HostEndpoint::new("example.com", 8080);
-    assert!(env_manager
-        .init_svc_env(&ServiceID::MEMGRAPH, endpoint)
-        .is_ok());
+    assert!(env_manager.init_svc_env(&ServiceID::DBGW, endpoint).is_ok());
 }
 
 #[test]
@@ -149,10 +147,8 @@ fn test_get_memgraph_host() {
     let env_manager = SvcEnvManager::new(&ctm, &dnm);
 
     let endpoint = HostEndpoint::new("localhost", 9090);
-    assert!(env_manager
-        .init_svc_env(&ServiceID::MEMGRAPH, endpoint)
-        .is_ok());
+    assert!(env_manager.init_svc_env(&ServiceID::DBGW, endpoint).is_ok());
 
-    let host = env_manager.get_svc_host_port(ServiceID::MEMGRAPH).unwrap();
+    let host = env_manager.get_svc_host_port(ServiceID::DBGW).unwrap();
     assert_eq!(host, ("127.0.0.1".to_string(), 9090));
 }

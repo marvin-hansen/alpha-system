@@ -8,7 +8,7 @@ pub fn cmdb_service_config() -> ServiceConfig {
     let description = "CMDB Manages configurations stored in the DB".to_string();
     let health_check_uri = "cmdb-service.default.svc.cluster.local:5050/health".to_string();
     let base_uri = "cmdb-service.default.svc.cluster.local".to_string();
-    let dependencies = vec![ServiceID::MEMGRAPH, ServiceID::SMDB];
+    let dependencies = vec![ServiceID::DBGW, ServiceID::SMDB];
     let exposure = ServiceType::ENDPOINT;
     let endpoint = get_endpoint();
 
@@ -30,9 +30,9 @@ fn get_endpoint() -> Endpoint {
     let endpoint_name = "cmdb Endpoint".to_string();
     let endpoint_version = 1;
     let endpoint_description =
-        "Access to the configuration service via gRPC on baseUri:7070".to_string();
+        "Access to the configuration service via gRPC on baseUri:8080".to_string();
     let endpoint_uri = "/".to_string();
-    let endpoint_port = 7070;
+    let endpoint_port = 8080;
     let endpoint_protocol = ProtocolType::GRPC;
     let endpoint_encoding = Encoding::Protobuf;
 

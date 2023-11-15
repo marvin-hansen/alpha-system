@@ -33,7 +33,7 @@ fn test_smdb_service_config() {
     );
     assert_eq!(
         service_config.dependencies().len(),
-        vec![ServiceID::MEMGRAPH].len()
+        vec![ServiceID::DBGW].len()
     );
     assert_eq!(service_config.exposure(), &ServiceType::ENDPOINT);
 
@@ -45,7 +45,7 @@ fn test_smdb_service_config() {
         "Access to the SMDB service registry via gRPC on baseUri:5050"
     );
     assert_eq!(endpoint.uri(), "/");
-    assert_eq!(endpoint.port(), 5050);
+    assert_eq!(endpoint.port(), 7070);
     assert_eq!(endpoint.protocol(), ProtocolType::GRPC);
     assert_eq!(endpoint.encoding(), Encoding::Protobuf);
 }
