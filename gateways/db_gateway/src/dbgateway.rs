@@ -3,8 +3,8 @@ use std::str::FromStr;
 
 use futures::{future, prelude::*};
 use tarpc::server;
-use tarpc::server::Channel;
 use tarpc::server::incoming::Incoming;
+use tarpc::server::Channel;
 use tarpc::tokio_serde::formats::Bincode;
 
 use common::prelude::{print_utils, ServiceID};
@@ -20,12 +20,15 @@ async fn main() -> anyhow::Result<()> {
     let dns_manager = DnsManager::new(&ctx_manager);
     let cfg_manager = CfgManager::new(svc_id, &ctx_manager);
     let svm_manager = SvcEnvManager::new(&ctx_manager, &dns_manager);
-    let service_manager = ServiceManager::new_offline_service_manager(&cfg_manager, &svm_manager);
 
-    // service_manager configures ip and port fully automatically for
-    // relative to the detected context.
-    service_manager.init_service(&svc_id).expect("Failed to init service autoconfig");
-    let (host_ip, port) = service_manager.get_service_host_port(svc_id).expect("Failed to get host and port");
+    // service_manager configures ip and port fully automatically relative to the detected context.
+    let service_manager = ServiceManager::new_offline_service_manager(&cfg_manager, &svm_manager);
+    service_manager
+        .init_service(&svc_id)
+        .expect("Failed to init service autoconfig");
+    let (host_ip, port) = service_manager
+        .get_service_host_port(svc_id)
+        .expect("Failed to get host and port");
     let ip = IpAddr::from_str(&host_ip).expect("Failed to parse host ip");
     let server_addr = (ip, port);
 

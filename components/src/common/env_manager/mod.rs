@@ -48,7 +48,11 @@ impl<'l> SvcEnvManager<'l> {
     /// `Result<(), InitError>` containing a
     /// * `InitError` in case of an error
     /// * `Ok(())` if the service environment was successfully initialized.
-    pub fn init_svc_env(&self, svc_id: &ServiceID, endpoint: HostEndpoint) -> Result<(), InitError> {
+    pub fn init_svc_env(
+        &self,
+        svc_id: &ServiceID,
+        endpoint: HostEndpoint,
+    ) -> Result<(), InitError> {
         match svc_id {
             ServiceID::CMDB => self.init_cmdb_env(endpoint),
             ServiceID::SMDB => self.init_smdb_env(endpoint),
@@ -135,7 +139,6 @@ impl<'l> SvcEnvManager<'l> {
         }
     }
 
-
     // Returns the hostname and port of the service based on the environment type.
     // If the environment type is local, it returns the hostname of the service running locally.
     // If the environment type is cluster, it returns the hostname of the service running in the cluster.
@@ -143,26 +146,20 @@ impl<'l> SvcEnvManager<'l> {
     fn get_host(&self, svc_env_config: &SvcEnvConfig) -> Result<(String, u16), InitError> {
         let port: u16 = svc_env_config.port().parse().unwrap();
 
-        let host = match self.ctx_manager.env_type()
-        {
-            EnvironmentType::LOCAL => {
-                svc_env_config.local_host().to_string()
-            }
+        let host = match self.ctx_manager.env_type() {
+            EnvironmentType::LOCAL => svc_env_config.local_host().to_string(),
 
-            EnvironmentType::CI => {
-                svc_env_config.ci_host().to_string()
-            }
+            EnvironmentType::CI => svc_env_config.ci_host().to_string(),
 
             EnvironmentType::CLUSTER => {
-                let cluster_host = self.dns_manager
+                let cluster_host = self
+                    .dns_manager
                     .resolve_dns(svc_env_config.cluster_host(), true)
                     .expect("Failed to resolve DNS");
 
                 cluster_host.to_string()
             }
-            EnvironmentType::UnknownEnv => {
-                svc_env_config.local_host().to_string()
-            }
+            EnvironmentType::UnknownEnv => svc_env_config.local_host().to_string(),
         };
 
         Ok((host, port))

@@ -1,5 +1,5 @@
-use surrealdb::{Error, Surreal};
 use surrealdb::engine::local;
+use surrealdb::{Error, Surreal};
 
 use components::prelude::DBManager;
 

@@ -1,11 +1,11 @@
 use common::prelude::HostEndpoint;
 use db_gateway_client::DBGatewayClient;
 
-use crate::types::{ServiceOP, SpecType};
 use crate::types::SpecType::ServiceConfig;
+use crate::types::{ServiceOP, SpecType};
 
-mod types;
 mod svc_handle;
+mod types;
 
 pub const SPEC_TYPE: SpecType = ServiceConfig;
 pub const SPEC_OP: ServiceOP = ServiceOP::CreateAllService;
