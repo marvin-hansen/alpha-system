@@ -1,6 +1,8 @@
 use std::error::Error;
 use std::fmt;
 
+use serde::{Deserialize, Serialize};
+
 #[derive(Debug)]
 pub struct InitError(pub String);
 
@@ -12,12 +14,12 @@ impl fmt::Display for InitError {
     }
 }
 
-#[derive(Debug)]
-pub struct MemGraphError(pub String);
+#[derive(Debug, Serialize, Deserialize)]
+pub struct DBGatewayError(pub String);
 
-impl Error for MemGraphError {}
+impl Error for DBGatewayError {}
 
-impl fmt::Display for MemGraphError {
+impl fmt::Display for DBGatewayError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "MemGraphError: {}", self.0)
     }

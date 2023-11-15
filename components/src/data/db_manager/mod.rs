@@ -36,7 +36,7 @@ impl DBManager {
     }
 
     pub async fn read_record_by_id(&self, id: &ServiceID) -> Result<Option<ServiceConfig>, Error> {
-        let res: Option<ServiceConfig> = self.db.select((SERVICE_TABLE, &id.to_string())).await?;
+        let res = self.db.select((SERVICE_TABLE, &id.to_string())).await?;
         Ok(res)
     }
 
@@ -45,8 +45,7 @@ impl DBManager {
         data: ServiceConfig,
     ) -> Result<Option<ServiceConfig>, Error> {
         let id = data.svc_id().to_string();
-        let updated: Option<ServiceConfig> =
-            self.db.update((SERVICE_TABLE, id)).content(data).await?;
+        let updated = self.db.update((SERVICE_TABLE, id)).content(data).await?;
         Ok(updated)
     }
 

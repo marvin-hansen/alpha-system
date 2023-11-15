@@ -1,4 +1,4 @@
-use common::prelude::{MemGraphError, ServiceConfig, ServiceID};
+use common::prelude::{DBGatewayError, ServiceConfig, ServiceID};
 
 #[derive(Debug, Default)]
 pub struct SmdbDataManager {}
@@ -12,18 +12,18 @@ impl SmdbDataManager {
 
 impl SmdbDataManager {
     /// Closes the connection
-    pub fn close_connection(&mut self) -> Result<(), MemGraphError> {
+    pub fn close_connection(&mut self) -> Result<(), DBGatewayError> {
         Ok(())
     }
 
     /// Gets all services from the data store.
-    pub fn get_all_services(&self) -> Result<Vec<ServiceConfig>, MemGraphError> {
+    pub fn get_all_services(&self) -> Result<Vec<ServiceConfig>, DBGatewayError> {
         let services: Vec<ServiceConfig> = Vec::new();
         Ok(services)
     }
 
     /// Gets a service from the data store.
-    pub fn get_service(&self, _service_id: &ServiceID) -> Result<ServiceConfig, MemGraphError> {
+    pub fn get_service(&self, _service_id: &ServiceID) -> Result<ServiceConfig, DBGatewayError> {
         let service: ServiceConfig = ServiceConfig::default();
         Ok(service)
     }
@@ -32,7 +32,7 @@ impl SmdbDataManager {
     pub fn check_all_service_dependencies(
         &self,
         _service_id: &ServiceID,
-    ) -> Result<bool, MemGraphError> {
+    ) -> Result<bool, DBGatewayError> {
         Ok(false)
     }
 
@@ -40,7 +40,7 @@ impl SmdbDataManager {
     pub fn check_all_service_depends_on(
         &self,
         _service_id: &ServiceID,
-    ) -> Result<bool, MemGraphError> {
+    ) -> Result<bool, DBGatewayError> {
         Ok(false)
     }
 
@@ -48,7 +48,7 @@ impl SmdbDataManager {
     pub fn get_all_service_dependencies(
         &self,
         _service_id: &ServiceID,
-    ) -> Result<Vec<ServiceID>, MemGraphError> {
+    ) -> Result<Vec<ServiceID>, DBGatewayError> {
         let dependencies: Vec<ServiceID> = Vec::new();
         Ok(dependencies)
     }
@@ -57,38 +57,41 @@ impl SmdbDataManager {
     pub fn get_all_service_depends_on(
         &self,
         _service_id: &ServiceID,
-    ) -> Result<Vec<ServiceID>, MemGraphError> {
+    ) -> Result<Vec<ServiceID>, DBGatewayError> {
         let dependencies: Vec<ServiceID> = Vec::new();
         Ok(dependencies)
     }
 
     /// Creates a service in the data store.
-    pub fn create_service(&mut self, _service_config: &ServiceConfig) -> Result<(), MemGraphError> {
+    pub fn create_service(
+        &mut self,
+        _service_config: &ServiceConfig,
+    ) -> Result<(), DBGatewayError> {
         Ok(())
     }
 
     /// Checks if a service exists in the data store.
-    pub fn check_service_exists(&self, _service_id: &ServiceID) -> Result<bool, MemGraphError> {
+    pub fn check_service_exists(&self, _service_id: &ServiceID) -> Result<bool, DBGatewayError> {
         Ok(false)
     }
 
     /// Checks if a service is online.
-    pub fn check_service_online(&self, _service_id: &ServiceID) -> Result<bool, MemGraphError> {
+    pub fn check_service_online(&self, _service_id: &ServiceID) -> Result<bool, DBGatewayError> {
         Ok(false)
     }
 
     /// Deletes a service from the data store.
-    pub fn delete_service(&self, _service_id: &ServiceID) -> Result<(), MemGraphError> {
+    pub fn delete_service(&self, _service_id: &ServiceID) -> Result<(), DBGatewayError> {
         Ok(())
     }
 
     /// Registers a service with the data manager.
-    pub fn register_service(&self, _service: &ServiceID) -> Result<(), MemGraphError> {
+    pub fn register_service(&self, _service: &ServiceID) -> Result<(), DBGatewayError> {
         Ok(())
     }
 
     /// Deregisters a service with the data manager.
-    pub fn deregister_service(&self, _service: &ServiceID) -> Result<(), MemGraphError> {
+    pub fn deregister_service(&self, _service: &ServiceID) -> Result<(), DBGatewayError> {
         Ok(())
     }
 }
