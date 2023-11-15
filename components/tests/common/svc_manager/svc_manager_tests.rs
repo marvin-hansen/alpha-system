@@ -105,7 +105,7 @@ fn test_get_service_config() {
 }
 
 #[test]
-fn test_init_service_dependencies() {
+fn test_init_services() {
     let svc = ServiceID::SMDB;
     let ctx_manager = &CtxManager::new();
     let dns_manager = &DnsManager::new(ctx_manager);
@@ -116,26 +116,20 @@ fn test_init_service_dependencies() {
     assert_eq!(service_manager.is_online(), &false);
 
     let dependencies = vec![ServiceID::CMDB];
-    service_manager
-        .init_service_dependencies(dependencies)
-        .unwrap();
-    assert!(service_manager.is_service_dependency_initialized(ServiceID::CMDB));
+    service_manager.init_services(dependencies).unwrap();
+    assert!(service_manager.is_service_initialized(ServiceID::CMDB));
 
     let dependencies = vec![ServiceID::SMDB];
-    service_manager
-        .init_service_dependencies(dependencies)
-        .unwrap();
-    assert!(service_manager.is_service_dependency_initialized(ServiceID::SMDB));
+    service_manager.init_services(dependencies).unwrap();
+    assert!(service_manager.is_service_initialized(ServiceID::SMDB));
 
     let dependencies = vec![ServiceID::MEMGRAPH];
-    service_manager
-        .init_service_dependencies(dependencies)
-        .unwrap();
-    assert!(service_manager.is_service_dependency_initialized(ServiceID::MEMGRAPH));
+    service_manager.init_services(dependencies).unwrap();
+    assert!(service_manager.is_service_initialized(ServiceID::MEMGRAPH));
 }
 
 #[test]
-fn test_get_dependency_svc_host() {
+fn test_get_service_host_port() {
     env::set_var("ENV", "CLUSTER");
     env::set_var("DNS_SERVER", "9.9.9.9");
 
@@ -149,50 +143,44 @@ fn test_get_dependency_svc_host() {
     assert_eq!(service_manager.is_online(), &false);
 
     let dependencies = vec![ServiceID::CMDB];
-    service_manager
-        .init_service_dependencies(dependencies)
-        .unwrap();
-    assert!(service_manager.is_service_dependency_initialized(ServiceID::CMDB));
+    service_manager.init_services(dependencies).unwrap();
+    assert!(service_manager.is_service_initialized(ServiceID::CMDB));
 
     // We can't really test this, because the CI can't resolve the DNS server of the cluster host.
     // The root cause is that the CI can only have one ENV variable and it's alerady set to CLUSTER.
     assert!(service_manager
-        .get_dependency_svc_host(ServiceID::CMDB)
+        .get_service_host_port(ServiceID::CMDB)
         .is_err());
 
     // assert_eq!(
-    //     service_manager.get_dependency_svc_host(ServiceID::CMDB).unwrap(),
+    //     service_manager.get_service_host_port(ServiceID::CMDB).unwrap(),
     //     String::from("127.0.0.1:7070")
     // );
 
     let dependencies = vec![ServiceID::SMDB];
-    service_manager
-        .init_service_dependencies(dependencies)
-        .unwrap();
-    assert!(service_manager.is_service_dependency_initialized(ServiceID::SMDB));
-    assert!(service_manager.is_service_dependency_initialized(ServiceID::SMDB));
+    service_manager.init_services(dependencies).unwrap();
+    assert!(service_manager.is_service_initialized(ServiceID::SMDB));
+    assert!(service_manager.is_service_initialized(ServiceID::SMDB));
     assert!(service_manager
-        .get_dependency_svc_host(ServiceID::SMDB)
+        .get_service_host_port(ServiceID::SMDB)
         .is_err());
 
     // assert_eq!(
-    //     service_manager.get_dependency_svc_host(ServiceID::SMDB).unwrap(),
+    //     service_manager.get_service_host_port(ServiceID::SMDB).unwrap(),
     //     String::from("127.0.0.1:5050")
     // );
 
     let dependencies = vec![ServiceID::MEMGRAPH];
-    service_manager
-        .init_service_dependencies(dependencies)
-        .unwrap();
-    assert!(service_manager.is_service_dependency_initialized(ServiceID::MEMGRAPH));
+    service_manager.init_services(dependencies).unwrap();
+    assert!(service_manager.is_service_initialized(ServiceID::MEMGRAPH));
 
-    assert!(service_manager.is_service_dependency_initialized(ServiceID::MEMGRAPH));
+    assert!(service_manager.is_service_initialized(ServiceID::MEMGRAPH));
     assert!(service_manager
-        .get_dependency_svc_host(ServiceID::MEMGRAPH)
+        .get_service_host_port(ServiceID::MEMGRAPH)
         .is_err());
 
     // assert_eq!(
-    //     service_manager.get_dependency_svc_host(ServiceID::MEMGRAPH).unwrap(),
+    //     service_manager.get_service_host_port(ServiceID::MEMGRAPH).unwrap(),
     //     String::from("127.0.0.1:7687")
     // );
 }

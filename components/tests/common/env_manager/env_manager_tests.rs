@@ -28,9 +28,9 @@ fn test_new() {
 
     let env_manager = SvcEnvManager::new(&ctm, &dnm);
     // These return errors because the corresponding init function has not been called.
-    assert!(env_manager.get_svc_host(ServiceID::SMDB).is_err());
-    assert!(env_manager.get_svc_host(ServiceID::CMDB).is_err());
-    assert!(env_manager.get_svc_host(ServiceID::MEMGRAPH).is_err());
+    assert!(env_manager.get_svc_host_port(ServiceID::SMDB).is_err());
+    assert!(env_manager.get_svc_host_port(ServiceID::CMDB).is_err());
+    assert!(env_manager.get_svc_host_port(ServiceID::MEMGRAPH).is_err());
 }
 
 #[test]
@@ -48,7 +48,7 @@ fn test_init_smdb_env() {
 
     let env_manager = SvcEnvManager::new(&ctm, &dnm);
     let endpoint = HostEndpoint::new("example.com", 8080);
-    assert!(env_manager.init_svc_env(ServiceID::SMDB, endpoint).is_ok());
+    assert!(env_manager.init_svc_env(&ServiceID::SMDB, endpoint).is_ok());
 }
 
 #[test]
@@ -66,7 +66,7 @@ fn test_init_cmdb_env() {
 
     let env_manager = SvcEnvManager::new(&ctm, &dnm);
     let endpoint = HostEndpoint::new("example.com", 8080);
-    assert!(env_manager.init_svc_env(ServiceID::CMDB, endpoint).is_ok());
+    assert!(env_manager.init_svc_env(&ServiceID::CMDB, endpoint).is_ok());
 }
 
 #[test]
@@ -85,7 +85,7 @@ fn test_init_memgraph_env() {
     let env_manager = SvcEnvManager::new(&ctm, &dnm);
     let endpoint = HostEndpoint::new("example.com", 8080);
     assert!(env_manager
-        .init_svc_env(ServiceID::MEMGRAPH, endpoint)
+        .init_svc_env(&ServiceID::MEMGRAPH, endpoint)
         .is_ok());
 }
 
@@ -105,10 +105,10 @@ fn test_get_cmdb_host() {
     let env_manager = SvcEnvManager::new(&ctm, &dnm);
 
     let endpoint = HostEndpoint::new("localhost", 7070);
-    assert!(env_manager.init_svc_env(ServiceID::CMDB, endpoint).is_ok());
+    assert!(env_manager.init_svc_env(&ServiceID::CMDB, endpoint).is_ok());
 
-    let host = env_manager.get_svc_host(ServiceID::CMDB).unwrap();
-    assert_eq!(host, "127.0.0.1:7070");
+    let host = env_manager.get_svc_host_port(ServiceID::CMDB).unwrap();
+    assert_eq!(host, ("127.0.0.1".to_string(), 7070));
 }
 
 #[test]
@@ -127,10 +127,10 @@ fn test_get_smdb_host() {
     let env_manager = SvcEnvManager::new(&ctm, &dnm);
 
     let endpoint = HostEndpoint::new("localhost", 8080);
-    assert!(env_manager.init_svc_env(ServiceID::SMDB, endpoint).is_ok());
+    assert!(env_manager.init_svc_env(&ServiceID::SMDB, endpoint).is_ok());
 
-    let host = env_manager.get_svc_host(ServiceID::SMDB).unwrap();
-    assert_eq!(host, "127.0.0.1:8080");
+    let host = env_manager.get_svc_host_port(ServiceID::SMDB).unwrap();
+    assert_eq!(host, ("127.0.0.1".to_string(), 8080));
 }
 
 #[test]
@@ -150,9 +150,9 @@ fn test_get_memgraph_host() {
 
     let endpoint = HostEndpoint::new("localhost", 9090);
     assert!(env_manager
-        .init_svc_env(ServiceID::MEMGRAPH, endpoint)
+        .init_svc_env(&ServiceID::MEMGRAPH, endpoint)
         .is_ok());
 
-    let host = env_manager.get_svc_host(ServiceID::MEMGRAPH).unwrap();
-    assert_eq!(host, "127.0.0.1:9090");
+    let host = env_manager.get_svc_host_port(ServiceID::MEMGRAPH).unwrap();
+    assert_eq!(host, ("127.0.0.1".to_string(), 9090));
 }
