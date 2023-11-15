@@ -12,7 +12,7 @@ use tarpc::tokio_serde::formats::Bincode;
 use common::prelude::{print_utils, ServiceID};
 use components::prelude::DBManager;
 use service::DBGateway;
-use service::{DBGatewayServer, PORT};
+use service::DBGatewayServer;
 
 async fn get_dbm() -> Result<DBManager, Error> {
     let db: Surreal<local::Db> = Surreal::new::<local::Mem>(()).await.unwrap();
@@ -25,13 +25,13 @@ async fn get_dbm() -> Result<DBManager, Error> {
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
     //  add autoconfig to obtain contextual service id, ip and port
+    let port: u16 = 8080;
+    let server_addr = (IpAddr::V4(Ipv4Addr::LOCALHOST), port);
 
     // Build a new db manager
     let dbm = get_dbm().await.unwrap();
 
-    print_utils::print_start_header(&ServiceID::MEMGRAPH, PORT);
-
-    let server_addr = (IpAddr::V4(Ipv4Addr::LOCALHOST), PORT);
+    print_utils::print_start_header(&ServiceID::MEMGRAPH, port);
 
     // JSON transport is provided by the json_transport tarpc module. It makes it easy
     // to start up a serde-powered json serialization strategy over TCP.
