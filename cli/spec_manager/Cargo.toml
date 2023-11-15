@@ -15,8 +15,8 @@ path = "../../common"
 version = "0.1.0"
 
 
-[dependencies.db_gateway_client]
-path = "../../clients/db_gateway_client"
+[dependencies.dbgw_client]
+path = "../../clients/dbgw_client"
 version = "0.1.0"
 
 

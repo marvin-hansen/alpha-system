@@ -80,15 +80,30 @@ impl<'l> SvcEnvManager<'l> {
         match svc_id {
             ServiceID::CMDB => {
                 self.is_svc_env_initialized(ServiceID::CMDB);
-                self.get_host(self.cmdb_env.borrow().as_ref().expect("Failed to get cmdb host and port"))
+                self.get_host(
+                    self.cmdb_env
+                        .borrow()
+                        .as_ref()
+                        .expect("Failed to get cmdb host and port"),
+                )
             }
             ServiceID::SMDB => {
                 self.is_svc_env_initialized(ServiceID::SMDB);
-                self.get_host(self.smdb_env.borrow().as_ref().expect("Failed to get smdb host and port"))
+                self.get_host(
+                    self.smdb_env
+                        .borrow()
+                        .as_ref()
+                        .expect("Failed to get smdb host and port"),
+                )
             }
             ServiceID::DBGW => {
                 self.is_svc_env_initialized(ServiceID::DBGW);
-                self.get_host(self.dbgw_env.borrow().as_ref().expect("Failed to get dbgw host and port"))
+                self.get_host(
+                    self.dbgw_env
+                        .borrow()
+                        .as_ref()
+                        .expect("Failed to get dbgw host and port"),
+                )
             }
             ServiceID::Default => Err(InitError(format!("Service {:?} is not supported", svc_id))),
         }
@@ -108,7 +123,10 @@ impl<'l> SvcEnvManager<'l> {
     // If the environment type is cluster, it returns the hostname of the service running in the cluster.
     // If the environment type is unknown, it returns an error.
     fn get_host(&self, svc_env_config: &SvcEnvConfig) -> Result<(String, u16), InitError> {
-        let port: u16 = svc_env_config.port().parse().expect("Failed to parse port from config");
+        let port: u16 = svc_env_config
+            .port()
+            .parse()
+            .expect("Failed to parse port from config");
 
         let host = match self.ctx_manager.env_type() {
             EnvironmentType::LOCAL => svc_env_config.local_host().to_string(),

@@ -1,5 +1,5 @@
 use common::prelude::ServiceID;
-use db_gateway_client::DBGatewayClient;
+use dbgw_client::DBGatewayClient;
 use specs::services::get_all_service_configs;
 
 use crate::types::ServiceOP;

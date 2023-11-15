@@ -2,16 +2,18 @@ use std::net::IpAddr;
 use std::str::FromStr;
 
 use futures::{future, prelude::*};
+use surrealdb::engine::local;
+use surrealdb::{Error, Surreal};
 use tarpc::server;
 use tarpc::server::incoming::Incoming;
 use tarpc::server::Channel;
 use tarpc::tokio_serde::formats::Bincode;
 
 use common::prelude::{print_utils, ServiceID};
-use components::prelude::{CfgManager, CtxManager, DnsManager, ServiceManager, SvcEnvManager};
+use components::prelude::{
+    CfgManager, CtxManager, DBManager, DnsManager, ServiceManager, SvcEnvManager,
+};
 use service::service::{DBGateway, DBGatewayServer};
-
-mod utils;
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
@@ -20,9 +22,8 @@ async fn main() -> anyhow::Result<()> {
     let dns_manager = DnsManager::new(&ctx_manager);
     let cfg_manager = CfgManager::new(svc_id, &ctx_manager);
     let svm_manager = SvcEnvManager::new(&ctx_manager, &dns_manager);
-
-    // service_manager configures ip and port fully automatically relative to the detected context.
     let service_manager = ServiceManager::new_offline_service_manager(&cfg_manager, &svm_manager);
+    // service_manager configures ip and port automatically relative to the detected context.
     service_manager
         .init_service(&svc_id)
         .expect("Failed to init service autoconfig");
@@ -32,10 +33,9 @@ async fn main() -> anyhow::Result<()> {
     let ip = IpAddr::from_str(&host_ip).expect("Failed to parse host ip");
     let server_addr = (ip, port);
 
-    // Build a new db manager
-    let dbm = utils::get_dbm().await.unwrap();
+    let dbm = get_dbm().await.unwrap();
 
-    print_utils::print_start_header(&svc_id, port);
+    print_utils::print_start_header(&svc_id, server_addr.1);
 
     // JSON transport is provided by the json_transport tarpc module. It makes it easy
     // to start up a serde-powered json serialization strategy over TCP.
@@ -58,4 +58,12 @@ async fn main() -> anyhow::Result<()> {
         .await;
 
     Ok(())
+}
+
+pub async fn get_dbm() -> Result<DBManager, Error> {
+    let db: Surreal<local::Db> = Surreal::new::<local::Mem>(()).await.unwrap();
+    db.use_ns("test").use_db("test").await.unwrap();
+    let dbm = DBManager::new(db);
+
+    Ok(dbm)
 }

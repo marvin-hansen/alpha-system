@@ -1,5 +1,5 @@
 use common::prelude::HostEndpoint;
-use db_gateway_client::DBGatewayClient;
+use dbgw_client::DBGatewayClient;
 
 use crate::types::SpecType::ServiceConfig;
 use crate::types::{ServiceOP, SpecType};

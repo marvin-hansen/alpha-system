@@ -112,7 +112,6 @@ fn test_init_services() {
 
 #[test]
 fn test_get_service_host_port() {
-
     // Make this conditional to run in CI
     env::set_var("ENV", "LOCAL");
     env::set_var("DNS_SERVER", "9.9.9.9");
@@ -144,7 +143,9 @@ fn test_get_service_host_port() {
     let dependencies = vec![ServiceID::SMDB];
     service_manager.init_services(dependencies).unwrap();
     assert!(service_manager.is_service_initialized(ServiceID::SMDB));
-    assert!(service_manager.get_service_host_port(ServiceID::SMDB).is_ok());
+    assert!(service_manager
+        .get_service_host_port(ServiceID::SMDB)
+        .is_ok());
 
     // assert_eq!(
     //     service_manager.get_service_host_port(ServiceID::SMDB).unwrap(),
@@ -154,7 +155,9 @@ fn test_get_service_host_port() {
     let dependencies = vec![ServiceID::DBGW];
     service_manager.init_services(dependencies).unwrap();
     assert!(service_manager.is_service_initialized(ServiceID::DBGW));
-    assert!(service_manager.get_service_host_port(ServiceID::DBGW).is_ok());
+    assert!(service_manager
+        .get_service_host_port(ServiceID::DBGW)
+        .is_ok());
 
     // assert_eq!(
     //     service_manager.get_service_host_port(ServiceID::MEMGRAPH).unwrap(),
