@@ -22,7 +22,12 @@ impl CtxManager {
     /// Creates a new CtxManager instance.
     pub fn new() -> Self {
         let env_type = get_env_type();
-        let int_dns_server = get_int_dns_server();
+
+        let int_dns_server = if env_type != EnvironmentType::UnknownEnv {
+            get_int_dns_server()
+        } else {
+            None
+        };
         Self {
             env_type,
             int_dns_server,

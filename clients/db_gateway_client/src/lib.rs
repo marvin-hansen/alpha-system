@@ -5,7 +5,7 @@ use tarpc::client;
 use tarpc::tokio_serde::formats::Bincode;
 
 use common::prelude::HostEndpoint;
-use service::DBGatewayClient as DBGWClient;
+use service::service::DBGatewayClient as DBGWClient;
 
 mod svc_gw;
 

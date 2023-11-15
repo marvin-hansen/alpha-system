@@ -1,35 +1,36 @@
-use std::net::{IpAddr, Ipv4Addr};
+use std::net::IpAddr;
+use std::str::FromStr;
 
 use futures::{future, prelude::*};
-use surrealdb::engine::local;
-use surrealdb::Error;
-use surrealdb::Surreal;
 use tarpc::server;
-use tarpc::server::incoming::Incoming;
 use tarpc::server::Channel;
+use tarpc::server::incoming::Incoming;
 use tarpc::tokio_serde::formats::Bincode;
 
 use common::prelude::{print_utils, ServiceID};
-use components::prelude::DBManager;
-use service::DBGateway;
-use service::DBGatewayServer;
+use components::prelude::{CfgManager, CtxManager, DnsManager, ServiceManager, SvcEnvManager};
+use service::service::{DBGateway, DBGatewayServer};
 
-async fn get_dbm() -> Result<DBManager, Error> {
-    let db: Surreal<local::Db> = Surreal::new::<local::Mem>(()).await.unwrap();
-    db.use_ns("test").use_db("test").await.unwrap();
-    let dbm = DBManager::new(db);
-
-    Ok(dbm)
-}
+mod utils;
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
-    //  add autoconfig to obtain contextual service id, ip and port
-    let port: u16 = 8080;
-    let server_addr = (IpAddr::V4(Ipv4Addr::LOCALHOST), port);
+    let svc_id = ServiceID::MEMGRAPH;
+    let ctx_manager = CtxManager::new();
+    let dns_manager = DnsManager::new(&ctx_manager);
+    let cfg_manager = CfgManager::new(svc_id, &ctx_manager);
+    let svm_manager = SvcEnvManager::new(&ctx_manager, &dns_manager);
+    let service_manager = ServiceManager::new_offline_service_manager(&cfg_manager, &svm_manager);
+
+    // service_manager configures ip and port fully automatically for
+    // relative to the detected context.
+    service_manager.init_service(&svc_id).expect("Failed to init service autoconfig");
+    let (host_ip, port) = service_manager.get_service_host_port(svc_id).expect("Failed to get host and port");
+    let ip = IpAddr::from_str(&host_ip).expect("Failed to parse host ip");
+    let server_addr = (ip, port);
 
     // Build a new db manager
-    let dbm = get_dbm().await.unwrap();
+    let dbm = utils::get_dbm().await.unwrap();
 
     print_utils::print_start_header(&ServiceID::MEMGRAPH, port);
 
@@ -52,8 +53,6 @@ async fn main() -> anyhow::Result<()> {
         .buffer_unordered(10)
         .for_each(|_| async {})
         .await;
-
-    println!("Tarpc Example Server Stopped");
 
     Ok(())
 }

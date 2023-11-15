@@ -1,5 +1,5 @@
 use common::errors::InitError;
-use common::prelude::{MainConfig, ServiceConfig, ServiceID};
+use common::prelude::{Endpoint, MainConfig, ServiceConfig, ServiceID};
 
 use crate::prelude::CfgManager;
 use crate::prelude::SvcEnvManager;
@@ -55,26 +55,29 @@ impl<'l> ServiceManager<'l> {
     pub fn get_service_config(&self) -> ServiceConfig {
         self.cfg_manager.svc_config()
     }
-}
 
-impl<'l> ServiceManager<'l> {
-    pub fn get_dependency_svc_host(&self, svc_id: ServiceID) -> Result<String, InitError> {
-        self.svm_manager.get_svc_host(svc_id)
+    pub fn get_service_endpoint(&self) -> Endpoint {
+        self.cfg_manager.svc_config().endpoint()
     }
 
-    pub fn is_service_dependency_initialized(&self, dependency: ServiceID) -> bool {
+    pub fn get_service_host_port(&self, svc_id: ServiceID) -> Result<(String, u16), InitError> {
+        self.svm_manager.get_svc_host_port(svc_id)
+    }
+
+    pub fn is_service_initialized(&self, dependency: ServiceID) -> bool {
         self.svm_manager.is_svc_env_initialized(dependency)
     }
 
-    pub fn init_service_dependencies(&self, dependencies: Vec<ServiceID>) -> Result<(), InitError> {
+    pub fn init_services(&self, dependencies: Vec<ServiceID>) -> Result<(), InitError> {
         for svc_id in dependencies {
-            self.init_service(svc_id)?
+            self.init_service(&svc_id)
+                .expect("Failed to initialize service");
         }
 
         Ok(())
     }
 
-    fn init_service(&self, svc_id: ServiceID) -> Result<(), InitError> {
+    pub fn init_service(&self, svc_id: &ServiceID) -> Result<(), InitError> {
         let svc_config = self.cfg_manager.get_svc_config(svc_id).to_owned();
         let binding = svc_config.endpoint();
         let endpoint = binding.host_endpoint();

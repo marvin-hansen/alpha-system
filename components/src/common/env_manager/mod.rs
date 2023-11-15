@@ -48,7 +48,7 @@ impl<'l> SvcEnvManager<'l> {
     /// `Result<(), InitError>` containing a
     /// * `InitError` in case of an error
     /// * `Ok(())` if the service environment was successfully initialized.
-    pub fn init_svc_env(&self, svc_id: ServiceID, endpoint: HostEndpoint) -> Result<(), InitError> {
+    pub fn init_svc_env(&self, svc_id: &ServiceID, endpoint: HostEndpoint) -> Result<(), InitError> {
         match svc_id {
             ServiceID::CMDB => self.init_cmdb_env(endpoint),
             ServiceID::SMDB => self.init_smdb_env(endpoint),
@@ -96,7 +96,7 @@ impl<'l> SvcEnvManager<'l> {
     ///  If the environment type is cluster, it returns the hostname of the service running in the cluster.
     ///  If the environment type is unknown, it returns an error.
     /// The function checks if the service is initialized, and if not, it returns an InitError.
-    pub fn get_svc_host(&self, svc_id: ServiceID) -> Result<String, InitError> {
+    pub fn get_svc_host_port(&self, svc_id: ServiceID) -> Result<(String, u16), InitError> {
         match svc_id {
             ServiceID::CMDB => self.get_cmdb_host(),
             ServiceID::SMDB => self.get_smdb_host(),
@@ -105,7 +105,7 @@ impl<'l> SvcEnvManager<'l> {
         }
     }
 
-    fn get_cmdb_host(&self) -> Result<String, InitError> {
+    fn get_cmdb_host(&self) -> Result<(String, u16), InitError> {
         if self.cmdb_env.borrow().is_none() {
             Err(InitError(
                 "CMDB Env. Not Initialized. Call init_cmdb_env()".to_string(),
@@ -115,7 +115,7 @@ impl<'l> SvcEnvManager<'l> {
         }
     }
 
-    fn get_smdb_host(&self) -> Result<String, InitError> {
+    fn get_smdb_host(&self) -> Result<(String, u16), InitError> {
         if self.smdb_env.borrow().is_none() {
             Err(InitError(
                 "CMDB Env. Not Initialized. Call init_smdb_env()".to_string(),
@@ -125,7 +125,7 @@ impl<'l> SvcEnvManager<'l> {
         }
     }
 
-    fn get_memgraph_host(&self) -> Result<String, InitError> {
+    fn get_memgraph_host(&self) -> Result<(String, u16), InitError> {
         if self.memgraph_env.borrow().is_none() {
             Err(InitError(
                 "CMDB Env. Not Initialized. Call init_memgraph_env()".to_string(),
@@ -135,34 +135,36 @@ impl<'l> SvcEnvManager<'l> {
         }
     }
 
-    // Returns the hostname of the service based on the environment type.
+
+    // Returns the hostname and port of the service based on the environment type.
     // If the environment type is local, it returns the hostname of the service running locally.
     // If the environment type is cluster, it returns the hostname of the service running in the cluster.
     // If the environment type is unknown, it returns an error.
-    fn get_host(&self, svc_env_config: &SvcEnvConfig) -> Result<String, InitError> {
-        let port = svc_env_config.port();
-        let host = match self.ctx_manager.env_type() {
-            EnvironmentType::LOCAL => Ok(format!("{}:{}", svc_env_config.local_host(), port)),
+    fn get_host(&self, svc_env_config: &SvcEnvConfig) -> Result<(String, u16), InitError> {
+        let port: u16 = svc_env_config.port().parse().unwrap();
 
-            EnvironmentType::CI => Ok(format!("{}:{}", svc_env_config.local_host(), port)),
+        let host = match self.ctx_manager.env_type()
+        {
+            EnvironmentType::LOCAL => {
+                svc_env_config.local_host().to_string()
+            }
+
+            EnvironmentType::CI => {
+                svc_env_config.ci_host().to_string()
+            }
 
             EnvironmentType::CLUSTER => {
-                let host = match self
-                    .dns_manager
+                let cluster_host = self.dns_manager
                     .resolve_dns(svc_env_config.cluster_host(), true)
-                {
-                    Ok(host) => host,
-                    Err(e) => return Err(InitError(e.to_string())),
-                };
+                    .expect("Failed to resolve DNS");
 
-                let host_uri = format!("{}:{}", host, port);
-
-                Ok(host_uri)
+                cluster_host.to_string()
             }
-            EnvironmentType::UnknownEnv => Err(InitError("Unknown Environment".to_string())),
-        }
-        .expect("Failed to get host");
+            EnvironmentType::UnknownEnv => {
+                svc_env_config.local_host().to_string()
+            }
+        };
 
-        Ok(host.to_string())
+        Ok((host, port))
     }
 }

@@ -32,7 +32,7 @@ impl<'l> CfgManager<'l> {
 }
 
 impl<'l> CfgManager<'l> {
-    fn service_config(&self, svc: ServiceID) -> ServiceConfig {
+    fn service_config(&self, svc: &ServiceID) -> ServiceConfig {
         match svc {
             ServiceID::MEMGRAPH => memgraph_service_config(),
             ServiceID::SMDB => smdb_service_config(),
@@ -53,13 +53,13 @@ impl<'l> CfgManager<'l> {
     }
     /// Returns a reference to the main configuration for the service.
     pub fn main_config(&self) -> MainConfig {
-        self.service_config(self.svc).clone().main_config()
+        self.service_config(&self.svc).clone().main_config()
     }
     /// Returns a reference to the service-specific configuration.
     pub fn svc_config(&self) -> ServiceConfig {
-        self.service_config(self.svc)
+        self.service_config(&self.svc)
     }
-    pub fn get_svc_config(&self, svc_id: ServiceID) -> ServiceConfig {
+    pub fn get_svc_config(&self, svc_id: &ServiceID) -> ServiceConfig {
         self.service_config(svc_id)
     }
 }
