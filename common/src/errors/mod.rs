@@ -35,3 +35,14 @@ impl fmt::Display for SMDBError {
         write!(f, "SMDBError: {}", self.0)
     }
 }
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct CMDBError(pub String);
+
+impl Error for CMDBError {}
+
+impl fmt::Display for CMDBError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "CMDBError: {}", self.0)
+    }
+}

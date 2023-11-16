@@ -1,3 +1,4 @@
+pub use crate::errors::CMDBError;
 // Errors
 pub use crate::errors::DBGatewayError;
 pub use crate::errors::InitError;
@@ -15,3 +16,4 @@ pub use crate::types::config_types::service_type::*;
 pub use crate::types::config_types::svc_env_config::*;
 // utils
 pub use crate::utils::print_utils;
+
