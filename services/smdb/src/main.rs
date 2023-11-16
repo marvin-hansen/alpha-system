@@ -21,20 +21,29 @@ async fn main() -> anyhow::Result<()> {
     let cfg_manager = CfgManager::new(svc_id, &ctx_manager);
     let svm_manager = SvcEnvManager::new(&ctx_manager, &dns_manager);
     let service_manager = ServiceManager::new_offline_service_manager(&cfg_manager, &svm_manager);
-    // service_manager configures ip and port automatically relative to the detected context.
-    let (host_ip, port) = service_manager
-        .get_service_host_port(svc_id)
-        .expect("Failed to get host and port");
-    let ip = IpAddr::from_str(&host_ip).expect("Failed to parse host ip");
-    let server_addr = (ip, port);
+
+    // TODO Check if DBGW is online, and if not, abort and report it's missing.
+    //
 
     // pull DBGW endpoint from auto config
     let (dbgw_host, dbgw_port) = service_manager
         .get_service_host_port(DBGW)
-        .expect("Failed to get host and port");
+        .expect("Failed to get host and port for DBGW");
 
     let dbgw_endpoint = HostEndpoint::new(&dbgw_host, dbgw_port);
     let dbgw_lient = DBGatewayClient::new(dbgw_endpoint).await;
+
+    // service_manager configures ip and port automatically relative to the detected context.
+    let (host_ip, port) = service_manager
+        .get_service_host_port(svc_id)
+        .expect("SMDB: Failed to get host and port");
+
+    let ip = IpAddr::from_str(&host_ip).expect("SMDB: Failed to parse host ip");
+    let server_addr = (ip, port);
+
+    // TODO Set SMDB service to online
+    //
+
 
     print_utils::print_start_header(&svc_id, server_addr.1);
 
