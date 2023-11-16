@@ -57,10 +57,8 @@ impl<'l> ServiceManager<'l> {
 
     pub fn get_service_host_port(&self, svc_id: ServiceID) -> Result<(String, u16), InitError> {
         if !self.is_service_initialized(&svc_id) {
-            match self.init_service(&svc_id) {
-                Err(e) => return Err(e),
-                _ => {}
-            }
+            self.init_service(&svc_id)
+                .expect("Failed to initialize service");
         }
 
         self.svm_manager.get_svc_host_port(svc_id)

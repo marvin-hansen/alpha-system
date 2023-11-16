@@ -3,12 +3,12 @@ use std::str::FromStr;
 
 use futures::{future, prelude::*};
 use tarpc::server;
-use tarpc::server::Channel;
 use tarpc::server::incoming::Incoming;
+use tarpc::server::Channel;
 use tarpc::tokio_serde::formats::Bincode;
 
-use common::prelude::{HostEndpoint, print_utils, ServiceID};
 use common::prelude::ServiceID::DBGW;
+use common::prelude::{print_utils, HostEndpoint, ServiceID};
 use components::prelude::{CfgManager, CtxManager, DnsManager, ServiceManager, SvcEnvManager};
 use dbgw_client::DBGatewayClient;
 use smdb_service::service::{SMDBServer, SMDBService};
@@ -43,7 +43,6 @@ async fn main() -> anyhow::Result<()> {
 
     // TODO Set SMDB service to online
     //
-
 
     print_utils::print_start_header(&svc_id, server_addr.1);
 

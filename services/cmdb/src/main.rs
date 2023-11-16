@@ -3,13 +3,13 @@ use std::str::FromStr;
 
 use futures::{future, prelude::*};
 use tarpc::server;
-use tarpc::server::Channel;
 use tarpc::server::incoming::Incoming;
+use tarpc::server::Channel;
 use tarpc::tokio_serde::formats::Bincode;
 
 use cmdb_service::service::{CMDBServer, CMDBService};
-use common::prelude::{HostEndpoint, print_utils, ServiceID};
 use common::prelude::ServiceID::DBGW;
+use common::prelude::{print_utils, HostEndpoint, ServiceID};
 use components::prelude::{CfgManager, CtxManager, DnsManager, ServiceManager, SvcEnvManager};
 use dbgw_client::DBGatewayClient;
 
@@ -35,13 +35,11 @@ async fn main() -> anyhow::Result<()> {
     let dbgw_endpoint = HostEndpoint::new(&dbgw_host, dbgw_port);
     let dbgw_lient = DBGatewayClient::new(dbgw_endpoint).await;
 
-
     // service_manager configures ip and port automatically relative to the detected context.
     let (host_ip, port) = service_manager
         .get_service_host_port(svc_id)
         .expect("CMDB: Failed to get host and port");
-    let ip = IpAddr::from_str(&host_ip)
-        .expect("CMDB: Failed to parse host ip");
+    let ip = IpAddr::from_str(&host_ip).expect("CMDB: Failed to parse host ip");
     let server_addr = (ip, port);
 
     // TODO Set CMDB service to online

@@ -9,7 +9,6 @@ use common::prelude::HostEndpoint;
 
 mod svc_cmdb;
 
-
 pub struct CMDBClient {
     client: CMDBServiceClient,
 }

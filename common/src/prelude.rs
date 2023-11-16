@@ -16,4 +16,3 @@ pub use crate::types::config_types::service_type::*;
 pub use crate::types::config_types::svc_env_config::*;
 // utils
 pub use crate::utils::print_utils;
-

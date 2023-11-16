@@ -2,11 +2,11 @@ use std::net::IpAddr;
 use std::str::FromStr;
 
 use futures::{future, prelude::*};
-use surrealdb::{Error, Surreal};
 use surrealdb::engine::local;
+use surrealdb::{Error, Surreal};
 use tarpc::server;
-use tarpc::server::Channel;
 use tarpc::server::incoming::Incoming;
+use tarpc::server::Channel;
 use tarpc::tokio_serde::formats::Bincode;
 
 use common::prelude::{print_utils, ServiceID};
@@ -29,8 +29,7 @@ async fn main() -> anyhow::Result<()> {
         .get_service_host_port(svc_id)
         .expect("DBGW: Failed to get host and port");
 
-    let ip = IpAddr::from_str(&host_ip)
-        .expect("DBGW: Failed to parse host ip");
+    let ip = IpAddr::from_str(&host_ip).expect("DBGW: Failed to parse host ip");
 
     let server_addr = (ip, port);
 
