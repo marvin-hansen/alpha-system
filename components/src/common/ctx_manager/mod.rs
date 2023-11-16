@@ -1,5 +1,6 @@
 use std::env;
 use std::fmt::{Display, Formatter};
+use std::path::Path;
 
 use common::prelude::EnvironmentType;
 
@@ -23,8 +24,8 @@ impl CtxManager {
     pub fn new() -> Self {
         let env_type = get_env_type();
 
-        let int_dns_server = if env_type != EnvironmentType::UnknownEnv {
-            get_int_dns_server()
+        let int_dns_server = if env_type == EnvironmentType::CLUSTER {
+            get_int_cluster_dns_server()
         } else {
             None
         };
@@ -56,11 +57,24 @@ impl Display for CtxManager {
     }
 }
 
+// Check if the environment variable is set.
+// If not, check if an .env file is present.
+// If so, return local environment as the file only exists locally.
+// If not, return UnknownEnv.
+// Note, on Mac OS, shell environment variables are sanitized (erased) by default for security reasons
+// thus the presence of an .env file is used to identify a local environment.
 fn get_env_type() -> EnvironmentType {
-    // Check if the environment variable is set. If not, return the default value UnknownEnv.
     let env_var = match env::var("ENV") {
         Ok(val) => val,
-        Err(_) => return EnvironmentType::UnknownEnv,
+        Err(_) => {
+            let file_path = ".env";
+            let path = Path::new(file_path);
+            return if path.exists() {
+                EnvironmentType::LOCAL
+            } else {
+                EnvironmentType::UnknownEnv
+            };
+        }
     };
 
     // Convert the environment variable to an EnvironmentType enum value.
@@ -73,7 +87,7 @@ fn get_env_type() -> EnvironmentType {
     };
 }
 
-fn get_int_dns_server() -> Option<String> {
+fn get_int_cluster_dns_server() -> Option<String> {
     // Check if the environment variable is set. If not, return the default value UnknownEnv.
     let dns_server_var = match env::var("DNS_SERVER") {
         Ok(val) => val,

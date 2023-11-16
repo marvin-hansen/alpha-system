@@ -139,7 +139,9 @@ impl<'l> SvcEnvManager<'l> {
 
                 cluster_host.to_string()
             }
-            EnvironmentType::UnknownEnv => svc_env_config.local_host().to_string(),
+            EnvironmentType::UnknownEnv => {
+                return Err(InitError("Unknown Environment".to_string()));
+            }
         };
 
         Ok((host, port))
