@@ -2,11 +2,11 @@ use std::net::IpAddr;
 use std::str::FromStr;
 
 use futures::{future, prelude::*};
-use surrealdb::{Error, Surreal};
 use surrealdb::engine::local;
+use surrealdb::{Error, Surreal};
 use tarpc::server;
-use tarpc::server::Channel;
 use tarpc::server::incoming::Incoming;
+use tarpc::server::Channel;
 use tarpc::tokio_serde::formats::Bincode;
 
 use common::prelude::{print_utils, ServiceID};

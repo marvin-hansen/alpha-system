@@ -1,7 +1,6 @@
 use tarpc::context::Context;
 
-use common::errors::SMDBError;
-use common::prelude::ServiceID;
+use common::prelude::{SMDBError, ServiceID};
 use dbgw_client::DBGatewayClient;
 
 #[tarpc::service]
@@ -25,17 +24,43 @@ impl SMDBServer {
 
 #[tarpc::server]
 impl SMDBService for SMDBServer {
-    async fn check_if_service_id_exists(self, _: Context, id: ServiceID) -> Result<bool, SMDBError> {
-        Ok(true)
+    async fn check_if_service_id_exists(
+        self,
+        _: Context,
+        id: ServiceID,
+    ) -> Result<bool, SMDBError> {
+        let res = self.dbgw.check_if_service_id_exists(id).await;
+        match res {
+            Ok(res) => Ok(res),
+            Err(e) => Err(SMDBError(e.to_string())),
+        }
     }
 
-    async fn check_if_services_exists(self, _: Context, services: Vec<ServiceID>) -> Result<bool, SMDBError> {
-        Ok(true)
+    async fn check_if_services_exists(
+        self,
+        _: Context,
+        services: Vec<ServiceID>,
+    ) -> Result<bool, SMDBError> {
+        let res = self.dbgw.check_if_services_exists(services).await;
+        match res {
+            Ok(res) => Ok(res),
+            Err(e) => Err(SMDBError(e.to_string())),
+        }
     }
+
     async fn set_service_online(self, _: Context, id: ServiceID) -> Result<bool, SMDBError> {
-        Ok(true)
+        let res = self.dbgw.set_service_online(id, true).await;
+        match res {
+            Ok(res) => Ok(res),
+            Err(e) => Err(SMDBError(e.to_string())),
+        }
     }
+
     async fn set_service_offline(self, _: Context, id: ServiceID) -> Result<bool, SMDBError> {
-        Ok(true)
+        let res = self.dbgw.set_service_online(id, false).await;
+        match res {
+            Ok(res) => Ok(res),
+            Err(e) => Err(SMDBError(e.to_string())),
+        }
     }
 }

@@ -1,6 +1,7 @@
-pub use crate::errors::DBGatewayError;
 // Errors
+pub use crate::errors::DBGatewayError;
 pub use crate::errors::InitError;
+pub use crate::errors::SMDBError;
 pub use crate::types::config_types::db_config::*;
 // Types
 pub use crate::types::config_types::encoding::*;
