@@ -27,7 +27,13 @@ serde = { version = "1", features = ["derive"] }
 surrealdb = { version = "1", features = ["kv-mem"] }
 tarpc = { version = "0.33", features = ["full"] }
 tokio = { version = "1", features = ["macros", "net", "rt-multi-thread", "signal"] }
-
+anyhow = "1.0"
+log = "0.4"
+futures = "0.3"
+rand = "0.8"
+tracing = { version = "0.1" }
+tracing-opentelemetry = "0.22.0"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 
 # Optimize all crates
 [profile.release]

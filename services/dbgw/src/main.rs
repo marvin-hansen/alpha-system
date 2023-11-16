@@ -2,11 +2,11 @@ use std::net::IpAddr;
 use std::str::FromStr;
 
 use futures::{future, prelude::*};
-use surrealdb::engine::local;
 use surrealdb::{Error, Surreal};
+use surrealdb::engine::local;
 use tarpc::server;
-use tarpc::server::incoming::Incoming;
 use tarpc::server::Channel;
+use tarpc::server::incoming::Incoming;
 use tarpc::tokio_serde::formats::Bincode;
 
 use common::prelude::{print_utils, ServiceID};
@@ -33,12 +33,12 @@ async fn main() -> anyhow::Result<()> {
     let ip = IpAddr::from_str(&host_ip).expect("Failed to parse host ip");
     let server_addr = (ip, port);
 
+    // pull dbm config from autoconfig
     let dbm = get_dbm().await.unwrap();
 
     print_utils::print_start_header(&svc_id, server_addr.1);
 
-    // JSON transport is provided by the json_transport tarpc module. It makes it easy
-    // to start up a serde-powered json serialization strategy over TCP.
+    // JSON transport is provided by the json_transport tarpc module.
     let mut listener = tarpc::serde_transport::tcp::listen(&server_addr, Bincode::default).await?;
     listener.config_mut().max_frame_length(usize::MAX);
     listener

@@ -36,11 +36,10 @@ serde = { workspace = true }
 surrealdb = { workspace = true }
 tarpc = { workspace = true }
 tokio = { workspace = true }
-#
-anyhow = "1.0"
-log = "0.4"
-futures = "0.3"
-rand = "0.8"
-tracing = { version = "0.1" }
-tracing-opentelemetry = "0.22.0"
-tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+anyhow = { workspace = true }
+log = { workspace = true }
+futures = { workspace = true }
+rand = { workspace = true }
+tracing = { workspace = true }
+tracing-opentelemetry = { workspace = true }
+tracing-subscriber = { workspace = true }

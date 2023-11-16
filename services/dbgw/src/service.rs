@@ -5,8 +5,7 @@ use common::errors::DBGatewayError;
 use common::prelude::{ServiceConfig, ServiceID};
 use components::prelude::DBManager;
 
-/// This is the service definition. It looks a lot like a trait definition.
-/// It defines one RPC, hello, which takes one arg, name, and returns a String.
+/// Service definition. Client and server are generated from this trait.
 #[tarpc::service]
 pub trait DBGateway {
     async fn create_service(data: ServiceConfig) -> Result<bool, DBGatewayError>;

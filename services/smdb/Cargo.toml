@@ -9,4 +9,41 @@ authors.workspace = true
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[[bin]]
+name = "smdb"
+path = "src/main.rs"
+
+
+[lib]
+name = "service"
+path = "src/lib.rs"
+
+
+[dependencies.common]
+path = "../../common"
+version = "0.1.0"
+
+
+[dependencies.components]
+path = "../../components"
+version = "0.1.0"
+
+
+[dependencies.dbgw_client]
+path = "../../clients/dbgw_client"
+version = "0.1.0"
+
+
 [dependencies]
+serde_json = { workspace = true }
+serde = { workspace = true }
+surrealdb = { workspace = true }
+tarpc = { workspace = true }
+tokio = { workspace = true }
+anyhow = { workspace = true }
+log = { workspace = true }
+futures = { workspace = true }
+rand = { workspace = true }
+tracing = { workspace = true }
+tracing-opentelemetry = { workspace = true }
+tracing-subscriber = { workspace = true }

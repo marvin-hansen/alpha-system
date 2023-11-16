@@ -21,6 +21,17 @@ impl Error for DBGatewayError {}
 
 impl fmt::Display for DBGatewayError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "MemGraphError: {}", self.0)
+        write!(f, "DBGatewayError: {}", self.0)
+    }
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct SMDBError(pub String);
+
+impl Error for SMDBError {}
+
+impl fmt::Display for SMDBError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "SMDBError: {}", self.0)
     }
 }

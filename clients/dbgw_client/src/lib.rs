@@ -9,6 +9,7 @@ use service::service::DBGatewayClient as DBGWClient;
 
 mod svc_gw;
 
+#[derive(Clone)]
 pub struct DBGatewayClient {
     client: DBGWClient,
 }
