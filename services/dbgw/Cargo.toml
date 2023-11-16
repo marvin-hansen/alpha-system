@@ -16,7 +16,7 @@ path = "src/main.rs"
 
 
 [lib]
-name = "service"
+name = "dbgw_service"
 path = "src/lib.rs"
 
 

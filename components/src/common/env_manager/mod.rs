@@ -79,7 +79,7 @@ impl<'l> SvcEnvManager<'l> {
     pub fn get_svc_host_port(&self, svc_id: ServiceID) -> Result<(String, u16), InitError> {
         match svc_id {
             ServiceID::CMDB => {
-                self.is_svc_env_initialized(ServiceID::CMDB);
+                self.is_svc_env_initialized(&svc_id);
                 self.get_host(
                     self.cmdb_env
                         .borrow()
@@ -88,7 +88,7 @@ impl<'l> SvcEnvManager<'l> {
                 )
             }
             ServiceID::SMDB => {
-                self.is_svc_env_initialized(ServiceID::SMDB);
+                self.is_svc_env_initialized(&svc_id);
                 self.get_host(
                     self.smdb_env
                         .borrow()
@@ -97,7 +97,7 @@ impl<'l> SvcEnvManager<'l> {
                 )
             }
             ServiceID::DBGW => {
-                self.is_svc_env_initialized(ServiceID::DBGW);
+                self.is_svc_env_initialized(&svc_id);
                 self.get_host(
                     self.dbgw_env
                         .borrow()
@@ -109,7 +109,7 @@ impl<'l> SvcEnvManager<'l> {
         }
     }
 
-    pub fn is_svc_env_initialized(&self, svc_id: ServiceID) -> bool {
+    pub fn is_svc_env_initialized(&self, svc_id: &ServiceID) -> bool {
         match svc_id {
             ServiceID::CMDB => self.cmdb_env.borrow().is_some(),
             ServiceID::SMDB => self.smdb_env.borrow().is_some(),

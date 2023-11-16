@@ -56,23 +56,23 @@ impl<'l> ServiceManager<'l> {
     }
 
     pub fn get_service_host_port(&self, svc_id: ServiceID) -> Result<(String, u16), InitError> {
+        if !self.is_service_initialized(&svc_id) {
+            match self.init_service(&svc_id) {
+                Err(e) => return Err(e),
+                _ => {}
+            }
+        }
+
         self.svm_manager.get_svc_host_port(svc_id)
     }
+}
 
-    pub fn is_service_initialized(&self, dependency: ServiceID) -> bool {
+impl<'l> ServiceManager<'l> {
+    fn is_service_initialized(&self, dependency: &ServiceID) -> bool {
         self.svm_manager.is_svc_env_initialized(dependency)
     }
 
-    pub fn init_services(&self, dependencies: Vec<ServiceID>) -> Result<(), InitError> {
-        for svc_id in dependencies {
-            self.init_service(&svc_id)
-                .expect("Failed to initialize service");
-        }
-
-        Ok(())
-    }
-
-    pub fn init_service(&self, svc_id: &ServiceID) -> Result<(), InitError> {
+    fn init_service(&self, svc_id: &ServiceID) -> Result<(), InitError> {
         let svc_config = self.cfg_manager.get_svc_config(svc_id).to_owned();
         let binding = svc_config.endpoint();
         let endpoint = binding.host_endpoint();

@@ -2,18 +2,18 @@ use std::net::IpAddr;
 use std::str::FromStr;
 
 use futures::{future, prelude::*};
-use surrealdb::engine::local;
 use surrealdb::{Error, Surreal};
+use surrealdb::engine::local;
 use tarpc::server;
-use tarpc::server::incoming::Incoming;
 use tarpc::server::Channel;
+use tarpc::server::incoming::Incoming;
 use tarpc::tokio_serde::formats::Bincode;
 
 use common::prelude::{print_utils, ServiceID};
 use components::prelude::{
     CfgManager, CtxManager, DBManager, DnsManager, ServiceManager, SvcEnvManager,
 };
-use service::service::{DBGateway, DBGatewayServer};
+use dbgw_service::service::{DBGateway, DBGatewayServer};
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
@@ -24,9 +24,6 @@ async fn main() -> anyhow::Result<()> {
     let svm_manager = SvcEnvManager::new(&ctx_manager, &dns_manager);
     let service_manager = ServiceManager::new_offline_service_manager(&cfg_manager, &svm_manager);
     // service_manager configures ip and port automatically relative to the detected context.
-    service_manager
-        .init_service(&svc_id)
-        .expect("Failed to init service autoconfig");
     let (host_ip, port) = service_manager
         .get_service_host_port(svc_id)
         .expect("Failed to get host and port");

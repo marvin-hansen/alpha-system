@@ -3,16 +3,15 @@ use std::str::FromStr;
 
 use futures::{future, prelude::*};
 use tarpc::server;
-use tarpc::server::incoming::Incoming;
 use tarpc::server::Channel;
+use tarpc::server::incoming::Incoming;
 use tarpc::tokio_serde::formats::Bincode;
 
+use common::prelude::{HostEndpoint, print_utils, ServiceID};
 use common::prelude::ServiceID::DBGW;
-use common::prelude::{print_utils, HostEndpoint, ServiceID};
 use components::prelude::{CfgManager, CtxManager, DnsManager, ServiceManager, SvcEnvManager};
 use dbgw_client::DBGatewayClient;
-use service::service::SMDBServer;
-use service::service::SMDBService;
+use smdb_service::service::{SMDBServer, SMDBService};
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
@@ -23,9 +22,6 @@ async fn main() -> anyhow::Result<()> {
     let svm_manager = SvcEnvManager::new(&ctx_manager, &dns_manager);
     let service_manager = ServiceManager::new_offline_service_manager(&cfg_manager, &svm_manager);
     // service_manager configures ip and port automatically relative to the detected context.
-    service_manager
-        .init_service(&svc_id)
-        .expect("Failed to init service autoconfig");
     let (host_ip, port) = service_manager
         .get_service_host_port(svc_id)
         .expect("Failed to get host and port");
@@ -33,10 +29,6 @@ async fn main() -> anyhow::Result<()> {
     let server_addr = (ip, port);
 
     // pull DBGW endpoint from auto config
-    service_manager
-        .init_service(&DBGW)
-        .expect("Failed to init service autoconfig");
-
     let (dbgw_host, dbgw_port) = service_manager
         .get_service_host_port(DBGW)
         .expect("Failed to get host and port");

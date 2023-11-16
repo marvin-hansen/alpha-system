@@ -5,7 +5,7 @@ use tarpc::client;
 use tarpc::tokio_serde::formats::Bincode;
 
 use common::prelude::HostEndpoint;
-use service::service::SMDBServiceClient;
+use smdb_service::service::SMDBServiceClient;
 
 mod svc_smdb;
 
