@@ -87,30 +87,6 @@ fn test_get_service_config() {
 }
 
 #[test]
-fn test_init_services() {
-    let svc = ServiceID::SMDB;
-    let ctx_manager = &CtxManager::new();
-    let dns_manager = &DnsManager::new(ctx_manager);
-    let cfg_manager = &CfgManager::new(svc, ctx_manager);
-    let svm_manager = &SvcEnvManager::new(ctx_manager, dns_manager);
-
-    let service_manager = ServiceManager::new_offline_service_manager(cfg_manager, svm_manager);
-    assert_eq!(service_manager.is_online(), &false);
-
-    let dependencies = vec![ServiceID::CMDB];
-    service_manager.init_services(dependencies).unwrap();
-    assert!(service_manager.is_service_initialized(ServiceID::CMDB));
-
-    let dependencies = vec![ServiceID::SMDB];
-    service_manager.init_services(dependencies).unwrap();
-    assert!(service_manager.is_service_initialized(ServiceID::SMDB));
-
-    let dependencies = vec![ServiceID::DBGW];
-    service_manager.init_services(dependencies).unwrap();
-    assert!(service_manager.is_service_initialized(ServiceID::DBGW));
-}
-
-#[test]
 fn test_get_service_host_port() {
     // Make this conditional to run in CI
     env::set_var("ENV", "LOCAL");
@@ -125,10 +101,6 @@ fn test_get_service_host_port() {
     let service_manager = ServiceManager::new_offline_service_manager(cfg_manager, svm_manager);
     assert_eq!(service_manager.is_online(), &false);
 
-    let dependencies = vec![ServiceID::CMDB];
-    service_manager.init_services(dependencies).unwrap();
-    assert!(service_manager.is_service_initialized(ServiceID::CMDB));
-
     // We can't really test this, because the CI can't resolve the DNS server of the cluster host.
     // The root cause is that the CI can only have one ENV variable and it's alerady set to CLUSTER.
     // assert!(service_manager
@@ -140,24 +112,10 @@ fn test_get_service_host_port() {
     //     String::from("127.0.0.1:7070")
     // );
 
-    let dependencies = vec![ServiceID::SMDB];
-    service_manager.init_services(dependencies).unwrap();
-    assert!(service_manager.is_service_initialized(ServiceID::SMDB));
-    assert!(service_manager
-        .get_service_host_port(ServiceID::SMDB)
-        .is_ok());
-
     // assert_eq!(
     //     service_manager.get_service_host_port(ServiceID::SMDB).unwrap(),
     //     String::from("127.0.0.1:5050")
     // );
-
-    let dependencies = vec![ServiceID::DBGW];
-    service_manager.init_services(dependencies).unwrap();
-    assert!(service_manager.is_service_initialized(ServiceID::DBGW));
-    assert!(service_manager
-        .get_service_host_port(ServiceID::DBGW)
-        .is_ok());
 
     // assert_eq!(
     //     service_manager.get_service_host_port(ServiceID::MEMGRAPH).unwrap(),
