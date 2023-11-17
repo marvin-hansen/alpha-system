@@ -14,6 +14,8 @@ pub struct ServiceManager<'l> {
 }
 
 impl<'l> ServiceManager<'l> {
+    // TODO implement online service manager that connects to SMDB service
+
     /// new_online_service_manager creates a normal service manager for usage in all services that register with the SMDB
     pub fn new_online_service_manager(
         cfg_manager: &'l CfgManager,

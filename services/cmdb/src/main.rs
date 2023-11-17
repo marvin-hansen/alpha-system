@@ -42,7 +42,7 @@ async fn main() -> anyhow::Result<()> {
     let ip = IpAddr::from_str(&host_ip).expect("CMDB: Failed to parse host ip");
     let server_addr = (ip, port);
 
-    // TODO Set CMDB service to online
+    // TODO Set CMDB service to online via SMDB
     //
 
     print_utils::print_start_header(&svc_id, server_addr.1);
