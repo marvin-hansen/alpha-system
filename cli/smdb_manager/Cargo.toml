@@ -9,4 +9,17 @@ authors.workspace = true
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+
+[dependencies.common]
+path = "../../common"
+version = "0.1.0"
+
+
+[dependencies.smdb_client]
+path = "../../clients/smdb_client"
+version = "0.1.0"
+
+
 [dependencies]
+tokio = { workspace = true }
+anyhow = { workspace = true }

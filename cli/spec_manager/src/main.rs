@@ -1,15 +1,15 @@
 use common::prelude::HostEndpoint;
 use dbgw_client::DBGatewayClient;
 
-use crate::types::SpecType::*;
 use crate::types::{ServiceOP, SpecType, WorkflowOP};
+use crate::types::SpecType::*;
 
 mod svc_handle;
 mod types;
 mod wkf_handle;
 
-pub const SPEC_TYPE: SpecType = Workflow;
-pub const SPEC_OP: ServiceOP = ServiceOP::ReadAllServices;
+pub const SPEC_TYPE: SpecType = ServiceConfig;
+pub const SPEC_OP: ServiceOP = ServiceOP::CreateAllService;
 pub const WORKFLOW_OP: WorkflowOP = WorkflowOP::SetCheckOnline;
 
 #[tokio::main]

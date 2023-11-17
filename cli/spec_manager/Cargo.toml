@@ -27,4 +27,4 @@ version = "0.1.0"
 
 [dependencies]
 tokio = { workspace = true }
-anyhow = "1.0.75"
+anyhow = { workspace = true }

@@ -1,11 +1,11 @@
 use tarpc::context;
 
-use common::prelude::{SMDBError, ServiceID};
+use common::prelude::{ServiceID, SMDBError};
 
 use crate::SMDBClient;
 
 impl SMDBClient {
-    async fn check_if_service_id_exists(self, id: ServiceID) -> Result<bool, SMDBError> {
+    pub async fn check_if_service_id_exists(&self, id: ServiceID) -> Result<bool, SMDBError> {
         let res = self
             .client
             .check_if_service_id_exists(context::current(), id)
@@ -17,7 +17,7 @@ impl SMDBClient {
         }
     }
 
-    async fn check_if_services_exists(self, services: Vec<ServiceID>) -> Result<bool, SMDBError> {
+    pub async fn check_if_services_exists(&self, services: Vec<ServiceID>) -> Result<bool, SMDBError> {
         let res = self
             .client
             .check_if_services_exists(context::current(), services)
@@ -29,7 +29,7 @@ impl SMDBClient {
         }
     }
 
-    async fn set_service_online(self, id: ServiceID) -> Result<bool, SMDBError> {
+    pub async fn set_service_online(&self, id: ServiceID) -> Result<bool, SMDBError> {
         let res = self
             .client
             .set_service_online(context::current(), id)
@@ -41,7 +41,7 @@ impl SMDBClient {
         }
     }
 
-    async fn check_if_service_id_online(self, id: ServiceID) -> Result<bool, SMDBError> {
+    pub async fn check_if_service_id_online(&self, id: ServiceID) -> Result<bool, SMDBError> {
         let res = self
             .client
             .check_if_service_id_online(context::current(), id)
@@ -54,7 +54,7 @@ impl SMDBClient {
         }
     }
 
-    async fn check_if_services_online(self, id: Vec<ServiceID>) -> Result<bool, SMDBError> {
+    pub async fn check_if_services_online(&self, id: Vec<ServiceID>) -> Result<bool, SMDBError> {
         let res = self
             .client
             .check_if_services_online(context::current(), id)
@@ -67,7 +67,7 @@ impl SMDBClient {
         }
     }
 
-    async fn set_service_offline(self, id: ServiceID) -> Result<bool, SMDBError> {
+    pub async fn set_service_offline(&self, id: ServiceID) -> Result<bool, SMDBError> {
         let res = self
             .client
             .set_service_offline(context::current(), id)

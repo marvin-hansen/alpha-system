@@ -9,6 +9,7 @@ use smdb_service::service::SMDBServiceClient;
 
 mod svc_smdb;
 
+#[derive(Clone)]
 pub struct SMDBClient {
     client: SMDBServiceClient,
 }

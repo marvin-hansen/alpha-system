@@ -1,5 +1,6 @@
 use common::prelude::ServiceID;
 use dbgw_client::DBGatewayClient;
+use specs::prelude::smdb_service_config;
 use specs::services::get_all_service_configs;
 
 use crate::types::ServiceOP;
@@ -18,7 +19,10 @@ pub async fn handle_service_op(client: &DBGatewayClient, op: ServiceOP) -> anyho
             }
         }
         ServiceOP::CreateService => {
-            panic!("Not implemented yet");
+            let service = smdb_service_config();
+            let res = client.create_service(service).await.expect("Failed to create service");
+
+            println!("Service created: {}", res);
         }
 
         ServiceOP::CheckIfServiceIDExists => {
@@ -64,7 +68,7 @@ pub async fn handle_service_op(client: &DBGatewayClient, op: ServiceOP) -> anyho
 
         ServiceOP::CheckServicesOnline => {
             println!("Checking if all services are online");
-            let services = vec![ServiceID::SMDB, ServiceID::DBGW];
+            let services = vec![ServiceID::SMDB, ServiceID::CMDB, ServiceID::DBGW];
             let online = client
                 .check_if_services_online(services)
                 .await

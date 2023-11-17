@@ -6,7 +6,7 @@ use common::prelude::CMDBError;
 use crate::CMDBClient;
 
 impl CMDBClient {
-    async fn check_ok(self, _: Context) -> Result<bool, CMDBError> {
+    async fn check_ok(&self, _: Context) -> Result<bool, CMDBError> {
         let res = self
             .client
             .check_ok(context::current())

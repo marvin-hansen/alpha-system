@@ -12,6 +12,7 @@ impl DBGatewayClient {
             .create_service(context::current(), data)
             .await
             .expect("RPC call failed to create service");
+        
         match res {
             Ok(res) => Ok(res),
             Err(e) => Err(e),
