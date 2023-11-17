@@ -49,10 +49,42 @@ impl DBManager {
         }
     }
 
-    pub async fn check_if_services_exists(&self, services: Vec<ServiceID>) -> Result<bool, Error> {
+    pub async fn check_if_services_exists(&self, services: &Vec<ServiceID>) -> Result<bool, Error> {
         for id in services {
             if !self
-                .check_if_service_id_exists(&id)
+                .check_if_service_id_exists(id)
+                .await
+                .expect("Failed to check if service id exists")
+            {
+                return Ok(false);
+            }
+        }
+
+        Ok(true)
+    }
+
+    pub async fn check_if_service_id_online(&self, id: &ServiceID) -> Result<bool, Error> {
+        // https://surrealdb.com/docs/surrealql/statements/select
+        let q = format!("SELECT VALUE online FROM {}:{};", SERVICE_TABLE, id);
+
+        let mut res = self
+            .db
+            .query(q)
+            .await
+            .expect("Failed to check if service id exists");
+
+        let online = res.take(0).expect("Failed to get online status");
+
+        match online {
+            None => Ok(false),
+            Some(res) => Ok(res),
+        }
+    }
+
+    pub async fn check_if_services_online(&self, services: &Vec<ServiceID>) -> Result<bool, Error> {
+        for id in services {
+            if !self
+                .check_if_service_id_online(id)
                 .await
                 .expect("Failed to check if service id exists")
             {
@@ -83,7 +115,16 @@ impl DBManager {
         Ok(res)
     }
 
-    pub async fn set_service_online(&self, id: &ServiceID, online: bool) -> Result<bool, Error> {
+    pub async fn set_service_online(&self, id: &ServiceID) -> Result<bool, Error> {
+        self.set_svc_online(id, true).await
+    }
+
+    pub async fn set_service_offline(&self, id: &ServiceID) -> Result<bool, Error> {
+        self.set_svc_online(id, false).await
+    }
+
+    async fn set_svc_online(&self, id: &ServiceID, online: bool) -> Result<bool, Error> {
+        // Test if service even exists
         let exists = self
             .check_if_service_id_exists(id)
             .await
