@@ -21,6 +21,48 @@ pub async fn handle_service_op(client: &DBGatewayClient, op: ServiceOP) -> anyho
             panic!("Not implemented yet");
         }
 
+        ServiceOP::CheckIfServiceIDExists => {
+            println!("Checking if service id exists");
+            let id = ServiceID::SMDB;
+            let exists = client
+                .check_if_service_id_exists(id)
+                .await.expect("Failed to check if service id exists");
+
+            println!("Service id {:?} exists: {}", id, exists);
+
+            println!("Checking if service id DOES NOT exists");
+            let id = ServiceID::Default;
+            let exists = client
+                .check_if_service_id_exists(id)
+                .await.expect("Failed to check if service id exists");
+
+            println!("Service id {:?} exists: {}", id, exists);
+        }
+
+        ServiceOP::CheckIfServicesExists => {
+            println!("Checking if all services exist");
+            let services = vec![ServiceID::SMDB, ServiceID::CMDB, ServiceID::DBGW];
+            let exists = client
+                .check_if_services_exists(services)
+                .await.expect("Failed to check if services exists");
+
+            println!("All Services exists: {}", &exists);
+        }
+
+        ServiceOP::CheckServiceIDOnline => {
+            println!("Checking if service id is online");
+            let id = ServiceID::SMDB;
+            let online = client.check_if_service_id_online(id).await.expect("Failed to check service id online");
+            println!("Service id {:?} is online: {}", id, online);
+        }
+
+        ServiceOP::CheckServicesOnline => {
+            println!("Checking if all services are online");
+            let services = vec![ServiceID::SMDB, ServiceID::DBGW];
+            let online = client.check_if_services_online(services).await.expect("Failed to check services online");
+            println!("All services are online: {}", &online);
+        }
+
         ServiceOP::ReadAllServices => {
             println!("Reading all services");
             let services = client
@@ -38,8 +80,44 @@ pub async fn handle_service_op(client: &DBGatewayClient, op: ServiceOP) -> anyho
                 .read_service_by_id(id)
                 .await
                 .expect("Failed to read service by id");
-            println!("{:?}", service.name());
+            println!("{:?}", service);
         }
+        ServiceOP::SetServiceOnline => {
+            println!("Setting service online");
+            let id = ServiceID::SMDB;
+            let res = client
+                .set_service_online(id)
+                .await
+                .expect("Failed to set service online");
+            println!("Service online: {}", res);
+
+            println!("read & print service");
+            let id = ServiceID::SMDB;
+            let service = client
+                .read_service_by_id(id)
+                .await
+                .expect("Failed to read service by id");
+            println!("{:?}", service);
+        }
+
+        ServiceOP::SetServiceOffline => {
+            println!("Setting service offline");
+            let id = ServiceID::SMDB;
+            let res = client
+                .set_service_offline(id)
+                .await
+                .expect("Failed to set service online");
+
+            println!("Service offline: {}", res);
+
+            let id = ServiceID::SMDB;
+            let service = client
+                .read_service_by_id(id)
+                .await
+                .expect("Failed to read service by id");
+            println!("{:?}", service);
+        }
+
         ServiceOP::UpdateService => {
             panic!("Not implemented yet");
         }
