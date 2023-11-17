@@ -2,11 +2,11 @@ use std::net::IpAddr;
 use std::str::FromStr;
 
 use futures::{future, prelude::*};
-use surrealdb::engine::local;
 use surrealdb::{Error, Surreal};
+use surrealdb::engine::local;
 use tarpc::server;
-use tarpc::server::incoming::Incoming;
 use tarpc::server::Channel;
+use tarpc::server::incoming::Incoming;
 use tarpc::tokio_serde::formats::Bincode;
 
 use common::prelude::{print_utils, ServiceID};
@@ -34,10 +34,10 @@ async fn main() -> anyhow::Result<()> {
     let server_addr = (ip, port);
 
     // pull dbm config from autoconfig
-    let dbm = get_dbm().await.unwrap();
+    let dbm = get_dbm().await.expect("Failed to get dbm");
 
-    // TODO Set DBGW service to online
-    //
+    // Set DBGW service to online
+    dbm.set_service_online(&svc_id).await.expect("Failed to set service to online");
 
     print_utils::print_start_header(&svc_id, server_addr.1);
 

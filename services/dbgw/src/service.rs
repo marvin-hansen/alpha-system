@@ -11,9 +11,12 @@ pub trait DBGateway {
     async fn create_service(data: ServiceConfig) -> Result<bool, DBGatewayError>;
     async fn check_if_service_id_exists(id: ServiceID) -> Result<bool, DBGatewayError>;
     async fn check_if_services_exists(services: Vec<ServiceID>) -> Result<bool, DBGatewayError>;
+    async fn check_if_service_id_online(id: ServiceID) -> Result<bool, DBGatewayError>;
+    async fn check_if_services_online(id: Vec<ServiceID>) -> Result<bool, DBGatewayError>;
     async fn read_all_services() -> Result<Vec<ServiceConfig>, DBGatewayError>;
     async fn read_service_by_id(id: ServiceID) -> Result<ServiceConfig, DBGatewayError>;
-    async fn set_service_online(id: ServiceID, online: bool) -> Result<bool, DBGatewayError>;
+    async fn set_service_online(id: ServiceID) -> Result<bool, DBGatewayError>;
+    async fn set_service_offline(id: ServiceID) -> Result<bool, DBGatewayError>;
     async fn update_service(data: ServiceConfig) -> Result<bool, DBGatewayError>;
     async fn delete_service(id: ServiceID) -> Result<bool, DBGatewayError>;
 }
@@ -58,8 +61,32 @@ impl DBGateway for DBGatewayServer {
         _: Context,
         services: Vec<ServiceID>,
     ) -> Result<bool, DBGatewayError> {
-        let exists: Result<bool, Error> = self.dbm.check_if_services_exists(services).await;
+        let exists: Result<bool, Error> = self.dbm.check_if_services_exists(&services).await;
         match exists {
+            Ok(res) => Ok(res),
+            Err(e) => Err(DBGatewayError(e.to_string())),
+        }
+    }
+
+    async fn check_if_service_id_online(
+        self,
+        _: Context,
+        id: ServiceID,
+    ) -> Result<bool, DBGatewayError> {
+        let online: Result<bool, Error> = self.dbm.check_if_service_id_online(&id).await;
+        match online {
+            Ok(res) => Ok(res),
+            Err(e) => Err(DBGatewayError(e.to_string())),
+        }
+    }
+
+    async fn check_if_services_online(
+        self,
+        _: Context,
+        services: Vec<ServiceID>,
+    ) -> Result<bool, DBGatewayError> {
+        let online: Result<bool, Error> = self.dbm.check_if_services_online(&services).await;
+        match online {
             Ok(res) => Ok(res),
             Err(e) => Err(DBGatewayError(e.to_string())),
         }
@@ -88,18 +115,22 @@ impl DBGateway for DBGatewayServer {
         }
     }
 
-    async fn set_service_online(
-        self,
-        _: Context,
-        id: ServiceID,
-        online: bool,
-    ) -> Result<bool, DBGatewayError> {
-        let online: Result<bool, Error> = self.dbm.set_service_online(&id, online).await;
+    async fn set_service_online(self, _: Context, id: ServiceID) -> Result<bool, DBGatewayError> {
+        let online: Result<bool, Error> = self.dbm.set_service_online(&id).await;
         match online {
             Ok(res) => Ok(res),
             Err(e) => Err(DBGatewayError(e.to_string())),
         }
     }
+
+    async fn set_service_offline(self, _: Context, id: ServiceID) -> Result<bool, DBGatewayError> {
+        let online: Result<bool, Error> = self.dbm.set_service_offline(&id).await;
+        match online {
+            Ok(res) => Ok(res),
+            Err(e) => Err(DBGatewayError(e.to_string())),
+        }
+    }
+
     async fn update_service(self, _: Context, data: ServiceConfig) -> Result<bool, DBGatewayError> {
         let id = data.svc_id().to_string().clone();
         let updated: Result<Option<ServiceConfig>, Error> = self.dbm.update_service(data).await;
