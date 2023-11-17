@@ -1,6 +1,6 @@
 use tarpc::context::Context;
 
-use common::prelude::{SMDBError, ServiceID};
+use common::prelude::{ServiceID, SMDBError};
 use dbgw_client::DBGatewayClient;
 
 #[tarpc::service]
@@ -49,7 +49,7 @@ impl SMDBService for SMDBServer {
     }
 
     async fn set_service_online(self, _: Context, id: ServiceID) -> Result<bool, SMDBError> {
-        let res = self.dbgw.set_service_online(id, true).await;
+        let res = self.dbgw.set_service_online(id).await;
         match res {
             Ok(res) => Ok(res),
             Err(e) => Err(SMDBError(e.to_string())),
@@ -57,7 +57,7 @@ impl SMDBService for SMDBServer {
     }
 
     async fn set_service_offline(self, _: Context, id: ServiceID) -> Result<bool, SMDBError> {
-        let res = self.dbgw.set_service_online(id, false).await;
+        let res = self.dbgw.set_service_offline(id).await;
         match res {
             Ok(res) => Ok(res),
             Err(e) => Err(SMDBError(e.to_string())),
