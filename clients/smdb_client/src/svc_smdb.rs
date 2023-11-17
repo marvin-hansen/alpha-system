@@ -41,6 +41,32 @@ impl SMDBClient {
         }
     }
 
+    async fn check_if_service_id_online(self, id: ServiceID) -> Result<bool, SMDBError> {
+        let res = self
+            .client
+            .check_if_service_id_online(context::current(), id)
+            .await
+            .expect("RPC call failed to check if service id online");
+
+        match res {
+            Ok(res) => Ok(res),
+            Err(e) => Err(SMDBError(e.to_string())),
+        }
+    }
+
+    async fn check_if_services_online(self, id: Vec<ServiceID>) -> Result<bool, SMDBError> {
+        let res = self
+            .client
+            .check_if_services_online(context::current(), id)
+            .await
+            .expect("Failed to check if services online");
+
+        match res {
+            Ok(res) => Ok(res),
+            Err(e) => Err(SMDBError(e.to_string())),
+        }
+    }
+
     async fn set_service_offline(self, id: ServiceID) -> Result<bool, SMDBError> {
         let res = self
             .client

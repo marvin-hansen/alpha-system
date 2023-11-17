@@ -1,5 +1,5 @@
-use surrealdb::Error;
 use surrealdb::opt::PatchOp;
+use surrealdb::Error;
 
 use common::prelude::{ServiceConfig, ServiceID};
 
