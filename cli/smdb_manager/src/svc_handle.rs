@@ -109,6 +109,3 @@ async fn check_if_svc_online(client: &SMDBClient) {
         .expect("Failed to check service id online");
     println!("Service id {:?} is online: {}", id, online);
 }
-
-
-

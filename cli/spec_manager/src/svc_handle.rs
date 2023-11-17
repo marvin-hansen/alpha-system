@@ -20,7 +20,10 @@ pub async fn handle_service_op(client: &DBGatewayClient, op: ServiceOP) -> anyho
         }
         ServiceOP::CreateService => {
             let service = smdb_service_config();
-            let res = client.create_service(service).await.expect("Failed to create service");
+            let res = client
+                .create_service(service)
+                .await
+                .expect("Failed to create service");
 
             println!("Service created: {}", res);
         }

@@ -1,6 +1,6 @@
 use tarpc::context;
 
-use common::prelude::{ServiceID, SMDBError};
+use common::prelude::{SMDBError, ServiceID};
 
 use crate::SMDBClient;
 
@@ -17,7 +17,10 @@ impl SMDBClient {
         }
     }
 
-    pub async fn check_if_services_exists(&self, services: Vec<ServiceID>) -> Result<bool, SMDBError> {
+    pub async fn check_if_services_exists(
+        &self,
+        services: Vec<ServiceID>,
+    ) -> Result<bool, SMDBError> {
         let res = self
             .client
             .check_if_services_exists(context::current(), services)

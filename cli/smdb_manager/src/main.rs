@@ -3,8 +3,8 @@ use smdb_client::SMDBClient;
 
 use crate::svc_types::ServiceOP;
 
-mod svc_types;
 mod svc_handle;
+mod svc_types;
 
 pub const SPEC_OP: ServiceOP = ServiceOP::CheckIfServiceIDExists;
 
@@ -19,4 +19,3 @@ async fn main() -> anyhow::Result<()> {
 
     Ok(())
 }
-
