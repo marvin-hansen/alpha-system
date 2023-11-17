@@ -33,7 +33,8 @@ async fn create_read(client: &DBGatewayClient) -> anyhow::Result<()> {
     let services = vec![ServiceID::SMDB, ServiceID::CMDB, ServiceID::DBGW];
     let exists = client
         .check_if_services_exists(services)
-        .await.expect("Failed to check if services exists");
+        .await
+        .expect("Failed to check if services exists");
 
     println!("All Services exists: {}", &exists);
     Ok(())
@@ -44,14 +45,29 @@ async fn set_check_online(client: &DBGatewayClient) -> anyhow::Result<()> {
     let id = ServiceID::SMDB;
     let exists = client
         .check_if_service_id_exists(id)
-        .await.expect("Failed to check if service id exists");
+        .await
+        .expect("Failed to check if service id exists");
+
+    if !exists {
+        create_read(client).await?;
+    }
+
+    let exists = client
+        .check_if_service_id_exists(id)
+        .await
+        .expect("Failed to check if service id exists");
 
     println!("Service id {:?} exists: {}", id, exists);
+    println!();
 
     println!("Checking if service id is online");
     let id = ServiceID::SMDB;
-    let online = client.check_if_service_id_online(id).await.expect("Failed to check service id online");
+    let online = client
+        .check_if_service_id_online(id)
+        .await
+        .expect("Failed to check service id online");
     println!("Service id {:?} is online: {}", id, online);
+    println!();
 
     println!("Setting service online");
     let id = ServiceID::SMDB;
@@ -60,11 +76,16 @@ async fn set_check_online(client: &DBGatewayClient) -> anyhow::Result<()> {
         .await
         .expect("Failed to set service online");
     println!("Service online: {}", res);
+    println!();
 
     println!("Checking if service id is online");
     let id = ServiceID::SMDB;
-    let online = client.check_if_service_id_online(id).await.expect("Failed to check service id online");
+    let online = client
+        .check_if_service_id_online(id)
+        .await
+        .expect("Failed to check service id online");
     println!("Service id {:?} is online: {}", id, online);
+    println!();
 
     println!("read & print service");
     let id = ServiceID::SMDB;
@@ -73,6 +94,7 @@ async fn set_check_online(client: &DBGatewayClient) -> anyhow::Result<()> {
         .await
         .expect("Failed to read service by id");
     println!("{:?}", service);
+    println!();
 
     Ok(())
 }

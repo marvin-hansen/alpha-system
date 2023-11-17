@@ -32,7 +32,6 @@ impl Display for WorkflowOP {
     }
 }
 
-
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub enum ServiceOP {
     CreateAllService,

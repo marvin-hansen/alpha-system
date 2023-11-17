@@ -26,7 +26,8 @@ pub async fn handle_service_op(client: &DBGatewayClient, op: ServiceOP) -> anyho
             let id = ServiceID::SMDB;
             let exists = client
                 .check_if_service_id_exists(id)
-                .await.expect("Failed to check if service id exists");
+                .await
+                .expect("Failed to check if service id exists");
 
             println!("Service id {:?} exists: {}", id, exists);
 
@@ -34,7 +35,8 @@ pub async fn handle_service_op(client: &DBGatewayClient, op: ServiceOP) -> anyho
             let id = ServiceID::Default;
             let exists = client
                 .check_if_service_id_exists(id)
-                .await.expect("Failed to check if service id exists");
+                .await
+                .expect("Failed to check if service id exists");
 
             println!("Service id {:?} exists: {}", id, exists);
         }
@@ -44,7 +46,8 @@ pub async fn handle_service_op(client: &DBGatewayClient, op: ServiceOP) -> anyho
             let services = vec![ServiceID::SMDB, ServiceID::CMDB, ServiceID::DBGW];
             let exists = client
                 .check_if_services_exists(services)
-                .await.expect("Failed to check if services exists");
+                .await
+                .expect("Failed to check if services exists");
 
             println!("All Services exists: {}", &exists);
         }
@@ -52,14 +55,20 @@ pub async fn handle_service_op(client: &DBGatewayClient, op: ServiceOP) -> anyho
         ServiceOP::CheckServiceIDOnline => {
             println!("Checking if service id is online");
             let id = ServiceID::SMDB;
-            let online = client.check_if_service_id_online(id).await.expect("Failed to check service id online");
+            let online = client
+                .check_if_service_id_online(id)
+                .await
+                .expect("Failed to check service id online");
             println!("Service id {:?} is online: {}", id, online);
         }
 
         ServiceOP::CheckServicesOnline => {
             println!("Checking if all services are online");
             let services = vec![ServiceID::SMDB, ServiceID::DBGW];
-            let online = client.check_if_services_online(services).await.expect("Failed to check services online");
+            let online = client
+                .check_if_services_online(services)
+                .await
+                .expect("Failed to check services online");
             println!("All services are online: {}", &online);
         }
 
