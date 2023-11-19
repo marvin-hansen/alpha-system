@@ -31,6 +31,8 @@ anyhow = "1.0"
 log = "0.4"
 futures = "0.3"
 rand = "0.8"
+rust_decimal = "1.33"
+rust_decimal_macros = "1.33"
 tracing = { version = "0.1" }
 tracing-opentelemetry = "0.22.0"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
