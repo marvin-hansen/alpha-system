@@ -2,8 +2,6 @@ use std::net::IpAddr;
 use std::str::FromStr;
 
 use futures::{future, prelude::*};
-use surrealdb::engine::local;
-use surrealdb::{Error, Surreal};
 use tarpc::server;
 use tarpc::server::incoming::Incoming;
 use tarpc::server::Channel;
@@ -29,12 +27,14 @@ async fn main() -> anyhow::Result<()> {
         .get_service_host_port(svc_id)
         .expect("DBGW: Failed to get host and port");
 
+    // setup ip and port for DBGW service
     let ip = IpAddr::from_str(&host_ip).expect("DBGW: Failed to parse host ip");
-
     let server_addr = (ip, port);
 
-    // pull dbm config from autoconfig
-    let dbm = get_dbm().await.expect("Failed to get dbm");
+    // pull dbm config from config manager relative to the detected context.
+    let db_config = cfg_manager.get_db_config();
+    // configure database manager
+    let dbm = DBManager::new_offline(&db_config).await;
 
     // Set DBGW service to online
     dbm.set_service_online(&svc_id)
@@ -63,12 +63,4 @@ async fn main() -> anyhow::Result<()> {
         .await;
 
     Ok(())
-}
-
-pub async fn get_dbm() -> Result<DBManager, Error> {
-    let db: Surreal<local::Db> = Surreal::new::<local::Mem>(()).await.unwrap();
-    db.use_ns("test").use_db("test").await.unwrap();
-    let dbm = DBManager::new(db);
-
-    Ok(dbm)
 }

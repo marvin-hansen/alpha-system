@@ -1,5 +1,8 @@
-use common::prelude::{EnvironmentType, ServiceConfig, ServiceID};
-use specs::prelude::{cmdb_service_config, dbgw_service_config, smdb_service_config};
+use common::prelude::{DBConfig, EnvironmentType, ServiceConfig, ServiceID};
+use specs::prelude::{
+    cmdb_service_config, db_config_ci, db_config_cluster, db_config_local, dbgw_service_config,
+    smdb_service_config,
+};
 
 use crate::prelude::CtxManager;
 
@@ -32,17 +35,6 @@ impl<'l> CfgManager<'l> {
 }
 
 impl<'l> CfgManager<'l> {
-    fn service_config(&self, svc: &ServiceID) -> ServiceConfig {
-        match svc {
-            ServiceID::SMDB => smdb_service_config(),
-            ServiceID::CMDB => cmdb_service_config(),
-            ServiceID::DBGW => dbgw_service_config(),
-            ServiceID::Default => ServiceConfig::default(),
-        }
-    }
-}
-
-impl<'l> CfgManager<'l> {
     /// Returns the ID of the service.
     pub fn svc(&self) -> ServiceID {
         self.svc
@@ -57,5 +49,28 @@ impl<'l> CfgManager<'l> {
     }
     pub fn get_svc_config(&self, svc_id: &ServiceID) -> ServiceConfig {
         self.service_config(svc_id)
+    }
+
+    pub fn get_db_config(&self) -> DBConfig {
+        self.db_config()
+    }
+}
+
+impl<'l> CfgManager<'l> {
+    fn db_config(&self) -> DBConfig {
+        match self.env_type {
+            EnvironmentType::LOCAL => db_config_local(),
+            EnvironmentType::CI => db_config_ci(),
+            EnvironmentType::CLUSTER => db_config_cluster(),
+            _ => panic!("Invalid environment type"),
+        }
+    }
+    fn service_config(&self, svc: &ServiceID) -> ServiceConfig {
+        match svc {
+            ServiceID::SMDB => smdb_service_config(),
+            ServiceID::CMDB => cmdb_service_config(),
+            ServiceID::DBGW => dbgw_service_config(),
+            ServiceID::Default => ServiceConfig::default(),
+        }
     }
 }
