@@ -1,0 +1,9 @@
+# https://docs.codecov.com/docs/common-recipe-list
+comment:
+  require_changes: true
+
+# https://docs.codecov.com/docs/ignoring-paths
+ignore:
+  - "cli"  # ignore folders and all its contents
+  - "clients"
+  - "services"
