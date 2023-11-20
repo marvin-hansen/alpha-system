@@ -1,7 +1,21 @@
 use tarpc::context::Context;
 
-use common::prelude::{SMDBError, ServiceID};
+use common::prelude::ServiceID;
 use dbgw_client::DBGatewayClient;
+use std::error::Error;
+use std::fmt;
+use tarpc::serde::{Deserialize, Serialize};
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct SMDBError(pub String);
+
+impl Error for SMDBError {}
+
+impl fmt::Display for SMDBError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "SMDBError: {}", self.0)
+    }
+}
 
 #[tarpc::service]
 pub trait SMDBService {

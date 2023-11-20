@@ -4,30 +4,12 @@ use common::prelude::{Endpoint, ServiceConfig, ServiceID};
 use crate::prelude::CfgManager;
 use crate::prelude::SvcEnvManager;
 
-const ONLINE: &bool = &true;
-const OFFLINE: &bool = &false;
-
 pub struct ServiceManager<'l> {
     cfg_manager: &'l CfgManager<'l>,
     svm_manager: &'l SvcEnvManager<'l>,
-    online: &'l bool,
 }
 
 impl<'l> ServiceManager<'l> {
-    // TODO implement online service manager that connects to SMDB service
-
-    /// new_online_service_manager creates a normal service manager for usage in all services that register with the SMDB
-    pub fn new_online_service_manager(
-        cfg_manager: &'l CfgManager,
-        svm_manager: &'l SvcEnvManager<'l>,
-    ) -> Self {
-        Self {
-            cfg_manager,
-            svm_manager,
-            online: ONLINE,
-        }
-    }
-
     /// new_offline_service_manager creates an offline service manager with only DB access
     /// required to implement SMDB service registry.
     pub fn new_offline_service_manager(
@@ -37,17 +19,11 @@ impl<'l> ServiceManager<'l> {
         Self {
             cfg_manager,
             svm_manager,
-            online: OFFLINE,
         }
     }
 }
 
 impl<'l> ServiceManager<'l> {
-    /// Returns true if the service is online and can reach the SMDB registry
-    pub fn is_online(&self) -> &bool {
-        self.online
-    }
-
     /// Returns a reference to the service-specific configuration of the service.
     pub fn get_service_config(&self) -> ServiceConfig {
         self.cfg_manager.svc_config()

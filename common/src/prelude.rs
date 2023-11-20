@@ -2,7 +2,6 @@
 pub use crate::errors::CMDBError;
 pub use crate::errors::DBGatewayError;
 pub use crate::errors::InitError;
-pub use crate::errors::SMDBError;
 //
 // Types
 // config types

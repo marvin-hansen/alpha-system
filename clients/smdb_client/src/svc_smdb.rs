@@ -1,6 +1,7 @@
 use tarpc::context;
 
-use common::prelude::{SMDBError, ServiceID};
+use common::prelude::ServiceID;
+use smdb_service::service::SMDBError;
 
 use crate::SMDBClient;
 

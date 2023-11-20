@@ -4,7 +4,6 @@ use std::str::FromStr;
 use tarpc::client;
 use tarpc::tokio_serde::formats::Bincode;
 
-use common::prelude::HostEndpoint;
 use smdb_service::service::SMDBServiceClient;
 
 mod svc_smdb;
@@ -15,10 +14,7 @@ pub struct SMDBClient {
 }
 
 impl SMDBClient {
-    pub async fn new(config: HostEndpoint<'_>) -> Self {
-        let port = config.port();
-        let host = config.host_uri();
-
+    pub async fn new(host: &str, port: u16) -> Self {
         let ip_addr = IpAddr::from_str(host).expect("Failed to parse IP address from DBConfig");
         let server_addr = ((ip_addr), port);
         let codec_fn = Bincode::default;

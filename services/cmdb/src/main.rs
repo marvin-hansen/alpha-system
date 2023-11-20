@@ -21,7 +21,7 @@ async fn main() -> anyhow::Result<()> {
     let cfg_manager = CfgManager::new(svc_id, &ctx_manager);
     let svm_manager = SvcEnvManager::new(&ctx_manager, &dns_manager);
 
-    // TODO Switch to online service manager
+    // TODO Switch to online SMDB service provider
     let service_manager = ServiceManager::new_offline_service_manager(&cfg_manager, &svm_manager);
 
     // TODO Check if DBGW is online, and if not, abort and report it's missing.

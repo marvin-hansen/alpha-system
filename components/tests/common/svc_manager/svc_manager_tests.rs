@@ -4,17 +4,6 @@ use common::prelude::{Encoding, ProtocolType, ServiceID, ServiceType};
 use components::prelude::{CfgManager, CtxManager, DnsManager, ServiceManager, SvcEnvManager};
 
 #[test]
-fn test_new_online_service_manager() {
-    let svc = ServiceID::SMDB;
-    let ctx_manager = &CtxManager::new();
-    let dns_manager = &DnsManager::new(ctx_manager);
-    let cfg_manager = &CfgManager::new(svc, ctx_manager);
-    let svm_manager = &SvcEnvManager::new(ctx_manager, dns_manager);
-    let service_manager = ServiceManager::new_online_service_manager(cfg_manager, svm_manager);
-    assert_eq!(service_manager.is_online(), &true);
-}
-
-#[test]
 fn test_new_offline_service_manager() {
     let svc = ServiceID::SMDB;
     let ctx_manager = &CtxManager::new();
@@ -22,21 +11,8 @@ fn test_new_offline_service_manager() {
     let cfg_manager = &CfgManager::new(svc, ctx_manager);
     let svm_manager = &SvcEnvManager::new(ctx_manager, dns_manager);
     let service_manager = ServiceManager::new_offline_service_manager(cfg_manager, svm_manager);
-    assert_eq!(service_manager.is_online(), &false);
-}
-
-#[test]
-fn test_is_online() {
-    let svc = ServiceID::SMDB;
-    let ctx_manager = &CtxManager::new();
-    let dns_manager = &DnsManager::new(ctx_manager);
-    let cfg_manager = &CfgManager::new(svc, ctx_manager);
-    let svm_manager = &SvcEnvManager::new(ctx_manager, dns_manager);
-    let service_manager = ServiceManager::new_online_service_manager(cfg_manager, svm_manager);
-    assert_eq!(service_manager.is_online(), &true);
-
-    let service_manager = ServiceManager::new_offline_service_manager(cfg_manager, svm_manager);
-    assert_eq!(service_manager.is_online(), &false);
+    let service_config = service_manager.get_service_config();
+    assert_eq!(service_config.svc_id(), &ServiceID::SMDB);
 }
 
 #[test]
@@ -48,13 +24,11 @@ fn test_get_service_config() {
     let svm_manager = &SvcEnvManager::new(ctx_manager, dns_manager);
 
     let service_manager = ServiceManager::new_offline_service_manager(cfg_manager, svm_manager);
-    assert_eq!(service_manager.is_online(), &false);
 
     let service_config = service_manager.get_service_config();
     assert_eq!(service_config.svc_id(), &ServiceID::SMDB);
     assert_eq!(service_config.name(), "smdbv1");
     assert_eq!(service_config.version(), 1);
-    assert!(!service_config.online());
     assert_eq!(
         service_config.description(),
         "SMDB Service Management Database"
@@ -99,8 +73,9 @@ fn test_get_service_host_port() {
     let svm_manager = &SvcEnvManager::new(ctx_manager, dns_manager);
 
     let service_manager = ServiceManager::new_offline_service_manager(cfg_manager, svm_manager);
-    assert_eq!(service_manager.is_online(), &false);
-
+    let service_config = service_manager.get_service_config();
+    assert_eq!(service_config.svc_id(), &ServiceID::SMDB);
+    
     // We can't really test this, because the CI can't resolve the DNS server of the cluster host.
     // The root cause is that the CI can only have one ENV variable and it's alerady set to CLUSTER.
     // assert!(service_manager

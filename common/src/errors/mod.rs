@@ -26,17 +26,6 @@ impl fmt::Display for DBGatewayError {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-pub struct SMDBError(pub String);
-
-impl Error for SMDBError {}
-
-impl fmt::Display for SMDBError {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "SMDBError: {}", self.0)
-    }
-}
-
-#[derive(Debug, Serialize, Deserialize)]
 pub struct CMDBError(pub String);
 
 impl Error for CMDBError {}
