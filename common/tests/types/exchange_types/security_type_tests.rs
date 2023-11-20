@@ -42,8 +42,5 @@ fn test_display_option() {
 
 #[test]
 fn test_display_future_option() {
-    assert_eq!(
-        format!("{:?}", SecurityType::FutureOption),
-        "FutureOption"
-    );
+    assert_eq!(format!("{:?}", SecurityType::FutureOption), "FutureOption");
 }
