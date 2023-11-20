@@ -1,6 +1,6 @@
-use std::str::FromStr;
-use rust_decimal::Decimal;
 use common::prelude::{ExchangeID, Symbol};
+use rust_decimal::Decimal;
+use std::str::FromStr;
 
 fn get_new_symbol() -> Symbol {
     Symbol::new(
@@ -13,7 +13,6 @@ fn get_new_symbol() -> Symbol {
         Decimal::from_str("0.001").unwrap(),
     )
 }
-
 
 #[test]
 fn test_symbol_id_global() {
@@ -54,7 +53,10 @@ fn test_asset_quote_exchange() {
 fn test_price_precision() {
     let symbol = get_new_symbol();
 
-    assert_eq!(symbol.price_precision(), Decimal::from_str("0.000001").unwrap());
+    assert_eq!(
+        symbol.price_precision(),
+        Decimal::from_str("0.000001").unwrap()
+    );
 }
 
 #[test]

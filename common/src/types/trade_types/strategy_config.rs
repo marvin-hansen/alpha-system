@@ -111,5 +111,3 @@ impl Display for StrategyConfig {
         )
     }
 }
-
-

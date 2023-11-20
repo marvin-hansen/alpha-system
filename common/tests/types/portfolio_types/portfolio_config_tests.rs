@@ -1,0 +1,139 @@
+use common::prelude::{AccountType, ExchangeID, PortfolioConfig};
+
+fn get_portfolio_config() -> PortfolioConfig {
+    let portfolio_id = 1;
+    let portfolio_description = "cash portfolio".to_string();
+    let portfolio_account_type = AccountType::Cash;
+    let portfolio_account_id = "cash_account".to_string();
+    let portfolio_exchange_id = ExchangeID::VEX;
+    let portfolio_currency = "USD".to_string();
+    let portfolio_cash_balance = 1000.0;
+    let portfolio_max_drawdown = 20.0;
+    let portfolio_instruments = vec!["BTC".to_string(), "ETH".to_string()];
+    let instrument_max_allocation = Some(0.02);
+    let instrument_max_drawdown = Some(10.0);
+
+    PortfolioConfig::new_cash_portfolio(
+        portfolio_id,
+        portfolio_description,
+        portfolio_account_type,
+        portfolio_account_id,
+        portfolio_exchange_id,
+        portfolio_currency,
+        portfolio_cash_balance,
+        portfolio_max_drawdown,
+        portfolio_instruments,
+        instrument_max_allocation,
+        instrument_max_drawdown,
+    )
+}
+
+#[test]
+fn portfolio_config_portfolio_id_returns_expected_value() {
+    let portfolio_id = 1;
+    let portfolio_config = get_portfolio_config();
+    assert_eq!(portfolio_config.portfolio_id(), portfolio_id);
+}
+
+#[test]
+fn test_portfolio_id() {
+    let config = get_portfolio_config();
+    assert_eq!(config.portfolio_id(), 1);
+}
+
+#[test]
+fn test_portfolio_description() {
+    let config = get_portfolio_config();
+    assert_eq!(config.portfolio_description(), "cash portfolio");
+}
+
+#[test]
+fn test_portfolio_account_type() {
+    let account_type = AccountType::Cash;
+    let config = get_portfolio_config();
+    assert_eq!(config.portfolio_account_type(), &account_type);
+}
+
+#[test]
+fn test_portfolio_account_id() {
+    let config = get_portfolio_config();
+    assert_eq!(config.portfolio_account_id(), "cash_account");
+}
+
+#[test]
+fn test_portfolio_exchange_id() {
+    let config = get_portfolio_config();
+    assert_eq!(config.portfolio_exchange_id(), &ExchangeID::VEX);
+}
+
+#[test]
+fn test_portfolio_currency() {
+    let config = get_portfolio_config();
+    assert_eq!(config.portfolio_currency(), "USD");
+}
+
+#[test]
+fn test_portfolio_cash() {
+    let config = get_portfolio_config();
+    assert_eq!(config.portfolio_cash(), 1000.0);
+}
+
+#[test]
+fn test_portfolio_margin() {
+    let config = get_portfolio_config();
+    assert_eq!(config.portfolio_margin(), None);
+}
+
+#[test]
+fn test_portfolio_max_drawdown() {
+    let config = get_portfolio_config();
+    assert_eq!(config.portfolio_max_drawdown(), 20.0);
+}
+
+#[test]
+fn test_portfolio_instruments() {
+    let instruments = vec!["BTC".to_string(), "ETH".to_string()];
+    let config = get_portfolio_config();
+    assert_eq!(config.portfolio_instruments(), &instruments);
+}
+
+#[test]
+fn test_instrument_max_allocation() {
+    let instrument_max_allocation = Some(0.02);
+    let config = get_portfolio_config();
+    assert_eq!(
+        config.instrument_max_allocation(),
+        instrument_max_allocation
+    );
+}
+
+#[test]
+fn test_instrument_max_drawdown() {
+    let max_drawdown = Some(10.0);
+    let config = get_portfolio_config();
+    assert_eq!(config.instrument_max_drawdown(), max_drawdown);
+}
+
+#[test]
+fn test_portfolio_free_margin() {
+    let config = get_portfolio_config();
+    assert_eq!(config.portfolio_free_margin(), None);
+}
+
+#[test]
+fn test_portfolio_free_cash() {
+    let config = get_portfolio_config();
+    assert_eq!(config.portfolio_free_cash(), Some(1000.0));
+}
+
+#[test]
+fn test_portfolio_free_margin_percent() {
+    let config = get_portfolio_config();
+    assert_eq!(config.portfolio_free_margin_percent(), None);
+}
+
+#[test]
+fn test_portfolio_free_cash_percent() {
+    let config = get_portfolio_config();
+    assert_eq!(config.portfolio_free_cash_percent(), Some(100.0));
+}

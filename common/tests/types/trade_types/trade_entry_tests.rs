@@ -12,7 +12,6 @@ fn test_display() {
     assert_eq!(format!("{:?}", entry_type), "CurrentBar");
 }
 
-
 #[test]
 fn test_serialize() {
     let entry_type = TradeEntryType::CurrentBar;
@@ -28,13 +27,11 @@ fn test_deserialize() {
     assert_eq!(deserialized, TradeEntryType::CurrentBar);
 }
 
-
 #[test]
 fn test_next_bar() {
     let entry_type = TradeEntryType::NextBar;
     assert_eq!(entry_type, TradeEntryType::NextBar);
 }
-
 
 #[test]
 fn test_current_bar() {
