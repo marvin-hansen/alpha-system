@@ -36,10 +36,10 @@ fn test_default() {
     let config = DBConfig::default();
 
     assert_eq!(config.port(), 8000);
-    assert_eq!(config.host(), &None);
-    assert_eq!(config.username(), &None);
-    assert_eq!(config.password(), &None);
-    assert_eq!(config.client_name(), "rsmgclient/2.0.2");
+    assert_eq!(config.host(), &"localhost".to_string());
+    assert_eq!(config.username(), &"None".to_string());
+    assert_eq!(config.password(), &"None".to_string());
+    assert_eq!(config.client_name(), &"dbgw".to_string());
 }
 
 #[test]

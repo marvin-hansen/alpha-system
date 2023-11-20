@@ -1,16 +1,12 @@
-use surrealdb::engine::local;
 use surrealdb::Error;
-use surrealdb::Surreal;
 
 use common::prelude::{ServiceConfig, ServiceID};
 use components::prelude::DBManager;
-use specs::prelude::{cmdb_service_config, smdb_service_config};
+use specs::prelude::{cmdb_service_config, db_config_ci, smdb_service_config};
 
 async fn get_dbm() -> Result<DBManager, Error> {
-    let db: Surreal<local::Db> = Surreal::new::<local::Mem>(()).await.unwrap();
-    db.use_ns("test").use_db("test").await.unwrap();
-    let dbm = DBManager::new(db);
-
+    let config = db_config_ci();
+    let dbm = DBManager::new_offline(&config).await;
     Ok(dbm)
 }
 
