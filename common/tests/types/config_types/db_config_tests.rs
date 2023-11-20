@@ -2,7 +2,7 @@ use common::prelude::DBConfig;
 
 #[test]
 fn test_new_connection() {
-    let config = DBConfig::new_connection(8000, ("localhost".to_string()));
+    let config = DBConfig::new_connection(8000, "localhost".to_string());
 
     assert_eq!(config.port(), 8000);
     assert_eq!(config.host(), &("localhost".to_string()));
@@ -12,9 +12,9 @@ fn test_new_connection() {
 fn test_new_connection_with_authentication() {
     let config = DBConfig::new_connection_with_authentication(
         8000,
-        ("localhost".to_string()),
-        ("username".to_string()),
-        ("password".to_string()),
+        "localhost".to_string(),
+        "username".to_string(),
+        "password".to_string(),
     );
 
     assert_eq!(config.port(), 8000);
@@ -25,7 +25,7 @@ fn test_new_connection_with_authentication() {
 
 #[test]
 fn test_new_authentication() {
-    let config = DBConfig::new_authentication(("username".to_string()), ("password".to_string()));
+    let config = DBConfig::new_authentication("username".to_string(), "password".to_string());
 
     assert_eq!(config.username(), &("username".to_string()));
     assert_eq!(config.password(), &("password".to_string()));
@@ -46,12 +46,12 @@ fn test_default() {
 fn test_debug() {
     let config = DBConfig::new_connection_with_authentication(
         8000,
-        ("localhost".to_string()),
-        ("username".to_string()),
-        ("password".to_string()),
+        "localhost".to_string(),
+        "username".to_string(),
+        "password".to_string(),
     );
 
-    let expected = "DBConfig { port: 8000, host:  (\"localhost\"), username:  (\"username\"), password:  (\"password\"), client_name: \"rsmgclient/2.0.2\" }";
+    let expected = "DBConfig { port: 8000, host: \"localhost\", db_name: \"test\", db_namespace: \"test\", username: \"username\", password: \"password\", client_name: \"dbgw\" }";
     let actual = format!("{:?}", config);
     assert_eq!(expected, actual);
 }
@@ -60,12 +60,12 @@ fn test_debug() {
 fn test_display() {
     let config = DBConfig::new_connection_with_authentication(
         8000,
-        ("localhost".to_string()),
-        ("username".to_string()),
-        ("password".to_string()),
+        "localhost".to_string(),
+        "username".to_string(),
+        "password".to_string(),
     );
 
-    let expected = "DBConfig { port: 8000, host:  (\"localhost\"), username:  (\"username\"), password:  (\"password\"), client_name: \"rsmgclient/2.0.2\" }";
+    let expected = "DBConfig { port: 8000, host: localhost, db_name: test, db_namespace: test, username: username,password: password, client_name: dbgw }";
     let actual = config.to_string();
     assert_eq!(expected, actual);
 }
