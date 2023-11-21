@@ -1,6 +1,6 @@
 use surrealdb::Error;
 
-use common::prelude::{ServiceConfig, ServiceID};
+use common::prelude::{AccountType, ExchangeID, PortfolioConfig, ServiceConfig, ServiceID};
 use components::prelude::DBManager;
 use specs::prelude::{cmdb_service_config, db_config_ci, smdb_service_config};
 
@@ -8,6 +8,97 @@ async fn get_dbm() -> Result<DBManager, Error> {
     let config = db_config_ci();
     let dbm = DBManager::new_offline(&config).await;
     Ok(dbm)
+}
+
+fn get_portfolio_config() -> PortfolioConfig {
+    let portfolio_id = 1;
+    let portfolio_description = "cash portfolio".to_string();
+    let portfolio_account_type = AccountType::Cash;
+    let portfolio_account_id = "cash_account".to_string();
+    let portfolio_exchange_id = ExchangeID::VEX;
+    let portfolio_currency = "USD".to_string();
+    let portfolio_cash_balance = 1000.0;
+    let portfolio_max_drawdown = 20.0;
+    let portfolio_instruments = vec!["BTC".to_string(), "ETH".to_string()];
+    let instrument_max_allocation = Some(0.02);
+    let instrument_max_drawdown = Some(10.0);
+
+    PortfolioConfig::new_cash_portfolio(
+        portfolio_id,
+        portfolio_description,
+        portfolio_account_type,
+        portfolio_account_id,
+        portfolio_exchange_id,
+        portfolio_currency,
+        portfolio_cash_balance,
+        portfolio_max_drawdown,
+        portfolio_instruments,
+        instrument_max_allocation,
+        instrument_max_drawdown,
+    )
+}
+
+#[tokio::test]
+async fn test_add_portfolio_config() {
+    let dbm = get_dbm().await.unwrap();
+    let config = get_portfolio_config();
+
+    let result = dbm.add_portfolio_config(&config).await.unwrap();
+    assert!(result);
+}
+
+#[tokio::test]
+async fn test_read_all_portfolio_config() {
+    let dbm = get_dbm().await.unwrap();
+    let configs = dbm.read_all_portfolio_configs().await.unwrap();
+    assert_eq!(configs.len(), 0);
+
+    let config = get_portfolio_config();
+    let result = dbm.add_portfolio_config(&config).await.unwrap();
+    assert!(result);
+
+    let configs = dbm.read_all_portfolio_configs().await.unwrap();
+    assert_eq!(configs.len(), 1);
+}
+
+#[tokio::test]
+async fn test_read_portfolio_config_by_id() {
+    let dbm = get_dbm().await.unwrap();
+    let config = get_portfolio_config();
+    let result = dbm.add_portfolio_config(&config).await.unwrap();
+    assert!(result);
+
+    let config = dbm.read_portfolio_config_by_id(1).await.unwrap();
+    assert_eq!(config.unwrap().portfolio_id(), 1);
+}
+
+#[tokio::test]
+async fn test_update_portfolio_config() {
+    let dbm = get_dbm().await.unwrap();
+    let config = get_portfolio_config();
+    let result = dbm.add_portfolio_config(&config).await.unwrap();
+    assert!(result);
+
+    let config = get_portfolio_config();
+    let result = dbm.update_portfolio_config(config).await.unwrap();
+    assert!(result.is_some());
+
+    let config = dbm.read_portfolio_config_by_id(1).await.unwrap();
+    assert_eq!(config.unwrap().portfolio_id(), 1);
+}
+
+#[tokio::test]
+async fn test_delete_portfolio_config() {
+    let dbm = get_dbm().await.unwrap();
+    let delete_result = dbm.delete_portfolio_config(1).await.unwrap();
+    assert!(!delete_result);
+
+    let config = get_portfolio_config();
+    let result = dbm.add_portfolio_config(&config).await.unwrap();
+    assert!(result);
+
+    let delete_result = dbm.delete_portfolio_config(1).await.unwrap();
+    assert!(delete_result);
 }
 
 #[tokio::test]
