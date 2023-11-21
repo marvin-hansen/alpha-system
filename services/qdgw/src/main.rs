@@ -26,7 +26,7 @@ async fn main() -> anyhow::Result<()> {
     let dependencies = service_manager.get_service_dependencies();
 
     // Check if there are any dependencies
-    if dependencies.len() != 0 {
+    if !dependencies.is_empty() {
         // Check if all dependencies are online, abort of anyone is missing.
         for d in dependencies {
             let available = smdb_provider
