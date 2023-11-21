@@ -10,7 +10,7 @@ use tarpc::tokio_serde::formats::Bincode;
 use cmdb_service::service::{CMDBServer, CMDBService};
 use common::prelude::ServiceID::DBGW;
 use common::prelude::{print_utils, HostEndpoint, ServiceID};
-use components::prelude::{CfgManager, CtxManager, DnsManager, ServiceManager, EnvManager};
+use components::prelude::{CfgManager, CtxManager, DnsManager, EnvManager, ServiceManager};
 use dbgw_client::DBGatewayClient;
 use smdb_provider::SMDBProvider;
 
@@ -24,18 +24,21 @@ async fn main() -> anyhow::Result<()> {
     let service_manager = ServiceManager::new(&cfg_manager, &svm_manager);
     let smdb_provider = SMDBProvider::new(&service_manager).await;
 
-
     //get all dependencies
     let dependencies = service_manager.get_service_dependencies();
 
     // Check if all dependencies are online, abort of anyone is missing.
     for d in dependencies {
-        let available = smdb_provider.check_if_service_id_exists(d)
+        let available = smdb_provider
+            .check_if_service_id_exists(d)
             .await
             .expect("[CMDB]: Failed to check if service dependency exists");
 
         if !available {
-            panic!("[CMDB]: Service dependency {:?} is not available please start it", d);
+            panic!(
+                "[CMDB]: Service dependency {:?} is not available please start it",
+                d
+            );
         }
     }
 
@@ -55,7 +58,8 @@ async fn main() -> anyhow::Result<()> {
     let server_addr = (ip, port);
 
     // Set CMDB service to online via SMDB
-    smdb_provider.set_service_online(ServiceID::CMDB)
+    smdb_provider
+        .set_service_online(ServiceID::CMDB)
         .await
         .expect("[CMDB]: Failed to set CMDB service to online");
 

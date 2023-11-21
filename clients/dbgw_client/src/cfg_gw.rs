@@ -6,7 +6,10 @@ use dbgw_service::service::DBGatewayError;
 use crate::DBGatewayClient;
 
 impl DBGatewayClient {
-    pub async fn create_portfolio_config(self, data: PortfolioConfig) -> Result<bool, DBGatewayError> {
+    pub async fn create_portfolio_config(
+        self,
+        data: PortfolioConfig,
+    ) -> Result<bool, DBGatewayError> {
         let res = self
             .client
             .create_portfolio_config(context::current(), data)
@@ -32,7 +35,10 @@ impl DBGatewayClient {
         }
     }
 
-    pub async fn read_portfolio_config_by_id(self, id: u16) -> Result<Option<PortfolioConfig>, DBGatewayError> {
+    pub async fn read_portfolio_config_by_id(
+        self,
+        id: u16,
+    ) -> Result<Option<PortfolioConfig>, DBGatewayError> {
         let res = self
             .client
             .read_portfolio_config_by_id(context::current(), id)
@@ -45,7 +51,10 @@ impl DBGatewayClient {
         }
     }
 
-    pub async fn update_portfolio_config(self, data: PortfolioConfig) -> Result<Option<PortfolioConfig>, DBGatewayError> {
+    pub async fn update_portfolio_config(
+        self,
+        data: PortfolioConfig,
+    ) -> Result<Option<PortfolioConfig>, DBGatewayError> {
         let res = self
             .client
             .update_portfolio_config(context::current(), data)

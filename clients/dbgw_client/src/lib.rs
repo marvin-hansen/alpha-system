@@ -7,8 +7,8 @@ use tarpc::tokio_serde::formats::Bincode;
 use common::prelude::HostEndpoint;
 use dbgw_service::service::DBGatewayClient as DBGWClient;
 
-mod svc_gw;
 mod cfg_gw;
+mod svc_gw;
 
 #[derive(Clone)]
 pub struct DBGatewayClient {

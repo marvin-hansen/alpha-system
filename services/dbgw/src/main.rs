@@ -9,7 +9,7 @@ use tarpc::tokio_serde::formats::Bincode;
 
 use common::prelude::{print_utils, ServiceID};
 use components::prelude::{
-    CfgManager, CtxManager, DBManager, DnsManager, ServiceManager, EnvManager,
+    CfgManager, CtxManager, DBManager, DnsManager, EnvManager, ServiceManager,
 };
 use dbgw_service::service::{DBGateway, DBGatewayServer};
 

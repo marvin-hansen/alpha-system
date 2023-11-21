@@ -19,14 +19,17 @@ impl fmt::Display for DBGatewayError {
     }
 }
 
-
 /// Service definition. Client and server are generated from this trait.
 #[tarpc::service]
 pub trait DBGateway {
     async fn create_portfolio_config(config: PortfolioConfig) -> Result<bool, DBGatewayError>;
     async fn read_all_portfolio_configs() -> Result<Vec<PortfolioConfig>, DBGatewayError>;
-    async fn read_portfolio_config_by_id(id: u16) -> Result<Option<PortfolioConfig>, DBGatewayError>;
-    async fn update_portfolio_config(data: PortfolioConfig) -> Result<Option<PortfolioConfig>, DBGatewayError>;
+    async fn read_portfolio_config_by_id(
+        id: u16,
+    ) -> Result<Option<PortfolioConfig>, DBGatewayError>;
+    async fn update_portfolio_config(
+        data: PortfolioConfig,
+    ) -> Result<Option<PortfolioConfig>, DBGatewayError>;
     async fn delete_portfolio_config(id: u16) -> Result<bool, DBGatewayError>;
     async fn create_service(data: ServiceConfig) -> Result<bool, DBGatewayError>;
     async fn check_if_service_id_exists(id: ServiceID) -> Result<bool, DBGatewayError>;
@@ -56,7 +59,11 @@ impl DBGatewayServer {
 
 #[tarpc::server]
 impl DBGateway for DBGatewayServer {
-    async fn create_portfolio_config(self, _: Context, data: PortfolioConfig) -> Result<bool, DBGatewayError> {
+    async fn create_portfolio_config(
+        self,
+        _: Context,
+        data: PortfolioConfig,
+    ) -> Result<bool, DBGatewayError> {
         let created = self.dbm.add_portfolio_config(&data).await;
         match created {
             Ok(res) => Ok(res),
@@ -64,7 +71,10 @@ impl DBGateway for DBGatewayServer {
         }
     }
 
-    async fn read_all_portfolio_configs(self, _: Context) -> Result<Vec<PortfolioConfig>, DBGatewayError> {
+    async fn read_all_portfolio_configs(
+        self,
+        _: Context,
+    ) -> Result<Vec<PortfolioConfig>, DBGatewayError> {
         let records = self.dbm.read_all_portfolio_configs().await;
         match records {
             Ok(res) => Ok(res),
@@ -72,7 +82,11 @@ impl DBGateway for DBGatewayServer {
         }
     }
 
-    async fn read_portfolio_config_by_id(self, _: Context, id: u16) -> Result<Option<PortfolioConfig>, DBGatewayError> {
+    async fn read_portfolio_config_by_id(
+        self,
+        _: Context,
+        id: u16,
+    ) -> Result<Option<PortfolioConfig>, DBGatewayError> {
         let record = self.dbm.read_portfolio_config_by_id(id).await;
         match record {
             Ok(res) => Ok(res),
@@ -80,17 +94,19 @@ impl DBGateway for DBGatewayServer {
         }
     }
 
-    async fn update_portfolio_config(self, _: Context, data: PortfolioConfig) -> Result<Option<PortfolioConfig>, DBGatewayError> {
+    async fn update_portfolio_config(
+        self,
+        _: Context,
+        data: PortfolioConfig,
+    ) -> Result<Option<PortfolioConfig>, DBGatewayError> {
         let id = data.portfolio_id().to_string();
         let updated = self.dbm.update_portfolio_config(data).await;
         match updated {
             Ok(res) => match res {
-                None => {
-                    Err(DBGatewayError(format!(
-                        "Failed to update service id {}",
-                        id
-                    )))
-                }
+                None => Err(DBGatewayError(format!(
+                    "Failed to update service id {}",
+                    id
+                ))),
                 Some(res) => Ok(Some(res)),
             },
             Err(e) => Err(DBGatewayError(e.to_string())),
@@ -104,7 +120,6 @@ impl DBGateway for DBGatewayServer {
             Err(e) => Err(DBGatewayError(e.to_string())),
         }
     }
-
 
     async fn create_service(self, _: Context, data: ServiceConfig) -> Result<bool, DBGatewayError> {
         let created: Result<bool, Error> = self.dbm.create_service(data).await;

@@ -12,10 +12,7 @@ pub struct ServiceManager<'l> {
 impl<'l> ServiceManager<'l> {
     /// new_offline_service_manager creates an offline service manager with only DB access
     /// required to implement SMDB service registry.
-    pub fn new(
-        cfg_manager: &'l CfgManager,
-        svm_manager: &'l EnvManager<'l>,
-    ) -> Self {
+    pub fn new(cfg_manager: &'l CfgManager, svm_manager: &'l EnvManager<'l>) -> Self {
         Self {
             cfg_manager,
             svm_manager,
@@ -32,7 +29,6 @@ impl<'l> ServiceManager<'l> {
     pub fn get_service_dependencies(&self) -> Vec<ServiceID> {
         self.cfg_manager.svc_config().dependencies().clone()
     }
-
 
     pub fn get_service_endpoint(&self) -> Endpoint {
         self.cfg_manager.svc_config().endpoint()

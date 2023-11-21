@@ -11,4 +11,3 @@ impl fmt::Display for InitError {
         write!(f, "InitError: {}", self.0)
     }
 }
-

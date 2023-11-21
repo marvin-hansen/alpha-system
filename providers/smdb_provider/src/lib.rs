@@ -31,10 +31,8 @@ impl SMDBProvider {
         let mut transport = tarpc::serde_transport::tcp::connect(server_addr, codec_fn);
         transport.config_mut().max_frame_length(usize::MAX);
 
-        let client = SMDBServiceClient::new(
-            client::Config::default(),
-            transport.await.unwrap(),
-        ).spawn();
+        let client =
+            SMDBServiceClient::new(client::Config::default(), transport.await.unwrap()).spawn();
 
         Self { client }
     }

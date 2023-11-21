@@ -1,6 +1,6 @@
-use surrealdb::Error;
-use common::prelude::PortfolioConfig;
 use crate::prelude::DBManager;
+use common::prelude::PortfolioConfig;
+use surrealdb::Error;
 
 const PORTFOLIO_CONFIG_TABLE: &str = "portfolio_config";
 
@@ -37,7 +37,10 @@ impl DBManager {
     }
 
     /// returns the portfolio config with the given id
-    pub async fn read_portfolio_config_by_id(&self, id: u16) -> Result<Option<PortfolioConfig>, Error> {
+    pub async fn read_portfolio_config_by_id(
+        &self,
+        id: u16,
+    ) -> Result<Option<PortfolioConfig>, Error> {
         let id = id.to_string();
 
         let res = self

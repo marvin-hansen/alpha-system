@@ -1,6 +1,6 @@
+use crate::svc_types::ServiceOP;
 use common::prelude::ServiceID;
 use smdb_provider::SMDBProvider;
-use crate::svc_types::ServiceOP;
 
 pub async fn handle_service_op(client: &SMDBProvider, op: ServiceOP) -> anyhow::Result<()> {
     match op {

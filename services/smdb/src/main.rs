@@ -9,7 +9,7 @@ use tarpc::tokio_serde::formats::Bincode;
 
 use common::prelude::ServiceID::DBGW;
 use common::prelude::{print_utils, HostEndpoint, ServiceID};
-use components::prelude::{CfgManager, CtxManager, DnsManager, ServiceManager, EnvManager};
+use components::prelude::{CfgManager, CtxManager, DnsManager, EnvManager, ServiceManager};
 use dbgw_client::DBGatewayClient;
 use smdb_service::service::{SMDBServer, SMDBService};
 

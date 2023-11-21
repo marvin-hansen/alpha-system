@@ -56,7 +56,10 @@ impl<'l> EnvManager<'l> {
                 *self.dbgw_env.borrow_mut() = Some(dbgw_env);
                 Ok(())
             }
-            ServiceID::Default => Err(InitError(format!("[SvcEnvManager]: Service {:?} is not supported", svc_id))),
+            ServiceID::Default => Err(InitError(format!(
+                "[SvcEnvManager]: Service {:?} is not supported",
+                svc_id
+            ))),
         }
     }
 
@@ -105,7 +108,10 @@ impl<'l> EnvManager<'l> {
                         .expect("[SvcEnvManager]: Failed to get dbgw host and port"),
                 )
             }
-            ServiceID::Default => Err(InitError(format!("[SvcEnvManager]: Service {:?} is not supported", svc_id))),
+            ServiceID::Default => Err(InitError(format!(
+                "[SvcEnvManager]: Service {:?} is not supported",
+                svc_id
+            ))),
         }
     }
 
@@ -140,7 +146,9 @@ impl<'l> EnvManager<'l> {
                 cluster_host.to_string()
             }
             EnvironmentType::UnknownEnv => {
-                return Err(InitError("[SvcEnvManager]: Unknown Environment".to_string()));
+                return Err(InitError(
+                    "[SvcEnvManager]: Unknown Environment".to_string(),
+                ));
             }
         };
 

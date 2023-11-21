@@ -18,13 +18,14 @@ impl fmt::Display for CMDBError {
     }
 }
 
-
 #[tarpc::service]
 pub trait CMDBService {
     async fn create_portfolio_config(config: PortfolioConfig) -> Result<bool, CMDBError>;
     async fn read_all_portfolio_configs() -> Result<Vec<PortfolioConfig>, CMDBError>;
     async fn read_portfolio_config_by_id(id: u16) -> Result<Option<PortfolioConfig>, CMDBError>;
-    async fn update_portfolio_config(data: PortfolioConfig) -> Result<Option<PortfolioConfig>, CMDBError>;
+    async fn update_portfolio_config(
+        data: PortfolioConfig,
+    ) -> Result<Option<PortfolioConfig>, CMDBError>;
     async fn delete_portfolio_config(id: u16) -> Result<bool, CMDBError>;
 }
 
@@ -88,11 +89,7 @@ impl CMDBService for CMDBServer {
         }
     }
 
-    async fn delete_portfolio_config(
-        self,
-        _: Context,
-        id: u16,
-    ) -> Result<bool, CMDBError> {
+    async fn delete_portfolio_config(self, _: Context, id: u16) -> Result<bool, CMDBError> {
         let res = self.dbgw.delete_portfolio_config(id).await;
         match res {
             Ok(res) => Ok(res),
