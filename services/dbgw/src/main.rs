@@ -9,7 +9,7 @@ use tarpc::tokio_serde::formats::Bincode;
 
 use common::prelude::{print_utils, ServiceID};
 use components::prelude::{
-    CfgManager, CtxManager, DBManager, DnsManager, ServiceManager, SvcEnvManager,
+    CfgManager, CtxManager, DBManager, DnsManager, ServiceManager, EnvManager,
 };
 use dbgw_service::service::{DBGateway, DBGatewayServer};
 
@@ -19,8 +19,8 @@ async fn main() -> anyhow::Result<()> {
     let ctx_manager = CtxManager::new();
     let dns_manager = DnsManager::new(&ctx_manager);
     let cfg_manager = CfgManager::new(svc_id, &ctx_manager);
-    let svm_manager = SvcEnvManager::new(&ctx_manager, &dns_manager);
-    let service_manager = ServiceManager::new_offline_service_manager(&cfg_manager, &svm_manager);
+    let svm_manager = EnvManager::new(&ctx_manager, &dns_manager);
+    let service_manager = ServiceManager::new(&cfg_manager, &svm_manager);
 
     // service_manager configures ip and port automatically relative to the detected context.
     let (host_ip, port) = service_manager

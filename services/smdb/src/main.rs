@@ -9,7 +9,7 @@ use tarpc::tokio_serde::formats::Bincode;
 
 use common::prelude::ServiceID::DBGW;
 use common::prelude::{print_utils, HostEndpoint, ServiceID};
-use components::prelude::{CfgManager, CtxManager, DnsManager, ServiceManager, SvcEnvManager};
+use components::prelude::{CfgManager, CtxManager, DnsManager, ServiceManager, EnvManager};
 use dbgw_client::DBGatewayClient;
 use smdb_service::service::{SMDBServer, SMDBService};
 
@@ -19,8 +19,8 @@ async fn main() -> anyhow::Result<()> {
     let ctx_manager = CtxManager::new();
     let dns_manager = DnsManager::new(&ctx_manager);
     let cfg_manager = CfgManager::new(svc_id, &ctx_manager);
-    let svm_manager = SvcEnvManager::new(&ctx_manager, &dns_manager);
-    let service_manager = ServiceManager::new_offline_service_manager(&cfg_manager, &svm_manager);
+    let svm_manager = EnvManager::new(&ctx_manager, &dns_manager);
+    let service_manager = ServiceManager::new(&cfg_manager, &svm_manager);
 
     // pull DBGW endpoint from auto config
     let (dbgw_host, dbgw_port) = service_manager

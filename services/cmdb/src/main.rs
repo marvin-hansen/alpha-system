@@ -10,7 +10,7 @@ use tarpc::tokio_serde::formats::Bincode;
 use cmdb_service::service::{CMDBServer, CMDBService};
 use common::prelude::ServiceID::DBGW;
 use common::prelude::{print_utils, HostEndpoint, ServiceID};
-use components::prelude::{CfgManager, CtxManager, DnsManager, ServiceManager, SvcEnvManager};
+use components::prelude::{CfgManager, CtxManager, DnsManager, ServiceManager, EnvManager};
 use dbgw_client::DBGatewayClient;
 use smdb_provider::SMDBProvider;
 
@@ -20,9 +20,10 @@ async fn main() -> anyhow::Result<()> {
     let ctx_manager = CtxManager::new();
     let dns_manager = DnsManager::new(&ctx_manager);
     let cfg_manager = CfgManager::new(svc_id, &ctx_manager);
-    let svm_manager = SvcEnvManager::new(&ctx_manager, &dns_manager);
-    let smdb_provider = SMDBProvider::new(&svm_manager).await;
-    let service_manager = ServiceManager::new_offline_service_manager(&cfg_manager, &svm_manager);
+    let svm_manager = EnvManager::new(&ctx_manager, &dns_manager);
+    let service_manager = ServiceManager::new(&cfg_manager, &svm_manager);
+    let smdb_provider = SMDBProvider::new(&service_manager).await;
+
 
     //get all dependencies
     let dependencies = service_manager.get_service_dependencies();
@@ -31,17 +32,17 @@ async fn main() -> anyhow::Result<()> {
     for d in dependencies {
         let available = smdb_provider.check_if_service_id_exists(d)
             .await
-            .expect("Failed to check if services exists");
+            .expect("[CMDB]: Failed to check if service dependency exists");
 
         if !available {
-            panic!("Service dependency {:?} is not available please start it", d);
+            panic!("[CMDB]: Service dependency {:?} is not available please start it", d);
         }
     }
 
     // pull DBGW endpoint from auto config
     let (dbgw_host, dbgw_port) = service_manager
         .get_service_host_port(DBGW)
-        .expect("Failed to get host and port for: DBGW");
+        .expect("[CMDB]: Failed to get host and port for: DBGW");
 
     let dbgw_endpoint = HostEndpoint::new(&dbgw_host, dbgw_port);
     let dbgw_client = DBGatewayClient::new(dbgw_endpoint).await;
@@ -49,14 +50,14 @@ async fn main() -> anyhow::Result<()> {
     // service_manager configures ip and port automatically relative to the detected context.
     let (host_ip, port) = service_manager
         .get_service_host_port(svc_id)
-        .expect("CMDB: Failed to get host and port");
+        .expect("[CMDB]: Failed to get CMDB host and port");
     let ip = IpAddr::from_str(&host_ip).expect("CMDB: Failed to parse host ip");
     let server_addr = (ip, port);
 
     // Set CMDB service to online via SMDB
     smdb_provider.set_service_online(ServiceID::CMDB)
         .await
-        .expect("Failed to check if services exists");
+        .expect("[CMDB]: Failed to set CMDB service to online");
 
     print_utils::print_start_header(&svc_id, server_addr.1);
 

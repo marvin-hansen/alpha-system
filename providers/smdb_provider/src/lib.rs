@@ -5,7 +5,7 @@ use tarpc::client;
 use tarpc::tokio_serde::formats::Bincode;
 
 use common::prelude::{HostEndpoint, ServiceID};
-use components::prelude::SvcEnvManager;
+use components::prelude::ServiceManager;
 use smdb_service::service::SMDBServiceClient;
 
 mod prv_smdb;
@@ -18,11 +18,11 @@ pub struct SMDBProvider {
 impl SMDBProvider {
     /// new creates a new SMDBProvider, finds the host and port of the SMDB service,
     /// and configures the smdb client fully automatically relative to the detected context.
-    pub async fn new(svm: &SvcEnvManager<'_>) -> Self {
+    pub async fn new(svm: &ServiceManager<'_>) -> Self {
         // SvcEnvManager configures SMDB ip and port relative to the detected context.
         let (host, port) = svm
-            .get_svc_host_port(ServiceID::SMDB)
-            .expect("Failed to get host and port for: SMDB");
+            .get_service_host_port(ServiceID::SMDB)
+            .expect("[SMDBProvider]: Failed to get host and port for: SMDB");
 
         let ip_addr = IpAddr::from_str(&host).expect("Failed to parse IP address from DBConfig");
         let server_addr = ((ip_addr), port);

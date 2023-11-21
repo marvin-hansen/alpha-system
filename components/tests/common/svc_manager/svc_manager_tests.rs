@@ -1,7 +1,7 @@
 use std::env;
 
 use common::prelude::{Encoding, ProtocolType, ServiceID, ServiceType};
-use components::prelude::{CfgManager, CtxManager, DnsManager, ServiceManager, SvcEnvManager};
+use components::prelude::{CfgManager, CtxManager, DnsManager, ServiceManager, EnvManager};
 
 #[test]
 fn test_new_offline_service_manager() {
@@ -9,7 +9,7 @@ fn test_new_offline_service_manager() {
     let ctx_manager = &CtxManager::new();
     let dns_manager = &DnsManager::new(ctx_manager);
     let cfg_manager = &CfgManager::new(svc, ctx_manager);
-    let svm_manager = &SvcEnvManager::new(ctx_manager, dns_manager);
+    let svm_manager = &EnvManager::new(ctx_manager, dns_manager);
     let service_manager = ServiceManager::new_offline_service_manager(cfg_manager, svm_manager);
     let service_config = service_manager.get_service_config();
     assert_eq!(service_config.svc_id(), &ServiceID::SMDB);
@@ -21,7 +21,7 @@ fn test_get_service_config() {
     let ctx_manager = &CtxManager::new();
     let dns_manager = &DnsManager::new(ctx_manager);
     let cfg_manager = &CfgManager::new(svc, ctx_manager);
-    let svm_manager = &SvcEnvManager::new(ctx_manager, dns_manager);
+    let svm_manager = &EnvManager::new(ctx_manager, dns_manager);
 
     let service_manager = ServiceManager::new_offline_service_manager(cfg_manager, svm_manager);
 
@@ -70,7 +70,7 @@ fn test_get_service_host_port() {
     let ctx_manager = &CtxManager::new();
     let dns_manager = &DnsManager::new(ctx_manager);
     let cfg_manager = &CfgManager::new(svc, ctx_manager);
-    let svm_manager = &SvcEnvManager::new(ctx_manager, dns_manager);
+    let svm_manager = &EnvManager::new(ctx_manager, dns_manager);
 
     let service_manager = ServiceManager::new_offline_service_manager(cfg_manager, svm_manager);
     let service_config = service_manager.get_service_config();

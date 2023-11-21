@@ -4,7 +4,7 @@ use common::prelude::{EnvironmentType, HostEndpoint, InitError, ServiceID, SvcEn
 
 use crate::prelude::{CtxManager, DnsManager};
 
-pub struct SvcEnvManager<'l> {
+pub struct EnvManager<'l> {
     ctx_manager: &'l CtxManager,
     dns_manager: &'l DnsManager,
     cmdb_env: RefCell<Option<SvcEnvConfig>>,
@@ -12,7 +12,7 @@ pub struct SvcEnvManager<'l> {
     dbgw_env: RefCell<Option<SvcEnvConfig>>,
 }
 
-impl<'l> SvcEnvManager<'l> {
+impl<'l> EnvManager<'l> {
     pub fn new(ctx_manager: &'l CtxManager, dns_manager: &'l DnsManager) -> Self {
         Self {
             ctx_manager,
@@ -24,7 +24,7 @@ impl<'l> SvcEnvManager<'l> {
     }
 }
 
-impl<'l> SvcEnvManager<'l> {
+impl<'l> EnvManager<'l> {
     /// Initializes the service environment based on the given service ID and host endpoint.
     ///
     /// # Arguments
@@ -56,7 +56,7 @@ impl<'l> SvcEnvManager<'l> {
                 *self.dbgw_env.borrow_mut() = Some(dbgw_env);
                 Ok(())
             }
-            ServiceID::Default => Err(InitError(format!("Service {:?} is not supported", svc_id))),
+            ServiceID::Default => Err(InitError(format!("[SvcEnvManager]: Service {:?} is not supported", svc_id))),
         }
     }
 
@@ -70,7 +70,7 @@ impl<'l> SvcEnvManager<'l> {
     }
 }
 
-impl<'l> SvcEnvManager<'l> {
+impl<'l> EnvManager<'l> {
     ///  Returns the hostname of the service relative to the application context.
     ///  If the environment type is local, it returns the hostname of the service running locally.
     ///  If the environment type is cluster, it returns the hostname of the service running in the cluster.
@@ -84,7 +84,7 @@ impl<'l> SvcEnvManager<'l> {
                     self.cmdb_env
                         .borrow()
                         .as_ref()
-                        .expect("Failed to get cmdb host and port"),
+                        .expect("[SvcEnvManager]: Failed to get cmdb host and port"),
                 )
             }
             ServiceID::SMDB => {
@@ -93,7 +93,7 @@ impl<'l> SvcEnvManager<'l> {
                     self.smdb_env
                         .borrow()
                         .as_ref()
-                        .expect("Failed to get smdb host and port"),
+                        .expect("[SvcEnvManager]: Failed to get smdb host and port"),
                 )
             }
             ServiceID::DBGW => {
@@ -102,10 +102,10 @@ impl<'l> SvcEnvManager<'l> {
                     self.dbgw_env
                         .borrow()
                         .as_ref()
-                        .expect("Failed to get dbgw host and port"),
+                        .expect("[SvcEnvManager]: Failed to get dbgw host and port"),
                 )
             }
-            ServiceID::Default => Err(InitError(format!("Service {:?} is not supported", svc_id))),
+            ServiceID::Default => Err(InitError(format!("[SvcEnvManager]: Service {:?} is not supported", svc_id))),
         }
     }
 
@@ -126,7 +126,7 @@ impl<'l> SvcEnvManager<'l> {
         let port: u16 = svc_env_config
             .port()
             .parse()
-            .expect("Failed to parse port from config");
+            .expect("[SvcEnvManager]: Failed to parse port from config");
 
         let host = match self.ctx_manager.env_type() {
             EnvironmentType::LOCAL => svc_env_config.local_host().to_string(),
@@ -135,12 +135,12 @@ impl<'l> SvcEnvManager<'l> {
                 let cluster_host = self
                     .dns_manager
                     .resolve_dns(svc_env_config.cluster_host(), true)
-                    .expect("Failed to resolve DNS");
+                    .expect("[SvcEnvManager]: Failed to resolve DNS");
 
                 cluster_host.to_string()
             }
             EnvironmentType::UnknownEnv => {
-                return Err(InitError("Unknown Environment".to_string()));
+                return Err(InitError("[SvcEnvManager]: Unknown Environment".to_string()));
             }
         };
 

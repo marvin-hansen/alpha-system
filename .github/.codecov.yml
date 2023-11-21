@@ -7,3 +7,4 @@ ignore:
   - "cli"  # ignore folders and all its contents
   - "clients"
   - "services"
+  - "providers"

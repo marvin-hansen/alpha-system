@@ -2,19 +2,19 @@ use common::errors::InitError;
 use common::prelude::{Endpoint, ServiceConfig, ServiceID};
 
 use crate::prelude::CfgManager;
-use crate::prelude::SvcEnvManager;
+use crate::prelude::EnvManager;
 
 pub struct ServiceManager<'l> {
     cfg_manager: &'l CfgManager<'l>,
-    svm_manager: &'l SvcEnvManager<'l>,
+    svm_manager: &'l EnvManager<'l>,
 }
 
 impl<'l> ServiceManager<'l> {
     /// new_offline_service_manager creates an offline service manager with only DB access
     /// required to implement SMDB service registry.
-    pub fn new_offline_service_manager(
+    pub fn new(
         cfg_manager: &'l CfgManager,
-        svm_manager: &'l SvcEnvManager<'l>,
+        svm_manager: &'l EnvManager<'l>,
     ) -> Self {
         Self {
             cfg_manager,
@@ -41,7 +41,7 @@ impl<'l> ServiceManager<'l> {
     pub fn get_service_host_port(&self, svc_id: ServiceID) -> Result<(String, u16), InitError> {
         if !self.is_service_initialized(&svc_id) {
             self.init_service(&svc_id)
-                .expect("Failed to initialize service");
+                .expect("[ServiceManager]: Failed to initialize service");
         }
 
         self.svm_manager.get_svc_host_port(svc_id)
