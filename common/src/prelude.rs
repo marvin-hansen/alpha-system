@@ -1,6 +1,4 @@
 // Errors
-pub use crate::errors::CMDBError;
-pub use crate::errors::DBGatewayError;
 pub use crate::errors::InitError;
 //
 // Types

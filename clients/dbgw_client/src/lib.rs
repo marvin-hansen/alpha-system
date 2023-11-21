@@ -8,6 +8,7 @@ use common::prelude::HostEndpoint;
 use dbgw_service::service::DBGatewayClient as DBGWClient;
 
 mod svc_gw;
+mod cfg_gw;
 
 #[derive(Clone)]
 pub struct DBGatewayClient {

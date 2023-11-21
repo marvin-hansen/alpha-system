@@ -4,6 +4,7 @@ use surrealdb::Surreal;
 use common::prelude::DBConfig;
 
 mod db_svc;
+mod db_cfg;
 
 #[derive(Clone)]
 pub struct DBManager {

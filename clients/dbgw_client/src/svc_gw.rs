@@ -1,7 +1,7 @@
 use tarpc::context;
 
-use common::errors::DBGatewayError;
 use common::prelude::{ServiceConfig, ServiceID};
+use dbgw_service::service::DBGatewayError;
 
 use crate::DBGatewayClient;
 
