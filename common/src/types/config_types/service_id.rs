@@ -16,6 +16,7 @@ pub enum ServiceID {
     SMDB,
     CMDB,
     DBGW,
+    QDGW,
 }
 
 impl ServiceID {
@@ -25,6 +26,7 @@ impl ServiceID {
             "SMDB" => Some(ServiceID::SMDB),
             "CMDB" => Some(ServiceID::CMDB),
             "DBGW" => Some(ServiceID::DBGW),
+            "QDGW" => Some(ServiceID::QDGW),
             _ => None,
         }
     }
@@ -37,6 +39,7 @@ impl Display for ServiceID {
             ServiceID::SMDB => write!(f, "SMDB"),
             ServiceID::CMDB => write!(f, "CMDB"),
             ServiceID::DBGW => write!(f, "DBGW"),
+            ServiceID::QDGW => write!(f, "QDGW"),
         }
     }
 }

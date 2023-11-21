@@ -10,6 +10,7 @@ pub struct EnvManager<'l> {
     cmdb_env: RefCell<Option<SvcEnvConfig>>,
     smdb_env: RefCell<Option<SvcEnvConfig>>,
     dbgw_env: RefCell<Option<SvcEnvConfig>>,
+    qdgw_env: RefCell<Option<SvcEnvConfig>>,
 }
 
 impl<'l> EnvManager<'l> {
@@ -20,6 +21,7 @@ impl<'l> EnvManager<'l> {
             cmdb_env: RefCell::new(None),
             smdb_env: RefCell::new(None),
             dbgw_env: RefCell::new(None),
+            qdgw_env: RefCell::new(None),
         }
     }
 }
@@ -56,8 +58,13 @@ impl<'l> EnvManager<'l> {
                 *self.dbgw_env.borrow_mut() = Some(dbgw_env);
                 Ok(())
             }
+            ServiceID::QDGW => {
+                let qdgw_env = self.get_svc_env_config(ServiceID::QDGW, endpoint);
+                *self.qdgw_env.borrow_mut() = Some(qdgw_env);
+                Ok(())
+            }
             ServiceID::Default => Err(InitError(format!(
-                "[SvcEnvManager]: Service {:?} is not supported",
+                "[EnvManager]: Service {:?} is not supported",
                 svc_id
             ))),
         }
@@ -87,7 +94,7 @@ impl<'l> EnvManager<'l> {
                     self.cmdb_env
                         .borrow()
                         .as_ref()
-                        .expect("[SvcEnvManager]: Failed to get cmdb host and port"),
+                        .expect("[EnvManager]: Failed to get cmdb host and port"),
                 )
             }
             ServiceID::SMDB => {
@@ -96,7 +103,7 @@ impl<'l> EnvManager<'l> {
                     self.smdb_env
                         .borrow()
                         .as_ref()
-                        .expect("[SvcEnvManager]: Failed to get smdb host and port"),
+                        .expect("[EnvManager]: Failed to get smdb host and port"),
                 )
             }
             ServiceID::DBGW => {
@@ -105,11 +112,20 @@ impl<'l> EnvManager<'l> {
                     self.dbgw_env
                         .borrow()
                         .as_ref()
-                        .expect("[SvcEnvManager]: Failed to get dbgw host and port"),
+                        .expect("[EnvManager]: Failed to get dbgw host and port"),
+                )
+            }
+            ServiceID::QDGW => {
+                self.is_svc_env_initialized(&svc_id);
+                self.get_host(
+                    self.qdgw_env
+                        .borrow()
+                        .as_ref()
+                        .expect("[EnvManager]: Failed to get qdgw host and port"),
                 )
             }
             ServiceID::Default => Err(InitError(format!(
-                "[SvcEnvManager]: Service {:?} is not supported",
+                "[EnvManager]: Service {:?} is not supported",
                 svc_id
             ))),
         }
@@ -120,6 +136,7 @@ impl<'l> EnvManager<'l> {
             ServiceID::CMDB => self.cmdb_env.borrow().is_some(),
             ServiceID::SMDB => self.smdb_env.borrow().is_some(),
             ServiceID::DBGW => self.dbgw_env.borrow().is_some(),
+            ServiceID::QDGW => self.qdgw_env.borrow().is_some(),
             ServiceID::Default => false,
         }
     }
@@ -132,7 +149,7 @@ impl<'l> EnvManager<'l> {
         let port: u16 = svc_env_config
             .port()
             .parse()
-            .expect("[SvcEnvManager]: Failed to parse port from config");
+            .expect("[EnvManager]: Failed to parse port from config");
 
         let host = match self.ctx_manager.env_type() {
             EnvironmentType::LOCAL => svc_env_config.local_host().to_string(),
@@ -141,14 +158,12 @@ impl<'l> EnvManager<'l> {
                 let cluster_host = self
                     .dns_manager
                     .resolve_dns(svc_env_config.cluster_host(), true)
-                    .expect("[SvcEnvManager]: Failed to resolve DNS");
+                    .expect("[EnvManager]: Failed to resolve DNS");
 
                 cluster_host.to_string()
             }
             EnvironmentType::UnknownEnv => {
-                return Err(InitError(
-                    "[SvcEnvManager]: Unknown Environment".to_string(),
-                ));
+                return Err(InitError("[EnvManager]: Unknown Environment".to_string()));
             }
         };
 

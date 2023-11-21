@@ -2,9 +2,11 @@ use common::prelude::ServiceConfig;
 
 use crate::prelude::{cmdb_service_config, smdb_service_config};
 use crate::services::dbgw::dbgw_service_config;
+use crate::services::qdgw::qdgw_service_config;
 
 pub mod cmdb;
 pub mod dbgw;
+pub mod qdgw;
 pub mod smdb;
 
 pub fn get_all_service_configs() -> Vec<ServiceConfig> {
@@ -12,5 +14,6 @@ pub fn get_all_service_configs() -> Vec<ServiceConfig> {
         cmdb_service_config(),
         smdb_service_config(),
         dbgw_service_config(),
+        qdgw_service_config(),
     ]
 }

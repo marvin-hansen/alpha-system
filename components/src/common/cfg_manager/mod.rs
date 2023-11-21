@@ -1,7 +1,7 @@
 use common::prelude::{DBConfig, EnvironmentType, ServiceConfig, ServiceID};
 use specs::prelude::{
     cmdb_service_config, db_config_ci, db_config_cluster, db_config_local, dbgw_service_config,
-    smdb_service_config,
+    qdgw_service_config, smdb_service_config,
 };
 
 use crate::prelude::CtxManager;
@@ -70,6 +70,7 @@ impl<'l> CfgManager<'l> {
             ServiceID::SMDB => smdb_service_config(),
             ServiceID::CMDB => cmdb_service_config(),
             ServiceID::DBGW => dbgw_service_config(),
+            ServiceID::QDGW => qdgw_service_config(),
             ServiceID::Default => ServiceConfig::default(),
         }
     }
