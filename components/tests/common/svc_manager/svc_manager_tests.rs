@@ -75,7 +75,7 @@ fn test_get_service_host_port() {
     let service_manager = ServiceManager::new_offline_service_manager(cfg_manager, svm_manager);
     let service_config = service_manager.get_service_config();
     assert_eq!(service_config.svc_id(), &ServiceID::SMDB);
-    
+
     // We can't really test this, because the CI can't resolve the DNS server of the cluster host.
     // The root cause is that the CI can only have one ENV variable and it's alerady set to CLUSTER.
     // assert!(service_manager

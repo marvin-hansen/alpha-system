@@ -15,6 +15,11 @@ path = "../../common"
 version = "0.1.0"
 
 
+[dependencies.components]
+path = "../../components"
+version = "0.1.0"
+
+
 [dependencies.smdb]
 path = "../../services/smdb"
 version = "0.1.0"

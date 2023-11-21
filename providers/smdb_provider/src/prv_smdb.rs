@@ -3,9 +3,9 @@ use tarpc::context;
 use common::prelude::ServiceID;
 use smdb_service::service::SMDBError;
 
-use crate::SMDBClient;
+use crate::SMDBProvider;
 
-impl SMDBClient {
+impl SMDBProvider {
     pub async fn check_if_service_id_exists(&self, id: ServiceID) -> Result<bool, SMDBError> {
         let res = self
             .client

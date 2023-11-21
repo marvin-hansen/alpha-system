@@ -36,6 +36,11 @@ path = "../../clients/dbgw_client"
 version = "0.1.0"
 
 
+[dependencies.smdb_provider]
+path = "../../providers/smdb_provider"
+version = "0.1.0"
+
+
 [dependencies]
 serde_json = { workspace = true }
 serde = { workspace = true }

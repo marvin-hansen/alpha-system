@@ -1,5 +1,6 @@
+use common::prelude::HostEndpoint;
 use crate::svc_types::ServiceOP;
-use smdb_client::SMDBClient;
+use smdb_provider::SMDBProvider;
 
 mod svc_handle;
 mod svc_types;
@@ -8,7 +9,9 @@ pub const SPEC_OP: ServiceOP = ServiceOP::CheckIfServiceIDExists;
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
-    let client = SMDBClient::new("127.0.0.1", 7070).await;
+    let endpoint = HostEndpoint::new("127.0.0.1", 7070);
+    let client = SMDBProvider::from_host_endpoint(endpoint).await;
+
     svc_handle::handle_service_op(&client, SPEC_OP)
         .await
         .expect("Failed to handle service");

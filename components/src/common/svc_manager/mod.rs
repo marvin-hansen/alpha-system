@@ -29,6 +29,11 @@ impl<'l> ServiceManager<'l> {
         self.cfg_manager.svc_config()
     }
 
+    pub fn get_service_dependencies(&self) -> Vec<ServiceID> {
+        self.cfg_manager.svc_config().dependencies().clone()
+    }
+
+
     pub fn get_service_endpoint(&self) -> Endpoint {
         self.cfg_manager.svc_config().endpoint()
     }

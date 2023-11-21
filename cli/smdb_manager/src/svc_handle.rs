@@ -1,9 +1,8 @@
 use common::prelude::ServiceID;
-use smdb_client::SMDBClient;
-
+use smdb_provider::SMDBProvider;
 use crate::svc_types::ServiceOP;
 
-pub async fn handle_service_op(client: &SMDBClient, op: ServiceOP) -> anyhow::Result<()> {
+pub async fn handle_service_op(client: &SMDBProvider, op: ServiceOP) -> anyhow::Result<()> {
     match op {
         ServiceOP::CheckIfServiceIDExists => check_if_svc_exists(client).await,
         ServiceOP::CheckIfServicesExists => check_if_svcs_exists(client).await,
@@ -16,7 +15,7 @@ pub async fn handle_service_op(client: &SMDBClient, op: ServiceOP) -> anyhow::Re
     Ok(())
 }
 
-async fn check_if_svc_exists(client: &SMDBClient) {
+async fn check_if_svc_exists(client: &SMDBProvider) {
     println!("Checking if service id exists");
     let id = ServiceID::SMDB;
     let exists = client
@@ -36,7 +35,7 @@ async fn check_if_svc_exists(client: &SMDBClient) {
     println!("Service id {:?} exists: {}", id, exists);
 }
 
-async fn check_if_svcs_exists(client: &SMDBClient) {
+async fn check_if_svcs_exists(client: &SMDBProvider) {
     println!("Checking if all services exist");
     let services = vec![ServiceID::SMDB, ServiceID::CMDB, ServiceID::DBGW];
     let exists = client
@@ -47,7 +46,7 @@ async fn check_if_svcs_exists(client: &SMDBClient) {
     println!("All Services exists: {}", &exists);
 }
 
-async fn set_svc_offline(client: &SMDBClient) {
+async fn set_svc_offline(client: &SMDBProvider) {
     println!("Checking if service is online");
     let id = ServiceID::SMDB;
     let online = client
@@ -72,7 +71,7 @@ async fn set_svc_offline(client: &SMDBClient) {
     println!("Service id {:?} is online: {}", id, online);
 }
 
-async fn set_svc_online(client: &SMDBClient) {
+async fn set_svc_online(client: &SMDBProvider) {
     println!("Checking if service is online");
     let id = ServiceID::SMDB;
     let online = client
@@ -90,7 +89,7 @@ async fn set_svc_online(client: &SMDBClient) {
     println!("Service online: {}", res);
 }
 
-async fn check_if_svcs_online(client: &SMDBClient) {
+async fn check_if_svcs_online(client: &SMDBProvider) {
     println!("Checking if all services are online");
     let services = vec![ServiceID::SMDB, ServiceID::CMDB, ServiceID::DBGW];
     let online = client
@@ -100,7 +99,7 @@ async fn check_if_svcs_online(client: &SMDBClient) {
     println!("All services are online: {}", &online);
 }
 
-async fn check_if_svc_online(client: &SMDBClient) {
+async fn check_if_svc_online(client: &SMDBProvider) {
     println!("Checking if service id is online");
     let id = ServiceID::SMDB;
     let online = client
