@@ -11,8 +11,9 @@ help:
 	@echo '    make format   	Formats call code according to cargo fmt style.'
 	@echo '    make install   	Tests and installs all make script dependencies.'
 	@echo '    make run   		Runs the binary defined in scripts/run.sh.'
-	@echo '    make start   	Starts the dev day with updating rust, pulling from git remote, and build the project.'
-	@echo '    make test   	Runs all tests across all crates.'
+	@echo '    make update   	Update rust, pull latest from git remote, and build the project.'
+	@echo '    make test   		Tests across all crates.'
+	@echo '    make sbe   		Generates Rust bindings for SBE messages define in spec/sbe.'
 
 # "---------------------------------------------------------"
 # "---------------------------------------------------------"
@@ -57,11 +58,16 @@ run:
 	@source scripts/run.sh
 
 
-.PHONY: start
-start:
-	@source scripts/start.sh
+.PHONY: update
+update:
+	@source scripts/update.sh
 
 
 .PHONY: test
 test:
 	@source scripts/test.sh
+
+
+.PHONY: sbe
+sbe:
+	@source scripts/sbe.sh
