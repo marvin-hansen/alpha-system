@@ -35,6 +35,16 @@ fn test_default() {
 }
 
 #[test]
+fn test_host_endpoint() {
+    let endpoint = Endpoint::default();
+
+    let host_endpoint = endpoint.host_endpoint();
+
+    assert_eq!(host_endpoint.host_uri(), "");
+    assert_eq!(host_endpoint.port(), 0);
+}
+
+#[test]
 fn test_display() {
     let name = "name".to_string();
     let version = 1;

@@ -1,6 +1,27 @@
 use common::prelude::DBConfig;
 
 #[test]
+fn test_new() {
+    let config = DBConfig::new(
+        8000,
+        "localhost".to_string(),
+        "test".to_string(),
+        "test".to_string(),
+        "username".to_string(),
+        "password".to_string(),
+        "client_name".to_string(),
+    );
+
+    assert_eq!(config.port(), 8000);
+    assert_eq!(config.host(), "localhost");
+    assert_eq!(config.db_name(), "test");
+    assert_eq!(config.db_namespace(), "test");
+    assert_eq!(config.username(), "username");
+    assert_eq!(config.password(), "password");
+    assert_eq!(config.client_name(), "client_name");
+}
+
+#[test]
 fn test_new_connection() {
     let config = DBConfig::new_connection(8000, "localhost".to_string());
 

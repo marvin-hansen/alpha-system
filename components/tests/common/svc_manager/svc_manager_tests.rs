@@ -61,10 +61,46 @@ fn test_get_service_config() {
 }
 
 #[test]
+fn get_service_dependencies() {
+    let svc = ServiceID::DBGW;
+    let ctx_manager = &CtxManager::new();
+    let dns_manager = &DnsManager::new(ctx_manager);
+    let cfg_manager = &CfgManager::new(svc, ctx_manager);
+    let svm_manager = &EnvManager::new(ctx_manager, dns_manager);
+
+    let service_manager = ServiceManager::new(cfg_manager, svm_manager);
+
+    let service_dependencies = service_manager.get_service_dependencies();
+
+    assert_eq!(service_dependencies.len(), 0);
+}
+
+#[test]
+fn test_get_service_endpoint() {
+    let svc = ServiceID::SMDB;
+    let ctx_manager = &CtxManager::new();
+    let dns_manager = &DnsManager::new(ctx_manager);
+    let cfg_manager = &CfgManager::new(svc, ctx_manager);
+    let svm_manager = &EnvManager::new(ctx_manager, dns_manager);
+    let service_manager = ServiceManager::new(cfg_manager, svm_manager);
+
+    let endpoint = service_manager.get_service_endpoint();
+
+    assert_eq!(endpoint.name(), "service-registry");
+    assert_eq!(endpoint.version(), 1);
+    assert_eq!(
+        endpoint.description(),
+        "Access to the SMDB service registry via gRPC on baseUri:7070"
+    );
+    assert_eq!(endpoint.uri(), "/");
+    assert_eq!(endpoint.port(), 7070);
+    assert_eq!(endpoint.protocol(), ProtocolType::GRPC);
+    assert_eq!(endpoint.encoding(), Encoding::Protobuf);
+}
+
+#[test]
 fn test_get_service_host_port() {
-    // Make this conditional to run in CI
     env::set_var("ENV", "LOCAL");
-    env::set_var("DNS_SERVER", "9.9.9.9");
 
     let svc = ServiceID::SMDB;
     let ctx_manager = &CtxManager::new();
@@ -76,24 +112,12 @@ fn test_get_service_host_port() {
     let service_config = service_manager.get_service_config();
     assert_eq!(service_config.svc_id(), &ServiceID::SMDB);
 
-    // We can't really test this, because the CI can't resolve the DNS server of the cluster host.
-    // The root cause is that the CI can only have one ENV variable and it's alerady set to CLUSTER.
-    // assert!(service_manager
-    //     .get_service_host_port(ServiceID::CMDB)
-    //     .is_err());
+    let result = service_manager.get_service_host_port(ServiceID::SMDB);
 
-    // assert_eq!(
-    //     service_manager.get_service_host_port(ServiceID::CMDB).unwrap(),
-    //     String::from("127.0.0.1:7070")
-    // );
+    // Assert
+    assert!(result.is_ok());
 
-    // assert_eq!(
-    //     service_manager.get_service_host_port(ServiceID::SMDB).unwrap(),
-    //     String::from("127.0.0.1:5050")
-    // );
-
-    // assert_eq!(
-    //     service_manager.get_service_host_port(ServiceID::MEMGRAPH).unwrap(),
-    //     String::from("127.0.0.1:7687")
-    // );
+    let (host, port) = result.unwrap();
+    assert_eq!(host, "127.0.0.1");
+    assert_eq!(port, 7070);
 }

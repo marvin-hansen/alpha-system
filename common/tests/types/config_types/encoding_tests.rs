@@ -8,6 +8,9 @@ fn test_default() {
 
 #[test]
 fn test_debug() {
+    let e = Encoding::Binary;
+    assert_eq!(format!("{:?}", e), "Binary");
+
     let e1 = Encoding::Protobuf;
     assert_eq!(format!("{:?}", e1), "Protobuf");
 
@@ -17,9 +20,7 @@ fn test_debug() {
 
 #[test]
 fn test_display() {
-    let e1 = Encoding::Protobuf;
-    assert_eq!(format!("{}", e1), "Protobuf");
-
-    let e2 = Encoding::SBE;
-    assert_eq!(format!("{}", e2), "SBE");
+    assert_eq!(format!("{}", Encoding::Binary), "Binary");
+    assert_eq!(format!("{}", Encoding::Protobuf), "Protobuf");
+    assert_eq!(format!("{}", Encoding::SBE), "SBE");
 }

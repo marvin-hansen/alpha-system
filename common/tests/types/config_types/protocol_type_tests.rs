@@ -7,6 +7,21 @@ fn test_default() {
 }
 
 #[test]
+fn test_protocol_type_from_string() {
+    let grpc_type = ProtocolType::from_string("GRPC");
+    assert_eq!(grpc_type, Some(ProtocolType::GRPC));
+
+    let http_type = ProtocolType::from_string("HTTP");
+    assert_eq!(http_type, Some(ProtocolType::HTTP));
+
+    let udp_type = ProtocolType::from_string("UDP");
+    assert_eq!(udp_type, Some(ProtocolType::UDP));
+
+    let invalid_type = ProtocolType::from_string("invalid");
+    assert_eq!(invalid_type, None);
+}
+
+#[test]
 fn test_debug() {
     let e1 = ProtocolType::GRPC;
     assert_eq!(format!("{:?}", e1), "GRPC");

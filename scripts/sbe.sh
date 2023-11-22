@@ -36,7 +36,7 @@ function check_hashes() {
 function regenerate_bindings() {
 
 #         https://github.com/real-logic/simple-binary-encoding?tab=readme-ov-file
-        command java -Dsbe.generate.ir=true -Dsbe.target.language=Rust -Dsbe.target.namespace=sbe -Dsbe.output.dir=sbe/rust -Dsbe.errorLog=yes -jar tools/sbe-all-1.30.0-SNAPSHOT.jar sbe/schema/FixBinary.xml
+        command java -Dsbe.generate.ir=true -Dsbe.target.language=Rust -Dsbe.target.namespace=sbe -Dsbe.output.dir=sbe -Dsbe.errorLog=yes -jar tools/sbe-all-1.30.0-SNAPSHOT.jar sbe/schema/car.xml
 
         for file in sbe/schema/*; do md5 -q $file; done > sbe_hashes.txt
 
