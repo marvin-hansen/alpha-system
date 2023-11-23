@@ -33,6 +33,11 @@ check:
 	@source scripts/check.sh
 
 
+.PHONY: clean
+clean:
+	@source scripts/clean.sh
+
+
 .PHONY: fix
 fix:
 	@source scripts/fix.sh
