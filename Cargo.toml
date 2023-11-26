@@ -8,6 +8,8 @@ members = [
     "common",
     "components",
     "providers/*",
+    "sbe/bindings",
+    "sbe/messages",
     "services/*",
     "specs"
 ]

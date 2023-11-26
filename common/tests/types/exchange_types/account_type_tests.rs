@@ -7,12 +7,6 @@ fn test_unknown_account_type_display() {
 }
 
 #[test]
-fn test_cash_account_type_display() {
-    let account_type = AccountType::Cash;
-    assert_eq!(account_type.to_string(), "Cash");
-}
-
-#[test]
 fn test_spot_account_type_display() {
     let account_type = AccountType::Spot;
     assert_eq!(account_type.to_string(), "Spot");

@@ -1,8 +1,11 @@
 use std::env;
 
-use common::prelude::{ EnvironmentType, ServiceConfig, ServiceID};
+use common::prelude::{EnvironmentType, ServiceConfig, ServiceID};
 use components::prelude::{CfgManager, CtxManager};
-use specs::prelude::{cmdb_service_config, db_config_ci, db_config_cluster, db_config_local, dbgw_service_config, qdgw_service_config, smdb_service_config};
+use specs::prelude::{
+    cmdb_service_config, db_config_ci, db_config_cluster, db_config_local, dbgw_service_config,
+    qdgw_service_config, smdb_service_config,
+};
 
 #[test]
 fn new_config_manager_default() {
@@ -69,7 +72,6 @@ fn new_config_manager_qdgw() {
     assert_eq!(config_manager.svc_config(), qdgw_service_config());
 }
 
-
 #[test]
 fn test_get_db_config_local() {
     env::set_var("ENV", "LOCAL");
@@ -81,7 +83,8 @@ fn test_get_db_config_local() {
 }
 
 #[test]
-fn test_get_db_config_ci() {    env::set_var("ENV", "CI");
+fn test_get_db_config_ci() {
+    env::set_var("ENV", "CI");
 
     let ctx = CtxManager::new();
     let cfg_manager = CfgManager::new(ServiceID::DBGW, &ctx);
@@ -98,4 +101,3 @@ fn test_get_db_config_cluster() {
     let db_config = cfg_manager.get_db_config();
     assert_eq!(db_config, db_config_cluster());
 }
-

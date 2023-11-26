@@ -4,7 +4,6 @@ use std::fmt::{Display, Formatter};
 #[derive(Serialize, Deserialize, Debug, Default, Clone, Eq, PartialEq)]
 pub enum AccountType {
     UnknownAccountType,
-    Cash,
     #[default]
     Spot,
     Margin,
@@ -15,7 +14,6 @@ impl Display for AccountType {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
             AccountType::UnknownAccountType => write!(f, "UnknownAccountType"),
-            AccountType::Cash => write!(f, "Cash"),
             AccountType::Spot => write!(f, "Spot"),
             AccountType::Margin => write!(f, "Margin"),
             AccountType::Future => write!(f, "Future"),

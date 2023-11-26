@@ -5,30 +5,30 @@ use std::fmt::{Display, Formatter};
     Serialize, Deserialize, Clone, Copy, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash,
 )]
 #[repr(u8)]
-pub enum ExchangeID {
-    BNB = 0x1_u8,
-    VEX = 0x2_u8,
+pub enum MessageType {
     #[default]
     NullVal = 0xff_u8,
+    StartData = 0x1_u8,
+    StopData = 0x2_u8,
 }
 
-impl From<u8> for ExchangeID {
+impl From<u8> for MessageType {
     #[inline]
     fn from(v: u8) -> Self {
         match v {
-            0x1_u8 => Self::BNB,
-            0x2_u8 => Self::VEX,
+            0x1_u8 => Self::StartData,
+            0x2_u8 => Self::StopData,
             _ => Self::NullVal,
         }
     }
 }
 
-impl Display for ExchangeID {
+impl Display for MessageType {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
-            ExchangeID::BNB => write!(f, "BNB: Binance Spot Exchange"),
-            ExchangeID::VEX => write!(f, "VEX: Virtual Exchange"),
-            ExchangeID::NullVal => write!(f, "NullVal"),
+            MessageType::StartData => write!(f, "StartData"),
+            MessageType::StopData => write!(f, "StopData"),
+            MessageType::NullVal => write!(f, "NullVal"),
         }
     }
 }

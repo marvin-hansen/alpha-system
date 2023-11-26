@@ -13,7 +13,7 @@ async fn get_dbm() -> Result<DBManager, Error> {
 fn get_portfolio_config() -> PortfolioConfig {
     let portfolio_id = 1;
     let portfolio_description = "cash portfolio".to_string();
-    let portfolio_account_type = AccountType::Cash;
+    let portfolio_account_type = AccountType::Spot;
     let portfolio_account_id = "cash_account".to_string();
     let portfolio_exchange_id = ExchangeID::VEX;
     let portfolio_currency = "USD".to_string();
