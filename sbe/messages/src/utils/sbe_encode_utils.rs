@@ -10,15 +10,19 @@ use crate::errors::SbeEncodeError;
 /// This function does not panic.
 #[inline]
 pub fn encode_string<const N: usize>(str: &str) -> Result<[u8; N], SbeEncodeError> {
-
     // Check if the input string is empty.
     if str.len() == 0 {
-        return Err(SbeEncodeError("String is empty. Cannot encode null length string.".into()));
+        return Err(SbeEncodeError(
+            "String is empty. Cannot encode null length string.".into(),
+        ));
     }
 
     // Check if the input string is longer than the specified target byte length.
     if str.len() > N {
-        return Err(SbeEncodeError(format!("String is longer than {} target byte length. Cannot encode string.", N)));
+        return Err(SbeEncodeError(format!(
+            "String is longer than {} target byte length. Cannot encode string.",
+            N
+        )));
     }
 
     // Convert the input string into a byte slice.

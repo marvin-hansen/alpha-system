@@ -16,8 +16,9 @@ pub struct StartDataMessage {
 
 impl StartDataMessage {
     pub fn new(exchange_id: ExchangeID, symbol_id: SymbolID) -> Self {
+        let message_type = MessageType::StartData;
         Self {
-            message_type: MessageType::StartData,
+            message_type,
             exchange_id,
             symbol_id,
         }

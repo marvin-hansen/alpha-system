@@ -1,7 +1,8 @@
-use crate::prelude::{MessageType, StartDataMessage};
+use crate::messages::data_messages::stop_data::StopDataMessage;
+use crate::prelude::MessageType;
 use common::prelude::{ExchangeID, SymbolID};
 
-impl StartDataMessage {
+impl StopDataMessage {
     pub fn message_type(&self) -> &MessageType {
         &self.message_type
     }

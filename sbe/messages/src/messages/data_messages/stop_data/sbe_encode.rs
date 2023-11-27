@@ -1,14 +1,14 @@
-use sbe_bindings::{message_header_codec, Encoder, StartDataMsgEncoder, WriteBuf};
+use sbe_bindings::{message_header_codec, Encoder, StopDataMsgEncoder, WriteBuf};
 use sbe_bindings::{ExchangeID as SbeExchangeID, MessageType as SbeMessageType};
 
-use crate::prelude::{SbeEncodeError, StartDataMessage};
+use crate::prelude::{SbeEncodeError, StopDataMessage};
 
-impl StartDataMessage {
+impl StopDataMessage {
     pub fn encode(&self) -> Result<(usize, Vec<u8>), SbeEncodeError> {
         // precise buffer size is 12 bytes for the entire message.
         let mut buffer = vec![0u8; 12];
 
-        let mut csg = StartDataMsgEncoder::default();
+        let mut csg = StopDataMsgEncoder::default();
 
         csg = csg.wrap(
             WriteBuf::new(buffer.as_mut_slice()),
