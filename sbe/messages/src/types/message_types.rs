@@ -1,6 +1,7 @@
 use serde::{Deserialize, Serialize};
 use std::fmt::{Display, Formatter};
 
+/// Enum representing the different types of messages that can be sent over network.
 #[derive(
     Serialize, Deserialize, Clone, Copy, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash,
 )]
@@ -13,6 +14,18 @@ pub enum MessageType {
 }
 
 impl From<u8> for MessageType {
+    /// Converts a raw byte value into a `MessageType`.
+    /// Unknown message type results in NullVal
+    ///
+    /// # Example
+    /// ```
+    /// use messages::prelude::MessageType;
+    ///
+    /// let raw_value = 0x1;
+    /// let message_type = MessageType::from(raw_value);
+    ///
+    /// assert_eq!(message_type, MessageType::StartData);
+    /// ```
     #[inline]
     fn from(v: u8) -> Self {
         match v {
