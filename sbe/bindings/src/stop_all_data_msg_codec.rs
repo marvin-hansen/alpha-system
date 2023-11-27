@@ -1,10 +1,10 @@
 use crate::*;
 
-pub use encoder::StartDataMsgEncoder;
-pub use decoder::StartDataMsgDecoder;
+pub use encoder::StopAllDataMsgEncoder;
+pub use decoder::StopAllDataMsgDecoder;
 
-pub const SBE_BLOCK_LENGTH: u16 = 4;
-pub const SBE_TEMPLATE_ID: u16 = 1;
+pub const SBE_BLOCK_LENGTH: u16 = 2;
+pub const SBE_TEMPLATE_ID: u16 = 3;
 pub const SBE_SCHEMA_ID: u16 = 1;
 pub const SBE_SCHEMA_VERSION: u16 = 1;
 pub const SBE_SEMANTIC_VERSION: &str = "5.2";
@@ -13,21 +13,21 @@ pub mod encoder {
     use super::*;
 
     #[derive(Debug, Default)]
-    pub struct StartDataMsgEncoder<'a> {
+    pub struct StopAllDataMsgEncoder<'a> {
         buf: WriteBuf<'a>,
         initial_offset: usize,
         offset: usize,
         limit: usize,
     }
 
-    impl<'a> Writer<'a> for StartDataMsgEncoder<'a> {
+    impl<'a> Writer<'a> for StopAllDataMsgEncoder<'a> {
         #[inline]
         fn get_buf_mut(&mut self) -> &mut WriteBuf<'a> {
             &mut self.buf
         }
     }
 
-    impl<'a> Encoder<'a> for StartDataMsgEncoder<'a> {
+    impl<'a> Encoder<'a> for StopAllDataMsgEncoder<'a> {
         #[inline]
         fn get_limit(&self) -> usize {
             self.limit
@@ -39,7 +39,7 @@ pub mod encoder {
         }
     }
 
-    impl<'a> StartDataMsgEncoder<'a> {
+    impl<'a> StopAllDataMsgEncoder<'a> {
         pub fn wrap(mut self, buf: WriteBuf<'a>, offset: usize) -> Self {
             let limit = offset + SBE_BLOCK_LENGTH as usize;
             self.buf = buf;
@@ -77,20 +77,6 @@ pub mod encoder {
             self.get_buf_mut().put_u8_at(offset, value as u8)
         }
 
-        /// primitive field 'assetID'
-        /// - min value: 0
-        /// - max value: 65534
-        /// - null value: 65535
-        /// - characterEncoding: null
-        /// - semanticType: null
-        /// - encodedOffset: 2
-        /// - encodedLength: 2
-        #[inline]
-        pub fn asset_id(&mut self, value: u16) {
-            let offset = self.offset + 2;
-            self.get_buf_mut().put_u16_at(offset, value);
-        }
-
     }
 
 } // end encoder
@@ -99,7 +85,7 @@ pub mod decoder {
     use super::*;
 
     #[derive(Clone, Copy, Debug, Default)]
-    pub struct StartDataMsgDecoder<'a> {
+    pub struct StopAllDataMsgDecoder<'a> {
         buf: ReadBuf<'a>,
         initial_offset: usize,
         offset: usize,
@@ -108,14 +94,14 @@ pub mod decoder {
         pub acting_version: u16,
     }
 
-    impl<'a> Reader<'a> for StartDataMsgDecoder<'a> {
+    impl<'a> Reader<'a> for StopAllDataMsgDecoder<'a> {
         #[inline]
         fn get_buf(&self) -> &ReadBuf<'a> {
             &self.buf
         }
     }
 
-    impl<'a> Decoder<'a> for StartDataMsgDecoder<'a> {
+    impl<'a> Decoder<'a> for StopAllDataMsgDecoder<'a> {
         #[inline]
         fn get_limit(&self) -> usize {
             self.limit
@@ -127,7 +113,7 @@ pub mod decoder {
         }
     }
 
-    impl<'a> StartDataMsgDecoder<'a> {
+    impl<'a> StopAllDataMsgDecoder<'a> {
         pub fn wrap(
             mut self,
             buf: ReadBuf<'a>,
@@ -173,12 +159,6 @@ pub mod decoder {
         #[inline]
         pub fn exchange_id(&self) -> ExchangeID {
             self.get_buf().get_u8_at(self.offset + 1).into()
-        }
-
-        /// primitive field - 'REQUIRED'
-        #[inline]
-        pub fn asset_id(&self) -> u16 {
-            self.get_buf().get_u16_at(self.offset + 2)
         }
 
     }

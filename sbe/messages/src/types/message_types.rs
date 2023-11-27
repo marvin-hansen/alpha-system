@@ -11,6 +11,7 @@ pub enum MessageType {
     NullVal = 0xff_u8,
     StartData = 0x1_u8,
     StopData = 0x2_u8,
+    StopAllData = 0x3_u8,
 }
 
 impl From<u8> for MessageType {
@@ -31,6 +32,7 @@ impl From<u8> for MessageType {
         match v {
             0x1_u8 => Self::StartData,
             0x2_u8 => Self::StopData,
+            0x3_u8 => Self::StopAllData,
             _ => Self::NullVal,
         }
     }
@@ -41,6 +43,7 @@ impl Display for MessageType {
         match self {
             MessageType::StartData => write!(f, "StartData"),
             MessageType::StopData => write!(f, "StopData"),
+            MessageType::StopAllData => write!(f, "StopAllData"),
             MessageType::NullVal => write!(f, "NullVal"),
         }
     }

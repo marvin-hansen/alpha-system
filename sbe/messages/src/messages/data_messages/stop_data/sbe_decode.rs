@@ -14,6 +14,8 @@ pub fn decode_stop_data_message(buffer: &[u8]) -> SbeResult<StopDataMessage> {
 
     let sbe_message_type = csg.message_type();
     let message_type = MessageType::from(sbe_message_type as u8);
+    assert_eq!(message_type, MessageType::StopData);
+
 
     let sbe_exchange_id = csg.exchange_id();
     let exchange_id = ExchangeID::from(sbe_exchange_id as u8);
@@ -21,11 +23,11 @@ pub fn decode_stop_data_message(buffer: &[u8]) -> SbeResult<StopDataMessage> {
     let sbe_asset = csg.asset_id();
     let symbol = SymbolID::from(sbe_asset);
 
-    let stop_data_message = StopDataMessage {
+    let message = StopDataMessage {
         message_type,
         exchange_id,
         symbol_id: symbol,
     };
 
-    Ok(stop_data_message)
+    Ok(message)
 }

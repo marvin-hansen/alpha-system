@@ -1,0 +1,12 @@
+use common::prelude::ExchangeID;
+use crate::messages::data_messages::stop_all_data::StopAllDataMessage;
+use crate::prelude::MessageType;
+
+impl StopAllDataMessage {
+    pub fn message_type(&self) -> &MessageType {
+        &self.message_type
+    }
+    pub fn exchange_id(&self) -> &ExchangeID {
+        &self.exchange_id
+    }
+}
