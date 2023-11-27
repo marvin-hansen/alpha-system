@@ -7,6 +7,7 @@ pub struct InitError(pub String);
 impl Error for InitError {}
 
 impl fmt::Display for InitError {
+    #[inline]
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "InitError: {}", self.0)
     }

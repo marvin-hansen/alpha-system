@@ -1,11 +1,11 @@
-use sbe_bindings::{message_header_codec, Encoder, SbeResult, StartDataMsgEncoder, WriteBuf};
+use sbe_bindings::{Encoder, message_header_codec, StartDataMsgEncoder, WriteBuf};
 use sbe_bindings::{ExchangeID as SbeExchangeID, MessageType as SbeMessageType};
 
-use crate::prelude::StartDataMessage;
+use crate::prelude::{SbeEncodeError, StartDataMessage};
 use crate::utils::sbe_encode_utils;
 
 impl StartDataMessage {
-    pub fn encode(&self) -> SbeResult<(usize, Vec<u8>)> {
+    pub fn encode(&self) -> Result<(usize, Vec<u8>), SbeEncodeError> {
         let mut buffer = vec![0u8; 256];
 
         let mut csg = StartDataMsgEncoder::default();
@@ -22,7 +22,11 @@ impl StartDataMessage {
         let value = SbeExchangeID::from(self.exchange_id as u8);
         csg.exchange_id(value);
 
-        let value = sbe_encode_utils::encode_string(&self.asset);
+        let value = match sbe_encode_utils::encode_string(&self.asset) {
+            Ok(value) => value,
+            Err(e) => return Err(e),
+        };
+
         csg.asset(value);
 
         let limit = csg.get_limit();
