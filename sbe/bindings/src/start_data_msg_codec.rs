@@ -1,9 +1,9 @@
 use crate::*;
 
-pub use decoder::StartDataMsgDecoder;
 pub use encoder::StartDataMsgEncoder;
+pub use decoder::StartDataMsgDecoder;
 
-pub const SBE_BLOCK_LENGTH: u16 = 10;
+pub const SBE_BLOCK_LENGTH: u16 = 4;
 pub const SBE_TEMPLATE_ID: u16 = 1;
 pub const SBE_SCHEMA_ID: u16 = 1;
 pub const SBE_SCHEMA_VERSION: u16 = 1;
@@ -77,22 +77,22 @@ pub mod encoder {
             self.get_buf_mut().put_u8_at(offset, value as u8)
         }
 
-        /// primitive array field 'asset'
-        /// - min value: 32
-        /// - max value: 126
-        /// - null value: 0
-        /// - characterEncoding: US-ASCII
-        /// - semanticType: String
+        /// primitive field 'assetID'
+        /// - min value: 0
+        /// - max value: 65534
+        /// - null value: 65535
+        /// - characterEncoding: null
+        /// - semanticType: null
         /// - encodedOffset: 2
-        /// - encodedLength: 8
-        /// - version: 0
+        /// - encodedLength: 2
         #[inline]
-        pub fn asset(&mut self, value: [u8; 8]) {
+        pub fn asset_id(&mut self, value: u16) {
             let offset = self.offset + 2;
-            let buf = self.get_buf_mut();
-            buf.put_bytes_at(offset, value);
+            self.get_buf_mut().put_u16_at(offset, value);
         }
+
     }
+
 } // end encoder
 
 pub mod decoder {
@@ -175,10 +175,13 @@ pub mod decoder {
             self.get_buf().get_u8_at(self.offset + 1).into()
         }
 
+        /// primitive field - 'REQUIRED'
         #[inline]
-        pub fn asset(&self) -> [u8; 8] {
-            let buf = self.get_buf();
-            ReadBuf::get_bytes_at(buf.data, self.offset + 2)
+        pub fn asset_id(&self) -> u16 {
+            self.get_buf().get_u16_at(self.offset + 2)
         }
+
     }
+
 } // end decoder
+

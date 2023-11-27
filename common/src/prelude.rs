@@ -23,6 +23,7 @@ pub use crate::types::pattern_types::pattern_type::*;
 pub use crate::types::portfolio_types::portfolio_config::*;
 // symbol types
 pub use crate::types::symbol_types::symbol::*;
+pub use crate::types::symbol_types::symbol_id::*;
 // trade types
 pub use crate::types::trade_types::strategy_config::*;
 pub use crate::types::trade_types::trade_direction::*;

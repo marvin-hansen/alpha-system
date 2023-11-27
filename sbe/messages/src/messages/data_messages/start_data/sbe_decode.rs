@@ -1,5 +1,5 @@
 use crate::prelude::{MessageType, StartDataMessage};
-use common::prelude::ExchangeID;
+use common::prelude::{ExchangeID, SymbolID};
 use sbe_bindings::{MessageHeaderDecoder, ReadBuf, SbeResult, StartDataMsgDecoder};
 
 use sbe_bindings::start_data_msg_codec::SBE_TEMPLATE_ID;
@@ -13,20 +13,18 @@ pub fn decode_start_data_message(buffer: &[u8]) -> SbeResult<StartDataMessage> {
     csg = csg.header(header);
 
     let sbe_message_type = csg.message_type();
-    let message_type =
-        MessageType::try_from(sbe_message_type as u8).expect("Failed to convert message type");
+    let message_type = MessageType::from(sbe_message_type as u8);
 
     let sbe_exchange_id = csg.exchange_id();
-    let exchange_id =
-        ExchangeID::try_from(sbe_exchange_id as u8).expect("Failed to convert exchange id");
+    let exchange_id = ExchangeID::from(sbe_exchange_id as u8);
 
-    let sbe_asset = csg.asset();
-    let asset = String::from_utf8(Vec::from(sbe_asset)).expect("Failed to convert asset");
+    let sbe_asset = csg.asset_id();
+    let symbol = SymbolID::from(sbe_asset);
 
     let start_data_message = StartDataMessage {
         message_type,
         exchange_id,
-        asset,
+        symbol_id: symbol,
     };
 
     Ok(start_data_message)

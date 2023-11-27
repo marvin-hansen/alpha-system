@@ -57,10 +57,6 @@
     </types>
 
     <types>
-        <type name="Asset" description="Asset" length="8" primitiveType="char" semanticType="String"/>
-    </types>
-
-    <types>
         <enum name="MessageType" encodingType="uInt8NULL">
             <validValue name="UnknownMessageType" description="Message type unknown">0</validValue>
             <validValue name="StartData" description="Start data stream">1</validValue>
@@ -71,18 +67,20 @@
             <validValue name="BNB" description="Binance Spot Exchange">1</validValue>
             <validValue name="VEX" description="Virtual Exchange">2</validValue>
         </enum>
+
+        <type name="AssetID" encodingType="uInt16NULL" primitiveType="uint16"/>
     </types>
 
     <sbe:message name="StartDataMsg" id="1" description="Message to start data stream">
         <field name="messageType" id="1" type="MessageType"/>
-        <field name="ExchangeID" id="2" type="ExchangeID"/>
-        <field name="asset" id="3" type="Asset" description="The asset code also known as Product Code" semanticType="String"/>
+        <field name="exchangeID" id="2" type="ExchangeID"/>
+        <field name="assetID" id="3" type="AssetID"/>
     </sbe:message>
 
     <sbe:message name="StopDataMsg" id="2" description="Message to stop data stream">
         <field name="messageType" id="1" type="MessageType"/>
-        <field name="ExchangeID" id="2" type="ExchangeID"/>
-        <field name="asset" id="3" type="Asset" description="The asset code also known as Product Code" semanticType="String"/>
+        <field name="exchangeID" id="2" type="ExchangeID"/>
+        <field name="assetID" id="3" type="AssetID"/>
     </sbe:message>
 
 </sbe:messageSchema>

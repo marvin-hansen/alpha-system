@@ -1,5 +1,5 @@
 use crate::prelude::MessageType;
-use common::prelude::ExchangeID;
+use common::prelude::{ExchangeID, SymbolID};
 use serde::{Deserialize, Serialize};
 
 mod display;
@@ -11,15 +11,15 @@ mod sbe_encode;
 pub struct StartDataMessage {
     message_type: MessageType,
     exchange_id: ExchangeID,
-    asset: String,
+    symbol_id: SymbolID,
 }
 
 impl StartDataMessage {
-    pub fn new(exchange_id: ExchangeID, asset: String) -> Self {
+    pub fn new(exchange_id: ExchangeID, symbol_id: SymbolID) -> Self {
         Self {
             message_type: MessageType::StartData,
             exchange_id,
-            asset,
+            symbol_id,
         }
     }
 }

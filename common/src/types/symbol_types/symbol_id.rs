@@ -1,0 +1,38 @@
+use serde::{Deserialize, Serialize};
+use std::fmt::{Display, Formatter};
+#[derive(
+Serialize, Deserialize, Clone, Copy, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash,
+)]
+#[repr(u16)]
+pub enum SymbolID {
+    #[default]
+    NullVal = 0xff_u16,
+    //
+    BTCUSD = 0x1_u16,
+    ETHUSD = 0x2_u16,
+    LTCUSD = 0x3_u16,
+}
+
+impl From<u16> for SymbolID {
+    #[inline]
+    fn from(v: u16) -> Self {
+        match v {
+            0xff_u16 => SymbolID::NullVal,
+            0x1_u16 => SymbolID::BTCUSD,
+            0x2_u16 => SymbolID::ETHUSD,
+            0x3_u16 => SymbolID::LTCUSD,
+            _ => Self::NullVal,
+        }
+    }
+}
+
+impl Display for SymbolID {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        match self {
+            SymbolID::NullVal => write!(f, "NullVal"),
+            SymbolID::BTCUSD => write!(f, "BTCUSD"),
+            SymbolID::ETHUSD => write!(f, "ETHUSD"),
+            SymbolID::LTCUSD => write!(f, "LTCUSD"),
+        }
+    }
+}
