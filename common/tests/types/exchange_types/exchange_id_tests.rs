@@ -2,8 +2,8 @@ use common::prelude::ExchangeID;
 
 #[test]
 fn test_unknown_exchange() {
-    let exchange_id = ExchangeID::UnknownExchange;
-    assert_eq!(format!("{}", exchange_id), "UnknownExchange");
+    let exchange_id = ExchangeID::NullVal;
+    assert_eq!(format!("{}", exchange_id), "NullVal");
 }
 
 #[test]
