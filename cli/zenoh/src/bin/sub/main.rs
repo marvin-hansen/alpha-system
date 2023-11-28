@@ -3,9 +3,9 @@ use std::process::exit;
 use futures::select;
 use zenoh::prelude::r#async::*;
 use cli::config;
-
-const MAX: i32 = config::MAX_MESSAGES;
+const KEY_EXPRESS: &str = config::KEY_EXPRESS;
 const LOW_LATENCY: bool = config::LOW_LATENCY;
+const MAX: i32 = config::MAX_MESSAGES;
 
 #[async_std::main]
 async fn main() {
@@ -25,9 +25,8 @@ async fn main() {
     println!("Opening session...");
     let session = zenoh::open(config).res().await.unwrap();
 
-    let key_expr = String::from("key/expression");
-    println!("Declaring Subscriber on '{}'...", &key_expr);
-    let subscriber = session.declare_subscriber(&key_expr).res().await.unwrap();
+    println!("Declaring Subscriber on '{}'...", KEY_EXPRESS);
+    let subscriber = session.declare_subscriber(KEY_EXPRESS).res().await.unwrap();
 
     println!("Enter 'Ctrl+C' to quit...");
     loop {

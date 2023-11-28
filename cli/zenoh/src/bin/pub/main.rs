@@ -6,8 +6,9 @@ use zenoh::prelude::r#async::*;
 
 use cli::config;
 
-const MAX: i32 = config::MAX_MESSAGES;
+const KEY_EXPRESS: &str = config::KEY_EXPRESS;
 const LOW_LATENCY: bool = config::LOW_LATENCY;
+const MAX: i32 = config::MAX_MESSAGES;
 
 #[async_std::main]
 async fn main() {
@@ -22,11 +23,8 @@ async fn main() {
     println!("Opening session...");
     let session = zenoh::open(config).res().await.unwrap();
 
-    let key_expr = String::from("key/expression");
-    println!("Declaring Subscriber on '{}'...", &key_expr);
-
-    println!("Declaring Publisher on '{key_expr}'...");
-    let publisher = session.declare_publisher(&key_expr).res().await.unwrap();
+    println!("Declaring Publisher on '{KEY_EXPRESS}'...");
+    let publisher = session.declare_publisher(KEY_EXPRESS).res().await.unwrap();
 
     let value = String::from("value");
 

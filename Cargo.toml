@@ -25,24 +25,23 @@ authors = ["Marvin Hansen <marvin.hansen@gmail.com>"]
 
 
 [workspace.dependencies]
-serde_json = "1"
-serde = { version = "1", features = ["derive"] }
-surrealdb = { version = "1", features = ["kv-mem"] }
-tarpc = { version = "0.33", features = ["full"] }
-tokio = { version = "1", features = ["macros", "net", "rt-multi-thread", "signal"] }
 anyhow = "1.0"
-log = "0.4"
+async-std = "1.12"
+ctrlc = "3.4"
 futures = "0.3"
+log = "0.4"
 rand = "0.8"
 rust_decimal = "1.33"
 rust_decimal_macros = "1.33"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+surrealdb = { version = "1", features = ["kv-mem"] }
+tarpc = { version = "0.33", features = ["full"] }
+tokio = { version = "1", features = ["macros", "net", "rt-multi-thread", "signal"] }
 tracing = { version = "0.1" }
 tracing-opentelemetry = "0.22.0"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
-#
-zenoh = "0.10.0-rc"
-async-std = "1.12"
-ctrlc = "3.4"
+zenoh = {version = "0.10.0-rc",  features = [   "transport_quic", "transport_tcp", "transport_tls", "transport_udp",]}
 
 # Optimize all crates
 [profile.release]
