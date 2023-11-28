@@ -84,12 +84,15 @@ fn test_get_db_config_local() {
 
 #[test]
 fn test_get_db_config_ci() {
-    env::set_var("ENV", "CI");
+    // CI uses the cluster environment variable to emulate the cluster environment
+    // therefore no dedicated CI test
+    env::set_var("ENV", "CLUSTER");
 
     let ctx = CtxManager::new();
     let cfg_manager = CfgManager::new(ServiceID::DBGW, &ctx);
     let db_config = cfg_manager.get_db_config();
-    assert_eq!(db_config, db_config_ci());
+    // CI
+    assert_eq!(db_config, db_config_cluster());
 }
 
 #[test]
