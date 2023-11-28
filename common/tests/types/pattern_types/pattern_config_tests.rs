@@ -89,10 +89,20 @@ fn test_pattern_short_yes() {
 }
 
 #[test]
-fn pattern_config_display() {
+fn pattern_config_debug() {
     let pattern_config = get_pattern_config();
     assert_eq!(
         format!("{:?}", pattern_config),
         "PatternConfig { pattern_config_id: 1, pattern_config_name: \"test_name\", pattern_config_description: \"test_description\", pattern_type: Base, pattern_long_yes: 1, pattern_long_no: 2, pattern_short_yes: 3, pattern_short_no: 4 }"
+    );
+}
+
+
+#[test]
+fn pattern_config_display() {
+    let pattern_config = get_pattern_config();
+    assert_eq!(
+        format!("{}", pattern_config),
+        "PatternConfig { pattern_config_id: 1, pattern_config_name: \"test_name\",pattern_config_description: \"test_description\", pattern_type: Base, pattern_long_yes: 1, pattern_long_no: 2, pattern_short_yes: 3, pattern_short_no: 4 }"
     );
 }

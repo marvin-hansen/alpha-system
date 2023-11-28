@@ -1,7 +1,21 @@
 use common::prelude::ExchangeID;
 
+
 #[test]
-fn test_unknown_exchange() {
+fn test_from_valid_values() {
+    assert_eq!(ExchangeID::from(0x0), ExchangeID::NullVal);
+    assert_eq!(ExchangeID::from(0x1), ExchangeID::BNB);
+    assert_eq!(ExchangeID::from(0x2), ExchangeID::VEX);
+}
+
+#[test]
+fn test_from_invalid_values() {
+    assert_eq!(ExchangeID::from(0x0), ExchangeID::NullVal);
+    assert_eq!(ExchangeID::from(0x3), ExchangeID::NullVal);
+}
+
+#[test]
+fn test_null_val() {
     let exchange_id = ExchangeID::NullVal;
     assert_eq!(format!("{}", exchange_id), "NullVal");
 }

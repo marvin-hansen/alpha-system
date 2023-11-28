@@ -137,3 +137,10 @@ fn test_portfolio_free_cash_percent() {
     let config = get_portfolio_config();
     assert_eq!(config.portfolio_free_cash_percent(), Some(100.0));
 }
+
+#[test]
+fn test_display() {
+    let config = get_portfolio_config();
+    let expected =  "portfolio_id: 1, portfolio_description: cash portfolio, portfolio_account_type: Spot, portfolio_account_id: cash_account, portfolio_exchange_id: VEX: Virtual Exchange, portfolio_currency: USD, portfolio_cash: 1000, portfolio_margin: None, portfolio_max_drawdown: 20, portfolio_instruments: [\"BTC\", \"ETH\"], instrument_max_allocation: Some(0.02), instrument_max_drawdown: Some(10.0), portfolio_free_margin: None, portfolio_free_cash: Some(1000.0), portfolio_free_margin_percent: None, portfolio_free_cash_percent: Some(100.0)";
+    assert_eq!(expected, format!("{}", config));
+}

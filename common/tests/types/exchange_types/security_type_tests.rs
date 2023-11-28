@@ -13,34 +13,40 @@ fn test_unknown_security_type() {
 }
 
 #[test]
-fn test_display_spot() {
+fn test_debug() {
+    assert_eq!(format!("{:?}", SecurityType::UnknownSecurityType), "UnknownSecurityType");
     assert_eq!(format!("{:?}", SecurityType::Spot), "Spot");
-}
-
-#[test]
-fn test_display_index() {
     assert_eq!(format!("{:?}", SecurityType::Index), "Index");
-}
-
-#[test]
-fn test_display_future() {
     assert_eq!(format!("{:?}", SecurityType::Future), "Future");
-}
-
-#[test]
-fn test_display_perpetual_future() {
     assert_eq!(
         format!("{:?}", SecurityType::PerpetualFuture),
         "PerpetualFuture"
     );
-}
-
-#[test]
-fn test_display_option() {
     assert_eq!(format!("{:?}", SecurityType::Option), "Option");
+    assert_eq!(format!("{:?}", SecurityType::FutureOption), "FutureOption");
 }
 
+
 #[test]
-fn test_display_future_option() {
-    assert_eq!(format!("{:?}", SecurityType::FutureOption), "FutureOption");
+fn test_display() {
+    let security_type = SecurityType::UnknownSecurityType;
+    assert_eq!(security_type.to_string(), "UnknownSecurityType");
+
+    let security_type = SecurityType::Spot;
+    assert_eq!(security_type.to_string(), "Spot");
+
+    let security_type = SecurityType::Index;
+    assert_eq!(security_type.to_string(), "Index");
+
+    let security_type = SecurityType::Future;
+    assert_eq!(security_type.to_string(), "Future");
+
+    let security_type = SecurityType::PerpetualFuture;
+    assert_eq!(security_type.to_string(), "PerpetualFuture");
+
+    let security_type = SecurityType::Option;
+    assert_eq!(security_type.to_string(), "Option");
+
+    let security_type = SecurityType::FutureOption;
+    assert_eq!(security_type.to_string(), "FutureOption");
 }

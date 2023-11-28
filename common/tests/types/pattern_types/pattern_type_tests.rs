@@ -1,21 +1,23 @@
 use common::prelude::PatternType;
 
 #[test]
-fn pattern_type_base_displays_as_base() {
+fn test_debug() {
     let pattern_type = PatternType::Base;
     assert_eq!("Base", format!("{:?}", pattern_type));
-}
 
-#[test]
-fn pattern_type_extra_displays_as_extra() {
     let pattern_type = PatternType::Extra;
     assert_eq!("Extra", format!("{:?}", pattern_type));
 }
 
 #[test]
 fn test_pattern_type_default_display() {
-    let pattern_type = PatternType::default();
+    let pattern_type = PatternType::Base;
     let expected = "Base";
-    let result = format!("{:?}", pattern_type);
+    let result = format!("{}", pattern_type.to_string());
+    assert_eq!(result, expected);
+
+    let pattern_type = PatternType::Extra;
+    let expected = "Extra";
+    let result = format!("{}", pattern_type.to_string());
     assert_eq!(result, expected);
 }
