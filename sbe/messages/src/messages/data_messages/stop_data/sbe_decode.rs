@@ -16,7 +16,6 @@ pub fn decode_stop_data_message(buffer: &[u8]) -> SbeResult<StopDataMessage> {
     let message_type = MessageType::from(sbe_message_type as u8);
     assert_eq!(message_type, MessageType::StopData);
 
-
     let sbe_exchange_id = csg.exchange_id();
     let exchange_id = ExchangeID::from(sbe_exchange_id as u8);
 

@@ -1,4 +1,4 @@
-use common::prelude::{ExchangeID};
+use common::prelude::ExchangeID;
 use messages::prelude::{MessageType, StopAllDataMessage};
 
 #[test]
@@ -52,8 +52,7 @@ fn test_exchange_id() {
 fn test_display() {
     let message = StopAllDataMessage::new(ExchangeID::BNB);
 
-    let expected =
-        "StopAllDataMessage { message_type: StopAllData, exchange_id: BNB }";
+    let expected = "StopAllDataMessage { message_type: StopAllData, exchange_id: BNB }";
     let actual = format!("{}", message);
     assert_eq!(expected, actual);
 }

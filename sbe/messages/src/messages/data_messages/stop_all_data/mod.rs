@@ -4,11 +4,10 @@ use common::prelude::ExchangeID;
 
 use crate::prelude::MessageType;
 
-mod getter;
 mod display;
-mod sbe_encode;
+mod getter;
 mod sbe_decode;
-
+mod sbe_encode;
 
 #[derive(Serialize, Deserialize, Debug, Default, Clone, PartialEq)]
 pub struct StopAllDataMessage {
@@ -29,6 +28,7 @@ impl StopAllDataMessage {
 impl From<&[u8]> for StopAllDataMessage {
     #[inline]
     fn from(buffer: &[u8]) -> Self {
-        sbe_decode::decode_stop_all_data_message(buffer).expect("Failed to decode start data message")
+        sbe_decode::decode_stop_all_data_message(buffer)
+            .expect("Failed to decode start data message")
     }
 }

@@ -1,4 +1,4 @@
-use sbe_bindings::{message_header_codec, Encoder, WriteBuf, StopAllDataMsgEncoder};
+use sbe_bindings::{message_header_codec, Encoder, StopAllDataMsgEncoder, WriteBuf};
 use sbe_bindings::{ExchangeID as SbeExchangeID, MessageType as SbeMessageType};
 
 use crate::prelude::{SbeEncodeError, StopAllDataMessage};

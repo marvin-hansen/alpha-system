@@ -16,7 +16,8 @@ async fn main() {
         println!("received Ctrl+C!");
         println!("Shutting down...");
         exit(0);
-    }).expect("Error setting Ctrl-C handler");
+    })
+    .expect("Error setting Ctrl-C handler");
 
     println!("Build config");
     let config = config::get_config(LOW_LATENCY);

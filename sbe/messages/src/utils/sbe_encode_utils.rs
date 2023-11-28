@@ -11,7 +11,7 @@ use crate::errors::SbeEncodeError;
 #[inline]
 pub fn encode_string<const N: usize>(str: &str) -> Result<[u8; N], SbeEncodeError> {
     // Check if the input string is empty.
-    if str.len() == 0 {
+    if str.is_empty() {
         return Err(SbeEncodeError(
             "String is empty. Cannot encode null length string.".into(),
         ));

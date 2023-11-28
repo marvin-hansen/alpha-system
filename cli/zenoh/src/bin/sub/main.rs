@@ -1,8 +1,8 @@
 use std::process::exit;
 
+use cli::config;
 use futures::select;
 use zenoh::prelude::r#async::*;
-use cli::config;
 const KEY_EXPRESS: &str = config::KEY_EXPRESS;
 const LOW_LATENCY: bool = config::LOW_LATENCY;
 const MAX: i32 = config::MAX_MESSAGES;
@@ -17,10 +17,11 @@ async fn main() {
         println!("Max Count: {}", MAX);
 
         exit(0);
-    }).expect("Error setting Ctrl-C handler");
+    })
+    .expect("Error setting Ctrl-C handler");
 
     println!("Build config");
-    let  config= config::get_config(LOW_LATENCY);
+    let config = config::get_config(LOW_LATENCY);
 
     println!("Opening session...");
     let session = zenoh::open(config).res().await.unwrap();
