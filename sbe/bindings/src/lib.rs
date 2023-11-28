@@ -1,4 +1,6 @@
 #![forbid(unsafe_code)]
+#![allow(dead_code)]
+#![allow(ambiguous_glob_reexports)]
 #![allow(clippy::upper_case_acronyms)]
 #![allow(non_camel_case_types)]
 use ::core::{convert::TryInto};
