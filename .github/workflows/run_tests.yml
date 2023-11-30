@@ -13,6 +13,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Install protoc
+        run: sudo apt-get install -y protobuf-compiler
+
       - name: Test Environment
         run: echo "ENVIRONMENT IS ${{env.ENV}} DNS SERVER IS ${{env.DNS_SERVER}}"
 
