@@ -25,6 +25,7 @@ authors = ["Marvin Hansen <marvin.hansen@gmail.com>"]
 
 
 [workspace.dependencies]
+autometrics = { version = "0.6.0", features = ["prometheus-exporter"] }
 anyhow = "1.0"
 async-std = "1.12"
 ctrlc = "3.4"
@@ -45,6 +46,7 @@ tonic-build = "0.10.2"
 tracing = { version = "0.1" }
 tracing-opentelemetry = "0.22.0"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+warp = { version = "0.3", features = ["multipart"] }
 zenoh = {version = "0.10.0-rc",  features = [   "transport_quic", "transport_tcp", "transport_tls", "transport_udp",]}
 
 

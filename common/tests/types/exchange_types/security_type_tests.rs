@@ -14,7 +14,10 @@ fn test_unknown_security_type() {
 
 #[test]
 fn test_debug() {
-    assert_eq!(format!("{:?}", SecurityType::UnknownSecurityType), "UnknownSecurityType");
+    assert_eq!(
+        format!("{:?}", SecurityType::UnknownSecurityType),
+        "UnknownSecurityType"
+    );
     assert_eq!(format!("{:?}", SecurityType::Spot), "Spot");
     assert_eq!(format!("{:?}", SecurityType::Index), "Index");
     assert_eq!(format!("{:?}", SecurityType::Future), "Future");
@@ -25,7 +28,6 @@ fn test_debug() {
     assert_eq!(format!("{:?}", SecurityType::Option), "Option");
     assert_eq!(format!("{:?}", SecurityType::FutureOption), "FutureOption");
 }
-
 
 #[test]
 fn test_display() {

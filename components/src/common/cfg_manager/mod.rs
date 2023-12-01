@@ -13,7 +13,6 @@ pub struct CfgManager<'l> {
     svc: ServiceID,
     /// Type of the environment (e.g., development, testing, production).
     env_type: EnvironmentType,
-    // Bind  the lifeline
     id: &'l str,
 }
 

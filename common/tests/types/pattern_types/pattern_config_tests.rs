@@ -97,7 +97,6 @@ fn pattern_config_debug() {
     );
 }
 
-
 #[test]
 fn pattern_config_display() {
     let pattern_config = get_pattern_config();

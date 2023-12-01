@@ -30,11 +30,13 @@ version = "0.1.0"
 
 
 [dependencies]
+autometrics = { workspace = true }
 prost = { workspace = true }
 surrealdb = { workspace = true }
 tokio = { workspace = true }
 tonic = { workspace = true }
 tonic-health = { workspace = true }
+warp = { workspace = true }
 
 
 [build-dependencies]

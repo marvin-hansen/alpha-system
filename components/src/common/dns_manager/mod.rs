@@ -25,10 +25,11 @@ use crate::prelude::CtxManager;
  * The DnsManager struct contains two Resolvers, one for internal (cluster) DNS resolution
  * and one for external (Cloudflare) DNS resolution.
  */
+#[derive(Debug, Clone, Eq, PartialEq)]
 pub struct DnsManager {
-    internal_resolver: Resolver,
+    internal_resolver_config: ResolverConfig,
     internal_dns: String,
-    external_resolver: Resolver,
+    external_resolver_config: ResolverConfig,
     external_dns: String,
 }
 
@@ -38,10 +39,8 @@ impl DnsManager {
      */
     pub fn new(ctx: &CtxManager) -> Self {
         // Build the external (Cloudflare) DNS address resolver
-        let config = build_cloudflare_resolver_config();
+        let external_resolver_config = build_cloudflare_resolver_config();
         let external_dns = "1.1.1.1:53".to_string();
-        let external_resolver = Resolver::new(config, ResolverOpts::default())
-            .expect("Failed to construct external (Cloudflare) DNS resolver");
 
         // Build the internal cluster DNS resolver
         let internal_dns_host = match ctx.env_type() {
@@ -56,17 +55,13 @@ impl DnsManager {
             EnvironmentType::UnknownEnv => "1.1.1.1",
         };
 
-        let mut internal_dns = internal_dns_host.to_string();
-        internal_dns.push_str(":53");
-
-        let config = build_custom_resolver_config(&internal_dns);
-        let internal_resolver = Resolver::new(config, ResolverOpts::default())
-            .expect("Failed to construct internal CLUSTER DNS resolver");
+        let internal_dns = format!("{}{}", internal_dns_host, ":53");
+        let internal_resolver_config = build_custom_resolver_config(&internal_dns);
 
         Self {
-            internal_resolver,
+            internal_resolver_config,
             internal_dns,
-            external_resolver,
+            external_resolver_config,
             external_dns,
         }
     }
@@ -95,11 +90,19 @@ impl DnsManager {
      */
     pub fn resolve_dns(&self, host: &str, internal: bool) -> Result<IpAddr, ResolveError> {
         if internal {
+            let config = &self.internal_resolver_config;
+            let internal_resolver = Resolver::new(config.clone(), ResolverOpts::default())
+                .expect("Failed to construct internal CLUSTER DNS resolver");
             // resolve host name using the internal (cluster) DNS server
-            resolve_address(&self.internal_resolver, host)
+            resolve_address(&internal_resolver, host)
         } else {
+            let config = &self.external_resolver_config;
+
+            let external_resolver = Resolver::new(config.clone(), ResolverOpts::default())
+                .expect("Failed to construct external (Cloudflare) DNS resolver");
+
             // resolve host name using the external DNS server
-            resolve_address(&self.external_resolver, host)
+            resolve_address(&external_resolver, host)
         }
     }
 }

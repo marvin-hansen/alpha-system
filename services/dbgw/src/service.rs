@@ -25,7 +25,6 @@ impl JobRunner for MyJobRunner {
 
     // #[autometrics]
     async fn list_jobs(&self, request: Request<Empty>) -> Result<Response<JobList>, Status> {
-
         println!("Got a request: {:?}", request);
 
         let reply = job::JobList {

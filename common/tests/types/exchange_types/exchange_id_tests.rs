@@ -1,6 +1,5 @@
 use common::prelude::ExchangeID;
 
-
 #[test]
 fn test_from_valid_values() {
     assert_eq!(ExchangeID::from(0x0), ExchangeID::NullVal);
