@@ -95,6 +95,6 @@ async fn main() -> Result<(), Box<dyn Error>> {
         }
     }
 
-    println!("{SVC_ID} Service Shutdown complete");
+    print_utils::print_stop_header(&SVC_ID);
     Ok(())
 }

@@ -29,6 +29,12 @@ path = "../../components"
 version = "0.1.0"
 
 
+[dependencies.service_utils]
+path = "../../service_utils"
+version = "0.1.0"
+
+
+
 [dependencies]
 autometrics = { workspace = true }
 prost = { workspace = true }
