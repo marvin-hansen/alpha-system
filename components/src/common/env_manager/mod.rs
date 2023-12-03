@@ -75,8 +75,8 @@ impl<'l> EnvManager<'l> {
         let local_host = "127.0.0.1".to_string();
         let cluster_host = endpoint.host_uri().to_string();
         let ci_host = "127.0.0.1".to_string();
-        let port = endpoint.port().to_string();
-        SvcEnvConfig::new(service_id, cluster_host, ci_host, local_host, port)
+        let service_port = endpoint.port().to_string();
+        SvcEnvConfig::new(service_id, cluster_host, ci_host, local_host, service_port)
     }
 }
 
@@ -147,7 +147,7 @@ impl<'l> EnvManager<'l> {
     // If the environment type is unknown, it returns an error.
     fn get_host(&self, svc_env_config: &SvcEnvConfig) -> Result<(String, u16), InitError> {
         let port: u16 = svc_env_config
-            .port()
+            .service_port()
             .parse()
             .expect("[EnvManager]: Failed to parse port from config");
 

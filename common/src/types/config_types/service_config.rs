@@ -3,7 +3,7 @@ use std::fmt::{Display, Formatter};
 use serde::{Deserialize, Serialize};
 use surrealdb::sql::Thing;
 
-use crate::prelude::{Endpoint, ServiceID, ServiceType};
+use crate::prelude::{Endpoint, MetricConfig, ServiceID, ServiceType};
 
 #[derive(Serialize, Deserialize, Debug, Default, Clone, Eq, PartialEq)]
 pub struct ServiceConfig {
@@ -29,6 +29,8 @@ pub struct ServiceConfig {
     exposure: ServiceType,
     /// Service endpoint.
     endpoint: Endpoint,
+    /// Service metrics
+    metrics: MetricConfig
 }
 
 impl ServiceConfig {
@@ -59,6 +61,7 @@ impl ServiceConfig {
         dependencies: Vec<ServiceID>,
         exposure: ServiceType,
         endpoint: Endpoint,
+        metrics: MetricConfig
     ) -> Self {
         Self {
             id: None,
@@ -72,6 +75,7 @@ impl ServiceConfig {
             dependencies,
             exposure,
             endpoint,
+            metrics
         }
     }
 }
@@ -126,13 +130,16 @@ impl ServiceConfig {
     pub fn endpoint(&self) -> Endpoint {
         self.endpoint.to_owned()
     }
+    pub fn metrics(&self) -> &MetricConfig {
+        &self.metrics
+    }
 }
 
 impl Display for ServiceConfig {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         write!(f,
-               "ServiceConfig {{ svc_id: {}, name: {}, version: {}, online: {}, description: {}, health_check_uri: {}, base_uri: {}, dependencies: {:?}, exposure: {}, endpoint: {} }}",
-               self.svc_id, self.name, self.version, self.online, self.description, self.health_check_uri, self.base_uri, self.dependencies, self.exposure, self.endpoint
+               "ServiceConfig {{ svc_id: {}, name: {}, version: {}, online: {}, description: {}, health_check_uri: {}, base_uri: {}, dependencies: {:?}, exposure: {}, endpoint: {} metrics: {} }}",
+               self.svc_id, self.name, self.version, self.online, self.description, self.health_check_uri, self.base_uri, self.dependencies, self.exposure, self.endpoint, self.metrics
         )
     }
 }

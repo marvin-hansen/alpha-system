@@ -1,4 +1,4 @@
-use common::prelude::{Encoding, Endpoint, ProtocolType, ServiceConfig, ServiceID, ServiceType};
+use common::prelude::{Encoding, Endpoint, MetricConfig, ProtocolType, ServiceConfig, ServiceID, ServiceType};
 
 pub fn cmdb_service_config() -> ServiceConfig {
     let id = ServiceID::CMDB;
@@ -11,6 +11,7 @@ pub fn cmdb_service_config() -> ServiceConfig {
     let dependencies = vec![ServiceID::DBGW, ServiceID::SMDB];
     let exposure = ServiceType::ENDPOINT;
     let endpoint = get_endpoint();
+    let metrics = MetricConfig::default();
 
     ServiceConfig::new(
         id,
@@ -23,6 +24,7 @@ pub fn cmdb_service_config() -> ServiceConfig {
         dependencies,
         exposure,
         endpoint,
+        metrics
     )
 }
 

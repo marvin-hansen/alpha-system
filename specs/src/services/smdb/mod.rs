@@ -1,4 +1,4 @@
-use common::prelude::{Encoding, Endpoint, ProtocolType, ServiceConfig, ServiceID, ServiceType};
+use common::prelude::{Encoding, Endpoint, MetricConfig, ProtocolType, ServiceConfig, ServiceID, ServiceType};
 
 pub fn smdb_service_config() -> ServiceConfig {
     let svc_id = ServiceID::SMDB;
@@ -11,6 +11,8 @@ pub fn smdb_service_config() -> ServiceConfig {
     let dependencies = vec![ServiceID::DBGW];
     let exposure = ServiceType::ENDPOINT;
     let endpoint = get_endpoint();
+    let metrics = MetricConfig::default();
+
 
     ServiceConfig::new(
         svc_id,
@@ -23,6 +25,7 @@ pub fn smdb_service_config() -> ServiceConfig {
         dependencies,
         exposure,
         endpoint,
+        metrics,
     )
 }
 
