@@ -1,6 +1,6 @@
 use std::cell::RefCell;
 
-use common::prelude::{EnvironmentType, HostEndpoint, InitError, ServiceID, SvcEnvConfig};
+use common::prelude::{EnvironmentType, HostEndpoint, InitError, MetricConfig, ServiceID, SvcEnvConfig};
 
 use crate::prelude::{CtxManager, DnsManager};
 
@@ -41,25 +41,30 @@ impl<'l> EnvManager<'l> {
         &self,
         svc_id: &ServiceID,
         endpoint: HostEndpoint,
+        metrics_config: MetricConfig,
     ) -> Result<(), InitError> {
         match svc_id {
             ServiceID::CMDB => {
-                let cmdb_env = self.get_svc_env_config(ServiceID::CMDB, endpoint);
+                let cmdb_env = self.get_svc_env_config(
+                    ServiceID::CMDB,
+                    endpoint,
+                    metrics_config,
+                );
                 *self.cmdb_env.borrow_mut() = Some(cmdb_env);
                 Ok(())
             }
             ServiceID::SMDB => {
-                let smdb_env = self.get_svc_env_config(ServiceID::SMDB, endpoint);
+                let smdb_env = self.get_svc_env_config(ServiceID::SMDB, endpoint, metrics_config);
                 *self.smdb_env.borrow_mut() = Some(smdb_env);
                 Ok(())
             }
             ServiceID::DBGW => {
-                let dbgw_env = self.get_svc_env_config(ServiceID::DBGW, endpoint);
+                let dbgw_env = self.get_svc_env_config(ServiceID::DBGW, endpoint, metrics_config);
                 *self.dbgw_env.borrow_mut() = Some(dbgw_env);
                 Ok(())
             }
             ServiceID::QDGW => {
-                let qdgw_env = self.get_svc_env_config(ServiceID::QDGW, endpoint);
+                let qdgw_env = self.get_svc_env_config(ServiceID::QDGW, endpoint, metrics_config);
                 *self.qdgw_env.borrow_mut() = Some(qdgw_env);
                 Ok(())
             }
@@ -71,25 +76,97 @@ impl<'l> EnvManager<'l> {
     }
 
     // The functions take a HostEndpoint struct as an argument, which contains the hostname and port of the respective service.
-    fn get_svc_env_config(&self, service_id: ServiceID, endpoint: HostEndpoint) -> SvcEnvConfig {
+    fn get_svc_env_config(
+        &self,
+        service_id: ServiceID,
+        endpoint: HostEndpoint,
+        metrics_config: MetricConfig,
+    )
+        -> SvcEnvConfig
+    {
         let local_host = "127.0.0.1".to_string();
         let cluster_host = endpoint.host_uri().to_string();
         let ci_host = "127.0.0.1".to_string();
         let service_port = endpoint.port().to_string();
-        SvcEnvConfig::new(service_id, cluster_host, ci_host, local_host, service_port)
+        let metrics_uri = metrics_config.metric_uri().to_string();
+        let metrics_port = metrics_config.metric_port();
+
+        SvcEnvConfig::new(service_id, cluster_host, ci_host, local_host, service_port, metrics_uri, metrics_port)
     }
 }
 
 impl<'l> EnvManager<'l> {
+    pub fn get_svc_metric_host_uri_port(&self, svc_id: ServiceID) -> Result<(String, String, u16), InitError> {
+
+        // Check if the service is initialized
+        if !self.is_svc_env_initialized(&svc_id) {
+            InitError(format!("[EnvManager:get_svc_metric_host_uri_port]: Service {:?} is not initialized", svc_id));
+        };
+
+        let (metric_host, _) = self.get_svc_host_port(svc_id)
+            .expect("Failed to get host and port");
+
+        let (metrics_uri,metrics_port ) = match svc_id {
+
+            ServiceID::CMDB => {
+                let binding =self.cmdb_env.borrow();
+                let svc = binding.as_ref().unwrap();
+                let metrics_uri = svc.metrics_uri().to_string();
+                let metrics_port = *svc.metrics_port();
+
+                (metrics_uri, metrics_port)
+            },
+
+            ServiceID::SMDB => {
+                let binding =self.smdb_env.borrow();
+                let svc = binding.as_ref().unwrap();
+                let metrics_uri = svc.metrics_uri().to_string();
+                let metrics_port = *svc.metrics_port();
+
+                (metrics_uri, metrics_port)
+            },
+
+            ServiceID::DBGW => {
+                let binding =self.dbgw_env.borrow();
+                let svc =binding.as_ref().unwrap();
+                let metrics_uri = svc.metrics_uri().to_string();
+                let metrics_port = *svc.metrics_port();
+
+                (metrics_uri, metrics_port)
+            },
+
+            ServiceID::QDGW => {
+                let binding =self.qdgw_env.borrow();
+                let svc = binding.as_ref().unwrap();
+                let metrics_uri = svc.metrics_uri().to_string();
+                let metrics_port = *svc.metrics_port();
+
+                (metrics_uri, metrics_port)
+            },
+
+            ServiceID::Default => return Err(InitError(format!(
+                "[EnvManager::get_svc_metric_host_uri_port]: Service {:?} is not supported",
+                svc_id
+            ))),
+        };
+
+        Ok((metric_host, metrics_uri, metrics_port))
+    }
+
+
     ///  Returns the hostname of the service relative to the application context.
     ///  If the environment type is local, it returns the hostname of the service running locally.
     ///  If the environment type is cluster, it returns the hostname of the service running in the cluster.
     ///  If the environment type is unknown, it returns an error.
     /// The function checks if the service is initialized, and if not, it returns an InitError.
     pub fn get_svc_host_port(&self, svc_id: ServiceID) -> Result<(String, u16), InitError> {
+        // Check if the service is initialized
+        if !self.is_svc_env_initialized(&svc_id) {
+            InitError(format!("[EnvManager:get_svc_host_port]: Service {:?} is not initialized", svc_id));
+        };
+
         match svc_id {
             ServiceID::CMDB => {
-                self.is_svc_env_initialized(&svc_id);
                 self.get_host(
                     self.cmdb_env
                         .borrow()
@@ -98,7 +175,6 @@ impl<'l> EnvManager<'l> {
                 )
             }
             ServiceID::SMDB => {
-                self.is_svc_env_initialized(&svc_id);
                 self.get_host(
                     self.smdb_env
                         .borrow()
@@ -107,7 +183,6 @@ impl<'l> EnvManager<'l> {
                 )
             }
             ServiceID::DBGW => {
-                self.is_svc_env_initialized(&svc_id);
                 self.get_host(
                     self.dbgw_env
                         .borrow()
@@ -116,7 +191,6 @@ impl<'l> EnvManager<'l> {
                 )
             }
             ServiceID::QDGW => {
-                self.is_svc_env_initialized(&svc_id);
                 self.get_host(
                     self.qdgw_env
                         .borrow()

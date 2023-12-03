@@ -28,12 +28,18 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .get_service_host_port(SVC_ID)
         .expect("DBGW: Failed to get host and port");
 
-    // Set up two different ports for gRPC and HTTP
-    let grpc_addr = format!("{}:{}", host_ip, host_port)
+    // Service manager configures metrics endpoint ip and port automatically relative to the detected context.
+    let (metrics_host, metrics_uri, metrics_port) = service_manager
+        .get_svc_metric_host_uri_port(SVC_ID)
+        .expect("DBGW:Failed to get metric host, uri, and port");
+
+    // Set up two different sockets for gRPC and HTTP
+    let grpc_addr: SocketAddr = format!("{}:{}", host_ip, host_port)
         .parse()
         .expect("Failed to parse address");
 
-    let web_addr: SocketAddr = "127.0.0.1:8080"
+    // Http socket is needed to serve metrics to prometheus
+    let web_addr: SocketAddr =  format!("{}:{}", metrics_host, metrics_port)
         .parse()
         .expect("Failed to parse web address");
 
@@ -63,14 +69,15 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     // Build http /metrics endpoint
     let routes = warp::get()
-        .and(warp::path("metrics"))
+        .and(warp::path(metrics_uri.clone()))
         .map(|| prometheus_exporter::encode_http_response());
 
     // Build a Http sigint signal handler
     let signal = shutdown::http_sigint();
 
     // Build http web server
-    let (_, web_server) = warp::serve(routes).bind_with_graceful_shutdown(web_addr, signal);
+    let (_, web_server) = warp::serve(routes)
+        .bind_with_graceful_shutdown(web_addr, signal);
 
     // Create a handler for each server https://github.com/hyperium/tonic/discussions/740
     let grpc_handle = tokio::spawn(grpc_server);
@@ -82,7 +89,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .expect("Failed to set service to online");
 
     // Print start header
-    print_utils::print_start_header(&SVC_ID, grpc_addr.port());
+    print_utils::print_start_header(&SVC_ID, grpc_addr.port(), &metrics_uri, metrics_port);
 
     // Start all servers jointly
     match tokio::try_join!(grpc_handle, grpc_web_handle) {

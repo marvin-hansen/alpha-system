@@ -4,15 +4,21 @@ use crate::prelude::ServiceID;
 
 #[derive(Debug, Default, Clone, Eq, PartialEq)]
 pub struct SvcEnvConfig {
+    /// The service ID of the service
     service_id: ServiceID,
+    /// The port on which the service is listening
+    service_port: String,
     /// The hostname address of the cluster
     cluster_host: String,
     /// The hostname address in Continuous Integration (CI) for testing
     ci_host: String,
     /// The hostname address of the local machine
     local_host: String,
-    /// The port on which the service is listening
-    service_port: String,
+    // The metric endpoint URI of the service
+    metrics_uri: String,
+    // The metric endpoint port of the service
+    metrics_port: u16,
+    // The health endpoint URI of the service
 }
 
 impl SvcEnvConfig {
@@ -24,6 +30,8 @@ impl SvcEnvConfig {
         ci_host: String,
         local_host: String,
         service_port: String,
+        metrics_uri: String,
+        metrics_port: u16,
     ) -> Self {
         Self {
             service_id,
@@ -31,6 +39,8 @@ impl SvcEnvConfig {
             ci_host,
             local_host,
             service_port,
+            metrics_uri,
+            metrics_port,
         }
     }
 }
@@ -56,13 +66,22 @@ impl SvcEnvConfig {
     pub fn service_id(&self) -> ServiceID {
         self.service_id
     }
+    /// Returns the metric endpoint URI of the service
+    pub fn metrics_uri(&self) -> &str {
+        &self.metrics_uri
+    }
+    /// Returns the metric endpoint port of the service
+    pub fn metrics_port(&self) -> &u16 {
+        &self.metrics_port
+    }
 }
 
 impl Display for SvcEnvConfig {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         write!(f,
-            "SvcEnvConfig {{ service_id: {:?}, cluster_host: {:?}, ci_host: {:?}, local_host: {:?}, port: {:?} }}",
-            self.service_id, self.cluster_host, self.ci_host, self.local_host, self.service_port
+               "SvcEnvConfig {{ service_id: {:?}, cluster_host: {:?}, ci_host: {:?}, \
+               local_host: {:?}, service_port: {:?}, metrics_uri: {:?}, metrics_port: {:?} }}",
+               self.service_id, self.cluster_host, self.ci_host, self.local_host, self.service_port, self.metrics_uri, self.metrics_port
         )
     }
 }

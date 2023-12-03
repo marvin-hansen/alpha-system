@@ -53,8 +53,13 @@ async fn main() -> anyhow::Result<()> {
     let (host_ip, port) = service_manager
         .get_service_host_port(svc_id)
         .expect("[CMDB]: Failed to get CMDB host and port");
+
     let ip = IpAddr::from_str(&host_ip).expect("CMDB: Failed to parse host ip");
     let server_addr = (ip, port);
+
+    // Dummy endpoint until service is migrated to new service model with metrics endpoint
+    let metrics_port = 8080;
+    let metrics_uri = "metrics".to_string();
 
     // Set CMDB service to online via SMDB
     smdb_provider
@@ -62,7 +67,7 @@ async fn main() -> anyhow::Result<()> {
         .await
         .expect("[CMDB]: Failed to set CMDB service to online");
 
-    print_utils::print_start_header(&svc_id, server_addr.1);
+    print_utils::print_start_header(&svc_id, server_addr.1, &metrics_uri, metrics_port);
 
     let mut listener = tarpc::serde_transport::tcp::listen(&server_addr, Bincode::default).await?;
     listener.config_mut().max_frame_length(usize::MAX);

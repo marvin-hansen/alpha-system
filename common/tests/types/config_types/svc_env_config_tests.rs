@@ -32,7 +32,8 @@ fn test_svc_env_config_ci_host() {
     let ci_host = "127.0.0.1".to_string();
     let local_host = "127.0.0.1".to_string();
     let port = "8080".to_string();
-    let config = SvcEnvConfig::new(service_id, cluster_host, ci_host, local_host, port);
+    let config = SvcEnvConfig::new(service_id, cluster_host, ci_host, local_host,
+                                   port);
 
     assert_eq!(config.service_id(), ServiceID::CMDB);
     assert_eq!(config.cluster_host(), "127.0.0.1".to_string());
@@ -46,7 +47,8 @@ fn test_svc_env_config_local_host() {
     let ci_host = "127.0.0.1".to_string();
     let local_host = "127.0.0.1".to_string();
     let port = "8080".to_string();
-    let config = SvcEnvConfig::new(service_id, cluster_host, ci_host, local_host, port);
+    let config = SvcEnvConfig::new(service_id, cluster_host, ci_host, local_host,
+                                   port);
 
     assert_eq!(config.service_id(), ServiceID::CMDB);
     assert_eq!(config.cluster_host(), "127.0.0.1".to_string());

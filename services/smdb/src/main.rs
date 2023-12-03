@@ -3,12 +3,12 @@ use std::str::FromStr;
 
 use futures::{future, prelude::*};
 use tarpc::server;
-use tarpc::server::incoming::Incoming;
 use tarpc::server::Channel;
+use tarpc::server::incoming::Incoming;
 use tarpc::tokio_serde::formats::Bincode;
 
+use common::prelude::{HostEndpoint, print_utils, ServiceID};
 use common::prelude::ServiceID::DBGW;
-use common::prelude::{print_utils, HostEndpoint, ServiceID};
 use components::prelude::{CfgManager, CtxManager, DnsManager, EnvManager, ServiceManager};
 use dbgw_client::DBGatewayClient;
 use smdb_service::service::{SMDBServer, SMDBService};
@@ -38,13 +38,17 @@ async fn main() -> anyhow::Result<()> {
     let ip = IpAddr::from_str(&host_ip).expect("SMDB: Failed to parse host ip");
     let server_addr = (ip, port);
 
+    // Dummy endpoint until service is migrated to new service model with metrics endpoint
+    let metrics_uri = "metrics".to_string();
+    let metrics_port = 8080;
+
     // Set SMDB service to online
     dbgw_client
         .set_service_online(ServiceID::SMDB)
         .await
         .expect("Failed to set service online");
 
-    print_utils::print_start_header(&svc_id, server_addr.1);
+    print_utils::print_start_header(&svc_id, server_addr.1, &metrics_uri, metrics_port);
 
     let mut listener = tarpc::serde_transport::tcp::listen(&server_addr, Bincode::default).await?;
     listener.config_mut().max_frame_length(usize::MAX);

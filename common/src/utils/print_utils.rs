@@ -1,8 +1,14 @@
 use crate::prelude::ServiceID;
 
-pub fn print_start_header(service_id: &ServiceID, port: u16) {
+pub fn print_start_header(service_id: &ServiceID,
+                          service_port: u16,
+                          metrics_uri: &String,
+                          metrics_port: u16
+)
+{
     println!("==========================================");
-    println!("Service {} on port {}", service_id, port);
+    println!("Service {} on port {}", service_id, service_port);
+    println!("Metrics on endpoint :{}/{}", metrics_port, metrics_uri);
     println!("==========================================");
     println!();
 }
