@@ -67,7 +67,7 @@ fn test_svc_env_config_port() {
     assert_eq!(config.cluster_host(), "127.0.0.1".to_string());
     assert_eq!(config.ci_host(), "127.0.0.1".to_string());
     assert_eq!(config.local_host(), "127.0.0.1".to_string());
-    assert_eq!(config.port(), "8080".to_string());
+    assert_eq!(config.service_port(), "8080".to_string());
 }
 
 #[test]

@@ -12,7 +12,7 @@ pub struct SvcEnvConfig {
     /// The hostname address of the local machine
     local_host: String,
     /// The port on which the service is listening
-    port: String,
+    service_port: String,
 }
 
 impl SvcEnvConfig {
@@ -23,14 +23,14 @@ impl SvcEnvConfig {
         cluster_host: String,
         ci_host: String,
         local_host: String,
-        port: String,
+        service_port: String,
     ) -> Self {
         Self {
             service_id,
             cluster_host,
             ci_host,
             local_host,
-            port,
+            service_port,
         }
     }
 }
@@ -49,8 +49,8 @@ impl SvcEnvConfig {
         &self.local_host
     }
     /// Returns the port on which the service is listening
-    pub fn port(&self) -> &str {
-        &self.port
+    pub fn service_port(&self) -> &str {
+        &self.service_port
     }
     /// Returns the service ID
     pub fn service_id(&self) -> ServiceID {
@@ -60,10 +60,9 @@ impl SvcEnvConfig {
 
 impl Display for SvcEnvConfig {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(
-            f,
+        write!(f,
             "SvcEnvConfig {{ service_id: {:?}, cluster_host: {:?}, ci_host: {:?}, local_host: {:?}, port: {:?} }}",
-            self.service_id, self.cluster_host, self.ci_host, self.local_host, self.port
+            self.service_id, self.cluster_host, self.ci_host, self.local_host, self.service_port
         )
     }
 }
