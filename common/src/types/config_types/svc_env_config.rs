@@ -14,11 +14,12 @@ pub struct SvcEnvConfig {
     ci_host: String,
     /// The hostname address of the local machine
     local_host: String,
-    // The metric endpoint URI of the service
+    /// The host address when running in Docker
+    docker_host: String,
+    /// The metric endpoint URI of the service
     metrics_uri: String,
-    // The metric endpoint port of the service
+    /// The metric endpoint port of the service
     metrics_port: u16,
-    // The health endpoint URI of the service
 }
 
 impl SvcEnvConfig {
@@ -29,6 +30,7 @@ impl SvcEnvConfig {
         cluster_host: String,
         ci_host: String,
         local_host: String,
+        docker_host: String,
         service_port: String,
         metrics_uri: String,
         metrics_port: u16,
@@ -38,6 +40,7 @@ impl SvcEnvConfig {
             cluster_host,
             ci_host,
             local_host,
+            docker_host,
             service_port,
             metrics_uri,
             metrics_port,
@@ -57,6 +60,10 @@ impl SvcEnvConfig {
     /// Returns the hostname of the host on a local machine
     pub fn local_host(&self) -> &str {
         &self.local_host
+    }
+    /// Returns the hostname address of the host when running in Docker
+    pub fn docker_host(&self) -> &str {
+        &self.docker_host
     }
     /// Returns the port on which the service is listening
     pub fn service_port(&self) -> &str {
@@ -79,9 +86,8 @@ impl SvcEnvConfig {
 impl Display for SvcEnvConfig {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         write!(f,
-               "SvcEnvConfig {{ service_id: {:?}, cluster_host: {:?}, ci_host: {:?}, \
-               local_host: {:?}, service_port: {:?}, metrics_uri: {:?}, metrics_port: {:?} }}",
-               self.service_id, self.cluster_host, self.ci_host, self.local_host, self.service_port, self.metrics_uri, self.metrics_port
+            "SvcEnvConfig {{ service_id: {:?}, service_port: {:?}, cluster_host: {:?}, ci_host: {:?}, local_host: {:?}, docker_host: {:?}, metrics_uri: {:?}, metrics_port: {:?} }}",
+            self.service_id, self.service_port, self.cluster_host, self.ci_host, self.local_host, self.docker_host, self.metrics_uri, self.metrics_port
         )
     }
 }

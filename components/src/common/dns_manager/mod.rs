@@ -52,6 +52,7 @@ impl DnsManager {
                     panic!("Failed to find cluster DNS_SERVER env. Ensure DNS_SERVER is set as environment variable in deployment.yaml");
                 }
             },
+            EnvironmentType::Docker => "1.1.1.1",
             EnvironmentType::UnknownEnv => "1.1.1.1",
         };
 

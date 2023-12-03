@@ -10,6 +10,8 @@ use common::prelude::EnvironmentType;
 ///         ENV: CLUSTER
 ///         DNS_SERVER: 175.24.54.1 //  IP of your actual cluster DNS server
 ///
+/// PANICS if either one of the variables is not set.
+///
 /// # Fields
 /// * `env_type`: The environment type, which can be either `LOCAL`, `CLUSTER`, or `UNKNOWN`.
 /// * `int_dns_server`: The internal DNS server.
@@ -83,8 +85,13 @@ fn get_env_type() -> EnvironmentType {
         "LOCAL" => EnvironmentType::LOCAL,
         "CI" => EnvironmentType::CI,
         "CLUSTER" => EnvironmentType::CLUSTER,
+        "DOCKER" => EnvironmentType::Docker,
         "UNKNOWN" => EnvironmentType::UnknownEnv,
-        _ => EnvironmentType::UnknownEnv,
+        _ => {
+            panic!(
+                "Failed to read ENV environment variable. Ensure ENV is set in deployment.yaml",
+            );
+        }
     };
 }
 
@@ -93,11 +100,10 @@ fn get_int_cluster_dns_server() -> Option<String> {
     let dns_server_var = match env::var("DNS_SERVER") {
         Ok(val) => val,
         Err(e) => {
-            println!(
-                "Failed to read DNS_SERVER env. Ensure DNS_SERVER is set in deployment.yaml:m {}",
+            panic!(
+                "Failed to read DNS_SERVER environment variable. Ensure DNS_SERVER is set in deployment.yaml:{}",
                 e
             );
-            return None;
         }
     };
 

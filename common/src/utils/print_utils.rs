@@ -7,8 +7,8 @@ pub fn print_start_header(service_id: &ServiceID,
 )
 {
     println!("==========================================");
-    println!("Service {} on port {}", service_id, service_port);
-    println!("Metrics on endpoint :{}/{}", metrics_port, metrics_uri);
+    println!("Service {} on port: {}", service_id, service_port);
+    println!("Metrics on endpoint: {}/{}", metrics_port, metrics_uri);
     println!("==========================================");
     println!();
 }

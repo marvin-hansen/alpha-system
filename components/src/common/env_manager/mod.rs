@@ -87,11 +87,12 @@ impl<'l> EnvManager<'l> {
         let local_host = "127.0.0.1".to_string();
         let cluster_host = endpoint.host_uri().to_string();
         let ci_host = "127.0.0.1".to_string();
+        let docker_host = "0.0.0.0".to_string();
         let service_port = endpoint.port().to_string();
         let metrics_uri = metrics_config.metric_uri().to_string();
         let metrics_port = metrics_config.metric_port();
 
-        SvcEnvConfig::new(service_id, cluster_host, ci_host, local_host, service_port, metrics_uri, metrics_port)
+        SvcEnvConfig::new(service_id, cluster_host, ci_host, local_host, docker_host, service_port, metrics_uri, metrics_port)
     }
 }
 
@@ -106,43 +107,42 @@ impl<'l> EnvManager<'l> {
         let (metric_host, _) = self.get_svc_host_port(svc_id)
             .expect("Failed to get host and port");
 
-        let (metrics_uri,metrics_port ) = match svc_id {
-
+        let (metrics_uri, metrics_port) = match svc_id {
             ServiceID::CMDB => {
-                let binding =self.cmdb_env.borrow();
+                let binding = self.cmdb_env.borrow();
                 let svc = binding.as_ref().unwrap();
                 let metrics_uri = svc.metrics_uri().to_string();
                 let metrics_port = *svc.metrics_port();
 
                 (metrics_uri, metrics_port)
-            },
+            }
 
             ServiceID::SMDB => {
-                let binding =self.smdb_env.borrow();
+                let binding = self.smdb_env.borrow();
                 let svc = binding.as_ref().unwrap();
                 let metrics_uri = svc.metrics_uri().to_string();
                 let metrics_port = *svc.metrics_port();
 
                 (metrics_uri, metrics_port)
-            },
+            }
 
             ServiceID::DBGW => {
-                let binding =self.dbgw_env.borrow();
-                let svc =binding.as_ref().unwrap();
-                let metrics_uri = svc.metrics_uri().to_string();
-                let metrics_port = *svc.metrics_port();
-
-                (metrics_uri, metrics_port)
-            },
-
-            ServiceID::QDGW => {
-                let binding =self.qdgw_env.borrow();
+                let binding = self.dbgw_env.borrow();
                 let svc = binding.as_ref().unwrap();
                 let metrics_uri = svc.metrics_uri().to_string();
                 let metrics_port = *svc.metrics_port();
 
                 (metrics_uri, metrics_port)
-            },
+            }
+
+            ServiceID::QDGW => {
+                let binding = self.qdgw_env.borrow();
+                let svc = binding.as_ref().unwrap();
+                let metrics_uri = svc.metrics_uri().to_string();
+                let metrics_port = *svc.metrics_port();
+
+                (metrics_uri, metrics_port)
+            }
 
             ServiceID::Default => return Err(InitError(format!(
                 "[EnvManager::get_svc_metric_host_uri_port]: Service {:?} is not supported",
@@ -220,14 +220,21 @@ impl<'l> EnvManager<'l> {
     // If the environment type is cluster, it returns the hostname of the service running in the cluster.
     // If the environment type is unknown, it returns an error.
     fn get_host(&self, svc_env_config: &SvcEnvConfig) -> Result<(String, u16), InitError> {
+        //
         let port: u16 = svc_env_config
             .service_port()
             .parse()
             .expect("[EnvManager]: Failed to parse port from config");
 
         let host = match self.ctx_manager.env_type() {
-            EnvironmentType::LOCAL => svc_env_config.local_host().to_string(),
-            EnvironmentType::CI => svc_env_config.ci_host().to_string(),
+            EnvironmentType::LOCAL => {
+                svc_env_config.local_host().to_string()
+            }
+
+            EnvironmentType::CI => {
+                svc_env_config.ci_host().to_string()
+            }
+
             EnvironmentType::CLUSTER => {
                 let cluster_host = self
                     .dns_manager
@@ -236,6 +243,11 @@ impl<'l> EnvManager<'l> {
 
                 cluster_host.to_string()
             }
+
+            EnvironmentType::Docker => {
+                svc_env_config.docker_host().to_string()
+            }
+
             EnvironmentType::UnknownEnv => {
                 return Err(InitError("[EnvManager]: Unknown Environment".to_string()));
             }
