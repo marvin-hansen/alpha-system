@@ -11,6 +11,7 @@ members = [
     "sbe/bindings",
     "sbe/messages",
     "services/*",
+    "service_utils",
     "specs"
 ]
 
