@@ -7,10 +7,11 @@ use tarpc::server::Channel;
 use tarpc::server::incoming::Incoming;
 use tarpc::tokio_serde::formats::Bincode;
 
-use common::prelude::{HostEndpoint, print_utils, ServiceID};
+use common::prelude::{HostEndpoint, ServiceID};
 use common::prelude::ServiceID::DBGW;
 use components::prelude::{CfgManager, CtxManager, DnsManager, EnvManager, ServiceManager};
 use dbgw_client::DBGatewayClient;
+use service_utils::print_utils;
 use smdb_service::service::{SMDBServer, SMDBService};
 
 #[tokio::main]

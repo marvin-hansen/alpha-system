@@ -1,7 +1,8 @@
 use autometrics::prometheus_exporter;
-use common::prelude::{print_utils, ServiceID};
+use common::prelude::ServiceID;
 use components::prelude::*;
 use dbgw_service::service::{job::job_runner_server::*, MyJobRunner};
+use service_utils::print_utils;
 use std::error::Error;
 use std::net::SocketAddr;
 use tonic::transport::Server as TonicServer;
@@ -24,24 +25,24 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let service_manager = async { ServiceManager::new(&cfg_manager, &svm_manager) }.await;
 
     // Service_manager configures ip and port automatically relative to the detected context.
-    let (host_ip, host_port) = service_manager
-        .get_service_host_port(SVC_ID)
+    let service_addr = service_manager
+        .configure_svc_socket_addr(&SVC_ID)
         .expect("DBGW: Failed to get host and port");
 
+    // Set up socket address for gRPC and HTTP
+    let grpc_addr = service_addr
+        .parse()
+        .expect("DBGW: Failed to parse address");
+
     // Service manager configures metrics endpoint ip and port automatically relative to the detected context.
-    let (metrics_host, metrics_uri, metrics_port) = service_manager
-        .get_svc_metric_host_uri_port(SVC_ID)
-        .expect("DBGW:Failed to get metric host, uri, and port");
+    let (metrics_addr, metrics_uri) = service_manager
+        .configure_metrics_socket_addr_uri(&SVC_ID)
+        .expect("DBGW: Failed to get metric host, uri, and port");
 
-    // Set up two different sockets for gRPC and HTTP
-    let grpc_addr: SocketAddr = format!("{}:{}", host_ip, host_port)
+    // Http/web socket address is needed to serve metrics to prometheus
+    let web_addr: SocketAddr =  metrics_addr
         .parse()
-        .expect("Failed to parse address");
-
-    // Http socket is needed to serve metrics to prometheus
-    let web_addr: SocketAddr =  format!("{}:{}", metrics_host, metrics_port)
-        .parse()
-        .expect("Failed to parse web address");
+        .expect("DBGW: Failed to parse web address");
 
     // Load dbm config from config manager
     let db_config = cfg_manager.get_db_config();
@@ -86,10 +87,10 @@ async fn main() -> Result<(), Box<dyn Error>> {
     // Set DBGW service to online
     dbm.set_service_online(&SVC_ID)
         .await
-        .expect("Failed to set service to online");
+        .expect("DBGW: Failed to set service to online");
 
     // Print start header
-    print_utils::print_start_header(&SVC_ID, grpc_addr.port(), &metrics_uri, metrics_port);
+    print_utils::print_start_header(&SVC_ID, &service_addr, &metrics_addr, &metrics_uri);
 
     // Start all servers jointly
     match tokio::try_join!(grpc_handle, grpc_web_handle) {
@@ -97,8 +98,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
         Err(e) => {
             dbm.set_service_offline(&SVC_ID)
                 .await
-                .expect("Failed to set service offline");
-            println!("Failed to start gRPC and HTTP server: {:?}", e);
+                .expect("DBGW: Failed to set service offline");
+            println!("DBGW: Failed to start gRPC and HTTP server: {:?}", e);
         }
     }
 

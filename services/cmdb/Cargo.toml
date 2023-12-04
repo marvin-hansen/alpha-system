@@ -41,6 +41,11 @@ path = "../../providers/smdb_provider"
 version = "0.1.0"
 
 
+[dependencies.service_utils]
+path = "../../service_utils"
+version = "0.1.0"
+
+
 [dependencies]
 serde_json = { workspace = true }
 serde = { workspace = true }

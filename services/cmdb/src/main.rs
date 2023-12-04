@@ -8,9 +8,10 @@ use tarpc::server::Channel;
 use tarpc::tokio_serde::formats::Bincode;
 
 use cmdb_service::service::{CMDBServer, CMDBService};
-use common::prelude::{print_utils, HostEndpoint, ServiceID};
+use common::prelude::{HostEndpoint, ServiceID};
 use components::prelude::{CfgManager, CtxManager, DnsManager, EnvManager, ServiceManager};
 use dbgw_client::DBGatewayClient;
+use service_utils::print_utils;
 use smdb_provider::SMDBProvider;
 
 #[tokio::main]

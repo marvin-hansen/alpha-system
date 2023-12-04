@@ -21,6 +21,19 @@ impl<'l> ServiceManager<'l> {
 }
 
 impl<'l> ServiceManager<'l> {
+    pub fn configure_svc_socket_addr(&self, svc_id: &ServiceID) -> Result<String, InitError> {
+        if !self.is_service_initialized(svc_id) {
+            self.init_service(&svc_id)
+                .expect("[ServiceManager]: Failed to initialize service");
+        }
+
+        self.svm_manager.configure_svc_socket_addr(svc_id)
+    }
+
+    pub fn configure_metrics_socket_addr_uri(&self, svc_id: &ServiceID) -> Result<(String, String), InitError> {
+        self.svm_manager.configure_metrics_socket_addr_uri(svc_id)
+    }
+
     /// Returns a reference to the service-specific configuration of the service.
     pub fn get_service_config(&self) -> ServiceConfig {
         self.cfg_manager.svc_config()
@@ -34,8 +47,8 @@ impl<'l> ServiceManager<'l> {
         self.cfg_manager.svc_config().endpoint()
     }
 
-    pub fn get_svc_metric_host_uri_port(&self, svc_id: ServiceID) -> Result<(String, String, u16), InitError> {
-        if !self.is_service_initialized(&svc_id) {
+    pub fn get_svc_metric_host_uri_port(&self, svc_id: &ServiceID) -> Result<(String, String, u16), InitError> {
+        if !self.is_service_initialized(svc_id) {
             self.init_service(&svc_id)
                 .expect("[ServiceManager]: Failed to initialize service");
         }
@@ -43,9 +56,9 @@ impl<'l> ServiceManager<'l> {
         self.svm_manager.get_svc_metric_host_uri_port(svc_id)
     }
 
-    pub fn get_service_host_port(&self, svc_id: ServiceID) -> Result<(String, u16), InitError> {
+    pub fn get_service_host_port(&self, svc_id: &ServiceID) -> Result<(String, u16), InitError> {
         if !self.is_service_initialized(&svc_id) {
-            self.init_service(&svc_id)
+            self.init_service(svc_id)
                 .expect("[ServiceManager]: Failed to initialize service");
         }
 
