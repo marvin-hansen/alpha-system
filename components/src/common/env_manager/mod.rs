@@ -1,6 +1,8 @@
 use std::cell::RefCell;
 
-use common::prelude::{EnvironmentType, HostEndpoint, InitError, MetricConfig, ServiceID, SvcEnvConfig};
+use common::prelude::{
+    EnvironmentType, HostEndpoint, InitError, MetricConfig, ServiceID, SvcEnvConfig,
+};
 
 use crate::prelude::{CtxManager, DnsManager};
 
@@ -48,11 +50,7 @@ impl<'l> EnvManager<'l> {
     ) -> Result<(), InitError> {
         match svc_id {
             ServiceID::CMDB => {
-                let cmdb_env = self.get_svc_env_config(
-                    ServiceID::CMDB,
-                    endpoint,
-                    metrics_config,
-                );
+                let cmdb_env = self.get_svc_env_config(ServiceID::CMDB, endpoint, metrics_config);
                 *self.cmdb_env.borrow_mut() = Some(cmdb_env);
                 Ok(())
             }
@@ -92,9 +90,13 @@ impl<'l> EnvManager<'l> {
     /// returns the socket address to run the service in any context.
     pub fn configure_svc_socket_addr(&self, svc_id: &ServiceID) -> Result<String, InitError> {
         // Get the configuration of the service
-        let svc_config = self.get_svc_env(svc_id).expect("Failed to get service config");
+        let svc_config = self
+            .get_svc_env(svc_id)
+            .expect("Failed to get service config");
         // Get the host and port of the service
-        let (_, port) = self.get_host(&svc_config).expect("Failed to get host and port");
+        let (_, port) = self
+            .get_host(&svc_config)
+            .expect("Failed to get host and port");
         // Set host to default (0.0.0.0) to listen on all interfaces
         let host = DEFAULT_HOST;
         // Merge the host and port into a socket address i.e. 0.0.0.0:7070
@@ -104,32 +106,43 @@ impl<'l> EnvManager<'l> {
     }
 
     /// Returns the metric socket address and uri to run the service in any
-    pub fn configure_metrics_socket_addr_uri(&self, svc_id: &ServiceID) -> Result<(String, String), InitError> {
-        let (_, metrics_uri, metrics_port) = self.
-            get_svc_metric_host_uri_port(svc_id)
+    pub fn configure_metrics_socket_addr_uri(
+        &self,
+        svc_id: &ServiceID,
+    ) -> Result<(String, String), InitError> {
+        let (_, metrics_uri, metrics_port) = self
+            .get_svc_metric_host_uri_port(svc_id)
             .expect("Failed to get metric host, uri, and port");
 
         // Set host to default (0.0.0.0) to listen on all interfaces
         let metrics_host = DEFAULT_HOST;
         // Merge the host and port into a socket address i.e. 0.0.0.0:8080
-        let socket_addr = format!("{}:{}",  metrics_host, metrics_port);
+        let socket_addr = format!("{}:{}", metrics_host, metrics_port);
 
         Ok((socket_addr, metrics_uri))
     }
 
     /// Returns the host, uri, and port of the metrics endpoint of the service relative to its context.
     /// Use this to pull metrics data from the service regardless of deployment context.
-    pub fn get_svc_metric_host_uri_port(&self, svc_id: &ServiceID) -> Result<(String, String, u16), InitError> {
-
+    pub fn get_svc_metric_host_uri_port(
+        &self,
+        svc_id: &ServiceID,
+    ) -> Result<(String, String, u16), InitError> {
         // Check if the service is initialized
         if !self.is_svc_env_initialized(svc_id) {
-            InitError(format!("[EnvManager:get_svc_metric_host_uri_port]: Service {:?} is not initialized", svc_id));
+            InitError(format!(
+                "[EnvManager:get_svc_metric_host_uri_port]: Service {:?} is not initialized",
+                svc_id
+            ));
         };
 
-        let (metric_host, _) = self.get_svc_host_port(svc_id)
+        let (metric_host, _) = self
+            .get_svc_host_port(svc_id)
             .expect("Failed to get host and port");
 
-        let svc = self.get_svc_env(svc_id).expect("Failed to get service environment");
+        let svc = self
+            .get_svc_env(svc_id)
+            .expect("Failed to get service environment");
         let metrics_uri = svc.metrics_uri().to_string();
         let metrics_port = *svc.metrics_port();
 
@@ -146,10 +159,15 @@ impl<'l> EnvManager<'l> {
     pub fn get_svc_host_port(&self, svc_id: &ServiceID) -> Result<(String, u16), InitError> {
         // Check if the service is initialized
         if !self.is_svc_env_initialized(&svc_id) {
-            InitError(format!("[EnvManager:get_svc_host_port]: Service {:?} is not initialized", svc_id));
+            InitError(format!(
+                "[EnvManager:get_svc_host_port]: Service {:?} is not initialized",
+                svc_id
+            ));
         };
         // Get the configuration of the service
-        let svc_config = self.get_svc_env(svc_id).expect("Failed to get service config");
+        let svc_config = self
+            .get_svc_env(svc_id)
+            .expect("Failed to get service config");
         // Get the host and port of the service
         self.get_host(&svc_config)
     }
@@ -162,9 +180,7 @@ impl<'l> EnvManager<'l> {
         service_id: ServiceID,
         endpoint: HostEndpoint,
         metrics_config: MetricConfig,
-    )
-        -> SvcEnvConfig
-    {
+    ) -> SvcEnvConfig {
         let local_host = "127.0.0.1".to_string();
         let cluster_host = endpoint.host_uri().to_string();
         let ci_host = "127.0.0.1".to_string();
@@ -173,7 +189,16 @@ impl<'l> EnvManager<'l> {
         let metrics_uri = metrics_config.metric_uri().to_string();
         let metrics_port = metrics_config.metric_port();
 
-        SvcEnvConfig::new(service_id, cluster_host, ci_host, local_host, docker_host, service_port, metrics_uri, metrics_port)
+        SvcEnvConfig::new(
+            service_id,
+            cluster_host,
+            ci_host,
+            local_host,
+            docker_host,
+            service_port,
+            metrics_uri,
+            metrics_port,
+        )
     }
 
     // Returns the hostname and port of the service based on the environment type.
@@ -188,13 +213,9 @@ impl<'l> EnvManager<'l> {
             .expect("[EnvManager]: Failed to parse port from config");
 
         let host = match self.ctx_manager.env_type() {
-            EnvironmentType::LOCAL => {
-                svc_env_config.local_host().to_string()
-            }
+            EnvironmentType::LOCAL => svc_env_config.local_host().to_string(),
 
-            EnvironmentType::CI => {
-                svc_env_config.ci_host().to_string()
-            }
+            EnvironmentType::CI => svc_env_config.ci_host().to_string(),
 
             EnvironmentType::CLUSTER => {
                 let cluster_host = self
@@ -205,9 +226,7 @@ impl<'l> EnvManager<'l> {
                 cluster_host.to_string()
             }
 
-            EnvironmentType::Docker => {
-                svc_env_config.docker_host().to_string()
-            }
+            EnvironmentType::Docker => svc_env_config.docker_host().to_string(),
 
             EnvironmentType::UnknownEnv => {
                 return Err(InitError("[EnvManager]: Unknown Environment".to_string()));
@@ -220,7 +239,8 @@ impl<'l> EnvManager<'l> {
     fn get_svc_env(&self, svc_id: &ServiceID) -> Result<SvcEnvConfig, InitError> {
         match svc_id {
             ServiceID::CMDB => {
-                let svc = self.cmdb_env
+                let svc = self
+                    .cmdb_env
                     .borrow()
                     .as_ref()
                     .expect("[EnvManager]: Failed to get cmdb host and port")
@@ -230,7 +250,8 @@ impl<'l> EnvManager<'l> {
             }
 
             ServiceID::SMDB => {
-                let svc = self.smdb_env
+                let svc = self
+                    .smdb_env
                     .borrow()
                     .as_ref()
                     .expect("[EnvManager]: Failed to get smdb host and port")
@@ -240,7 +261,8 @@ impl<'l> EnvManager<'l> {
             }
 
             ServiceID::DBGW => {
-                let svc = self.dbgw_env
+                let svc = self
+                    .dbgw_env
                     .borrow()
                     .as_ref()
                     .expect("[EnvManager]: Failed to get dbgw host and port")
@@ -250,7 +272,8 @@ impl<'l> EnvManager<'l> {
             }
 
             ServiceID::QDGW => {
-                let svc = self.qdgw_env
+                let svc = self
+                    .qdgw_env
                     .borrow()
                     .as_ref()
                     .expect("[EnvManager]: Failed to get qdgw host and port")

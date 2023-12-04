@@ -30,4 +30,3 @@ pub use crate::types::trade_types::strategy_config::*;
 pub use crate::types::trade_types::trade_direction::*;
 pub use crate::types::trade_types::trade_entry::*;
 pub use crate::types::trade_types::trade_strategy::*;
-

@@ -1,4 +1,6 @@
-use common::prelude::{Encoding, Endpoint, MetricConfig, ProtocolType, ServiceConfig, ServiceID, ServiceType};
+use common::prelude::{
+    Encoding, Endpoint, MetricConfig, ProtocolType, ServiceConfig, ServiceID, ServiceType,
+};
 
 pub fn qdgw_service_config() -> ServiceConfig {
     let id = ServiceID::QDGW;
@@ -12,7 +14,6 @@ pub fn qdgw_service_config() -> ServiceConfig {
     let exposure = ServiceType::ENDPOINT;
     let endpoint = get_endpoint();
     let metrics = MetricConfig::default();
-
 
     ServiceConfig::new(
         id,

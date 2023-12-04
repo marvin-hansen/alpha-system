@@ -1,6 +1,5 @@
-use std::fmt::{Display, Formatter};
 use serde::{Deserialize, Serialize};
-
+use std::fmt::{Display, Formatter};
 
 #[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq)]
 pub struct MetricConfig {
@@ -11,7 +10,11 @@ pub struct MetricConfig {
 
 impl MetricConfig {
     pub fn new(metric_uri: String, metric_host: String, metric_port: u16) -> Self {
-        Self { metric_uri, metric_host, metric_port }
+        Self {
+            metric_uri,
+            metric_host,
+            metric_port,
+        }
     }
 }
 
@@ -39,9 +42,10 @@ impl MetricConfig {
 
 impl Display for MetricConfig {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f,
-               "metric_uri: {},  metric_host: {},  metric_port: {}",
-               self.metric_uri, self.metric_host, self.metric_port
+        write!(
+            f,
+            "metric_uri: {},  metric_host: {},  metric_port: {}",
+            self.metric_uri, self.metric_host, self.metric_port
         )
     }
 }

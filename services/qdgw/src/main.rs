@@ -7,7 +7,7 @@ use tarpc::server::incoming::Incoming;
 use tarpc::server::Channel;
 use tarpc::tokio_serde::formats::Bincode;
 
-use common::prelude::{ServiceID};
+use common::prelude::ServiceID;
 use components::prelude::{CfgManager, CtxManager, DnsManager, EnvManager, ServiceManager};
 use qdgw_service::service::{QDGateway, QDGatewayServer};
 use service_utils::print_utils;

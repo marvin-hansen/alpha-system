@@ -3,12 +3,12 @@ use std::str::FromStr;
 
 use futures::{future, prelude::*};
 use tarpc::server;
-use tarpc::server::Channel;
 use tarpc::server::incoming::Incoming;
+use tarpc::server::Channel;
 use tarpc::tokio_serde::formats::Bincode;
 
-use common::prelude::{HostEndpoint, ServiceID};
 use common::prelude::ServiceID::DBGW;
+use common::prelude::{HostEndpoint, ServiceID};
 use components::prelude::{CfgManager, CtxManager, DnsManager, EnvManager, ServiceManager};
 use dbgw_client::DBGatewayClient;
 use service_utils::print_utils;

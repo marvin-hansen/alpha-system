@@ -30,7 +30,7 @@ pub struct ServiceConfig {
     /// Service endpoint.
     endpoint: Endpoint,
     /// Service metrics
-    metrics: MetricConfig
+    metrics: MetricConfig,
 }
 
 impl ServiceConfig {
@@ -61,7 +61,7 @@ impl ServiceConfig {
         dependencies: Vec<ServiceID>,
         exposure: ServiceType,
         endpoint: Endpoint,
-        metrics: MetricConfig
+        metrics: MetricConfig,
     ) -> Self {
         Self {
             id: None,
@@ -75,7 +75,7 @@ impl ServiceConfig {
             dependencies,
             exposure,
             endpoint,
-            metrics
+            metrics,
         }
     }
 }

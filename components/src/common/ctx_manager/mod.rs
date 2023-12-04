@@ -88,9 +88,7 @@ fn get_env_type() -> EnvironmentType {
         "DOCKER" => EnvironmentType::Docker,
         "UNKNOWN" => EnvironmentType::UnknownEnv,
         _ => {
-            panic!(
-                "Failed to read ENV environment variable. Ensure ENV is set in deployment.yaml",
-            );
+            panic!("Failed to read ENV environment variable. Ensure ENV is set in deployment.yaml",);
         }
     };
 }

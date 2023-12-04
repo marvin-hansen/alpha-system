@@ -30,7 +30,10 @@ impl<'l> ServiceManager<'l> {
         self.svm_manager.configure_svc_socket_addr(svc_id)
     }
 
-    pub fn configure_metrics_socket_addr_uri(&self, svc_id: &ServiceID) -> Result<(String, String), InitError> {
+    pub fn configure_metrics_socket_addr_uri(
+        &self,
+        svc_id: &ServiceID,
+    ) -> Result<(String, String), InitError> {
         self.svm_manager.configure_metrics_socket_addr_uri(svc_id)
     }
 
@@ -47,7 +50,10 @@ impl<'l> ServiceManager<'l> {
         self.cfg_manager.svc_config().endpoint()
     }
 
-    pub fn get_svc_metric_host_uri_port(&self, svc_id: &ServiceID) -> Result<(String, String, u16), InitError> {
+    pub fn get_svc_metric_host_uri_port(
+        &self,
+        svc_id: &ServiceID,
+    ) -> Result<(String, String, u16), InitError> {
         if !self.is_service_initialized(svc_id) {
             self.init_service(&svc_id)
                 .expect("[ServiceManager]: Failed to initialize service");
@@ -77,6 +83,7 @@ impl<'l> ServiceManager<'l> {
         let endpoint = binding.host_endpoint();
         let metrics_config = svc_config.metrics().to_owned();
 
-        self.svm_manager.init_svc_env(svc_id, endpoint, metrics_config)
+        self.svm_manager
+            .init_svc_env(svc_id, endpoint, metrics_config)
     }
 }

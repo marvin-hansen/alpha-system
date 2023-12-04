@@ -1,4 +1,6 @@
-use common::prelude::{Encoding, Endpoint, MetricConfig, ProtocolType, ServiceConfig, ServiceID, ServiceType};
+use common::prelude::{
+    Encoding, Endpoint, MetricConfig, ProtocolType, ServiceConfig, ServiceID, ServiceType,
+};
 
 pub fn dbgw_service_config() -> ServiceConfig {
     let id = ServiceID::DBGW;
@@ -13,7 +15,6 @@ pub fn dbgw_service_config() -> ServiceConfig {
     let endpoint = get_endpoint();
     let metrics = MetricConfig::default();
 
-
     ServiceConfig::new(
         id,
         name,
@@ -25,7 +26,7 @@ pub fn dbgw_service_config() -> ServiceConfig {
         dependencies,
         exposure,
         endpoint,
-        metrics
+        metrics,
     )
 }
 
