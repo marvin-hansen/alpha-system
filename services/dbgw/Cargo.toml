@@ -32,12 +32,13 @@ version = "0.1.0"
 
 [dependencies]
 autometrics = { workspace = true }
-prost = { workspace = true }
 surrealdb = { workspace = true }
 tokio = { workspace = true }
 tonic = { workspace = true }
 tonic-health = { workspace = true }
+prost = { workspace = true }
 warp = { workspace = true }
+tonic-build = "0.10.2"
 
 
 [build-dependencies]

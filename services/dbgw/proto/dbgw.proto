@@ -1,5 +1,6 @@
+// protp/dbgw.proto
 syntax = "proto3";
-package dbgw_proto;
+package dbgw;
 
 // Service definitions.
 // https://developers.google.com/protocol-buffers/docs/proto3#services
@@ -27,15 +28,11 @@ message MultiServicesRequest {
 
 // Response message definitions
 message CreateServiceResponse {
-  STATUS_ENUM status_code = 1;
-  string  status_message = 2;
-  bool success = 3;
+  bool success = 1;
 }
 
 message CheckServiceIdExistsResponse {
-  STATUS_ENUM status_code = 1;
-  string  status_message = 2;
-  bool    service_exists = 3;
+  bool    service_exists = 1;
 }
 
 message CheckServicesExistsResponse {

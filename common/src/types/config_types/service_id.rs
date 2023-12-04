@@ -24,18 +24,18 @@ pub enum ServiceID {
 }
 
 
-impl From<u8> for ServiceID {
+impl From<i32> for ServiceID {
     /// Converts a raw byte value into a `ServiceID`.
     /// Unknown message type results in NullVal
     /// ```
     #[inline]
-    fn from(v: u8) -> Self {
+    fn from(v: i32) -> Self {
         match v {
-            0x0_u8 => Self::Default,
-            0x1_u8 => Self::SMDB,
-            0x2_u8 => Self::CMDB,
-            0x3_u8 => Self::DBGW,
-            0x4_u8 => Self::QDGW,
+            0x0_i32 => Self::Default,
+            0x1_i32 => Self::SMDB,
+            0x2_i32 => Self::CMDB,
+            0x3_i32 => Self::DBGW,
+            0x4_i32 => Self::QDGW,
             _ => Self::Default,
         }
     }

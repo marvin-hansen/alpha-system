@@ -7,10 +7,14 @@ use warp::Filter;
 
 use common::prelude::ServiceID;
 use components::prelude::*;
-use service::{job::job_runner_server::*, MyJobRunner};
 use service_utils::print_utils;
+use crate::service::DBGWServer;
+
+use crate::service::dbgw::db_gateway_service_server::{DbGatewayServiceServer};
+
 
 mod service;
+
 
 const SVC_ID: ServiceID = ServiceID::DBGW;
 
@@ -31,18 +35,20 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let dbm = DBManager::new_offline(&db_config).await;
 
     // Configure service ip and port automatically relative to the detected context.
-    let service_addr = service_manager.configure_svc_socket_addr(&SVC_ID).expect("DBGW: Failed to get host and port");
+    let service_addr = service_manager
+        .configure_svc_socket_addr(&SVC_ID)
+        .expect("DBGW: Failed to get host and port");
 
     // Set up socket address for gRPC and HTTP
     let grpc_addr = service_addr.parse().expect("DBGW: Failed to parse address");
 
     // Construct gRPC server
-    let grpc_svc = JobRunnerServer::new(MyJobRunner::default());
+    let grpc_svc = DbGatewayServiceServer::new(DBGWServer::new(dbm.clone()));
 
     // Build health service for gRPC server
     let (mut health_reporter, health_svc) = tonic_health::server::health_reporter();
     health_reporter
-        .set_serving::<JobRunnerServer<MyJobRunner>>()
+        .set_serving::<DbGatewayServiceServer<DBGWServer>>()
         .await;
 
     // Build gRPC server with health service and signal sigint handler
@@ -71,7 +77,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     // Create a handler for each server https://github.com/hyperium/tonic/discussions/740
     let grpc_handle = tokio::spawn(grpc_server);
-    let grpc_web_handle = tokio::spawn(web_server);
+    let web_handle = tokio::spawn(web_server);
 
     // Set DBGW service to online
     dbm.set_service_online(&SVC_ID)
@@ -80,7 +86,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     // Start all servers jointly
     print_utils::print_start_header(&SVC_ID, &service_addr, &metrics_addr, &metrics_uri);
-    match tokio::try_join!(grpc_handle, grpc_web_handle) {
+    match tokio::try_join!(grpc_handle, web_handle) {
         Ok(_) => {}
         Err(e) => {
             dbm.set_service_offline(&SVC_ID)
@@ -101,6 +107,8 @@ async fn http_sigint() {
 
 async fn grpc_sigint(dbm: DBManager) {
     service_utils::shutdown::wait_for_signal().await;
-    dbm.set_service_offline(&SVC_ID).await.expect("DBGW: Failed to set service offline!");
+    dbm.set_service_offline(&SVC_ID)
+        .await
+        .expect("DBGW: Failed to set service offline!");
     println!("* Service shutdown complete");
 }
