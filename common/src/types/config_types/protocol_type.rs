@@ -11,14 +11,31 @@ use serde::{Deserialize, Serialize};
 /// * `UDP`: The UDP protocol.
 #[derive(Serialize, Deserialize, Debug, Copy, Clone, Default, Eq, PartialEq)]
 pub enum ProtocolType {
-    /// The gRPC protocol.
     #[default]
-    GRPC,
+    NullVal = 0,
+    /// The gRPC protocol.
+    GRPC = 1,
     /// The HTTP protocol.
-    HTTP,
+    HTTP = 2,
     /// The UDP protocol.
-    UDP,
+    UDP = 3,
 }
+
+impl From<i32> for ProtocolType {
+    /// All .proto enumeration types convert to the Rust i32 type.
+    /// This functions converts a raw i32 byte value back into a `ServiceType`.
+    /// Unknown message type results in NullVal
+    #[inline]
+    fn from(v: i32) -> Self {
+        match v {
+            0x1_i32 => Self::GRPC,
+            0x2_i32 => Self::HTTP,
+            0x3_i32 => Self::UDP,
+            _ => Self::NullVal,
+        }
+    }
+}
+
 
 impl ProtocolType {
     pub fn from_string(s: &str) -> Option<ProtocolType> {
@@ -37,6 +54,7 @@ impl Display for ProtocolType {
             ProtocolType::GRPC => write!(f, "GRPC"),
             ProtocolType::HTTP => write!(f, "HTTP"),
             ProtocolType::UDP => write!(f, "UDP"),
+            ProtocolType::NullVal => write!(f, "NullVal"),
         }
     }
 }

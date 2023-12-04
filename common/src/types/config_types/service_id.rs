@@ -2,21 +2,43 @@ use std::fmt::{Display, Formatter};
 
 use serde::{Deserialize, Serialize};
 
-/// An Enum that represents the unique ID of a service.
+/// An u8 encoded Enum that represents the unique ID of a service.
 ///
 /// # Variants
 ///
-/// * `MEMGRAPH`: The Memgraph service.
+/// * `NullVal`: Null value in case deserialization fails due to an unknown value.
+/// * `Default`: Default value.
 /// * `SMDB`: The SMDb service.
 /// * `CMDB`: The CMDB service.
+/// * `DBGW`: The DBGW service.
+/// * `QDGW`: The QDGW service.
 #[derive(Serialize, Deserialize, Debug, Default, Copy, Clone, Eq, PartialEq)]
+#[repr(u8)]
 pub enum ServiceID {
     #[default]
-    Default,
-    SMDB,
-    CMDB,
-    DBGW,
-    QDGW,
+    Default = 0x0_u8,
+    SMDB = 0x1_u8,
+    CMDB = 0x2_u8,
+    DBGW = 0x3_u8,
+    QDGW = 0x4_u8,
+}
+
+
+impl From<u8> for ServiceID {
+    /// Converts a raw byte value into a `ServiceID`.
+    /// Unknown message type results in NullVal
+    /// ```
+    #[inline]
+    fn from(v: u8) -> Self {
+        match v {
+            0x0_u8 => Self::Default,
+            0x1_u8 => Self::SMDB,
+            0x2_u8 => Self::CMDB,
+            0x3_u8 => Self::DBGW,
+            0x4_u8 => Self::QDGW,
+            _ => Self::Default,
+        }
+    }
 }
 
 impl ServiceID {

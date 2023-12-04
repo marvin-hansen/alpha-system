@@ -1,5 +1,4 @@
 use std::fmt::{Display, Formatter};
-
 use serde::{Deserialize, Serialize};
 use surrealdb::sql::Thing;
 
