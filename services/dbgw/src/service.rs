@@ -43,10 +43,11 @@ impl DbGatewayService for DBGWServer {
 
     async fn check_service_id_exists(&self, request: Request<SingleServiceRequest>) -> Result<Response<CheckServiceIdExistsResponse>, Status> {
 
+        // Convert raw integer into ServiceID Enum
         let req = request.into_inner().service_id;
-
         let id = RustServiceID::from(req);
 
+        // Check if the service ID exists in the database
         let exists: Result<bool, Error> = self.dbm.check_if_service_id_exists(&id).await;
 
         return if exists.is_ok() {
