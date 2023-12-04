@@ -29,15 +29,15 @@ impl DbGatewayService for DBGWServer {
 
         // let data = request.into_inner();
 
-        // convert data from proto to Rust
+        // convert data from proto to Rust via from_proto()
         let s = RustServiceConfig::default();
 
         let created = self.dbm.create_service(s).await;
 
         return if created.is_ok() {
-            Ok(Response::new(CreateServiceResponse { success: true }))
+            Ok(Response::new(CreateServiceResponse { service_created: true }))
         } else {
-            Ok(Response::new(CreateServiceResponse { success: false }))
+            Ok(Response::new(CreateServiceResponse { service_created: false }))
         };
     }
 

@@ -1,9 +1,7 @@
-// protp/dbgw.proto
 syntax = "proto3";
 package dbgw;
 
-// Service definitions.
-// https://developers.google.com/protocol-buffers/docs/proto3#services
+// Service definitions: https://developers.google.com/protocol-buffers/docs/proto3#services
 service DBGatewayService {
   rpc CreateService (ServiceConfig) returns (CreateServiceResponse) {}
   rpc CheckServiceIdExists (SingleServiceRequest) returns (CheckServiceIdExistsResponse) {}
@@ -19,16 +17,15 @@ service DBGatewayService {
 }
 
 message SingleServiceRequest {
-  ServiceID service_id = 1;
+  int32 service_id = 1;
 }
 
 message MultiServicesRequest {
-  repeated ServiceID service_id = 1;
+  repeated int32 service_id = 1;
 }
 
-// Response message definitions
 message CreateServiceResponse {
-  bool success = 1;
+  bool service_created = 1;
 }
 
 message CheckServiceIdExistsResponse {
@@ -36,69 +33,51 @@ message CheckServiceIdExistsResponse {
 }
 
 message CheckServicesExistsResponse {
-  STATUS_ENUM status_code = 1;
-  string  status_message = 2;
-  bool    services_exist = 3;
+  bool    services_exist = 1;
 }
 
 message CheckServiceIdOnlineResponse {
-  STATUS_ENUM status_code = 1;
-  string  status_message = 2;
-  bool    service_online = 3;
+  bool    service_online = 1;
 }
 
 message CheckServicesOnlineResponse {
-  STATUS_ENUM status_code = 1;
-  string  status_message = 2;
-  bool    services_online = 3;
+  bool    services_online = 1;
 }
 
 message ReadAllServicesResponse {
-  STATUS_ENUM status_code = 1;
-  string  status_message = 2;
-  repeated ServiceConfig service = 3;
+  repeated ServiceConfig service_configs = 1;
 }
 
 message ReadServiceResponse {
-  STATUS_ENUM status_code = 1;
-  string  status_message = 2;
-  ServiceConfig service = 3;
+  ServiceConfig service_config = 1;
 }
 
 message SetServiceOnlineResponse {
-  STATUS_ENUM status_code = 1;
-  string  status_message = 2;
-  bool success = 3;
+  bool service_online = 1;
 }
 
 message SetServiceOfflineResponse {
-  STATUS_ENUM status_code = 1;
-  string  status_message = 2;
-  bool success = 3;
+  bool service_offline = 3;
 }
 
 message UpdateServiceResponse {
-  STATUS_ENUM status_code = 1;
-  string  status_message = 2;
-  bool success = 3;
+  bool service_updated = 1;
 }
 
 message DeleteServiceResponse {
-  STATUS_ENUM status_code = 1;
-  string  status_message = 2;
-  bool success = 3;
+  bool service_deleted = 3;
 }
 
 message ServiceConfig {
-  ServiceID id = 1;
+  int32 id = 1;
   string name = 2;
   uint32 version = 3;
   bool online = 4;
   string description = 5;
   string health_check_uri = 6;
   string base_uri = 7;
-  repeated ServiceID service_dependencies = 8;
-  ServiceType Exposure = 9;
+  repeated int32 service_dependencies = 8;
+  int32 Exposure = 9;
   Endpoint endpoint = 10;
   MetricConfig metrics = 11;
 }
@@ -115,44 +94,6 @@ message Endpoint {
   string endpoint_description = 3;
   string endpoint_uri = 4;
   uint32 endpoint_port = 5;
-  ProtocolType endpoint_protocol = 6;
-  EncodingType endpoint_encoding = 7;
-}
-
-enum STATUS_ENUM {
-  UNSPECIFIED = 0;
-  OK = 1;
-  ALREADY_REGISTERED = 2;
-  SERVER_ERROR = 3;
-  DATA_ERROR = 4;
-  SERVICE_OFFLINE = 5;
-}
-
-enum ServiceID{
-  NullValServiceID = 0;
-  Default = 1;
-  SMDB = 2;
-  CMDB = 3;
-  DBGW = 4;
-  QDGW = 5;
-}
-
-enum ServiceType{
-  NullValServiceType = 0;
-  ENDPOINT = 1;
-  CHANNEL = 2;
-}
-
-enum EncodingType{
-  NullValEncodingType = 0;
-  Binary = 1;
-  Protobuf = 2;
-  SBE = 3;
-}
-
-enum ProtocolType{
-  NullValProtocolType = 0;
-  GRPC = 1;
-  HTTP = 2;
-  UDP = 3;
+  int32 endpoint_protocol = 6;
+  int32 endpoint_encoding = 7;
 }
