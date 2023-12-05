@@ -1,5 +1,6 @@
-use std::fmt::{Display, Formatter};
+use std::fmt::{Display, Error, Formatter};
 
+use dbgw_proto::bindings::*;
 use serde::{Deserialize, Serialize};
 
 use crate::prelude::{Encoding, HostEndpoint, ProtocolType};
@@ -45,6 +46,35 @@ impl Endpoint {
             protocol,
             encoding,
         }
+    }
+}
+
+impl Endpoint {
+    pub fn from_proto(proto: ProtoEndpoint) -> Result<Endpoint, Error> {
+        let protocol = ProtocolType::from(proto.protocol);
+        let encoding = Encoding::from(proto.encoding);
+
+        Ok(Endpoint {
+            name: proto.name.to_string(),
+            version: proto.version as u8,
+            description: proto.description.to_string(),
+            uri: proto.uri.to_string(),
+            port: proto.port as u16,
+            protocol,
+            encoding,
+        })
+    }
+
+    pub fn to_proto(&self) -> Result<ProtoEndpoint, Error> {
+        Ok(ProtoEndpoint {
+            name: self.name.clone(),
+            version: self.version as u32,
+            description: self.description.clone(),
+            uri: self.uri.clone(),
+            port: self.port as u32,
+            protocol: self.protocol as i32,
+            encoding: self.encoding as i32,
+        })
     }
 }
 

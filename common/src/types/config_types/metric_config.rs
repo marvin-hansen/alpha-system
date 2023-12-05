@@ -1,4 +1,6 @@
+use dbgw_proto::bindings::ProtoMetricConfig;
 use serde::{Deserialize, Serialize};
+use std::fmt;
 use std::fmt::{Display, Formatter};
 
 #[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq)]
@@ -15,6 +17,24 @@ impl MetricConfig {
             metric_host,
             metric_port,
         }
+    }
+}
+
+impl MetricConfig {
+    pub fn from_proto(proto: ProtoMetricConfig) -> Result<MetricConfig, fmt::Error> {
+        Ok(MetricConfig {
+            metric_uri: proto.metric_uri,
+            metric_host: proto.metric_host,
+            metric_port: proto.metric_port as u16,
+        })
+    }
+
+    pub fn to_proto(&self) -> Result<ProtoMetricConfig, fmt::Error> {
+        Ok(ProtoMetricConfig {
+            metric_uri: self.metric_uri.clone(),
+            metric_host: self.metric_host.clone(),
+            metric_port: self.metric_port as u32,
+        })
     }
 }
 

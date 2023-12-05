@@ -2,7 +2,6 @@ use std::fmt::{Display, Formatter};
 
 use serde::{Deserialize, Serialize};
 
-
 /// An Enum representing the encoding format used for network communication.
 ///
 /// # Variants
@@ -34,7 +33,6 @@ impl From<i32> for Encoding {
         }
     }
 }
-
 
 impl Display for Encoding {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {

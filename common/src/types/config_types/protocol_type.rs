@@ -10,6 +10,7 @@ use serde::{Deserialize, Serialize};
 /// * `HTTP`: The HTTP protocol.
 /// * `UDP`: The UDP protocol.
 #[derive(Serialize, Deserialize, Debug, Copy, Clone, Default, Eq, PartialEq)]
+#[repr(u8)]
 pub enum ProtocolType {
     #[default]
     NullVal = 0,
@@ -35,7 +36,6 @@ impl From<i32> for ProtocolType {
         }
     }
 }
-
 
 impl ProtocolType {
     pub fn from_string(s: &str) -> Option<ProtocolType> {

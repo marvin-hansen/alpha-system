@@ -16,9 +16,13 @@ name = "common"
 path = "src/lib.rs"
 
 
+[dependencies.dbgw_proto]
+path = "../proto/dbgw_proto"
+version = "0.1.0"
+
+
 [dependencies]
 rust_decimal = { workspace = true }
 serde_json = { workspace = true }
 serde = { workspace = true }
 surrealdb = { workspace = true }
-bincode = "1.3.3"

@@ -1,5 +1,6 @@
-use std::fmt::{Display, Formatter};
+use dbgw_proto::bindings::ProtoServiceConfig;
 use serde::{Deserialize, Serialize};
+use std::fmt::{Display, Error, Formatter};
 use surrealdb::sql::Thing;
 
 use crate::prelude::{Endpoint, MetricConfig, ServiceID, ServiceType};
@@ -80,6 +81,74 @@ impl ServiceConfig {
 }
 
 impl ServiceConfig {
+    pub fn from_proto(proto: ProtoServiceConfig) -> Result<ServiceConfig, Error> {
+        let proto_svc_id = proto.svc_id;
+        let svc_id = ServiceID::from(proto_svc_id);
+
+        let proto_dependencies = proto.dependencies;
+        let dependencies: Vec<ServiceID> =
+            proto_dependencies.into_iter().map(|x| x.into()).collect();
+
+        let proto_endpoint = proto
+            .endpoint
+            .expect("Failed to create endpoint from proto");
+
+        let endpoint =
+            Endpoint::from_proto(proto_endpoint).expect("Failed to create endpoint from proto");
+
+        let proto_metrics = proto.metrics.expect("Failed to create metrics from proto");
+        let metrics =
+            MetricConfig::from_proto(proto_metrics).expect("Failed to create metrics from proto");
+
+        let proto_exposure = proto.exposure;
+        let exposure = ServiceType::from(proto_exposure);
+
+        Ok(ServiceConfig {
+            id: None,
+            svc_id,
+            name: proto.name.into(),
+            version: proto.version as u8,
+            online: proto.online,
+            description: proto.description,
+            health_check_uri: proto.health_check_uri,
+            base_uri: proto.base_uri,
+            dependencies,
+            exposure,
+            endpoint,
+            metrics,
+        })
+    }
+
+    pub fn to_proto(&self) -> Result<ProtoServiceConfig, Error> {
+        let proto_dependencies = self
+            .dependencies
+            .iter()
+            .map(|x| x.to_owned() as i32)
+            .collect::<Vec<i32>>();
+        let proto_endpoint = self
+            .endpoint
+            .to_proto()
+            .expect("Failed to create endpoint from proto");
+        let proto_metrics = self
+            .metrics
+            .to_proto()
+            .expect("Failed to create metrics from proto");
+
+        Ok(ProtoServiceConfig {
+            svc_id: self.svc_id as i32,
+            name: self.name.clone(),
+            version: self.version as u32,
+            online: self.online,
+            description: self.description.clone(),
+            health_check_uri: self.health_check_uri.clone(),
+            base_uri: self.base_uri.clone(),
+            dependencies: proto_dependencies,
+            exposure: self.exposure as i32,
+            endpoint: Some(proto_endpoint),
+            metrics: Some(proto_metrics),
+        })
+    }
+
     pub fn to_json(&self) -> Result<String, serde_json::Error> {
         // https://github.com/serde-rs/json
         let json = serde_json::to_string(&self).expect("Failed to serialize ServiceConfig to JSON");

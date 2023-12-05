@@ -23,7 +23,6 @@ pub enum ServiceID {
     QDGW = 0x4_u8,
 }
 
-
 impl From<i32> for ServiceID {
     /// Converts a raw byte value into a `ServiceID`.
     /// Unknown message type results in NullVal

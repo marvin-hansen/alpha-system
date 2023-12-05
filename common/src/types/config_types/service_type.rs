@@ -1,5 +1,5 @@
-use std::fmt::{Display, Formatter};
 use serde::{Deserialize, Serialize};
+use std::fmt::{Display, Formatter};
 
 /// A ServiceType represents the type of service.
 ///
@@ -18,7 +18,6 @@ pub enum ServiceType {
     CHANNEL = 0x2_u8,
 }
 
-
 impl From<i32> for ServiceType {
     /// Converts a raw byte value into a `ServiceType`.
     /// Unknown message type results in NullVal
@@ -31,7 +30,6 @@ impl From<i32> for ServiceType {
         }
     }
 }
-
 
 impl Display for ServiceType {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
