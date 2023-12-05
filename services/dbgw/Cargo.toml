@@ -15,6 +15,11 @@ name = "dbgw"
 path = "src/main.rs"
 
 
+[lib]
+name = "dbgw_service"
+path = "src/lib.rs"
+
+
 [dependencies.common]
 path = "../../common"
 version = "0.1.0"

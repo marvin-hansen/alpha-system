@@ -53,6 +53,11 @@ install:
 	@source scripts/install_deps.sh
 
 
+.PHONY: docker
+docker:
+	@source scripts/docker.sh
+
+
 .PHONY: release
 release:
 	@source scripts/release.sh

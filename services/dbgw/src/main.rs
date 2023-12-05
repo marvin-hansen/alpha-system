@@ -8,13 +8,9 @@ use warp::Filter;
 use common::prelude::ServiceID;
 use components::prelude::*;
 use service_utils::print_utils;
-use crate::service::DBGWServer;
 
-use crate::service::dbgw::db_gateway_service_server::{DbGatewayServiceServer};
-
-
-mod service;
-
+use dbgw_service::service::DBGWServer;
+use dbgw_service::service::dbgw::db_gateway_service_server::{DbGatewayServiceServer};
 
 const SVC_ID: ServiceID = ServiceID::DBGW;
 
