@@ -23,7 +23,7 @@ impl DBGWServer {
 #[tonic::async_trait]
 #[autometrics]
 impl DbGatewayService for DBGWServer {
-    async fn create_service(&self, _request: Request<ServiceConfig>) -> Result<Response<CreateServiceResponse>, Status> {
+    async fn create_service(&self, _request: Request<ProtoServiceConfig>) -> Result<Response<CreateServiceResponse>, Status> {
 
         // let data = request.into_inner();
 
@@ -84,7 +84,7 @@ impl DbGatewayService for DBGWServer {
         todo!()
     }
 
-    async fn update_service(&self, _request: Request<ServiceConfig>) -> Result<Response<UpdateServiceResponse>, Status> {
+    async fn update_service(&self, _request: Request<ProtoServiceConfig>) -> Result<Response<UpdateServiceResponse>, Status> {
         todo!()
     }
 
