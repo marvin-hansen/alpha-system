@@ -10,7 +10,7 @@ use components::prelude::*;
 use service_utils::print_utils;
 
 use dbgw_service::service::DBGWServer;
-use dbgw_service::service::dbgw::db_gateway_service_server::{DbGatewayServiceServer};
+use dbgw_proto::bindings::db_gateway_service_server::{DbGatewayServiceServer};
 
 const SVC_ID: ServiceID = ServiceID::DBGW;
 

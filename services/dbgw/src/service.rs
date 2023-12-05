@@ -4,12 +4,10 @@ use tonic::{Request, Response, Status};
 use components::prelude::DBManager;
 use common::prelude::ServiceID as RustServiceID;
 use common::prelude::ServiceConfig as RustServiceConfig;
-use dbgw::db_gateway_service_server::{DbGatewayService};
-use dbgw::*;
 
-pub mod dbgw {
-    tonic::include_proto!("dbgw");
-}
+use dbgw_proto::bindings::db_gateway_service_server::{DbGatewayService};
+use dbgw_proto::bindings::*;
+
 
 #[derive(Debug, Default)]
 pub struct DBGWServer {

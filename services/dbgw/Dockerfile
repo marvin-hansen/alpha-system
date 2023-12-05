@@ -23,15 +23,15 @@ WORKDIR /app
 # Copy over the entire source code
 COPY . ./
 
-# Fix linker issue with musel
+# Fix linker issue with musel that affects both, AMD64 and ARM64 (aarch64).
 # https://github.com/rust-lang/stacker/issues/80
 ARG CARGO_TARGET_AARCH64_UNKNOWN_LINUX_MUSL_LINKER=aarch64-linux-gnu-gcc
 ARG CC=aarch64-linux-gnu-gcc
 
-# Fetch dependencies
+# Download all dependencies
 RUN cargo fetch
 
-# Because of Issue #10174 in SurrealDB Docker requires at least 4GB of memory build the image.
+# Because of Issue #10174 in SurrealDB, Docker requires at least 4GB of memory build the image.
 # When memory is low, the docker build aborts after 15+ min with (signal: 9, SIGKILL: kill)
 # Just set memory limit in Docker to at least 4GB, better 12GB, and the issue is gone.
 # https://github.com/google/oss-fuzz/issues/10174
@@ -45,13 +45,13 @@ RUN mv /app/target/aarch64-unknown-linux-musl/release/dbgw /dbgw
 ############################
 # Scratch image
 ############################
-# Create a minimal docker image
+# Create minimal docker image
 FROM scratch as runner
 
 # Import user and group files from the build stage.
 COPY --from=builder /user/group /user/passwd /etc/
 
-# Import the CAcertificates to enable HTTPS.
+# Import the CAcertificates from the build stage to enable HTTPS.
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 
 # Copy binary from build output directory

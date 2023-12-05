@@ -30,6 +30,11 @@ path = "../../components"
 version = "0.1.0"
 
 
+[dependencies.dbgw_proto]
+path = "../../proto/dbgw_proto"
+version = "0.1.0"
+
+
 [dependencies.service_utils]
 path = "../../service_utils"
 version = "0.1.0"
@@ -43,8 +48,3 @@ tonic = { workspace = true }
 tonic-health = { workspace = true }
 prost = { workspace = true }
 warp = { workspace = true }
-tonic-build = "0.10.2"
-
-
-[build-dependencies]
-tonic-build = { workspace = true }

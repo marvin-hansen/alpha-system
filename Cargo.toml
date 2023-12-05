@@ -9,6 +9,7 @@ members = [
     "clients/dbgw_client",
     "common",
     "components",
+    "proto/dbgw_proto",
     "providers/smdb_provider",
     "sbe/bindings",
     "sbe/messages",
