@@ -1,12 +1,11 @@
 use std::error::Error as StdError;
 use std::fmt;
 
+use common::prelude::{PortfolioConfig, ServiceConfig, ServiceID};
+use components::prelude::DBManager;
 use serde::{Deserialize, Serialize};
 use surrealdb::Error;
 use tarpc::context::Context;
-
-use common::prelude::{PortfolioConfig, ServiceConfig, ServiceID};
-use components::prelude::DBManager;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct DBGatewayError(pub String);

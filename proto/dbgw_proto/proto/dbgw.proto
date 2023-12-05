@@ -11,7 +11,7 @@ service DBGatewayService {
   rpc ReadService (SingleServiceRequest) returns (ReadServiceResponse) {}
   rpc ReadAllServices (MultiServicesRequest) returns (ReadAllServicesResponse) {}
   rpc SetServiceOnline (SingleServiceRequest) returns (SetServiceOnlineResponse) {}
-  rpc SetServiceOffline (MultiServicesRequest) returns (SetServiceOfflineResponse) {}
+  rpc SetServiceOffline (SingleServiceRequest) returns (SetServiceOfflineResponse) {}
   rpc UpdateService (ProtoServiceConfig) returns (UpdateServiceResponse) {}
   rpc DeleteService (SingleServiceRequest) returns (DeleteServiceResponse) {}
 }
@@ -21,7 +21,7 @@ message SingleServiceRequest {
 }
 
 message MultiServicesRequest {
-  repeated int32 service_id = 1;
+  repeated int32 services_id = 1;
 }
 
 message CreateServiceResponse {
