@@ -1,11 +1,10 @@
-use autometrics::autometrics;
-use common::prelude::ServiceID as RustServiceID;
-use common::prelude::{ServiceConfig as RustServiceConfig, ServiceID};
+use surrealdb::Error;
+use tonic::{Request, Response, Status};
+
+use common::prelude::{PortfolioConfig, ServiceConfig, ServiceID};
 use components::prelude::DBManager;
 use dbgw_proto::bindings::db_gateway_service_server::DbGatewayService;
 use dbgw_proto::bindings::*;
-use surrealdb::Error;
-use tonic::{Request, Response, Status};
 
 #[derive(Debug, Default)]
 pub struct DBGWServer {
@@ -19,17 +18,128 @@ impl DBGWServer {
 }
 
 #[tonic::async_trait]
-#[autometrics]
+// #[autometrics]
 impl DbGatewayService for DBGWServer {
+    async fn create_portfolio_config(
+        &self,
+        request: Request<ProtoPortfolioConfig>,
+    ) -> Result<Response<CreatePortfolioResponse>, Status> {
+        let data =
+            PortfolioConfig::from_proto(request.into_inner()).expect("Failed to parse request");
+
+        let res = self.dbm.add_portfolio_config(&data).await;
+
+        match res {
+            Ok(portfolio_created) => {
+                Ok(Response::new(CreatePortfolioResponse { portfolio_created }))
+            }
+            Err(e) => Err(Status::internal(e.to_string())),
+        }
+    }
+
+    async fn read_portfolio_config(
+        &self,
+        request: Request<SinglePortfolioRequest>,
+    ) -> Result<Response<ReadPortfolioResponse>, Status> {
+        let id = request.into_inner().portfolio_id as u16;
+
+        let record = self.dbm.read_portfolio_config_by_id(id).await;
+
+        match record {
+            Ok(res) => match res {
+                None => Ok(Response::new(ReadPortfolioResponse {
+                    portfolio_config: None,
+                })),
+                Some(res) => {
+                    let proto_portfolio_config =
+                        res.to_proto().expect("Failed to convert record to proto");
+
+                    Ok(Response::new(ReadPortfolioResponse {
+                        portfolio_config: Some(proto_portfolio_config),
+                    }))
+                }
+            },
+            Err(e) => Err(Status::internal(e.to_string())),
+        }
+    }
+
+    async fn read_all_portfolio_configs(
+        &self,
+        _request: Request<MultiPortfolioRequest>,
+    ) -> Result<Response<ReadAllPortfoliosResponse>, Status> {
+        let records = self.dbm.read_all_portfolio_configs().await;
+
+        match records {
+            Ok(res) => {
+                let mut portfolio_configs: Vec<ProtoPortfolioConfig> = Vec::new();
+
+                if res.is_empty() {
+                    Ok(Response::new(ReadAllPortfoliosResponse {
+                        portfolio_configs,
+                    }))
+                } else {
+                    for record in res {
+                        let proto_portfolio_config = record
+                            .to_proto()
+                            .expect("Failed to convert record to proto");
+
+                        portfolio_configs.push(proto_portfolio_config);
+                    }
+
+                    Ok(Response::new(ReadAllPortfoliosResponse {
+                        portfolio_configs,
+                    }))
+                }
+            }
+            Err(e) => Err(Status::internal(e.to_string())),
+        }
+    }
+
+    async fn update_portfolio_config(
+        &self,
+        request: Request<ProtoPortfolioConfig>,
+    ) -> Result<Response<UpdatePortfolioResponse>, Status> {
+        let data =
+            PortfolioConfig::from_proto(request.into_inner()).expect("Failed to parse request");
+
+        let res = self.dbm.update_portfolio_config(data).await;
+
+        match res {
+            Ok(res) => match res {
+                None => Ok(Response::new(UpdatePortfolioResponse {
+                    portfolio_updated: false,
+                })),
+                Some(_) => Ok(Response::new(UpdatePortfolioResponse {
+                    portfolio_updated: true,
+                })),
+            },
+            Err(e) => Err(Status::internal(e.to_string())),
+        }
+    }
+
+    async fn delete_portfolio_config(
+        &self,
+        request: Request<SinglePortfolioRequest>,
+    ) -> Result<Response<DeletePortfolioResponse>, Status> {
+        let id = request.into_inner().portfolio_id as u16;
+
+        let res = self.dbm.delete_portfolio_config(id).await;
+
+        match res {
+            Ok(portfolio_deleted) => {
+                Ok(Response::new(DeletePortfolioResponse { portfolio_deleted }))
+            }
+            Err(e) => Err(Status::internal(e.to_string())),
+        }
+    }
+
     async fn create_service(
         &self,
         rqt: Request<ProtoServiceConfig>,
     ) -> Result<Response<CreateServiceResponse>, Status> {
-        // convert data from proto to Rust via from_proto()
-        let data = RustServiceConfig::from_proto(rqt.into_inner())
+        let data = ServiceConfig::from_proto(rqt.into_inner())
             .expect("Failed to create ServiceConfig from proto");
 
-        // Write data into DB
         let res = self.dbm.create_service(data).await;
 
         match res {
@@ -42,10 +152,8 @@ impl DbGatewayService for DBGWServer {
         &self,
         request: Request<SingleServiceRequest>,
     ) -> Result<Response<CheckServiceIdExistsResponse>, Status> {
-        // Convert raw integer into ServiceID Enum
-        let id = RustServiceID::from(request.into_inner().service_id);
+        let id = ServiceID::from(request.into_inner().service_id);
 
-        // Check if the service ID exists in the database
         let res: Result<bool, Error> = self.dbm.check_if_service_id_exists(&id).await;
 
         match res {
@@ -78,7 +186,7 @@ impl DbGatewayService for DBGWServer {
         &self,
         request: Request<SingleServiceRequest>,
     ) -> Result<Response<CheckServiceIdOnlineResponse>, Status> {
-        let id = RustServiceID::from(request.into_inner().service_id);
+        let id = ServiceID::from(request.into_inner().service_id);
 
         let res: Result<bool, Error> = self.dbm.check_if_service_id_online(&id).await;
 
@@ -112,10 +220,9 @@ impl DbGatewayService for DBGWServer {
         &self,
         request: Request<SingleServiceRequest>,
     ) -> Result<Response<ReadServiceResponse>, Status> {
-        let id = RustServiceID::from(request.into_inner().service_id);
+        let id = ServiceID::from(request.into_inner().service_id);
 
-        let record: Result<Option<RustServiceConfig>, Error> =
-            self.dbm.read_record_by_id(&id).await;
+        let record: Result<Option<ServiceConfig>, Error> = self.dbm.read_record_by_id(&id).await;
 
         match record {
             Ok(res) => match res {
@@ -141,28 +248,24 @@ impl DbGatewayService for DBGWServer {
         &self,
         _request: Request<MultiServicesRequest>,
     ) -> Result<Response<ReadAllServicesResponse>, Status> {
-        let records: Result<Vec<RustServiceConfig>, Error> = self.dbm.read_all_services().await;
+        let records: Result<Vec<ServiceConfig>, Error> = self.dbm.read_all_services().await;
 
         match records {
             Ok(res) => {
-                let mut proto_services = Vec::new();
+                let mut service_configs = Vec::new();
 
                 if res.is_empty() {
-                    Ok(Response::new(ReadAllServicesResponse {
-                        service_configs: proto_services,
-                    }))
+                    Ok(Response::new(ReadAllServicesResponse { service_configs }))
                 } else {
                     for record in res {
                         let proto_service_config = record
                             .to_proto()
                             .expect("Failed to convert Rust ServiceConfig to proto");
 
-                        proto_services.push(proto_service_config);
+                        service_configs.push(proto_service_config);
                     }
 
-                    Ok(Response::new(ReadAllServicesResponse {
-                        service_configs: proto_services,
-                    }))
+                    Ok(Response::new(ReadAllServicesResponse { service_configs }))
                 }
             }
 
@@ -174,7 +277,7 @@ impl DbGatewayService for DBGWServer {
         &self,
         request: Request<SingleServiceRequest>,
     ) -> Result<Response<SetServiceOnlineResponse>, Status> {
-        let id = RustServiceID::from(request.into_inner().service_id);
+        let id = ServiceID::from(request.into_inner().service_id);
 
         let res: Result<bool, Error> = self.dbm.set_service_online(&id).await;
 
@@ -189,7 +292,7 @@ impl DbGatewayService for DBGWServer {
         &self,
         request: Request<SingleServiceRequest>,
     ) -> Result<Response<SetServiceOfflineResponse>, Status> {
-        let id = RustServiceID::from(request.into_inner().service_id);
+        let id = ServiceID::from(request.into_inner().service_id);
 
         let res: Result<bool, Error> = self.dbm.set_service_offline(&id).await;
 
@@ -203,10 +306,10 @@ impl DbGatewayService for DBGWServer {
         &self,
         request: Request<ProtoServiceConfig>,
     ) -> Result<Response<UpdateServiceResponse>, Status> {
-        let data = RustServiceConfig::from_proto(request.into_inner())
+        let data = ServiceConfig::from_proto(request.into_inner())
             .expect("Failed to create ServiceConfig from proto");
 
-        let res: Result<Option<RustServiceConfig>, Error> = self.dbm.update_service(data).await;
+        let res: Result<Option<ServiceConfig>, Error> = self.dbm.update_service(data).await;
 
         match res {
             Ok(res) => match res {
@@ -226,7 +329,7 @@ impl DbGatewayService for DBGWServer {
         &self,
         request: Request<SingleServiceRequest>,
     ) -> Result<Response<DeleteServiceResponse>, Status> {
-        let id = RustServiceID::from(request.into_inner().service_id);
+        let id = ServiceID::from(request.into_inner().service_id);
 
         let res: Result<bool, Error> = self.dbm.delete_service(&id).await;
 

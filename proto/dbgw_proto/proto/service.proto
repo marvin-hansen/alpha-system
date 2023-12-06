@@ -1,0 +1,89 @@
+syntax = "proto3";
+package dbgw;
+
+
+message ProtoServiceConfig {
+  int32 svc_id = 1;
+  string name = 2;
+  uint32 version = 3;
+  bool online = 4;
+  string description = 5;
+  string health_check_uri = 6;
+  string base_uri = 7;
+  repeated int32 dependencies = 8;
+  int32 Exposure = 9;
+  ProtoEndpoint endpoint = 10;
+  ProtoMetricConfig metrics = 11;
+}
+
+message ProtoMetricConfig {
+  string metric_uri = 1;
+  string metric_host = 2;
+  uint32 metric_port = 3;
+}
+
+message ProtoEndpoint {
+  string name = 1;
+  uint32 version = 2;
+  string description = 3;
+  string uri = 4;
+  uint32 port = 5;
+  int32 protocol = 6;
+  int32 encoding = 7;
+}
+
+// Request
+
+message SingleServiceRequest {
+  int32 service_id = 1;
+}
+
+message MultiServicesRequest {
+  repeated int32 services_id = 1;
+}
+
+// Response
+
+message CreateServiceResponse {
+  bool service_created = 1;
+}
+
+message CheckServiceIdExistsResponse {
+  bool    service_exists = 1;
+}
+
+message CheckServicesExistsResponse {
+  bool    services_exist = 1;
+}
+
+message CheckServiceIdOnlineResponse {
+  bool    service_online = 1;
+}
+
+message CheckServicesOnlineResponse {
+  bool    services_online = 1;
+}
+
+message ReadAllServicesResponse {
+  repeated ProtoServiceConfig service_configs = 1;
+}
+
+message ReadServiceResponse {
+  ProtoServiceConfig service_config = 1;
+}
+
+message SetServiceOnlineResponse {
+  bool service_online = 1;
+}
+
+message SetServiceOfflineResponse {
+  bool service_offline = 3;
+}
+
+message UpdateServiceResponse {
+  bool service_updated = 1;
+}
+
+message DeleteServiceResponse {
+  bool service_deleted = 3;
+}

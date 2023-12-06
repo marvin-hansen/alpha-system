@@ -1,34 +1,36 @@
-use std::fmt::{Display, Formatter};
+use std::fmt::{Display, Error, Formatter};
 
 use serde::{Deserialize, Serialize};
+
+use dbgw_proto::bindings::ProtoPortfolioConfig;
 
 use crate::prelude::{AccountType, ExchangeID};
 
 #[derive(Serialize, Deserialize, Debug, Default, Clone, PartialEq)]
 pub struct PortfolioConfig {
-    portfolio_id: u16,
+    portfolio_id: u32,
     portfolio_description: String,
     portfolio_account_type: AccountType,
     portfolio_account_id: String,
     portfolio_exchange_id: ExchangeID,
     portfolio_currency: String,
     portfolio_cash: f64,
-    portfolio_margin: Option<f64>,
+    portfolio_margin: f64,
     portfolio_max_drawdown: f64,
     portfolio_instruments: Vec<String>,
-    instrument_max_allocation: Option<f64>,
-    instrument_max_drawdown: Option<f64>,
+    instrument_max_allocation: f64,
+    instrument_max_drawdown: f64,
     //
-    portfolio_free_margin: Option<f64>,
-    portfolio_free_cash: Option<f64>,
-    portfolio_free_margin_percent: Option<f64>,
-    portfolio_free_cash_percent: Option<f64>,
+    portfolio_free_margin: f64,
+    portfolio_free_cash: f64,
+    portfolio_free_margin_percent: f64,
+    portfolio_free_cash_percent: f64,
 }
 
 impl PortfolioConfig {
     #[allow(clippy::too_many_arguments)]
     pub fn new_cash_portfolio(
-        portfolio_id: u16,
+        portfolio_id: u32,
         portfolio_description: String,
         portfolio_account_type: AccountType,
         portfolio_account_id: String,
@@ -37,8 +39,8 @@ impl PortfolioConfig {
         portfolio_cash: f64,
         portfolio_max_drawdown: f64,
         portfolio_instruments: Vec<String>,
-        instrument_max_allocation: Option<f64>,
-        instrument_max_drawdown: Option<f64>,
+        instrument_max_allocation: f64,
+        instrument_max_drawdown: f64,
     ) -> Self {
         Self {
             portfolio_id,
@@ -48,34 +50,77 @@ impl PortfolioConfig {
             portfolio_exchange_id,
             portfolio_currency,
             portfolio_cash,
-            portfolio_margin: None,
+            portfolio_margin: 0f64,
             portfolio_max_drawdown,
             portfolio_instruments,
             instrument_max_allocation,
             instrument_max_drawdown,
-            portfolio_free_margin: None,
-            portfolio_free_cash: Some(portfolio_cash),
-            portfolio_free_margin_percent: None,
-            portfolio_free_cash_percent: Some(100.0),
+            portfolio_free_margin: 0f64,
+            portfolio_free_cash: portfolio_cash,
+            portfolio_free_margin_percent: 0f64,
+            portfolio_free_cash_percent: 100.0,
         }
     }
 }
 
 impl PortfolioConfig {
-    pub fn portfolio_id(&self) -> u16 {
+    pub fn from_proto(proto: ProtoPortfolioConfig) -> Result<PortfolioConfig, Error> {
+        Ok(PortfolioConfig {
+            portfolio_id: proto.portfolio_id as u32,
+            portfolio_description: proto.portfolio_description.into(),
+            portfolio_account_type: AccountType::from(proto.portfolio_account_type),
+            portfolio_account_id: proto.portfolio_account_id.into(),
+            portfolio_exchange_id: ExchangeID::from(proto.portfolio_exchange_id),
+            portfolio_currency: proto.portfolio_currency.into(),
+            portfolio_cash: proto.portfolio_cash,
+            portfolio_margin: proto.portfolio_margin,
+            portfolio_max_drawdown: proto.portfolio_max_drawdown,
+            portfolio_instruments: proto.portfolio_instruments.into_iter().map(|x| x.into()).collect(),
+            instrument_max_allocation: proto.instrument_max_allocation,
+            instrument_max_drawdown: proto.instrument_max_drawdown,
+            portfolio_free_margin: proto.portfolio_free_margin,
+            portfolio_free_cash: proto.portfolio_free_cash,
+            portfolio_free_margin_percent: proto.portfolio_free_margin_percent,
+            portfolio_free_cash_percent: proto.portfolio_free_cash_percent,
+        })
+    }
+    pub fn to_proto(&self) -> Result<ProtoPortfolioConfig, Error> {
+        Ok(ProtoPortfolioConfig {
+            portfolio_id: self.portfolio_id as i32,
+            portfolio_description: self.portfolio_description.clone(),
+            portfolio_account_type: self.portfolio_account_type as i32,
+            portfolio_account_id: self.portfolio_account_id.clone(),
+            portfolio_exchange_id: self.portfolio_exchange_id as i32,
+            portfolio_currency: self.portfolio_currency.clone(),
+            portfolio_cash: self.portfolio_cash,
+            portfolio_margin: self.portfolio_margin,
+            portfolio_max_drawdown: self.portfolio_max_drawdown,
+            portfolio_instruments: self.portfolio_instruments.clone(),
+            instrument_max_allocation: self.instrument_max_allocation,
+            instrument_max_drawdown: self.instrument_max_drawdown,
+            portfolio_free_margin: self.portfolio_free_margin,
+            portfolio_free_cash: self.portfolio_free_cash,
+            portfolio_free_margin_percent: self.portfolio_free_margin_percent,
+            portfolio_free_cash_percent: self.portfolio_free_cash_percent,
+        })
+    }
+}
+
+impl PortfolioConfig {
+    pub fn portfolio_id(&self) -> u32 {
         self.portfolio_id
     }
     pub fn portfolio_description(&self) -> &str {
         &self.portfolio_description
     }
-    pub fn portfolio_account_type(&self) -> &AccountType {
-        &self.portfolio_account_type
+    pub fn portfolio_account_type(&self) -> AccountType {
+        self.portfolio_account_type
     }
     pub fn portfolio_account_id(&self) -> &str {
         &self.portfolio_account_id
     }
-    pub fn portfolio_exchange_id(&self) -> &ExchangeID {
-        &self.portfolio_exchange_id
+    pub fn portfolio_exchange_id(&self) -> ExchangeID {
+        self.portfolio_exchange_id
     }
     pub fn portfolio_currency(&self) -> &str {
         &self.portfolio_currency
@@ -83,7 +128,7 @@ impl PortfolioConfig {
     pub fn portfolio_cash(&self) -> f64 {
         self.portfolio_cash
     }
-    pub fn portfolio_margin(&self) -> Option<f64> {
+    pub fn portfolio_margin(&self) -> f64 {
         self.portfolio_margin
     }
     pub fn portfolio_max_drawdown(&self) -> f64 {
@@ -92,22 +137,22 @@ impl PortfolioConfig {
     pub fn portfolio_instruments(&self) -> &Vec<String> {
         &self.portfolio_instruments
     }
-    pub fn instrument_max_allocation(&self) -> Option<f64> {
+    pub fn instrument_max_allocation(&self) -> f64 {
         self.instrument_max_allocation
     }
-    pub fn instrument_max_drawdown(&self) -> Option<f64> {
+    pub fn instrument_max_drawdown(&self) -> f64 {
         self.instrument_max_drawdown
     }
-    pub fn portfolio_free_margin(&self) -> Option<f64> {
+    pub fn portfolio_free_margin(&self) -> f64 {
         self.portfolio_free_margin
     }
-    pub fn portfolio_free_cash(&self) -> Option<f64> {
+    pub fn portfolio_free_cash(&self) -> f64 {
         self.portfolio_free_cash
     }
-    pub fn portfolio_free_margin_percent(&self) -> Option<f64> {
+    pub fn portfolio_free_margin_percent(&self) -> f64 {
         self.portfolio_free_margin_percent
     }
-    pub fn portfolio_free_cash_percent(&self) -> Option<f64> {
+    pub fn portfolio_free_cash_percent(&self) -> f64 {
         self.portfolio_free_cash_percent
     }
 }

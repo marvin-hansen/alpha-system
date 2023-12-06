@@ -3,17 +3,17 @@ use messages::prelude::{MessageType, StartDataMessage};
 
 #[test]
 fn test_new() {
-    let message = StartDataMessage::new(ExchangeID::BNB, SymbolID::BTCUSD);
+    let message = StartDataMessage::new(ExchangeID::BinanceSpot, SymbolID::BTCUSD);
     assert_eq!(message.message_type(), &MessageType::StartData);
-    assert_eq!(message.exchange_id(), &ExchangeID::BNB);
+    assert_eq!(message.exchange_id(), &ExchangeID::BinanceSpot);
     assert_eq!(message.symbol_id(), &SymbolID::BTCUSD);
 }
 
 #[test]
 fn test_encode() {
-    let message = StartDataMessage::new(ExchangeID::BNB, SymbolID::BTCUSD);
+    let message = StartDataMessage::new(ExchangeID::BinanceSpot, SymbolID::BTCUSD);
     assert_eq!(message.message_type(), &MessageType::StartData);
-    assert_eq!(message.exchange_id(), &ExchangeID::BNB);
+    assert_eq!(message.exchange_id(), &ExchangeID::BinanceSpot);
     assert_eq!(message.symbol_id(), &SymbolID::BTCUSD);
 
     let enc = message.encode();
@@ -34,31 +34,31 @@ fn test_decode() {
 
     let message = StartDataMessage::from(buffer);
     assert_eq!(message.message_type(), &MessageType::StartData);
-    assert_eq!(message.exchange_id(), &ExchangeID::BNB);
+    assert_eq!(message.exchange_id(), &ExchangeID::BinanceSpot);
     assert_eq!(message.symbol_id(), &SymbolID::BTCUSD);
 }
 
 #[test]
 fn test_message_type() {
-    let message = StartDataMessage::new(ExchangeID::BNB, SymbolID::BTCUSD);
+    let message = StartDataMessage::new(ExchangeID::BinanceSpot, SymbolID::BTCUSD);
     assert_eq!(message.message_type(), &MessageType::StartData);
 }
 
 #[test]
 fn test_exchange_id() {
-    let message = StartDataMessage::new(ExchangeID::BNB, SymbolID::BTCUSD);
-    assert_eq!(message.exchange_id(), &ExchangeID::BNB);
+    let message = StartDataMessage::new(ExchangeID::BinanceSpot, SymbolID::BTCUSD);
+    assert_eq!(message.exchange_id(), &ExchangeID::BinanceSpot);
 }
 
 #[test]
 fn test_symbol_id() {
-    let message = StartDataMessage::new(ExchangeID::BNB, SymbolID::BTCUSD);
+    let message = StartDataMessage::new(ExchangeID::BinanceSpot, SymbolID::BTCUSD);
     assert_eq!(message.symbol_id(), &SymbolID::BTCUSD);
 }
 
 #[test]
 fn test_display() {
-    let message = StartDataMessage::new(ExchangeID::BNB, SymbolID::BTCUSD);
+    let message = StartDataMessage::new(ExchangeID::BinanceSpot, SymbolID::BTCUSD);
 
     let expected =
         "StartDataMessage { message_type: StartData, exchange_id: BNB, symbol_id: BTCUSD }";
