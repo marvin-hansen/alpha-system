@@ -7,10 +7,10 @@ impl DBGatewayClient {
     pub async fn create_portfolio_config(
         self,
         data: PortfolioConfig,
-    )
-        -> Result<bool, DBGatewayError>
-    {
-        let proto_portfolio_config = data.to_proto().expect("Failed to convert Rust PortfolioConfig to proto");
+    ) -> Result<bool, DBGatewayError> {
+        let proto_portfolio_config = data
+            .to_proto()
+            .expect("Failed to convert Rust PortfolioConfig to proto");
 
         let request = tonic::Request::new(proto_portfolio_config);
 
@@ -27,7 +27,9 @@ impl DBGatewayClient {
     }
 
     pub async fn read_all_portfolio_configs(self) -> Result<Vec<PortfolioConfig>, DBGatewayError> {
-        let request = tonic::Request::new(MultiPortfolioRequest { portfolios_all: true });
+        let request = tonic::Request::new(MultiPortfolioRequest {
+            portfolios_all: true,
+        });
 
         let res = self
             .client
@@ -35,15 +37,17 @@ impl DBGatewayClient {
             .read_all_portfolio_configs(request)
             .await;
 
-
         match res {
             Ok(res) => {
                 let vec = res
                     .into_inner()
                     .portfolio_configs
                     .iter()
-                    .map(|p| PortfolioConfig::from_proto(p.to_owned())
-                        .expect("Failed to convert ProtoPortfolioConfig to Rust PortfolioConfig"))
+                    .map(|p| {
+                        PortfolioConfig::from_proto(p.to_owned()).expect(
+                            "Failed to convert ProtoPortfolioConfig to Rust PortfolioConfig",
+                        )
+                    })
                     .collect::<Vec<PortfolioConfig>>();
 
                 Ok(vec)
@@ -56,7 +60,9 @@ impl DBGatewayClient {
         self,
         id: u16,
     ) -> Result<Option<PortfolioConfig>, DBGatewayError> {
-        let request = tonic::Request::new(SinglePortfolioRequest { portfolio_id: id as u32 });
+        let request = tonic::Request::new(SinglePortfolioRequest {
+            portfolio_id: id as u32,
+        });
 
         let res = self
             .client
@@ -65,15 +71,12 @@ impl DBGatewayClient {
             .await;
 
         match res {
-            Ok(res) => {
-                match res.into_inner().portfolio_config {
-                    Some(p) =>{
-                        Ok(Some(PortfolioConfig::from_proto(p.to_owned())
-                            .expect("Failed to convert ProtoPortfolioConfig to Rust PortfolioConfig")))
-                    },
-                    None => Ok(None),
-                }
-            }
+            Ok(res) => match res.into_inner().portfolio_config {
+                Some(p) => Ok(Some(PortfolioConfig::from_proto(p.to_owned()).expect(
+                    "Failed to convert ProtoPortfolioConfig to Rust PortfolioConfig",
+                ))),
+                None => Ok(None),
+            },
             Err(e) => Err(DBGatewayError(e.to_string())),
         }
     }
@@ -82,11 +85,11 @@ impl DBGatewayClient {
         self,
         data: PortfolioConfig,
     ) -> Result<bool, DBGatewayError> {
-
-        let proto_portfolio_config = data.to_proto().expect("Failed to convert Rust PortfolioConfig to proto");
+        let proto_portfolio_config = data
+            .to_proto()
+            .expect("Failed to convert Rust PortfolioConfig to proto");
 
         let request = tonic::Request::new(proto_portfolio_config);
-
 
         let res = self
             .client
@@ -101,8 +104,9 @@ impl DBGatewayClient {
     }
 
     pub async fn delete_portfolio_config(self, id: u16) -> Result<bool, DBGatewayError> {
-
-        let request = tonic::Request::new(SinglePortfolioRequest { portfolio_id: id as u32 });
+        let request = tonic::Request::new(SinglePortfolioRequest {
+            portfolio_id: id as u32,
+        });
 
         let res = self
             .client

@@ -1,4 +1,4 @@
-use std::fmt::{Debug};
+use std::fmt::Debug;
 use surrealdb::engine::local;
 use surrealdb::Surreal;
 
@@ -35,4 +35,3 @@ impl Default for DBManager {
         db
     }
 }
-

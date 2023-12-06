@@ -1,9 +1,9 @@
-use std::cell::RefCell;
-use std::error::Error;
-use std::fmt;
 use common::prelude::HostEndpoint;
 use dbgw_proto::bindings::db_gateway_service_client::DbGatewayServiceClient as DBGWClient;
 use serde::{Deserialize, Serialize};
+use std::cell::RefCell;
+use std::error::Error;
+use std::fmt;
 use tonic::transport::{Channel, Uri};
 
 mod cfg_gw;
@@ -30,10 +30,11 @@ impl DBGatewayClient {
             .await
             .expect("Failed to connect to server");
 
-
         let client = DBGWClient::new(channel);
 
-        Self { client: RefCell::new(client) }
+        Self {
+            client: RefCell::new(client),
+        }
     }
 }
 
