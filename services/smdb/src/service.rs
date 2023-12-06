@@ -25,7 +25,9 @@ impl SmdbService for SMDBServer {
     async fn check_service_id_exists(
         &self,
         request: Request<SingleServiceRequest>,
-    ) -> Result<Response<CheckServiceIdExistsResponse>, Status> {
+    )
+        -> Result<Response<CheckServiceIdExistsResponse>, Status>
+    {
 
         let id = ServiceID::from(request.into_inner().service_id);
 
@@ -45,7 +47,7 @@ impl SmdbService for SMDBServer {
 
     async fn check_services_exists(
         &self,
-        request: Request<MultiServicesRequest>,
+        _request: Request<MultiServicesRequest>,
     ) -> Result<Response<CheckServicesExistsResponse>, Status> {
 
         // let proto_services = request.into_inner().services_id;
@@ -67,7 +69,7 @@ impl SmdbService for SMDBServer {
 
     async fn check_service_id_online(
         &self,
-        request: Request<SingleServiceRequest>,
+        _request: Request<SingleServiceRequest>,
     ) -> Result<Response<CheckServiceIdOnlineResponse>, Status> {
         // let id = ServiceID::from(request.into_inner().service_id);
         //
@@ -87,7 +89,7 @@ impl SmdbService for SMDBServer {
 
     async fn check_services_online(
         &self,
-        request: Request<MultiServicesRequest>,
+        _request: Request<MultiServicesRequest>,
     ) -> Result<Response<CheckServicesOnlineResponse>, Status> {
         // let proto_services = request.into_inner().services_id;
         // let services: Vec<ServiceID> = proto_services.into_iter().map(|x| x.into()).collect();
@@ -108,7 +110,7 @@ impl SmdbService for SMDBServer {
 
     async fn set_service_online(
         &self,
-        request: Request<SingleServiceRequest>,
+        _request: Request<SingleServiceRequest>,
     ) -> Result<Response<SetServiceOnlineResponse>, Status> {
         // let id = ServiceID::from(request.into_inner().service_id);
         //
@@ -126,7 +128,7 @@ impl SmdbService for SMDBServer {
 
     async fn set_service_offline(
         &self,
-        request: Request<SingleServiceRequest>,
+        _request: Request<SingleServiceRequest>,
     ) -> Result<Response<SetServiceOfflineResponse>, Status> {
         // let id = ServiceID::from(request.into_inner().service_id);
         // let client = self.dbgw.lock().unwrap();

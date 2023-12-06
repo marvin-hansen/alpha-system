@@ -49,7 +49,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .await;
 
     // Build gRPC server with health service and signal sigint handler
-    let signal = grpc_sigint(dbm.clone());
+    let signal = service_utils::shutdown::signal_handler("gRPC server");
     let grpc_server = Server::builder()
         .add_service(grpc_svc)
         .add_service(health_svc)
@@ -69,7 +69,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .map(|| prometheus_exporter::encode_http_response());
 
     // Build http web server for metrics with sigint handler
-    let signal = http_sigint();
+    let signal = service_utils::shutdown::signal_handler("http web server");
     let (_, web_server) = warp::serve(routes).bind_with_graceful_shutdown(web_addr, signal);
 
     // Create a handler for each server https://github.com/hyperium/tonic/discussions/740
@@ -93,19 +93,10 @@ async fn main() -> Result<(), Box<dyn Error>> {
         }
     }
 
-    print_utils::print_stop_header(&SVC_ID);
-    Ok(())
-}
-
-async fn http_sigint() {
-    service_utils::shutdown::wait_for_signal().await;
-    println!("* Metrics shutdown complete");
-}
-
-async fn grpc_sigint(dbm: DBManager) {
-    service_utils::shutdown::wait_for_signal().await;
     dbm.set_service_offline(&SVC_ID)
         .await
         .expect("DBGW: Failed to set service offline!");
-    println!("* Service shutdown complete");
+
+    print_utils::print_stop_header(&SVC_ID);
+    Ok(())
 }

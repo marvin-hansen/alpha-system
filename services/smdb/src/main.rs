@@ -1,7 +1,8 @@
+use std::error::Error;
 use autometrics::prometheus_exporter;
 use std::net::SocketAddr;
 use std::sync::{Arc, Mutex};
-use tonic::transport::{Channel, Server};
+use tonic::transport::{Server};
 
 use common::prelude::ServiceID::DBGW;
 use common::prelude::{HostEndpoint, ServiceID};
@@ -18,7 +19,7 @@ mod service;
 const SVC_ID: ServiceID = ServiceID::SMDB;
 
 #[tokio::main]
-async fn main() -> anyhow::Result<()> {
+async fn main() -> Result<(), Box<dyn Error>> {
     // Setup prometheus metrics exporter
     prometheus_exporter::init();
 
@@ -37,7 +38,6 @@ async fn main() -> anyhow::Result<()> {
     // Configure DBGW client
     let dbgw_endpoint = HostEndpoint::new(&dbgw_host, dbgw_port);
     let mut dbgw_client = DBGatewayClient::new(dbgw_endpoint).await;
-    // let main_client = DbGatewayServiceClient<Channel>::new()
 
     // Configure service ip and port automatically relative to the detected context.
     let service_addr = service_manager
@@ -59,7 +59,7 @@ async fn main() -> anyhow::Result<()> {
         .await;
 
     // Build gRPC server with health service and signal sigint handler
-    let signal = sigint();
+    let signal = service_utils::shutdown::signal_handler("gRPC server");
     let grpc_server = Server::builder()
         .add_service(grpc_svc)
         .add_service(health_svc)
@@ -79,7 +79,7 @@ async fn main() -> anyhow::Result<()> {
         .map(|| prometheus_exporter::encode_http_response());
 
     // Build http web server for metrics with sigint handler
-    let signal = sigint();
+    let signal = service_utils::shutdown::signal_handler("http web server");
     let (_, web_server) = warp::serve(routes).bind_with_graceful_shutdown(web_addr, signal);
 
     // Create a handler for each server https://github.com/hyperium/tonic/discussions/740
@@ -113,8 +113,4 @@ async fn main() -> anyhow::Result<()> {
 
     print_utils::print_stop_header(&SVC_ID);
     Ok(())
-}
-
-async fn sigint() {
-    service_utils::shutdown::wait_for_signal().await;
 }
