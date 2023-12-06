@@ -2,16 +2,17 @@ use std::error::Error;
 use std::net::SocketAddr;
 
 use autometrics::prometheus_exporter;
-use tonic::transport::Server as TonicServer;
+use tonic::transport::Server;
 use warp::Filter;
 
 use common::prelude::ServiceID;
 use components::prelude::*;
 use service_utils::print_utils;
 
-use proto_binding::dbgw::db_gateway_service_server::DbGatewayServiceServer;
-use dbgw_service::service::DBGWServer;
+use proto::binding::db_gateway_service_server::DbGatewayServiceServer;
+use service::DBGWServer;
 
+mod service;
 const SVC_ID: ServiceID = ServiceID::DBGW;
 
 #[tokio::main]
@@ -49,7 +50,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     // Build gRPC server with health service and signal sigint handler
     let signal = grpc_sigint(dbm.clone());
-    let grpc_server = TonicServer::builder()
+    let grpc_server = Server::builder()
         .add_service(grpc_svc)
         .add_service(health_svc)
         .serve_with_shutdown(grpc_addr, signal);

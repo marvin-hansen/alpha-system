@@ -1,5 +1,5 @@
 syntax = "proto3";
-package dbgw;
+package proto;
 
 import "service.proto";
 import "portfolio.proto";

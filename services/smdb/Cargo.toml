@@ -14,11 +14,6 @@ name = "smdb"
 path = "src/main.rs"
 
 
-[lib]
-name = "smdb_service"
-path = "src/lib.rs"
-
-
 [dependencies.common]
 path = "../../common"
 version = "0.1.0"
@@ -34,6 +29,11 @@ path = "../../clients/dbgw_client"
 version = "0.1.0"
 
 
+[dependencies.proto]
+path = "../../proto"
+version = "0.1.0"
+
+
 [dependencies.service_utils]
 path = "../../service_utils"
 version = "0.1.0"
@@ -42,12 +42,21 @@ version = "0.1.0"
 [dependencies]
 serde_json = { workspace = true }
 serde = { workspace = true }
-surrealdb = { workspace = true }
+#surrealdb = { workspace = true }
 tarpc = { workspace = true }
-tokio = { workspace = true }
+#tokio = { workspace = true }
 anyhow = { workspace = true }
 log = { workspace = true }
 futures = { workspace = true }
 rand = { workspace = true }
 tracing = { workspace = true }
 tracing-subscriber = { workspace = true }
+
+#
+autometrics = { workspace = true }
+surrealdb = { workspace = true }
+tokio = { workspace = true }
+tonic = { workspace = true }
+tonic-health = { workspace = true }
+prost = { workspace = true }
+warp = { workspace = true }

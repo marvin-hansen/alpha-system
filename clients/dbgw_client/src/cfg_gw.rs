@@ -1,11 +1,11 @@
 use common::prelude::PortfolioConfig;
-use proto_binding::dbgw::{MultiPortfolioRequest, SinglePortfolioRequest};
+use proto::binding::{MultiPortfolioRequest, SinglePortfolioRequest};
 
 use crate::{DBGatewayClient, DBGatewayError};
 
 impl DBGatewayClient {
     pub async fn create_portfolio_config(
-        self,
+        mut self,
         data: PortfolioConfig,
     ) -> Result<bool, DBGatewayError> {
         let proto_portfolio_config = data
@@ -16,7 +16,6 @@ impl DBGatewayClient {
 
         let res = self
             .client
-            .borrow_mut()
             .create_portfolio_config(request)
             .await;
 
@@ -26,14 +25,13 @@ impl DBGatewayClient {
         }
     }
 
-    pub async fn read_all_portfolio_configs(self) -> Result<Vec<PortfolioConfig>, DBGatewayError> {
+    pub async fn read_all_portfolio_configs(mut self) -> Result<Vec<PortfolioConfig>, DBGatewayError> {
         let request = tonic::Request::new(MultiPortfolioRequest {
             portfolios_all: true,
         });
 
         let res = self
             .client
-            .borrow_mut()
             .read_all_portfolio_configs(request)
             .await;
 
@@ -57,7 +55,7 @@ impl DBGatewayClient {
     }
 
     pub async fn read_portfolio_config_by_id(
-        self,
+        mut self,
         id: u16,
     ) -> Result<Option<PortfolioConfig>, DBGatewayError> {
         let request = tonic::Request::new(SinglePortfolioRequest {
@@ -66,7 +64,6 @@ impl DBGatewayClient {
 
         let res = self
             .client
-            .borrow_mut()
             .read_portfolio_config(request)
             .await;
 
@@ -82,7 +79,7 @@ impl DBGatewayClient {
     }
 
     pub async fn update_portfolio_config(
-        self,
+        mut self,
         data: PortfolioConfig,
     ) -> Result<bool, DBGatewayError> {
         let proto_portfolio_config = data
@@ -93,7 +90,6 @@ impl DBGatewayClient {
 
         let res = self
             .client
-            .borrow_mut()
             .update_portfolio_config(request)
             .await;
 
@@ -103,14 +99,13 @@ impl DBGatewayClient {
         }
     }
 
-    pub async fn delete_portfolio_config(self, id: u16) -> Result<bool, DBGatewayError> {
+    pub async fn delete_portfolio_config(mut self, id: u16) -> Result<bool, DBGatewayError> {
         let request = tonic::Request::new(SinglePortfolioRequest {
             portfolio_id: id as u32,
         });
 
         let res = self
             .client
-            .borrow_mut()
             .delete_portfolio_config(request)
             .await;
 

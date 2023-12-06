@@ -1,7 +1,6 @@
 use common::prelude::HostEndpoint;
-use proto_binding::dbgw::db_gateway_service_client::DbGatewayServiceClient as DBGWClient;
+use proto::binding::db_gateway_service_client::DbGatewayServiceClient as DBGWClient;
 use serde::{Deserialize, Serialize};
-use std::cell::RefCell;
 use std::error::Error;
 use std::fmt;
 use tonic::transport::{Channel, Uri};
@@ -11,7 +10,7 @@ mod svc_gw;
 
 #[derive(Clone)]
 pub struct DBGatewayClient {
-    client: RefCell<DBGWClient<Channel>>,
+    client: DBGWClient<Channel>,
 }
 
 impl DBGatewayClient {
@@ -22,6 +21,7 @@ impl DBGatewayClient {
         // "http://[::1]:50051"
         let s = format!("http://{}:{}", host, port);
         let uri = s.parse::<Uri>().unwrap();
+
         println!("Server URI: {}", &s);
 
         // creating a channel ie connection to server
@@ -33,7 +33,7 @@ impl DBGatewayClient {
         let client = DBGWClient::new(channel);
 
         Self {
-            client: RefCell::new(client),
+            client,
         }
     }
 }
