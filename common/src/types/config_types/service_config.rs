@@ -1,4 +1,4 @@
-use dbgw_proto::bindings::ProtoServiceConfig;
+use proto_binding::dbgw::ProtoServiceConfig;
 use serde::{Deserialize, Serialize};
 use std::fmt::{Display, Error, Formatter};
 use surrealdb::sql::Thing;

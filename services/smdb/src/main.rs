@@ -14,12 +14,13 @@ use dbgw_client::DBGatewayClient;
 use service_utils::print_utils;
 use smdb_service::service::{SMDBServer, SMDBService};
 
+const SVC_ID: ServiceID = ServiceID::SMDB;
+
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
-    let svc_id = ServiceID::SMDB;
     let ctx_manager = CtxManager::new();
     let dns_manager = DnsManager::new(&ctx_manager);
-    let cfg_manager = CfgManager::new(svc_id, &ctx_manager);
+    let cfg_manager = CfgManager::new(SVC_ID, &ctx_manager);
     let svm_manager = EnvManager::new(&ctx_manager, &dns_manager);
     let service_manager = ServiceManager::new(&cfg_manager, &svm_manager);
 
@@ -33,7 +34,7 @@ async fn main() -> anyhow::Result<()> {
 
     // service_manager configures SMDB ip and port automatically relative to the detected context.
     let (host_ip, port) = service_manager
-        .get_service_host_port(&svc_id)
+        .get_service_host_port(&SVC_ID)
         .expect("SMDB: Failed to get host and port");
 
     let ip = IpAddr::from_str(&host_ip).expect("SMDB: Failed to parse host ip");

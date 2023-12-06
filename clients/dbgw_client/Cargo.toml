@@ -20,8 +20,8 @@ path = "../../common"
 version = "0.1.0"
 
 
-[dependencies.dbgw_proto]
-path = "../../proto/dbgw_proto"
+[dependencies.proto_binding]
+path = "../../proto_binding"
 version = "0.1.0"
 
 

@@ -1,3 +1,3 @@
-pub mod bindings {
+pub mod dbgw {
     tonic::include_proto!("dbgw");
 }

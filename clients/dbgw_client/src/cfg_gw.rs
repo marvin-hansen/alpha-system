@@ -1,5 +1,5 @@
 use common::prelude::PortfolioConfig;
-use dbgw_proto::bindings::{MultiPortfolioRequest, SinglePortfolioRequest};
+use proto_binding::dbgw::{MultiPortfolioRequest, SinglePortfolioRequest};
 
 use crate::{DBGatewayClient, DBGatewayError};
 

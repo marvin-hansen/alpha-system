@@ -2,7 +2,7 @@ use std::fmt::{Display, Error, Formatter};
 
 use serde::{Deserialize, Serialize};
 
-use dbgw_proto::bindings::ProtoPortfolioConfig;
+use proto_binding::dbgw::ProtoPortfolioConfig;
 
 use crate::prelude::{AccountType, ExchangeID};
 

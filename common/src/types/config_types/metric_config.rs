@@ -1,7 +1,7 @@
-use dbgw_proto::bindings::ProtoMetricConfig;
 use serde::{Deserialize, Serialize};
 use std::fmt;
 use std::fmt::{Display, Formatter};
+use proto_binding::dbgw::ProtoMetricConfig;
 
 #[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq)]
 pub struct MetricConfig {

@@ -1,5 +1,5 @@
 use common::prelude::{ServiceConfig, ServiceID};
-use dbgw_proto::bindings::{MultiServicesRequest, SingleServiceRequest};
+use proto_binding::dbgw::{MultiServicesRequest, SingleServiceRequest};
 
 use crate::{DBGatewayClient, DBGatewayError};
 

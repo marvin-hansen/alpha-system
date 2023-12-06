@@ -1,5 +1,5 @@
 use common::prelude::HostEndpoint;
-use dbgw_proto::bindings::db_gateway_service_client::DbGatewayServiceClient as DBGWClient;
+use proto_binding::dbgw::db_gateway_service_client::DbGatewayServiceClient as DBGWClient;
 use serde::{Deserialize, Serialize};
 use std::cell::RefCell;
 use std::error::Error;

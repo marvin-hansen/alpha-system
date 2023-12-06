@@ -1,7 +1,7 @@
 use std::fmt::{Display, Error, Formatter};
 
-use dbgw_proto::bindings::*;
 use serde::{Deserialize, Serialize};
+use proto_binding::dbgw::ProtoEndpoint;
 
 use crate::prelude::{Encoding, HostEndpoint, ProtocolType};
 
