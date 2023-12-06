@@ -1,18 +1,17 @@
-use std::net::IpAddr;
-use std::str::FromStr;
-
-use tarpc::client;
-use tarpc::tokio_serde::formats::Bincode;
-
+use std::cell::RefCell;
+use std::error::Error;
+use std::fmt;
 use common::prelude::HostEndpoint;
-use dbgw_service::service_db::DBGatewayClient as DBGWClient;
+use dbgw_proto::bindings::db_gateway_service_client::DbGatewayServiceClient as DBGWClient;
+use serde::{Deserialize, Serialize};
+use tonic::transport::{Channel, Uri};
 
 mod cfg_gw;
 mod svc_gw;
 
 #[derive(Clone)]
 pub struct DBGatewayClient {
-    client: DBGWClient,
+    client: RefCell<DBGWClient<Channel>>,
 }
 
 impl DBGatewayClient {
@@ -20,15 +19,31 @@ impl DBGatewayClient {
         let port = config.port();
         let host = config.host_uri();
 
-        let ip_addr = IpAddr::from_str(host).expect("Failed to parse IP address from DBConfig");
-        let server_addr = ((ip_addr), port);
-        let codec_fn = Bincode::default;
+        // "http://[::1]:50051"
+        let s = format!("http://{}:{}", host, port);
+        let uri = s.parse::<Uri>().unwrap();
+        println!("Server URI: {}", &s);
 
-        let mut transport = tarpc::serde_transport::tcp::connect(server_addr, codec_fn);
-        transport.config_mut().max_frame_length(usize::MAX);
+        // creating a channel ie connection to server
+        let channel = Channel::builder(uri)
+            .connect()
+            .await
+            .expect("Failed to connect to server");
 
-        let client = DBGWClient::new(client::Config::default(), transport.await.unwrap()).spawn();
 
-        Self { client }
+        let client = DBGWClient::new(channel);
+
+        Self { client: RefCell::new(client) }
+    }
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct DBGatewayError(pub String);
+
+impl Error for DBGatewayError {}
+
+impl fmt::Display for DBGatewayError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "DBGatewayError: {}", self.0)
     }
 }

@@ -20,11 +20,18 @@ path = "../../common"
 version = "0.1.0"
 
 
+[dependencies.dbgw_proto]
+path = "../../proto/dbgw_proto"
+version = "0.1.0"
+
+
 [dependencies.dbgw]
 path = "../../services/dbgw"
 version = "0.1.0"
 
 
 [dependencies]
-tarpc = { workspace = true }
 tokio = { workspace = true }
+tonic = { workspace = true }
+prost = { workspace = true }
+serde = { version = "1.0.193", features = ["derive"] }

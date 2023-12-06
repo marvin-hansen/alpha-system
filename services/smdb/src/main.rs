@@ -25,7 +25,7 @@ async fn main() -> anyhow::Result<()> {
 
     // pull DBGW endpoint from auto config
     let (dbgw_host, dbgw_port) = service_manager
-        .get_service_host_port(DBGW)
+        .get_service_host_port(&DBGW)
         .expect("Failed to get host and port for DBGW");
 
     let dbgw_endpoint = HostEndpoint::new(&dbgw_host, dbgw_port);
@@ -33,7 +33,7 @@ async fn main() -> anyhow::Result<()> {
 
     // service_manager configures SMDB ip and port automatically relative to the detected context.
     let (host_ip, port) = service_manager
-        .get_service_host_port(svc_id)
+        .get_service_host_port(&svc_id)
         .expect("SMDB: Failed to get host and port");
 
     let ip = IpAddr::from_str(&host_ip).expect("SMDB: Failed to parse host ip");
@@ -49,7 +49,8 @@ async fn main() -> anyhow::Result<()> {
         .await
         .expect("Failed to set service online");
 
-    print_utils::print_start_header(&svc_id, server_addr.1, &metrics_uri, metrics_port);
+    // Fix later
+    // print_utils::print_start_header(&svc_id, server_addr.1, &metrics_uri, metrics_port);
 
     let mut listener = tarpc::serde_transport::tcp::listen(&server_addr, Bincode::default).await?;
     listener.config_mut().max_frame_length(usize::MAX);

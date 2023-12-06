@@ -1,3 +1,4 @@
+use autometrics::autometrics;
 use surrealdb::Error;
 use tonic::{Request, Response, Status};
 
@@ -18,7 +19,7 @@ impl DBGWServer {
 }
 
 #[tonic::async_trait]
-// #[autometrics]
+#[autometrics]
 impl DbGatewayService for DBGWServer {
     async fn create_portfolio_config(
         &self,
