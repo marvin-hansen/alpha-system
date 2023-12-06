@@ -19,15 +19,15 @@ impl DBGatewayClient {
         }
     }
 
-    pub async fn check_if_service_id_exists(&mut self, id: ServiceID) -> Result<bool, DBGatewayError> {
+    pub async fn check_if_service_id_exists(
+        &mut self,
+        id: ServiceID,
+    ) -> Result<bool, DBGatewayError> {
         let request = tonic::Request::new(SingleServiceRequest {
             service_id: id as i32,
         });
 
-        let res = self
-            .client
-            .check_service_id_exists(request)
-            .await;
+        let res = self.client.check_service_id_exists(request).await;
 
         match res {
             Ok(res) => Ok(res.into_inner().service_exists),
@@ -46,10 +46,7 @@ impl DBGatewayClient {
 
         let request = tonic::Request::new(MultiServicesRequest { services_id });
 
-        let res = self
-            .client
-            .check_services_exists(request)
-            .await;
+        let res = self.client.check_services_exists(request).await;
 
         match res {
             Ok(res) => Ok(res.into_inner().services_exist),
@@ -57,15 +54,15 @@ impl DBGatewayClient {
         }
     }
 
-    pub async fn check_if_service_id_online(&mut self, id: ServiceID) -> Result<bool, DBGatewayError> {
+    pub async fn check_if_service_id_online(
+        &mut self,
+        id: ServiceID,
+    ) -> Result<bool, DBGatewayError> {
         let request = tonic::Request::new(SingleServiceRequest {
             service_id: id as i32,
         });
 
-        let res = self
-            .client
-            .check_service_id_online(request)
-            .await;
+        let res = self.client.check_service_id_online(request).await;
 
         match res {
             Ok(res) => Ok(res.into_inner().service_online),
@@ -83,10 +80,7 @@ impl DBGatewayClient {
 
         let request = tonic::Request::new(MultiServicesRequest { services_id });
 
-        let res = self
-            .client
-            .check_services_online(request)
-            .await;
+        let res = self.client.check_services_online(request).await;
 
         match res {
             Ok(res) => Ok(res.into_inner().services_online),

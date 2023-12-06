@@ -1,11 +1,11 @@
-use std::sync::{Arc, Mutex};
 use proto::binding::db_gateway_service_client::DbGatewayServiceClient;
+use std::sync::{Arc, Mutex};
 // use autometrics::autometrics;
-use tonic::{Request, Response, Status};
 use common::prelude::ServiceID;
 use dbgw_client::DBGatewayClient;
-use proto::binding::*;
 use proto::binding::smdb_service_server::SmdbService;
+use proto::binding::*;
+use tonic::{Request, Response, Status};
 
 #[derive(Clone)]
 pub struct SMDBServer {
@@ -14,7 +14,7 @@ pub struct SMDBServer {
 }
 
 impl SMDBServer {
-    pub fn new(dbgw:  Arc<Mutex<DBGatewayClient>>) -> Self {
+    pub fn new(dbgw: Arc<Mutex<DBGatewayClient>>) -> Self {
         Self { dbgw }
     }
 }
@@ -25,15 +25,12 @@ impl SmdbService for SMDBServer {
     async fn check_service_id_exists(
         &self,
         request: Request<SingleServiceRequest>,
-    )
-        -> Result<Response<CheckServiceIdExistsResponse>, Status>
-    {
-
+    ) -> Result<Response<CheckServiceIdExistsResponse>, Status> {
         let id = ServiceID::from(request.into_inner().service_id);
 
         let mut binding = self.dbgw.lock().unwrap();
 
-        let fut =  binding.check_if_service_id_exists(id);
+        let fut = binding.check_if_service_id_exists(id);
 
         let res = fut.await;
 
@@ -49,7 +46,6 @@ impl SmdbService for SMDBServer {
         &self,
         _request: Request<MultiServicesRequest>,
     ) -> Result<Response<CheckServicesExistsResponse>, Status> {
-
         // let proto_services = request.into_inner().services_id;
 
         // let services: Vec<ServiceID> = proto_services.into_iter().map(|x| x.into()).collect();

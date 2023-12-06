@@ -32,9 +32,7 @@ impl DBGatewayClient {
 
         let client = DBGWClient::new(channel);
 
-        Self {
-            client,
-        }
+        Self { client }
     }
 }
 

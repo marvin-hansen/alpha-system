@@ -1,4 +1,3 @@
-
 /// Registers a signal handler that waits for a signal that indicates a shutdown request.
 pub async fn signal_handler(svc: &str) {
     wait_for_signal_impl(svc).await

@@ -1,16 +1,13 @@
-use std::error::Error;
-use std::net::SocketAddr;
-
 use autometrics::prometheus_exporter;
-use tonic::transport::Server;
-use warp::Filter;
-
 use common::prelude::ServiceID;
 use components::prelude::*;
-use service_utils::print_utils;
-
 use proto::binding::db_gateway_service_server::DbGatewayServiceServer;
 use service::DBGWServer;
+use service_utils::{print_utils, shutdown_utils};
+use std::error::Error;
+use std::net::SocketAddr;
+use tonic::transport::Server;
+use warp::Filter;
 
 mod service;
 const SVC_ID: ServiceID = ServiceID::DBGW;
@@ -49,7 +46,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .await;
 
     // Build gRPC server with health service and signal sigint handler
-    let signal = service_utils::shutdown::signal_handler("gRPC server");
+    let signal = shutdown_utils::signal_handler("gRPC server");
     let grpc_server = Server::builder()
         .add_service(grpc_svc)
         .add_service(health_svc)
@@ -69,7 +66,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .map(|| prometheus_exporter::encode_http_response());
 
     // Build http web server for metrics with sigint handler
-    let signal = service_utils::shutdown::signal_handler("http web server");
+    let signal = shutdown_utils::signal_handler("http web server");
     let (_, web_server) = warp::serve(routes).bind_with_graceful_shutdown(web_addr, signal);
 
     // Create a handler for each server https://github.com/hyperium/tonic/discussions/740

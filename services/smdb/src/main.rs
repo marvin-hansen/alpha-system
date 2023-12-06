@@ -1,16 +1,16 @@
-use std::error::Error;
 use autometrics::prometheus_exporter;
+use std::error::Error;
 use std::net::SocketAddr;
 use std::sync::{Arc, Mutex};
-use tonic::transport::{Server};
+use tonic::transport::Server;
 
 use common::prelude::ServiceID::DBGW;
 use common::prelude::{HostEndpoint, ServiceID};
 use components::prelude::{CfgManager, CtxManager, DnsManager, EnvManager, ServiceManager};
 use dbgw_client::DBGatewayClient;
-use warp::Filter;
 use proto::binding::smdb_service_server::SmdbServiceServer;
-use service_utils::print_utils;
+use service_utils::{print_utils, shutdown_utils};
+use warp::Filter;
 
 use service::SMDBServer;
 
@@ -48,7 +48,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let grpc_addr = service_addr.parse().expect("DBGW: Failed to parse address");
 
     // Construct gRPC server
-    let  client = Arc::new(Mutex::new(dbgw_client.clone()));
+    let client = Arc::new(Mutex::new(dbgw_client.clone()));
 
     let grpc_svc = SmdbServiceServer::new(SMDBServer::new(client.clone()));
 
@@ -59,7 +59,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .await;
 
     // Build gRPC server with health service and signal sigint handler
-    let signal = service_utils::shutdown::signal_handler("gRPC server");
+    let signal = shutdown_utils::signal_handler("gRPC server");
     let grpc_server = Server::builder()
         .add_service(grpc_svc)
         .add_service(health_svc)
@@ -79,7 +79,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .map(|| prometheus_exporter::encode_http_response());
 
     // Build http web server for metrics with sigint handler
-    let signal = service_utils::shutdown::signal_handler("http web server");
+    let signal = shutdown_utils::signal_handler("http web server");
     let (_, web_server) = warp::serve(routes).bind_with_graceful_shutdown(web_addr, signal);
 
     // Create a handler for each server https://github.com/hyperium/tonic/discussions/740

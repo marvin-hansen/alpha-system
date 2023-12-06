@@ -14,10 +14,7 @@ impl DBGatewayClient {
 
         let request = tonic::Request::new(proto_portfolio_config);
 
-        let res = self
-            .client
-            .create_portfolio_config(request)
-            .await;
+        let res = self.client.create_portfolio_config(request).await;
 
         match res {
             Ok(res) => Ok(res.into_inner().portfolio_created),
@@ -25,15 +22,14 @@ impl DBGatewayClient {
         }
     }
 
-    pub async fn read_all_portfolio_configs(mut self) -> Result<Vec<PortfolioConfig>, DBGatewayError> {
+    pub async fn read_all_portfolio_configs(
+        mut self,
+    ) -> Result<Vec<PortfolioConfig>, DBGatewayError> {
         let request = tonic::Request::new(MultiPortfolioRequest {
             portfolios_all: true,
         });
 
-        let res = self
-            .client
-            .read_all_portfolio_configs(request)
-            .await;
+        let res = self.client.read_all_portfolio_configs(request).await;
 
         match res {
             Ok(res) => {
@@ -62,10 +58,7 @@ impl DBGatewayClient {
             portfolio_id: id as u32,
         });
 
-        let res = self
-            .client
-            .read_portfolio_config(request)
-            .await;
+        let res = self.client.read_portfolio_config(request).await;
 
         match res {
             Ok(res) => match res.into_inner().portfolio_config {
@@ -88,10 +81,7 @@ impl DBGatewayClient {
 
         let request = tonic::Request::new(proto_portfolio_config);
 
-        let res = self
-            .client
-            .update_portfolio_config(request)
-            .await;
+        let res = self.client.update_portfolio_config(request).await;
 
         match res {
             Ok(res) => Ok(res.into_inner().portfolio_updated),
@@ -104,10 +94,7 @@ impl DBGatewayClient {
             portfolio_id: id as u32,
         });
 
-        let res = self
-            .client
-            .delete_portfolio_config(request)
-            .await;
+        let res = self.client.delete_portfolio_config(request).await;
 
         match res {
             Ok(res) => Ok(res.into_inner().portfolio_deleted),
