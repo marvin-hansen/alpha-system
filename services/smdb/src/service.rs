@@ -2,17 +2,17 @@ use autometrics::autometrics;
 use tonic::transport::Channel;
 use tonic::{Request, Response, Status};
 
-use proto::binding::db_gateway_service_client::DbGatewayServiceClient as DBGWClient;
+use proto::binding::db_gateway_service_client::DbGatewayServiceClient;
 use proto::binding::smdb_service_server::SmdbService;
 use proto::binding::*;
 
 #[derive(Clone)]
 pub struct SMDBServer {
-    dbgw: DBGWClient<Channel>,
+    dbgw: DbGatewayServiceClient<Channel>,
 }
 
 impl SMDBServer {
-    pub fn new(dbgw: DBGWClient<Channel>) -> Self {
+    pub fn new(dbgw: DbGatewayServiceClient<Channel>) -> Self {
         Self { dbgw }
     }
 }
