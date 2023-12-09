@@ -1,42 +1,34 @@
-use proto::binding::db_gateway_service_client::DbGatewayServiceClient;
-use std::sync::{Arc, Mutex};
-// use autometrics::autometrics;
-use common::prelude::ServiceID;
-use dbgw_client::DBGatewayClient;
+use autometrics::autometrics;
+use tonic::transport::Channel;
+use tonic::{Request, Response, Status};
+
+use proto::binding::db_gateway_service_client::DbGatewayServiceClient as DBGWClient;
 use proto::binding::smdb_service_server::SmdbService;
 use proto::binding::*;
-use tonic::{Request, Response, Status};
 
 #[derive(Clone)]
 pub struct SMDBServer {
-    // https://stackoverflow.com/questions/67877287/refcellstdstringstring-cannot-be-shared-between-threads-safely
-    dbgw: Arc<Mutex<DBGatewayClient>>,
+    dbgw: DBGWClient<Channel>,
 }
 
 impl SMDBServer {
-    pub fn new(dbgw: Arc<Mutex<DBGatewayClient>>) -> Self {
+    pub fn new(dbgw: DBGWClient<Channel>) -> Self {
         Self { dbgw }
     }
 }
 
 #[tonic::async_trait]
-// #[autometrics]
+#[autometrics]
 impl SmdbService for SMDBServer {
     async fn check_service_id_exists(
         &self,
         request: Request<SingleServiceRequest>,
     ) -> Result<Response<CheckServiceIdExistsResponse>, Status> {
-        let id = ServiceID::from(request.into_inner().service_id);
+        let mut client = self.dbgw.clone();
 
-        let mut binding = self.dbgw.lock().unwrap();
-
-        let fut = binding.check_if_service_id_exists(id);
-
-        let res = fut.await;
-
-        match res {
-            Ok(service_exists) => Ok(Response::new(CheckServiceIdExistsResponse {
-                service_exists,
+        match client.check_service_id_exists(request).await {
+            Ok(res) => Ok(Response::new(CheckServiceIdExistsResponse {
+                service_exists: res.into_inner().service_exists,
             })),
             Err(e) => Err(Status::internal(e.to_string())),
         }
@@ -44,98 +36,71 @@ impl SmdbService for SMDBServer {
 
     async fn check_services_exists(
         &self,
-        _request: Request<MultiServicesRequest>,
+        request: Request<MultiServicesRequest>,
     ) -> Result<Response<CheckServicesExistsResponse>, Status> {
-        // let proto_services = request.into_inner().services_id;
+        let mut client = self.dbgw.clone();
 
-        // let services: Vec<ServiceID> = proto_services.into_iter().map(|x| x.into()).collect();
-        //
-        // let client = self.dbgw.lock().unwrap();
-        //
-        // let res = client.check_if_services_exists(services).await;
-        // match res {
-        //     Ok(services_exist) => Ok(Response::new(CheckServicesExistsResponse {
-        //         services_exist,
-        //     })),
-        //     Err(e) => Err(Status::internal(e.to_string())),
-        // }
-
-        todo!()
+        match client.check_services_exists(request).await {
+            Ok(res) => Ok(Response::new(CheckServicesExistsResponse {
+                services_exist: res.into_inner().services_exist,
+            })),
+            Err(e) => Err(Status::internal(e.to_string())),
+        }
     }
 
     async fn check_service_id_online(
         &self,
-        _request: Request<SingleServiceRequest>,
+        request: Request<SingleServiceRequest>,
     ) -> Result<Response<CheckServiceIdOnlineResponse>, Status> {
-        // let id = ServiceID::from(request.into_inner().service_id);
-        //
-        // let client = self.dbgw.lock().unwrap();
-        //
-        // let res = client.check_if_service_id_online(id).await;
-        //
-        // match res {
-        //     Ok(service_online) => Ok(Response::new(CheckServiceIdOnlineResponse {
-        //         service_online,
-        //     })),
-        //     Err(e) => Err(Status::internal(e.to_string())),
-        // }
+        let mut client = self.dbgw.clone();
 
-        todo!()
+        match client.check_service_id_online(request).await {
+            Ok(res) => Ok(Response::new(CheckServiceIdOnlineResponse {
+                service_online: res.into_inner().service_online,
+            })),
+            Err(e) => Err(Status::internal(e.to_string())),
+        }
     }
 
     async fn check_services_online(
         &self,
-        _request: Request<MultiServicesRequest>,
+        request: Request<MultiServicesRequest>,
     ) -> Result<Response<CheckServicesOnlineResponse>, Status> {
-        // let proto_services = request.into_inner().services_id;
-        // let services: Vec<ServiceID> = proto_services.into_iter().map(|x| x.into()).collect();
-        //
-        // let client = self.dbgw.lock().unwrap();
-        //
-        // let res = client.check_if_services_online(services).await;
-        //
-        // match res {
-        //     Ok(services_online) => Ok(Response::new(CheckServicesOnlineResponse {
-        //         services_online,
-        //     })),
-        //     Err(e) => Err(Status::internal(e.to_string())),
-        // }
+        let mut client = self.dbgw.clone();
 
-        todo!()
+        match client.check_services_online(request).await {
+            Ok(res) => Ok(Response::new(CheckServicesOnlineResponse {
+                services_online: res.into_inner().services_online,
+            })),
+            Err(e) => Err(Status::internal(e.to_string())),
+        }
     }
 
     async fn set_service_online(
         &self,
-        _request: Request<SingleServiceRequest>,
+        request: Request<SingleServiceRequest>,
     ) -> Result<Response<SetServiceOnlineResponse>, Status> {
-        // let id = ServiceID::from(request.into_inner().service_id);
-        //
-        // let client = self.dbgw.lock().unwrap();
-        //
-        // let res = client.set_service_online(id).await;
-        //
-        // match res {
-        //     Ok(service_online) => Ok(Response::new(SetServiceOnlineResponse { service_online })),
-        //     Err(e) => Err(Status::internal(e.to_string())),
-        // }
+        let mut client = self.dbgw.clone();
 
-        todo!()
+        match client.set_service_online(request).await {
+            Ok(res) => Ok(Response::new(SetServiceOnlineResponse {
+                service_online: res.into_inner().service_online,
+            })),
+            Err(e) => Err(Status::internal(e.to_string())),
+        }
     }
 
     async fn set_service_offline(
         &self,
-        _request: Request<SingleServiceRequest>,
+        request: Request<SingleServiceRequest>,
     ) -> Result<Response<SetServiceOfflineResponse>, Status> {
-        // let id = ServiceID::from(request.into_inner().service_id);
-        // let client = self.dbgw.lock().unwrap();
-        //
-        // let res = client.set_service_offline(id).await;
-        //
-        // match res {
-        //     Ok(service_offline) => Ok(Response::new(SetServiceOfflineResponse { service_offline })),
-        //     Err(e) => Err(Status::internal(e.to_string())),
-        // }
+        let mut client = self.dbgw.clone();
 
-        todo!()
+        match client.set_service_offline(request).await {
+            Ok(res) => Ok(Response::new(SetServiceOfflineResponse {
+                service_offline: res.into_inner().service_offline,
+            })),
+            Err(e) => Err(Status::internal(e.to_string())),
+        }
     }
 }

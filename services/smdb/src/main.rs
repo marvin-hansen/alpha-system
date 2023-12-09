@@ -1,18 +1,19 @@
-use autometrics::prometheus_exporter;
 use std::error::Error;
 use std::net::SocketAddr;
-use std::sync::{Arc, Mutex};
-use tonic::transport::Server;
 
-use common::prelude::ServiceID::DBGW;
-use common::prelude::{HostEndpoint, ServiceID};
-use components::prelude::{CfgManager, CtxManager, DnsManager, EnvManager, ServiceManager};
-use dbgw_client::DBGatewayClient;
-use proto::binding::smdb_service_server::SmdbServiceServer;
-use service_utils::{print_utils, shutdown_utils};
+use autometrics::prometheus_exporter;
+use tonic::Request;
+use tonic::transport::{Channel, Server, Uri};
 use warp::Filter;
 
+use common::prelude::ServiceID;
+use common::prelude::ServiceID::DBGW;
+use components::prelude::{CfgManager, CtxManager, DnsManager, EnvManager, ServiceManager};
+use proto::binding::db_gateway_service_client::DbGatewayServiceClient;
+use proto::binding::SingleServiceRequest;
+use proto::binding::smdb_service_server::SmdbServiceServer;
 use service::SMDBServer;
+use service_utils::{print_utils, shutdown_utils};
 
 mod service;
 
@@ -35,22 +36,29 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .get_service_host_port(&DBGW)
         .expect("Failed to get host and port for DBGW");
 
+    // Configure DBGW URI
+    let s = format!("http://{}:{}", dbgw_host, dbgw_port);
+    let uri = s.parse::<Uri>().unwrap();
+
+    // Configure a channel connection to DBGW server
+    let channel = Channel::builder(uri)
+        .connect()
+        .await
+        .expect("Failed to connect to server");
+
     // Configure DBGW client
-    let dbgw_endpoint = HostEndpoint::new(&dbgw_host, dbgw_port);
-    let mut dbgw_client = DBGatewayClient::new(dbgw_endpoint).await;
+    let mut dbgw_client = DbGatewayServiceClient::new(channel);
 
     // Configure service ip and port automatically relative to the detected context.
     let service_addr = service_manager
         .configure_svc_socket_addr(&SVC_ID)
         .expect("DBGW: Failed to get host and port");
 
-    // Set up socket address for gRPC and HTTP
+    // Set up socket address for gRPC service
     let grpc_addr = service_addr.parse().expect("DBGW: Failed to parse address");
 
     // Construct gRPC server
-    let client = Arc::new(Mutex::new(dbgw_client.clone()));
-
-    let grpc_svc = SmdbServiceServer::new(SMDBServer::new(client.clone()));
+    let grpc_svc = SmdbServiceServer::new(SMDBServer::new(dbgw_client.clone()));
 
     // Build health service for gRPC server
     let (mut health_reporter, health_svc) = tonic_health::server::health_reporter();
@@ -88,7 +96,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     // Set SMDB service to online
     dbgw_client
-        .set_service_online(SVC_ID)
+        .set_service_online(get_svc_request())
         .await
         .expect("Failed to set service online");
 
@@ -98,7 +106,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         Ok(_) => {}
         Err(e) => {
             dbgw_client
-                .set_service_offline(SVC_ID)
+                .set_service_offline(get_svc_request())
                 .await
                 .expect("DBGW: Failed to set service offline!");
             println!("DBGW: Failed to start gRPC and HTTP server: {:?}", e);
@@ -106,11 +114,17 @@ async fn main() -> Result<(), Box<dyn Error>> {
     }
 
     // Set SMDB service offline
-    // dbgw_client
-    //     .set_service_offline(SVC_ID)
-    //     .await
-    //     .expect("Failed to set service offline");
+    dbgw_client
+        .set_service_offline(get_svc_request())
+        .await
+        .expect("Failed to set service offline");
 
     print_utils::print_stop_header(&SVC_ID);
     Ok(())
+}
+
+fn get_svc_request() -> Request<SingleServiceRequest> {
+    tonic::Request::new(SingleServiceRequest {
+        service_id: SVC_ID as i32,
+    })
 }

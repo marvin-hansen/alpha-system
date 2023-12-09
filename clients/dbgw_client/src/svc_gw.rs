@@ -23,6 +23,7 @@ impl DBGatewayClient {
         &mut self,
         id: ServiceID,
     ) -> Result<bool, DBGatewayError> {
+
         let request = tonic::Request::new(SingleServiceRequest {
             service_id: id as i32,
         });
