@@ -1,10 +1,12 @@
 use autometrics::autometrics;
-use tonic::transport::Channel;
 use tonic::{Request, Response, Status};
+use tonic::transport::Channel;
 
+use proto::binding::*;
 use proto::binding::db_gateway_service_client::DbGatewayServiceClient;
 use proto::binding::smdb_service_server::SmdbService;
-use proto::binding::*;
+
+use crate::SVC_ID;
 
 #[derive(Clone)]
 pub struct SMDBServer {
@@ -103,4 +105,10 @@ impl SmdbService for SMDBServer {
             Err(e) => Err(Status::internal(e.to_string())),
         }
     }
+}
+
+pub fn get_svc_request() -> Request<SingleServiceRequest> {
+    Request::new(SingleServiceRequest {
+        service_id: SVC_ID as i32,
+    })
 }

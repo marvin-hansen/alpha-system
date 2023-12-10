@@ -110,12 +110,10 @@ impl<'l> EnvManager<'l> {
         &self,
         svc_id: &ServiceID,
     ) -> Result<(String, String), InitError> {
-        let (_, metrics_uri, metrics_port) = self
+        let (metrics_host, metrics_uri, metrics_port) = self
             .get_svc_metric_host_uri_port(svc_id)
             .expect("Failed to get metric host, uri, and port");
 
-        // Set host to default (0.0.0.0) to listen on all interfaces
-        let metrics_host = DEFAULT_HOST;
         // Merge the host and port into a socket address i.e. 0.0.0.0:8080
         let socket_addr = format!("{}:{}", metrics_host, metrics_port);
 
@@ -136,13 +134,11 @@ impl<'l> EnvManager<'l> {
             ));
         };
 
-        let (metric_host, _) = self
-            .get_svc_host_port(svc_id)
-            .expect("Failed to get host and port");
-
         let svc = self
             .get_svc_env(svc_id)
             .expect("Failed to get service environment");
+
+        let metric_host= svc.metrics_host().to_string();
         let metrics_uri = svc.metrics_uri().to_string();
         let metrics_port = *svc.metrics_port();
 
@@ -186,6 +182,7 @@ impl<'l> EnvManager<'l> {
         let ci_host = "127.0.0.1".to_string();
         let docker_host = "0.0.0.0".to_string();
         let service_port = endpoint.port().to_string();
+        let metrics_host = metrics_config.metric_host().to_string();
         let metrics_uri = metrics_config.metric_uri().to_string();
         let metrics_port = metrics_config.metric_port();
 
@@ -196,6 +193,7 @@ impl<'l> EnvManager<'l> {
             local_host,
             docker_host,
             service_port,
+            metrics_host,
             metrics_uri,
             metrics_port,
         )

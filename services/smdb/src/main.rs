@@ -2,7 +2,6 @@ use std::error::Error;
 use std::net::SocketAddr;
 
 use autometrics::prometheus_exporter;
-use tonic::Request;
 use tonic::transport::{Channel, Server, Uri};
 use warp::Filter;
 
@@ -10,7 +9,6 @@ use common::prelude::ServiceID;
 use common::prelude::ServiceID::DBGW;
 use components::prelude::{CfgManager, CtxManager, DnsManager, EnvManager, ServiceManager};
 use proto::binding::db_gateway_service_client::DbGatewayServiceClient;
-use proto::binding::SingleServiceRequest;
 use proto::binding::smdb_service_server::SmdbServiceServer;
 use service::SMDBServer;
 use service_utils::{print_utils, shutdown_utils};
@@ -34,17 +32,17 @@ async fn main() -> Result<(), Box<dyn Error>> {
     // pull DBGW endpoint from auto config
     let (dbgw_host, dbgw_port) = service_manager
         .get_service_host_port(&DBGW)
-        .expect("Failed to get host and port for DBGW");
+        .expect("[SMDB]: Failed to get host and port for DBGW");
 
     // Configure DBGW URI
     let s = format!("http://{}:{}", dbgw_host, dbgw_port);
     let uri = s.parse::<Uri>().unwrap();
 
-    // Configure a channel connection to DBGW server
+    // Configure a channel connection to DBGW service
     let channel = Channel::builder(uri)
         .connect()
         .await
-        .expect("Failed to connect to server");
+        .expect(format!("\r\n [SMDB]: Failed to connect to DBGW service on: {} \r\n  \r\n Detail: \r\n", s).as_str());
 
     // Configure DBGW client
     let mut dbgw_client = DbGatewayServiceClient::new(channel);
@@ -52,10 +50,12 @@ async fn main() -> Result<(), Box<dyn Error>> {
     // Configure service ip and port automatically relative to the detected context.
     let service_addr = service_manager
         .configure_svc_socket_addr(&SVC_ID)
-        .expect("DBGW: Failed to get host and port");
+        .expect("[SMDB]: Failed to get host and port");
 
     // Set up socket address for gRPC service
-    let grpc_addr = service_addr.parse().expect("DBGW: Failed to parse address");
+    let grpc_addr = service_addr
+        .parse()
+        .expect("[SMDB]: Failed to parse address");
 
     // Construct gRPC server
     let grpc_svc = SmdbServiceServer::new(SMDBServer::new(dbgw_client.clone()));
@@ -76,10 +76,10 @@ async fn main() -> Result<(), Box<dyn Error>> {
     // Configure http metrics endpoint ip and port automatically relative to the detected context.
     let (metrics_addr, metrics_uri) = service_manager
         .configure_metrics_socket_addr_uri(&SVC_ID)
-        .expect("DBGW: Failed to get metric host, uri, and port");
+        .expect("[SMDB]: Failed to get metric host, uri, and port");
 
     // Http/web socket address is needed to serve metrics to prometheus
-    let web_addr: SocketAddr = metrics_addr.parse().expect("DBGW: Failed to parse address");
+    let web_addr: SocketAddr = metrics_addr.parse().expect("[SMDB]: Failed to parse metric host to address");
 
     // Build metrics endpoint
     let routes = warp::get()
@@ -96,9 +96,9 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     // Set SMDB service to online
     dbgw_client
-        .set_service_online(get_svc_request())
+        .set_service_online(service::get_svc_request())
         .await
-        .expect("Failed to set service online");
+        .expect("[SMDB]: Failed to set service online");
 
     // Start all servers jointly
     print_utils::print_start_header(&SVC_ID, &service_addr, &metrics_addr, &metrics_uri);
@@ -106,25 +106,19 @@ async fn main() -> Result<(), Box<dyn Error>> {
         Ok(_) => {}
         Err(e) => {
             dbgw_client
-                .set_service_offline(get_svc_request())
+                .set_service_offline(service::get_svc_request())
                 .await
-                .expect("DBGW: Failed to set service offline!");
-            println!("DBGW: Failed to start gRPC and HTTP server: {:?}", e);
+                .expect("[SMDB]: Failed to set service offline!");
+            println!("[SMDB]: Failed to start gRPC and HTTP server: {:?}", e);
         }
     }
 
     // Set SMDB service offline
     dbgw_client
-        .set_service_offline(get_svc_request())
+        .set_service_offline(service::get_svc_request())
         .await
-        .expect("Failed to set service offline");
+        .expect("[SMDB]: Failed to set service offline");
 
     print_utils::print_stop_header(&SVC_ID);
     Ok(())
-}
-
-fn get_svc_request() -> Request<SingleServiceRequest> {
-    tonic::Request::new(SingleServiceRequest {
-        service_id: SVC_ID as i32,
-    })
 }

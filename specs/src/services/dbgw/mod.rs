@@ -13,7 +13,7 @@ pub fn dbgw_service_config() -> ServiceConfig {
     let dependencies = vec![];
     let exposure = ServiceType::ENDPOINT;
     let endpoint = get_endpoint();
-    let metrics = MetricConfig::default();
+    let metrics = get_metric_config();
 
     ServiceConfig::new(
         id,
@@ -48,4 +48,12 @@ fn get_endpoint() -> Endpoint {
         endpoint_protocol,
         endpoint_encoding,
     )
+}
+
+fn get_metric_config() -> MetricConfig {
+    let metric_host = "0.0.0.0".to_string();
+    let metric_uri = "metrics".to_string();
+    let metric_port = 8080;    // Default port is 8080
+
+    MetricConfig::new(metric_uri, metric_host, metric_port)
 }
