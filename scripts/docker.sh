@@ -6,8 +6,18 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-command cp services/dbgw/Dockerfile Dockerfile_DBGW
+command cp services/cmdb/Dockerfile Dockerfile_cmdb
+command docker build -t cmdb:latest -f Dockerfile_cmdb .
+command rm Dockerfile_cmdb
 
-command docker build -t dbgw:latest -f Dockerfile_DBGW .
+command cp services/dbgw/Dockerfile Dockerfile_dbgw
+command docker build -t dbgw:latest -f Dockerfile_dbgw .
+command rm Dockerfile_dbgw
 
-command rm Dockerfile_DBGW
+command cp services/qdgw/Dockerfile Dockerfile_qdgw
+command docker build -t qdgw:latest -f Dockerfile_qdgw .
+command rm Dockerfile_qdgw
+
+command cp services/smdb/Dockerfile Dockerfile_smdb
+command docker build -t smdb:latest -f Dockerfile_smdb .
+command rm Dockerfile_smdb
