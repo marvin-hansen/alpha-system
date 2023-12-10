@@ -9,6 +9,7 @@ use env_manager::EnvManager;
 use svc_manager::ServiceManager;
 
 use cfg_manager::CfgManager;
+use common::prelude::ServiceID::SMDB;
 use service_utils::{print_utils, shutdown_utils};
 use smdb_provider::SMDBProvider;
 use warp::Filter;
@@ -26,12 +27,9 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let svm_manager = async { EnvManager::new(&ctx_manager, &dns_manager) }.await;
     let service_manager = async { ServiceManager::new(&cfg_manager, &svm_manager) }.await;
 
-    // pull SMDB endpoint from auto config
-    let (smdb_host, smdb_port) = service_manager
-        .get_service_host_port(&ServiceID::SMDB)
-        .expect("[QDGW]: Failed to get host and port for DBGW");
-
-    let smdb_manager = SMDBProvider::new(smdb_host, smdb_port).await;
+    // pull SMDB endpoint from auto config & configure SMDB manager
+    let smdb_endpoint = service_manager.get_service_endpoint(&SMDB);
+    let smdb_manager = SMDBProvider::new(smdb_endpoint.host_endpoint()).await;
 
     //get all dependencies
     let dependencies = service_manager.get_service_dependencies();

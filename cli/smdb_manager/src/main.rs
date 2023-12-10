@@ -10,7 +10,7 @@ pub const SPEC_OP: ServiceOP = ServiceOP::CheckIfServicesExists;
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
     let endpoint = HostEndpoint::new("127.0.0.1", 7070);
-    let client = SMDBProvider::from_host_endpoint(endpoint).await;
+    let client = SMDBProvider::new(endpoint).await;
 
     svc_handle::handle_service_op(&client, SPEC_OP)
         .await

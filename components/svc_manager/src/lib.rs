@@ -45,11 +45,7 @@ impl<'l> ServiceManager<'l> {
         self.cfg_manager.svc_config().dependencies().clone()
     }
 
-    pub fn get_service_endpoint(&self) -> Endpoint {
-        self.cfg_manager.svc_config().endpoint()
-    }
-
-    pub fn get_svc_metric_host_uri_port(
+    pub fn get_service_metric_host_uri_port(
         &self,
         svc_id: &ServiceID,
     ) -> Result<(String, String, u16), InitError> {
@@ -59,6 +55,10 @@ impl<'l> ServiceManager<'l> {
         }
 
         self.svm_manager.get_svc_metric_host_uri_port(svc_id)
+    }
+
+    pub fn get_service_endpoint(&self, svc_id: &ServiceID) -> Endpoint {
+        self.cfg_manager.get_svc_config(svc_id).endpoint()
     }
 
     pub fn get_service_host_port(&self, svc_id: &ServiceID) -> Result<(String, u16), InitError> {

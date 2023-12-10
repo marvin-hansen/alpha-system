@@ -13,7 +13,10 @@ pub struct SMDBProvider {
 }
 
 impl SMDBProvider {
-    pub async fn new(host: String, port: u16) -> Self {
+    pub async fn new(config: HostEndpoint<'_>) -> Self {
+        let port = config.port();
+        let host = config.host_uri().to_string();
+
         let s = format!("http://{}:{}", host, port);
         let uri = s
             .parse::<Uri>()
@@ -28,14 +31,6 @@ impl SMDBProvider {
         let client = SmdbServiceClient::new(channel);
 
         Self { client }
-    }
-
-    /// from_host_endpoint creates a new SMDBProvider from a host endpoint.
-    pub async fn from_host_endpoint(config: HostEndpoint<'_>) -> Self {
-        let port = config.port();
-        let host = config.host_uri().to_string();
-
-        Self::new(host, port).await
     }
 }
 

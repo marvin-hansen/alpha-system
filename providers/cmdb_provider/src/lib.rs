@@ -1,20 +1,22 @@
-mod prv_cmdb;
-
 use std::error::Error;
 use std::fmt;
-
 use tonic::transport::{Channel, Uri};
-use common::prelude::HostEndpoint;
 
+use common::prelude::HostEndpoint;
 use proto::binding::cmdb_service_client::CmdbServiceClient;
 
+mod prv_cmdb;
+
 #[derive(Debug, Clone)]
-pub struct CMDBProvider {
+pub struct CmdbManager {
     client: CmdbServiceClient<Channel>,
 }
 
-impl CMDBProvider {
-    pub async fn new(host: String, port: u16) -> Self {
+impl CmdbManager {
+    pub async fn new(config: HostEndpoint<'_>) -> Self {
+        let port = config.port();
+        let host = config.host_uri().to_string();
+
         let s = format!("http://{}:{}", host, port);
         let uri = s
             .parse::<Uri>()
@@ -29,13 +31,6 @@ impl CMDBProvider {
         let client = CmdbServiceClient::new(channel);
 
         Self { client }
-    }
-
-    pub async fn from_host_endpoint(config: HostEndpoint<'_>) -> Self {
-        let port = config.port();
-        let host = config.host_uri().to_string();
-
-        Self::new(host, port).await
     }
 }
 
