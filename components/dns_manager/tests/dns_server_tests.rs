@@ -1,7 +1,8 @@
 use std::env;
 
 use common::prelude::EnvironmentType;
-use components::prelude::{CtxManager, DnsManager};
+use ctx_manager::CtxManager;
+use dns_manager::DnsManager;
 
 // LOCAL and unknown environment cannot really be tested otherwise CI test runs breaks
 // because the environment variable must be set in the CI environment (not in the test)

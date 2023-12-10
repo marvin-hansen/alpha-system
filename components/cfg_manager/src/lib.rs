@@ -5,7 +5,6 @@ use specs::prelude::{
     qdgw_service_config, smdb_service_config,
 };
 
-
 /// Struct that holds the configuration for a specific service.
 #[derive(Debug, Clone, Copy, Eq, PartialEq)]
 pub struct CfgManager<'l> {

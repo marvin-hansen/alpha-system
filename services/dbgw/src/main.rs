@@ -1,18 +1,18 @@
 use autometrics::prometheus_exporter;
+use cfg_manager::CfgManager;
 use common::prelude::ServiceID;
+use ctx_manager::CtxManager;
+use db_manager::DBManager;
+use dns_manager::DnsManager;
+use env_manager::EnvManager;
 use proto::binding::db_gateway_service_server::DbGatewayServiceServer;
 use service::DBGWServer;
 use service_utils::{print_utils, shutdown_utils};
 use std::error::Error;
 use std::net::SocketAddr;
+use svc_manager::ServiceManager;
 use tonic::transport::Server;
 use warp::Filter;
-use cfg_manager::CfgManager;
-use ctx_manager::CtxManager;
-use dns_manager::DnsManager;
-use env_manager::EnvManager;
-use svc_manager::ServiceManager;
-use db_manager::DBManager;
 
 mod service;
 const SVC_ID: ServiceID = ServiceID::DBGW;

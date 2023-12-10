@@ -3,7 +3,7 @@ use common::prelude::Encoding;
 #[test]
 fn test_default() {
     let protocol = Encoding::default();
-    assert_eq!(protocol, Encoding::Protobuf);
+    assert_eq!(protocol, Encoding::NullVal);
 }
 
 #[test]

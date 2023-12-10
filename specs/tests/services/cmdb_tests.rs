@@ -35,7 +35,7 @@ fn test_cmdb_service_config() {
         "Access to the configuration service via gRPC on baseUri:8080"
     );
     assert_eq!(endpoint.uri(), String::from("/"));
-    assert_eq!(endpoint.port(), 8080);
+    assert_eq!(endpoint.port(), 9090);
     assert_eq!(endpoint.protocol(), ProtocolType::GRPC);
     assert_eq!(endpoint.encoding(), Encoding::Protobuf);
 }

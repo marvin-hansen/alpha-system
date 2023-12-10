@@ -1,7 +1,7 @@
 use surrealdb::Error;
 
 use common::prelude::{AccountType, ExchangeID, PortfolioConfig, ServiceConfig, ServiceID};
-use components::prelude::DBManager;
+use db_manager::DBManager;
 use specs::prelude::{cmdb_service_config, db_config_ci, smdb_service_config};
 
 async fn get_dbm() -> Result<DBManager, Error> {
@@ -20,8 +20,8 @@ fn get_portfolio_config() -> PortfolioConfig {
     let portfolio_cash_balance = 1000.0;
     let portfolio_max_drawdown = 20.0;
     let portfolio_instruments = vec!["BTC".to_string(), "ETH".to_string()];
-    let instrument_max_allocation = Some(0.02);
-    let instrument_max_drawdown = Some(10.0);
+    let instrument_max_allocation = 0.02;
+    let instrument_max_drawdown = 10.0;
 
     PortfolioConfig::new_cash_portfolio(
         portfolio_id,

@@ -3,7 +3,6 @@ use common::errors::InitError;
 use common::prelude::{Endpoint, ServiceConfig, ServiceID};
 use env_manager::EnvManager;
 
-
 pub struct ServiceManager<'l> {
     cfg_manager: &'l CfgManager<'l>,
     svm_manager: &'l EnvManager<'l>,

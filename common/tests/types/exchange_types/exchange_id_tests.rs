@@ -4,13 +4,13 @@ use common::prelude::ExchangeID;
 fn test_from_valid_values() {
     assert_eq!(ExchangeID::from(0x0), ExchangeID::NullVal);
     assert_eq!(ExchangeID::from(0x1), ExchangeID::BinanceSpot);
-    assert_eq!(ExchangeID::from(0x2), ExchangeID::VEX);
+    assert_eq!(ExchangeID::from(0x2), ExchangeID::COINBASE);
+    assert_eq!(ExchangeID::from(0x3), ExchangeID::VEX);
 }
 
 #[test]
 fn test_from_invalid_values() {
     assert_eq!(ExchangeID::from(0x0), ExchangeID::NullVal);
-    assert_eq!(ExchangeID::from(0x3), ExchangeID::NullVal);
 }
 
 #[test]
@@ -22,11 +22,11 @@ fn test_null_val() {
 #[test]
 fn test_binance() {
     let exchange_id = ExchangeID::BinanceSpot;
-    assert_eq!(format!("{}", exchange_id), "BNB: Binance Spot Exchange");
+    assert_eq!(format!("{}", exchange_id), "BinanceSpot");
 }
 
 #[test]
 fn test_vex() {
     let exchange_id = ExchangeID::VEX;
-    assert_eq!(format!("{}", exchange_id), "VEX: Virtual Exchange");
+    assert_eq!(format!("{}", exchange_id), "VEX");
 }

@@ -61,7 +61,7 @@ fn test_display() {
     let message = StartDataMessage::new(ExchangeID::BinanceSpot, SymbolID::BTCUSD);
 
     let expected =
-        "StartDataMessage { message_type: StartData, exchange_id: BNB, symbol_id: BTCUSD }";
+        "StartDataMessage { message_type: StartData, exchange_id: BinanceSpot, symbol_id: BTCUSD }";
     let actual = format!("{}", message);
     assert_eq!(expected, actual);
 }

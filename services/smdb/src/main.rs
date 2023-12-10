@@ -2,20 +2,20 @@ use std::error::Error;
 use std::net::SocketAddr;
 
 use autometrics::prometheus_exporter;
+use cfg_manager::CfgManager;
 use tonic::transport::{Channel, Server, Uri};
 use warp::Filter;
-use cfg_manager::CfgManager;
 
 use common::prelude::ServiceID;
 use common::prelude::ServiceID::DBGW;
 use ctx_manager::CtxManager;
 use dns_manager::DnsManager;
 use env_manager::EnvManager;
-use svc_manager::ServiceManager;
 use proto::binding::db_gateway_service_client::DbGatewayServiceClient;
 use proto::binding::smdb_service_server::SmdbServiceServer;
 use service::SMDBServer;
 use service_utils::{print_utils, shutdown_utils};
+use svc_manager::ServiceManager;
 
 mod service;
 

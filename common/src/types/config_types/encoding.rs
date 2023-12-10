@@ -13,10 +13,10 @@ use serde::{Deserialize, Serialize};
 #[repr(u8)]
 pub enum Encoding {
     #[default]
-    NullVal = 0,
-    Binary = 1,
-    Protobuf = 2,
-    SBE = 3,
+    NullVal = 0_u8,
+    Binary = 1_u8,
+    Protobuf = 2_u8,
+    SBE = 3_u8,
 }
 
 impl From<i32> for Encoding {

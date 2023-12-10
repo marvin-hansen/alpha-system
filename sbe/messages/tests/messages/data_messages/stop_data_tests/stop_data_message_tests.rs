@@ -61,7 +61,7 @@ fn test_display() {
     let message = StopDataMessage::new(ExchangeID::BinanceSpot, SymbolID::BTCUSD);
 
     let expected =
-        "StopDataMessage { message_type: StopData, exchange_id: BNB, symbol_id: BTCUSD }";
+        "StopDataMessage { message_type: StopData, exchange_id: BinanceSpot, symbol_id: BTCUSD }";
     let actual = format!("{}", message);
     assert_eq!(expected, actual);
 }

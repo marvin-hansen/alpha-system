@@ -2,8 +2,8 @@ use common::prelude::AccountType;
 
 #[test]
 fn test_unknown_account_type_display() {
-    let account_type = AccountType::UnknownAccountType;
-    assert_eq!(account_type.to_string(), "UnknownAccountType");
+    let account_type = AccountType::NullVal;
+    assert_eq!(account_type.to_string(), "NullVal");
 }
 
 #[test]

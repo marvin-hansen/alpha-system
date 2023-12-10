@@ -1,7 +1,7 @@
 use std::env;
 
 use common::prelude::EnvironmentType;
-use components::prelude::CtxManager;
+use ctx_manager::CtxManager;
 
 // LOCAL and unknown environment cannot really be tested otherwise CI test runs breaks
 // because the environment variable must be set in the CI environment (not in the test)

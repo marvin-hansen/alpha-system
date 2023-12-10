@@ -52,7 +52,7 @@ fn test_exchange_id() {
 fn test_display() {
     let message = StopAllDataMessage::new(ExchangeID::BinanceSpot);
 
-    let expected = "StopAllDataMessage { message_type: StopAllData, exchange_id: BNB }";
+    let expected = "StopAllDataMessage { message_type: StopAllData, exchange_id: BinanceSpot }";
     let actual = format!("{}", message);
     assert_eq!(expected, actual);
 }

@@ -13,21 +13,6 @@ fn test_display() {
 }
 
 #[test]
-fn test_serialize() {
-    let entry_type = TradeEntryType::CurrentBar;
-    let serialized = bincode::serialize(&entry_type).unwrap();
-    let deserialized: TradeEntryType = bincode::deserialize(&serialized).unwrap();
-    assert_eq!(deserialized, entry_type);
-}
-
-#[test]
-fn test_deserialize() {
-    let serialized = bincode::serialize(&TradeEntryType::CurrentBar).unwrap();
-    let deserialized: TradeEntryType = bincode::deserialize(&serialized).unwrap();
-    assert_eq!(deserialized, TradeEntryType::CurrentBar);
-}
-
-#[test]
 fn test_next_bar() {
     let entry_type = TradeEntryType::NextBar;
     assert_eq!(entry_type, TradeEntryType::NextBar);

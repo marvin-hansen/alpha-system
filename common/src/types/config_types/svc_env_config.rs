@@ -16,6 +16,7 @@ pub struct SvcEnvConfig {
     local_host: String,
     /// The host address when running in Docker
     docker_host: String,
+    /// The metric endpoint address
     metrics_host: String,
     /// The metric endpoint URI of the service
     metrics_uri: String,

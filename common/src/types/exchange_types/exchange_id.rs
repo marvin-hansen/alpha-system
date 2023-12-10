@@ -5,10 +5,10 @@ use std::fmt::{Display, Formatter};
 #[repr(u8)]
 pub enum ExchangeID {
     #[default]
-    NullVal = 0xff_u8,
-    BinanceSpot = 0x1_u8,
-    COINBASE = 0x2_u8,
-    VEX = 0x3_u8,
+    NullVal = 0_u8,
+    BinanceSpot = 1_u8,
+    COINBASE = 2_u8,
+    VEX = 3_u8,
 }
 
 impl From<i32> for ExchangeID {
@@ -18,6 +18,7 @@ impl From<i32> for ExchangeID {
             0xff_i32 => Self::NullVal,
             0x1_i32 => Self::BinanceSpot,
             0x2_i32 => Self::COINBASE,
+            0x3_i32 => Self::VEX,
             _ => Self::NullVal,
         }
     }

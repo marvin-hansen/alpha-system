@@ -1,9 +1,9 @@
 use autometrics::prometheus_exporter;
+use cfg_manager::CfgManager;
 use std::error::Error;
 use std::net::SocketAddr;
 use tonic::transport::{Channel, Server, Uri};
 use warp::Filter;
-use cfg_manager::CfgManager;
 
 use crate::service::CMDBServer;
 use common::prelude::ServiceID;
@@ -17,7 +17,6 @@ use proto::binding::cmdb_service_server::CmdbServiceServer;
 use proto::binding::db_gateway_service_client::DbGatewayServiceClient;
 use service_utils::{print_utils, shutdown_utils};
 use smdb_provider::SMDBProvider;
-
 
 mod service;
 

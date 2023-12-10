@@ -10,8 +10,8 @@ fn get_portfolio_config() -> PortfolioConfig {
     let portfolio_cash_balance = 1000.0;
     let portfolio_max_drawdown = 20.0;
     let portfolio_instruments = vec!["BTC".to_string(), "ETH".to_string()];
-    let instrument_max_allocation = Some(0.02);
-    let instrument_max_drawdown = Some(10.0);
+    let instrument_max_allocation = 0.0;
+    let instrument_max_drawdown = 10.0;
 
     PortfolioConfig::new_cash_portfolio(
         portfolio_id,
@@ -51,7 +51,7 @@ fn test_portfolio_description() {
 fn test_portfolio_account_type() {
     let account_type = AccountType::Spot;
     let config = get_portfolio_config();
-    assert_eq!(config.portfolio_account_type(), &account_type);
+    assert_eq!(config.portfolio_account_type(), account_type);
 }
 
 #[test]
@@ -63,7 +63,7 @@ fn test_portfolio_account_id() {
 #[test]
 fn test_portfolio_exchange_id() {
     let config = get_portfolio_config();
-    assert_eq!(config.portfolio_exchange_id(), &ExchangeID::VEX);
+    assert_eq!(config.portfolio_exchange_id(), ExchangeID::VEX);
 }
 
 #[test]
@@ -81,7 +81,7 @@ fn test_portfolio_cash() {
 #[test]
 fn test_portfolio_margin() {
     let config = get_portfolio_config();
-    assert_eq!(config.portfolio_margin(), None);
+    assert_eq!(config.portfolio_margin(), 0.0f64);
 }
 
 #[test]
@@ -99,7 +99,7 @@ fn test_portfolio_instruments() {
 
 #[test]
 fn test_instrument_max_allocation() {
-    let instrument_max_allocation = Some(0.02);
+    let instrument_max_allocation = 0.0f64;
     let config = get_portfolio_config();
     assert_eq!(
         config.instrument_max_allocation(),
@@ -109,7 +109,7 @@ fn test_instrument_max_allocation() {
 
 #[test]
 fn test_instrument_max_drawdown() {
-    let max_drawdown = Some(10.0);
+    let max_drawdown = 10.0;
     let config = get_portfolio_config();
     assert_eq!(config.instrument_max_drawdown(), max_drawdown);
 }
@@ -117,30 +117,30 @@ fn test_instrument_max_drawdown() {
 #[test]
 fn test_portfolio_free_margin() {
     let config = get_portfolio_config();
-    assert_eq!(config.portfolio_free_margin(), None);
+    assert_eq!(config.portfolio_free_margin(), 0.0f64);
 }
 
 #[test]
 fn test_portfolio_free_cash() {
     let config = get_portfolio_config();
-    assert_eq!(config.portfolio_free_cash(), Some(1000.0));
+    assert_eq!(config.portfolio_free_cash(), (1000.0));
 }
 
 #[test]
 fn test_portfolio_free_margin_percent() {
     let config = get_portfolio_config();
-    assert_eq!(config.portfolio_free_margin_percent(), None);
+    assert_eq!(config.portfolio_free_margin_percent(), 0f64);
 }
 
 #[test]
 fn test_portfolio_free_cash_percent() {
     let config = get_portfolio_config();
-    assert_eq!(config.portfolio_free_cash_percent(), Some(100.0));
+    assert_eq!(config.portfolio_free_cash_percent(), 100.0f64);
 }
 
 #[test]
 fn test_display() {
-    let config = get_portfolio_config();
-    let expected =  "portfolio_id: 1, portfolio_description: cash portfolio, portfolio_account_type: Spot, portfolio_account_id: cash_account, portfolio_exchange_id: VEX: Virtual Exchange, portfolio_currency: USD, portfolio_cash: 1000, portfolio_margin: None, portfolio_max_drawdown: 20, portfolio_instruments: [\"BTC\", \"ETH\"], instrument_max_allocation: Some(0.02), instrument_max_drawdown: Some(10.0), portfolio_free_margin: None, portfolio_free_cash: Some(1000.0), portfolio_free_margin_percent: None, portfolio_free_cash_percent: Some(100.0)";
-    assert_eq!(expected, format!("{}", config));
+    let actual = get_portfolio_config().to_string();
+    let expected = "portfolio_id: 1, portfolio_description: cash portfolio, portfolio_account_type: Spot, portfolio_account_id: cash_account, portfolio_exchange_id: VEX, portfolio_currency: USD, portfolio_cash: 1000, portfolio_margin: 0.0, portfolio_max_drawdown: 20, portfolio_instruments: [\"BTC\", \"ETH\"], instrument_max_allocation: 0.0, instrument_max_drawdown: 10.0, portfolio_free_margin: 0.0, portfolio_free_cash: 1000.0, portfolio_free_margin_percent: 0.0, portfolio_free_cash_percent: 100.0";
+    assert_eq!(expected, actual);
 }

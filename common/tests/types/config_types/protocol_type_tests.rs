@@ -3,7 +3,7 @@ use common::prelude::ProtocolType;
 #[test]
 fn test_default() {
     let protocol = ProtocolType::default();
-    assert_eq!(protocol, ProtocolType::GRPC);
+    assert_eq!(protocol, ProtocolType::NullVal);
 }
 
 #[test]

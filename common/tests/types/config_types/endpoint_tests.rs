@@ -30,8 +30,8 @@ fn test_default() {
     assert_eq!(endpoint.description(), "");
     assert_eq!(endpoint.uri(), "");
     assert_eq!(endpoint.port(), 0);
-    assert_eq!(endpoint.protocol(), ProtocolType::GRPC);
-    assert_eq!(endpoint.encoding(), Encoding::Protobuf);
+    assert_eq!(endpoint.protocol(), ProtocolType::NullVal);
+    assert_eq!(endpoint.encoding(), Encoding::NullVal);
 }
 
 #[test]

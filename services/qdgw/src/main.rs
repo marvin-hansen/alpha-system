@@ -8,10 +8,10 @@ use dns_manager::DnsManager;
 use env_manager::EnvManager;
 use svc_manager::ServiceManager;
 
+use cfg_manager::CfgManager;
 use service_utils::{print_utils, shutdown_utils};
 use smdb_provider::SMDBProvider;
 use warp::Filter;
-use cfg_manager::CfgManager;
 
 mod service;
 

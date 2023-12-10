@@ -1,4 +1,4 @@
-use common::prelude::{Endpoint, ServiceConfig, ServiceID, ServiceType};
+use common::prelude::{Endpoint, MetricConfig, ServiceConfig, ServiceID, ServiceType};
 
 #[test]
 fn test_new() {
@@ -12,6 +12,7 @@ fn test_new() {
     let dependencies = vec![ServiceID::DBGW];
     let exposure = ServiceType::default();
     let endpoint = Endpoint::default();
+    let metrics = MetricConfig::default();
 
     let service_config = ServiceConfig::new(
         id,
@@ -24,6 +25,7 @@ fn test_new() {
         dependencies,
         exposure,
         endpoint,
+        metrics,
     );
 
     assert_eq!(service_config.svc_id(), &ServiceID::SMDB);
@@ -56,6 +58,7 @@ fn test_to_json() {
     let dependencies = vec![ServiceID::DBGW];
     let exposure = ServiceType::default();
     let endpoint = Endpoint::default();
+    let metrics = MetricConfig::default();
 
     let service_config = ServiceConfig::new(
         id,
@@ -68,10 +71,11 @@ fn test_to_json() {
         dependencies,
         exposure,
         endpoint,
+        metrics,
     );
 
     let actual = service_config.to_json().unwrap();
-    let expected = "{\"id\":null,\"svc_id\":\"SMDB\",\"name\":\"name\",\"version\":1,\"online\":true,\"description\":\"description\",\"health_check_uri\":\"health_check_uri\",\"base_uri\":\"base_uri\",\"dependencies\":[\"DBGW\"],\"exposure\":\"ENDPOINT\",\"endpoint\":{\"name\":\"\",\"version\":0,\"description\":\"\",\"uri\":\"\",\"port\":0,\"protocol\":\"GRPC\",\"encoding\":\"Protobuf\"}}";
+    let expected = "{\"id\":null,\"svc_id\":\"SMDB\",\"name\":\"name\",\"version\":1,\"online\":true,\"description\":\"description\",\"health_check_uri\":\"health_check_uri\",\"base_uri\":\"base_uri\",\"dependencies\":[\"DBGW\"],\"exposure\":\"ENDPOINT\",\"endpoint\":{\"name\":\"\",\"version\":0,\"description\":\"\",\"uri\":\"\",\"port\":0,\"protocol\":\"NullVal\",\"encoding\":\"NullVal\"},\"metrics\":{\"metric_uri\":\"metrics\",\"metric_host\":\"127.0.0.1\",\"metric_port\":8080}}";
     assert_eq!(expected, actual)
 }
 
@@ -103,6 +107,7 @@ fn test_display() {
     let dependencies = vec![ServiceID::DBGW];
     let exposure = ServiceType::default();
     let endpoint = Endpoint::default();
+    let metrics = MetricConfig::default();
 
     let service_config = ServiceConfig::new(
         id,
@@ -115,9 +120,10 @@ fn test_display() {
         dependencies,
         exposure,
         endpoint,
+        metrics,
     );
 
-    let expected = "ServiceConfig { svc_id: SMDB, name: SMDB, version: 1, online: true, description: description, health_check_uri: health_check_uri, base_uri: base_uri, dependencies: [DBGW], exposure: ENDPOINT, endpoint: name: ,  version: 0,  port: 0,  description: ,  uri: ,  protocol: GRPC,  encoding: Protobuf }".to_string();
+    let expected = "ServiceConfig { svc_id: SMDB, name: SMDB, version: 1, online: true, description: description, health_check_uri: health_check_uri, base_uri: base_uri, dependencies: [DBGW], exposure: ENDPOINT, endpoint: name: ,  version: 0,  port: 0,  description: ,  uri: ,  protocol: NullVal,  encoding: NullVal metrics: metric_uri: metrics,  metric_host: 127.0.0.1,  metric_port: 8080 }".to_string();
     let actual = service_config.to_string();
     assert_eq!(actual, expected);
 }
