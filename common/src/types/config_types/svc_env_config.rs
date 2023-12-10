@@ -26,7 +26,7 @@ pub struct SvcEnvConfig {
 
 impl SvcEnvConfig {
     /// Creates a new `SvcEnvConfig` with the given parameters
-
+    #[allow(clippy::too_many_arguments)]
     pub fn new(
         service_id: ServiceID,
         cluster_host: String,
