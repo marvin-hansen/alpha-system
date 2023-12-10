@@ -1,10 +1,10 @@
 use common::prelude::{DBConfig, EnvironmentType, ServiceConfig, ServiceID};
+use ctx_manager::CtxManager;
 use specs::prelude::{
     cmdb_service_config, db_config_ci, db_config_cluster, db_config_local, dbgw_service_config,
     qdgw_service_config, smdb_service_config,
 };
 
-use crate::prelude::CtxManager;
 
 /// Struct that holds the configuration for a specific service.
 #[derive(Debug, Clone, Copy, Eq, PartialEq)]

@@ -1,6 +1,7 @@
 [package]
-name = "cmdb_provider"
+name = "svc_manager"
 version = "0.1.0"
+
 edition.workspace = true
 rust-version.workspace = true
 readme.workspace = true
@@ -9,7 +10,7 @@ authors.workspace = true
 
 
 [lib]
-name = "cmdb_provider"
+name = "svc_manager"
 path = "src/lib.rs"
 
 
@@ -18,12 +19,13 @@ path = "../../common"
 version = "0.1.0"
 
 
-[dependencies.proto]
-path = "../../proto"
+[dependencies.cfg_manager]
+path = "../../components/cfg_manager"
+version = "0.1.0"
+
+[dependencies.env_manager]
+path = "../../components/env_manager"
 version = "0.1.0"
 
 
 [dependencies]
-tokio = { workspace = true }
-tonic = { workspace = true }
-prost = { workspace = true }

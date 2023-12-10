@@ -3,15 +3,21 @@ use std::error::Error;
 use std::net::SocketAddr;
 use tonic::transport::{Channel, Server, Uri};
 use warp::Filter;
+use cfg_manager::CfgManager;
 
 use crate::service::CMDBServer;
 use common::prelude::ServiceID;
 use common::prelude::ServiceID::SMDB;
-use components::prelude::{CfgManager, CtxManager, DnsManager, EnvManager, ServiceManager};
+use ctx_manager::CtxManager;
+use dns_manager::DnsManager;
+use env_manager::EnvManager;
+use svc_manager::ServiceManager;
+
 use proto::binding::cmdb_service_server::CmdbServiceServer;
 use proto::binding::db_gateway_service_client::DbGatewayServiceClient;
 use service_utils::{print_utils, shutdown_utils};
 use smdb_provider::SMDBProvider;
+
 
 mod service;
 

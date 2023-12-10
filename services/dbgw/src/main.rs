@@ -7,7 +7,11 @@ use std::error::Error;
 use std::net::SocketAddr;
 use tonic::transport::Server;
 use warp::Filter;
-use components::prelude::{CfgManager, CtxManager, DnsManager, EnvManager, ServiceManager};
+use cfg_manager::CfgManager;
+use ctx_manager::CtxManager;
+use dns_manager::DnsManager;
+use env_manager::EnvManager;
+use svc_manager::ServiceManager;
 use db_manager::DBManager;
 
 mod service;

@@ -18,11 +18,6 @@ path = "../../common"
 version = "0.1.0"
 
 
-[dependencies.components]
-path = "../../components"
-version = "0.1.0"
-
-
 [dependencies.proto]
 path = "../../proto"
 version = "0.1.0"

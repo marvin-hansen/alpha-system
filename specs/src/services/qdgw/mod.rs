@@ -10,7 +10,7 @@ pub fn qdgw_service_config() -> ServiceConfig {
     let description = " QDGW gives access to quantitative Tick / min data".to_string();
     let health_check_uri = "qdg-service.default.svc.cluster.local:4040/health".to_string();
     let base_uri = "qdg-service.default.svc.cluster.local".to_string();
-    let dependencies = vec![];
+    let dependencies = vec![ServiceID::SMDB];
     let exposure = ServiceType::ENDPOINT;
     let endpoint = get_endpoint();
     let metrics = get_metric_config();

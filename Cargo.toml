@@ -7,8 +7,12 @@ members = [
     "cli/spec_manager",
     "clients/dbgw_client",
     "common",
-    "components",
     "components/db_manager",
+    "components/cfg_manager",
+    "components/ctx_manager",
+    "components/dns_manager",
+    "components/env_manager",
+    "components/svc_manager",
     "proto",
     "providers/cmdb_provider",
     "providers/smdb_provider",
@@ -38,6 +42,7 @@ anyhow = "1.0"
 async-std = "1.12"
 ctrlc = "3.4"
 futures = "0.3"
+hickory-resolver = { version = "0.24", default-features = false, features = ["tokio-runtime"] }
 log = "0.4"
 prost = "0.12"
 prost-types = { version = "0.12", default-features = false }

@@ -4,10 +4,14 @@ use std::net::SocketAddr;
 use autometrics::prometheus_exporter;
 use tonic::transport::{Channel, Server, Uri};
 use warp::Filter;
+use cfg_manager::CfgManager;
 
 use common::prelude::ServiceID;
 use common::prelude::ServiceID::DBGW;
-use components::prelude::{CfgManager, CtxManager, DnsManager, EnvManager, ServiceManager};
+use ctx_manager::CtxManager;
+use dns_manager::DnsManager;
+use env_manager::EnvManager;
+use svc_manager::ServiceManager;
 use proto::binding::db_gateway_service_client::DbGatewayServiceClient;
 use proto::binding::smdb_service_server::SmdbServiceServer;
 use service::SMDBServer;

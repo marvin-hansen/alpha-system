@@ -3,8 +3,9 @@ use std::cell::RefCell;
 use common::prelude::{
     EnvironmentType, HostEndpoint, InitError, MetricConfig, ServiceID, SvcEnvConfig,
 };
+use ctx_manager::CtxManager;
+use dns_manager::DnsManager;
 
-use crate::prelude::{CtxManager, DnsManager};
 
 // https://stackoverflow.com/questions/20778771/what-is-the-difference-between-0-0-0-0-127-0-0-1-and-localhost
 const DEFAULT_HOST: &str = "0.0.0.0";

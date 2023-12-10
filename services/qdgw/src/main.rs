@@ -3,10 +3,15 @@ use std::error::Error;
 use std::net::SocketAddr;
 
 use common::prelude::ServiceID;
-use components::prelude::{CfgManager, CtxManager, DnsManager, EnvManager, ServiceManager};
+use ctx_manager::CtxManager;
+use dns_manager::DnsManager;
+use env_manager::EnvManager;
+use svc_manager::ServiceManager;
+
 use service_utils::{print_utils, shutdown_utils};
 use smdb_provider::SMDBProvider;
 use warp::Filter;
+use cfg_manager::CfgManager;
 
 mod service;
 

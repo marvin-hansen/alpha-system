@@ -19,7 +19,7 @@ use hickory_resolver::Resolver;
 
 use common::prelude::EnvironmentType;
 
-use crate::prelude::CtxManager;
+use ctx_manager::CtxManager;
 
 /**
  * The DnsManager struct contains two Resolvers, one for internal (cluster) DNS resolution

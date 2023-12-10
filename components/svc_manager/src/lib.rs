@@ -1,8 +1,8 @@
+use cfg_manager::CfgManager;
 use common::errors::InitError;
 use common::prelude::{Endpoint, ServiceConfig, ServiceID};
+use env_manager::EnvManager;
 
-use crate::prelude::CfgManager;
-use crate::prelude::EnvManager;
 
 pub struct ServiceManager<'l> {
     cfg_manager: &'l CfgManager<'l>,

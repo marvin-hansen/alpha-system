@@ -19,8 +19,28 @@ path = "../../common"
 version = "0.1.0"
 
 
-[dependencies.components]
-path = "../../components"
+[dependencies.cfg_manager]
+path = "../../components/cfg_manager"
+version = "0.1.0"
+
+
+[dependencies.ctx_manager]
+path = "../../components/ctx_manager"
+version = "0.1.0"
+
+
+[dependencies.dns_manager]
+path = "../../components/dns_manager"
+version = "0.1.0"
+
+
+[dependencies.env_manager]
+path = "../../components/env_manager"
+version = "0.1.0"
+
+
+[dependencies.svc_manager]
+path = "../../components/svc_manager"
 version = "0.1.0"
 
 
