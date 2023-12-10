@@ -13,11 +13,11 @@ pub struct SMDBProvider {
 }
 
 impl SMDBProvider {
-    pub async fn new(smdb_host: String, smdb_port: u16) -> Self {
-        let s = format!("http://{}:{}", smdb_host, smdb_port);
+    pub async fn new(host: String, port: u16) -> Self {
+        let s = format!("http://{}:{}", host, port);
         let uri = s
             .parse::<Uri>()
-            .unwrap_or_else(|_| panic!("SMDBProvider: Failed to parse server URI: {}", s));
+            .unwrap_or_else(|_| panic!("[SMDBProvider]: Failed to parse server URI: {}", s));
 
         // creating a channel that connects to server
         let channel = Channel::builder(uri)
