@@ -39,10 +39,13 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let uri = s.parse::<Uri>().unwrap();
 
     // Configure a channel connection to DBGW service
-    let channel = Channel::builder(uri)
-        .connect()
-        .await
-        .expect(format!("\r\n [SMDB]: Failed to connect to DBGW service on: {} \r\n  \r\n Detail: \r\n", s).as_str());
+    let channel = Channel::builder(uri).connect().await.expect(
+        format!(
+            "\r\n [SMDB]: Failed to connect to DBGW service on: {} \r\n  \r\n Detail: \r\n",
+            s
+        )
+        .as_str(),
+    );
 
     // Configure DBGW client
     let mut dbgw_client = DbGatewayServiceClient::new(channel);
@@ -79,7 +82,9 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .expect("[SMDB]: Failed to get metric host, uri, and port");
 
     // Http/web socket address is needed to serve metrics to prometheus
-    let web_addr: SocketAddr = metrics_addr.parse().expect("[SMDB]: Failed to parse metric host to address");
+    let web_addr: SocketAddr = metrics_addr
+        .parse()
+        .expect("[SMDB]: Failed to parse metric host to address");
 
     // Build metrics endpoint
     let routes = warp::get()

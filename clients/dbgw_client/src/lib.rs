@@ -19,7 +19,8 @@ impl DBGatewayClient {
 
         // "http://[::1]:50051"
         let s = format!("http://{}:{}", host, port);
-        let uri = s.parse::<Uri>()
+        let uri = s
+            .parse::<Uri>()
             .expect(format!("DBGatewayClient: Failed to parse server URI: {}", s).as_str());
 
         // println!("DBGatewayClient: Server URI: {}", &s);

@@ -1,99 +1,102 @@
-use std::error::Error;
-use std::fmt;
+// use autometrics::autometrics;
+use tonic::transport::Channel;
+use tonic::{Request, Response, Status};
 
-use serde::{Deserialize, Serialize};
-use tarpc::context::Context;
+use proto::binding::cmdb_service_server::CmdbService;
+use proto::binding::db_gateway_service_client::DbGatewayServiceClient;
+use proto::binding::*;
 
-use common::prelude::PortfolioConfig;
-use dbgw_client::DBGatewayClient;
-
-#[derive(Debug, Serialize, Deserialize)]
-pub struct CMDBError(pub String);
-
-impl Error for CMDBError {}
-
-impl fmt::Display for CMDBError {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "CMDBError: {}", self.0)
-    }
-}
-
-#[tarpc::service]
-pub trait CMDBService {
-    async fn create_portfolio_config(config: PortfolioConfig) -> Result<bool, CMDBError>;
-    async fn read_all_portfolio_configs() -> Result<Vec<PortfolioConfig>, CMDBError>;
-    async fn read_portfolio_config_by_id(id: u16) -> Result<Option<PortfolioConfig>, CMDBError>;
-    async fn update_portfolio_config(
-        data: PortfolioConfig,
-    ) -> Result<Option<PortfolioConfig>, CMDBError>;
-    async fn delete_portfolio_config(id: u16) -> Result<bool, CMDBError>;
-}
+use crate::SVC_ID;
 
 #[derive(Clone)]
 pub struct CMDBServer {
-    dbgw: DBGatewayClient,
+    dbgw: DbGatewayServiceClient<Channel>,
 }
 
 impl CMDBServer {
-    pub fn new(dbgw: DBGatewayClient) -> Self {
+    pub fn new(dbgw: DbGatewayServiceClient<Channel>) -> Self {
         Self { dbgw }
     }
 }
 
-#[tarpc::server]
-impl CMDBService for CMDBServer {
+#[tonic::async_trait]
+// #[autometrics]
+impl CmdbService for CMDBServer {
     async fn create_portfolio_config(
-        self,
-        _: Context,
-        config: PortfolioConfig,
-    ) -> Result<bool, CMDBError> {
-        let res = self.dbgw.create_portfolio_config(config).await;
-        match res {
-            Ok(res) => Ok(res),
-            Err(e) => Err(CMDBError(e.to_string())),
+        &self,
+        request: Request<ProtoPortfolioConfig>,
+    ) -> Result<Response<CreatePortfolioResponse>, Status> {
+        let mut client = self.dbgw.clone();
+
+        match client.create_portfolio_config(request).await {
+            Ok(res) => Ok(Response::new(CreatePortfolioResponse {
+                portfolio_created: res.into_inner().portfolio_created,
+            })),
+            Err(e) => Err(Status::internal(e.to_string())),
+        }
+    }
+
+    async fn read_portfolio_config(
+        &self,
+        request: Request<SinglePortfolioRequest>,
+    ) -> Result<Response<ReadPortfolioResponse>, Status> {
+        let mut client = self.dbgw.clone();
+
+        match client.read_portfolio_config(request).await {
+            Ok(res) => Ok(Response::new(ReadPortfolioResponse {
+                portfolio_config: res.into_inner().portfolio_config,
+            })),
+
+            Err(e) => Err(Status::internal(e.to_string())),
         }
     }
 
     async fn read_all_portfolio_configs(
-        self,
-        _: Context,
-    ) -> Result<Vec<PortfolioConfig>, CMDBError> {
-        let res = self.dbgw.read_all_portfolio_configs().await;
-        match res {
-            Ok(res) => Ok(res),
-            Err(e) => Err(CMDBError(e.to_string())),
-        }
-    }
+        &self,
+        request: Request<MultiPortfolioRequest>,
+    ) -> Result<Response<ReadAllPortfoliosResponse>, Status> {
+        let mut client = self.dbgw.clone();
 
-    async fn read_portfolio_config_by_id(
-        self,
-        _: Context,
-        id: u16,
-    ) -> Result<Option<PortfolioConfig>, CMDBError> {
-        let res = self.dbgw.read_portfolio_config_by_id(id).await;
-        match res {
-            Ok(res) => Ok(res),
-            Err(e) => Err(CMDBError(e.to_string())),
+        match client.read_all_portfolio_configs(request).await {
+            Ok(res) => Ok(Response::new(ReadAllPortfoliosResponse {
+                portfolio_configs: res.into_inner().portfolio_configs,
+            })),
+
+            Err(e) => Err(Status::internal(e.to_string())),
         }
     }
 
     async fn update_portfolio_config(
-        self,
-        _: Context,
-        data: PortfolioConfig,
-    ) -> Result<Option<PortfolioConfig>, CMDBError> {
-        let res = self.dbgw.update_portfolio_config(data).await;
-        match res {
-            Ok(res) => Ok(res),
-            Err(e) => Err(CMDBError(e.to_string())),
+        &self,
+        request: Request<ProtoPortfolioConfig>,
+    ) -> Result<Response<UpdatePortfolioResponse>, Status> {
+        let mut client = self.dbgw.clone();
+
+        match client.update_portfolio_config(request).await {
+            Ok(res) => Ok(Response::new(UpdatePortfolioResponse {
+                portfolio_updated: res.into_inner().portfolio_updated,
+            })),
+            Err(e) => Err(Status::internal(e.to_string())),
         }
     }
 
-    async fn delete_portfolio_config(self, _: Context, id: u16) -> Result<bool, CMDBError> {
-        let res = self.dbgw.delete_portfolio_config(id).await;
-        match res {
-            Ok(res) => Ok(res),
-            Err(e) => Err(CMDBError(e.to_string())),
+    async fn delete_portfolio_config(
+        &self,
+        request: Request<SinglePortfolioRequest>,
+    ) -> Result<Response<DeletePortfolioResponse>, Status> {
+        let mut client = self.dbgw.clone();
+
+        match client.delete_portfolio_config(request).await {
+            Ok(res) => Ok(Response::new(DeletePortfolioResponse {
+                portfolio_deleted: res.into_inner().portfolio_deleted,
+            })),
+            Err(e) => Err(Status::internal(e.to_string())),
         }
     }
+}
+
+pub fn get_svc_request() -> Request<SingleServiceRequest> {
+    Request::new(SingleServiceRequest {
+        service_id: SVC_ID as i32,
+    })
 }

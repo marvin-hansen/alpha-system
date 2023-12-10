@@ -2,8 +2,7 @@ use std::error::Error;
 use std::fmt;
 use tonic::transport::{Channel, Uri};
 
-
-use common::prelude::{HostEndpoint};
+use common::prelude::HostEndpoint;
 use proto::binding::smdb_service_client::SmdbServiceClient;
 
 mod prv_smdb;
@@ -14,9 +13,10 @@ pub struct SMDBProvider {
 }
 
 impl SMDBProvider {
-    pub async fn new(smdb_host: String, smdb_port:u16) -> Self {
+    pub async fn new(smdb_host: String, smdb_port: u16) -> Self {
         let s = format!("http://{}:{}", smdb_host, smdb_port);
-        let uri = s.parse::<Uri>()
+        let uri = s
+            .parse::<Uri>()
             .expect(format!("SMDBProvider: Failed to parse server URI: {}", s).as_str());
 
         // creating a channel that connects to server
@@ -49,4 +49,3 @@ impl fmt::Display for SMDBError {
         write!(f, "SMDBError: {}", self.0)
     }
 }
-

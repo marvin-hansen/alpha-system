@@ -19,11 +19,7 @@ impl DBGatewayClient {
         }
     }
 
-    pub async fn check_if_service_id_exists(
-        &self,
-        id: ServiceID,
-    ) -> Result<bool, DBGatewayError> {
-
+    pub async fn check_if_service_id_exists(&self, id: ServiceID) -> Result<bool, DBGatewayError> {
         let request = tonic::Request::new(SingleServiceRequest {
             service_id: id as i32,
         });
@@ -47,16 +43,13 @@ impl DBGatewayClient {
 
         let request = tonic::Request::new(MultiServicesRequest { services_id });
 
-        match  self.client.check_services_exists(request).await {
+        match self.client.check_services_exists(request).await {
             Ok(res) => Ok(res.into_inner().services_exist),
             Err(e) => Err(DBGatewayError(e.to_string())),
         }
     }
 
-    pub async fn check_if_service_id_online(
-        &self,
-        id: ServiceID,
-    ) -> Result<bool, DBGatewayError> {
+    pub async fn check_if_service_id_online(&self, id: ServiceID) -> Result<bool, DBGatewayError> {
         let request = tonic::Request::new(SingleServiceRequest {
             service_id: id as i32,
         });
@@ -81,7 +74,7 @@ impl DBGatewayClient {
 
         let mut client = self.client.clone();
 
-        match  client.check_services_online(request).await {
+        match client.check_services_online(request).await {
             Ok(res) => Ok(res.into_inner().services_online),
             Err(e) => Err(DBGatewayError(e.to_string())),
         }
@@ -183,7 +176,7 @@ impl DBGatewayClient {
 
         let mut client = self.client.clone();
 
-        match  client.delete_service(request).await {
+        match client.delete_service(request).await {
             Ok(res) => Ok(res.into_inner().service_deleted),
             Err(e) => Err(DBGatewayError(e.to_string())),
         }

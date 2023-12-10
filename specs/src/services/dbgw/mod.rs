@@ -53,7 +53,7 @@ fn get_endpoint() -> Endpoint {
 fn get_metric_config() -> MetricConfig {
     let metric_host = "0.0.0.0".to_string();
     let metric_uri = "metrics".to_string();
-    let metric_port = 8080;    // Default port is 8080
+    let metric_port = 8080; // Default port is 8080
 
     MetricConfig::new(metric_uri, metric_host, metric_port)
 }

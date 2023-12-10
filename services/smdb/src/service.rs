@@ -1,10 +1,10 @@
 use autometrics::autometrics;
-use tonic::{Request, Response, Status};
 use tonic::transport::Channel;
+use tonic::{Request, Response, Status};
 
-use proto::binding::*;
 use proto::binding::db_gateway_service_client::DbGatewayServiceClient;
 use proto::binding::smdb_service_server::SmdbService;
+use proto::binding::*;
 
 use crate::SVC_ID;
 
@@ -40,7 +40,6 @@ impl SmdbService for SMDBServer {
         &self,
         request: Request<MultiServicesRequest>,
     ) -> Result<Response<CheckServicesExistsResponse>, Status> {
-
         let mut client = self.dbgw.clone();
 
         match client.check_services_exists(request).await {

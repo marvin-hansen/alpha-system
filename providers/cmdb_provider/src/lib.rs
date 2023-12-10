@@ -1,7 +1,7 @@
+use proto::binding::smdb_service_client::SmdbServiceClient;
 use std::error::Error;
 use std::fmt;
 use tonic::transport::Channel;
-use proto::binding::smdb_service_client::SmdbServiceClient;
 
 #[derive(Debug, Clone)]
 pub struct CMDBProvider {

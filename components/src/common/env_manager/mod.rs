@@ -138,7 +138,7 @@ impl<'l> EnvManager<'l> {
             .get_svc_env(svc_id)
             .expect("Failed to get service environment");
 
-        let metric_host= svc.metrics_host().to_string();
+        let metric_host = svc.metrics_host().to_string();
         let metrics_uri = svc.metrics_uri().to_string();
         let metrics_port = *svc.metrics_port();
 

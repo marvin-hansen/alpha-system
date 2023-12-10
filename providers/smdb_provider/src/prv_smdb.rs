@@ -33,10 +33,7 @@ impl SMDBProvider {
         }
     }
 
-
-
     pub async fn check_if_service_id_online(&self, id: ServiceID) -> Result<bool, SMDBError> {
-
         let request = tonic::Request::new(SingleServiceRequest {
             service_id: id as i32,
         });
@@ -49,8 +46,10 @@ impl SMDBProvider {
         }
     }
 
-    pub async fn check_if_services_online(&self, services: Vec<ServiceID>) -> Result<bool, SMDBError> {
-
+    pub async fn check_if_services_online(
+        &self,
+        services: Vec<ServiceID>,
+    ) -> Result<bool, SMDBError> {
         let services_id = services.iter().map(|s| s.to_owned() as i32).collect();
 
         let request = tonic::Request::new(MultiServicesRequest { services_id });
@@ -77,7 +76,6 @@ impl SMDBProvider {
     }
 
     pub async fn set_service_offline(&self, id: ServiceID) -> Result<bool, SMDBError> {
-
         let request = tonic::Request::new(SingleServiceRequest {
             service_id: id as i32,
         });
