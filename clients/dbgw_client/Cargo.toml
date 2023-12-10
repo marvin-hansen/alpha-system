@@ -34,4 +34,3 @@ version = "0.1.0"
 tokio = { workspace = true }
 tonic = { workspace = true }
 prost = { workspace = true }
-serde = { version = "1.0.193", features = ["derive"] }

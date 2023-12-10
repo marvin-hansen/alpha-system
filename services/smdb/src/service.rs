@@ -40,6 +40,7 @@ impl SmdbService for SMDBServer {
         &self,
         request: Request<MultiServicesRequest>,
     ) -> Result<Response<CheckServicesExistsResponse>, Status> {
+
         let mut client = self.dbgw.clone();
 
         match client.check_services_exists(request).await {

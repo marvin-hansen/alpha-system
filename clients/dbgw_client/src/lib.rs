@@ -1,6 +1,5 @@
 use common::prelude::HostEndpoint;
 use proto::binding::db_gateway_service_client::DbGatewayServiceClient as DBGWClient;
-use serde::{Deserialize, Serialize};
 use std::error::Error;
 use std::fmt;
 use tonic::transport::{Channel, Uri};
@@ -20,15 +19,16 @@ impl DBGatewayClient {
 
         // "http://[::1]:50051"
         let s = format!("http://{}:{}", host, port);
-        let uri = s.parse::<Uri>().unwrap();
+        let uri = s.parse::<Uri>()
+            .expect(format!("DBGatewayClient: Failed to parse server URI: {}", s).as_str());
 
-        println!("Server URI: {}", &s);
+        // println!("DBGatewayClient: Server URI: {}", &s);
 
-        // creating a channel ie connection to server
+        // creating a channel that connects to server
         let channel = Channel::builder(uri)
             .connect()
             .await
-            .expect("Failed to connect to server");
+            .expect(format!("\r\n DBGatewayClient: Failed to connect to DBGW service on: {} \r\n  \r\n Detail: \r\n", s).as_str());
 
         let client = DBGWClient::new(channel);
 
@@ -36,7 +36,7 @@ impl DBGatewayClient {
     }
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug)]
 pub struct DBGatewayError(pub String);
 
 impl Error for DBGatewayError {}
