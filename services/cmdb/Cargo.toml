@@ -44,11 +44,6 @@ path = "../../components/svc_manager"
 version = "0.1.0"
 
 
-[dependencies.dbgw_client]
-path = "../../clients/dbgw_client"
-version = "0.1.0"
-
-
 [dependencies.smdb_provider]
 path = "../../providers/smdb_provider"
 version = "0.1.0"

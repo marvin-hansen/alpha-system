@@ -43,11 +43,6 @@ path = "../../components/svc_manager"
 version = "0.1.0"
 
 
-[dependencies.dbgw_client]
-path = "../../clients/dbgw_client"
-version = "0.1.0"
-
-
 [dependencies.proto]
 path = "../../proto"
 version = "0.1.0"
