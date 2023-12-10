@@ -6,6 +6,9 @@ use specs::services::get_all_service_configs;
 use crate::types::ServiceOP;
 
 pub async fn handle_service_op(client: &DBGatewayClient, op: ServiceOP) -> anyhow::Result<()> {
+
+    let mut client = client.clone();
+
     match op {
         ServiceOP::CreateAllService => {
             println!("Creating all services");
@@ -85,6 +88,7 @@ pub async fn handle_service_op(client: &DBGatewayClient, op: ServiceOP) -> anyho
                 .read_all_services()
                 .await
                 .expect("Failed to read all services");
+
             for service in services {
                 println!("{:?}", service.name());
             }
@@ -148,7 +152,7 @@ pub async fn handle_service_op(client: &DBGatewayClient, op: ServiceOP) -> anyho
         }
         ServiceOP::DeleteAllServices => {
             println!("Deleting all services");
-            let services = client
+            let services = client.clone()
                 .read_all_services()
                 .await
                 .expect("Failed to read all services");

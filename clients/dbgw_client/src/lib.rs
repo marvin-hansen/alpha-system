@@ -7,7 +7,7 @@ use tonic::transport::{Channel, Uri};
 mod cfg_gw;
 mod svc_gw;
 
-#[derive(Clone)]
+#[derive(Debug, Clone)]
 pub struct DBGatewayClient {
     client: DBGWClient<Channel>,
 }

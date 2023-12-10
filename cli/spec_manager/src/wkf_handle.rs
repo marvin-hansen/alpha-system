@@ -19,6 +19,9 @@ pub async fn handle_workflow_op(client: &DBGatewayClient, op: WorkflowOP) -> any
 }
 
 async fn create_read(client: &DBGatewayClient) -> anyhow::Result<()> {
+
+    let mut client = client.clone();
+
     println!("Creating all services");
     let services = get_all_service_configs();
     for service in services {

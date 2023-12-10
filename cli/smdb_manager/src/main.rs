@@ -5,7 +5,7 @@ use smdb_provider::SMDBProvider;
 mod svc_handle;
 mod svc_types;
 
-pub const SPEC_OP: ServiceOP = ServiceOP::CheckIfServiceIDExists;
+pub const SPEC_OP: ServiceOP = ServiceOP::CheckIfServicesExists;
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
