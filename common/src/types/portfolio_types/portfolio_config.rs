@@ -67,18 +67,17 @@ impl PortfolioConfig {
     pub fn from_proto(proto: ProtoPortfolioConfig) -> Result<PortfolioConfig, Error> {
         Ok(PortfolioConfig {
             portfolio_id: proto.portfolio_id as u32,
-            portfolio_description: proto.portfolio_description.into(),
+            portfolio_description: proto.portfolio_description,
             portfolio_account_type: AccountType::from(proto.portfolio_account_type),
-            portfolio_account_id: proto.portfolio_account_id.into(),
+            portfolio_account_id: proto.portfolio_account_id,
             portfolio_exchange_id: ExchangeID::from(proto.portfolio_exchange_id),
-            portfolio_currency: proto.portfolio_currency.into(),
+            portfolio_currency: proto.portfolio_currency,
             portfolio_cash: proto.portfolio_cash,
             portfolio_margin: proto.portfolio_margin,
             portfolio_max_drawdown: proto.portfolio_max_drawdown,
             portfolio_instruments: proto
                 .portfolio_instruments
                 .into_iter()
-                .map(|x| x.into())
                 .collect(),
             instrument_max_allocation: proto.instrument_max_allocation,
             instrument_max_drawdown: proto.instrument_max_drawdown,

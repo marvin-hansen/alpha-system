@@ -72,7 +72,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     // Build metrics endpoint
     let routes = warp::get()
         .and(warp::path(metrics_uri.clone()))
-        .map(|| prometheus_exporter::encode_http_response());
+        .map(prometheus_exporter::encode_http_response);
 
     // Build http web server for metrics with sigint handler
     let signal = shutdown_utils::signal_handler("http web server");

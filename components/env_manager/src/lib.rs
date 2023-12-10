@@ -154,7 +154,7 @@ impl<'l> EnvManager<'l> {
     /// The function checks if the service is initialized, and if not, it returns an InitError.
     pub fn get_svc_host_port(&self, svc_id: &ServiceID) -> Result<(String, u16), InitError> {
         // Check if the service is initialized
-        if !self.is_svc_env_initialized(&svc_id) {
+        if !self.is_svc_env_initialized(svc_id) {
             InitError(format!(
                 "[EnvManager:get_svc_host_port]: Service {:?} is not initialized",
                 svc_id

@@ -22,7 +22,7 @@ impl<'l> ServiceManager<'l> {
 impl<'l> ServiceManager<'l> {
     pub fn configure_svc_socket_addr(&self, svc_id: &ServiceID) -> Result<String, InitError> {
         if !self.is_service_initialized(svc_id) {
-            self.init_service(&svc_id)
+            self.init_service(svc_id)
                 .expect("[ServiceManager]: Failed to initialize service");
         }
 
@@ -54,7 +54,7 @@ impl<'l> ServiceManager<'l> {
         svc_id: &ServiceID,
     ) -> Result<(String, String, u16), InitError> {
         if !self.is_service_initialized(svc_id) {
-            self.init_service(&svc_id)
+            self.init_service(svc_id)
                 .expect("[ServiceManager]: Failed to initialize service");
         }
 
@@ -62,7 +62,7 @@ impl<'l> ServiceManager<'l> {
     }
 
     pub fn get_service_host_port(&self, svc_id: &ServiceID) -> Result<(String, u16), InitError> {
-        if !self.is_service_initialized(&svc_id) {
+        if !self.is_service_initialized(svc_id) {
             self.init_service(svc_id)
                 .expect("[ServiceManager]: Failed to initialize service");
         }

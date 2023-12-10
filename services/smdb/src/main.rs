@@ -43,13 +43,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let uri = s.parse::<Uri>().unwrap();
 
     // Configure a channel connection to DBGW service
-    let channel = Channel::builder(uri).connect().await.expect(
-        format!(
-            "\r\n [SMDB]: Failed to connect to DBGW service on: {} \r\n  \r\n Detail: \r\n",
-            s
-        )
-        .as_str(),
-    );
+    let channel = Channel::builder(uri).connect().await.unwrap_or_else(|_| panic!("\r\n [SMDB]: Failed to connect to DBGW service on: {} \r\n  \r\n Detail: \r\n",
+            s));
 
     // Configure DBGW client
     let mut dbgw_client = DbGatewayServiceClient::new(channel);
@@ -93,7 +88,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     // Build metrics endpoint
     let routes = warp::get()
         .and(warp::path(metrics_uri.clone()))
-        .map(|| prometheus_exporter::encode_http_response());
+        .map(prometheus_exporter::encode_http_response);
 
     // Build http web server for metrics with sigint handler
     let signal = shutdown_utils::signal_handler("http web server");

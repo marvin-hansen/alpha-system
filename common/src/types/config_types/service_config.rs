@@ -106,7 +106,7 @@ impl ServiceConfig {
         Ok(ServiceConfig {
             id: None,
             svc_id,
-            name: proto.name.into(),
+            name: proto.name,
             version: proto.version as u8,
             online: proto.online,
             description: proto.description,

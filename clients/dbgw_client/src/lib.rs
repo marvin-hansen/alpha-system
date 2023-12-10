@@ -21,7 +21,7 @@ impl DBGatewayClient {
         let s = format!("http://{}:{}", host, port);
         let uri = s
             .parse::<Uri>()
-            .expect(format!("DBGatewayClient: Failed to parse server URI: {}", s).as_str());
+            .unwrap_or_else(|_| panic!("DBGatewayClient: Failed to parse server URI: {}", s));
 
         // println!("DBGatewayClient: Server URI: {}", &s);
 
@@ -29,7 +29,7 @@ impl DBGatewayClient {
         let channel = Channel::builder(uri)
             .connect()
             .await
-            .expect(format!("\r\n DBGatewayClient: Failed to connect to DBGW service on: {} \r\n  \r\n Detail: \r\n", s).as_str());
+            .unwrap_or_else(|_| panic!("\r\n DBGatewayClient: Failed to connect to DBGW service on: {} \r\n  \r\n Detail: \r\n", s));
 
         let client = DBGWClient::new(channel);
 

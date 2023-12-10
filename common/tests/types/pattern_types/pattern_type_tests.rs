@@ -13,11 +13,11 @@ fn test_debug() {
 fn test_pattern_type_default_display() {
     let pattern_type = PatternType::Base;
     let expected = "Base";
-    let result = format!("{}", pattern_type.to_string());
+    let result = format!("{}", pattern_type);
     assert_eq!(result, expected);
 
     let pattern_type = PatternType::Extra;
     let expected = "Extra";
-    let result = format!("{}", pattern_type.to_string());
+    let result = format!("{}", pattern_type);
     assert_eq!(result, expected);
 }

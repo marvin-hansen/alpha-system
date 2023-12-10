@@ -17,13 +17,13 @@ impl SMDBProvider {
         let s = format!("http://{}:{}", smdb_host, smdb_port);
         let uri = s
             .parse::<Uri>()
-            .expect(format!("SMDBProvider: Failed to parse server URI: {}", s).as_str());
+            .unwrap_or_else(|_| panic!("SMDBProvider: Failed to parse server URI: {}", s));
 
         // creating a channel that connects to server
         let channel = Channel::builder(uri)
             .connect()
             .await
-            .expect(format!("\r\n [SMDBProvider]: Failed to connect to SMDB service on: {} \r\n  \r\n Detail: \r\n", s).as_str());
+            .unwrap_or_else(|_| panic!("\r\n [SMDBProvider]: Failed to connect to SMDB service on: {} \r\n  \r\n Detail: \r\n", s));
 
         let client = SmdbServiceClient::new(channel);
 
