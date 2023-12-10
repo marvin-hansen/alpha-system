@@ -1,6 +1,5 @@
 use autometrics::prometheus_exporter;
 use common::prelude::ServiceID;
-use components::prelude::*;
 use proto::binding::db_gateway_service_server::DbGatewayServiceServer;
 use service::DBGWServer;
 use service_utils::{print_utils, shutdown_utils};
@@ -8,6 +7,8 @@ use std::error::Error;
 use std::net::SocketAddr;
 use tonic::transport::Server;
 use warp::Filter;
+use components::prelude::{CfgManager, CtxManager, DnsManager, EnvManager, ServiceManager};
+use db_manager::DBManager;
 
 mod service;
 const SVC_ID: ServiceID = ServiceID::DBGW;

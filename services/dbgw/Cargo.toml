@@ -25,6 +25,11 @@ path = "../../components"
 version = "0.1.0"
 
 
+[dependencies.db_manager]
+path = "../../components/db_manager"
+version = "0.1.0"
+
+
 [dependencies.proto]
 path = "../../proto"
 version = "0.1.0"

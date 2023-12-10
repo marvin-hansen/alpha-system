@@ -3,7 +3,7 @@ use surrealdb::Error;
 use tonic::{Request, Response, Status};
 
 use common::prelude::{PortfolioConfig, ServiceConfig, ServiceID};
-use components::prelude::DBManager;
+use db_manager::DBManager;
 use proto::binding::db_gateway_service_server::DbGatewayService;
 use proto::binding::*;
 

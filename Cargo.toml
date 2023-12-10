@@ -8,6 +8,7 @@ members = [
     "clients/dbgw_client",
     "common",
     "components",
+    "components/db_manager",
     "proto",
     "providers/cmdb_provider",
     "providers/smdb_provider",
