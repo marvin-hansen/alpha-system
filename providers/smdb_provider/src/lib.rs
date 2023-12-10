@@ -8,7 +8,7 @@ use proto::binding::smdb_service_client::SmdbServiceClient;
 
 mod prv_smdb;
 
-#[derive(Clone)]
+#[derive(Debug, Clone)]
 pub struct SMDBProvider {
     client: SmdbServiceClient<Channel>,
 }
