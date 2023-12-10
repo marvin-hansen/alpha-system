@@ -43,8 +43,12 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let uri = s.parse::<Uri>().unwrap();
 
     // Configure a channel connection to DBGW service
-    let channel = Channel::builder(uri).connect().await.unwrap_or_else(|_| panic!("\r\n [SMDB]: Failed to connect to DBGW service on: {} \r\n  \r\n Detail: \r\n",
-            s));
+    let channel = Channel::builder(uri).connect().await.unwrap_or_else(|_| {
+        panic!(
+            "\r\n [SMDB]: Failed to connect to DBGW service on: {} \r\n  \r\n Detail: \r\n",
+            s
+        )
+    });
 
     // Configure DBGW client
     let mut dbgw_client = DbGatewayServiceClient::new(channel);

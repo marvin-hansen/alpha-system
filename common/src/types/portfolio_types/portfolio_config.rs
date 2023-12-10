@@ -75,10 +75,7 @@ impl PortfolioConfig {
             portfolio_cash: proto.portfolio_cash,
             portfolio_margin: proto.portfolio_margin,
             portfolio_max_drawdown: proto.portfolio_max_drawdown,
-            portfolio_instruments: proto
-                .portfolio_instruments
-                .into_iter()
-                .collect(),
+            portfolio_instruments: proto.portfolio_instruments.into_iter().collect(),
             instrument_max_allocation: proto.instrument_max_allocation,
             instrument_max_drawdown: proto.instrument_max_drawdown,
             portfolio_free_margin: proto.portfolio_free_margin,
