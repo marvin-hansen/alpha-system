@@ -6,7 +6,10 @@ comment:
 ignore:
   - "cli"  # ignore folders and all its contents
   - "clients"
+  - "proto"
+  - "providers"
   - "sbe/bindings"
   - "sbe/schema"
+  - "service_utils"
   - "services"
-  - "providers"
+  - "tools"
