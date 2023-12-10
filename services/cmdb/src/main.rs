@@ -13,7 +13,7 @@ use proto::binding::db_gateway_service_client::DbGatewayServiceClient;
 use service_utils::{print_utils, shutdown_utils};
 use smdb_provider::SMDBProvider;
 
-pub mod service;
+mod service;
 
 const SVC_ID: ServiceID = ServiceID::CMDB;
 
@@ -31,14 +31,14 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .get_service_host_port(&SMDB)
         .expect("[CMDB]: Failed to get host and port for DBGW");
 
-    let smdb_provider = SMDBProvider::new(smdb_host, smdb_port).await;
+    let smdb_manager = SMDBProvider::new(smdb_host, smdb_port).await;
 
     //get all dependencies
     let dependencies = service_manager.get_service_dependencies();
 
     // Check if all dependencies are online, abort of anyone is missing.
     for d in dependencies {
-        let available = smdb_provider
+        let available = smdb_manager
             .check_if_service_id_exists(d)
             .await
             .expect("[CMDB]: Failed to check if service dependency exists");
@@ -70,7 +70,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     );
 
     // Configure DBGW client
-    let mut dbgw_client = DbGatewayServiceClient::new(channel);
+    let dbgw_client = DbGatewayServiceClient::new(channel);
 
     // Configure service ip and port automatically relative to the detected context.
     let service_addr = service_manager
@@ -122,8 +122,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let web_handle = tokio::spawn(web_server);
 
     // Set service to online
-    dbgw_client
-        .set_service_online(service::get_svc_request())
+    smdb_manager
+        .set_service_online(SVC_ID)
         .await
         .expect("[CMDB]: Failed to set service online");
 
@@ -132,8 +132,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
     match tokio::try_join!(grpc_handle, web_handle) {
         Ok(_) => {}
         Err(e) => {
-            dbgw_client
-                .set_service_offline(service::get_svc_request())
+            smdb_manager
+                .set_service_offline(SVC_ID)
                 .await
                 .expect("[CMDB]: Failed to set service offline!");
             println!("[CMDB]: Failed to start gRPC and HTTP server: {:?}", e);
@@ -141,8 +141,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
     }
 
     // Set service offline
-    dbgw_client
-        .set_service_offline(service::get_svc_request())
+    smdb_manager
+        .set_service_offline(SVC_ID)
         .await
         .expect("[CMDB]: Failed to set service offline");
 

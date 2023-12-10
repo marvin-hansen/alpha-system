@@ -1,27 +1,32 @@
-use std::net::IpAddr;
-use std::str::FromStr;
-
-use futures::{future, prelude::*};
-use tarpc::server;
-use tarpc::server::incoming::Incoming;
-use tarpc::server::Channel;
-use tarpc::tokio_serde::formats::Bincode;
+use autometrics::prometheus_exporter;
+use std::error::Error;
+use std::net::SocketAddr;
 
 use common::prelude::ServiceID;
 use components::prelude::{CfgManager, CtxManager, DnsManager, EnvManager, ServiceManager};
-use qdgw_service::service::{QDGateway, QDGatewayServer};
-use service_utils::print_utils;
+use service_utils::{print_utils, shutdown_utils};
 use smdb_provider::SMDBProvider;
+use warp::Filter;
+
+mod service;
+
+const SVC_ID: ServiceID = ServiceID::QDGW;
 
 #[tokio::main]
-async fn main() -> anyhow::Result<()> {
-    let svc_id = ServiceID::QDGW;
-    let ctx_manager = CtxManager::new();
-    let dns_manager = DnsManager::new(&ctx_manager);
-    let cfg_manager = CfgManager::new(svc_id, &ctx_manager);
-    let svm_manager = EnvManager::new(&ctx_manager, &dns_manager);
-    let service_manager = ServiceManager::new(&cfg_manager, &svm_manager);
-    let smdb_provider = SMDBProvider::new(&service_manager).await;
+async fn main() -> Result<(), Box<dyn Error>> {
+    // Setup autoconfiguration.
+    let ctx_manager = async { CtxManager::new() }.await;
+    let dns_manager = async { DnsManager::new(&ctx_manager) }.await;
+    let cfg_manager = async { CfgManager::new(SVC_ID, &ctx_manager) }.await;
+    let svm_manager = async { EnvManager::new(&ctx_manager, &dns_manager) }.await;
+    let service_manager = async { ServiceManager::new(&cfg_manager, &svm_manager) }.await;
+
+    // pull SMDB endpoint from auto config
+    let (smdb_host, smdb_port) = service_manager
+        .get_service_host_port(&ServiceID::SMDB)
+        .expect("[QDGW]: Failed to get host and port for DBGW");
+
+    let smdb_manager = SMDBProvider::new(smdb_host, smdb_port).await;
 
     //get all dependencies
     let dependencies = service_manager.get_service_dependencies();
@@ -30,7 +35,7 @@ async fn main() -> anyhow::Result<()> {
     if !dependencies.is_empty() {
         // Check if all dependencies are online, abort of anyone is missing.
         for d in dependencies {
-            let available = smdb_provider
+            let available = smdb_manager
                 .check_if_service_id_exists(d)
                 .await
                 .expect("[QDGW]: Failed to check if service dependency exists");
@@ -44,42 +49,60 @@ async fn main() -> anyhow::Result<()> {
         }
     }
 
-    // service_manager configures ip and port automatically relative to the detected context.
-    let (host_ip, port) = service_manager
-        .get_service_host_port(svc_id)
-        .expect("[QDGW]: Failed to get CMDB host and port");
-    let ip = IpAddr::from_str(&host_ip).expect("CMDB: Failed to parse host ip");
-    let server_addr = (ip, port);
+    // Configure service ip and port automatically relative to the detected context.
+    let service_addr = service_manager
+        .configure_svc_socket_addr(&SVC_ID)
+        .expect("[QDGW]: Failed to get host and port");
 
-    // Dummy endpoint until service is migrated to new service model with metrics endpoint
-    let metrics_port = 8080;
-    let metrics_uri = "metrics".to_string();
+    // Configure http metrics endpoint ip and port automatically relative to the detected context.
+    let (metrics_addr, metrics_uri) = service_manager
+        .configure_metrics_socket_addr_uri(&SVC_ID)
+        .expect("[QDGW]: Failed to get metric host, uri, and port");
 
-    // Set CMDB service to online via SMDB
-    smdb_provider
-        .set_service_online(svc_id)
+    // Http/web socket address is needed to serve metrics to prometheus
+    let web_addr: SocketAddr = metrics_addr
+        .parse()
+        .expect("[QDGW]: Failed to parse metric host to address");
+
+    // Build metrics endpoint
+    let routes = warp::get()
+        .and(warp::path(metrics_uri.clone()))
+        .map(|| prometheus_exporter::encode_http_response());
+
+    // Build http web server for metrics with sigint handler
+    let signal = shutdown_utils::signal_handler("http web server");
+    let (_, web_server) = warp::serve(routes).bind_with_graceful_shutdown(web_addr, signal);
+
+    // Create a handler for each server https://github.com/hyperium/tonic/discussions/740
+    // let grpc_handle = tokio::spawn(grpc_server);
+    let web_handle = tokio::spawn(web_server);
+
+    // Set service to online
+    smdb_manager
+        .set_service_online(SVC_ID)
         .await
-        .expect("[QDGW]: Failed to set CMDB service to online");
+        .expect("[QDGW]: Failed to set service online");
 
-    print_utils::print_start_header(&svc_id, server_addr.1, &metrics_uri, metrics_port);
+    // Start all servers jointly
+    print_utils::print_start_header(&SVC_ID, &service_addr, &metrics_addr, &metrics_uri);
+    match tokio::try_join!(web_handle) {
+        Ok(_) => {}
+        Err(e) => {
+            smdb_manager
+                .set_service_offline(SVC_ID)
+                .await
+                .expect("[QDGW]: Failed to set service offline!");
+            println!("[QDGW]: Failed to start gRPC and HTTP server: {:?}", e);
+        }
+    }
 
-    let mut listener = tarpc::serde_transport::tcp::listen(&server_addr, Bincode::default).await?;
-    listener.config_mut().max_frame_length(usize::MAX);
-    listener
-        // Ignore accept errors.
-        .filter_map(|r| future::ready(r.ok()))
-        .map(server::BaseChannel::with_defaults)
-        // Limit channels to 1 per IP.
-        .max_channels_per_key(1, |t| t.transport().peer_addr().unwrap().ip())
-        // serve is generated by the service attribute.
-        .map(|channel| {
-            let server = QDGatewayServer::new();
-            channel.execute(server.serve())
-        })
-        // Max 10 channels.
-        .buffer_unordered(10)
-        .for_each(|_| async {})
-        .await;
+    // Set service offline
+    smdb_manager
+        .set_service_offline(SVC_ID)
+        .await
+        .expect("[QDGW]: Failed to set service offline");
+
+    print_utils::print_stop_header(&SVC_ID);
 
     Ok(())
 }

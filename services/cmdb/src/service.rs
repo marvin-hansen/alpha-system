@@ -6,8 +6,6 @@ use proto::binding::cmdb_service_server::CmdbService;
 use proto::binding::db_gateway_service_client::DbGatewayServiceClient;
 use proto::binding::*;
 
-use crate::SVC_ID;
-
 #[derive(Clone)]
 pub struct CMDBServer {
     dbgw: DbGatewayServiceClient<Channel>,
@@ -93,10 +91,4 @@ impl CmdbService for CMDBServer {
             Err(e) => Err(Status::internal(e.to_string())),
         }
     }
-}
-
-pub fn get_svc_request() -> Request<SingleServiceRequest> {
-    Request::new(SingleServiceRequest {
-        service_id: SVC_ID as i32,
-    })
 }
