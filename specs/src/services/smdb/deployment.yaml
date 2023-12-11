@@ -12,9 +12,9 @@ spec:
   type: ClusterIP
   ports:
     - name: main-port
-      port: 5050
+      port: 7070
       protocol: TCP
-      targetPort: 5050
+      targetPort: 7070
     - name: metrics-port
       port: 8080
       protocol: TCP
@@ -52,19 +52,19 @@ spec:
                   key: DNS_SERVER
 
           ports:
-            - containerPort: 5050
+            - containerPort: 7070
             - containerPort: 8080
 
           livenessProbe:
             grpc:
-              port: 5050
+              port: 7070
             initialDelaySeconds: 3
             failureThreshold: 1
             periodSeconds: 3
 
           startupProbe:
             grpc:
-              port: 5050
+              port: 7070
             initialDelaySeconds: 1
             failureThreshold: 10
             periodSeconds: 3
