@@ -57,9 +57,9 @@ fn test_default() {
     let config = DBConfig::default();
 
     assert_eq!(config.port(), 8000);
-    assert_eq!(config.host(), &"localhost".to_string());
-    assert_eq!(config.username(), &"None".to_string());
-    assert_eq!(config.password(), &"None".to_string());
+    assert_eq!(config.host(), &"0.0.0.0".to_string());
+    assert_eq!(config.username(), &"root".to_string());
+    assert_eq!(config.password(), &"root".to_string());
     assert_eq!(config.client_name(), &"dbgw".to_string());
 }
 
