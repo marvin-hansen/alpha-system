@@ -28,7 +28,11 @@ impl UdpServer {
             // If so then we try to send it back to the original source, waiting
             // until it's writable and we're able to do so.
             if let Some((size, peer)) = to_send {
-                let amt = socket.send_to(&buf[..size], &peer)
+                let data = &mut buf[..size];
+
+                process_data(&data).await.expect("Failed to process data");
+
+                let amt = socket.send_to(&mut buf[..size], &peer)
                     .await
                     .expect("Failed to send data ");
 
@@ -40,4 +44,12 @@ impl UdpServer {
             to_send = Some(socket.recv_from(&mut buf).await?);
         }
     }
+
+}
+
+async fn process_data(data: &[u8]) -> Result<(), io::Error> {
+
+    println!("Echoed {} ", String::from_utf8_lossy(data));
+
+    Ok(())
 }

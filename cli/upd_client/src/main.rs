@@ -61,8 +61,11 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let data = get_stdin_data().expect("Failed to read data from stdin");
 
     socket.send(&data).await.expect("Failed to send data to address");
+
     let mut data = vec![0u8; MAX_DATAGRAM_SIZE];
-    let len = socket.recv(&mut data).await?;
+    let len = socket.recv(&mut data).await
+        .expect("Failed to receive data from address");
+
     println!(
         "Received {} bytes:\n{}",
         len,
