@@ -36,7 +36,7 @@ fn get_endpoint() -> Endpoint {
     let endpoint_description =
         "Access to the SMDB service registry via gRPC on baseUri:7070".to_string();
     let endpoint_uri = "/".to_string();
-    let endpoint_port = 7070;
+    let endpoint_port = 5050;
     let endpoint_protocol = ProtocolType::GRPC;
     let endpoint_encoding = Encoding::Protobuf;
 

@@ -31,7 +31,7 @@ pub fn qdgw_service_config() -> ServiceConfig {
 }
 
 fn get_endpoint() -> Endpoint {
-    let endpoint_name = "qdg Endpoint".to_string();
+    let endpoint_name = "qdgw Endpoint".to_string();
     let endpoint_version = 1;
     let endpoint_description = "Access to quantitative data via gRPC on baseUri:4040".to_string();
     let endpoint_uri = "/".to_string();

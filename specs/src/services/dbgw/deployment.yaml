@@ -1,0 +1,72 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dbgw-service
+  namespace: default
+
+spec:
+  selector:
+    app: dbgw
+  sessionAffinity: None
+  type: ClusterIP
+  ports:
+    - name: main-port
+      port: 6060
+      protocol: TCP
+      targetPort: 6060
+    - name: metrics-port
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dbgw
+  namespace: default
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dbgw
+  template:
+    metadata:
+      labels:
+        app: dbgw
+    spec:
+      containers:
+        - name: dbgw
+          image: gcr.io/future-309012/dbgw:latest
+          imagePullPolicy: IfNotPresent
+
+          env:
+            - name: ENV
+              value: "CLUSTER"
+
+            - name: DNS_SERVER
+              valueFrom:
+                secretKeyRef:
+                  name: dns-access
+                  key: DNS_SERVER
+
+          ports:
+            - containerPort: 6060
+            - containerPort: 8080
+
+          livenessProbe:
+            grpc:
+              port: 9090
+            initialDelaySeconds: 3
+            failureThreshold: 1
+            periodSeconds: 3
+
+          startupProbe:
+            grpc:
+              port: 9090
+            initialDelaySeconds: 1
+            failureThreshold: 10
+            periodSeconds: 3
