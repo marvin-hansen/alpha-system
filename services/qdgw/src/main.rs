@@ -1,6 +1,7 @@
 use autometrics::prometheus_exporter;
 use std::error::Error;
 use std::net::SocketAddr;
+use tokio::net::UdpSocket;
 
 use common::prelude::ServiceID;
 use ctx_manager::CtxManager;
@@ -13,8 +14,9 @@ use common::prelude::ServiceID::SMDB;
 use service_utils::{print_utils, shutdown_utils};
 use smdb_provider::SMDBProvider;
 use warp::Filter;
+use crate::udp_service::UdpServer;
 
-mod service;
+mod udp_service;
 
 const SVC_ID: ServiceID = ServiceID::QDGW;
 
@@ -79,11 +81,14 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let signal = shutdown_utils::signal_handler("http web server");
     let (_, web_server) = warp::serve(routes).bind_with_graceful_shutdown(web_addr, signal);
 
-    // Create a handler for each server https://github.com/hyperium/tonic/discussions/740
-    // let grpc_handle = tokio::spawn(grpc_server);
-    let web_handle = tokio::spawn(web_server);
+    let socket = UdpSocket::bind(&service_addr).await.expect("[QDGW]: Failed to bind to address");
+    let buf = vec![0; 1024];
+    let server = UdpServer::new(socket, buf, None);
 
-    // Set service to online
+    // Create a handler for each server https://github.com/hyperium/tonic/discussions/740
+    let web_handle = tokio::spawn(web_server);
+    let udp_handle = tokio::spawn(server.run());
+
     smdb_manager
         .set_service_online(SVC_ID)
         .await
@@ -91,7 +96,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     // Start all servers jointly
     print_utils::print_start_header(&SVC_ID, &service_addr, &metrics_addr, &metrics_uri);
-    match tokio::try_join!(web_handle) {
+    match tokio::try_join!(web_handle, udp_handle) {
         Ok(_) => {}
         Err(e) => {
             smdb_manager

@@ -5,6 +5,7 @@ resolver = "2"
 members = [
     "cli/smdb_manager",
     "cli/spec_manager",
+    "cli/upd_client",
     "clients/dbgw_client",
     "common",
     "components/db_manager",
