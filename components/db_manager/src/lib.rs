@@ -1,6 +1,8 @@
 use std::fmt::Debug;
-use surrealdb::engine::local;
+
 use surrealdb::Surreal;
+use surrealdb::engine::remote::ws::{Client, Ws};
+use surrealdb::opt::auth::Root;
 
 use common::prelude::DBConfig;
 
@@ -9,29 +11,38 @@ mod db_svc;
 
 #[derive(Clone, Debug)]
 pub struct DBManager {
-    db: Surreal<local::Db>,
+    db: Surreal<Client>,
 }
 
 impl DBManager {
-    pub async fn new_offline(db_config: &DBConfig) -> Self {
-        let ns = db_config.db_namespace();
+    pub async fn new(db_config: &DBConfig) -> Self {
+        // Extract DB config parameters
+        let db_host = db_config.host();
+        let db_port = db_config.port();
+        let db_address = format!("{}:{}", db_host, db_port);
+        //
+        let db_ns = db_config.db_namespace();
         let db_name = db_config.db_name();
+        //
+        let db_user = db_config.username();
+        let db_pass = db_config.password();
 
-        let db: Surreal<local::Db> = Surreal::new::<local::Mem>(()).await.unwrap();
-        db.use_ns(ns).use_db(db_name).await.unwrap();
+        // Connect to the server
+        let db = Surreal::new::<Ws>(db_address)
+            .await
+            .expect("Failed to connect to Surreal DB server");
+
+        // Signin as a namespace, database, or root user
+        db.signin(Root {
+            username: db_user,
+            password: db_pass,
+        }).await.expect("Failed to sign in to Surreal DB server");
+
+        // Select a specific namespace / database
+        db.use_db(db_name).await.expect("Failed to set db name");
+        db.use_ns(db_ns).await.expect("Failed to set namespace");
 
         Self { db }
     }
 }
 
-impl Default for DBManager {
-    fn default() -> Self {
-        // How do I synchronously return a value calculated in an asynchronous Future?
-        // https://stackoverflow.com/questions/52521201/how-do-i-synchronously-return-a-value-calculated-in-an-asynchronous-future
-        use futures::executor; // 0.3.1
-        let db_config = DBConfig::default();
-        let db = executor::block_on(Self::new_offline(&db_config));
-
-        db
-    }
-}

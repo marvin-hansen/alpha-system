@@ -2,7 +2,6 @@ use std::error::Error;
 use std::fmt;
 use tonic::transport::{Channel, Uri};
 
-use common::prelude::HostEndpoint;
 use proto::binding::cmdb_service_client::CmdbServiceClient;
 
 mod prv_cmdb;
@@ -13,9 +12,7 @@ pub struct CmdbManager {
 }
 
 impl CmdbManager {
-    pub async fn new(config: HostEndpoint<'_>) -> Self {
-        let port = config.port();
-        let host = config.host_uri().to_string();
+    pub async fn new(host: String, port: u16) -> Self {
 
         let s = format!("http://{}:{}", host, port);
         let uri = s

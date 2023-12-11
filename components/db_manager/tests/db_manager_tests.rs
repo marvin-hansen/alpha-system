@@ -6,7 +6,7 @@ use specs::prelude::{cmdb_service_config, db_config_ci, smdb_service_config};
 
 async fn get_dbm() -> Result<DBManager, Error> {
     let config = db_config_ci();
-    let dbm = DBManager::new_offline(&config).await;
+    let dbm = DBManager::new_in_memory(&config).await;
     Ok(dbm)
 }
 

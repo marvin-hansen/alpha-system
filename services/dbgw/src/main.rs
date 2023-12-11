@@ -31,7 +31,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     // Configure database manager
     let db_config = cfg_manager.get_db_config();
-    let dbm = DBManager::new_offline(&db_config).await;
+    let dbm = DBManager::new(&db_config).await;
 
     // Configure service ip and port automatically relative to the detected context.
     let service_addr = service_manager

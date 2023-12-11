@@ -7,7 +7,7 @@ use db_manager::DBManager;
 use proto::binding::db_gateway_service_server::DbGatewayService;
 use proto::binding::*;
 
-#[derive(Debug, Default)]
+#[derive(Clone)]
 pub struct DBGWServer {
     dbm: DBManager,
 }

@@ -2,7 +2,6 @@ use std::error::Error;
 use std::fmt;
 use tonic::transport::{Channel, Uri};
 
-use common::prelude::HostEndpoint;
 use proto::binding::smdb_service_client::SmdbServiceClient;
 
 mod prv_smdb;
@@ -13,11 +12,8 @@ pub struct SMDBProvider {
 }
 
 impl SMDBProvider {
-    pub async fn new(config: HostEndpoint<'_>) -> Self {
-        let port = config.port();
-        let host = config.host_uri().to_string();
-
-        let s = format!("http://{}:{}", host, port);
+    pub async fn new(host: String, smdb_port: u16) -> Self {
+        let s = format!("http://{}:{}", host, smdb_port);
         let uri = s
             .parse::<Uri>()
             .unwrap_or_else(|_| panic!("[SMDBProvider]: Failed to parse server URI: {}", s));

@@ -131,11 +131,11 @@ impl Default for DBConfig {
     fn default() -> Self {
         Self {
             port: 8000,
-            host: "localhost".to_string(),
+            host: "0.0.0.0".to_string(),
             db_name: "test".to_string(),
             db_namespace: "test".to_string(),
-            username: "None".to_string(),
-            password: "None".to_string(),
+            username: "root".to_string(),
+            password: "root".to_string(),
             client_name: String::from("dbgw"),
         }
     }
