@@ -7,6 +7,7 @@ help:
 	@echo '    make build   	Builds the code base incrementally (fast) for dev.'
 	@echo '    make bench   	Runs all benchmarks across all crates.'
 	@echo '    make check   	Checks the code base for security vulnerabilities.'
+	@echo '    make db   		Starts the local development database'
 	@echo '    make fix   		Fixes linting issues as reported by clippy.'
 	@echo '    make format   	Formats call code according to cargo fmt style.'
 	@echo '    make install   	Tests and installs all make script dependencies.'
@@ -36,6 +37,11 @@ check:
 .PHONY: clean
 clean:
 	@source scripts/clean.sh
+
+
+.PHONY: db
+db:
+	@source scripts/db.sh
 
 
 .PHONY: fix
