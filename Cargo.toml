@@ -5,6 +5,7 @@ resolver = "2"
 members = [
     "cli/smdb_manager",
     "cli/spec_manager",
+    "cli/zmq_manager",
     "clients/dbgw_client",
     "common",
     "components/db_manager",
@@ -16,8 +17,8 @@ members = [
     "proto",
     "providers/cmdb_provider",
     "providers/smdb_provider",
-    "sbe/bindings",
-    "sbe/messages",
+    "sbe/sbe_bindings",
+    "sbe/sbe_messages",
     "service_utils",
     "services/cmdb",
     "services/dbgw",
@@ -37,7 +38,6 @@ authors = ["Marvin Hansen <marvin.hansen@gmail.com>"]
 
 [workspace.dependencies]
 autometrics = { version = "1", features = ["prometheus-exporter"] }
-anyhow = "1.0"
 async-std = "1.12"
 ctrlc = "3.4"
 futures = "0.3"

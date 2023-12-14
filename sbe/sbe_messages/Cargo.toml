@@ -1,5 +1,5 @@
 [package]
-name = "messages"
+name = "sbe_messages"
 version = "0.1.0"
 edition.workspace = true
 rust-version.workspace = true
@@ -11,12 +11,12 @@ authors.workspace = true
 
 
 [lib]
-name = "messages"
+name = "sbe_messages"
 path = "src/lib.rs"
 
 
 [dependencies.sbe_bindings]
-path = "../bindings"
+path = "../sbe_bindings"
 version = "0.1.0"
 
 
