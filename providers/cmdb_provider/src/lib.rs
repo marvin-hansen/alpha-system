@@ -13,7 +13,6 @@ pub struct CmdbManager {
 
 impl CmdbManager {
     pub async fn new(host: String, port: u16) -> Self {
-
         let s = format!("http://{}:{}", host, port);
         let uri = s
             .parse::<Uri>()

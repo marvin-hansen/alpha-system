@@ -8,7 +8,6 @@ pub const SPEC_OP: ServiceOP = ServiceOP::CheckIfServicesExists;
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
-
     let host = "0.0.0.0".to_string();
     let port = 7070;
 

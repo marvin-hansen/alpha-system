@@ -6,4 +6,4 @@ set -o pipefail
 command cargo clean
 
 command rm -rf sbe/bindings
-command rm -rf sbe/car.sbeir
+command rm sbe_hashes.md5

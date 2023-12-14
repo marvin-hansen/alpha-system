@@ -1,54 +1,63 @@
-use autometrics::prometheus_exporter;
 use std::error::Error;
 use std::net::SocketAddr;
-use tokio::net::UdpSocket;
 
+use autometrics::prometheus_exporter;
+use warp::Filter;
+
+use cfg_manager::CfgManager;
 use common::prelude::ServiceID;
+use common::prelude::ServiceID::SMDB;
 use ctx_manager::CtxManager;
 use dns_manager::DnsManager;
 use env_manager::EnvManager;
-use svc_manager::ServiceManager;
-
-use cfg_manager::CfgManager;
-use common::prelude::ServiceID::SMDB;
 use service_utils::{print_utils, shutdown_utils};
 use smdb_provider::SMDBProvider;
-use warp::Filter;
-use crate::udp_service::UdpServer;
+use svc_manager::ServiceManager;
 
-mod udp_service;
+use crate::service::Server;
+
+mod service;
 
 const SVC_ID: ServiceID = ServiceID::QDGW;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
-    // Setup autoconfiguration.
+    //
+    //Creates a new instance of the Context Manager.
     let ctx_manager = async { CtxManager::new() }.await;
+    //Creates a new instance of the DNS Manager.
     let dns_manager = async { DnsManager::new(&ctx_manager) }.await;
+    //Creates a new instance of the Configuration Manager.
     let cfg_manager = async { CfgManager::new(SVC_ID, &ctx_manager) }.await;
+    //Creates a new instance of the Environment Variable Manager.
     let svm_manager = async { EnvManager::new(&ctx_manager, &dns_manager) }.await;
+    //Creates a new instance of the Service Manager.
     let service_manager = async { ServiceManager::new(&cfg_manager, &svm_manager) }.await;
 
-    // pull SMDB endpoint from auto config
+    //Retrieves the host and port of the Service Manager Database (SMDB) from the auto-configuration.
     let (smdb_host, smdb_port) = service_manager
         .get_service_host_port(&SMDB)
         .expect("[CMDB]: Failed to get host and port for DBGW");
 
+    //Creates a new instance of the Service Manager Database (SMDB) Provider.
     let smdb_manager = SMDBProvider::new(smdb_host, smdb_port).await;
 
-    //get all dependencies
+    //Retrieves a list of all service dependencies for the current service.
     let dependencies = service_manager.get_service_dependencies();
 
-    // Check if there are any dependencies
+    //Checks if the list of dependencies is empty.
     if !dependencies.is_empty() {
-        // Check if all dependencies are online, abort of anyone is missing.
+        //Iterates over the list of dependencies.
         for d in dependencies {
+            //Checks if the Service Manager Database (SMDB) contains the specified service ID.
             let available = smdb_manager
                 .check_if_service_id_exists(d)
                 .await
                 .expect("[QDGW]: Failed to check if service dependency exists");
 
+            //Checks if the service is available.
             if !available {
+                //Panics if the service is not available.
                 panic!(
                     "[QDGW]: Service dependency {:?} is not available please start it",
                     d
@@ -57,48 +66,54 @@ async fn main() -> Result<(), Box<dyn Error>> {
         }
     }
 
-    // Configure service ip and port automatically relative to the detected context.
+    //Configures the IP address and port of the current service automatically based on the detected context.
     let service_addr = service_manager
         .configure_svc_socket_addr(&SVC_ID)
         .expect("[QDGW]: Failed to get host and port");
 
-    // Configure http metrics endpoint ip and port automatically relative to the detected context.
+    //Configures the IP address and port of the HTTP metrics endpoint automatically based on the detected context.
     let (metrics_addr, metrics_uri) = service_manager
         .configure_metrics_socket_addr_uri(&SVC_ID)
         .expect("[QDGW]: Failed to get metric host, uri, and port");
 
-    // Http/web socket address is needed to serve metrics to prometheus
+    //Creates a SocketAddr instance from the metrics address string.
     let web_addr: SocketAddr = metrics_addr
         .parse()
         .expect("[QDGW]: Failed to parse metric host to address");
 
-    // Build metrics endpoint
+    //Creates a new Warp filter for the metrics endpoint.
     let routes = warp::get()
         .and(warp::path(metrics_uri.clone()))
         .map(prometheus_exporter::encode_http_response);
 
-    // Build http web server for metrics with sigint handler
+    //Creates a new Warp filter for the metrics endpoint with a graceful shutdown handler.
     let signal = shutdown_utils::signal_handler("http web server");
     let (_, web_server) = warp::serve(routes).bind_with_graceful_shutdown(web_addr, signal);
 
-    let socket = UdpSocket::bind(&service_addr).await.expect("[QDGW]: Failed to bind to address");
-    let buf = vec![0; 1024];
-    let server = UdpServer::new(socket, buf, None);
+    //Creates a new server with the specified socket
+    let server = Server::new();
 
-    // Create a handler for each server https://github.com/hyperium/tonic/discussions/740
+    //Creates a new Tokio task for the HTTP web server.
     let web_handle = tokio::spawn(web_server);
-    let udp_handle = tokio::spawn(server.run());
 
+    //Creates a new Tokio task for the UDP server.
+    let signal = shutdown_utils::signal_handler("ZMQ server");
+    let service_handle = tokio::spawn(server.run(signal));
+
+    //Sets the current service status to online in the Service Manager Database (SMDB).
     smdb_manager
         .set_service_online(SVC_ID)
         .await
         .expect("[QDGW]: Failed to set service online");
 
-    // Start all servers jointly
+    //Starts both servers concurrently.
     print_utils::print_start_header(&SVC_ID, &service_addr, &metrics_addr, &metrics_uri);
-    match tokio::try_join!(web_handle, udp_handle) {
+
+    match tokio::try_join!(web_handle, service_handle) {
         Ok(_) => {}
         Err(e) => {
+            //Sets the current service status to offline in the Service Manager Database (SMDB)
+            // if an error occurs.
             smdb_manager
                 .set_service_offline(SVC_ID)
                 .await
@@ -107,12 +122,13 @@ async fn main() -> Result<(), Box<dyn Error>> {
         }
     }
 
-    // Set service offline
+    //Sets the current service status to offline in the Service Manager Database (SMDB).
     smdb_manager
         .set_service_offline(SVC_ID)
         .await
         .expect("[QDGW]: Failed to set service offline");
 
+    //Prints the start and stop headers for the current service.
     print_utils::print_stop_header(&SVC_ID);
 
     Ok(())

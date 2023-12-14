@@ -5,7 +5,6 @@ resolver = "2"
 members = [
     "cli/smdb_manager",
     "cli/spec_manager",
-    "cli/upd_client",
     "clients/dbgw_client",
     "common",
     "components/db_manager",
@@ -29,9 +28,8 @@ members = [
 
 
 [workspace.package]
-# https://doc.rust-lang.org/cargo/reference/workspaces.html
 edition = "2021"
-rust-version = "1.70"
+rust-version = "1.74"
 readme = "README.md"
 repository = "https://github.com/marvin-hansen/quant-engine"
 authors = ["Marvin Hansen <marvin.hansen@gmail.com>"]
@@ -58,6 +56,7 @@ tonic-health = "0.10"
 tonic = "0.10"
 tonic-build = "0.10.2"
 warp = { version = "0.3", features = ["multipart"] }
+zeromq = { version = "0.3", default_features = false, features = [ "tokio-runtime", "tcp-transport" ] }
 
 
 # Optimize all crates

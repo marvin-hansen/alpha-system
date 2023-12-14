@@ -56,7 +56,9 @@ version = "0.1.0"
 
 [dependencies]
 autometrics = { workspace = true }
+futures = { workspace = true }
 tokio = { workspace = true }
 tonic = { workspace = true }
 prost = { workspace = true }
 warp = { workspace = true }
+zeromq = { workspace = true }

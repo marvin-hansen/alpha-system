@@ -5,7 +5,6 @@ authors = ["sbetool"]
 description = "Example schema"
 edition = "2021"
 
-
 [lib]
 name = "sbe_bindings"
 path = "src/lib.rs"

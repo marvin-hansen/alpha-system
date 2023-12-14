@@ -1,10 +1,15 @@
+//
 /// Registers a signal handler that waits for a signal that indicates a shutdown request.
+// https://stackoverflow.com/questions/77585473/rust-tokio-how-to-handle-more-signals-than-just-sigint-i-e-sigquit?noredirect=1#comment136778587_77585473
 pub async fn signal_handler(svc: &str) {
     wait_for_signal_impl(svc).await
 }
 
-/// Waits for a signal that requests a graceful shutdown, like SIGTERM, SIGINT (Ctrl-C), or SIGQUIT.
-// https://stackoverflow.com/questions/77585473/rust-tokio-how-to-handle-more-signals-than-just-sigint-i-e-sigquit?noredirect=1#comment136778587_77585473
+/// Waits for a signal that requests a graceful shutdown. Supports the following signals on unix:
+/// * SIGTERM
+/// * SIGINT (Ctrl-C)
+/// * SIGQUIT
+/// * SIGHUP
 #[cfg(unix)]
 async fn wait_for_signal_impl(svc: &str) {
     use tokio::signal::unix::{signal, SignalKind};
@@ -24,7 +29,11 @@ async fn wait_for_signal_impl(svc: &str) {
     }
 }
 
-/// Waits for a signal that requests a graceful shutdown, like SIGTERM, SIGINT (Ctrl-C), or SIGQUIT.
+/// Waits for a signal that requests a graceful shutdown. Supports the following signals on Windows:
+/// * ctrl_c
+/// * ctrl_break
+/// * ctrl_close
+/// * ctrl_shutdown
 #[cfg(windows)]
 async fn wait_for_signal_impl(svc: &str) {
     use tokio::signal::windows;

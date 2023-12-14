@@ -1,8 +1,8 @@
 use std::fmt::Debug;
 
-use surrealdb::Surreal;
 use surrealdb::engine::remote::ws::{Client, Ws};
 use surrealdb::opt::auth::Root;
+use surrealdb::Surreal;
 
 use common::prelude::DBConfig;
 
@@ -36,7 +36,9 @@ impl DBManager {
         db.signin(Root {
             username: db_user,
             password: db_pass,
-        }).await.expect("Failed to sign in to Surreal DB server");
+        })
+        .await
+        .expect("Failed to sign in to Surreal DB server");
 
         // Select a specific namespace / database
         db.use_db(db_name).await.expect("Failed to set db name");
@@ -45,4 +47,3 @@ impl DBManager {
         Self { db }
     }
 }
-
