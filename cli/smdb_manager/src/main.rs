@@ -1,3 +1,4 @@
+use std::error::Error;
 use crate::svc_types::ServiceOP;
 use smdb_provider::SMDBProvider;
 
@@ -7,7 +8,8 @@ mod svc_types;
 pub const SPEC_OP: ServiceOP = ServiceOP::CheckIfServicesExists;
 
 #[tokio::main]
-async fn main() -> anyhow::Result<()> {
+async fn main() -> Result<(), Box<dyn Error>> {
+
     let host = "0.0.0.0".to_string();
     let port = 7070;
 
