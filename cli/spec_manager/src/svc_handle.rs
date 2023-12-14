@@ -1,3 +1,4 @@
+use std::error::Error;
 use common::prelude::ServiceID;
 use dbgw_client::DBGatewayClient;
 use specs::prelude::smdb_service_config;
@@ -5,7 +6,7 @@ use specs::services::get_all_service_configs;
 
 use crate::types::ServiceOP;
 
-pub async fn handle_service_op(client: &DBGatewayClient, op: ServiceOP) -> anyhow::Result<()> {
+pub async fn handle_service_op(client: &DBGatewayClient, op: ServiceOP) -> Result<(), Box<dyn Error>>  {
     let mut client = client.clone();
 
     match op {
