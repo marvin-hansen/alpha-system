@@ -1,4 +1,4 @@
-use messages::prelude::MessageType;
+use sbe_messages::prelude::MessageType;
 
 #[test]
 fn test_message_type_from() {

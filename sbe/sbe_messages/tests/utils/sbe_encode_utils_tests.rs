@@ -1,4 +1,4 @@
-use messages::utils::sbe_encode_utils;
+use sbe_messages::utils::sbe_encode_utils;
 
 #[test]
 fn test_encode_string() {

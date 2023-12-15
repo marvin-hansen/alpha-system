@@ -1,4 +1,4 @@
-use messages::prelude::{SbeDecodeError, SbeEncodeError};
+use sbe_messages::prelude::{SbeDecodeError, SbeEncodeError};
 
 #[test]
 fn test_sbe_encode_error_display() {

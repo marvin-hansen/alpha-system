@@ -1,6 +1,5 @@
 use common::prelude::{ExchangeID, SymbolID};
-use sbe_bindings::MessageType;
-use sbe_messages::prelude::StartDataMessage;
+use sbe_messages::prelude::{MessageType, StartDataMessage};
 
 #[test]
 fn test_new() {
