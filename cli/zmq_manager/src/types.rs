@@ -5,6 +5,7 @@ pub enum WorkflowOP {
     #[default]
     StartData,
     StopData,
+    TestData,
 }
 
 impl Display for WorkflowOP {
@@ -12,6 +13,7 @@ impl Display for WorkflowOP {
         match self {
             WorkflowOP::StartData => write!(f, "StartData"),
             WorkflowOP::StopData => write!(f, "StopData"),
+            WorkflowOP::TestData => write!(f, "TesData"),
         }
     }
 }

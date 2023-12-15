@@ -49,6 +49,11 @@ path = "../../providers/smdb_provider"
 version = "0.1.0"
 
 
+[dependencies.sbe_messages]
+path = "../../sbe/sbe_messages"
+version = "0.1.0"
+
+
 [dependencies.service_utils]
 path = "../../service_utils"
 version = "0.1.0"
@@ -56,9 +61,9 @@ version = "0.1.0"
 
 [dependencies]
 autometrics = { workspace = true }
+fluvio = { workspace = true }
 futures = { workspace = true }
 tokio = { workspace = true }
 tonic = { workspace = true }
 prost = { workspace = true }
 warp = { workspace = true }
-zeromq = { workspace = true }

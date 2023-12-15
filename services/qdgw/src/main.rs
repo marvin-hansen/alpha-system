@@ -16,6 +16,7 @@ use svc_manager::ServiceManager;
 
 use crate::service::Server;
 
+mod handle;
 mod service;
 
 const SVC_ID: ServiceID = ServiceID::QDGW;
@@ -37,7 +38,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     //Retrieves the host and port of the Service Manager Database (SMDB) from the auto-configuration.
     let (smdb_host, smdb_port) = service_manager
         .get_service_host_port(&SMDB)
-        .expect("[CMDB]: Failed to get host and port for DBGW");
+        .expect("[QDGW]/main: Failed to get host and port for DBGW");
 
     //Creates a new instance of the Service Manager Database (SMDB) Provider.
     let smdb_manager = SMDBProvider::new(smdb_host, smdb_port).await;
@@ -53,13 +54,13 @@ async fn main() -> Result<(), Box<dyn Error>> {
             let available = smdb_manager
                 .check_if_service_id_exists(d)
                 .await
-                .expect("[QDGW]: Failed to check if service dependency exists");
+                .expect("[QDGW]/main: Failed to check if service dependency exists");
 
             //Checks if the service is available.
             if !available {
                 //Panics if the service is not available.
                 panic!(
-                    "[QDGW]: Service dependency {:?} is not available please start it",
+                    "[QDGW]/main: Service dependency {:?} is not available please start it",
                     d
                 );
             }
@@ -69,17 +70,17 @@ async fn main() -> Result<(), Box<dyn Error>> {
     //Configures the IP address and port of the current service automatically based on the detected context.
     let service_addr = service_manager
         .configure_svc_socket_addr(&SVC_ID)
-        .expect("[QDGW]: Failed to get host and port");
+        .expect("[QDGW]/main: Failed to get host and port");
 
     //Configures the IP address and port of the HTTP metrics endpoint automatically based on the detected context.
     let (metrics_addr, metrics_uri) = service_manager
         .configure_metrics_socket_addr_uri(&SVC_ID)
-        .expect("[QDGW]: Failed to get metric host, uri, and port");
+        .expect("[QDGW]/main: Failed to get metric host, uri, and port");
 
     //Creates a SocketAddr instance from the metrics address string.
     let web_addr: SocketAddr = metrics_addr
         .parse()
-        .expect("[QDGW]: Failed to parse metric host to address");
+        .expect("[QDGW]/main: Failed to parse metric host to address");
 
     //Creates a new Warp filter for the metrics endpoint.
     let routes = warp::get()
@@ -90,8 +91,17 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let signal = shutdown_utils::signal_handler("http web server");
     let (_, web_server) = warp::serve(routes).bind_with_graceful_shutdown(web_addr, signal);
 
+    //
+    // @TODO: Add topic & partition to autoconfig
+    //
+    const TOPIC: &str = "echo";
+    // creates a new consumer for the topic
+    let consumer = fluvio::consumer(TOPIC, 0)
+        .await
+        .expect("[QDGW]/main: Failed to create a message consumer");
+
     //Creates a new server with the specified socket
-    let server = Server::new();
+    let server = Server::new(consumer);
 
     //Creates a new Tokio task for the HTTP web server.
     let web_handle = tokio::spawn(web_server);
@@ -104,7 +114,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     smdb_manager
         .set_service_online(SVC_ID)
         .await
-        .expect("[QDGW]: Failed to set service online");
+        .expect("[QDGW]/main: Failed to set service online");
 
     //Starts both servers concurrently.
     print_utils::print_start_header(&SVC_ID, &service_addr, &metrics_addr, &metrics_uri);
@@ -117,8 +127,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
             smdb_manager
                 .set_service_offline(SVC_ID)
                 .await
-                .expect("[QDGW]: Failed to set service offline!");
-            println!("[QDGW]: Failed to start gRPC and HTTP server: {:?}", e);
+                .expect("[QDGW]/main: Failed to set service offline!");
+            println!("[QDGW]/main: Failed to start gRPC and HTTP server: {:?}", e);
         }
     }
 
@@ -126,7 +136,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     smdb_manager
         .set_service_offline(SVC_ID)
         .await
-        .expect("[QDGW]: Failed to set service offline");
+        .expect("[QDGW]/main: Failed to set service offline");
 
     //Prints the start and stop headers for the current service.
     print_utils::print_stop_header(&SVC_ID);

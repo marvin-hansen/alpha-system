@@ -1,9 +1,9 @@
-use std::error::Error;
 use crate::svc_types::ServiceOP;
 use common::prelude::ServiceID;
 use smdb_provider::SMDBProvider;
+use std::error::Error;
 
-pub async fn handle_service_op(client: &SMDBProvider, op: ServiceOP) ->  Result<(), Box<dyn Error>>{
+pub async fn handle_service_op(client: &SMDBProvider, op: ServiceOP) -> Result<(), Box<dyn Error>> {
     match op {
         ServiceOP::CheckIfServiceIDExists => check_if_svc_exists(client).await,
         ServiceOP::CheckIfServicesExists => check_if_svcs_exists(client).await,

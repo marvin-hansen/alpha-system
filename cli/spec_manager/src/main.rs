@@ -1,6 +1,6 @@
-use std::error::Error;
 use common::prelude::HostEndpoint;
 use dbgw_client::DBGatewayClient;
+use std::error::Error;
 
 use crate::types::SpecType::*;
 use crate::types::{ServiceOP, SpecType, WorkflowOP};
@@ -14,8 +14,7 @@ pub const SPEC_OP: ServiceOP = ServiceOP::CreateAllService;
 pub const WORKFLOW_OP: WorkflowOP = WorkflowOP::SetCheckOnline;
 
 #[tokio::main]
-async fn main() -> Result<(), Box<dyn Error>>  {
-
+async fn main() -> Result<(), Box<dyn Error>> {
     let host_endpoint = HostEndpoint::new("127.0.0.1", 6060);
     let client = DBGatewayClient::new(host_endpoint).await;
 

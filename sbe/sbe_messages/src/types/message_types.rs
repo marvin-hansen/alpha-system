@@ -20,7 +20,7 @@ impl From<u8> for MessageType {
     ///
     /// # Example
     /// ```
-    /// use messages::prelude::MessageType;
+    /// use sbe_messages::prelude::MessageType;
     ///
     /// let raw_value = 0x1;
     /// let message_type = MessageType::from(raw_value);

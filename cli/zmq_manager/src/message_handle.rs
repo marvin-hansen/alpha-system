@@ -1,7 +1,12 @@
 use std::error::Error;
 use crate::types::WorkflowOP;
 
-pub async fn handle_workflow_op(op: &WorkflowOP) -> Result<(), Box<dyn Error>>  {
+
+pub async fn handle_workflow_op(
+    op: &WorkflowOP,
+)
+    -> Result<(), Box<dyn Error>>
+{
 
     match op {
 
@@ -10,6 +15,10 @@ pub async fn handle_workflow_op(op: &WorkflowOP) -> Result<(), Box<dyn Error>>  
         }
         WorkflowOP::StopData => {
             handle_stop_data().await.expect("Failed to handle stop data");
+        }
+
+        WorkflowOP::TestData => {
+            handle_test_data().await.expect("Failed to handle tes data");
         }
     }
 
@@ -24,6 +33,13 @@ async fn handle_start_data() -> Result<(), Box<dyn Error>>  {
 
 async fn handle_stop_data() -> Result<(), Box<dyn Error>>  {
     println!("Stopping data");
+
+    Ok(())
+}
+
+async fn handle_test_data() -> Result<(), Box<dyn Error>>  {
+
+    println!("Running test data");
 
     Ok(())
 }

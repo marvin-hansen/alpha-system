@@ -1,11 +1,14 @@
-use std::error::Error;
 use common::prelude::ServiceID;
 use dbgw_client::DBGatewayClient;
 use specs::services::get_all_service_configs;
+use std::error::Error;
 
 use crate::types::WorkflowOP;
 
-pub async fn handle_workflow_op(client: &DBGatewayClient, op: WorkflowOP) -> Result<(), Box<dyn Error>>  {
+pub async fn handle_workflow_op(
+    client: &DBGatewayClient,
+    op: WorkflowOP,
+) -> Result<(), Box<dyn Error>> {
     match op {
         WorkflowOP::CreateRead => {
             create_read(client).await?;
@@ -19,7 +22,7 @@ pub async fn handle_workflow_op(client: &DBGatewayClient, op: WorkflowOP) -> Res
     Ok(())
 }
 
-async fn create_read(client: &DBGatewayClient) ->Result<(), Box<dyn Error>>  {
+async fn create_read(client: &DBGatewayClient) -> Result<(), Box<dyn Error>> {
     let mut client = client.clone();
 
     println!("Creating all services");
@@ -43,7 +46,7 @@ async fn create_read(client: &DBGatewayClient) ->Result<(), Box<dyn Error>>  {
     Ok(())
 }
 
-async fn set_check_online(client: &DBGatewayClient) -> Result<(), Box<dyn Error>>  {
+async fn set_check_online(client: &DBGatewayClient) -> Result<(), Box<dyn Error>> {
     println!("Checking if service id exists");
     let id = ServiceID::SMDB;
     let exists = client
