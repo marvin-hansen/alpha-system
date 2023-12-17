@@ -41,7 +41,7 @@ authors = ["Marvin Hansen <marvin.hansen@gmail.com>"]
 
 [workspace.dependencies]
 autometrics = { version = "1", features = ["prometheus-exporter"] }
-async-std = "1.12"
+#async-std = "1.12"
 ctrlc = "3.4"
 fluvio = { version = "0.21" , default-features = false, features = ["rustls"] }
 futures = "0.3"
@@ -50,12 +50,12 @@ log = "0.4"
 parquet = "49.0.0"
 prost = "0.12"
 prost-types = { version = "0.12", default-features = false }
-rand = "0.8"
+rand = {version = "0.8", default-features = false , features = ["std"]}
 rust_decimal = "1.33"
 rust_decimal_macros = "1.33"
 serde = { version = "1", features = ["derive"] }
-serde_json = "1"
-surrealdb = { version = "1", features = ["kv-mem"] }
+serde_json = { version = "1", default-features = false }
+surrealdb = { version = "1.0.1", features = ["kv-mem"] }
 tokio = { version = "1", features = ["macros", "net", "rt-multi-thread", "signal"] }
 tonic-health = "0.10"
 tonic = "0.10"

@@ -6,6 +6,8 @@ comment:
 ignore:
   - "cli"  # ignore folders and all its contents
   - "clients"
+  - "components/db_manager"
+  - "components/svc_manager"
   - "proto"
   - "providers"
   - "sbe/bindings"
