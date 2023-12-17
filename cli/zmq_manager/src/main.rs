@@ -90,7 +90,7 @@ async fn produce() -> Result<(), Box<dyn Error + Send>> {
 
     producer.flush().await.expect("Failed to flush");
 
-    return Ok(())
+    return Ok(());
 }
 
 /// Consumes events until a "Done!" event is read

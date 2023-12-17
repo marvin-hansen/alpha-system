@@ -1,5 +1,5 @@
 [package]
-name = "file_manager"
+name = "bar_manager"
 version = "0.1.0"
 edition.workspace = true
 rust-version.workspace = true
@@ -9,15 +9,11 @@ authors.workspace = true
 
 
 [lib]
-name = "file_manager"
+name = "bar_manager"
 path = "src/lib.rs"
 
 
 [dependencies.common]
 path = "../../common"
 version = "0.1.0"
-
-
 [dependencies]
-rust_decimal = { workspace = true }
-parquet = {workspace = true}

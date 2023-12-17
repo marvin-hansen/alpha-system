@@ -1,4 +1,5 @@
 mod config_types;
+mod data_types;
 mod exchange_types;
 mod pattern_types;
 mod portfolio_types;
