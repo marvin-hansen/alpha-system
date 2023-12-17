@@ -15,6 +15,7 @@ members = [
     "components/dns_manager",
     "components/env_manager",
     "components/file_manager",
+    "components/qd_manager",
     "components/svc_manager",
     "proto",
     "providers/cmdb_provider",

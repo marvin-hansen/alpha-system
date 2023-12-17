@@ -1,3 +1,4 @@
+
 use std::collections::HashMap;
 use common::prelude::DataBar;
 
@@ -94,7 +95,7 @@ impl BarManager {
     /// use common::prelude::DataBar;
     /// use bar_manager::BarManager;
     /// let mut bar_manager = BarManager::new();
-    /// let bars = bar_manager.get_bars("AAPL")?;
+    /// let bars = bar_manager.get_bars("AAPL").expect("Failed to get data bars");
     /// ```
     pub fn get_bars(&self, symbol: &str) -> Result<Vec<DataBar>, &'static str> {
         match self.bars.get(symbol) {
