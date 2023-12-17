@@ -1,6 +1,5 @@
 use bar_manager::BarManager;
 
-
 #[test]
 fn test_add_bars() {
     // Arrange
@@ -9,7 +8,6 @@ fn test_add_bars() {
     let bars = vec![/* test bars */];
 
     assert!(!bar_manager.has_data(symbol));
-
 
     // Act
     bar_manager.add_bars(symbol, bars.clone());
@@ -63,4 +61,3 @@ fn test_get_bars() {
     assert!(result.is_ok());
     assert_eq!(result.unwrap(), bars);
 }
-

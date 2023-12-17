@@ -1,12 +1,11 @@
+use common::prelude::DataBar;
+use parquet::file::reader::{FileReader, SerializedFileReader};
+use parquet::record::{Row, RowAccessor};
+use rust_decimal::prelude::FromPrimitive;
+use rust_decimal::Decimal;
 use std::error::Error;
 use std::fs::File;
 use std::path::Path;
-use parquet::file::reader::{FileReader, SerializedFileReader};
-use parquet::record::{Row, RowAccessor};
-use rust_decimal::Decimal;
-use rust_decimal::prelude::FromPrimitive;
-use common::prelude::DataBar;
-
 
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct FileManager {}
@@ -18,7 +17,6 @@ impl FileManager {
 }
 
 impl FileManager {
-
     /// Reads parquet file at given path and converts rows to Vec<DataBar>
     ///
     /// # Parameters
@@ -44,20 +42,17 @@ impl FileManager {
 
         read_parquet(&path)
     }
-
 }
 
 fn read_parquet(path: &str) -> Result<Vec<DataBar>, Box<dyn Error>> {
-
     let mut content: Vec<DataBar> = Vec::with_capacity(1500); // fixed pre-allocation
 
-    let file = File::open(&Path::new(path))
-        .expect("Could not open file");
+    let file = File::open(&Path::new(path)).expect("Could not open file");
 
-    let reader = SerializedFileReader::new(file)
-        .expect("Could not create parquet reader");
+    let reader = SerializedFileReader::new(file).expect("Could not create parquet reader");
 
-    let mut iter = reader.get_row_iter(None)
+    let mut iter = reader
+        .get_row_iter(None)
         .expect("Could not create parquet row iterator");
 
     while let Some(record) = iter.next() {
@@ -110,10 +105,10 @@ fn convert_field_to_bar(record: &Row) -> Result<DataBar, Box<dyn Error>> {
     let date_time = record.get_string(0).unwrap().to_owned();
     let symbol = record.get_string(1).unwrap().to_owned();
     let open = Decimal::from_f64(record.get_double(2).unwrap()).unwrap();
-    let high =  Decimal::from_f64(record.get_double(3).unwrap()).unwrap();
-    let low =  Decimal::from_f64(record.get_double(4).unwrap()).unwrap();
+    let high = Decimal::from_f64(record.get_double(3).unwrap()).unwrap();
+    let low = Decimal::from_f64(record.get_double(4).unwrap()).unwrap();
     let close = Decimal::from_f64(record.get_double(5).unwrap()).unwrap();
-    let volume =  Decimal::from_f64(record.get_double(6).unwrap()).unwrap();
+    let volume = Decimal::from_f64(record.get_double(6).unwrap()).unwrap();
     let trades = Decimal::from(record.get_ulong(7).unwrap());
 
     let bar = DataBar::new(date_time, symbol, open, high, low, close, volume, trades);

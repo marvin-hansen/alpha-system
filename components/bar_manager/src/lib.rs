@@ -1,6 +1,5 @@
-
-use std::collections::HashMap;
 use common::prelude::DataBar;
+use std::collections::HashMap;
 
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct BarManager {
@@ -56,7 +55,6 @@ impl BarManager {
         self.bars.remove(symbol);
     }
 
-
     /// Checks if data is available for the given symbol
     ///
     /// # Parameters
@@ -100,8 +98,7 @@ impl BarManager {
     pub fn get_bars(&self, symbol: &str) -> Result<Vec<DataBar>, &'static str> {
         match self.bars.get(symbol) {
             Some(bars) => Ok(bars.to_vec()),
-            None => Err("No data found for symbol")
+            None => Err("No data found for symbol"),
         }
     }
 }
-

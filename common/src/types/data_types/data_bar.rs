@@ -6,7 +6,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Eq, Clone, PartialEq, Serialize, Deserialize)]
 pub struct DataBar {
-    date_time: String,// Cannot serialize DataTime with serde hence String
+    date_time: String, // Cannot serialize DataTime with serde hence String
     symbol: String,
     open: Decimal,
     high: Decimal,
@@ -17,13 +17,30 @@ pub struct DataBar {
 }
 
 impl DataBar {
-    pub fn new(date_time: String, symbol: String, open: Decimal, high: Decimal, low: Decimal, close: Decimal, volume: Decimal, trades: Decimal) -> Self {
-        Self { date_time, symbol, open, high, low, close, volume, trades }
+    pub fn new(
+        date_time: String,
+        symbol: String,
+        open: Decimal,
+        high: Decimal,
+        low: Decimal,
+        close: Decimal,
+        volume: Decimal,
+        trades: Decimal,
+    ) -> Self {
+        Self {
+            date_time,
+            symbol,
+            open,
+            high,
+            low,
+            close,
+            volume,
+            trades,
+        }
     }
 }
 
 impl DataBar {
-
     pub fn date_time(&self) -> String {
         self.date_time.clone()
     }
