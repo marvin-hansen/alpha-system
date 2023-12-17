@@ -19,6 +19,11 @@ path = "../../common"
 version = "0.1.0"
 
 
+[dependencies.bar_manager]
+path = "../../components/bar_manager"
+version = "0.1.0"
+
+
 [dependencies.cfg_manager]
 path = "../../components/cfg_manager"
 version = "0.1.0"
@@ -36,6 +41,11 @@ version = "0.1.0"
 
 [dependencies.env_manager]
 path = "../../components/env_manager"
+version = "0.1.0"
+
+
+[dependencies.file_manager]
+path = "../../components/file_manager"
 version = "0.1.0"
 
 
