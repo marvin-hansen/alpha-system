@@ -21,6 +21,10 @@ impl BarManager {
         self.bars.insert(symbol.to_string(), bars);
     }
 
+    pub fn remove_bars(&mut self, symbol: &str) {
+        self.bars.remove(symbol);
+    }
+
     pub fn has_data(&self, symbol: &str) -> bool {
         self.bars.contains_key(symbol)
     }
