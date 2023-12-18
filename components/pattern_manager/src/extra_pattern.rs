@@ -2,11 +2,10 @@
  * Copyright (c) 2023. Marvin Hansen <marvin.hansen@gmail.com> All rights reserved.
  */
 
-use common::prelude::{DataBar, math_utils};
-use rust_decimal::prelude::ToPrimitive;
 use crate::abstract_trait::PatternTrait;
 use crate::fields::*;
-
+use common::prelude::{math_utils, DataBar};
+use rust_decimal::prelude::ToPrimitive;
 
 const SIZE: usize = 139;
 
@@ -15,20 +14,14 @@ pub struct ExtraPattern {
     arr: [bool; SIZE],
 }
 
-
-impl ExtraPattern
-{
+impl ExtraPattern {
     pub fn new() -> Self {
-        ExtraPattern {
-            arr: [false; SIZE]
-        }
+        ExtraPattern { arr: [false; SIZE] }
     }
 }
 
-impl PatternTrait for ExtraPattern
-{
-    fn get_eval_result(&self, index: usize) -> Result<bool, String>
-    {
+impl PatternTrait for ExtraPattern {
+    fn get_eval_result(&self, index: usize) -> Result<bool, String> {
         if index >= self.arr.len() {
             return Err(format!("extra_pattern: index out of bound: {}", index));
         }
@@ -36,17 +29,11 @@ impl PatternTrait for ExtraPattern
         Ok(self.arr[index])
     }
 
-    fn get_pattern_len(&self) -> Result<usize, String>
-    {
+    fn get_pattern_len(&self) -> Result<usize, String> {
         Ok(SIZE)
     }
 
-    fn update_patterns(
-       &mut self,
-       window: &[DataBar; 6]
-    )
-       -> Result<(), String>
-    {
+    fn update_patterns(&mut self, window: &[DataBar; 6]) -> Result<(), String> {
         let last_idx = window.len() - 1;
         let day_0_bar = &window[last_idx];
         let day_1_bar = &window[last_idx - 1];
@@ -80,7 +67,8 @@ impl PatternTrait for ExtraPattern
         let body1d = math_utils::abs(opend1 - closed1);
         let body5d = math_utils::abs(opend5 - closed1);
         let range1d = highd1 - lowd1;
-        let range5d = math_utils::max(&[highd1, highd2, highd3, highd4, highd5]) - math_utils::min(&[lowd1, lowd2, lowd3, lowd4, lowd5]);
+        let range5d = math_utils::max(&[highd1, highd2, highd3, highd4, highd5])
+            - math_utils::min(&[lowd1, lowd2, lowd3, lowd4, lowd5]);
 
         self.arr[0] = false;
         self.arr[1] = body1d < POINT_ONE * range1d;
@@ -134,8 +122,14 @@ impl PatternTrait for ExtraPattern
         self.arr[45] = (opend0 - lowd0) > ((opend1 - lowd1) * TWO_POINT_FIVE);
         self.arr[46] = (opend0 - lowd0) > ((opend1 - lowd1) * THREE);
         self.arr[47] = (closed1 > closed2) && (closed2 > closed3) && (closed3 > closed4);
-        self.arr[48] = (closed1 > closed2) && (closed2 > closed3) && (closed3 > closed4) && (closed4 > closed5);
-        self.arr[49] = (closed1 < closed2) && (closed2 < closed3) && (closed3 < closed4) && (closed4 < closed5);
+        self.arr[48] = (closed1 > closed2)
+            && (closed2 > closed3)
+            && (closed3 > closed4)
+            && (closed4 > closed5);
+        self.arr[49] = (closed1 < closed2)
+            && (closed2 < closed3)
+            && (closed3 < closed4)
+            && (closed4 < closed5);
         self.arr[50] = (highd1 > highd2) && (lowd1 > lowd2);
 
         self.arr[51] = (highd1 < highd2) && (lowd1 < lowd2);

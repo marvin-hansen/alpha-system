@@ -16,9 +16,13 @@ pub use crate::types::config_types::service_type::*;
 pub use crate::types::config_types::svc_env_config::*;
 // data types
 pub use crate::types::data_types::data_bar::*;
+pub use crate::types::data_types::time_resolution::*;
 // exchange types
 pub use crate::types::exchange_types::account_type::*;
 pub use crate::types::exchange_types::exchange_id::*;
+// file types
+pub use crate::types::file_types::file_config::*;
+pub use crate::types::file_types::file_config_type::*;
 // pattern types
 pub use crate::types::pattern_types::pattern_config::*;
 pub use crate::types::pattern_types::pattern_type::*;

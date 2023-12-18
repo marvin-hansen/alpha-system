@@ -1,6 +1,8 @@
 use serde::{Deserialize, Serialize};
 use std::fmt::{Display, Formatter};
-#[derive(Serialize, Deserialize, Clone, Copy, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash, )]
+#[derive(
+    Serialize, Deserialize, Clone, Copy, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash,
+)]
 #[repr(u16)] // Type is u16 for direct conversion from proto integer. The smallest possible integer in proto is 16B.
 pub enum SymbolID {
     #[default]
@@ -23,7 +25,7 @@ impl From<u16> for SymbolID {
     }
 }
 
-impl SymbolID{
+impl SymbolID {
     pub fn from_str(s: &str) -> SymbolID {
         match s.to_lowercase().as_str() {
             "btcusd" => SymbolID::BTCUSD,
@@ -33,7 +35,7 @@ impl SymbolID{
         }
     }
 
-    pub fn as_str(&self) ->  &'static str {
+    pub fn as_str(&self) -> &'static str {
         match *self {
             SymbolID::BTCUSD => "btcusd",
             SymbolID::ETHUSD => "ethusd",

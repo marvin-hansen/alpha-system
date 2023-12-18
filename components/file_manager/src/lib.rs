@@ -1,3 +1,4 @@
+use chrono::{DateTime, TimeZone, Utc};
 use common::prelude::{DataBar, SymbolID};
 use parquet::file::reader::{FileReader, SerializedFileReader};
 use parquet::record::{Row, RowAccessor};
@@ -6,7 +7,6 @@ use rust_decimal::Decimal;
 use std::error::Error;
 use std::fs::File;
 use std::path::Path;
-use chrono::{DateTime, TimeZone, Utc};
 
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct FileManager {}
@@ -113,15 +113,7 @@ fn convert_field_to_bar(row: &Row) -> Result<DataBar, Box<dyn Error>> {
     let volume = Decimal::from_f64(volume).expect("Failed to parse volume");
 
     // Build DataBar.
-    let bar = DataBar::new(
-        date_time,
-        symbol,
-        open,
-        high,
-        low,
-        close,
-        volume,
-    );
+    let bar = DataBar::new(date_time, symbol, open, high, low, close, volume);
 
     Ok(bar)
 }
@@ -133,7 +125,8 @@ fn get_date_time_field(row: &Row) -> Result<DateTime<Utc>, Box<dyn std::error::E
         let s = row.get_string(0).expect("Cannot extract datetime str");
         // supported timezone syntax for DateTime from string https://github.com/chronotope/chrono/issues/219
         let date_time: DateTime<Utc> = DateTime::parse_from_str(s, fmt)
-            .expect("Cannot convert string to DateTime").with_timezone(&Utc);
+            .expect("Cannot convert string to DateTime")
+            .with_timezone(&Utc);
 
         return Ok(date_time);
     }
@@ -145,7 +138,9 @@ fn get_date_time_field(row: &Row) -> Result<DateTime<Utc>, Box<dyn std::error::E
     }
 
     if row.get_timestamp_micros(0).is_ok() {
-        let micros = row.get_timestamp_micros(0).expect("Cannot extract datetime millis");
+        let micros = row
+            .get_timestamp_micros(0)
+            .expect("Cannot extract datetime millis");
         let millis = micros / 1000;
 
         let date_time: DateTime<Utc> = Utc.timestamp_millis_opt(millis).unwrap();

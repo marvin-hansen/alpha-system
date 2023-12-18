@@ -2,36 +2,26 @@
  * Copyright (c) 2023. Marvin Hansen <marvin.hansen@gmail.com> All rights reserved.
  */
 
-
-use common::prelude::DataBar;
-use rust_decimal::prelude::ToPrimitive;
 use crate::abstract_trait::PatternTrait;
 use crate::fields::{ONE_HUNDRED, POINT_FIVE};
-
+use common::prelude::DataBar;
+use rust_decimal::prelude::ToPrimitive;
 
 const SIZE: usize = 9;
 
 #[derive(Debug, Clone, Eq, PartialEq)]
-pub struct ShortPattern
-{
+pub struct ShortPattern {
     arr: [bool; SIZE],
 }
 
-impl ShortPattern
-{
+impl ShortPattern {
     pub fn new() -> Self {
         Self { arr: [false; SIZE] }
     }
 }
 
-impl PatternTrait for  ShortPattern
-{
-     fn get_eval_result(
-        &self,
-        index: usize,
-    )
-        -> Result<bool, String>
-    {
+impl PatternTrait for ShortPattern {
+    fn get_eval_result(&self, index: usize) -> Result<bool, String> {
         if index >= self.arr.len() {
             return Err(format!("short_pattern: index out of bound: {}", index));
         }
@@ -39,16 +29,11 @@ impl PatternTrait for  ShortPattern
         Ok(self.arr[index])
     }
 
-     fn get_pattern_len(&self) -> Result<usize, String> {
+    fn get_pattern_len(&self) -> Result<usize, String> {
         Ok(SIZE)
     }
 
-     fn update_patterns(
-        &mut self,
-        window: &[DataBar; 6],
-    )
-         -> Result<(), String>
-    {
+    fn update_patterns(&mut self, window: &[DataBar; 6]) -> Result<(), String> {
         let last_idx = window.len() - 1;
         let day_0_bar = &window[last_idx];
         let day_1_bar = &window[last_idx - 1];

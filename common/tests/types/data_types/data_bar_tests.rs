@@ -2,7 +2,6 @@ use chrono::Utc;
 use common::prelude::{DataBar, SymbolID};
 use rust_decimal::Decimal;
 
-
 #[test]
 fn test_new() {
     let date_time = Utc::now();
@@ -13,15 +12,7 @@ fn test_new() {
     let close = Decimal::default();
     let volume = Decimal::default();
 
-    let data_bar = DataBar::new(
-        date_time,
-        symbol,
-        open,
-        high,
-        low,
-        close,
-        volume
-    );
+    let data_bar = DataBar::new(date_time, symbol, open, high, low, close, volume);
 
     assert_eq!(data_bar.date_time(), date_time);
     assert_eq!(data_bar.symbol(), symbol);
@@ -31,7 +22,6 @@ fn test_new() {
     assert_eq!(data_bar.close(), close);
     assert_eq!(data_bar.volume(), volume);
 }
-
 
 #[test]
 fn test_default() {

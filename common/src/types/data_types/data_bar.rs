@@ -1,11 +1,10 @@
+use chrono::{DateTime, Utc};
 use rust_decimal::Decimal;
 use std::fmt;
 use std::fmt::{Debug, Display};
-use chrono::{DateTime, Utc};
 
-use serde::{Deserialize, Serialize};
 use crate::prelude::SymbolID;
-
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Eq, Clone, PartialEq, Serialize, Deserialize)]
 pub struct DataBar {
@@ -40,12 +39,9 @@ impl DataBar {
     }
 }
 
-impl Default for DataBar
-{
-    fn default() -> Self
-    {
-        Self
-        {
+impl Default for DataBar {
+    fn default() -> Self {
+        Self {
             date_time: Utc::now(),
             symbol: SymbolID::default(),
             open: Decimal::default(),
@@ -57,19 +53,15 @@ impl Default for DataBar
     }
 }
 
-
 impl DataBar {
-
     pub fn range_change(&self) -> Decimal {
         self.close - self.open
     }
 
-    pub fn range_percent(&self) -> Decimal
-    {
+    pub fn range_percent(&self) -> Decimal {
         let one_hundred = Decimal::new(100, 0);
         (((self.close - self.open) / self.open) * one_hundred).round_dp(4)
     }
-
 }
 
 impl DataBar {
@@ -100,12 +92,14 @@ impl DataBar {
     pub fn volume(&self) -> Decimal {
         self.volume
     }
-
 }
 
 impl Display for DataBar {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "DataTime: {},\n Symbol {},\n Open {},\n High {},\n Low {},\n Close {},\n Volume {}",
-               self.date_time, self.symbol, self.open, self.high, self.low, self.close, self.volume)
+        write!(
+            f,
+            "DataTime: {},\n Symbol {},\n Open {},\n High {},\n Low {},\n Close {},\n Volume {}",
+            self.date_time, self.symbol, self.open, self.high, self.low, self.close, self.volume
+        )
     }
 }

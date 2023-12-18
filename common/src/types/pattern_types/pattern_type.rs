@@ -7,10 +7,10 @@ use serde::{Deserialize, Serialize};
 pub enum PatternType {
     NullVal = 0xff_u8,
     #[default]
-    Base  = 0x1_u8,
-    Extra  = 0x2_u8,
-    Long  = 0x3_u8,
-    Short  = 0x4_u8,
+    Base = 0x1_u8,
+    Extra = 0x2_u8,
+    Long = 0x3_u8,
+    Short = 0x4_u8,
 }
 
 impl From<u8> for PatternType {
@@ -26,9 +26,7 @@ impl From<u8> for PatternType {
     }
 }
 
-
-impl PatternType
-{
+impl PatternType {
     pub fn as_str(&self) -> &'static str {
         match self {
             PatternType::NullVal => "null",
