@@ -11,9 +11,8 @@ struct QDManager {
 impl QDManager {
     fn new() -> Self {
         let file_manager = FileManager::new();
-        let bar_manager = BarManager::new();
 
-        // TODO: load bars from file and add to bar_manager
+        let bar_manager = BarManager::new();
 
         Self {
             file_manager,
