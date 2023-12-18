@@ -28,8 +28,8 @@ impl BarManager {
     /// This will insert the bars into the internal map, associating
     /// the symbol with the bar data.
     ///
-    pub fn add_bars(&mut self, symbol: FileConfigType, bars: Vec<DataBar>) {
-        self.bars.insert(symbol, bars);
+    pub fn add_bars(&mut self, symbol: &FileConfigType, bars: Vec<DataBar>) {
+        self.bars.insert(*symbol, bars);
     }
 
     /// Removes the bars for the given symbol

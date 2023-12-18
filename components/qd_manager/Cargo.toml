@@ -28,6 +28,11 @@ path = "../../components/cfg_manager"
 version = "0.1.0"
 
 
+[dependencies.ctx_manager]
+path = "../../components/ctx_manager"
+version = "0.1.0"
+
+
 [dependencies.file_manager]
 path = "../../components/file_manager"
 version = "0.1.0"

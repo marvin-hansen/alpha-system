@@ -1,10 +1,11 @@
 use bar_manager::BarManager;
+use common::prelude::FileConfigType;
 
 #[test]
 fn test_add_bars() {
     // Arrange
     let mut bar_manager = BarManager::new();
-    let symbol = "AAPL";
+    let symbol = &FileConfigType::BtcSmall;
     let bars = vec![/* test bars */];
 
     assert!(!bar_manager.has_data(symbol));
@@ -20,10 +21,10 @@ fn test_add_bars() {
 fn test_remove_bars() {
     // Arrange
     let mut bar_manager = BarManager::new();
-    let symbol = "AAPL";
+    let symbol = &FileConfigType::BtcSmall;
     let bars = vec![/* test bars */];
     bar_manager.add_bars(symbol, bars.clone());
-    assert!(bar_manager.has_data(symbol));
+    assert!(bar_manager.has_data(&symbol));
 
     // Act
     bar_manager.remove_bars(symbol);
@@ -37,7 +38,7 @@ fn test_remove_bars() {
 fn test_has_data() {
     // Arrange
     let mut bar_manager = BarManager::new();
-    let symbol = "AAPL";
+    let symbol = &FileConfigType::BtcSmall;
 
     // Act & Assert
     assert!(!bar_manager.has_data(symbol));
@@ -50,7 +51,7 @@ fn test_has_data() {
 fn test_get_bars() {
     // Arrange
     let mut bar_manager = BarManager::new();
-    let symbol = "AAPL";
+    let symbol = &FileConfigType::BtcSmall;
     let bars = vec![/* test bars */];
     bar_manager.add_bars(symbol, bars.clone());
     // Act

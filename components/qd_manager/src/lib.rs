@@ -16,15 +16,15 @@ impl QDManager {
 
         let mut bar_manager = BarManager::new();
 
-        let file_config_type = FileConfigType::BtcSmall;
+        let file_config_type = &FileConfigType::BtcSmall;
 
         let btc_small_config = cfg_manager
-            .get_file_config(&file_config_type)
-            .expect("Error reading config file");
+            .get_file_config(file_config_type)
+            .expect("QDManager: Error reading config file");
 
         let btc_bars = file_manager
-            .read_data_from_file(btc_small_config.path())
-            .expect("Error reading data from file");
+            .read_data_from_file(btc_small_config)
+            .expect("QDManager: Error reading data from file");
 
         bar_manager.add_bars(file_config_type, btc_bars);
 
