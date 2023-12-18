@@ -53,7 +53,6 @@ fn test_get_bars() {
     let symbol = "AAPL";
     let bars = vec![/* test bars */];
     bar_manager.add_bars(symbol, bars.clone());
-
     // Act
     let result = bar_manager.get_bars(symbol);
 

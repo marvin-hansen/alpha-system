@@ -28,14 +28,7 @@ impl FileManager {
     /// Result<Vec<DataBar>, Box<dyn Error>> - Vector of DataBar structs parsed
     /// from file, or error if file read/parse fails
     ///
-    /// # Example
-    ///
-    /// ```
-    /// use file_manager::FileManager;
-    /// let file_manager = FileManager::new();
-    /// let bars = file_manager.read_data_from_file("data.parquet")?;
-    /// ```
-    pub fn read_data_from_file(path: &str) -> Result<Vec<DataBar>, Box<dyn Error>> {
+    pub fn read_data_from_file(&self, path: &str) -> Result<Vec<DataBar>, Box<dyn Error>> {
         if false == Path::new(path).exists() {
             return Err(Box::try_from(format!("File {} does not exist", path)).unwrap());
         }

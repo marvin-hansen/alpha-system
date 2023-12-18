@@ -91,9 +91,13 @@ impl BarManager {
     ///
     /// ```
     /// use common::prelude::DataBar;
-    /// use bar_manager::BarManager;
+    /// use bar_manager::BarManager;    ///
+    ///
+    /// let symbol = "AAPL";
     /// let mut bar_manager = BarManager::new();
-    /// let bars = bar_manager.get_bars("AAPL").expect("Failed to get data bars");
+    ///  let bars = vec![/* test bars */];
+    ///  bar_manager.add_bars(symbol, bars.clone());
+    /// let bars = bar_manager.get_bars(symbol).expect("Failed to get data bars");
     /// ```
     pub fn get_bars(&self, symbol: &str) -> Result<Vec<DataBar>, &'static str> {
         match self.bars.get(symbol) {
