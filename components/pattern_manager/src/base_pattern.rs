@@ -1,18 +1,18 @@
-use rust_decimal::prelude::ToPrimitive;
-use common::prelude::{DataBar, math_utils};
-use crate::fields::{ONE, ONE_HUNDRED, ONE_POINT_FIVE, POINT_FIVE, POINT_SEVEN_FIVE, POINT_TWO, THREE};
 use crate::abstract_trait::PatternTrait;
+use crate::fields::{
+    ONE, ONE_HUNDRED, ONE_POINT_FIVE, POINT_FIVE, POINT_SEVEN_FIVE, POINT_TWO, THREE,
+};
+use common::prelude::{math_utils, DataBar};
+use rust_decimal::prelude::ToPrimitive;
 
 const SIZE: usize = 43;
 
 #[derive(Debug, Clone, Eq, PartialEq)]
-pub struct BasePattern
-{
+pub struct BasePattern {
     arr: [bool; SIZE],
 }
 
-impl BasePattern
-{
+impl BasePattern {
     pub fn new() -> Self {
         Self { arr: [false; SIZE] }
     }
@@ -29,7 +29,7 @@ impl PatternTrait for BasePattern {
     fn get_pattern_len(&self) -> Result<usize, String> {
         Ok(SIZE)
     }
-    fn update_patterns(&mut self, window: &[DataBar; 6]) -> Result<(), String>{
+    fn update_patterns(&mut self, window: &[DataBar; 6]) -> Result<(), String> {
         let last_idx = window.len() - 1;
         let day_0_bar = &window.clone()[last_idx];
         let day_1_bar = &window[last_idx - 1];
@@ -62,7 +62,9 @@ impl PatternTrait for BasePattern {
         self.arr[0] = false;
         self.arr[1] = math_utils::abs(opend1 - closed1) < ((highd1 - lowd1) * POINT_FIVE);
         self.arr[2] = math_utils::abs(opend1 - closed5) < ((highd5 - closed1) * POINT_FIVE);
-        self.arr[3] = math_utils::abs(opend5 - closed1) < (math_utils::max(&[highd1, highd2, highd3, highd4, highd5]) - (math_utils::min(&[lowd1, lowd2, lowd3, lowd4, lowd5])) * POINT_FIVE);
+        self.arr[3] = math_utils::abs(opend5 - closed1)
+            < (math_utils::max(&[highd1, highd2, highd3, highd4, highd5])
+                - (math_utils::min(&[lowd1, lowd2, lowd3, lowd4, lowd5])) * POINT_FIVE);
         self.arr[4] = (highd0 - opend0) > ((highd1 - opend1) * ONE);
         self.arr[5] = (highd0 - opend0) > ((highd1 - opend1) * ONE_POINT_FIVE);
         self.arr[6] = (opend0 - lowd0) > ((opend1 - lowd1) * ONE);

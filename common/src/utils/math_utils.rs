@@ -1,9 +1,4 @@
-
-pub fn abs(
-    x: f64
-)
-    -> f64
-{
+pub fn abs(x: f64) -> f64 {
     if x < 0.0 {
         -x
     } else {
@@ -11,11 +6,7 @@ pub fn abs(
     }
 }
 
-pub fn min(
-    numbers: &[f64]
-)
-    -> f64
-{
+pub fn min(numbers: &[f64]) -> f64 {
     let mut number = numbers[0];
     for i in 0..numbers.len() {
         if numbers[i] < number {
@@ -25,11 +16,7 @@ pub fn min(
     number
 }
 
-pub fn max(
-    numbers: &[f64]
-)
-    -> f64
-{
+pub fn max(numbers: &[f64]) -> f64 {
     let mut number = numbers[0];
     for i in 0..numbers.len() {
         if numbers[i] > number {

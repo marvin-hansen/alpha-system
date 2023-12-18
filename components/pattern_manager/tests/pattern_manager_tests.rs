@@ -1,7 +1,6 @@
 use common::prelude::{DataBar, PatternType};
 use pattern_manager::PatternManager;
 
-
 #[test]
 fn test_get_pattern_len() {
     let pattern_manager = PatternManager::new();
@@ -9,19 +8,22 @@ fn test_get_pattern_len() {
     let base_len = pattern_manager.get_pattern_len(&PatternType::Base).unwrap();
     assert_eq!(base_len, 43);
 
-    let extra_len = pattern_manager.get_pattern_len(&PatternType::Extra).unwrap();
+    let extra_len = pattern_manager
+        .get_pattern_len(&PatternType::Extra)
+        .unwrap();
     assert_eq!(extra_len, 139);
 
     let long_len = pattern_manager.get_pattern_len(&PatternType::Long).unwrap();
     assert_eq!(long_len, 9);
 
-    let short_len = pattern_manager.get_pattern_len(&PatternType::Short).unwrap();
+    let short_len = pattern_manager
+        .get_pattern_len(&PatternType::Short)
+        .unwrap();
     assert_eq!(short_len, 9);
 
     let err = pattern_manager.get_pattern_len(&PatternType::NullVal);
     assert!(err.is_err());
 }
-
 
 #[test]
 fn test_get_eval_result() {
@@ -43,11 +45,17 @@ fn test_get_eval_result() {
     assert!(null_result.is_err());
 }
 
-
 #[test]
 fn test_update_patterns() {
     let pattern_manager = PatternManager::new();
-    let window: [DataBar; 6] = [DataBar::default(), DataBar::default(), DataBar::default(), DataBar::default(), DataBar::default(), DataBar::default(), ];
+    let window: [DataBar; 6] = [
+        DataBar::default(),
+        DataBar::default(),
+        DataBar::default(),
+        DataBar::default(),
+        DataBar::default(),
+        DataBar::default(),
+    ];
 
     let base_result = pattern_manager.update_patterns(&PatternType::Base, &window);
     assert!(base_result.is_ok());
@@ -64,4 +72,3 @@ fn test_update_patterns() {
     let null_result = pattern_manager.update_patterns(&PatternType::NullVal, &window);
     assert!(null_result.is_err());
 }
-
