@@ -1,7 +1,8 @@
-# bin/bash
+# bin/sh
 set -o errexit
 set -o nounset
 set -o pipefail
+
 
 # Install surreal DB:
 # https://docs.surrealdb.com/docs/installation/macos

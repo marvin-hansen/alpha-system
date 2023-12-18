@@ -1,7 +1,8 @@
-# bin/bash
+# bin/sh
 set -o errexit
 set -o nounset
 set -o pipefail
+
 
 # Define the path to the target file that we're going to check
 TARGET_FILE="sbe_hashes.md5"
