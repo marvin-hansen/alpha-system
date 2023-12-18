@@ -22,6 +22,7 @@ pub struct PatternManager
     short_pattern: RefCell<ShortPattern>,
 }
 
+
 impl PatternManager
 {
     pub fn new() -> Self {
