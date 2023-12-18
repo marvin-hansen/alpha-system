@@ -3,7 +3,6 @@ use common::prelude::{FileConfig, FileConfigType, SymbolID, TimeResolution};
 #[test]
 fn test_new() {
     let config = FileConfig::new(
-        1,
         SymbolID::BTCUSD,
         TimeResolution::OneMin,
         "/path/to/file".to_string(),
@@ -11,7 +10,6 @@ fn test_new() {
         FileConfigType::BtcMin2017,
     );
 
-    assert_eq!(config.id(), 1);
     assert_eq!(config.data_symbol(), SymbolID::BTCUSD);
     assert_eq!(config.time_resolution(), TimeResolution::OneMin);
     assert_eq!(config.path(), "/path/to/file");
@@ -22,7 +20,6 @@ fn test_new() {
 #[test]
 fn test_display() {
     let config = FileConfig::new(
-        1,
         SymbolID::BTCUSD,
         TimeResolution::OneMin,
         "/path/to/file".to_string(),
@@ -32,7 +29,6 @@ fn test_display() {
 
     assert_eq!(
         format!("{}", config),
-        "FileConfig[id=1, symbol=BTCUSD, resolution=OneMin, path=/path/to/file, description=BTC 1 min data, type=BtcMin2017]"
+        "FileConfig[symbol=BTCUSD, resolution=OneMin, path=/path/to/file, description=BTC 1 min data, type=BtcMin2017]"
     );
 }
-

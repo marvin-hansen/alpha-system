@@ -1,9 +1,9 @@
-use common::prelude::DataBar;
+use common::prelude::{DataBar, FileConfigType};
 use std::collections::HashMap;
 
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct BarManager {
-    bars: HashMap<String, Vec<DataBar>>,
+    bars: HashMap<FileConfigType, Vec<DataBar>>,
 }
 
 impl BarManager {
@@ -28,8 +28,8 @@ impl BarManager {
     /// This will insert the bars into the internal map, associating
     /// the symbol with the bar data.
     ///
-    pub fn add_bars(&mut self, symbol: &str, bars: Vec<DataBar>) {
-        self.bars.insert(symbol.to_string(), bars);
+    pub fn add_bars(&mut self, symbol: FileConfigType, bars: Vec<DataBar>) {
+        self.bars.insert(symbol, bars);
     }
 
     /// Removes the bars for the given symbol
@@ -43,15 +43,7 @@ impl BarManager {
     /// This will remove the symbol and associated bars from the
     /// internal map if present.
     ///
-    /// # Examples
-    ///
-    /// ```
-    /// use common::prelude::DataBar;
-    /// use bar_manager::BarManager;
-    /// let mut bar_manager = BarManager::new();
-    /// bar_manager.remove_bars("AAPL");
-    /// ```
-    pub fn remove_bars(&mut self, symbol: &str) {
+    pub fn remove_bars(&mut self, symbol: &FileConfigType) {
         self.bars.remove(symbol);
     }
 
@@ -64,16 +56,7 @@ impl BarManager {
     /// # Returns
     ///
     /// bool - true if data is available, false otherwise
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use common::prelude::DataBar;
-    /// use bar_manager::BarManager;
-    /// let mut bar_manager = BarManager::new();
-    /// let has_data = bar_manager.has_data("AAPL");
-    /// ```
-    pub fn has_data(&self, symbol: &str) -> bool {
+    pub fn has_data(&self, symbol: &FileConfigType) -> bool {
         self.bars.contains_key(symbol)
     }
 
@@ -86,20 +69,7 @@ impl BarManager {
     /// # Returns
     ///
     /// Result<Vec<DataBar>, &'static str> - Vector of bars if found, error string if not found
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use common::prelude::DataBar;
-    /// use bar_manager::BarManager;    ///
-    ///
-    /// let symbol = "AAPL";
-    /// let mut bar_manager = BarManager::new();
-    ///  let bars = vec![/* test bars */];
-    ///  bar_manager.add_bars(symbol, bars.clone());
-    /// let bars = bar_manager.get_bars(symbol).expect("Failed to get data bars");
-    /// ```
-    pub fn get_bars(&self, symbol: &str) -> Result<Vec<DataBar>, &'static str> {
+    pub fn get_bars(&self, symbol: &FileConfigType) -> Result<Vec<DataBar>, &'static str> {
         match self.bars.get(symbol) {
             Some(bars) => Ok(bars.to_vec()),
             None => Err("No data found for symbol"),

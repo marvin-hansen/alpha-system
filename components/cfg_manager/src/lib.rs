@@ -1,17 +1,17 @@
-use common::prelude::{DBConfig, EnvironmentType, ServiceConfig, ServiceID};
+use std::collections::HashMap;
+use common::prelude::{DBConfig, EnvironmentType, FileConfig, FileConfigType, ServiceConfig, ServiceID};
 use ctx_manager::CtxManager;
-use specs::prelude::{
-    cmdb_service_config, db_config_ci, db_config_cluster, db_config_local, dbgw_service_config,
-    qdgw_service_config, smdb_service_config,
-};
+use specs::prelude::{cmdb_service_config, db_config_ci, db_config_cluster, db_config_local, dbgw_service_config, get_all_file_configs, qdgw_service_config, smdb_service_config};
 
 /// Struct that holds the configuration for a specific service.
-#[derive(Debug, Clone, Copy, Eq, PartialEq)]
+#[derive(Debug, Clone, Eq, PartialEq)]
 pub struct CfgManager<'l> {
     /// ID of the service.
     svc: ServiceID,
     /// Type of the environment (e.g., development, testing, production).
     env_type: EnvironmentType,
+    /// File configurations for data files.
+    file_configs: HashMap<FileConfigType, FileConfig>,
     id: &'l str,
 }
 
@@ -24,9 +24,12 @@ impl<'l> CfgManager<'l> {
     /// * `ctx` - Context manager.
     pub fn new(svc: ServiceID, ctx: &CtxManager) -> Self {
         let env_type = ctx.env_type();
+        let file_configs = get_all_file_configs();
+
         Self {
             svc,
             env_type,
+            file_configs,
             id: "CfgManager",
         }
     }
@@ -48,9 +51,12 @@ impl<'l> CfgManager<'l> {
     pub fn get_svc_config(&self, svc_id: &ServiceID) -> ServiceConfig {
         self.service_config(svc_id)
     }
-
     pub fn get_db_config(&self) -> DBConfig {
         self.db_config()
+    }
+
+    pub fn get_file_config(&self, file_config_type: &FileConfigType) -> Option<&FileConfig> {
+        self.file_configs.get(file_config_type)
     }
 }
 
