@@ -1,13 +1,10 @@
 use serde::{Deserialize, Serialize};
 use std::fmt::{Display, Formatter};
-#[derive(
-    Serialize, Deserialize, Clone, Copy, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash,
-)]
-#[repr(u16)]
+#[derive(Serialize, Deserialize, Clone, Copy, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash, )]
+#[repr(u16)] // Type is u16 for direct conversion from proto integer. The smallest possible integer in proto is 16B.
 pub enum SymbolID {
     #[default]
     NullVal = 0xff_u16,
-    //
     BTCUSD = 0x1_u16,
     ETHUSD = 0x2_u16,
     LTCUSD = 0x3_u16,
