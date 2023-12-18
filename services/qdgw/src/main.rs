@@ -10,6 +10,7 @@ use common::prelude::ServiceID::SMDB;
 use ctx_manager::CtxManager;
 use dns_manager::DnsManager;
 use env_manager::EnvManager;
+use qd_manager::QDManager;
 use service_utils::{print_utils, shutdown_utils};
 use smdb_provider::SMDBProvider;
 use svc_manager::ServiceManager;
@@ -34,6 +35,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let svm_manager = async { EnvManager::new(&ctx_manager, &dns_manager) }.await;
     //Creates a new instance of the Service Manager.
     let service_manager = async { ServiceManager::new(&cfg_manager, &svm_manager) }.await;
+    // Creates a new instance of the QD manager.
+    let qd_manager = async { QDManager::new(&cfg_manager) }.await;
 
     //Retrieves the host and port of the Service Manager Database (SMDB) from the auto-configuration.
     let (smdb_host, smdb_port) = service_manager
@@ -101,7 +104,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .expect("[QDGW]/main: Failed to create a message consumer");
 
     //Creates a new server with the specified socket
-    let server = Server::new(consumer);
+    let server = Server::new(consumer, qd_manager);
 
     //Creates a new Tokio task for the HTTP web server.
     let web_handle = tokio::spawn(web_server);

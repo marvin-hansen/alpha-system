@@ -4,14 +4,13 @@ use common::prelude::{DataBar, FileConfigType};
 use file_manager::FileManager;
 
 #[derive(Debug, Clone, Eq, PartialEq)]
-pub struct QDManager<'l> {
-    cfg_manager: &'l CfgManager<'l>,
+pub struct QDManager {
     file_manager: FileManager,
     bar_manager: BarManager,
 }
 
-impl<'l> QDManager<'l> {
-    pub fn new(cfg_manager: &'l CfgManager) -> Self {
+impl QDManager {
+    pub fn new(cfg_manager: &CfgManager) -> Self {
 
         let file_manager = FileManager::new();
 
@@ -30,14 +29,13 @@ impl<'l> QDManager<'l> {
         bar_manager.add_bars(file_config_type, btc_bars);
 
         Self {
-            cfg_manager,
             file_manager,
             bar_manager,
         }
     }
 }
 
-impl<'l> QDManager<'l> {
+impl QDManager {
     pub fn get_data_bars(&self, symbol: &FileConfigType) -> Result<Vec<DataBar>, &'static str> {
         match self.bar_manager.get_bars(symbol) {
             Ok(bars) => Ok(bars),

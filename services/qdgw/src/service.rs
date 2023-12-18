@@ -4,16 +4,22 @@ use std::future::Future;
 use fluvio::{Offset, PartitionConsumer};
 use futures::StreamExt;
 use tokio::{pin, select};
+use qd_manager::QDManager;
 
 use crate::handle;
 
 pub struct Server {
     consumer: PartitionConsumer,
+    qd_manager: QDManager,
 }
 
 impl Server {
-    pub fn new(consumer: PartitionConsumer) -> Self {
-        Self { consumer }
+    pub fn new(
+        consumer: PartitionConsumer,
+        qd_manager: QDManager,
+    ) -> Self
+    {
+        Self { consumer, qd_manager }
     }
 }
 
@@ -46,6 +52,7 @@ impl Server {
                             Some(res) => {
                                 match res {
                                     Ok(record) => {
+                                    // Move handle within the server struct implementation
                                         handle::handle_record(&record).await;
                                 },
                                     Err(err) =>{
