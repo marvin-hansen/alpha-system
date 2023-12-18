@@ -14,6 +14,7 @@ members = [
     "components/db_manager",
     "components/dns_manager",
     "components/env_manager",
+    "components/pattern_manager",
     "components/file_manager",
     "components/qd_manager",
     "components/svc_manager",
@@ -41,7 +42,7 @@ authors = ["Marvin Hansen <marvin.hansen@gmail.com>"]
 
 [workspace.dependencies]
 autometrics = { version = "1", features = ["prometheus-exporter"] }
-#async-std = "1.12"
+chrono = { version = "0.4", features = ["serde"] }
 ctrlc = "3.4"
 fluvio = { version = "0.21" , default-features = false, features = ["rustls"] }
 futures = "0.3"
