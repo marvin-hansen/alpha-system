@@ -8,6 +8,7 @@ ignore:
   - "clients"
   - "components/db_manager"
   - "components/file_manager"
+  - "components/qd_manager"
   - "components/svc_manager"
   - "proto"
   - "providers"

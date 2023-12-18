@@ -1,5 +1,5 @@
 use chrono::{DateTime, TimeZone, Utc};
-use common::prelude::{DataBar, SymbolID};
+use common::prelude::{DataBar, FileConfig, SymbolID};
 use parquet::file::reader::{FileReader, SerializedFileReader};
 use parquet::record::{Row, RowAccessor};
 use rust_decimal::prelude::FromPrimitive;
@@ -29,31 +29,38 @@ impl FileManager {
     /// Result<Vec<DataBar>, Box<dyn Error>> - Vector of DataBar structs parsed
     /// from file, or error if file read/parse fails
     ///
-    pub fn read_data_from_file(&self, path: &str) -> Result<Vec<DataBar>, Box<dyn Error>> {
+    pub fn read_data_from_file(&self, file_config: &FileConfig) -> Result<Vec<DataBar>, Box<dyn Error>> {
+
+        let path = file_config.path();
         if false == Path::new(path).exists() {
-            return Err(Box::try_from(format!("File {} does not exist", path)).unwrap());
+            return Err(Box::try_from(format!("[FileManager]: File {} does not exist", path)).unwrap());
         }
 
-        read_parquet(&path)
+        read_parquet(file_config)
     }
 }
 
-fn read_parquet(path: &str) -> Result<Vec<DataBar>, Box<dyn Error>> {
+fn read_parquet(file_config: &FileConfig) -> Result<Vec<DataBar>, Box<dyn Error>> {
+
+    let path = file_config.path();
+
+    let file = File::open(&Path::new(path)).expect("[FileManager]: Could not open file");
+
+    let symbol= file_config.data_symbol();
+
     let mut content: Vec<DataBar> = Vec::with_capacity(1500); // fixed pre-allocation
 
-    let file = File::open(&Path::new(path)).expect("Could not open file");
-
-    let reader = SerializedFileReader::new(file).expect("Could not create parquet reader");
+    let reader = SerializedFileReader::new(file).expect("[FileManager]: Could not create parquet reader");
 
     let mut iter = reader
         .get_row_iter(None)
-        .expect("Could not create parquet row iterator");
+        .expect("[FileManager]: Could not create parquet row iterator");
 
     while let Some(record) = iter.next() {
-        let record = record.expect("Could not read record");
-        let bar = match convert_field_to_bar(&record) {
+        let record = record.expect("[FileManager]: Could not read record");
+        let bar = match convert_field_to_bar(&record, symbol) {
             Ok(bar) => bar,
-            Err(e) => panic!("Could not convert field to bar: {}", e),
+            Err(e) => panic!("[FileManager]: Could not convert field to bar: {}", e),
         };
 
         content.push(bar);
@@ -76,41 +83,36 @@ fn read_parquet(path: &str) -> Result<Vec<DataBar>, Box<dyn Error>> {
 ///
 /// This makes assumptions about the schema based on position:
 ///
-/// - 0: date_time String
-/// - 1: symbol String
-/// - 2: open f64
-/// - 3: high f64
-/// - 4: low f64
-/// - 5: close f64
-/// - 6: volume f64
+/// 0 date_time String
+/// 1 open f64
+/// 2 high f64
+/// 3 low f64
+/// 4 close f64
+/// 5 volume f64
 ///
-fn convert_field_to_bar(row: &Row) -> Result<DataBar, Box<dyn Error>> {
+fn convert_field_to_bar(row: &Row, symbol: SymbolID) -> Result<DataBar, Box<dyn Error>> {
     // parquet index.
     // 0 date_time String
-    // 1 symbol String
-    // 2 open f64
-    // 3 high f64
-    // 4 low f64
-    // 5 close f64
-    // 6 volume f64
-    // We can safely unwrap b/c all data fields are complete and correct.
+    // 1 open f64
+    // 2 high f64
+    // 3 low f64
+    // 4 close f64
+    // 5 volume f64
 
     // Extract fields from row.
-    let date_time: DateTime<Utc> = get_date_time_field(row).expect("Failed to get date_time field");
-    let symbol: &str = row.get_string(1).expect("Cannot extract str symbol");
-    let open_price: f64 = row.get_double(2).expect("Cannot extract open price");
-    let high_price: f64 = row.get_double(3).expect("Cannot extract high price");
-    let low_price: f64 = row.get_double(4).expect("Cannot extract low price");
-    let close_price: f64 = row.get_double(5).expect("Cannot extract close price");
-    let volume: f64 = row.get_double(6).expect("Cannot extract close price");
+    let date_time: DateTime<Utc> = get_date_time_field(row).expect("[FileManager]: Failed to get date_time field");
+    let open_price: f64 = row.get_double(1).expect("[FileManager]: Cannot extract open price");
+    let high_price: f64 = row.get_double(2).expect("[FileManager]: Cannot extract high price");
+    let low_price: f64 = row.get_double(3).expect("[FileManager]: Cannot extract low price");
+    let close_price: f64 = row.get_double(4).expect("[FileManager]: Cannot extract close price");
+    let volume: f64 = row.get_double(5).expect("[FileManager]: Cannot extract close price");
 
     // Convert fields to Rust types.
-    let symbol = SymbolID::from_str(symbol);
-    let open = Decimal::from_f64(open_price).expect("Failed to parse open price");
-    let high = Decimal::from_f64(high_price).expect("Failed to parse high price");
-    let low = Decimal::from_f64(low_price).expect("Failed to parse low price");
-    let close = Decimal::from_f64(close_price).expect("Failed to parse close price");
-    let volume = Decimal::from_f64(volume).expect("Failed to parse volume");
+    let open = Decimal::from_f64(open_price).expect("[FileManager]: Failed to parse open price");
+    let high = Decimal::from_f64(high_price).expect("[FileManager]: Failed to parse high price");
+    let low = Decimal::from_f64(low_price).expect("[FileManager]: Failed to parse low price");
+    let close = Decimal::from_f64(close_price).expect("[FileManager]: Failed to parse close price");
+    let volume = Decimal::from_f64(volume).expect("[FileManager]: Failed to parse volume");
 
     // Build DataBar.
     let bar = DataBar::new(date_time, symbol, open, high, low, close, volume);

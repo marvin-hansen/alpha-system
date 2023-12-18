@@ -11,6 +11,7 @@ pub mod btc_small;
 
 pub fn get_all_file_configs() -> HashMap<FileConfigType, FileConfig> {
     let mut file_configs = HashMap::new();
+    file_configs.insert(FileConfigType::BtcSmall, btc_small::get_btc_usd_small_file_config());
     file_configs.insert(FileConfigType::BtcMin2017, btc_1m_2017::get_btc_usd_2017_file_config());
     file_configs.insert(FileConfigType::BtcMin2018, btc_1m_2018::get_btc_usd_2018_file_config());
     file_configs.insert(FileConfigType::BtcMin2019, btc_1m_2019::get_btc_usd_2019_file_config());
