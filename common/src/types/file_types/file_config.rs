@@ -5,7 +5,6 @@ use std::fmt;
 
 #[derive(Debug, Clone, Eq, PartialEq, Hash)]
 pub struct FileConfig {
-    id: u32,
     data_symbol: SymbolID,
     time_resolution: TimeResolution,
     path: String,
@@ -15,7 +14,6 @@ pub struct FileConfig {
 
 impl FileConfig {
     pub fn new(
-        id: u32,
         data_symbol: SymbolID,
         time_resolution: TimeResolution,
         path: String,
@@ -23,7 +21,6 @@ impl FileConfig {
         file_config_type: FileConfigType,
     ) -> Self {
         Self {
-            id,
             data_symbol,
             time_resolution,
             path,
@@ -34,9 +31,6 @@ impl FileConfig {
 }
 
 impl FileConfig {
-    pub fn id(&self) -> u32 {
-        self.id
-    }
     pub fn data_symbol(&self) -> SymbolID {
         self.data_symbol
     }
@@ -58,8 +52,7 @@ impl fmt::Display for FileConfig {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(
             f,
-            "FileConfig[id={}, symbol={}, resolution={}, path={}, description={}, type={}]",
-            self.id,
+            "FileConfig[symbol={}, resolution={}, path={}, description={}, type={}]",
             self.data_symbol,
             self.time_resolution,
             self.path,

@@ -7,7 +7,6 @@ readme.workspace = true
 repository.workspace = true
 authors.workspace = true
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [[bin]]
 name = "qdgw"
@@ -36,6 +35,11 @@ version = "0.1.0"
 
 [dependencies.env_manager]
 path = "../../components/env_manager"
+version = "0.1.0"
+
+
+[dependencies.qd_manager]
+path = "../../components/qd_manager"
 version = "0.1.0"
 
 
