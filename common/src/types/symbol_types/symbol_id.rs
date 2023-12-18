@@ -23,6 +23,26 @@ impl From<u16> for SymbolID {
     }
 }
 
+impl SymbolID{
+    pub fn from_str(s: &str) -> SymbolID {
+        match s.to_lowercase().as_str() {
+            "btcusd" => SymbolID::BTCUSD,
+            "ethusd" => SymbolID::ETHUSD,
+            "ltcusd" => SymbolID::LTCUSD,
+            _ => SymbolID::NullVal,
+        }
+    }
+
+    pub fn as_str(&self) ->  &'static str {
+        match *self {
+            SymbolID::BTCUSD => "btcusd",
+            SymbolID::ETHUSD => "ethusd",
+            SymbolID::LTCUSD => "ltcusd",
+            _ => "NullVal",
+        }
+    }
+}
+
 impl Display for SymbolID {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {

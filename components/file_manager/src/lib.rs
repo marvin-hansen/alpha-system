@@ -1,4 +1,4 @@
-use common::prelude::DataBar;
+use common::prelude::{DataBar, SymbolID};
 use parquet::file::reader::{FileReader, SerializedFileReader};
 use parquet::record::{Row, RowAccessor};
 use rust_decimal::prelude::FromPrimitive;
@@ -6,6 +6,7 @@ use rust_decimal::Decimal;
 use std::error::Error;
 use std::fs::File;
 use std::path::Path;
+use chrono::{DateTime, TimeZone, Utc};
 
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct FileManager {}
@@ -82,9 +83,8 @@ fn read_parquet(path: &str) -> Result<Vec<DataBar>, Box<dyn Error>> {
 /// - 4: low f64
 /// - 5: close f64
 /// - 6: volume f64
-/// - 7: trades u64
 ///
-fn convert_field_to_bar(record: &Row) -> Result<DataBar, Box<dyn Error>> {
+fn convert_field_to_bar(row: &Row) -> Result<DataBar, Box<dyn Error>> {
     // parquet index.
     // 0 date_time String
     // 1 symbol String
@@ -93,18 +93,64 @@ fn convert_field_to_bar(record: &Row) -> Result<DataBar, Box<dyn Error>> {
     // 4 low f64
     // 5 close f64
     // 6 volume f64
-    // 7 trades u64
-    // We can safely unwrap b/c all data are complete and correct.
-    let date_time = record.get_string(0).unwrap().to_owned();
-    let symbol = record.get_string(1).unwrap().to_owned();
-    let open = Decimal::from_f64(record.get_double(2).unwrap()).unwrap();
-    let high = Decimal::from_f64(record.get_double(3).unwrap()).unwrap();
-    let low = Decimal::from_f64(record.get_double(4).unwrap()).unwrap();
-    let close = Decimal::from_f64(record.get_double(5).unwrap()).unwrap();
-    let volume = Decimal::from_f64(record.get_double(6).unwrap()).unwrap();
-    let trades = Decimal::from(record.get_ulong(7).unwrap());
+    // We can safely unwrap b/c all data fields are complete and correct.
 
-    let bar = DataBar::new(date_time, symbol, open, high, low, close, volume, trades);
+    // Extract fields from row.
+    let date_time: DateTime<Utc> = get_date_time_field(row).expect("Failed to get date_time field");
+    let symbol: &str = row.get_string(1).expect("Cannot extract str symbol");
+    let open_price: f64 = row.get_double(2).expect("Cannot extract open price");
+    let high_price: f64 = row.get_double(3).expect("Cannot extract high price");
+    let low_price: f64 = row.get_double(4).expect("Cannot extract low price");
+    let close_price: f64 = row.get_double(5).expect("Cannot extract close price");
+    let volume: f64 = row.get_double(6).expect("Cannot extract close price");
+
+    // Convert fields to Rust types.
+    let symbol = SymbolID::from_str(symbol);
+    let open = Decimal::from_f64(open_price).expect("Failed to parse open price");
+    let high = Decimal::from_f64(high_price).expect("Failed to parse high price");
+    let low = Decimal::from_f64(low_price).expect("Failed to parse low price");
+    let close = Decimal::from_f64(close_price).expect("Failed to parse close price");
+    let volume = Decimal::from_f64(volume).expect("Failed to parse volume");
+
+    // Build DataBar.
+    let bar = DataBar::new(
+        date_time,
+        symbol,
+        open,
+        high,
+        low,
+        close,
+        volume,
+    );
 
     Ok(bar)
+}
+
+fn get_date_time_field(row: &Row) -> Result<DateTime<Utc>, Box<dyn std::error::Error>> {
+    if row.get_string(0).is_ok() {
+        // supported timezone syntax for DateTime from string https://github.com/chronotope/chrono/issues/219
+        let fmt = "%Y-%m-%d %H:%M:%S%.6f%z";
+        let s = row.get_string(0).expect("Cannot extract datetime str");
+        // supported timezone syntax for DateTime from string https://github.com/chronotope/chrono/issues/219
+        let date_time: DateTime<Utc> = DateTime::parse_from_str(s, fmt)
+            .expect("Cannot convert string to DateTime").with_timezone(&Utc);
+
+        return Ok(date_time);
+    }
+
+    if row.get_long(0).is_ok() {
+        let millis = row.get_long(0).expect("Cannot extract datetime millis");
+        let date_time: DateTime<Utc> = Utc.timestamp_millis_opt(millis).unwrap();
+        return Ok(date_time);
+    }
+
+    if row.get_timestamp_micros(0).is_ok() {
+        let micros = row.get_timestamp_micros(0).expect("Cannot extract datetime millis");
+        let millis = micros / 1000;
+
+        let date_time: DateTime<Utc> = Utc.timestamp_millis_opt(millis).unwrap();
+        return Ok(date_time);
+    }
+
+    panic!("get_date_time_field: Cannot extract datetime field");
 }

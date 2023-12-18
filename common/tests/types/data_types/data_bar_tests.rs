@@ -1,43 +1,53 @@
-use common::prelude::DataBar;
+use chrono::Utc;
+use common::prelude::{DataBar, SymbolID};
 use rust_decimal::Decimal;
 
+
 #[test]
-fn test_data_bar_new() {
-    let bar = DataBar::new(
-        "2020-01-01T00:00:00".to_string(),
-        "AAPL".to_string(),
-        Decimal::from(100),
-        Decimal::from(110),
-        Decimal::from(90),
-        Decimal::from(105),
-        Decimal::from(1000),
-        Decimal::from(500),
+fn test_new() {
+    let date_time = Utc::now();
+    let symbol = SymbolID::default();
+    let open = Decimal::default();
+    let high = Decimal::default();
+    let low = Decimal::default();
+    let close = Decimal::default();
+    let volume = Decimal::default();
+
+    let data_bar = DataBar::new(
+        date_time,
+        symbol,
+        open,
+        high,
+        low,
+        close,
+        volume
     );
 
-    assert_eq!(bar.date_time(), "2020-01-01T00:00:00");
-    assert_eq!(bar.symbol(), "AAPL");
-    assert_eq!(bar.open(), Decimal::from(100));
-    assert_eq!(bar.high(), Decimal::from(110));
-    assert_eq!(bar.low(), Decimal::from(90));
-    assert_eq!(bar.close(), Decimal::from(105));
-    assert_eq!(bar.volume(), Decimal::from(1000));
-    assert_eq!(bar.trades(), Decimal::from(500));
+    assert_eq!(data_bar.date_time(), date_time);
+    assert_eq!(data_bar.symbol(), symbol);
+    assert_eq!(data_bar.open(), open);
+    assert_eq!(data_bar.high(), high);
+    assert_eq!(data_bar.low(), low);
+    assert_eq!(data_bar.close(), close);
+    assert_eq!(data_bar.volume(), volume);
 }
 
+
 #[test]
-fn test_data_bar_display() {
-    let actual = DataBar::new(
-        "2020-01-01T00:00:00".to_string(),
-        "AAPL".to_string(),
-        Decimal::from(100),
-        Decimal::from(110),
-        Decimal::from(90),
-        Decimal::from(105),
-        Decimal::from(1000),
-        Decimal::from(500),
-    );
+fn test_default() {
+    let symbol = SymbolID::default();
+    let open = Decimal::default();
+    let high = Decimal::default();
+    let low = Decimal::default();
+    let close = Decimal::default();
+    let volume = Decimal::default();
 
-    let expected = "DataTime: 2020-01-01T00:00:00,\n Symbol AAPL,\n Open 100,\n High 110,\n Low 90,\n Close 105,\n Volume 1000,\n Trades 500";
+    let default_bar = DataBar::default();
 
-    assert_eq!(actual.to_string(), expected);
+    assert_eq!(default_bar.symbol(), symbol);
+    assert_eq!(default_bar.open(), open);
+    assert_eq!(default_bar.high(), high);
+    assert_eq!(default_bar.low(), low);
+    assert_eq!(default_bar.close(), close);
+    assert_eq!(default_bar.volume(), volume);
 }

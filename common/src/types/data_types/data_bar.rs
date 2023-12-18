@@ -60,8 +60,6 @@ impl Default for DataBar
 
 impl DataBar {
 
-
-
     pub fn range_change(&self) -> Decimal {
         self.close - self.open
     }
@@ -69,7 +67,6 @@ impl DataBar {
     pub fn range_percent(&self) -> Decimal
     {
         let one_hundred = Decimal::new(100, 0);
-        // https://docs.rs/rust_decimal/latest/rust_decimal/
         (((self.close - self.open) / self.open) * one_hundred).round_dp(4)
     }
 
