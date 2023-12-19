@@ -1,0 +1,29 @@
+[package]
+name = "cmdb_provider"
+version = "0.1.0"
+edition.workspace = true
+rust-version.workspace = true
+readme.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+
+[lib]
+name = "cmdb_provider"
+path = "src/lib.rs"
+
+
+[dependencies.common]
+path = "../../queng_common"
+version = "0.1.0"
+
+
+[dependencies.proto]
+path = "../../queng_proto"
+version = "0.1.0"
+
+
+[dependencies]
+tokio = { workspace = true }
+tonic = { workspace = true }
+prost = { workspace = true }

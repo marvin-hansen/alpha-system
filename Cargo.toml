@@ -1,41 +1,35 @@
 [workspace]
 resolver = "2"
 
-
 members = [
-    "cli/smdb_manager",
-    "cli/spec_manager",
-    "cli/zmq_manager",
-    "clients/dbgw_client",
-    "common",
-#    Components
-    "components/bar_manager",
-    "components/cfg_manager",
-    "components/ctx_manager",
-    "components/db_manager",
-    "components/dns_manager",
-    "components/env_manager",
-    "components/pattern_manager",
-    "components/file_manager",
-    "components/qd_manager",
-    "components/svc_manager",
-    "proto",
-#    providers
-    "providers/cmdb_provider",
-    "providers/smdb_provider",
-#    SBE
-    "sbe/sbe_bindings",
-    "sbe/sbe_messages",
-    "service_utils",
-#    Services
-    "services/cmdb",
-    "services/dbgw",
-    "services/qdgw",
-    "services/smdb",
-#    Specs
-    "specs/db_specs",
-    "specs/file_specs",
-    "specs/service_specs"
+    "queng_cli/smdb_manager",
+    "queng_cli/spec_manager",
+    "queng_cli/zmq_manager",
+    "queng_cli/dbgw_client",
+    "queng_common",
+    "queng_components/bar_manager",
+    "queng_components/cfg_manager",
+    "queng_components/ctx_manager",
+    "queng_components/db_manager",
+    "queng_components/dns_manager",
+    "queng_components/env_manager",
+    "queng_components/pattern_manager",
+    "queng_components/file_manager",
+    "queng_components/qd_manager",
+    "queng_components/svc_manager",
+    "queng_proto",
+    "queng_providers/cmdb_provider",
+    "queng_providers/smdb_provider",
+    "queng_sbe/sbe_bindings",
+    "queng_sbe/sbe_messages",
+    "queng_utils/service_utils",
+    "queng_services/cmdb",
+    "queng_services/dbgw",
+    "queng_services/qdgw",
+    "queng_services/smdb",
+    "queng_specs/db_specs",
+    "queng_specs/file_specs",
+    "queng_specs/service_specs"
 ]
 
 

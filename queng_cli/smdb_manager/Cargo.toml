@@ -1,0 +1,29 @@
+[package]
+name = "smdb_manager"
+version = "0.1.0"
+edition.workspace = true
+rust-version.workspace = true
+readme.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+
+[[bin]]
+name = "smdb_manager"
+path = "src/main.rs"
+
+
+[dependencies.common]
+path = "../../queng_common"
+version = "0.1.0"
+
+
+[dependencies.smdb_provider]
+path = "../../queng_providers/smdb_provider"
+version = "0.1.0"
+
+
+[dependencies]
+tokio = { workspace = true }
