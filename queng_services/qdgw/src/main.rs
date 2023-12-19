@@ -1,10 +1,12 @@
 use std::error::Error;
 use std::net::SocketAddr;
+use std::sync::{Arc, Mutex};
 
 use autometrics::prometheus_exporter;
 use warp::Filter;
 
 use cfg_manager::CfgManager;
+use client_manager::ClientManager;
 use common::prelude::ServiceID;
 use common::prelude::ServiceID::SMDB;
 use ctx_manager::CtxManager;
@@ -17,8 +19,10 @@ use svc_manager::ServiceManager;
 
 use crate::service::Server;
 
-mod handle;
+mod handle_data;
 mod service;
+mod handle_clients;
+mod handle;
 
 const SVC_ID: ServiceID = ServiceID::QDGW;
 
@@ -41,6 +45,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
     // Otherwise, init takes too long i.e. > 20 seconds.
     // For details, see: queng_specs/file_specs/src/files
     let qd_manager = async { QDManager::new(&cfg_manager) }.await;
+    // Creates a new instance of the Client Manager.
+    let client_manager = Arc::new(Mutex::new(ClientManager::new()));
 
     //Retrieves the host and port of the Service Manager Database (SMDB) from the auto-configuration.
     let (smdb_host, smdb_port) = service_manager
@@ -108,7 +114,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .expect("[QDGW]/main: Failed to create a message consumer");
 
     //Creates a new server with the specified socket
-    let server = Server::new(consumer, qd_manager);
+    let server = Server::new(consumer, qd_manager, client_manager);
 
     //Creates a new Tokio task for the HTTP web server.
     let web_handle = tokio::spawn(web_server);

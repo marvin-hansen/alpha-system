@@ -1,7 +1,7 @@
-use crate::service::Server;
-use common::prelude::MessageProcessingError;
 use fluvio::dataplane::record::ConsumerRecord;
-use sbe_messages::prelude::{MessageType, StartDataMessage, StopAllDataMessage, StopDataMessage};
+use common::errors::MessageProcessingError;
+use sbe_messages::prelude::{ClientLoginMessage, ClientLogoutMessage, MessageType, StartDataMessage, StopAllDataMessage, StopDataMessage};
+use crate::service::Server;
 
 impl Server {
     /// Handles an incoming record from the Fluvio stream.
@@ -26,10 +26,21 @@ impl Server {
         let message_type = MessageType::from(buffer[2]);
 
         match message_type {
-            MessageType::NullVal => Err(MessageProcessingError(
+            MessageType::UnknownMessageType => Err(MessageProcessingError(
                 "[QDGW/handle::handle_record]:  Fluvio consumer record contained a null value"
                     .to_string(),
             )),
+
+            MessageType::ClientLogin => {
+                let client_login_msg = ClientLoginMessage::from(buffer);
+                self.client_login(&client_login_msg).await
+            }
+
+            MessageType::ClientLogout => {
+                let client_logout_msg = ClientLogoutMessage::from(buffer);
+                self.client_logout(&client_logout_msg).await
+            }
+
             MessageType::StartData => {
                 let start_data_msg = StartDataMessage::from(buffer);
                 self.start_date(&start_data_msg).await
@@ -43,40 +54,5 @@ impl Server {
                 self.stop_all_data(&stop_all_data_msg).await
             }
         }
-    }
-}
-
-impl Server {
-    async fn start_date(
-        &self,
-        start_data_msg: &StartDataMessage,
-    ) -> Result<(), MessageProcessingError> {
-        println!(
-            "[QDGW/handle::start_date]: start_data: {:?}",
-            start_data_msg
-        );
-
-        Ok(())
-    }
-
-    async fn stop_date(
-        &self,
-        stop_data_msg: &StopDataMessage,
-    ) -> Result<(), MessageProcessingError> {
-        println!("[QDGW/handle::stop_date]: stop_data: {:?}", stop_data_msg);
-
-        Ok(())
-    }
-
-    async fn stop_all_data(
-        &self,
-        stop_all_data_msg: &StopAllDataMessage,
-    ) -> Result<(), MessageProcessingError> {
-        println!(
-            "[QDGW/handle::stop_all_data]: stop_all_data: {:?}",
-            stop_all_data_msg
-        );
-
-        Ok(())
     }
 }

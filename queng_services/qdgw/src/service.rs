@@ -3,18 +3,27 @@ use fluvio::{Offset, PartitionConsumer};
 use futures::StreamExt;
 use qd_manager::QDManager;
 use std::future::Future;
+use std::sync::{Arc, Mutex};
 use tokio::{pin, select};
+use client_manager::ClientManager;
 
 pub struct Server {
     consumer: PartitionConsumer,
     qd_manager: QDManager,
+    client_manager: Arc<Mutex<ClientManager>>,
+
 }
 
 impl Server {
-    pub fn new(consumer: PartitionConsumer, qd_manager: QDManager) -> Self {
+    pub fn new(
+        consumer: PartitionConsumer,
+        qd_manager: QDManager,
+        client_manager: Arc<Mutex<ClientManager>>
+    ) -> Self {
         Self {
             consumer,
             qd_manager,
+            client_manager,
         }
     }
 }
