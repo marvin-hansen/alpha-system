@@ -1,8 +1,8 @@
-use std::env;
 use cfg_manager::CfgManager;
 use common::prelude::{FileConfigType, ServiceID};
 use ctx_manager::CtxManager;
 use qd_manager::QDManager;
+use std::env;
 #[test]
 fn test_get_data_bars() {
     env::set_var("ENV", "CLUSTER");
@@ -22,4 +22,3 @@ fn test_get_data_bars() {
     let bars = result.expect("get data bars failed");
     assert_eq!(bars.len(), 1000);
 }
-

@@ -4,8 +4,8 @@ use std::env;
 use common::prelude::{EnvironmentType, ServiceConfig, ServiceID};
 use ctx_manager::CtxManager;
 
-use service_specs::prelude::*;
 use db_specs::prelude::*;
+use service_specs::prelude::*;
 
 #[test]
 fn new_config_manager_default() {

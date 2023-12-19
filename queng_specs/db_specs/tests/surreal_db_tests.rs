@@ -20,7 +20,6 @@ fn test_db_config_local() {
     assert_eq!(expected, actual);
 }
 
-
 #[test]
 fn test_db_config_ci() {
     let expected = DBConfig::default();
@@ -45,4 +44,3 @@ fn test_db_config_cluster() {
 
     assert_eq!(expected, actual);
 }
-
