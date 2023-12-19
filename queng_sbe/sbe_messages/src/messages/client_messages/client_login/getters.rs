@@ -9,6 +9,6 @@ impl ClientLoginMessage {
         self.client_id
     }
     pub fn client_name(&self) -> String {
-       String::from_utf8(self.client_name.to_vec()).unwrap()
+        String::from_utf8(self.client_name.to_vec()).unwrap()
     }
 }

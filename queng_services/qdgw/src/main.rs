@@ -19,10 +19,10 @@ use svc_manager::ServiceManager;
 
 use crate::service::Server;
 
+mod handle;
+mod handle_clients;
 mod handle_data;
 mod service;
-mod handle_clients;
-mod handle;
 
 const SVC_ID: ServiceID = ServiceID::QDGW;
 

@@ -1,6 +1,5 @@
 use sbe_messages::prelude::MessageType;
 
-
 #[test]
 fn test_from_u8() {
     let message_type = MessageType::from(0x1);
@@ -42,6 +41,3 @@ fn test_display() {
     let message_type = MessageType::UnknownMessageType;
     assert_eq!(format!("{}", message_type), "UnknownMessageType");
 }
-
-
-

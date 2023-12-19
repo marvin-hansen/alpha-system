@@ -1,2 +1,2 @@
-mod data_messages;
 mod client_messages;
+mod data_messages;

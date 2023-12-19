@@ -1,10 +1,10 @@
-use std::fmt;
 use serde::{Deserialize, Serialize};
-use std::fmt::{Display};
+use std::fmt;
+use std::fmt::Display;
 
 /// Enum representing the different types of messages that can be sent over network.
 #[derive(
-Serialize, Deserialize, Clone, Copy, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash,
+    Serialize, Deserialize, Clone, Copy, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash,
 )]
 #[repr(u8)]
 pub enum MessageType {
@@ -42,4 +42,3 @@ impl Display for MessageType {
         }
     }
 }
-

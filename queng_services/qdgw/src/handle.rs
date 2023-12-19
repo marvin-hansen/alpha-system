@@ -1,7 +1,10 @@
-use fluvio::dataplane::record::ConsumerRecord;
-use common::errors::MessageProcessingError;
-use sbe_messages::prelude::{ClientLoginMessage, ClientLogoutMessage, MessageType, StartDataMessage, StopAllDataMessage, StopDataMessage};
 use crate::service::Server;
+use common::errors::MessageProcessingError;
+use fluvio::dataplane::record::ConsumerRecord;
+use sbe_messages::prelude::{
+    ClientLoginMessage, ClientLogoutMessage, MessageType, StartDataMessage, StopAllDataMessage,
+    StopDataMessage,
+};
 
 impl Server {
     /// Handles an incoming record from the Fluvio stream.

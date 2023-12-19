@@ -1,7 +1,6 @@
-use sbe_bindings::{ClientLoginDecoder, MessageHeaderDecoder, ReadBuf, SbeResult};
 use crate::prelude::{ClientLoginMessage, MessageType};
 use sbe_bindings::client_login_codec::SBE_TEMPLATE_ID;
-
+use sbe_bindings::{ClientLoginDecoder, MessageHeaderDecoder, ReadBuf, SbeResult};
 
 pub fn decode_client_login_message(buffer: &[u8]) -> SbeResult<ClientLoginMessage> {
     let mut csg = ClientLoginDecoder::default();
@@ -18,10 +17,7 @@ pub fn decode_client_login_message(buffer: &[u8]) -> SbeResult<ClientLoginMessag
     let client_id = csg.client_id();
     let client_name = csg.client_name();
 
-    let message = ClientLoginMessage::new(
-        client_id,
-        client_name,
-    );
+    let message = ClientLoginMessage::new(client_id, client_name);
 
     Ok(message)
 }

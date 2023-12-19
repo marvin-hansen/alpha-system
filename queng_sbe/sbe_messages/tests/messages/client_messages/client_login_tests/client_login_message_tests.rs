@@ -28,14 +28,18 @@ fn test_encode() {
     let (limit, buffer) = enc.unwrap();
     assert_eq!(limit, 19);
 
-    let expected: Vec<u8> = vec![11, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 99, 108, 105, 101, 110, 116, 45, 49];
+    let expected: Vec<u8> = vec![
+        11, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 99, 108, 105, 101, 110, 116, 45, 49,
+    ];
     let actual = buffer;
     assert_eq!(expected, actual);
 }
 
 #[test]
 fn test_decode() {
-    let encoded: Vec<u8> = vec![11, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 99, 108, 105, 101, 110, 116, 45, 49];
+    let encoded: Vec<u8> = vec![
+        11, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 99, 108, 105, 101, 110, 116, 45, 49,
+    ];
     let buffer = encoded.as_slice();
 
     let message = ClientLoginMessage::from(buffer);
