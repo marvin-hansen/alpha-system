@@ -87,6 +87,22 @@ impl DBConfig {
     }
 }
 
+impl Default for DBConfig {
+    /// Returns the default configuration.
+    //https://surrealdb.com/docs/installation/running/docker
+    fn default() -> Self {
+        Self {
+            port: 8000,
+            host: "0.0.0.0".to_string(),
+            db_name: "test".to_string(),
+            db_namespace: "test".to_string(),
+            username: "root".to_string(),
+            password: "root".to_string(),
+            client_name: String::from("dbgw"),
+        }
+    }
+}
+
 // getters
 impl DBConfig {
     /// Returns the name of the database to connect to.
@@ -125,21 +141,6 @@ impl DBConfig {
     }
 }
 
-impl Default for DBConfig {
-    /// Returns the default configuration.
-    //https://surrealdb.com/docs/installation/running/docker
-    fn default() -> Self {
-        Self {
-            port: 8000,
-            host: "0.0.0.0".to_string(),
-            db_name: "test".to_string(),
-            db_namespace: "test".to_string(),
-            username: "root".to_string(),
-            password: "root".to_string(),
-            client_name: String::from("dbgw"),
-        }
-    }
-}
 
 impl Display for DBConfig {
     /// Formats the config as a string.
