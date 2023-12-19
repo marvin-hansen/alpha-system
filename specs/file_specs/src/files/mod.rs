@@ -9,6 +9,18 @@ pub mod btc_1m_2021;
 pub mod btc_1m_2022;
 pub mod btc_small;
 
+pub fn get_all_file_config_types() -> Vec<FileConfigType> {
+    vec![
+        FileConfigType::BtcSmall,
+        FileConfigType::BtcMin2017,
+        FileConfigType::BtcMin2018,
+        FileConfigType::BtcMin2019,
+        FileConfigType::BtcMin2020,
+        FileConfigType::BtcMin2021,
+        FileConfigType::BtcMin2022,
+    ]
+}
+
 pub fn get_all_file_configs() -> HashMap<FileConfigType, FileConfig> {
     let mut file_configs = HashMap::new();
     file_configs.insert(FileConfigType::BtcSmall, btc_small::get_btc_usd_small_file_config());

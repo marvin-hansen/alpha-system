@@ -1,6 +1,6 @@
 use common::prelude::ServiceID;
 use dbgw_client::DBGatewayClient;
-use specs::services::get_all_service_configs;
+use service_specs::services::get_all_service_configs;
 use std::error::Error;
 
 use crate::types::WorkflowOP;

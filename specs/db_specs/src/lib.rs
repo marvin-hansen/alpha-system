@@ -1,3 +1,5 @@
+pub mod prelude;
+
 use common::prelude::DBConfig;
 
 const PORT: u16 = 8000;

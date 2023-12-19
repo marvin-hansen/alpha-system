@@ -1,5 +1,4 @@
 use common::prelude::{Encoding, ProtocolType, ServiceID, ServiceType};
-use specs::prelude::cmdb_service_config;
 
 #[test]
 fn test_cmdb_service_config() {

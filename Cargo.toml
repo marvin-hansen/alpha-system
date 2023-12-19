@@ -8,6 +8,7 @@ members = [
     "cli/zmq_manager",
     "clients/dbgw_client",
     "common",
+#    Components
     "components/bar_manager",
     "components/cfg_manager",
     "components/ctx_manager",
@@ -19,16 +20,22 @@ members = [
     "components/qd_manager",
     "components/svc_manager",
     "proto",
+#    providers
     "providers/cmdb_provider",
     "providers/smdb_provider",
+#    SBE
     "sbe/sbe_bindings",
     "sbe/sbe_messages",
     "service_utils",
+#    Services
     "services/cmdb",
     "services/dbgw",
     "services/qdgw",
     "services/smdb",
-    "specs"
+#    Specs
+    "specs/db_specs",
+    "specs/file_specs",
+    "specs/service_specs"
 ]
 
 
