@@ -1,0 +1,28 @@
+[package]
+name = "dns_manager"
+version = "0.1.0"
+
+edition.workspace = true
+rust-version.workspace = true
+readme.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+
+[lib]
+name = "dns_manager"
+path = "src/lib.rs"
+
+
+[dependencies.common]
+path = "../../queng_common"
+version = "0.1.0"
+
+
+[dependencies.ctx_manager]
+path = "../ctx_manager"
+version = "0.1.0"
+
+
+[dependencies]
+hickory-resolver = { workspace = true }
