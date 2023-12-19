@@ -8,7 +8,7 @@ pub fn dbgw_service_config() -> ServiceConfig {
     let version = 1;
     let online = true;
     let description = "DBGW gives access to surreal DB".to_string();
-    let health_check_uri = "dbgw-service.default.svc.cluster.local:5050/health".to_string();
+    let health_check_uri = "dbgw-service.default.svc.cluster.local:6060/health".to_string();
     let base_uri = "dbgw-service.default.svc.cluster.local".to_string();
     let dependencies = vec![];
     let exposure = ServiceType::ENDPOINT;
