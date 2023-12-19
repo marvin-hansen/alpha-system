@@ -14,7 +14,7 @@ spec:
     - name: main-port
       port: 4040
       protocol: TCP
-      targetPort: 9090
+      targetPort: 4040
     - name: metrics-port
       port: 8080
       protocol: TCP

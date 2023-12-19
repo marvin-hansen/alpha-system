@@ -1,9 +1,9 @@
 use crate::*;
 
-pub use decoder::StopDataMsgDecoder;
-pub use encoder::StopDataMsgEncoder;
+pub use encoder::ClientLogoutEncoder;
+pub use decoder::ClientLogoutDecoder;
 
-pub const SBE_BLOCK_LENGTH: u16 = 4;
+pub const SBE_BLOCK_LENGTH: u16 = 3;
 pub const SBE_TEMPLATE_ID: u16 = 2;
 pub const SBE_SCHEMA_ID: u16 = 1;
 pub const SBE_SCHEMA_VERSION: u16 = 1;
@@ -13,21 +13,21 @@ pub mod encoder {
     use super::*;
 
     #[derive(Debug, Default)]
-    pub struct StopDataMsgEncoder<'a> {
+    pub struct ClientLogoutEncoder<'a> {
         buf: WriteBuf<'a>,
         initial_offset: usize,
         offset: usize,
         limit: usize,
     }
 
-    impl<'a> Writer<'a> for StopDataMsgEncoder<'a> {
+    impl<'a> Writer<'a> for ClientLogoutEncoder<'a> {
         #[inline]
         fn get_buf_mut(&mut self) -> &mut WriteBuf<'a> {
             &mut self.buf
         }
     }
 
-    impl<'a> Encoder<'a> for StopDataMsgEncoder<'a> {
+    impl<'a> Encoder<'a> for ClientLogoutEncoder<'a> {
         #[inline]
         fn get_limit(&self) -> usize {
             self.limit
@@ -39,7 +39,7 @@ pub mod encoder {
         }
     }
 
-    impl<'a> StopDataMsgEncoder<'a> {
+    impl<'a> ClientLogoutEncoder<'a> {
         pub fn wrap(mut self, buf: WriteBuf<'a>, offset: usize) -> Self {
             let limit = offset + SBE_BLOCK_LENGTH as usize;
             self.buf = buf;
@@ -70,34 +70,29 @@ pub mod encoder {
             self.get_buf_mut().put_u8_at(offset, value as u8)
         }
 
-        /// REQUIRED enum
-        #[inline]
-        pub fn exchange_id(&mut self, value: ExchangeID) {
-            let offset = self.offset + 1;
-            self.get_buf_mut().put_u8_at(offset, value as u8)
-        }
-
-        /// primitive field 'assetID'
+        /// primitive field 'clientID'
         /// - min value: 0
         /// - max value: 65534
         /// - null value: 65535
         /// - characterEncoding: null
         /// - semanticType: null
-        /// - encodedOffset: 2
+        /// - encodedOffset: 1
         /// - encodedLength: 2
         #[inline]
-        pub fn asset_id(&mut self, value: u16) {
-            let offset = self.offset + 2;
+        pub fn client_id(&mut self, value: u16) {
+            let offset = self.offset + 1;
             self.get_buf_mut().put_u16_at(offset, value);
         }
+
     }
+
 } // end encoder
 
 pub mod decoder {
     use super::*;
 
     #[derive(Clone, Copy, Debug, Default)]
-    pub struct StopDataMsgDecoder<'a> {
+    pub struct ClientLogoutDecoder<'a> {
         buf: ReadBuf<'a>,
         initial_offset: usize,
         offset: usize,
@@ -106,14 +101,14 @@ pub mod decoder {
         pub acting_version: u16,
     }
 
-    impl<'a> Reader<'a> for StopDataMsgDecoder<'a> {
+    impl<'a> Reader<'a> for ClientLogoutDecoder<'a> {
         #[inline]
         fn get_buf(&self) -> &ReadBuf<'a> {
             &self.buf
         }
     }
 
-    impl<'a> Decoder<'a> for StopDataMsgDecoder<'a> {
+    impl<'a> Decoder<'a> for ClientLogoutDecoder<'a> {
         #[inline]
         fn get_limit(&self) -> usize {
             self.limit
@@ -125,7 +120,7 @@ pub mod decoder {
         }
     }
 
-    impl<'a> StopDataMsgDecoder<'a> {
+    impl<'a> ClientLogoutDecoder<'a> {
         pub fn wrap(
             mut self,
             buf: ReadBuf<'a>,
@@ -167,16 +162,13 @@ pub mod decoder {
             self.get_buf().get_u8_at(self.offset).into()
         }
 
-        /// REQUIRED enum
-        #[inline]
-        pub fn exchange_id(&self) -> ExchangeID {
-            self.get_buf().get_u8_at(self.offset + 1).into()
-        }
-
         /// primitive field - 'REQUIRED'
         #[inline]
-        pub fn asset_id(&self) -> u16 {
-            self.get_buf().get_u16_at(self.offset + 2)
+        pub fn client_id(&self) -> u16 {
+            self.get_buf().get_u16_at(self.offset + 1)
         }
+
     }
+
 } // end decoder
+
