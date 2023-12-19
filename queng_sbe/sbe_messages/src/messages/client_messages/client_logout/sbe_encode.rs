@@ -1,7 +1,7 @@
-use sbe_bindings::{ClientLogoutEncoder, Encoder, message_header_codec, WriteBuf};
 use crate::errors::SbeEncodeError;
 use crate::prelude::ClientLogoutMessage;
-use sbe_bindings::{MessageType as SbeMessageType};
+use sbe_bindings::MessageType as SbeMessageType;
+use sbe_bindings::{message_header_codec, ClientLogoutEncoder, Encoder, WriteBuf};
 
 impl ClientLogoutMessage {
     pub fn encode(&self) -> Result<(usize, Vec<u8>), SbeEncodeError> {

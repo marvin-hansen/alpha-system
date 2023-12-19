@@ -1,6 +1,6 @@
-use sbe_bindings::{ClientLogoutDecoder, MessageHeaderDecoder, ReadBuf, SbeResult};
 use crate::prelude::{ClientLogoutMessage, MessageType};
 use sbe_bindings::client_logout_codec::SBE_TEMPLATE_ID;
+use sbe_bindings::{ClientLogoutDecoder, MessageHeaderDecoder, ReadBuf, SbeResult};
 
 pub fn decode_client_logout_message(buffer: &[u8]) -> SbeResult<ClientLogoutMessage> {
     let mut csg = ClientLogoutDecoder::default();
@@ -16,9 +16,7 @@ pub fn decode_client_logout_message(buffer: &[u8]) -> SbeResult<ClientLogoutMess
 
     let client_id = csg.client_id();
 
-    let message = ClientLogoutMessage::new(
-        client_id,
-    );
+    let message = ClientLogoutMessage::new(client_id);
 
     Ok(message)
 }

@@ -1,6 +1,5 @@
 use sbe_messages::prelude::{ClientLoginMessage, ClientLogoutMessage, MessageType};
 
-
 #[test]
 fn test_new() {
     let message = ClientLogoutMessage::new(123);
@@ -23,7 +22,6 @@ fn test_encode() {
     let (limit, buffer) = enc.unwrap();
     assert_eq!(limit, 11);
 
-
     let expected: Vec<u8> = vec![3, 0, 2, 0, 1, 0, 1, 0, 2, 1, 0];
     let actual = buffer;
     assert_eq!(expected, actual);
@@ -38,7 +36,6 @@ fn test_decode() {
     assert_eq!(message.message_type(), &MessageType::ClientLogout);
     assert_eq!(message.client_id(), 1);
 }
-
 
 #[test]
 fn test_message_type() {
@@ -60,7 +57,6 @@ fn test_message_client_id() {
 fn test_display() {
     let client_id = 123;
     let message = ClientLogoutMessage::new(client_id);
-
 
     let expected = "ClientLogoutMessage { client_id: 123 }";
 

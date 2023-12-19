@@ -1,12 +1,10 @@
-use sbe_bindings::{ClientLoginEncoder, Encoder, message_header_codec, WriteBuf};
 use crate::errors::SbeEncodeError;
 use crate::prelude::ClientLoginMessage;
-use sbe_bindings::{MessageType as SbeMessageType};
-
+use sbe_bindings::MessageType as SbeMessageType;
+use sbe_bindings::{message_header_codec, ClientLoginEncoder, Encoder, WriteBuf};
 
 impl ClientLoginMessage {
     pub fn encode(&self) -> Result<(usize, Vec<u8>), SbeEncodeError> {
-
         // precise buffer size is 19 bytes for the entire message.
         let mut buffer = vec![0u8; 19];
 
