@@ -6,10 +6,10 @@ pub fn qdgw_service_config() -> ServiceConfig {
     let id = ServiceID::QDGW;
     let name = "qdgwv1".to_string();
     let version = 1;
-    let online = true;
-    let description = " QDGW gives access to quantitative Tick / min data".to_string();
-    let health_check_uri = "qdg-service.default.svc.cluster.local:4040/health".to_string();
-    let base_uri = "qdg-service.default.svc.cluster.local".to_string();
+    let online = false;
+    let description = "QDGW gives access to quantitative Tick / min data".to_string();
+    let health_check_uri = "qdgw-service.default.svc.cluster.local:4040/health".to_string();
+    let base_uri = "qdgw-service.default.svc.cluster.local".to_string();
     let dependencies = vec![ServiceID::SMDB];
     let exposure = ServiceType::ENDPOINT;
     let endpoint = get_endpoint();
