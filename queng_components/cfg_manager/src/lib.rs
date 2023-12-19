@@ -1,9 +1,13 @@
-use std::collections::HashMap;
-use common::prelude::{DBConfig, EnvironmentType, FileConfig, FileConfigType, ServiceConfig, ServiceID};
+use common::prelude::{
+    DBConfig, EnvironmentType, FileConfig, FileConfigType, ServiceConfig, ServiceID,
+};
 use ctx_manager::CtxManager;
-use file_specs::prelude::{ get_all_file_config_types, get_all_file_configs};
-use service_specs::prelude::{cmdb_service_config, dbgw_service_config, qdgw_service_config, smdb_service_config};
 use db_specs::prelude::{db_config_ci, db_config_cluster, db_config_local};
+use file_specs::prelude::{get_all_file_config_types, get_all_file_configs};
+use service_specs::prelude::{
+    cmdb_service_config, dbgw_service_config, qdgw_service_config, smdb_service_config,
+};
+use std::collections::HashMap;
 
 /// Struct that holds the configuration for a specific service.
 #[derive(Debug, Clone, Eq, PartialEq)]
@@ -39,7 +43,7 @@ impl CfgManager {
     }
 }
 
-impl CfgManager{
+impl CfgManager {
     /// Returns the ID of the service.
     pub fn svc(&self) -> ServiceID {
         self.svc
@@ -66,7 +70,7 @@ impl CfgManager{
     }
 }
 
-impl CfgManager{
+impl CfgManager {
     fn db_config(&self) -> DBConfig {
         match self.env_type {
             EnvironmentType::LOCAL => db_config_local(),

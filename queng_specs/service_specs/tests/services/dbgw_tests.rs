@@ -21,10 +21,7 @@ fn test_cmdb_service_config() {
         service_config.base_uri(),
         "dbgw-service.default.svc.cluster.local"
     );
-    assert_eq!(
-        service_config.dependencies().len(),
-        0
-    );
+    assert_eq!(service_config.dependencies().len(), 0);
     assert_eq!(service_config.exposure(), &ServiceType::ENDPOINT);
 
     let endpoint = service_config.endpoint();

@@ -15,5 +15,3 @@ fn test_get_btc_usd_2018_file_config() {
 
     assert_eq!(expected, actual);
 }
-
-

@@ -1,7 +1,6 @@
 use common::prelude::{FileConfig, FileConfigType, SymbolID, TimeResolution};
 use file_specs::prelude::get_btc_usd_2017_file_config;
 
-
 #[test]
 fn test_get_btc_usd_2017_file_config() {
     let expected = FileConfig::new(
@@ -16,4 +15,3 @@ fn test_get_btc_usd_2017_file_config() {
 
     assert_eq!(expected, actual);
 }
-

@@ -15,7 +15,6 @@ impl QDManager {
         let mut bar_manager = BarManager::new();
 
         for file_config in cfg_manager.get_all_file_config_types().iter() {
-
             let config = cfg_manager
                 .get_file_config(file_config)
                 .expect("QDManager: Error reading config file");
@@ -42,4 +41,3 @@ impl QDManager {
         }
     }
 }
-

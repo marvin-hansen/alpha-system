@@ -29,11 +29,15 @@ impl FileManager {
     /// Result<Vec<DataBar>, Box<dyn Error>> - Vector of DataBar structs parsed
     /// from file, or error if file read/parse fails
     ///
-    pub fn read_data_from_file(&self, file_config: &FileConfig) -> Result<Vec<DataBar>, Box<dyn Error>> {
-
+    pub fn read_data_from_file(
+        &self,
+        file_config: &FileConfig,
+    ) -> Result<Vec<DataBar>, Box<dyn Error>> {
         let path = file_config.path();
         if false == Path::new(path).exists() {
-            return Err(Box::try_from(format!("[FileManager]: File {} does not exist", path)).unwrap());
+            return Err(
+                Box::try_from(format!("[FileManager]: File {} does not exist", path)).unwrap(),
+            );
         }
 
         read_parquet(file_config)
@@ -41,16 +45,16 @@ impl FileManager {
 }
 
 fn read_parquet(file_config: &FileConfig) -> Result<Vec<DataBar>, Box<dyn Error>> {
-
     let path = file_config.path();
 
     let file = File::open(&Path::new(path)).expect("[FileManager]: Could not open file");
 
-    let symbol= file_config.data_symbol();
+    let symbol = file_config.data_symbol();
 
     let mut content: Vec<DataBar> = Vec::with_capacity(1500); // fixed pre-allocation
 
-    let reader = SerializedFileReader::new(file).expect("[FileManager]: Could not create parquet reader");
+    let reader =
+        SerializedFileReader::new(file).expect("[FileManager]: Could not create parquet reader");
 
     let mut iter = reader
         .get_row_iter(None)
@@ -100,12 +104,23 @@ fn convert_field_to_bar(row: &Row, symbol: SymbolID) -> Result<DataBar, Box<dyn 
     // 5 volume f64
 
     // Extract fields from row.
-    let date_time: DateTime<Utc> = get_date_time_field(row).expect("[FileManager]: Failed to get date_time field");
-    let open_price: f64 = row.get_double(1).expect("[FileManager]: Cannot extract open price");
-    let high_price: f64 = row.get_double(2).expect("[FileManager]: Cannot extract high price");
-    let low_price: f64 = row.get_double(3).expect("[FileManager]: Cannot extract low price");
-    let close_price: f64 = row.get_double(4).expect("[FileManager]: Cannot extract close price");
-    let volume: f64 = row.get_double(5).expect("[FileManager]: Cannot extract close price");
+    let date_time: DateTime<Utc> =
+        get_date_time_field(row).expect("[FileManager]: Failed to get date_time field");
+    let open_price: f64 = row
+        .get_double(1)
+        .expect("[FileManager]: Cannot extract open price");
+    let high_price: f64 = row
+        .get_double(2)
+        .expect("[FileManager]: Cannot extract high price");
+    let low_price: f64 = row
+        .get_double(3)
+        .expect("[FileManager]: Cannot extract low price");
+    let close_price: f64 = row
+        .get_double(4)
+        .expect("[FileManager]: Cannot extract close price");
+    let volume: f64 = row
+        .get_double(5)
+        .expect("[FileManager]: Cannot extract close price");
 
     // Convert fields to Rust types.
     let open = Decimal::from_f64(open_price).expect("[FileManager]: Failed to parse open price");

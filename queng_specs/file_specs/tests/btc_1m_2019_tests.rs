@@ -2,8 +2,8 @@ use common::prelude::{FileConfig, FileConfigType, SymbolID, TimeResolution};
 use file_specs::prelude::get_btc_usd_2019_file_config;
 
 #[test]
-    fn test_get_btc_usd_2019_file_config() {
-        let expected = FileConfig::new(
+fn test_get_btc_usd_2019_file_config() {
+    let expected = FileConfig::new(
             SymbolID::BTCUSD,
             TimeResolution::OneMin,
             "/Users/marvin/RustroverProjects/quant-engine/data/pqt/btcusd/btc_1m_year/btcusd_1m_2019.parquet".to_string(),
@@ -11,9 +11,7 @@ use file_specs::prelude::get_btc_usd_2019_file_config;
             FileConfigType::BtcMin2019,
         );
 
-        let actual = get_btc_usd_2019_file_config();
+    let actual = get_btc_usd_2019_file_config();
 
-        assert_eq!(expected, actual);
-    }
-
-
+    assert_eq!(expected, actual);
+}

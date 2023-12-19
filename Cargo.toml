@@ -22,14 +22,14 @@ members = [
     "queng_providers/smdb_provider",
     "queng_sbe/sbe_bindings",
     "queng_sbe/sbe_messages",
-    "queng_utils/service_utils",
     "queng_services/cmdb",
     "queng_services/dbgw",
     "queng_services/qdgw",
     "queng_services/smdb",
     "queng_specs/db_specs",
     "queng_specs/file_specs",
-    "queng_specs/service_specs"
+    "queng_specs/service_specs",
+    "queng_utils/service_utils",
 ]
 
 

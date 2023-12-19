@@ -3,8 +3,8 @@ use std::future::Future;
 
 use fluvio::{Offset, PartitionConsumer};
 use futures::StreamExt;
-use tokio::{pin, select};
 use qd_manager::QDManager;
+use tokio::{pin, select};
 
 use crate::handle;
 
@@ -14,12 +14,11 @@ pub struct Server {
 }
 
 impl Server {
-    pub fn new(
-        consumer: PartitionConsumer,
-        qd_manager: QDManager,
-    ) -> Self
-    {
-        Self { consumer, qd_manager }
+    pub fn new(consumer: PartitionConsumer, qd_manager: QDManager) -> Self {
+        Self {
+            consumer,
+            qd_manager,
+        }
     }
 }
 

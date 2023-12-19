@@ -141,7 +141,6 @@ impl DBConfig {
     }
 }
 
-
 impl Display for DBConfig {
     /// Formats the config as a string.
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
