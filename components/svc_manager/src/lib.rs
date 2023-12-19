@@ -4,7 +4,7 @@ use common::prelude::{Endpoint, ServiceConfig, ServiceID};
 use env_manager::EnvManager;
 
 pub struct ServiceManager<'l> {
-    cfg_manager: &'l CfgManager<'l>,
+    cfg_manager: &'l CfgManager,
     svm_manager: &'l EnvManager<'l>,
 }
 

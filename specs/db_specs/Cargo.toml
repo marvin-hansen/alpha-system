@@ -1,5 +1,5 @@
 [package]
-name = "specs"
+name = "db_specs"
 version = "0.1.0"
 
 edition.workspace = true
@@ -12,12 +12,12 @@ authors.workspace = true
 
 
 [lib]
-name = "specs"
+name = "db_specs"
 path = "src/lib.rs"
 
 
 [dependencies.common]
-path = "../common"
+path = "../../common"
 version = "0.1.0"
 
 

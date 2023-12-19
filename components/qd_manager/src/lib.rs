@@ -11,22 +11,21 @@ pub struct QDManager {
 
 impl QDManager {
     pub fn new(cfg_manager: &CfgManager) -> Self {
-
         let file_manager = FileManager::new();
-
         let mut bar_manager = BarManager::new();
 
-        let file_config_type = &FileConfigType::BtcSmall;
+        for file_config in cfg_manager.get_all_file_config_types().iter() {
 
-        let btc_small_config = cfg_manager
-            .get_file_config(file_config_type)
-            .expect("QDManager: Error reading config file");
+            let config = cfg_manager
+                .get_file_config(file_config)
+                .expect("QDManager: Error reading config file");
 
-        let btc_bars = file_manager
-            .read_data_from_file(btc_small_config)
-            .expect("QDManager: Error reading data from file");
+            let bars = file_manager
+                .read_data_from_file(config)
+                .expect("QDManager: Error reading data from file");
 
-        bar_manager.add_bars(file_config_type, btc_bars);
+            bar_manager.add_bars(file_config, bars);
+        }
 
         Self {
             file_manager,
@@ -43,3 +42,4 @@ impl QDManager {
         }
     }
 }
+

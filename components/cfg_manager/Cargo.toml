@@ -24,8 +24,18 @@ path = "../../components/ctx_manager"
 version = "0.1.0"
 
 
-[dependencies.specs]
-path = "../../specs"
+[dependencies.service_specs]
+path = "../../specs/service_specs"
+version = "0.1.0"
+
+
+[dependencies.db_specs]
+path = "../../specs/db_specs"
+version = "0.1.0"
+
+
+[dependencies.file_specs]
+path = "../../specs/file_specs"
 version = "0.1.0"
 
 

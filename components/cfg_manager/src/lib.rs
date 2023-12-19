@@ -1,21 +1,24 @@
 use std::collections::HashMap;
 use common::prelude::{DBConfig, EnvironmentType, FileConfig, FileConfigType, ServiceConfig, ServiceID};
 use ctx_manager::CtxManager;
-use specs::prelude::{cmdb_service_config, db_config_ci, db_config_cluster, db_config_local, dbgw_service_config, get_all_file_configs, qdgw_service_config, smdb_service_config};
+use file_specs::prelude::{ get_all_file_config_types, get_all_file_configs};
+use service_specs::prelude::{cmdb_service_config, dbgw_service_config, qdgw_service_config, smdb_service_config};
+use db_specs::prelude::{db_config_ci, db_config_cluster, db_config_local};
 
 /// Struct that holds the configuration for a specific service.
 #[derive(Debug, Clone, Eq, PartialEq)]
-pub struct CfgManager<'l> {
+pub struct CfgManager {
     /// ID of the service.
     svc: ServiceID,
     /// Type of the environment (e.g., development, testing, production).
     env_type: EnvironmentType,
     /// File configurations for data files.
     file_configs: HashMap<FileConfigType, FileConfig>,
-    id: &'l str,
+    ///
+    file_config_types: Vec<FileConfigType>,
 }
 
-impl<'l> CfgManager<'l> {
+impl CfgManager {
     /// Creates a new `ConfigManager` instance for the given service ID.
     ///
     /// # Arguments
@@ -25,17 +28,18 @@ impl<'l> CfgManager<'l> {
     pub fn new(svc: ServiceID, ctx: &CtxManager) -> Self {
         let env_type = ctx.env_type();
         let file_configs = get_all_file_configs();
+        let file_config_types = get_all_file_config_types();
 
         Self {
             svc,
             env_type,
             file_configs,
-            id: "CfgManager",
+            file_config_types,
         }
     }
 }
 
-impl<'l> CfgManager<'l> {
+impl CfgManager{
     /// Returns the ID of the service.
     pub fn svc(&self) -> ServiceID {
         self.svc
@@ -54,13 +58,15 @@ impl<'l> CfgManager<'l> {
     pub fn get_db_config(&self) -> DBConfig {
         self.db_config()
     }
-
     pub fn get_file_config(&self, file_config_type: &FileConfigType) -> Option<&FileConfig> {
         self.file_configs.get(file_config_type)
     }
+    pub fn get_all_file_config_types(&self) -> Vec<FileConfigType> {
+        self.file_config_types.clone()
+    }
 }
 
-impl<'l> CfgManager<'l> {
+impl CfgManager{
     fn db_config(&self) -> DBConfig {
         match self.env_type {
             EnvironmentType::LOCAL => db_config_local(),
