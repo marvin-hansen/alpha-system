@@ -23,6 +23,11 @@ path = "../../queng_components/cfg_manager"
 version = "0.1.0"
 
 
+[dependencies.client_manager]
+path = "../../queng_components/client_manager"
+version = "0.1.0"
+
+
 [dependencies.ctx_manager]
 path = "../../queng_components/ctx_manager"
 version = "0.1.0"
