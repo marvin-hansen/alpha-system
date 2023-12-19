@@ -14,6 +14,8 @@ impl QDManager {
         let file_manager = FileManager::new();
         let mut bar_manager = BarManager::new();
 
+        // Only loading 2 out of 7 files for testing purposes. Otherwise, init takes too long.
+        // For details, see: queng_specs/file_specs/src/files
         for file_config in cfg_manager.get_all_file_config_types().iter() {
             let config = cfg_manager
                 .get_file_config(file_config)

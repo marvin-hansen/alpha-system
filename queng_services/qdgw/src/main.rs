@@ -35,7 +35,11 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let svm_manager = async { EnvManager::new(&ctx_manager, &dns_manager) }.await;
     //Creates a new instance of the Service Manager.
     let service_manager = async { ServiceManager::new(&cfg_manager, &svm_manager) }.await;
+
     // Creates a new instance of the QD manager.
+    // Only loads 2 out of 7 local files for testing purposes.
+    // Otherwise, init takes too long i.e. > 20 seconds.
+    // For details, see: queng_specs/file_specs/src/files
     let qd_manager = async { QDManager::new(&cfg_manager) }.await;
 
     //Retrieves the host and port of the Service Manager Database (SMDB) from the auto-configuration.
