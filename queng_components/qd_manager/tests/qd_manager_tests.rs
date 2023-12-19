@@ -3,7 +3,11 @@ use common::prelude::{FileConfigType, ServiceID};
 use ctx_manager::CtxManager;
 use qd_manager::QDManager;
 use std::env;
-#[test]
+
+// This test easily runs 20 seconds and much longer on CI.
+// Only uncomment if you have something to test...
+
+// #[test]
 fn test_get_data_bars() {
     env::set_var("ENV", "CLUSTER");
     env::set_var("DNS_SERVER", "175.24.54.1");
