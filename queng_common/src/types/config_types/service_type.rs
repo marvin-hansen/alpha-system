@@ -10,7 +10,7 @@ use std::fmt::{Display, Formatter};
 #[derive(Serialize, Deserialize, Debug, Default, Copy, Clone, Eq, PartialEq)]
 #[repr(u8)]
 pub enum ServiceType {
-    NullVal = 0,
+    NullVal = 0x0_u8,
     /// The endpoint service type.
     #[default]
     ENDPOINT = 0x1_u8,
@@ -24,6 +24,7 @@ impl From<i32> for ServiceType {
     #[inline]
     fn from(v: i32) -> Self {
         match v {
+            0x0_i32 => Self::NullVal,
             0x1_i32 => Self::ENDPOINT,
             0x2_i32 => Self::CHANNEL,
             _ => Self::NullVal,

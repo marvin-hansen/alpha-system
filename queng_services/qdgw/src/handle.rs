@@ -46,9 +46,7 @@ impl Server {
     }
 }
 
-
 impl Server {
-
     async fn start_date(
         &self,
         start_data_msg: &StartDataMessage,
