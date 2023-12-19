@@ -4,16 +4,12 @@ comment:
 
 # https://docs.codecov.com/docs/ignoring-paths
 ignore:
-  - "cli"  # ignore folders and all its contents
-  - "clients"
-  - "components/db_manager"
-  - "components/file_manager"
-  - "components/qd_manager"
-  - "components/svc_manager"
-  - "proto"
-  - "providers"
-  - "sbe/bindings"
-  - "sbe/schema"
-  - "service_utils"
-  - "services"
-  - "tools"
+  - "queng_cli/dbgw_client"  # ignore folders and all its contents
+  - "queng_components/db_manager"
+  - "queng_components/file_manager"
+  - "queng_components/svc_manager"
+  - "queng_proto"
+  - "queng_providers"
+  - "queng_sbe"
+  - "queng_utils"
+  - "queng_services"
