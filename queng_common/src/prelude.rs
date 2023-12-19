@@ -1,5 +1,6 @@
 // Errors
 pub use crate::errors::InitError;
+pub use crate::errors::MessageProcessingError;
 //
 // Types
 // config types

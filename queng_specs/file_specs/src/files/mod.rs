@@ -12,11 +12,11 @@ pub mod btc_small;
 pub fn get_all_file_config_types() -> Vec<FileConfigType> {
     vec![
         FileConfigType::BtcSmall,
-        FileConfigType::BtcMin2017,
-        FileConfigType::BtcMin2018,
-        FileConfigType::BtcMin2019,
-        FileConfigType::BtcMin2020,
-        FileConfigType::BtcMin2021,
+        // FileConfigType::BtcMin2017,
+        // FileConfigType::BtcMin2018,
+        // FileConfigType::BtcMin2019,
+        // FileConfigType::BtcMin2020,
+        // FileConfigType::BtcMin2021,
         FileConfigType::BtcMin2022,
     ]
 }

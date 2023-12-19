@@ -1,12 +1,9 @@
-use std::error::Error;
-use std::future::Future;
-
+use common::errors::MessageProcessingError;
 use fluvio::{Offset, PartitionConsumer};
 use futures::StreamExt;
 use qd_manager::QDManager;
+use std::future::Future;
 use tokio::{pin, select};
-
-use crate::handle;
 
 pub struct Server {
     consumer: PartitionConsumer,
@@ -26,7 +23,7 @@ impl Server {
     pub async fn run(
         self,
         signal: impl Future<Output = ()> + Send + 'static,
-    ) -> Result<(), Box<dyn Error + Send>> {
+    ) -> Result<(), MessageProcessingError> {
         // When call .await on a &mut _ reference, pin the future.
         // https://docs.rs/tokio/latest/tokio/macro.pin.html#examples
         let signal_future = signal;
@@ -51,15 +48,19 @@ impl Server {
                             Some(res) => {
                                 match res {
                                     Ok(record) => {
-                                    // Move handle within the server struct implementation
-                                        handle::handle_record(&record).await;
+                                        match self.handle_record(&record).await{
+                                        Ok(()) => {},
+                                        Err(e) => {
+                                            return Err(e);
+                                        }
+                                    }
                                 },
-                                    Err(err) =>{
-                                        return Err(Box::new(err));
+                                    Err(e) =>{
+                                        return Err(MessageProcessingError(e.to_string()));
                                     }
                             }
                         },
-                        None => {},
+                        None => {}, // No message, no processing.
                     }
 
                 }// end stream.next()
