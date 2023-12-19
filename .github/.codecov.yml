@@ -4,7 +4,7 @@ comment:
 
 # https://docs.codecov.com/docs/ignoring-paths
 ignore:
-  - "queng_cli/dbgw_client"  # ignore folders and all its contents
+  - "queng_cli"  # ignore folders and all its contents
   - "queng_components/db_manager"
   - "queng_components/file_manager"
   - "queng_components/svc_manager"
