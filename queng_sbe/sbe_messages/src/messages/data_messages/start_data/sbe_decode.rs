@@ -20,12 +20,12 @@ pub fn decode_start_data_message(buffer: &[u8]) -> SbeResult<StartDataMessage> {
     let exchange_id = ExchangeID::from(sbe_exchange_id as i32);
 
     let sbe_asset = csg.asset_id();
-    let symbol = SymbolID::from(sbe_asset);
+    let symbol_id = SymbolID::from(sbe_asset);
 
     let message = StartDataMessage {
         message_type,
         exchange_id,
-        symbol_id: symbol,
+        symbol_id,
     };
 
     Ok(message)

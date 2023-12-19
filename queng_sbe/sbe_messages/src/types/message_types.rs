@@ -1,50 +1,45 @@
+use std::fmt;
 use serde::{Deserialize, Serialize};
-use std::fmt::{Display, Formatter};
+use std::fmt::{Display};
 
 /// Enum representing the different types of messages that can be sent over network.
 #[derive(
-    Serialize, Deserialize, Clone, Copy, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash,
+Serialize, Deserialize, Clone, Copy, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash,
 )]
 #[repr(u8)]
 pub enum MessageType {
     #[default]
-    NullVal = 0xff_u8,
-    StartData = 0x1_u8,
-    StopData = 0x2_u8,
-    StopAllData = 0x3_u8,
+    UnknownMessageType = 0xff_u8,
+    ClientLogin = 0x1_u8,
+    ClientLogout = 0x2_u8,
+    StartData = 0x3_u8,
+    StopData = 0x4_u8,
+    StopAllData = 0x5_u8,
 }
 
 impl From<u8> for MessageType {
-    /// Converts a raw byte value into a `MessageType`.
-    /// Unknown message type results in NullVal
-    ///
-    /// # Example
-    /// ```
-    /// use sbe_messages::prelude::MessageType;
-    ///
-    /// let raw_value = 0x1;
-    /// let message_type = MessageType::from(raw_value);
-    ///
-    /// assert_eq!(message_type, MessageType::StartData);
-    /// ```
-    #[inline]
-    fn from(v: u8) -> Self {
-        match v {
-            0x1_u8 => Self::StartData,
-            0x2_u8 => Self::StopData,
-            0x3_u8 => Self::StopAllData,
-            _ => Self::NullVal,
+    fn from(value: u8) -> Self {
+        match value {
+            0x1 => MessageType::ClientLogin,
+            0x2 => MessageType::ClientLogout,
+            0x3 => MessageType::StartData,
+            0x4 => MessageType::StopData,
+            0x5 => MessageType::StopAllData,
+            _ => MessageType::UnknownMessageType,
         }
     }
 }
 
 impl Display for MessageType {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
+            MessageType::ClientLogin => write!(f, "ClientLogin"),
+            MessageType::ClientLogout => write!(f, "ClientLogout"),
             MessageType::StartData => write!(f, "StartData"),
             MessageType::StopData => write!(f, "StopData"),
             MessageType::StopAllData => write!(f, "StopAllData"),
-            MessageType::NullVal => write!(f, "NullVal"),
+            MessageType::UnknownMessageType => write!(f, "UnknownMessageType"),
         }
     }
 }
+

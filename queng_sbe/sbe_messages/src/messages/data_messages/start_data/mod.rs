@@ -27,7 +27,8 @@ impl StartDataMessage {
 
 impl From<&[u8]> for StartDataMessage {
     #[inline]
-    fn from(buffer: &[u8]) -> Self {
-        sbe_decode::decode_start_data_message(buffer).expect("Failed to decode start data message")
+    fn from(value: &[u8]) -> Self {
+        sbe_decode::decode_start_data_message(value)
+            .expect("Failed to decode start data message")
     }
 }

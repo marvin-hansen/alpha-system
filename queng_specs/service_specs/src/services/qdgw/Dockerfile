@@ -11,8 +11,10 @@ RUN mkdir /user && \
     echo 'nobody:x:65534:65534:nobody:/:' > /user/passwd && \
     echo 'nobody:x:65534:' > /user/group
 
-# Install protobuf compiler so that
-RUN apt-get update && apt-get install -y protobuf-compiler libprotobuf-dev
+# Install protobuf compiler
+# Install git to fix issue #3787 in fluvio
+# https://github.com/infinyon/fluvio/issues/3787
+RUN apt-get update && apt-get install -y git protobuf-compiler libprotobuf-dev
 
 # Install build target musel for compiling a static binary
 RUN rustup target add aarch64-unknown-linux-musl
@@ -58,7 +60,7 @@ COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY --from=builder /qdgw /
 
 # Port number must match deployment.yaml and specs/*/service_info
-# service port: 7070
+# service port: 4040
 # metrics port: 8080
 EXPOSE 4040 8080
 

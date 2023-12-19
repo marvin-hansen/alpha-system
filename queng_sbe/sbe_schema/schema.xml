@@ -10,6 +10,7 @@
     <types>
         <type name="Char" description="Char" primitiveType="char"/>
         <type name="Text" description="Text" length="180" primitiveType="char" semanticType="String"/>
+        <type name="Text5" description="Text" length="5" primitiveType="char" semanticType="String"/>
 
         <type name="Int8"  description="int8" primitiveType="int8"/>
         <type name="Int16" description="int16" primitiveType="int16"/>
@@ -58,10 +59,12 @@
 
     <types>
         <enum name="MessageType" encodingType="uInt8NULL">
-            <validValue name="UnknownMessageType" description="Message type unknown">0</validValue>
-            <validValue name="StartData" description="Start data stream">1</validValue>
-            <validValue name="StopData" description="Stop data stream">2</validValue>
-            <validValue name="StopAllData" description="Stop all data streams">3</validValue>
+            <validValue name="UnknownMessageType">0</validValue>
+            <validValue name="ClientLogin">1</validValue>
+            <validValue name="ClientLogout">2</validValue>
+            <validValue name="StartData">3</validValue>
+            <validValue name="StopData">4</validValue>
+            <validValue name="StopAllData">5</validValue>
         </enum>
 
         <enum name="ExchangeID" encodingType="uInt8NULL">
@@ -70,21 +73,35 @@
         </enum>
 
         <type name="AssetID" encodingType="uInt16NULL" primitiveType="uint16"/>
+        <type name="ClientID" encodingType="uInt16NULL" primitiveType="uint16"/>
+        <type name="ClientName" primitiveType="char" length="8" characterEncoding="ASCII"/>
+
     </types>
 
-    <sbe:message name="StartDataMsg" id="1" description="Message to start data stream">
+    <sbe:message name="ClientLogin" id="1" description="Message to start data stream">
+        <field name="messageType" id="1" type="MessageType"/>
+        <field name="clientID" id="2" type="ClientID"/>
+        <field name="clientName" id="3" type="ClientName"/>
+    </sbe:message>
+
+    <sbe:message name="ClientLogout" id="2" description="Message to start data stream">
+        <field name="messageType" id="1" type="MessageType"/>
+        <field name="clientID" id="2" type="ClientID"/>
+    </sbe:message>
+
+    <sbe:message name="StartDataMsg" id="3" description="Message to start data stream">
         <field name="messageType" id="1" type="MessageType"/>
         <field name="exchangeID" id="2" type="ExchangeID"/>
         <field name="assetID" id="3" type="AssetID"/>
     </sbe:message>
 
-    <sbe:message name="StopDataMsg" id="2" description="Message to stop data stream">
+    <sbe:message name="StopDataMsg" id="4" description="Message to stop data stream">
         <field name="messageType" id="1" type="MessageType"/>
         <field name="exchangeID" id="2" type="ExchangeID"/>
         <field name="assetID" id="3" type="AssetID"/>
     </sbe:message>
 
-    <sbe:message name="StopAllDataMsg" id="3" description="Message to stop all data streams from an exchange">
+    <sbe:message name="StopAllDataMsg" id="5" description="Message to stop all data streams from an exchange">
         <field name="messageType" id="1" type="MessageType"/>
         <field name="exchangeID" id="2" type="ExchangeID"/>
     </sbe:message>
