@@ -20,6 +20,16 @@ impl MetricConfig {
     }
 }
 
+impl Default for MetricConfig {
+    fn default() -> Self {
+        Self {
+            metric_uri: String::from("metrics"),
+            metric_host: String::from("127.0.0.1"),
+            metric_port: 8080,
+        }
+    }
+}
+
 impl MetricConfig {
     pub fn from_proto(proto: ProtoMetricConfig) -> Result<MetricConfig, fmt::Error> {
         Ok(MetricConfig {
@@ -35,16 +45,6 @@ impl MetricConfig {
             metric_host: self.metric_host.clone(),
             metric_port: self.metric_port as u32,
         })
-    }
-}
-
-impl Default for MetricConfig {
-    fn default() -> Self {
-        Self {
-            metric_uri: String::from("metrics"),
-            metric_host: String::from("127.0.0.1"),
-            metric_port: 8080,
-        }
     }
 }
 

@@ -7,6 +7,14 @@ fn test_default() {
 }
 
 #[test]
+fn test_from() {
+    assert_eq!(ProtocolType::from(0x1_i32), ProtocolType::GRPC);
+    assert_eq!(ProtocolType::from(0x2_i32), ProtocolType::HTTP);
+    assert_eq!(ProtocolType::from(0x3_i32), ProtocolType::UDP);
+    assert_eq!(ProtocolType::from(0x4_i32), ProtocolType::NullVal);
+}
+
+#[test]
 fn test_protocol_type_from_string() {
     let grpc_type = ProtocolType::from_string("GRPC");
     assert_eq!(grpc_type, Some(ProtocolType::GRPC));

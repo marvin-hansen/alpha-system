@@ -7,6 +7,14 @@ fn test_default() {
 }
 
 #[test]
+fn test_from_i32() {
+    assert_eq!(Encoding::from(0x1_i32), Encoding::Binary);
+    assert_eq!(Encoding::from(0x2_i32), Encoding::Protobuf);
+    assert_eq!(Encoding::from(0x3_i32), Encoding::SBE);
+    assert_eq!(Encoding::from(0x4_i32), Encoding::NullVal);
+}
+
+#[test]
 fn test_debug() {
     let e = Encoding::Binary;
     assert_eq!(format!("{:?}", e), "Binary");
