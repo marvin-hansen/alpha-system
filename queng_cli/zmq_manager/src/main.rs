@@ -48,7 +48,10 @@ async fn produce() -> Result<(), Box<dyn Error + Send>> {
         .await
         .expect("Failed to create a producer");
 
-    let message = StartDataMessage::new(ExchangeID::BinanceSpot, SymbolID::BTCUSD);
+    let client_id = 1;
+    let exchange_id = ExchangeID::BinanceSpot;
+    let symbol_id = SymbolID::BTCUSD;
+    let message = StartDataMessage::new(client_id, exchange_id, symbol_id);
     let enc = message.encode();
     assert!(enc.is_ok());
 
@@ -62,7 +65,7 @@ async fn produce() -> Result<(), Box<dyn Error + Send>> {
 
     producer.flush().await.expect("Failed to flush");
 
-    let message = StopDataMessage::new(ExchangeID::BinanceSpot, SymbolID::BTCUSD);
+    let message = StopDataMessage::new(client_id, exchange_id, symbol_id);
     let enc = message.encode();
     assert!(enc.is_ok());
 
@@ -76,7 +79,7 @@ async fn produce() -> Result<(), Box<dyn Error + Send>> {
 
     producer.flush().await.expect("Failed to flush");
 
-    let message = StopAllDataMessage::new(ExchangeID::BinanceSpot);
+    let message = StopAllDataMessage::new(client_id, exchange_id);
     let enc = message.encode();
     assert!(enc.is_ok());
 

@@ -12,14 +12,16 @@ mod sbe_encode;
 #[derive(Serialize, Deserialize, Debug, Default, Clone, PartialEq)]
 pub struct StopAllDataMessage {
     message_type: MessageType,
+    client_id: u16,
     exchange_id: ExchangeID,
 }
 
 impl StopAllDataMessage {
-    pub fn new(exchange_id: ExchangeID) -> Self {
+    pub fn new(client_id: u16, exchange_id: ExchangeID) -> Self {
         let message_type = MessageType::StopAllData;
         Self {
             message_type,
+            client_id,
             exchange_id,
         }
     }

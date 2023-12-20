@@ -1,9 +1,9 @@
 use crate::*;
 
-pub use decoder::StopAllDataMsgDecoder;
 pub use encoder::StopAllDataMsgEncoder;
+pub use decoder::StopAllDataMsgDecoder;
 
-pub const SBE_BLOCK_LENGTH: u16 = 2;
+pub const SBE_BLOCK_LENGTH: u16 = 4;
 pub const SBE_TEMPLATE_ID: u16 = 5;
 pub const SBE_SCHEMA_ID: u16 = 1;
 pub const SBE_SCHEMA_VERSION: u16 = 1;
@@ -70,13 +70,29 @@ pub mod encoder {
             self.get_buf_mut().put_u8_at(offset, value as u8)
         }
 
+        /// primitive field 'clientID'
+        /// - min value: 0
+        /// - max value: 65534
+        /// - null value: 65535
+        /// - characterEncoding: null
+        /// - semanticType: null
+        /// - encodedOffset: 1
+        /// - encodedLength: 2
+        #[inline]
+        pub fn client_id(&mut self, value: u16) {
+            let offset = self.offset + 1;
+            self.get_buf_mut().put_u16_at(offset, value);
+        }
+
         /// REQUIRED enum
         #[inline]
         pub fn exchange_id(&mut self, value: ExchangeID) {
-            let offset = self.offset + 1;
+            let offset = self.offset + 3;
             self.get_buf_mut().put_u8_at(offset, value as u8)
         }
+
     }
+
 } // end encoder
 
 pub mod decoder {
@@ -153,10 +169,19 @@ pub mod decoder {
             self.get_buf().get_u8_at(self.offset).into()
         }
 
+        /// primitive field - 'REQUIRED'
+        #[inline]
+        pub fn client_id(&self) -> u16 {
+            self.get_buf().get_u16_at(self.offset + 1)
+        }
+
         /// REQUIRED enum
         #[inline]
         pub fn exchange_id(&self) -> ExchangeID {
-            self.get_buf().get_u8_at(self.offset + 1).into()
+            self.get_buf().get_u8_at(self.offset + 3).into()
         }
+
     }
+
 } // end decoder
+
