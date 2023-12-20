@@ -14,7 +14,7 @@ impl Server {
     )
         -> Result<(), MessageProcessingError>
     {
-        //
+        // Remove debug print
         println!(
             "[QDGW/handle::start_date]: start_data: {:?}",
             start_data_msg
@@ -31,6 +31,7 @@ impl Server {
     )
         -> Result<(), MessageProcessingError>
     {
+        // Remove debug print
         println!("[QDGW/handle::stop_date]: stop_data: {:?}", stop_data_msg);
 
         Ok(())
@@ -42,6 +43,7 @@ impl Server {
     )
         -> Result<(), MessageProcessingError>
     {
+        // Remove debug print
         println!(
             "[QDGW/handle::stop_all_data]: stop_all_data: {:?}",
             stop_all_data_msg

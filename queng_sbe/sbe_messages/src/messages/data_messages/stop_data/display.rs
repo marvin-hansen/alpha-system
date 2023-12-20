@@ -1,12 +1,14 @@
-use crate::messages::data_messages::stop_data::StopDataMessage;
-use std::fmt::{Display, Formatter};
+use crate::prelude::StopDataMessage;
 
-impl Display for StopDataMessage {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(
-            f,
-            "StopDataMessage {{ message_type: {:?}, exchange_id: {:?}, symbol_id: {:?} }}",
-            self.message_type, self.exchange_id, self.symbol_id
+use std::fmt;
+
+impl fmt::Display for StopDataMessage {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "StopDataMessage[message_type: {}, client_id: {}, exchange_id: {}, symbol_id: {}]",
+               self.message_type,
+               self.client_id,
+               self.exchange_id,
+               self.symbol_id
         )
     }
 }

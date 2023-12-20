@@ -9,25 +9,23 @@
 
     <types>
         <type name="Char" description="Char" primitiveType="char"/>
-        <type name="Text" description="Text" length="180" primitiveType="char" semanticType="String"/>
-        <type name="Text5" description="Text" length="5" primitiveType="char" semanticType="String"/>
 
-        <type name="Int8"  description="int8" primitiveType="int8"/>
+        <type name="Int8" description="int8" primitiveType="int8"/>
         <type name="Int16" description="int16" primitiveType="int16"/>
         <type name="Int32" description="int32" primitiveType="int32"/>
         <type name="Int64" description="int32" primitiveType="int64"/>
 
-        <type name="Int8NULL"  presence="optional" nullValue="127" primitiveType="int8"/>
+        <type name="Int8NULL" presence="optional" nullValue="127" primitiveType="int8"/>
         <type name="Int16NULL" presence="optional" nullValue="32767" primitiveType="int16"/>
         <type name="Int32NULL" presence="optional" nullValue="2147483647" primitiveType="int32"/>
         <type name="Int64NULL" presence="optional" nullValue="9223372036854775807" primitiveType="int64"/>
 
-        <type name="uInt8"  description="uInt8" primitiveType="uint8"/>
+        <type name="uInt8" description="uInt8" primitiveType="uint8"/>
         <type name="uInt16" description="uInt8" primitiveType="uint16"/>
         <type name="uInt32" description="uInt32" primitiveType="uint32"/>
         <type name="uInt64" description="uInt64" primitiveType="uint64"/>
 
-        <type name="uInt8NULL"  presence="optional" nullValue="255" primitiveType="uint8"/>
+        <type name="uInt8NULL" presence="optional" nullValue="255" primitiveType="uint8"/>
         <type name="uInt16NULL" presence="optional" nullValue="65535" primitiveType="uint16"/>
         <type name="uInt32NULL" presence="optional" nullValue="4294967295" primitiveType="uint32"/>
         <type name="uInt64NULL" presence="optional" nullValue="18446744073709551615" primitiveType="uint64"/>
@@ -40,23 +38,9 @@
             <type name="schemaId" primitiveType="uint16"/>
             <type name="version" primitiveType="uint16"/>
         </composite>
-
-        <composite name="groupSizeEncoding" description="Repeating group dimensions">
-            <type name="blockLength" primitiveType="uint16"/>
-            <type name="numInGroup" primitiveType="uint16"/>
-        </composite>
-
-        <composite name="varStringEncoding">
-            <type name="length" primitiveType="uint32" maxValue="1073741824"/>
-            <type name="varData" primitiveType="uint8" length="0" characterEncoding="ISO-8859-1"/>
-        </composite>
-
-        <composite name="varDataEncoding">
-            <type name="length" primitiveType="uint32" maxValue="1073741824"/>
-            <type name="varData" primitiveType="uint8" length="0"/>
-        </composite>
     </types>
 
+    <!--    ENUM DEFINITIONS-->
     <types>
         <enum name="MessageType" encodingType="uInt8NULL">
             <validValue name="UnknownMessageType">0</validValue>
@@ -71,13 +55,17 @@
             <validValue name="BNB" description="Binance Spot Exchange">1</validValue>
             <validValue name="VEX" description="Virtual Exchange">2</validValue>
         </enum>
-
-        <type name="AssetID" encodingType="uInt16NULL" primitiveType="uint16"/>
-        <type name="ClientID" encodingType="uInt16NULL" primitiveType="uint16"/>
-        <type name="ClientName" primitiveType="char" length="8" characterEncoding="ASCII"/>
-
     </types>
 
+    <!--    TYPE ALIAS DEFINITIONS-->
+    <types>
+        <type name="SymbolID" encodingType="uInt16NULL" primitiveType="uint16"/>
+        <type name="ClientID" encodingType="uInt16NULL" primitiveType="uint16"/>
+        <type name="ClientName" primitiveType="char" length="8" characterEncoding="ASCII"/>
+    </types>
+
+
+    <!--   REQUEST MESSAGE DEFINITIONS -->
     <sbe:message name="ClientLogin" id="1" description="Message to start data stream">
         <field name="messageType" id="1" type="MessageType"/>
         <field name="clientID" id="2" type="ClientID"/>
@@ -91,19 +79,22 @@
 
     <sbe:message name="StartDataMsg" id="3" description="Message to start data stream">
         <field name="messageType" id="1" type="MessageType"/>
-        <field name="exchangeID" id="2" type="ExchangeID"/>
-        <field name="assetID" id="3" type="AssetID"/>
+        <field name="clientID" id="2" type="ClientID"/>
+        <field name="exchangeID" id="3" type="ExchangeID"/>
+        <field name="symbolID" id="4" type="SymbolID"/>
     </sbe:message>
 
     <sbe:message name="StopDataMsg" id="4" description="Message to stop data stream">
         <field name="messageType" id="1" type="MessageType"/>
-        <field name="exchangeID" id="2" type="ExchangeID"/>
-        <field name="assetID" id="3" type="AssetID"/>
+        <field name="clientID" id="2" type="ClientID"/>
+        <field name="exchangeID" id="3" type="ExchangeID"/>
+        <field name="symbolID" id="4" type="SymbolID"/>
     </sbe:message>
 
     <sbe:message name="StopAllDataMsg" id="5" description="Message to stop all data streams from an exchange">
         <field name="messageType" id="1" type="MessageType"/>
-        <field name="exchangeID" id="2" type="ExchangeID"/>
+        <field name="clientID" id="2" type="ClientID"/>
+        <field name="exchangeID" id="3" type="ExchangeID"/>
     </sbe:message>
 
 </sbe:messageSchema>

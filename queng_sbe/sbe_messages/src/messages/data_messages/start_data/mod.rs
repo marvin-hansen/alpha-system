@@ -10,15 +10,17 @@ mod sbe_encode;
 #[derive(Serialize, Deserialize, Debug, Default, Clone, PartialEq)]
 pub struct StartDataMessage {
     message_type: MessageType,
+    client_id: u16,
     exchange_id: ExchangeID,
     symbol_id: SymbolID,
 }
 
 impl StartDataMessage {
-    pub fn new(exchange_id: ExchangeID, symbol_id: SymbolID) -> Self {
+    pub fn new(client_id: u16, exchange_id: ExchangeID, symbol_id: SymbolID) -> Self {
         let message_type = MessageType::StartData;
         Self {
             message_type,
+            client_id,
             exchange_id,
             symbol_id,
         }
