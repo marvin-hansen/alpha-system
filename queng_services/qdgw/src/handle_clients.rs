@@ -1,18 +1,16 @@
 use crate::service::Server;
 use client_manager::ClientManager;
 use common::errors::MessageProcessingError;
+use common::prelude::MessageClientConfig;
 use sbe_messages::prelude::{ClientLoginMessage, ClientLogoutMessage};
 use std::sync::{Arc, Mutex};
-use common::prelude::MessageClientConfig;
 
 impl Server {
     pub(crate) async fn client_login(
         &self,
         client_manager: &Arc<Mutex<ClientManager>>,
         client_login_msg: &ClientLoginMessage,
-    )
-        -> Result<(), MessageProcessingError>
-    {
+    ) -> Result<(), MessageProcessingError> {
         // Remove debug print
         println!("[QDGW/handle_client::client_login]: {:?}", client_login_msg);
 
@@ -43,9 +41,7 @@ impl Server {
         &self,
         client_manager: &Arc<Mutex<ClientManager>>,
         client_logout_msg: &ClientLogoutMessage,
-    )
-        -> Result<(), MessageProcessingError>
-    {
+    ) -> Result<(), MessageProcessingError> {
         // Remove debug print
         println!(
             "[QDGW/handle_client::client_logout]: {:?}",

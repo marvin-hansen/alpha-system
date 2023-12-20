@@ -1,10 +1,10 @@
 use crate::*;
 
-pub use decoder::StopAllDataMsgDecoder;
-pub use encoder::StopAllDataMsgEncoder;
+pub use decoder::LastDataBarDecoder;
+pub use encoder::LastDataBarEncoder;
 
-pub const SBE_BLOCK_LENGTH: u16 = 4;
-pub const SBE_TEMPLATE_ID: u16 = 5;
+pub const SBE_BLOCK_LENGTH: u16 = 1;
+pub const SBE_TEMPLATE_ID: u16 = 7;
 pub const SBE_SCHEMA_ID: u16 = 1;
 pub const SBE_SCHEMA_VERSION: u16 = 1;
 pub const SBE_SEMANTIC_VERSION: &str = "5.2";
@@ -13,21 +13,21 @@ pub mod encoder {
     use super::*;
 
     #[derive(Debug, Default)]
-    pub struct StopAllDataMsgEncoder<'a> {
+    pub struct LastDataBarEncoder<'a> {
         buf: WriteBuf<'a>,
         initial_offset: usize,
         offset: usize,
         limit: usize,
     }
 
-    impl<'a> Writer<'a> for StopAllDataMsgEncoder<'a> {
+    impl<'a> Writer<'a> for LastDataBarEncoder<'a> {
         #[inline]
         fn get_buf_mut(&mut self) -> &mut WriteBuf<'a> {
             &mut self.buf
         }
     }
 
-    impl<'a> Encoder<'a> for StopAllDataMsgEncoder<'a> {
+    impl<'a> Encoder<'a> for LastDataBarEncoder<'a> {
         #[inline]
         fn get_limit(&self) -> usize {
             self.limit
@@ -39,7 +39,7 @@ pub mod encoder {
         }
     }
 
-    impl<'a> StopAllDataMsgEncoder<'a> {
+    impl<'a> LastDataBarEncoder<'a> {
         pub fn wrap(mut self, buf: WriteBuf<'a>, offset: usize) -> Self {
             let limit = offset + SBE_BLOCK_LENGTH as usize;
             self.buf = buf;
@@ -69,27 +69,6 @@ pub mod encoder {
             let offset = self.offset;
             self.get_buf_mut().put_u8_at(offset, value as u8)
         }
-
-        /// primitive field 'clientID'
-        /// - min value: 0
-        /// - max value: 65534
-        /// - null value: 65535
-        /// - characterEncoding: null
-        /// - semanticType: null
-        /// - encodedOffset: 1
-        /// - encodedLength: 2
-        #[inline]
-        pub fn client_id(&mut self, value: u16) {
-            let offset = self.offset + 1;
-            self.get_buf_mut().put_u16_at(offset, value);
-        }
-
-        /// REQUIRED enum
-        #[inline]
-        pub fn exchange_id(&mut self, value: ExchangeID) {
-            let offset = self.offset + 3;
-            self.get_buf_mut().put_u8_at(offset, value as u8)
-        }
     }
 } // end encoder
 
@@ -97,7 +76,7 @@ pub mod decoder {
     use super::*;
 
     #[derive(Clone, Copy, Debug, Default)]
-    pub struct StopAllDataMsgDecoder<'a> {
+    pub struct LastDataBarDecoder<'a> {
         buf: ReadBuf<'a>,
         initial_offset: usize,
         offset: usize,
@@ -106,14 +85,14 @@ pub mod decoder {
         pub acting_version: u16,
     }
 
-    impl<'a> Reader<'a> for StopAllDataMsgDecoder<'a> {
+    impl<'a> Reader<'a> for LastDataBarDecoder<'a> {
         #[inline]
         fn get_buf(&self) -> &ReadBuf<'a> {
             &self.buf
         }
     }
 
-    impl<'a> Decoder<'a> for StopAllDataMsgDecoder<'a> {
+    impl<'a> Decoder<'a> for LastDataBarDecoder<'a> {
         #[inline]
         fn get_limit(&self) -> usize {
             self.limit
@@ -125,7 +104,7 @@ pub mod decoder {
         }
     }
 
-    impl<'a> StopAllDataMsgDecoder<'a> {
+    impl<'a> LastDataBarDecoder<'a> {
         pub fn wrap(
             mut self,
             buf: ReadBuf<'a>,
@@ -165,18 +144,6 @@ pub mod decoder {
         #[inline]
         pub fn message_type(&self) -> MessageType {
             self.get_buf().get_u8_at(self.offset).into()
-        }
-
-        /// primitive field - 'REQUIRED'
-        #[inline]
-        pub fn client_id(&self) -> u16 {
-            self.get_buf().get_u16_at(self.offset + 1)
-        }
-
-        /// REQUIRED enum
-        #[inline]
-        pub fn exchange_id(&self) -> ExchangeID {
-            self.get_buf().get_u8_at(self.offset + 3).into()
         }
     }
 } // end decoder

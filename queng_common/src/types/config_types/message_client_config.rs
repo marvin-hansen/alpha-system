@@ -47,9 +47,10 @@ impl MessageClientConfig {
 
 impl Display for MessageClientConfig {
     fn fmt(&self, f: &mut Formatter) -> fmt::Result {
-        write!(f, "MessageClientConfig {{ id: {}, name: {} }}",
-               self.id,
-               self.name
+        write!(
+            f,
+            "MessageClientConfig {{ id: {}, name: {} }}",
+            self.id, self.name
         )
     }
 }

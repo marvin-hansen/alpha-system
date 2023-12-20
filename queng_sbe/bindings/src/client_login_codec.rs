@@ -1,7 +1,7 @@
 use crate::*;
 
-pub use encoder::ClientLoginEncoder;
 pub use decoder::ClientLoginDecoder;
+pub use encoder::ClientLoginEncoder;
 
 pub const SBE_BLOCK_LENGTH: u16 = 11;
 pub const SBE_TEMPLATE_ID: u16 = 1;
@@ -99,9 +99,7 @@ pub mod encoder {
             let buf = self.get_buf_mut();
             buf.put_bytes_at(offset, value);
         }
-
     }
-
 } // end encoder
 
 pub mod decoder {
@@ -189,8 +187,5 @@ pub mod decoder {
             let buf = self.get_buf();
             ReadBuf::get_bytes_at(buf.data, self.offset + 3)
         }
-
     }
-
 } // end decoder
-

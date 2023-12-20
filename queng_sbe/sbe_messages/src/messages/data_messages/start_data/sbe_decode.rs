@@ -21,8 +21,8 @@ pub fn decode_start_data_message(buffer: &[u8]) -> SbeResult<StartDataMessage> {
     let sbe_exchange_id = csg.exchange_id();
     let exchange_id = ExchangeID::from(sbe_exchange_id as i32);
 
-    let sbe_asset = csg.symbol_id();
-    let symbol_id = SymbolID::from(sbe_asset);
+    let sbe_symbol = csg.symbol_id();
+    let symbol_id = SymbolID::from(sbe_symbol);
 
     let message = StartDataMessage {
         message_type,
