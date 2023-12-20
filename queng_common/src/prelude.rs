@@ -1,6 +1,7 @@
 // Errors
 pub use crate::errors::InitError;
 pub use crate::errors::MessageProcessingError;
+pub use crate::errors::MessageClientConfigError;
 //
 // Types
 // config types
@@ -9,6 +10,7 @@ pub use crate::types::config_types::encoding::*;
 pub use crate::types::config_types::endpoint::*;
 pub use crate::types::config_types::endpoint_host::*;
 pub use crate::types::config_types::environment_type::*;
+pub use crate::types::config_types::message_client_config::*;
 pub use crate::types::config_types::metric_config::*;
 pub use crate::types::config_types::protocol_type::*;
 pub use crate::types::config_types::service_config::*;

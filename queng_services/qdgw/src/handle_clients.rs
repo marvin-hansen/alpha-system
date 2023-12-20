@@ -3,6 +3,7 @@ use client_manager::ClientManager;
 use common::errors::MessageProcessingError;
 use sbe_messages::prelude::{ClientLoginMessage, ClientLogoutMessage};
 use std::sync::{Arc, Mutex};
+use common::prelude::MessageClientConfig;
 
 impl Server {
     pub(crate) async fn client_login(
@@ -23,8 +24,12 @@ impl Server {
             ));
         }
 
+        let id = client_login_msg.client_id();
+        let name = client_login_msg.client_name();
+        let config = MessageClientConfig::new(id, name);
+
         client_db
-            .add_client(client_login_msg.client_id(), client_login_msg.client_name())
+            .add_client(id, config)
             .expect("[QDGW/handle_client::client_login]: Failed to add client");
 
         // Remove debug print

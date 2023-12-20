@@ -9,3 +9,4 @@ pub mod service_config;
 pub mod service_id;
 pub mod service_type;
 pub mod svc_env_config;
+pub mod message_client_config;

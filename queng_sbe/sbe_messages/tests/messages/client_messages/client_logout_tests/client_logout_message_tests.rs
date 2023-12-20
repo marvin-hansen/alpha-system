@@ -1,4 +1,4 @@
-use sbe_messages::prelude::{ClientLoginMessage, ClientLogoutMessage, MessageType};
+use sbe_messages::prelude::{ClientLogoutMessage, MessageType};
 
 #[test]
 fn test_new() {

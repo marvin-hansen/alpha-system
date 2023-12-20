@@ -24,3 +24,15 @@ impl fmt::Display for MessageProcessingError {
         write!(f, "MessageProcessingError: {}", self.0)
     }
 }
+
+
+#[derive(Debug, Clone)]
+pub struct MessageClientConfigError(pub String);
+
+impl Error for MessageClientConfigError {}
+
+impl fmt::Display for MessageClientConfigError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "MessageClientConfigError: {}", self.0)
+    }
+}
