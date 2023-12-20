@@ -62,7 +62,6 @@ fn test_message_type() {
     assert_eq!(message.message_type(), &MessageType::StartData);
 }
 
-
 #[test]
 fn test_message_client_id() {
     let client_id = 1;
@@ -72,7 +71,6 @@ fn test_message_client_id() {
 
     assert_eq!(message.client_id(), &1);
 }
-
 
 #[test]
 fn test_exchange_id() {

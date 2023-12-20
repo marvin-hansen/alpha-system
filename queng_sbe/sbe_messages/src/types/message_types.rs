@@ -15,6 +15,8 @@ pub enum MessageType {
     StartData = 0x3_u8,
     StopData = 0x4_u8,
     StopAllData = 0x5_u8,
+    DataBar = 0x6_u8,
+    LastDataBar = 0x7_u8,
 }
 
 impl From<u8> for MessageType {
@@ -25,6 +27,8 @@ impl From<u8> for MessageType {
             0x3 => MessageType::StartData,
             0x4 => MessageType::StopData,
             0x5 => MessageType::StopAllData,
+            0x6 => MessageType::DataBar,
+            0x7 => MessageType::LastDataBar,
             _ => MessageType::UnknownMessageType,
         }
     }
@@ -38,6 +42,8 @@ impl Display for MessageType {
             MessageType::StartData => write!(f, "StartData"),
             MessageType::StopData => write!(f, "StopData"),
             MessageType::StopAllData => write!(f, "StopAllData"),
+            MessageType::DataBar => write!(f, "DataBar"),
+            MessageType::LastDataBar => write!(f, "LastDataBar"),
             MessageType::UnknownMessageType => write!(f, "UnknownMessageType"),
         }
     }

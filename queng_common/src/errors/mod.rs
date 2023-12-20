@@ -25,7 +25,6 @@ impl fmt::Display for MessageProcessingError {
     }
 }
 
-
 #[derive(Debug, Clone)]
 pub struct MessageClientConfigError(pub String);
 

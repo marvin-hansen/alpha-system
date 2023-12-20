@@ -76,7 +76,6 @@ fn test_exchange_id() {
     let symbol_id = SymbolID::BTCUSD;
     let message = StopDataMessage::new(client_id, exchange_id, symbol_id);
 
-
     assert_eq!(message.exchange_id(), &ExchangeID::BinanceSpot);
 }
 

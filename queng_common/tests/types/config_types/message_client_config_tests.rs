@@ -32,7 +32,6 @@ fn test_id() {
     assert_eq!(config.id(), 1);
 }
 
-
 #[test]
 fn test_name() {
     let config = MessageClientConfig::new(1, "client1".to_string());

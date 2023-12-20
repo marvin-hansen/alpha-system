@@ -35,7 +35,7 @@ impl Server {
 impl Server {
     pub async fn run(
         self,
-        signal: impl Future<Output=()> + Send + 'static,
+        signal: impl Future<Output = ()> + Send + 'static,
     ) -> Result<(), MessageProcessingError> {
         // When call .await on a &mut _ reference, pin the future. https://docs.rs/tokio/latest/tokio/macro.pin.html#examples
         let signal_future = signal;
@@ -117,7 +117,17 @@ impl Server {
 
             MessageType::StartData => {
                 let start_data_msg = StartDataMessage::from(buffer);
-                self.start_date(&self.client_manager, &self.qd_manager, &start_data_msg).await
+                let client_id = start_data_msg.client_id();
+
+                let client_data_channel = match self.get_client_data_channel(&self.client_manager, *client_id).await {
+                    Ok(channel) => channel,
+                    Err(e) => {
+                        // Send error message back to client instead of return
+                        return Err(e)
+                    },
+                };
+
+                self.start_date(&self.qd_manager, &client_data_channel, &start_data_msg).await
             }
             MessageType::StopData => {
                 let stop_data_msg = StopDataMessage::from(buffer);
@@ -127,6 +137,21 @@ impl Server {
                 let stop_all_data_msg = StopAllDataMessage::from(buffer);
                 self.stop_all_data(&stop_all_data_msg).await
             }
+            _ => {
+                Ok(())
+            }
+        }
+    }
+
+    async fn get_client_data_channel(
+        &self,
+        client_manager: &Arc<Mutex<ClientManager>>,
+        client_id: u16,
+    ) -> Result<String, MessageProcessingError> {
+        let client_db = client_manager.lock().unwrap();
+        match client_db.get_client_data_channel(client_id) {
+            Ok(data_channel) => Ok(data_channel),
+            Err(e) => Err(MessageProcessingError(e.to_string())),
         }
     }
 }

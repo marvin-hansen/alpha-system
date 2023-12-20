@@ -1,5 +1,5 @@
-use std::collections::HashMap;
 use common::prelude::{MessageClientConfig, MessageClientConfigError};
+use std::collections::HashMap;
 
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct ClientManager {
@@ -17,22 +17,34 @@ impl ClientManager {
 impl ClientManager {
     pub fn get_client_control_channel(&self, id: u16) -> Result<String, MessageClientConfigError> {
         match self.get_client_config(id) {
-           Ok(client_config) => Ok(client_config.control_channel().clone()),
-           Err(_) => Err(MessageClientConfigError(format!("Client id {} does not exist", id))),
-       }
+            Ok(client_config) => Ok(client_config.control_channel().clone()),
+            Err(_) => Err(MessageClientConfigError(format!(
+                "Client id {} does not exist",
+                id
+            ))),
+        }
     }
 
     pub fn get_client_data_channel(&self, id: u16) -> Result<String, MessageClientConfigError> {
         match self.get_client_config(id) {
             Ok(client_config) => Ok(client_config.data_channel().clone()),
-            Err(_) => Err(MessageClientConfigError(format!("Client id {} does not exist", id))),
+            Err(_) => Err(MessageClientConfigError(format!(
+                "Client id {} does not exist",
+                id
+            ))),
         }
     }
 
-    pub fn get_client_execution_channel(&self, id: u16) -> Result<String, MessageClientConfigError> {
+    pub fn get_client_execution_channel(
+        &self,
+        id: u16,
+    ) -> Result<String, MessageClientConfigError> {
         match self.get_client_config(id) {
             Ok(client_config) => Ok(client_config.execution_channel().clone()),
-            Err(_) => Err(MessageClientConfigError(format!("Client id {} does not exist", id))),
+            Err(_) => Err(MessageClientConfigError(format!(
+                "Client id {} does not exist",
+                id
+            ))),
         }
     }
 }
@@ -47,7 +59,11 @@ impl ClientManager {
     /// "Client id already exists" message.
     /// Otherwise inserts the id and name into the hashmap
     /// and returns Ok.
-    pub fn add_client(&mut self, id: u16, config: MessageClientConfig) -> Result<(), MessageClientConfigError> {
+    pub fn add_client(
+        &mut self,
+        id: u16,
+        config: MessageClientConfig,
+    ) -> Result<(), MessageClientConfigError> {
         if self.clients.contains_key(&id) {
             return Err(MessageClientConfigError("Client id already exists".into()));
         }
@@ -64,12 +80,17 @@ impl ClientManager {
     /// If the id does not exist, returns an Err with
     /// "Client id does not exist" message.
     /// Otherwise returns the client String in an Ok.
-    pub fn get_client_config(&self, id: u16) -> Result<&MessageClientConfig, MessageClientConfigError> {
+    pub fn get_client_config(
+        &self,
+        id: u16,
+    ) -> Result<&MessageClientConfig, MessageClientConfigError> {
         if !self.clients.contains_key(&id) {
             return Err(MessageClientConfigError("Client id does not exist".into()));
         }
 
-        self.clients.get(&id).ok_or(MessageClientConfigError("Client not found".into()))
+        self.clients
+            .get(&id)
+            .ok_or(MessageClientConfigError("Client not found".into()))
     }
 
     /// Updates a client.
