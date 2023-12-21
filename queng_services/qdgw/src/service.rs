@@ -127,7 +127,7 @@ impl Server {
                     },
                 };
 
-                self.start_date(&self.qd_manager, &client_data_channel, &start_data_msg).await
+                self.start_data(&self.qd_manager, &client_data_channel, &start_data_msg).await
             }
             MessageType::StopData => {
                 let stop_data_msg = StopDataMessage::from(buffer);

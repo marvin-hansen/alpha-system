@@ -2,10 +2,12 @@ use crate::service::Server;
 use common::prelude::{FileConfigType, MessageProcessingError, SymbolID};
 use fluvio::{Fluvio, RecordKey};
 use qd_manager::QDManager;
-use sbe_messages::prelude::{SbeDataBar, StartDataMessage, StopAllDataMessage, StopDataMessage};
+use sbe_messages::prelude::{
+    LastDataBar, SbeDataBar, StartDataMessage, StopAllDataMessage, StopDataMessage,
+};
 
 impl Server {
-    pub(crate) async fn start_date(
+    pub(crate) async fn start_data(
         &self,
         qd_manager: &QDManager,
         client_data_channel: &str,
@@ -50,7 +52,14 @@ impl Server {
                     .expect("Failed to send Done!");
             }
 
-            // Send last bar message
+            // Send last bar message to inform the client that the data stream has ended
+            let last_bar = LastDataBar::new();
+            let (_, buffer) = last_bar.encode().expect("Failed to encode last data bar");
+
+            producer
+                .send(RecordKey::NULL, buffer)
+                .await
+                .expect("Failed to send Done!");
 
             producer.flush().await.expect("Failed to flush");
         }
