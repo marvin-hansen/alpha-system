@@ -73,7 +73,6 @@
     <sbe:message name="ClientLogin" id="1" description="Message to start data stream">
         <field name="messageType" id="1" type="MessageType"/>
         <field name="clientID" id="2" type="ClientID"/>
-        <field name="clientName" id="3" type="ClientName"/>
     </sbe:message>
 
     <sbe:message name="ClientLogout" id="2" description="Message to start data stream">

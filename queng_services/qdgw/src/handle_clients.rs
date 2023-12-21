@@ -23,8 +23,7 @@ impl Server {
         }
 
         let id = client_login_msg.client_id();
-        let name = client_login_msg.client_name();
-        let config = MessageClientConfig::new(id, name);
+        let config = MessageClientConfig::new(id);
 
         client_db
             .add_client(id, config)

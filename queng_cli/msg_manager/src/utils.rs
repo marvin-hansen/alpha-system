@@ -2,9 +2,7 @@ use common::prelude::MessageClientConfig;
 use fluvio::{Fluvio, PartitionConsumer, TopicProducer};
 
 pub fn get_client_config() -> MessageClientConfig {
-    let id = 100;
-    let name = "client-100".to_string();
-    MessageClientConfig::new(id, name)
+    MessageClientConfig::new(100)
 }
 
 pub async fn get_producer(topic: &str) -> TopicProducer {

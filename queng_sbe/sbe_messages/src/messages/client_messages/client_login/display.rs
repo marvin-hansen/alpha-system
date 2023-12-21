@@ -5,9 +5,8 @@ impl fmt::Display for ClientLoginMessage {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(
             f,
-            "ClientLoginMessage {{ client_id: {}, client_name: {} }}",
+            "ClientLoginMessage {{ client_id: {} }}",
             self.client_id(),
-            self.client_name()
         )
     }
 }
