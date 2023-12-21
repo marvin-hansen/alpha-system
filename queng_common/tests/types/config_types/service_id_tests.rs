@@ -13,7 +13,8 @@ fn test_from_i32() {
     assert_eq!(ServiceID::from(0x2_i32), ServiceID::CMDB);
     assert_eq!(ServiceID::from(0x3_i32), ServiceID::DBGW);
     assert_eq!(ServiceID::from(0x4_i32), ServiceID::QDGW);
-    assert_eq!(ServiceID::from(0x5_i32), ServiceID::Default);
+    assert_eq!(ServiceID::from(0x5_i32), ServiceID::VEX);
+    assert_eq!(ServiceID::from(0x6_i32), ServiceID::Default);
 }
 
 #[test]

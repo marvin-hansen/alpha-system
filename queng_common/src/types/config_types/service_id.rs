@@ -21,6 +21,7 @@ pub enum ServiceID {
     CMDB = 0x2_u8,
     DBGW = 0x3_u8,
     QDGW = 0x4_u8,
+    VEX = 0x5_u8,
 }
 
 impl ServiceID {
@@ -45,6 +46,7 @@ impl From<i32> for ServiceID {
             0x2_i32 => Self::CMDB,
             0x3_i32 => Self::DBGW,
             0x4_i32 => Self::QDGW,
+            0x5_i32 => Self::VEX,
             _ => Self::Default,
         }
     }
@@ -58,6 +60,7 @@ impl ServiceID {
             "CMDB" => Some(ServiceID::CMDB),
             "DBGW" => Some(ServiceID::DBGW),
             "QDGW" => Some(ServiceID::QDGW),
+            "VEX" => Some(ServiceID::VEX),
             _ => None,
         }
     }
@@ -71,6 +74,7 @@ impl Display for ServiceID {
             ServiceID::CMDB => write!(f, "CMDB"),
             ServiceID::DBGW => write!(f, "DBGW"),
             ServiceID::QDGW => write!(f, "QDGW"),
+            ServiceID::VEX => write!(f, "VEX"),
         }
     }
 }

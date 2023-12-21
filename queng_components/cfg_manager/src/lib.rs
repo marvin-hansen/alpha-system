@@ -7,6 +7,7 @@ use db_specs::prelude::{db_config_ci, db_config_cluster, db_config_local};
 use file_specs::prelude::{get_all_file_config_types, get_all_file_configs};
 use service_specs::prelude::{
     cmdb_service_config, dbgw_service_config, qdgw_service_config, smdb_service_config,
+    vex_service_config,
 };
 use std::collections::HashMap;
 
@@ -89,6 +90,7 @@ impl CfgManager {
             ServiceID::CMDB => cmdb_service_config(),
             ServiceID::DBGW => dbgw_service_config(),
             ServiceID::QDGW => qdgw_service_config(),
+            ServiceID::VEX => vex_service_config(),
             ServiceID::Default => ServiceConfig::default(),
         }
     }
