@@ -16,6 +16,7 @@ pub struct EnvManager<'l> {
     smdb_env: RefCell<Option<SvcEnvConfig>>,
     dbgw_env: RefCell<Option<SvcEnvConfig>>,
     qdgw_env: RefCell<Option<SvcEnvConfig>>,
+    vex_env: RefCell<Option<SvcEnvConfig>>,
 }
 
 impl<'l> EnvManager<'l> {
@@ -27,6 +28,7 @@ impl<'l> EnvManager<'l> {
             smdb_env: RefCell::new(None),
             dbgw_env: RefCell::new(None),
             qdgw_env: RefCell::new(None),
+            vex_env: RefCell::new(None),
         }
     }
 }
@@ -69,6 +71,12 @@ impl<'l> EnvManager<'l> {
                 *self.qdgw_env.borrow_mut() = Some(qdgw_env);
                 Ok(())
             }
+            ServiceID::VEX => {
+                let qdgw_env = self.get_svc_env_config(ServiceID::VEX, endpoint, metrics_config);
+                *self.vex_env.borrow_mut() = Some(qdgw_env);
+                Ok(())
+            }
+
             ServiceID::Default => Err(InitError(format!(
                 "[EnvManager]: Service {:?} is not supported",
                 svc_id
@@ -83,6 +91,7 @@ impl<'l> EnvManager<'l> {
             ServiceID::SMDB => self.smdb_env.borrow().is_some(),
             ServiceID::DBGW => self.dbgw_env.borrow().is_some(),
             ServiceID::QDGW => self.qdgw_env.borrow().is_some(),
+            ServiceID::VEX => self.vex_env.borrow().is_some(),
             ServiceID::Default => false,
         }
     }
@@ -275,6 +284,17 @@ impl<'l> EnvManager<'l> {
                     .borrow()
                     .as_ref()
                     .expect("[EnvManager]: Failed to get qdgw host and port")
+                    .to_owned();
+
+                Ok(svc)
+            }
+
+            ServiceID::VEX => {
+                let svc = self
+                    .vex_env
+                    .borrow()
+                    .as_ref()
+                    .expect("[EnvManager]: Failed to get vex host and port")
                     .to_owned();
 
                 Ok(svc)
