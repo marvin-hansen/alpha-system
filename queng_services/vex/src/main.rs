@@ -5,7 +5,6 @@ use common::prelude::ServiceID;
 use common::prelude::ServiceID::SMDB;
 use ctx_manager::CtxManager;
 use dns_manager::DnsManager;
-use env_manager::EnvManager;
 use service_utils::{print_utils, shutdown_utils};
 use smdb_provider::SMDBProvider;
 use std::error::Error;
@@ -21,9 +20,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
     // Setup autoconfiguration.
     let ctx_manager = async { CtxManager::new() }.await;
     let dns_manager = async { DnsManager::new(&ctx_manager) }.await;
-    let cfg_manager = async { CfgManager::new(SVC_ID, &ctx_manager) }.await;
-    let svm_manager = async { EnvManager::new(&ctx_manager, &dns_manager) }.await;
-    let service_manager = async { ServiceManager::new(&cfg_manager, &svm_manager) }.await;
+    let cfg_manager = async { CfgManager::new(SVC_ID, &ctx_manager, &dns_manager) }.await;
+    let service_manager = async { ServiceManager::new(&cfg_manager) }.await;
 
     // pull SMDB endpoint from auto config
     let (smdb_host, smdb_port) = service_manager

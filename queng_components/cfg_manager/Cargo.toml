@@ -24,6 +24,11 @@ path = "../ctx_manager"
 version = "0.1.0"
 
 
+[dependencies.dns_manager]
+path = "../dns_manager"
+version = "0.1.0"
+
+
 [dependencies.service_specs]
 path = "../../queng_specs/service_specs"
 version = "0.1.0"
