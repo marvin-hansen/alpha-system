@@ -29,8 +29,8 @@ impl StopAllDataMessage {
 
 impl From<&[u8]> for StopAllDataMessage {
     #[inline]
-    fn from(buffer: &[u8]) -> Self {
-        sbe_decode::decode_stop_all_data_message(buffer)
+    fn from(value: &[u8]) -> Self {
+        sbe_decode::decode_stop_all_data_message(value)
             .expect("Failed to decode start data message")
     }
 }

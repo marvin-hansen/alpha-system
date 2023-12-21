@@ -11,7 +11,6 @@ impl Server {
         client_data_channel: &str,
         start_data_msg: &StartDataMessage,
     ) -> Result<(), MessageProcessingError> {
-
         // Remove debug print
         println!(
             "[QDGW/handle::start_date]: start_data: {:?}",
@@ -36,7 +35,10 @@ impl Server {
 
             let bars = result.expect("get data bars failed");
 
-            println!("[QDGW/handle::start_date]: sending # bars: {:?}", bars.len());
+            println!(
+                "[QDGW/handle::start_date]: sending # bars: {:?}",
+                bars.len()
+            );
 
             for bar in bars {
                 let (_, buffer) =
