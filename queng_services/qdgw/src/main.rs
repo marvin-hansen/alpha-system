@@ -11,7 +11,6 @@ use common::prelude::ServiceID;
 use common::prelude::ServiceID::SMDB;
 use ctx_manager::CtxManager;
 use dns_manager::DnsManager;
-use env_manager::EnvManager;
 use qd_manager::QDManager;
 use service_utils::{print_utils, shutdown_utils};
 use smdb_provider::SMDBProvider;
@@ -33,11 +32,9 @@ async fn main() -> Result<(), Box<dyn Error>> {
     //Creates a new instance of the DNS Manager.
     let dns_manager = async { DnsManager::new(&ctx_manager) }.await;
     //Creates a new instance of the Configuration Manager.
-    let cfg_manager = async { CfgManager::new(SVC_ID, &ctx_manager) }.await;
-    //Creates a new instance of the Environment Variable Manager.
-    let svm_manager = async { EnvManager::new(&ctx_manager, &dns_manager) }.await;
+    let cfg_manager = async { CfgManager::new(SVC_ID, &ctx_manager, &dns_manager) }.await;
     //Creates a new instance of the Service Manager.
-    let service_manager = async { ServiceManager::new(&cfg_manager, &svm_manager) }.await;
+    let service_manager = async { ServiceManager::new(&cfg_manager) }.await;
 
     // Creates a new instance of the QD manager.
     // Only loads 2 out of 7 local files for testing purposes.

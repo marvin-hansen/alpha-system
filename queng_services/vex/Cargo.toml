@@ -34,11 +34,6 @@ path = "../../queng_components/dns_manager"
 version = "0.1.0"
 
 
-[dependencies.env_manager]
-path = "../../queng_components/env_manager"
-version = "0.1.0"
-
-
 [dependencies.svc_manager]
 path = "../../queng_components/svc_manager"
 version = "0.1.0"

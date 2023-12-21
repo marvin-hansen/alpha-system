@@ -1,39 +1,8 @@
-use std::cell::RefCell;
+use crate::{CfgManager, DEFAULT_HOST};
+use common::errors::InitError;
+use common::prelude::{EnvironmentType, HostEndpoint, MetricConfig, ServiceID, SvcEnvConfig};
 
-use common::prelude::{
-    EnvironmentType, HostEndpoint, InitError, MetricConfig, ServiceID, SvcEnvConfig,
-};
-use ctx_manager::CtxManager;
-use dns_manager::DnsManager;
-
-// https://stackoverflow.com/questions/20778771/what-is-the-difference-between-0-0-0-0-127-0-0-1-and-localhost
-const DEFAULT_HOST: &str = "0.0.0.0";
-
-pub struct EnvManager<'l> {
-    ctx_manager: &'l CtxManager,
-    dns_manager: &'l DnsManager,
-    cmdb_env: RefCell<Option<SvcEnvConfig>>,
-    smdb_env: RefCell<Option<SvcEnvConfig>>,
-    dbgw_env: RefCell<Option<SvcEnvConfig>>,
-    qdgw_env: RefCell<Option<SvcEnvConfig>>,
-    vex_env: RefCell<Option<SvcEnvConfig>>,
-}
-
-impl<'l> EnvManager<'l> {
-    pub fn new(ctx_manager: &'l CtxManager, dns_manager: &'l DnsManager) -> Self {
-        Self {
-            ctx_manager,
-            dns_manager,
-            cmdb_env: RefCell::new(None),
-            smdb_env: RefCell::new(None),
-            dbgw_env: RefCell::new(None),
-            qdgw_env: RefCell::new(None),
-            vex_env: RefCell::new(None),
-        }
-    }
-}
-
-impl<'l> EnvManager<'l> {
+impl<'l> CfgManager<'l> {
     /// Initializes the service environment based on the given service ID and host endpoint.
     ///
     /// # Arguments
@@ -178,7 +147,7 @@ impl<'l> EnvManager<'l> {
     }
 }
 
-impl<'l> EnvManager<'l> {
+impl<'l> CfgManager<'l> {
     // The functions take a HostEndpoint struct as an argument, which contains the hostname and port of the respective service.
     fn get_svc_env_config(
         &self,
