@@ -1,8 +1,15 @@
-use common::prelude::MessageClientConfig;
-use fluvio::{Fluvio, PartitionConsumer, TopicProducer};
+use fluvio::{Fluvio, PartitionConsumer, RecordKey, TopicProducer};
+use std::error::Error;
 
-pub fn get_client_config() -> MessageClientConfig {
-    MessageClientConfig::new(100)
+pub async fn send_message(producer: &TopicProducer, buffer: Vec<u8>) -> Result<(), Box<dyn Error>> {
+    producer
+        .send(RecordKey::NULL, buffer)
+        .await
+        .expect("Failed to send Done!");
+
+    producer.flush().await.expect("Failed to flush");
+
+    Ok(())
 }
 
 pub async fn get_producer(topic: &str) -> TopicProducer {

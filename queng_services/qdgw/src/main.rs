@@ -79,12 +79,12 @@ async fn main() -> Result<(), Box<dyn Error>> {
         }
     }
 
-    //Configures the IP address and port of the current service automatically based on the detected context.
-    let service_addr = service_manager
+    // Autoconfigures the IP address and port of the current service automatically based on the detected context.
+    let _ = service_manager
         .configure_svc_socket_addr(&SVC_ID)
         .expect("[QDGW]/main: Failed to get host and port");
 
-    //Configures the IP address and port of the HTTP metrics endpoint automatically based on the detected context.
+    // Autoconfigures the IP address and port of the HTTP metrics endpoint automatically based on the detected context.
     let (metrics_addr, metrics_uri) = service_manager
         .configure_metrics_socket_addr_uri(&SVC_ID)
         .expect("[QDGW]/main: Failed to get metric host, uri, and port");
@@ -103,12 +103,12 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let signal = shutdown_utils::signal_handler("http web server");
     let (_, web_server) = warp::serve(routes).bind_with_graceful_shutdown(web_addr, signal);
 
-    //
-    // @TODO: Add topic & partition to autoconfig
-    //
-    const TOPIC: &str = "echo";
+    // Autoconfigures message channel
+    let msg_config = cfg_manager.get_message_client_config();
+    let service_topic = msg_config.control_channel();
+
     // creates a new consumer for the topic
-    let consumer = fluvio::consumer(TOPIC, 0)
+    let consumer = fluvio::consumer(&service_topic, 0)
         .await
         .expect("[QDGW]/main: Failed to create a message consumer");
 
@@ -129,7 +129,12 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .expect("[QDGW]/main: Failed to set service online");
 
     //Starts both servers concurrently.
-    print_utils::print_start_header(&SVC_ID, &service_addr, &metrics_addr, &metrics_uri);
+    print_utils::print_start_header_message_service(
+        &SVC_ID,
+        &service_topic,
+        &metrics_addr,
+        &metrics_uri,
+    );
 
     match tokio::try_join!(web_handle, service_handle) {
         Ok(_) => {}

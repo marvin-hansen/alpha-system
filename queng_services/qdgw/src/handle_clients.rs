@@ -29,10 +29,6 @@ impl Server {
             .add_client(id, config)
             .expect("[QDGW/handle_client::client_login]: Failed to add client");
 
-        // Remove debug print
-        let exists = client_db.check_client(client_login_msg.client_id());
-        println!("[QDGW/handle_client::client_login]: {:?}", exists);
-
         Ok(())
     }
 
@@ -49,10 +45,6 @@ impl Server {
 
         let mut client_db = client_manager.lock().unwrap();
         client_db.remove_client(client_logout_msg.client_id());
-
-        // Remove debug print
-        let exists = client_db.check_client(client_logout_msg.client_id());
-        println!("[QDGW/handle_client::client_login]: {:?}", exists);
 
         Ok(())
     }

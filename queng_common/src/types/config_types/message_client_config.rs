@@ -25,7 +25,7 @@ impl MessageClientConfig {
 
         // Prevents ID clash with manually created configurations
         assert!(id < 20, "id must be less than 20");
-        let name = format!("{}-{}-{}", NAME, svc_name, id);
+        let name = format!("{}", svc_name.to_lowercase());
 
         Self { id, name }
     }
