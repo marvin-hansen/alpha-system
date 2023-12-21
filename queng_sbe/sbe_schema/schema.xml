@@ -63,7 +63,7 @@
     <types>
         <type name="Currency" description="Currency" length="3" primitiveType="char"/>
         <type name="ClientID" encodingType="uInt16NULL" primitiveType="uint16"/>
-        <type name="ClientName" primitiveType="char" length="8" characterEncoding="ASCII"/>
+        <type name="ClientName" primitiveType="char" length="10" characterEncoding="ASCII"/>
         <type name="SymbolID" encodingType="uInt16NULL" primitiveType="uint16"/>
         <type name="Timestamp" encodingType="Int64NULL" primitiveType="int64"/>
     </types>
