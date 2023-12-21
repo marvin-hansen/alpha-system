@@ -4,6 +4,7 @@ resolver = "2"
 members = [
     "queng_cli/smdb_manager",
     "queng_cli/spec_manager",
+    "queng_cli/msg_manager",
     "queng_cli/zmq_manager",
     "queng_cli/dbgw_client",
     "queng_common",

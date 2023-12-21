@@ -3,7 +3,7 @@ use crate::*;
 pub use decoder::ClientLoginDecoder;
 pub use encoder::ClientLoginEncoder;
 
-pub const SBE_BLOCK_LENGTH: u16 = 11;
+pub const SBE_BLOCK_LENGTH: u16 = 13;
 pub const SBE_TEMPLATE_ID: u16 = 1;
 pub const SBE_SCHEMA_ID: u16 = 1;
 pub const SBE_SCHEMA_VERSION: u16 = 1;
@@ -91,10 +91,10 @@ pub mod encoder {
         /// - characterEncoding: ASCII
         /// - semanticType: null
         /// - encodedOffset: 3
-        /// - encodedLength: 8
+        /// - encodedLength: 10
         /// - version: 0
         #[inline]
-        pub fn client_name(&mut self, value: [u8; 8]) {
+        pub fn client_name(&mut self, value: [u8; 10]) {
             let offset = self.offset + 3;
             let buf = self.get_buf_mut();
             buf.put_bytes_at(offset, value);
@@ -183,7 +183,7 @@ pub mod decoder {
         }
 
         #[inline]
-        pub fn client_name(&self) -> [u8; 8] {
+        pub fn client_name(&self) -> [u8; 10] {
             let buf = self.get_buf();
             ReadBuf::get_bytes_at(buf.data, self.offset + 3)
         }

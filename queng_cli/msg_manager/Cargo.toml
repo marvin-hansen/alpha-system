@@ -1,0 +1,27 @@
+[package]
+name = "msg_manager"
+version = "0.1.0"
+edition.workspace = true
+rust-version.workspace = true
+readme.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+[[bin]]
+name = "msg_manager"
+path = "src/main.rs"
+
+
+[dependencies.common]
+path = "../../queng_common"
+version = "0.1.0"
+
+[dependencies.sbe_messages]
+path = "../../queng_sbe/sbe_messages"
+version = "0.1.0"
+
+
+[dependencies]
+futures = { workspace = true }
+tokio = { workspace = true }
+fluvio = { workspace = true }

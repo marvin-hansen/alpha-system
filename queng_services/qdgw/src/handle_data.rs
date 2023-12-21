@@ -37,6 +37,7 @@ impl Server {
 
             let bars = result.expect("get data bars failed");
 
+            // Remove debug print
             println!(
                 "[QDGW/handle::start_date]: sending # bars: {:?}",
                 bars.len()

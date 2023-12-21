@@ -1,3 +1,4 @@
+use crate::prelude::ServiceID;
 use std::fmt;
 use std::fmt::{Display, Formatter};
 
@@ -9,6 +10,25 @@ pub struct MessageClientConfig {
 
 impl MessageClientConfig {
     pub fn new(id: u16, name: String) -> Self {
+        // Prevents ID clash with configurations generated from ServiceID ENUM
+        assert!(id > 20, "id must be greater than 14");
+
+        // SBE Login & Logout message defines name as non-empty 10 characters
+        assert_eq!(name.len(), 10, "name must be exactly 10 characters long");
+
+        Self { id, name }
+    }
+
+    pub fn from_svc_id(svc_id: ServiceID) -> Self {
+        let id = svc_id.id().into();
+        let name = svc_id.name();
+
+        // Prevents ID clash with manually created configurations
+        assert!(id < 20, "id must be less than 14");
+        // SBE Login & Logout message defines name as non-empty 10 characters
+        assert!(name.len() > 0, "name cannot be empty");
+        assert!(name.len() < 11, "name must be at most 10 characters long");
+
         Self { id, name }
     }
 }
@@ -16,7 +36,7 @@ impl MessageClientConfig {
 impl Default for MessageClientConfig {
     fn default() -> Self {
         Self {
-            id: 0,
+            id: 100,
             name: String::from("default_client"),
         }
     }
