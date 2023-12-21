@@ -15,9 +15,8 @@ pub fn decode_client_login_message(buffer: &[u8]) -> SbeResult<ClientLoginMessag
     assert_eq!(message_type, MessageType::ClientLogin);
 
     let client_id = csg.client_id();
-    let client_name = csg.client_name();
 
-    let message = ClientLoginMessage::new(client_id, client_name);
+    let message = ClientLoginMessage::new(client_id);
 
     Ok(message)
 }

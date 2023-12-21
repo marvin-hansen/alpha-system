@@ -93,16 +93,6 @@ impl ClientManager {
             .ok_or(MessageClientConfigError("Client not found".into()))
     }
 
-    /// Updates a client.
-    ///
-    /// Takes a `u16` id and a `String` name.
-    /// Inserts the id and name into the hashmap,
-    /// overwriting any existing entry with the same id.
-    /// If no entry exists, adds a new one.
-    pub fn update_client(&mut self, id: u16, value: MessageClientConfig) {
-        self.clients.insert(id, value);
-    }
-
     /// Checks if a client id exists.
     ///
     /// Takes a `u16` id and returns a `bool`.

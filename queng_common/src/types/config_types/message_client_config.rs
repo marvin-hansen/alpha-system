@@ -8,26 +8,24 @@ pub struct MessageClientConfig {
     name: String,
 }
 
-impl MessageClientConfig {
-    pub fn new(id: u16, name: String) -> Self {
-        // Prevents ID clash with configurations generated from ServiceID ENUM
-        assert!(id > 20, "id must be greater than 14");
+const NAME: &str = "client";
 
-        // SBE Login & Logout message defines name as non-empty 10 characters
-        assert_eq!(name.len(), 10, "name must be exactly 10 characters long");
+impl MessageClientConfig {
+    pub fn new(id: u16) -> Self {
+        // Prevents ID clash with configurations generated from ServiceID ENUM
+        assert!(id > 20, "id must be greater than 20");
+        let name = format!("{}-{}", NAME, id);
 
         Self { id, name }
     }
 
     pub fn from_svc_id(svc_id: ServiceID) -> Self {
         let id = svc_id.id().into();
-        let name = svc_id.name();
+        let svc_name = svc_id.name();
 
         // Prevents ID clash with manually created configurations
-        assert!(id < 20, "id must be less than 14");
-        // SBE Login & Logout message defines name as non-empty 10 characters
-        assert!(name.len() > 0, "name cannot be empty");
-        assert!(name.len() < 11, "name must be at most 10 characters long");
+        assert!(id < 20, "id must be less than 20");
+        let name = format!("{}-{}-{}", NAME, svc_name, id);
 
         Self { id, name }
     }
@@ -37,7 +35,7 @@ impl Default for MessageClientConfig {
     fn default() -> Self {
         Self {
             id: 100,
-            name: String::from("default_client"),
+            name: String::from("default-client-100"),
         }
     }
 }

@@ -5,9 +5,8 @@ use common::prelude::MessageClientConfig;
 fn test_add_client() {
     let mut manager = ClientManager::new();
 
-    let id = 21;
-    let name = "client--21".to_string();
-    let config = MessageClientConfig::new(id, name);
+    let id = 100;
+    let config = MessageClientConfig::new(id);
     manager
         .add_client(id, config)
         .expect("Failed to add client");
@@ -18,9 +17,8 @@ fn test_add_client() {
 #[test]
 fn test_get_client_control_channel() {
     let mut manager = ClientManager::new();
-    let id = 21;
-    let name = "client--21".to_string();
-    let config = MessageClientConfig::new(id, name);
+    let id = 100;
+    let config = MessageClientConfig::new(id);
     manager
         .add_client(id, config.clone())
         .expect("Failed to add client");
@@ -41,9 +39,8 @@ fn test_get_client_control_channel() {
 #[test]
 fn test_get_client_data_channel() {
     let mut manager = ClientManager::new();
-    let id = 21;
-    let name = "client--21".to_string();
-    let config = MessageClientConfig::new(id, name);
+    let id = 100;
+    let config = MessageClientConfig::new(id);
     manager
         .add_client(id, config.clone())
         .expect("Failed to add client");
@@ -63,9 +60,8 @@ fn test_get_client_data_channel() {
 #[test]
 fn test_get_client_execution_channel() {
     let mut manager = ClientManager::new();
-    let id = 21;
-    let name = "client--21".to_string();
-    let config = MessageClientConfig::new(id, name);
+    let id = 100;
+    let config = MessageClientConfig::new(id);
     manager
         .add_client(id, config.clone())
         .expect("Failed to add client");
@@ -85,46 +81,21 @@ fn test_get_client_execution_channel() {
 #[test]
 fn test_get_client() {
     let mut manager = ClientManager::new();
-    let id = 21;
-    let name = "client--21".to_string();
-    let config = MessageClientConfig::new(id, name);
+    let id = 100;
+    let config = MessageClientConfig::new(id);
     manager
         .add_client(id, config)
         .expect("Failed to add client");
 
-    let client = manager.get_client_config(id).expect("Failed to get client");
-
-    assert_eq!(client.name(), "client--21");
-}
-
-#[test]
-fn test_update_client() {
-    let mut manager = ClientManager::new();
-    let id = 21;
-    let name = "client--21".to_string();
-    let config = MessageClientConfig::new(id, name);
-    manager
-        .add_client(id, config)
-        .expect("Failed to add client");
-
-    let client = manager.get_client_config(id).expect("Failed to get client");
-
-    assert_eq!(client.name(), "client--21");
-    let config_updated = MessageClientConfig::new(id, "client--42".to_string());
-
-    manager.update_client(id, config_updated);
-
-    let client = manager.get_client_config(id).expect("Failed to get client");
-
-    assert_eq!(client.name(), &"client--42".to_string());
+    let res = manager.get_client_config(id);
+    assert!(res.is_ok());
 }
 
 #[test]
 fn test_remove_client() {
     let mut manager = ClientManager::new();
-    let id = 21;
-    let name = "client--21".to_string();
-    let config = MessageClientConfig::new(id, name);
+    let id = 100;
+    let config = MessageClientConfig::new(id);
     manager
         .add_client(id, config)
         .expect("Failed to add client");

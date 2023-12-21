@@ -1,5 +1,4 @@
 use crate::prelude::MessageType;
-use common::prelude::MessageClientConfig;
 use serde::{Deserialize, Serialize};
 
 mod display;
@@ -11,29 +10,15 @@ mod sbe_encode;
 pub struct ClientLoginMessage {
     message_type: MessageType,
     client_id: u16,
-    client_name: [u8; 10],
 }
 
 impl ClientLoginMessage {
-    pub fn from_config(conf: &MessageClientConfig) -> Self {
-        let client_id = conf.id();
-        let client_name = conf.name().to_string().as_bytes().try_into().unwrap();
+    pub fn new(client_id: u16) -> Self {
         let message_type = MessageType::ClientLogin;
 
         Self {
             message_type,
             client_id,
-            client_name,
-        }
-    }
-
-    pub fn new(client_id: u16, client_name: [u8; 10]) -> Self {
-        let message_type = MessageType::ClientLogin;
-
-        Self {
-            message_type,
-            client_id,
-            client_name,
         }
     }
 }
