@@ -1,5 +1,6 @@
 use common::prelude::{
-    DBConfig, EnvironmentType, FileConfig, FileConfigType, ServiceConfig, ServiceID,
+    DBConfig, EnvironmentType, FileConfig, FileConfigType, MessageClientConfig, ServiceConfig,
+    ServiceID,
 };
 use ctx_manager::CtxManager;
 use db_specs::prelude::{db_config_ci, db_config_cluster, db_config_local};
@@ -67,6 +68,9 @@ impl CfgManager {
     }
     pub fn get_all_file_config_types(&self) -> Vec<FileConfigType> {
         self.file_config_types.clone()
+    }
+    pub fn get_message_client_config(&self) -> MessageClientConfig {
+        MessageClientConfig::from_svc_id(self.svc)
     }
 }
 

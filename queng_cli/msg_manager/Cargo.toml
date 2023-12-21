@@ -8,8 +8,13 @@ repository.workspace = true
 authors.workspace = true
 
 [[bin]]
-name = "msg_manager"
+name = "main"
 path = "src/main.rs"
+
+
+[lib]
+name = "msg_manager"
+path = "src/lib.rs"
 
 
 [dependencies.common]

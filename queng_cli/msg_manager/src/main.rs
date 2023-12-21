@@ -1,7 +1,14 @@
-mod handle;
-mod types;
-mod utils;
+use msg_manager::handle;
+use msg_manager::types::WorkflowOP;
+use std::error::Error;
 
-fn main() {
-    println!("Hello, world!");
+const OP: WorkflowOP = WorkflowOP::LoginStartStopDataLogout;
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn Error + Send>> {
+    handle::handle_workflow(&OP)
+        .await
+        .expect("Failed to handle workflow");
+
+    Ok(())
 }

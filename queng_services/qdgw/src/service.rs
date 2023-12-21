@@ -81,19 +81,6 @@ impl Server {
         return Ok(());
     }
 
-    /// Handles an incoming record from the Fluvio stream.
-    ///
-    /// # Parameters
-    /// * `record`: The incoming Fluvio consumer record to handle.
-    ///
-    /// # Functionality
-    /// - Extracts the message value from the record and converts it to a byte buffer.
-    /// - Deserializes the message type from the buffer.
-    /// - Matches on the message type:
-    ///   - `UnknownMessageType`: Logs receiving an UnknownMessageType.
-    ///   - `StartData`: Deserializes a `StartDataMessage` and calls `start_date`.
-    ///   - `StopData`: Deserializes a `StopDataMessage` and calls `stop_date`.
-    ///   - `StopAllData`: Deserializes a `StopAllDataMessage` and calls `stop_all_data`.
     async fn handle_record(&self, record: &ConsumerRecord) -> Result<(), MessageProcessingError> {
         let value = record.get_value().to_vec();
         let buffer = value.as_slice();
