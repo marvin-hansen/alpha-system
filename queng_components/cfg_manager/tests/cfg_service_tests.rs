@@ -1,9 +1,9 @@
+use cfg_manager::CfgManager;
 use std::env;
 
 use common::prelude::{EnvironmentType, HostEndpoint, MetricConfig, ServiceID};
 use ctx_manager::CtxManager;
 use dns_manager::DnsManager;
-use env_manager::EnvManager;
 
 // LOCAL and unknown environment cannot really be tested otherwise CI test runs breaks
 // because the environment variable must be set in the CI environment (not in the test)
@@ -28,10 +28,11 @@ fn test_new() {
     assert_eq!(dnm.internal_dns(), "9.9.9.9:53");
     assert_eq!(dnm.external_dns(), "1.1.1.1:53");
 
-    let env_manager = EnvManager::new(&ctm, &dnm);
+    let cfg_manager = CfgManager::new(ServiceID::SMDB, &ctm, &dnm);
+
     let endpoint = HostEndpoint::new("example.com", 8080);
     let metric_config = MetricConfig::default();
-    assert!(env_manager
+    assert!(cfg_manager
         .init_svc_env(&ServiceID::SMDB, endpoint, metric_config)
         .is_ok());
 }
@@ -49,11 +50,11 @@ fn test_init_smdb_env() {
     assert_eq!(dnm.internal_dns(), "9.9.9.9:53");
     assert_eq!(dnm.external_dns(), "1.1.1.1:53");
 
-    let env_manager = EnvManager::new(&ctm, &dnm);
+    let cfg_manager = CfgManager::new(ServiceID::SMDB, &ctm, &dnm);
     let endpoint = HostEndpoint::new("example.com", 8080);
     let metric_config = MetricConfig::default();
 
-    assert!(env_manager
+    assert!(cfg_manager
         .init_svc_env(&ServiceID::SMDB, endpoint, metric_config)
         .is_ok());
 }
@@ -71,11 +72,11 @@ fn test_init_cmdb_env() {
     assert_eq!(dnm.internal_dns(), "9.9.9.9:53");
     assert_eq!(dnm.external_dns(), "1.1.1.1:53");
 
-    let env_manager = EnvManager::new(&ctm, &dnm);
+    let cfg_manager = CfgManager::new(ServiceID::CMDB, &ctm, &dnm);
     let endpoint = HostEndpoint::new("example.com", 8080);
     let metric_config = MetricConfig::default();
 
-    assert!(env_manager
+    assert!(cfg_manager
         .init_svc_env(&ServiceID::CMDB, endpoint, metric_config)
         .is_ok());
 }
@@ -93,11 +94,11 @@ fn test_init_dbgw_env() {
     assert_eq!(dnm.internal_dns(), "9.9.9.9:53");
     assert_eq!(dnm.external_dns(), "1.1.1.1:53");
 
-    let env_manager = EnvManager::new(&ctm, &dnm);
+    let cfg_manager = CfgManager::new(ServiceID::DBGW, &ctm, &dnm);
     let endpoint = HostEndpoint::new("example.com", 8080);
     let metric_config = MetricConfig::default();
 
-    assert!(env_manager
+    assert!(cfg_manager
         .init_svc_env(&ServiceID::DBGW, endpoint, metric_config)
         .is_ok());
 }
@@ -115,15 +116,15 @@ fn test_get_cmdb_host() {
     assert_eq!(dnm.internal_dns(), "9.9.9.9:53");
     assert_eq!(dnm.external_dns(), "1.1.1.1:53");
 
-    let env_manager = EnvManager::new(&ctm, &dnm);
+    let cfg_manager = CfgManager::new(ServiceID::CMDB, &ctm, &dnm);
 
     let endpoint = HostEndpoint::new("localhost", 7070);
     let metric_config = MetricConfig::default();
 
-    assert!(env_manager
+    assert!(cfg_manager
         .init_svc_env(&ServiceID::CMDB, endpoint, metric_config)
         .is_ok());
-    let host = env_manager.get_svc_host_port(&ServiceID::CMDB).unwrap();
+    let host = cfg_manager.get_svc_host_port(&ServiceID::CMDB).unwrap();
     assert_eq!(host, ("127.0.0.1".to_string(), 7070));
 }
 
@@ -140,20 +141,20 @@ fn test_get_smdb_host() {
     assert_eq!(dnm.internal_dns(), "9.9.9.9:53");
     assert_eq!(dnm.external_dns(), "1.1.1.1:53");
 
-    let env_manager = EnvManager::new(&ctm, &dnm);
+    let cfg_manager = CfgManager::new(ServiceID::SMDB, &ctm, &dnm);
 
     let endpoint = HostEndpoint::new("localhost", 8080);
     let metric_config = MetricConfig::default();
 
-    assert!(env_manager
+    assert!(cfg_manager
         .init_svc_env(&ServiceID::SMDB, endpoint, metric_config)
         .is_ok());
-    let host = env_manager.get_svc_host_port(&ServiceID::SMDB).unwrap();
+    let host = cfg_manager.get_svc_host_port(&ServiceID::SMDB).unwrap();
     assert_eq!(host, ("127.0.0.1".to_string(), 8080));
 }
 
 #[test]
-fn test_get_memgraph_host() {
+fn test_get_dbgw_host() {
     env::set_var("ENV", "CLUSTER");
     env::set_var("DNS_SERVER", "9.9.9.9");
 
@@ -165,15 +166,37 @@ fn test_get_memgraph_host() {
     assert_eq!(dnm.internal_dns(), "9.9.9.9:53");
     assert_eq!(dnm.external_dns(), "1.1.1.1:53");
 
-    let env_manager = EnvManager::new(&ctm, &dnm);
+    let cfg_manager = CfgManager::new(ServiceID::DBGW, &ctm, &dnm);
 
     let endpoint = HostEndpoint::new("localhost", 9090);
     let metric_config = MetricConfig::default();
 
-    assert!(env_manager
+    assert!(cfg_manager
         .init_svc_env(&ServiceID::DBGW, endpoint, metric_config)
         .is_ok());
 
-    let host = env_manager.get_svc_host_port(&ServiceID::DBGW).unwrap();
+    let host = cfg_manager.get_svc_host_port(&ServiceID::DBGW).unwrap();
     assert_eq!(host, ("127.0.0.1".to_string(), 9090));
+}
+
+#[test]
+fn test_get_vex_host() {
+    env::set_var("ENV", "LOCAL");
+
+    let ctm = CtxManager::new();
+    assert_eq!(ctm.env_type(), EnvironmentType::LOCAL);
+    let dnm = DnsManager::new(&ctm);
+    let cfg_manager = CfgManager::new(ServiceID::VEX, &ctm, &dnm);
+
+    let binding = cfg_manager.get_svc_config().endpoint();
+    let endpoint = binding.host_endpoint();
+
+    let metric_config = cfg_manager.get_svc_metric_config();
+
+    assert!(cfg_manager
+        .init_svc_env(&ServiceID::VEX, endpoint, metric_config)
+        .is_ok());
+
+    let host = cfg_manager.get_svc_host_port(&ServiceID::VEX).unwrap();
+    assert_eq!(host, ("127.0.0.1".to_string(), 9999));
 }

@@ -49,7 +49,12 @@ impl<'l> ServiceManager<'l> {
                 .expect("[ServiceManager]: Failed to initialize service");
         }
 
-        self.cfg_manager.get_svc_metric_host_uri_port(svc_id)
+        let svc_metric = self.cfg_manager.get_svc_metric_config_by_id(svc_id);
+        let metric_host = svc_metric.metric_host().to_string();
+        let metric_uri = svc_metric.metric_uri().to_string();
+        let metrics_port = svc_metric.metric_port();
+
+        Ok((metric_host, metric_uri, metrics_port))
     }
 
     pub fn get_service_endpoint(&self, svc_id: &ServiceID) -> Endpoint {
