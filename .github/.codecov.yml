@@ -8,6 +8,7 @@ ignore:
   - "queng_components/db_manager"
   - "queng_components/file_manager"
   - "queng_components/svc_manager"
+  - "queng_components/qd_manager"
   - "queng_proto"
   - "queng_providers"
   - "queng_sbe"
