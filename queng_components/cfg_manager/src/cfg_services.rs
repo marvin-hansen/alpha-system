@@ -41,8 +41,8 @@ impl<'l> CfgManager<'l> {
                 Ok(())
             }
             ServiceID::VEX => {
-                let qdgw_env = self.get_svc_env_config(ServiceID::VEX, endpoint, metrics_config);
-                *self.vex_env.borrow_mut() = Some(qdgw_env);
+                let vex_env = self.get_svc_env_config(ServiceID::VEX, endpoint, metrics_config);
+                *self.vex_env.borrow_mut() = Some(vex_env);
                 Ok(())
             }
 
@@ -97,54 +97,6 @@ impl<'l> CfgManager<'l> {
 
         Ok((socket_addr, metrics_uri))
     }
-
-    /// Returns the host, uri, and port of the metrics endpoint of the service relative to its context.
-    /// Use this to pull metrics data from the service regardless of deployment context.
-    pub fn get_svc_metric_host_uri_port(
-        &self,
-        svc_id: &ServiceID,
-    ) -> Result<(String, String, u16), InitError> {
-        // Check if the service is initialized
-        if !self.is_svc_env_initialized(svc_id) {
-            InitError(format!(
-                "[EnvManager:get_svc_metric_host_uri_port]: Service {:?} is not initialized",
-                svc_id
-            ));
-        };
-
-        let svc = self
-            .get_svc_env(svc_id)
-            .expect("Failed to get service environment");
-
-        let metric_host = svc.metrics_host().to_string();
-        let metrics_uri = svc.metrics_uri().to_string();
-        let metrics_port = *svc.metrics_port();
-
-        Ok((metric_host, metrics_uri, metrics_port))
-    }
-
-    ///  Returns the hostname of the service relative to the application context.
-    ///  Use this to connect to the service regardless of deployment context.
-    ///
-    ///  If the environment type is local, it returns the hostname of the service running locally.
-    ///  If the environment type is cluster, it returns the hostname of the service running in the cluster.
-    ///  If the environment type is unknown, it returns an error.
-    /// The function checks if the service is initialized, and if not, it returns an InitError.
-    pub fn get_svc_host_port(&self, svc_id: &ServiceID) -> Result<(String, u16), InitError> {
-        // Check if the service is initialized
-        if !self.is_svc_env_initialized(svc_id) {
-            InitError(format!(
-                "[EnvManager:get_svc_host_port]: Service {:?} is not initialized",
-                svc_id
-            ));
-        };
-        // Get the configuration of the service
-        let svc_config = self
-            .get_svc_env(svc_id)
-            .expect("Failed to get service config");
-        // Get the host and port of the service
-        self.get_host(&svc_config)
-    }
 }
 
 impl<'l> CfgManager<'l> {
@@ -177,11 +129,37 @@ impl<'l> CfgManager<'l> {
         )
     }
 
+    fn get_svc_metric_host_uri_port(
+        &self,
+        svc_id: &ServiceID,
+    ) -> Result<(String, String, u16), InitError> {
+        // Check if the service is initialized
+        if !self.is_svc_env_initialized(svc_id) {
+            InitError(format!(
+                "[EnvManager:get_svc_metric_host_uri_port]: Service {:?} is not initialized",
+                svc_id
+            ));
+        };
+
+        let svc = self
+            .get_svc_env(svc_id)
+            .expect("Failed to get service environment");
+
+        let metric_host = svc.metrics_host().to_string();
+        let metrics_uri = svc.metrics_uri().to_string();
+        let metrics_port = *svc.metrics_port();
+
+        Ok((metric_host, metrics_uri, metrics_port))
+    }
+
     // Returns the hostname and port of the service based on the environment type.
     // If the environment type is local, it returns the hostname of the service running locally.
     // If the environment type is cluster, it returns the hostname of the service running in the cluster.
     // If the environment type is unknown, it returns an error.
-    fn get_host(&self, svc_env_config: &SvcEnvConfig) -> Result<(String, u16), InitError> {
+    pub(crate) fn get_host(
+        &self,
+        svc_env_config: &SvcEnvConfig,
+    ) -> Result<(String, u16), InitError> {
         //
         let port: u16 = svc_env_config
             .service_port()
@@ -212,7 +190,7 @@ impl<'l> CfgManager<'l> {
         Ok((host, port))
     }
 
-    fn get_svc_env(&self, svc_id: &ServiceID) -> Result<SvcEnvConfig, InitError> {
+    pub(crate) fn get_svc_env(&self, svc_id: &ServiceID) -> Result<SvcEnvConfig, InitError> {
         match svc_id {
             ServiceID::CMDB => {
                 let svc = self
