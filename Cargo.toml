@@ -12,6 +12,8 @@ members = [
     "queng_components/client_manager",
     "queng_components/ctx_manager",
     "queng_components/db_manager",
+    "queng_components/db_surreal_manager",
+    "queng_components/db_quest_manager",
     "queng_components/dns_manager",
     "queng_components/pattern_manager",
     "queng_components/file_manager",
@@ -63,6 +65,9 @@ tokio = { version = "1", features = ["macros", "net", "rt-multi-thread", "signal
 tonic-health = "0.10"
 tonic = "0.10"
 tonic-build = "0.10.2"
+# Quest DB uses the postgres wire protocol for queries, which requires the postgres crate
+questdb-rs = {version = "3.1"}
+postgres = {version = "0.19", features = ["with-uuid"]}
 warp = { version = "0.3", features = ["multipart"] }
 
 
