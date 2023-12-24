@@ -40,8 +40,8 @@ path = "../../queng_components/svc_manager"
 version = "0.1.0"
 
 
-[dependencies.db_manager]
-path = "../../queng_components/db_manager"
+[dependencies.db_surreal_manager]
+path = "../../queng_components/db_surreal_manager"
 version = "0.1.0"
 
 

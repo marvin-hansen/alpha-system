@@ -3,17 +3,17 @@ use surrealdb::Error;
 use tonic::{Request, Response, Status};
 
 use common::prelude::{PortfolioConfig, ServiceConfig, ServiceID};
-use db_manager::DBManager;
+use db_surreal_manager::SurrealDBManager;
 use proto::binding::db_gateway_service_server::DbGatewayService;
 use proto::binding::*;
 
 #[derive(Clone)]
 pub struct DBGWServer {
-    dbm: DBManager,
+    dbm: SurrealDBManager,
 }
 
 impl DBGWServer {
-    pub fn new(dbm: DBManager) -> Self {
+    pub fn new(dbm: SurrealDBManager) -> Self {
         Self { dbm }
     }
 }

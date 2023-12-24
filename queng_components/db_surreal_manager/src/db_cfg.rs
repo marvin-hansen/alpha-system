@@ -1,10 +1,10 @@
-use crate::DBManager;
+use crate::SurrealDBManager;
 use common::prelude::PortfolioConfig;
 use surrealdb::Error;
 
 const PORTFOLIO_CONFIG_TABLE: &str = "portfolio_config";
 
-impl DBManager {
+impl SurrealDBManager {
     /// add_portfolio_config that adds a PortfolioConfig config to the database
     /// Returns true in case of success, or false in case of insert error,
     /// or an error in case of a database error.
