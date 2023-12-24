@@ -5,7 +5,9 @@ comment:
 # https://docs.codecov.com/docs/ignoring-paths
 ignore:
   - "queng_cli"  # ignore folders and all its contents
-  - "queng_components/db_manager"
+  - "queng_components/db_quasar_manager"
+  - "queng_components/db_quest_manager"
+  - "queng_components/db_surreal_manager"
   - "queng_components/file_manager"
   - "queng_components/svc_manager"
   - "queng_components/qd_manager"
