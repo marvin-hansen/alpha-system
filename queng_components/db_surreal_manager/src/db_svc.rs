@@ -3,11 +3,11 @@ use surrealdb::Error;
 
 use common::prelude::{ServiceConfig, ServiceID};
 
-use crate::DBManager;
+use crate::SurrealDBManager;
 
 const SERVICE_TABLE: &str = "service";
 
-impl DBManager {
+impl SurrealDBManager {
     pub async fn create_service(&self, data: ServiceConfig) -> Result<bool, Error> {
         let table = SERVICE_TABLE;
         let id = data.svc_id().to_string();

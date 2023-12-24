@@ -2,7 +2,7 @@ use autometrics::prometheus_exporter;
 use cfg_manager::CfgManager;
 use common::prelude::ServiceID;
 use ctx_manager::CtxManager;
-use db_manager::DBManager;
+use db_surreal_manager::SurrealDBManager;
 use dns_manager::DnsManager;
 use proto::binding::db_gateway_service_server::DbGatewayServiceServer;
 use service::DBGWServer;
@@ -29,7 +29,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     // Configure database manager
     let db_config = cfg_manager.get_db_config();
-    let dbm = DBManager::new(&db_config).await;
+    let dbm = SurrealDBManager::new(&db_config).await;
 
     // Configure service ip and port automatically relative to the detected context.
     let service_addr = service_manager
