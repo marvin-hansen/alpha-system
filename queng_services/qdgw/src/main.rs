@@ -125,7 +125,6 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .await
         .expect("[QDGW]/main: Failed to set service online");
 
-    //Starts both servers concurrently.
     print_utils::print_start_header_message_service(
         &SVC_ID,
         &service_topic,
@@ -133,6 +132,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         &metrics_uri,
     );
 
+    //Starts both servers concurrently.
     match tokio::try_join!(web_handle, service_handle) {
         Ok(_) => {}
         Err(e) => {
