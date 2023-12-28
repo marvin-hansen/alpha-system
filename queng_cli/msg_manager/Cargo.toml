@@ -7,6 +7,7 @@ readme.workspace = true
 repository.workspace = true
 authors.workspace = true
 
+
 [[bin]]
 name = "main"
 path = "src/main.rs"
@@ -20,6 +21,7 @@ path = "src/lib.rs"
 [dependencies.common]
 path = "../../queng_common"
 version = "0.1.0"
+
 
 [dependencies.sbe_messages]
 path = "../../queng_sbe/sbe_messages"
