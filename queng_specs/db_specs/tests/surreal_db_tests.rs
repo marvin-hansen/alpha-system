@@ -12,7 +12,6 @@ fn test_db_config_local() {
         "test".to_string(),
         "root".to_string(),
         "root".to_string(),
-        String::from("dbgw"),
     );
 
     let actual = db_config_local();
@@ -37,7 +36,6 @@ fn test_db_config_cluster() {
         "service".to_string(),
         "root".to_string(),
         "root".to_string(),
-        String::from("dbgw"),
     );
 
     let actual = db_config_cluster();
