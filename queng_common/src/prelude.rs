@@ -17,6 +17,8 @@ pub use crate::types::config_types::service_config::*;
 pub use crate::types::config_types::service_id::*;
 pub use crate::types::config_types::service_type::*;
 pub use crate::types::config_types::svc_env_config::*;
+// Currency types
+pub use crate::types::currency_types::fiat_iso_code::FiatIsoCode;
 // data types
 pub use crate::types::data_types::data_bar::*;
 pub use crate::types::data_types::time_resolution::*;

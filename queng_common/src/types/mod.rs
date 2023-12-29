@@ -1,4 +1,6 @@
 pub mod config_types;
+
+pub mod currency_types;
 pub(crate) mod data_types;
 pub mod exchange_types;
 pub(crate) mod file_types;
