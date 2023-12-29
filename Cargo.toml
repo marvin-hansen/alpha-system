@@ -2,6 +2,7 @@
 resolver = "2"
 
 members = [
+    "queng_cli/data_importer",
     "queng_cli/dbgw_client",
     "queng_cli/smdb_manager",
     "queng_cli/spec_manager",
@@ -11,7 +12,6 @@ members = [
     "queng_components/cfg_manager",
     "queng_components/client_manager",
     "queng_components/ctx_manager",
-    "queng_components/db_quasar_manager",
     "queng_components/db_quest_manager",
     "queng_components/db_surreal_manager",
     "queng_components/dns_manager",
