@@ -27,8 +27,6 @@ pub struct DBConfig {
     username: String,
     /// Password to be used if the server demands password authentication.
     password: String,
-    /// Alternate name and version of the client to send to server. The default is "MemgraphBolt/0.1".
-    client_name: String,
 }
 
 impl DBConfig {
@@ -39,7 +37,6 @@ impl DBConfig {
         db_namespace: String,
         username: String,
         password: String,
-        client_name: String,
     ) -> Self {
         Self {
             port,
@@ -48,7 +45,6 @@ impl DBConfig {
             db_namespace,
             username,
             password,
-            client_name,
         }
     }
 
@@ -98,7 +94,6 @@ impl Default for DBConfig {
             db_namespace: "test".to_string(),
             username: "root".to_string(),
             password: "root".to_string(),
-            client_name: String::from("dbgw"),
         }
     }
 }
@@ -134,11 +129,6 @@ impl DBConfig {
     pub fn password(&self) -> &String {
         &self.password
     }
-
-    /// Returns the alternate name and version of the client to send to server.
-    pub fn client_name(&self) -> &str {
-        &self.client_name
-    }
 }
 
 impl Display for DBConfig {
@@ -147,14 +137,8 @@ impl Display for DBConfig {
         write!(
             f,
             "DBConfig {{ port: {}, host: {}, db_name: {}, db_namespace: {}, username: {},\
-                password: {}, client_name: {} }}",
-            self.port,
-            self.host,
-            self.db_name,
-            self.db_namespace,
-            self.username,
-            self.password,
-            self.client_name
+                password: {} }}",
+            self.port, self.host, self.db_name, self.db_namespace, self.username, self.password,
         )
     }
 }

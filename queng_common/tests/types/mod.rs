@@ -1,4 +1,5 @@
 mod config_types;
+mod currency_types;
 mod data_types;
 mod exchange_types;
 mod file_types;
