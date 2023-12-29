@@ -19,6 +19,5 @@ pub fn db_config_cluster() -> DBConfig {
         "service".to_string(),
         "root".to_string(),
         "root".to_string(),
-        String::from("dbgw"),
     )
 }
