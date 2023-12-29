@@ -1,4 +1,5 @@
 mod db_cfg;
+mod db_fiat_iso;
 mod db_svc;
 
 use std::fmt::{Debug, Display, Formatter};
