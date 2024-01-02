@@ -4,4 +4,4 @@ set -o nounset
 set -o pipefail
 
 
-command cargo build --release
+RUSTFLAGS='-C target-cpu=native' cargo build --release
