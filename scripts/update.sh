@@ -10,7 +10,7 @@ command rustup upgrade
 
 
 command echo ""
-command echo "Checking for rustc update"
+command echo "Checking for rustc stable update"
 command rustup update stable
 
 
