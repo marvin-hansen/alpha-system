@@ -28,12 +28,12 @@ name = "lib_import"
 path = "src/lib/mod.rs"
 
 
-[dependencies.common]
-path = "../../queng_common"
-version = "0.1.0"
+#[dependencies.common]
+#path = "../../queng_common"
+#version = "0.1.0"
 
 
 [dependencies]
-futures = { workspace = true }
-tokio = { workspace = true }
-questdb-rs = { workspace = true }
+#futures = { workspace = true }
+#tokio = { workspace = true }
+#questdb-rs = { workspace = true }
