@@ -12,7 +12,6 @@ members = [
     "queng_components/cfg_manager",
     "queng_components/client_manager",
     "queng_components/ctx_manager",
-    "queng_components/db_quest_manager",
     "queng_components/db_surreal_manager",
     "queng_components/dns_manager",
     "queng_components/pattern_manager",
@@ -52,7 +51,7 @@ fluvio = { version = "0.21" , default-features = false, features = ["rustls"] }
 futures = "0.3"
 hickory-resolver = { version = "0.24", default-features = false, features = ["tokio-runtime"] }
 log = "0.4"
-parquet = "49.0.0"
+parquet = "50"
 prost = "0.12"
 prost-types = { version = "0.12", default-features = false }
 rand = {version = "0.8", default-features = false , features = ["std"]}
@@ -60,11 +59,11 @@ rust_decimal = "1.33"
 rust_decimal_macros = "1.33"
 serde = { version = "1", features = ["derive"] }
 serde_json = { version = "1", default-features = false }
-surrealdb = { version = "1.0.1", features = ["kv-mem"] }
+surrealdb = { version = "1.1"}
 tokio = { version = "1", features = ["macros", "net", "rt-multi-thread", "signal"] }
 tonic-health = "0.10"
 tonic = "0.10"
-tonic-build = "0.10.2"
+tonic-build = "0.10"
 # Quest DB uses the postgres wire protocol for queries, which requires the postgres crate
 questdb-rs = {version = "3.1"}
 postgres = {version = "0.19", features = ["with-uuid"]}
