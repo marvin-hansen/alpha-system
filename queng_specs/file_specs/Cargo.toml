@@ -7,17 +7,12 @@ readme.workspace = true
 repository.workspace = true
 authors.workspace = true
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 
 [lib]
 name = "file_specs"
 path = "src/lib.rs"
 
 
-[dependencies.common]
-path = "../../queng_common"
-version = "0.1.0"
-
-
 [dependencies]
+# Internal crates
+common = {workspace = true}

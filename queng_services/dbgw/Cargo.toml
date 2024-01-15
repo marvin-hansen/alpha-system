@@ -15,47 +15,17 @@ name = "dbgw"
 path = "src/main.rs"
 
 
-[dependencies.common]
-path = "../../queng_common"
-version = "0.1.0"
-
-
-[dependencies.cfg_manager]
-path = "../../queng_components/cfg_manager"
-version = "0.1.0"
-
-
-[dependencies.ctx_manager]
-path = "../../queng_components/ctx_manager"
-version = "0.1.0"
-
-
-[dependencies.dns_manager]
-path = "../../queng_components/dns_manager"
-version = "0.1.0"
-
-
-[dependencies.svc_manager]
-path = "../../queng_components/svc_manager"
-version = "0.1.0"
-
-
-[dependencies.db_surreal_manager]
-path = "../../queng_components/db_surreal_manager"
-version = "0.1.0"
-
-
-[dependencies.proto]
-path = "../../queng_proto"
-version = "0.1.0"
-
-
-[dependencies.service_utils]
-path = "../../queng_utils/service_utils"
-version = "0.1.0"
-
-
 [dependencies]
+# Internal crates
+common = {workspace = true}
+cfg_manager = {workspace = true}
+ctx_manager = {workspace = true}
+db_surreal_manager = {workspace = true}
+dns_manager = {workspace = true}
+proto = {workspace = true}
+service_utils = {workspace = true}
+svc_manager = {workspace = true}
+# External crates
 autometrics = { workspace = true }
 surrealdb = { workspace = true }
 tokio = { workspace = true }
