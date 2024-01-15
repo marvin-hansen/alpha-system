@@ -26,7 +26,7 @@ impl Server {
             .await
             .expect("Failed to create a producer");
 
-        let symbol = start_data_msg.symbol_id().clone();
+        let symbol = *start_data_msg.symbol_id();
 
         if symbol == SymbolID::BTCUSD {
             let symbol = &FileConfigType::BtcSmall;

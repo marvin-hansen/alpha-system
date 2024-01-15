@@ -27,27 +27,6 @@ impl From<u8> for PatternType {
 }
 
 impl PatternType {
-    pub fn as_str(&self) -> &'static str {
-        match self {
-            PatternType::NullVal => "null",
-            PatternType::Base => "base",
-            PatternType::Extra => "extra",
-            PatternType::Long => "long",
-            PatternType::Short => "short",
-        }
-    }
-
-    pub fn from_str(s: &str) -> Option<PatternType> {
-        match s {
-            "null" => Some(PatternType::NullVal),
-            "base" => Some(PatternType::Base),
-            "extra" => Some(PatternType::Extra),
-            "long" => Some(PatternType::Long),
-            "short" => Some(PatternType::Short),
-            _ => None,
-        }
-    }
-
     pub fn get_pattern_type(&self) -> PatternType {
         match self {
             PatternType::NullVal => PatternType::NullVal,

@@ -6,6 +6,12 @@ pub struct BarManager {
     bars: HashMap<FileConfigType, Vec<DataBar>>,
 }
 
+impl Default for BarManager {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl BarManager {
     /// Creates a new instance of `BarManager`.
     pub fn new() -> Self {
