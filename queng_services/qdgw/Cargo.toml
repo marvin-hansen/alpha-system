@@ -64,6 +64,7 @@ version = "0.1.0"
 
 
 [dependencies]
+# External crates
 autometrics = { workspace = true }
 fluvio = { workspace = true }
 futures = { workspace = true }
