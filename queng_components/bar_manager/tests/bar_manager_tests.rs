@@ -24,7 +24,7 @@ fn test_remove_bars() {
     let symbol = &FileConfigType::BtcSmall;
     let bars = vec![/* test bars */];
     bar_manager.add_bars(symbol, bars.clone());
-    assert!(bar_manager.has_data(&symbol));
+    assert!(bar_manager.has_data(symbol));
 
     // Act
     bar_manager.remove_bars(symbol);

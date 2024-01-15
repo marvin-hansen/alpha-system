@@ -21,6 +21,12 @@ pub struct PatternManager {
     short_pattern: RefCell<ShortPattern>,
 }
 
+impl Default for PatternManager {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl PatternManager {
     pub fn new() -> Self {
         Self {
@@ -68,9 +74,7 @@ impl PatternManager {
             PatternType::Extra => self.extra_pattern.borrow_mut().update_patterns(window),
             PatternType::Long => self.long_pattern.borrow_mut().update_patterns(window),
             PatternType::Short => self.short_pattern.borrow_mut().update_patterns(window),
-            PatternType::NullVal => {
-                return Err("Error: Null pattern type".to_string());
-            }
+            PatternType::NullVal => Err("Error: Null pattern type".to_string()),
         }
     }
 }

@@ -11,6 +11,12 @@ use std::path::Path;
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct FileManager {}
 
+impl Default for FileManager {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl FileManager {
     pub fn new() -> Self {
         Self {}
@@ -34,10 +40,11 @@ impl FileManager {
         file_config: &FileConfig,
     ) -> Result<Vec<DataBar>, Box<dyn Error>> {
         let path = file_config.path();
-        if false == Path::new(path).exists() {
-            return Err(
-                Box::try_from(format!("[FileManager]: File {} does not exist", path)).unwrap(),
-            );
+        if !Path::new(path).exists() {
+            return Err(Box::from(format!(
+                "[FileManager]: File {} does not exist",
+                path
+            )));
         }
 
         read_parquet(file_config)
@@ -47,7 +54,7 @@ impl FileManager {
 fn read_parquet(file_config: &FileConfig) -> Result<Vec<DataBar>, Box<dyn Error>> {
     let path = file_config.path();
 
-    let file = File::open(&Path::new(path)).expect("[FileManager]: Could not open file");
+    let file = File::open(Path::new(path)).expect("[FileManager]: Could not open file");
 
     let symbol = file_config.data_symbol();
 
@@ -56,11 +63,11 @@ fn read_parquet(file_config: &FileConfig) -> Result<Vec<DataBar>, Box<dyn Error>
     let reader =
         SerializedFileReader::new(file).expect("[FileManager]: Could not create parquet reader");
 
-    let mut iter = reader
+    let iter = reader
         .get_row_iter(None)
         .expect("[FileManager]: Could not create parquet row iterator");
 
-    while let Some(record) = iter.next() {
+    for record in iter {
         let record = record.expect("[FileManager]: Could not read record");
         let bar = match convert_field_to_bar(&record, symbol) {
             Ok(bar) => bar,

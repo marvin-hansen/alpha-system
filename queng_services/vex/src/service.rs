@@ -27,6 +27,6 @@ impl Server {
             } // end select
         } // end loop
 
-        return Ok(());
+        Ok(())
     }
 }
