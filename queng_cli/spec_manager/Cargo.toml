@@ -7,28 +7,16 @@ readme.workspace = true
 repository.workspace = true
 authors.workspace = true
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 
 [[bin]]
 name = "spec_manager"
 path = "src/main.rs"
 
 
-[dependencies.common]
-path = "../../queng_common"
-version = "0.1.0"
-
-
-[dependencies.dbgw_client]
-path = "../dbgw_client"
-version = "0.1.0"
-
-
-[dependencies.service_specs]
-path = "../../queng_specs/service_specs"
-version = "0.1.0"
-
-
 [dependencies]
+# Internal crates
+common = {workspace = true}
+dbgw_client = {workspace = true}
+service_specs = {workspace = true}
+# External crates
 tokio = { workspace = true }

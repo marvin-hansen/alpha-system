@@ -3,10 +3,10 @@ resolver = "2"
 
 members = [
     "queng_cli/data_importer",
-    "queng_cli/dbgw_client",
     "queng_cli/smdb_manager",
     "queng_cli/spec_manager",
     "queng_cli/msg_manager",
+    "queng_clients/dbgw_client",
     "queng_common",
     "queng_components/bar_manager",
     "queng_components/cfg_manager",
@@ -46,57 +46,59 @@ authors = ["Marvin Hansen <marvin.hansen@gmail.com>"]
 [workspace.dependencies]
 #
 # Internal crates
-common = {path = "queng_common" }
+common = { path = "queng_common" }
+# Clients
+dbgw_client = { path = "queng_clients/dbgw_client" }
 # Components
-bar_manager = {path = "queng_components/bar_manager" }
-cfg_manager = {path = "queng_components/cfg_manager" }
-client_manager = {path = "queng_components/client_manager" }
-ctx_manager = {path = "queng_components/ctx_manager" }
-db_surreal_manager = {path = "queng_components/db_surreal_manager" }
-dns_manager = {path = "queng_components/dns_manager" }
-file_manager = {path = "queng_components/file_manager" }
-pattern_manager = {path = "queng_components/pattern_manager" }
-qd_manager = {path = "queng_components/qd_manager" }
-svc_manager = {path = "queng_components/svc_manager" }
+bar_manager = { path = "queng_components/bar_manager" }
+cfg_manager = { path = "queng_components/cfg_manager" }
+client_manager = { path = "queng_components/client_manager" }
+ctx_manager = { path = "queng_components/ctx_manager" }
+db_surreal_manager = { path = "queng_components/db_surreal_manager" }
+dns_manager = { path = "queng_components/dns_manager" }
+file_manager = { path = "queng_components/file_manager" }
+pattern_manager = { path = "queng_components/pattern_manager" }
+qd_manager = { path = "queng_components/qd_manager" }
+svc_manager = { path = "queng_components/svc_manager" }
 # Proto specs
-proto = {path = "queng_proto" }
+proto = { path = "queng_proto" }
 # Providers
-cmdb_provider = {path = "queng_providers/cmdb_provider" }
-smdb_provider = {path = "queng_providers/smdb_provider" }
+cmdb_provider = { path = "queng_providers/cmdb_provider" }
+smdb_provider = { path = "queng_providers/smdb_provider" }
 # SBE
-bindings = {path = "queng_sbe/bindings"}
-sbe_messages = {path = "queng_sbe/sbe_messages"}
+sbe_bindings = { path = "queng_sbe/bindings" }
+sbe_messages = { path = "queng_sbe/sbe_messages" }
 # Specs
-db_specs = {path = "queng_specs/db_specs"}
-file_specs = {path = "queng_specs/file_specs"}
-service_specs = {path = "queng_specs/service_specs"}
+db_specs = { path = "queng_specs/db_specs" }
+file_specs = { path = "queng_specs/file_specs" }
+service_specs = { path = "queng_specs/service_specs" }
 # Utils
-service_utils = {path = "queng_utils/service_utils"}
+service_utils = { path = "queng_utils/service_utils" }
 #
 # External crates
 autometrics = { version = "1", features = ["prometheus-exporter"] }
 chrono = { version = "0.4", features = ["serde"] }
 ctrlc = "3.4"
-fluvio = { version = "0.21" , default-features = false, features = ["rustls"] }
+fluvio = { version = "0.21", default-features = false, features = ["rustls"] }
 futures = "0.3"
 hickory-resolver = { version = "0.24", default-features = false, features = ["tokio-runtime"] }
 log = "0.4"
 parquet = "50"
 prost = "0.12"
 prost-types = { version = "0.12", default-features = false }
-rand = {version = "0.8", default-features = false , features = ["std"]}
+rand = { version = "0.8", default-features = false, features = ["std"] }
 rust_decimal = "1.33"
 rust_decimal_macros = "1.33"
 serde = { version = "1", features = ["derive"] }
 serde_json = { version = "1", default-features = false }
-surrealdb = { version = "1.1"}
+surrealdb = { version = "1.1" }
 tokio = { version = "1", features = ["macros", "net", "rt-multi-thread", "signal"] }
 tonic-health = "0.10"
 tonic = "0.10"
 tonic-build = "0.10"
 # Quest DB uses the postgres wire protocol for queries, which requires the postgres crate
-questdb-rs = {version = "3.1"}
-postgres = {version = "0.19", features = ["with-uuid"]}
+questdb-rs = { version = "3.1" }
+postgres = { version = "0.19", features = ["with-uuid"] }
 warp = { version = "0.3", features = ["multipart"] }
 
 
