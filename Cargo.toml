@@ -44,6 +44,36 @@ authors = ["Marvin Hansen <marvin.hansen@gmail.com>"]
 
 
 [workspace.dependencies]
+#
+# Internal crates
+common = {path = "queng_common" }
+# Components
+bar_manager = {path = "queng_components/bar_manager" }
+cfg_manager = {path = "queng_components/cfg_manager" }
+client_manager = {path = "queng_components/client_manager" }
+ctx_manager = {path = "queng_components/ctx_manager" }
+db_surreal_manager = {path = "queng_components/db_surreal_manager" }
+dns_manager = {path = "queng_components/dns_manager" }
+file_manager = {path = "queng_components/file_manager" }
+pattern_manager = {path = "queng_components/pattern_manager" }
+qd_manager = {path = "queng_components/qd_manager" }
+svc_manager = {path = "queng_components/svc_manager" }
+# Proto specs
+proto = {path = "queng_proto" }
+# Providers
+cmdb_provider = {path = "queng_providers/cmdb_provider" }
+smdb_provider = {path = "queng_providers/smdb_provider" }
+# SBE
+bindings = {path = "queng_sbe/bindings"}
+sbe_messages = {path = "queng_sbe/sbe_messages"}
+# Specs
+db_specs = {path = "queng_specs/db_specs"}
+file_specs = {path = "queng_specs/file_specs"}
+service_specs = {path = "queng_specs/service_specs"}
+# Utils
+service_utils = {path = "queng_utils/service_utils"}
+#
+# External crates
 autometrics = { version = "1", features = ["prometheus-exporter"] }
 chrono = { version = "0.4", features = ["serde"] }
 ctrlc = "3.4"
