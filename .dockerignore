@@ -1,5 +1,10 @@
 .autometrics
 .cargo
 .github
-target
 data
+db
+docs
+scripts
+target
+tools
+*.md
