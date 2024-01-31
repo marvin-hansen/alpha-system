@@ -37,7 +37,7 @@ members = [
 
 [workspace.package]
 edition = "2021"
-rust-version = "1.74"
+rust-version = "1.75"
 readme = "README.md"
 repository = "https://github.com/marvin-hansen/quant-engine"
 authors = ["Marvin Hansen <marvin.hansen@gmail.com>"]
@@ -115,5 +115,5 @@ codegen-units = 1 # Reduce Parallel Code Generation Units to Increase Optimizati
 # https://docs.rust-embedded.org/book/unsorted/speed-vs-size.html
 [profile.release.package."*"]
 opt-level = 3
-strip = true  # Automatically strip debug symbols from the binary to reduce size
+strip = 'debuginfo'  # Automatically strip debug infos from the binary to reduce size
 codegen-units = 1 # Reduce Parallel Code Generation Units to Increase Optimization
