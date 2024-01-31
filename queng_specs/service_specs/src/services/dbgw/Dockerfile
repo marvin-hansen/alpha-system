@@ -37,7 +37,7 @@ RUN cargo fetch
 # https://github.com/google/oss-fuzz/issues/10174
 
 # Run the release build.
-RUN RUSTFLAGS='-C target-cpu=native' cargo build build -p dbgw --release --target aarch64-unknown-linux-musl
+RUN RUSTFLAGS='-C target-cpu=native' cargo build -p dbgw --release --target aarch64-unknown-linux-musl
 
 # Move binary up to root level directory for easy access
 RUN mv /app/target/aarch64-unknown-linux-musl/release/dbgw /dbgw
