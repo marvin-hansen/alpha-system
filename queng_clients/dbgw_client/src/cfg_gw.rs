@@ -1,13 +1,15 @@
 use common::prelude::PortfolioConfig;
 use proto::binding::{MultiPortfolioRequest, SinglePortfolioRequest};
 
-use crate::{DBGatewayClient, DBGatewayError};
+use crate::error::DBGatewayError;
+use crate::DBGatewayClient;
 
 impl DBGatewayClient {
     pub async fn create_portfolio_config(
         mut self,
         data: PortfolioConfig,
     ) -> Result<bool, DBGatewayError> {
+        //
         let proto_portfolio_config = data
             .to_proto()
             .expect("Failed to convert Rust PortfolioConfig to proto");

@@ -1,7 +1,8 @@
 use common::prelude::{ServiceConfig, ServiceID};
 use proto::binding::{MultiServicesRequest, SingleServiceRequest};
 
-use crate::{DBGatewayClient, DBGatewayError};
+use crate::error::DBGatewayError;
+use crate::DBGatewayClient;
 
 impl DBGatewayClient {
     pub async fn create_service(&self, data: ServiceConfig) -> Result<bool, DBGatewayError> {
