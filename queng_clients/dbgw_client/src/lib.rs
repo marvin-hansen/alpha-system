@@ -1,10 +1,9 @@
 use common::prelude::HostEndpoint;
 use proto::binding::db_gateway_service_client::DbGatewayServiceClient as DBGWClient;
-use std::error::Error;
-use std::fmt;
 use tonic::transport::{Channel, Uri};
 
 mod cfg_gw;
+mod error;
 mod svc_gw;
 
 #[derive(Debug, Clone)]
@@ -34,16 +33,5 @@ impl DBGatewayClient {
         let client = DBGWClient::new(channel);
 
         Self { client }
-    }
-}
-
-#[derive(Debug)]
-pub struct DBGatewayError(pub String);
-
-impl Error for DBGatewayError {}
-
-impl fmt::Display for DBGatewayError {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "DBGatewayError: {}", self.0)
     }
 }
