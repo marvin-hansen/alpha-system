@@ -2,7 +2,7 @@ use crate::abstract_trait::PatternTrait;
 use crate::fields::{
     ONE, ONE_HUNDRED, ONE_POINT_FIVE, POINT_FIVE, POINT_SEVEN_FIVE, POINT_TWO, THREE,
 };
-use common::prelude::{math_utils, DataBar};
+use common::prelude::{math_utils, OHLCVBar};
 use rust_decimal::prelude::ToPrimitive;
 
 const SIZE: usize = 43;
@@ -29,7 +29,7 @@ impl PatternTrait for BasePattern {
     fn get_pattern_len(&self) -> Result<usize, String> {
         Ok(SIZE)
     }
-    fn update_patterns(&mut self, window: &[DataBar; 6]) -> Result<(), String> {
+    fn update_patterns(&mut self, window: &[OHLCVBar; 6]) -> Result<(), String> {
         let last_idx = window.len() - 1;
         let day_0_bar = &window.clone()[last_idx];
         let day_1_bar = &window[last_idx - 1];

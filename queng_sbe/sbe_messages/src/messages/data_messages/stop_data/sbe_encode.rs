@@ -1,12 +1,38 @@
+use sbe_bindings::MessageType as SbeMessageType;
 use sbe_bindings::{message_header_codec, Encoder, StopDataMsgEncoder, WriteBuf};
-use sbe_bindings::{ExchangeID as SbeExchangeID, MessageType as SbeMessageType};
 
 use crate::prelude::{SbeEncodeError, StopDataMessage};
 
 impl StopDataMessage {
+    /// Encodes a StopDataMessage to a byte buffer.
+    ///
+    /// # Arguments
+    ///
+    /// * `self` - StopDataMessage to encode
+    ///
+    /// # Returns
+    ///
+    /// (usize, `Vec<u8>`) - Tuple containing encoded size and byte buffer
+    ///
+    /// # Errors
+    ///
+    /// Returns Err if encoding fails
+    ///
+    /// # Process
+    ///
+    /// - Create 16 byte buffer
+    /// - Create default StopDataMsgEncoder
+    /// - Wrap buffer in WriteBuf
+    /// - Encode header
+    /// - Encode message_type
+    /// - Encode client_id
+    /// - Encode exchange_id
+    /// - Encode symbol_id
+    /// - Encode data_type_id
+    /// - Return encoded size and buffer
+    ///
     pub fn encode(&self) -> Result<(usize, Vec<u8>), SbeEncodeError> {
-        // Exact buffer size is 14 bytes for the entire message
-        let mut buffer = vec![0u8; 14];
+        let mut buffer = vec![0u8; 16];
 
         let mut csg = StopDataMsgEncoder::default();
 
@@ -17,20 +43,21 @@ impl StopDataMessage {
 
         csg = csg.header(0).parent().expect("Failed to encode header");
 
-        let value = SbeMessageType::from(self.message_type as u8);
+        let value = SbeMessageType::from(self.message_type as u16);
         csg.message_type(value);
 
         let value = self.client_id;
         csg.client_id(value);
 
-        let value = SbeExchangeID::from(self.exchange_id as u8);
+        let value = self.exchange_id as u8;
         csg.exchange_id(value);
 
-        let value = self.symbol_id as u16;
+        let value = self.symbol_id;
         csg.symbol_id(value);
 
-        // Limit contains the exact number of bytes required to encode the message
-        // Use this value to determine the size of the buffer
+        let value = self.data_type_id as u8;
+        csg.data_type_id(value);
+
         let limit = csg.get_limit();
         Ok((limit, buffer))
     }

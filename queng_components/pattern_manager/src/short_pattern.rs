@@ -4,7 +4,7 @@
 
 use crate::abstract_trait::PatternTrait;
 use crate::fields::{ONE_HUNDRED, POINT_FIVE};
-use common::prelude::DataBar;
+use common::prelude::OHLCVBar;
 use rust_decimal::prelude::ToPrimitive;
 
 const SIZE: usize = 9;
@@ -33,7 +33,7 @@ impl PatternTrait for ShortPattern {
         Ok(SIZE)
     }
 
-    fn update_patterns(&mut self, window: &[DataBar; 6]) -> Result<(), String> {
+    fn update_patterns(&mut self, window: &[OHLCVBar; 6]) -> Result<(), String> {
         let last_idx = window.len() - 1;
         let day_0_bar = &window[last_idx];
         let day_1_bar = &window[last_idx - 1];

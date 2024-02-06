@@ -7,6 +7,8 @@ readme.workspace = true
 repository.workspace = true
 authors.workspace = true
 
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
 
 [lib]
 name = "sbe_messages"
@@ -15,8 +17,8 @@ path = "src/lib.rs"
 
 [dependencies]
 # Internal crates
-common = {workspace = true}
-sbe_bindings = {workspace = true}
+common = { workspace = true }
+sbe_bindings = { workspace = true }
 # External crates
 rust_decimal = { workspace = true }
 serde = { workspace = true }

@@ -1,2 +1,8 @@
 pub mod data_bar;
+
+pub mod ohlcv_bar;
+
+pub mod sampled_bars;
+
 pub mod time_resolution;
+pub mod trade_bar;
