@@ -1,8 +1,9 @@
-use chrono::{DateTime, Utc};
+use chrono::{DateTime, TimeZone, Utc};
+use rust_decimal::prelude::FromPrimitive;
 use rust_decimal::Decimal;
 use serde::{Deserialize, Serialize};
-// use sqlx::postgres::PgRow;
-// use sqlx::Row;
+use sqlx::postgres::PgRow;
+use sqlx::Row;
 
 mod default;
 mod display;
@@ -37,33 +38,33 @@ impl TradeBar {
         }
     }
 }
-//
-// impl TradeBar {
-//     pub fn from_pg_row(symbol_id: u16, row: PgRow) -> Self {
-//         //
-//         let timestamp = row
-//             .try_get("timestamp")
-//             .expect("[TradeBar]: Could not parse timestamp");
-//
-//         let p = row
-//             .try_get("price")
-//             .expect("[TradeBar]: Could not parse price");
-//
-//         let v = row
-//             .try_get("volume")
-//             .expect("[TradeBar]: Could not parse volume");
-//
-//         let date_time = Utc.from_local_datetime(&timestamp).unwrap();
-//
-//         let price = Decimal::from_f64(p).expect("[TradeBar]: Could not parse price from f64");
-//
-//         let volume = Decimal::from_f64(v).expect("[TradeBar]: Could not parse volume from f64");
-//
-//         Self {
-//             symbol_id,
-//             date_time,
-//             price,
-//             volume,
-//         }
-//     }
-// }
+
+impl TradeBar {
+    pub fn from_pg_row(symbol_id: u16, row: PgRow) -> Self {
+        //
+        let timestamp = row
+            .try_get("timestamp")
+            .expect("[TradeBar]: Could not parse timestamp");
+
+        let p = row
+            .try_get("price")
+            .expect("[TradeBar]: Could not parse price");
+
+        let v = row
+            .try_get("volume")
+            .expect("[TradeBar]: Could not parse volume");
+
+        let date_time = Utc.from_local_datetime(&timestamp).unwrap();
+
+        let price = Decimal::from_f64(p).expect("[TradeBar]: Could not parse price from f64");
+
+        let volume = Decimal::from_f64(v).expect("[TradeBar]: Could not parse volume from f64");
+
+        Self {
+            symbol_id,
+            date_time,
+            price,
+            volume,
+        }
+    }
+}
