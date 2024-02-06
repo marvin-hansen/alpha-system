@@ -20,16 +20,12 @@ cfg_manager = {workspace = true}
 client_manager = {workspace = true}
 ctx_manager = {workspace = true}
 dns_manager = {workspace = true}
-qd_manager = {workspace = true}
-sbe_messages = {workspace = true}
 service_utils = {workspace = true}
 smdb_provider = {workspace = true}
 svc_manager = {workspace = true}
 # External crates
 autometrics = { workspace = true }
-fluvio = { workspace = true }
 futures = { workspace = true }
 tokio = { workspace = true }
 tonic = { workspace = true }
-prost = { workspace = true }
 warp = { workspace = true }
