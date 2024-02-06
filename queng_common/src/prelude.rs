@@ -16,7 +16,6 @@ pub use crate::types::config_types::svc_env_config::*;
 // Currency types
 pub use crate::types::currency_types::fiat_iso_code::FiatIsoCode;
 // data types
-pub use crate::types::data_types::data_bar::*;
 pub use crate::types::data_types::ohlcv_bar::*;
 pub use crate::types::data_types::sampled_bars::*;
 pub use crate::types::data_types::time_resolution::*;
@@ -26,6 +25,7 @@ pub use crate::types::error_types::InitError;
 pub use crate::types::error_types::LookupError;
 pub use crate::types::error_types::MessageClientConfigError;
 pub use crate::types::error_types::MessageProcessingError;
+pub use crate::types::error_types::ValidationError;
 // exchange types
 pub use crate::types::exchange_types::account_type::*;
 pub use crate::types::exchange_types::exchange_id::*;

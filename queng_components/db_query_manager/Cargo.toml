@@ -1,7 +1,6 @@
 [package]
-name = "common"
+name = "db_query_manager"
 version = "0.1.0"
-
 edition.workspace = true
 rust-version.workspace = true
 readme.workspace = true
@@ -10,17 +9,16 @@ authors.workspace = true
 
 
 [lib]
-name = "common"
+name = "db_query_manager"
 path = "src/lib.rs"
 
 
 [dependencies]
 # Internal crates
-proto = {workspace = true}
+common = { workspace = true }
 # External crates
 chrono = { workspace = true }
+futures = { workspace = true }
 rust_decimal = { workspace = true }
-serde_json = { workspace = true }
-serde = { workspace = true }
-surrealdb = { workspace = true }
+tokio = { workspace = true }
 sqlx = { workspace = true }

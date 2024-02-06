@@ -7,10 +7,10 @@ members = [
     "queng_cli/spec_manager",
     "queng_clients/dbgw_client",
     "queng_common",
-    "queng_components/bar_manager",
     "queng_components/cfg_manager",
     "queng_components/client_manager",
     "queng_components/ctx_manager",
+    "queng_components/db_query_manager",
     "queng_components/db_surreal_manager",
     "queng_components/dns_manager",
     "queng_components/pattern_manager",
@@ -48,10 +48,10 @@ common = { path = "queng_common" }
 # Clients
 dbgw_client = { path = "queng_clients/dbgw_client" }
 # Components
-bar_manager = { path = "queng_components/bar_manager" }
 cfg_manager = { path = "queng_components/cfg_manager" }
 client_manager = { path = "queng_components/client_manager" }
 ctx_manager = { path = "queng_components/ctx_manager" }
+db_query_manager = {path = "queng_components/db_query_manager" }
 db_surreal_manager = { path = "queng_components/db_surreal_manager" }
 dns_manager = { path = "queng_components/dns_manager" }
 pattern_manager = { path = "queng_components/pattern_manager" }
@@ -94,9 +94,7 @@ tokio = { version = "1", features = ["macros", "net", "rt-multi-thread", "signal
 tonic-health = "0.10"
 tonic = "0.10"
 tonic-build = "0.10"
-# Quest DB uses the postgres wire protocol for queries, which requires the postgres crate
-questdb-rs = { version = "3.1" }
-postgres = { version = "0.19", features = ["with-uuid"] }
+sqlx = { version = "0.7", features = ["runtime-tokio", "postgres","uuid", "chrono"] }
 warp = { version = "0.3", features = ["multipart"] }
 
 
