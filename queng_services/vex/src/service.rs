@@ -1,4 +1,4 @@
-use common::errors::MessageProcessingError;
+use common::prelude::MessageProcessingError;
 use std::future::Future;
 use tokio::{pin, select};
 

@@ -1,6 +1,7 @@
 use crate::{CfgManager, DEFAULT_HOST};
-use common::errors::InitError;
-use common::prelude::{EnvironmentType, HostEndpoint, MetricConfig, ServiceID, SvcEnvConfig};
+use common::prelude::{
+    EnvironmentType, HostEndpoint, InitError, MetricConfig, ServiceID, SvcEnvConfig,
+};
 
 impl<'l> CfgManager<'l> {
     /// Initializes the service environment based on the given service ID and host endpoint.

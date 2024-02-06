@@ -1,7 +1,3 @@
-// Errors
-pub use crate::errors::InitError;
-pub use crate::errors::MessageClientConfigError;
-pub use crate::errors::MessageProcessingError;
 //
 // Types
 // config types
@@ -25,6 +21,11 @@ pub use crate::types::data_types::ohlcv_bar::*;
 pub use crate::types::data_types::sampled_bars::*;
 pub use crate::types::data_types::time_resolution::*;
 pub use crate::types::data_types::trade_bar::*;
+// Error types
+pub use crate::types::error_types::InitError;
+pub use crate::types::error_types::LookupError;
+pub use crate::types::error_types::MessageClientConfigError;
+pub use crate::types::error_types::MessageProcessingError;
 // exchange types
 pub use crate::types::exchange_types::account_type::*;
 pub use crate::types::exchange_types::exchange_id::*;
