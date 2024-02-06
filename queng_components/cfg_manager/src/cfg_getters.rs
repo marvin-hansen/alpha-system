@@ -1,8 +1,7 @@
 use crate::CfgManager;
-use common::errors::InitError;
 use common::prelude::{
-    DBConfig, EnvironmentType, FileConfig, FileConfigType, MessageClientConfig, MetricConfig,
-    ServiceConfig, ServiceID,
+    DBConfig, EnvironmentType, FileConfig, FileConfigType, InitError, MessageClientConfig,
+    MetricConfig, ServiceConfig, ServiceID,
 };
 use db_specs::prelude::{db_config_ci, db_config_cluster, db_config_local};
 use service_specs::prelude::{

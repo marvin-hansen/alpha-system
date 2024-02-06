@@ -1,6 +1,5 @@
 use cfg_manager::CfgManager;
-use common::errors::InitError;
-use common::prelude::{Endpoint, ServiceConfig, ServiceID};
+use common::prelude::{Endpoint, InitError, ServiceConfig, ServiceID};
 
 pub struct ServiceManager<'l> {
     cfg_manager: &'l CfgManager<'l>,

@@ -15,6 +15,7 @@ members = [
     "queng_components/dns_manager",
     "queng_components/pattern_manager",
     "queng_components/svc_manager",
+    "queng_components/symbol_manager",
     "queng_proto",
     "queng_providers/cmdb_provider",
     "queng_providers/smdb_provider",
@@ -55,6 +56,7 @@ db_surreal_manager = { path = "queng_components/db_surreal_manager" }
 dns_manager = { path = "queng_components/dns_manager" }
 pattern_manager = { path = "queng_components/pattern_manager" }
 svc_manager = { path = "queng_components/svc_manager" }
+symbol_manager = { path = "queng_components/symbol_manager" }
 # Proto specs
 proto = { path = "queng_proto" }
 # Providers
@@ -78,6 +80,7 @@ fluvio = { version = "0.21", default-features = false, features = ["rustls"] }
 futures = "0.3"
 hickory-resolver = { version = "0.24", default-features = false, features = ["tokio-runtime"] }
 log = "0.4"
+lru = "0.12"
 parquet = "50"
 prost = "0.12"
 prost-types = { version = "0.12", default-features = false }
