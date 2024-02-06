@@ -27,6 +27,7 @@ pub struct CfgManager<'l> {
     //
     cmdb_env: RefCell<Option<SvcEnvConfig>>,
     smdb_env: RefCell<Option<SvcEnvConfig>>,
+    symdb_env: RefCell<Option<SvcEnvConfig>>,
     dbgw_env: RefCell<Option<SvcEnvConfig>>,
     qdgw_env: RefCell<Option<SvcEnvConfig>>,
     vex_env: RefCell<Option<SvcEnvConfig>>,
@@ -47,6 +48,7 @@ impl<'l> CfgManager<'l> {
             file_config_types,
             cmdb_env: RefCell::new(None),
             smdb_env: RefCell::new(None),
+            symdb_env: RefCell::new(None),
             dbgw_env: RefCell::new(None),
             qdgw_env: RefCell::new(None),
             vex_env: RefCell::new(None),
