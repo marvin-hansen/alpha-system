@@ -11,16 +11,9 @@ use common::prelude::ServiceID;
 use common::prelude::ServiceID::SMDB;
 use ctx_manager::CtxManager;
 use dns_manager::DnsManager;
-use qd_manager::QDManager;
 use service_utils::{print_utils, shutdown_utils};
 use smdb_provider::SMDBProvider;
 use svc_manager::ServiceManager;
-
-use crate::service::Server;
-
-mod handle_clients;
-mod handle_data;
-mod service;
 
 const SVC_ID: ServiceID = ServiceID::QDGW;
 
@@ -36,13 +29,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
     //Creates a new instance of the Service Manager.
     let service_manager = async { ServiceManager::new(&cfg_manager) }.await;
 
-    // Creates a new instance of the QD manager.
-    // Only loads 2 out of 7 local files for testing purposes.
-    // Otherwise, init takes too long i.e. > 20 seconds.
-    // For details, see: queng_specs/file_specs/src/files
-    let qd_manager = async { QDManager::new(&cfg_manager) }.await;
     // Creates a new instance of the Client Manager.
-    let client_manager = Arc::new(Mutex::new(ClientManager::new()));
+    let _client_manager = Arc::new(Mutex::new(ClientManager::new()));
 
     //Retrieves the host and port of the Service Manager Database (SMDB) from the auto-configuration.
     let (smdb_host, smdb_port) = service_manager
@@ -104,20 +92,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let msg_config = cfg_manager.get_message_client_config();
     let service_topic = msg_config.control_channel();
 
-    // creates a new consumer for the topic
-    let consumer = fluvio::consumer(&service_topic, 0)
-        .await
-        .expect("[QDGW]/main: Failed to create a message consumer");
-
-    //Creates a new server with the specified socket
-    let server = Server::new(consumer, qd_manager, client_manager);
-
-    //Creates a new Tokio task for the HTTP web server.
     let web_handle = tokio::spawn(web_server);
-
-    //Creates a new Tokio task for the UDP server.
-    let signal = shutdown_utils::signal_handler("ZMQ server");
-    let service_handle = tokio::spawn(server.run(signal));
 
     //Sets the current service status to online in the Service Manager Database (SMDB).
     smdb_manager
@@ -133,7 +108,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     );
 
     //Starts both servers concurrently.
-    match tokio::try_join!(web_handle, service_handle) {
+    match tokio::try_join!(web_handle) {
         Ok(_) => {}
         Err(e) => {
             //Sets the current service status to offline in the Service Manager Database (SMDB)
