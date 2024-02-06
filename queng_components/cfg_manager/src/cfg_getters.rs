@@ -7,7 +7,7 @@ use common::prelude::{
 use db_specs::prelude::{db_config_ci, db_config_cluster, db_config_local};
 use service_specs::prelude::{
     cmdb_service_config, dbgw_service_config, qdgw_service_config, smdb_service_config,
-    vex_service_config,
+    symdb_service_config, vex_service_config,
 };
 
 impl<'l> CfgManager<'l> {
@@ -75,10 +75,11 @@ impl<'l> CfgManager<'l> {
     }
     fn service_config(&self, svc: &ServiceID) -> ServiceConfig {
         match svc {
-            ServiceID::SMDB => smdb_service_config(),
             ServiceID::CMDB => cmdb_service_config(),
             ServiceID::DBGW => dbgw_service_config(),
             ServiceID::QDGW => qdgw_service_config(),
+            ServiceID::SMDB => smdb_service_config(),
+            ServiceID::SYMDB => symdb_service_config(),
             ServiceID::VEX => vex_service_config(),
             ServiceID::Default => ServiceConfig::default(),
         }

@@ -25,11 +25,6 @@ impl<'l> CfgManager<'l> {
                 *self.cmdb_env.borrow_mut() = Some(cmdb_env);
                 Ok(())
             }
-            ServiceID::SMDB => {
-                let smdb_env = self.get_svc_env_config(ServiceID::SMDB, endpoint, metrics_config);
-                *self.smdb_env.borrow_mut() = Some(smdb_env);
-                Ok(())
-            }
             ServiceID::DBGW => {
                 let dbgw_env = self.get_svc_env_config(ServiceID::DBGW, endpoint, metrics_config);
                 *self.dbgw_env.borrow_mut() = Some(dbgw_env);
@@ -38,6 +33,16 @@ impl<'l> CfgManager<'l> {
             ServiceID::QDGW => {
                 let qdgw_env = self.get_svc_env_config(ServiceID::QDGW, endpoint, metrics_config);
                 *self.qdgw_env.borrow_mut() = Some(qdgw_env);
+                Ok(())
+            }
+            ServiceID::SMDB => {
+                let smdb_env = self.get_svc_env_config(ServiceID::SMDB, endpoint, metrics_config);
+                *self.smdb_env.borrow_mut() = Some(smdb_env);
+                Ok(())
+            }
+            ServiceID::SYMDB => {
+                let symdb_env = self.get_svc_env_config(ServiceID::SYMDB, endpoint, metrics_config);
+                *self.symdb_env.borrow_mut() = Some(symdb_env);
                 Ok(())
             }
             ServiceID::VEX => {
@@ -57,9 +62,10 @@ impl<'l> CfgManager<'l> {
     pub fn is_svc_env_initialized(&self, svc_id: &ServiceID) -> bool {
         match svc_id {
             ServiceID::CMDB => self.cmdb_env.borrow().is_some(),
-            ServiceID::SMDB => self.smdb_env.borrow().is_some(),
             ServiceID::DBGW => self.dbgw_env.borrow().is_some(),
             ServiceID::QDGW => self.qdgw_env.borrow().is_some(),
+            ServiceID::SMDB => self.smdb_env.borrow().is_some(),
+            ServiceID::SYMDB => self.symdb_env.borrow().is_some(),
             ServiceID::VEX => self.vex_env.borrow().is_some(),
             ServiceID::Default => false,
         }
@@ -231,6 +237,17 @@ impl<'l> CfgManager<'l> {
                     .borrow()
                     .as_ref()
                     .expect("[EnvManager]: Failed to get qdgw host and port")
+                    .to_owned();
+
+                Ok(svc)
+            }
+
+            ServiceID::SYMDB => {
+                let svc = self
+                    .symdb_env
+                    .borrow()
+                    .as_ref()
+                    .expect("[EnvManager]: Failed to get vex host and port")
                     .to_owned();
 
                 Ok(svc)
