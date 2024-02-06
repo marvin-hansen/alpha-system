@@ -10,7 +10,7 @@ use crate::extra_pattern::ExtraPattern;
 use crate::long_pattern::LongPattern;
 use crate::short_pattern::ShortPattern;
 use abstract_trait::PatternTrait;
-use common::prelude::{DataBar, PatternType};
+use common::prelude::{OHLCVBar, PatternType};
 use std::cell::RefCell;
 
 #[derive(Debug, Clone)]
@@ -67,7 +67,7 @@ impl PatternManager {
     pub fn update_patterns(
         &self,
         pattern_type: &PatternType,
-        window: &[DataBar; 6],
+        window: &[OHLCVBar; 6],
     ) -> Result<(), String> {
         match pattern_type {
             PatternType::Base => self.base_pattern.borrow_mut().update_patterns(window),

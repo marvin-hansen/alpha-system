@@ -1,4 +1,4 @@
-use common::prelude::{DataBar, PatternType};
+use common::prelude::{OHLCVBar, PatternType};
 use pattern_manager::PatternManager;
 
 #[test]
@@ -48,13 +48,13 @@ fn test_get_eval_result() {
 #[test]
 fn test_update_patterns() {
     let pattern_manager = PatternManager::new();
-    let window: [DataBar; 6] = [
-        DataBar::default(),
-        DataBar::default(),
-        DataBar::default(),
-        DataBar::default(),
-        DataBar::default(),
-        DataBar::default(),
+    let window: [OHLCVBar; 6] = [
+        OHLCVBar::default(),
+        OHLCVBar::default(),
+        OHLCVBar::default(),
+        OHLCVBar::default(),
+        OHLCVBar::default(),
+        OHLCVBar::default(),
     ];
 
     let base_result = pattern_manager.update_patterns(&PatternType::Base, &window);

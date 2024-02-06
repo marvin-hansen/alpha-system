@@ -5,7 +5,6 @@ members = [
     "queng_cli/data_importer",
     "queng_cli/smdb_manager",
     "queng_cli/spec_manager",
-    "queng_cli/msg_manager",
     "queng_clients/dbgw_client",
     "queng_common",
     "queng_components/bar_manager",
@@ -15,7 +14,6 @@ members = [
     "queng_components/db_surreal_manager",
     "queng_components/dns_manager",
     "queng_components/pattern_manager",
-    "queng_components/file_manager",
     "queng_components/svc_manager",
     "queng_proto",
     "queng_providers/cmdb_provider",
@@ -55,7 +53,6 @@ client_manager = { path = "queng_components/client_manager" }
 ctx_manager = { path = "queng_components/ctx_manager" }
 db_surreal_manager = { path = "queng_components/db_surreal_manager" }
 dns_manager = { path = "queng_components/dns_manager" }
-file_manager = { path = "queng_components/file_manager" }
 pattern_manager = { path = "queng_components/pattern_manager" }
 svc_manager = { path = "queng_components/svc_manager" }
 # Proto specs
