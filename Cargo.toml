@@ -16,7 +16,6 @@ members = [
     "queng_components/dns_manager",
     "queng_components/pattern_manager",
     "queng_components/file_manager",
-    "queng_components/qd_manager",
     "queng_components/svc_manager",
     "queng_proto",
     "queng_providers/cmdb_provider",
@@ -58,7 +57,6 @@ db_surreal_manager = { path = "queng_components/db_surreal_manager" }
 dns_manager = { path = "queng_components/dns_manager" }
 file_manager = { path = "queng_components/file_manager" }
 pattern_manager = { path = "queng_components/pattern_manager" }
-qd_manager = { path = "queng_components/qd_manager" }
 svc_manager = { path = "queng_components/svc_manager" }
 # Proto specs
 proto = { path = "queng_proto" }
