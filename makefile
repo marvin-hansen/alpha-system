@@ -7,7 +7,7 @@ help:
 	@echo '    make run   		Runs the default binary.'
 	@echo '    make cmdb   	Runs the cmdb service. Requires DBGW & SMDB'
 	@echo '    make dbgw   	Runs the dbgw service. Requires SurrealDB'
-	@echo '    make qbgw   	Runs the qbgw service. Requires DBGW & SMDB'
+	@echo '    make qdgw   	Runs the qdgw service. Requires DBGW & SMDB'
 	@echo '    make smdb   	Runs the smdb service. Requires DBGW'
 	@echo '    make symdb   	Runs the symdb service. Requires DBGW'
 	@echo '    make vex   		Runs the vex service. '
@@ -42,9 +42,9 @@ dbgw:
 	@source scripts/service_dbgw.sh
 
 
-.PHONY: qbgw
-qbgw:
-	@source scripts/service_qbgw.sh
+.PHONY: qdgw
+qdgw:
+	@source scripts/service_qdgw.sh
 
 
 .PHONY: smdb
