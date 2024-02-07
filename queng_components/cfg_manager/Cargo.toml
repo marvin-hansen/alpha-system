@@ -14,34 +14,11 @@ name = "cfg_manager"
 path = "src/lib.rs"
 
 
-[dependencies.common]
-path = "../../queng_common"
-version = "0.1.0"
-
-
-[dependencies.ctx_manager]
-path = "../ctx_manager"
-version = "0.1.0"
-
-
-[dependencies.dns_manager]
-path = "../dns_manager"
-version = "0.1.0"
-
-
-[dependencies.service_specs]
-path = "../../queng_specs/service_specs"
-version = "0.1.0"
-
-
-[dependencies.db_specs]
-path = "../../queng_specs/db_specs"
-version = "0.1.0"
-
-
-[dependencies.file_specs]
-path = "../../queng_specs/file_specs"
-version = "0.1.0"
-
-
 [dependencies]
+# Internal crates
+common = { workspace = true }
+ctx_manager = { workspace = true }
+dns_manager = { workspace = true }
+db_specs = { workspace = true }
+exchange_specs = { workspace = true }
+service_specs = { workspace = true }
