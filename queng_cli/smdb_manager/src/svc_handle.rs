@@ -6,9 +6,9 @@ use std::error::Error;
 pub async fn handle_service_op(client: &SMDBProvider, op: ServiceOP) -> Result<(), Box<dyn Error>> {
     match op {
         ServiceOP::CheckIfServiceIDExists => check_if_svc_exists(client).await,
-        ServiceOP::CheckIfServicesExists => check_if_svcs_exists(client).await,
+        ServiceOP::CheckIfAllServicesExists => check_if_all_svcs_exists(client).await,
         ServiceOP::CheckServiceIDOnline => check_if_svc_online(client).await,
-        ServiceOP::CheckServicesOnline => check_if_svcs_online(client).await,
+        ServiceOP::CheckAllServicesOnline => check_if_svcs_online(client).await,
         ServiceOP::SetServiceOnline => set_svc_online(client).await,
         ServiceOP::SetServiceOffline => set_svc_offline(client).await,
     }
@@ -17,6 +17,15 @@ pub async fn handle_service_op(client: &SMDBProvider, op: ServiceOP) -> Result<(
 }
 
 async fn check_if_svc_exists(client: &SMDBProvider) {
+    println!("Checking if service id exists");
+    let id = ServiceID::DBGW;
+    let exists = client
+        .check_if_service_id_exists(id)
+        .await
+        .expect("Failed to check if service id exists");
+
+    println!("Service id {:?} exists: {}", id, exists);
+
     println!("Checking if service id exists");
     let id = ServiceID::SMDB;
     let exists = client
@@ -36,7 +45,7 @@ async fn check_if_svc_exists(client: &SMDBProvider) {
     println!("Service id {:?} exists: {}", id, exists);
 }
 
-async fn check_if_svcs_exists(client: &SMDBProvider) {
+async fn check_if_all_svcs_exists(client: &SMDBProvider) {
     println!("Checking if all services exist");
     let services = vec![ServiceID::SMDB, ServiceID::CMDB, ServiceID::DBGW];
     let exists = client
