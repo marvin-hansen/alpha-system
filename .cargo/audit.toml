@@ -16,4 +16,8 @@ ignore = [
     # Some Ref methods are unsound with some type parameters
     # https://rustsec.org/advisories/RUSTSEC-2023-0074
     "RUSTSEC-2023-0074",
+
+    # Resource exhaustion vulnerability in h2 may lead to Denial of Service (DoS)
+    # https://rustsec.org/advisories/RUSTSEC-2024-0003
+    "RUSTSEC-2024-0003"
 ]
