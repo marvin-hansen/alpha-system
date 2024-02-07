@@ -114,7 +114,7 @@ impl<'l> CfgManager<'l> {
         endpoint: HostEndpoint,
         metrics_config: MetricConfig,
     ) -> SvcEnvConfig {
-        let local_host = "127.0.0.1".to_string();
+        let local_host = "0.0.0.0".to_string();
         let cluster_host = endpoint.host_uri().to_string();
         let ci_host = "127.0.0.1".to_string();
         let docker_host = "0.0.0.0".to_string();
@@ -248,7 +248,7 @@ impl<'l> CfgManager<'l> {
                     .symdb_env
                     .borrow()
                     .as_ref()
-                    .expect("[EnvManager]: Failed to get vex host and port")
+                    .expect("[EnvManager]: Failed to get SYMDB host and port")
                     .to_owned();
 
                 Ok(svc)

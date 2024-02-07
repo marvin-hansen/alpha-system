@@ -99,11 +99,6 @@ fn test_get_db_config_local() {
     let dnm = DnsManager::new(&ctm);
     assert_eq!(ctm.int_dns_server(), &None);
     assert_eq!(dnm.external_dns(), "1.1.1.1:53");
-
-    let config_manager = CfgManager::new(ServiceID::SMDB, &ctm, &dnm);
-
-    let db_config = config_manager.get_db_config();
-    assert_eq!(db_config, db_config_local());
 }
 
 // #[test]

@@ -6,7 +6,7 @@ mod query_utils;
 mod stream_ohlcv;
 mod stream_trades;
 
-use common::prelude::DBConfig;
+use common::prelude::QuestDBConfig;
 use sqlx::{postgres::PgPoolOptions, Pool, Postgres};
 use std::fmt::Error;
 
@@ -34,12 +34,12 @@ impl QueryDBManager {
     /// # Example
     ///
     /// ```rust
-    /// use common::prelude::DBConfig;
+    /// use common::prelude::QuestDBConfig;
     /// use db_query_manager::QueryDBManager;
     ///
     /// #[tokio::main]
     /// async fn main() {
-    ///  let db_config =  DBConfig::new(9009, "0.0.0.0".into());
+    ///  let db_config =  QuestDBConfig::new("0.0.0.0".into());
     ///  let query_manager = QueryDBManager::new(db_config).await.expect("Failed to create db connection");
     ///   // Run Queries
     ///
@@ -48,7 +48,7 @@ impl QueryDBManager {
     /// }
     /// ```
     ///
-    pub async fn new(db_config: DBConfig) -> Result<Self, Error> {
+    pub async fn new(db_config: QuestDBConfig) -> Result<Self, Error> {
         let url = db_config.pg_connection_url();
         let max_connections = db_config.pg_max_connections();
         let pool = create_connection_pool(url, max_connections).await;
@@ -98,12 +98,12 @@ impl QueryDBManager {
     ///
     /// # Example
     /// ```rust
-    /// use common::prelude::DBConfig;
+    /// use common::prelude::QuestDBConfig;
     /// use db_query_manager::QueryDBManager;
     ///
     /// #[tokio::main]
     /// async fn main() {
-    ///  let db_config =  DBConfig::new(9009, "0.0.0.0".into());
+    ///  let db_config =  QuestDBConfig::new("0.0.0.0".into());
     /// let query_manager = QueryDBManager::new(db_config).await.expect("Failed to create db connection");
     ///
     /// let open = query_manager.is_open().await;
@@ -149,12 +149,12 @@ impl QueryDBManager {
     /// # Example
     ///
     /// ```rust
-    /// use common::prelude::DBConfig;
+    /// use common::prelude::QuestDBConfig;
     /// use db_query_manager::QueryDBManager;
     ///
     /// #[tokio::main]
     /// async fn main() {
-    ///  let db_config =  DBConfig::new(9009, "0.0.0.0".into());
+    ///  let db_config =  QuestDBConfig::new("0.0.0.0".into());
     ///  let query_manager = QueryDBManager::new(db_config).await.expect("Failed to create db connection");
     ///
     ///   query_manager.close().await;

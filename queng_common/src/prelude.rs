@@ -1,7 +1,8 @@
 //
 // Types
 // config types
-pub use crate::types::config_types::db_config::*;
+pub use crate::types::config_types::db_quest_config::*;
+pub use crate::types::config_types::db_surreal_config::*;
 pub use crate::types::config_types::encoding::*;
 pub use crate::types::config_types::endpoint::*;
 pub use crate::types::config_types::endpoint_host::*;

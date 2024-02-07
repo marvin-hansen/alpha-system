@@ -28,7 +28,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let service_manager = async { ServiceManager::new(&cfg_manager) }.await;
 
     // Configure database manager
-    let db_config = cfg_manager.get_db_config();
+    let db_config = cfg_manager.get_surreal_db_config();
     let dbm = SurrealDBManager::new(&db_config).await;
 
     // Configure service ip and port automatically relative to the detected context.
