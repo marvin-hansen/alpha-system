@@ -5,7 +5,7 @@ use std::error::Error;
 mod svc_handle;
 mod svc_types;
 
-pub const SPEC_OP: ServiceOP = ServiceOP::CheckIfServicesExists;
+pub const SPEC_OP: ServiceOP = ServiceOP::CheckIfAllServicesExists;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
