@@ -36,9 +36,26 @@ impl ServiceID {
 }
 
 impl From<i32> for ServiceID {
-    /// Converts a raw byte value into a `ServiceID`.
-    /// Unknown message type results in NullVal
-    /// ```
+    /// Converts an `i32` value to a `ServiceID` variant.
+    ///
+    /// # Arguments
+    ///
+    /// * `value` - The `i32` value to convert
+    ///
+    /// # Returns
+    ///
+    /// The corresponding `ServiceID` variant for the `i32` value:
+    ///
+    /// * 0: `Default`
+    /// * 1: `SMDB`
+    /// * 2: `CMDB`
+    /// * 3: `DBGW`
+    /// * 4: `QDGW`
+    /// * 5: `SYMDB`
+    /// * 6: `VEX`
+    ///
+    /// If the value does not match a variant, returns `Default`.
+    ///
     #[inline]
     fn from(v: i32) -> Self {
         match v {
@@ -49,6 +66,42 @@ impl From<i32> for ServiceID {
             0x4_i32 => Self::QDGW,
             0x5_i32 => Self::SYMDB,
             0x6_i32 => Self::VEX,
+            _ => Self::Default,
+        }
+    }
+}
+
+impl From<u8> for ServiceID {
+    /// Converts a `u8` value to a `ServiceID` variant.
+    ///
+    /// # Arguments
+    ///
+    /// * `value` - The `u8` value to convert
+    ///
+    /// # Returns
+    ///
+    /// The corresponding `ServiceID` variant for the `u8` value:
+    ///
+    /// * 0: `Default`
+    /// * 1: `SMDB`
+    /// * 2: `CMDB`
+    /// * 3: `DBGW`
+    /// * 4: `QDGW`
+    /// * 5: `SYMDB`
+    /// * 6: `VEX`
+    ///
+    /// If the value does not match a variant, returns `Default`.
+    ///
+    #[inline]
+    fn from(value: u8) -> Self {
+        match value {
+            0 => Self::Default,
+            1 => Self::SMDB,
+            2 => Self::CMDB,
+            3 => Self::DBGW,
+            4 => Self::QDGW,
+            5 => Self::SYMDB,
+            6 => Self::VEX,
             _ => Self::Default,
         }
     }
