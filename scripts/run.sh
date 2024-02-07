@@ -4,4 +4,4 @@ set -o nounset
 set -o pipefail
 
 
-command  cargo run --bin qdgw
+command  echo "Please configure /scripts/run.sh to run your application"
