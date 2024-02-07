@@ -6,6 +6,7 @@ members = [
     "queng_cli/smdb_manager",
     "queng_cli/spec_manager",
     "queng_clients/dbgw_client",
+    "queng_clients/symdb_client",
     "queng_common",
     "queng_components/cfg_manager",
     "queng_components/client_manager",
@@ -44,11 +45,11 @@ authors = ["Marvin Hansen <marvin.hansen@gmail.com>"]
 
 
 [workspace.dependencies]
-#
 # Internal crates
 common = { path = "queng_common" }
 # Clients
 dbgw_client = { path = "queng_clients/dbgw_client" }
+symdb_client = { path = "queng_clients/symdb_client" }
 # Components
 cfg_manager = { path = "queng_components/cfg_manager" }
 client_manager = { path = "queng_components/client_manager" }
@@ -82,7 +83,6 @@ ctrlc = "3.4"
 fluvio = { version = "0.21", default-features = false, features = ["rustls"] }
 futures = "0.3"
 hickory-resolver = { version = "0.24", default-features = false, features = ["tokio-runtime"] }
-log = "0.4"
 lru = "0.12"
 parquet = "50"
 prost = "0.12"

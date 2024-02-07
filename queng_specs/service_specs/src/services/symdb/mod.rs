@@ -59,7 +59,7 @@ fn get_endpoint() -> Endpoint {
     let endpoint_description =
         "Access to the SYMDB symbol mastger via gRPC on baseUri:7777".to_string();
     let endpoint_uri = "/".to_string();
-    let endpoint_port = 7777;
+    let endpoint_port = 6789;
     let endpoint_protocol = ProtocolType::GRPC;
     let endpoint_encoding = Encoding::Protobuf;
 
