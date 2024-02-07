@@ -70,7 +70,7 @@ fn test_debug() {
     );
 
     let actual = format!("{:?}", config);
-    let expected = "DBConfig { port: 8000, host: \"localhost\", db_name: \"test\", db_namespace: \"test\", username: \"username\", password: \"password\", pg_max_connections: 5 }";
+    let expected = "DBConfig { port: 8000, host: \"localhost\", db_name: \"test\", db_namespace: \"test\", username: \"username\", password: \"password\" }";
     assert_eq!(actual, expected);
 }
 
