@@ -1,5 +1,6 @@
 pub mod db_quest_config;
 
+pub mod client_channel;
 pub mod db_surreal_config;
 pub mod encoding;
 pub mod endpoint;
