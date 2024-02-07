@@ -14,15 +14,9 @@ name = "dns_manager"
 path = "src/lib.rs"
 
 
-[dependencies.common]
-path = "../../queng_common"
-version = "0.1.0"
-
-
-[dependencies.ctx_manager]
-path = "../ctx_manager"
-version = "0.1.0"
-
-
 [dependencies]
+# Internal crates
+common = { workspace = true }
+ctx_manager = { workspace = true }
+# External crates
 hickory-resolver = { workspace = true }

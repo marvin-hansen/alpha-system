@@ -14,14 +14,7 @@ name = "svc_manager"
 path = "src/lib.rs"
 
 
-[dependencies.common]
-path = "../../queng_common"
-version = "0.1.0"
-
-
-[dependencies.cfg_manager]
-path = "../cfg_manager"
-version = "0.1.0"
-
-
 [dependencies]
+# Internal crates
+common = { workspace = true }
+cfg_manager = { workspace = true }

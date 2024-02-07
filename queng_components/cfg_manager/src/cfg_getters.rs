@@ -1,7 +1,7 @@
 use crate::CfgManager;
 use common::prelude::{
-    DBConfig, EnvironmentType, FileConfig, FileConfigType, InitError, MessageClientConfig,
-    MetricConfig, ServiceConfig, ServiceID,
+    DBConfig, EnvironmentType, ExchangeID, InitError, MessageClientConfig, MetricConfig,
+    ServiceConfig, ServiceID,
 };
 use db_specs::prelude::{db_config_ci, db_config_cluster, db_config_local};
 use service_specs::prelude::{
@@ -28,12 +28,7 @@ impl<'l> CfgManager<'l> {
     pub fn get_db_config(&self) -> DBConfig {
         self.db_config()
     }
-    pub fn get_file_config(&self, file_config_type: &FileConfigType) -> Option<&FileConfig> {
-        self.file_configs.get(file_config_type)
-    }
-    pub fn get_all_file_config_types(&self) -> Vec<FileConfigType> {
-        self.file_config_types.clone()
-    }
+
     pub fn get_message_client_config(&self) -> MessageClientConfig {
         MessageClientConfig::from_svc_id(self.svc)
     }
@@ -64,7 +59,55 @@ impl<'l> CfgManager<'l> {
 }
 
 impl<'l> CfgManager<'l> {
-    fn db_config(&self) -> DBConfig {
+    /// Get the default ExchangeID configured for this service.
+    ///
+    /// # Returns
+    ///
+    /// The `default_exchange` field, containing the u16 ExchangeID value
+    /// set as the default for this service.
+    pub fn default_exchange(&self) -> ExchangeID {
+        self.default_exchange
+    }
+
+    /// Get a reference to the vector of configured ExchangeIDs.
+    ///
+    /// # Returns
+    ///
+    /// A reference to the `exchanges` field, which is a vector containing
+    /// the ExchangeID values configured for this service.
+    pub fn exchanges(&self) -> &Vec<ExchangeID> {
+        &self.exchanges
+    }
+
+    /// Get a reference to the vector containing ExchangeID and name pairs.
+    ///
+    /// # Returns
+    ///
+    /// A reference to the `exchanges_id_names` field, which contains a vector
+    /// of tuples with the first element being the ExchangeID u16 and the
+    /// second element being the corresponding exchange name string.
+    pub fn exchanges_id_names(&self) -> &Vec<(u16, String)> {
+        &self.exchanges_id_names
+    }
+
+    /// Retrieves the symbol table name for the given exchange and symbol IDs.
+    ///
+    /// # Arguments
+    ///
+    /// * `exchange_id` - The ID of the exchange
+    /// * `symbol_id` - The ID of the symbol
+    ///
+    /// # Returns
+    ///
+    /// Returns an Option of either a `String` containing the symbol table name or None.,
+    ///
+    pub fn get_symbol_table(&self, exchange_id: ExchangeID) -> Option<String> {
+        self.exchanges_symbol_tables.get(&exchange_id).cloned()
+    }
+}
+
+impl<'l> CfgManager<'l> {
+    pub fn db_config(&self) -> DBConfig {
         match self.env_type {
             EnvironmentType::LOCAL => db_config_local(),
             EnvironmentType::CI => db_config_ci(),

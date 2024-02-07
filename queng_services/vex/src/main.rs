@@ -2,7 +2,6 @@ use crate::service::Server;
 use autometrics::prometheus_exporter;
 use cfg_manager::CfgManager;
 use common::prelude::ServiceID;
-use common::prelude::ServiceID::SMDB;
 use ctx_manager::CtxManager;
 use dns_manager::DnsManager;
 use service_utils::{print_utils, shutdown_utils};
@@ -25,7 +24,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     // pull SMDB endpoint from auto config
     let (smdb_host, smdb_port) = service_manager
-        .get_service_host_port(&SMDB)
+        .get_service_host_port(&SVC_ID)
         .expect("[CMDB]: Failed to get host and port for DBGW");
 
     let smdb_manager = SMDBProvider::new(smdb_host, smdb_port).await;
