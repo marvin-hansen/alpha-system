@@ -1,4 +1,3 @@
-// use crate::service::Server;
 use crate::service::SYMDBServer;
 use autometrics::prometheus_exporter;
 use cfg_manager::CfgManager;
@@ -83,10 +82,10 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     // println!("[SYMDB]: Get the symbol table for the default exchange.");
     let default_exchange = cfg_manager.default_exchange();
-    let exchanges = cfg_manager.exchanges_id_names().to_owned();
     let exchange_symbol_table = cfg_manager
         .get_symbol_table(default_exchange)
         .expect("[SYMDB]/main: Failed to get symbol table for default exchange.");
+    // println!("[SYMDB]: Symbol table for the default exchange: {}",exchange_symbol_table);
 
     // println!("[SYMDB]: Create a new QueryDBManager instance.");
     let db_config = cfg_manager.get_quest_db_config();
@@ -99,6 +98,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .get_all_symbols_with_ids(&exchange_symbol_table)
         .await
         .expect("[SYMDB]/main: Failed to get all symbols for SymbolManager.");
+
+    let exchanges = cfg_manager.exchanges_id_names().to_owned();
 
     // println!("[SYMDB]: Create a new SymbolManager instance.");
     let symbol_manager = async {

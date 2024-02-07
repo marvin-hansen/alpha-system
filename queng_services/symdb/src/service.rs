@@ -44,6 +44,8 @@ impl SymdbService for SYMDBServer {
     ) -> Result<Response<LookupExchangeNameResponse>, Status> {
         // Extract fields from request
         let exchange_id = request.into_inner().exchange_id;
+        // println!("{}LOOKUP EXCHANGE NAME: {}", FN_NAME, exchange_id);
+
         // Lock symbol manager
         let sym_manager = self
             .symbol_manager
@@ -80,6 +82,7 @@ impl SymdbService for SYMDBServer {
         // Extract fields from request
         let exchange_id = request.get_ref().exchange_id;
         let symbol_id = request.get_ref().symbol_id;
+        // println!("{} LOOKUP SYMBOL: {} for Exchange:{}", FN_NAME, symbol_id, exchange_id);
 
         // Lock symbol manager
         let mut sym_manager = self
@@ -94,6 +97,7 @@ impl SymdbService for SYMDBServer {
                 return Err(get_status(msg.as_str(), e));
             }
         };
+        // println!("{} Found Exchange Name: {}", FN_NAME, exchange_name);
 
         return match sym_manager.get_symbol(symbol_id as u16) {
             Ok(symbol) => Ok(Response::new(LookupSymbolResponse {
@@ -144,6 +148,7 @@ impl SymdbService for SYMDBServer {
                 return Err(get_status(msg.as_str(), e));
             }
         };
+        // println!("{} Found Exchange Name: {}", FN_NAME, exchange_name);
 
         // Lookup ID for Sy,bol & handle error
         return match sym_manager.get_symbol_id(&symbol) {
