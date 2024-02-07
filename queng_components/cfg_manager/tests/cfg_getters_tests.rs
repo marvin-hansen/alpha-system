@@ -1,7 +1,6 @@
 use cfg_manager::CfgManager;
 use common::prelude::{EnvironmentType, ServiceID};
 use ctx_manager::CtxManager;
-use db_specs::prelude::db_config_local;
 use dns_manager::DnsManager;
 use service_specs::prelude::{
     cmdb_service_config, dbgw_service_config, qdgw_service_config, smdb_service_config,

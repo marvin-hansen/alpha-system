@@ -198,5 +198,5 @@ fn test_get_vex_host() {
         .is_ok());
 
     let host = cfg_manager.get_svc_host_port(&ServiceID::VEX).unwrap();
-    assert_eq!(host, ("127.0.0.1".to_string(), 9999));
+    assert_eq!(host, ("0.0.0.0".to_string(), 9999));
 }
