@@ -12,22 +12,26 @@ mod utils_data_encoding;
 mod utils_error;
 mod utils_fluvio;
 
+use futures::lock::Mutex;
 use std::error::Error;
 use std::net::SocketAddr;
-use std::sync::{Arc, Mutex};
+use std::sync::Arc;
 
 use autometrics::prometheus_exporter;
 use warp::Filter;
 
+use crate::service::Server;
 use cfg_manager::CfgManager;
 use client_manager::ClientManager;
 use common::prelude::ServiceID;
 use common::prelude::ServiceID::SMDB;
 use ctx_manager::CtxManager;
+use db_query_manager::QueryDBManager;
 use dns_manager::DnsManager;
 use service_utils::{print_utils, shutdown_utils};
 use smdb_provider::SMDBProvider;
 use svc_manager::ServiceManager;
+use symbol_manager::SymbolManager;
 
 const SVC_ID: ServiceID = ServiceID::QDGW;
 
@@ -108,6 +112,65 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     let web_handle = tokio::spawn(web_server);
 
+    // Wrap ClientManager into Arc/Mutex to allow multi-threaded access.
+    let client_manager = Arc::new(Mutex::new(ClientManager::new()));
+
+    // Get the symbol table for the default exchange.
+    let default_exchange = cfg_manager.default_exchange();
+    let exchanges = cfg_manager.exchanges_id_names().to_owned();
+    let exchange_symbol_table = cfg_manager
+        .get_symbol_table(default_exchange)
+        .expect("[QDGW]/main: Failed to get symbol table for default exchange.");
+
+    // Create a new QueryDBManager instance.
+    let db_config = cfg_manager.get_quest_db_config();
+    let mut q_manager = QueryDBManager::new(db_config.clone())
+        .await
+        .expect("[QDGW]/main: Failed to create QueryDBManager instance.");
+
+    // Get all symbols for the default exchange.
+    let symbols = q_manager
+        .get_all_symbols_with_ids(&exchange_symbol_table)
+        .await
+        .expect("[QDGW]/main: Failed to get all symbols for SymbolManager.");
+
+    // Create a new SymbolManager instance.
+    let symbol_manager = async {
+        Arc::new(Mutex::new(
+            SymbolManager::new(symbols, exchanges)
+                .expect("[QDGW]/main: Failed to create SymbolManager instance."),
+        ))
+    }
+    .await;
+
+    // Wrap the QueryDBManager instance into an Arc/Mutex to allow multi-threaded access.
+    let query_manager = Arc::new(Mutex::new(q_manager));
+
+    // Check if the database connection is open.
+    let q_manager = query_manager.lock().await;
+    let is_open = q_manager.is_open().await;
+    drop(q_manager);
+
+    if is_open {
+        println!("✅ Database Connection OK!");
+    }
+
+    // Autoconfigures message channel
+    let msg_config = cfg_manager.get_message_client_config();
+    let service_topic = msg_config.control_channel();
+
+    //Creates a new server
+    let server = Server::new(
+        service_topic.clone(),
+        client_manager,
+        query_manager.clone(),
+        symbol_manager,
+    );
+
+    //Creates a new Tokio task for the server.
+    let signal = shutdown_utils::signal_handler("Message server");
+    let service_handle = tokio::spawn(server.run(signal));
+
     //Sets the current service status to online in the Service Manager Database (SMDB).
     smdb_manager
         .set_service_online(SVC_ID)
@@ -122,7 +185,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     );
 
     //Starts both servers concurrently.
-    match tokio::try_join!(web_handle) {
+    match tokio::try_join!(web_handle, service_handle) {
         Ok(_) => {}
         Err(e) => {
             //Sets the current service status to offline in the Service Manager Database (SMDB)

@@ -22,7 +22,7 @@ impl Server {
     /// - MessageProcessingError if there is an issue getting the client's control channel, checking their login status,
     /// or logging them out.
     ///
-    // #[autometrics]
+    #[autometrics]
     pub(crate) async fn handle_client_logout(
         &self,
         client_logout_msg: &ClientLogoutMessage,
