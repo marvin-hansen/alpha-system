@@ -33,7 +33,7 @@ pub fn symdb_service_config() -> ServiceConfig {
         "SYMDB (Symbol Master Database) gives access to central symbol to ID mapping)".to_string();
     let health_check_uri = "health".to_string();
     let base_uri = "symdb-service.default.svc.cluster.local".to_string();
-    let dependencies = vec![ServiceID::DBGW];
+    let dependencies = vec![ServiceID::DBGW, ServiceID::SMDB];
     let exposure = ServiceType::ENDPOINT;
     let endpoint = get_endpoint();
     let metrics = get_metric_config();

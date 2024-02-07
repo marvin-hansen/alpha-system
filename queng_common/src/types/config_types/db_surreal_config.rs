@@ -27,8 +27,6 @@ pub struct DBConfig {
     username: String,
     /// Password to be used if the server demands password authentication.
     password: String,
-    /// Postgres max connections.
-    pg_max_connections: u32,
 }
 
 impl DBConfig {
@@ -47,7 +45,6 @@ impl DBConfig {
             db_namespace,
             username,
             password,
-            pg_max_connections: 5,
         }
     }
 
@@ -97,7 +94,6 @@ impl Default for DBConfig {
             db_namespace: "test".to_string(),
             username: "root".to_string(),
             password: "root".to_string(),
-            pg_max_connections: 5,
         }
     }
 }
@@ -145,10 +141,6 @@ impl DBConfig {
     /// Returns the password to be used if the server demands password authentication.
     pub fn password(&self) -> &String {
         &self.password
-    }
-    /// Returns the Postgres max connections.
-    pub fn pg_max_connections(&self) -> u32 {
-        self.pg_max_connections
     }
 }
 

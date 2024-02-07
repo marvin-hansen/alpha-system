@@ -3,6 +3,7 @@ use crate::service::SYMDBServer;
 use autometrics::prometheus_exporter;
 use cfg_manager::CfgManager;
 use common::prelude::ServiceID;
+use common::prelude::ServiceID::SMDB;
 use ctx_manager::CtxManager;
 use db_query_manager::QueryDBManager;
 use dns_manager::DnsManager;
@@ -31,7 +32,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     // pull SMDB endpoint from auto config
     let (smdb_host, smdb_port) = service_manager
-        .get_service_host_port(&SVC_ID)
+        .get_service_host_port(&SMDB)
         .expect("[SYMDB]: Failed to get host and port for DBGW");
 
     let smdb_manager = SMDBProvider::new(smdb_host, smdb_port).await;
@@ -39,8 +40,9 @@ async fn main() -> Result<(), Box<dyn Error>> {
     //get all dependencies
     let dependencies = service_manager.get_service_dependencies();
 
-    // Check if all dependencies are online, abort of anyone is missing.
+    // println!("[SYMDB]: Checking if all dependencies are online");
     for d in dependencies {
+        // println!("[SYMDB]: Checking if service dependency {:?} is available", d);
         let available = smdb_manager
             .check_if_service_id_exists(d)
             .await
@@ -54,45 +56,51 @@ async fn main() -> Result<(), Box<dyn Error>> {
         }
     }
 
-    // Configure http metrics endpoint ip and port automatically relative to the detected context.
+    // println!("[SYMDB]/main: Configure service ip and port automatically relative to the detected context");
+    let service_addr = service_manager
+        .configure_svc_socket_addr(&SVC_ID)
+        .expect("[SMDB]: Failed to get host and port");
+
+    // println!("[SYMDB]: Configuring metrics endpoint");
     let (metrics_addr, metrics_uri) = service_manager
         .configure_metrics_socket_addr_uri(&SVC_ID)
         .expect("[SYMDB]: Failed to get metric host, uri, and port");
 
-    // Http/web socket address is needed to serve metrics to prometheus
+    // println!("[SYMDB]: Configuring http web server for prometheus export");
     let web_addr: SocketAddr = metrics_addr
         .parse()
         .expect("[SYMDB]: Failed to parse metric host to address");
 
     // Build metrics endpoint
+    // println!("[SYMDB]: Building metrics endpoint");
     let routes = warp::get()
         .and(warp::path(metrics_uri.clone()))
         .map(prometheus_exporter::encode_http_response);
 
-    // Build http web server for metrics with sigint handler
+    // println!("[SYMDB]: Building http web server for prometheus export with sigint handler");
     let signal = shutdown_utils::signal_handler("http web server");
     let (_, web_server) = warp::serve(routes).bind_with_graceful_shutdown(web_addr, signal);
 
-    // Get the symbol table for the default exchange.
+    // println!("[SYMDB]: Get the symbol table for the default exchange.");
     let default_exchange = cfg_manager.default_exchange();
     let exchanges = cfg_manager.exchanges_id_names().to_owned();
     let exchange_symbol_table = cfg_manager
         .get_symbol_table(default_exchange)
         .expect("[SYMDB]/main: Failed to get symbol table for default exchange.");
 
-    // Create a new QueryDBManager instance.
-    let db_config = cfg_manager.db_config();
+    // println!("[SYMDB]: Create a new QueryDBManager instance.");
+    let db_config = cfg_manager.get_quest_db_config();
     let mut q_manager = QueryDBManager::new(db_config)
         .await
         .expect("[SYMDB]/main: Failed to create QueryDBManager instance.");
 
-    // Get all symbols for the default exchange.
+    // println!("[SYMDB]: Get all symbols for the default exchange.");
     let symbols = q_manager
         .get_all_symbols_with_ids(&exchange_symbol_table)
         .await
         .expect("[SYMDB]/main: Failed to get all symbols for SymbolManager.");
 
-    // Create a new SymbolManager instance.
+    // println!("[SYMDB]: Create a new SymbolManager instance.");
     let symbol_manager = async {
         Arc::new(RwLock::new(SymbolManager::new(symbols, exchanges).expect(
             "[SYMDB]/main: Failed to create SymbolManager instance.",
@@ -102,11 +110,6 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     // Close the DB Connection as its not needed anymore.
     q_manager.close().await;
-
-    // Configure service ip and port automatically relative to the detected context.
-    let service_addr = service_manager
-        .configure_svc_socket_addr(&SVC_ID)
-        .expect("[SMDB]: Failed to get host and port");
 
     // Set up socket address for gRPC service
     let grpc_addr = service_addr

@@ -1,6 +1,5 @@
-use common::prelude::{DBConfig, EnvironmentType, ExchangeID, ServiceID, SvcEnvConfig};
+use common::prelude::{EnvironmentType, ExchangeID, ServiceID, SvcEnvConfig};
 use ctx_manager::CtxManager;
-use db_specs::prelude::{get_cluster_quest_db_config, get_local_quest_db_config};
 use dns_manager::DnsManager;
 use exchange_specs::prelude;
 use exchange_specs::prelude::{
@@ -20,12 +19,10 @@ const DEFAULT_HOST: &str = "0.0.0.0";
 pub struct CfgManager<'l> {
     ctx_manager: &'l CtxManager,
     dns_manager: &'l DnsManager,
-    // ID of the service.
+    /// ID of the service.
     svc: ServiceID,
-    // Type of the environment (e.g., development, testing, production).
+    /// Type of the environment (e.g., development, testing, production).
     env_type: EnvironmentType,
-    /// DB configuration relative to the detected environment.
-    db_config: DBConfig,
     /// Default exchange
     default_exchange: ExchangeID,
     /// Vector of all supported exchanges.
@@ -47,7 +44,6 @@ impl<'l> CfgManager<'l> {
     pub fn new(svc: ServiceID, ctx_manager: &'l CtxManager, dns_manager: &'l DnsManager) -> Self {
         let env_type = ctx_manager.env_type();
         // Load specifications
-        let db_config = get_quest_db_config(&env_type);
         let default_exchange = prelude::get_default_exchange();
         let exchanges = get_all_exchanges();
         let exchanges_id_names = get_all_exchanges_ids_names();
@@ -58,7 +54,6 @@ impl<'l> CfgManager<'l> {
             dns_manager,
             svc,
             env_type,
-            db_config,
             default_exchange,
             exchanges,
             exchanges_id_names,
@@ -70,31 +65,5 @@ impl<'l> CfgManager<'l> {
             qdgw_env: RefCell::new(None),
             vex_env: RefCell::new(None),
         }
-    }
-}
-
-/// Gets the database configuration for the given environment type.
-///
-/// Matches on the environment type to call the appropriate
-/// DB config retrieval function.
-///
-/// # Arguments
-///
-/// * `env_type` - The EnvironmentType enum
-///
-/// # Returns
-///
-/// The DBConfig for the environment.
-///
-/// Specific configs:
-///
-/// - EnvironmentType::Local - Calls get_local_db_config()
-/// - EnvironmentType::Cluster - Calls get_cluster_db_config()
-///
-pub fn get_quest_db_config(env_type: &EnvironmentType) -> DBConfig {
-    match env_type {
-        EnvironmentType::LOCAL => get_local_quest_db_config(),
-        EnvironmentType::CLUSTER => get_cluster_quest_db_config(),
-        _ => DBConfig::default(),
     }
 }

@@ -1,4 +1,6 @@
-pub mod db_config;
+pub mod db_quest_config;
+
+pub mod db_surreal_config;
 pub mod encoding;
 pub mod endpoint;
 pub mod endpoint_host;

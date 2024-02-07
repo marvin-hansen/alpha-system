@@ -1,6 +1,4 @@
-use common::prelude::DBConfig;
-
-const PORT: u16 = 9009;
+use common::prelude::QuestDBConfig;
 
 /// Returns a DBConfig for connecting to a local QuestDB instance.
 ///
@@ -14,8 +12,8 @@ const PORT: u16 = 9009;
 ///
 /// Useful for connecting to a local QuestDB instance.
 ///
-pub fn get_local_quest_db_config() -> DBConfig {
-    DBConfig::new_connection(PORT, "0.0.0.0".into())
+pub fn get_local_quest_db_config() -> QuestDBConfig {
+    QuestDBConfig::new("0.0.0.0".into())
 }
 
 /// Returns a DBConfig for connecting to a QuestDB cluster instance.
@@ -31,6 +29,6 @@ pub fn get_local_quest_db_config() -> DBConfig {
 /// Useful for connecting to a QuestDB cluster instance
 /// using Kubernetes service discovery.
 ///
-pub fn get_cluster_quest_db_config() -> DBConfig {
-    DBConfig::new_connection(PORT, "questdb.default.svc.cluster.local".into())
+pub fn get_cluster_quest_db_config() -> QuestDBConfig {
+    QuestDBConfig::new("questdb.default.svc.cluster.local".into())
 }

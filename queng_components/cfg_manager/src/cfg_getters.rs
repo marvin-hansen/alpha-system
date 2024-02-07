@@ -1,9 +1,12 @@
 use crate::CfgManager;
 use common::prelude::{
     DBConfig, EnvironmentType, ExchangeID, InitError, MessageClientConfig, MetricConfig,
-    ServiceConfig, ServiceID,
+    QuestDBConfig, ServiceConfig, ServiceID,
 };
-use db_specs::prelude::{db_config_ci, db_config_cluster, db_config_local};
+use db_specs::prelude::{
+    db_config_ci, db_config_cluster, db_config_local, get_cluster_quest_db_config,
+    get_local_quest_db_config,
+};
 use service_specs::prelude::{
     cmdb_service_config, dbgw_service_config, qdgw_service_config, smdb_service_config,
     symdb_service_config, vex_service_config,
@@ -24,9 +27,6 @@ impl<'l> CfgManager<'l> {
     }
     pub fn get_svc_config_by_id(&self, svc_id: &ServiceID) -> ServiceConfig {
         self.service_config(svc_id)
-    }
-    pub fn get_db_config(&self) -> DBConfig {
-        self.db_config()
     }
 
     pub fn get_message_client_config(&self) -> MessageClientConfig {
@@ -107,12 +107,20 @@ impl<'l> CfgManager<'l> {
 }
 
 impl<'l> CfgManager<'l> {
-    pub fn db_config(&self) -> DBConfig {
+    pub fn get_quest_db_config(&self) -> QuestDBConfig {
+        match self.env_type {
+            EnvironmentType::LOCAL => get_local_quest_db_config(),
+            EnvironmentType::CLUSTER => get_cluster_quest_db_config(),
+            _ => panic!("[CfgManager/get_quest_db_config]: Invalid environment type"),
+        }
+    }
+
+    pub fn get_surreal_db_config(&self) -> DBConfig {
         match self.env_type {
             EnvironmentType::LOCAL => db_config_local(),
             EnvironmentType::CI => db_config_ci(),
             EnvironmentType::CLUSTER => db_config_cluster(),
-            _ => panic!("Invalid environment type"),
+            _ => panic!("[CfgManager/get_surreal_db_config]: Invalid environment type"),
         }
     }
     fn service_config(&self, svc: &ServiceID) -> ServiceConfig {
