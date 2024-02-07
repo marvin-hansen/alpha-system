@@ -47,7 +47,7 @@ impl DBConfig {
             db_namespace,
             username,
             password,
-            pg_max_connections: 10,
+            pg_max_connections: 5,
         }
     }
 

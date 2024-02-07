@@ -69,9 +69,9 @@ fn test_debug() {
         "password".to_string(),
     );
 
-    let expected = "DBConfig { port: 8000, host: \"localhost\", db_name: \"test\", db_namespace: \"test\", username: \"username\", password: \"password\" }";
     let actual = format!("{:?}", config);
-    assert_eq!(expected, actual);
+    let expected = "DBConfig { port: 8000, host: \"localhost\", db_name: \"test\", db_namespace: \"test\", username: \"username\", password: \"password\", pg_max_connections: 5 }";
+    assert_eq!(actual, expected);
 }
 
 #[test]
@@ -83,7 +83,7 @@ fn test_display() {
         "password".to_string(),
     );
 
-    let expected = "DBConfig { port: 8000, host: localhost, db_name: test, db_namespace: test, username: username,password: password }";
     let actual = config.to_string();
-    assert_eq!(expected, actual);
+    let expected = "DBConfig { port: 8000, host: localhost, db_name: test, db_namespace: test, username: username,password: password }";
+    assert_eq!(actual, expected);
 }
