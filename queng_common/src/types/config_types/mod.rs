@@ -1,11 +1,14 @@
-pub mod db_quest_config;
-
+pub mod click_house_config;
 pub mod client_channel;
+pub mod db_config;
+pub mod db_quest_config;
 pub mod db_surreal_config;
 pub mod encoding;
 pub mod endpoint;
 pub mod endpoint_host;
 pub mod environment_type;
+pub mod iggy_config;
+pub mod iggy_user;
 pub mod message_client_config;
 pub mod metric_config;
 pub mod protocol_type;
