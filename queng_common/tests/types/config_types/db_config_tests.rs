@@ -1,7 +1,7 @@
-use common::prelude::DBConfig;
+use common::prelude::SurrealDBConfig;
 
-fn get_db_config() -> DBConfig {
-    DBConfig::new(27017, "localhost".to_string())
+fn get_db_config() -> SurrealDBConfig {
+    SurrealDBConfig::new(27017, "localhost".to_string())
 }
 
 #[test]
@@ -13,7 +13,7 @@ fn test_new() {
 
 #[test]
 fn test_new_with_pg_config() {
-    let config = DBConfig::new_with_pg_config(
+    let config = SurrealDBConfig::new_with_pg_config(
         27017,
         "localhost".to_string(),
         "pguser".to_string(),
@@ -43,7 +43,7 @@ fn test_pg_connection_string() {
 
 #[test]
 fn test_display() {
-    let config = DBConfig::new_with_pg_config(
+    let config = SurrealDBConfig::new_with_pg_config(
         27017,
         "localhost".to_string(),
         "pguser".to_string(),

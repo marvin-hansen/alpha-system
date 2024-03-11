@@ -14,7 +14,7 @@ use serde::{Deserialize, Serialize};
 /// * `client_name`: The alternate name and version of the client to send to the server. The default
 /// is "MemgraphBolt/0.1".
 #[derive(Debug, Eq, Clone, PartialEq, Serialize, Deserialize)]
-pub struct DBConfig {
+pub struct SurrealDBConfig {
     /// Port number to connect to at the server host. The default port is 7687.
     port: u16,
     /// DNS resolvable name of the host to connect to.
@@ -29,7 +29,7 @@ pub struct DBConfig {
     password: String,
 }
 
-impl DBConfig {
+impl SurrealDBConfig {
     pub fn new(
         port: u16,
         host: String,
@@ -83,7 +83,7 @@ impl DBConfig {
     }
 }
 
-impl Default for DBConfig {
+impl Default for SurrealDBConfig {
     /// Returns the default configuration.
     //https://surrealdb.com/docs/installation/running/docker
     fn default() -> Self {
@@ -98,7 +98,7 @@ impl Default for DBConfig {
     }
 }
 
-impl DBConfig {
+impl SurrealDBConfig {
     pub fn pg_connection_url(&self) -> String {
         format!(
             "postgres://{}:{}@{}:{}/{}",
@@ -112,7 +112,7 @@ impl DBConfig {
 }
 
 // getters
-impl DBConfig {
+impl SurrealDBConfig {
     /// Returns the name of the database to connect to.
     pub fn db_name(&self) -> &String {
         &self.db_name
@@ -144,7 +144,7 @@ impl DBConfig {
     }
 }
 
-impl Display for DBConfig {
+impl Display for SurrealDBConfig {
     /// Formats the config as a string.
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         write!(

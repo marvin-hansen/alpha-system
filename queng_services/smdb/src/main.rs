@@ -2,7 +2,7 @@ use std::error::Error;
 use std::net::SocketAddr;
 
 use autometrics::prometheus_exporter;
-use cfg_manager::CfgManager;
+use config_manager::CfgManager;
 use tonic::transport::{Channel, Server, Uri};
 use warp::Filter;
 

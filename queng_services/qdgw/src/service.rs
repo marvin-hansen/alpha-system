@@ -34,13 +34,11 @@ impl Server {
     ///
     pub fn new(
         _channel_topic: String,
-        _client_manager: Arc<Mutex<ClientManager>>,
         _query_manager: Arc<Mutex<QueryDBManager>>,
         _symbol_manager: Arc<Mutex<SymbolManager>>,
     ) -> Self {
         Self {
             // channel_topic,
-            // client_manager,
             // query_manager,
             // symbol_manager,
             // client_data_producers,

@@ -4,7 +4,7 @@ mod db_svc;
 
 use std::fmt::{Debug, Display, Formatter};
 
-use common::prelude::DBConfig;
+use common::prelude::SurrealDBConfig;
 use surrealdb::engine::remote::ws::{Client, Ws};
 use surrealdb::opt::auth::Root;
 use surrealdb::Surreal;
@@ -12,11 +12,11 @@ use surrealdb::Surreal;
 #[derive(Clone, Debug)]
 pub struct SurrealDBManager {
     db: Surreal<Client>,
-    db_config: DBConfig,
+    db_config: SurrealDBConfig,
 }
 
 impl SurrealDBManager {
-    pub async fn new(db_config: &DBConfig) -> Self {
+    pub async fn new(db_config: &SurrealDBConfig) -> Self {
         // Extract DB config parameters
         let db_host = db_config.host();
         let db_port = db_config.port();

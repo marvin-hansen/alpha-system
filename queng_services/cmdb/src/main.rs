@@ -5,9 +5,9 @@ use autometrics::prometheus_exporter;
 use tonic::transport::{Channel, Server, Uri};
 use warp::Filter;
 
-use cfg_manager::CfgManager;
 use common::prelude::ServiceID;
 use common::prelude::ServiceID::SMDB;
+use config_manager::CfgManager;
 use ctx_manager::CtxManager;
 use dns_manager::DnsManager;
 use proto::binding::cmdb_service_server::CmdbServiceServer;

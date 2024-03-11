@@ -40,7 +40,7 @@ impl SymbolManager {
     /// # Example
     ///
     /// ```no_run
-    /// use common::prelude::DBConfig;
+    /// use common::prelude::SurrealDBConfig;
     /// use symbol_manager::SymbolManager;
     ///
     ///  let exchanges = vec![(1, "kraken".to_string()), (2, "bittrex".to_string())];
