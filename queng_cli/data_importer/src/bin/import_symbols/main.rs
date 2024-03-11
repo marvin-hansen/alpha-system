@@ -1,3 +1,5 @@
+mod process;
+
 use client_utils::{config_utils, file_utils, print_utils};
 use common::prelude::ClickHouseConfig;
 use klickhouse::{Client, ClientOptions};
@@ -17,6 +19,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     print_utils::dbg_print(vrb, "Build DB Client");
     let db_config = ClickHouseConfig::default();
     let destination = db_config.connection_string();
+
     let client = Client::connect(destination.clone(), ClientOptions::default())
         .await
         .expect(format!("Failed to connect to {}", &destination).as_str());
@@ -37,7 +40,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     print_utils::dbg_print(vrb, format!("Found {} files", files.len()).as_str());
 
     for file in files {
-        println!("Importing file: {}", file.to_str().unwrap());
+        if file.to_str().unwrap().contains(".json") {
+            process::process(&client, &file, vrb)
+                .await
+                .expect("Failed to import file");
+        }
     }
 
     print_utils::print_duration(&start.elapsed());
