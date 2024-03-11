@@ -28,4 +28,3 @@ path = "src/lib/mod.rs"
 
 # External crates
 serde = {workspace = true}
-serde_json = {workspace = true}
