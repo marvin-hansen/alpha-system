@@ -1,7 +1,7 @@
 use crate::CfgManager;
 use common::prelude::{
-    EnvironmentType, ExchangeID, InitError, MessageClientConfig, MetricConfig, QuestDBConfig,
-    ServiceConfig, ServiceID, SurrealDBConfig,
+    ClickHouseConfig, EnvironmentType, ExchangeID, InitError, MessageClientConfig, MetricConfig,
+    QuestDBConfig, ServiceConfig, ServiceID, SurrealDBConfig,
 };
 use db_specs::prelude::{
     db_config_ci, db_config_cluster, db_config_local, get_cluster_quest_db_config,
@@ -55,6 +55,9 @@ impl<'l> CfgManager<'l> {
             .expect("Failed to get service config");
         // Get the host and port of the service
         self.get_host(&svc_config)
+    }
+    pub fn clickhouse_config(&self) -> &ClickHouseConfig {
+        &self.clickhouse_config
     }
 }
 

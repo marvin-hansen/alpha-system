@@ -7,4 +7,5 @@ pub mod file_types;
 pub mod pattern_types;
 pub mod portfolio_types;
 pub mod symbol_types;
+pub mod time_types;
 pub mod trade_types;

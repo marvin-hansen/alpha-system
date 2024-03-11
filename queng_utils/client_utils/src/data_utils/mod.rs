@@ -1,6 +1,6 @@
 use common::prelude::SampledDataBars;
 use common::prelude::{ExchangeID, TimeResolution};
-use config_manager::ConfigManager;
+use config_manager::CfgManager;
 use db_query_manager::QueryDBManager;
 use std::error::Error;
 use symbol_manager::SymbolManager;
@@ -25,27 +25,9 @@ const FN_NAME: &str = "[client_utils/load_data]: ";
 ///
 /// Result with [`SampledDataBars`] containing the loaded data or error.
 ///
-/// # Example
-///
-/// ```rust
-/// use common::prelude::{ExchangeID, ServiceID};
-/// use config_manager::ConfigManager;
-///
-/// async fn test(){
-///
-/// use client_utils::data_utils::load_data;
-/// let cfg_manager = ConfigManager::new(ServiceID::Default);
-/// let symbol = "ethaed";
-/// let exchange_id = ExchangeID::Kraken;
-///
-/// let result = load_data(&cfg_manager, symbol, exchange_id).await;
-///
-/// assert!(result.is_ok());
-/// }
-/// ```
 ///
 pub async fn load_data(
-    cfg_manager: &ConfigManager,
+    cfg_manager: &CfgManager<'_>,
     symbol: &str,
     exchange_id: ExchangeID,
 ) -> Result<SampledDataBars, Box<dyn Error>> {
@@ -60,7 +42,7 @@ pub async fn load_data(
         .expect("[client_utils/load_data]: Failed to get symbol table for default exchange.");
 
     // println!("{FN_NAME}: Creating a new QueryDBManager.");
-    let db_config = cfg_manager.db_config();
+    let db_config = cfg_manager.clickhouse_config();
     let mut db_query_manager = match QueryDBManager::new(db_config.clone()).await {
         Ok(db_query_manager) => db_query_manager,
         Err(err) => {

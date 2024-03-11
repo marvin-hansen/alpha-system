@@ -100,7 +100,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .expect("[QDGW]/main: Failed to get symbol table for default exchange.");
 
     // Create a new QueryDBManager instance.
-    let db_config = cfg_manager.get_quest_db_config();
+    let db_config = cfg_manager.clickhouse_config();
     let mut q_manager = QueryDBManager::new(db_config.clone())
         .await
         .expect("[QDGW]/main: Failed to create QueryDBManager instance.");

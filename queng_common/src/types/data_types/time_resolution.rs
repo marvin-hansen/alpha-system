@@ -14,6 +14,8 @@ pub enum TimeResolution {
     OneHour = 0x5_u8,
     OneDay = 0x6_u8,
     OneWeek = 0x7_u8,
+    OneMonth = 0x8_u8,
+    OneYear = 0x9_u8,
 }
 
 impl FromStr for TimeResolution {
@@ -29,6 +31,8 @@ impl FromStr for TimeResolution {
             "OneHour" => Ok(TimeResolution::OneHour),
             "OneDay" => Ok(TimeResolution::OneDay),
             "OneWeek" => Ok(TimeResolution::OneWeek),
+            "OneMonth" => Ok(TimeResolution::OneMonth),
+            "OneYear" => Ok(TimeResolution::OneYear),
             _ => Err(()),
         }
     }
@@ -46,6 +50,8 @@ impl From<u8> for TimeResolution {
             0x5_u8 => Self::OneHour,
             0x6_u8 => Self::OneDay,
             0x7_u8 => Self::OneWeek,
+            0x8_u8 => Self::OneMonth,
+            0x9_u8 => Self::OneYear,
             _ => Self::NoValue,
         }
     }
@@ -62,6 +68,8 @@ impl fmt::Display for TimeResolution {
             TimeResolution::OneHour => write!(f, "OneHour"),
             TimeResolution::OneDay => write!(f, "OneDay"),
             TimeResolution::OneWeek => write!(f, "OneWeek"),
+            TimeResolution::OneMonth => write!(f, "OneMonth"),
+            TimeResolution::OneYear => write!(f, "OneYear"),
         }
     }
 }
