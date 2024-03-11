@@ -1,16 +1,4 @@
-mod handle;
-mod handle_client_login;
-mod handle_client_logout;
-mod handle_data_start;
-mod handle_data_start_ohlcv_data;
-mod handle_data_start_trade_data;
-mod handle_data_stop;
-mod handle_data_stop_all;
 mod service;
-mod utils;
-mod utils_data_encoding;
-mod utils_error;
-mod utils_fluvio;
 
 use futures::lock::Mutex;
 use std::error::Error;
@@ -105,10 +93,6 @@ async fn main() -> Result<(), Box<dyn Error>> {
     //Creates a new Warp filter for the metrics endpoint with a graceful shutdown handler.
     let signal = shutdown_utils::signal_handler("http web server");
     let (_, web_server) = warp::serve(routes).bind_with_graceful_shutdown(web_addr, signal);
-
-    // Autoconfigures message channel
-    let msg_config = cfg_manager.get_message_client_config();
-    let service_topic = msg_config.control_channel();
 
     let web_handle = tokio::spawn(web_server);
 

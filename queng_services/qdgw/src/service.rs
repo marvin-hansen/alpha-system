@@ -2,22 +2,20 @@ use client_manager::ClientManager;
 use common::prelude::MessageProcessingError;
 use db_query_manager::QueryDBManager;
 use futures::lock::Mutex;
-use futures::StreamExt;
-use std::collections::HashMap;
 use std::future::Future;
 use std::sync::Arc;
 use symbol_manager::SymbolManager;
 use tokio::{pin, select};
 
 pub struct Server {
-    channel_topic: String,
-    // Future Mutex implements sync + send and works well
-    // with tokio async https://stackoverflow.com/questions/67277282/async-function-the-trait-stdmarkersend-is-not-implemented-for-stdsync
-    pub(crate) client_manager: Arc<Mutex<ClientManager>>,
-    pub(crate) query_manager: Arc<Mutex<QueryDBManager>>,
-    pub(crate) symbol_manager: Arc<Mutex<SymbolManager>>,
-    // Store a data producer for each client on login to send data back to the client
-    pub(crate) client_data_producers: Arc<Mutex<HashMap<u16, String>>>,
+    // channel_topic: String,
+    // // Future Mutex implements sync + send and works well
+    // // with tokio async https://stackoverflow.com/questions/67277282/async-function-the-trait-stdmarkersend-is-not-implemented-for-stdsync
+    // client_manager: Arc<Mutex<ClientManager>>,
+    // query_manager: Arc<Mutex<QueryDBManager>>,
+    // symbol_manager: Arc<Mutex<SymbolManager>>,
+    // // Store a data producer for each client on login to send data back to the client
+    // client_data_producers: Arc<Mutex<HashMap<u16, String>>>,
 }
 
 impl Server {
@@ -35,20 +33,17 @@ impl Server {
     /// A new Server instance
     ///
     pub fn new(
-        channel_topic: String,
-        client_manager: Arc<Mutex<ClientManager>>,
-        query_manager: Arc<Mutex<QueryDBManager>>,
-        symbol_manager: Arc<Mutex<SymbolManager>>,
+        _channel_topic: String,
+        _client_manager: Arc<Mutex<ClientManager>>,
+        _query_manager: Arc<Mutex<QueryDBManager>>,
+        _symbol_manager: Arc<Mutex<SymbolManager>>,
     ) -> Self {
-        // Create a new HashMap to store data producers for each client
-        let client_data_producers = Arc::new(Mutex::new(HashMap::new()));
-
         Self {
-            channel_topic,
-            client_manager,
-            query_manager,
-            symbol_manager,
-            client_data_producers,
+            // channel_topic,
+            // client_manager,
+            // query_manager,
+            // symbol_manager,
+            // client_data_producers,
         }
     }
 }
