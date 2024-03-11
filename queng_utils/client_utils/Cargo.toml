@@ -12,7 +12,7 @@ authors.workspace = true
 [dependencies]
 # Internal dependencies
 common = { workspace = true }
-cfg_manager = { workspace = true }
+config_manager = { workspace = true }
 db_query_manager = { workspace = true }
 db_specs = { workspace = true }
 sbe_messages = { workspace = true }

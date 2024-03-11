@@ -1,5 +1,5 @@
 [package]
-name = "cfg_manager"
+name = "config_manager"
 version = "0.1.0"
 
 edition.workspace = true
@@ -10,7 +10,7 @@ authors.workspace = true
 
 
 [lib]
-name = "cfg_manager"
+name = "config_manager"
 path = "src/lib.rs"
 
 

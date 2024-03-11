@@ -18,7 +18,7 @@ path = "src/main.rs"
 [dependencies]
 # Internal crates
 common = {workspace = true}
-cfg_manager = {workspace = true}
+config_manager = {workspace = true}
 ctx_manager = {workspace = true}
 db_surreal_manager = {workspace = true}
 dns_manager = {workspace = true}
