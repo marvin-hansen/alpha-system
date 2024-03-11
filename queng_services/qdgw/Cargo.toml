@@ -17,7 +17,7 @@ path = "src/main.rs"
 # Internal crates
 common = {workspace = true}
 client_manager = {workspace = true}
-cfg_manager = {workspace = true}
+config_manager = {workspace = true}
 ctx_manager = {workspace = true}
 dns_manager = {workspace = true}
 db_query_manager = {workspace = true}

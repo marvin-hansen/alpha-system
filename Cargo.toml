@@ -8,7 +8,7 @@ members = [
     "queng_clients/dbgw_client",
     "queng_clients/symdb_client",
     "queng_common",
-    "queng_components/cfg_manager",
+    "queng_components/config_manager",
     "queng_components/client_manager",
     "queng_components/ctx_manager",
     "queng_components/db_query_manager",
@@ -52,7 +52,7 @@ common = { path = "queng_common" }
 dbgw_client = { path = "queng_clients/dbgw_client" }
 symdb_client = { path = "queng_clients/symdb_client" }
 # Components
-cfg_manager = { path = "queng_components/cfg_manager" }
+config_manager = { path = "queng_components/config_manager" }
 client_manager = { path = "queng_components/client_manager" }
 ctx_manager = { path = "queng_components/ctx_manager" }
 db_query_manager = { path = "queng_components/db_query_manager" }
