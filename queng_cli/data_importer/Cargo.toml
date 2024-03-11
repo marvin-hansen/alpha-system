@@ -22,9 +22,15 @@ path = "src/bin/import_symbols/main.rs"
 name = "lib_import"
 path = "src/lib/mod.rs"
 
-
 [dependencies]
 # Internal crates
-
+client_utils = { workspace = true }
+common = { workspace = true }
+db_specs = { workspace = true }
 # External crates
-serde = {workspace = true}
+csv = { workspace = true }
+chrono = { workspace = true }
+encoding_rs = { workspace = true }
+klickhouse = { workspace = true }
+serde = { workspace = true }
+tokio = { workspace = true, features = ["rt", "rt-multi-thread", "macros"] }
