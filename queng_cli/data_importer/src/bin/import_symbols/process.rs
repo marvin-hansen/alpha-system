@@ -91,8 +91,8 @@ async fn process_instruments(
     vrb: bool,
 ) -> Result<(), Box<dyn Error>> {
     print_utils::dbg_print(vrb, "Processing instruments");
-    let exchange_gone = Arc::new(AtomicUsize::new(0));
     let instrument_inactive = Arc::new(AtomicUsize::new(0));
+    let instrument_figi_counter = Arc::new(AtomicUsize::new(0));
 
     let file = File::open(file_path).expect("file not found");
 
@@ -102,6 +102,13 @@ async fn process_instruments(
 
     for instrument in instruments.data.iter() {
         if is_valid_instrument(instrument, instrument_inactive.clone()) {
+            if instrument.metadata.is_some() {
+                let meta = instrument.metadata.as_ref().unwrap();
+                if meta.instrument_figi.is_some() {
+                    instrument_figi_counter.fetch_add(1, Ordering::SeqCst);
+                }
+            }
+
             filtered.push(instrument.clone());
         }
     }
@@ -117,9 +124,12 @@ async fn process_instruments(
 
     let count = filtered.len();
     println!(
-        "Number of Filtered (active, non-option, etc) instruments: {}",
+        "Number of filtered (active, non-option, etc) instruments: {}",
         count
     );
+
+    let count = instrument_figi_counter.load(Ordering::SeqCst);
+    println!("Number of filtered instruments with FIGI: {}", count);
 
     Ok(())
 }
@@ -139,16 +149,6 @@ fn is_valid_instrument(instrument: &Instrument, instrument_inactive: Arc<AtomicU
 
     // Instrument is of no interest
     if instrument.class.contains("option") {
-        return false;
-    }
-
-    true
-}
-
-fn is_active_exchange(exchange: &Exchange) -> bool {
-    let inactive_exchanges = vec![""];
-
-    if inactive_exchanges.contains(&exchange.name.as_str()) {
         return false;
     }
 
