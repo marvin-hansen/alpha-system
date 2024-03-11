@@ -33,4 +33,5 @@ chrono = { workspace = true }
 encoding_rs = { workspace = true }
 klickhouse = { workspace = true }
 serde = { workspace = true }
+serde_json = { workspace = true }
 tokio = { workspace = true, features = ["rt", "rt-multi-thread", "macros"] }

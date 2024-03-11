@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct Root {
+pub struct AssetRoot {
     pub result: String,
     pub data: Vec<Asset>,
 }
@@ -18,7 +18,7 @@ pub struct Asset {
     pub asset_class: String,
     pub metadata: Option<Metadata>,
     #[serde(default)]
-    pub addresses: Vec<Address>,
+    pub addresses: Option<Vec<Address>>,
 }
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
