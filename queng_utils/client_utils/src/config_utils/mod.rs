@@ -1,8 +1,8 @@
 use common::prelude::ClickHouseConfig;
-use std::error::Error;
-
 use config_file::FromConfigFile;
+use db_specs::clickhouse;
 use serde::Deserialize;
+use std::error::Error;
 use std::fmt::{Display, Formatter};
 
 /// Gets the configuration file from the given path.
@@ -38,7 +38,7 @@ pub fn get_config_file(path: &str) -> Result<ConfigFile, Box<dyn Error>> {
 /// The `DBConfig` for connecting to the local database.
 ///
 pub fn get_local_db_config() -> ClickHouseConfig {
-    db_specs::prelude::get_local_db_config()
+    clickhouse::get_local_db_config()
 }
 
 /// Represents the application configuration file.

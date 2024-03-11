@@ -1,4 +1,3 @@
-use client_manager::ClientManager;
 use common::prelude::MessageProcessingError;
 use db_query_manager::QueryDBManager;
 use futures::lock::Mutex;

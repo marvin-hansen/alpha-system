@@ -1,4 +1,4 @@
-use config_manager::ConfigManager;
+use config_manager::CfgManager;
 use db_query_manager::QueryDBManager;
 use std::error::Error;
 use symbol_manager::SymbolManager;
@@ -23,27 +23,8 @@ const FN_NAME: &str = "client_utils/get_symbol_id";
 ///
 /// Returns a `Box<dyn Error>` if the symbol id could not be found.
 ///
-/// # Example
-///
-/// ```
-/// use client_utils::symbol_utils::get_symbol_id;
-/// use common::prelude::{ServiceID};
-/// use config_manager::ConfigManager;
-///
-/// async fn test(){
-///
-/// use client_utils::data_utils::load_data;
-/// let cfg_manager = ConfigManager::new(ServiceID::Default);
-/// let symbol = "ethaed";
-///
-/// let result = get_symbol_id(&cfg_manager, symbol).await;
-///
-/// assert!(result.is_ok());
-/// }
-/// ```
-///
 pub async fn get_symbol_id(
-    cfg_manager: &ConfigManager,
+    cfg_manager: &CfgManager<'_>,
     symbol: &str,
 ) -> Result<u16, Box<dyn Error>> {
     // println!("{FN_NAME}: Loading configuration for QueryDBManager.");
@@ -62,7 +43,7 @@ pub async fn get_symbol_id(
     };
 
     // println!("{FN_NAME}: Creating a new QueryDBManager.");
-    let db_config = cfg_manager.db_config();
+    let db_config = cfg_manager.clickhouse_config();
     let mut db_query_manager = match QueryDBManager::new(db_config.clone()).await {
         Ok(dqm) => dqm,
         Err(err) => {

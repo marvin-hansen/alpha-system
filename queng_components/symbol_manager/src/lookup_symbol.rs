@@ -15,7 +15,7 @@ impl SymbolManager {
     /// # Example
     ///
     /// ```
-    /// use common::prelude::SurrealDBConfig;
+    /// use common::prelude::DBConfig;
     /// use symbol_manager::SymbolManager;
     ///
     ///  let exchanges = vec![(1, "kraken".to_string()), (2, "bittrex".to_string())];
@@ -65,7 +65,7 @@ impl SymbolManager {
     /// # Example
     ///
     /// ```
-    /// use common::prelude::SurrealDBConfig;
+    /// use common::prelude::DBConfig;
     /// use symbol_manager::SymbolManager;
     ///
     ///  let exchanges = vec![(1, "kraken".to_string()), (2, "bittrex".to_string())];
@@ -112,7 +112,7 @@ impl SymbolManager {
     /// # Example
     ///
     /// ```rust
-    /// use common::prelude::SurrealDBConfig;
+    /// use common::prelude::DBConfig;
     /// use symbol_manager::SymbolManager;
     ///
     ///  let exchanges = vec![(1, "kraken".to_string()), (2, "bittrex".to_string())];
@@ -150,7 +150,7 @@ impl SymbolManager {
     /// # Example
     ///
     /// ```rust
-    /// use common::prelude::SurrealDBConfig;
+    /// use common::prelude::DBConfig;
     /// use symbol_manager::SymbolManager;
     ///
     ///  let exchanges = vec![(1, "kraken".to_string()), (2, "bittrex".to_string())];

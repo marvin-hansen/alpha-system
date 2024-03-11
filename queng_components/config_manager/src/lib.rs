@@ -1,4 +1,4 @@
-use common::prelude::{EnvironmentType, ExchangeID, ServiceID, SvcEnvConfig};
+use common::prelude::{ClickHouseConfig, EnvironmentType, ExchangeID, ServiceID, SvcEnvConfig};
 use ctx_manager::CtxManager;
 use dns_manager::DnsManager;
 use exchange_specs::prelude;
@@ -10,6 +10,7 @@ use std::collections::HashMap;
 
 mod cfg_getters;
 mod cfg_services;
+mod utils;
 
 // https://stackoverflow.com/questions/20778771/what-is-the-difference-between-0-0-0-0-127-0-0-1-and-localhost
 const DEFAULT_HOST: &str = "0.0.0.0";
@@ -21,6 +22,8 @@ pub struct CfgManager<'l> {
     dns_manager: &'l DnsManager,
     /// ID of the service.
     svc: ServiceID,
+    /// ClickHouse configuration.
+    clickhouse_config: ClickHouseConfig,
     /// Type of the environment (e.g., development, testing, production).
     env_type: EnvironmentType,
     /// Default exchange
@@ -44,6 +47,7 @@ impl<'l> CfgManager<'l> {
     pub fn new(svc: ServiceID, ctx_manager: &'l CtxManager, dns_manager: &'l DnsManager) -> Self {
         let env_type = ctx_manager.env_type();
         // Load specifications
+        let clickhouse_config = utils::get_db_config(&env_type);
         let default_exchange = prelude::get_default_exchange();
         let exchanges = get_all_exchanges();
         let exchanges_id_names = get_all_exchanges_ids_names();
@@ -53,6 +57,7 @@ impl<'l> CfgManager<'l> {
             ctx_manager,
             dns_manager,
             svc,
+            clickhouse_config,
             env_type,
             default_exchange,
             exchanges,

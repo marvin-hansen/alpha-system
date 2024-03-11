@@ -88,7 +88,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     // println!("[SYMDB]: Symbol table for the default exchange: {}",exchange_symbol_table);
 
     // println!("[SYMDB]: Create a new QueryDBManager instance.");
-    let db_config = cfg_manager.get_quest_db_config();
+    let db_config = cfg_manager.clickhouse_config().to_owned();
     let mut q_manager = QueryDBManager::new(db_config)
         .await
         .expect("[SYMDB]/main: Failed to create QueryDBManager instance.");
@@ -108,9 +108,6 @@ async fn main() -> Result<(), Box<dyn Error>> {
         )))
     }
     .await;
-
-    // Close the DB Connection as its not needed anymore.
-    q_manager.close().await;
 
     // Set up socket address for gRPC service
     let grpc_addr = service_addr

@@ -46,6 +46,9 @@ pub use crate::types::portfolio_types::portfolio_config::*;
 // symbol types
 pub use crate::types::symbol_types::symbol::*;
 pub use crate::types::symbol_types::symbol_id::*;
+// Time Types
+pub use crate::types::time_types::month::Month;
+pub use crate::types::time_types::time_scale::TimeScale;
 // trade types
 pub use crate::types::trade_types::strategy_config::*;
 pub use crate::types::trade_types::trade_direction::*;
