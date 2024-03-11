@@ -1,4 +1,4 @@
-pub(crate) fn generate_asset_table_ddl() -> String {
+pub(crate) fn _generate_asset_table_ddl() -> String {
     r"
      CREATE TABLE IF NOT EXISTS default.assets
      (
@@ -11,7 +11,7 @@ pub(crate) fn generate_asset_table_ddl() -> String {
     .to_string()
 }
 
-pub(crate) fn generate_exchange_table_ddl() -> String {
+pub(crate) fn _generate_exchange_table_ddl() -> String {
     r"
      CREATE TABLE IF NOT EXISTS default.exchanges
      (
@@ -24,7 +24,7 @@ pub(crate) fn generate_exchange_table_ddl() -> String {
     .to_string()
 }
 
-pub(crate) fn generate_instruments_table_ddl() -> String {
+pub(crate) fn _generate_instruments_table_ddl() -> String {
     r"
      CREATE TABLE IF NOT EXISTS default.instruments
      (
@@ -37,7 +37,7 @@ pub(crate) fn generate_instruments_table_ddl() -> String {
     .to_string()
 }
 
-pub(crate) fn generate_master_symbols_table_ddl() -> String {
+pub(crate) fn _generate_master_symbols_table_ddl() -> String {
     r"
      CREATE TABLE IF NOT EXISTS default.master_symbols
      (
