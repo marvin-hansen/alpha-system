@@ -9,14 +9,14 @@ use klickhouse::{Client, ClientOptions};
 use query_utils::create_meta_data_table;
 use std::time::Instant;
 
-const CONFIG_FILE_NAME: &str = "import_config.toml";
+const CONFIG_FILE_NAME: &str = "import_trade_data_config.toml";
 const META_DATA_TABLE: &str = "kraken_symbols";
 const VERBOSE: bool = true;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let start = Instant::now();
-    print_utils::print_import_header();
+    print_utils::print_trade_data_import_header();
     // Enables verbose output for main
     let vrb = VERBOSE;
     // Enables verbose output for process_file.

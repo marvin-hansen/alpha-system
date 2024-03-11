@@ -5,7 +5,7 @@ use klickhouse::Client;
 use std::error::Error;
 use std::path::PathBuf;
 
-/// Process a CSV file for import into TimePlus Proton.
+/// Process a CSV file for import into ClickHouse.
 ///
 /// # Arguments
 ///
