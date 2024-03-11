@@ -1,5 +1,5 @@
-use cfg_manager::CfgManager;
 use common::prelude::{EnvironmentType, ServiceConfig, ServiceID};
+use config_manager::CfgManager;
 use ctx_manager::CtxManager;
 use dns_manager::DnsManager;
 use std::env;

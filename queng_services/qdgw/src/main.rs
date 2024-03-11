@@ -9,10 +9,9 @@ use autometrics::prometheus_exporter;
 use warp::Filter;
 
 use crate::service::Server;
-use cfg_manager::CfgManager;
-use client_manager::ClientManager;
 use common::prelude::ServiceID;
 use common::prelude::ServiceID::SMDB;
+use config_manager::CfgManager;
 use ctx_manager::CtxManager;
 use db_query_manager::QueryDBManager;
 use dns_manager::DnsManager;
@@ -34,9 +33,6 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let cfg_manager = async { CfgManager::new(SVC_ID, &ctx_manager, &dns_manager) }.await;
     //Creates a new instance of the Service Manager.
     let service_manager = async { ServiceManager::new(&cfg_manager) }.await;
-
-    // Creates a new instance of the Client Manager.
-    let _client_manager = Arc::new(Mutex::new(ClientManager::new()));
 
     //Retrieves the host and port of the Service Manager Database (SMDB) from the auto-configuration.
     let (smdb_host, smdb_port) = service_manager
@@ -96,9 +92,6 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     let web_handle = tokio::spawn(web_server);
 
-    // Wrap ClientManager into Arc/Mutex to allow multi-threaded access.
-    let client_manager = Arc::new(Mutex::new(ClientManager::new()));
-
     // Get the symbol table for the default exchange.
     let default_exchange = cfg_manager.default_exchange();
     let exchanges = cfg_manager.exchanges_id_names().to_owned();
@@ -144,12 +137,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let service_topic = msg_config.control_channel();
 
     //Creates a new server
-    let server = Server::new(
-        service_topic.clone(),
-        client_manager,
-        query_manager.clone(),
-        symbol_manager,
-    );
+    let server = Server::new(service_topic.clone(), query_manager.clone(), symbol_manager);
 
     //Creates a new Tokio task for the server.
     let signal = shutdown_utils::signal_handler("Message server");

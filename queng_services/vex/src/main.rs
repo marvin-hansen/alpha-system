@@ -1,7 +1,7 @@
 use crate::service::Server;
 use autometrics::prometheus_exporter;
-use cfg_manager::CfgManager;
 use common::prelude::ServiceID;
+use config_manager::CfgManager;
 use ctx_manager::CtxManager;
 use dns_manager::DnsManager;
 use service_utils::{print_utils, shutdown_utils};

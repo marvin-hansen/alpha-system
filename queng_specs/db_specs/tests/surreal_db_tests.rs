@@ -1,11 +1,11 @@
-use common::prelude::DBConfig;
+use common::prelude::SurrealDBConfig;
 use db_specs::prelude::{db_config_ci, db_config_cluster, db_config_local};
 
 const PORT: u16 = 8000;
 
 #[test]
 fn test_db_config_local() {
-    let expected = DBConfig::new(
+    let expected = SurrealDBConfig::new(
         PORT,
         "0.0.0.0".to_string(),
         "test".to_string(),
@@ -21,7 +21,7 @@ fn test_db_config_local() {
 
 #[test]
 fn test_db_config_ci() {
-    let expected = DBConfig::default();
+    let expected = SurrealDBConfig::default();
     let actual = db_config_ci();
 
     assert_eq!(expected, actual);
@@ -29,7 +29,7 @@ fn test_db_config_ci() {
 
 #[test]
 fn test_db_config_cluster() {
-    let expected = DBConfig::new(
+    let expected = SurrealDBConfig::new(
         PORT,
         "db.namespace.url.cluster".to_string(),
         "cluster".to_string(),

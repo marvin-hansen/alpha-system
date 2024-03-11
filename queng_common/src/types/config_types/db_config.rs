@@ -51,9 +51,9 @@ impl DBConfig {
     /// # Example
     ///
     /// ```rust
-    /// use common::prelude::DBConfig;
+    /// use common::prelude::SurrealDBConfig;
     ///
-    /// let config = DBConfig::new(9009, "localhost".to_string());
+    /// let config = SurrealDBConfig::new(9009, "localhost".to_string());
     /// ```
     pub fn new(port: u16, host: String) -> Self {
         Self {
@@ -91,9 +91,9 @@ impl DBConfig {
     /// # Example
     ///
     /// ```
-    /// use common::prelude::DBConfig;
+    /// use common::prelude::SurrealDBConfig;
     ///
-    /// let config = DBConfig::new_with_pg_config(
+    /// let config = SurrealDBConfig::new_with_pg_config(
     ///     9009, "localhost".into(), "myuser".into(), "password".into(),
     ///     "qdb".into(), 8812, 10);
     /// ```
@@ -137,9 +137,9 @@ impl DBConfig {
     /// # Examples
     ///
     /// ```rust
-    /// use common::prelude::DBConfig;
+    /// use common::prelude::SurrealDBConfig;
     ///
-    /// let config = DBConfig::new(9009, "localhost".into());
+    /// let config = SurrealDBConfig::new(9009, "localhost".into());
     /// let conn_str = config.pg_connection_string();
     ///
     /// assert_eq!(conn_str, "user=admin password=quest host=localhost port=8812 dbname=qdb");
@@ -168,9 +168,9 @@ impl DBConfig {
     /// # Examples
     ///
     /// ```rust
-    /// use common::prelude::DBConfig;
+    /// use common::prelude::SurrealDBConfig;
     ///
-    /// let config = DBConfig::new(9009, "localhost".into());
+    /// let config = SurrealDBConfig::new(9009, "localhost".into());
     /// assert_eq!(config.port(), 9009);
     /// ```
     pub fn port(&self) -> u16 {
@@ -182,9 +182,9 @@ impl DBConfig {
     /// # Examples
     ///
     /// ```rust
-    /// use common::prelude::DBConfig;
+    /// use common::prelude::SurrealDBConfig;
     ///
-    /// let config = DBConfig::new(9009, "localhost".into());
+    /// let config = SurrealDBConfig::new(9009, "localhost".into());
     /// assert_eq!(config.host(), "localhost");
     /// ```
     pub fn host(&self) -> &str {
@@ -196,9 +196,9 @@ impl DBConfig {
     /// # Examples
     ///
     /// ```rust
-    /// use common::prelude::DBConfig;
+    /// use common::prelude::SurrealDBConfig;
     ///
-    /// let config = DBConfig::new(9009, "localhost".into());
+    /// let config = SurrealDBConfig::new(9009, "localhost".into());
     /// assert_eq!(config.buffer_size(), 50000);
     /// ```
     pub fn buffer_size(&self) -> usize {
@@ -210,9 +210,9 @@ impl DBConfig {
     /// # Examples
     ///
     /// ```rust
-    /// use common::prelude::DBConfig;
+    /// use common::prelude::SurrealDBConfig;
     ///
-    /// let config = DBConfig::new_with_pg_config(
+    /// let config = SurrealDBConfig::new_with_pg_config(
     ///         27017,
     ///         "localhost".to_string(),
     ///         "pguser".to_string(),
@@ -233,9 +233,9 @@ impl DBConfig {
     /// # Examples
     ///
     /// ```rust
-    /// use common::prelude::DBConfig;
+    /// use common::prelude::SurrealDBConfig;
     ///
-    /// let config = DBConfig::new_with_pg_config(
+    /// let config = SurrealDBConfig::new_with_pg_config(
     ///         27017,
     ///         "localhost".to_string(),
     ///         "pguser".to_string(),
@@ -256,9 +256,9 @@ impl DBConfig {
     /// # Examples
     ///
     /// ```rust
-    /// use common::prelude::DBConfig;
+    /// use common::prelude::SurrealDBConfig;
     ///
-    /// let config = DBConfig::new_with_pg_config(
+    /// let config = SurrealDBConfig::new_with_pg_config(
     ///         27017,
     ///         "localhost".to_string(),
     ///         "pguser".to_string(),
@@ -279,9 +279,9 @@ impl DBConfig {
     /// # Examples
     ///
     /// ```rust
-    /// use common::prelude::DBConfig;
+    /// use common::prelude::SurrealDBConfig;
     ///
-    /// let config = DBConfig::new_with_pg_config(
+    /// let config = SurrealDBConfig::new_with_pg_config(
     ///         27017,
     ///         "localhost".to_string(),
     ///         "pguser".to_string(),

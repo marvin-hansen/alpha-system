@@ -1,7 +1,7 @@
 use crate::CfgManager;
 use common::prelude::{
-    DBConfig, EnvironmentType, ExchangeID, InitError, MessageClientConfig, MetricConfig,
-    QuestDBConfig, ServiceConfig, ServiceID,
+    EnvironmentType, ExchangeID, InitError, MessageClientConfig, MetricConfig, QuestDBConfig,
+    ServiceConfig, ServiceID, SurrealDBConfig,
 };
 use db_specs::prelude::{
     db_config_ci, db_config_cluster, db_config_local, get_cluster_quest_db_config,
@@ -115,7 +115,7 @@ impl<'l> CfgManager<'l> {
         }
     }
 
-    pub fn get_surreal_db_config(&self) -> DBConfig {
+    pub fn get_surreal_db_config(&self) -> SurrealDBConfig {
         match self.env_type {
             EnvironmentType::LOCAL => db_config_local(),
             EnvironmentType::CI => db_config_ci(),

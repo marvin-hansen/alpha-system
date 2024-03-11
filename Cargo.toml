@@ -9,7 +9,6 @@ members = [
     "queng_clients/symdb_client",
     "queng_common",
     "queng_components/config_manager",
-    "queng_components/client_manager",
     "queng_components/ctx_manager",
     "queng_components/db_query_manager",
     "queng_components/db_surreal_manager",
@@ -53,7 +52,6 @@ dbgw_client = { path = "queng_clients/dbgw_client" }
 symdb_client = { path = "queng_clients/symdb_client" }
 # Components
 config_manager = { path = "queng_components/config_manager" }
-client_manager = { path = "queng_components/client_manager" }
 ctx_manager = { path = "queng_components/ctx_manager" }
 db_query_manager = { path = "queng_components/db_query_manager" }
 db_surreal_manager = { path = "queng_components/db_surreal_manager" }

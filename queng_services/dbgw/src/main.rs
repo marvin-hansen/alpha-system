@@ -1,6 +1,6 @@
 use autometrics::prometheus_exporter;
-use cfg_manager::CfgManager;
 use common::prelude::ServiceID;
+use config_manager::CfgManager;
 use ctx_manager::CtxManager;
 use db_surreal_manager::SurrealDBManager;
 use dns_manager::DnsManager;

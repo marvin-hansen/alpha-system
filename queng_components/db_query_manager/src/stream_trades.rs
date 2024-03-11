@@ -22,14 +22,14 @@ impl QueryDBManager {
     /// # Example
     ///
     /// ```
-    /// use common::prelude::DBConfig;
+    /// use common::prelude::SurrealDBConfig;
     /// use db_query_manager::QueryDBManager;
     ///  use futures::StreamExt;
     ///
     /// #[tokio::main]
     /// async fn main() {
     ///
-    /// let db_config =  DBConfig::new(9009, "0.0.0.0".into());
+    /// let db_config =  SurrealDBConfig::new(9009, "0.0.0.0".into());
     ///
     /// let query_manager = QueryDBManager::new(db_config).await.expect("Failed to create db connection");    ///
     /// let trade_table = "kraken_ethaed";    ///

@@ -1,4 +1,4 @@
-use cfg_manager::CfgManager;
+use config_manager::CfgManager;
 use std::env;
 
 use common::prelude::{EnvironmentType, HostEndpoint, MetricConfig, ServiceID};
