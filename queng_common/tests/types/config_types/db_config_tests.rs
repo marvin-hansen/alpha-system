@@ -1,89 +1,59 @@
 use common::prelude::DBConfig;
 
+fn get_db_config() -> DBConfig {
+    DBConfig::new(27017, "localhost".to_string())
+}
+
 #[test]
 fn test_new() {
-    let config = DBConfig::new(
-        8000,
-        "localhost".to_string(),
-        "test".to_string(),
-        "test".to_string(),
-        "username".to_string(),
-        "password".to_string(),
-    );
-
-    assert_eq!(config.port(), 8000);
+    let config = get_db_config();
+    assert_eq!(config.port(), 27017);
     assert_eq!(config.host(), "localhost");
-    assert_eq!(config.db_name(), "test");
-    assert_eq!(config.db_namespace(), "test");
-    assert_eq!(config.username(), "username");
-    assert_eq!(config.password(), "password");
 }
 
 #[test]
-fn test_new_connection() {
-    let config = DBConfig::new_connection(8000, "localhost".to_string());
-
-    assert_eq!(config.port(), 8000);
-    assert_eq!(config.host(), &("localhost".to_string()));
-}
-
-#[test]
-fn test_new_connection_with_authentication() {
-    let config = DBConfig::new_connection_with_authentication(
-        8000,
+fn test_new_with_pg_config() {
+    let config = DBConfig::new_with_pg_config(
+        27017,
         "localhost".to_string(),
-        "username".to_string(),
-        "password".to_string(),
+        "pguser".to_string(),
+        "pgpass".to_string(),
+        "pgdb".to_string(),
+        5432,
+        10,
     );
 
-    assert_eq!(config.port(), 8000);
-    assert_eq!(config.host(), &("localhost".to_string()));
-    assert_eq!(config.username(), &("username".to_string()));
-    assert_eq!(config.password(), &("password".to_string()));
+    assert_eq!(config.port(), 27017);
+    assert_eq!(config.host(), "localhost");
+    assert_eq!(config.pg_user(), "pguser");
+    assert_eq!(config.pg_password(), "pgpass");
+    assert_eq!(config.pg_database(), "pgdb");
+    assert_eq!(config.pg_port(), 5432);
 }
 
 #[test]
-fn test_new_authentication() {
-    let config = DBConfig::new_authentication("username".to_string(), "password".to_string());
+fn test_pg_connection_string() {
+    let config = get_db_config();
 
-    assert_eq!(config.username(), &("username".to_string()));
-    assert_eq!(config.password(), &("password".to_string()));
-}
+    // 8812 is the postgres default port.
+    let expected = "user=admin password=quest host=localhost port=8812 dbname=qdb";
 
-#[test]
-fn test_default() {
-    let config = DBConfig::default();
-
-    assert_eq!(config.port(), 8000);
-    assert_eq!(config.host(), &"0.0.0.0".to_string());
-    assert_eq!(config.username(), &"root".to_string());
-    assert_eq!(config.password(), &"root".to_string());
-}
-
-#[test]
-fn test_debug() {
-    let config = DBConfig::new_connection_with_authentication(
-        8000,
-        "localhost".to_string(),
-        "username".to_string(),
-        "password".to_string(),
-    );
-
-    let actual = format!("{:?}", config);
-    let expected = "DBConfig { port: 8000, host: \"localhost\", db_name: \"test\", db_namespace: \"test\", username: \"username\", password: \"password\" }";
-    assert_eq!(actual, expected);
+    assert_eq!(expected, config.pg_connection_string());
 }
 
 #[test]
 fn test_display() {
-    let config = DBConfig::new_connection_with_authentication(
-        8000,
+    let config = DBConfig::new_with_pg_config(
+        27017,
         "localhost".to_string(),
-        "username".to_string(),
-        "password".to_string(),
+        "pguser".to_string(),
+        "pgpass".to_string(),
+        "pgdb".to_string(),
+        5432,
+        10,
     );
 
-    let actual = config.to_string();
-    let expected = "DBConfig { port: 8000, host: localhost, db_name: test, db_namespace: test, username: username,password: password }";
-    assert_eq!(actual, expected);
+    let expected = "DBConfig {\n  port: 27017,\n  host: localhost,\n  pg_user: pguser,\n  pg_database: pgdb\n pg_port: 5432\n}";
+
+    assert_eq!(format!("{}", config), expected);
 }

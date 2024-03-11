@@ -1,13 +1,17 @@
 //
 // Types
 // config types
+pub use crate::types::config_types::click_house_config::ClickHouseConfig;
 pub use crate::types::config_types::client_channel::*;
+pub use crate::types::config_types::db_config::DBConfig;
 pub use crate::types::config_types::db_quest_config::*;
-pub use crate::types::config_types::db_surreal_config::*;
+// pub use crate::types::config_types::db_surreal_config::*;
 pub use crate::types::config_types::encoding::*;
 pub use crate::types::config_types::endpoint::*;
 pub use crate::types::config_types::endpoint_host::*;
 pub use crate::types::config_types::environment_type::*;
+pub use crate::types::config_types::iggy_config::IggyConfig;
+pub use crate::types::config_types::iggy_user::IggyUser;
 pub use crate::types::config_types::message_client_config::*;
 pub use crate::types::config_types::metric_config::*;
 pub use crate::types::config_types::protocol_type::*;
