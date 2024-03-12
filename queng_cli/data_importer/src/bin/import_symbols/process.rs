@@ -1,7 +1,7 @@
 use client_utils::print_utils;
 use klickhouse::Client;
 use lib_import::types::assets::AssetRoot;
-use lib_import::types::exchanges::{Exchange, ExchangesRoot};
+use lib_import::types::exchanges::ExchangesRoot;
 use lib_import::types::instruments::{Instrument, InstrumentsRoot};
 use std::error::Error;
 use std::fs::File;
@@ -73,14 +73,25 @@ async fn process_exchanges(
     vrb: bool,
 ) -> Result<(), Box<dyn Error>> {
     print_utils::dbg_print(vrb, "Processing exchanges");
+    let active = Arc::new(AtomicUsize::new(0));
 
     let file = File::open(file_path).expect("file not found");
 
     let exchanges: ExchangesRoot = serde_json::from_reader(file).expect("error while reading");
 
+    for exchange in exchanges.data.iter() {
+        if exchange.active {
+            active.fetch_add(1, Ordering::SeqCst);
+        }
+    }
+
     let count = exchanges.data.len();
 
     println!("Number of exchanges: {}", count);
+    println!(
+        "Number of active exchanges: {}",
+        active.load(Ordering::SeqCst)
+    );
 
     Ok(())
 }
@@ -93,6 +104,7 @@ async fn process_instruments(
     print_utils::dbg_print(vrb, "Processing instruments");
     let instrument_inactive = Arc::new(AtomicUsize::new(0));
     let instrument_figi_counter = Arc::new(AtomicUsize::new(0));
+    let pair_figi_counter = Arc::new(AtomicUsize::new(0));
 
     let file = File::open(file_path).expect("file not found");
 
@@ -106,6 +118,9 @@ async fn process_instruments(
                 let meta = instrument.metadata.as_ref().unwrap();
                 if meta.instrument_figi.is_some() {
                     instrument_figi_counter.fetch_add(1, Ordering::SeqCst);
+                }
+                if meta.pair_figi.is_some() {
+                    pair_figi_counter.fetch_add(1, Ordering::SeqCst);
                 }
             }
 
@@ -129,7 +144,13 @@ async fn process_instruments(
     );
 
     let count = instrument_figi_counter.load(Ordering::SeqCst);
-    println!("Number of filtered instruments with FIGI: {}", count);
+    println!(
+        "Number of filtered instruments with instrument FIGI: {}",
+        count
+    );
+
+    let count = pair_figi_counter.load(Ordering::SeqCst);
+    println!("Number of filtered instruments with Pair FIGI: {}", count);
 
     Ok(())
 }
