@@ -28,7 +28,7 @@ pub struct Instrument {
     pub kaiko_legacy_symbol: String,
     pub code: String,
     pub class: String,
-    pub metadata: Option<Metadata>,
+    pub metadata: Option<InstrumentMetadata>,
     #[serde(rename = "trade_start_timestamp")]
     pub trade_start_timestamp: Option<u64>,
     #[serde(rename = "trade_end_timestamp")]
@@ -47,7 +47,7 @@ impl Instrument {
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct Metadata {
+pub struct InstrumentMetadata {
     #[serde(rename = "pair_figi")]
     pub pair_figi: Option<String>,
     #[serde(rename = "instrument_figi")]
