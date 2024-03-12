@@ -30,19 +30,20 @@ pub struct Instrument {
     pub class: String,
     pub metadata: Option<Metadata>,
     #[serde(rename = "trade_start_timestamp")]
-    pub trade_start_timestamp: Option<i64>,
+    pub trade_start_timestamp: Option<u64>,
     #[serde(rename = "trade_end_timestamp")]
     pub trade_end_timestamp: Option<i64>,
     #[serde(rename = "trade_compressed_size")]
-    pub trade_compressed_size: i64,
+    pub trade_compressed_size: u64,
     #[serde(rename = "trade_count")]
-    pub trade_count: i64,
+    pub trade_count: u64,
 }
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Metadata {
-    #[serde(rename = "asset_figi")]
+    #[serde(rename = "pair_figi")]
     pub pair_figi: Option<String>,
+    #[serde(rename = "instrument_figi")]
     pub instrument_figi: Option<String>,
 }

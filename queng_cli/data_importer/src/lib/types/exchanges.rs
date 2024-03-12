@@ -14,4 +14,8 @@ pub struct Exchange {
     pub name: String,
     #[serde(rename = "kaiko_legacy_slug")]
     pub kaiko_legacy_slug: String,
+    #[serde(rename = "active")]
+    pub active: bool,
+    #[serde(rename = "url")]
+    pub url: Option<String>,
 }
