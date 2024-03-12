@@ -1,3 +1,5 @@
+use crate::fields::INACTIVE_EXCHANGES;
+use crate::gen_ddl;
 use client_utils::print_utils;
 use klickhouse::Client;
 use lib_import::types::assets::AssetRoot;
@@ -76,8 +78,13 @@ async fn process_exchanges(
     let active = Arc::new(AtomicUsize::new(0));
 
     let file = File::open(file_path).expect("file not found");
-
     let exchanges: ExchangesRoot = serde_json::from_reader(file).expect("error while reading");
+
+    let ddl = gen_ddl::generate_exchange_table_ddl();
+    client
+        .execute(ddl.as_str())
+        .await
+        .expect("Failed to create exchanges table");
 
     for exchange in exchanges.data.iter() {
         if exchange.active {
@@ -86,13 +93,9 @@ async fn process_exchanges(
     }
 
     let count = exchanges.data.len();
-
     println!("Number of exchanges: {}", count);
-    println!(
-        "Number of active exchanges: {}",
-        active.load(Ordering::SeqCst)
-    );
-
+    let count = active.load(Ordering::SeqCst);
+    println!("Number of active exchanges: {}", count);
     Ok(())
 }
 
@@ -102,6 +105,7 @@ async fn process_instruments(
     vrb: bool,
 ) -> Result<(), Box<dyn Error>> {
     print_utils::dbg_print(vrb, "Processing instruments");
+
     let instrument_inactive = Arc::new(AtomicUsize::new(0));
     let instrument_figi_counter = Arc::new(AtomicUsize::new(0));
     let pair_figi_counter = Arc::new(AtomicUsize::new(0));
@@ -113,6 +117,11 @@ async fn process_instruments(
     let mut filtered = Vec::new();
 
     for instrument in instruments.data.iter() {
+        // Skip all instruments from inactive exchanges
+        if INACTIVE_EXCHANGES.contains(&instrument.exchange_code()) {
+            continue;
+        }
+
         if is_valid_instrument(instrument, instrument_inactive.clone()) {
             if instrument.metadata.is_some() {
                 let meta = instrument.metadata.as_ref().unwrap();
@@ -155,6 +164,7 @@ async fn process_instruments(
     Ok(())
 }
 
+// Double check if instrument is inactive i.e. from an inactive exchange
 fn is_valid_instrument(instrument: &Instrument, instrument_inactive: Arc<AtomicUsize>) -> bool {
     // Instrument  inactive
     if instrument.trade_start_time.is_none() && instrument.trade_end_time.is_none() {
