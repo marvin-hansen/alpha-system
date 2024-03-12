@@ -1,3 +1,6 @@
+mod fields;
+mod gen_ddl;
+mod gen_query;
 mod process;
 
 use client_utils::{config_utils, file_utils, print_utils};

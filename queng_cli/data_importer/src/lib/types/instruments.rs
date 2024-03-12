@@ -17,7 +17,7 @@ pub struct Instrument {
     #[serde(rename = "trade_end_time")]
     pub trade_end_time: Option<String>,
     #[serde(rename = "exchange_code")]
-    pub exchange_code: String,
+    exchange_code: String,
     #[serde(rename = "exchange_pair_code")]
     pub exchange_pair_code: String,
     #[serde(rename = "base_asset")]
@@ -37,6 +37,12 @@ pub struct Instrument {
     pub trade_compressed_size: u64,
     #[serde(rename = "trade_count")]
     pub trade_count: u64,
+}
+
+impl Instrument {
+    pub fn exchange_code(&self) -> &str {
+        &self.exchange_code
+    }
 }
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
