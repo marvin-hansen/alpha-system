@@ -2,6 +2,10 @@ mod fields;
 mod gen_ddl;
 mod gen_query;
 mod process;
+mod process_assets;
+mod process_exchanges;
+mod process_instruments;
+mod utils_query;
 
 use client_utils::{config_utils, file_utils, print_utils};
 use common::prelude::ClickHouseConfig;

@@ -1,7 +1,7 @@
 use crate::query_gen;
 use klickhouse::Client;
 use lib_import::types::count::CountRow;
-use lib_import::types::symbol::SymbolMetaData;
+use lib_import::types::symbol_meta_data::SymbolMetaData;
 use std::error::Error;
 
 pub(crate) async fn count_rows(client: &Client, path: &str) -> Result<u64, Box<dyn Error>> {

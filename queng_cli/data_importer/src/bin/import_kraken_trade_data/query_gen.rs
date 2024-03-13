@@ -1,4 +1,4 @@
-use lib_import::types::symbol::SymbolMetaData;
+use lib_import::types::symbol_meta_data::SymbolMetaData;
 
 pub(crate) fn generate_trade_table_ddl(table_name: &str) -> String {
     format!(
