@@ -76,11 +76,13 @@ async fn process_assets(
     print_utils::dbg_print(vrb, "Importing assets");
     for asset in assets.iter() {
         let insert_query = generate_asset_insert(asset);
-
-        client
-            .execute(&insert_query)
-            .await
-            .expect("Failed to insert asset");
+        match client.execute(&insert_query).await {
+            Ok(_) => {}
+            Err(e) => {
+                println!("Failed insert query: {}", insert_query);
+                return Err(Box::from(e));
+            }
+        };
     }
 
     let count_query = gen_query::generate_count_assets();
@@ -113,7 +115,7 @@ async fn process_exchanges(
     print_utils::dbg_print(vrb, "Processing exchanges");
     let active = Arc::new(AtomicUsize::new(0));
 
-    print_utils::dbg_print(vrb, "Load exchanges from files");
+    print_utils::dbg_print(vrb, "Load exchanges from file");
     let exchanges = get_exchanges_from_file(file_path)
         .await
         .expect("Failed to read exchanges from file");
@@ -129,10 +131,14 @@ async fn process_exchanges(
         if exchange.active {
             active.fetch_add(1, Ordering::SeqCst);
             let insert_query = generate_exchange_insert(exchange);
-            client
-                .execute(&insert_query)
-                .await
-                .expect("Failed to insert exchange");
+
+            match client.execute(&insert_query).await {
+                Ok(_) => {}
+                Err(e) => {
+                    println!("Failed insert query: {}", insert_query);
+                    return Err(Box::from(e));
+                }
+            };
         }
     }
 
@@ -171,7 +177,7 @@ async fn process_instruments(
     let instrument_figi_counter = Arc::new(AtomicUsize::new(0));
     let pair_figi_counter = Arc::new(AtomicUsize::new(0));
 
-    print_utils::dbg_print(vrb, "Load instruments from files");
+    print_utils::dbg_print(vrb, "Load instruments from file");
     let instruments = get_instruments_from_file(file_path)
         .await
         .expect("Failed to read instruments from file");
@@ -208,10 +214,13 @@ async fn process_instruments(
 
             instrument_filtered.fetch_add(1, Ordering::SeqCst);
             let insert_query = generate_instruments_insert(instrument);
-            client
-                .execute(&insert_query)
-                .await
-                .expect("Failed to insert instrument");
+            match client.execute(&insert_query).await {
+                Ok(_) => {}
+                Err(e) => {
+                    println!("Failed insert query: {}", insert_query);
+                    return Err(Box::from(e));
+                }
+            };
         }
     }
 
