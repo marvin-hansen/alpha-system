@@ -2,26 +2,15 @@ use klickhouse::Row;
 use serde::{Deserialize, Serialize};
 use std::fmt;
 
-#[derive(Debug, Row, Serialize, Deserialize)]
-pub struct CountRow {
-    count: u64,
-}
-
-impl CountRow {
-    pub fn count(&self) -> u64 {
-        self.count
-    }
-}
-
 #[derive(Debug, Clone, Row, Serialize, Deserialize)]
-pub struct MetaData {
+pub struct SymbolMetaData {
     table_name: String,
     symbol: String,
     symbol_id: u32,
     number_of_rows: u64,
 }
 
-impl MetaData {
+impl SymbolMetaData {
     pub fn new(table_name: String, symbol: String, symbol_id: u32, number_of_rows: u64) -> Self {
         Self {
             table_name,
@@ -32,7 +21,7 @@ impl MetaData {
     }
 }
 
-impl MetaData {
+impl SymbolMetaData {
     pub fn table_name(&self) -> &str {
         &self.table_name
     }
@@ -47,7 +36,7 @@ impl MetaData {
     }
 }
 
-impl fmt::Display for MetaData {
+impl fmt::Display for SymbolMetaData {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(
             f,

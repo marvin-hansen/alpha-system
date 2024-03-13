@@ -1,6 +1,7 @@
 use crate::query_gen;
-use crate::types::{CountRow, MetaData};
 use klickhouse::Client;
+use lib_import::types::count::CountRow;
+use lib_import::types::symbol::SymbolMetaData;
 use std::error::Error;
 
 pub(crate) async fn count_rows(client: &Client, path: &str) -> Result<u64, Box<dyn Error>> {
@@ -59,7 +60,7 @@ pub(crate) async fn create_meta_data_table(
 
 pub(crate) async fn insert_meta_data(
     client: &Client,
-    meta_data: &MetaData,
+    meta_data: &SymbolMetaData,
     meta_data_table: &str,
 ) -> Result<(), Box<dyn Error>> {
     let query = query_gen::generate_meta_data_insert_query(meta_data_table, meta_data);

@@ -1,7 +1,6 @@
 mod process_file;
 mod query_gen;
 mod query_utils;
-mod types;
 
 use client_utils::prelude::{config_utils, file_utils, print_utils};
 use common::prelude::ClickHouseConfig;
