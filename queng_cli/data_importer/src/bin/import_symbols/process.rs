@@ -1,5 +1,8 @@
 use crate::fields::INACTIVE_EXCHANGES;
 use crate::gen_ddl;
+use crate::gen_query::{
+    generate_asset_insert, generate_exchange_insert, generate_instruments_insert,
+};
 use client_utils::print_utils;
 use klickhouse::Client;
 use lib_import::types::assets::{Asset, AssetRoot};
@@ -71,6 +74,14 @@ async fn process_assets(
         .await
         .expect("Failed to create exchanges table");
 
+    for asset in assets.iter() {
+        let insert_query = generate_asset_insert(asset);
+        client
+            .execute(&insert_query)
+            .await
+            .expect("Failed to insert asset");
+    }
+
     Ok(())
 }
 
@@ -101,6 +112,11 @@ async fn process_exchanges(
     for exchange in exchanges.iter() {
         if exchange.active {
             active.fetch_add(1, Ordering::SeqCst);
+            let insert_query = generate_exchange_insert(exchange);
+            client
+                .execute(&insert_query)
+                .await
+                .expect("Failed to insert exchange");
         }
     }
 
@@ -126,6 +142,7 @@ async fn process_instruments(
     print_utils::dbg_print(vrb, "Processing instruments");
 
     let instrument_inactive = Arc::new(AtomicUsize::new(0));
+    let instrument_filtered = Arc::new(AtomicUsize::new(0));
     let instrument_figi_counter = Arc::new(AtomicUsize::new(0));
     let pair_figi_counter = Arc::new(AtomicUsize::new(0));
 
@@ -145,8 +162,6 @@ async fn process_instruments(
         .await
         .expect("Failed to create instrument table");
 
-    let mut filtered = Vec::new();
-
     for instrument in instruments.iter() {
         // Skip all instruments from inactive exchanges
         if INACTIVE_EXCHANGES.contains(&instrument.exchange_code()) {
@@ -164,7 +179,12 @@ async fn process_instruments(
                 }
             }
 
-            filtered.push(instrument.clone());
+            instrument_filtered.fetch_add(1, Ordering::SeqCst);
+            let insert_query = generate_instruments_insert(instrument);
+            client
+                .execute(&insert_query)
+                .await
+                .expect("Failed to insert instrument");
         }
     }
 
@@ -177,7 +197,7 @@ async fn process_instruments(
         number_of_instruments_inactive
     );
 
-    let count = filtered.len();
+    let count = instrument_filtered.load(Ordering::SeqCst);
     println!(
         "Number of filtered (active, non-option, etc) instruments: {}",
         count
