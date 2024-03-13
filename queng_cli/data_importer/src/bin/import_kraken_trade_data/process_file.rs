@@ -1,7 +1,7 @@
 use crate::query_utils;
 use client_utils::print_utils;
 use klickhouse::Client;
-use lib_import::types::symbol::SymbolMetaData;
+use lib_import::types::symbol_meta_data::SymbolMetaData;
 use std::error::Error;
 use std::path::PathBuf;
 
