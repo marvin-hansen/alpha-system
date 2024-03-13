@@ -1,4 +1,4 @@
-pub fn _generate_asset_table_ddl() -> String {
+pub fn generate_asset_table_ddl() -> String {
     r"
     CREATE TABLE IF NOT EXISTS default.assets
     (
@@ -35,12 +35,12 @@ pub fn generate_exchange_table_ddl() -> String {
      )
      ENGINE = MergeTree()
      PRIMARY KEY (code, name)
-     SETTINGS index_granularity = 12;
+     SETTINGS index_granularity = 12
     "
     .to_string()
 }
 
-pub fn _generate_instruments_table_ddl() -> String {
+pub fn generate_instruments_table_ddl() -> String {
     r"
      CREATE TABLE IF NOT EXISTS default.instruments
      (
@@ -58,12 +58,12 @@ pub fn _generate_instruments_table_ddl() -> String {
      ENGINE = MergeTree()
      PRIMARY KEY (code)
      ORDER BY (code, class, exchange_code, exchange_pair_code, base_asset, quote_asset)
-     SETTINGS index_granularity = 812;
+     SETTINGS index_granularity = 812
     "
     .to_string()
 }
 
-pub fn _generate_master_symbols_table_ddl() -> String {
+pub fn generate_master_symbols_table_ddl() -> String {
     r"
      CREATE TABLE IF NOT EXISTS default.master_symbols
      (
@@ -73,7 +73,7 @@ pub fn _generate_master_symbols_table_ddl() -> String {
      ENGINE = MergeTree()
      PRIMARY KEY (master_symbol_id, master_symbol)
      ORDER BY (master_symbol_id, master_symbol)
-     SETTINGS index_granularity = 8192;
+     SETTINGS index_granularity = 819
     "
     .to_string()
 }

@@ -2,8 +2,8 @@ use crate::fields::INACTIVE_EXCHANGES;
 use crate::gen_ddl;
 use client_utils::print_utils;
 use klickhouse::Client;
-use lib_import::types::assets::AssetRoot;
-use lib_import::types::exchanges::ExchangesRoot;
+use lib_import::types::assets::{Asset, AssetRoot};
+use lib_import::types::exchanges::{Exchange, ExchangesRoot};
 use lib_import::types::instruments::{Instrument, InstrumentsRoot};
 use std::error::Error;
 use std::fs::File;
@@ -58,15 +58,26 @@ async fn process_assets(
 ) -> Result<(), Box<dyn Error>> {
     print_utils::dbg_print(vrb, "Processing assets");
 
-    let file = File::open(file_path).expect("file not found");
+    let assets = get_assets_from_file(file_path)
+        .await
+        .expect("Failed to read assets from file");
 
-    let assets: AssetRoot = serde_json::from_reader(file).expect("error while reading");
-
-    let count = assets.data.len();
-
+    let count = assets.len();
     println!("Number of assets: {}", count);
 
+    let ddl = gen_ddl::generate_asset_table_ddl();
+    client
+        .execute(&ddl)
+        .await
+        .expect("Failed to create exchanges table");
+
     Ok(())
+}
+
+async fn get_assets_from_file(file_path: &PathBuf) -> Result<Vec<Asset>, Box<dyn Error>> {
+    let file = File::open(file_path).expect("file not found");
+    let assets: AssetRoot = serde_json::from_reader(file).expect("error while reading");
+    Ok(assets.data)
 }
 
 async fn process_exchanges(
@@ -77,26 +88,34 @@ async fn process_exchanges(
     print_utils::dbg_print(vrb, "Processing exchanges");
     let active = Arc::new(AtomicUsize::new(0));
 
-    let file = File::open(file_path).expect("file not found");
-    let exchanges: ExchangesRoot = serde_json::from_reader(file).expect("error while reading");
+    let exchanges = get_exchanges_from_file(file_path)
+        .await
+        .expect("Failed to read exchanges from file");
 
     let ddl = gen_ddl::generate_exchange_table_ddl();
     client
-        .execute(ddl.as_str())
+        .execute(&ddl)
         .await
         .expect("Failed to create exchanges table");
 
-    for exchange in exchanges.data.iter() {
+    for exchange in exchanges.iter() {
         if exchange.active {
             active.fetch_add(1, Ordering::SeqCst);
         }
     }
 
-    let count = exchanges.data.len();
+    let count = exchanges.len();
     println!("Number of exchanges: {}", count);
     let count = active.load(Ordering::SeqCst);
     println!("Number of active exchanges: {}", count);
+
     Ok(())
+}
+
+async fn get_exchanges_from_file(file_path: &PathBuf) -> Result<Vec<Exchange>, Box<dyn Error>> {
+    let file = File::open(file_path).expect("file not found");
+    let exchanges: ExchangesRoot = serde_json::from_reader(file).expect("error while reading");
+    Ok(exchanges.data)
 }
 
 async fn process_instruments(
@@ -110,13 +129,25 @@ async fn process_instruments(
     let instrument_figi_counter = Arc::new(AtomicUsize::new(0));
     let pair_figi_counter = Arc::new(AtomicUsize::new(0));
 
-    let file = File::open(file_path).expect("file not found");
+    let instruments = get_instruments_from_file(file_path)
+        .await
+        .expect("Failed to read instruments from file");
 
-    let instruments: InstrumentsRoot = serde_json::from_reader(file).expect("error while reading");
+    let ddl = gen_ddl::generate_instruments_table_ddl();
+    client
+        .execute(&ddl)
+        .await
+        .expect("Failed to create instrument table");
+
+    let ddl = gen_ddl::generate_master_symbols_table_ddl();
+    client
+        .execute(&ddl)
+        .await
+        .expect("Failed to create instrument table");
 
     let mut filtered = Vec::new();
 
-    for instrument in instruments.data.iter() {
+    for instrument in instruments.iter() {
         // Skip all instruments from inactive exchanges
         if INACTIVE_EXCHANGES.contains(&instrument.exchange_code()) {
             continue;
@@ -137,7 +168,7 @@ async fn process_instruments(
         }
     }
 
-    let count = instruments.data.len();
+    let count = instruments.len();
     println!("Number of All instruments: {}", count);
 
     let number_of_instruments_inactive = instrument_inactive.load(Ordering::SeqCst);
@@ -162,6 +193,12 @@ async fn process_instruments(
     println!("Number of filtered instruments with Pair FIGI: {}", count);
 
     Ok(())
+}
+
+async fn get_instruments_from_file(file_path: &PathBuf) -> Result<Vec<Instrument>, Box<dyn Error>> {
+    let file = File::open(file_path).expect("file not found");
+    let instruments: InstrumentsRoot = serde_json::from_reader(file).expect("error while reading");
+    Ok(instruments.data)
 }
 
 // Double check if instrument is inactive i.e. from an inactive exchange

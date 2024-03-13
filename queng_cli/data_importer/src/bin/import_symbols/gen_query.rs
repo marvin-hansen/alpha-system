@@ -1,4 +1,4 @@
-use lib_import::types::assets::{Asset, Metadata};
+use lib_import::types::assets::{Asset, AssetMetadata};
 use lib_import::types::exchanges::Exchange;
 use lib_import::types::instruments::{Instrument, InstrumentMetadata};
 
@@ -22,7 +22,7 @@ pub fn generate_asset_insert(asset: &Asset) -> String {
     )
 }
 
-fn extract_asset_figi(metadata: &Option<Metadata>) -> String {
+fn extract_asset_figi(metadata: &Option<AssetMetadata>) -> String {
     let empty_string = "".to_string();
     let asset_figi = match metadata {
         Some(metadata) => match &metadata.asset_figi {
@@ -88,5 +88,21 @@ pub fn generate_instruments_insert(instrument: &Instrument) -> String {
 fn extract_instrument_figi(metadata: &Option<InstrumentMetadata>) -> (String, String) {
     let empty_string = "".to_string();
 
-    (empty_string.clone(), empty_string.clone())
+    let pair_figi = match metadata {
+        Some(metadata) => match &metadata.pair_figi {
+            Some(figi) => figi.to_owned(),
+            None => "".to_string(),
+        },
+        None => "".to_string(),
+    };
+
+    let instrument_figi = match metadata {
+        Some(metadata) => match &metadata.instrument_figi {
+            Some(figi) => figi.to_owned(),
+            None => "".to_string(),
+        },
+        None => "".to_string(),
+    };
+
+    (pair_figi, instrument_figi)
 }

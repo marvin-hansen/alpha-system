@@ -23,6 +23,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let db_config = ClickHouseConfig::default();
     let destination = db_config.connection_string();
 
+    print_utils::dbg_print(vrb, "Connect to DB");
     let client = Client::connect(destination.clone(), ClientOptions::default())
         .await
         .expect(format!("Failed to connect to {}", &destination).as_str());
