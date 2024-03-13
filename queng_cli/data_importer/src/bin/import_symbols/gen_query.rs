@@ -48,7 +48,7 @@ pub fn generate_exchange_insert(exchange: &Exchange) -> String {
         '{code}',
         '{name}',
          {active},
-         '{url}'
+        '{url}'
          );
     "
     )
@@ -86,8 +86,6 @@ pub fn generate_instruments_insert(instrument: &Instrument) -> String {
 }
 
 fn extract_instrument_figi(metadata: &Option<InstrumentMetadata>) -> (String, String) {
-    let empty_string = "".to_string();
-
     let pair_figi = match metadata {
         Some(metadata) => match &metadata.pair_figi {
             Some(figi) => figi.to_owned(),
