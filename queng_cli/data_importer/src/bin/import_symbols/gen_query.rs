@@ -2,7 +2,7 @@ use lib_import::types::assets::{Asset, AssetMetadata};
 use lib_import::types::exchanges::Exchange;
 use lib_import::types::instruments::{Instrument, InstrumentMetadata};
 
-pub fn generate_asset_insert(asset: &Asset) -> String {
+pub(crate) fn generate_asset_insert(asset: &Asset) -> String {
     let table_name = "default.assets";
     let code = &asset.code;
     let name = &asset.name;
@@ -17,9 +17,13 @@ pub fn generate_asset_insert(asset: &Asset) -> String {
         '{name}',
         '{asset_class}',
         '{asset_figi}'
-        );
+        )
     "
     )
+}
+
+pub(crate) fn generate_count_assets() -> String {
+    generate_count_query("default.assets")
 }
 
 fn extract_asset_figi(metadata: &Option<AssetMetadata>) -> String {
@@ -35,7 +39,7 @@ fn extract_asset_figi(metadata: &Option<AssetMetadata>) -> String {
     asset_figi
 }
 
-pub fn generate_exchange_insert(exchange: &Exchange) -> String {
+pub(crate) fn generate_exchange_insert(exchange: &Exchange) -> String {
     let table_name = "default.exchanges";
     let code = &exchange.code;
     let name = &exchange.name;
@@ -49,9 +53,13 @@ pub fn generate_exchange_insert(exchange: &Exchange) -> String {
         '{name}',
          {active},
         '{url}'
-         );
+         )
     "
     )
+}
+
+pub(crate) fn generate_count_exchanges() -> String {
+    generate_count_query("default.exchanges")
 }
 
 pub fn generate_instruments_insert(instrument: &Instrument) -> String {
@@ -80,9 +88,30 @@ pub fn generate_instruments_insert(instrument: &Instrument) -> String {
         '{class}',
         '{pair_figi}',
         '{instrument_figi}'
-        "
+        )"
     )
     .to_string()
+}
+
+pub(crate) fn generate_count_instruments() -> String {
+    generate_count_query("default.instruments")
+}
+
+pub fn _generate_master_symbols_insert(id: u64, code: &str) -> String {
+    let table_name = "default.master_symbols";
+    format!(
+        r"
+        INSERT INTO {table_name} (*)
+        VALUES (
+        {id},
+        '{code}'
+        )
+    "
+    )
+}
+
+pub(crate) fn _generate_count_master_symbols() -> String {
+    generate_count_query("default.master_symbols")
 }
 
 fn extract_instrument_figi(metadata: &Option<InstrumentMetadata>) -> (String, String) {
@@ -103,4 +132,12 @@ fn extract_instrument_figi(metadata: &Option<InstrumentMetadata>) -> (String, St
     };
 
     (pair_figi, instrument_figi)
+}
+
+fn generate_count_query(table_name: &str) -> String {
+    format!(
+        r"
+        SELECT count(*) FROM {table_name}
+    "
+    )
 }

@@ -1,4 +1,4 @@
-use crate::types::MetaData;
+use lib_import::types::symbol::SymbolMetaData;
 
 pub(crate) fn generate_trade_table_ddl(table_name: &str) -> String {
     format!(
@@ -54,7 +54,7 @@ pub(crate) fn generate_metadata_table_ddl(meta_data_table: &str) -> String {
 
 pub(crate) fn generate_meta_data_insert_query(
     meta_data_table: &str,
-    meta_data: &MetaData,
+    meta_data: &SymbolMetaData,
 ) -> String {
     let symbol = meta_data.symbol();
     let symbol_id = meta_data.symbol_id();

@@ -1,7 +1,7 @@
 use crate::query_utils;
-use crate::types::MetaData;
 use client_utils::print_utils;
 use klickhouse::Client;
+use lib_import::types::symbol::SymbolMetaData;
 use std::error::Error;
 use std::path::PathBuf;
 
@@ -88,7 +88,7 @@ pub(crate) async fn process(
     }
 
     print_utils::dbg_print(vrb, "Insert meta data into meta data table");
-    let meta_data = MetaData::new(table_name, symbol, symbol_id, number_of_rows);
+    let meta_data = SymbolMetaData::new(table_name, symbol, symbol_id, number_of_rows);
     query_utils::insert_meta_data(&client, &meta_data, meta_data_table)
         .await
         .expect("Failed to insert meta data");

@@ -1,11 +1,12 @@
 use crate::fields::INACTIVE_EXCHANGES;
-use crate::gen_ddl;
 use crate::gen_query::{
     generate_asset_insert, generate_exchange_insert, generate_instruments_insert,
 };
+use crate::{gen_ddl, gen_query};
 use client_utils::print_utils;
 use klickhouse::Client;
 use lib_import::types::assets::{Asset, AssetRoot};
+use lib_import::types::count::CountRow;
 use lib_import::types::exchanges::{Exchange, ExchangesRoot};
 use lib_import::types::instruments::{Instrument, InstrumentsRoot};
 use std::error::Error;
@@ -61,12 +62,10 @@ async fn process_assets(
 ) -> Result<(), Box<dyn Error>> {
     print_utils::dbg_print(vrb, "Processing assets");
 
+    print_utils::dbg_print(vrb, "Load assets from files");
     let assets = get_assets_from_file(file_path)
         .await
         .expect("Failed to read assets from file");
-
-    let count = assets.len();
-    println!("Number of assets: {}", count);
 
     let ddl = gen_ddl::generate_asset_table_ddl();
     client
@@ -74,13 +73,28 @@ async fn process_assets(
         .await
         .expect("Failed to create exchanges table");
 
+    print_utils::dbg_print(vrb, "Importing assets");
     for asset in assets.iter() {
         let insert_query = generate_asset_insert(asset);
+
         client
             .execute(&insert_query)
             .await
             .expect("Failed to insert asset");
     }
+
+    let count_query = gen_query::generate_count_assets();
+
+    let number_of_assets: CountRow = client
+        .query_one(&count_query)
+        .await
+        .expect("Failed to count rows in table");
+
+    let count = assets.len();
+    println!("Number of assets: {}", count);
+
+    let count = number_of_assets.count();
+    println!("Number of assets imported: {}", count);
 
     Ok(())
 }
@@ -99,6 +113,7 @@ async fn process_exchanges(
     print_utils::dbg_print(vrb, "Processing exchanges");
     let active = Arc::new(AtomicUsize::new(0));
 
+    print_utils::dbg_print(vrb, "Load exchanges from files");
     let exchanges = get_exchanges_from_file(file_path)
         .await
         .expect("Failed to read exchanges from file");
@@ -109,6 +124,7 @@ async fn process_exchanges(
         .await
         .expect("Failed to create exchanges table");
 
+    print_utils::dbg_print(vrb, "Importing exchanges");
     for exchange in exchanges.iter() {
         if exchange.active {
             active.fetch_add(1, Ordering::SeqCst);
@@ -120,10 +136,19 @@ async fn process_exchanges(
         }
     }
 
+    let count_query = gen_query::generate_count_exchanges();
+
+    let number_of_exchanges: CountRow = client
+        .query_one(&count_query)
+        .await
+        .expect("Failed to count rows in table");
+
     let count = exchanges.len();
     println!("Number of exchanges: {}", count);
     let count = active.load(Ordering::SeqCst);
     println!("Number of active exchanges: {}", count);
+    let count = number_of_exchanges.count();
+    println!("Number of exchanges imported: {}", count);
 
     Ok(())
 }
@@ -146,6 +171,7 @@ async fn process_instruments(
     let instrument_figi_counter = Arc::new(AtomicUsize::new(0));
     let pair_figi_counter = Arc::new(AtomicUsize::new(0));
 
+    print_utils::dbg_print(vrb, "Load instruments from files");
     let instruments = get_instruments_from_file(file_path)
         .await
         .expect("Failed to read instruments from file");
@@ -162,6 +188,7 @@ async fn process_instruments(
         .await
         .expect("Failed to create instrument table");
 
+    print_utils::dbg_print(vrb, "Insert instruments");
     for instrument in instruments.iter() {
         // Skip all instruments from inactive exchanges
         if INACTIVE_EXCHANGES.contains(&instrument.exchange_code()) {
@@ -188,6 +215,13 @@ async fn process_instruments(
         }
     }
 
+    let count_query = gen_query::generate_count_instruments();
+
+    let number_of_instruments: CountRow = client
+        .query_one(&count_query)
+        .await
+        .expect("Failed to count rows in table");
+
     let count = instruments.len();
     println!("Number of All instruments: {}", count);
 
@@ -211,6 +245,9 @@ async fn process_instruments(
 
     let count = pair_figi_counter.load(Ordering::SeqCst);
     println!("Number of filtered instruments with Pair FIGI: {}", count);
+
+    let count = number_of_instruments.count();
+    println!("Number of instruments imported: {}", count);
 
     Ok(())
 }
