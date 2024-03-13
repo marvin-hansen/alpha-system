@@ -24,6 +24,7 @@ fn print_data_import_header(msg: &str) {
 
 pub fn dbg_print(vrb: bool, msg: &str) {
     if vrb {
+        println!();
         println!("{msg}");
         println!();
     }

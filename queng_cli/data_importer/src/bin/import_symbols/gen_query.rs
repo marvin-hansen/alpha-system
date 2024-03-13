@@ -5,7 +5,9 @@ use lib_import::types::instruments::{Instrument, InstrumentMetadata};
 pub(crate) fn generate_asset_insert(asset: &Asset) -> String {
     let table_name = "default.assets";
     let code = &asset.code;
-    let name = &asset.name;
+    // ClickHouse needs quotes to be escaped
+    // https://github.com/ClickHouse/ClickHouse/issues/191
+    let name = &asset.name.replace("\'", "\\'");
     let asset_class = &asset.asset_class;
     let asset_figi = extract_asset_figi(&asset.metadata);
 
