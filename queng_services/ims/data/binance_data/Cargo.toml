@@ -22,11 +22,15 @@ dns_manager = {workspace = true}
 db_query_manager = {workspace = true}
 lib_data_stream = {workspace = true}
 proto = {workspace = true}
+rest_client = {workspace = true}
 service_utils = {workspace = true}
 smdb_provider = {workspace = true}
 symbol_manager = {workspace = true}
 # External crates
 autometrics = { workspace = true }
+anyhow = { workspace = true }
+binance = { workspace = true }
+serde = {workspace = true}
 tokio = { workspace = true }
 tonic = { workspace = true }
 tonic-health = { workspace = true }

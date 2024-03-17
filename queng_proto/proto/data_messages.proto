@@ -5,13 +5,13 @@ package proto;
 
 message ProtoStartDataRequest {
   uint32 exchange_id = 1;
-  repeated uint32 symbol_id = 2;
+  repeated string symbols = 2;
   uint32 data_type_id = 3;
 }
 
 message ProtoStopDataRequest {
   uint32 exchange_id = 1;
-  repeated uint32 symbol_id = 2;
+  repeated string symbols = 2;
   uint32 data_type_id = 3;
 }
 
@@ -34,8 +34,7 @@ message ProtoStopExchangeRequest {
 message ProtoStartDataResponse {
   uint32 exchange_id = 1;
   uint32 data_type_id = 2;
-  repeated uint32 symbol_id = 3;
-  bool data_started = 4;
+  bool data_started = 3;
 }
 
 message ProtoStartAllDataResponse {
@@ -47,8 +46,7 @@ message ProtoStartAllDataResponse {
 message ProtoStopDataResponse {
   uint32 exchange_id = 1;
   uint32 data_type_id = 2;
-  repeated uint32 symbol_id = 3;
-  bool data_stopped = 4;
+  bool data_stopped = 3;
 }
 
 message ProtoStopAllDataResponse {
