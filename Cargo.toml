@@ -22,8 +22,6 @@ members = [
     "queng_sbe/sbe_messages",
     "queng_services/cmdb",
     "queng_services/dbgw",
-    "queng_services/ims/clients/binance_wss_client",
-    "queng_services/ims/clients/lib_wss_client",
     "queng_services/ims/data/binance_data",
     "queng_services/ims/data/shared_data",
     "queng_services/qdgw",
@@ -61,6 +59,7 @@ db_surreal_manager = { path = "queng_components/db_surreal_manager" }
 dns_manager = { path = "queng_components/dns_manager" }
 pattern_manager = { path = "queng_components/pattern_manager" }
 symbol_manager = { path = "queng_components/symbol_manager" }
+wss_client_manager = { path = "queng_services/ims/clients/wss_client_manager" }
 # Proto specs
 proto = { path = "queng_proto" }
 # Providers
@@ -69,9 +68,8 @@ smdb_provider = { path = "queng_providers/smdb_provider" }
 # SBE
 sbe_bindings = { path = "queng_sbe/bindings" }
 sbe_messages = { path = "queng_sbe/sbe_messages" }
-# Services
+# Service libs
 lib_data_stream = { path = "queng_services/ims/data/shared_data" }
-lib_wss_client = { path = "queng_services/ims/clients/lib_wss_client" }
 # Specs
 db_specs = { path = "queng_specs/db_specs" }
 exchange_specs = { path = "queng_specs/exchange_specs" }
@@ -97,6 +95,7 @@ lru = {version = "0.12"}
 parquet = {version = "50"}
 prost = {version = "0.12"}
 prost-types = { version = "0.12", default-features = false }
+trait-variant = {version = "0.1"}
 rand = { version = "0.8", default-features = false, features = ["std"] }
 rust_decimal = {version = "1.34"}
 rust_decimal_macros = {version = "1.34"}

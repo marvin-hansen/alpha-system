@@ -1,37 +1,30 @@
-use crate::service::ImsDataServer;
 use autometrics::prometheus_exporter;
+use common::prelude::ServiceID;
 use common::prelude::ServiceID::SMDB;
-use common::prelude::{ExchangeID, ServiceID};
 use config_manager::CfgManager;
 use ctx_manager::CtxManager;
 use dns_manager::DnsManager;
-use proto::binding::ims_data_service_server::ImsDataServiceServer;
+use proto::binding::ims_data_service_server::{ImsDataService, ImsDataServiceServer};
 use service_utils::{print_utils, shutdown_utils};
 use smdb_provider::SMDBProvider;
 use std::error::Error;
 use std::net::SocketAddr;
 use tonic::transport::Server;
+use tonic_health::pb::health_server::{Health, HealthServer};
 use warp::Filter;
 
-mod handle_start;
-mod handle_stop;
-mod service;
-
-const SVC_ID: ServiceID = ServiceID::ImsDataBinance;
-
-pub async fn run(exchange_id: ExchangeID) -> Result<(), Box<dyn Error>> {
-    println!(
-        "[ImsDataBinance]: Running IMS service for exchange {}",
-        exchange_id
-    );
-
+pub async fn run(
+    svc_id: ServiceID,
+    grpc_svc: ImsDataServiceServer<impl ImsDataService>,
+    health_svc: HealthServer<impl Health + Sized>,
+) -> Result<(), Box<dyn Error>> {
     //
     //Creates a new instance of the Context Manager.
     let ctx_manager = async { CtxManager::new() }.await;
     //Creates a new instance of the DNS Manager.
     let dns_manager = async { DnsManager::new(&ctx_manager) }.await;
     //Creates a new instance of the Configuration Manager.
-    let cfg_manager = async { CfgManager::new(SVC_ID, &ctx_manager, &dns_manager) }.await;
+    let cfg_manager = async { CfgManager::new(svc_id, &ctx_manager, &dns_manager) }.await;
 
     // pull SMDB endpoint from auto config
     let (smdb_host, smdb_port) = cfg_manager
@@ -61,12 +54,12 @@ pub async fn run(exchange_id: ExchangeID) -> Result<(), Box<dyn Error>> {
 
     // println!("[ImsDataBinance]/main: Configure service ip and port automatically relative to the detected context");
     let service_addr = cfg_manager
-        .configure_svc_socket_addr(&SVC_ID)
+        .configure_svc_socket_addr(&svc_id)
         .expect("[ImsDataBinance]: Failed to get host and port");
 
     // println!("[ImsDataBinance]: Configuring metrics endpoint");
     let (metrics_addr, metrics_uri) = cfg_manager
-        .configure_metrics_socket_addr_uri(&SVC_ID)
+        .configure_metrics_socket_addr_uri(&svc_id)
         .expect("[ImsDataBinance]: Failed to get metric host, uri, and port");
 
     // println!("[ImsDataBinance]: Configuring http web server for prometheus export");
@@ -89,13 +82,9 @@ pub async fn run(exchange_id: ExchangeID) -> Result<(), Box<dyn Error>> {
         .parse()
         .expect("[ImsDataBinance]: Failed to parse address");
 
-    // Create new gRPC service
-    let grpc_svc = ImsDataServiceServer::new(ImsDataServer::new());
-    // Build health service for gRPC server
-    let (mut health_reporter, health_svc) = tonic_health::server::health_reporter();
-    health_reporter
-        .set_serving::<ImsDataServiceServer<ImsDataServer>>()
-        .await;
+    // health_reporter
+    //     .set_serving::<ImsDataServiceServer<ImsDataServer>>()
+    //     .await;
 
     // Build gRPC server with health service and signal sigint handler
     let signal = shutdown_utils::signal_handler("gRPC server");
@@ -110,7 +99,7 @@ pub async fn run(exchange_id: ExchangeID) -> Result<(), Box<dyn Error>> {
     let web_handle = tokio::spawn(web_server);
 
     // Print service start header
-    print_utils::print_start_header(&SVC_ID, &service_addr, &metrics_addr, &metrics_uri);
+    print_utils::print_start_header(&svc_id, &service_addr, &metrics_addr, &metrics_uri);
 
     // Free up some memory before starting the service,
     drop(cfg_manager);
@@ -119,7 +108,7 @@ pub async fn run(exchange_id: ExchangeID) -> Result<(), Box<dyn Error>> {
 
     // Set service to online
     smdb_manager
-        .set_service_online(SVC_ID)
+        .set_service_online(svc_id)
         .await
         .expect("[ImsDataBinance]: Failed to set service online");
 
@@ -128,7 +117,7 @@ pub async fn run(exchange_id: ExchangeID) -> Result<(), Box<dyn Error>> {
         Ok(_) => {}
         Err(e) => {
             smdb_manager
-                .set_service_offline(SVC_ID)
+                .set_service_offline(svc_id)
                 .await
                 .expect("[ImsDataBinance]: Failed to set service offline!");
             println!(
@@ -140,11 +129,11 @@ pub async fn run(exchange_id: ExchangeID) -> Result<(), Box<dyn Error>> {
 
     // Set service offline
     smdb_manager
-        .set_service_offline(SVC_ID)
+        .set_service_offline(svc_id)
         .await
         .expect("[ImsDataBinance]: Failed to set service offline");
 
-    print_utils::print_stop_header(&SVC_ID);
+    print_utils::print_stop_header(&svc_id);
 
     Ok(())
 }
