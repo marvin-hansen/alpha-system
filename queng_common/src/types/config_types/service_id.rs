@@ -124,14 +124,6 @@ impl ServiceID {
 
 impl Display for ServiceID {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        match self {
-            ServiceID::Default => write!(f, "Default"),
-            ServiceID::SMDB => write!(f, "SMDB"),
-            ServiceID::CMDB => write!(f, "CMDB"),
-            ServiceID::DBGW => write!(f, "DBGW"),
-            ServiceID::QDGW => write!(f, "QDGW"),
-            ServiceID::SYMDB => write!(f, "SYMDB"),
-            ServiceID::VEX => write!(f, "VEX"),
-        }
+        write!(f, "{:?}", self)
     }
 }

@@ -14,7 +14,6 @@ use proto::binding::db_gateway_service_client::DbGatewayServiceClient;
 use proto::binding::smdb_service_server::SmdbServiceServer;
 use service::SMDBServer;
 use service_utils::{print_utils, shutdown_utils};
-use svc_manager::ServiceManager;
 
 mod service;
 
@@ -29,10 +28,10 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let ctx_manager = async { CtxManager::new() }.await;
     let dns_manager = async { DnsManager::new(&ctx_manager) }.await;
     let cfg_manager = async { CfgManager::new(SVC_ID, &ctx_manager, &dns_manager) }.await;
-    let service_manager = async { ServiceManager::new(&cfg_manager) }.await;
+    // let service_manager = async { ServiceManager::new(&cfg_manager) }.await;
 
     // pull DBGW endpoint from auto config
-    let (dbgw_host, dbgw_port) = service_manager
+    let (dbgw_host, dbgw_port) = cfg_manager
         .get_service_host_port(&DBGW)
         .expect("[SMDB]: Failed to get host and port for DBGW");
 
@@ -52,7 +51,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let mut dbgw_client = DbGatewayServiceClient::new(channel);
 
     // Configure service ip and port automatically relative to the detected context.
-    let service_addr = service_manager
+    let service_addr = cfg_manager
         .configure_svc_socket_addr(&SVC_ID)
         .expect("[SMDB]: Failed to get host and port");
 
@@ -78,7 +77,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .serve_with_shutdown(grpc_addr, signal);
 
     // Configure http metrics endpoint ip and port automatically relative to the detected context.
-    let (metrics_addr, metrics_uri) = service_manager
+    let (metrics_addr, metrics_uri) = cfg_manager
         .configure_metrics_socket_addr_uri(&SVC_ID)
         .expect("[SMDB]: Failed to get metric host, uri, and port");
 

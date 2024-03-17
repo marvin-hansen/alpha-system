@@ -12,7 +12,6 @@ use smdb_provider::SMDBProvider;
 use std::error::Error;
 use std::net::SocketAddr;
 use std::sync::{Arc, RwLock};
-use svc_manager::ServiceManager;
 use symbol_manager::SymbolManager;
 use tonic::transport::Server;
 use warp::Filter;
@@ -27,17 +26,16 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let ctx_manager = async { CtxManager::new() }.await;
     let dns_manager = async { DnsManager::new(&ctx_manager) }.await;
     let cfg_manager = async { CfgManager::new(SVC_ID, &ctx_manager, &dns_manager) }.await;
-    let service_manager = async { ServiceManager::new(&cfg_manager) }.await;
 
     // pull SMDB endpoint from auto config
-    let (smdb_host, smdb_port) = service_manager
+    let (smdb_host, smdb_port) = cfg_manager
         .get_service_host_port(&SMDB)
         .expect("[SYMDB]: Failed to get host and port for DBGW");
 
     let smdb_manager = SMDBProvider::new(smdb_host, smdb_port).await;
 
     //get all dependencies
-    let dependencies = service_manager.get_service_dependencies();
+    let dependencies = cfg_manager.get_service_dependencies();
 
     // println!("[SYMDB]: Checking if all dependencies are online");
     for d in dependencies {
@@ -56,12 +54,12 @@ async fn main() -> Result<(), Box<dyn Error>> {
     }
 
     // println!("[SYMDB]/main: Configure service ip and port automatically relative to the detected context");
-    let service_addr = service_manager
+    let service_addr = cfg_manager
         .configure_svc_socket_addr(&SVC_ID)
         .expect("[SMDB]: Failed to get host and port");
 
     // println!("[SYMDB]: Configuring metrics endpoint");
-    let (metrics_addr, metrics_uri) = service_manager
+    let (metrics_addr, metrics_uri) = cfg_manager
         .configure_metrics_socket_addr_uri(&SVC_ID)
         .expect("[SYMDB]: Failed to get metric host, uri, and port");
 

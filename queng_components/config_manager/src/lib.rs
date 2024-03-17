@@ -9,6 +9,7 @@ use std::cell::RefCell;
 use std::collections::HashMap;
 
 mod cfg_getters;
+mod cfg_ims_data;
 mod cfg_services;
 mod utils;
 
@@ -36,6 +37,7 @@ pub struct CfgManager<'l> {
     exchanges_symbol_tables: HashMap<ExchangeID, String>,
     //
     cmdb_env: RefCell<Option<SvcEnvConfig>>,
+    ims_data_env: RefCell<Option<SvcEnvConfig>>,
     smdb_env: RefCell<Option<SvcEnvConfig>>,
     symdb_env: RefCell<Option<SvcEnvConfig>>,
     dbgw_env: RefCell<Option<SvcEnvConfig>>,
@@ -48,6 +50,8 @@ impl<'l> CfgManager<'l> {
         let env_type = ctx_manager.env_type();
         // Load specifications
         let clickhouse_config = utils::get_db_config(&env_type);
+
+        // Move this into symbol_manager
         let default_exchange = prelude::get_default_exchange();
         let exchanges = get_all_exchanges();
         let exchanges_id_names = get_all_exchanges_ids_names();
@@ -64,6 +68,7 @@ impl<'l> CfgManager<'l> {
             exchanges_id_names,
             exchanges_symbol_tables,
             cmdb_env: RefCell::new(None),
+            ims_data_env: RefCell::new(None),
             smdb_env: RefCell::new(None),
             symdb_env: RefCell::new(None),
             dbgw_env: RefCell::new(None),

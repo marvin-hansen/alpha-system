@@ -7,8 +7,6 @@ readme.workspace = true
 repository.workspace = true
 authors.workspace = true
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 
 [[bin]]
 name = "dbgw"
@@ -24,7 +22,6 @@ db_surreal_manager = {workspace = true}
 dns_manager = {workspace = true}
 proto = {workspace = true}
 service_utils = {workspace = true}
-svc_manager = {workspace = true}
 # External crates
 autometrics = { workspace = true }
 surrealdb = { workspace = true }

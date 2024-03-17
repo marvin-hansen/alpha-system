@@ -6,12 +6,6 @@ pub struct MasterSymbolRow {
     data: Vec<String>,
 }
 
-impl MasterSymbolRow {
-    pub fn data(&self) -> &Vec<String> {
-        &self.data
-    }
-}
-
 #[derive(Debug, Clone, Row, Serialize, Deserialize)]
 pub struct MasterSymbol {
     master_symbol: String,

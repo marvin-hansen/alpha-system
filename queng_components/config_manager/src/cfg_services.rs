@@ -1,9 +1,94 @@
 use crate::{CfgManager, DEFAULT_HOST};
 use common::prelude::{
-    EnvironmentType, HostEndpoint, InitError, MetricConfig, ServiceID, SvcEnvConfig,
+    EnvironmentType, HostEndpoint, InitError, MetricConfig, ServiceConfig, ServiceID, SvcEnvConfig,
+};
+use service_specs::prelude::{
+    cmdb_service_config, dbgw_service_config, qdgw_service_config, smdb_service_config,
+    symdb_service_config, vex_service_config,
 };
 
 impl<'l> CfgManager<'l> {
+    pub(crate) fn service_config(&self, svc: &ServiceID) -> ServiceConfig {
+        match svc {
+            ServiceID::CMDB => cmdb_service_config(),
+            ServiceID::DBGW => dbgw_service_config(),
+            ServiceID::QDGW => qdgw_service_config(),
+            ServiceID::SMDB => smdb_service_config(),
+            ServiceID::SYMDB => symdb_service_config(),
+            ServiceID::VEX => vex_service_config(),
+            ServiceID::Default => ServiceConfig::default(),
+        }
+    }
+}
+
+impl<'l> CfgManager<'l> {
+    pub fn get_service_host_port(&self, svc_id: &ServiceID) -> Result<(String, u16), InitError> {
+        if !self.is_svc_env_initialized(svc_id) {
+            self.init_service(svc_id)
+                .expect("[ServiceManager]: Failed to initialize service");
+        }
+
+        self.get_svc_host_port(svc_id)
+    }
+
+    pub fn get_service_dependencies(&self) -> Vec<ServiceID> {
+        self.get_svc_config().dependencies().clone()
+    }
+
+    /// returns the socket address to run the service in any context.
+    pub fn configure_svc_socket_addr(&self, svc_id: &ServiceID) -> Result<String, InitError> {
+        if !self.is_svc_env_initialized(svc_id) {
+            let svc_config = self.get_svc_config_by_id(svc_id).to_owned();
+            let binding = svc_config.endpoint();
+            let endpoint = binding.host_endpoint();
+            let metrics_config = svc_config.metrics().to_owned();
+
+            self.init_svc_env(svc_id, endpoint, metrics_config)
+                .expect("Failed to initialize service");
+        }
+
+        // Get the configuration of the service
+        let svc_config = self
+            .get_svc_env(svc_id)
+            .expect("Failed to get service config");
+        // Get the host and port of the service
+        let (_, port) = self
+            .get_host(&svc_config)
+            .expect("Failed to get host and port");
+        // Set host to default (0.0.0.0) to listen on all interfaces
+        let host = DEFAULT_HOST;
+        // Merge the host and port into a socket address i.e. 0.0.0.0:7070
+        let socket_addr = format!("{}:{}", host, port);
+
+        Ok(socket_addr)
+    }
+
+    /// Returns the metric socket address and uri to run the service in any
+    pub fn configure_metrics_socket_addr_uri(
+        &self,
+        svc_id: &ServiceID,
+    ) -> Result<(String, String), InitError> {
+        let (metrics_host, metrics_uri, metrics_port) = self
+            .get_svc_metric_host_uri_port(svc_id)
+            .expect("Failed to get metric host, uri, and port");
+
+        // Merge the host and port into a socket address i.e. 0.0.0.0:8080
+        let socket_addr = format!("{}:{}", metrics_host, metrics_port);
+
+        Ok((socket_addr, metrics_uri))
+    }
+}
+
+impl<'l> CfgManager<'l> {
+    pub fn init_service(&self, svc_id: &ServiceID) -> Result<(), InitError> {
+        let svc_config = self.get_svc_config_by_id(svc_id).to_owned();
+        let binding = svc_config.endpoint();
+        let endpoint = binding.host_endpoint();
+        let metrics_config = svc_config.metrics().to_owned();
+
+        self.init_svc_env(svc_id, endpoint, metrics_config)
+    }
+
     /// Initializes the service environment based on the given service ID and host endpoint.
     ///
     /// # Arguments
@@ -70,39 +155,6 @@ impl<'l> CfgManager<'l> {
             ServiceID::VEX => self.vex_env.borrow().is_some(),
             ServiceID::Default => false,
         }
-    }
-
-    /// returns the socket address to run the service in any context.
-    pub fn configure_svc_socket_addr(&self, svc_id: &ServiceID) -> Result<String, InitError> {
-        // Get the configuration of the service
-        let svc_config = self
-            .get_svc_env(svc_id)
-            .expect("Failed to get service config");
-        // Get the host and port of the service
-        let (_, port) = self
-            .get_host(&svc_config)
-            .expect("Failed to get host and port");
-        // Set host to default (0.0.0.0) to listen on all interfaces
-        let host = DEFAULT_HOST;
-        // Merge the host and port into a socket address i.e. 0.0.0.0:7070
-        let socket_addr = format!("{}:{}", host, port);
-
-        Ok(socket_addr)
-    }
-
-    /// Returns the metric socket address and uri to run the service in any
-    pub fn configure_metrics_socket_addr_uri(
-        &self,
-        svc_id: &ServiceID,
-    ) -> Result<(String, String), InitError> {
-        let (metrics_host, metrics_uri, metrics_port) = self
-            .get_svc_metric_host_uri_port(svc_id)
-            .expect("Failed to get metric host, uri, and port");
-
-        // Merge the host and port into a socket address i.e. 0.0.0.0:8080
-        let socket_addr = format!("{}:{}", metrics_host, metrics_port);
-
-        Ok((socket_addr, metrics_uri))
     }
 }
 

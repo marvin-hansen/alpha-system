@@ -17,7 +17,6 @@ use db_query_manager::QueryDBManager;
 use dns_manager::DnsManager;
 use service_utils::{print_utils, shutdown_utils};
 use smdb_provider::SMDBProvider;
-use svc_manager::ServiceManager;
 use symbol_manager::SymbolManager;
 
 const SVC_ID: ServiceID = ServiceID::QDGW;
@@ -31,11 +30,9 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let dns_manager = async { DnsManager::new(&ctx_manager) }.await;
     //Creates a new instance of the Configuration Manager.
     let cfg_manager = async { CfgManager::new(SVC_ID, &ctx_manager, &dns_manager) }.await;
-    //Creates a new instance of the Service Manager.
-    let service_manager = async { ServiceManager::new(&cfg_manager) }.await;
 
     //Retrieves the host and port of the Service Manager Database (SMDB) from the auto-configuration.
-    let (smdb_host, smdb_port) = service_manager
+    let (smdb_host, smdb_port) = cfg_manager
         .get_service_host_port(&SMDB)
         .expect("[QDGW]/main: Failed to get host and port for DBGW");
 
@@ -43,7 +40,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let smdb_manager = SMDBProvider::new(smdb_host, smdb_port).await;
 
     //Retrieves a list of all service dependencies for the current service.
-    let dependencies = service_manager.get_service_dependencies();
+    let dependencies = cfg_manager.get_service_dependencies();
 
     //Checks if the list of dependencies is empty.
     if !dependencies.is_empty() {
@@ -67,12 +64,12 @@ async fn main() -> Result<(), Box<dyn Error>> {
     }
 
     // Autoconfigures the IP address and port of the current service automatically based on the detected context.
-    let _ = service_manager
+    let _ = cfg_manager
         .configure_svc_socket_addr(&SVC_ID)
         .expect("[QDGW]/main: Failed to get host and port");
 
     // Autoconfigures the IP address and port of the HTTP metrics endpoint automatically based on the detected context.
-    let (metrics_addr, metrics_uri) = service_manager
+    let (metrics_addr, metrics_uri) = cfg_manager
         .configure_metrics_socket_addr_uri(&SVC_ID)
         .expect("[QDGW]/main: Failed to get metric host, uri, and port");
 

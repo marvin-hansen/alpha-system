@@ -55,11 +55,6 @@ impl From<u8> for ExchangeID {
 
 impl Display for ExchangeID {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        match self {
-            ExchangeID::NullVal => write!(f, "NullVal"),
-            ExchangeID::Kraken => write!(f, "Kraken"),
-            ExchangeID::COINBASE => write!(f, "COINBASE"),
-            ExchangeID::VEX => write!(f, "VEX"),
-        }
+        write!(f, "{:?}", self)
     }
 }
