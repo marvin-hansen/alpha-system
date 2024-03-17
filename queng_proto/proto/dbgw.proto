@@ -1,8 +1,8 @@
 syntax = "proto3";
 package proto;
 
-import "service.proto";
-import "portfolio.proto";
+import "service_messages.proto";
+import "portfolio_messages.proto";
 
 // Service definitions: https://developers.google.com/protocol-buffers/docs/proto3#services
 service DBGatewayService {

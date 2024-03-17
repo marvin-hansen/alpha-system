@@ -1,0 +1,63 @@
+syntax = "proto3";
+package proto;
+
+// Requests
+
+message ProtoStartDataRequest {
+  uint32 exchange_id = 1;
+  repeated uint32 symbol_id = 2;
+  uint32 data_type_id = 3;
+}
+
+message ProtoStopDataRequest {
+  uint32 exchange_id = 1;
+  repeated uint32 symbol_id = 2;
+  uint32 data_type_id = 3;
+}
+
+message ProtoStartAllDataRequest {
+  uint32 exchange_id = 1;
+  uint32 data_type_id = 2;
+}
+
+message ProtoStopAllDataRequest {
+  uint32 exchange_id = 1;
+  uint32 data_type_id = 2;
+}
+
+message ProtoStopExchangeRequest {
+  uint32 exchange_id = 1;
+}
+
+// Responses
+
+message ProtoStartDataResponse {
+  uint32 exchange_id = 1;
+  uint32 data_type_id = 2;
+  repeated uint32 symbol_id = 3;
+  bool data_started = 4;
+}
+
+message ProtoStartAllDataResponse {
+  uint32 exchange_id = 1;
+  uint32 data_type_id = 2;
+  bool data_started = 3;
+}
+
+message ProtoStopDataResponse {
+  uint32 exchange_id = 1;
+  uint32 data_type_id = 2;
+  repeated uint32 symbol_id = 3;
+  bool data_stopped = 4;
+}
+
+message ProtoStopAllDataResponse {
+  uint32 exchange_id = 1;
+  uint32 data_type_id = 2;
+  bool data_stopped = 3;
+}
+
+message ProtoStopExchangeResponse {
+  uint32 exchange_id = 1;
+  bool exchange_stopped = 2;
+}
