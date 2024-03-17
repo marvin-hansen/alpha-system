@@ -9,7 +9,6 @@ use service::DBGWServer;
 use service_utils::{print_utils, shutdown_utils};
 use std::error::Error;
 use std::net::SocketAddr;
-use svc_manager::ServiceManager;
 use tonic::transport::Server;
 use warp::Filter;
 
@@ -25,14 +24,13 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let ctx_manager = async { CtxManager::new() }.await;
     let dns_manager = async { DnsManager::new(&ctx_manager) }.await;
     let cfg_manager = async { CfgManager::new(SVC_ID, &ctx_manager, &dns_manager) }.await;
-    let service_manager = async { ServiceManager::new(&cfg_manager) }.await;
 
     // Configure database manager
     let db_config = cfg_manager.get_surreal_db_config();
     let dbm = SurrealDBManager::new(&db_config).await;
 
     // Configure service ip and port automatically relative to the detected context.
-    let service_addr = service_manager
+    let service_addr = cfg_manager
         .configure_svc_socket_addr(&SVC_ID)
         .expect("DBGW: Failed to get host and port");
 
@@ -56,7 +54,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .serve_with_shutdown(grpc_addr, signal);
 
     // Configure http metrics endpoint ip and port automatically relative to the detected context.
-    let (metrics_addr, metrics_uri) = service_manager
+    let (metrics_addr, metrics_uri) = cfg_manager
         .configure_metrics_socket_addr_uri(&SVC_ID)
         .expect("DBGW: Failed to get metric host, uri, and port");
 

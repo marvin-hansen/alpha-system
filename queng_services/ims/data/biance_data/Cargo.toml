@@ -1,7 +1,6 @@
 [package]
-name = "vex"
+name = "biance_data"
 version = "0.1.0"
-
 edition.workspace = true
 rust-version.workspace = true
 readme.workspace = true
@@ -10,7 +9,7 @@ authors.workspace = true
 
 
 [[bin]]
-name = "vex"
+name = "biance_data"
 path = "src/main.rs"
 
 
@@ -20,13 +19,16 @@ common = {workspace = true}
 config_manager = {workspace = true}
 ctx_manager = {workspace = true}
 dns_manager = {workspace = true}
+db_query_manager = {workspace = true}
+lib_data_stream = {workspace = true}
 proto = {workspace = true}
 service_utils = {workspace = true}
 smdb_provider = {workspace = true}
+symbol_manager = {workspace = true}
 # External crates
 autometrics = { workspace = true }
 tokio = { workspace = true }
 tonic = { workspace = true }
-#tonic-health = { workspace = true }
+tonic-health = { workspace = true }
 prost = { workspace = true }
 warp = { workspace = true }

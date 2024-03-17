@@ -12,6 +12,7 @@ pub mod qdgw;
 pub mod smdb;
 pub mod symdb;
 
+mod ims_data;
 pub mod vex;
 
 pub fn get_all_service_configs() -> Vec<ServiceConfig> {

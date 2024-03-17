@@ -23,7 +23,6 @@ proto = {workspace = true}
 db_query_manager = {workspace = true}
 service_utils = {workspace = true}
 smdb_provider = {workspace = true}
-svc_manager = {workspace = true}
 symbol_manager = {workspace = true}
 # External crates
 autometrics = { workspace = true }

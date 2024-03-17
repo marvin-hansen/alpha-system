@@ -27,7 +27,8 @@ fn test_from_u8() {
     assert_eq!(ServiceID::from(4), ServiceID::QDGW);
     assert_eq!(ServiceID::from(5), ServiceID::SYMDB);
     assert_eq!(ServiceID::from(6), ServiceID::VEX);
-    assert_eq!(ServiceID::from(7), ServiceID::Default);
+    assert_eq!(ServiceID::from(7), ServiceID::ImsData);
+    assert_eq!(ServiceID::from(12), ServiceID::Default);
 }
 
 #[test]

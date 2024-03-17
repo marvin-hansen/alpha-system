@@ -24,7 +24,6 @@ smdb_provider = {workspace = true}
 sbe_messages = {workspace = true}
 service_utils = {workspace = true}
 symbol_manager = {workspace = true}
-svc_manager = {workspace = true}
 # External crates
 autometrics = { workspace = true }
 futures = { workspace = true }

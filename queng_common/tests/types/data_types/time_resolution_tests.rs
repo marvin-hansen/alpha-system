@@ -35,6 +35,11 @@ fn test_from_str() {
         TimeResolution::from_str("OneWeek"),
         Ok(TimeResolution::OneWeek)
     );
+    assert_eq!(
+        TimeResolution::from_str("OneMonth"),
+        Ok(TimeResolution::OneMonth)
+    );
+
     assert_eq!(TimeResolution::from_str("Invalid"), Err(()));
 }
 
@@ -48,7 +53,7 @@ fn test_from_u8() {
     assert_eq!(TimeResolution::from(0x5_u8), TimeResolution::OneHour);
     assert_eq!(TimeResolution::from(0x6_u8), TimeResolution::OneDay);
     assert_eq!(TimeResolution::from(0x7_u8), TimeResolution::OneWeek);
-    assert_eq!(TimeResolution::from(0x8_u8), TimeResolution::NoValue);
+    assert_eq!(TimeResolution::from(0x8_u8), TimeResolution::OneMonth);
 }
 
 #[test]
@@ -61,4 +66,5 @@ fn test_display() {
     assert_eq!(format!("{}", TimeResolution::OneHour), "OneHour");
     assert_eq!(format!("{}", TimeResolution::OneDay), "OneDay");
     assert_eq!(format!("{}", TimeResolution::OneWeek), "OneWeek");
+    assert_eq!(format!("{}", TimeResolution::OneMonth), "OneMonth");
 }

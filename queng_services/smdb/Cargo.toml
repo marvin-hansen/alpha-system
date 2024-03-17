@@ -21,7 +21,6 @@ ctx_manager = {workspace = true}
 dns_manager = {workspace = true}
 proto = {workspace = true}
 service_utils = {workspace = true}
-svc_manager = {workspace = true}
 # External crates
 autometrics = { workspace = true }
 tokio = { workspace = true }

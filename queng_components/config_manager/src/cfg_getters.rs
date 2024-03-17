@@ -7,21 +7,16 @@ use db_specs::prelude::{
     db_config_ci, db_config_cluster, db_config_local, get_cluster_quest_db_config,
     get_local_quest_db_config,
 };
-use service_specs::prelude::{
-    cmdb_service_config, dbgw_service_config, qdgw_service_config, smdb_service_config,
-    symdb_service_config, vex_service_config,
-};
 
 impl<'l> CfgManager<'l> {
-    /// Returns the ID of the service.
     pub fn get_svc_id(&self) -> ServiceID {
         self.svc
     }
-    /// Returns the type of the environment.
+
     pub fn get_env_type(&self) -> EnvironmentType {
         self.env_type
     }
-    /// Returns a reference to the service-specific configuration.
+
     pub fn get_svc_config(&self) -> ServiceConfig {
         self.service_config(&self.svc)
     }
@@ -56,6 +51,7 @@ impl<'l> CfgManager<'l> {
         // Get the host and port of the service
         self.get_host(&svc_config)
     }
+
     pub fn clickhouse_config(&self) -> &ClickHouseConfig {
         &self.clickhouse_config
     }
@@ -124,17 +120,6 @@ impl<'l> CfgManager<'l> {
             EnvironmentType::CI => db_config_ci(),
             EnvironmentType::CLUSTER => db_config_cluster(),
             _ => panic!("[CfgManager/get_surreal_db_config]: Invalid environment type"),
-        }
-    }
-    fn service_config(&self, svc: &ServiceID) -> ServiceConfig {
-        match svc {
-            ServiceID::CMDB => cmdb_service_config(),
-            ServiceID::DBGW => dbgw_service_config(),
-            ServiceID::QDGW => qdgw_service_config(),
-            ServiceID::SMDB => smdb_service_config(),
-            ServiceID::SYMDB => symdb_service_config(),
-            ServiceID::VEX => vex_service_config(),
-            ServiceID::Default => ServiceConfig::default(),
         }
     }
 }
