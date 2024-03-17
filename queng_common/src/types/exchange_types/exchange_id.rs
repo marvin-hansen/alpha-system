@@ -11,6 +11,7 @@ pub enum ExchangeID {
     Kraken = 1_u8,
     COINBASE = 2_u8,
     VEX = 3_u8,
+    Binance = 4_u8,
 }
 
 impl From<i32> for ExchangeID {
@@ -21,6 +22,7 @@ impl From<i32> for ExchangeID {
             0x1_i32 => Self::Kraken,
             0x2_i32 => Self::COINBASE,
             0x3_i32 => Self::VEX,
+            0x4_i32 => Self::Binance,
             _ => Self::NullVal,
         }
     }
@@ -48,6 +50,7 @@ impl From<u8> for ExchangeID {
             1 => Self::Kraken,
             2 => Self::COINBASE,
             3 => Self::VEX,
+            4 => Self::Binance,
             _ => Self::NullVal,
         }
     }

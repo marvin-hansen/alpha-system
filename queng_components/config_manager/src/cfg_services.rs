@@ -3,20 +3,21 @@ use common::prelude::{
     EnvironmentType, HostEndpoint, InitError, MetricConfig, ServiceConfig, ServiceID, SvcEnvConfig,
 };
 use service_specs::prelude::{
-    cmdb_service_config, dbgw_service_config, qdgw_service_config, smdb_service_config,
-    symdb_service_config, vex_service_config,
+    cmdb_service_config, dbgw_service_config, ims_data_binance_config, qdgw_service_config,
+    smdb_service_config, symdb_service_config, vex_service_config,
 };
 
 impl<'l> CfgManager<'l> {
     pub(crate) fn service_config(&self, svc: &ServiceID) -> ServiceConfig {
         match svc {
+            ServiceID::Default => ServiceConfig::default(),
             ServiceID::CMDB => cmdb_service_config(),
             ServiceID::DBGW => dbgw_service_config(),
             ServiceID::QDGW => qdgw_service_config(),
             ServiceID::SMDB => smdb_service_config(),
             ServiceID::SYMDB => symdb_service_config(),
             ServiceID::VEX => vex_service_config(),
-            ServiceID::Default => ServiceConfig::default(),
+            ServiceID::ImsDataBinance => ims_data_binance_config(),
         }
     }
 }
@@ -136,7 +137,11 @@ impl<'l> CfgManager<'l> {
                 *self.vex_env.borrow_mut() = Some(vex_env);
                 Ok(())
             }
-
+            ServiceID::ImsDataBinance => {
+                let vex_env = self.get_svc_env_config(ServiceID::VEX, endpoint, metrics_config);
+                *self.ims_data_env.borrow_mut() = Some(vex_env);
+                Ok(())
+            }
             ServiceID::Default => Err(InitError(format!(
                 "[EnvManager]: Service {:?} is not supported",
                 svc_id
@@ -153,6 +158,7 @@ impl<'l> CfgManager<'l> {
             ServiceID::SMDB => self.smdb_env.borrow().is_some(),
             ServiceID::SYMDB => self.symdb_env.borrow().is_some(),
             ServiceID::VEX => self.vex_env.borrow().is_some(),
+            ServiceID::ImsDataBinance => self.ims_data_env.borrow().is_some(),
             ServiceID::Default => false,
         }
     }
@@ -312,6 +318,17 @@ impl<'l> CfgManager<'l> {
                     .borrow()
                     .as_ref()
                     .expect("[EnvManager]: Failed to get vex host and port")
+                    .to_owned();
+
+                Ok(svc)
+            }
+
+            ServiceID::ImsDataBinance => {
+                let svc = self
+                    .ims_data_env
+                    .borrow()
+                    .as_ref()
+                    .expect("[EnvManager]: Failed to get ImsDataBinance host and port")
                     .to_owned();
 
                 Ok(svc)
