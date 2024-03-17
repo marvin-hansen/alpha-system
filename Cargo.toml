@@ -22,7 +22,9 @@ members = [
     "queng_sbe/sbe_messages",
     "queng_services/cmdb",
     "queng_services/dbgw",
-    "queng_services/ims/data/biance_data",
+    "queng_services/ims/clients/binance_wss_client",
+    "queng_services/ims/clients/lib_wss_client",
+    "queng_services/ims/data/binance_data",
     "queng_services/ims/data/shared_data",
     "queng_services/qdgw",
     "queng_services/smdb",
@@ -69,6 +71,7 @@ sbe_bindings = { path = "queng_sbe/bindings" }
 sbe_messages = { path = "queng_sbe/sbe_messages" }
 # Services
 lib_data_stream = { path = "queng_services/ims/data/shared_data" }
+lib_wss_client = { path = "queng_services/ims/clients/lib_wss_client" }
 # Specs
 db_specs = { path = "queng_specs/db_specs" }
 exchange_specs = { path = "queng_specs/exchange_specs" }
