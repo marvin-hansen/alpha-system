@@ -4,6 +4,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             &[
                 "proto/cmdb.proto",
                 "proto/dbgw.proto",
+                "proto/ims_data.proto",
                 "proto/smdb.proto",
                 "proto/symdb.proto",
             ],

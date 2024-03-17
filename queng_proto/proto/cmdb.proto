@@ -1,7 +1,7 @@
 syntax = "proto3";
 package proto;
 
-import "portfolio.proto";
+import "portfolio_messages.proto";
 
 service CMDBService {
   rpc CreatePortfolioConfig(ProtoPortfolioConfig) returns (CreatePortfolioResponse){}
