@@ -1,13 +1,16 @@
+use crate::service::ImsDataServer;
 use autometrics::prometheus_exporter;
 use common::prelude::ServiceID::SMDB;
 use common::prelude::{ExchangeID, ServiceID};
 use config_manager::CfgManager;
 use ctx_manager::CtxManager;
 use dns_manager::DnsManager;
+use proto::binding::ims_data_service_server::ImsDataServiceServer;
 use service_utils::{print_utils, shutdown_utils};
 use smdb_provider::SMDBProvider;
 use std::error::Error;
 use std::net::SocketAddr;
+use tonic::transport::Server;
 use warp::Filter;
 
 mod service;
@@ -80,10 +83,28 @@ pub async fn run(exchange_id: ExchangeID) -> Result<(), Box<dyn Error>> {
     let (_, web_server) = warp::serve(routes).bind_with_graceful_shutdown(web_addr, signal);
 
     // Set up socket address for gRPC service
-    // let grpc_addr = service_addr
-    //     .parse()
-    //     .expect("[ImsDataBinance]: Failed to parse address");
+    let grpc_addr = service_addr
+        .parse()
+        .expect("[ImsDataBinance]: Failed to parse address");
 
+    // Create new gRPC service
+    let grpc_svc = ImsDataServiceServer::new(ImsDataServer::new());
+    // Build health service for gRPC server
+    let (mut health_reporter, health_svc) = tonic_health::server::health_reporter();
+    health_reporter
+        .set_serving::<ImsDataServiceServer<ImsDataServer>>()
+        .await;
+
+    // Build gRPC server with health service and signal sigint handler
+    let signal = shutdown_utils::signal_handler("gRPC server");
+    let grpc_server = Server::builder()
+        .add_service(grpc_svc)
+        .add_service(health_svc)
+        .serve_with_shutdown(grpc_addr, signal);
+
+    //Creates a new Tokio task for each server.
+    // https://github.com/hyperium/tonic/discussions/740
+    let grpc_handle = tokio::spawn(grpc_server);
     let web_handle = tokio::spawn(web_server);
 
     // Print service start header
@@ -101,7 +122,7 @@ pub async fn run(exchange_id: ExchangeID) -> Result<(), Box<dyn Error>> {
         .expect("[ImsDataBinance]: Failed to set service online");
 
     // Start all servers jointly
-    match tokio::try_join!(web_handle) {
+    match tokio::try_join!(web_handle, grpc_handle) {
         Ok(_) => {}
         Err(e) => {
             smdb_manager

@@ -1,6 +1,5 @@
 syntax = "proto3";
 package proto;
-
 import "data_messages.proto";
 
 // Service definitions: https://developers.google.com/protocol-buffers/docs/proto3#services
