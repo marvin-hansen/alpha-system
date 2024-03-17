@@ -1,6 +1,5 @@
-use std::fmt::{Display, Formatter};
-
 use serde::{Deserialize, Serialize};
+use std::fmt::{Display, Formatter};
 
 /// An u8 encoded Enum that represents the unique ID of a service.
 ///
@@ -23,6 +22,7 @@ pub enum ServiceID {
     QDGW = 0x4_u8,
     SYMDB = 0x5_u8,
     VEX = 0x6_u8,
+    ImsDataBinance = 0x7_u8,
 }
 
 impl ServiceID {
@@ -66,6 +66,7 @@ impl From<i32> for ServiceID {
             0x4_i32 => Self::QDGW,
             0x5_i32 => Self::SYMDB,
             0x6_i32 => Self::VEX,
+            0x7_i32 => Self::ImsDataBinance,
             _ => Self::Default,
         }
     }
@@ -102,6 +103,7 @@ impl From<u8> for ServiceID {
             4 => Self::QDGW,
             5 => Self::SYMDB,
             6 => Self::VEX,
+            7 => Self::ImsDataBinance,
             _ => Self::Default,
         }
     }
@@ -116,6 +118,7 @@ impl ServiceID {
             "DBGW" => Some(ServiceID::DBGW),
             "QDGW" => Some(ServiceID::QDGW),
             "SYMDB" => Some(ServiceID::SYMDB),
+            "ImsDataBinance" => Some(ServiceID::ImsDataBinance),
             "VEX" => Some(ServiceID::VEX),
             _ => None,
         }
