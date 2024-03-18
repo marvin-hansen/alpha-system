@@ -1,8 +1,8 @@
-mod binance_client;
-mod binance_model;
-mod handle;
+mod client;
+mod handlers;
 mod service;
-mod symbols;
+mod stream_manager;
+mod types;
 
 use crate::service::ImsDataServer;
 use common::prelude::ServiceID;

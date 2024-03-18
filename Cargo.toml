@@ -47,7 +47,11 @@ authors = ["Marvin Hansen <marvin.hansen@gmail.com>"]
 
 
 [workspace.dependencies]
+#
+# ==============
 # Internal crates
+# ==============
+#
 common = { path = "queng_common" }
 # Clients
 dbgw_client = { path = "queng_clients/dbgw_client" }
@@ -81,10 +85,13 @@ service_specs = { path = "queng_specs/service_specs" }
 client_utils = { path = "queng_utils/client_utils" }
 service_utils = { path = "queng_utils/service_utils" }
 #
+# ==============
 # External crates
+# ==============
+#
 autometrics = { version = "1", features = ["prometheus-exporter"] }
 anyhow = { version = "1.0" }
-binance = { git = "https://github.com/wisespace-io/binance-rs.git" }
+binance-rs-async = "1.3"
 chrono = { version = "0.4", features = ["serde"] }
 config-file = {version = "0.2"}
 ctrlc =  {version = "3.4"}
@@ -106,7 +113,8 @@ rust_decimal = {version = "1.34"}
 rust_decimal_macros = {version = "1.34"}
 serde = { version = "1", features = ["derive"] }
 serde_json = { version = "1", default-features = false }
-surrealdb = { version = "1.1" }
+surrealdb = { version = "1.3" }
+svix-ksuid = {version = "0.8"}
 tokio = { version = "1", features = ["macros", "net", "rt-multi-thread", "signal"] }
 tonic-health = { version = "0.11" }
 tonic = { version = "0.11" }

@@ -25,11 +25,13 @@ proto = {workspace = true}
 rest_client = {workspace = true}
 service_utils = {workspace = true}
 smdb_provider = {workspace = true}
+svix-ksuid = {workspace = true}
 symbol_manager = {workspace = true}
 # External crates
 autometrics = { workspace = true }
 anyhow = { workspace = true }
-binance = { workspace = true }
+binance-rs-async = { workspace = true }
+chrono = { workspace = true }
 serde = {workspace = true}
 tokio = { workspace = true }
 tonic = { workspace = true }
