@@ -1,4 +1,4 @@
-use crate::binance_model::ExchangeInfo;
+use crate::types::symbols::ExchangeInfo;
 use anyhow::{bail, Result};
 use rest_client::RestClient;
 use std::fmt::Error;

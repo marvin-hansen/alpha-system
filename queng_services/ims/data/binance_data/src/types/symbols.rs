@@ -1,10 +1,12 @@
 use serde::Deserialize;
 
 #[derive(Debug, Deserialize, Clone)]
-#[serde(rename_all = "camelCase")]
 pub struct ExchangeInfo {
+    #[serde(rename = "timezone")]
     pub timezone: String,
-    pub serverTime: u64,
+    #[serde(rename = "serverTime")]
+    pub server_time: u64,
+    #[serde(rename = "symbols")]
     pub symbols: Vec<Symbol>,
 }
 
