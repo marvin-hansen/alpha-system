@@ -1,20 +1,13 @@
+use crate::handlers::trade_handler;
 use binance::websockets::{agg_trade_stream, WebSockets};
 use binance::ws_model::WebsocketEvent;
 use std::sync::atomic::AtomicBool;
 
-pub(crate) async fn market_websocket(symbols: Vec<String>) {
+pub(crate) async fn trade_websocket(symbols: Vec<String>) {
+    //
     let mut web_socket: WebSockets<'_, WebsocketEvent> =
         WebSockets::new(|event: WebsocketEvent| {
-            match event {
-                WebsocketEvent::Trade(trade) => {
-                    println!(
-                        "Symbol: {}, price: {}, qty: {}",
-                        trade.symbol, trade.price, trade.qty
-                    );
-                }
-                _ => (),
-            };
-
+            trade_handler::trade_event_handler(event);
             Ok(())
         });
 
