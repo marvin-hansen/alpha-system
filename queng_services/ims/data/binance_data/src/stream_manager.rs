@@ -36,18 +36,15 @@ pub async fn stream_manager(mut rx: mpsc::Receiver<Command>) {
             Command::StopData(id) => {
                 if let Some(close_tx) = streams.get(&id) {
                     close_tx.send(true).unwrap();
+                    streams.remove(&id);
                 }
             }
             Command::StopAllData => {
+                // drain() clears the map, returning all key-value pairs as an iterator.
+                // Keeps the allocated memory for reuse.
                 for (_, close_tx) in streams.drain() {
                     close_tx.send(true).expect("Failed to send close signal");
                 }
-            }
-            Command::ReconnectData(_id) => {
-
-                // if let Some(close_tx) = streams.get(&id) {
-                //     close_tx.send(true).expect("Failed to send close signal");
-                // }
             }
         }
     }

@@ -109,12 +109,12 @@ prost-types = { version = "0.12", default-features = false }
 reqwest = { version = "0.11"}
 rust_decimal = {version = "1.34"}
 rust_decimal_macros = {version = "1.34"}
-stream-reconnect = { version = "0.3.4", default-features = false, features = ["tokio"] }
 serde = { version = "1", features = ["derive"] }
 serde_json = { version = "1", default-features = false }
 surrealdb = { version = "1.3" }
 tokio = { version = "1", features = ["macros", "net", "rt-multi-thread", "signal"] }
 tonic-health = { version = "0.11" }
+tokio-tungstenite = { version = "0.21.0" }
 tonic = { version = "0.11" }
 tonic-build = {version = "0.11"}
 warp = { version = "0.3", features = ["multipart"] }

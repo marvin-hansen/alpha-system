@@ -23,6 +23,7 @@ pub(crate) async fn market_websocket(symbols: Vec<String>) {
         .connect_multiple(endpoints)
         .await
         .expect("Failed to connect to stream");
+
     if let Err(e) = web_socket.event_loop(&AtomicBool::new(true)).await {
         println!("Error: {e}");
     }

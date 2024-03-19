@@ -58,10 +58,10 @@ impl ImsDataService for ImsDataServer {
 
         let symbols = req.symbols;
         let data_type = DataType::from(req.data_type_id as u8);
-        let command = Command::StartData(stream_id, symbols, data_type);
+        let start_command = Command::StartData(stream_id, symbols, data_type);
 
         self.tx
-            .send(command)
+            .send(start_command)
             .await
             .expect("Failed to send start data command");
         //
@@ -84,9 +84,9 @@ impl ImsDataService for ImsDataServer {
         let stream_id = req.stream_id;
         let exchange_id = req.exchange_id;
 
-        let command = Command::StopData(stream_id);
+        let stop_command = Command::StopData(stream_id);
         self.tx
-            .send(command)
+            .send(stop_command)
             .await
             .expect("Failed to send start data command");
         //
@@ -107,9 +107,9 @@ impl ImsDataService for ImsDataServer {
         let req = request.into_inner();
 
         let exchange_id = req.exchange_id;
-        let command = Command::StopAllData;
+        let stop_all_command = Command::StopAllData;
         self.tx
-            .send(command)
+            .send(stop_all_command)
             .await
             .expect("Failed to send start data command");
 
