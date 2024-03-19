@@ -98,13 +98,12 @@ config-file = {version = "0.2"}
 ctrlc =  {version = "3.4"}
 csv = {version = "1.3"}
 encoding_rs = "0.8"
-fluvio = { version = "0.21", default-features = false, features = ["rustls"] }
 futures = {version = "0.3"}
 hickory-resolver = { version = "0.24", default-features = false, features = ["tokio-runtime"] }
 iggy = {version = "0.2.8"}
 klickhouse = {version = "0.11"}
 lru = {version = "0.12"}
-parquet = {version = "50"}
+parquet = {version = "51.0" }
 prost = {version = "0.12"}
 prost-types = { version = "0.12", default-features = false }
 trait-variant = {version = "0.1"}
