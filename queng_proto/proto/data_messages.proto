@@ -22,7 +22,6 @@ message ProtoStartAllDataRequest {
 
 message ProtoStopAllDataRequest {
   uint32 exchange_id = 1;
-  uint32 stream_id = 2;
 }
 
 // Responses
