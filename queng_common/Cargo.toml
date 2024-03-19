@@ -24,4 +24,3 @@ rust_decimal = { workspace = true }
 serde_json = { workspace = true }
 serde = { workspace = true }
 surrealdb = { workspace = true }
-sqlx = { workspace = true }
