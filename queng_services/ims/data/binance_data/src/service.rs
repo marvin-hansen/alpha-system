@@ -3,26 +3,28 @@ use crate::types::command::Command;
 use common::prelude::DataType;
 use proto::binding::ims_data_service_server::ImsDataService;
 use proto::binding::*;
+use std::sync::atomic;
+use std::sync::atomic::AtomicU32;
 use tokio::sync::mpsc::Sender;
-use tokio::task::JoinHandle;
 use tonic::{Request, Response, Status};
 
 // Binance docs states that at most a connection can handle 1024 streams.
 // In practice, its more close to 950 because of the URL length limit but we
-// settle for 800 to leave plenty of room for long stream names.
+// settle for 800 leaving plenty of room for long stream names.
 const MAX_SYMBOLS: usize = 800;
+const ORDER: atomic::Ordering = atomic::Ordering::Relaxed;
 
 pub struct ImsDataServer {
-    handle: JoinHandle<()>,
+    counter: AtomicU32,
     tx: Sender<Command>,
 }
 
 impl ImsDataServer {
     pub fn new() -> Self {
+        let counter = AtomicU32::new(1);
         let (tx, rx) = tokio::sync::mpsc::channel(100);
-        let handle = tokio::spawn(stream_manager(rx));
-
-        Self { handle, tx }
+        tokio::spawn(stream_manager(rx));
+        Self { counter, tx }
     }
 }
 
@@ -51,22 +53,23 @@ impl ImsDataService for ImsDataServer {
             )));
         }
 
+        let stream_id = self.counter.fetch_add(1, ORDER);
+        let exchange_id = req.exchange_id;
+
         let symbols = req.symbols;
-
         let data_type = DataType::from(req.data_type_id as u8);
-
-        let command = Command::StartData(symbols, data_type);
+        let command = Command::StartData(stream_id, symbols, data_type);
 
         self.tx
             .send(command)
             .await
             .expect("Failed to send start data command");
+        //
         println!("[ImsDataBinance]: Data started");
 
         Ok(Response::new(ProtoStartDataResponse {
-            exchange_id: req.exchange_id,
-            data_type_id: req.data_type_id,
-            data_started: true,
+            exchange_id,
+            stream_id,
         }))
     }
 
@@ -75,15 +78,24 @@ impl ImsDataService for ImsDataServer {
         request: Request<ProtoStopDataRequest>,
     ) -> Result<Response<ProtoStopDataResponse>, Status> {
         println!("[ImsDataBinance]: Processing request, {:?}", request);
-        todo!()
-    }
 
-    async fn start_all_data(
-        &self,
-        request: Request<ProtoStartAllDataRequest>,
-    ) -> Result<Response<ProtoStartAllDataResponse>, Status> {
-        println!("[ImsDataBinance]: Processing request, {:?}", request);
-        todo!()
+        let req = request.into_inner();
+
+        let stream_id = req.stream_id;
+        let exchange_id = req.exchange_id;
+
+        let command = Command::StopData(stream_id);
+        self.tx
+            .send(command)
+            .await
+            .expect("Failed to send start data command");
+        //
+        println!("[ImsDataBinance]: Data stopped");
+
+        Ok(Response::new(ProtoStopDataResponse {
+            exchange_id,
+            ok: true,
+        }))
     }
 
     async fn stop_all_data(
@@ -91,15 +103,19 @@ impl ImsDataService for ImsDataServer {
         request: Request<ProtoStopAllDataRequest>,
     ) -> Result<Response<ProtoStopAllDataResponse>, Status> {
         println!("[ImsDataBinance]: Processing request, {:?}", request);
-        todo!()
-    }
 
-    async fn stop_exchange(
-        &self,
-        request: Request<ProtoStopExchangeRequest>,
-    ) -> Result<Response<ProtoStopExchangeResponse>, Status> {
-        println!("[ImsDataBinance]: Processing request, {:?}", request);
+        let req = request.into_inner();
 
-        todo!()
+        let exchange_id = req.exchange_id;
+        let command = Command::StopAllData;
+        self.tx
+            .send(command)
+            .await
+            .expect("Failed to send start data command");
+
+        Ok(Response::new(ProtoStopAllDataResponse {
+            exchange_id,
+            ok: true,
+        }))
     }
 }

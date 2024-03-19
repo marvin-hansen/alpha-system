@@ -2,10 +2,7 @@ use binance::websockets::{agg_trade_stream, WebSockets};
 use binance::ws_model::WebsocketEvent;
 use std::sync::atomic::AtomicBool;
 
-// #[allow(dead_code)]
-pub(crate) async fn market_websocket() {
-    let agg_trade: String = agg_trade_stream("ethbtc");
-
+pub(crate) async fn market_websocket(symbols: Vec<String>) {
     let mut web_socket: WebSockets<'_, WebsocketEvent> =
         WebSockets::new(|event: WebsocketEvent| {
             match event {
@@ -21,10 +18,25 @@ pub(crate) async fn market_websocket() {
             Ok(())
         });
 
-    web_socket.connect(&agg_trade).await.unwrap(); // check error
+    let endpoints = get_endpoints(symbols);
+
+    web_socket
+        .connect_multiple(endpoints)
+        .await
+        .expect("Failed to connect to stream");
     if let Err(e) = web_socket.event_loop(&AtomicBool::new(true)).await {
         println!("Error: {e}");
     }
     web_socket.disconnect().await.unwrap();
-    println!("disconnected");
+}
+
+fn get_endpoints(symbols: Vec<String>) -> Vec<String> {
+    let mut endpoints: Vec<String> = Vec::with_capacity(symbols.len());
+
+    for symbol in symbols {
+        let endpoint = agg_trade_stream(&symbol);
+        endpoints.push(endpoint);
+    }
+
+    endpoints
 }

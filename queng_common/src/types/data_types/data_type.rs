@@ -8,8 +8,6 @@ use std::fmt::{Display, Formatter};
 /// - `UnknownDataType` - Default unknown data type
 /// - `TradeData` - Trade/tick data
 /// - `OHLCVData` - Open-high-low-close-volume bar data
-/// - `OrderBookData` - Current order book data
-/// - `QuoteData` - Quote data
 ///
 /// The enum is represented as a `u8` under the hood.
 #[derive(
@@ -44,7 +42,6 @@ impl From<u8> for DataType {
     #[inline]
     fn from(value: u8) -> Self {
         match value {
-            0_u8 => DataType::UnknownDataType,
             1_u8 => DataType::TradeData,
             2_u8 => DataType::OHLCVData,
             _ => DataType::UnknownDataType,

@@ -1,8 +1,8 @@
 use common::prelude::DataType;
 
 pub(crate) enum Command {
-    StartData(Vec<String>, DataType),
-    StopData(u16),
+    StartData(u32, Vec<String>, DataType),
+    StopData(u32),
     StopAllData,
-    ReconnectData(u16),
+    ReconnectData(u32),
 }

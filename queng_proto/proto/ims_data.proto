@@ -6,7 +6,5 @@ import "data_messages.proto";
 service ImsDataService {
   rpc StartData(ProtoStartDataRequest) returns (ProtoStartDataResponse) {}
   rpc StopData(ProtoStopDataRequest) returns (ProtoStopDataResponse) {}
-  rpc StartAllData(ProtoStartAllDataRequest) returns (ProtoStartAllDataResponse) {}
   rpc StopAllData(ProtoStopAllDataRequest) returns (ProtoStopAllDataResponse) {}
-  rpc StopExchange(ProtoStopExchangeRequest) returns (ProtoStopExchangeResponse) {}
 }
