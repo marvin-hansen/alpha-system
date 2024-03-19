@@ -1,4 +1,3 @@
-mod client;
 mod handlers;
 mod service;
 mod stream_manager;
@@ -13,14 +12,8 @@ const SVC_ID: ServiceID = ServiceID::ImsDataBinance;
 
 #[tokio::main]
 async fn main() {
-    // Create new data stream service
-    let svc = ImsDataServer::new();
-    // Download reference symbols from Binance
-    svc.update_reference_symbols()
-        .await
-        .expect("Failed to update reference symbols");
     // Create new gRPC server
-    let grpc_svc = ImsDataServiceServer::new(svc);
+    let grpc_svc = ImsDataServiceServer::new(ImsDataServer::new());
 
     // Create & configure health service
     let (mut health_reporter, health_svc) = tonic_health::server::health_reporter();

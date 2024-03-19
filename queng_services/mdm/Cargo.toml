@@ -1,0 +1,23 @@
+[package]
+name = "mdm"
+version = "0.1.0"
+edition.workspace = true
+rust-version.workspace = true
+readme.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+
+[[bin]]
+name = "mdm"
+path = "src/main.rs"
+
+[dependencies]
+# Internal crates
+rest_client = {workspace = true}
+
+# External crates
+anyhow = { workspace = true }
+#binance-rs-async = { workspace = true }
+tokio = { workspace = true, features = ["rt", "rt-multi-thread", "macros"] }
+serde = {workspace = true}

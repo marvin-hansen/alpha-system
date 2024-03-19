@@ -25,6 +25,7 @@ members = [
     "queng_services/dbgw",
     "queng_services/ims/data/binance_data",
     "queng_services/ims/data/shared_data",
+    "queng_services/mdm",
     "queng_services/qdgw",
     "queng_services/smdb",
     "queng_services/symdb",
