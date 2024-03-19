@@ -16,6 +16,8 @@ pub(crate) async fn trade_websocket(symbols: Vec<String>) {
     let mut secs = 1;
     let mut err_count = 0;
 
+    // async client auto reconnect to server when disconnect
+    // https://users.rust-lang.org/t/how-to-impl-async-client-auto-reconnect-to-server-when-disconnect/65587
     'reconnect_loop: loop {
         match web_socket.connect_multiple(endpoints.clone()).await {
             Ok(_) => {
