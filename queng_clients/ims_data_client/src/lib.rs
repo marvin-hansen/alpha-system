@@ -21,15 +21,15 @@ impl ImsDataClient {
         // "http://[::1]:7070"
         let s = format!("http://{}:{}", host, port);
 
-        let uri = s
-            .parse::<Uri>()
-            .unwrap_or_else(|_| panic!("\r\n ❌ [SymdbClient]: Failed to parse server URI: {}", s));
+        let uri = s.parse::<Uri>().unwrap_or_else(|_| {
+            panic!("\r\n ❌ [ImsDataClient]: Failed to parse server URI: {}", s)
+        });
 
         // creating a channel that connects to server
         let channel = Channel::builder(uri)
             .connect()
             .await
-            .unwrap_or_else(|_| panic!("\r\n ❌[SymdbClient]: Failed to connect to SYMDB service on: {} \r\n  \r\n Detail: \r\n", s));
+            .unwrap_or_else(|_| panic!("\r\n ❌[ImsDataClient]: Failed to connect to Ims Data Service service on: {} \r\n  \r\n Detail: \r\n", s));
 
         let client = ImsDataServiceClient::new(channel);
 
