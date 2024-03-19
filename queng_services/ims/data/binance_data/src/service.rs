@@ -1,14 +1,9 @@
-use crate::client::binance_client::BinanceRESTClient;
 use crate::stream_manager::stream_manager;
-use crate::types::alias::Guarded;
 use crate::types::command::Command;
 use common::prelude::DataType;
 use proto::binding::ims_data_service_server::ImsDataService;
 use proto::binding::*;
-use std::fmt::Error;
-use std::sync::Arc;
 use tokio::sync::mpsc::Sender;
-use tokio::sync::RwLock;
 use tokio::task::JoinHandle;
 use tonic::{Request, Response, Status};
 
@@ -18,61 +13,16 @@ use tonic::{Request, Response, Status};
 const MAX_SYMBOLS: usize = 800;
 
 pub struct ImsDataServer {
-    rest_client: Guarded<BinanceRESTClient>,
-    reference_symbols: Guarded<Vec<String>>,
     handle: JoinHandle<()>,
     tx: Sender<Command>,
 }
 
 impl ImsDataServer {
     pub fn new() -> Self {
-        let client = BinanceRESTClient::new().expect("Failed to build Binance REST client");
-        let rest_client = Arc::new(RwLock::new(client));
         let (tx, rx) = tokio::sync::mpsc::channel(100);
         let handle = tokio::spawn(stream_manager(rx));
 
-        Self {
-            rest_client,
-            reference_symbols: Arc::new(RwLock::new(Vec::new())),
-            handle,
-            tx,
-        }
-    }
-}
-
-impl ImsDataServer {
-    pub async fn update_reference_symbols(&self) -> Result<(), Error> {
-        let client = self.rest_client.read().await;
-        let reference_symbols = client
-            .get_available_symbols()
-            .await
-            .expect("Failed to get reference symbols from Binance");
-
-        let mut guard = self.reference_symbols.write().await;
-        *guard = reference_symbols;
-        drop(guard);
-
-        Ok(())
-    }
-
-    pub async fn validate_symbols(&self, symbols: &Vec<String>) -> Result<(), String> {
-        let guard = self.reference_symbols.read().await;
-
-        if guard.len() == 0 {
-            self.update_reference_symbols()
-                .await
-                .expect("Failed to update reference symbols");
-        }
-
-        for symbol in symbols {
-            if !guard.contains(symbol) {
-                return Err(symbol.to_string());
-            }
-        }
-
-        drop(guard);
-
-        Ok(())
+        Self { handle, tx }
     }
 }
 
@@ -101,10 +51,7 @@ impl ImsDataService for ImsDataServer {
             )));
         }
 
-        let symbols = match self.validate_symbols(&req.symbols).await {
-            Ok(_) => req.symbols,
-            Err(e) => return Err(Status::invalid_argument(format!("Invalid symbol: {}", e))),
-        };
+        let symbols = req.symbols;
 
         let data_type = DataType::from(req.data_type_id as u8);
 
