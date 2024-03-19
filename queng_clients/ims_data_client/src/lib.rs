@@ -3,9 +3,11 @@ use proto::binding::ims_data_service_client::ImsDataServiceClient;
 use std::fmt::Error;
 use tonic::transport::{Channel, Uri};
 
-mod error;
+pub mod error;
 mod utils_proto;
 mod workflow;
+
+pub use error::ImsDataClientError;
 
 #[derive(Debug, Clone)]
 pub struct ImsDataClient {
@@ -13,12 +15,32 @@ pub struct ImsDataClient {
 }
 
 impl ImsDataClient {
+    /// Client for interacting with the IMS data service
+    ///
+    /// Can be used to start/stop data streams from exchanges. Handles
+    /// connecting to the gRPC service and sending requests.
+    ///
+    /// Use the connect() method to create a new instance connected
+    /// to the IMS data service. Then call methods like start_data()
+    /// and stop_data() to control data streams.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use common::prelude::{DataType, ExchangeID};
+    /// use ims_data_client::*;
+    /// # async fn example() -> Result<(), ImsDataClientError> {
+    /// let mut client = ImsDataClient::connect("localhost:50051").await?;
+    /// let stream_id = client.start_data(ExchangeID::Binance, vec!["BTC-USD".to_string()], DataType::TradeData)?;
+    /// # Ok(())
+    /// # }
+    /// ```
     pub async fn new(config: HostEndpoint<'_>) -> Result<Self, Error> {
         // Extract host and port from config
         let port = config.port();
         let host = config.host_uri();
 
-        // "http://[::1]:7070"
+        // "http://[::1]:4040"
         let s = format!("http://{}:{}", host, port);
 
         let uri = s.parse::<Uri>().unwrap_or_else(|_| {
