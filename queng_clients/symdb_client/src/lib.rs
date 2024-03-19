@@ -1,6 +1,6 @@
 mod error;
-mod lookup;
 mod utils_proto;
+mod workflow;
 
 use common::prelude::HostEndpoint;
 use proto::binding::symdb_service_client::SymdbServiceClient;

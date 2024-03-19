@@ -6,6 +6,7 @@ members = [
     "queng_cli/smdb_manager",
     "queng_cli/spec_manager",
     "queng_clients/dbgw_client",
+    "queng_clients/ims_data_client",
     "queng_clients/rest_client",
     "queng_clients/symdb_client",
     "queng_common",
@@ -56,6 +57,7 @@ authors = ["Marvin Hansen <marvin.hansen@gmail.com>"]
 common = { path = "queng_common" }
 # Clients
 dbgw_client = { path = "queng_clients/dbgw_client" }
+ims_data_client = { path = "queng_clients/ims_data_client" }
 rest_client = { path = "queng_clients/rest_client" }
 symdb_client = { path = "queng_clients/symdb_client" }
 # Components
@@ -66,7 +68,6 @@ db_surreal_manager = { path = "queng_components/db_surreal_manager" }
 dns_manager = { path = "queng_components/dns_manager" }
 pattern_manager = { path = "queng_components/pattern_manager" }
 symbol_manager = { path = "queng_components/symbol_manager" }
-wss_client_manager = { path = "queng_services/ims/clients/wss_client_manager" }
 # Proto specs
 proto = { path = "queng_proto" }
 # Providers
