@@ -35,10 +35,7 @@ impl ImsDataService for ImsDataServer {
         &self,
         request: Request<ProtoStartDataRequest>,
     ) -> Result<Response<ProtoStartDataResponse>, Status> {
-        println!(
-            "[ImsDataBinance/start_data]: Processing request, {:?}",
-            request
-        );
+        println!("[ImsDataBinance/start_data]",);
 
         let req = request.into_inner();
         let nr_symbols = req.symbols.capacity();
@@ -58,14 +55,15 @@ impl ImsDataService for ImsDataServer {
 
         let symbols = req.symbols;
         let data_type = DataType::from(req.data_type_id as u8);
-        let start_command = Command::StartData(stream_id, symbols, data_type);
 
+        println!("[ImsDataBinance/start_data]: Starting data stream...");
+        let start_command = Command::StartData(stream_id, symbols, data_type);
         self.tx
             .send(start_command)
             .await
             .expect("Failed to send start data command");
         //
-        println!("[ImsDataBinance]: Data started");
+        println!("[ImsDataBinance/start_data]: Data started");
 
         Ok(Response::new(ProtoStartDataResponse {
             exchange_id,
@@ -77,20 +75,21 @@ impl ImsDataService for ImsDataServer {
         &self,
         request: Request<ProtoStopDataRequest>,
     ) -> Result<Response<ProtoStopDataResponse>, Status> {
-        println!("[ImsDataBinance]: Processing request, {:?}", request);
+        println!("[ImsDataBinance/stop_data]");
 
         let req = request.into_inner();
 
         let stream_id = req.stream_id;
         let exchange_id = req.exchange_id;
 
+        println!("[ImsDataBinance/StopData]: Stopping data stream...");
         let stop_command = Command::StopData(stream_id);
         self.tx
             .send(stop_command)
             .await
             .expect("Failed to send start data command");
         //
-        println!("[ImsDataBinance]: Data stopped");
+        println!("[ImsDataBinance/stop_data]: Data stream stopped");
 
         Ok(Response::new(ProtoStopDataResponse {
             exchange_id,
@@ -102,16 +101,19 @@ impl ImsDataService for ImsDataServer {
         &self,
         request: Request<ProtoStopAllDataRequest>,
     ) -> Result<Response<ProtoStopAllDataResponse>, Status> {
-        println!("[ImsDataBinance]: Processing request, {:?}", request);
+        println!("[ImsDataBinance/stop_all_data]");
 
         let req = request.into_inner();
-
         let exchange_id = req.exchange_id;
+
+        println!("[ImsDataBinance/StopAllData]: Stopping all data streams...");
         let stop_all_command = Command::StopAllData;
         self.tx
             .send(stop_all_command)
             .await
             .expect("Failed to send start data command");
+        //
+        println!("[ImsDataBinance/stop_all_data]: All data streams stopped");
 
         Ok(Response::new(ProtoStopAllDataResponse {
             exchange_id,
