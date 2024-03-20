@@ -24,10 +24,11 @@ async fn test_start_stop_single_stream() {
     let result = client.start_data(exchange_id, symbols, data_type).await;
     assert!(result.is_ok());
 
-    tokio::time::sleep(std::time::Duration::from_secs(2)).await;
+    tokio::time::sleep(std::time::Duration::from_secs(10)).await;
 
     let stream_id = result.unwrap();
 
     let result = client.stop_data(exchange_id, stream_id, data_type).await;
     assert!(result.is_ok());
+    tokio::time::sleep(std::time::Duration::from_secs(1)).await;
 }
