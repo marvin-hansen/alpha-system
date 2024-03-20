@@ -36,11 +36,11 @@ RUN cargo fetch
 # Just set memory limit in Docker to at least 4GB, better 12GB, and the issue is gone.
 # https://github.com/google/oss-fuzz/issues/10174
 
-# Build the release binary.
-RUN RUSTFLAGS='-C target-cpu=native' cargo build -p smdb --release --target aarch64-unknown-linux-musl
+# Run the release build.
+RUN cargo build -p symdb --release --target aarch64-unknown-linux-musl
 
 # Move binary up to root level directory for easy access
-RUN mv /app/target/aarch64-unknown-linux-musl/release/smdb /smdb
+RUN mv /app/target/aarch64-unknown-linux-musl/release/symdb /symdb
 
 ############################
 # Scratch image
@@ -55,15 +55,15 @@ COPY --from=builder /user/group /user/passwd /etc/
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 
 # Copy binary from build output directory
-COPY --from=builder /smdb /
+COPY --from=builder /symdb /
 
 # Port number must match deployment.yaml and specs/*/service_info
-# service port: 7070
+# service port: 9090
 # metrics port: 8080
-EXPOSE 7070 8080
+EXPOSE 9090 8080
 
 # Run binary as unprivileged user
 USER nobody:nobody
 
 # Hard coded start command b/c no shell in scratch image
-CMD ["/smdb"]
+CMD ["/symdb"]

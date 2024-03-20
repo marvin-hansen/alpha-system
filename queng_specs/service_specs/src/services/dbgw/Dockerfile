@@ -12,7 +12,7 @@ RUN mkdir /user && \
     echo 'nobody:x:65534:' > /user/group
 
 # Install protobuf compiler so that
-RUN apt-get update && apt-get install -y protobuf-compiler libprotobuf-dev
+RUN apt-get update && apt-get install -y protobuf-compiler libprotobuf-dev pkg-config make libssl-dev
 
 # Install build target musel for compiling a static binary
 RUN rustup target add aarch64-unknown-linux-musl

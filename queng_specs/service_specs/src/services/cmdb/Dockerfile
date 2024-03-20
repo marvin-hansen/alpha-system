@@ -12,7 +12,7 @@ RUN mkdir /user && \
     echo 'nobody:x:65534:' > /user/group
 
 # Install protobuf compiler so that
-RUN apt-get update && apt-get install -y protobuf-compiler libprotobuf-dev
+RUN apt-get update && apt-get install -y protobuf-compiler libprotobuf-dev pkg-config make libssl-dev
 
 # Install build target musel for compiling a static binary
 RUN rustup target add aarch64-unknown-linux-musl
@@ -37,7 +37,7 @@ RUN cargo fetch
 # https://github.com/google/oss-fuzz/issues/10174
 
 # Run the release build.
-RUN RUSTFLAGS='-C target-cpu=native' cargo build -p cmdb --release --target aarch64-unknown-linux-musl
+RUN cargo build -p cmdb --release --target aarch64-unknown-linux-musl
 
 # Move binary up to root level directory for easy access
 RUN mv /app/target/aarch64-unknown-linux-musl/release/cmdb /cmdb
