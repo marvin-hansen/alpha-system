@@ -29,6 +29,6 @@ fn test_display() {
 
     assert_eq!(
         format!("{}", config),
-        "FileConfig[symbol=BTCUSD, resolution=OneMin, path=/path/to/file, description=BTC 1 min data, type=BtcMin2017]"
+        "FileConfig[symbol=BTCUSD, resolution=1 minute, path=/path/to/file, description=BTC 1 min data, type=BtcMin2017]"
     );
 }
