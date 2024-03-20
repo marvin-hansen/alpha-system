@@ -59,12 +59,12 @@ fn test_from_u8() {
 #[test]
 fn test_display() {
     assert_eq!(format!("{}", TimeResolution::NoValue), "NoValue");
-    assert_eq!(format!("{}", TimeResolution::OneMin), "OneMin");
-    assert_eq!(format!("{}", TimeResolution::FiveMin), "FiveMin");
-    assert_eq!(format!("{}", TimeResolution::FifteenMin), "FifteenMin");
-    assert_eq!(format!("{}", TimeResolution::ThirtyMin), "ThirtyMin");
-    assert_eq!(format!("{}", TimeResolution::OneHour), "OneHour");
-    assert_eq!(format!("{}", TimeResolution::OneDay), "OneDay");
-    assert_eq!(format!("{}", TimeResolution::OneWeek), "OneWeek");
-    assert_eq!(format!("{}", TimeResolution::OneMonth), "OneMonth");
+    assert_eq!(format!("{}", TimeResolution::OneMin), "1 minute");
+    assert_eq!(format!("{}", TimeResolution::FiveMin), "5 minute");
+    assert_eq!(format!("{}", TimeResolution::FifteenMin), "15 minute");
+    assert_eq!(format!("{}", TimeResolution::ThirtyMin), "30 minute");
+    assert_eq!(format!("{}", TimeResolution::OneHour), "1 hour");
+    assert_eq!(format!("{}", TimeResolution::OneDay), "1 day");
+    assert_eq!(format!("{}", TimeResolution::OneWeek), "1 week");
+    assert_eq!(format!("{}", TimeResolution::OneMonth), "1 month");
 }

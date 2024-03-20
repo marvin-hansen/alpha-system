@@ -9,11 +9,11 @@ fn get_config() -> HostEndpoint<'static> {
 // Requires that the IMS DATA server is running on localhost:4040
 // Start the server with:
 //
-// cargo run --bin ims_sata
+// cargo run --bin binance_data
 //
 
-#[test]
-async fn test_start_data() {
+#[tokio::test]
+async fn test_start_stop_single_stream() {
     let config = get_config();
 
     let mut client = ImsDataClient::new(config).await.unwrap();
