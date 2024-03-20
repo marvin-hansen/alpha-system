@@ -42,6 +42,9 @@ RUN cargo build -p cmdb --release --target aarch64-unknown-linux-musl
 # Move binary up to root level directory for easy access
 RUN mv /app/target/aarch64-unknown-linux-musl/release/cmdb /cmdb
 
+# Strip the binary to reduce its size
+RUN strip -s /cmdb
+
 ############################
 # Scratch image
 ############################

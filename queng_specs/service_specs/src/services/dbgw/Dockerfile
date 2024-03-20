@@ -42,6 +42,9 @@ RUN RUSTFLAGS='-C target-cpu=native' cargo build -p dbgw --release --target aarc
 # Move binary up to root level directory for easy access
 RUN mv /app/target/aarch64-unknown-linux-musl/release/dbgw /dbgw
 
+# Strip the binary to reduce its size
+RUN strip -s /dbgw
+
 ############################
 # Scratch image
 ############################
