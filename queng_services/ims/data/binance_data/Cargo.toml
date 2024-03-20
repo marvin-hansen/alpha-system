@@ -9,7 +9,7 @@ authors.workspace = true
 
 
 [[bin]]
-name = "biance_data"
+name = "binance_data"
 path = "src/main.rs"
 
 

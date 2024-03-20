@@ -61,15 +61,15 @@ impl fmt::Display for TimeResolution {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
             TimeResolution::NoValue => write!(f, "NoValue"),
-            TimeResolution::OneMin => write!(f, "OneMin"),
-            TimeResolution::FiveMin => write!(f, "FiveMin"),
-            TimeResolution::FifteenMin => write!(f, "FifteenMin"),
-            TimeResolution::ThirtyMin => write!(f, "ThirtyMin"),
-            TimeResolution::OneHour => write!(f, "OneHour"),
-            TimeResolution::OneDay => write!(f, "OneDay"),
-            TimeResolution::OneWeek => write!(f, "OneWeek"),
-            TimeResolution::OneMonth => write!(f, "OneMonth"),
-            TimeResolution::OneYear => write!(f, "OneYear"),
+            TimeResolution::OneMin => write!(f, "1 minute"),
+            TimeResolution::FiveMin => write!(f, "5 minute"),
+            TimeResolution::FifteenMin => write!(f, "15 minute"),
+            TimeResolution::ThirtyMin => write!(f, "30 minute"),
+            TimeResolution::OneHour => write!(f, "1 hour"),
+            TimeResolution::OneDay => write!(f, "1 day"),
+            TimeResolution::OneWeek => write!(f, "1 week"),
+            TimeResolution::OneMonth => write!(f, "1 month"),
+            TimeResolution::OneYear => write!(f, "1 year"),
         }
     }
 }

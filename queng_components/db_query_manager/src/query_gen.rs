@@ -32,7 +32,8 @@ impl crate::QueryDBManager {
         time_resolution: &TimeResolution,
     ) -> String {
         format!(
-            r"SELECT toUnixTimestamp(toStartOfInterval(timestamp, INTERVAL {time_resolution})) AS datetime,
+            r"
+            SELECT toStartOfInterval(timestamp, INTERVAL {time_resolution}) AS datetime,
               argMin(price, timestamp) AS open,
               max(price) AS high,
               min(price) AS low,
@@ -41,8 +42,10 @@ impl crate::QueryDBManager {
 
             FROM {trade_table}
             GROUP BY datetime
-            ORDER BY datetime"
-        ).to_string()
+            ORDER BY datetime
+            "
+        )
+        .to_string()
     }
 
     /// Builds a SQL query to get all trades from a trade table.
