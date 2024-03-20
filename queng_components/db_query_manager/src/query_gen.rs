@@ -32,8 +32,7 @@ impl crate::QueryDBManager {
         time_resolution: &TimeResolution,
     ) -> String {
         format!(
-            r"
-            SELECT toStartOfInterval(timestamp, INTERVAL {time_resolution}) AS datetime,
+            r"SELECT toUnixTimestamp(toStartOfInterval(timestamp, INTERVAL {time_resolution})) AS datetime,
               argMin(price, timestamp) AS open,
               max(price) AS high,
               min(price) AS low,
