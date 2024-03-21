@@ -32,7 +32,7 @@ jobs:
 
       - name: Build and Push image
         run: docker buildx build \
-              --file Dockerfile \
+              --file 'Dockerfile' \
               --platform linux/arm64 \
               --tag ghcr.io/marvin-hansen/quant-engine/smdb:latest \
               --push .
