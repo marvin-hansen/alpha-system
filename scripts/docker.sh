@@ -19,9 +19,10 @@ command docker build -t bianance_data:latest -f Dockerfile_bianance_data .
 command rm Dockerfile_bianance_data
 
 
-command cp queng_specs/service_specs/src/services/qdgw/Dockerfile Dockerfile_qdgw
-command docker build -t qdgw:latest -f Dockerfile_qdgw .
-command rm Dockerfile_qdgw
+# Not implemented
+#command cp queng_specs/service_specs/src/services/qdgw/Dockerfile Dockerfile_qdgw
+#command docker build -t qdgw:latest -f Dockerfile_qdgw .
+#command rm Dockerfile_qdgw
 
 
 command cp queng_specs/service_specs/src/services/smdb/Dockerfile Dockerfile_smdb
