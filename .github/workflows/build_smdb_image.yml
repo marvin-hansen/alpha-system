@@ -37,7 +37,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/arm64v8
           push: true
           tags: |
             ghcr.io/marvin-hansen/quant-engine/smdb:latest
