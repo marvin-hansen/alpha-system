@@ -31,11 +31,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and Push image
-        run: docker buildx build \
-              --file 'Dockerfile' \
-              --platform linux/arm64 \
-              --tag ghcr.io/marvin-hansen/quant-engine/smdb:latest \
-              --push .
+        run: docker buildx build --platform linux/arm64 --tag ghcr.io/marvin-hansen/quant-engine/smdb:latest --push .
 
 #      - name: Build and push
 #        uses: docker/build-push-action@v5
