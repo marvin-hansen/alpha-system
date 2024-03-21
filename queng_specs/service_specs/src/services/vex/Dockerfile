@@ -14,13 +14,13 @@ COPY . ./
 RUN set -x && cargo fetch
 
 # Run the release build.
-RUN cargo build -p dbgw --release --target aarch64-unknown-linux-musl
+RUN cargo build -p vex --release --target aarch64-unknown-linux-musl
 
 # Move binary up to root level directory for easy access
-RUN mv /app/target/aarch64-unknown-linux-musl/release/dbgw /dbgw
+RUN mv /app/target/aarch64-unknown-linux-musl/release/vex /vex
 
 # Strip the binary to reduce its size
-RUN strip -s /dbgw
+RUN strip -s /vex
 
 ############################
 # Scratch image
@@ -28,7 +28,7 @@ RUN strip -s /dbgw
 FROM hansenmarvin/rust-scratch:latest as runner
 
 # Copy binary from build output directory
-COPY --from=builder /dbgw /
+COPY --from=builder /vex /
 
 # Port number must match deployment.yaml and specs/*/service_info
 # service port: 9090
@@ -39,4 +39,4 @@ EXPOSE 9090 8080
 USER nobody:nobody
 
 # Hard coded start command b/c no shell in scratch image
-CMD ["/dbgw"]
+CMD ["/vex"]
