@@ -1,0 +1,26 @@
+load("@rules_rust//rust:defs.bzl", "rust_library")
+
+rust_library(
+    name = "error",
+    srcs = ["error.rs"],
+)
+
+rust_library(
+    name = "lib",
+    srcs = ["lib.rs"],
+    deps = [
+        "@crates//:proto",
+        "@crates//:tonic",
+    ],
+)
+
+rust_library(
+    name = "utils_proto",
+    srcs = ["utils_proto.rs"],
+    deps = ["@crates//:proto"],
+)
+
+rust_library(
+    name = "workflow",
+    srcs = ["workflow.rs"],
+)

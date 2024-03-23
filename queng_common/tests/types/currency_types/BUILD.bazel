@@ -1,0 +1,16 @@
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
+
+rust_library(
+    name = "fiat_iso_code_tests",
+    srcs = ["fiat_iso_code_tests.rs"],
+)
+
+rust_library(
+    name = "mod",
+    srcs = ["mod.rs"],
+)
+
+rust_test(
+    name = "fiat_iso_code_tests_test",
+    crate = ":fiat_iso_code_tests",
+)

@@ -1,0 +1,16 @@
+load("@rules_rust//rust:defs.bzl", "rust_library")
+
+rust_library(
+    name = "file_config",
+    srcs = ["file_config.rs"],
+)
+
+rust_library(
+    name = "file_config_type",
+    srcs = ["file_config_type.rs"],
+)
+
+rust_library(
+    name = "mod",
+    srcs = ["mod.rs"],
+)

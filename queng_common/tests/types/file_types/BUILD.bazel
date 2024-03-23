@@ -1,0 +1,26 @@
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
+
+rust_library(
+    name = "file_config_tests",
+    srcs = ["file_config_tests.rs"],
+)
+
+rust_library(
+    name = "file_config_type_tests",
+    srcs = ["file_config_type_tests.rs"],
+)
+
+rust_library(
+    name = "mod",
+    srcs = ["mod.rs"],
+)
+
+rust_test(
+    name = "file_config_tests_test",
+    crate = ":file_config_tests",
+)
+
+rust_test(
+    name = "file_config_type_tests_test",
+    crate = ":file_config_type_tests",
+)

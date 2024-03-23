@@ -1,0 +1,41 @@
+load("@rules_rust//rust:defs.bzl", "rust_library")
+
+rust_library(
+    name = "btc_1m_2017",
+    srcs = ["btc_1m_2017.rs"],
+)
+
+rust_library(
+    name = "btc_1m_2018",
+    srcs = ["btc_1m_2018.rs"],
+)
+
+rust_library(
+    name = "btc_1m_2019",
+    srcs = ["btc_1m_2019.rs"],
+)
+
+rust_library(
+    name = "btc_1m_2020",
+    srcs = ["btc_1m_2020.rs"],
+)
+
+rust_library(
+    name = "btc_1m_2021",
+    srcs = ["btc_1m_2021.rs"],
+)
+
+rust_library(
+    name = "btc_1m_2022",
+    srcs = ["btc_1m_2022.rs"],
+)
+
+rust_library(
+    name = "btc_small",
+    srcs = ["btc_small.rs"],
+)
+
+rust_library(
+    name = "mod",
+    srcs = ["mod.rs"],
+)

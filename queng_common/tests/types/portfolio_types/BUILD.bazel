@@ -1,0 +1,16 @@
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
+
+rust_library(
+    name = "mod",
+    srcs = ["mod.rs"],
+)
+
+rust_library(
+    name = "portfolio_config_tests",
+    srcs = ["portfolio_config_tests.rs"],
+)
+
+rust_test(
+    name = "portfolio_config_tests_test",
+    crate = ":portfolio_config_tests",
+)

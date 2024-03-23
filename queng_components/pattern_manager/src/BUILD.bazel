@@ -1,0 +1,40 @@
+load("@rules_rust//rust:defs.bzl", "rust_library")
+
+rust_library(
+    name = "abstract_trait",
+    srcs = ["abstract_trait.rs"],
+)
+
+rust_library(
+    name = "base_pattern",
+    srcs = ["base_pattern.rs"],
+    deps = ["@crates//:rust_decimal"],
+)
+
+rust_library(
+    name = "extra_pattern",
+    srcs = ["extra_pattern.rs"],
+    deps = ["@crates//:rust_decimal"],
+)
+
+rust_library(
+    name = "fields",
+    srcs = ["fields.rs"],
+)
+
+rust_library(
+    name = "lib",
+    srcs = ["lib.rs"],
+)
+
+rust_library(
+    name = "long_pattern",
+    srcs = ["long_pattern.rs"],
+    deps = ["@crates//:rust_decimal"],
+)
+
+rust_library(
+    name = "short_pattern",
+    srcs = ["short_pattern.rs"],
+    deps = ["@crates//:rust_decimal"],
+)
