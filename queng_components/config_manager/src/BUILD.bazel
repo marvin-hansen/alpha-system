@@ -1,0 +1,26 @@
+load("@rules_rust//rust:defs.bzl", "rust_library")
+
+rust_library(
+    name = "cfg_getters",
+    srcs = ["cfg_getters.rs"],
+)
+
+rust_library(
+    name = "cfg_ims_data",
+    srcs = ["cfg_ims_data.rs"],
+)
+
+rust_library(
+    name = "cfg_services",
+    srcs = ["cfg_services.rs"],
+)
+
+rust_library(
+    name = "lib",
+    srcs = ["lib.rs"],
+)
+
+rust_library(
+    name = "utils",
+    srcs = ["utils.rs"],
+)

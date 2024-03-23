@@ -1,0 +1,16 @@
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
+
+rust_library(
+    name = "mod",
+    srcs = ["mod.rs"],
+)
+
+rust_library(
+    name = "stop_data_message_tests",
+    srcs = ["stop_data_message_tests.rs"],
+)
+
+rust_test(
+    name = "stop_data_message_tests_test",
+    crate = ":stop_data_message_tests",
+)

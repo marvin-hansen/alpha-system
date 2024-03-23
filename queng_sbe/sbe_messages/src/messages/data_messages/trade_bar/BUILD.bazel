@@ -1,0 +1,22 @@
+load("@rules_rust//rust:defs.bzl", "rust_library")
+
+rust_library(
+    name = "mod",
+    srcs = ["mod.rs"],
+    deps = ["@crates//:serde"],
+)
+
+rust_library(
+    name = "sbe_decode",
+    srcs = ["sbe_decode.rs"],
+    deps = [
+        "@crates//:chrono",
+        "@crates//:rust_decimal",
+    ],
+)
+
+rust_library(
+    name = "sbe_encode",
+    srcs = ["sbe_encode.rs"],
+    deps = ["@crates//:rust_decimal"],
+)

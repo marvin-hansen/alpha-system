@@ -1,0 +1,16 @@
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
+
+rust_library(
+    name = "data_error_message_tests",
+    srcs = ["data_error_message_tests.rs"],
+)
+
+rust_library(
+    name = "mod",
+    srcs = ["mod.rs"],
+)
+
+rust_test(
+    name = "data_error_message_tests_test",
+    crate = ":data_error_message_tests",
+)

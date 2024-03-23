@@ -1,0 +1,27 @@
+load("@rules_rust//rust:defs.bzl", "rust_library")
+
+rust_library(
+    name = "getters",
+    srcs = ["getters.rs"],
+)
+
+rust_library(
+    name = "lib",
+    srcs = ["lib.rs"],
+    deps = ["@crates//:lru"],
+)
+
+rust_library(
+    name = "lookup_exchange_name",
+    srcs = ["lookup_exchange_name.rs"],
+)
+
+rust_library(
+    name = "lookup_symbol",
+    srcs = ["lookup_symbol.rs"],
+)
+
+rust_library(
+    name = "lookup_symbol_table",
+    srcs = ["lookup_symbol_table.rs"],
+)

@@ -1,0 +1,27 @@
+load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_library")
+
+rust_binary(
+    name = "main",
+    srcs = ["main.rs"],
+    deps = [
+        "@crates//:klickhouse",
+        "@crates//:tokio",
+    ],
+)
+
+rust_library(
+    name = "process_file",
+    srcs = ["process_file.rs"],
+    deps = ["@crates//:klickhouse"],
+)
+
+rust_library(
+    name = "query_gen",
+    srcs = ["query_gen.rs"],
+)
+
+rust_library(
+    name = "query_utils",
+    srcs = ["query_utils.rs"],
+    deps = ["@crates//:klickhouse"],
+)

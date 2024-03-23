@@ -1,0 +1,12 @@
+load("@rules_rust//rust:defs.bzl", "rust_library")
+
+rust_library(
+    name = "ims_data_client_tests",
+    srcs = ["ims_data_client_tests.rs"],
+    deps = ["@crates//:tokio"],
+)
+
+rust_library(
+    name = "mod",
+    srcs = ["mod.rs"],
+)

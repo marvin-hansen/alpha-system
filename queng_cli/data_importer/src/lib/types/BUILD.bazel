@@ -1,0 +1,51 @@
+load("@rules_rust//rust:defs.bzl", "rust_library")
+
+rust_library(
+    name = "assets",
+    srcs = ["assets.rs"],
+    deps = ["@crates//:serde"],
+)
+
+rust_library(
+    name = "count",
+    srcs = ["count.rs"],
+    deps = [
+        "@crates//:klickhouse",
+        "@crates//:serde",
+    ],
+)
+
+rust_library(
+    name = "exchanges",
+    srcs = ["exchanges.rs"],
+    deps = ["@crates//:serde"],
+)
+
+rust_library(
+    name = "instruments",
+    srcs = ["instruments.rs"],
+    deps = ["@crates//:serde"],
+)
+
+rust_library(
+    name = "master_symbols",
+    srcs = ["master_symbols.rs"],
+    deps = [
+        "@crates//:klickhouse",
+        "@crates//:serde",
+    ],
+)
+
+rust_library(
+    name = "mod",
+    srcs = ["mod.rs"],
+)
+
+rust_library(
+    name = "symbol_meta_data",
+    srcs = ["symbol_meta_data.rs"],
+    deps = [
+        "@crates//:klickhouse",
+        "@crates//:serde",
+    ],
+)

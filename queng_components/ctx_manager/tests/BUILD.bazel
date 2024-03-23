@@ -1,0 +1,11 @@
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
+
+rust_test(
+    name = "ctx_manager_tests",
+    srcs = ["ctx_manager_tests.rs"],
+)
+
+rust_library(
+    name = "mod",
+    srcs = ["mod.rs"],
+)

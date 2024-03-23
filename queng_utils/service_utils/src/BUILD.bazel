@@ -1,0 +1,17 @@
+load("@rules_rust//rust:defs.bzl", "rust_library")
+
+rust_library(
+    name = "lib",
+    srcs = ["lib.rs"],
+)
+
+rust_library(
+    name = "print_utils",
+    srcs = ["print_utils.rs"],
+)
+
+rust_library(
+    name = "shutdown_utils",
+    srcs = ["shutdown_utils.rs"],
+    deps = ["@crates//:tokio"],
+)

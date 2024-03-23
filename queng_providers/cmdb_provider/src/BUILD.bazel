@@ -1,0 +1,19 @@
+load("@rules_rust//rust:defs.bzl", "rust_library")
+
+rust_library(
+    name = "lib",
+    srcs = ["lib.rs"],
+    deps = [
+        "@crates//:proto",
+        "@crates//:tonic",
+    ],
+)
+
+rust_library(
+    name = "prv_cmdb",
+    srcs = ["prv_cmdb.rs"],
+    deps = [
+        "@crates//:proto",
+        "@crates//:tonic",
+    ],
+)

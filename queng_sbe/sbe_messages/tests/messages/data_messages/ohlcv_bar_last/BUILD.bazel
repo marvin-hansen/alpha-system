@@ -1,0 +1,16 @@
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
+
+rust_library(
+    name = "mod",
+    srcs = ["mod.rs"],
+)
+
+rust_library(
+    name = "ohlcv_bar_last_tests",
+    srcs = ["ohlcv_bar_last_tests.rs"],
+)
+
+rust_test(
+    name = "ohlcv_bar_last_tests_test",
+    crate = ":ohlcv_bar_last_tests",
+)

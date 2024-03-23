@@ -1,0 +1,11 @@
+load("@rules_rust//rust:defs.bzl", "rust_library")
+
+rust_library(
+    name = "math_utils",
+    srcs = ["math_utils.rs"],
+)
+
+rust_library(
+    name = "mod",
+    srcs = ["mod.rs"],
+)

@@ -1,0 +1,30 @@
+load("@rules_rust//rust:defs.bzl", "rust_library")
+
+rust_library(
+    name = "client_error_types",
+    srcs = ["client_error_types.rs"],
+    deps = ["@crates//:serde"],
+)
+
+rust_library(
+    name = "data_error_types",
+    srcs = ["data_error_types.rs"],
+    deps = ["@crates//:serde"],
+)
+
+rust_library(
+    name = "data_type",
+    srcs = ["data_type.rs"],
+    deps = ["@crates//:serde"],
+)
+
+rust_library(
+    name = "message_types",
+    srcs = ["message_types.rs"],
+    deps = ["@crates//:serde"],
+)
+
+rust_library(
+    name = "mod",
+    srcs = ["mod.rs"],
+)

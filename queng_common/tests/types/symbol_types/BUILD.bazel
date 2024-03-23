@@ -1,0 +1,27 @@
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
+
+rust_library(
+    name = "mod",
+    srcs = ["mod.rs"],
+)
+
+rust_library(
+    name = "symbol_id_tests",
+    srcs = ["symbol_id_tests.rs"],
+)
+
+rust_library(
+    name = "symbol_tests",
+    srcs = ["symbol_tests.rs"],
+    deps = ["@crates//:rust_decimal"],
+)
+
+rust_test(
+    name = "symbol_id_tests_test",
+    crate = ":symbol_id_tests",
+)
+
+rust_test(
+    name = "symbol_tests_test",
+    crate = ":symbol_tests",
+)

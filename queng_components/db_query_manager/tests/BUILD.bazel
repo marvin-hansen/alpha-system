@@ -1,0 +1,16 @@
+load("@rules_rust//rust:defs.bzl", "rust_library")
+
+rust_library(
+    name = "db_query_manager_tests",
+    srcs = ["db_query_manager_tests.rs"],
+    deps = [
+        "@crates//:futures",
+        "@crates//:rust_decimal",
+        "@crates//:tokio",
+    ],
+)
+
+rust_library(
+    name = "mod",
+    srcs = ["mod.rs"],
+)
