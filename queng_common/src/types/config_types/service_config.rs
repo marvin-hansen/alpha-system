@@ -4,8 +4,6 @@ use std::fmt::{Display, Formatter};
 
 #[derive(Serialize, Deserialize, Debug, Default, Clone, Eq, PartialEq)]
 pub struct ServiceConfig {
-    // DB ID
-    // id: Option<Thing>,
     /// Unique Service ID.
     svc_id: ServiceID,
     /// Service name.
@@ -61,7 +59,6 @@ impl ServiceConfig {
         metrics: MetricConfig,
     ) -> Self {
         Self {
-            // id: None,
             svc_id,
             name,
             version,
