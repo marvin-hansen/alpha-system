@@ -4,6 +4,7 @@ rust_binary(
     name = "main",
     srcs = ["main.rs"],
     deps = [
+        "//queng_common/src:common",
         "@crates//:autometrics",
         "@crates//:tokio",
         "@crates//:warp",
@@ -13,5 +14,8 @@ rust_binary(
 rust_library(
     name = "service",
     srcs = ["service.rs"],
-    deps = ["@crates//:tokio"],
+    deps = [
+        "//queng_common/src:common",
+        "@crates//:tokio",
+    ],
 )

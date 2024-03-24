@@ -1,0 +1,32 @@
+load("@crate_index//:defs.bzl", "aliases", "all_crate_deps")
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test_suite", "rust_test")
+
+rust_library(
+    name = "common",
+    crate_root = "src/lib.rs",
+    srcs = glob([
+        "src/**",
+    ]),
+    aliases = aliases(),
+    proc_macro_deps = all_crate_deps(proc_macro = True),
+    deps = all_crate_deps(normal = True),
+    visibility = ["//visibility:public"],
+)
+
+rust_test(
+    name = "tests",
+    srcs = glob([
+        "tests/**",
+    ]),
+    crate_root = "tests/mod.rs",
+    deps = all_crate_deps(
+        normal = True,
+        normal_dev = True,
+    ) + [
+        "//queng_common:common",
+    ],
+    proc_macro_deps = all_crate_deps(
+        proc_macro_dev = True
+    ),
+    visibility = ["//visibility:public"],
+)

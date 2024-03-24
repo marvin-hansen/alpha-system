@@ -9,6 +9,7 @@ rust_library(
     name = "trade_bar_tests",
     srcs = ["trade_bar_tests.rs"],
     deps = [
+        "//queng_common/src:common",
         "@crates//:chrono",
         "@crates//:rust_decimal",
     ],

@@ -4,6 +4,7 @@ rust_library(
     name = "cfg_gw",
     srcs = ["cfg_gw.rs"],
     deps = [
+        "//queng_common/src:common",
         "@crates//:proto",
         "@crates//:tonic",
     ],
@@ -18,6 +19,7 @@ rust_library(
     name = "lib",
     srcs = ["lib.rs"],
     deps = [
+        "//queng_common/src:common",
         "@crates//:proto",
         "@crates//:tonic",
     ],
@@ -27,6 +29,7 @@ rust_library(
     name = "svc_gw",
     srcs = ["svc_gw.rs"],
     deps = [
+        "//queng_common/src:common",
         "@crates//:proto",
         "@crates//:tonic",
     ],

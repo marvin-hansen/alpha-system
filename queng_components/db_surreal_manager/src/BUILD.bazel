@@ -3,23 +3,35 @@ load("@rules_rust//rust:defs.bzl", "rust_library")
 rust_library(
     name = "db_cfg",
     srcs = ["db_cfg.rs"],
-    deps = ["@crates//:surrealdb"],
+    deps = [
+        "//queng_common/src:common",
+        "@crates//:surrealdb",
+    ],
 )
 
 rust_library(
     name = "db_fiat_iso",
     srcs = ["db_fiat_iso.rs"],
-    deps = ["@crates//:surrealdb"],
+    deps = [
+        "//queng_common/src:common",
+        "@crates//:surrealdb",
+    ],
 )
 
 rust_library(
     name = "db_svc",
     srcs = ["db_svc.rs"],
-    deps = ["@crates//:surrealdb"],
+    deps = [
+        "//queng_common/src:common",
+        "@crates//:surrealdb",
+    ],
 )
 
 rust_library(
     name = "lib",
     srcs = ["lib.rs"],
-    deps = ["@crates//:surrealdb"],
+    deps = [
+        "//queng_common/src:common",
+        "@crates//:surrealdb",
+    ],
 )

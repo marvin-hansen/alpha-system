@@ -4,6 +4,7 @@ rust_binary(
     name = "main",
     srcs = ["main.rs"],
     deps = [
+        "//queng_common/src:common",
         "@crates//:autometrics",
         "@crates//:proto",
         "@crates//:tokio",

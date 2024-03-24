@@ -3,6 +3,7 @@ load("@rules_rust//rust:defs.bzl", "rust_library")
 rust_library(
     name = "command",
     srcs = ["command.rs"],
+    deps = ["//queng_common/src:common"],
 )
 
 rust_library(

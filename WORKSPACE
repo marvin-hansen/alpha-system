@@ -23,24 +23,29 @@ http_archive(
     urls = ["https://github.com/bazelbuild/rules_rust/releases/download/0.40.0/rules_rust-v0.40.0.tar.gz"],
 )
 
+rust_version = "1.76.0"
+
 # Configure Rust Toolchain to use.
 load("@rules_rust//rust:repositories.bzl", "rules_rust_dependencies", "rust_register_toolchains")
 rules_rust_dependencies()
 rust_register_toolchains(
     edition = "2021",
     versions = [
-        "1.76.0",
+        rust_version,
     ],
 )
+
+load("@rules_rust//crate_universe:repositories.bzl", "crate_universe_dependencies")
+crate_universe_dependencies()
 
 # Track dependencies of all crates.
 # When you add a new crate, re-run:
 # CARGO_BAZEL_REPIN=true bazel sync --only=crate_index
 load("@rules_rust//crate_universe:defs.bzl", "crates_repository")
 crates_repository(
-    name = "crates",
+    name = "crate_index",
     cargo_lockfile = "//:Cargo.lock",
-    lockfile = "//:cargo-bazel-lock",
+    lockfile = "//:cargo-bazel-lock.json",
     manifests = [
         "//:Cargo.toml",
         "//:queng_cli/data_importer/Cargo.toml",
@@ -82,31 +87,5 @@ crates_repository(
     ],
 )
 
-load("@rules_rust//crate_universe:repositories.bzl", "crate_universe_dependencies")
-crate_universe_dependencies()
-
-load("@rules_rust//proto/protobuf:repositories.bzl", "rust_proto_protobuf_dependencies", "rust_proto_protobuf_register_toolchains")
-rust_proto_protobuf_dependencies()
-rust_proto_protobuf_register_toolchains()
-
-# Load gazelle_rust. In a real project, this would use http_archive.
-GAZELLE_RUST_COMMIT = "aef7695c4a9b6c3e32255ed48570e62199f52537"
-GAZELLE_RUST_SHA256 = ""
-
-http_archive(
-    name = "gazelle_rust",
-    sha256 = GAZELLE_RUST_SHA256,
-    strip_prefix = "gazelle_rust-{}".format(GAZELLE_RUST_COMMIT),
-    url = "https://github.com/Calsign/gazelle_rust/archive/{}.zip".format(GAZELLE_RUST_COMMIT),
-)
-
-# Load gazelle_rust transitive dependencies (includes gazelle). You can also load gazelle yourself,
-# before these macros.
-
-load("@gazelle_rust//:deps1.bzl", "gazelle_rust_dependencies1")
-
-gazelle_rust_dependencies1()
-
-load("@gazelle_rust//:deps2.bzl", "gazelle_rust_dependencies2")
-
-gazelle_rust_dependencies2()
+load("@crate_index//:defs.bzl", "crate_repositories")
+crate_repositories()

@@ -8,5 +8,8 @@ rust_library(
 rust_library(
     name = "symdb_client_tests",
     srcs = ["symdb_client_tests.rs"],
-    deps = ["@crates//:tokio"],
+    deps = [
+        "//queng_common/src:common",
+        "@crates//:tokio",
+    ],
 )

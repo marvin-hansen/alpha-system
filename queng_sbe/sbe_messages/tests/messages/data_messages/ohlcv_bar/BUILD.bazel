@@ -8,6 +8,7 @@ rust_library(
 rust_library(
     name = "ohlcv_bar_tests",
     srcs = ["ohlcv_bar_tests.rs"],
+    deps = ["//queng_common/src:common"],
 )
 
 rust_test(

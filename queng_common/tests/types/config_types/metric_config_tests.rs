@@ -1,5 +1,4 @@
 use common::prelude::MetricConfig;
-use proto::binding::ProtoMetricConfig;
 
 #[test]
 fn test_new() {

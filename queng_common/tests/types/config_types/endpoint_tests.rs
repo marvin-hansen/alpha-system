@@ -1,5 +1,4 @@
 use common::prelude::{Encoding, Endpoint, ProtocolType};
-use proto::binding::ProtoEndpoint;
 
 #[test]
 fn test_new() {
