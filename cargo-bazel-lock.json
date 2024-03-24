@@ -1,5 +1,5 @@
 {
-  "checksum": "6409307487b92e0bfc7c26fec7671a3aed368e8d7999b334ce5faa517f1e69a3",
+  "checksum": "0d63eae928fc5321da9222481a21f9502668deadc7052a4bd68e24e624ae3e0c",
   "crates": {
     "addr 0.15.6": {
       "name": "addr",
@@ -19412,49 +19412,6 @@
       ],
       "license_file": "LICENSE"
     },
-    "qdgw 0.1.0": {
-      "name": "qdgw",
-      "version": "0.1.0",
-      "package_url": "https://github.com/marvin-hansen/quant-engine",
-      "repository": null,
-      "targets": [],
-      "library_target_name": null,
-      "common_attrs": {
-        "compile_data_glob": [
-          "**"
-        ],
-        "deps": {
-          "common": [
-            {
-              "id": "autometrics 1.0.0",
-              "target": "autometrics"
-            },
-            {
-              "id": "futures 0.3.29",
-              "target": "futures"
-            },
-            {
-              "id": "tokio 1.36.0",
-              "target": "tokio"
-            },
-            {
-              "id": "tonic 0.11.0",
-              "target": "tonic"
-            },
-            {
-              "id": "warp 0.3.6",
-              "target": "warp"
-            }
-          ],
-          "selects": {}
-        },
-        "edition": "2021",
-        "version": "0.1.0"
-      },
-      "license": null,
-      "license_ids": [],
-      "license_file": null
-    },
     "quanta 0.11.1": {
       "name": "quanta",
       "version": "0.11.1",
@@ -31026,49 +30983,6 @@
       ],
       "license_file": "LICENSE-APACHE"
     },
-    "vex 0.1.0": {
-      "name": "vex",
-      "version": "0.1.0",
-      "package_url": "https://github.com/marvin-hansen/quant-engine",
-      "repository": null,
-      "targets": [],
-      "library_target_name": null,
-      "common_attrs": {
-        "compile_data_glob": [
-          "**"
-        ],
-        "deps": {
-          "common": [
-            {
-              "id": "autometrics 1.0.0",
-              "target": "autometrics"
-            },
-            {
-              "id": "prost 0.12.3",
-              "target": "prost"
-            },
-            {
-              "id": "tokio 1.36.0",
-              "target": "tokio"
-            },
-            {
-              "id": "tonic 0.11.0",
-              "target": "tonic"
-            },
-            {
-              "id": "warp 0.3.6",
-              "target": "warp"
-            }
-          ],
-          "selects": {}
-        },
-        "edition": "2021",
-        "version": "0.1.0"
-      },
-      "license": null,
-      "license_ids": [],
-      "license_file": null
-    },
     "walkdir 2.4.0": {
       "name": "walkdir",
       "version": "2.4.0",
@@ -34131,7 +34045,6 @@
     "pattern_manager 0.1.0": "queng_components/pattern_manager",
     "proto 0.1.0": "queng_proto",
     "proto_utils 0.1.0": "queng_utils/proto_utils",
-    "qdgw 0.1.0": "queng_services/qdgw",
     "rest_client 0.1.0": "queng_clients/rest_client",
     "sbe_bindings 0.1.0": "queng_sbe/bindings",
     "sbe_messages 0.1.0": "queng_sbe/sbe_messages",
@@ -34143,8 +34056,7 @@
     "spec_manager 0.1.0": "queng_cli/spec_manager",
     "symbol_manager 0.1.0": "queng_components/symbol_manager",
     "symdb 0.1.0": "queng_services/symdb",
-    "symdb_client 0.1.0": "queng_clients/symdb_client",
-    "vex 0.1.0": "queng_services/vex"
+    "symdb_client 0.1.0": "queng_clients/symdb_client"
   },
   "conditions": {
     "aarch64-apple-darwin": [
