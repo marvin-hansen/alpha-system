@@ -3,22 +3,28 @@ load("@rules_rust//rust:defs.bzl", "rust_library")
 rust_library(
     name = "error",
     srcs = ["error.rs"],
+    deps = ["//queng_common/src:common"],
 )
 
 rust_library(
     name = "lib",
     srcs = ["lib.rs"],
-    deps = ["@crates//:klickhouse"],
+    deps = [
+        "//queng_common/src:common",
+        "@crates//:klickhouse",
+    ],
 )
 
 rust_library(
     name = "query_gen",
     srcs = ["query_gen.rs"],
+    deps = ["//queng_common/src:common"],
 )
 
 rust_library(
     name = "query_ohlcv",
     srcs = ["query_ohlcv.rs"],
+    deps = ["//queng_common/src:common"],
 )
 
 rust_library(
@@ -29,17 +35,20 @@ rust_library(
 rust_library(
     name = "query_trades",
     srcs = ["query_trades.rs"],
+    deps = ["//queng_common/src:common"],
 )
 
 rust_library(
     name = "query_utils",
     srcs = ["query_utils.rs"],
+    deps = ["//queng_common/src:common"],
 )
 
 rust_library(
     name = "stream_ohlcv",
     srcs = ["stream_ohlcv.rs"],
     deps = [
+        "//queng_common/src:common",
         "@crates//:futures",
         "@crates//:klickhouse",
     ],

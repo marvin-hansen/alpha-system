@@ -4,6 +4,7 @@ rust_library(
     name = "mod",
     srcs = ["mod.rs"],
     deps = [
+        "//queng_common/src:common",
         "@crates//:config-file",
         "@crates//:serde",
     ],

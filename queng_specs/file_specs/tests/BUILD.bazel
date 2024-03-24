@@ -3,36 +3,43 @@ load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
 rust_test(
     name = "btc_1m_2017_tests",
     srcs = ["btc_1m_2017_tests.rs"],
+    deps = ["//queng_common/src:common"],
 )
 
 rust_test(
     name = "btc_1m_2018_tests",
     srcs = ["btc_1m_2018_tests.rs"],
+    deps = ["//queng_common/src:common"],
 )
 
 rust_test(
     name = "btc_1m_2019_tests",
     srcs = ["btc_1m_2019_tests.rs"],
+    deps = ["//queng_common/src:common"],
 )
 
 rust_test(
     name = "btc_1m_2020_tests",
     srcs = ["btc_1m_2020_tests.rs"],
+    deps = ["//queng_common/src:common"],
 )
 
 rust_test(
     name = "btc_1m_2021_tests",
     srcs = ["btc_1m_2021_tests.rs"],
+    deps = ["//queng_common/src:common"],
 )
 
 rust_test(
     name = "btc_1m_2022_tests",
     srcs = ["btc_1m_2022_tests.rs"],
+    deps = ["//queng_common/src:common"],
 )
 
 rust_test(
     name = "btc_small_tests",
     srcs = ["btc_small_tests.rs"],
+    deps = ["//queng_common/src:common"],
 )
 
 rust_library(

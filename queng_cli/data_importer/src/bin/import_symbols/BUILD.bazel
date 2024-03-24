@@ -19,6 +19,7 @@ rust_binary(
     name = "main",
     srcs = ["main.rs"],
     deps = [
+        "//queng_common/src:common",
         "@crates//:klickhouse",
         "@crates//:tokio",
     ],

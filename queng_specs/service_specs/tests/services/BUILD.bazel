@@ -3,11 +3,13 @@ load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
 rust_library(
     name = "cmdb_tests",
     srcs = ["cmdb_tests.rs"],
+    deps = ["//queng_common/src:common"],
 )
 
 rust_library(
     name = "dbgw_tests",
     srcs = ["dbgw_tests.rs"],
+    deps = ["//queng_common/src:common"],
 )
 
 rust_library(
@@ -18,11 +20,13 @@ rust_library(
 rust_library(
     name = "qdgw_tests",
     srcs = ["qdgw_tests.rs"],
+    deps = ["//queng_common/src:common"],
 )
 
 rust_library(
     name = "smdb_tests",
     srcs = ["smdb_tests.rs"],
+    deps = ["//queng_common/src:common"],
 )
 
 rust_test(

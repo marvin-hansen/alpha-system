@@ -7,8 +7,6 @@ pub mod encoding;
 pub mod endpoint;
 pub mod endpoint_host;
 pub mod environment_type;
-pub mod iggy_config;
-pub mod iggy_user;
 pub mod message_client_config;
 pub mod metric_config;
 pub mod protocol_type;

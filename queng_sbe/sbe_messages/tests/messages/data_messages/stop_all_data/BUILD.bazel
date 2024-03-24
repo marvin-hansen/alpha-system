@@ -8,6 +8,7 @@ rust_library(
 rust_library(
     name = "stop_all_data_message_tests",
     srcs = ["stop_all_data_message_tests.rs"],
+    deps = ["//queng_common/src:common"],
 )
 
 rust_test(

@@ -9,6 +9,7 @@ rust_library(
     name = "lib",
     srcs = ["lib.rs"],
     deps = [
+        "//queng_common/src:common",
         "@crates//:proto",
         "@crates//:tonic",
     ],
@@ -17,10 +18,14 @@ rust_library(
 rust_library(
     name = "utils_proto",
     srcs = ["utils_proto.rs"],
-    deps = ["@crates//:proto"],
+    deps = [
+        "//queng_common/src:common",
+        "@crates//:proto",
+    ],
 )
 
 rust_library(
     name = "workflow",
     srcs = ["workflow.rs"],
+    deps = ["//queng_common/src:common"],
 )

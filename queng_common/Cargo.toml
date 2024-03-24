@@ -17,8 +17,6 @@ path = "src/lib.rs"
 [dependencies]
 # External crates
 chrono = { workspace = true }
-iggy = { workspace = true }
 rust_decimal = { workspace = true }
 serde_json = { workspace = true }
 serde = { workspace = true }
-surrealdb = { workspace = true }

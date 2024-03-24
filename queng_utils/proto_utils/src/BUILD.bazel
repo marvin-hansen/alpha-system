@@ -3,7 +3,10 @@ load("@rules_rust//rust:defs.bzl", "rust_library")
 rust_library(
     name = "endpoint_proto_utils",
     srcs = ["endpoint_proto_utils.rs"],
-    deps = ["@crates//:proto"],
+    deps = [
+        "//queng_common/src:common",
+        "@crates//:proto",
+    ],
 )
 
 rust_library(
@@ -14,17 +17,26 @@ rust_library(
 rust_library(
     name = "metric_config_proto_utils",
     srcs = ["metric_config_proto_utils.rs"],
-    deps = ["@crates//:proto"],
+    deps = [
+        "//queng_common/src:common",
+        "@crates//:proto",
+    ],
 )
 
 rust_library(
     name = "portfolio_proto_utils",
     srcs = ["portfolio_proto_utils.rs"],
-    deps = ["@crates//:proto"],
+    deps = [
+        "//queng_common/src:common",
+        "@crates//:proto",
+    ],
 )
 
 rust_library(
     name = "service_config_proto_utils",
     srcs = ["service_config_proto_utils.rs"],
-    deps = ["@crates//:proto"],
+    deps = [
+        "//queng_common/src:common",
+        "@crates//:proto",
+    ],
 )

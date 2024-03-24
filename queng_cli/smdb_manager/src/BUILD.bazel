@@ -9,6 +9,7 @@ rust_binary(
 rust_library(
     name = "svc_handle",
     srcs = ["svc_handle.rs"],
+    deps = ["//queng_common/src:common"],
 )
 
 rust_library(

@@ -8,17 +8,22 @@ rust_library(
 rust_library(
     name = "getter",
     srcs = ["getter.rs"],
+    deps = ["//queng_common/src:common"],
 )
 
 rust_library(
     name = "mod",
     srcs = ["mod.rs"],
-    deps = ["@crates//:serde"],
+    deps = [
+        "//queng_common/src:common",
+        "@crates//:serde",
+    ],
 )
 
 rust_library(
     name = "sbe_decode",
     srcs = ["sbe_decode.rs"],
+    deps = ["//queng_common/src:common"],
 )
 
 rust_library(

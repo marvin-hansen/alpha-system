@@ -13,6 +13,7 @@ rust_library(
     name = "prv_smdb",
     srcs = ["prv_smdb.rs"],
     deps = [
+        "//queng_common/src:common",
         "@crates//:proto",
         "@crates//:tonic",
     ],

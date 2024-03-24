@@ -1,12 +1,11 @@
 use crate::prelude::{Endpoint, MetricConfig, ServiceID, ServiceType};
 use serde::{Deserialize, Serialize};
 use std::fmt::{Display, Formatter};
-use surrealdb::sql::Thing;
 
 #[derive(Serialize, Deserialize, Debug, Default, Clone, Eq, PartialEq)]
 pub struct ServiceConfig {
     // DB ID
-    id: Option<Thing>,
+    // id: Option<Thing>,
     /// Unique Service ID.
     svc_id: ServiceID,
     /// Service name.
@@ -62,7 +61,7 @@ impl ServiceConfig {
         metrics: MetricConfig,
     ) -> Self {
         Self {
-            id: None,
+            // id: None,
             svc_id,
             name,
             version,
