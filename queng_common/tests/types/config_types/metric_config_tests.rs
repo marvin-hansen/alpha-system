@@ -20,32 +20,6 @@ fn test_default() {
 }
 
 #[test]
-fn test_from_proto() {
-    let proto = ProtoMetricConfig {
-        metric_uri: "metrics".to_string(),
-        metric_host: "localhost".to_string(),
-        metric_port: 8080,
-    };
-
-    let config = MetricConfig::from_proto(proto).unwrap();
-
-    assert_eq!(config.metric_uri(), "metrics");
-    assert_eq!(config.metric_host(), "localhost");
-    assert_eq!(config.metric_port(), 8080);
-}
-
-#[test]
-fn test_to_proto() {
-    let config = MetricConfig::new("metrics".to_string(), "localhost".to_string(), 8080);
-
-    let proto = config.to_proto().unwrap();
-
-    assert_eq!(proto.metric_uri, "metrics");
-    assert_eq!(proto.metric_host, "localhost");
-    assert_eq!(proto.metric_port, 8080);
-}
-
-#[test]
 fn test_display() {
     let config = MetricConfig::default();
 

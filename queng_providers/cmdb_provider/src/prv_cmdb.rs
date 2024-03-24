@@ -1,12 +1,12 @@
 use common::prelude::PortfolioConfig;
 use proto::binding::{MultiPortfolioRequest, SinglePortfolioRequest};
+use proto_utils::portfolio_proto_utils::{portfolio_config_from_proto, portfolio_config_to_proto};
 
 use crate::{CMDBError, CmdbManager};
 
 impl CmdbManager {
     pub async fn create_portfolio_config(self, data: PortfolioConfig) -> Result<bool, CMDBError> {
-        let proto_portfolio_config = data
-            .to_proto()
+        let proto_portfolio_config = portfolio_config_to_proto(data)
             .expect("Failed to convert Rust PortfolioConfig to proto");
 
         let request = tonic::Request::new(proto_portfolio_config);
@@ -31,7 +31,7 @@ impl CmdbManager {
 
         match client.read_portfolio_config(request).await {
             Ok(res) => match res.into_inner().portfolio_config {
-                Some(p) => Ok(Some(PortfolioConfig::from_proto(p.to_owned()).expect(
+                Some(p) => Ok(Some(portfolio_config_from_proto(p.to_owned()).expect(
                     "Failed to convert ProtoPortfolioConfig to Rust PortfolioConfig",
                 ))),
                 None => Ok(None),
@@ -54,7 +54,7 @@ impl CmdbManager {
                     .portfolio_configs
                     .iter()
                     .map(|p| {
-                        PortfolioConfig::from_proto(p.to_owned()).expect(
+                        portfolio_config_from_proto(p.to_owned()).expect(
                             "Failed to convert ProtoPortfolioConfig to Rust PortfolioConfig",
                         )
                     })
@@ -67,8 +67,7 @@ impl CmdbManager {
     }
 
     pub async fn update_portfolio_config(self, data: PortfolioConfig) -> Result<bool, CMDBError> {
-        let proto_portfolio_config = data
-            .to_proto()
+        let proto_portfolio_config = portfolio_config_to_proto(data)
             .expect("Failed to convert Rust PortfolioConfig to proto");
 
         let request = tonic::Request::new(proto_portfolio_config);

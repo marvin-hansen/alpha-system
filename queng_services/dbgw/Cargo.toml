@@ -21,6 +21,7 @@ ctx_manager = {workspace = true}
 db_surreal_manager = {workspace = true}
 dns_manager = {workspace = true}
 proto = {workspace = true}
+proto_utils = {workspace = true}
 service_utils = {workspace = true}
 # External crates
 autometrics = { workspace = true }

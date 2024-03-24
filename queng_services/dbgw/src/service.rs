@@ -2,10 +2,12 @@ use autometrics::autometrics;
 use surrealdb::Error;
 use tonic::{Request, Response, Status};
 
-use common::prelude::{PortfolioConfig, ServiceConfig, ServiceID};
+use common::prelude::{ServiceConfig, ServiceID};
 use db_surreal_manager::SurrealDBManager;
 use proto::binding::db_gateway_service_server::DbGatewayService;
 use proto::binding::*;
+use proto_utils::portfolio_proto_utils::{portfolio_config_from_proto, portfolio_config_to_proto};
+use proto_utils::service_config_proto_utils::{service_config_from_proto, service_config_to_proto};
 
 #[derive(Clone)]
 pub struct DBGWServer {
@@ -26,7 +28,7 @@ impl DbGatewayService for DBGWServer {
         request: Request<ProtoPortfolioConfig>,
     ) -> Result<Response<CreatePortfolioResponse>, Status> {
         let data =
-            PortfolioConfig::from_proto(request.into_inner()).expect("Failed to parse request");
+            portfolio_config_from_proto(request.into_inner()).expect("Failed to parse request");
 
         let res = self.dbm.add_portfolio_config(&data).await;
 
@@ -53,7 +55,7 @@ impl DbGatewayService for DBGWServer {
                 })),
                 Some(res) => {
                     let proto_portfolio_config =
-                        res.to_proto().expect("Failed to convert record to proto");
+                        portfolio_config_to_proto(res).expect("Failed to convert record to proto");
 
                     Ok(Response::new(ReadPortfolioResponse {
                         portfolio_config: Some(proto_portfolio_config),
@@ -80,8 +82,7 @@ impl DbGatewayService for DBGWServer {
                     }))
                 } else {
                     for record in res {
-                        let proto_portfolio_config = record
-                            .to_proto()
+                        let proto_portfolio_config = portfolio_config_to_proto(record)
                             .expect("Failed to convert record to proto");
 
                         portfolio_configs.push(proto_portfolio_config);
@@ -101,7 +102,7 @@ impl DbGatewayService for DBGWServer {
         request: Request<ProtoPortfolioConfig>,
     ) -> Result<Response<UpdatePortfolioResponse>, Status> {
         let data =
-            PortfolioConfig::from_proto(request.into_inner()).expect("Failed to parse request");
+            portfolio_config_from_proto(request.into_inner()).expect("Failed to parse request");
 
         let res = self.dbm.update_portfolio_config(data).await;
 
@@ -138,7 +139,7 @@ impl DbGatewayService for DBGWServer {
         &self,
         rqt: Request<ProtoServiceConfig>,
     ) -> Result<Response<CreateServiceResponse>, Status> {
-        let data = ServiceConfig::from_proto(rqt.into_inner())
+        let data = service_config_from_proto(rqt.into_inner())
             .expect("Failed to create ServiceConfig from proto");
 
         let res = self.dbm.create_service(data).await;
@@ -232,8 +233,7 @@ impl DbGatewayService for DBGWServer {
                 })),
 
                 Some(res) => {
-                    let proto_service_config = res
-                        .to_proto()
+                    let proto_service_config = service_config_to_proto(res)
                         .expect("Failed to convert Rust ServiceConfig to proto");
 
                     Ok(Response::new(ReadServiceResponse {
@@ -259,8 +259,7 @@ impl DbGatewayService for DBGWServer {
                     Ok(Response::new(ReadAllServicesResponse { service_configs }))
                 } else {
                     for record in res {
-                        let proto_service_config = record
-                            .to_proto()
+                        let proto_service_config = service_config_to_proto(record)
                             .expect("Failed to convert Rust ServiceConfig to proto");
 
                         service_configs.push(proto_service_config);
@@ -307,7 +306,7 @@ impl DbGatewayService for DBGWServer {
         &self,
         request: Request<ProtoServiceConfig>,
     ) -> Result<Response<UpdateServiceResponse>, Status> {
-        let data = ServiceConfig::from_proto(request.into_inner())
+        let data = service_config_from_proto(request.into_inner())
             .expect("Failed to create ServiceConfig from proto");
 
         let res: Result<Option<ServiceConfig>, Error> = self.dbm.update_service(data).await;

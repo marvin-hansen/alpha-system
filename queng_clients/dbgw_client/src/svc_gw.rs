@@ -7,8 +7,8 @@ use crate::DBGatewayClient;
 
 impl DBGatewayClient {
     pub async fn create_service(&self, data: ServiceConfig) -> Result<bool, DBGatewayError> {
-        let proto_service_config = service_config_to_proto(&data)
-            .expect("Failed to convert Rust PortfolioConfig to proto");
+        let proto_service_config =
+            service_config_to_proto(data).expect("Failed to convert Rust PortfolioConfig to proto");
 
         let request = tonic::Request::new(proto_service_config);
 
@@ -156,9 +156,8 @@ impl DBGatewayClient {
     }
 
     pub async fn update_service(&self, data: ServiceConfig) -> Result<bool, DBGatewayError> {
-        let proto_service_config = data
-            .to_proto()
-            .expect("Failed to convert Rust PortfolioConfig to proto");
+        let proto_service_config =
+            service_config_to_proto(data).expect("Failed to convert Rust PortfolioConfig to proto");
 
         let request = tonic::Request::new(proto_service_config);
 

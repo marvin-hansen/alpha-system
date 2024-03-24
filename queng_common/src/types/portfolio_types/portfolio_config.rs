@@ -1,10 +1,6 @@
-use std::fmt::{Display, Error, Formatter};
-
-use serde::{Deserialize, Serialize};
-
-use proto::binding::ProtoPortfolioConfig;
-
 use crate::prelude::{AccountType, ExchangeID};
+use serde::{Deserialize, Serialize};
+use std::fmt::{Display, Formatter};
 
 #[derive(Serialize, Deserialize, Debug, Default, Clone, PartialEq)]
 pub struct PortfolioConfig {
@@ -99,49 +95,6 @@ impl PortfolioConfig {
             portfolio_free_margin_percent: 0f64,
             portfolio_free_cash_percent: 100.0,
         }
-    }
-}
-
-impl PortfolioConfig {
-    pub fn from_proto(proto: ProtoPortfolioConfig) -> Result<PortfolioConfig, Error> {
-        Ok(PortfolioConfig {
-            portfolio_id: proto.portfolio_id as u32,
-            portfolio_description: proto.portfolio_description,
-            portfolio_account_type: AccountType::from(proto.portfolio_account_type),
-            portfolio_account_id: proto.portfolio_account_id,
-            portfolio_exchange_id: ExchangeID::from(proto.portfolio_exchange_id),
-            portfolio_currency: proto.portfolio_currency,
-            portfolio_cash: proto.portfolio_cash,
-            portfolio_margin: proto.portfolio_margin,
-            portfolio_max_drawdown: proto.portfolio_max_drawdown,
-            portfolio_instruments: proto.portfolio_instruments.into_iter().collect(),
-            instrument_max_allocation: proto.instrument_max_allocation,
-            instrument_max_drawdown: proto.instrument_max_drawdown,
-            portfolio_free_margin: proto.portfolio_free_margin,
-            portfolio_free_cash: proto.portfolio_free_cash,
-            portfolio_free_margin_percent: proto.portfolio_free_margin_percent,
-            portfolio_free_cash_percent: proto.portfolio_free_cash_percent,
-        })
-    }
-    pub fn to_proto(&self) -> Result<ProtoPortfolioConfig, Error> {
-        Ok(ProtoPortfolioConfig {
-            portfolio_id: self.portfolio_id as i32,
-            portfolio_description: self.portfolio_description.clone(),
-            portfolio_account_type: self.portfolio_account_type as i32,
-            portfolio_account_id: self.portfolio_account_id.clone(),
-            portfolio_exchange_id: self.portfolio_exchange_id as i32,
-            portfolio_currency: self.portfolio_currency.clone(),
-            portfolio_cash: self.portfolio_cash,
-            portfolio_margin: self.portfolio_margin,
-            portfolio_max_drawdown: self.portfolio_max_drawdown,
-            portfolio_instruments: self.portfolio_instruments.clone(),
-            instrument_max_allocation: self.instrument_max_allocation,
-            instrument_max_drawdown: self.instrument_max_drawdown,
-            portfolio_free_margin: self.portfolio_free_margin,
-            portfolio_free_cash: self.portfolio_free_cash,
-            portfolio_free_margin_percent: self.portfolio_free_margin_percent,
-            portfolio_free_cash_percent: self.portfolio_free_cash_percent,
-        })
     }
 }
 
