@@ -29,6 +29,45 @@ pub struct PortfolioConfig {
 
 impl PortfolioConfig {
     #[allow(clippy::too_many_arguments)]
+    pub fn new(
+        portfolio_id: u32,
+        portfolio_description: String,
+        portfolio_account_type: AccountType,
+        portfolio_account_id: String,
+        portfolio_exchange_id: ExchangeID,
+        portfolio_currency: String,
+        portfolio_cash: f64,
+        portfolio_margin: f64,
+        portfolio_max_drawdown: f64,
+        portfolio_instruments: Vec<String>,
+        instrument_max_allocation: f64,
+        instrument_max_drawdown: f64,
+        portfolio_free_margin: f64,
+        portfolio_free_cash: f64,
+        portfolio_free_margin_percent: f64,
+        portfolio_free_cash_percent: f64,
+    ) -> Self {
+        Self {
+            portfolio_id,
+            portfolio_description,
+            portfolio_account_type,
+            portfolio_account_id,
+            portfolio_exchange_id,
+            portfolio_currency,
+            portfolio_cash,
+            portfolio_margin,
+            portfolio_max_drawdown,
+            portfolio_instruments,
+            instrument_max_allocation,
+            instrument_max_drawdown,
+            portfolio_free_margin,
+            portfolio_free_cash,
+            portfolio_free_margin_percent,
+            portfolio_free_cash_percent,
+        }
+    }
+
+    #[allow(clippy::too_many_arguments)]
     pub fn new_cash_portfolio(
         portfolio_id: u32,
         portfolio_description: String,

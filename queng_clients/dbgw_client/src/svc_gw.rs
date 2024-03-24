@@ -1,13 +1,13 @@
 use common::prelude::{ServiceConfig, ServiceID};
 use proto::binding::{MultiServicesRequest, SingleServiceRequest};
+use proto_utils::service_config_proto_utils::{service_config_from_proto, service_config_to_proto};
 
 use crate::error::DBGatewayError;
 use crate::DBGatewayClient;
 
 impl DBGatewayClient {
     pub async fn create_service(&self, data: ServiceConfig) -> Result<bool, DBGatewayError> {
-        let proto_service_config = data
-            .to_proto()
+        let proto_service_config = service_config_to_proto(&data)
             .expect("Failed to convert Rust PortfolioConfig to proto");
 
         let request = tonic::Request::new(proto_service_config);
@@ -94,7 +94,7 @@ impl DBGatewayClient {
                     .service_configs
                     .iter()
                     .map(|s| {
-                        ServiceConfig::from_proto(s.to_owned())
+                        service_config_from_proto(s.to_owned())
                             .expect("Failed to convert ProtoServiceConfig to Rust ServiceConfig")
                     })
                     .collect::<Vec<ServiceConfig>>();
@@ -118,7 +118,7 @@ impl DBGatewayClient {
         match client.read_service(request).await {
             Ok(res) => match res.into_inner().service_config {
                 Some(p) => {
-                    let service_config = ServiceConfig::from_proto(p.to_owned())
+                    let service_config = service_config_from_proto(p.to_owned())
                         .expect("Failed to convert ProtoServiceConfig to Rust ServiceConfig");
 
                     Ok(Some(service_config))
