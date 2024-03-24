@@ -1,5 +1,6 @@
 use common::prelude::PortfolioConfig;
 use proto::binding::{MultiPortfolioRequest, SinglePortfolioRequest};
+use proto_utils::portfolio_proto_utils::{portfolio_config_from_proto, portfolio_config_to_proto};
 
 use crate::error::DBGatewayError;
 use crate::DBGatewayClient;
@@ -10,8 +11,7 @@ impl DBGatewayClient {
         data: PortfolioConfig,
     ) -> Result<bool, DBGatewayError> {
         //
-        let proto_portfolio_config = data
-            .to_proto()
+        let proto_portfolio_config = portfolio_config_to_proto(data)
             .expect("Failed to convert Rust PortfolioConfig to proto");
 
         let request = tonic::Request::new(proto_portfolio_config);
@@ -40,7 +40,7 @@ impl DBGatewayClient {
                     .portfolio_configs
                     .iter()
                     .map(|p| {
-                        PortfolioConfig::from_proto(p.to_owned()).expect(
+                        portfolio_config_from_proto(p.to_owned()).expect(
                             "Failed to convert ProtoPortfolioConfig to Rust PortfolioConfig",
                         )
                     })
@@ -64,7 +64,7 @@ impl DBGatewayClient {
 
         match res {
             Ok(res) => match res.into_inner().portfolio_config {
-                Some(p) => Ok(Some(PortfolioConfig::from_proto(p.to_owned()).expect(
+                Some(p) => Ok(Some(portfolio_config_from_proto(p.to_owned()).expect(
                     "Failed to convert ProtoPortfolioConfig to Rust PortfolioConfig",
                 ))),
                 None => Ok(None),
@@ -77,8 +77,7 @@ impl DBGatewayClient {
         mut self,
         data: PortfolioConfig,
     ) -> Result<bool, DBGatewayError> {
-        let proto_portfolio_config = data
-            .to_proto()
+        let proto_portfolio_config = portfolio_config_to_proto(data)
             .expect("Failed to convert Rust PortfolioConfig to proto");
 
         let request = tonic::Request::new(proto_portfolio_config);

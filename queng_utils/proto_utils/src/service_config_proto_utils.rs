@@ -1,4 +1,6 @@
-use common::prelude::{Endpoint, MetricConfig, ServiceConfig, ServiceID, ServiceType};
+use crate::endpoint_proto_utils::{endpoint_from_proto, endpoint_to_proto};
+use crate::metric_config_proto_utils::{metric_config_from_proto, metric_config_to_proto};
+use common::prelude::{ServiceConfig, ServiceID, ServiceType};
 use proto::binding::ProtoServiceConfig;
 use std::fmt::Error;
 
@@ -15,11 +17,11 @@ pub fn service_config_from_proto(proto: ProtoServiceConfig) -> Result<ServiceCon
         .expect("Failed to create endpoint from proto");
 
     let endpoint =
-        Endpoint::from_proto(proto_endpoint).expect("Failed to create endpoint from proto");
+        endpoint_from_proto(proto_endpoint).expect("Failed to create endpoint from proto");
 
     let proto_metrics = proto.metrics.expect("Failed to create metrics from proto");
     let metrics =
-        MetricConfig::from_proto(proto_metrics).expect("Failed to create metrics from proto");
+        metric_config_from_proto(proto_metrics).expect("Failed to create metrics from proto");
 
     let proto_exposure = proto.exposure;
     let exposure = ServiceType::from(proto_exposure);
@@ -39,18 +41,12 @@ pub fn service_config_from_proto(proto: ProtoServiceConfig) -> Result<ServiceCon
     ))
 }
 
-pub fn service_config_to_proto(
-    service_config: &ServiceConfig,
-) -> Result<ProtoServiceConfig, Error> {
+pub fn service_config_to_proto(service_config: ServiceConfig) -> Result<ProtoServiceConfig, Error> {
     //
-    let proto_endpoint = service_config
-        .endpoint()
-        .to_proto()
-        .expect("Failed to create endpoint from proto");
+    let proto_endpoint =
+        endpoint_to_proto(service_config.endpoint()).expect("Failed to create endpoint from proto");
 
-    let proto_metrics = service_config
-        .metrics()
-        .to_proto()
+    let proto_metrics = metric_config_to_proto(service_config.metrics())
         .expect("Failed to create metrics from proto");
 
     let proto_dependencies = service_config

@@ -15,8 +15,6 @@ path = "src/lib.rs"
 
 
 [dependencies]
-# Internal crates
-proto = { workspace = true }
 # External crates
 chrono = { workspace = true }
 iggy = { workspace = true }

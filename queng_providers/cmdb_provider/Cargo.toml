@@ -17,6 +17,7 @@ path = "src/lib.rs"
 # Internal crates
 common = {workspace = true}
 proto = {workspace = true}
+proto_utils = {workspace = true}
 # External crates
 tokio = { workspace = true }
 tonic = { workspace = true }

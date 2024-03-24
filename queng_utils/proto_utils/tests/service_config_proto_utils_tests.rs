@@ -50,7 +50,7 @@ fn test_to_proto() {
         MetricConfig::default(),
     );
 
-    let proto = service_config_to_proto(&config).unwrap();
+    let proto = service_config_to_proto(config).unwrap();
 
     assert_eq!(proto.svc_id, 1);
     assert_eq!(proto.name, "Test Service");
