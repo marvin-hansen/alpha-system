@@ -1,0 +1,8 @@
+filegroup(
+    name = "build",
+    srcs = [
+        "//queng_utils/service_utils:service_utils",
+    ],
+    visibility = ["//visibility:public"],
+)
+

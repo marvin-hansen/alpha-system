@@ -1,7 +1,11 @@
 filegroup(
     name = "build",
     srcs = [
-        "//queng_common:common",
+        "//queng_common:build",
+        "//queng_components:build",
+        "//queng_sbe:build",
+        "//queng_utils:build",
+        "//queng_specs:build",
     ],
     visibility = ["//visibility:public"],
 )

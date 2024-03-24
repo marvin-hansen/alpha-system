@@ -1,0 +1,11 @@
+filegroup(
+    name = "build",
+    srcs = [
+        "//queng_specs/db_specs:db_specs",
+        "//queng_specs/exchange_specs:exchange_specs",
+        "//queng_specs/file_specs:file_specs",
+        "//queng_specs/service_specs:service_specs",
+    ],
+    visibility = ["//visibility:public"],
+)
+
