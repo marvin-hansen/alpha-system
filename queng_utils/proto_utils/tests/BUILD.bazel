@@ -1,0 +1,24 @@
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
+
+rust_test(
+    name = "endpoint_proto_utils_tests",
+    srcs = ["endpoint_proto_utils_tests.rs"],
+    deps = ["@crates//:proto"],
+)
+
+rust_test(
+    name = "metric_config_proto_utils_tests",
+    srcs = ["metric_config_proto_utils_tests.rs"],
+    deps = ["@crates//:proto"],
+)
+
+rust_library(
+    name = "mod",
+    srcs = ["mod.rs"],
+)
+
+rust_test(
+    name = "service_config_proto_utils_tests",
+    srcs = ["service_config_proto_utils_tests.rs"],
+    deps = ["@crates//:proto"],
+)
