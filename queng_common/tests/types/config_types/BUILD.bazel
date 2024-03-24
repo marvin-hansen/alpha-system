@@ -55,7 +55,6 @@ rust_library(
 rust_library(
     name = "service_config_tests",
     srcs = ["service_config_tests.rs"],
-    deps = ["@crates//:proto"],
 )
 
 rust_library(

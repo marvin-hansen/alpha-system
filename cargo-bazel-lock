@@ -1,5 +1,5 @@
 {
-  "checksum": "53a12f675699de2d8bf67ea6de1db33ca624e3b6462ff2eb90ef8207e1a6865c",
+  "checksum": "e9e648fe3607d5d12acb999214cc0b52e580192d5c1871094fefeb7a9e779cc1",
   "crates": {
     "addr 0.15.6": {
       "name": "addr",
@@ -21294,6 +21294,37 @@
       "license_ids": [],
       "license_file": null
     },
+    "proto_utils 0.1.0": {
+      "name": "proto_utils",
+      "version": "0.1.0",
+      "package_url": "https://github.com/marvin-hansen/quant-engine",
+      "repository": null,
+      "targets": [
+        {
+          "Library": {
+            "crate_name": "proto_utils",
+            "crate_root": "src/lib.rs",
+            "srcs": {
+              "allow_empty": false,
+              "include": [
+                "**/*.rs"
+              ]
+            }
+          }
+        }
+      ],
+      "library_target_name": "proto_utils",
+      "common_attrs": {
+        "compile_data_glob": [
+          "**"
+        ],
+        "edition": "2021",
+        "version": "0.1.0"
+      },
+      "license": null,
+      "license_ids": [],
+      "license_file": null
+    },
     "protobuf 2.28.0": {
       "name": "protobuf",
       "version": "2.28.0",
@@ -38011,6 +38042,7 @@
     "mdm 0.1.0": "queng_services/mdm",
     "pattern_manager 0.1.0": "queng_components/pattern_manager",
     "proto 0.1.0": "queng_proto",
+    "proto_utils 0.1.0": "queng_utils/proto_utils",
     "qdgw 0.1.0": "queng_services/qdgw",
     "rest_client 0.1.0": "queng_clients/rest_client",
     "sbe_bindings 0.1.0": "queng_sbe/bindings",

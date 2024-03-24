@@ -38,10 +38,7 @@ rust_library(
 rust_library(
     name = "endpoint",
     srcs = ["endpoint.rs"],
-    deps = [
-        "@crates//:proto",
-        "@crates//:serde",
-    ],
+    deps = ["@crates//:serde"],
 )
 
 rust_library(
@@ -77,10 +74,7 @@ rust_library(
 rust_library(
     name = "metric_config",
     srcs = ["metric_config.rs"],
-    deps = [
-        "@crates//:proto",
-        "@crates//:serde",
-    ],
+    deps = ["@crates//:serde"],
 )
 
 rust_library(
@@ -98,9 +92,7 @@ rust_library(
     name = "service_config",
     srcs = ["service_config.rs"],
     deps = [
-        "@crates//:proto",
         "@crates//:serde",
-        "@crates//:serde_json",
         "@crates//:surrealdb",
     ],
 )

@@ -8,8 +8,5 @@ rust_library(
 rust_library(
     name = "portfolio_config",
     srcs = ["portfolio_config.rs"],
-    deps = [
-        "@crates//:proto",
-        "@crates//:serde",
-    ],
+    deps = ["@crates//:serde"],
 )
