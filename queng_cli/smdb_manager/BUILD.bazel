@@ -1,9 +1,9 @@
 load("@crate_index//:defs.bzl", "aliases", "all_crate_deps")
-load("@rules_rust//rust:defs.bzl", "rust_library")
+load("@rules_rust//rust:defs.bzl", "rust_binary")
 
-rust_library(
-    name = "dbgw_client",
-    crate_root = "src/lib.rs",
+rust_binary(
+    name = "smdb_manager",
+    crate_root = "src/main.rs",
     srcs = glob([
         "src/**",
     ]),
@@ -13,8 +13,8 @@ rust_library(
         normal = True,
     ) + [
         "//queng_common:common",
-        "//queng_proto:rust_proto",
-        "//queng_utils/proto_utils:proto_utils",
+        "//queng_clients/dbgw_client:dbgw_client",
+        "//queng_providers/smdb_provider:smdb_provider",
     ],
     visibility = ["//visibility:public"],
 )

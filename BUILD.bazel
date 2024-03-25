@@ -1,6 +1,7 @@
 filegroup(
     name = "build",
     srcs = [
+        "//queng_cli:build",
         "//queng_clients:build",
         "//queng_common:build",
         "//queng_components:build",

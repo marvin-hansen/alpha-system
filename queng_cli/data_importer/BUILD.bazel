@@ -1,0 +1,53 @@
+load("@crate_index//:defs.bzl", "aliases", "all_crate_deps")
+load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_library")
+
+rust_binary(
+    name = "import_trade_data",
+    crate_root = "src/bin/import_kraken_trade_data/main.rs",
+    srcs = glob(["src/bin/import_kraken_trade_data/*.rs"]),
+    aliases = aliases(),
+    proc_macro_deps = all_crate_deps(proc_macro = True),
+    deps = all_crate_deps(
+        normal = True,
+    ) + [
+        ":lib_import",
+        "//queng_utils/client_utils:client_utils",
+        "//queng_common:common",
+        "//queng_specs/db_specs:db_specs",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+rust_binary(
+    name = "import_symbols",
+    crate_root = "src/bin/import_symbols/main.rs",
+    srcs = glob(["src/bin/import_symbols/*.rs"]),
+    aliases = aliases(),
+    proc_macro_deps = all_crate_deps(proc_macro = True),
+    deps = all_crate_deps(
+        normal = True,
+    ) + [
+        ":lib_import",
+        "//queng_utils/client_utils:client_utils",
+        "//queng_common:common",
+        "//queng_specs/db_specs:db_specs",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+rust_library(
+    name = "lib_import",
+    crate_root = "src/lib/mod.rs",
+    srcs = glob([
+        "src/lib/**/*.rs",
+    ]),
+    aliases = aliases(),
+    proc_macro_deps = all_crate_deps(proc_macro = True),
+    deps = all_crate_deps(
+        normal = True,
+    ) + [
+        "//queng_utils/client_utils:client_utils",
+        "//queng_common:common",
+        "//queng_specs/db_specs:db_specs",
+    ],
+)

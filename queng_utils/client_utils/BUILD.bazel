@@ -1,8 +1,8 @@
 load("@crate_index//:defs.bzl", "aliases", "all_crate_deps")
-load("@rules_rust//rust:defs.bzl", "rust_library")
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
 
 rust_library(
-    name = "dbgw_client",
+    name = "client_utils",
     crate_root = "src/lib.rs",
     srcs = glob([
         "src/**",
@@ -13,8 +13,11 @@ rust_library(
         normal = True,
     ) + [
         "//queng_common:common",
-        "//queng_proto:rust_proto",
-        "//queng_utils/proto_utils:proto_utils",
+        "//queng_components/config_manager:config_manager",
+        "//queng_components/db_query_manager:db_query_manager",
+        "//queng_components/symbol_manager:symbol_manager",
+        "//queng_specs/db_specs:db_specs",
+        "//queng_sbe/sbe_messages:sbe_messages",
     ],
     visibility = ["//visibility:public"],
 )
