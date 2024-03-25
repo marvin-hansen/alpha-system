@@ -1,5 +1,5 @@
 use common::prelude::MetricConfig;
-use proto::binding::ProtoMetricConfig;
+use proto_bindings::proto::ProtoMetricConfig;
 use std::fmt;
 
 pub fn metric_config_from_proto(proto: ProtoMetricConfig) -> Result<MetricConfig, fmt::Error> {

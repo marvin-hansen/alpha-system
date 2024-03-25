@@ -1,0 +1,27 @@
+syntax = "proto3";
+package proto;
+
+import "queng_proto/proto_bazel/service_messages.proto";
+import "queng_proto/proto_bazel/portfolio_messages.proto";
+
+// Service definitions: https://developers.google.com/protocol-buffers/docs/proto3#services
+service DBGatewayService {
+  // portfolio
+  rpc CreatePortfolioConfig(ProtoPortfolioConfig) returns (CreatePortfolioResponse){}
+  rpc ReadPortfolioConfig(SinglePortfolioRequest) returns (ReadPortfolioResponse) {}
+  rpc ReadAllPortfolioConfigs(MultiPortfolioRequest) returns (ReadAllPortfoliosResponse){}
+  rpc UpdatePortfolioConfig(ProtoPortfolioConfig) returns (UpdatePortfolioResponse) {}
+  rpc DeletePortfolioConfig(SinglePortfolioRequest) returns (DeletePortfolioResponse) {}
+  // service
+  rpc CreateService (ProtoServiceConfig) returns (CreateServiceResponse) {}
+  rpc CheckServiceIdExists (SingleServiceRequest) returns (CheckServiceIdExistsResponse) {}
+  rpc CheckServicesExists (MultiServicesRequest) returns (CheckServicesExistsResponse) {}
+  rpc CheckServiceIdOnline (SingleServiceRequest) returns (CheckServiceIdOnlineResponse) {}
+  rpc CheckServicesOnline (MultiServicesRequest) returns (CheckServicesOnlineResponse) {}
+  rpc ReadService (SingleServiceRequest) returns (ReadServiceResponse) {}
+  rpc ReadAllServices (MultiServicesRequest) returns (ReadAllServicesResponse) {}
+  rpc SetServiceOnline (SingleServiceRequest) returns (SetServiceOnlineResponse) {}
+  rpc SetServiceOffline (SingleServiceRequest) returns (SetServiceOfflineResponse) {}
+  rpc UpdateService (ProtoServiceConfig) returns (UpdateServiceResponse) {}
+  rpc DeleteService (SingleServiceRequest) returns (DeleteServiceResponse) {}
+}

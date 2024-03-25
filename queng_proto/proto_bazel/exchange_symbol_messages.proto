@@ -1,0 +1,35 @@
+syntax = "proto3";
+package proto;
+
+
+// Request
+
+message LookupExchangeNameRequest {
+  int32 exchange_id = 1;
+}
+
+message LookupSymbolRequest {
+  int32 exchange_id = 1;
+  int32 symbol_id = 2;
+}
+
+message LookupSymbolIDRequest {
+  int32 exchange_id = 1;
+  string symbol = 2;
+}
+
+// Response
+
+message LookupExchangeNameResponse {
+  string exchange_name =1;
+}
+
+message LookupSymbolResponse {
+  string exchange_name =1;
+  string symbol =2;
+}
+
+message LookupSymbolIDResponse {
+  string exchange_name =1;
+  int32 symbol_id =2;
+}

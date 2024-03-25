@@ -1,3 +1,3 @@
-pub mod binding {
+pub mod proto {
     tonic::include_proto!("proto");
 }

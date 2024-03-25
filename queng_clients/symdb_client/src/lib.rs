@@ -3,7 +3,7 @@ mod utils_proto;
 mod workflow;
 
 use common::prelude::HostEndpoint;
-use proto::binding::symdb_service_client::SymdbServiceClient;
+use proto_bindings::proto::symdb_service_client::SymdbServiceClient;
 use std::fmt::Error;
 use tonic::transport::{Channel, Uri};
 

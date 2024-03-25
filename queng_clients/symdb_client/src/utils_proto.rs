@@ -1,5 +1,7 @@
 use common::prelude::ExchangeID;
-use proto::binding::{LookupExchangeNameRequest, LookupSymbolIdRequest, LookupSymbolRequest};
+use proto_bindings::proto::{
+    LookupExchangeNameRequest, LookupSymbolIdRequest, LookupSymbolRequest,
+};
 
 /// Creates a tonic::Request for the GetExchange RPC method.
 ///

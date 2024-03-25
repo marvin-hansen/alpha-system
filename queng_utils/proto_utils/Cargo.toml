@@ -16,5 +16,5 @@ path = "src/lib.rs"
 [dependencies]
 # Internal dependencies
 common = { workspace = true }
-proto = { workspace = true }
+proto_bindings = { workspace = true }
 # External crates

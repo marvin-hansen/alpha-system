@@ -2,9 +2,9 @@
 use tonic::transport::Channel;
 use tonic::{Request, Response, Status};
 
-use proto::binding::cmdb_service_server::CmdbService;
-use proto::binding::db_gateway_service_client::DbGatewayServiceClient;
-use proto::binding::*;
+use proto_bindings::proto::cmdb_service_server::CmdbService;
+use proto_bindings::proto::db_gateway_service_client::DbGatewayServiceClient;
+use proto_bindings::proto::*;
 
 #[derive(Clone)]
 pub struct CMDBServer {

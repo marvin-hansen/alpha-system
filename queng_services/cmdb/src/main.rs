@@ -10,8 +10,8 @@ use common::prelude::ServiceID::SMDB;
 use config_manager::CfgManager;
 use ctx_manager::CtxManager;
 use dns_manager::DnsManager;
-use proto::binding::cmdb_service_server::CmdbServiceServer;
-use proto::binding::db_gateway_service_client::DbGatewayServiceClient;
+use proto_bindings::proto::cmdb_service_server::CmdbServiceServer;
+use proto_bindings::proto::db_gateway_service_client::DbGatewayServiceClient;
 use service_utils::{print_utils, shutdown_utils};
 use smdb_provider::SMDBProvider;
 

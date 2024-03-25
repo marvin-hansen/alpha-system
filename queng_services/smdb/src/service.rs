@@ -2,9 +2,9 @@ use autometrics::autometrics;
 use tonic::transport::Channel;
 use tonic::{Request, Response, Status};
 
-use proto::binding::db_gateway_service_client::DbGatewayServiceClient;
-use proto::binding::smdb_service_server::SmdbService;
-use proto::binding::*;
+use proto_bindings::proto::db_gateway_service_client::DbGatewayServiceClient;
+use proto_bindings::proto::smdb_service_server::SmdbService;
+use proto_bindings::proto::*;
 
 use crate::SVC_ID;
 

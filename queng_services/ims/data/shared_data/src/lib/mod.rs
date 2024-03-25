@@ -4,7 +4,7 @@ use common::prelude::ServiceID::SMDB;
 use config_manager::CfgManager;
 use ctx_manager::CtxManager;
 use dns_manager::DnsManager;
-use proto::binding::ims_data_service_server::{ImsDataService, ImsDataServiceServer};
+use proto_bindings::proto::ims_data_service_server::{ImsDataService, ImsDataServiceServer};
 use service_utils::{print_utils, shutdown_utils};
 use smdb_provider::SMDBProvider;
 use std::error::Error;
