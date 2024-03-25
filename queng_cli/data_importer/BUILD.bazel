@@ -2,7 +2,7 @@ load("@crate_index//:defs.bzl", "aliases", "all_crate_deps")
 load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_library")
 
 rust_binary(
-    name = "import_trade_data",
+    name = "trade_bin",
     crate_root = "src/bin/import_kraken_trade_data/main.rs",
     srcs = glob(["src/bin/import_kraken_trade_data/*.rs"]),
     aliases = aliases(),
@@ -19,7 +19,7 @@ rust_binary(
 )
 
 rust_binary(
-    name = "import_symbols",
+    name = "symbols_bin",
     crate_root = "src/bin/import_symbols/main.rs",
     srcs = glob(["src/bin/import_symbols/*.rs"]),
     aliases = aliases(),

@@ -1,5 +1,5 @@
 {
-  "checksum": "85e63a9e6d1a19aaccc7475f23ef7f68e47688c3a7fb883c4c31d5425cec371f",
+  "checksum": "d76b7529fa5f57a84143304f456e83f588d91472245634a9cc386afcf631d6ae",
   "crates": {
     "addr 0.15.6": {
       "name": "addr",
@@ -4360,10 +4360,6 @@
         ],
         "deps": {
           "common": [
-            {
-              "id": "autometrics 1.0.0",
-              "target": "autometrics"
-            },
             {
               "id": "prost 0.12.3",
               "target": "prost"
