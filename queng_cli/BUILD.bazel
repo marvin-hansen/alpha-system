@@ -1,10 +1,10 @@
 filegroup(
     name = "build",
     srcs = [
-        "//queng_cli/data_importer:import_symbols",
-        "//queng_cli/data_importer:import_trade_data",
-        "//queng_cli/spec_manager:spec_manager",
-        "//queng_cli/smdb_manager:smdb_manager",
+        "//queng_cli/data_importer:trade_bin",
+        "//queng_cli/data_importer:symbols_bin",
+        "//queng_cli/smdb_manager:bin",
+        "//queng_cli/spec_manager:bin",
     ],
     visibility = ["//visibility:public"],
 )
