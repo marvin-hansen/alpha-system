@@ -1,9 +1,9 @@
 filegroup(
     name = "build",
     srcs = [
+        "//queng_utils/client_utils:client_utils",
         "//queng_utils/proto_utils:proto_utils",
         "//queng_utils/service_utils:service_utils",
     ],
     visibility = ["//visibility:public"],
 )
-

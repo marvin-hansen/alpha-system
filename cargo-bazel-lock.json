@@ -1,5 +1,5 @@
 {
-  "checksum": "3fd65dec0dd97ac5f9a1eadc1146e4c39dab68fe7d94051ffa630f434d31979d",
+  "checksum": "85e63a9e6d1a19aaccc7475f23ef7f68e47688c3a7fb883c4c31d5425cec371f",
   "crates": {
     "addr 0.15.6": {
       "name": "addr",
@@ -6378,6 +6378,46 @@
         "MIT"
       ],
       "license_file": "LICENSE-APACHE"
+    },
+    "direct-cargo-bazel-deps 0.0.1": {
+      "name": "direct-cargo-bazel-deps",
+      "version": "0.0.1",
+      "package_url": null,
+      "repository": null,
+      "targets": [
+        {
+          "Library": {
+            "crate_name": "direct_cargo_bazel_deps",
+            "crate_root": ".direct_cargo_bazel_deps.rs",
+            "srcs": {
+              "allow_empty": false,
+              "include": [
+                "**/*.rs"
+              ]
+            }
+          }
+        }
+      ],
+      "library_target_name": "direct_cargo_bazel_deps",
+      "common_attrs": {
+        "compile_data_glob": [
+          "**"
+        ],
+        "deps": {
+          "common": [
+            {
+              "id": "wasm-bindgen-macro-support 0.2.90",
+              "target": "wasm_bindgen_macro_support"
+            }
+          ],
+          "selects": {}
+        },
+        "edition": "2018",
+        "version": "0.0.1"
+      },
+      "license": null,
+      "license_ids": [],
+      "license_file": null
     },
     "dirs-next 2.0.0": {
       "name": "dirs-next",
@@ -26995,16 +27035,10 @@
             "printing",
             "proc-macro",
             "quote",
+            "visit",
             "visit-mut"
           ],
-          "selects": {
-            "wasm32-unknown-unknown": [
-              "visit"
-            ],
-            "wasm32-wasi": [
-              "visit"
-            ]
-          }
+          "selects": {}
         },
         "deps": {
           "common": [
@@ -31385,10 +31419,15 @@
           "**"
         ],
         "crate_features": {
-          "common": [
-            "spans"
-          ],
-          "selects": {}
+          "common": [],
+          "selects": {
+            "wasm32-unknown-unknown": [
+              "spans"
+            ],
+            "wasm32-wasi": [
+              "spans"
+            ]
+          }
         },
         "deps": {
           "common": [
@@ -31584,10 +31623,15 @@
           "**"
         ],
         "crate_features": {
-          "common": [
-            "spans"
-          ],
-          "selects": {}
+          "common": [],
+          "selects": {
+            "wasm32-unknown-unknown": [
+              "spans"
+            ],
+            "wasm32-wasi": [
+              "spans"
+            ]
+          }
         },
         "deps": {
           "common": [
@@ -34036,6 +34080,7 @@
     "db_surreal_manager 0.1.0": "queng_components/db_surreal_manager",
     "dbgw 0.1.0": "queng_services/dbgw",
     "dbgw_client 0.1.0": "queng_clients/dbgw_client",
+    "direct-cargo-bazel-deps 0.0.1": "",
     "dns_manager 0.1.0": "queng_components/dns_manager",
     "exchange_specs 0.1.0": "queng_specs/exchange_specs",
     "file_specs 0.1.0": "queng_specs/file_specs",
@@ -34873,7 +34918,8 @@
     "tonic 0.11.0",
     "tonic-build 0.11.0",
     "tonic-health 0.11.0",
-    "warp 0.3.6"
+    "warp 0.3.6",
+    "wasm-bindgen-macro-support 0.2.90"
   ],
   "direct_dev_deps": []
 }

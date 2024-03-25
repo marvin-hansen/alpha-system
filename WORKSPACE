@@ -67,15 +67,16 @@ rules_proto_toolchains()
 ###############################################################################
 
 load("@rules_rust//crate_universe:repositories.bzl", "crate_universe_dependencies")
-crate_universe_dependencies()
+crate_universe_dependencies(bootstrap = True)
 
 # Track dependencies of all crates.
 # When you add a new crate, re-run:
 # CARGO_BAZEL_REPIN=true bazel sync --only=crate_index
-load("@rules_rust//crate_universe:defs.bzl", "crates_repository")
+load("@rules_rust//crate_universe:defs.bzl", "crate", "crates_repository", "render_config")
 crates_repository(
     name = "crate_index",
     cargo_lockfile = "//:Cargo.lock",
+    generator = "@cargo_bazel_bootstrap//:cargo-bazel",
     lockfile = "//:cargo-bazel-lock.json",
     manifests = [
         "//:Cargo.toml",
@@ -114,6 +115,13 @@ crates_repository(
         "//:queng_utils/proto_utils/Cargo.toml",
         "//:queng_utils/service_utils/Cargo.toml",
     ],
+    # Solves: error[E0433]: failed to resolve: could not find `visit` in `syn`
+    # https://stackoverflow.com/questions/60576277/yanked-subdependency-error-e0433-failed-to-resolve-could-not-find-rt-i
+       packages = {
+            "wasm-bindgen-macro-support": crate.spec(
+                version = "0.2.90",
+            ),
+        },
 )
 
 load("@crate_index//:defs.bzl", "crate_repositories")

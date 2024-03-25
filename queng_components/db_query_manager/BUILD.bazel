@@ -8,9 +8,7 @@ rust_library(
         "src/**",
     ]),
     aliases = aliases(),
-    proc_macro_deps = all_crate_deps(
-    proc_macro = True
-    ),
+    proc_macro_deps = all_crate_deps(proc_macro = True),
     deps = all_crate_deps(
         normal = True,
     ) + [
