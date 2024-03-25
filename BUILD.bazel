@@ -15,3 +15,11 @@ filegroup(
     visibility = ["//visibility:public"],
 )
 
+
+filegroup(
+    name = "image",
+    srcs = [
+        "//queng_services:image",
+    ],
+    visibility = ["//visibility:public"],
+)

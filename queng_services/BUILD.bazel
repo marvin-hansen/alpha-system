@@ -8,3 +8,14 @@ filegroup(
     ],
     visibility = ["//visibility:public"],
 )
+
+filegroup(
+    name = "image",
+    srcs = [
+        "//queng_services/cmdb:cmdb",
+        "//queng_services/ims/data/binance_data:binance_data",
+        "//queng_services/smdb:smdb",
+        "//queng_services/symdb:symdb",
+    ],
+    visibility = ["//visibility:public"],
+)

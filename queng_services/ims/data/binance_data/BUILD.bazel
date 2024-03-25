@@ -1,5 +1,7 @@
 load("@crate_index//:defs.bzl", "aliases", "all_crate_deps")
 load("@rules_rust//rust:defs.bzl", "rust_binary")
+load("@rules_pkg//pkg:tar.bzl", "pkg_tar")
+load("@rules_oci//oci:defs.bzl", "oci_image")
 
 rust_binary(
     name = "bin",
@@ -24,5 +26,21 @@ rust_binary(
         "//queng_providers/smdb_provider:smdb_provider",
         "//queng_components/symbol_manager:symbol_manager",
     ],
+    visibility = ["//visibility:public"],
+)
+
+# Compress it to layer using pkg_tar
+pkg_tar(
+    name = "tar_layer",
+    srcs = [":bin"],
+)
+
+
+# Build image and add built layer to it
+oci_image(
+    name = "binance_data",
+    base = "@distroless_cc",
+    tars = [":tar_layer"],
+    entrypoint = ["/bin"],
     visibility = ["//visibility:public"],
 )
