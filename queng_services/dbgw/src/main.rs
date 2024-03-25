@@ -1,4 +1,3 @@
-use autometrics::prometheus_exporter;
 use common::prelude::ServiceID;
 use config_manager::CfgManager;
 use ctx_manager::CtxManager;
@@ -8,18 +7,13 @@ use proto_bindings::proto::db_gateway_service_server::DbGatewayServiceServer;
 use service::DBGWServer;
 use service_utils::{print_utils, shutdown_utils};
 use std::error::Error;
-use std::net::SocketAddr;
 use tonic::transport::Server;
-use warp::Filter;
 
 mod service;
 const SVC_ID: ServiceID = ServiceID::DBGW;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
-    // Setup prometheus metrics exporter
-    prometheus_exporter::init();
-
     // Setup autoconfiguration.
     let ctx_manager = async { CtxManager::new() }.await;
     let dns_manager = async { DnsManager::new(&ctx_manager) }.await;
@@ -40,17 +34,10 @@ async fn main() -> Result<(), Box<dyn Error>> {
     // Construct gRPC server
     let grpc_svc = DbGatewayServiceServer::new(DBGWServer::new(dbm.clone()));
 
-    // Build health service for gRPC server
-    let (mut health_reporter, health_svc) = tonic_health::server::health_reporter();
-    health_reporter
-        .set_serving::<DbGatewayServiceServer<DBGWServer>>()
-        .await;
-
     // Build gRPC server with health service and signal sigint handler
     let signal = shutdown_utils::signal_handler("gRPC server");
     let grpc_server = Server::builder()
         .add_service(grpc_svc)
-        .add_service(health_svc)
         .serve_with_shutdown(grpc_addr, signal);
 
     // Configure http metrics endpoint ip and port automatically relative to the detected context.
@@ -58,21 +45,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .configure_metrics_socket_addr_uri(&SVC_ID)
         .expect("DBGW: Failed to get metric host, uri, and port");
 
-    // Http/web socket address is needed to serve metrics to prometheus
-    let web_addr: SocketAddr = metrics_addr.parse().expect("DBGW: Failed to parse address");
-
-    // Build metrics endpoint
-    let routes = warp::get()
-        .and(warp::path(metrics_uri.clone()))
-        .map(prometheus_exporter::encode_http_response);
-
-    // Build http web server for metrics with sigint handler
-    let signal = shutdown_utils::signal_handler("http web server");
-    let (_, web_server) = warp::serve(routes).bind_with_graceful_shutdown(web_addr, signal);
-
     // Create a handler for each server https://github.com/hyperium/tonic/discussions/740
     let grpc_handle = tokio::spawn(grpc_server);
-    let web_handle = tokio::spawn(web_server);
 
     // Set DBGW service to online
     dbm.set_service_online(&SVC_ID)
@@ -81,7 +55,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     // Start all servers jointly
     print_utils::print_start_header(&SVC_ID, &service_addr, &metrics_addr, &metrics_uri);
-    match tokio::try_join!(grpc_handle, web_handle) {
+    match tokio::try_join!(grpc_handle) {
         Ok(_) => {}
         Err(e) => {
             dbm.set_service_offline(&SVC_ID)
