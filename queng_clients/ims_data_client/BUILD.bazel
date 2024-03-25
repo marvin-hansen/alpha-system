@@ -2,7 +2,7 @@ load("@crate_index//:defs.bzl", "aliases", "all_crate_deps")
 load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
 
 rust_library(
-    name = "dns_manager",
+    name = "ims_data_client",
     crate_root = "src/lib.rs",
     srcs = glob([
         "src/**",
@@ -13,11 +13,10 @@ rust_library(
         normal = True,
     ) + [
         "//queng_common:common",
-        "//queng_components/ctx_manager:ctx_manager",
+        "//queng_proto:rust_proto",
     ],
     visibility = ["//visibility:public"],
 )
-
 
 rust_test(
     name = "tests",
@@ -30,8 +29,7 @@ rust_test(
         normal_dev = True,
     ) + [
         "//queng_common:common",
-        "//queng_components/ctx_manager:ctx_manager",
-        "//queng_components/dns_manager:dns_manager",
+        "//queng_proto:rust_proto",
     ],
     proc_macro_deps = all_crate_deps(
         proc_macro_dev = True
