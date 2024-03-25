@@ -1,0 +1,10 @@
+filegroup(
+    name = "build",
+    srcs = [
+        "//queng_services/cmdb:bin",
+        "//queng_services/ims/data/binance_data:bin",
+        "//queng_services/smdb:bin",
+        "//queng_services/symdb:bin",
+    ],
+    visibility = ["//visibility:public"],
+)

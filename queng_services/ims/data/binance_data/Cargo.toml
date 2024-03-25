@@ -27,7 +27,6 @@ service_utils = {workspace = true}
 smdb_provider = {workspace = true}
 symbol_manager = {workspace = true}
 # External crates
-autometrics = { workspace = true }
 anyhow = { workspace = true }
 binance-rs-async = { workspace = true }
 chrono = { workspace = true }
@@ -37,6 +36,4 @@ tokio = { workspace = true }
 tokio-tungstenite = { workspace = true }
 tokio-timer = { workspace = true }
 tonic = { workspace = true }
-tonic-health = { workspace = true }
 prost = { workspace = true }
-warp = { workspace = true }

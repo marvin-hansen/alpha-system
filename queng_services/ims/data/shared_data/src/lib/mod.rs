@@ -1,4 +1,3 @@
-use autometrics::prometheus_exporter;
 use common::prelude::ServiceID;
 use common::prelude::ServiceID::SMDB;
 use config_manager::CfgManager;
@@ -8,15 +7,11 @@ use proto_bindings::proto::ims_data_service_server::{ImsDataService, ImsDataServ
 use service_utils::{print_utils, shutdown_utils};
 use smdb_provider::SMDBProvider;
 use std::error::Error;
-use std::net::SocketAddr;
 use tonic::transport::Server;
-use tonic_health::pb::health_server::{Health, HealthServer};
-use warp::Filter;
 
 pub async fn run(
     svc_id: ServiceID,
     grpc_svc: ImsDataServiceServer<impl ImsDataService>,
-    health_svc: HealthServer<impl Health + Sized>,
 ) -> Result<(), Box<dyn Error>> {
     //
     //Creates a new instance of the Context Manager.
@@ -62,41 +57,20 @@ pub async fn run(
         .configure_metrics_socket_addr_uri(&svc_id)
         .expect("[ImsDataBinance]: Failed to get metric host, uri, and port");
 
-    // println!("[ImsDataBinance]: Configuring http web server for prometheus export");
-    let web_addr: SocketAddr = metrics_addr
-        .parse()
-        .expect("[ImsDataBinance]: Failed to parse metric host to address");
-
-    // Build metrics endpoint
-    // println!("[ImsDataBinance]: Building metrics endpoint");
-    let routes = warp::get()
-        .and(warp::path(metrics_uri.clone()))
-        .map(prometheus_exporter::encode_http_response);
-
-    // println!("[ImsDataBinance]: Building http web server for prometheus export with sigint handler");
-    let signal = shutdown_utils::signal_handler("http web server");
-    let (_, web_server) = warp::serve(routes).bind_with_graceful_shutdown(web_addr, signal);
-
     // Set up socket address for gRPC service
     let grpc_addr = service_addr
         .parse()
         .expect("[ImsDataBinance]: Failed to parse address");
 
-    // health_reporter
-    //     .set_serving::<ImsDataServiceServer<ImsDataServer>>()
-    //     .await;
-
     // Build gRPC server with health service and signal sigint handler
     let signal = shutdown_utils::signal_handler("gRPC server");
     let grpc_server = Server::builder()
         .add_service(grpc_svc)
-        .add_service(health_svc)
         .serve_with_shutdown(grpc_addr, signal);
 
     //Creates a new Tokio task for each server.
     // https://github.com/hyperium/tonic/discussions/740
     let grpc_handle = tokio::spawn(grpc_server);
-    let web_handle = tokio::spawn(web_server);
 
     // Print service start header
     print_utils::print_start_header(&svc_id, &service_addr, &metrics_addr, &metrics_uri);
@@ -113,7 +87,7 @@ pub async fn run(
         .expect("[ImsDataBinance]: Failed to set service online");
 
     // Start all servers jointly
-    match tokio::try_join!(web_handle, grpc_handle) {
+    match tokio::try_join!(grpc_handle) {
         Ok(_) => {}
         Err(e) => {
             smdb_manager

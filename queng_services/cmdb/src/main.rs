@@ -1,10 +1,3 @@
-use std::error::Error;
-use std::net::SocketAddr;
-
-use autometrics::prometheus_exporter;
-use tonic::transport::{Channel, Server, Uri};
-use warp::Filter;
-
 use common::prelude::ServiceID;
 use common::prelude::ServiceID::SMDB;
 use config_manager::CfgManager;
@@ -14,6 +7,8 @@ use proto_bindings::proto::cmdb_service_server::CmdbServiceServer;
 use proto_bindings::proto::db_gateway_service_client::DbGatewayServiceClient;
 use service_utils::{print_utils, shutdown_utils};
 use smdb_provider::SMDBProvider;
+use std::error::Error;
+use tonic::transport::{Channel, Server, Uri};
 
 use crate::service::CMDBServer;
 
@@ -86,17 +81,10 @@ async fn main() -> Result<(), Box<dyn Error>> {
     // Construct gRPC server
     let grpc_svc = CmdbServiceServer::new(CMDBServer::new(dbgw_client.clone()));
 
-    // Build health service for gRPC server
-    let (mut health_reporter, health_svc) = tonic_health::server::health_reporter();
-    health_reporter
-        .set_serving::<CmdbServiceServer<CMDBServer>>()
-        .await;
-
     // Build gRPC server with health service and signal sigint handler
     let signal = shutdown_utils::signal_handler("gRPC server");
     let grpc_server = Server::builder()
         .add_service(grpc_svc)
-        .add_service(health_svc)
         .serve_with_shutdown(grpc_addr, signal);
 
     // Configure http metrics endpoint ip and port automatically relative to the detected context.
@@ -104,23 +92,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .configure_metrics_socket_addr_uri(&SVC_ID)
         .expect("[CMDB]: Failed to get metric host, uri, and port");
 
-    // Http/web socket address is needed to serve metrics to prometheus
-    let web_addr: SocketAddr = metrics_addr
-        .parse()
-        .expect("[CMDB]: Failed to parse metric host to address");
-
-    // Build metrics endpoint
-    let routes = warp::get()
-        .and(warp::path(metrics_uri.clone()))
-        .map(prometheus_exporter::encode_http_response);
-
-    // Build http web server for metrics with sigint handler
-    let signal = shutdown_utils::signal_handler("http web server");
-    let (_, web_server) = warp::serve(routes).bind_with_graceful_shutdown(web_addr, signal);
-
     // Create a handler for each server https://github.com/hyperium/tonic/discussions/740
     let grpc_handle = tokio::spawn(grpc_server);
-    let web_handle = tokio::spawn(web_server);
 
     // Set service to online
     smdb_manager
@@ -130,7 +103,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     // Start all servers jointly
     print_utils::print_start_header(&SVC_ID, &service_addr, &metrics_addr, &metrics_uri);
-    match tokio::try_join!(grpc_handle, web_handle) {
+    match tokio::try_join!(grpc_handle) {
         Ok(_) => {}
         Err(e) => {
             smdb_manager

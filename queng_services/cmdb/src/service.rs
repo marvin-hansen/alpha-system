@@ -1,4 +1,3 @@
-// use autometrics::autometrics;
 use tonic::transport::Channel;
 use tonic::{Request, Response, Status};
 
@@ -18,7 +17,6 @@ impl CMDBServer {
 }
 
 #[tonic::async_trait]
-// #[autometrics]
 impl CmdbService for CMDBServer {
     async fn create_portfolio_config(
         &self,

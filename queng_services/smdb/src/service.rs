@@ -1,4 +1,3 @@
-use autometrics::autometrics;
 use tonic::transport::Channel;
 use tonic::{Request, Response, Status};
 
@@ -20,7 +19,6 @@ impl SMDBServer {
 }
 
 #[tonic::async_trait]
-#[autometrics]
 impl SmdbService for SMDBServer {
     async fn check_service_id_exists(
         &self,
