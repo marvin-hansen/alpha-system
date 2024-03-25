@@ -29,7 +29,6 @@ impl ImsDataServer {
 }
 
 #[tonic::async_trait]
-// #[autometrics]
 impl ImsDataService for ImsDataServer {
     async fn start_data(
         &self,

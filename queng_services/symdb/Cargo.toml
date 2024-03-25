@@ -19,15 +19,12 @@ common = {workspace = true}
 config_manager = {workspace = true}
 ctx_manager = {workspace = true}
 dns_manager = {workspace = true}
-proto_bindings = {workspace = true}
 db_query_manager = {workspace = true}
+proto_bindings = {workspace = true}
 service_utils = {workspace = true}
 smdb_provider = {workspace = true}
 symbol_manager = {workspace = true}
 # External crates
-autometrics = { workspace = true }
 tokio = { workspace = true }
 tonic = { workspace = true }
-tonic-health = { workspace = true }
 prost = { workspace = true }
-warp = { workspace = true }

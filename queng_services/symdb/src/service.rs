@@ -1,4 +1,3 @@
-use autometrics::autometrics;
 use common::prelude::LookupError;
 use std::sync::{Arc, RwLock};
 use tonic::{Request, Response, Status};
@@ -21,7 +20,6 @@ impl SYMDBServer {
 }
 
 #[tonic::async_trait]
-#[autometrics]
 impl SymdbService for SYMDBServer {
     /// Looks up the exchange name for the given exchange ID.
     ///

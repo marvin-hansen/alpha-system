@@ -1,5 +1,5 @@
 {
-  "checksum": "d76b7529fa5f57a84143304f456e83f588d91472245634a9cc386afcf631d6ae",
+  "checksum": "70b04a2a22df241140355ff573e5c2922d462aa4af1b788b808fa19ba6ddf23f",
   "crates": {
     "addr 0.15.6": {
       "name": "addr",
@@ -2464,10 +2464,6 @@
               "target": "anyhow"
             },
             {
-              "id": "autometrics 1.0.0",
-              "target": "autometrics"
-            },
-            {
               "id": "binance-rs-async 1.3.3",
               "target": "binance"
             },
@@ -2502,14 +2498,6 @@
             {
               "id": "tonic 0.11.0",
               "target": "tonic"
-            },
-            {
-              "id": "tonic-health 0.11.0",
-              "target": "tonic_health"
-            },
-            {
-              "id": "warp 0.3.6",
-              "target": "warp"
             }
           ],
           "selects": {}
@@ -4371,14 +4359,6 @@
             {
               "id": "tonic 0.11.0",
               "target": "tonic"
-            },
-            {
-              "id": "tonic-health 0.11.0",
-              "target": "tonic_health"
-            },
-            {
-              "id": "warp 0.3.6",
-              "target": "warp"
             }
           ],
           "selects": {}
@@ -12753,10 +12733,6 @@
         "deps": {
           "common": [
             {
-              "id": "autometrics 1.0.0",
-              "target": "autometrics"
-            },
-            {
               "id": "prost 0.12.3",
               "target": "prost"
             },
@@ -12767,14 +12743,6 @@
             {
               "id": "tonic 0.11.0",
               "target": "tonic"
-            },
-            {
-              "id": "tonic-health 0.11.0",
-              "target": "tonic_health"
-            },
-            {
-              "id": "warp 0.3.6",
-              "target": "warp"
             }
           ],
           "selects": {}
@@ -25005,10 +24973,6 @@
         "deps": {
           "common": [
             {
-              "id": "autometrics 1.0.0",
-              "target": "autometrics"
-            },
-            {
               "id": "prost 0.12.3",
               "target": "prost"
             },
@@ -25019,14 +24983,6 @@
             {
               "id": "tonic 0.11.0",
               "target": "tonic"
-            },
-            {
-              "id": "tonic-health 0.11.0",
-              "target": "tonic_health"
-            },
-            {
-              "id": "warp 0.3.6",
-              "target": "warp"
             }
           ],
           "selects": {}
@@ -26819,10 +26775,6 @@
         "deps": {
           "common": [
             {
-              "id": "autometrics 1.0.0",
-              "target": "autometrics"
-            },
-            {
               "id": "prost 0.12.3",
               "target": "prost"
             },
@@ -26833,14 +26785,6 @@
             {
               "id": "tonic 0.11.0",
               "target": "tonic"
-            },
-            {
-              "id": "tonic-health 0.11.0",
-              "target": "tonic_health"
-            },
-            {
-              "id": "warp 0.3.6",
-              "target": "warp"
             }
           ],
           "selects": {}
