@@ -21,7 +21,7 @@ ctx_manager = {workspace = true}
 dns_manager = {workspace = true}
 db_query_manager = {workspace = true}
 lib_data_stream = {workspace = true}
-proto = {workspace = true}
+proto_bindings = {workspace = true}
 rest_client = {workspace = true}
 service_utils = {workspace = true}
 smdb_provider = {workspace = true}

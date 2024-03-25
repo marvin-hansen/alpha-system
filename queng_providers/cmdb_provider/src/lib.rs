@@ -2,7 +2,7 @@ use std::error::Error;
 use std::fmt;
 use tonic::transport::{Channel, Uri};
 
-use proto::binding::cmdb_service_client::CmdbServiceClient;
+use proto_bindings::proto::cmdb_service_client::CmdbServiceClient;
 
 mod prv_cmdb;
 

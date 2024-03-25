@@ -13,7 +13,7 @@ rust_library(
         normal = True,
     ) + [
         "//queng_common:common",
-        "//queng_proto:build",
+        "//queng_proto:rust_proto",
     ],
     visibility = ["//visibility:public"],
 )

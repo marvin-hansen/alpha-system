@@ -1,5 +1,5 @@
 use common::prelude::HostEndpoint;
-use proto::binding::ims_data_service_client::ImsDataServiceClient;
+use proto_bindings::proto::ims_data_service_client::ImsDataServiceClient;
 use std::fmt::Error;
 use tonic::transport::{Channel, Uri};
 

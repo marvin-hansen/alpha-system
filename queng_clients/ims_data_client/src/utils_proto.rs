@@ -1,5 +1,5 @@
 use common::prelude::{DataType, ExchangeID};
-use proto::binding::{ProtoStartDataRequest, ProtoStopAllDataRequest, ProtoStopDataRequest};
+use proto_bindings::proto::{ProtoStartDataRequest, ProtoStopAllDataRequest, ProtoStopDataRequest};
 
 pub(crate) fn get_start_data_request(
     exchange_id: ExchangeID,

@@ -1,0 +1,10 @@
+syntax = "proto3";
+package proto;
+import "queng_proto/proto_bazel/data_messages.proto";
+
+// Service definitions: https://developers.google.com/protocol-buffers/docs/proto3#services
+service ImsDataService {
+  rpc StartData(ProtoStartDataRequest) returns (ProtoStartDataResponse) {}
+  rpc StopData(ProtoStopDataRequest) returns (ProtoStopDataResponse) {}
+  rpc StopAllData(ProtoStopAllDataRequest) returns (ProtoStopAllDataResponse) {}
+}

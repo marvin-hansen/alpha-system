@@ -1,5 +1,5 @@
 use common::prelude::MetricConfig;
-use proto::binding::ProtoMetricConfig;
+use proto_bindings::proto::ProtoMetricConfig;
 use proto_utils::metric_config_proto_utils::{metric_config_from_proto, metric_config_to_proto};
 
 #[test]

@@ -6,7 +6,7 @@ use config_manager::CfgManager;
 use ctx_manager::CtxManager;
 use db_query_manager::QueryDBManager;
 use dns_manager::DnsManager;
-use proto::binding::symdb_service_server::SymdbServiceServer;
+use proto_bindings::proto::symdb_service_server::SymdbServiceServer;
 use service_utils::{print_utils, shutdown_utils};
 use smdb_provider::SMDBProvider;
 use std::error::Error;

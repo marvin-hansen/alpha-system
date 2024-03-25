@@ -1,5 +1,5 @@
 use common::prelude::{Encoding, Endpoint, ProtocolType};
-use proto::binding::ProtoEndpoint;
+use proto_bindings::proto::ProtoEndpoint;
 use std::fmt::Error;
 
 pub fn endpoint_from_proto(proto: ProtoEndpoint) -> Result<Endpoint, Error> {

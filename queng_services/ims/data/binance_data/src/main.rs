@@ -6,7 +6,7 @@ mod types;
 use crate::service::ImsDataServer;
 use common::prelude::ServiceID;
 use lib_data_stream;
-use proto::binding::ims_data_service_server::ImsDataServiceServer;
+use proto_bindings::proto::ims_data_service_server::ImsDataServiceServer;
 
 const SVC_ID: ServiceID = ServiceID::ImsDataBinance;
 

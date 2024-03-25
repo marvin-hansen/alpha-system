@@ -4,7 +4,7 @@ use config_manager::CfgManager;
 use ctx_manager::CtxManager;
 use db_surreal_manager::SurrealDBManager;
 use dns_manager::DnsManager;
-use proto::binding::db_gateway_service_server::DbGatewayServiceServer;
+use proto_bindings::proto::db_gateway_service_server::DbGatewayServiceServer;
 use service::DBGWServer;
 use service_utils::{print_utils, shutdown_utils};
 use std::error::Error;

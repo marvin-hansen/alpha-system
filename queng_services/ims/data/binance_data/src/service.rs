@@ -1,8 +1,8 @@
 use crate::stream_manager::stream_manager;
 use crate::types::command::Command;
 use common::prelude::DataType;
-use proto::binding::ims_data_service_server::ImsDataService;
-use proto::binding::*;
+use proto_bindings::proto::ims_data_service_server::ImsDataService;
+use proto_bindings::proto::*;
 use std::sync::atomic;
 use std::sync::atomic::AtomicU32;
 use tokio::sync::mpsc::Sender;

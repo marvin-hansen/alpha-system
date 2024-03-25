@@ -1,5 +1,5 @@
 use common::prelude::{AccountType, ExchangeID, PortfolioConfig};
-use proto::binding::ProtoPortfolioConfig;
+use proto_bindings::proto::ProtoPortfolioConfig;
 use std::fmt::Error;
 
 pub fn portfolio_config_from_proto(proto: ProtoPortfolioConfig) -> Result<PortfolioConfig, Error> {

@@ -3,8 +3,8 @@ use common::prelude::LookupError;
 use std::sync::{Arc, RwLock};
 use tonic::{Request, Response, Status};
 
-use proto::binding::symdb_service_server::SymdbService;
-use proto::binding::*;
+use proto_bindings::proto::symdb_service_server::SymdbService;
+use proto_bindings::proto::*;
 use symbol_manager::SymbolManager;
 
 const FN_NAME: &str = "[SymdbClient/service]: ";

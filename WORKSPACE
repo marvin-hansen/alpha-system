@@ -23,6 +23,10 @@ http_archive(
     urls = ["https://github.com/bazelbuild/rules_rust/releases/download/0.40.0/rules_rust-v0.40.0.tar.gz"],
 )
 
+###############################################################################
+# R U L E S  R U S T
+###############################################################################
+
 rust_version = "1.76.0"
 
 # Configure Rust Toolchain to use.
@@ -34,6 +38,33 @@ rust_register_toolchains(
         rust_version,
     ],
 )
+
+load("@rules_rust//proto/prost/private:repositories.bzl", "rust_prost_dependencies", "rust_prost_register_toolchains")
+rust_prost_dependencies()
+rust_prost_register_toolchains()
+
+load("@rules_rust//proto/prost:transitive_repositories.bzl", "rust_prost_transitive_repositories")
+rust_prost_transitive_repositories()
+
+###############################################################################
+# R U L E S  P R O T O
+###############################################################################
+# https://github.com/bazelbuild/rules_proto/releases
+http_archive(
+    name = "rules_proto",
+    sha256 = "dc3fb206a2cb3441b485eb1e423165b231235a1ea9b031b4433cf7bc1fa460dd",
+    strip_prefix = "rules_proto-5.3.0-21.7",
+    urls = [
+        "https://github.com/bazelbuild/rules_proto/archive/refs/tags/5.3.0-21.7.tar.gz",
+    ],
+)
+load("@rules_proto//proto:repositories.bzl", "rules_proto_dependencies", "rules_proto_toolchains")
+rules_proto_dependencies()
+rules_proto_toolchains()
+
+###############################################################################
+# R U S T  C R A T E S
+###############################################################################
 
 load("@rules_rust//crate_universe:repositories.bzl", "crate_universe_dependencies")
 crate_universe_dependencies()

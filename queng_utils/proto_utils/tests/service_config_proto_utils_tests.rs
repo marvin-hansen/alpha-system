@@ -1,5 +1,5 @@
 use common::prelude::{Endpoint, MetricConfig, ServiceConfig, ServiceID, ServiceType};
-use proto::binding::{ProtoEndpoint, ProtoMetricConfig, ProtoServiceConfig};
+use proto_bindings::proto::{ProtoEndpoint, ProtoMetricConfig, ProtoServiceConfig};
 use proto_utils::service_config_proto_utils::{service_config_from_proto, service_config_to_proto};
 
 #[test]
