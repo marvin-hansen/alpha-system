@@ -1,0 +1,11 @@
+filegroup(
+    name = "build",
+    srcs = [
+        "//queng_clients/dbgw_client:dbgw_client",
+        "//queng_clients/ims_data_client:ims_data_client",
+        "//queng_clients/rest_client:rest_client",
+        "//queng_clients/symdb_client:symdb_client",
+    ],
+    visibility = ["//visibility:public"],
+)
+

@@ -4,7 +4,8 @@ filegroup(
         "//queng_components/ctx_manager:ctx_manager",
         "//queng_components/dns_manager:dns_manager",
         "//queng_components/pattern_manager:pattern_manager",
-        "//queng_components/symbol_manager:symbol_manager",    ],
+        "//queng_components/symbol_manager:symbol_manager",
+        ],
     visibility = ["//visibility:public"],
 )
 
