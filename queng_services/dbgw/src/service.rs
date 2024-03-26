@@ -2,7 +2,7 @@ use std::fmt::Error;
 use tonic::{Request, Response, Status};
 
 use common::prelude::{ServiceConfig, ServiceID};
-use db_surreal_manager::SurrealDBManager;
+use db_system_manager::SystemDBManager;
 use proto_bindings::proto::db_gateway_service_server::DbGatewayService;
 use proto_bindings::proto::*;
 use proto_utils::portfolio_proto_utils::{portfolio_config_from_proto, portfolio_config_to_proto};
@@ -10,11 +10,11 @@ use proto_utils::service_config_proto_utils::{service_config_from_proto, service
 
 #[derive(Clone)]
 pub struct DBGWServer {
-    dbm: SurrealDBManager,
+    dbm: SystemDBManager,
 }
 
 impl DBGWServer {
-    pub fn new(dbm: SurrealDBManager) -> Self {
+    pub fn new(dbm: SystemDBManager) -> Self {
         Self { dbm }
     }
 }

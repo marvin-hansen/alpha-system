@@ -1,0 +1,18 @@
+load("@crate_index//:defs.bzl", "aliases", "all_crate_deps")
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
+
+rust_library(
+    name = "db_system_manager",
+    crate_root = "src/lib.rs",
+    srcs = glob([
+        "src/**",
+    ]),
+    aliases = aliases(),
+    proc_macro_deps = all_crate_deps(proc_macro = True),
+    deps = all_crate_deps(
+        normal = True,
+    ) + [
+        "//queng_common:common",
+    ],
+    visibility = ["//visibility:public"],
+)
