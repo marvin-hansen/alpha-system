@@ -4,6 +4,7 @@
 
 # Bazel stuff
 out/
+out/quant-engine/
 
 # Too big data files
 data/kaiko
