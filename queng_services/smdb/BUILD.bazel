@@ -1,7 +1,7 @@
 load("@crate_index//:defs.bzl", "aliases", "all_crate_deps")
 load("@rules_rust//rust:defs.bzl", "rust_binary")
 load("@rules_pkg//pkg:tar.bzl", "pkg_tar")
-load("@rules_oci//oci:defs.bzl", "oci_image")
+load("@rules_oci//oci:defs.bzl", "oci_image", "oci_push")
 
 rust_binary(
     name = "bin",
@@ -37,5 +37,15 @@ oci_image(
     base = "@distroless_cc",
     tars = [":tar_layer"],
     entrypoint = ["/bin"],
+    visibility = ["//visibility:public"],
+)
+
+
+# Publish image to registry
+oci_push(
+    name = "push",
+    image = ":smdb",
+    repository = "ghcr.io/marvin-hansen/quant-engine/smdb",
+    remote_tags = ["latest"],
     visibility = ["//visibility:public"],
 )

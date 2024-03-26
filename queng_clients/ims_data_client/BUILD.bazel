@@ -28,6 +28,7 @@ rust_test(
         normal = True,
         normal_dev = True,
     ) + [
+        ":ims_data_client",
         "//queng_common:common",
         "//queng_proto:rust_proto",
     ],
