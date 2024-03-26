@@ -28,7 +28,7 @@ http_archive(
 ###############################################################################
 # R U L E S  R U S T
 ###############################################################################
-rust_version = "1.76.0"
+rust_version = "1.77.0"
 
 # Configure Rust Toolchain to use.
 load("@rules_rust//rust:repositories.bzl", "rules_rust_dependencies", "rust_register_toolchains")

@@ -1,4 +1,4 @@
-use surrealdb::Error;
+use std::fmt::Error;
 use tonic::{Request, Response, Status};
 
 use common::prelude::{ServiceConfig, ServiceID};

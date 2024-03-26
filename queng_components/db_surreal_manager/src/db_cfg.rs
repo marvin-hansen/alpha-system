@@ -1,6 +1,6 @@
 use crate::SurrealDBManager;
 use common::prelude::PortfolioConfig;
-use surrealdb::Error;
+use std::fmt::Error;
 
 const PORTFOLIO_CONFIG_TABLE: &str = "portfolio_config";
 

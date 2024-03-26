@@ -3,8 +3,7 @@
 .autometrics
 
 # Bazel stuff
-bazel-out
-bazel-dist
+out/
 
 # Too big data files
 data/kaiko
