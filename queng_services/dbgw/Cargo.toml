@@ -24,7 +24,6 @@ proto_bindings = {workspace = true}
 proto_utils = {workspace = true}
 service_utils = {workspace = true}
 # External crates
-surrealdb = { workspace = true }
 tokio = { workspace = true }
 tonic = { workspace = true }
 tonic-health = { workspace = true }

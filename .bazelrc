@@ -5,7 +5,7 @@
 # Also, it's a workaround for https://github.com/bazelbuild/rules_typescript/issues/12
 # Instead, you should run `bazel info bazel-bin` to find out where the outputs went.
 
-build --symlink_prefix=bazel-dist/
+build --symlink_prefix=out/
 
 test --test_output=errors
 
