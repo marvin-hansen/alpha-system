@@ -51,8 +51,8 @@ multi_arch(
     name = "images",
     image = ":image",
     platforms = [
-        "//cmdb:linux_arm64",
-        "//cmdb:linux_amd64",
+#        "//cmdb:linux_arm64",
+#        "//cmdb:linux_amd64",
     ],
 )
 

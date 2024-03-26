@@ -4,7 +4,6 @@ use std::fmt::Error;
 
 impl SystemDBManager {
     pub async fn create_service(&self, data: ServiceConfig) -> Result<bool, Error> {
-
         println!("{}", data);
 
         Ok(true)
