@@ -3,8 +3,11 @@
 .autometrics
 
 # Bazel stuff
-out/
-out/quant-engine/
+/out/
+/out/*
+/out/*.*
+/out/quant-engine/
+/out/quant-engine/*/*
 
 # Too big data files
 data/kaiko
