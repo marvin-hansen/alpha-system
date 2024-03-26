@@ -1,15 +1,10 @@
 # https://github.com/GoogleCloudPlatform/gke-bazel-demo/blob/master/.bazelrc
 
 # Don't create bazel-* symlinks in the WORKSPACE directory.
-# These require .gitignore and may scare users.
-# Also, it's a workaround for https://github.com/bazelbuild/rules_typescript/issues/12
-# Instead, you should run `bazel info bazel-bin` to find out where the outputs went.
-
-build --symlink_prefix=out/
+# Instead, set a prefix and put it in .gitignore
+build --symlink_prefix=target-bzl/
 
 test --test_output=errors
 
 # Basic build settings
 build --jobs 512
-
-
