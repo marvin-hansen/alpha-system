@@ -152,9 +152,89 @@ oci_register_toolchains(
 )
 
 load("@rules_oci//oci:pull.bzl", "oci_pull")
+
 oci_pull(
     name = "distroless_cc",
-    digest = "sha256:a9056d2232d16e3772bec3ef36b93a5ea9ef6ad4b4ed407631e534b85832cf40",
-    image = "gcr.io/distroless/cc-debian12",
-    platforms = ["linux/amd64", "linux/arm64/v8"],
+    digest = "sha256:8aad707f96620ee89e27febef51b01c6ff244277a3560fcfcfbe68633ef09193",
+    image = "gcr.io/distroless/cc",
+    platforms = ["linux/amd64","linux/arm64"],
+)
+
+################################################################################
+# Kubernetes rules
+# https://github.com/bazelbuild/rules_k8s/releases/
+################################################################################
+# https://github.com/bazelbuild/rules_docker/#setup
+http_archive(
+    name = "io_bazel_rules_k8s",
+    sha256 = "ce5b9bc0926681e2e7f2147b49096f143e6cbc783e71bc1d4f36ca76b00e6f4a",
+    strip_prefix = "rules_k8s-0.7",
+    urls = ["https://github.com/bazelbuild/rules_k8s/archive/refs/tags/v0.7.tar.gz"],
+)
+
+load("@io_bazel_rules_k8s//k8s:k8s.bzl", "k8s_repositories")
+
+k8s_repositories()
+
+load("@io_bazel_rules_k8s//k8s:k8s_go_deps.bzl", k8s_go_deps = "deps")
+
+k8s_go_deps()
+
+# Set up some default attributes when the K8s rule "k8s_object" is called later,
+# This also exposes a Bazel rule called "k8s_deploy"
+# See https://github.com/bazelbuild/rules_k8s#k8s_defaults
+load("@io_bazel_rules_k8s//k8s:k8s.bzl", "k8s_defaults")
+
+## ==== Deploy Defaults
+## import: load("@k8s_deploy//:defaults.bzl", "k8s_deploy")
+k8s_defaults(
+    name = "k8s_deploy",
+    # kubectl config current-context
+    cluster = "gke_future-309012_asia-northeast1-c_quantum",
+    context = "gke_future-309012_asia-northeast1-c_quantum",
+    image_chroot = "gcr.io/future-309012",
+    kind = "deployment",
+    namespace = "default",
+)
+
+## ==== Dev Deploy Defaults
+## import: load("@k8s_deploy_dev//:defaults.bzl", "k8s_deploy_dev")
+k8s_defaults(
+    name = "k8s_deploy_dev",
+    cluster = "gke_future-309012_asia-northeast1-c_quantum",
+    context = "gke_future-309012_asia-northeast1-c_quantum",
+    image_chroot = "gcr.io/future-309012",
+    kind = "deployment",
+    namespace = "default",
+)
+
+## ==== Test Deploy Defaults
+## import: load("@k8s_deploy_test//:defaults.bzl", "k8s_deploy_test")
+
+k8s_defaults(
+    name = "k8s_deploy_test",
+    cluster = "gke_future-309012_asia-northeast1-c_quantum",
+    context = "gke_future-309012_asia-northeast1-c_quantum",
+    image_chroot = "gcr.io/future-309012",
+    kind = "deployment",
+    namespace = "default",
+)
+
+## ==== Prod Deploy Defaults
+## import: load("@k8s_deploy_prod//:defaults.bzl", "k8s_deploy_prod")
+k8s_defaults(
+    name = "k8s_deploy_prod",
+    cluster = "gke_future-309012_asia-northeast1-c_quantum",
+    context = "gke_future-309012_asia-northeast1-c_quantum",
+    image_chroot = "gcr.io/future-309012",
+    kind = "deployment",
+    namespace = "default",
+)
+
+# Set up some default attributes when the K8s rule "k8s_object" is called later
+# See https://github.com/bazelbuild/rules_k8s#k8s_defaults
+k8s_defaults(
+    name = "k8s_service",
+    kind = "service",
+    namespace = "default",
 )
