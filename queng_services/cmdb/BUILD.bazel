@@ -1,10 +1,10 @@
 load("@crate_index//:defs.bzl", "aliases", "all_crate_deps")
 load("@rules_rust//rust:defs.bzl", "rust_binary")
-load("@rules_pkg//pkg:tar.bzl", "pkg_tar")
-load("@rules_oci//oci:defs.bzl", "oci_image")
+load("@rules_oci//oci:defs.bzl", "oci_push")
+load("//:build_image.bzl", "build_image")
 
 
-# Step 1: Build to binary
+# Build binary
 rust_binary(
     name = "bin",
     crate_root = "src/main.rs",
@@ -27,18 +27,19 @@ rust_binary(
     visibility = ["//visibility:public"],
 )
 
-# Compress it to layer using pkg_tar
-pkg_tar(
-    name = "tar_layer",
-    srcs = [":bin"],
+# Build a multi-architecture OCI container image.
+build_image(
+    name = "cmdb",
+    srcs = ["//queng_services/cmdb:bin"],
+    exposed_ports = ["9090", "8080"],
+    visibility = ["//visibility:public"],
 )
 
-
-# Build image and add built layer to it
-oci_image(
-    name = "cmdb",
-    base = "@distroless_cc",
-    tars = [":tar_layer"],
-    entrypoint = ["/bin"],
+# Publish image to registry
+oci_push(
+    name = "push",
+    image = ":cmdb",
+    repository = "asia-northeast1-docker.pkg.dev",
+    remote_tags = ["latest"],
     visibility = ["//visibility:public"],
 )
