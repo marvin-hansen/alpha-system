@@ -25,7 +25,7 @@ impl CtxManager {
     /// Creates a new CtxManager instance.
     pub fn new() -> Self {
         let env_type = get_env_type();
-        // println!("[CtxManager]: Environment type: {:?}", env_type);
+        println!("[CtxManager]: Environment type: {:?}", env_type);
 
         let int_dns_server = if env_type == EnvironmentType::CLUSTER {
             get_int_cluster_dns_server()
@@ -67,28 +67,25 @@ impl Display for CtxManager {
 // Note, on Mac OS, shell environment variables are sanitized (erased) by default for security reasons
 // thus the presence of an .env file is used to identify a local environment.
 fn get_env_type() -> EnvironmentType {
-    let env_var = match env::var("ENV") {
-        Ok(val) => val,
+    return match env::var("ENV") {
+        Ok(val) => match val.as_str() {
+            "LOCAL" => EnvironmentType::LOCAL,
+            "CI" => EnvironmentType::CI,
+            "CLUSTER" => EnvironmentType::CLUSTER,
+            "DOCKER" => EnvironmentType::Docker,
+            "UNKNOWN" => EnvironmentType::UnknownEnv,
+            _ => {
+                panic!("Failed to read ENV environment variable. Ensure ENV is set");
+            }
+        },
         Err(_) => {
             let file_path = ".env";
             let path = Path::new(file_path);
-            return if path.exists() {
+            if path.exists() {
                 EnvironmentType::LOCAL
             } else {
                 EnvironmentType::UnknownEnv
-            };
-        }
-    };
-
-    // Convert the environment variable to an EnvironmentType enum value.
-    return match env_var.as_str() {
-        "LOCAL" => EnvironmentType::LOCAL,
-        "CI" => EnvironmentType::CI,
-        "CLUSTER" => EnvironmentType::CLUSTER,
-        "DOCKER" => EnvironmentType::Docker,
-        "UNKNOWN" => EnvironmentType::UnknownEnv,
-        _ => {
-            panic!("Failed to read ENV environment variable. Ensure ENV is set in deployment.yaml",);
+            }
         }
     };
 }

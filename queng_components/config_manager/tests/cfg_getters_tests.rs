@@ -99,27 +99,3 @@ fn test_get_db_config_local() {
     assert_eq!(ctm.int_dns_server(), &None);
     assert_eq!(dnm.external_dns(), "1.1.1.1:53");
 }
-
-// #[test]
-// fn test_get_db_config_ci() {
-//     // CI uses the cluster environment variable to emulate the cluster environment
-//     // therefore no dedicated CI test
-//     env::set_var("ENV", "CLUSTER");
-//
-//     let ctx = CtxManager::new();
-//     let cfg_manager = CfgManager::new(ServiceID::DBGW, &ctx);
-//     let db_config = cfg_manager.get_db_config();
-//     // CI
-//     assert_eq!(db_config, db_config_cluster());
-// }
-
-//
-// #[test]
-// fn test_get_db_config_cluster() {
-//     env::set_var("ENV", "CLUSTER");
-//
-//     let ctx = CtxManager::new();
-//     let cfg_manager = CfgManager::new(ServiceID::DBGW, &ctx);
-//     let db_config = cfg_manager.get_db_config();
-//     assert_eq!(db_config, db_config_cluster());
-// }
