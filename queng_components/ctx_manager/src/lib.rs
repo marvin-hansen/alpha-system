@@ -1,6 +1,5 @@
 use std::env;
 use std::fmt::{Display, Formatter};
-use std::path::Path;
 
 use common::prelude::EnvironmentType;
 
@@ -74,18 +73,11 @@ fn get_env_type() -> EnvironmentType {
             "CLUSTER" => EnvironmentType::CLUSTER,
             "DOCKER" => EnvironmentType::Docker,
             "UNKNOWN" => EnvironmentType::UnknownEnv,
-            _ => {
-                panic!("Failed to read ENV environment variable. Ensure ENV is set");
-            }
+            _ => EnvironmentType::UnknownEnv,
         },
-        Err(_) => {
-            let file_path = ".env";
-            let path = Path::new(file_path);
-            if path.exists() {
-                EnvironmentType::LOCAL
-            } else {
-                EnvironmentType::UnknownEnv
-            }
+        Err(e) => {
+            eprintln!("Error: {}", e);
+            panic!("Failed to read ENV environment variable. Ensure ENV is set");
         }
     };
 }
