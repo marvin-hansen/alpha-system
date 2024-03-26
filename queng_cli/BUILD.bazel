@@ -2,6 +2,7 @@ filegroup(
     name = "build",
     srcs = [
         "//queng_cli/data_importer:trade_bin",
+        "//queng_cli/data_importer:services_bin",
         "//queng_cli/data_importer:symbols_bin",
         "//queng_cli/smdb_manager:bin",
         "//queng_cli/spec_manager:bin",

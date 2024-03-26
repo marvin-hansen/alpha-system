@@ -14,6 +14,11 @@ path = "src/bin/import_kraken_trade_data/main.rs"
 
 
 [[bin]]
+name = "import_services"
+path = "src/bin/import_services/main.rs"
+
+
+[[bin]]
 name = "import_symbols"
 path = "src/bin/import_symbols/main.rs"
 
@@ -22,11 +27,13 @@ path = "src/bin/import_symbols/main.rs"
 name = "lib_import"
 path = "src/lib/mod.rs"
 
+
 [dependencies]
 # Internal crates
 client_utils = { workspace = true }
 common = { workspace = true }
 db_specs = { workspace = true }
+service_specs = { workspace = true }
 # External crates
 csv = { workspace = true }
 chrono = { workspace = true }
@@ -34,4 +41,4 @@ encoding_rs = { workspace = true }
 klickhouse = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
-tokio = { workspace = true, features = ["rt", "rt-multi-thread", "macros"] }
+tokio = { workspace = true}
