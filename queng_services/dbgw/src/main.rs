@@ -1,7 +1,7 @@
 use common::prelude::ServiceID;
 use config_manager::CfgManager;
 use ctx_manager::CtxManager;
-use db_surreal_manager::SurrealDBManager;
+use db_system_manager::SystemDBManager;
 use dns_manager::DnsManager;
 use proto_bindings::proto::db_gateway_service_server::DbGatewayServiceServer;
 use service::DBGWServer;
@@ -20,8 +20,10 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let cfg_manager = async { CfgManager::new(SVC_ID, &ctx_manager, &dns_manager) }.await;
 
     // Configure database manager
-    let db_config = cfg_manager.get_surreal_db_config();
-    let dbm = SurrealDBManager::new(&db_config).await;
+    let db_config = cfg_manager.clickhouse_config();
+    let dbm = SystemDBManager::new(db_config)
+        .await
+        .expect("Failed to create DB Manager");
 
     // Configure service ip and port automatically relative to the detected context.
     let service_addr = cfg_manager

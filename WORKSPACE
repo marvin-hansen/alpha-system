@@ -91,7 +91,7 @@ crates_repository(
         "//:queng_components/config_manager/Cargo.toml",
         "//:queng_components/ctx_manager/Cargo.toml",
         "//:queng_components/db_query_manager/Cargo.toml",
-        "//:queng_components/db_surreal_manager/Cargo.toml",
+        "//:queng_components/db_system_manager/Cargo.toml",
         "//:queng_components/dns_manager/Cargo.toml",
         "//:queng_components/pattern_manager/Cargo.toml",
         "//:queng_components/symbol_manager/Cargo.toml",

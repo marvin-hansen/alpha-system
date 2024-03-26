@@ -18,7 +18,7 @@ path = "src/main.rs"
 common = {workspace = true}
 config_manager = {workspace = true}
 ctx_manager = {workspace = true}
-db_surreal_manager = {workspace = true}
+db_system_manager = {workspace = true}
 dns_manager = {workspace = true}
 proto_bindings = {workspace = true}
 proto_utils = {workspace = true}

@@ -1,5 +1,5 @@
 [package]
-name = "db_surreal_manager"
+name = "db_system_manager"
 version = "0.1.0"
 edition.workspace = true
 rust-version.workspace = true
@@ -9,7 +9,7 @@ authors.workspace = true
 
 
 [lib]
-name = "db_surreal_manager"
+name = "db_system_manager"
 path = "src/lib.rs"
 
 
@@ -17,6 +17,10 @@ path = "src/lib.rs"
 # Internal crates
 common = { workspace = true }
 # External crates
+chrono = { workspace = true }
+klickhouse = { workspace = true }
 futures = { workspace = true }
-surrealdb = { workspace = true }
+rust_decimal = { workspace = true }
 tokio = { workspace = true }
+serde = { workspace = true }
+

@@ -2,6 +2,7 @@ filegroup(
     name = "build",
     srcs = [
         "//queng_services/cmdb:bin",
+        "//queng_services/dbgw:bin",
         "//queng_services/ims/data/binance_data:bin",
         "//queng_services/smdb:bin",
         "//queng_services/symdb:bin",
@@ -12,7 +13,8 @@ filegroup(
 filegroup(
     name = "image",
     srcs = [
-        "//queng_services/cmdb:cmdb",
+#        "//queng_services/cmdb:image",
+        "//queng_services/dbgw:image",
         "//queng_services/ims/data/binance_data:binance_data",
         "//queng_services/smdb:smdb",
         "//queng_services/symdb:symdb",
