@@ -1,3 +1,7 @@
+mod gen_ddl;
+mod gen_query;
+mod process;
+
 use service_specs::services::get_all_service_configs;
 
 #[tokio::main]
