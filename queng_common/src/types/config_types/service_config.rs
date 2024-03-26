@@ -75,6 +75,18 @@ impl ServiceConfig {
 }
 
 impl ServiceConfig {
+    /// Converts the service config as a JSON string.
+    pub fn to_json(&self) -> String {
+        serde_json::to_string(&self).unwrap()
+    }
+
+    /// Converts the service config from a JSON string.
+    pub fn from_json(json: &str) -> Self {
+        serde_json::from_str(json).unwrap()
+    }
+}
+
+impl ServiceConfig {
     /// Returns the service ID.
     pub fn svc_id(&self) -> &ServiceID {
         &self.svc_id

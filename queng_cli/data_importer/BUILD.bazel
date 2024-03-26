@@ -19,6 +19,24 @@ rust_binary(
 )
 
 rust_binary(
+    name = "services_bin",
+    crate_root = "src/bin/import_services/main.rs",
+    srcs = glob(["src/bin/import_services/*.rs"]),
+    aliases = aliases(),
+    proc_macro_deps = all_crate_deps(proc_macro = True),
+    deps = all_crate_deps(
+        normal = True,
+    ) + [
+        ":lib_import",
+        "//queng_utils/client_utils:client_utils",
+        "//queng_common:common",
+        "//queng_specs/db_specs:db_specs",
+        "//queng_specs/service_specs:service_specs",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+rust_binary(
     name = "symbols_bin",
     crate_root = "src/bin/import_symbols/main.rs",
     srcs = glob(["src/bin/import_symbols/*.rs"]),

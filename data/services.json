@@ -1,0 +1,164 @@
+[
+  {
+    "svc_id": "CMDB",
+    "name": "cmdbv1",
+    "version": 1,
+    "online": false,
+    "description": "CMDB Manages configurations stored in the DB",
+    "health_check_uri": "cmdb-service.default.svc.cluster.local:5050/health",
+    "base_uri": "cmdb-service.default.svc.cluster.local",
+    "dependencies": [
+      "DBGW",
+      "SMDB"
+    ],
+    "exposure": "ENDPOINT",
+    "endpoint": {
+      "name": "cmdb Endpoint",
+      "version": 1,
+      "description": "Access to the configuration service via gRPC on baseUri:8080",
+      "uri": "/",
+      "port": 9090,
+      "protocol": "GRPC",
+      "encoding": "Protobuf"
+    },
+    "metrics": {
+      "metric_uri": "metrics",
+      "metric_host": "0.0.0.0",
+      "metric_port": 8082
+    }
+  },
+  {
+    "svc_id": "DBGW",
+    "name": "dbgwv1",
+    "version": 1,
+    "online": true,
+    "description": "DBGW gives access to surreal DB",
+    "health_check_uri": "dbgw-service.default.svc.cluster.local:6060/health",
+    "base_uri": "dbgw-service.default.svc.cluster.local",
+    "dependencies": [],
+    "exposure": "ENDPOINT",
+    "endpoint": {
+      "name": "dbgw Endpoint",
+      "version": 1,
+      "description": "Access to surreal DB via gRPC on baseUri:6060",
+      "uri": "/",
+      "port": 6060,
+      "protocol": "GRPC",
+      "encoding": "Protobuf"
+    },
+    "metrics": {
+      "metric_uri": "metrics",
+      "metric_host": "0.0.0.0",
+      "metric_port": 8080
+    }
+  },
+  {
+    "svc_id": "QDGW",
+    "name": "qdgwv1",
+    "version": 1,
+    "online": false,
+    "description": "QDGW gives access to quantitative Tick / min data",
+    "health_check_uri": "qdgw-service.default.svc.cluster.local:4040/health",
+    "base_uri": "qdgw-service.default.svc.cluster.local",
+    "dependencies": [
+      "SMDB"
+    ],
+    "exposure": "ENDPOINT",
+    "endpoint": {
+      "name": "qdgw Endpoint",
+      "version": 1,
+      "description": "Access to quantitative data via gRPC on baseUri:4040",
+      "uri": "/",
+      "port": 4040,
+      "protocol": "GRPC",
+      "encoding": "Protobuf"
+    },
+    "metrics": {
+      "metric_uri": "metrics",
+      "metric_host": "0.0.0.0",
+      "metric_port": 8083
+    }
+  },
+  {
+    "svc_id": "SMDB",
+    "name": "smdbv1",
+    "version": 1,
+    "online": false,
+    "description": "SMDB Service Management Database",
+    "health_check_uri": "smdb-service.default.svc.cluster.local:5050/health",
+    "base_uri": "smdb-service.default.svc.cluster.local",
+    "dependencies": [
+      "DBGW"
+    ],
+    "exposure": "ENDPOINT",
+    "endpoint": {
+      "name": "service-registry",
+      "version": 1,
+      "description": "Access to the SMDB service registry via gRPC on baseUri:7070",
+      "uri": "/",
+      "port": 7070,
+      "protocol": "GRPC",
+      "encoding": "Protobuf"
+    },
+    "metrics": {
+      "metric_uri": "metrics",
+      "metric_host": "0.0.0.0",
+      "metric_port": 8081
+    }
+  },
+  {
+    "svc_id": "SYMDB",
+    "name": "symdbv1",
+    "version": 1,
+    "online": false,
+    "description": "SYMDB (Symbol Master Database) gives access to central symbol to ID mapping)",
+    "health_check_uri": "health",
+    "base_uri": "symdb-service.default.svc.cluster.local",
+    "dependencies": [
+      "DBGW",
+      "SMDB"
+    ],
+    "exposure": "ENDPOINT",
+    "endpoint": {
+      "name": "symbol-master",
+      "version": 1,
+      "description": "Access to the SYMDB symbol mastger via gRPC on baseUri:7777",
+      "uri": "/",
+      "port": 6789,
+      "protocol": "GRPC",
+      "encoding": "Protobuf"
+    },
+    "metrics": {
+      "metric_uri": "metrics",
+      "metric_host": "0.0.0.0",
+      "metric_port": 8085
+    }
+  },
+  {
+    "svc_id": "VEX",
+    "name": "vexv1",
+    "version": 1,
+    "online": false,
+    "description": "vex: Virtual Exchange",
+    "health_check_uri": "vex-service.default.svc.cluster.local:5050/health",
+    "base_uri": "vex-service.default.svc.cluster.local",
+    "dependencies": [
+      "SMDB"
+    ],
+    "exposure": "ENDPOINT",
+    "endpoint": {
+      "name": "vex Endpoint",
+      "version": 1,
+      "description": "",
+      "uri": "/",
+      "port": 9999,
+      "protocol": "GRPC",
+      "encoding": "Protobuf"
+    },
+    "metrics": {
+      "metric_uri": "metrics",
+      "metric_host": "0.0.0.0",
+      "metric_port": 8084
+    }
+  }
+]
