@@ -1,34 +1,14 @@
-use common::prelude::ServiceConfig;
-pub(crate) fn generate_service_insert(service_config: ServiceConfig) -> String {
-    let table_name = "default.services";
-    let svc_id = service_config.svc_id();
-    let name = service_config.name();
-    let version = service_config.version();
-    let online = service_config.online();
-    let description = service_config.description();
-    let health_check_uri = service_config.health_check_uri();
-    let base_uri = service_config.base_uri();
-    let dependencies = service_config.dependencies().as_slice();
-    let exposure = service_config.exposure();
-    let endpoint = service_config.endpoint();
+// Working with JSON in ClickHouse
+// https://clickhouse.com/docs/en/integrations/data-formats/json
 
+pub(crate) fn generate_all_service_insert() -> String {
+    let table_name = "default.services";
     format!(
         r"
-        INSERT INTO {table_name} (*)
-        VALUES (
-        '{svc_id}',
-        '{name}',
-        {version},
-        {online},
-        '{description}',
-        '{health_check_uri}',
-        '{base_uri}',
-        '{dependencies}',
-        '{exposure}',
-        '{endpoint}'
-        )
+    INSERT INTO {table_name} SELECT * FROM file(services.json,'JSONEachRow')
     "
     )
+    .to_string()
 }
 
 pub(crate) fn generate_count_services() -> String {
