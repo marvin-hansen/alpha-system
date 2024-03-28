@@ -8,4 +8,3 @@ command CARGO_BAZEL_ISOLATED=false CARGO_BAZEL_REPIN=1 bazel sync --only=crate_i
 
 # Rebuilds the entire workspace
 command bazel build //:build
-

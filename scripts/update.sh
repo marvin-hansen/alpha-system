@@ -17,8 +17,3 @@ command rustup update stable
 command echo ""
 command echo "Running git pull to update local repo"
 command git pull
-
-
-command echo ""
-command echo "Build project"
-command command cargo build
