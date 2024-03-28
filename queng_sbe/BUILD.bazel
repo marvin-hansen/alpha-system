@@ -11,7 +11,7 @@ filegroup(
     name = "doc",
     srcs = [
         "//queng_sbe/bindings:doc",
-        "//queng_sbe/sbe_messages:sbe_messages",
+        "//queng_sbe/sbe_messages:doc",
     ],
     visibility = ["//visibility:public"],
 )
