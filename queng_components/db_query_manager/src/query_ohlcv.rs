@@ -1,8 +1,9 @@
-use crate::error::QueryError;
 use crate::types::OHLCVRow;
 use crate::QueryDBManager;
 use crate::FN_NAME;
 use common::prelude::{OHLCVBar, TimeResolution};
+use db_utils::error::QueryError;
+use db_utils::query_utils;
 
 impl QueryDBManager {
     /// Retrieves all OHLCV data bars for the given symbol table and time resolution.
@@ -55,9 +56,8 @@ impl QueryDBManager {
         time_resolution: &TimeResolution,
     ) -> Result<Vec<OHLCVBar>, QueryError> {
         // Sanitize table name input to prevent SQL injection.
-        let sanitized_name = self
-            .sanitize_table_name(symbol_table)
-            .expect("Failed to sanitize table name");
+        let sanitized_name =
+            query_utils::sanitize_table_name(symbol_table).expect("Failed to sanitize table name");
 
         // Build the query
         let query = self.build_get_ohlcv_bars_query(sanitized_name, time_resolution);

@@ -1,6 +1,7 @@
 use crate::types::OHLCVRow;
 use crate::{QueryDBManager, FN_NAME};
 use common::prelude::TimeResolution;
+use db_utils::query_utils::sanitize_table_name;
 use futures::stream::BoxStream;
 use futures::StreamExt;
 use klickhouse::KlickhouseError;
@@ -12,9 +13,8 @@ impl QueryDBManager {
         time_resolution: &TimeResolution,
     ) -> BoxStream<Result<OHLCVRow, KlickhouseError>> {
         // Sanitize table name input to prevent SQL injection.
-        let sanitized_name = self
-            .sanitize_table_name(symbol_table)
-            .expect("Failed to sanitize table name");
+        let sanitized_name =
+            sanitize_table_name(symbol_table).expect("Failed to sanitize table name");
 
         // Build the query
         let query = self.build_get_ohlcv_bars_query(sanitized_name, time_resolution);

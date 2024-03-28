@@ -34,6 +34,7 @@ members = [
     "queng_specs/file_specs",
     "queng_specs/service_specs",
     "queng_utils/client_utils",
+    "queng_utils/db_utils",
     "queng_utils/proto_utils",
     "queng_utils/service_utils",
 ]
@@ -84,6 +85,7 @@ file_specs = { path = "queng_specs/file_specs" }
 service_specs = { path = "queng_specs/service_specs" }
 # Utils
 client_utils = { path = "queng_utils/client_utils" }
+db_utils = { path = "queng_utils/db_utils" }
 proto_utils = { path = "queng_utils/proto_utils" }
 service_utils = { path = "queng_utils/service_utils" }
 #

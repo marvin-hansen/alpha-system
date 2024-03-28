@@ -1,9 +1,7 @@
-pub mod error;
 mod query_gen;
 mod query_ohlcv;
 mod query_symbols;
 mod query_trades;
-mod query_utils;
 mod stream_ohlcv;
 mod stream_trades;
 pub mod types;

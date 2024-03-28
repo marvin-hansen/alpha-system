@@ -15,6 +15,7 @@ rust_library(
         normal = True,
     ) + [
         "//queng_common:common",
+        "//queng_utils/db_utils:db_utils",
     ],
     visibility = ["//visibility:public"],
 )

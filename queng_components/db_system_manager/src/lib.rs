@@ -1,5 +1,7 @@
 mod db_cfg;
 mod db_svc;
+mod gen_query;
+mod types;
 
 use common::prelude::{ClickHouseConfig, PortfolioConfig, ServiceConfig, ServiceID};
 use klickhouse::{Client, ClientOptions};
@@ -39,6 +41,7 @@ impl SystemDBManager {
     ///
     pub async fn new(db_config: &ClickHouseConfig) -> Result<Self, Error> {
         let destination = db_config.connection_string();
+
         let client = Client::connect(destination.clone(), ClientOptions::default())
             .await
             .expect(format!("{} Failed to connect to {}", FN_NAME, &destination).as_str());
