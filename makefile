@@ -14,6 +14,7 @@ help:
 	@echo ''
 	@echo ' Development:'
 	@echo '    make build   	Builds the code base incrementally (fast) for dev.'
+	@echo '    make current   	Builds the current target incrementally (fast) for dev.'
 	@echo '    make rebuild   	Syncs dependencies and builds the code base from scratch (slow).'
 	@echo '    make check   	Checks the code base for security vulnerabilities.'
 	@echo '    make container   Builds the container images.'
@@ -69,6 +70,11 @@ vex:
 .PHONY: build
 build:
 	@source scripts/bazel/build.sh
+
+
+.PHONY: current
+current:
+	@source scripts/bazel/current.sh
 
 
 .PHONY: rebuild
