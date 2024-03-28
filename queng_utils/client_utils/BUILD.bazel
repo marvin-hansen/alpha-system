@@ -1,5 +1,7 @@
 load("@crate_index//:defs.bzl", "aliases", "all_crate_deps")
 load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
+load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test")
+
 
 rust_library(
     name = "client_utils",
@@ -20,4 +22,16 @@ rust_library(
         "//queng_sbe/sbe_messages:sbe_messages",
     ],
     visibility = ["//visibility:public"],
+)
+
+rust_doc(
+    name = "doc",
+    crate = ":client_utils",
+    visibility = ["//visibility:public"],
+)
+
+rust_doc_test(
+     name = "doc_test",
+     crate = ":client_utils",
+     visibility = ["//visibility:public"],
 )

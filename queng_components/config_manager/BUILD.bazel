@@ -1,5 +1,7 @@
 load("@crate_index//:defs.bzl", "aliases", "all_crate_deps")
 load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
+load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test")
+
 
 rust_library(
     name = "config_manager",
@@ -21,8 +23,6 @@ rust_library(
     ],
     visibility = ["//visibility:public"],
 )
-
-
 
 rust_test(
     name = "tests",
@@ -47,3 +47,16 @@ rust_test(
     ),
     visibility = ["//visibility:public"],
 )
+
+
+rust_doc(
+    name = "doc",
+    crate = ":config_manager",
+    visibility = ["//visibility:public"],
+)
+
+rust_doc_test(
+     name = "doc_test",
+     crate = ":config_manager",
+     visibility = ["//visibility:public"],
+ )

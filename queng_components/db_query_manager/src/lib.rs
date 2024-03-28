@@ -33,7 +33,6 @@ impl QueryDBManager {
     ///
     /// Will return an error if the connection to the database fails.
     ///
-    /// # Example
     ///
     pub async fn new(db_config: ClickHouseConfig) -> Result<Self, Error> {
         let destination = db_config.connection_string();

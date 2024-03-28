@@ -12,3 +12,17 @@ filegroup(
     visibility = ["//visibility:public"],
 )
 
+
+filegroup(
+    name = "doc",
+    srcs = [
+        "//queng_components/config_manager:doc",
+        "//queng_components/ctx_manager:doc",
+        "//queng_components/db_query_manager:doc",
+        "//queng_components/db_system_manager:doc",
+        "//queng_components/dns_manager:doc",
+        "//queng_components/pattern_manager:doc",
+        "//queng_components/symbol_manager:doc",
+    ],
+    visibility = ["//visibility:public"],
+)
