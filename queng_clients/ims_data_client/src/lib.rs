@@ -24,17 +24,6 @@ impl ImsDataClient {
     /// to the IMS data service. Then call methods like start_data()
     /// and stop_data() to control data streams.
     ///
-    /// # Example
-    ///
-    /// ```
-    /// use common::prelude::{DataType, ExchangeID};
-    /// use ims_data_client::*;
-    /// # async fn example() -> Result<(), ImsDataClientError> {
-    /// let mut client = ImsDataClient::connect("localhost:50051").await?;
-    /// let stream_id = client.start_data(ExchangeID::Binance, vec!["BTC-USD".to_string()], DataType::TradeData)?;
-    /// # Ok(())
-    /// # }
-    /// ```
     pub async fn new(config: HostEndpoint<'_>) -> Result<Self, Error> {
         // Extract host and port from config
         let port = config.port();

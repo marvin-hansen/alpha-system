@@ -68,10 +68,9 @@ impl Display for CtxManager {
 fn get_env_type() -> EnvironmentType {
     return match env::var("ENV") {
         Ok(val) => match val.as_str() {
-            "LOCAL" => EnvironmentType::LOCAL,
             "CI" => EnvironmentType::CI,
             "CLUSTER" => EnvironmentType::CLUSTER,
-            "DOCKER" => EnvironmentType::Docker,
+            "LOCAL" => EnvironmentType::LOCAL,
             "UNKNOWN" => EnvironmentType::UnknownEnv,
             _ => EnvironmentType::UnknownEnv,
         },

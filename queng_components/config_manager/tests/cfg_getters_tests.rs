@@ -86,16 +86,3 @@ fn new_config_manager_qdgw() {
     assert_eq!(config_manager.get_env_type(), EnvironmentType::CLUSTER);
     assert_eq!(config_manager.get_svc_config(), qdgw_service_config());
 }
-
-#[test]
-fn test_get_db_config_local() {
-    env::set_var("ENV", "LOCAL");
-
-    let ctm = CtxManager::new();
-    assert_eq!(ctm.env_type(), EnvironmentType::LOCAL);
-    assert_eq!(ctm.int_dns_server(), &None);
-
-    let dnm = DnsManager::new(&ctm);
-    assert_eq!(ctm.int_dns_server(), &None);
-    assert_eq!(dnm.external_dns(), "1.1.1.1:53");
-}

@@ -245,8 +245,6 @@ impl<'l> CfgManager<'l> {
                 cluster_host.to_string()
             }
 
-            EnvironmentType::Docker => svc_env_config.docker_host().to_string(),
-
             EnvironmentType::UnknownEnv => {
                 return Err(InitError("[EnvManager]: Unknown Environment".to_string()));
             }

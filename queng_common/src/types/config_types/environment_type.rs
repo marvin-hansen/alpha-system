@@ -18,8 +18,6 @@ pub enum EnvironmentType {
     CLUSTER,
     /// Continuous Integration (CI) environment type.
     CI,
-    /// Docker environment type here.
-    Docker,
 }
 
 impl Display for EnvironmentType {
@@ -29,7 +27,6 @@ impl Display for EnvironmentType {
             EnvironmentType::LOCAL => write!(f, "LOCAL"),
             EnvironmentType::CLUSTER => write!(f, "CLUSTER"),
             EnvironmentType::CI => write!(f, "CI"),
-            EnvironmentType::Docker => write!(f, "Docker"),
         }
     }
 }
