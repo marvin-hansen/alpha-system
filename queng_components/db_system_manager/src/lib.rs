@@ -1,15 +1,23 @@
 mod db_cfg;
 mod db_svc;
 
-use common::prelude::ClickHouseConfig;
+use common::prelude::{ClickHouseConfig, PortfolioConfig, ServiceConfig, ServiceID};
 use klickhouse::{Client, ClientOptions};
+use std::collections::HashMap;
 use std::fmt::Error;
+use std::sync::{Arc, RwLock};
 
 const FN_NAME: &str = "[SystemDBManager]:";
+
+// Interior mutability in Rust, part 2: thread safety
+// https://ricardomartins.cc/2016/06/25/interior-mutability-thread-safety
+type SafeRef<K, V> = Arc<RwLock<HashMap<K, V>>>;
 
 #[derive(Clone)]
 pub struct SystemDBManager {
     client: Client,
+    portfolio_cache: SafeRef<u32, PortfolioConfig>,
+    service_cache: SafeRef<ServiceID, ServiceConfig>,
 }
 
 impl SystemDBManager {
@@ -35,7 +43,14 @@ impl SystemDBManager {
             .await
             .expect(format!("{} Failed to connect to {}", FN_NAME, &destination).as_str());
 
-        Ok(Self { client })
+        let service_cache = Arc::new(RwLock::new(HashMap::new()));
+        let portfolio_cache = Arc::new(RwLock::new(HashMap::new()));
+
+        Ok(Self {
+            client,
+            portfolio_cache,
+            service_cache,
+        })
     }
 }
 
