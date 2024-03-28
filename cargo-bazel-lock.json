@@ -1,5 +1,5 @@
 {
-  "checksum": "087b27879efe0f60f96991d07b5f97e3f627940806cccfdf59fca00c71989613",
+  "checksum": "d949ca6a7e2ff5d5d9ca050ec732f7fb1e378fd610f65c3468134c666ce42579",
   "crates": {
     "addr2line 0.21.0": {
       "name": "addr2line",
@@ -3631,6 +3631,46 @@
             {
               "id": "tokio 1.36.0",
               "target": "tokio"
+            }
+          ],
+          "selects": {}
+        },
+        "edition": "2021",
+        "version": "0.1.0"
+      },
+      "license": null,
+      "license_ids": [],
+      "license_file": null
+    },
+    "db_utils 0.1.0": {
+      "name": "db_utils",
+      "version": "0.1.0",
+      "package_url": "https://github.com/marvin-hansen/quant-engine",
+      "repository": null,
+      "targets": [
+        {
+          "Library": {
+            "crate_name": "db_utils",
+            "crate_root": "src/lib.rs",
+            "srcs": {
+              "allow_empty": false,
+              "include": [
+                "**/*.rs"
+              ]
+            }
+          }
+        }
+      ],
+      "library_target_name": "db_utils",
+      "common_attrs": {
+        "compile_data_glob": [
+          "**"
+        ],
+        "deps": {
+          "common": [
+            {
+              "id": "klickhouse 0.11.2",
+              "target": "klickhouse"
             }
           ],
           "selects": {}
@@ -21004,6 +21044,7 @@
     "db_query_manager 0.1.0": "queng_components/db_query_manager",
     "db_specs 0.1.0": "queng_specs/db_specs",
     "db_system_manager 0.1.0": "queng_components/db_system_manager",
+    "db_utils 0.1.0": "queng_utils/db_utils",
     "dbgw 0.1.0": "queng_services/dbgw",
     "dbgw_client 0.1.0": "queng_clients/dbgw_client",
     "direct-cargo-bazel-deps 0.0.1": "",

@@ -112,6 +112,7 @@ crates_repository(
         "//:queng_specs/file_specs/Cargo.toml",
         "//:queng_specs/service_specs/Cargo.toml",
         "//:queng_utils/client_utils/Cargo.toml",
+        "//:queng_utils/db_utils/Cargo.toml",
         "//:queng_utils/proto_utils/Cargo.toml",
         "//:queng_utils/service_utils/Cargo.toml",
     ],

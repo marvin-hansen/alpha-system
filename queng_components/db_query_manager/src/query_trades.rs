@@ -1,7 +1,8 @@
-use crate::error::QueryError;
 use crate::types::TradeRow;
 use crate::{QueryDBManager, FN_NAME};
 use common::prelude::TradeBar;
+use db_utils::error::QueryError;
+use db_utils::query_utils::sanitize_table_name;
 
 impl QueryDBManager {
     /// Retrieves all trade bars for the given symbol table from the database.
@@ -48,7 +49,7 @@ impl QueryDBManager {
         symbol_table: &str,
     ) -> Result<Vec<TradeBar>, QueryError> {
         // Sanitize table name input to prevent SQL injection.
-        let sanitized_name = match self.sanitize_table_name(symbol_table) {
+        let sanitized_name = match sanitize_table_name(symbol_table) {
             Ok(name) => name,
             Err(e) => return Err(e),
         };

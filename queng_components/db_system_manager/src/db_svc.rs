@@ -1,9 +1,10 @@
 use crate::SystemDBManager;
 use common::prelude::{ServiceConfig, ServiceID};
+use db_utils::error::QueryError;
 use std::fmt::Error;
 
 impl SystemDBManager {
-    pub async fn create_service(&self, data: ServiceConfig) -> Result<bool, Error> {
+    pub async fn create_service(&self, data: ServiceConfig) -> Result<bool, QueryError> {
         println!("{}", data);
 
         Ok(true)
@@ -48,7 +49,7 @@ impl SystemDBManager {
     pub async fn read_all_services(&self) -> Result<Vec<ServiceConfig>, Error> {
         // Check if the cache is empty, if so query the database, add to cache and return.
         if self.service_cache.read().unwrap().is_empty() {
-            // TODO
+            //
         }
 
         // otherwise return service_cache as vector
@@ -101,7 +102,10 @@ impl SystemDBManager {
 
         // check if id is in service_cache, if so remove it from the cache
         if self.service_cache.read().unwrap().contains_key(id) {
-            // self.service_cache.remove(id);
+            self.service_cache
+                .write()
+                .expect("Failed to acquire write lock")
+                .remove(id);
         }
 
         // Otherwise, check if id is in database, if so delete from database.

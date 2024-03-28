@@ -2,6 +2,7 @@ filegroup(
     name = "build",
     srcs = [
         "//queng_utils/client_utils:client_utils",
+        "//queng_utils/db_utils:db_utils",
         "//queng_utils/proto_utils:proto_utils",
         "//queng_utils/service_utils:service_utils",
     ],
@@ -12,6 +13,7 @@ filegroup(
     name = "doc",
     srcs = [
         "//queng_utils/client_utils:doc",
+        "//queng_utils/db_utils:doc",
         "//queng_utils/proto_utils:doc",
         "//queng_utils/service_utils:doc",
     ],

@@ -13,11 +13,17 @@ impl SystemDBManager {
             .unwrap()
             .contains_key(&config.portfolio_id())
         {
-            // self.portfolio_cache.remove(&config.portfolio_id());
+            self.portfolio_cache
+                .write()
+                .expect("Failed to acquire write lock")
+                .remove(&config.portfolio_id());
         }
 
         // Otherwise, add new portfolio config to portfolio_cache
-        // self.portfolio_cache.insert(config.portfolio_id(), config.clone());
+        self.portfolio_cache
+            .write()
+            .expect("Failed to acquire write lock")
+            .insert(config.portfolio_id(), config.clone());
 
         // Check if there is an id in the database, if so update database.
 
@@ -83,7 +89,10 @@ impl SystemDBManager {
 
         // Check if id is in portfolio_cache, if so delete from cache.
         if self.portfolio_cache.read().unwrap().contains_key(&id) {
-            // self.portfolio_cache.remove(&id);
+            self.portfolio_cache
+                .write()
+                .expect("Failed to acquire write lock")
+                .remove(&id);
         }
 
         // Otherwise, check if id is in database, if so delete from database.

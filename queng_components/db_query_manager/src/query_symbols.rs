@@ -1,6 +1,7 @@
-use crate::error::QueryError;
 use crate::types::SymbolRow;
 use crate::{QueryDBManager, FN_NAME};
+use db_utils::error::QueryError;
+use db_utils::query_utils::sanitize_table_name;
 
 impl QueryDBManager {
     /// Retrieves all symbols and their IDs from the given symbol table.
@@ -51,7 +52,7 @@ impl QueryDBManager {
         symbol_table: &str,
     ) -> Result<Vec<(u16, String)>, QueryError> {
         // Sanitize table name input to prevent SQL injection.
-        let sanitized_name = match self.sanitize_table_name(symbol_table) {
+        let sanitized_name = match sanitize_table_name(symbol_table) {
             Ok(name) => name,
             Err(e) => return Err(e),
         };
