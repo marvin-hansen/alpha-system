@@ -8,15 +8,7 @@ pub fn print_example_header(example: &str) {
     println!();
 }
 
-pub fn print_trade_data_import_header() {
-    print_data_import_header("Imports trade tick data from CSV into Clickhouse.");
-}
-
-pub fn print_symbol_meta_data_import_header() {
-    print_data_import_header("Imports symbol meta data into Clickhouse.");
-}
-
-fn print_data_import_header(msg: &str) {
+pub fn print_data_import_header(msg: &str) {
     println!();
     println!("Import Data: {}", msg);
     println!();

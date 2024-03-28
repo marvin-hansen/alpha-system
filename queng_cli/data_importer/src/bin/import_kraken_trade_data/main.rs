@@ -15,7 +15,7 @@ const VERBOSE: bool = true;
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let start = Instant::now();
-    print_utils::print_trade_data_import_header();
+    print_utils::print_data_import_header("Imports trade tick data from CSV into Clickhouse.");
     // Enables verbose output for main
     let vrb = VERBOSE;
     // Enables verbose output for process_file.
