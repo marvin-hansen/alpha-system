@@ -15,21 +15,6 @@ use std::error::Error;
 ///
 /// Returns `Ok(())` if the data is successfully inserted, or `Err` if an error occurs.
 ///
-/// # Example
-///
-/// ```
-/// use klickhouse::Client;
-/// use std::error::Error;
-///
-/// # async fn example() -> Result<(), Box<dyn Error>> {
-/// let client = Client::default();
-/// let table_name = "system.services";
-/// let vrb = true;
-///
-/// process(&client, table_name, vrb).await?;
-/// # Ok(())
-/// # }
-/// ```
 pub(crate) async fn process(
     client: &Client,
     table_name: &str,

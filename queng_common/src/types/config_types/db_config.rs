@@ -37,24 +37,6 @@ pub struct DBConfig {
 }
 
 impl DBConfig {
-    /// Creates a new DBConfig instance.
-    ///
-    /// # Arguments
-    ///
-    /// * `port`: The ILP port number to connect to at the server host. The default port is 9009.
-    /// * `host` - The hostname of the database server
-    ///
-    /// # Returns
-    ///
-    /// A new DBConfig instance with the provided parameters and a default buffer size.
-    ///
-    /// # Example
-    ///
-    /// ```rust
-    /// use common::prelude::SurrealDBConfig;
-    ///
-    /// let config = SurrealDBConfig::new(9009, "localhost".to_string());
-    /// ```
     pub fn new(port: u16, host: String) -> Self {
         Self {
             port,
@@ -70,34 +52,6 @@ impl DBConfig {
         }
     }
 
-    /// Creates a new DBConfig instance configured for Postgres.
-    ///
-    /// This allows providing Postgres specific configuration like credentials and database name.
-    ///
-    /// # Arguments
-    ///
-    /// * `port`: The ILP port number to connect to at the server host. The default port is 9009.
-    /// * `host` - The QuestDB host address
-    /// * `pg_user` - The Postgres user to authenticate with. Default is "admin"
-    /// * `pg_password` - The password for the Postgres user
-    /// * `pg_database` - The name of the Postgres database to use. Default is "qdb"
-    /// * `pg_port` - The port to connect to Postgres on. Default is 8812
-    /// * `pg_max_connections` - The maximum number of connections to Postgres. Default is 10
-    ///
-    /// # Returns
-    ///
-    /// A DBConfig instance configured with the provided Postgres parameters.
-    ///
-    /// # Example
-    ///
-    /// ```
-    /// use common::prelude::SurrealDBConfig;
-    ///
-    /// let config = SurrealDBConfig::new_with_pg_config(
-    ///     9009, "localhost".into(), "myuser".into(), "password".into(),
-    ///     "qdb".into(), 8812, 10);
-    /// ```
-    ///
     pub fn new_with_pg_config(
         port: u16,
         host: String,
@@ -130,21 +84,6 @@ impl DBConfig {
     /// - password
     /// - host
     /// - port
-    /// - dbname
-    ///
-    /// The string follows the format expected by PostgreSQL clients.
-    ///
-    /// # Examples
-    ///
-    /// ```rust
-    /// use common::prelude::SurrealDBConfig;
-    ///
-    /// let config = SurrealDBConfig::new(9009, "localhost".into());
-    /// let conn_str = config.pg_connection_string();
-    ///
-    /// assert_eq!(conn_str, "user=admin password=quest host=localhost port=8812 dbname=qdb");
-    /// ```
-    ///
     pub fn pg_connection_string(&self) -> String {
         // https://questdb.io/docs/develop/query-data/#postgresql-wire-protocol
         format!(
@@ -163,136 +102,30 @@ impl DBConfig {
 
 // getters
 impl DBConfig {
-    /// Returns the configured ILP port number.
-    ///
-    /// # Examples
-    ///
-    /// ```rust
-    /// use common::prelude::SurrealDBConfig;
-    ///
-    /// let config = SurrealDBConfig::new(9009, "localhost".into());
-    /// assert_eq!(config.port(), 9009);
-    /// ```
     pub fn port(&self) -> u16 {
         self.port
     }
 
-    /// Returns the configured host string.
-    ///
-    /// # Examples
-    ///
-    /// ```rust
-    /// use common::prelude::SurrealDBConfig;
-    ///
-    /// let config = SurrealDBConfig::new(9009, "localhost".into());
-    /// assert_eq!(config.host(), "localhost");
-    /// ```
     pub fn host(&self) -> &str {
         &self.host
     }
 
-    /// Returns the configured buffer size.
-    ///
-    /// # Examples
-    ///
-    /// ```rust
-    /// use common::prelude::SurrealDBConfig;
-    ///
-    /// let config = SurrealDBConfig::new(9009, "localhost".into());
-    /// assert_eq!(config.buffer_size(), 50000);
-    /// ```
     pub fn buffer_size(&self) -> usize {
         self.buffer_size
     }
 
-    /// Returns the configured Postgres user.
-    ///
-    /// # Examples
-    ///
-    /// ```rust
-    /// use common::prelude::SurrealDBConfig;
-    ///
-    /// let config = SurrealDBConfig::new_with_pg_config(
-    ///         27017,
-    ///         "localhost".to_string(),
-    ///         "pguser".to_string(),
-    ///         "pgpass".to_string(),
-    ///         "pgdb".to_string(),
-    ///         5432,
-    ///         10,
-    ///     );
-    ///
-    /// assert_eq!(config.pg_user(), "pguser");
-    /// ```
     pub fn pg_user(&self) -> &str {
         &self.pg_user
     }
 
-    /// Returns the configured Postgres password.
-    ///
-    /// # Examples
-    ///
-    /// ```rust
-    /// use common::prelude::SurrealDBConfig;
-    ///
-    /// let config = SurrealDBConfig::new_with_pg_config(
-    ///         27017,
-    ///         "localhost".to_string(),
-    ///         "pguser".to_string(),
-    ///         "pgpass".to_string(),
-    ///         "pgdb".to_string(),
-    ///         5432,
-    ///         10,
-    ///     );
-    ///
-    /// assert_eq!(config.pg_password(), "pgpass");
-    /// ```
     pub fn pg_password(&self) -> &str {
         &self.pg_password
     }
 
-    /// Returns the configured Postgres database name.
-    ///
-    /// # Examples
-    ///
-    /// ```rust
-    /// use common::prelude::SurrealDBConfig;
-    ///
-    /// let config = SurrealDBConfig::new_with_pg_config(
-    ///         27017,
-    ///         "localhost".to_string(),
-    ///         "pguser".to_string(),
-    ///         "pgpass".to_string(),
-    ///         "pgdb".to_string(),
-    ///         5432,
-    ///         10,
-    ///     );
-    ///
-    /// assert_eq!(config.pg_database(), "pgdb");
-    /// ```
     pub fn pg_database(&self) -> &str {
         &self.pg_database
     }
 
-    /// Returns the configured Postgres port number.
-    ///
-    /// # Examples
-    ///
-    /// ```rust
-    /// use common::prelude::SurrealDBConfig;
-    ///
-    /// let config = SurrealDBConfig::new_with_pg_config(
-    ///         27017,
-    ///         "localhost".to_string(),
-    ///         "pguser".to_string(),
-    ///         "pgpass".to_string(),
-    ///         "pgdb".to_string(),
-    ///         5432,
-    ///         10,
-    ///     );
-    ///
-    /// assert_eq!(config.pg_port(), 5432);
-    /// ```
     pub fn pg_port(&self) -> u16 {
         self.pg_port
     }
