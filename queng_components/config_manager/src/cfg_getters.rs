@@ -1,11 +1,7 @@
 use crate::CfgManager;
 use common::prelude::{
     ClickHouseConfig, EnvironmentType, ExchangeID, InitError, MessageClientConfig, MetricConfig,
-    QuestDBConfig, ServiceConfig, ServiceID, SurrealDBConfig,
-};
-use db_specs::prelude::{
-    db_config_ci, db_config_cluster, db_config_local, get_cluster_quest_db_config,
-    get_local_quest_db_config,
+    ServiceConfig, ServiceID,
 };
 
 impl<'l> CfgManager<'l> {
@@ -102,24 +98,5 @@ impl<'l> CfgManager<'l> {
     ///
     pub fn get_symbol_table(&self, exchange_id: ExchangeID) -> Option<String> {
         self.exchanges_symbol_tables.get(&exchange_id).cloned()
-    }
-}
-
-impl<'l> CfgManager<'l> {
-    pub fn get_quest_db_config(&self) -> QuestDBConfig {
-        match self.env_type {
-            EnvironmentType::LOCAL => get_local_quest_db_config(),
-            EnvironmentType::CLUSTER => get_cluster_quest_db_config(),
-            _ => panic!("[CfgManager/get_quest_db_config]: Invalid environment type"),
-        }
-    }
-
-    pub fn get_surreal_db_config(&self) -> SurrealDBConfig {
-        match self.env_type {
-            EnvironmentType::LOCAL => db_config_local(),
-            EnvironmentType::CI => db_config_ci(),
-            EnvironmentType::CLUSTER => db_config_cluster(),
-            _ => panic!("[CfgManager/get_surreal_db_config]: Invalid environment type"),
-        }
     }
 }
