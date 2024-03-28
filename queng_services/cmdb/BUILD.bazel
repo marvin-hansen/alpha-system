@@ -69,20 +69,11 @@ multi_arch(
     ],
 )
 
-# Create image index for all supported platforms
-oci_image_index(
-    name = "image_index",
-    images = [
-        ":images",
-    ],
-)
-
-# Push image index to registry
+# Publish image to registry
 oci_push(
     name = "push",
-    image = ":image_index",
-    repository = "ghcr.io/marvin-hansen/quant-engine/cmdb",
+    image = ":image",
+    repository = "asia-northeast1-docker.pkg.dev/future-309012/image-repo/cmdb",
     remote_tags = ["latest"],
     visibility = ["//visibility:public"],
 )
-

@@ -14,13 +14,14 @@ help:
 	@echo ''
 	@echo ' Development:'
 	@echo '    make build   	Builds the code base incrementally (fast) for dev.'
-	@echo '    make bench   	Runs all benchmarks across all crates.'
+	@echo '    make rebuild   	Syncs dependencies and builds the code base from scratch (slow).'
 	@echo '    make check   	Checks the code base for security vulnerabilities.'
-	@echo '    make db   		Starts the local development database'
+	@echo '    make container   Builds the container images.'
+	@echo '    make doc   		Builds documentation for the project.'
 	@echo '    make fix   		Fixes linting issues as reported by clippy.'
 	@echo '    make format   	Formats call code according to cargo fmt style.'
 	@echo '    make install   	Tests and installs all make script dependencies.'
-	@echo '    make update   	Update rust, pull git, and build the project.'
+	@echo '    make update   	Update rust, pulls from git remote.'
 	@echo '    make test   		Tests across all crates.'
 	@echo '    make sbe   		Generates Rust bindings for SBE messages.'
 
@@ -67,12 +68,12 @@ vex:
 
 .PHONY: build
 build:
-	@source scripts/build.sh
+	@source scripts/bazel/build.sh
 
 
-.PHONY: bench
-bench:
-	@source scripts/bench.sh
+.PHONY: rebuild
+rebuild:
+	@source scripts/bazel/rebuild.sh
 
 
 .PHONY: check
@@ -80,14 +81,14 @@ check:
 	@source scripts/check.sh
 
 
-.PHONY: clean
-clean:
-	@source scripts/clean.sh
+.PHONY: container
+container:
+	@source scripts/bazel/image.sh
 
 
-.PHONY: db
-db:
-	@source scripts/db.sh
+.PHONY: doc
+doc:
+	@source scripts/bazel/doc.sh
 
 
 .PHONY: fix
@@ -105,14 +106,9 @@ install:
 	@source scripts/install_deps.sh
 
 
-.PHONY: docker
-docker:
-	@source scripts/docker.sh
-
-
 .PHONY: release
 release:
-	@source scripts/release.sh
+	@source scripts/bazel/release.sh
 
 
 .PHONY: update
@@ -122,7 +118,7 @@ update:
 
 .PHONY: test
 test:
-	@source scripts/test.sh
+	@source scripts/bazel/test.sh
 
 
 .PHONY: sbe

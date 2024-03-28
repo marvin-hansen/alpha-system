@@ -4,5 +4,4 @@ set -o nounset
 set -o pipefail
 
 
-command cargo clean
-
+command bazel build //:doc
