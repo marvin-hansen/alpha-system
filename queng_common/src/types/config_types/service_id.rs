@@ -11,7 +11,7 @@ use std::fmt::{Display, Formatter};
 /// * `CMDB`: The CMDB service.
 /// * `DBGW`: The DBGW service.
 /// * `QDGW`: The QDGW service.
-#[derive(Serialize, Deserialize, Debug, Default, Copy, Clone, Eq, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, Default, Copy, Clone, Eq, PartialEq, Hash)]
 #[repr(u8)]
 pub enum ServiceID {
     #[default]
