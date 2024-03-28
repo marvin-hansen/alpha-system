@@ -13,6 +13,7 @@ rust_binary(
     ) + [
         ":lib_import",
         "//queng_utils/client_utils:client_utils",
+        "//queng_utils/db_utils:db_utils",
         "//queng_common:common",
         "//queng_specs/db_specs:db_specs",
     ],
@@ -42,6 +43,7 @@ rust_binary(
     ) + [
         ":lib_import",
         "//queng_utils/client_utils:client_utils",
+        "//queng_utils/db_utils:db_utils",
         "//queng_common:common",
         "//queng_specs/db_specs:db_specs",
         "//queng_specs/service_specs:service_specs",
@@ -72,6 +74,7 @@ rust_binary(
     ) + [
         ":lib_import",
         "//queng_utils/client_utils:client_utils",
+        "//queng_utils/db_utils:db_utils",
         "//queng_common:common",
         "//queng_specs/db_specs:db_specs",
     ],

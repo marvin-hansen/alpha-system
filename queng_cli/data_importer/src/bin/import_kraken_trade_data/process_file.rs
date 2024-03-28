@@ -1,5 +1,6 @@
-use crate::query_utils;
+use crate::query_gen;
 use client_utils::print_utils;
+use db_utils::query_utils;
 use klickhouse::Client;
 use lib_import::types::symbol_meta_data::SymbolMetaData;
 use std::error::Error;
@@ -70,12 +71,15 @@ pub(crate) async fn process(
     let symbol = file.to_lowercase();
 
     print_utils::dbg_print(vrb, "Create the trade data table if it doesn't exist");
-    query_utils::create_trade_data_table(&client, &table_name)
+    let query = query_gen::generate_trade_table_ddl(&table_name);
+    query_utils::execute_query(&client, &query)
         .await
         .expect("Failed to create trade table");
 
     print_utils::dbg_print(vrb, "Insert trade data into the trade table");
-    query_utils::insert_trade_data(&client, &file, path)
+    let query = query_gen::generate_insert_query(&file, &path);
+
+    query_utils::execute_query(&client, &query)
         .await
         .expect("Failed to insert trade data");
 
@@ -88,10 +92,20 @@ pub(crate) async fn process(
     }
 
     print_utils::dbg_print(vrb, "Insert meta data into meta data table");
-    let meta_data = SymbolMetaData::new(table_name, symbol, symbol_id, number_of_rows);
-    query_utils::insert_meta_data(&client, &meta_data, meta_data_table)
+    let meta_data = SymbolMetaData::new(table_name.clone(), symbol, symbol_id, number_of_rows);
+    let query = query_gen::generate_meta_data_insert_query(meta_data_table, &meta_data);
+    query_utils::execute_query(&client, &query)
         .await
         .expect("Failed to insert meta data");
+
+    if vrb {
+        print_utils::dbg_print(vrb, "Count the number of rows in the table");
+        let number_of_rows = query_utils::count_rows(&client, &table_name)
+            .await
+            .expect("Failed to count rows in table");
+
+        println!("Number of imported data: {}", number_of_rows);
+    }
 
     Ok(())
 }

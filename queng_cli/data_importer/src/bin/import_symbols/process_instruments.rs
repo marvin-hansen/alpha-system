@@ -1,7 +1,8 @@
 use crate::fields::INACTIVE_EXCHANGES;
+use crate::gen_ddl;
 use crate::gen_query::generate_instruments_insert;
-use crate::{gen_ddl, gen_query, utils_query};
 use client_utils::print_utils;
+use db_utils::query_utils;
 use klickhouse::Client;
 use lib_import::types::instruments::{Instrument, InstrumentsRoot};
 use std::error::Error;
@@ -28,12 +29,12 @@ pub async fn process_instruments(
         .expect("Failed to read instruments from file");
 
     let ddl = gen_ddl::generate_instruments_table_ddl();
-    utils_query::execute_query(client, &ddl)
+    query_utils::execute_query(client, &ddl)
         .await
         .expect("Failed to create instrument table");
 
     let ddl = gen_ddl::generate_master_symbols_table_ddl();
-    utils_query::execute_query(client, &ddl)
+    query_utils::execute_query(client, &ddl)
         .await
         .expect("Failed to create symbol master table");
 
@@ -57,7 +58,7 @@ pub async fn process_instruments(
 
             instrument_filtered.fetch_add(1, Ordering::SeqCst);
             let insert_query = generate_instruments_insert(instrument);
-            utils_query::execute_query(client, &insert_query)
+            query_utils::execute_query(client, &insert_query)
                 .await
                 .expect("Failed to insert asset")
         }
@@ -87,8 +88,7 @@ pub async fn process_instruments(
     let count = pair_figi_counter.load(Ordering::SeqCst);
     println!("Number of filtered instruments with Pair FIGI: {}", count);
 
-    let query = gen_query::generate_count_instruments();
-    let count = utils_query::execute_count_query(client, &query)
+    let count = query_utils::count_rows(client, "default.instruments")
         .await
         .expect("Failed to count rows");
     println!("Number of instruments imported: {}", count);

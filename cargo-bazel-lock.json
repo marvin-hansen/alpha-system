@@ -1,5 +1,5 @@
 {
-  "checksum": "d949ca6a7e2ff5d5d9ca050ec732f7fb1e378fd610f65c3468134c666ce42579",
+  "checksum": "7f6b32488c0f8b4f2449550008aa55ccb03841f4a436b719f8e9a4455f288466",
   "crates": {
     "addr2line 0.21.0": {
       "name": "addr2line",
@@ -3671,6 +3671,10 @@
             {
               "id": "klickhouse 0.11.2",
               "target": "klickhouse"
+            },
+            {
+              "id": "serde 1.0.197",
+              "target": "serde"
             }
           ],
           "selects": {}

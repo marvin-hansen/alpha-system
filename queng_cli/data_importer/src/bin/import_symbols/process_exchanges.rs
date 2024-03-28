@@ -1,6 +1,7 @@
+use crate::gen_ddl;
 use crate::gen_query::generate_exchange_insert;
-use crate::{gen_ddl, gen_query, utils_query};
 use client_utils::print_utils;
+use db_utils::query_utils;
 use klickhouse::Client;
 use lib_import::types::exchanges::{Exchange, ExchangesRoot};
 use std::error::Error;
@@ -23,7 +24,7 @@ pub(crate) async fn process_exchanges(
         .expect("Failed to read exchanges from file");
 
     let ddl = gen_ddl::generate_exchange_table_ddl();
-    utils_query::execute_query(client, &ddl)
+    query_utils::execute_query(client, &ddl)
         .await
         .expect("Failed to create exchanges table");
 
@@ -32,7 +33,7 @@ pub(crate) async fn process_exchanges(
         if exchange.active {
             active.fetch_add(1, Ordering::SeqCst);
             let insert_query = generate_exchange_insert(exchange);
-            utils_query::execute_query(client, &insert_query)
+            query_utils::execute_query(client, &insert_query)
                 .await
                 .expect("Failed to insert asset")
         }
@@ -43,8 +44,7 @@ pub(crate) async fn process_exchanges(
     let count = active.load(Ordering::SeqCst);
     println!("Number of active exchanges: {}", count);
 
-    let query = gen_query::generate_count_exchanges();
-    let count = utils_query::execute_count_query(client, &query)
+    let count = query_utils::count_rows(client, "default.exchanges")
         .await
         .expect("Failed to count rows");
     println!("Number of exchanges imported: {}", count);

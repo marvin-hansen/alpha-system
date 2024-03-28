@@ -1,5 +1,6 @@
-use crate::utils_query;
+use crate::{gen_ddl, gen_query};
 use client_utils::print_utils;
+use db_utils::query_utils;
 use klickhouse::Client;
 use std::error::Error;
 
@@ -20,22 +21,25 @@ pub(crate) async fn process(
     table_name: &str,
     vrb: bool,
 ) -> Result<(), Box<dyn Error>> {
+    //
     print_utils::dbg_print(vrb, "Create the data table if it doesn't exist");
-    utils_query::create_table(client, table_name)
+    let ddl = gen_ddl::generate_services_table_ddl(table_name);
+    query_utils::execute_query(client, &ddl)
         .await
         .expect("Failed to create table");
 
     print_utils::dbg_print(vrb, "Insert data into the table");
-    utils_query::insert_data(client, table_name)
+    let query = gen_query::generate_all_service_insert(table_name);
+    query_utils::execute_query(client, &query)
         .await
         .expect("Failed to insert data into table");
 
-    print_utils::dbg_print(vrb, "Count the number of rows in the table");
-    let number_of_rows = utils_query::count_rows(client, table_name)
-        .await
-        .expect("Failed to count rows in table");
-
     if vrb {
+        print_utils::dbg_print(vrb, "Count the number of rows in the table");
+        let number_of_rows = query_utils::count_rows(client, table_name)
+            .await
+            .expect("Failed to count rows in table");
+
         println!("Number of imported data: {}", number_of_rows);
     }
 

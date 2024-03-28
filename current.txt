@@ -1,1 +1,1 @@
-//queng_components/db_system_manager:db_system_manager
+//queng_cli/data_importer:services_bin

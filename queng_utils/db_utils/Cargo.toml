@@ -18,3 +18,4 @@ path = "src/lib.rs"
 common = { workspace = true }
 # External crates
 klickhouse = { workspace = true }
+serde = { workspace = true }

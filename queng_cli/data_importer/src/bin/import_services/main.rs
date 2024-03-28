@@ -1,14 +1,13 @@
 mod gen_ddl;
 mod gen_query;
 mod process;
-mod utils_query;
+// mod utils_query;
 
 use client_utils::print_utils;
 use common::prelude::ClickHouseConfig;
 use klickhouse::{Client, ClientOptions};
 use std::time::Instant;
 
-// Enables verbose output
 const VERBOSE: bool = true;
 const TABLE_NAME: &str = "system.services";
 
