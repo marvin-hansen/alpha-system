@@ -27,14 +27,6 @@ pub(crate) fn generate_insert_query(file: &str, path: &str) -> String {
     )
 }
 
-pub(crate) fn generate_count_query(table_name: &str) -> String {
-    format!(
-        r"
-    SELECT count(*) FROM {table_name}
-    "
-    )
-}
-
 pub(crate) fn generate_metadata_table_ddl(meta_data_table: &str) -> String {
     format!(
         r"

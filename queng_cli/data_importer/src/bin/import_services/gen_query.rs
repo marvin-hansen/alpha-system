@@ -9,12 +9,3 @@ pub(crate) fn generate_all_service_insert(table_name: &str) -> String {
     )
     .to_string()
 }
-
-pub(crate) fn generate_count_services(table_name: &str) -> String {
-    format!(
-        r"
-    SELECT count(*) FROM {table_name}
-    "
-    )
-    .to_string()
-}

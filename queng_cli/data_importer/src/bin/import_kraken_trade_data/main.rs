@@ -1,11 +1,10 @@
 mod process_file;
 mod query_gen;
-mod query_utils;
 
 use client_utils::prelude::{config_utils, file_utils, print_utils};
 use common::prelude::ClickHouseConfig;
+use db_utils::query_utils;
 use klickhouse::{Client, ClientOptions};
-use query_utils::create_meta_data_table;
 use std::time::Instant;
 
 const CONFIG_FILE_NAME: &str = "import_trade_data_config.toml";
@@ -44,7 +43,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     print_utils::dbg_print(vrb, format!("Found {} files", files.len()).as_str());
 
     print_utils::dbg_print(vrb, "Build metadata table");
-    create_meta_data_table(&client, META_DATA_TABLE)
+    let query = query_gen::generate_metadata_table_ddl(META_DATA_TABLE);
+    query_utils::execute_query(&client, &query)
         .await
         .expect("Failed to create metadata table");
 

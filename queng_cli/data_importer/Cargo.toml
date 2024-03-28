@@ -31,6 +31,7 @@ path = "src/lib/mod.rs"
 [dependencies]
 # Internal crates
 client_utils = { workspace = true }
+db_utils = { workspace = true }
 common = { workspace = true }
 db_specs = { workspace = true }
 service_specs = { workspace = true }
