@@ -1,5 +1,6 @@
 load("@crate_index//:defs.bzl", "aliases", "all_crate_deps")
 load("@rules_rust//rust:defs.bzl", "rust_binary")
+load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test")
 
 rust_binary(
     name = "bin",
@@ -18,3 +19,15 @@ rust_binary(
     ],
     visibility = ["//visibility:public"],
 )
+
+rust_doc(
+    name = "doc",
+    crate = ":bin",
+    visibility = ["//visibility:public"],
+)
+
+rust_doc_test(
+     name = "doc_test",
+     crate = ":bin",
+     visibility = ["//visibility:public"],
+ )

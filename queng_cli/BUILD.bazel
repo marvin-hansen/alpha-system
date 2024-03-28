@@ -10,3 +10,16 @@ filegroup(
     visibility = ["//visibility:public"],
 )
 
+filegroup(
+    name = "doc",
+    srcs = [
+        "//queng_cli/data_importer:trade_bin_doc",
+        "//queng_cli/data_importer:services_bin_doc",
+        "//queng_cli/data_importer:symbols_bin_doc",
+        "//queng_cli/data_importer:lib_import_doc",
+        "//queng_cli/smdb_manager:doc",
+        "//queng_cli/spec_manager:doc",
+    ],
+    visibility = ["//visibility:public"],
+)
+

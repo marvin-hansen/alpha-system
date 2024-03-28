@@ -1,5 +1,6 @@
 load("@crate_index//:defs.bzl", "aliases", "all_crate_deps")
 load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_library")
+load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test")
 
 rust_binary(
     name = "trade_bin",
@@ -17,6 +18,18 @@ rust_binary(
     ],
     visibility = ["//visibility:public"],
 )
+
+rust_doc(
+    name = "trade_bin_doc",
+    crate = ":trade_bin",
+    visibility = ["//visibility:public"],
+)
+
+rust_doc_test(
+     name = "trade_doc_test",
+     crate = ":trade_bin",
+     visibility = ["//visibility:public"],
+ )
 
 rust_binary(
     name = "services_bin",
@@ -36,6 +49,18 @@ rust_binary(
     visibility = ["//visibility:public"],
 )
 
+rust_doc(
+    name = "services_bin_doc",
+    crate = ":services_bin",
+    visibility = ["//visibility:public"],
+)
+
+rust_doc_test(
+     name = "services_bin_doc_test",
+     crate = ":services_bin",
+     visibility = ["//visibility:public"],
+ )
+
 rust_binary(
     name = "symbols_bin",
     crate_root = "src/bin/import_symbols/main.rs",
@@ -53,6 +78,18 @@ rust_binary(
     visibility = ["//visibility:public"],
 )
 
+rust_doc(
+    name = "symbols_bin_doc",
+    crate = ":symbols_bin",
+    visibility = ["//visibility:public"],
+)
+
+rust_doc_test(
+     name = "symbols_bin_doc_test",
+     crate = ":symbols_bin",
+     visibility = ["//visibility:public"],
+ )
+
 rust_library(
     name = "lib_import",
     crate_root = "src/lib/mod.rs",
@@ -69,3 +106,15 @@ rust_library(
         "//queng_specs/db_specs:db_specs",
     ],
 )
+
+rust_doc(
+    name = "lib_import_doc",
+    crate = ":lib_import",
+    visibility = ["//visibility:public"],
+)
+
+rust_doc_test(
+     name = "lib_import_doc_test",
+     crate = ":lib_import",
+     visibility = ["//visibility:public"],
+ )
