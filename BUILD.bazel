@@ -17,6 +17,15 @@ filegroup(
 
 
 filegroup(
+    name = "doc",
+    srcs = [
+        "//queng_cli:doc",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+
+filegroup(
     name = "image",
     srcs = [
         "//queng_services:image",
