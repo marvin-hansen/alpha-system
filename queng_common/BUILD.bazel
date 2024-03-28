@@ -1,5 +1,6 @@
 load("@crate_index//:defs.bzl", "aliases", "all_crate_deps")
 load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
+load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test")
 
 filegroup(
     name = "build",
@@ -8,8 +9,6 @@ filegroup(
     ],
     visibility = ["//visibility:public"],
 )
-
-
 
 rust_library(
     name = "common",
@@ -40,3 +39,15 @@ rust_test(
     ),
     visibility = ["//visibility:public"],
 )
+
+rust_doc(
+    name = "doc",
+    crate = ":common",
+    visibility = ["//visibility:public"],
+)
+
+rust_doc_test(
+     name = "doc_test",
+     crate = ":common",
+     visibility = ["//visibility:public"],
+ )

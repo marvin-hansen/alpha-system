@@ -7,3 +7,11 @@ filegroup(
     visibility = ["//visibility:public"],
 )
 
+filegroup(
+    name = "doc",
+    srcs = [
+        "//queng_providers/cmdb_provider:doc",
+        "//queng_providers/smdb_provider:doc",
+    ],
+    visibility = ["//visibility:public"],
+)

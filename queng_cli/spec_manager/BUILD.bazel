@@ -30,4 +30,4 @@ rust_doc_test(
      name = "doc_test",
      crate = ":bin",
      visibility = ["//visibility:public"],
- )
+)

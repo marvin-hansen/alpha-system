@@ -20,6 +20,14 @@ filegroup(
     name = "doc",
     srcs = [
         "//queng_cli:doc",
+        "//queng_clients:doc",
+        "//queng_common:doc",
+        "//queng_components:doc",
+        "//queng_providers:doc",
+        "//queng_sbe:doc",
+        "//queng_services:doc",
+        "//queng_specs:doc",
+        "//queng_utils:doc",
     ],
     visibility = ["//visibility:public"],
 )

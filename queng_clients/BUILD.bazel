@@ -9,3 +9,14 @@ filegroup(
     visibility = ["//visibility:public"],
 )
 
+
+filegroup(
+    name = "doc",
+    srcs = [
+    "//queng_clients/dbgw_client:doc",
+        "//queng_clients/ims_data_client:doc",
+        "//queng_clients/rest_client:doc",
+        "//queng_clients/symdb_client:doc",
+    ],
+    visibility = ["//visibility:public"],
+)

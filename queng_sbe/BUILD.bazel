@@ -7,3 +7,11 @@ filegroup(
     visibility = ["//visibility:public"],
 )
 
+filegroup(
+    name = "doc",
+    srcs = [
+        "//queng_sbe/bindings:doc",
+        "//queng_sbe/sbe_messages:sbe_messages",
+    ],
+    visibility = ["//visibility:public"],
+)

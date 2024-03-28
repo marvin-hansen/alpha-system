@@ -1,5 +1,6 @@
 load("@crate_index//:defs.bzl", "aliases", "all_crate_deps")
 load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
+load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test")
 
 rust_library(
     name = "exchange_specs",
@@ -34,4 +35,16 @@ rust_test(
         proc_macro_dev = True
     ),
     visibility = ["//visibility:public"],
+)
+
+rust_doc(
+    name = "doc",
+    crate = ":exchange_specs",
+    visibility = ["//visibility:public"],
+)
+
+rust_doc_test(
+     name = "doc_test",
+     crate = ":exchange_specs",
+     visibility = ["//visibility:public"],
 )

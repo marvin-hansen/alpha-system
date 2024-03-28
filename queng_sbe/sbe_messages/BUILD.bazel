@@ -1,5 +1,7 @@
 load("@crate_index//:defs.bzl", "aliases", "all_crate_deps")
 load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
+load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test")
+
 
 rust_library(
     name = "sbe_messages",
@@ -35,4 +37,16 @@ rust_test(
         proc_macro_dev = True
     ),
     visibility = ["//visibility:public"],
+)
+
+rust_doc(
+    name = "doc",
+    crate = ":sbe_messages",
+    visibility = ["//visibility:public"],
+)
+
+rust_doc_test(
+     name = "doc_test",
+     crate = ":sbe_messages",
+     visibility = ["//visibility:public"],
 )
