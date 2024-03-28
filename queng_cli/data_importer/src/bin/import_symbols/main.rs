@@ -21,7 +21,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let vrb = VERBOSE;
 
     let start = Instant::now();
-    print_utils::print_symbol_meta_data_import_header();
+    print_utils::print_data_import_header("Imports symbol meta data into Clickhouse.");
 
     print_utils::dbg_print(vrb, "Build DB Client");
     let db_config = ClickHouseConfig::default();
