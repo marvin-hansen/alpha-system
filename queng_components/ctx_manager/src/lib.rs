@@ -24,13 +24,17 @@ impl CtxManager {
     /// Creates a new CtxManager instance.
     pub fn new() -> Self {
         let env_type = get_env_type();
-        println!("[CtxManager]: Environment type: {:?}", env_type);
 
-        let int_dns_server = if env_type == EnvironmentType::CLUSTER {
-            get_int_cluster_dns_server()
-        } else {
-            None
-        };
+        let int_dns_server =
+            if env_type == EnvironmentType::CLUSTER || env_type == EnvironmentType::CI {
+                get_int_cluster_dns_server()
+            } else {
+                None
+            };
+
+        // println!("[CtxManager]: Environment type: {:?}", env_type);
+        // println!("[CtxManager]: Internal DNS server: {:?}", int_dns_server);
+
         Self {
             env_type,
             int_dns_server,
