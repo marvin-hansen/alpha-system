@@ -22,29 +22,6 @@ impl QueryDBManager {
     ///
     /// # Example
     ///
-    /// ```
-    /// use common::prelude::ClickHouseConfig;
-    /// use db_query_manager::QueryDBManager;
-    ///  use futures::StreamExt;
-    ///
-    /// #[tokio::main]
-    /// async fn main() {
-    ///
-    /// let db_config =  ClickHouseConfig::default();
-    ///
-    /// let query_manager = QueryDBManager::new(db_config).await.expect("Failed to create db connection");    ///
-    /// let trade_table = "kraken_ethaed";
-    /// let symbol_id = 284; // 284 = ethaed on Kraken
-    ///
-    ///     let mut stream = query_manager.stream_trades( trade_table).await;
-    ///
-    ///     while let Some(record) = stream.next().await {
-    ///         assert!(record.is_ok());
-    ///         let trade_bar = record.unwrap();
-    ///         println!("{:?}", trade_bar);
-    ///     }
-    /// }
-    /// ```
     pub async fn stream_trades<'a>(
         &'a self,
         trade_table: &'a str,

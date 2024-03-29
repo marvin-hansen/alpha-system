@@ -23,22 +23,6 @@ impl QueryDBManager {
     ///
     /// See wrapped errors for more details.
     ///
-    /// # Example
-    ///
-    /// ```rust
-    /// use common::prelude::ClickHouseConfig;
-    /// use db_query_manager::QueryDBManager;
-    /// #[tokio::main]
-    /// async fn main() {
-    /// let db_config =  ClickHouseConfig::default();
-    ///  let mut query_manager = QueryDBManager::new(db_config).await.expect("Failed to create db connection");
-    ///
-    ///  let symbols = query_manager.get_all_symbols_with_ids("kraken_symbols")
-    ///             .await
-    ///             .expect("Failed to query all symbols from symbols table");
-    ///
-    /// }
-    /// ```
     ///
     /// Note:
     ///
