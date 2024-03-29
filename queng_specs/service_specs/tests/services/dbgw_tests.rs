@@ -15,11 +15,11 @@ fn test_cmdb_service_config() {
     );
     assert_eq!(
         service_config.health_check_uri(),
-        "dbgw-service.default.svc.cluster.local:6060/health"
+        "dbgwv1-service.default.svc.cluster.local:6060/health"
     );
     assert_eq!(
         service_config.base_uri(),
-        "dbgw-service.default.svc.cluster.local"
+        "dbgwv1-service.default.svc.cluster.local"
     );
     assert_eq!(service_config.dependencies().len(), 0);
     assert_eq!(service_config.exposure(), &ServiceType::ENDPOINT);

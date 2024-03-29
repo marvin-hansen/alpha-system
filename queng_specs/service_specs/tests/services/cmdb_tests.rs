@@ -15,11 +15,11 @@ fn test_cmdb_service_config() {
     );
     assert_eq!(
         service_config.health_check_uri(),
-        "cmdb-service.default.svc.cluster.local:5050/health"
+        "cmdbv1-service.default.svc.cluster.local:9090/health"
     );
     assert_eq!(
         service_config.base_uri(),
-        "cmdb-service.default.svc.cluster.local"
+        "cmdbv1-service.default.svc.cluster.local"
     );
     assert_eq!(
         service_config.dependencies().len(),
