@@ -23,6 +23,10 @@ rust_test(
     srcs = glob([
         "tests/**",
     ]),
+    tags = [
+        "spec-test",
+        "unit-test",
+    ],
     crate_root = "tests/mod.rs",
     deps = all_crate_deps(
         normal = True,
