@@ -8,3 +8,7 @@ test --test_output=errors
 
 # Basic build settings
 build --jobs 512
+
+build --bes_results_url=https://app.buildbuddy.io/invocation/
+build --bes_backend=grpcs://remote.buildbuddy.io
+build --remote_header=x-buildbuddy-api-key=4Ml6AhYICvGtZ3XhqafP
