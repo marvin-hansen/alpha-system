@@ -8,7 +8,7 @@ pub fn vex_service_config() -> ServiceConfig {
     let version = 1;
     let online = false;
     let description = "vex: Virtual Exchange".to_string();
-    let health_check_uri = "vex-service.default.svc.cluster.local:5050/health".to_string();
+    let health_check_uri = "vex-service.default.svc.cluster.local:9999/health".to_string();
     let base_uri = "vex-service.default.svc.cluster.local".to_string();
     let dependencies = vec![ServiceID::SMDB];
     let exposure = ServiceType::ENDPOINT;
@@ -51,11 +51,8 @@ fn get_endpoint() -> Endpoint {
 }
 
 fn get_metric_config() -> MetricConfig {
-    let metric_host = "0.0.0.0".to_string();
     let metric_uri = "metrics".to_string();
-    // Default port is 8080, but this would conflict with the default port of the metric endpoints
-    //of  other services hence it is set to 8082.
-    let metric_port = 8084;
-
+    let metric_host = "0.0.0.0".to_string();
+    let metric_port = 8080;
     MetricConfig::new(metric_uri, metric_host, metric_port)
 }

@@ -1,7 +1,4 @@
-pub(crate) fn generate_services_table_ddl(table_name: &str) -> String {
-    format!(
-        r"
-    CREATE TABLE IF NOT EXISTS {table_name}
+   CREATE TABLE IF NOT EXISTS system.services
     (
         `svc_id` String CODEC(LZ4),
         `name` String CODEC(LZ4),
@@ -31,7 +28,3 @@ pub(crate) fn generate_services_table_ddl(table_name: &str) -> String {
     PRIMARY KEY (svc_id)
     ORDER BY (svc_id)
     SETTINGS index_granularity = 128
-    "
-    )
-    .to_string()
-}
