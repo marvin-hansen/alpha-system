@@ -23,6 +23,7 @@ help:
 	@echo '    make format   	Formats call code according to cargo fmt style.'
 	@echo '    make install   	Tests and installs all make script dependencies.'
 	@echo '    make update   	Update rust, pulls from git remote.'
+	@echo '    make push   		Builds, tests, and pushes to git remote.'
 	@echo '    make test   		Tests across all crates.'
 	@echo '    make sbe   		Generates Rust bindings for SBE messages.'
 
@@ -115,6 +116,11 @@ install:
 .PHONY: release
 release:
 	@source scripts/bazel/release.sh
+
+
+.PHONY: push
+push:
+	@source scripts/bazel/push.sh
 
 
 .PHONY: update
