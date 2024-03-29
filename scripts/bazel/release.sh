@@ -27,7 +27,7 @@ bazel build  --nolegacy_important_outputs \
              --experimental_remote_cache_compression \
              --experimental_profile_include_target_label \
              --experimental_profile_include_primary_output \
-             //:doc
+             -c opt //:doc
 
 # Build all container images in release mode
 bazel build  --nolegacy_important_outputs \
@@ -42,6 +42,3 @@ command bazel run -c opt //queng_services/cmdb:push
 command bazel run -c opt //queng_services/ims/data/binance_data:push
 command bazel run -c opt //queng_services/smdb:push
 command bazel run -c opt //queng_services/symdb:push
-
-# Push all remaining commits to remote
-command git push
