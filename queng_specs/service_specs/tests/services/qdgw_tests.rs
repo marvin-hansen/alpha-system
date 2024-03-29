@@ -15,11 +15,11 @@ fn test_cmdb_service_config() {
     );
     assert_eq!(
         service_config.health_check_uri(),
-        "qdgw-service.default.svc.cluster.local:4040/health"
+        "qdgwv1-service.default.svc.cluster.local:4040/health"
     );
     assert_eq!(
         service_config.base_uri(),
-        "qdgw-service.default.svc.cluster.local"
+        "qdgwv1-service.default.svc.cluster.local"
     );
     assert_eq!(
         service_config.dependencies().len(),

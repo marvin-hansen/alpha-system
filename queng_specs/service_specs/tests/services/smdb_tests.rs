@@ -15,11 +15,11 @@ fn test_smdb_service_config() {
     );
     assert_eq!(
         service_config.health_check_uri(),
-        "smdb-service.default.svc.cluster.local:5050/health"
+        "smdbv1-service.default.svc.cluster.local:7070/health"
     );
     assert_eq!(
         service_config.base_uri(),
-        "smdb-service.default.svc.cluster.local"
+        "smdbv1-service.default.svc.cluster.local"
     );
     assert_eq!(
         service_config.dependencies().len(),
