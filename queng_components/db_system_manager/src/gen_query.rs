@@ -1,7 +1,7 @@
-use crate::SystemDBManager;
+pub(crate) fn get_all_services_query() -> String {
+    "SELECT * FROM system.services".to_string()
+}
 
-impl SystemDBManager {
-    pub fn build_get_all_services_query(&self, service_table: &str) -> String {
-        format!("SELECT * FROM {}", service_table)
-    }
+pub(crate) fn get_all_portfolios_query() -> String {
+    "SELECT * FROM system.portfolios".to_string()
 }

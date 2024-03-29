@@ -3,7 +3,9 @@ mod db_svc;
 mod gen_query;
 mod types;
 
+use crate::types::TestRow;
 use common::prelude::{ClickHouseConfig, PortfolioConfig, ServiceConfig, ServiceID};
+use db_utils::error::QueryError;
 use klickhouse::{Client, ClientOptions};
 use std::collections::HashMap;
 use std::fmt::Error;
@@ -40,12 +42,13 @@ impl SystemDBManager {
     /// # Example
     ///
     pub async fn new(db_config: &ClickHouseConfig) -> Result<Self, Error> {
+        // Connect to the database
         let destination = db_config.connection_string();
-
         let client = Client::connect(destination.clone(), ClientOptions::default())
             .await
             .expect(format!("{} Failed to connect to {}", FN_NAME, &destination).as_str());
 
+        // Initialize the cache
         let service_cache = Arc::new(RwLock::new(HashMap::new()));
         let portfolio_cache = Arc::new(RwLock::new(HashMap::new()));
 
@@ -60,5 +63,59 @@ impl SystemDBManager {
 impl SystemDBManager {
     pub async fn is_open(&self) -> bool {
         !self.client.is_closed()
+    }
+}
+
+impl SystemDBManager {
+    pub async fn init(&self) -> Result<(), QueryError> {
+        self.init_portfolio_cache()
+            .await
+            .expect("Failed to init portfolio cache");
+
+        self.init_service_cache()
+            .await
+            .expect("Failed to init service cache");
+
+        Ok(())
+    }
+    async fn init_portfolio_cache(&self) -> Result<(), QueryError> {
+        // Build the query
+        let query = gen_query::get_all_portfolios_query();
+
+        //
+        // Fix type mapping from Rust to ClickHouse
+        //
+
+        // Execute query
+        let result_rows = self
+            .client
+            .query_collect::<TestRow>(&query)
+            .await
+            .expect(format!("{} Failed to execute query: {}", FN_NAME, query).as_str());
+
+        // Check for empty result
+        if result_rows.is_empty() {
+            return Ok(());
+        }
+        Ok(())
+    }
+
+    async fn init_service_cache(&self) -> Result<(), QueryError> {
+        // Build the query
+        let query = gen_query::get_all_services_query();
+
+        // Execute query
+        let result_rows = self
+            .client
+            .query_collect::<TestRow>(&query)
+            .await
+            .expect(format!("{} Failed to execute query: {}", FN_NAME, query).as_str());
+
+        // Check for empty result
+        if result_rows.is_empty() {
+            return Ok(());
+        }
+
+        Ok(())
     }
 }
