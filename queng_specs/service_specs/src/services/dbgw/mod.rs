@@ -8,8 +8,8 @@ pub fn dbgw_service_config() -> ServiceConfig {
     let version = 1;
     let online = true;
     let description = "DBGW gives access to surreal DB".to_string();
-    let health_check_uri = "dbgw-service.default.svc.cluster.local:6060/health".to_string();
-    let base_uri = "dbgw-service.default.svc.cluster.local".to_string();
+    let health_check_uri = "dbgwv1-service.default.svc.cluster.local:6060/health".to_string();
+    let base_uri = "dbgwv1-service.default.svc.cluster.local".to_string();
     let dependencies = vec![];
     let exposure = ServiceType::ENDPOINT;
     let endpoint = get_endpoint();
@@ -51,8 +51,8 @@ fn get_endpoint() -> Endpoint {
 }
 
 fn get_metric_config() -> MetricConfig {
-    let metric_host = "0.0.0.0".to_string();
     let metric_uri = "metrics".to_string();
+    let metric_host = "0.0.0.0".to_string();
     let metric_port = 8080; // Default port is 8080
 
     MetricConfig::new(metric_uri, metric_host, metric_port)

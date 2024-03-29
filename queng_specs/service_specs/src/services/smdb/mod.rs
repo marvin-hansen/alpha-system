@@ -8,8 +8,8 @@ pub fn smdb_service_config() -> ServiceConfig {
     let version = 1;
     let online = false;
     let description = "SMDB Service Management Database".to_string();
-    let health_check_uri = "smdb-service.default.svc.cluster.local:5050/health".to_string();
-    let base_uri = "smdb-service.default.svc.cluster.local".to_string();
+    let health_check_uri = "smdbv1-service.default.svc.cluster.local:7070/health".to_string();
+    let base_uri = "smdbv1-service.default.svc.cluster.local".to_string();
     let dependencies = vec![ServiceID::DBGW];
     let exposure = ServiceType::ENDPOINT;
     let endpoint = get_endpoint();
@@ -52,11 +52,9 @@ fn get_endpoint() -> Endpoint {
 }
 
 fn get_metric_config() -> MetricConfig {
-    let metric_host = "0.0.0.0".to_string();
     let metric_uri = "metrics".to_string();
-    // Default port is 8080, but this would conflict with the default port of the metric endpoints
-    // of  other services hence it is set to 8081.
-    let metric_port = 8081;
+    let metric_host = "0.0.0.0".to_string();
+    let metric_port = 8080;
 
     MetricConfig::new(metric_uri, metric_host, metric_port)
 }

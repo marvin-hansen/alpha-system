@@ -5,8 +5,8 @@
     "version": 1,
     "online": false,
     "description": "CMDB Manages configurations stored in the DB",
-    "health_check_uri": "cmdb-service.default.svc.cluster.local:5050/health",
-    "base_uri": "cmdb-service.default.svc.cluster.local",
+    "health_check_uri": "cmdbv1-service.default.svc.cluster.local:9090/health",
+    "base_uri": "cmdbv1-service.default.svc.cluster.local",
     "dependencies": [
       "DBGW",
       "SMDB"
@@ -24,7 +24,7 @@
     "metrics": {
       "metric_uri": "metrics",
       "metric_host": "0.0.0.0",
-      "metric_port": 8082
+      "metric_port": 8080
     }
   },
   {
@@ -33,8 +33,8 @@
     "version": 1,
     "online": true,
     "description": "DBGW gives access to surreal DB",
-    "health_check_uri": "dbgw-service.default.svc.cluster.local:6060/health",
-    "base_uri": "dbgw-service.default.svc.cluster.local",
+    "health_check_uri": "dbgwv1-service.default.svc.cluster.local:6060/health",
+    "base_uri": "dbgwv1-service.default.svc.cluster.local",
     "dependencies": [],
     "exposure": "ENDPOINT",
     "endpoint": {
@@ -53,40 +53,13 @@
     }
   },
   {
-    "svc_id": "QDGW",
-    "name": "qdgwv1",
-    "version": 1,
-    "online": false,
-    "description": "QDGW gives access to quantitative Tick / min data",
-    "health_check_uri": "qdgw-service.default.svc.cluster.local:4040/health",
-    "base_uri": "qdgw-service.default.svc.cluster.local",
-    "dependencies": [
-      "SMDB"
-    ],
-    "exposure": "ENDPOINT",
-    "endpoint": {
-      "name": "qdgw Endpoint",
-      "version": 1,
-      "description": "Access to quantitative data via gRPC on baseUri:4040",
-      "uri": "/",
-      "port": 4040,
-      "protocol": "GRPC",
-      "encoding": "Protobuf"
-    },
-    "metrics": {
-      "metric_uri": "metrics",
-      "metric_host": "0.0.0.0",
-      "metric_port": 8083
-    }
-  },
-  {
     "svc_id": "SMDB",
     "name": "smdbv1",
     "version": 1,
     "online": false,
     "description": "SMDB Service Management Database",
-    "health_check_uri": "smdb-service.default.svc.cluster.local:5050/health",
-    "base_uri": "smdb-service.default.svc.cluster.local",
+    "health_check_uri": "smdbv1-service.default.svc.cluster.local:7070/health",
+    "base_uri": "smdbv1-service.default.svc.cluster.local",
     "dependencies": [
       "DBGW"
     ],
@@ -103,7 +76,7 @@
     "metrics": {
       "metric_uri": "metrics",
       "metric_host": "0.0.0.0",
-      "metric_port": 8081
+      "metric_port": 8080
     }
   },
   {
@@ -112,8 +85,8 @@
     "version": 1,
     "online": false,
     "description": "SYMDB (Symbol Master Database) gives access to central symbol to ID mapping)",
-    "health_check_uri": "health",
-    "base_uri": "symdb-service.default.svc.cluster.local",
+    "health_check_uri":"symdbv1-service.default.svc.cluster.local:6789/health",
+    "base_uri": "symdbv1-service.default.svc.cluster.local",
     "dependencies": [
       "DBGW",
       "SMDB"
@@ -131,34 +104,7 @@
     "metrics": {
       "metric_uri": "metrics",
       "metric_host": "0.0.0.0",
-      "metric_port": 8085
-    }
-  },
-  {
-    "svc_id": "VEX",
-    "name": "vexv1",
-    "version": 1,
-    "online": false,
-    "description": "vex: Virtual Exchange",
-    "health_check_uri": "vex-service.default.svc.cluster.local:5050/health",
-    "base_uri": "vex-service.default.svc.cluster.local",
-    "dependencies": [
-      "SMDB"
-    ],
-    "exposure": "ENDPOINT",
-    "endpoint": {
-      "name": "vex Endpoint",
-      "version": 1,
-      "description": "",
-      "uri": "/",
-      "port": 9999,
-      "protocol": "GRPC",
-      "encoding": "Protobuf"
-    },
-    "metrics": {
-      "metric_uri": "metrics",
-      "metric_host": "0.0.0.0",
-      "metric_port": 8084
+      "metric_port": 8080
     }
   }
 ]
