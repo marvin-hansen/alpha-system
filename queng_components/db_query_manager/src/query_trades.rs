@@ -26,23 +26,6 @@ impl QueryDBManager {
     ///
     /// See wrapped errors for more details.
     ///
-    /// # Example
-    ///
-    /// ```
-    /// use common::prelude::DBConfig;
-    /// use db_query_manager::QueryDBManager;
-    ///  use common::prelude::ClickHouseConfig;
-    ///
-    /// #[tokio::main]
-    /// async fn main() {
-    /// let db_config =  ClickHouseConfig::default();
-    ///  let mut query_manager = QueryDBManager::new(db_config).await.expect("Failed to create db connection");
-    ///
-    ///  let trades = query_manager.get_all_trades(278, "kraken_ethaed")
-    ///               .await.expect("Failed to get all trades");
-    ///
-    /// }
-    /// ```
     pub async fn get_all_trades(
         &mut self,
         symbol_id: u16,

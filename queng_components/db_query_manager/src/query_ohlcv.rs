@@ -31,24 +31,6 @@ impl QueryDBManager {
     /// - Executes the query and converts the rows to `DataBar` objects.
     /// - Returns an empty vector if there are no results.
     ///
-    /// # Example
-    ///
-    /// ```
-    /// use common::prelude::{DBConfig, TimeResolution};
-    /// use db_query_manager::QueryDBManager;
-    ///
-    /// #[tokio::main]
-    /// async fn main() {
-    /// use common::prelude::ClickHouseConfig;
-    /// let db_config =  ClickHouseConfig::default();
-    ///  let mut query_manager = QueryDBManager::new(db_config).await.expect("Failed to create db connection");
-    ///
-    ///  let time_resolution = TimeResolution::FiveMin;
-    ///  let trades = query_manager.get_all_ohlcv_bars(278, "kraken_ethaed", &time_resolution)
-    ///               .await.expect("Failed to get all trades");
-    ///
-    /// }
-    /// ```
     pub async fn get_all_ohlcv_bars(
         &mut self,
         symbol_id: u16,
