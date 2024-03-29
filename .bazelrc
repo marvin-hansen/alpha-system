@@ -6,9 +6,6 @@ build --symlink_prefix=target-bzl/
 
 test --test_output=errors
 
-# Basic build settings
-build --jobs 128
-
 build --bes_results_url=https://app.buildbuddy.io/invocation/
 build --bes_backend=grpcs://remote.buildbuddy.io
 build --remote_cache=grpcs://remote.buildbuddy.io
