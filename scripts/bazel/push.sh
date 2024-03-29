@@ -5,13 +5,21 @@ set -o pipefail
 
 command command cargo fmt --all
 
-# Compile everything in release mode
+# Compile everything
 bazel build  --nolegacy_important_outputs \
              --noslim_profile \
              --experimental_remote_cache_compression \
              --experimental_profile_include_target_label \
              --experimental_profile_include_primary_output \
-             -c opt //...
+             //...
+
+# Build all docs
+bazel build  --nolegacy_important_outputs \
+             --noslim_profile \
+             --experimental_remote_cache_compression \
+             --experimental_profile_include_target_label \
+             --experimental_profile_include_primary_output \
+             //:doc
 
 # Run all tests
 bazel test   --nolegacy_important_outputs \
@@ -19,7 +27,7 @@ bazel test   --nolegacy_important_outputs \
              --experimental_remote_cache_compression \
              --experimental_profile_include_target_label \
              --experimental_profile_include_primary_output \
-             -c opt //...
+             //...
 
 ## Publish all Docker images to the registry
 #command bazel run -c opt //queng_services/cmdb:push
