@@ -16,18 +16,18 @@ http_archive(
 load("@bazel_skylib//:workspace.bzl", "bazel_skylib_workspace")
 bazel_skylib_workspace()
 
+
+###############################################################################
+# R U L E S  R U S T
+###############################################################################
 # To find additional information on this release or newer ones visit:
 # https://github.com/bazelbuild/rules_rust/releases
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 http_archive(
     name = "rules_rust",
-    integrity = "sha256-ww398ehv1QZQp26mRbOkXy8AZnsGGHpoXpVU4WfKl+4=",
-    urls = ["https://github.com/bazelbuild/rules_rust/releases/download/0.40.0/rules_rust-v0.40.0.tar.gz"],
+    integrity = "sha256-Y4v6kjQQfXxh5tU6FQB6YXux/ODFGUq3IlpgBV4Bwj8=",
+    urls = ["https://github.com/bazelbuild/rules_rust/releases/download/0.41.0/rules_rust-v0.41.0.tar.gz"],
 )
-
-###############################################################################
-# R U L E S  R U S T
-###############################################################################
 
 rust_edition = "2021"
 rust_version = "1.77.1"
