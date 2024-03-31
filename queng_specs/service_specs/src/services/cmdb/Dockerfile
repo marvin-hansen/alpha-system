@@ -2,7 +2,7 @@
 # This Dockerfile runs relative to the repo root.
 # Therefore, copy it to the root folder before running.
 ############################
-FROM ghcr.io/marvin-hansen/mimalloc/rust-build:1.76-alpine as builder
+FROM ghcr.io/marvin-hansen/mimalloc/rust-build:1.77-alpine as builder
 
 # Set workspace directory
 WORKDIR /app

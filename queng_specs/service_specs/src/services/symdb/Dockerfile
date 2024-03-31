@@ -2,7 +2,7 @@
 # This Dockerfile runs relative to the repo root.
 # Therefore, copy it to the root folder before running.
 ############################
-FROM ghcr.io/marvin-hansen/mimalloc/rust-build:1.76-alpine as builder
+FROM ghcr.io/marvin-hansen/mimalloc/rust-build:1.77-alpine as builder
 
 # Set workspace directory
 WORKDIR /app
@@ -13,7 +13,7 @@ COPY . ./
 # Fetch dependencies if they change.
 RUN set -x && cargo fetch
 
-# Run the release build.
+# Run the release build for ARM
 RUN cargo build -p symdb --release --target aarch64-unknown-linux-musl
 
 # Move binary up to root level directory for easy access
