@@ -17,10 +17,10 @@ RUN cargo fetch
 ENV LD_PRELOAD=/usr/lib/libmimalloc.so
 
 # Build the release binary.
-RUN cargo build -p smdb --release --target aarch64-unknown-linux-musl
+RUN cargo build -p smdb --release --target x86_64-unknown-linux-musl
 
 # Move binary up to root level directory for easy access
-RUN mv /app/target/aarch64-unknown-linux-musl/release/smdb /smdb
+RUN mv /app/target/x86_64-unknown-linux-musl/release/smdb /smdb
 
 # Strip the binary to reduce its size
 RUN strip -s /smdb
