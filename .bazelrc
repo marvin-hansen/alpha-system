@@ -1,11 +1,38 @@
-# https://github.com/GoogleCloudPlatform/gke-bazel-demo/blob/master/.bazelrc
+# `.bazelrc` is a Bazel configuration file.
+# https://bazel.build/docs/best-practices#bazelrc-file
+
+# Required on windows
+common --enable_platform_specific_config
+startup --windows_enable_symlinks
+build:windows --enable_runfiles
 
 # Don't create bazel-* symlinks in the WORKSPACE directory.
 # Instead, set a prefix and put it in .gitignore
 build --symlink_prefix=target-bzl/
 
+# Reduce test output to just error cases
 test --test_output=errors
 
+# Disable MODULE for the time being.
+# Migrate all dependencies from WORKSPACE to MODULE.bazel
+# https://github.com/bazelbuild/rules_rust/issues/2181
+common --noenable_bzlmod
+
+# Enable rustfmt for all targets in the workspace
+build:rustfmt --aspects=@rules_rust//rust:defs.bzl%rustfmt_aspect
+build:rustfmt --output_groups=+rustfmt_checks
+
+# Enable clippy for all targets in the workspace
+build:clippy --aspects=@rules_rust//rust:defs.bzl%rust_clippy_aspect
+build:clippy --output_groups=+clippy_checks
+
+# Resolve CC toolchains
+build --incompatible_enable_cc_toolchain_resolution
+
+# This isn't currently the defaut in Bazel, but we enable it to test we'll be ready if/when it flips.
+build --incompatible_disallow_empty_glob
+
+# Enable remote cache
 build --bes_results_url=https://app.buildbuddy.io/invocation/
 build --bes_backend=grpcs://remote.buildbuddy.io
 build --remote_cache=grpcs://remote.buildbuddy.io
