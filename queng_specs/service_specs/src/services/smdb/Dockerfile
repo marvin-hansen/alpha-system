@@ -2,7 +2,7 @@
 # This Dockerfile runs relative to the repo root.
 # Therefore, copy it to the root folder before running.
 ############################
-FROM ghcr.io/marvin-hansen/mimalloc/rust-build:1.77-alpine as builder
+FROM ghcr.io/marvin-hansen/mimalloc/rust-build:1.77-alpine as build
 
 # Set workspace directory
 WORKDIR /app
@@ -11,9 +11,9 @@ WORKDIR /app
 COPY . ./
 
 # Fetch dependencies if they change.
-RUN set -x && cargo fetch
+RUN cargo fetch
 
-# Run the release build.
+# Build the release binary.
 RUN cargo build -p smdb --release --target aarch64-unknown-linux-musl
 
 # Move binary up to root level directory for easy access
@@ -28,7 +28,7 @@ RUN strip -s /smdb
 FROM hansenmarvin/rust-scratch:latest as runner
 
 # Copy binary from build output directory
-COPY --from=builder /smdb /
+COPY --from=build /smdb /
 
 # Port number must match deployment.yaml and specs/*/service_info
 # service port: 9090
