@@ -1,9 +1,12 @@
 workspace(name = "queng")
 
+# http_archive
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
 ###############################################################################
 # R U L E S  S K Y L I B
+# Releases: https://github.com/bazelbuild/bazel-skylib/releases
 ###############################################################################
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 http_archive(
     name = "bazel_skylib",
     sha256 = "cd55a062e763b9349921f0f5db8c3933288dc8ba4f76dd9416aac68acee3cb94",
@@ -16,43 +19,100 @@ http_archive(
 load("@bazel_skylib//:workspace.bzl", "bazel_skylib_workspace")
 bazel_skylib_workspace()
 
-
 ###############################################################################
 # R U L E S  R U S T
+# Releases: # https://github.com/bazelbuild/rules_rust/releases
 ###############################################################################
-# To find additional information on this release or newer ones visit:
-# https://github.com/bazelbuild/rules_rust/releases
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 http_archive(
     name = "rules_rust",
     integrity = "sha256-Y4v6kjQQfXxh5tU6FQB6YXux/ODFGUq3IlpgBV4Bwj8=",
     urls = ["https://github.com/bazelbuild/rules_rust/releases/download/0.41.0/rules_rust-v0.41.0.tar.gz"],
 )
 
-rust_edition = "2021"
-rust_version = "1.77.1"
+RUST_EDITION = "2021"
+RUST_VERSION = "1.77.1"
 
 # Configure Rust Toolchain to use.
-load("@rules_rust//rust:repositories.bzl", "rules_rust_dependencies", "rust_register_toolchains")
+load("@rules_rust//rust:repositories.bzl", "rules_rust_dependencies", "rust_register_toolchains", "rust_repository_set")
 rules_rust_dependencies()
 rust_register_toolchains(
-    edition = rust_edition,
+    edition = RUST_EDITION,
     versions = [
-        rust_version,
+        RUST_VERSION,
     ],
 )
 
-load("@rules_rust//proto/prost/private:repositories.bzl", "rust_prost_dependencies", "rust_prost_register_toolchains")
-rust_prost_dependencies()
-rust_prost_register_toolchains()
+rust_repository_set(
+    name = "darwin_x86_64_to_x86_64_musl_tuple",
+    edition = RUST_EDITION,
+    exec_triple = "x86_64-apple-darwin",
+    # Setting this extra_target_triples allows differentiating the musl case from the non-musl case, in case multiple linux-targeting toolchains are registered.
+    extra_target_triples = {"x86_64-unknown-linux-musl": [
+        "@//linker_config:musl",
+        "@platforms//cpu:x86_64",
+        "@platforms//os:linux",
+    ]},
+    versions = [RUST_VERSION],
+)
 
-load("@rules_rust//proto/prost:transitive_repositories.bzl", "rust_prost_transitive_repositories")
-rust_prost_transitive_repositories()
+rust_repository_set(
+    name = "darwin_arm64_to_x86_64_musl_tuple",
+    edition = RUST_EDITION,
+    exec_triple = "aarch64-apple-darwin",
+    extra_target_triples = {"x86_64-unknown-linux-musl": [
+        "@//linker_config:musl",
+        "@platforms//cpu:x86_64",
+        "@platforms//os:linux",
+    ]},
+    versions = [RUST_VERSION],
+)
+
+rust_repository_set(
+    name = "darwin_x86_64_to_arm64_musl_tuple",
+    edition = RUST_EDITION,
+    exec_triple = "x86_64-apple-darwin",
+    # Setting this extra_target_triples allows differentiating the musl case from the non-musl case, in case multiple linux-targeting toolchains are registered.
+    extra_target_triples = {"aarch64-unknown-linux-musl": [
+        "@//linker_config:musl",
+        "@platforms//cpu:arm64",
+        "@platforms//os:linux",
+    ]},
+    versions = [RUST_VERSION],
+)
+
+rust_repository_set(
+    name = "darwin_arm64_to_arm64_musl_tuple",
+    edition = RUST_EDITION,
+    exec_triple = "aarch64-apple-darwin",
+    extra_target_triples = {"aarch64-unknown-linux-musl": [
+        "@//linker_config:musl",
+        "@platforms//cpu:arm64",
+        "@platforms//os:linux",
+    ]},
+    versions = [RUST_VERSION],
+)
+
+###############################################################################
+# R U L E S  A S P E C T
+# Releases: https://github.com/aspect-build/bazel-lib/releases
+###############################################################################
+http_archive(
+    name = "aspect_bazel_lib",
+    sha256 = "ac6392cbe5e1cc7701bbd81caf94016bae6f248780e12af4485d4a7127b4cb2b",
+    strip_prefix = "bazel-lib-2.6.1",
+    url = "https://github.com/aspect-build/bazel-lib/releases/download/v2.6.1/bazel-lib-v2.6.1.tar.gz",
+)
+
+load("@aspect_bazel_lib//lib:repositories.bzl", "aspect_bazel_lib_dependencies", "aspect_bazel_lib_register_toolchains")
+
+aspect_bazel_lib_dependencies()
+
+aspect_bazel_lib_register_toolchains()
 
 ###############################################################################
 # R U L E S  P R O T O
+# Releases: https://github.com/bazelbuild/rules_proto/releases
 ###############################################################################
-# https://github.com/bazelbuild/rules_proto/releases
 http_archive(
     name = "rules_proto",
     sha256 = "dc3fb206a2cb3441b485eb1e423165b231235a1ea9b031b4433cf7bc1fa460dd",
@@ -64,6 +124,13 @@ http_archive(
 load("@rules_proto//proto:repositories.bzl", "rules_proto_dependencies", "rules_proto_toolchains")
 rules_proto_dependencies()
 rules_proto_toolchains()
+
+load("@rules_rust//proto/prost/private:repositories.bzl", "rust_prost_dependencies", "rust_prost_register_toolchains")
+rust_prost_dependencies()
+rust_prost_register_toolchains()
+
+load("@rules_rust//proto/prost:transitive_repositories.bzl", "rust_prost_transitive_repositories")
+rust_prost_transitive_repositories()
 
 ###############################################################################
 # R U S T  C R A T E S
@@ -132,9 +199,8 @@ crate_repositories()
 
 ###############################################################################
 # R U L E S  O C I  I M A G E
+# Releases: https://github.com/bazel-contrib/rules_oci/releases
 ###############################################################################
-# https://github.com/bazel-contrib/rules_oci
-# https://github.com/bazel-contrib/rules_oci/releases
 http_archive(
     name = "rules_oci",
     sha256 = "4a276e9566c03491649eef63f27c2816cc222f41ccdebd97d2c5159e84917c3b",
@@ -165,9 +231,8 @@ oci_pull(
 
 ################################################################################
 # Kubernetes rules
-# https://github.com/bazelbuild/rules_k8s/releases/
+# Releases: https://github.com/bazelbuild/rules_k8s/releases/
 ################################################################################
-# https://github.com/bazelbuild/rules_docker/#setup
 http_archive(
     name = "io_bazel_rules_k8s",
     sha256 = "ce5b9bc0926681e2e7f2147b49096f143e6cbc783e71bc1d4f36ca76b00e6f4a",
