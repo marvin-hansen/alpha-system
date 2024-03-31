@@ -1,5 +1,5 @@
 {
-  "checksum": "7d67665212c11cefb5a6bf43d3127b11f5c458bb19486a44c46a6a11922b734f",
+  "checksum": "23614a6d8661e4790ab9b04798ff941b52c5a33a8b2f7a2e60eca55cad33fad7",
   "crates": {
     "addr2line 0.21.0": {
       "name": "addr2line",
@@ -3832,46 +3832,6 @@
         "MIT"
       ],
       "license_file": "LICENSE-APACHE"
-    },
-    "direct-cargo-bazel-deps 0.0.1": {
-      "name": "direct-cargo-bazel-deps",
-      "version": "0.0.1",
-      "package_url": null,
-      "repository": null,
-      "targets": [
-        {
-          "Library": {
-            "crate_name": "direct_cargo_bazel_deps",
-            "crate_root": ".direct_cargo_bazel_deps.rs",
-            "srcs": {
-              "allow_empty": false,
-              "include": [
-                "**/*.rs"
-              ]
-            }
-          }
-        }
-      ],
-      "library_target_name": "direct_cargo_bazel_deps",
-      "common_attrs": {
-        "compile_data_glob": [
-          "**"
-        ],
-        "deps": {
-          "common": [
-            {
-              "id": "wasm-bindgen-macro-support 0.2.90",
-              "target": "wasm_bindgen_macro_support"
-            }
-          ],
-          "selects": {}
-        },
-        "edition": "2018",
-        "version": "0.0.1"
-      },
-      "license": null,
-      "license_ids": [],
-      "license_file": null
     },
     "dns_manager 0.1.0": {
       "name": "dns_manager",
@@ -14759,10 +14719,16 @@
             "printing",
             "proc-macro",
             "quote",
-            "visit",
             "visit-mut"
           ],
-          "selects": {}
+          "selects": {
+            "wasm32-unknown-unknown": [
+              "visit"
+            ],
+            "wasm32-wasi": [
+              "visit"
+            ]
+          }
         },
         "deps": {
           "common": [
@@ -17932,15 +17898,10 @@
           "**"
         ],
         "crate_features": {
-          "common": [],
-          "selects": {
-            "wasm32-unknown-unknown": [
-              "spans"
-            ],
-            "wasm32-wasi": [
-              "spans"
-            ]
-          }
+          "common": [
+            "spans"
+          ],
+          "selects": {}
         },
         "deps": {
           "common": [
@@ -18136,15 +18097,10 @@
           "**"
         ],
         "crate_features": {
-          "common": [],
-          "selects": {
-            "wasm32-unknown-unknown": [
-              "spans"
-            ],
-            "wasm32-wasi": [
-              "spans"
-            ]
-          }
+          "common": [
+            "spans"
+          ],
+          "selects": {}
         },
         "deps": {
           "common": [
@@ -20260,7 +20216,6 @@
     "db_utils 0.1.0": "queng_utils/db_utils",
     "dbgw 0.1.0": "queng_services/dbgw",
     "dbgw_client 0.1.0": "queng_clients/dbgw_client",
-    "direct-cargo-bazel-deps 0.0.1": "",
     "dns_manager 0.1.0": "queng_components/dns_manager",
     "exchange_specs 0.1.0": "queng_specs/exchange_specs",
     "file_specs 0.1.0": "queng_specs/file_specs",
@@ -20871,8 +20826,7 @@
     "tokio-tungstenite 0.21.0",
     "tonic 0.11.0",
     "tonic-build 0.11.0",
-    "tonic-health 0.11.0",
-    "wasm-bindgen-macro-support 0.2.90"
+    "tonic-health 0.11.0"
   ],
   "direct_dev_deps": []
 }

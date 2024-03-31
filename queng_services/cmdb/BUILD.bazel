@@ -1,6 +1,8 @@
+load("@aspect_bazel_lib//lib:transitions.bzl", "platform_transition_binary")
 load("@crate_index//:defs.bzl", "aliases", "all_crate_deps")
 load("@rules_rust//rust:defs.bzl", "rust_binary")
 load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test")
+# OCI Container Rules
 load("@rules_pkg//pkg:tar.bzl", "pkg_tar")
 load("@rules_oci//oci:defs.bzl", "oci_image", "oci_push",  "oci_image_index")
 load("//:transition.bzl", "multi_arch")
@@ -28,6 +30,7 @@ rust_binary(
         "//queng_utils/service_utils:service_utils",
         "//queng_providers/smdb_provider:smdb_provider",
     ],
+    tags = ["manual"],
     visibility = ["//visibility:public"],
 )
 

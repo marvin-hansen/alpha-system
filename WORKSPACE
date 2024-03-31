@@ -185,13 +185,6 @@ crates_repository(
         "//:queng_utils/proto_utils/Cargo.toml",
         "//:queng_utils/service_utils/Cargo.toml",
     ],
-    # Solves: error[E0433]: failed to resolve: could not find `visit` in `syn`
-    # https://stackoverflow.com/questions/60576277/yanked-subdependency-error-e0433-failed-to-resolve-could-not-find-rt-i
-       packages = {
-            "wasm-bindgen-macro-support": crate.spec(
-                version = "0.2.90",
-            ),
-        },
 )
 
 load("@crate_index//:defs.bzl", "crate_repositories")
