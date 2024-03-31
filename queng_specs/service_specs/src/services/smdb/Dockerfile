@@ -2,7 +2,7 @@
 # This Dockerfile runs relative to the repo root.
 # Therefore, copy it to the root folder before running.
 ############################
-FROM ghcr.io/marvin-hansen/mimalloc/rust-build:1.77-alpine as build
+FROM asia-northeast1-docker.pkg.dev/future-309012/image-repo/rust-build:1.77-alpine as build
 
 # Set workspace directory
 WORKDIR /app
@@ -12,6 +12,9 @@ COPY . ./
 
 # Fetch dependencies if they change.
 RUN cargo fetch
+
+# Export environment variable to override default memory allocator
+ENV LD_PRELOAD=/usr/lib/libmimalloc.so
 
 # Build the release binary.
 RUN cargo build -p smdb --release --target aarch64-unknown-linux-musl
@@ -25,7 +28,7 @@ RUN strip -s /smdb
 ############################
 # Scratch image
 ############################
-FROM hansenmarvin/rust-scratch:latest as runner
+FROM asia-northeast1-docker.pkg.dev/future-309012/image-repo/rust-scratch:arm64-1.77-alpine as runner
 
 # Copy binary from build output directory
 COPY --from=build /smdb /
