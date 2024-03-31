@@ -28,7 +28,7 @@ RUN strip -s /smdb
 ############################
 # Scratch image
 ############################
-FROM asia-northeast1-docker.pkg.dev/future-309012/image-repo/rust-scratch:arm64-1.77-alpine as runner
+FROM asia-northeast1-docker.pkg.dev/future-309012/image-repo/rust-scratch:1.77-alpine as runner
 
 # Copy binary from build output directory
 COPY --from=build /smdb /
