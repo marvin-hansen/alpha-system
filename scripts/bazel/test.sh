@@ -4,7 +4,9 @@ set -o nounset
 set -o pipefail
 
 
-bazel test  --nolegacy_important_outputs \
+bazel test --bes_results_url=https://app.buildbuddy.io/invocation/ \
+             --bes_backend=grpcs://remote.buildbuddy.io \
+             --nolegacy_important_outputs \
              --noslim_profile \
              --experimental_remote_cache_compression \
              --experimental_profile_include_target_label \

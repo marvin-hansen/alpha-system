@@ -34,9 +34,9 @@ FROM asia-northeast1-docker.pkg.dev/future-309012/image-repo/rust-scratch:1.77-a
 COPY --from=build /smdb /
 
 # Port number must match deployment.yaml and specs/*/service_info
-# service port: 9090
+# service port: 7070
 # metrics port: 8080
-EXPOSE 9090 8080
+EXPOSE 7070 8080
 
 # Run binary as unprivileged user
 USER nobody:nobody
