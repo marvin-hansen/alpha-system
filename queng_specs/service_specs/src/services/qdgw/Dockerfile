@@ -31,9 +31,9 @@ FROM hansenmarvin/rust-scratch:latest as runner
 COPY --from=builder /qdgw /
 
 # Port number must match deployment.yaml and specs/*/service_info
-# service port: 9090
+# service port: 5050
 # metrics port: 8080
-EXPOSE 9090 8080
+EXPOSE 5050 8080
 
 # Run binary as unprivileged user
 USER nobody:nobody

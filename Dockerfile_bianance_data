@@ -13,14 +13,14 @@ COPY . ./
 # Fetch dependencies if they change.
 RUN set -x && cargo fetch
 
-# Run the release build for ARM
-RUN cargo build -p symdb --release --target aarch64-unknown-linux-musl
+# Run the release build.
+RUN cargo build -p binance_data --release --target aarch64-unknown-linux-musl
 
 # Move binary up to root level directory for easy access
-RUN mv /app/target/aarch64-unknown-linux-musl/release/symdb /symdb
+RUN mv /app/target/aarch64-unknown-linux-musl/release/binance_data /binance_data
 
 # Strip the binary to reduce its size
-RUN strip -s /symdb
+RUN strip -s /binance_data
 
 ############################
 # Scratch image
@@ -28,15 +28,15 @@ RUN strip -s /symdb
 FROM hansenmarvin/rust-scratch:latest as runner
 
 # Copy binary from build output directory
-COPY --from=builder /symdb /
+COPY --from=builder /binance_data /
 
 # Port number must match deployment.yaml and specs/*/service_info
-# service port: 6789
+# service port: 4040
 # metrics port: 8080
-EXPOSE 6789 8080
+EXPOSE 4040 8080
 
 # Run binary as unprivileged user
 USER nobody:nobody
 
 # Hard coded start command b/c no shell in scratch image
-CMD ["/symdb"]
+CMD ["/binance_data"]
