@@ -4,6 +4,9 @@ set -o nounset
 set -o pipefail
 
 
-command cargo build
-
-#command RUSTFLAGS="-Z threads=8" cargo +nightly build
+bazel build  --nolegacy_important_outputs \
+             --noslim_profile \
+             --experimental_remote_cache_compression \
+             --experimental_profile_include_target_label \
+             --experimental_profile_include_primary_output \
+             //...

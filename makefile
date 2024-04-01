@@ -7,10 +7,8 @@ help:
 	@echo '    make run   		Runs the default binary.'
 	@echo '    make cmdb   	Runs the cmdb service. Requires DBGW & SMDB'
 	@echo '    make dbgw   	Runs the dbgw service. Requires SurrealDB'
-	@echo '    make qdgw   	Runs the qdgw service. Requires DBGW & SMDB'
 	@echo '    make smdb   	Runs the smdb service. Requires DBGW'
 	@echo '    make symdb   	Runs the symdb service. Requires DBGW'
-	@echo '    make vex   		Runs the vex service. '
 	@echo ''
 	@echo ' Development:'
 	@echo '    make build   	Builds the code base incrementally (fast) for dev.'
@@ -28,41 +26,27 @@ help:
 	@echo '    make sbe   		Generates Rust bindings for SBE messages.'
 
 # "---------------------------------------------------------"
-# Service make targets
+# Service targets
 # "---------------------------------------------------------"
-.PHONY: run
-run:
-	@source scripts/run.sh
-
-
 .PHONY: cmdb
 cmdb:
-	@source scripts/service_cmdb.sh
+	@source scripts/run_cmdb.sh
 
 
 .PHONY: dbgw
 dbgw:
-	@source scripts/service_dbgw.sh
-
-
-.PHONY: qdgw
-qdgw:
-	@source scripts/service_qdgw.sh
+	@source scripts/run_dbgw.sh
 
 
 .PHONY: smdb
 smdb:
-	@source scripts/service_smdb.sh
+	@source scripts/run_smdb.sh
 
 
 .PHONY: symdb
 symdb:
-	@source scripts/service_symdb.sh
+	@source scripts/run_symdb.sh
 
-
-.PHONY: vex
-vex:
-	@source scripts/service_vex.sh
 
 # "---------------------------------------------------------"
 # Development make targets
@@ -70,17 +54,17 @@ vex:
 
 .PHONY: build
 build:
-	@source scripts/bazel/build.sh
+	@source scripts/build.sh
 
 
 .PHONY: current
 current:
-	@source scripts/bazel/current.sh
+	@source scripts/current.sh
 
 
 .PHONY: rebuild
 rebuild:
-	@source scripts/bazel/rebuild.sh
+	@source scripts/rebuild.sh
 
 
 .PHONY: check
@@ -95,7 +79,7 @@ container:
 
 .PHONY: doc
 doc:
-	@source scripts/bazel/doc.sh
+	@source scripts/doc.sh
 
 
 .PHONY: fix
@@ -115,12 +99,12 @@ install:
 
 .PHONY: release
 release:
-	@source scripts/bazel/release.sh
+	@source scripts/release.sh
 
 
 .PHONY: push
 push:
-	@source scripts/bazel/push.sh
+	@source scripts/push.sh
 
 
 .PHONY: update
@@ -130,7 +114,7 @@ update:
 
 .PHONY: test
 test:
-	@source scripts/bazel/test.sh
+	@source scripts/test.sh
 
 
 .PHONY: sbe
