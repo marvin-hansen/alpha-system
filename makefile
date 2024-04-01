@@ -21,6 +21,7 @@ help:
 	@echo '    make format   	Formats call code according to cargo fmt style.'
 	@echo '    make install   	Tests and installs all make script dependencies.'
 	@echo '    make update   	Update rust, pulls from git remote.'
+	@echo '    make pull   		Pull all container images from the remote registry.'
 	@echo '    make push   		Builds, tests, and pushes to git remote.'
 	@echo '    make test   		Tests across all crates.'
 	@echo '    make sbe   		Generates Rust bindings for SBE messages.'
@@ -105,6 +106,11 @@ release:
 .PHONY: push
 push:
 	@source scripts/push.sh
+
+
+.PHONY: pull
+pull:
+	@source scripts/pull.sh
 
 
 .PHONY: update
