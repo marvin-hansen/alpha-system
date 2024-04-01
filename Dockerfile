@@ -3,7 +3,8 @@
 # Therefore, copy it to the root folder before running.
 ############################
 
-# Set Rust version
+# Set Rust version as ARG 
+# https://docs.docker.com/build/guide/build-args/
 ARG RUST_VERSION=1.77
 
 FROM asia-northeast1-docker.pkg.dev/future-309012/image-repo/rust-build:${RUST_VERSION}-alpine as builder
