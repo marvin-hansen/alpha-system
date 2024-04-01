@@ -90,7 +90,7 @@ check:
 
 .PHONY: container
 container:
-	@source scripts/bazel/image.sh
+	@source scripts/docker.sh
 
 
 .PHONY: doc
