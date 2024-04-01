@@ -1,13 +1,13 @@
+mod config;
 mod process_file;
 mod query_gen;
 
-use client_utils::prelude::{config_utils, file_utils, print_utils};
+use client_utils::prelude::{file_utils, print_utils};
 use common::prelude::ClickHouseConfig;
 use db_utils::query_utils;
 use klickhouse::{Client, ClientOptions};
 use std::time::Instant;
 
-const CONFIG_FILE_NAME: &str = "import_trade_data_config.toml";
 const META_DATA_TABLE: &str = "kraken_symbols";
 const VERBOSE: bool = true;
 
@@ -27,9 +27,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .await
         .expect(format!("Failed to connect to {}", &destination).as_str());
 
-    print_utils::dbg_print(vrb, "Build import config");
-    let config =
-        config_utils::get_config_file(CONFIG_FILE_NAME).expect("Import config file not found");
+    print_utils::dbg_print(vrb, "Load import config");
+    let config = config::get_trade_data_config();
 
     print_utils::dbg_print(
         vrb,

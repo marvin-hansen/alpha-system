@@ -21,7 +21,7 @@ use std::fmt::{Display, Formatter};
 /// * `Ok(ConfigFile)` - The loaded config file
 /// * `Err(e)` - Error if failed to load file
 ///
-pub fn get_config_file(path: &str) -> Result<ConfigFile, Box<dyn Error>> {
+pub fn get_config_from_file(path: &str) -> Result<ConfigFile, Box<dyn Error>> {
     match ConfigFile::from_file(path) {
         Ok(config) => Ok(config),
         Err(e) => Err(e),
@@ -61,6 +61,14 @@ pub fn get_local_db_config() -> ClickHouseConfig {
 #[derive(Deserialize, Debug, Clone, PartialEq, PartialOrd)]
 pub struct ConfigFile {
     data_folder: String,
+}
+
+impl ConfigFile {
+    pub fn new(data_folder: &str) -> Self {
+        Self {
+            data_folder: data_folder.to_string(),
+        }
+    }
 }
 
 impl ConfigFile {

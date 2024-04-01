@@ -1,3 +1,4 @@
+mod config;
 mod fields;
 mod gen_ddl;
 mod gen_query;
@@ -6,14 +7,12 @@ mod process_assets;
 mod process_exchanges;
 mod process_instruments;
 
-use client_utils::{config_utils, file_utils, print_utils};
+use client_utils::{file_utils, print_utils};
 use common::prelude::ClickHouseConfig;
 use klickhouse::{Client, ClientOptions};
 use std::time::Instant;
 
 const VERBOSE: bool = true;
-
-const CONFIG_FILE_NAME: &str = "import_metadata_config.toml";
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -32,8 +31,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .expect(format!("Failed to connect to {}", &destination).as_str());
 
     print_utils::dbg_print(vrb, "Build import config");
-    let config =
-        config_utils::get_config_file(CONFIG_FILE_NAME).expect("Import config file not found");
+    let config = config::get_meta_data_config();
 
     print_utils::dbg_print(
         vrb,
