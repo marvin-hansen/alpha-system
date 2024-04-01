@@ -8,7 +8,7 @@ pub fn qdgw_service_config() -> ServiceConfig {
     let version = 1;
     let online = false;
     let description = "QDGW gives access to quantitative Tick / min data".to_string();
-    let health_check_uri = "qdgwv1-service.default.svc.cluster.local:5050/health".to_string();
+    let health_check_uri = "qdgwv1-service.default.svc.cluster.local:7070/health".to_string();
     let base_uri = "qdgwv1-service.default.svc.cluster.local".to_string();
     let dependencies = vec![ServiceID::SMDB];
     let exposure = ServiceType::ENDPOINT;
@@ -33,9 +33,9 @@ pub fn qdgw_service_config() -> ServiceConfig {
 fn get_endpoint() -> Endpoint {
     let endpoint_name = "qdgw Endpoint".to_string();
     let endpoint_version = 1;
-    let endpoint_description = "Access to quantitative data via gRPC on baseUri:4040".to_string();
+    let endpoint_description = "Access to quantitative data via gRPC on baseUri:7070".to_string();
     let endpoint_uri = "/".to_string();
-    let endpoint_port = 5050;
+    let endpoint_port = 7070;
     let endpoint_protocol = ProtocolType::GRPC;
     let endpoint_encoding = Encoding::Protobuf;
 

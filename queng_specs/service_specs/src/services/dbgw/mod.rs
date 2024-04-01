@@ -8,7 +8,7 @@ pub fn dbgw_service_config() -> ServiceConfig {
     let version = 1;
     let online = true;
     let description = "DBGW gives access to surreal DB".to_string();
-    let health_check_uri = "dbgwv1-service.default.svc.cluster.local:6060/health".to_string();
+    let health_check_uri = "dbgwv1-service.default.svc.cluster.local:7070/health".to_string();
     let base_uri = "dbgwv1-service.default.svc.cluster.local".to_string();
     let dependencies = vec![];
     let exposure = ServiceType::ENDPOINT;
@@ -33,9 +33,9 @@ pub fn dbgw_service_config() -> ServiceConfig {
 fn get_endpoint() -> Endpoint {
     let endpoint_name = "dbgw Endpoint".to_string();
     let endpoint_version = 1;
-    let endpoint_description = "Access to surreal DB via gRPC on baseUri:6060".to_string();
+    let endpoint_description = "Access to surreal DB via gRPC on baseUri:7070".to_string();
     let endpoint_uri = "/".to_string();
-    let endpoint_port = 6060;
+    let endpoint_port = 7070;
     let endpoint_protocol = ProtocolType::GRPC;
     let endpoint_encoding = Encoding::Protobuf;
 
