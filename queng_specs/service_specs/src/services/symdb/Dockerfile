@@ -2,7 +2,7 @@
 # This Dockerfile runs relative to the repo root.
 # Therefore, copy it to the root folder before running.
 ############################
-FROM ghcr.io/marvin-hansen/mimalloc/rust-build:1.77-alpine as builder
+FROM asia-northeast1-docker.pkg.dev/future-309012/image-repo/rust-build:1.77-alpine as build
 
 # Set workspace directory
 WORKDIR /app
@@ -25,7 +25,7 @@ RUN strip -s /symdb
 ############################
 # Scratch image
 ############################
-FROM hansenmarvin/rust-scratch:latest as runner
+FROM asia-northeast1-docker.pkg.dev/future-309012/image-repo/rust-scratch:1.77-alpine as runner
 
 # Copy binary from build output directory
 COPY --from=builder /symdb /
