@@ -31,11 +31,5 @@ bazel test --bes_results_url=https://app.buildbuddy.io/invocation/ \
              --experimental_profile_include_primary_output \
              //...
 
-## Publish all Docker images to the registry
-#command bazel run -c opt //queng_services/cmdb:push
-#command bazel run -c opt //queng_services/ims/data/binance_data:push
-#command bazel run -c opt //queng_services/smdb:push
-#command bazel run -c opt //queng_services/symdb:push
-
 # Push all remaining commits to remote
 command git push
