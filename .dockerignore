@@ -36,7 +36,6 @@ tools
 .clippy.toml
 .env
 CODEOWNERS
-LICENSE
 makefile
 
 cloudbuild_*.yaml
