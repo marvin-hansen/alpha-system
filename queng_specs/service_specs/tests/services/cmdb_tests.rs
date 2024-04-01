@@ -15,7 +15,7 @@ fn test_cmdb_service_config() {
     );
     assert_eq!(
         service_config.health_check_uri(),
-        "cmdbv1-service.default.svc.cluster.local:9090/health"
+        "cmdbv1-service.default.svc.cluster.local:7070/health"
     );
     assert_eq!(
         service_config.base_uri(),
@@ -32,10 +32,10 @@ fn test_cmdb_service_config() {
     assert_eq!(endpoint.version(), 1);
     assert_eq!(
         endpoint.description(),
-        "Access to the configuration service via gRPC on baseUri:8080"
+        "Access to the configuration service via gRPC on baseUri:7070"
     );
     assert_eq!(endpoint.uri(), String::from("/"));
-    assert_eq!(endpoint.port(), 9090);
+    assert_eq!(endpoint.port(), 7070);
     assert_eq!(endpoint.protocol(), ProtocolType::GRPC);
     assert_eq!(endpoint.encoding(), Encoding::Protobuf);
 }
