@@ -4,7 +4,7 @@ use common::prelude::{
 };
 
 pub(crate) fn ims_service_config(exchange_id: ExchangeID, service_id: ServiceID) -> ServiceConfig {
-    let port = 4040;
+    let port = 7070;
     let id = service_id;
     let name = format!("ims-service-{}", exchange_id);
     let version = 1;
@@ -61,8 +61,7 @@ fn get_endpoint(exchange_id: ExchangeID, port: u16) -> Endpoint {
 fn get_metric_config() -> MetricConfig {
     let metric_host = "0.0.0.0".to_string();
     let metric_uri = "metrics".to_string();
-    // Default port is 8080, but this would conflict with the default port of the metric endpoints
-    let metric_port = 8089;
+    let metric_port = 8080;
 
     MetricConfig::new(metric_uri, metric_host, metric_port)
 }

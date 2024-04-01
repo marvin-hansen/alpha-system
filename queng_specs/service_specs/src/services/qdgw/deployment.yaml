@@ -12,14 +12,13 @@ spec:
   type: ClusterIP
   ports:
     - name: main-port
-      port: 4040
+      port: 7070
       protocol: TCP
-      targetPort: 4040
+      targetPort: 7070
     - name: metrics-port
       port: 8080
       protocol: TCP
       targetPort: 8080
-
 
 ---
 apiVersion: apps/v1
@@ -40,7 +39,7 @@ spec:
     spec:
       containers:
         - name: qdgw
-          image: gcr.io/future-309012/qdgw:latest
+          image: asia-northeast1-docker.pkg.dev/future-309012/image-repo/qdgw:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: ENV
@@ -53,21 +52,19 @@ spec:
                   key: DNS_SERVER
 
           ports:
-            - containerPort: 4040
+            - containerPort: 7070
             - containerPort: 8080
 
-# Define a gRPC liveness probe
-#  https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#define-a-grpc-liveness-probe
           livenessProbe:
             grpc:
-              port: 4040
+              port: 7070
             initialDelaySeconds: 3
             failureThreshold: 1
             periodSeconds: 3
 
           startupProbe:
             grpc:
-              port: 4040
+              port: 7070
             initialDelaySeconds: 1
             failureThreshold: 10
             periodSeconds: 3

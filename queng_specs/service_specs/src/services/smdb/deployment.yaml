@@ -39,7 +39,7 @@ spec:
     spec:
       containers:
         - name: smdb
-          image: gcr.io/future-309012/smdb:latest
+          image: asia-northeast1-docker.pkg.dev/future-309012/image-repo/smdb:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: ENV
