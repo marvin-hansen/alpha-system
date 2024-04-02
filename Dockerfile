@@ -32,7 +32,6 @@ WORKDIR /app
 # Export environment variable to override default memory allocator
 ENV LD_PRELOAD=/usr/lib/libmimalloc.so
 
-# Cache build with cargo cache
 # Note, cargo cook and cargo build must be executed from the same working directory.
 # https://github.com/LukeMathWalker/cargo-chef
 COPY --from=planner /app/recipe.json recipe.json
