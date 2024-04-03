@@ -27,3 +27,6 @@ https://cloud.google.com/iam/docs/service-accounts-create#iam-service-accounts-c
 https://breadnet.co.uk/using-google-artifact-registry-with-k3s/amp/
 
 https://support.count.ly/hc/en-us/articles/4698120212889-Docker-and-Kubernetes-Connecting-to-Private-Artifact-Registry-and-Pulling-Images-with-Authentication-Plugin-Packages
+
+Image Registries in KubeSphere
+https://kubesphere.io/docs/v3.4/project-user-guide/configuration/image-registry/
