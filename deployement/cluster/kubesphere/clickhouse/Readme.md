@@ -8,3 +8,7 @@
 ## Verify installation
 
 > kubectl get pods -n kube-system | grep clickhouse
+
+## Apply CH manifest 
+
+
