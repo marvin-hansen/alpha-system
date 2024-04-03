@@ -7,7 +7,16 @@
 # https://docs.docker.com/build/guide/build-args/
 ARG RUST_VERSION=1.77
 
-FROM asia-northeast1-docker.pkg.dev/future-309012/image-repo/rust-build:${RUST_VERSION}-alpine as builder
+# Optimizing CI/CD pipelines in your Rust projects
+# https://blog.logrocket.com/optimizing-ci-cd-pipelines-rust-projects/
+FROM asia-northeast1-docker.pkg.dev/future-309012/image-repo/rust-build:${RUST_VERSION}-alpine as chef
+WORKDIR app
+
+FROM chef AS planner
+COPY . .
+RUN cargo chef prepare --recipe-path recipe.json
+
+FROM chef as builder
 
 # Set service name
 ARG SERVICE_NAME=""
@@ -20,14 +29,16 @@ RUN echo "BUILD_TARGET set to: ${BUILD_TARGET}"
 # Set workspace directory
 WORKDIR /app
 
-# Copy over the entire source code
-COPY . ./
-
-# Fetch dependencies
-RUN cargo fetch
-
 # Export environment variable to override default memory allocator
 ENV LD_PRELOAD=/usr/lib/libmimalloc.so
+
+# Note, cargo cook and cargo build must be executed from the same working directory.
+# https://github.com/LukeMathWalker/cargo-chef
+COPY --from=planner /app/recipe.json recipe.json
+RUN cargo chef cook --release --recipe-path recipe.json
+
+# Copy over the entire source code
+COPY . ./
 
 # Build the release binary.
 RUN cargo build -p $SERVICE_NAME --release --target $BUILD_TARGET
