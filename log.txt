@@ -1,0 +1,10 @@
+thread 'main' panicked at /app/queng_components/db_system_manager/src/lib.rs:49:14:
+
+ [SystemDBManager]: Failed to connect to
+
+ http://clickhouse.default.svc.cluster.local:8123:
+
+  Io(Custom { kind: Uncategorized, error: "failed to lookup
+
+ address information: Name does not resolve" })
+ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
