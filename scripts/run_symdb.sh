@@ -3,4 +3,4 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-command bazel run //queng_services/symdb:bin
+command bazel --host_jvm_args=-Xmx2g run //queng_services/symdb:bin
