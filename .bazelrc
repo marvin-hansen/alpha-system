@@ -18,12 +18,19 @@ test --test_output=errors
 # https://github.com/bazelbuild/rules_rust/issues/2181
 common --noenable_bzlmod
 
-# Enable
+# Enable various performance optimizations.
+# https://www.buildbuddy.io/blog/debugging-slow-bazel-builds/
+# https://www.buildbuddy.io/blog/how-bazel-7-0-makes-your-builds-faster/
 common --reuse_sandbox_directories
 common --nolegacy_important_outputs
 common --experimental_remote_cache_compression
 common --experimental_remote_cache_async
 common --noexperimental_merged_skyframe_analysis_execution
+
+# For a more detailed timing profile
+common --noslim_profile
+common --experimental_profile_include_target_label
+common --experimental_profile_include_primary_output
 
 # Enable rustfmt for all targets in the workspace
 build:rustfmt --aspects=@rules_rust//rust:defs.bzl%rustfmt_aspect

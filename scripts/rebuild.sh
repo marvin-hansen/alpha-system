@@ -4,15 +4,15 @@ set -o nounset
 set -o pipefail
 
 # Syncs Cargo dependencies to Bazel index
-CARGO_BAZEL_ISOLATED=false CARGO_BAZEL_REPIN=1 bazel sync --only=crate_index
+CARGO_BAZEL_ISOLATED=false CARGO_BAZEL_REPIN=1 bazel --host_jvm_args=-Xmx2g sync --only=crate_index
 
-# Rebuilds the entire workspace
-bazel build //...
+# Compile everything
+bazel --host_jvm_args=-Xmx2g build //... --jobs=50
 
-# Test the entire workspace
-bazel test --bes_results_url=https://app.buildbuddy.io/invocation/ \
+# Run all tests & upload results to BES
+bazel --host_jvm_args=-Xmx2g \
+             test \
+             --bes_results_url=https://app.buildbuddy.io/invocation/ \
              --bes_backend=grpcs://remote.buildbuddy.io \
-             --experimental_remote_cache_compression \
-             --experimental_profile_include_target_label \
-             --experimental_profile_include_primary_output \
-             //...
+             //... \
+             --jobs=50
