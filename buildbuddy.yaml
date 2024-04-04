@@ -1,4 +1,38 @@
 actions:
+
+  - name: "Build all targets"
+    triggers:
+      push:
+        branches:
+          - "main"
+      pull_request:
+        branches:
+          - "*"
+    bazel_commands:
+      - "build //..."
+
+  - name: "Build all service binaries"
+    triggers:
+      push:
+        branches:
+          - "main"
+      pull_request:
+        branches:
+          - "*"
+    bazel_commands:
+      - "build //queng_services:build"
+
+  - name: "Build all docs"
+    triggers:
+      push:
+        branches:
+          - "main"
+      pull_request:
+        branches:
+          - "*"
+    bazel_commands:
+      - "build //:build"
+
   - name: "Test all targets"
     triggers:
       push:
@@ -10,13 +44,24 @@ actions:
     bazel_commands:
       - "test //..."
 
-  - name: "Build all targets"
-    triggers:
-      push:
-        branches:
-          - "main"
-      pull_request:
-        branches:
-          - "*"
-    bazel_commands:
-      - "build //:build"
+#  - name: "Build all images"
+#    triggers:
+#      push:
+#        branches:
+#          - "main"
+#      pull_request:
+#        branches:
+#          - "*"
+#    bazel_commands:
+#      - "build //:image
+
+#  - name: "Push all images"
+#    triggers:
+#      push:
+#        branches:
+#          - "main"
+#      pull_request:
+#        branches:
+#          - "*"
+#    bazel_commands:
+#      - "push //:push"
