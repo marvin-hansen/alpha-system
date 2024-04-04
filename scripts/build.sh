@@ -4,4 +4,4 @@ set -o nounset
 set -o pipefail
 
 
-bazel --host_jvm_args=-Xmx2g build //... --jobs=50
+command bazel build //... --jobs=50
