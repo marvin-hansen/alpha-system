@@ -6,9 +6,4 @@ set -o pipefail
 current=$(cat current.txt)
 
 #echo "$current"
-bazel build  --nolegacy_important_outputs \
-             --noslim_profile \
-             --experimental_remote_cache_compression \
-             --experimental_profile_include_target_label \
-             --experimental_profile_include_primary_output \
-             "$current"
+bazel build "$current"
