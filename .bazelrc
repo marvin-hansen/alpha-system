@@ -18,6 +18,13 @@ test --test_output=errors
 # https://github.com/bazelbuild/rules_rust/issues/2181
 common --noenable_bzlmod
 
+# Enable
+common --reuse_sandbox_directories
+common --nolegacy_important_outputs
+common --experimental_remote_cache_compression
+common --experimental_remote_cache_async
+common --noexperimental_merged_skyframe_analysis_execution
+
 # Enable rustfmt for all targets in the workspace
 build:rustfmt --aspects=@rules_rust//rust:defs.bzl%rustfmt_aspect
 build:rustfmt --output_groups=+rustfmt_checks
@@ -27,7 +34,7 @@ build:clippy --aspects=@rules_rust//rust:defs.bzl%rust_clippy_aspect
 build:clippy --output_groups=+clippy_checks
 
 # Resolve CC toolchains
-build --incompatible_enable_cc_toolchain_resolution
+# build --incompatible_enable_cc_toolchain_resolution
 
 # This isn't currently the defaut in Bazel, but we enable it to test we'll be ready if/when it flips.
 build --incompatible_disallow_empty_glob
