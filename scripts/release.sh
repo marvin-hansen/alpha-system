@@ -6,21 +6,21 @@ set -o pipefail
 command command cargo fmt --all
 
 # Compile everything in release mode
-bazel --host_jvm_args=-Xmx2g build  -c opt //...
+command bazel build  -c opt //...
 
 # Run all tests & upload results to BES
-bazel --host_jvm_args=-Xmx2g \
+command bazel \
              test \
              --bes_results_url=https://app.buildbuddy.io/invocation/ \
              --bes_backend=grpcs://remote.buildbuddy.io \
               -c opt //... \
 
 # Build all docs and run doc tests
-bazel --host_jvm_args=-Xmx2g build  -c opt //:doc
+command bazel build  -c opt //:doc
 
 
 # Build all container images in release mode
-bazel --host_jvm_args=-Xmx2g build -c opt //:image
+command bazel build -c opt //:image
 
 # Build and publish all Docker images to the registry
 command docker build --platform=linux/arm64 --build-arg="SERVICE_NAME=cmdb"  --build-arg="BUILD_TARGET=aarch64-unknown-linux-musl" -t asia-northeast1-docker.pkg.dev/future-309012/image-repo/cmdb_arm64:latest -f Dockerfile_Local .
