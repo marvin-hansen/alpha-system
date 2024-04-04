@@ -9,3 +9,25 @@ actions:
           - "*"
     bazel_commands:
       - "test //..."
+
+  - name: "Build services"
+    triggers:
+      push:
+        branches:
+          - "main"
+      pull_request:
+        branches:
+          - "*"
+    bazel_commands:
+      - "build //queng_services:build"
+
+  - name: "Build docs"
+    triggers:
+      push:
+        branches:
+          - "main"
+      pull_request:
+        branches:
+          - "*"
+    bazel_commands:
+      - "build //:doc"
