@@ -40,14 +40,11 @@ build:rustfmt --output_groups=+rustfmt_checks
 build:clippy --aspects=@rules_rust//rust:defs.bzl%rust_clippy_aspect
 build:clippy --output_groups=+clippy_checks
 
-# Resolve CC toolchains
-# build --incompatible_enable_cc_toolchain_resolution
-
-# This isn't currently the defaut in Bazel, but we enable it to test we'll be ready if/when it flips.
-build --incompatible_disallow_empty_glob
-
 # Enable remote cache
 build:remote --host_platform=//platforms:platform_linux
 build --remote_cache=grpcs://remote.buildbuddy.io
 build --remote_timeout=3600
 build --remote_header=x-buildbuddy-api-key=4Ml6AhYICvGtZ3XhqafP
+
+# This isn't currently the defaut in Bazel, but we enable it to test we'll be ready if/when it flips.
+build --incompatible_disallow_empty_glob
