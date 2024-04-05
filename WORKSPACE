@@ -42,6 +42,72 @@ rust_register_toolchains(
     ],
 )
 
+rust_repository_set(
+    name = "darwin_arm64_to_x86_64_musl_tuple",
+    edition = RUST_EDITION,
+    exec_triple = "aarch64-apple-darwin",
+    extra_target_triples = {"x86_64-unknown-linux-musl": [
+        "@//linker_config:musl",
+        "@platforms//cpu:x86_64",
+        "@platforms//os:linux",
+    ]},
+    versions = [RUST_VERSION],
+)
+
+rust_repository_set(
+    name = "macos_x86_64",
+    edition = RUST_EDITION,
+    exec_triple = "x86_64-apple-darwin",
+    extra_target_triples = ["aarch64-unknown-linux-gnu"],
+    versions = [RUST_VERSION],
+)
+
+rust_repository_set(
+    name = "linux_x86_64",
+    edition = RUST_EDITION,
+    exec_triple = "x86_64-unknown-linux-gnu",
+    extra_target_triples = ["aarch64-unknown-linux-gnu"],
+    versions = [RUST_VERSION],
+)
+
+###############################################################################
+# M U S L
+# Releases: https://github.com/bazel-contrib/musl-toolchain/releases
+###############################################################################
+http_archive(
+    name = "musl_toolchains",
+    sha256 = "f9f077b9ae74a0545f7cb7108462cb061593eef10fd09d25db4554e281ee880b",
+    url = "https://github.com/bazel-contrib/musl-toolchain/releases/download/v0.1.7/musl_toolchain-v0.1.7.tar.gz",
+)
+
+load("@musl_toolchains//:repositories.bzl", "load_musl_toolchains")
+
+# Setting this extra_target_triples allows differentiating the musl case from the non-musl case, in case multiple linux-targeting toolchains are registered.
+load_musl_toolchains(extra_target_compatible_with = ["@//linker_config:musl"])
+
+load("@musl_toolchains//:toolchains.bzl", "register_musl_toolchains")
+
+###############################################################################
+# HERMETIC CC TOOLCHAIN
+# Releases:
+###############################################################################
+HERMETIC_CC_TOOLCHAIN_VERSION = "v2.1.2"
+
+http_archive(
+    name = "hermetic_cc_toolchain",
+    sha256 = "28fc71b9b3191c312ee83faa1dc65b38eb70c3a57740368f7e7c7a49bedf3106",
+    urls = [
+        "https://mirror.bazel.build/github.com/uber/hermetic_cc_toolchain/releases/download/{0}/hermetic_cc_toolchain-{0}.tar.gz".format(HERMETIC_CC_TOOLCHAIN_VERSION),
+        "https://github.com/uber/hermetic_cc_toolchain/releases/download/{0}/hermetic_cc_toolchain-{0}.tar.gz".format(HERMETIC_CC_TOOLCHAIN_VERSION),
+    ],
+)
+
+load("@hermetic_cc_toolchain//toolchain:defs.bzl", zig_toolchains = "toolchains")
+
+# Plain zig_toolchains() will pick reasonable defaults. See
+# toolchain/defs.bzl:toolchains on how to change the Zig SDK version and download URL.
+zig_toolchains()
+
 ###############################################################################
 # R U L E S  A S P E C T
 # Releases: https://github.com/aspect-build/bazel-lib/releases

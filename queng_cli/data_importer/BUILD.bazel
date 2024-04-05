@@ -8,6 +8,19 @@ rust_binary(
     srcs = glob(["src/bin/import_kraken_trade_data/*.rs"]),
     aliases = aliases(),
     proc_macro_deps = all_crate_deps(proc_macro = True),
+    rustc_flags = select({
+       "//:release": [
+            "-Clto",
+            "-Ccodegen-units=1",
+            "-Cpanic=abort",
+            "-Copt-level=3",
+            "-Cstrip=symbols",
+            ],
+        "//conditions:default":
+        [
+           "-Copt-level=0",
+        ],
+    }),
     deps = all_crate_deps(
         normal = True,
     ) + [
@@ -38,6 +51,19 @@ rust_binary(
     srcs = glob(["src/bin/import_services/*.rs"]),
     aliases = aliases(),
     proc_macro_deps = all_crate_deps(proc_macro = True),
+    rustc_flags = select({
+       "//:release": [
+            "-Clto",
+            "-Ccodegen-units=1",
+            "-Cpanic=abort",
+            "-Copt-level=3",
+            "-Cstrip=symbols",
+            ],
+        "//conditions:default":
+        [
+           "-Copt-level=0",
+        ],
+    }),
     deps = all_crate_deps(
         normal = True,
     ) + [
@@ -69,6 +95,19 @@ rust_binary(
     srcs = glob(["src/bin/import_symbols/*.rs"]),
     aliases = aliases(),
     proc_macro_deps = all_crate_deps(proc_macro = True),
+    rustc_flags = select({
+       "//:release": [
+            "-Clto",
+            "-Ccodegen-units=1",
+            "-Cpanic=abort",
+            "-Copt-level=3",
+            "-Cstrip=symbols",
+            ],
+        "//conditions:default":
+        [
+           "-Copt-level=0",
+        ],
+    }),
     deps = all_crate_deps(
         normal = True,
     ) + [
