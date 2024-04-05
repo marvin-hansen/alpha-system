@@ -75,7 +75,7 @@ oci_image(
 # Publish image to registry
 oci_push(
     name = "push",
-    image = ":binance_data",
+    image = ":image",
     repository = "ghcr.io/marvin-hansen/quant-engine/binance_data",
     remote_tags = ["latest"],
     visibility = ["//visibility:public"],
