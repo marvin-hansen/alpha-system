@@ -44,24 +44,13 @@ actions:
     bazel_commands:
       - "test //..."
 
-#  - name: "Build all images"
-#    triggers:
-#      push:
-#        branches:
-#          - "main"
-#      pull_request:
-#        branches:
-#          - "*"
-#    bazel_commands:
-#      - "build //:image
-
-#  - name: "Push all images"
-#    triggers:
-#      push:
-#        branches:
-#          - "main"
-#      pull_request:
-#        branches:
-#          - "*"
-#    bazel_commands:
-#      - "push //:push"
+  - name: "Publish all images"
+    triggers:
+      push:
+        branches:
+          - "main"
+      pull_request:
+        branches:
+          - "*"
+    bazel_commands:
+      - "build  -c opt //:image"
