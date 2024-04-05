@@ -12,6 +12,9 @@ data/Kraken_Trading_History
 /target/*.*
 
 # Bazel stuff
+
+cargo-bazel-lock.json
+
 /target-bzl/
 /target-bzl/*
 /target-bzl/*.*

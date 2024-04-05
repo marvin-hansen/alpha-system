@@ -12,9 +12,7 @@
 
 ## Install zookeeper
 
-Next step, we need to install/configure the Zookeeper. Zookeeper is used to store the replicas meta information.
 
-> kubectl --namespace=kube-system apply -f zookeeper.yaml
 
 ## Apply CH manifest 
 
