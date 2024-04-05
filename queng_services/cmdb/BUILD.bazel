@@ -55,3 +55,28 @@ rust_doc_test(
      visibility = ["//visibility:public"],
  )
 
+
+# Compress it to layer using pkg_tar
+pkg_tar(
+    name = "layer",
+    srcs = [":bin"],
+)
+
+
+# Build image and add built layer to it
+oci_image(
+    name = "image",
+    base = "@distroless_cc",
+    tars = ["layer"],
+    entrypoint = ["/bin"],
+    visibility = ["//visibility:public"],
+)
+
+# Publish image to registry
+oci_push(
+    name = "push",
+    image = ":image",
+    repository = "ghcr.io/marvin-hansen/quant-engine/cmdb",
+    remote_tags = ["latest"],
+    visibility = ["//visibility:public"],
+)

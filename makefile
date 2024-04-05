@@ -75,6 +75,11 @@ check:
 
 .PHONY: container
 container:
+	@source scripts/container.sh
+
+
+.PHONY: docker
+docker:
 	@source scripts/docker.sh
 
 

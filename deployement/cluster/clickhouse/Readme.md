@@ -13,13 +13,11 @@ Default config:
 
 Custom config: 
 
-> helm install clickhouse bitnami/clickhouse --namespace quant-engine --create-namespace
-
-Expected output: 
-
+> helm install clickhouse bitnami/clickhouse --namespace quant-engine -f values.yaml
+helm install clickhouse bitnami/clickhouse --namespace default -f values.yaml
 NAME: clickhouse
-LAST DEPLOYED: Fri Apr  5 14:28:07 2024
-NAMESPACE: quant-engine
+LAST DEPLOYED: Fri Apr  5 15:45:58 2024
+NAMESPACE: default
 STATUS: deployed
 REVISION: 1
 TEST SUITE: None
@@ -32,20 +30,15 @@ APP VERSION: 24.3.2
 
 ClickHouse is available in the following address:
 
-    kubectl port-forward --namespace quant-engine svc/clickhouse 9000:9000
+    kubectl port-forward --namespace default svc/clickhouse 9000:9000 &
 
 Credentials:
 
     echo "Username      : default"
-    echo "Password      : $(kubectl get secret --namespace quant-engine clickhouse -o jsonpath="{.data.admin-password}" | base64 -d)"
-
-WARNING: There are "resources" sections in the chart not set. Using "resourcesPreset" is not recommended for production. For production installations, please set the following values according to your workload needs:
-- resources
-  +info https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+    echo "Password      : $(kubectl get secret --namespace default clickhouse -o jsonpath="{.data.admin-password}" | base64 -d)"
 
 User: default
-PW: wTWBxWe5kZ
-
+PW: OPnWCVBQR7
 
 ## Verify deployment
 
@@ -55,7 +48,7 @@ PW: wTWBxWe5kZ
 
 ## Access the basic UI
 
-> kubectl port-forward --namespace quant-engine svc/clickhouse 8123:8123
+> kubectl port-forward  svc/clickhouse 8123:8123
 
 Open in a browser: 
 

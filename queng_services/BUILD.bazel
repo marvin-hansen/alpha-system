@@ -27,9 +27,9 @@ filegroup(
 filegroup(
     name = "image",
     srcs = [
-#        "//queng_services/cmdb:image",
+        "//queng_services/cmdb:image",
         "//queng_services/dbgw:image",
-        "//queng_services/ims/data/binance_data:binance_data",
+        "//queng_services/ims/data/binance_data:image",
         "//queng_services/smdb:smdb",
         "//queng_services/symdb:symdb",
     ],

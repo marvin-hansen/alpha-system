@@ -65,7 +65,7 @@ pkg_tar(
 
 # Build image and add built layer to it
 oci_image(
-    name = "binance_data",
+    name = "image",
     base = "@distroless_cc",
     tars = [":tar_layer"],
     entrypoint = ["/bin"],
