@@ -1,6 +1,6 @@
 actions:
 
-  - name: "Build all targets"
+  - name: "Build and test all targets"
     triggers:
       push:
         branches:
@@ -10,6 +10,7 @@ actions:
           - "*"
     bazel_commands:
       - "build -c opt //..."
+      - "test -c opt  //..."
 
   - name: "Build all service binaries"
     triggers:
@@ -33,7 +34,7 @@ actions:
     bazel_commands:
       - "build -c opt //:doc"
 
-  - name: "Test all targets"
+  - name: "Build and publish all images"
     triggers:
       push:
         branches:
@@ -42,15 +43,6 @@ actions:
         branches:
           - "*"
     bazel_commands:
-      - "test -c opt //..."
-
-  - name: "Publish all images"
-    triggers:
-      push:
-        branches:
-          - "main"
-      pull_request:
-        branches:
-          - "*"
-    bazel_commands:
-      - "build -c opt //:image"
+      - "build --bazelrc=ci.bazelrc -c opt //queng_services:build"
+      - "build --bazelrc=ci.bazelrc -c opt //:image"
+      - "build --bazelrc=ci.bazelrc -c opt //:push"

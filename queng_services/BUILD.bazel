@@ -1,3 +1,5 @@
+load("@rules_multirun//:defs.bzl", "command", "multirun")
+
 filegroup(
     name = "build",
     srcs = [
@@ -30,8 +32,50 @@ filegroup(
         "//queng_services/cmdb:image",
         "//queng_services/dbgw:image",
         "//queng_services/ims/data/binance_data:image",
-        "//queng_services/smdb:smdb",
-        "//queng_services/symdb:symdb",
+        "//queng_services/smdb:image",
+        "//queng_services/symdb:image",
     ],
     visibility = ["//visibility:public"],
+)
+
+multirun(
+    name = "push",
+    commands = [
+        "push_cmdb",
+        "push_dbgw",
+        "push_binance_data",
+        "push_smdb",
+    ],
+    jobs = 0, # Set to 0 to run in parallel, defaults to sequential
+    visibility = ["//visibility:public"],
+)
+
+command(
+    name = "push_cmdb",
+    command = "//queng_services/cmdb:push",
+    arguments = [], # Optional arguments passed directly to the tool
+)
+
+command(
+    name = "push_dbgw",
+    command = "//queng_services/dbgw:push",
+    arguments = [], # Optional arguments passed directly to the tool
+)
+
+command(
+    name = "push_binance_data",
+    command = "//queng_services/ims/data/binance_data:push",
+    arguments = [], # Optional arguments passed directly to the tool
+)
+
+command(
+    name = "push_smdb",
+    command = "//queng_services/smdb:push",
+    arguments = [], # Optional arguments passed directly to the tool
+)
+
+command(
+    name = "push_symdb",
+    command = "//queng_services/symdb:push",
+    arguments = [], # Optional arguments passed directly to the tool
 )

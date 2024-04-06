@@ -239,79 +239,11 @@ oci_pull(
 )
 
 ################################################################################
-# Kubernetes rules
-# Releases: https://github.com/bazelbuild/rules_k8s/releases/
+# Multirun rules
+# Releases: https://github.com/keith/rules_multirun/releases
 ################################################################################
 http_archive(
-    name = "io_bazel_rules_k8s",
-    sha256 = "ce5b9bc0926681e2e7f2147b49096f143e6cbc783e71bc1d4f36ca76b00e6f4a",
-    strip_prefix = "rules_k8s-0.7",
-    urls = ["https://github.com/bazelbuild/rules_k8s/archive/refs/tags/v0.7.tar.gz"],
-)
-
-load("@io_bazel_rules_k8s//k8s:k8s.bzl", "k8s_repositories")
-
-k8s_repositories()
-
-load("@io_bazel_rules_k8s//k8s:k8s_go_deps.bzl", k8s_go_deps = "deps")
-
-k8s_go_deps()
-
-# Set up some default attributes when the K8s rule "k8s_object" is called later,
-# This also exposes a Bazel rule called "k8s_deploy"
-# See https://github.com/bazelbuild/rules_k8s#k8s_defaults
-load("@io_bazel_rules_k8s//k8s:k8s.bzl", "k8s_defaults")
-
-## ==== Deploy Defaults
-## import: load("@k8s_deploy//:defaults.bzl", "k8s_deploy")
-k8s_defaults(
-    name = "k8s_deploy",
-    # kubectl config current-context
-    cluster = "gke_future-309012_asia-northeast1-c_quantum",
-    context = "gke_future-309012_asia-northeast1-c_quantum",
-    image_chroot = "gcr.io/future-309012",
-    kind = "deployment",
-    namespace = "default",
-)
-
-## ==== Dev Deploy Defaults
-## import: load("@k8s_deploy_dev//:defaults.bzl", "k8s_deploy_dev")
-k8s_defaults(
-    name = "k8s_deploy_dev",
-    cluster = "gke_future-309012_asia-northeast1-c_quantum",
-    context = "gke_future-309012_asia-northeast1-c_quantum",
-    image_chroot = "gcr.io/future-309012",
-    kind = "deployment",
-    namespace = "default",
-)
-
-## ==== Test Deploy Defaults
-## import: load("@k8s_deploy_test//:defaults.bzl", "k8s_deploy_test")
-
-k8s_defaults(
-    name = "k8s_deploy_test",
-    cluster = "gke_future-309012_asia-northeast1-c_quantum",
-    context = "gke_future-309012_asia-northeast1-c_quantum",
-    image_chroot = "gcr.io/future-309012",
-    kind = "deployment",
-    namespace = "default",
-)
-
-## ==== Prod Deploy Defaults
-## import: load("@k8s_deploy_prod//:defaults.bzl", "k8s_deploy_prod")
-k8s_defaults(
-    name = "k8s_deploy_prod",
-    cluster = "gke_future-309012_asia-northeast1-c_quantum",
-    context = "gke_future-309012_asia-northeast1-c_quantum",
-    image_chroot = "gcr.io/future-309012",
-    kind = "deployment",
-    namespace = "default",
-)
-
-# Set up some default attributes when the K8s rule "k8s_object" is called later
-# See https://github.com/bazelbuild/rules_k8s#k8s_defaults
-k8s_defaults(
-    name = "k8s_service",
-    kind = "service",
-    namespace = "default",
+    name = "rules_multirun",
+    sha256 = "0e124567fa85287874eff33a791c3bbdcc5343329a56faa828ef624380d4607c",
+    url = "https://github.com/keith/rules_multirun/releases/download/0.9.0/rules_multirun.0.9.0.tar.gz",
 )

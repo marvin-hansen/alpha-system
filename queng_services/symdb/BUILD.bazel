@@ -59,22 +59,20 @@ pkg_tar(
     srcs = [":bin"],
 )
 
-
 # Build image and add built layer to it
 oci_image(
-    name = "symdb",
+    name = "image",
     base = "@distroless_cc",
     tars = [":tar_layer"],
     entrypoint = ["/bin"],
     visibility = ["//visibility:public"],
 )
 
-
 # Publish image to registry
 oci_push(
     name = "push",
-    image = ":symdb",
-    repository = "ghcr.io/marvin-hansen/quant-engine/symdb",
-    remote_tags = ["latest"],
+    image = ":image",
+    repository = " asia-northeast1-docker.pkg.dev/future-309012/image-repo/symdb",
+    remote_tags = ["latest", "amd64"],
     visibility = ["//visibility:public"],
 )
