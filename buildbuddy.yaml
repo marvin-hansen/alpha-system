@@ -43,6 +43,6 @@ actions:
         branches:
           - "*"
     bazel_commands:
-      - "build --bazelrc=ci.bazelrc -c opt //queng_services:build"
-      - "build --bazelrc=ci.bazelrc -c opt //:image"
-      - "build --bazelrc=ci.bazelrc -c opt //:push"
+      - "--bazelrc=ci.bazelrc build -c opt //queng_services:build"
+      - "--bazelrc=ci.bazelrc build -c opt //:image"
+      - "--bazelrc=ci.bazelrc build -c opt //:push"
