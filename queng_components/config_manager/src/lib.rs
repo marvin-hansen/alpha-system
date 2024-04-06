@@ -35,7 +35,7 @@ pub struct CfgManager<'l> {
     exchanges_id_names: Vec<(u16, String)>,
     /// Maps exchange IDs to their symbol table. Used to configure Query Manager
     exchanges_symbol_tables: HashMap<ExchangeID, String>,
-    //
+    /// Service environment configuration for each service
     cmdb_env: RefCell<Option<SvcEnvConfig>>,
     ims_data_env: RefCell<Option<SvcEnvConfig>>,
     smdb_env: RefCell<Option<SvcEnvConfig>>,
