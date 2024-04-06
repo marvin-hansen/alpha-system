@@ -73,7 +73,7 @@ oci_image(
 oci_push(
     name = "push",
     image = ":image",
-    repository = "ghcr.io/marvin-hansen/quant-engine/dbgw",
-    remote_tags = ["latest"],
+    repository = " asia-northeast1-docker.pkg.dev/future-309012/image-repo/dbgw",
+    remote_tags = ["latest", "amd64"],
     visibility = ["//visibility:public"],
 )

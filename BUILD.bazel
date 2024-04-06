@@ -1,3 +1,5 @@
+load("@rules_multirun//:defs.bzl", "command", "multirun")
+
 config_setting(
     name = "release",
     values = {
@@ -47,4 +49,19 @@ filegroup(
         "//queng_services:image",
     ],
     visibility = ["//visibility:public"],
+)
+
+multirun(
+    name = "push",
+    commands = [
+        "push_services",
+    ],
+    jobs = 1, # Set to 0 to run in parallel, defaults to sequential
+    visibility = ["//visibility:public"],
+)
+
+command(
+    name = "push_services",
+    command = "//queng_services:push",
+    arguments = [], # Optional arguments passed directly to the tool
 )

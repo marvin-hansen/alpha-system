@@ -18,7 +18,6 @@ command bazel \
 # Build all docs and run doc tests
 command bazel build  -c opt //:doc
 
-
 # Build all container images in release mode
 command bazel build -c opt //:image
 
