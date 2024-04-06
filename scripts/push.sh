@@ -26,8 +26,18 @@ build --remote_exec_header=x-buildbuddy-platform.container-registry-username=_dc
 build --remote_exec_header=x-buildbuddy-platform.container-registry-password=${REGISTRY_PASSWORD}
 "
 
+# Add the file to git
+git add ci.bazelrc
+
 # Commit the file so that CI can read the temporary credentials
 command git commit -m "Added ci.bazelrc with temporary image pull credentials"
 
 # Push all new and remaining commits to remote to trigger CI
 command git push
+
+rm ci.bazelrc
+
+git rm ci.bazelrc
+
+command git commit -m "Cleaned up temporary data"
+
