@@ -45,4 +45,4 @@ actions:
     bazel_commands:
       - "--bazelrc=ci.bazelrc build -c opt //queng_services:build"
       - "--bazelrc=ci.bazelrc build -c opt //:image"
-      - "--bazelrc=ci.bazelrc build -c opt //:push"
+      - "--bazelrc=ci.bazelrc run -c opt //:push"

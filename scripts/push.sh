@@ -35,9 +35,8 @@ command git commit -m "Added ci.bazelrc with temporary image pull credentials"
 # Push all new and remaining commits to remote to trigger CI
 command git push
 
+# Remove the temporary file
 rm ci.bazelrc
-
 git rm ci.bazelrc
-
 command git commit -m "Cleaned up temporary data"
 
