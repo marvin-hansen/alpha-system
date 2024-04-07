@@ -9,7 +9,7 @@ config_setting(
 
 
 sh_binary(
-        name = "setup_docker_auth",
+        name = "buildbuddy_setup_docker_auth",
         srcs = ["buildbuddy_setup_docker_auth.sh"]
 )
 
