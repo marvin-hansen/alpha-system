@@ -43,6 +43,7 @@ actions:
         branches:
           - "*"
     bazel_commands:
+      - "bazel run :setup_docker_auth"
       - "build -c opt //queng_services:build"
-      - "--bazelrc=ci.bazelrc build -c opt //:image"
-      - "--bazelrc=ci.bazelrc run -c opt //:push"
+      - "build -c opt //:image"
+      - "run -c opt //:push"
