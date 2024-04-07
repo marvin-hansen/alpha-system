@@ -9,7 +9,6 @@ use std::cell::RefCell;
 use std::collections::HashMap;
 
 mod cfg_getters;
-mod cfg_ims_data;
 mod cfg_services;
 mod utils;
 
