@@ -13,7 +13,7 @@ FROM asia-northeast1-docker.pkg.dev/future-309012/image-repo/rust-build:${RUST_V
 WORKDIR app
 
 FROM chef AS planner
-COPY . .
+COPY ../.. .
 RUN cargo chef prepare --recipe-path recipe.json
 
 FROM chef as builder
@@ -38,7 +38,7 @@ COPY --from=planner /app/recipe.json recipe.json
 RUN cargo chef cook --release --recipe-path recipe.json
 
 # Copy over the entire source code
-COPY . ./
+COPY ../.. ./
 
 # Build the release binary.
 RUN cargo build -p $SERVICE_NAME --release --target $BUILD_TARGET

@@ -1,6 +1,5 @@
 workspace(name = "queng")
-
-# http_archive
+# rule http_archive
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 ###############################################################################
@@ -42,72 +41,6 @@ rust_register_toolchains(
     ],
 )
 
-rust_repository_set(
-    name = "darwin_arm64_to_x86_64_musl_tuple",
-    edition = RUST_EDITION,
-    exec_triple = "aarch64-apple-darwin",
-    extra_target_triples = {"x86_64-unknown-linux-musl": [
-        "@//linker_config:musl",
-        "@platforms//cpu:x86_64",
-        "@platforms//os:linux",
-    ]},
-    versions = [RUST_VERSION],
-)
-
-rust_repository_set(
-    name = "macos_x86_64",
-    edition = RUST_EDITION,
-    exec_triple = "x86_64-apple-darwin",
-    extra_target_triples = ["aarch64-unknown-linux-gnu"],
-    versions = [RUST_VERSION],
-)
-
-rust_repository_set(
-    name = "linux_x86_64",
-    edition = RUST_EDITION,
-    exec_triple = "x86_64-unknown-linux-gnu",
-    extra_target_triples = ["aarch64-unknown-linux-gnu"],
-    versions = [RUST_VERSION],
-)
-
-###############################################################################
-# M U S L
-# Releases: https://github.com/bazel-contrib/musl-toolchain/releases
-###############################################################################
-http_archive(
-    name = "musl_toolchains",
-    sha256 = "f9f077b9ae74a0545f7cb7108462cb061593eef10fd09d25db4554e281ee880b",
-    url = "https://github.com/bazel-contrib/musl-toolchain/releases/download/v0.1.7/musl_toolchain-v0.1.7.tar.gz",
-)
-
-load("@musl_toolchains//:repositories.bzl", "load_musl_toolchains")
-
-# Setting this extra_target_triples allows differentiating the musl case from the non-musl case, in case multiple linux-targeting toolchains are registered.
-load_musl_toolchains(extra_target_compatible_with = ["@//linker_config:musl"])
-
-load("@musl_toolchains//:toolchains.bzl", "register_musl_toolchains")
-
-###############################################################################
-# HERMETIC CC TOOLCHAIN
-# Releases:
-###############################################################################
-HERMETIC_CC_TOOLCHAIN_VERSION = "v2.1.2"
-
-http_archive(
-    name = "hermetic_cc_toolchain",
-    sha256 = "28fc71b9b3191c312ee83faa1dc65b38eb70c3a57740368f7e7c7a49bedf3106",
-    urls = [
-        "https://mirror.bazel.build/github.com/uber/hermetic_cc_toolchain/releases/download/{0}/hermetic_cc_toolchain-{0}.tar.gz".format(HERMETIC_CC_TOOLCHAIN_VERSION),
-        "https://github.com/uber/hermetic_cc_toolchain/releases/download/{0}/hermetic_cc_toolchain-{0}.tar.gz".format(HERMETIC_CC_TOOLCHAIN_VERSION),
-    ],
-)
-
-load("@hermetic_cc_toolchain//toolchain:defs.bzl", zig_toolchains = "toolchains")
-
-# Plain zig_toolchains() will pick reasonable defaults. See
-# toolchain/defs.bzl:toolchains on how to change the Zig SDK version and download URL.
-zig_toolchains()
-
 ###############################################################################
 # R U L E S  A S P E C T
 # Releases: https://github.com/aspect-build/bazel-lib/releases
@@ -120,10 +53,18 @@ http_archive(
 )
 
 load("@aspect_bazel_lib//lib:repositories.bzl", "aspect_bazel_lib_dependencies", "aspect_bazel_lib_register_toolchains")
-
 aspect_bazel_lib_dependencies()
-
 aspect_bazel_lib_register_toolchains()
+
+################################################################################
+# R U L E S  M U L T I R U N
+# Releases: https://github.com/keith/rules_multirun/releases
+################################################################################
+http_archive(
+    name = "rules_multirun",
+    sha256 = "0e124567fa85287874eff33a791c3bbdcc5343329a56faa828ef624380d4607c",
+    url = "https://github.com/keith/rules_multirun/releases/download/0.9.0/rules_multirun.0.9.0.tar.gz",
+)
 
 ###############################################################################
 # R U L E S  P R O T O
@@ -147,6 +88,37 @@ rust_prost_register_toolchains()
 
 load("@rules_rust//proto/prost:transitive_repositories.bzl", "rust_prost_transitive_repositories")
 rust_prost_transitive_repositories()
+
+###############################################################################
+# R U L E S  O C I  I M A G E
+# Releases: https://github.com/bazel-contrib/rules_oci/releases
+###############################################################################
+http_archive(
+    name = "rules_oci",
+    sha256 = "4a276e9566c03491649eef63f27c2816cc222f41ccdebd97d2c5159e84917c3b",
+    strip_prefix = "rules_oci-1.7.4",
+    url = "https://github.com/bazel-contrib/rules_oci/releases/download/v1.7.4/rules_oci-v1.7.4.tar.gz",
+)
+
+load("@rules_oci//oci:dependencies.bzl", "rules_oci_dependencies")
+rules_oci_dependencies()
+
+load("@rules_oci//oci:repositories.bzl", "LATEST_CRANE_VERSION", "oci_register_toolchains")
+oci_register_toolchains(
+    name = "oci",
+    crane_version = LATEST_CRANE_VERSION,
+    # Uncommenting the zot toolchain will cause it to be used instead of crane for some tasks.
+    # Note that it does not support docker-format images.
+    # zot_version = LATEST_ZOT_VERSION,
+)
+
+load("@rules_oci//oci:pull.bzl", "oci_pull")
+oci_pull(
+    name = "distroless_cc",
+    digest = "sha256:8aad707f96620ee89e27febef51b01c6ff244277a3560fcfcfbe68633ef09193",
+    image = "gcr.io/distroless/cc",
+    platforms = ["linux/amd64","linux/arm64"],
+)
 
 ###############################################################################
 # R U S T  C R A T E S
@@ -206,44 +178,3 @@ crates_repository(
 load("@crate_index//:defs.bzl", "crate_repositories")
 crate_repositories()
 
-###############################################################################
-# R U L E S  O C I  I M A G E
-# Releases: https://github.com/bazel-contrib/rules_oci/releases
-###############################################################################
-http_archive(
-    name = "rules_oci",
-    sha256 = "4a276e9566c03491649eef63f27c2816cc222f41ccdebd97d2c5159e84917c3b",
-    strip_prefix = "rules_oci-1.7.4",
-    url = "https://github.com/bazel-contrib/rules_oci/releases/download/v1.7.4/rules_oci-v1.7.4.tar.gz",
-)
-
-load("@rules_oci//oci:dependencies.bzl", "rules_oci_dependencies")
-rules_oci_dependencies()
-
-load("@rules_oci//oci:repositories.bzl", "LATEST_CRANE_VERSION", "oci_register_toolchains")
-oci_register_toolchains(
-    name = "oci",
-    crane_version = LATEST_CRANE_VERSION,
-    # Uncommenting the zot toolchain will cause it to be used instead of crane for some tasks.
-    # Note that it does not support docker-format images.
-    # zot_version = LATEST_ZOT_VERSION,
-)
-
-load("@rules_oci//oci:pull.bzl", "oci_pull")
-
-oci_pull(
-    name = "distroless_cc",
-    digest = "sha256:8aad707f96620ee89e27febef51b01c6ff244277a3560fcfcfbe68633ef09193",
-    image = "gcr.io/distroless/cc",
-    platforms = ["linux/amd64","linux/arm64"],
-)
-
-################################################################################
-# Multirun rules
-# Releases: https://github.com/keith/rules_multirun/releases
-################################################################################
-http_archive(
-    name = "rules_multirun",
-    sha256 = "0e124567fa85287874eff33a791c3bbdcc5343329a56faa828ef624380d4607c",
-    url = "https://github.com/keith/rules_multirun/releases/download/0.9.0/rules_multirun.0.9.0.tar.gz",
-)
