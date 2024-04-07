@@ -4,8 +4,6 @@ set -o nounset
 set -o pipefail
 set -e
 
-# Change to the WORKSPACE directory
-cd "$BUILD_WORKSPACE_DIRECTORY"
 
 # Run a command to request image pull credentials:
 REGISTRY_PASSWORD=$(gcloud auth print-access-token)
