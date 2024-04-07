@@ -44,6 +44,6 @@ actions:
           - "*"
     bazel_commands:
       - "bazel run :buildbuddy_setup_docker_auth --verbose_failures"
-      - "build -c opt //queng_services:build --verbose_failures"
-      - "build -c opt //:image --verbose_failures"
-      - "run -c opt //:push  --verbose_failures"
+      - "build -c opt //queng_services:build"
+      - "build -c opt //:image"
+      - "run -c opt //:push"
