@@ -1,7 +1,7 @@
 load("@rules_pkg//pkg:tar.bzl", "pkg_tar")
 load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
 
-def build_image(name, srcs, exposed_ports = ["8080"],visibility=None):
+def build_image(name, srcs, exposed_ports = [], visibility=None):
 
     # Build a Bazel Macro
     # https://belov.nz/posts/bazel-rules-macros/
@@ -13,36 +13,15 @@ def build_image(name, srcs, exposed_ports = ["8080"],visibility=None):
     pkg_tar(
         name = layer_name,
         srcs = srcs,
-        package_dir = "/",
     )
 
-    # Build a multi-architecture OCI container image.
-    # https://github.com/bazel-contrib/rules_oci/blob/main/docs/image_index.md
-    oci_image_index(
+    # Build container image
+    # https://github.com/bazel-contrib/rules_oci/blob/main/docs/image.md
+    oci_image(
         name = name,
-        images = [
-            ":linux_amd64",
-            ":linux_arm64",
-        ],
+        base = "@distroless_cc",
+        tars = [layer_name],
+        entrypoint = ["/{}".format(entry_point)],
+        exposed_ports = exposed_ports,
         visibility = visibility,
-    )
-
-    # Build AMD/ Intel image and add built layer to it
-    # https://github.com/bazel-contrib/rules_oci/blob/main/docs/image.md
-    oci_image(
-        name = "linux_amd64",
-        base = "@distroless_cc",
-        tars = [layer_name],
-        exposed_ports = exposed_ports,
-        entrypoint = ["/{}".format(entry_point)],
-    )
-
-    # Build ARM image and add built layer to it
-    # https://github.com/bazel-contrib/rules_oci/blob/main/docs/image.md
-    oci_image(
-        name = "linux_arm64",
-        base = "@distroless_cc",
-        tars = [layer_name],
-        exposed_ports = exposed_ports,
-        entrypoint = ["/{}".format(entry_point)],
     )

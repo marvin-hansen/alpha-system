@@ -21,7 +21,7 @@ RUN echo "BUILD_TARGET set to: ${BUILD_TARGET}"
 WORKDIR /app
 
 # Copy over the entire source code
-COPY . ./
+COPY ../.. ./
 
 # Fetch dependencies
 RUN cargo fetch
