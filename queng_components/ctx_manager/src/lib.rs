@@ -32,9 +32,6 @@ impl CtxManager {
                 None
             };
 
-        // println!("[CtxManager]: Environment type: {:?}", env_type);
-        // println!("[CtxManager]: Internal DNS server: {:?}", int_dns_server);
-
         Self {
             env_type,
             int_dns_server,
@@ -96,6 +93,5 @@ fn get_int_cluster_dns_server() -> Option<String> {
             );
         }
     };
-
     Some(dns_server_var)
 }
