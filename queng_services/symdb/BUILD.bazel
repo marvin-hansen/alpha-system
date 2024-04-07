@@ -72,7 +72,7 @@ oci_image(
 oci_push(
     name = "push",
     image = ":image",
-    repository = " asia-northeast1-docker.pkg.dev/future-309012/image-repo/symdb",
+    repository = "asia-northeast1-docker.pkg.dev/future-309012/image-repo/symdb",
     remote_tags = ["latest", "amd64"],
     visibility = ["//visibility:public"],
 )

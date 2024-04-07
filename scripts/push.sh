@@ -18,7 +18,7 @@ command bazel test --bes_results_url=https://app.buildbuddy.io/invocation/ \
              --jobs=50
 
 # Run a command to generate temporary image pull credentials that expire after 30 minutes:
-REGISTRY_PASSWORD=$(gcloud auth print-access-token --impersonate-service-account=105782787584889908240 --lifetime=1800 --quiet)
+REGISTRY_PASSWORD=$(gcloud auth print-access-token --impersonate-service-account=105782787584889908240 --lifetime=3600 --quiet)
 
 # Write the credentials to ci.bazelrc in the workspace root directory:
 echo >ci.bazelrc "
