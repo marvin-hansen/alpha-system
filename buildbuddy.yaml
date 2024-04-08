@@ -45,5 +45,6 @@ actions:
     bazel_commands:
       - "bazel run :buildbuddy_setup_docker_auth --verbose_failures"
       - "build -c opt //queng_services:build"
+      - "build //:stamp --workspace_status_command 'tools/stamp.sh'"
       - "build -c opt //:image"
       - "run -c opt //:push"

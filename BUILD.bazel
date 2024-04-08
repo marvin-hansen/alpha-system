@@ -14,6 +14,22 @@ sh_binary(
 )
 
 
+# Generate a txt file with the git revision as a string.
+genrule(
+    name = "git_hash",
+    srcs = [],
+    outs = ["x.txt"],
+    cmd = " ; ".join([
+        "(echo 'volatile data:'",
+        "cat bazel-out/volatile-status.txt",
+        "echo ---",
+        "echo 'stable data:'",
+        "cat bazel-out/stable-status.txt",
+        ") > $@",
+    ]),
+    stamp = 1,
+)
+
 filegroup(
     name = "build",
     srcs = [
