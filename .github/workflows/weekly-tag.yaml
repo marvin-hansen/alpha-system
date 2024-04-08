@@ -1,11 +1,16 @@
 # Apply a tag to HEAD at the beginning of each week.
 # We can use this to create semver-looking tags for releases like
 # 2020.44.123+abc1234
+
+name: Weekly Tag
+
 on:
   schedule:
     # Sunday at 1am UTC | 9am SGP
     # https://crontab.guru/#0_1_*_*_0
     - cron: '0 1 * * 0'
+  push:
+    branches: [ "main" ]
 
 jobs:
   tagger:
