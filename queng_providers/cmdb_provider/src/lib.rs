@@ -18,7 +18,6 @@ impl CmdbManager {
             .parse::<Uri>()
             .unwrap_or_else(|_| panic!("[CMDBProvider]: Failed to parse server URI: {}", s));
 
-        // creating a channel that connects to server
         let channel = Channel::builder(uri)
             .connect()
             .await
