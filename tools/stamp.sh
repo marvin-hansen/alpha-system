@@ -1,6 +1,4 @@
-# bin/sh
-set -o errexit
-set -o nounset
-set -o pipefail
+#!/usr/bin/env bash
+set -e
 
 echo CURRENT_COMMIT "$(git rev-parse --short HEAD)"
