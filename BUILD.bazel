@@ -7,12 +7,15 @@ config_setting(
     },
 )
 
-
 sh_binary(
         name = "buildbuddy_setup_docker_auth",
         srcs = ["buildbuddy_setup_docker_auth.sh"]
 )
 
+sh_binary(
+        name = "build_stamp_tag",
+        srcs = ["build_stamp_tag.sh"],
+)
 
 # Generate a txt file with the git revision as a string.
 genrule(

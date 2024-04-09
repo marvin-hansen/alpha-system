@@ -69,6 +69,7 @@ build_image(
     visibility = ["//visibility:public"],
 )
 
+# Write tag template
 write_file(
     name = "tags_tmpl",
     out = "tags.txt.tmpl",
