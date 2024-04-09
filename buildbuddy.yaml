@@ -47,4 +47,3 @@ actions:
       - "build -c opt //:build"
       - "build -c opt //:image"
       - "run   -c opt //:push --workspace_status_command 'tools/workspace_status.sh'"
-

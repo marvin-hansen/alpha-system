@@ -16,7 +16,8 @@ genrule(
   name = "gen_image_tag",
   outs = ["buildinfo.txt"],
   cmd = r"""grep "BUILD_EMBED_LABEL" bazel-out/stable-status.txt  | cut -d " " -f 2 > $@""",
-  visibility = ["//visibility:public"],
+  stamp = 1,
+ visibility = ["//visibility:public"],
 )
 
 filegroup(
