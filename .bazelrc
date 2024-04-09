@@ -40,8 +40,6 @@ build:rustfmt --output_groups=+rustfmt_checks
 build:clippy --aspects=@rules_rust//rust:defs.bzl%rust_clippy_aspect
 build:clippy --output_groups=+clippy_checks
 
-
-
 # Enable remote cache
 build:remote --host_platform=//platforms:platform_linux
 build --remote_cache=grpcs://remote.buildbuddy.io
