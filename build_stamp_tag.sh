@@ -3,7 +3,4 @@ set -eo pipefail
 
 export TAG="$(date +"%Y.%m.%d")"."$(git rev-parse --short HEAD)"
 
-git tag "$TAG" HEAD
-git push --tags
-
 echo TAG "$TAG"
