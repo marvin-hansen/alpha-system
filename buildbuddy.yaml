@@ -43,8 +43,7 @@ actions:
         branches:
           - "*"
     bazel_commands:
-      - "bazel run :buildbuddy_setup_docker_auth --verbose_failures"
+      - "run   -c opt //:buildbuddy_setup_docker_auth --verbose_failures"
       - "build -c opt //:build"
       - "build -c opt //:image"
-      - "run -c opt //:build_stamp_tag"
-      - "run -c opt //:push --stamp --embed_label=$TAG"
+      - "run   -c opt //:push --stamp --workspace_status_command 'tools/workspace_status.sh'"

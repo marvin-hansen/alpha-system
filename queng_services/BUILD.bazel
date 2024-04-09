@@ -45,6 +45,7 @@ multirun(
         "push_dbgw",
         "push_binance_data",
         "push_smdb",
+        "push_symdb",
     ],
     jobs = 0, # Set to 0 to run in parallel, defaults to sequential
     visibility = ["//visibility:public"],

@@ -12,9 +12,12 @@ sh_binary(
         srcs = ["buildbuddy_setup_docker_auth.sh"]
 )
 
-sh_binary(
-        name = "build_stamp_tag",
-        srcs = ["build_stamp_tag.sh"],
+genrule(
+  name = "gen_image_tag",
+  outs = ["buildinfo.txt"],
+  cmd = r"""grep "BUILD_EMBED_LABEL" bazel-out/stable-status.txt  | cut -d " " -f 2 > $@""",
+  stamp = 1,
+ visibility = ["//visibility:public"],
 )
 
 filegroup(
