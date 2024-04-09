@@ -18,5 +18,11 @@ command bazel test --bes_results_url=https://app.buildbuddy.io/invocation/ \
              //... \
              --jobs=50
 
+# Create new tag for this commit
+git tag "$(date +"%Y.%m.%d")"."$(git rev-parse --short HEAD)" HEAD
+
+# Push all new and remaining tags to remote
+git push --tags
+
 # Push all new and remaining commits to remote to trigger CI
 command git push
