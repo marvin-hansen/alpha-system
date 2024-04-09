@@ -1,3 +1,4 @@
+use crate::service::CMDBServer;
 use common::prelude::ServiceID;
 use common::prelude::ServiceID::SMDB;
 use config_manager::CfgManager;
@@ -9,8 +10,6 @@ use service_utils::{print_utils, shutdown_utils};
 use smdb_provider::SMDBProvider;
 use std::error::Error;
 use tonic::transport::{Channel, Server, Uri};
-
-use crate::service::CMDBServer;
 
 mod service;
 
