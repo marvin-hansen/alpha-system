@@ -47,4 +47,4 @@ actions:
       - "build -c opt //:build"
       - "build -c opt //:image"
       - "run -c opt //:build_stamp_tag"
-      - "run -c opt //:push"
+      - "run -c opt //:push --stamp --embed_label=$TAG"
