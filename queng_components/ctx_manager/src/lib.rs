@@ -14,6 +14,7 @@ use common::prelude::EnvironmentType;
 /// # Fields
 /// * `env_type`: The environment type, which can be either `LOCAL`, `CLUSTER`, or `UNKNOWN`.
 /// * `int_dns_server`: The internal DNS server.
+///
 #[derive(Debug, Clone, Default, Eq, PartialEq)]
 pub struct CtxManager {
     env_type: EnvironmentType,

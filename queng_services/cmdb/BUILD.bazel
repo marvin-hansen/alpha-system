@@ -3,9 +3,6 @@ load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_doc", "rust_doc_test")
 # OCI Container Rules
 load("@rules_pkg//pkg:tar.bzl", "pkg_tar")
 load("@rules_oci//oci:defs.bzl", "oci_image", "oci_push",  "oci_image_index")
-# Utils
-load("@aspect_bazel_lib//lib:expand_template.bzl", "expand_template")
-load("@bazel_skylib//rules:write_file.bzl", "write_file")
 # Custom container macro
 load("//:build_image.bzl", "build_image")
 
@@ -69,30 +66,12 @@ build_image(
     visibility = ["//visibility:public"],
 )
 
-# Write tag template
-write_file(
-    name = "tags_tmpl",
-    out = "tags.txt.tmpl",
-    content = [
-        "BUILD_VERSION",
-    ],
-)
-
-# Use the value of --embed_label under --stamp, otherwise use a deterministic constant
-# value to ensure cache hits for actions that depend on this.
-expand_template(
-    name = "stamped",
-    out = "_stamped.tags.txt",
-    stamp_substitutions = {"BUILD_VERSION": "{{BUILD_EMBED_LABEL}}"},
-    substitutions = {"BUILD_VERSION": "0.0.0"},
-    template = "tags_tmpl",
-)
 
 # Publish image to registry
 oci_push(
     name = "push",
     image = ":image",
     repository = "asia-northeast1-docker.pkg.dev/future-309012/image-repo/cmdb",
-    remote_tags = ":stamped",
+    remote_tags = "//:gen_image_tag",
     visibility = ["//visibility:public"],
 )
