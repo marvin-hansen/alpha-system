@@ -17,22 +17,6 @@ sh_binary(
         srcs = ["build_stamp_tag.sh"],
 )
 
-# Generate a txt file with the git revision as a string.
-genrule(
-    name = "git_hash",
-    srcs = [],
-    outs = ["x.txt"],
-    cmd = " ; ".join([
-        "(echo 'volatile data:'",
-        "cat bazel-out/volatile-status.txt",
-        "echo ---",
-        "echo 'stable data:'",
-        "cat bazel-out/stable-status.txt",
-        ") > $@",
-    ]),
-    stamp = 1,
-)
-
 filegroup(
     name = "build",
     srcs = [
@@ -81,7 +65,7 @@ multirun(
     commands = [
         "push_services",
     ],
-    jobs = 1, # Set to 0 to run in parallel, defaults to sequential
+    jobs = 0, # Set to 0 to run in parallel, defaults to sequential
     visibility = ["//visibility:public"],
 )
 
