@@ -37,7 +37,6 @@ filegroup(
     visibility = ["//visibility:public"],
 )
 
-
 filegroup(
     name = "doc",
     srcs = [
@@ -53,7 +52,6 @@ filegroup(
     ],
     visibility = ["//visibility:public"],
 )
-
 
 filegroup(
     name = "image",
