@@ -63,10 +63,18 @@ filegroup(
 multirun(
     name = "push",
     commands = [
+        "build_tag",
         "push_services",
     ],
-    jobs = 0, # Set to 0 to run in parallel, defaults to sequential
+    jobs = 1, # Set to sequential
     visibility = ["//visibility:public"],
+)
+
+
+command(
+    name = "build_tag",
+    command = "//:build_stamp_tag",
+    arguments = [], # Optional arguments passed directly to the tool
 )
 
 command(
