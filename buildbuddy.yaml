@@ -46,5 +46,5 @@ actions:
       - "bazel run :buildbuddy_setup_docker_auth --verbose_failures"
       - "build -c opt //queng_services:build"
       - "build -c opt //:image"
-      - "build //:build_stamp_tag"
+      - "run //:build_stamp_tag --verbose_failures"
       - "run -c opt //:push --stamp --embed_label=$TAG"
