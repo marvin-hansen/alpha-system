@@ -1,5 +1,0 @@
-steps:
-  - name: 'docker'
-    args: [ 'buildx', 'create', '--name', 'builder', '--use' ]
-  - name: 'docker'
-    args: [ 'buildx', 'build', '--platform', 'linux/amd64', '--build-arg=SERVICE_NAME=symdb', '--build-arg=BUILD_TARGET=x86_64-unknown-linux-musl','-t', 'asia-northeast1-docker.pkg.dev/future-309012/image-repo/symdb_x86_64:latest','--push', '.']
