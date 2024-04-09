@@ -84,7 +84,6 @@ expand_template(
     name = "stamped",
     out = "_stamped.tags.txt",
     stamp_substitutions = {"BUILD_VERSION": "{{BUILD_EMBED_LABEL}}"},
-    substitutions = {"BUILD_VERSION": "0.0.0"},
     template = "tags_tmpl",
 )
 
