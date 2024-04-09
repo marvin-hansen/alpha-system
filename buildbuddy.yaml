@@ -46,4 +46,5 @@ actions:
       - "run   -c opt //:buildbuddy_setup_docker_auth --verbose_failures"
       - "build -c opt //:build"
       - "build -c opt //:image"
-      - "run   -c opt //:push --stamp --workspace_status_command 'tools/workspace_status.sh'"
+      - "run   -c opt //:push --workspace_status_command 'tools/workspace_status.sh'"
+
