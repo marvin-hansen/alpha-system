@@ -24,12 +24,12 @@ bazel_skylib_workspace()
 ###############################################################################
 http_archive(
     name = "rules_rust",
-    integrity = "sha256-mUV3N2A8ORVVZbrm3O9yepAe/Kv4MD2ob9YQhB8aOI8=",
-    urls = ["https://github.com/bazelbuild/rules_rust/releases/download/0.41.1/rules_rust-v0.41.1.tar.gz"],
+    integrity = "sha256-XT1YVJ6FHJTXBr1v3px2fV37/OCS3dQk3ul+XvfIIf8=",
+    urls = ["https://github.com/bazelbuild/rules_rust/releases/download/0.42.0/rules_rust-v0.42.0.tar.gz"],
 )
 
 RUST_EDITION = "2021"
-RUST_VERSION = "1.77.1"
+RUST_VERSION = "1.77.2"
 
 # Configure Rust Toolchain to use.
 load("@rules_rust//rust:repositories.bzl", "rules_rust_dependencies", "rust_register_toolchains", "rust_repository_set")
