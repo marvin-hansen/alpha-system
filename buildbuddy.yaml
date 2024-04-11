@@ -8,9 +8,9 @@ actions:
         branches:
           - "*"
     bazel_commands:
-      - "build -c opt //..."
-      - "build -c opt //:doc"
-      - "test -c opt  //... --config=remote"
+      - "build -c opt //...  --config=remote"
+      - "build -c opt //:doc --config=remote"
+      - "test -c opt  //...  --config=remote"
 
   - name: "Build and publish all images"
     triggers:
