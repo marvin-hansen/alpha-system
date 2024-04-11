@@ -8,3 +8,20 @@ thread 'main' panicked at /app/queng_components/db_system_manager/src/lib.rs:49:
 
  address information: Name does not resolve" })
  note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+ bazel build //...
+ --remote_executor=remote.buildbuddy.io
+ --host_cpu=x86_64
+ --cpu=x86_64
+ --crosstool_top=@buildbuddy_toolchain//:cc_toolchain_suite
+ --host_platform=@buildbuddy_toolchain//:platform_linux
+  --extra_toolchains=@buildbuddy_toolchain//:cc_toolchain
+  --jobs=100
+
+
+   bazel build //... --remote_executor=remote.buildbuddy.io \
+   --crosstool_top=@buildbuddy_toolchain//:cc_toolchain_suite \
+   --host_platform=@buildbuddy_toolchain//:platform_linux \
+   --extra_toolchains=@buildbuddy_toolchain//:cc_toolchain \
+   --jobs=100

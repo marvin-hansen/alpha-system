@@ -26,7 +26,6 @@ common --nolegacy_important_outputs
 common --experimental_remote_cache_compression
 common --experimental_remote_cache_async
 common --noexperimental_merged_skyframe_analysis_execution
-
 # For a more detailed timing profile
 common --noslim_profile
 common --experimental_profile_include_target_label
@@ -40,11 +39,38 @@ build:rustfmt --output_groups=+rustfmt_checks
 build:clippy --aspects=@rules_rust//rust:defs.bzl%rust_clippy_aspect
 build:clippy --output_groups=+clippy_checks
 
-# Enable remote cache
-build:remote --host_platform=//platforms:platform_linux
+# Enable remote cache for local builds
 build --remote_cache=grpcs://remote.buildbuddy.io
-build --remote_timeout=3600
+build --remote_timeout=600
 build --remote_header=x-buildbuddy-api-key=4Ml6AhYICvGtZ3XhqafP
 
-# This isn't currently the defaut in Bazel, but we enable it to test we'll be ready if/when it flips.
-build --incompatible_disallow_empty_glob
+# Flags shared across remote configs
+common:remote-shared --jobs=100
+common:remote-shared --remote_upload_local_results
+common:remote-shared --remote_timeout=600
+common:remote-shared --remote_download_minimal
+common:remote-shared --host_cpu=x86_64
+common:remote-shared --cpu=x86_64
+common:remote-shared --verbose_failures
+common:remote-shared --crosstool_top=@buildbuddy_toolchain//:cc_toolchain_suite
+common:remote-shared --host_platform=@buildbuddy_toolchain//:platform_linux
+common:remote-shared --extra_toolchains=@buildbuddy_toolchain//:cc_toolchain
+common:remote-shared --remote_header=x-buildbuddy-api-key=4Ml6AhYICvGtZ3XhqafP
+common:remote-shared --remote_cache=grpcs://remote.buildbuddy.io
+common:remote-shared --remote_header=x-buildbuddy-api-key=4Ml6AhYICvGtZ3XhqafP
+
+# Build with --config=cache to send build logs to the production server with cache
+common:cache --bes_results_url=https://buildbuddy.buildbuddy.io/invocation/
+common:cache --bes_backend=grpcs://buildbuddy.buildbuddy.io
+common:cache --remote_cache=grpcs://buildbuddy.buildbuddy.io
+common:cache --remote_upload_local_results
+common:cache --experimental_remote_cache_compression
+
+# Build with --config=remote to enable Remote Build Execution (RBE)
+common:remote --config=remote-shared
+common:remote --remote_executor=remote.buildbuddy.io
+#common:remote --remote_header=x-buildbuddy-api-key=4Ml6AhYICvGtZ3XhqafP
+
+
+# This isn't currently the default in Bazel, but we enable it to test we'll be ready if/when it flips.
+# build --incompatible_disallow_empty_glob
