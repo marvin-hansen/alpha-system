@@ -10,33 +10,11 @@ actions:
           - "*"
     bazel_commands:
       - "build -c opt //..."
+      - "build -c opt //:doc"
       - "test -c opt  //..."
 
-  - name: "Build all service binaries"
-    container_image: ubuntu-20.04
-    triggers:
-      push:
-        branches:
-          - "main"
-      pull_request:
-        branches:
-          - "*"
-    bazel_commands:
-      - "build -c opt //queng_services:build"
-
-  - name: "Build all docs"
-    container_image: ubuntu-20.04
-    triggers:
-      push:
-        branches:
-          - "main"
-      pull_request:
-        branches:
-          - "*"
-    bazel_commands:
-      - "build -c opt //:doc"
-
   - name: "Build and publish all images"
+    container_image: ubuntu-20.04
     triggers:
       push:
         branches:
