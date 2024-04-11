@@ -28,6 +28,6 @@ actions:
           - "*"
     bazel_commands:
       - "run   -c opt //:buildbuddy_setup_docker_auth --verbose_failures"
-      - "build -c opt //:build"
-      - "build -c opt //:image"
+      - "build -c opt //:build  --config=remote"
+      - "build -c opt //:image  --config=remote"
       - "run   -c opt //:push --workspace_status_command 'tools/workspace_status.sh'"
