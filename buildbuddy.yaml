@@ -1,6 +1,6 @@
 actions:
-
   - name: "Build and test all targets"
+    container_image: ubuntu-20.04
     triggers:
       push:
         branches:
@@ -13,6 +13,7 @@ actions:
       - "test -c opt  //..."
 
   - name: "Build all service binaries"
+    container_image: ubuntu-20.04
     triggers:
       push:
         branches:
@@ -24,6 +25,7 @@ actions:
       - "build -c opt //queng_services:build"
 
   - name: "Build all docs"
+    container_image: ubuntu-20.04
     triggers:
       push:
         branches:
