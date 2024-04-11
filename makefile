@@ -68,6 +68,11 @@ rebuild:
 	@source scripts/rebuild.sh
 
 
+.PHONY: remote
+remote:
+	@source scripts/remote.sh
+
+
 .PHONY: check
 check:
 	@source scripts/check.sh
