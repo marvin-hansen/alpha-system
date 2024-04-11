@@ -16,6 +16,9 @@ actions:
       - "test -c opt  //...  --config=remote"
 
   - name: "Build and publish all images"
+    resource_request:
+      memory: 8Gi
+      cpu: 8
     triggers:
       push:
         branches:
