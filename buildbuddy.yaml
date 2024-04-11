@@ -1,5 +1,8 @@
 actions:
   - name: "Build and test all targets"
+    resource_request:
+      memory: 8Gi
+      cpu: 8
     triggers:
       push:
         branches:
