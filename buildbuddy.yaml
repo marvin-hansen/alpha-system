@@ -10,7 +10,7 @@ actions:
     bazel_commands:
       - "build -c opt //..."
       - "build -c opt //:doc"
-      - "test -c opt  //..."
+      - "test -c opt  //... --config=remote"
 
   - name: "Build and publish all images"
     triggers:
