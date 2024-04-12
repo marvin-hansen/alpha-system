@@ -40,7 +40,7 @@ def _build_tag_impl(ctx):
         inputs = [in_file],
         outputs = [out_file],
         arguments = [in_file.path, out_file.path],
-        command = "sed -n 's/.*sha256:\\([[:alnum:]]\\{7\\}\\).*/\\1/p' < \"$1\" > \"$2\"",
+        command = "sed -n 's/.*sha256:\\([[:alnum:]]\\{14\\}\\).*/\\1/p' < \"$1\" > \"$2\"",
     )
 
 
@@ -60,5 +60,5 @@ build_tag = rule(
             doc = "The generated tag file. Usually named _tag.txt"
         ),
     },
-    doc = "Extracts a 7 characters long short hash from the image digest..",
+    doc = "Extracts a 14 characters long short hash from the image digest..",
 )
