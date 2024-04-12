@@ -1,5 +1,5 @@
 {
-  "checksum": "693394bea13dcb6c91704e3f26447939c92256b62454cf4617d073d8386368d3",
+  "checksum": "1812cce9f08077ff9ea77e8f5f1aad6d11445fd5c8ddf47efd897192e3e8ecca",
   "crates": {
     "addr2line 0.21.0": {
       "name": "addr2line",
@@ -3871,6 +3871,69 @@
       "license_ids": [],
       "license_file": null
     },
+    "docker_engine_api 0.1.5": {
+      "name": "docker_engine_api",
+      "version": "0.1.5",
+      "package_url": "https://github.com/JeanVydes/docker-engine-api-wrapper",
+      "repository": {
+        "Http": {
+          "url": "https://static.crates.io/crates/docker_engine_api/0.1.5/download",
+          "sha256": "a1329cf4f000853550b404515c7ae7fc32c5594cf66800d9263c32cb3b80f3cb"
+        }
+      },
+      "targets": [
+        {
+          "Library": {
+            "crate_name": "docker_engine_api",
+            "crate_root": "src/lib.rs",
+            "srcs": {
+              "allow_empty": false,
+              "include": [
+                "**/*.rs"
+              ]
+            }
+          }
+        }
+      ],
+      "library_target_name": "docker_engine_api",
+      "common_attrs": {
+        "compile_data_glob": [
+          "**"
+        ],
+        "deps": {
+          "common": [
+            {
+              "id": "hyper 0.14.28",
+              "target": "hyper"
+            },
+            {
+              "id": "hyperlocal 0.8.0",
+              "target": "hyperlocal"
+            },
+            {
+              "id": "serde 1.0.197",
+              "target": "serde"
+            },
+            {
+              "id": "serde_json 1.0.115",
+              "target": "serde_json"
+            },
+            {
+              "id": "tokio 1.37.0",
+              "target": "tokio"
+            }
+          ],
+          "selects": {}
+        },
+        "edition": "2021",
+        "version": "0.1.5"
+      },
+      "license": "MIT",
+      "license_ids": [
+        "MIT"
+      ],
+      "license_file": "LICENSE"
+    },
     "either 1.10.0": {
       "name": "either",
       "version": "1.10.0",
@@ -4964,6 +5027,7 @@
             "async-await",
             "async-await-macro",
             "channel",
+            "default",
             "futures-channel",
             "futures-io",
             "futures-macro",
@@ -6746,6 +6810,77 @@
         },
         "edition": "2021",
         "version": "0.1.3"
+      },
+      "license": "MIT",
+      "license_ids": [
+        "MIT"
+      ],
+      "license_file": "LICENSE"
+    },
+    "hyperlocal 0.8.0": {
+      "name": "hyperlocal",
+      "version": "0.8.0",
+      "package_url": "https://github.com/softprops/hyperlocal",
+      "repository": {
+        "Http": {
+          "url": "https://static.crates.io/crates/hyperlocal/0.8.0/download",
+          "sha256": "0fafdf7b2b2de7c9784f76e02c0935e65a8117ec3b768644379983ab333ac98c"
+        }
+      },
+      "targets": [
+        {
+          "Library": {
+            "crate_name": "hyperlocal",
+            "crate_root": "src/lib.rs",
+            "srcs": {
+              "allow_empty": false,
+              "include": [
+                "**/*.rs"
+              ]
+            }
+          }
+        }
+      ],
+      "library_target_name": "hyperlocal",
+      "common_attrs": {
+        "compile_data_glob": [
+          "**"
+        ],
+        "crate_features": {
+          "common": [
+            "client",
+            "default",
+            "server"
+          ],
+          "selects": {}
+        },
+        "deps": {
+          "common": [
+            {
+              "id": "futures-util 0.3.30",
+              "target": "futures_util"
+            },
+            {
+              "id": "hex 0.4.3",
+              "target": "hex"
+            },
+            {
+              "id": "hyper 0.14.28",
+              "target": "hyper"
+            },
+            {
+              "id": "pin-project 1.1.5",
+              "target": "pin_project"
+            },
+            {
+              "id": "tokio 1.37.0",
+              "target": "tokio"
+            }
+          ],
+          "selects": {}
+        },
+        "edition": "2018",
+        "version": "0.8.0"
       },
       "license": "MIT",
       "license_ids": [
@@ -14750,6 +14885,10 @@
         "deps": {
           "common": [
             {
+              "id": "docker_engine_api 0.1.5",
+              "target": "docker_engine_api"
+            },
+            {
               "id": "tokio 1.37.0",
               "target": "tokio"
             }
@@ -20224,6 +20363,7 @@
     "chrono 0.4.37",
     "config-file 0.2.3",
     "csv 1.3.0",
+    "docker_engine_api 0.1.5",
     "encoding_rs 0.8.33",
     "futures 0.3.30",
     "hickory-resolver 0.24.0",

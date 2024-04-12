@@ -17,5 +17,6 @@ path = "src/lib.rs"
 # Internal crates
 common = {workspace = true}
 # External crates
+docker_engine_api = { workspace = true }
 tokio = { workspace = true }
 
