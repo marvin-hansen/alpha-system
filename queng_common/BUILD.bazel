@@ -38,6 +38,7 @@ rust_test(
         proc_macro_dev = True
     ),
     visibility = ["//visibility:public"],
+    tags = ["unit"],
 )
 
 rust_doc(

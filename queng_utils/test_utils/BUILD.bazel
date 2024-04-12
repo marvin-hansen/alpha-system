@@ -19,6 +19,26 @@ rust_library(
     visibility = ["//visibility:public"],
 )
 
+rust_test(
+    name = "tests",
+    srcs = glob([
+        "tests/**",
+    ]),
+    crate_root = "tests/mod.rs",
+    deps = all_crate_deps(
+        normal = True,
+        normal_dev = True,
+    ) + [
+        "//queng_utils/test_utils:test_utils",
+        "//queng_common:common",
+    ],
+    proc_macro_deps = all_crate_deps(
+        proc_macro_dev = True
+    ),
+    visibility = ["//visibility:public"],
+    tags = ["integration", "docker"],
+)
+
 rust_doc(
     name = "doc",
     crate = ":test_utils",
