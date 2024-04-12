@@ -27,14 +27,6 @@ sh_binary(
         srcs = ["buildbuddy_setup_docker_auth.sh"]
 )
 
-genrule(
-  name = "gen_image_tag",
-  outs = ["buildinfo.txt"],
-  cmd = r"""grep "BUILD_EMBED_LABEL" bazel-out/stable-status.txt  | cut -d " " -f 2 > $@""",
-  stamp = 1,
- visibility = ["//visibility:public"],
-)
-
 filegroup(
     name = "build",
     srcs = [
@@ -79,14 +71,14 @@ filegroup(
 multirun(
     name = "push",
     commands = [
-        "push_services",
+        "push_images",
     ],
-    jobs = 1, # Set to sequential
+    jobs = 0, # Set to parallel
     visibility = ["//visibility:public"],
 )
 
 command(
-    name = "push_services",
+    name = "push_images",
     command = "//queng_services:push",
     arguments = [], # Optional arguments passed directly to the tool
 )

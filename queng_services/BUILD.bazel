@@ -47,7 +47,7 @@ multirun(
         "push_smdb",
         "push_symdb",
     ],
-    jobs = 0, # Set to 0 to run in parallel, defaults to sequential
+    jobs = 0, # Set to 0 to run in parallel, 1 sets to sequential
     visibility = ["//visibility:public"],
 )
 

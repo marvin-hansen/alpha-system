@@ -9,7 +9,7 @@ def build_image(name, srcs, exposed_ports = [], visibility=None):
     entry_point = "bin"
     layer_name = "tar_layer"
 
-    # Compress binary to layer using pkg_tar
+    # Compress binary to a layer using pkg_tar
     pkg_tar(
         name = layer_name,
         srcs = srcs,
