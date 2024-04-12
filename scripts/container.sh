@@ -6,4 +6,4 @@ set -o pipefail
 # Builds all images
 command bazel build -c opt  //:image
 # Pushes all tagged images to registry
-command baze run -c opt //:push --workspace_status_command 'tools/workspace_status.sh'
+command bazel run -c opt //:push --workspace_status_command 'tools/workspace_status.sh'

@@ -25,3 +25,40 @@ def build_image(name, srcs, exposed_ports = [], visibility=None):
         exposed_ports = exposed_ports,
         visibility = visibility,
     )
+
+
+def _build_tag_impl(ctx):
+
+    # Both the input and output files are specified by the BUILD file.
+    in_file = ctx.file.input
+    out_file = ctx.outputs.output
+
+    # No need to return anything telling Bazel to build `out_file` when
+    # building this target -- It's implied because the output is declared
+    # as an attribute rather than with `declare_file()`.
+    ctx.actions.run_shell(
+        inputs = [in_file],
+        outputs = [out_file],
+        arguments = [in_file.path, out_file.path],
+        command = "sed -n 's/.*sha256:\\([[:alnum:]]\\{7\\}\\).*/\\1/p' < \"$1\" > \"$2\"",
+    )
+
+
+build_tag = rule(
+    implementation = _build_tag_impl,
+    attrs = {
+        "image": attr.label(
+            allow_single_file = True,
+            mandatory = True,
+        ),
+        "input": attr.label(
+            allow_single_file = True,
+            mandatory = True,
+            doc = "The image digest file. Usually called image.json.sha256",
+        ),
+        "output": attr.output(
+            doc = "The generated tag file. Usually named _tag.txt"
+        ),
+    },
+    doc = "Extracts a 7 characters long short hash from the image digest..",
+)

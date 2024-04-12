@@ -4,7 +4,7 @@ load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_doc", "rust_doc_test")
 load("@rules_pkg//pkg:tar.bzl", "pkg_tar")
 load("@rules_oci//oci:defs.bzl", "oci_image", "oci_push",  "oci_image_index")
 # Custom container macro
-load("//:build_image.bzl", "build_image")
+load("//:build_image.bzl", "build_image", "build_tag")
 
 rust_binary(
     name = "bin",
@@ -63,11 +63,19 @@ build_image(
     visibility = ["//visibility:public"],
 )
 
+# Build an unique and immutable image tag based on the image SHA265 digest.
+build_tag(
+    name = "remote_tag",
+    image = ":image",
+    input = "image.json.sha256",
+    output = "_tag.txt",
+)
+
 # Publish image to registry
 oci_push(
     name = "push",
     image = ":image",
     repository = "asia-northeast1-docker.pkg.dev/future-309012/image-repo/smdb",
-    remote_tags = ["latest"],
+    remote_tags = ":remote_tag",
     visibility = ["//visibility:public"],
 )
