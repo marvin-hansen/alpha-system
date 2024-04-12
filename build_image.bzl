@@ -45,6 +45,7 @@ def _build_tag_impl(ctx):
 
 
 build_tag = rule(
+    doc = "Extracts a 12 characters long short hash from the image digest.",
     implementation = _build_tag_impl,
     attrs = {
         "image": attr.label(
@@ -60,5 +61,4 @@ build_tag = rule(
             doc = "The generated tag file. Usually named _tag.txt"
         ),
     },
-    doc = "Extracts a 12 characters long short hash from the image digest..",
 )

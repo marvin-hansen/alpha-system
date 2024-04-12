@@ -1,5 +1,5 @@
 {
-  "checksum": "3416a1bf910193b68f25e0cbaaa1282ac66d1832f150f89c35b7629bc5f02ffd",
+  "checksum": "693394bea13dcb6c91704e3f26447939c92256b62454cf4617d073d8386368d3",
   "crates": {
     "addr2line 0.21.0": {
       "name": "addr2line",
@@ -14723,6 +14723,46 @@
       ],
       "license_file": "LICENSE-APACHE"
     },
+    "test_utils 0.1.0": {
+      "name": "test_utils",
+      "version": "0.1.0",
+      "package_url": "https://github.com/marvin-hansen/quant-engine",
+      "repository": null,
+      "targets": [
+        {
+          "Library": {
+            "crate_name": "test_utils",
+            "crate_root": "src/lib.rs",
+            "srcs": {
+              "allow_empty": false,
+              "include": [
+                "**/*.rs"
+              ]
+            }
+          }
+        }
+      ],
+      "library_target_name": "test_utils",
+      "common_attrs": {
+        "compile_data_glob": [
+          "**"
+        ],
+        "deps": {
+          "common": [
+            {
+              "id": "tokio 1.37.0",
+              "target": "tokio"
+            }
+          ],
+          "selects": {}
+        },
+        "edition": "2021",
+        "version": "0.1.0"
+      },
+      "license": null,
+      "license_ids": [],
+      "license_file": null
+    },
     "thiserror 1.0.58": {
       "name": "thiserror",
       "version": "1.0.58",
@@ -19610,7 +19650,8 @@
     "spec_manager 0.1.0": "queng_cli/spec_manager",
     "symbol_manager 0.1.0": "queng_components/symbol_manager",
     "symdb 0.1.0": "queng_services/symdb",
-    "symdb_client 0.1.0": "queng_clients/symdb_client"
+    "symdb_client 0.1.0": "queng_clients/symdb_client",
+    "test_utils 0.1.0": "queng_utils/test_utils"
   },
   "conditions": {
     "aarch64-apple-darwin": [

@@ -1,1 +1,1 @@
-//queng_components/db_system_manager:db_system_manager
+//queng_utils/test_utils:test_utils
