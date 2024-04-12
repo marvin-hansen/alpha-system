@@ -7,7 +7,7 @@ rust_library(
     name = "service_utils",
     crate_root = "src/lib.rs",
     srcs = glob([
-        "src/**",
+        "src/*.rs",
     ]),
     aliases = aliases(),
     proc_macro_deps = all_crate_deps(proc_macro = True),

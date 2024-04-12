@@ -37,6 +37,7 @@ members = [
     "queng_utils/db_utils",
     "queng_utils/proto_utils",
     "queng_utils/service_utils",
+    "queng_utils/test_utils",
 ]
 
 
@@ -88,6 +89,7 @@ client_utils = { path = "queng_utils/client_utils" }
 db_utils = { path = "queng_utils/db_utils" }
 proto_utils = { path = "queng_utils/proto_utils" }
 service_utils = { path = "queng_utils/service_utils" }
+test_utils = { path = "queng_utils/test_utils" }
 #
 # ==============
 # External crates

@@ -5,6 +5,7 @@ filegroup(
         "//queng_utils/db_utils:db_utils",
         "//queng_utils/proto_utils:proto_utils",
         "//queng_utils/service_utils:service_utils",
+        "//queng_utils/test_utils:test_utils",
     ],
     visibility = ["//visibility:public"],
 )
@@ -16,6 +17,7 @@ filegroup(
         "//queng_utils/db_utils:doc",
         "//queng_utils/proto_utils:doc",
         "//queng_utils/service_utils:doc",
+        "//queng_utils/test_utils:doc",
     ],
     visibility = ["//visibility:public"],
 )
