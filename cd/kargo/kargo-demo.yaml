@@ -1,0 +1,90 @@
+apiVersion: kargo.akuity.io/v1alpha1
+kind: Project
+metadata:
+  name: kargo-demo
+---
+  apiVersion: v1
+  kind: Secret
+  type: Opaque
+  metadata:
+    name: kargo-demo-repo
+    namespace: kargo-demo
+    labels:
+      kargo.akuity.io/cred-type: git
+  stringData:
+    repoURL: https://github.com/marvin-hansen/kargo-demo.git
+    username: marvin-hansen
+    password: ****
+---
+  apiVersion: kargo.akuity.io/v1alpha1
+  kind: Warehouse
+  metadata:
+    name: kargo-demo
+    namespace: kargo-demo
+  spec:
+    subscriptions:
+      - image:
+          repoURL: nginx
+          semverConstraint: ^1.24.0
+---
+  apiVersion: kargo.akuity.io/v1alpha1
+  kind: Stage
+  metadata:
+    name: test
+    namespace: kargo-demo
+  spec:
+    subscriptions:
+      warehouse: kargo-demo
+    promotionMechanisms:
+      gitRepoUpdates:
+        - repoURL: https://github.com/marvin-hansen/kargo-demo.git
+          writeBranch: stage/test
+          kustomize:
+            images:
+              - image: nginx
+                path: stages/test
+      argoCDAppUpdates:
+        - appName: kargo-demo-test
+          appNamespace: argocd
+---
+  apiVersion: kargo.akuity.io/v1alpha1
+  kind: Stage
+  metadata:
+    name: uat
+    namespace: kargo-demo
+  spec:
+    subscriptions:
+      upstreamStages:
+        - name: test
+    promotionMechanisms:
+      gitRepoUpdates:
+        - repoURL: https://github.com/marvin-hansen/kargo-demo.git
+          writeBranch: stage/uat
+          kustomize:
+            images:
+              - image: nginx
+                path: stages/uat
+      argoCDAppUpdates:
+        - appName: kargo-demo-uat
+          appNamespace: argocd
+---
+  apiVersion: kargo.akuity.io/v1alpha1
+  kind: Stage
+  metadata:
+    name: prod
+    namespace: kargo-demo
+  spec:
+    subscriptions:
+      upstreamStages:
+        - name: uat
+    promotionMechanisms:
+      gitRepoUpdates:
+        - repoURL: https://github.com/marvin-hansen/kargo-demo.git
+          writeBranch: stage/prod
+          kustomize:
+            images:
+              - image: nginx
+                path: stages/prod
+      argoCDAppUpdates:
+        - appName: kargo-demo-prod
+          appNamespace: argocd
