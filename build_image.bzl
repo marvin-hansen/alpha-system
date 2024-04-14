@@ -19,7 +19,7 @@ def build_image(name, srcs, exposed_ports = [], visibility=None):
     # https://github.com/bazel-contrib/rules_oci/blob/main/docs/image.md
     oci_image(
         name = name,
-        base = "@distroless_cc",
+        base = "@distroless",
         tars = [layer_name],
         entrypoint = ["/{}".format(entry_point)],
         exposed_ports = exposed_ports,
