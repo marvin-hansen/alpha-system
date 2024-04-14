@@ -16,6 +16,12 @@ impl From<&str> for DockerError {
     }
 }
 
+impl From<String> for DockerError {
+    fn from(field0: String) -> Self {
+        Self(field0)
+    }
+}
+
 impl Error for DockerError {}
 
 impl fmt::Display for DockerError {
