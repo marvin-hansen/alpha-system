@@ -112,11 +112,13 @@ oci_register_toolchains(
     # zot_version = LATEST_ZOT_VERSION,
 )
 
+# https://images.chainguard.dev/directory/image/static/versions
+# Releases: https://edu.chainguard.dev/chainguard/chainguard-images/reference/static/tags_history/
 load("@rules_oci//oci:pull.bzl", "oci_pull")
 oci_pull(
-    name = "distroless_cc",
-    digest = "sha256:8aad707f96620ee89e27febef51b01c6ff244277a3560fcfcfbe68633ef09193",
-    image = "gcr.io/distroless/cc",
+    name = "distroless",
+    digest = "sha256:8665c8a9fcdab0f8afc09533ee23287c7870de26064d464a10e3baa52f337734",
+    image = "cgr.dev/chainguard/static",
     platforms = ["linux/amd64","linux/arm64"],
 )
 
