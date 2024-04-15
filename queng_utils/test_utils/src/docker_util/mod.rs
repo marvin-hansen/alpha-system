@@ -1,6 +1,7 @@
 use crate::prelude::DockerError;
 use docker_engine_api::client::{Client, ClientTrait};
 use docker_engine_api::container_create::CreateContainerFrom;
+use docker_engine_api::container_inspect::InspectedContainer;
 use docker_engine_api::containers_service::ContainersServiceTrait;
 use std::collections::HashMap;
 
@@ -45,22 +46,32 @@ impl DockerUtil {
         &mut self,
         container_id: &str,
     ) -> Result<bool, DockerError> {
-        return match self
-            .client
-            .containers
-            .inspect_container(container_id, false)
-        {
-            Ok(report) => {
-                return if report.state.running {
-                    Ok(true)
-                } else {
-                    Ok(false)
-                };
-            }
-            Err(_) => Ok(false),
-        };
+        // Check if container exists.
+        let exists = self
+            .check_if_container_exists(container_id)
+            .expect("Failed to check if container exists");
+
+        // If container doesn't exists, return an error
+        if !exists {
+            return Err(DockerError::from(format!(
+                "Container doesn't exists: {}",
+                container_id
+            )));
+        }
+
+        // Get status report for container
+        let report = self
+            .get_container_report(container_id)
+            .expect("Failed to get container status report");
+
+        if report.state.running {
+            Ok(true)
+        } else {
+            Ok(false)
+        }
     }
 
+    /// Implement this
     pub fn get_running_container(&self) -> Result<(u16, String), DockerError> {
         return Err(DockerError::from("NOT IMPLEMENTED"));
     }
@@ -79,7 +90,6 @@ impl DockerUtil {
             .check_if_container_exists(name)
             .expect("Failed to check if container exists");
 
-        // If so, check if we can re-use it
         if exists {
             // Check if container is already running
             let running = self
@@ -91,7 +101,9 @@ impl DockerUtil {
                 // and if we want to re-use the running container
                 if reuse_server {
                     // Return the active container name and port
-                    // implementget running
+
+                    //
+                    // implement get running
                     let (port, container_name) = match self.get_running_container() {
                         Ok((port, container_name)) => (port, container_name),
                         Err(e) => return Err(e),
@@ -149,13 +161,20 @@ impl DockerUtil {
             .check_if_container_exists(container_id)
             .expect("Failed to check if container exists");
 
+        if !exists {
+            return Err(DockerError::from(format!(
+                "Container doesn't exists: {}",
+                container_id
+            )));
+        }
+
         if exists {
             // Check if container is already running
             let running = self
                 .check_if_container_is_running(container_id)
                 .expect("Failed to check if container is running");
 
-            // if the container is already running
+            // if the container is running, if so, stop it
             if running {
                 match self.client.containers.stop_container(container_id, 30) {
                     Ok(_) => (),
@@ -165,5 +184,21 @@ impl DockerUtil {
         }
 
         Ok(())
+    }
+}
+
+impl DockerUtil {
+    fn get_container_report(
+        &mut self,
+        container_id: &str,
+    ) -> Result<InspectedContainer, DockerError> {
+        return match self
+            .client
+            .containers
+            .inspect_container(container_id, false)
+        {
+            Ok(report) => Ok(report),
+            Err(e) => Err(DockerError::from(e.to_string())),
+        };
     }
 }
