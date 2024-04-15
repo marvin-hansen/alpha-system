@@ -11,9 +11,17 @@ fn test_new() {
 }
 
 #[test]
-fn test_start_container() {
+fn test_start_container_no_reuse() {
     let mut docker_util = get_docker_util();
-    let result = docker_util.start_container("test_container", "test_image", 8080, false);
+    let result = docker_util.start_container("test_container", "test_image", 7070, false);
+
+    assert!(result.is_ok())
+}
+
+#[test]
+fn test_start_container_reuse_running_container() {
+    let mut docker_util = get_docker_util();
+    let result = docker_util.start_container("test_container", "test_image", 7070, false);
 
     assert!(result.is_ok())
 }
