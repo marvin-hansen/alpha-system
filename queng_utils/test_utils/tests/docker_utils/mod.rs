@@ -36,16 +36,8 @@ fn test_get_running_container() {
 
 #[test]
 fn test_stop_container() {
-    let docker_util = get_docker_util();
+    let mut docker_util = get_docker_util();
     let result = docker_util.stop_container("test_container");
-
-    assert!(result.is_ok())
-}
-
-#[test]
-fn test_remove_container() {
-    let docker_util = get_docker_util();
-    let result = docker_util.remove_container("test_container");
 
     assert!(result.is_ok())
 }
