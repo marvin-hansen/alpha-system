@@ -96,21 +96,27 @@ impl DockerUtil {
     ) -> Result<(u16, String), DockerError> {
         //
         // Check if container already exists.
+        dbg_print(" Check if container already exists.");
         let exists = self
             .check_if_container_exists(name)
             .expect("Failed to check if container exists");
 
         if exists {
-            // Check if container is already running
+            dbg_print(" Container already exists.");
+            // Check if container is running
+
+            dbg_print(" Check if container is running.");
             let running = self
                 .check_if_container_is_running(name)
                 .expect("Failed to check if container is running");
 
             // if the container is already running
             if running {
+                dbg_print(" Container is running.");
                 // and if we want to re-use the running container
                 if reuse_server {
                     // Return the active container name and port
+                    dbg_print(" Container should be reused.");
 
                     //
                     // implement get running
@@ -122,19 +128,19 @@ impl DockerUtil {
                     return Ok((port, container_name));
                 }
 
-                // Because we don't re-use the server,
-                // we need to stop the container first
+                // Because we don't re-use the server, we need to stop the container first
+                dbg_print("Stopping running container b/c no re-use wanted.");
                 self.stop_container(name).expect("Failed to stop container");
             }
         }
 
-        // Container doesn't exist, so let's create one.
-        // Define options
+        dbg_print("Container doesn't exist.");
+        dbg_print("Building options.");
         let mut options = CreateContainerFrom::default();
         options.image = Some(image.to_string());
         options.cmd = cmd;
 
-        // Define exposed ports
+        dbg_print("Define exposed ports.");
         let mut exposed_ports = HashMap::new();
         exposed_ports.insert(port.to_string(), ());
         // Expose the metric port if it doesn't conflict with the service port.
@@ -145,6 +151,7 @@ impl DockerUtil {
         options.exposed_ports = Some(exposed_ports);
 
         // Call to create a container for the provided image name
+        dbg_print("Create new container.");
         let container_id =
             match self
                 .client
@@ -152,13 +159,21 @@ impl DockerUtil {
                 .create_container(name, DEFAULT_PLATFORM, &options)
             {
                 Ok(re) => re.id,
-                Err(e) => return Err(DockerError::from(e.to_string())),
+                Err(e) => {
+                    return {
+                        dbg_print(&e.to_string());
+                        Err(DockerError::from(e.to_string()))
+                    }
+                }
             };
 
         // Start the container
         match self.client.containers.start_container(&container_id) {
             Ok(res) => res,
-            Err(e) => return Err(DockerError::from(e.to_string())),
+            Err(e) => {
+                dbg_print(&e.to_string());
+                return Err(DockerError::from(e.to_string()));
+            }
         };
 
         Ok((port, container_id))
@@ -208,7 +223,11 @@ impl DockerUtil {
             .inspect_container(container_id, false)
         {
             Ok(report) => Ok(report),
-            Err(e) => Err(DockerError::from(e.to_string())),
+            Err(e) => {
+                dbg_print("[get_container_report]: Failed to get container report ");
+                dbg_print(&e.to_string());
+                Err(DockerError::from(e.to_string()))
+            }
         };
     }
 }

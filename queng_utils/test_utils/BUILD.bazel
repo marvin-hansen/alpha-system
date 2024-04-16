@@ -31,13 +31,11 @@ rust_doc_test(
      visibility = ["//visibility:public"],
 )
 
-
 rust_test(
-    name = "tests",
+    name = "docker_test_setup",
     srcs = glob([
-        "tests/**",
+        "tests/docker_utils/setup/mod.rs",
     ]),
-    crate_root = "tests/mod.rs",
     deps = all_crate_deps(
         normal = True,
         normal_dev = True,
@@ -49,5 +47,43 @@ rust_test(
         proc_macro_dev = True
     ),
     visibility = ["//visibility:public"],
-    tags = ["integration", "docker"],
+    tags = ["integration", "docker", "docker_test_setup"],
+)
+
+rust_test(
+    name = "docker_tests",
+    srcs = glob([
+        "tests/docker_utils/tests/mod.rs",
+    ]),
+    deps = all_crate_deps(
+        normal = True,
+        normal_dev = True,
+    ) + [
+        "//queng_utils/test_utils:test_utils",
+        "//queng_common:common",
+    ],
+    proc_macro_deps = all_crate_deps(
+        proc_macro_dev = True
+    ),
+    visibility = ["//visibility:public"],
+    tags = ["integration", "docker", "docker_tests"],
+)
+
+rust_test(
+    name = "docker_teardown",
+    srcs = glob([
+        "tests/docker_utils/teardown/mod.rs",
+    ]),
+    deps = all_crate_deps(
+        normal = True,
+        normal_dev = True,
+    ) + [
+        "//queng_utils/test_utils:test_utils",
+        "//queng_common:common",
+    ],
+    proc_macro_deps = all_crate_deps(
+        proc_macro_dev = True
+    ),
+    visibility = ["//visibility:public"],
+    tags = ["integration", "docker", "docker_teardown"],
 )
