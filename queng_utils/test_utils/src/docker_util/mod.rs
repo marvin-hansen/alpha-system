@@ -6,6 +6,13 @@ use docker_engine_api::containers_service::ContainersServiceTrait;
 use std::collections::HashMap;
 
 const DEFAULT_PLATFORM: &str = "linux";
+const DBG: bool = true;
+
+fn dbg_print(s: &str) {
+    if DBG {
+        println!("[DockerUtil]: {}", s);
+    }
+}
 
 pub struct DockerUtil {
     client: Client,
@@ -15,7 +22,9 @@ impl DockerUtil {
     pub fn new() -> Result<Self, DockerError> {
         let client = docker_engine_api::new("/var/run/docker.sock".to_string());
         match client.ping() {
-            Ok(_) => {}
+            Ok(_) => {
+                dbg_print("Connected to Docker");
+            }
             Err(e) => {
                 println!("Failed to connect to Docker: {}", e);
                 return Err(DockerError::from(e.to_string()));
@@ -81,6 +90,7 @@ impl DockerUtil {
         &mut self,
         name: &str,
         image: &str,
+        cmd: Option<Vec<String>>,
         port: u16,
         reuse_server: bool,
     ) -> Result<(u16, String), DockerError> {
@@ -122,7 +132,7 @@ impl DockerUtil {
         // Define options
         let mut options = CreateContainerFrom::default();
         options.image = Some(image.to_string());
-        options.cmd = Some(vec!["/bin/true".to_string()]);
+        options.cmd = cmd;
 
         // Define exposed ports
         let mut exposed_ports = HashMap::new();
