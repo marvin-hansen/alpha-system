@@ -1,8 +1,12 @@
-use crate::docker_utils::docker_shared;
+use test_utils::prelude::DockerUtil;
+
+pub fn get_docker_util() -> DockerUtil {
+    DockerUtil::new().expect("Failed to create DockerUtil")
+}
 
 #[test]
 fn test_get_container_status() {
-    let mut docker_util = docker_shared::get_docker_util();
+    let mut docker_util = get_docker_util();
     let result = docker_util.check_if_container_exists("test_container");
 
     assert!(result.is_ok());
@@ -14,7 +18,7 @@ fn test_get_container_status() {
 
 #[test]
 fn test_get_running_container() {
-    let docker_util = docker_shared::get_docker_util();
+    let docker_util = get_docker_util();
     let running_container = docker_util.get_running_container();
 
     assert!(running_container.is_ok())
