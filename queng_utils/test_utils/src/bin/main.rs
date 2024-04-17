@@ -8,7 +8,6 @@ fn get_docker_util() -> DockerUtil {
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut docker_util = get_docker_util();
 
-    println!("Test get_or_start_container");
     let name = "nginx";
     let port = 80;
     let image = "nginx:latest";

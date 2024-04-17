@@ -21,7 +21,7 @@ pub struct DockerUtil {}
 
 impl DockerUtil {
     pub fn new() -> Result<Self, DockerError> {
-        return match Command::new("docker").arg("-v").status() {
+        return match Command::new("docker").arg("-v").spawn() {
             Ok(_) => Ok(Self {}),
             Err(e) => Err(DockerError::from(format!(
                 "Error connecting to Docker: {}",
