@@ -1,11 +1,13 @@
 use crate::prelude::DockerError;
-use docker_engine_api::client::{Client, ClientTrait};
-use docker_engine_api::container_create::CreateContainerFrom;
-use docker_engine_api::container_inspect::InspectedContainer;
-use docker_engine_api::containers_service::ContainersServiceTrait;
-use std::collections::HashMap;
+use std::process::Command;
 
-const DEFAULT_PLATFORM: &str = "linux";
+// There are multiple ways to spawn a child process and execute an arbitrary command on the machine:
+//
+// spawn — runs the program and returns a value with details
+// output — runs the program and returns the output
+// status — runs the program and returns the exit code |  io::Result<ExitStatus>
+// https://stackoverflow.com/questions/21011330/how-do-i-invoke-a-system-command-and-capture-its-output
+
 const DBG: bool = true;
 
 fn dbg_print(s: &str) {
@@ -14,88 +16,31 @@ fn dbg_print(s: &str) {
     }
 }
 
-pub struct DockerUtil {
-    client: Client,
-}
+#[derive(Debug, Copy, Clone)]
+pub struct DockerUtil {}
 
 impl DockerUtil {
     pub fn new() -> Result<Self, DockerError> {
-        let client = docker_engine_api::new("/var/run/docker.sock".to_string());
-        match client.ping() {
-            Ok(_) => {
-                dbg_print("Connected to Docker");
-            }
-            Err(e) => {
-                println!("Failed to connect to Docker: {}", e);
-                return Err(DockerError::from(e.to_string()));
-            }
+        return match Command::new("docker").arg("-v").status() {
+            Ok(_) => Ok(Self {}),
+            Err(e) => Err(DockerError::from(format!(
+                "Error connecting to Docker: {}",
+                e
+            ))),
         };
-
-        Ok(Self { client })
     }
 }
 
 impl DockerUtil {
-    /// Check if a container is running
-    pub fn check_if_container_exists(&mut self, container_id: &str) -> Result<bool, DockerError> {
-        // Somehow the client API has no way build in to check if a container is exists.
-        // So we have to improvise by calling the stats endpoint b/c no container, no stats...
-        return match self
-            .client
-            .containers
-            .get_stats_container(container_id, false, true)
-        {
-            Ok(_) => Ok(true),
-            Err(_) => Ok(false),
-        };
-    }
-
-    /// Check if the container is running
-    pub fn check_if_container_is_running(
-        &mut self,
-        container_id: &str,
-    ) -> Result<bool, DockerError> {
-        // Check if container exists.
-        let exists = self
-            .check_if_container_exists(container_id)
-            .expect("Failed to check if container exists");
-
-        // If container doesn't exists, return an error
-        if !exists {
-            return Err(DockerError::from(format!(
-                "Container doesn't exists: {}",
-                container_id
-            )));
-        }
-
-        // Get status report for container
-        let report = self
-            .get_container_report(container_id)
-            .expect("Failed to get container status report");
-
-        if report.state.running {
-            Ok(true)
-        } else {
-            Ok(false)
-        }
-    }
-
-    /// Implement this
-    pub fn get_running_container(&self) -> Result<(u16, String), DockerError> {
-        return Err(DockerError::from("NOT IMPLEMENTED"));
-    }
-
     /// Start a container
-    pub fn start_container(
+    pub fn get_or_start_container(
         &mut self,
         name: &str,
         image: &str,
-        cmd: Option<Vec<String>>,
         port: u16,
         reuse_server: bool,
-    ) -> Result<(u16, String), DockerError> {
+    ) -> Result<(String, u16), DockerError> {
         //
-        // Check if container already exists.
         dbg_print(" Check if container already exists.");
         let exists = self
             .check_if_container_exists(name)
@@ -103,85 +48,29 @@ impl DockerUtil {
 
         if exists {
             dbg_print(" Container already exists.");
-            // Check if container is running
-
-            dbg_print(" Check if container is running.");
-            let running = self
-                .check_if_container_is_running(name)
-                .expect("Failed to check if container is running");
-
-            // if the container is already running
-            if running {
-                dbg_print(" Container is running.");
-                // and if we want to re-use the running container
-                if reuse_server {
-                    // Return the active container name and port
-                    dbg_print(" Container should be reused.");
-
-                    //
-                    // implement get running
-                    let (port, container_name) = match self.get_running_container() {
-                        Ok((port, container_name)) => (port, container_name),
-                        Err(e) => return Err(e),
-                    };
-
-                    return Ok((port, container_name));
-                }
-
-                // Because we don't re-use the server, we need to stop the container first
-                dbg_print("Stopping running container b/c no re-use wanted.");
-                self.stop_container(name).expect("Failed to stop container");
+            if reuse_server {
+                dbg_print("Re-using running running container.");
+                return match self.get_running_container(name) {
+                    Ok((container_name, port)) => Ok((container_name, port)),
+                    Err(e) => return Err(e),
+                };
             }
+
+            dbg_print("Stopping running container b/c no re-use wanted.");
+            self.stop_container(name).expect("Failed to stop container");
         }
 
         dbg_print("Container doesn't exist.");
-        dbg_print("Building options.");
-        let mut options = CreateContainerFrom::default();
-        options.image = Some(image.to_string());
-        options.cmd = cmd;
-
-        dbg_print("Define exposed ports.");
-        let mut exposed_ports = HashMap::new();
-        exposed_ports.insert(port.to_string(), ());
-        // Expose the metric port if it doesn't conflict with the service port.
-        if port != 8080 {
-            exposed_ports.insert("8080/tcp".to_string(), ());
-        }
-        // Set the exposed ports
-        options.exposed_ports = Some(exposed_ports);
-
-        // Call to create a container for the provided image name
-        dbg_print("Create new container.");
-        let container_id =
-            match self
-                .client
-                .containers
-                .create_container(name, DEFAULT_PLATFORM, &options)
-            {
-                Ok(re) => re.id,
-                Err(e) => {
-                    return {
-                        dbg_print(&e.to_string());
-                        Err(DockerError::from(e.to_string()))
-                    }
-                }
-            };
-
-        // Start the container
-        match self.client.containers.start_container(&container_id) {
-            Ok(res) => res,
-            Err(e) => {
-                dbg_print(&e.to_string());
-                return Err(DockerError::from(e.to_string()));
-            }
+        dbg_print("Start new container.");
+        return match self.start_container(name, port, image) {
+            Ok((container_id, port)) => Ok((container_id, port)),
+            Err(e) => Err(e),
         };
-
-        Ok((port, container_id))
     }
 
     /// Stop a container
     pub fn stop_container(&mut self, container_id: &str) -> Result<(), DockerError> {
-        // Check if container already exists.
+        dbg_print(" Check if container already exists.");
         let exists = self
             .check_if_container_exists(container_id)
             .expect("Failed to check if container exists");
@@ -194,18 +83,16 @@ impl DockerUtil {
         }
 
         if exists {
-            // Check if container is already running
-            let running = self
-                .check_if_container_is_running(container_id)
-                .expect("Failed to check if container is running");
-
-            // if the container is running, if so, stop it
-            if running {
-                match self.client.containers.stop_container(container_id, 30) {
-                    Ok(_) => (),
-                    Err(e) => return Err(DockerError::from(e.to_string())),
-                }
-            }
+            dbg_print(" Container already exists. Stopping it.");
+            // Example: docker kill test-80
+            return match Command::new("docker kill").arg(container_id).status() {
+                Ok(_) => Ok(()),
+                Err(e) => Err(DockerError::from(format!(
+                    "Error stopping container {}: {}",
+                    container_id,
+                    e.to_string()
+                ))),
+            };
         }
 
         Ok(())
@@ -213,21 +100,79 @@ impl DockerUtil {
 }
 
 impl DockerUtil {
-    fn get_container_report(
-        &mut self,
+    /// Start a container
+    fn start_container(
+        &self,
         container_id: &str,
-    ) -> Result<InspectedContainer, DockerError> {
-        return match self
-            .client
-            .containers
-            .inspect_container(container_id, false)
+        port: u16,
+        image: &str,
+    ) -> Result<(String, u16), DockerError> {
+        // Example: docker run --rm --detach --publish 80:80 --name test-80 nginx:latest
+        return match Command::new("docker run")
+            .arg("--rm")
+            .arg("--detach")
+            .arg(format!("--publish {}:{}", port, port))
+            .arg(format!("--name {}", container_id))
+            .arg(image)
+            .output()
         {
-            Ok(report) => Ok(report),
-            Err(e) => {
-                dbg_print("[get_container_report]: Failed to get container report ");
-                dbg_print(&e.to_string());
-                Err(DockerError::from(e.to_string()))
+            Ok(out) => {
+                dbg_print(&format!("{}", String::from_utf8_lossy(&out.stdout)));
+                Ok((container_id.to_string(), port))
             }
+            Err(e) => Err(DockerError::from(format!(
+                "Error starting container {}: {}",
+                container_id,
+                e.to_string()
+            ))),
+        };
+    }
+
+    /// Either returns the name and port of a container if its running, otherwise an error.
+    fn get_running_container(&self, container_id: &str) -> Result<(String, u16), DockerError> {
+        let container = match Command::new("docker ps")
+            .arg(format!("--filter=name={}", container_id))
+            .arg("--format={{.Names}}")
+            .output()
+        {
+            Ok(out) => String::from_utf8_lossy(&out.stdout).to_string(),
+            Err(e) => {
+                return Err(DockerError::from(format!(
+                    "Error getting container {}: {}",
+                    container_id,
+                    e.to_string()
+                )));
+            }
+        };
+
+        if container.is_empty() {
+            return Err(DockerError::from(format!(
+                "Error no container found for ID: {}",
+                container_id,
+            )));
+        }
+
+        let parts = container.split("-").collect::<Vec<&str>>();
+
+        let container_name = parts
+            .first()
+            .expect("Failed to get container name")
+            .to_string();
+
+        let port = parts
+            .last()
+            .expect("Failed to get container port")
+            .parse::<u16>()
+            .expect("Failed to convert container port from string into u16");
+
+        return Ok((container_name, port));
+    }
+
+    /// Check if a container is running
+    fn check_if_container_exists(&mut self, container_id: &str) -> Result<bool, DockerError> {
+        return match self.get_running_container(container_id) {
+            Ok(_) => Ok(true),
+            Err(_) => Ok(false),
         };
     }
 }
