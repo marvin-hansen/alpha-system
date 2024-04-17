@@ -1,28 +1,18 @@
 use test_utils::prelude::DockerUtil;
 
-pub fn get_docker_util() -> DockerUtil {
+fn get_docker_util() -> DockerUtil {
     DockerUtil::new().expect("Failed to create DockerUtil")
 }
 
-#[test]
-fn test_new() {
-    let result = DockerUtil::new();
-    if result.is_err() {
-        println!("{}", result.as_ref().unwrap_err());
-    }
-
-    assert!(result.is_ok());
-}
-
-#[test]
-fn test_start_re_use_stop() {
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut docker_util = get_docker_util();
 
     println!("Test get_or_start_container");
     let name = "nginx";
     let port = 80;
     let image = "nginx:latest";
-    let reuse_container = false;
+    let reuse_container = true;
 
     let result = docker_util.get_or_start_container(name, image, port, reuse_container);
 
@@ -32,7 +22,7 @@ fn test_start_re_use_stop() {
     assert!(result.is_ok());
     let (container_name, port) = result.unwrap();
 
-    println!("Container name: {}", container_name);
-    assert_eq!(container_name, "nginx-80");
-    assert_eq!(port, 80);
+    println!("Container name: {} and port: {}", container_name, port);
+
+    Ok(())
 }

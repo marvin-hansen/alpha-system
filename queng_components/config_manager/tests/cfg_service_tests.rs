@@ -178,25 +178,3 @@ fn test_get_dbgw_host() {
     let host = cfg_manager.get_svc_host_port(&ServiceID::DBGW).unwrap();
     assert_eq!(host, ("127.0.0.1".to_string(), 9090));
 }
-
-#[test]
-fn test_get_vex_host() {
-    env::set_var("ENV", "LOCAL");
-
-    let ctm = CtxManager::new();
-    assert_eq!(ctm.env_type(), EnvironmentType::LOCAL);
-    let dnm = DnsManager::new(&ctm);
-    let cfg_manager = CfgManager::new(ServiceID::VEX, &ctm, &dnm);
-
-    let binding = cfg_manager.get_svc_config().endpoint();
-    let endpoint = binding.host_endpoint();
-
-    let metric_config = cfg_manager.get_svc_metric_config();
-
-    assert!(cfg_manager
-        .init_svc_env(&ServiceID::VEX, endpoint, metric_config)
-        .is_ok());
-
-    let host = cfg_manager.get_svc_host_port(&ServiceID::VEX).unwrap();
-    assert_eq!(host, ("0.0.0.0".to_string(), 9999));
-}

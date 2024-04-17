@@ -38,31 +38,33 @@ impl DockerUtil {
         name: &str,
         image: &str,
         port: u16,
-        reuse_server: bool,
+        reuse_container: bool,
     ) -> Result<(String, u16), DockerError> {
-        //
-        dbg_print(" Check if container already exists.");
+        let container_id = &format!("{}-{}", name, port);
+
+        dbg_print("Check if container already exists.");
         let exists = self
-            .check_if_container_exists(name)
+            .check_if_container_exists(container_id)
             .expect("Failed to check if container exists");
 
         if exists {
             dbg_print(" Container already exists.");
-            if reuse_server {
+            if reuse_container {
                 dbg_print("Re-using running running container.");
-                return match self.get_running_container(name) {
+                return match self.get_running_container(container_id) {
                     Ok((container_name, port)) => Ok((container_name, port)),
                     Err(e) => return Err(e),
                 };
             }
 
             dbg_print("Stopping running container b/c no re-use wanted.");
-            self.stop_container(name).expect("Failed to stop container");
+            self.stop_container(container_id)
+                .expect("Failed to stop container");
         }
 
         dbg_print("Container doesn't exist.");
         dbg_print("Start new container.");
-        return match self.start_container(name, port, image) {
+        return match self.start_container(container_id, port, image) {
             Ok((container_id, port)) => Ok((container_id, port)),
             Err(e) => Err(e),
         };
@@ -70,7 +72,7 @@ impl DockerUtil {
 
     /// Stop a container
     pub fn stop_container(&mut self, container_id: &str) -> Result<(), DockerError> {
-        dbg_print(" Check if container already exists.");
+        dbg_print("Check if container already exists.");
         let exists = self
             .check_if_container_exists(container_id)
             .expect("Failed to check if container exists");
@@ -85,7 +87,11 @@ impl DockerUtil {
         if exists {
             dbg_print(" Container already exists. Stopping it.");
             // Example: docker kill test-80
-            return match Command::new("docker kill").arg(container_id).status() {
+            return match Command::new("docker")
+                .arg("kill")
+                .arg(container_id)
+                .status()
+            {
                 Ok(_) => Ok(()),
                 Err(e) => Err(DockerError::from(format!(
                     "Error stopping container {}: {}",
@@ -101,23 +107,36 @@ impl DockerUtil {
 
 impl DockerUtil {
     /// Start a container
-    fn start_container(
+    pub fn start_container(
         &self,
         container_id: &str,
         port: u16,
         image: &str,
     ) -> Result<(String, u16), DockerError> {
         // Example: docker run --rm --detach --publish 80:80 --name test-80 nginx:latest
-        return match Command::new("docker run")
+        dbg_print(&format!(
+            "[start_container]: Starting new container: {}.",
+            container_id
+        ));
+
+        let port_publish = format!("{}:{}", port, port);
+
+        return match Command::new("docker")
+            .arg("run")
             .arg("--rm")
             .arg("--detach")
-            .arg(format!("--publish {}:{}", port, port))
-            .arg(format!("--name {}", container_id))
+            .arg("--publish")
+            .arg(port_publish)
+            .arg("--name")
+            .arg(container_id)
             .arg(image)
-            .output()
+            .status()
         {
-            Ok(out) => {
-                dbg_print(&format!("{}", String::from_utf8_lossy(&out.stdout)));
+            Ok(_) => {
+                dbg_print(&format!(
+                    "[start_container]: {}",
+                    container_id //String::from_utf8_lossy(&out.stdout)
+                ));
                 Ok((container_id.to_string(), port))
             }
             Err(e) => Err(DockerError::from(format!(
@@ -130,7 +149,8 @@ impl DockerUtil {
 
     /// Either returns the name and port of a container if its running, otherwise an error.
     fn get_running_container(&self, container_id: &str) -> Result<(String, u16), DockerError> {
-        let container = match Command::new("docker ps")
+        let container = match Command::new("docker")
+            .arg("ps")
             .arg(format!("--filter=name={}", container_id))
             .arg("--format={{.Names}}")
             .output()
@@ -153,19 +173,14 @@ impl DockerUtil {
         }
 
         let parts = container.split("-").collect::<Vec<&str>>();
-
-        let container_name = parts
-            .first()
-            .expect("Failed to get container name")
-            .to_string();
-
         let port = parts
             .last()
             .expect("Failed to get container port")
+            .trim()
             .parse::<u16>()
             .expect("Failed to convert container port from string into u16");
 
-        return Ok((container_name, port));
+        return Ok((container.trim().to_string(), port));
     }
 
     /// Check if a container is running
