@@ -6,7 +6,7 @@ pub(crate) fn clickhouse_container_config() -> ContainerConfig<'static> {
     ContainerConfig::new(
         "clickhouse",
         "clickhouse/clickhouse-server",
-        "24.3.2",
+        "22.3.18",
         9000,
         true,
     )
