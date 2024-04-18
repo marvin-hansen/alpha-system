@@ -8,6 +8,6 @@ pub(crate) fn clickhouse_container_config() -> ContainerConfig<'static> {
         "clickhouse/clickhouse-server",
         "24.3.2",
         9000,
-        false,
+        true,
     )
 }

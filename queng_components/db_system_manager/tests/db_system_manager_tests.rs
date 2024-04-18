@@ -4,6 +4,7 @@ use ctx_manager::CtxManager;
 use db_system_manager::SystemDBManager;
 use dns_manager::DnsManager;
 use std::env;
+use std::process::Command;
 use std::thread::sleep;
 use std::time::Duration;
 use test_utils::prelude::TestEnv;
@@ -40,6 +41,21 @@ async fn test_new() {
     let config_manager = CfgManager::new(ServiceID::Default, &ctxm, &dnm);
     assert_eq!(config_manager.get_svc_id(), ServiceID::Default);
     assert_eq!(config_manager.get_env_type(), EnvironmentType::CI);
+
+    let out = Command::new("curl")
+        .arg("-vso")
+        .arg("/dev/null")
+        .arg("--connect-timeout")
+        .arg("5")
+        .arg("localhost:9000")
+        .output();
+
+    assert!(out.is_ok());
+    let out = out.unwrap();
+
+    println!("status: {}", out.status);
+    println!("stdout: {}", String::from_utf8_lossy(&out.stdout));
+    println!("stderr: stderr{}", String::from_utf8_lossy(&out.stderr));
 
     let clickhouse_config = ClickHouseConfig::new(
         "127.0.0.1".to_string(),
