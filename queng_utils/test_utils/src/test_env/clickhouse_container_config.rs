@@ -1,11 +1,13 @@
 use crate::prelude::ContainerConfig;
 
-pub(crate) fn clickhouse_container_config(reuse_container: bool) -> ContainerConfig<'static> {
+pub(crate) fn clickhouse_container_config() -> ContainerConfig<'static> {
+    // Official container image for ClickHouse
+    // https://hub.docker.com/r/clickhouse/clickhouse-server/tags
     ContainerConfig::new(
         "clickhouse",
-        "bitnami/clickhouse",
-        "24.3.2-debian-12-r2",
+        "clickhouse/clickhouse-server",
+        "24.3.2",
         9000,
-        reuse_container,
+        true,
     )
 }

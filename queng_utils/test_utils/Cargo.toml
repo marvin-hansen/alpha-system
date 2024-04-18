@@ -8,6 +8,16 @@ repository.workspace = true
 authors.workspace = true
 
 
+[[bin]]
+name = "test_docker_bin"
+path = "src/docker_bin/main.rs"
+
+
+[[bin]]
+name = "test_env_bin"
+path = "src/test_env_bin/main.rs"
+
+
 [lib]
 name = "test_utils"
 path = "src/lib.rs"

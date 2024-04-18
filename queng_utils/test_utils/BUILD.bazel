@@ -30,6 +30,34 @@ rust_binary(
     visibility = ["//visibility:public"],
 )
 
+
+rust_binary(
+    name = "test_env_bin",
+    crate_root = "src/test_env_bin/main.rs",
+    srcs = glob(["src/test_env_bin/*.rs"]),
+    aliases = aliases(),
+    proc_macro_deps = all_crate_deps(proc_macro = True),
+    rustc_flags = select({
+       "//:release": [
+            "-Clto",
+            "-Ccodegen-units=1",
+            "-Cpanic=abort",
+            "-Copt-level=3",
+            "-Cstrip=symbols",
+            ],
+        "//conditions:default":
+        [
+           "-Copt-level=0",
+        ],
+    }),
+    deps = all_crate_deps(
+        normal = True,
+    ) + [
+        ":test_utils",
+    ],
+    visibility = ["//visibility:public"],
+)
+
 rust_library(
     name = "test_utils",
     crate_root = "src/lib.rs",

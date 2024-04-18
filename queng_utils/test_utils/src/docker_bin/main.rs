@@ -26,6 +26,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let (container_name, port) = result.unwrap();
     assert_eq!(container_name, "nginx-80");
     assert_eq!(port, 80);
+
+    let exists = docker_util
+        .check_if_container_exists(&container_name)
+        .expect("Failed to check if container exists");
+    assert!(exists);
+
     println!(
         "✅ OK: Container name: {} and port: {}",
         container_name, port
@@ -51,6 +57,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let (container_name, port) = result.unwrap();
     assert_eq!(container_name, "nginx-80");
     assert_eq!(port, 80);
+
+    let exists = docker_util
+        .check_if_container_exists(&container_name)
+        .expect("Failed to check if container exists");
+    assert!(exists);
+
     println!(
         "✅ OK: Container name: {} and port: {}",
         container_name, port
@@ -70,6 +82,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
 
     assert!(result.is_ok());
+
+    let exists = docker_util
+        .check_if_container_exists(&container_name)
+        .expect("Failed to check if container exists");
+    assert!(!exists);
+
     println!("✅ OK: Container stopped");
     println!();
 
