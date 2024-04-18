@@ -42,7 +42,7 @@ async fn test_new() {
     assert_eq!(config_manager.get_env_type(), EnvironmentType::CI);
 
     let clickhouse_config = ClickHouseConfig::new(
-        "0.0.0.0".to_string(),
+        "127.0.0.1".to_string(),
         9000,
         "".to_string(),
         "".to_string(),
@@ -51,6 +51,5 @@ async fn test_new() {
 
     let sdbm = SystemDBManager::new(&clickhouse_config).await;
     assert!(sdbm.is_ok())
-
     // Unwrap the result and perform tests
 }
