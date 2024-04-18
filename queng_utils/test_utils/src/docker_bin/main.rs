@@ -11,9 +11,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!(">> Test get_or_start_container: Create a new container");
     println!();
 
-    let name = "nginx";
-    let port = 80;
-    let image = "nginx:latest";
+    let name = "clickhouse";
+    let port = 9000;
+    let image = "clickhouse/clickhouse-server:24.3.2";
     let reuse_container = false;
 
     let result = docker_util.get_or_start_container(name, image, port, reuse_container);
@@ -24,8 +24,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     assert!(result.is_ok());
 
     let (container_name, port) = result.unwrap();
-    assert_eq!(container_name, "nginx-80");
-    assert_eq!(port, 80);
+    assert_eq!(container_name, "clickhouse-9000");
+    assert_eq!(port, 9000);
 
     let exists = docker_util
         .check_if_container_exists(&container_name)
@@ -55,8 +55,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     assert!(result.is_ok());
 
     let (container_name, port) = result.unwrap();
-    assert_eq!(container_name, "nginx-80");
-    assert_eq!(port, 80);
+    assert_eq!(container_name, "clickhouse-9000");
+    assert_eq!(port, 9000);
 
     let exists = docker_util
         .check_if_container_exists(&container_name)
