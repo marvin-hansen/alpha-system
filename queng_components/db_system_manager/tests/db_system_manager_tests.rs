@@ -2,6 +2,7 @@ use clickhouse_rs::{Block, Pool};
 use common::prelude::{ClickHouseConfig, EnvironmentType, ServiceID};
 use config_manager::CfgManager;
 use ctx_manager::CtxManager;
+use db_system_manager::SystemDBManager;
 use dns_manager::DnsManager;
 use std::env;
 use std::process::Command;
@@ -37,7 +38,7 @@ async fn test_new() {
     assert_eq!(config_manager.get_svc_id(), ServiceID::Default);
     assert_eq!(config_manager.get_env_type(), EnvironmentType::CI);
 
-    let _clickhouse_config = ClickHouseConfig::new(
+    let clickhouse_config = ClickHouseConfig::new(
         "127.0.0.1".to_string(),
         9000,
         "default".to_string(),
@@ -126,7 +127,10 @@ async fn test_new() {
         println!("Found payment {}: {}", id, amount);
     }
 
-    // let sdbm = SystemDBManager::new(&clickhouse_config).await;
-    // assert!(sdbm.is_ok())
+    drop(client);
+    drop(pool);
+
+    let sdbm = SystemDBManager::new(&clickhouse_config).await;
+    assert!(sdbm.is_ok())
     // Unwrap the result and perform tests
 }
