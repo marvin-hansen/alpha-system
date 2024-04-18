@@ -27,22 +27,6 @@ sh_binary(
         srcs = ["buildbuddy_setup_docker_auth.sh"]
 )
 
-filegroup(
-    name = "build",
-    srcs = [
-        "//queng_cli:build",
-        "//queng_clients:build",
-        "//queng_common:build",
-        "//queng_components:build",
-        "//queng_proto:rust_proto",
-        "//queng_providers:build",
-        "//queng_sbe:build",
-        "//queng_services:build",
-        "//queng_specs:build",
-        "//queng_utils:build",
-    ],
-    visibility = ["//visibility:public"],
-)
 
 filegroup(
     name = "doc",

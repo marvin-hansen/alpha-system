@@ -41,7 +41,13 @@ async fn test_new() {
     assert_eq!(config_manager.get_svc_id(), ServiceID::Default);
     assert_eq!(config_manager.get_env_type(), EnvironmentType::CI);
 
-    let clickhouse_config = ClickHouseConfig::default();
+    let clickhouse_config = ClickHouseConfig::new(
+        "0.0.0.0".to_string(),
+        9000,
+        "".to_string(),
+        "".to_string(),
+        "default".to_string(),
+    );
 
     let sdbm = SystemDBManager::new(&clickhouse_config).await;
     assert!(sdbm.is_ok())
