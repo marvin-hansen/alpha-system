@@ -1,11 +1,9 @@
-use clickhouse_rs::{Block, Pool};
 use common::prelude::{ClickHouseConfig, EnvironmentType, ServiceID};
 use config_manager::CfgManager;
 use ctx_manager::CtxManager;
 use db_system_manager::SystemDBManager;
 use dns_manager::DnsManager;
 use std::env;
-use std::process::Command;
 use std::thread::sleep;
 use std::time::Duration;
 use test_utils::prelude::TestEnv;
@@ -46,91 +44,6 @@ async fn test_new() {
         "default".to_string(),
     );
 
-    // Try a manual connect
-    let out = Command::new("curl")
-        .arg("-vso")
-        .arg("/dev/null")
-        .arg("--connect-timeout")
-        .arg("5")
-        .arg("localhost:8123")
-        .output();
-
-    assert!(out.is_ok());
-    let out = out.unwrap();
-
-    println!("status: {}", out.status);
-    println!("stdout: {}", String::from_utf8_lossy(&out.stdout));
-    println!("stderr: stderr{}", String::from_utf8_lossy(&out.stderr));
-
-    let out = Command::new("docker")
-        .arg("exec")
-        .arg("clickhouse-9000")
-        .arg("cat")
-        .arg("/var/log/clickhouse-server/clickhouse-server.err.log")
-        .output();
-
-    assert!(out.is_ok());
-    let out = out.unwrap();
-
-    println!("status: {}", out.status);
-    println!("stdout: {}", String::from_utf8_lossy(&out.stdout));
-    println!("stderr: stderr{}", String::from_utf8_lossy(&out.stderr));
-
-    let ddl = r"
-        CREATE TABLE IF NOT EXISTS payment (
-            customer_id  UInt32,
-            amount       UInt32,
-            account_name Nullable(FixedString(3))
-        ) Engine=Memory";
-
-    let block = Block::new()
-        .column("customer_id", vec![1_u32, 3, 5, 7, 9])
-        .column("amount", vec![2_u32, 4, 6, 8, 10])
-        .column(
-            "account_name",
-            vec![Some("foo"), None, None, None, Some("bar")],
-        );
-
-    let dsn = "tcp://default:@127.0.0.1:9000/default";
-    println!("✅: database_url");
-
-    let pool = Pool::new(dsn);
-    println!("✅: pool");
-    println!("Pool config: {:?}", &pool);
-
-    println!("Trying to get DB handle...");
-    let mut client = pool.get_handle().await.expect("Failed to connect to DB");
-    println!("✅: client");
-
-    client
-        .execute(ddl)
-        .await
-        .expect("Failed to execute DDL query");
-    println!("✅: DDL");
-
-    client
-        .insert("payment", block)
-        .await
-        .expect("Failed to insert data");
-    println!("✅: insert");
-
-    let block = client
-        .query("SELECT * FROM payment")
-        .fetch_all()
-        .await
-        .expect("Failed to fetch data");
-    println!("✅: query");
-
-    for row in block.rows() {
-        let id: u32 = row.get("customer_id").unwrap();
-        let amount: u32 = row.get("amount").unwrap();
-        println!("Found payment {}: {}", id, amount);
-    }
-
-    drop(client);
-    drop(pool);
-
     let sdbm = SystemDBManager::new(&clickhouse_config).await;
     assert!(sdbm.is_ok())
-    // Unwrap the result and perform tests
 }

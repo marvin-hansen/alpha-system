@@ -63,7 +63,7 @@ impl TestEnv {
 }
 
 fn get_docker_util() -> Result<DockerUtil, DockerError> {
-    return match DockerUtil::with_debug() {
+    return match DockerUtil::new() {
         Ok(docker_util) => Ok(docker_util),
         Err(e) => Err(e),
     };
