@@ -11,13 +11,14 @@ use test_utils::prelude::TestEnv;
 fn setup() {
     // Set the environment variable.
     env::set_var("ENV", "CI");
+    // Internal CI DNS server.
     env::set_var("DNS_SERVER", "9.9.9.9");
 
     // Initialize the test environment to ensure all containers are up and running.
     let _test_env = TestEnv::setup_ci().expect("Failed to setup test env");
-    // Give the container some time to complete initialization.
+    // Give the container some extra time to complete initialization.
     // Otherwise, you may get a connection refused error. Adjust the time if needed.
-    sleep(Duration::from_millis(500));
+    sleep(Duration::from_millis(700));
 }
 
 #[tokio::test]
@@ -44,4 +45,6 @@ async fn test_new() {
 
     let sdbm = SystemDBManager::new(&clickhouse_config).await;
     assert!(sdbm.is_ok())
+
+    // Unwrap the result and perform tests
 }
