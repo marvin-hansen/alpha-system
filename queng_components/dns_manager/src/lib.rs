@@ -44,15 +44,10 @@ impl DnsManager {
 
         // Build the internal cluster DNS resolver
         let internal_dns_host = match ctx.env_type() {
-            EnvironmentType::LOCAL => "127.0.0.1",
-            EnvironmentType::CI => "127.0.0.1",
-            EnvironmentType::CLUSTER => match ctx.int_dns_server() {
-                Some(cluster_dns_server) => cluster_dns_server,
-                None => {
-                    panic!("Failed to find cluster DNS_SERVER env. Ensure DNS_SERVER is set as environment variable in deployment.yaml");
-                }
-            },
-            EnvironmentType::UnknownEnv => "1.1.1.1",
+            EnvironmentType::LOCAL => "127.0.0.1".to_owned(),
+            EnvironmentType::CI => Self::get_internal_context_dns(ctx),
+            EnvironmentType::CLUSTER => Self::get_internal_context_dns(ctx),
+            EnvironmentType::UnknownEnv => "1.1.1.1".to_string(),
         };
 
         let internal_dns = format!("{}{}", internal_dns_host, ":53");
@@ -64,6 +59,15 @@ impl DnsManager {
             external_resolver_config,
             external_dns,
         }
+    }
+
+    fn get_internal_context_dns(ctx: &CtxManager) -> String {
+        return match ctx.int_dns_server() {
+            Some(cluster_dns_server) => cluster_dns_server.to_string(),
+            None => {
+                panic!("Failed to find cluster DNS_SERVER env. Ensure DNS_SERVER is set as environment variable in deployment.yaml");
+            }
+        };
     }
 }
 

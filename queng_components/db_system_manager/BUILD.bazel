@@ -19,6 +19,41 @@ rust_library(
     visibility = ["//visibility:public"],
 )
 
+rust_test(
+    name = "tests",
+    srcs = glob([
+        "tests/**",
+    ]),
+    crate_root = "tests/mod.rs",
+    exec_properties = {
+        "test.workload-isolation-type": "firecracker",
+        "test.init-dockerd": "true",
+        "test.recycle-runner": "true",
+        # We don't want different different db tests to be assigned to the same recycled runner,
+        # because we can't fit all db docker images with the default disk limit.
+        "test.runner-recycling-key": "clickhouse",
+    },
+    tags = ["docker","integration"],
+    deps = all_crate_deps(
+        normal = True,
+        normal_dev = True,
+    ) + [
+        ":db_system_manager",
+        "//queng_common:common",
+        "//queng_components/ctx_manager:ctx_manager",
+        "//queng_components/dns_manager:dns_manager",
+        "//queng_specs/db_specs:db_specs",
+        "//queng_specs/exchange_specs:exchange_specs",
+        "//queng_specs/service_specs:service_specs",
+        "//queng_components/config_manager:config_manager",
+        "//queng_utils/db_utils:db_utils",
+        "//queng_utils/test_utils:test_utils",
+    ],
+    proc_macro_deps = all_crate_deps(
+        proc_macro_dev = True
+    ),
+    visibility = ["//visibility:public"],
+)
 
 rust_doc(
     name = "doc",
