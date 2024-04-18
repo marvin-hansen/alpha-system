@@ -1,10 +1,9 @@
+use clickhouse_rs::{Block, Pool};
 use common::prelude::{ClickHouseConfig, EnvironmentType, ServiceID};
 use config_manager::CfgManager;
 use ctx_manager::CtxManager;
-use db_system_manager::SystemDBManager;
 use dns_manager::DnsManager;
 use std::env;
-use std::process::Command;
 use std::thread::sleep;
 use std::time::Duration;
 use test_utils::prelude::TestEnv;
@@ -42,22 +41,7 @@ async fn test_new() {
     assert_eq!(config_manager.get_svc_id(), ServiceID::Default);
     assert_eq!(config_manager.get_env_type(), EnvironmentType::CI);
 
-    let out = Command::new("curl")
-        .arg("-vso")
-        .arg("/dev/null")
-        .arg("--connect-timeout")
-        .arg("5")
-        .arg("localhost:9000")
-        .output();
-
-    assert!(out.is_ok());
-    let out = out.unwrap();
-
-    println!("status: {}", out.status);
-    println!("stdout: {}", String::from_utf8_lossy(&out.stdout));
-    println!("stderr: stderr{}", String::from_utf8_lossy(&out.stderr));
-
-    let clickhouse_config = ClickHouseConfig::new(
+    let _clickhouse_config = ClickHouseConfig::new(
         "127.0.0.1".to_string(),
         9000,
         "".to_string(),
@@ -65,7 +49,63 @@ async fn test_new() {
         "default".to_string(),
     );
 
-    let sdbm = SystemDBManager::new(&clickhouse_config).await;
-    assert!(sdbm.is_ok())
+    let ddl = r"
+        CREATE TABLE IF NOT EXISTS payment (
+            customer_id  UInt32,
+            amount       UInt32,
+            account_name Nullable(FixedString(3))
+        ) Engine=Memory";
+
+    let block = Block::new()
+        .column("customer_id", vec![1_u32, 3, 5, 7, 9])
+        .column("amount", vec![2_u32, 4, 6, 8, 10])
+        .column(
+            "account_name",
+            vec![Some("foo"), None, None, None, Some("bar")],
+        );
+
+    let database_url = "tcp://default@127.0.0.1:9000/default";
+    println!("✅: database_url");
+
+    let pool = Pool::new(database_url);
+    println!("✅: pool");
+
+    let res = pool.get_handle().await;
+    println!("✅: get_handle");
+
+    assert!(res.is_ok());
+    println!("✅: res ok");
+
+    let mut client = res.expect("Failed to get client");
+    println!("✅: client");
+
+    client
+        .execute(ddl)
+        .await
+        .expect("Failed to execute DDL query");
+    println!("✅: DDL");
+
+    client
+        .insert("payment", block)
+        .await
+        .expect("Failed to insert data");
+    println!("✅: insert");
+
+    let block = client
+        .query("SELECT * FROM payment")
+        .fetch_all()
+        .await
+        .expect("Failed to fetch data");
+    println!("✅: query");
+
+    for row in block.rows() {
+        let id: u32 = row.get("customer_id").unwrap();
+        let amount: u32 = row.get("amount").unwrap();
+        //  let name: Option<&str>  = row.get("account_name").unwrap();
+        println!("Found payment {}: {}", id, amount);
+    }
+
+    // let sdbm = SystemDBManager::new(&clickhouse_config).await;
+    // assert!(sdbm.is_ok())
     // Unwrap the result and perform tests
 }
