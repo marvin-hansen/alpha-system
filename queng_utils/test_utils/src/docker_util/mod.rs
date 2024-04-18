@@ -104,7 +104,7 @@ impl DockerUtil {
     ) -> Result<(String, u16), DockerError> {
         // Unpack values from container config
         let name = container_config.name();
-        let image = container_config.image();
+        let image = &container_config.container_image();
         let port = container_config.port();
         let reuse_container = container_config.reuse_container();
 

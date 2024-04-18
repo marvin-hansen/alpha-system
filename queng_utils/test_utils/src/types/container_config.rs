@@ -4,6 +4,7 @@ use std::fmt::Display;
 pub struct ContainerConfig<'l> {
     name: &'l str,
     image: &'l str,
+    tag: &'l str,
     port: u16,
     reuse_container: bool,
 }
@@ -15,6 +16,7 @@ impl<'l> ContainerConfig<'l> {
     ///
     /// * `name` - The name of the container.
     /// * `image` - The image to use for the container.
+    /// * `tag` - The tag of the image.
     /// * `port` - The port number for the container.
     /// * `reuse_container` - A boolean flag indicating whether to reuse an existing container if found.
     ///
@@ -27,12 +29,19 @@ impl<'l> ContainerConfig<'l> {
     /// ```
     /// use test_utils::prelude::ContainerConfig;
     ///
-    /// let container_config = ContainerConfig::new("my_container", "nginx:latest", 80, false);
+    /// let container_config = ContainerConfig::new("my_container", "nginx",":latest" ,80, false);
     /// ```
-    pub fn new(name: &'l str, image: &'l str, port: u16, reuse_container: bool) -> Self {
+    pub fn new(
+        name: &'l str,
+        image: &'l str,
+        tag: &'l str,
+        port: u16,
+        reuse_container: bool,
+    ) -> Self {
         Self {
             name,
             image,
+            tag,
             port,
             reuse_container,
         }
@@ -43,8 +52,8 @@ impl<'l> ContainerConfig<'l> {
     pub fn name(&self) -> &'l str {
         self.name
     }
-    pub fn image(&self) -> &'l str {
-        self.image
+    pub fn container_image(&self) -> String {
+        format!("{}:{}", self.image, self.tag)
     }
     pub fn port(&self) -> u16 {
         self.port
@@ -58,8 +67,8 @@ impl Display for ContainerConfig<'_> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(
             f,
-            "name: {}, image: {}, port: {}, reuse_container: {}",
-            self.name, self.image, self.port, self.reuse_container
+            "name: {}, image: {}:{}, port: {}, reuse_container: {}",
+            self.name, self.image, self.tag, self.port, self.reuse_container
         )
     }
 }
