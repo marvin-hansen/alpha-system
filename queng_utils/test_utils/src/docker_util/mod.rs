@@ -255,14 +255,16 @@ impl DockerUtil {
             container_id
         ));
 
-        // let port_publish = format!("{}:{}", port, port);
+        let port_publish = format!("{}:{}", port, port);
         let container_name = format!("{}", container_id);
 
         return match Command::new("docker")
             .arg("run")
             .arg("--rm")
             .arg("--detach")
-            .arg("--network=host")
+            // .arg("--network=host")
+            .arg("--publish")
+            .arg(port_publish)
             .arg("--name")
             .arg(container_name)
             .arg(image)
