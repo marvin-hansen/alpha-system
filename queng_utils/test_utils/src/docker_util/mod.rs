@@ -148,6 +148,8 @@ impl DockerUtil {
     ) -> Result<(String, u16), DockerError> {
         let container_id = &format!("{}-{}", name, port);
 
+        println!("Container ID: {}", container_id);
+
         self.dbg_print("Check if container already exists.");
         let exists = self
             .check_if_container_exists(container_id)
@@ -254,6 +256,7 @@ impl DockerUtil {
         ));
 
         let port_publish = format!("{}:{}", port, port);
+        let container_name = format!("{}", container_id);
 
         return match Command::new("docker")
             .arg("run")
@@ -262,7 +265,7 @@ impl DockerUtil {
             .arg("--publish")
             .arg(port_publish)
             .arg("--name")
-            .arg(container_id)
+            .arg(container_name)
             .arg(image)
             .status()
         {
@@ -336,7 +339,7 @@ impl DockerUtil {
     ///
     /// Returns `Ok(true)` if the container exists, `Ok(false)` if the container does not exist, or `Err(DockerError)` if an error occurred.
     ///
-    fn check_if_container_exists(&mut self, container_id: &str) -> Result<bool, DockerError> {
+    pub fn check_if_container_exists(&mut self, container_id: &str) -> Result<bool, DockerError> {
         return match self.get_running_container(container_id) {
             Ok(_) => Ok(true),
             Err(_) => Ok(false),
