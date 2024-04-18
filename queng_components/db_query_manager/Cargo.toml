@@ -16,9 +16,11 @@ path = "src/lib.rs"
 [dependencies]
 # Internal crates
 common = { workspace = true }
+db_utils = { workspace = true }
+test_utils = { workspace = true }
+
 # External crates
 chrono = { workspace = true }
-db_utils = { workspace = true }
 klickhouse = { workspace = true }
 futures = { workspace = true }
 rust_decimal = { workspace = true }

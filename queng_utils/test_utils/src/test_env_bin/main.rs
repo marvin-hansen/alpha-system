@@ -19,7 +19,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("✅ OK: Container name: {} created", container_name);
     println!();
 
-    // Pause execution to check Docker UI/CLI if the container is up & running
+    // Give the container some time to complete initialization.
+    // Otherwise, you may get a connection refused error. Adjust the time if needed.
     thread::sleep(five_seconds);
 
     // At a later stage, containers will be re-used or re-created
