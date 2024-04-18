@@ -1,4 +1,4 @@
-use crate::prelude::DockerError;
+use crate::prelude::{ContainerConfig, DockerError};
 use std::process::Command;
 
 // There are multiple ways to spawn a child process and execute an arbitrary command on the machine:
@@ -8,21 +8,62 @@ use std::process::Command;
 // status — runs the program and returns the exit code |  io::Result<ExitStatus>
 // https://stackoverflow.com/questions/21011330/how-do-i-invoke-a-system-command-and-capture-its-output
 
-const DBG: bool = true;
-
-fn dbg_print(s: &str) {
-    if DBG {
-        println!("[DockerUtil]: {}", s);
-    }
+#[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq)]
+pub struct DockerUtil {
+    dbg: bool,
 }
 
-#[derive(Debug, Copy, Clone)]
-pub struct DockerUtil {}
-
 impl DockerUtil {
+    /// Create a new instance of the `DockerUtil` struct.
+    ///
+    /// # Returns
+    ///
+    /// Returns a new instance of the `DockerUtil` struct with default values.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use test_utils::prelude::DockerUtil;
+    ///
+    /// // Requires running Docker. Start Docker and uncomment.
+    /// //let docker_util = DockerUtil::new();
+    /// ```
+    ///
     pub fn new() -> Result<Self, DockerError> {
+        Self::build(false)
+    }
+
+    /// Create a new instance of the `DockerUtil` struct with debug mode enabled.
+    ///
+    /// # Returns
+    ///
+    /// Returns a `Result` containing a new instance of the `DockerUtil` struct with debug mode enabled, or a `DockerError` if an error occurred.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use test_utils::prelude::DockerUtil;
+    ///
+    /// // Requires running Docker. Start Docker and uncomment.
+    /// //let docker_util = DockerUtil::with_debug().expect("Failed to create DockerUtil with debug mode");
+    /// ```
+    pub fn with_debug() -> Result<Self, DockerError> {
+        Self::build(true)
+    }
+
+    /// Build a new instance of the `DockerUtil` struct with the given debug flag.
+    ///
+    /// # Arguments
+    ///
+    /// * `dbg` - A boolean flag indicating whether to enable debug mode.
+    ///
+    /// # Returns
+    ///
+    /// Returns a `Result` containing a new instance of the `DockerUtil` struct if successful, or a `DockerError` if an error occurred.
+    ///
+    fn build(dbg: bool) -> Result<Self, DockerError> {
         return match Command::new("docker").arg("-v").spawn() {
-            Ok(_) => Ok(Self {}),
+            Ok(_) => Ok(Self { dbg }),
             Err(e) => Err(DockerError::from(format!(
                 "Error connecting to Docker: {}",
                 e
@@ -31,8 +72,73 @@ impl DockerUtil {
     }
 }
 
+impl Default for DockerUtil {
+    fn default() -> Self {
+        Self::new().expect("Failed to create DockerUtil")
+    }
+}
+
 impl DockerUtil {
-    /// Start a container
+    fn dbg_print(&self, s: &str) {
+        if self.dbg {
+            println!("[DockerUtil]: {}", s);
+        }
+    }
+}
+
+impl DockerUtil {
+    /// Gets an existing container or starts a new one with the specified configuration
+    ///
+    /// # Arguments
+    ///
+    /// * `container_config` - The configuration of the container.
+    ///
+    /// # Returns
+    ///
+    /// Returns a tuple containing the container name and port if successful,
+    /// or a `DockerError` if an error occurs.
+    ///
+    pub fn get_or_start_container_config(
+        &mut self,
+        container_config: &ContainerConfig,
+    ) -> Result<(String, u16), DockerError> {
+        // Unpack values from container config
+        let name = container_config.name();
+        let image = container_config.image();
+        let port = container_config.port();
+        let reuse_container = container_config.reuse_container();
+
+        // Call get_or_start_container with unpacked values
+        self.get_or_start_container(name, image, port, reuse_container)
+    }
+
+    /// Gets an existing container or starts a new one with the specified name, image, port, and reuse status.
+    ///
+    /// # Arguments
+    ///
+    /// * `name` - The name of the container.
+    /// * `image` - The image to use for the container.
+    /// * `port` - The port number for the container.
+    /// * `reuse_container` - A boolean flag indicating whether to reuse an existing container if found.
+    ///
+    /// # Returns
+    ///
+    /// Returns a tuple containing the container name and port if successful, or a `DockerError` if an error occurs.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use test_utils::prelude::DockerUtil;
+    ///
+    /// let name = "nginx";
+    /// let image = "nginx:latest";
+    /// let port = 80;
+    /// let reuse_container = false;
+    ///
+    /// // Requires running Docker. Start Docker and uncomment.
+    /// //let mut docker_util = DockerUtil::new().expect("Failed to create DockerUtil");
+    /// //let result = docker_util.get_or_start_container(name, image, port, reuse_container);
+    /// ```
     pub fn get_or_start_container(
         &mut self,
         name: &str,
@@ -42,28 +148,28 @@ impl DockerUtil {
     ) -> Result<(String, u16), DockerError> {
         let container_id = &format!("{}-{}", name, port);
 
-        dbg_print("Check if container already exists.");
+        self.dbg_print("Check if container already exists.");
         let exists = self
             .check_if_container_exists(container_id)
             .expect("Failed to check if container exists");
 
         if exists {
-            dbg_print(" Container already exists.");
+            self.dbg_print("Container already exists.");
             if reuse_container {
-                dbg_print("Re-using running running container.");
+                self.dbg_print("Re-using running running container.");
                 return match self.get_running_container(container_id) {
                     Ok((container_name, port)) => Ok((container_name, port)),
                     Err(e) => return Err(e),
                 };
             }
 
-            dbg_print("Stopping running container b/c no re-use wanted.");
+            self.dbg_print("Stopping running container b/c no re-use wanted.");
             self.stop_container(container_id)
                 .expect("Failed to stop container");
         }
 
-        dbg_print("Container doesn't exist.");
-        dbg_print("Start new container.");
+        self.dbg_print("Container doesn't exist.");
+        self.dbg_print("Start new container.");
         return match self.start_container(container_id, port, image) {
             Ok((container_id, port)) => Ok((container_id, port)),
             Err(e) => Err(e),
@@ -71,8 +177,27 @@ impl DockerUtil {
     }
 
     /// Stop a container
+    ///
+    /// # Arguments
+    ///
+    /// * `container_id` - The ID of the container to stop.
+    ///
+    /// # Returns
+    ///
+    /// Returns `Ok(())` if the container was successfully stopped, or `Err(DockerError)` if an error occurred.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use test_utils::prelude::DockerUtil;
+    ///
+    /// // Requires running Docker. Start Docker and uncomment.
+    /// // let mut docker_util = DockerUtil::new().expect("Failed to create DockerUtil");
+    /// // let container_id = "my_container";
+    /// // docker_util.stop_container(container_id).expect("Failed to stop container");
+    /// ```
     pub fn stop_container(&mut self, container_id: &str) -> Result<(), DockerError> {
-        dbg_print("Check if container already exists.");
+        self.dbg_print("[stop_container]: Check if container exists.");
         let exists = self
             .check_if_container_exists(container_id)
             .expect("Failed to check if container exists");
@@ -85,7 +210,7 @@ impl DockerUtil {
         }
 
         if exists {
-            dbg_print(" Container already exists. Stopping it.");
+            self.dbg_print("[stop_container]: Container exists. Stopping it.");
             // Example: docker kill test-80
             return match Command::new("docker")
                 .arg("kill")
@@ -94,7 +219,7 @@ impl DockerUtil {
             {
                 Ok(_) => Ok(()),
                 Err(e) => Err(DockerError::from(format!(
-                    "Error stopping container {}: {}",
+                    "[stop_container]: Error stopping container {}: {}",
                     container_id,
                     e.to_string()
                 ))),
@@ -106,7 +231,16 @@ impl DockerUtil {
 }
 
 impl DockerUtil {
-    /// Start a container
+    /// Start a stopped container by its ID.
+    ///
+    /// # Arguments
+    ///
+    /// * `container_id` - The ID of the container to start.
+    ///
+    /// # Returns
+    ///
+    /// Returns `Ok(())` if the container was successfully started, or `Err(DockerError)` if an error occurred.
+    ///
     pub fn start_container(
         &self,
         container_id: &str,
@@ -114,7 +248,7 @@ impl DockerUtil {
         image: &str,
     ) -> Result<(String, u16), DockerError> {
         // Example: docker run --rm --detach --publish 80:80 --name test-80 nginx:latest
-        dbg_print(&format!(
+        self.dbg_print(&format!(
             "[start_container]: Starting new container: {}.",
             container_id
         ));
@@ -133,7 +267,7 @@ impl DockerUtil {
             .status()
         {
             Ok(_) => {
-                dbg_print(&format!(
+                self.dbg_print(&format!(
                     "[start_container]: {}",
                     container_id //String::from_utf8_lossy(&out.stdout)
                 ));
@@ -147,7 +281,16 @@ impl DockerUtil {
         };
     }
 
-    /// Either returns the name and port of a container if its running, otherwise an error.
+    /// Get information about a running container by its ID.
+    ///
+    /// # Arguments
+    ///
+    /// * `container_id` - The ID of the container to retrieve information about.
+    ///
+    /// # Returns
+    ///
+    /// Either returns the name and port of a container if its running, otherwise an DockerError.
+    ///
     fn get_running_container(&self, container_id: &str) -> Result<(String, u16), DockerError> {
         let container = match Command::new("docker")
             .arg("ps")
@@ -183,7 +326,16 @@ impl DockerUtil {
         return Ok((container.trim().to_string(), port));
     }
 
-    /// Check if a container is running
+    /// Check if a container exists by its ID.
+    ///
+    /// # Arguments
+    ///
+    /// * `container_id` - The ID of the container to check.
+    ///
+    /// # Returns
+    ///
+    /// Returns `Ok(true)` if the container exists, `Ok(false)` if the container does not exist, or `Err(DockerError)` if an error occurred.
+    ///
     fn check_if_container_exists(&mut self, container_id: &str) -> Result<bool, DockerError> {
         return match self.get_running_container(container_id) {
             Ok(_) => Ok(true),

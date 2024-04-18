@@ -4,9 +4,9 @@ load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test")
 
 
 rust_binary(
-    name = "test_bin",
-    crate_root = "src/bin/main.rs",
-    srcs = glob(["src/bin/*.rs"]),
+    name = "test_docker_bin",
+    crate_root = "src/docker_bin/main.rs",
+    srcs = glob(["src/docker_bin/*.rs"]),
     aliases = aliases(),
     proc_macro_deps = all_crate_deps(proc_macro = True),
     rustc_flags = select({
@@ -56,23 +56,4 @@ rust_doc_test(
      name = "doc_test",
      crate = ":test_utils",
      visibility = ["//visibility:public"],
-)
-
-rust_test(
-    name = "test",
-    srcs = glob([
-        "tests/docker_utils/mod.rs",
-    ]),
-    deps = all_crate_deps(
-        normal = True,
-        normal_dev = True,
-    ) + [
-        "//queng_utils/test_utils:test_utils",
-        "//queng_common:common",
-    ],
-    proc_macro_deps = all_crate_deps(
-        proc_macro_dev = True
-    ),
-    visibility = ["//visibility:public"],
-    tags = ["integration", "docker", "docker_test_setup"],
 )
