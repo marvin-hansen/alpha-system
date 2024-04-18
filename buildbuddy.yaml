@@ -11,7 +11,7 @@ actions:
         branches:
           - "*"
     bazel_commands:
-      - "build -c opt //...  --config=remote"
+      - "build -c opt //:image  --config=remote"
       - "build -c opt //:doc --config=remote"
       - "test -c opt  //...  --config=remote"
 
@@ -28,6 +28,5 @@ actions:
           - "*"
     bazel_commands:
       - "run   -c opt //:buildbuddy_setup_docker_auth --verbose_failures"
-      - "build -c opt //:build  --config=remote"
       - "build -c opt //:image  --config=remote"
       - "run   -c opt //:push   --config=remote"
