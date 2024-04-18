@@ -158,7 +158,7 @@ impl DockerUtil {
         if exists {
             self.dbg_print("Container already exists.");
             if reuse_container {
-                self.dbg_print("Re-using running running container.");
+                self.dbg_print("Re-using running container.");
                 return match self.get_running_container(container_id) {
                     Ok((container_name, port)) => Ok((container_name, port)),
                     Err(e) => return Err(e),
@@ -262,9 +262,10 @@ impl DockerUtil {
             .arg("run")
             .arg("--rm")
             .arg("--detach")
-            // .arg("--network=host")
             .arg("--publish")
             .arg(port_publish)
+            .arg("--publish")
+            .arg("8123:8123")
             .arg("--name")
             .arg(container_name)
             .arg(image)
@@ -344,6 +345,24 @@ impl DockerUtil {
         return match self.get_running_container(container_id) {
             Ok(_) => Ok(true),
             Err(_) => Ok(false),
+        };
+    }
+
+    pub fn prune_containers(&mut self) -> Result<(), DockerError> {
+        return match Command::new("docker")
+            .arg("system")
+            .arg("prune")
+            .arg("--all")
+            .arg("--force")
+            .spawn()
+        {
+            Ok(_) => Ok(()),
+            Err(e) => {
+                return Err(DockerError::from(format!(
+                    "Error pruning containers: {}",
+                    e.to_string()
+                )));
+            }
         };
     }
 }
