@@ -4,11 +4,14 @@ use config_manager::CfgManager;
 use ctx_manager::CtxManager;
 use dns_manager::DnsManager;
 use std::env;
+use std::process::Command;
 use std::thread::sleep;
 use std::time::Duration;
 use test_utils::prelude::TestEnv;
 
-fn setup() {
+#[tokio::test]
+async fn test_new() {
+    // Do the initial setup
     // Set the environment variable.
     env::set_var("ENV", "CI");
     // Internal CI DNS server.
@@ -19,13 +22,6 @@ fn setup() {
     // Give the container some extra time to complete initialization.
     // Otherwise, you may get a connection refused error. Adjust the time if needed.
     sleep(Duration::from_millis(700));
-}
-
-#[tokio::test]
-async fn test_new() {
-    // Do the initial setup
-    setup();
-
     // Build & configure components for contextual autoconfiguration.
     // Context manager determines the environment type.
     let ctxm = CtxManager::new();
@@ -44,10 +40,40 @@ async fn test_new() {
     let _clickhouse_config = ClickHouseConfig::new(
         "127.0.0.1".to_string(),
         9000,
-        "".to_string(),
+        "default".to_string(),
         "".to_string(),
         "default".to_string(),
     );
+
+    // Try a manual connect
+    let out = Command::new("curl")
+        .arg("-vso")
+        .arg("/dev/null")
+        .arg("--connect-timeout")
+        .arg("5")
+        .arg("localhost:8123")
+        .output();
+
+    assert!(out.is_ok());
+    let out = out.unwrap();
+
+    println!("status: {}", out.status);
+    println!("stdout: {}", String::from_utf8_lossy(&out.stdout));
+    println!("stderr: stderr{}", String::from_utf8_lossy(&out.stderr));
+
+    let out = Command::new("docker")
+        .arg("exec")
+        .arg("clickhouse-9000")
+        .arg("cat")
+        .arg("/var/log/clickhouse-server/clickhouse-server.err.log")
+        .output();
+
+    assert!(out.is_ok());
+    let out = out.unwrap();
+
+    println!("status: {}", out.status);
+    println!("stdout: {}", String::from_utf8_lossy(&out.stdout));
+    println!("stderr: stderr{}", String::from_utf8_lossy(&out.stderr));
 
     let ddl = r"
         CREATE TABLE IF NOT EXISTS payment (
@@ -64,19 +90,15 @@ async fn test_new() {
             vec![Some("foo"), None, None, None, Some("bar")],
         );
 
-    let database_url = "tcp://default@127.0.0.1:9000/default";
+    let dsn = "tcp://default:@127.0.0.1:9000/default";
     println!("✅: database_url");
 
-    let pool = Pool::new(database_url);
+    let pool = Pool::new(dsn);
     println!("✅: pool");
+    println!("Pool config: {:?}", &pool);
 
-    let res = pool.get_handle().await;
-    println!("✅: get_handle");
-
-    assert!(res.is_ok());
-    println!("✅: res ok");
-
-    let mut client = res.expect("Failed to get client");
+    println!("Trying to get DB handle...");
+    let mut client = pool.get_handle().await.expect("Failed to connect to DB");
     println!("✅: client");
 
     client
@@ -101,7 +123,6 @@ async fn test_new() {
     for row in block.rows() {
         let id: u32 = row.get("customer_id").unwrap();
         let amount: u32 = row.get("amount").unwrap();
-        //  let name: Option<&str>  = row.get("account_name").unwrap();
         println!("Found payment {}: {}", id, amount);
     }
 
