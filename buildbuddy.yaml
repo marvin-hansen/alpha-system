@@ -1,7 +1,6 @@
 actions:
   - name: "Build and test all targets"
     container_image: ubuntu-20.04
-
     triggers:
       push:
         branches:
@@ -16,7 +15,6 @@ actions:
 
   - name: "Build and publish all images"
     container_image: ubuntu-20.04
-
     triggers:
       push:
         branches:
