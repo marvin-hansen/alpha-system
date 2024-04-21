@@ -1,7 +1,5 @@
-use crate::query_gen;
 use client_utils::print_utils;
-use db_utils::query_utils;
-use db_utils::types::SymbolMetaData;
+use db_utils::{ddl, insert, query_utils, types::SymbolMetaData};
 use klickhouse::Client;
 use std::error::Error;
 use std::path::PathBuf;
@@ -71,13 +69,13 @@ pub(crate) async fn process(
     let symbol = file.to_lowercase();
 
     print_utils::dbg_print(vrb, "Create the trade data table if it doesn't exist");
-    let query = query_gen::generate_trade_table_ddl(&table_name);
+    let query = ddl::generate_trades_table_ddl(&table_name);
     query_utils::execute_query(&client, &query)
         .await
         .expect("Failed to create trade table");
 
     print_utils::dbg_print(vrb, "Insert trade data into the trade table");
-    let query = query_gen::generate_insert_query(&file, &path);
+    let query = insert::generate_trades_insert_query(&file, &path);
 
     query_utils::execute_query(&client, &query)
         .await
@@ -93,7 +91,7 @@ pub(crate) async fn process(
 
     print_utils::dbg_print(vrb, "Insert meta data into meta data table");
     let meta_data = SymbolMetaData::new(table_name.clone(), symbol, symbol_id, number_of_rows);
-    let query = query_gen::generate_meta_data_insert_query(meta_data_table, &meta_data);
+    let query = insert::generate_meta_data_insert_query(meta_data_table, &meta_data);
     query_utils::execute_query(&client, &query)
         .await
         .expect("Failed to insert meta data");

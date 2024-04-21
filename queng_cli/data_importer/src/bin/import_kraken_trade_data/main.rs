@@ -1,10 +1,9 @@
 mod config;
 mod process_file;
-mod query_gen;
 
 use client_utils::prelude::{file_utils, print_utils};
 use common::prelude::ClickHouseConfig;
-use db_utils::query_utils;
+use db_utils::{ddl, query_utils};
 use klickhouse::{Client, ClientOptions};
 use std::time::Instant;
 
@@ -42,7 +41,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     print_utils::dbg_print(vrb, format!("Found {} files", files.len()).as_str());
 
     print_utils::dbg_print(vrb, "Build metadata table");
-    let query = query_gen::generate_metadata_table_ddl(META_DATA_TABLE);
+    let query = ddl::generate_metadata_table_ddl(META_DATA_TABLE);
     query_utils::execute_query(&client, &query)
         .await
         .expect("Failed to create metadata table");
