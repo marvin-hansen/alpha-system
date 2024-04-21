@@ -11,6 +11,7 @@ rust_library(
     ]),
     aliases = aliases(),
     proc_macro_deps = all_crate_deps(proc_macro = True),
+    tags = ["unit","sbe"],
     deps = all_crate_deps(
         normal = True,
     ) + [

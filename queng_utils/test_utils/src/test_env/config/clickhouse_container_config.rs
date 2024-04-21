@@ -7,7 +7,9 @@ pub(crate) fn clickhouse_container_config() -> ContainerConfig<'static> {
         "clickhouse",
         "clickhouse/clickhouse-server",
         "22.3.18",
+        "0.0.0.0",
         9000,
-        true,
+        true,  // Keep the container running for re-use
+        false, // Keep the same container config across all env. setups.
     )
 }

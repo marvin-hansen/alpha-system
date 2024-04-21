@@ -4,8 +4,6 @@ use ctx_manager::CtxManager;
 use db_system_manager::SystemDBManager;
 use dns_manager::DnsManager;
 use std::env;
-use std::thread::sleep;
-use std::time::Duration;
 use test_utils::prelude::TestEnv;
 
 async fn setup_env() {
@@ -23,10 +21,6 @@ async fn test_new() {
 
     // Initialize the test environment to ensure all containers are up and running.
     let _test_env = TestEnv::setup_ci().expect("Failed to setup test env");
-
-    // Give the container some extra time to complete initialization.
-    // Otherwise, you may get a connection refused error. Adjust the time if needed.
-    sleep(Duration::from_millis(700));
 
     // Build & configure components for contextual autoconfiguration.
     // Context manager determines the environment type.
