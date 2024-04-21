@@ -7,6 +7,7 @@ rust_library(
     name = "db_utils",
     crate_root = "src/lib.rs",
     srcs = glob([
+        "src/*/*.rs",
         "src/*.rs",
     ]),
     aliases = aliases(),

@@ -1,9 +1,9 @@
-use crate::gen_ddl;
-use crate::gen_query::generate_exchange_insert;
 use client_utils::print_utils;
-use db_utils::query_utils;
+use db_utils::{
+    ddl, insert, query_utils,
+    types::{Exchange, ExchangesRoot},
+};
 use klickhouse::Client;
-use lib_import::types::exchanges::{Exchange, ExchangesRoot};
 use std::error::Error;
 use std::fs::File;
 use std::path::PathBuf;
@@ -23,7 +23,7 @@ pub(crate) async fn process_exchanges(
         .await
         .expect("Failed to read exchanges from file");
 
-    let ddl = gen_ddl::generate_exchange_table_ddl();
+    let ddl = ddl::generate_exchange_table_ddl();
     query_utils::execute_query(client, &ddl)
         .await
         .expect("Failed to create exchanges table");
@@ -32,7 +32,7 @@ pub(crate) async fn process_exchanges(
     for exchange in exchanges.iter() {
         if exchange.active {
             active.fetch_add(1, Ordering::SeqCst);
-            let insert_query = generate_exchange_insert(exchange);
+            let insert_query = insert::generate_exchange_insert(exchange);
             query_utils::execute_query(client, &insert_query)
                 .await
                 .expect("Failed to insert asset")

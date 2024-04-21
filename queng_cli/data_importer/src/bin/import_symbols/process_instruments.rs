@@ -1,10 +1,11 @@
-use crate::fields::INACTIVE_EXCHANGES;
-use crate::gen_ddl;
-use crate::gen_query::generate_instruments_insert;
 use client_utils::print_utils;
-use db_utils::query_utils;
+use db_utils::{
+    ddl,
+    fields::INACTIVE_EXCHANGES,
+    insert, query_utils,
+    types::{Instrument, InstrumentsRoot},
+};
 use klickhouse::Client;
-use lib_import::types::instruments::{Instrument, InstrumentsRoot};
 use std::error::Error;
 use std::fs::File;
 use std::path::PathBuf;
@@ -28,12 +29,12 @@ pub async fn process_instruments(
         .await
         .expect("Failed to read instruments from file");
 
-    let ddl = gen_ddl::generate_instruments_table_ddl();
+    let ddl = ddl::generate_instruments_table_ddl();
     query_utils::execute_query(client, &ddl)
         .await
         .expect("Failed to create instrument table");
 
-    let ddl = gen_ddl::generate_master_symbols_table_ddl();
+    let ddl = ddl::generate_master_symbols_table_ddl();
     query_utils::execute_query(client, &ddl)
         .await
         .expect("Failed to create symbol master table");
@@ -57,7 +58,7 @@ pub async fn process_instruments(
             }
 
             instrument_filtered.fetch_add(1, Ordering::SeqCst);
-            let insert_query = generate_instruments_insert(instrument);
+            let insert_query = insert::generate_instruments_insert(instrument);
             query_utils::execute_query(client, &insert_query)
                 .await
                 .expect("Failed to insert asset")

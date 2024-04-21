@@ -1,8 +1,8 @@
 use crate::query_gen;
 use client_utils::print_utils;
 use db_utils::query_utils;
+use db_utils::types::SymbolMetaData;
 use klickhouse::Client;
-use lib_import::types::symbol_meta_data::SymbolMetaData;
 use std::error::Error;
 use std::path::PathBuf;
 
