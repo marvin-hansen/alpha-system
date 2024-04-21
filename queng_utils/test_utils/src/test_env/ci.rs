@@ -1,12 +1,13 @@
 use crate::prelude::{TestEnv, TestEnvError};
 use crate::test_env::config::clickhouse_container_config::clickhouse_container_config;
 use crate::test_env::{clickhouse, utils};
+use db_utils::prelude::*;
 use std::thread::sleep;
 use std::time::Duration;
 
 impl TestEnv {
     /// Create a new instance of `TestEnv` for Continuous Integration (CI).
-    pub fn setup_ci() -> Result<Self, TestEnvError> {
+    pub async fn setup_ci() -> Result<Self, TestEnvError> {
         // Get docker util
         let mut docker_util =
             utils::get_docker_util().expect("[TestEnv:CI]: Failed to get docker util");
@@ -19,10 +20,10 @@ impl TestEnv {
             .expect("[TestEnv:CI]: Failed to get or reuse clickhouse container");
 
         // DB connection string
-        // let dsn = format!("{}:{}", container_config.url(), container_config.port(),);
+        let dsn = format!("{}:{}", container_config.url(), container_config.port(),);
 
         // Get clickhouse client.
-        // let client = db_utils::get_clickhouse_client(dsn).await;
+        let client = db_utils::get_clickhouse_client(dsn).await;
 
         // Init, reset, or reuse clickhouse db
         clickhouse::configure_reset_or_reuse_clickhouse_db(

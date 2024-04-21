@@ -20,7 +20,7 @@ async fn test_new() {
     setup_env().await;
 
     // Initialize the test environment to ensure all containers are up and running.
-    let _test_env = TestEnv::setup_ci().expect("Failed to setup test env");
+    let _test_env = TestEnv::setup_ci().await.expect("Failed to setup test env");
 
     // Build & configure components for contextual autoconfiguration.
     // Context manager determines the environment type.

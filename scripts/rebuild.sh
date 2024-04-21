@@ -12,7 +12,7 @@ command bazel build //... --jobs=50
 # Run all tests & upload results to BES
 command bazel \
              test \
-             --bes_results_url=https://app.buildbuddy.io/invocation/ \
-             --bes_backend=grpcs://remote.buildbuddy.io \
+#             --bes_results_url=https://app.buildbuddy.io/invocation/ \
+#             --bes_backend=grpcs://remote.buildbuddy.io \
              //... \
              --jobs=50

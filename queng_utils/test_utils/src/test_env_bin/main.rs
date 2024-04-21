@@ -1,12 +1,9 @@
-use std::{thread, time};
 use test_utils::prelude::TestEnv;
 
-fn main() -> Result<(), Box<dyn std::error::Error>> {
-    // Set default wait duration
-    let five_seconds = time::Duration::from_secs_f32(5.0f32);
-
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Initial setup of the CI test environment
-    let test_env = TestEnv::setup_ci().expect("Failed to setup test env");
+    let test_env = TestEnv::setup_ci().await.expect("Failed to setup test env");
     let docker_util = &mut test_env.docker_util();
 
     // Verify that the container was created
@@ -19,13 +16,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("✅ OK: Container name: {} created", container_name);
     println!();
 
-    // Give the container some time to complete initialization.
-    // Otherwise, you may get a connection refused error. Adjust the time if needed.
-    thread::sleep(five_seconds);
-
     // At a later stage, containers will be re-used or re-created
     // depending on the container configuration
-    let test_env = TestEnv::setup_ci().expect("Failed to setup test env");
+    let test_env = TestEnv::setup_ci().await.expect("Failed to setup test env");
 
     // Verify that the container was re-used
     let container_name = test_env.clickhouse_container_name();
@@ -36,9 +29,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     println!("✅ OK: Container name: {} re-used", container_name);
     println!();
-
-    // Pause execution to check Docker UI/CLI if the container is up & running
-    thread::sleep(five_seconds);
 
     // Teardown of the CI test environment
     test_env.teardown_ci().expect("Failed to teardown test env");
