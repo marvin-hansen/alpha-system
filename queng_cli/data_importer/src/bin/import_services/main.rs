@@ -1,7 +1,4 @@
-mod gen_ddl;
-mod gen_query;
 mod process;
-// mod utils_query;
 
 use client_utils::print_utils;
 use common::prelude::ClickHouseConfig;

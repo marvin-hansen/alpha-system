@@ -1,6 +1,6 @@
 // Tuple type cannot contain codecs on types,
 // https://clickhouse.com/docs/en/sql-reference/data-types/tuple
-pub(crate) fn generate_services_table_ddl(table_name: &str) -> String {
+pub fn generate_services_table_ddl(table_name: &str) -> String {
     format!(
         r"
     CREATE TABLE IF NOT EXISTS {table_name}

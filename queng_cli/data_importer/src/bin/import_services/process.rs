@@ -1,6 +1,5 @@
-use crate::{gen_ddl, gen_query};
 use client_utils::print_utils;
-use db_utils::query_utils;
+use db_utils::{ddl, insert, query_utils};
 use klickhouse::Client;
 use std::error::Error;
 
@@ -23,13 +22,13 @@ pub(crate) async fn process(
 ) -> Result<(), Box<dyn Error>> {
     //
     print_utils::dbg_print(vrb, "Create the data table if it doesn't exist");
-    let ddl = gen_ddl::generate_services_table_ddl(table_name);
+    let ddl = ddl::generate_services_table_ddl(table_name);
     query_utils::execute_query(client, &ddl)
         .await
         .expect("Failed to create table");
 
     print_utils::dbg_print(vrb, "Insert data into the table");
-    let query = gen_query::generate_all_service_insert(table_name);
+    let query = insert::generate_all_service_insert(table_name);
     query_utils::execute_query(client, &query)
         .await
         .expect("Failed to insert data into table");
