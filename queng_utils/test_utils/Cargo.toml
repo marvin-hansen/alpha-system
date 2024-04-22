@@ -29,4 +29,5 @@ common = {workspace = true}
 db_utils = {workspace = true}
 # External crates
 tokio = { workspace = true, features = ["rt", "rt-multi-thread", "macros"] }
+serde_json = "1.0.115"
 

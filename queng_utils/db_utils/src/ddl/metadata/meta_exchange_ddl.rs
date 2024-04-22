@@ -1,4 +1,4 @@
-pub fn generate_exchange_table_ddl() -> String {
+pub fn generate_create_exchanges_table_ddl() -> String {
     r"
      CREATE TABLE IF NOT EXISTS default.exchanges
      (
@@ -11,4 +11,10 @@ pub fn generate_exchange_table_ddl() -> String {
      PRIMARY KEY (code, name)
     "
     .to_string()
+}
+
+pub fn generate_drop_exchanges_table_ddl() -> String {
+    r"
+    DROP TABLE IF EXISTS default.exchanges"
+        .to_string()
 }

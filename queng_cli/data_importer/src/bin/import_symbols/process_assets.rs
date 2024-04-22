@@ -20,7 +20,7 @@ pub(crate) async fn process_assets(
         .await
         .expect("Failed to read assets from file");
 
-    let ddl = ddl::generate_asset_table_ddl();
+    let ddl = ddl::generate_create_asset_table_ddl();
     query_utils::execute_query(client, &ddl)
         .await
         .expect("Failed to create asset table");

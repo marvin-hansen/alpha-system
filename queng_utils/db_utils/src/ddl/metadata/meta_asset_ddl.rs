@@ -1,4 +1,4 @@
-pub fn generate_asset_table_ddl() -> String {
+pub fn generate_create_asset_table_ddl() -> String {
     r"
     CREATE TABLE IF NOT EXISTS default.assets
     (
@@ -22,4 +22,10 @@ pub fn generate_asset_table_ddl() -> String {
     SETTINGS index_granularity = 1024
     "
     .to_string()
+}
+
+pub fn generate_drop_asset_table_ddl() -> String {
+    r"
+    DROP TABLE IF EXISTS default.assets"
+        .to_string()
 }

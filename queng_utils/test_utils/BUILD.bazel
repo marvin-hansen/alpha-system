@@ -62,8 +62,13 @@ rust_library(
     name = "test_utils",
     crate_root = "src/lib.rs",
     srcs = glob([
-        "src/**/*.rs",
+        "src/**",
     ]),
+#    data = [
+#        "//data/assets.json",
+#        "//data/exchanges.json",
+#        "//data/instruments.json",
+#    ],
     aliases = aliases(),
     proc_macro_deps = all_crate_deps(proc_macro = True),
     deps = all_crate_deps(

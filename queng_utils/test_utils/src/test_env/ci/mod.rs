@@ -1,7 +1,10 @@
-use crate::prelude::{TestEnv, TestEnvError};
+mod clickhouse;
+mod metadata;
+mod specs;
+
+use crate::docker_util::DockerUtil;
+use crate::prelude::{DockerError, TestEnv, TestEnvError};
 use crate::test_env::config::clickhouse_container_config::clickhouse_container_config;
-use crate::test_env::{clickhouse, utils};
-use db_utils::prelude::*;
 use std::thread::sleep;
 use std::time::Duration;
 
@@ -9,8 +12,7 @@ impl TestEnv {
     /// Create a new instance of `TestEnv` for Continuous Integration (CI).
     pub async fn setup_ci() -> Result<Self, TestEnvError> {
         // Get docker util
-        let mut docker_util =
-            utils::get_docker_util().expect("[TestEnv:CI]: Failed to get docker util");
+        let mut docker_util = get_docker_util().expect("[TestEnv:CI]: Failed to get docker util");
 
         // Get or reuse clickhouse container
         let container_config = clickhouse_container_config();
@@ -47,8 +49,7 @@ impl TestEnv {
 impl TestEnv {
     pub fn teardown_ci(&self) -> Result<(), TestEnvError> {
         // Get docker util
-        let mut docker_util =
-            utils::get_docker_util().expect("[TestEnv:CI]: Failed to get docker util");
+        let mut docker_util = get_docker_util().expect("[TestEnv:CI]: Failed to get docker util");
 
         // Get Clickhouse container id
         let container_id = self.clickhouse_container_name();
@@ -60,4 +61,11 @@ impl TestEnv {
 
         Ok(())
     }
+}
+
+pub(crate) fn get_docker_util() -> Result<DockerUtil, DockerError> {
+    return match DockerUtil::new() {
+        Ok(docker_util) => Ok(docker_util),
+        Err(e) => Err(e),
+    };
 }

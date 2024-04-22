@@ -23,7 +23,7 @@ pub(crate) async fn process_exchanges(
         .await
         .expect("Failed to read exchanges from file");
 
-    let ddl = ddl::generate_exchange_table_ddl();
+    let ddl = ddl::generate_create_exchanges_table_ddl();
     query_utils::execute_query(client, &ddl)
         .await
         .expect("Failed to create exchanges table");

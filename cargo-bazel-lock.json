@@ -1,5 +1,5 @@
 {
-  "checksum": "2643dc62d9f078c5311cd100fc9eac935eb29c4699c347d32b1a9d6e109941c7",
+  "checksum": "490acb24cf3029d7647eeab3a8de74dc66eabb9f5d7f7aef1b648cf543fa43f3",
   "crates": {
     "addr2line 0.21.0": {
       "name": "addr2line",
@@ -15516,6 +15516,10 @@
         ],
         "deps": {
           "common": [
+            {
+              "id": "serde_json 1.0.115",
+              "target": "serde_json"
+            },
             {
               "id": "tokio 1.37.0",
               "target": "tokio"

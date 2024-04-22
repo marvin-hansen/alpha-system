@@ -1,7 +1,5 @@
 mod ci;
-mod clickhouse;
 mod config;
-mod utils;
 
 use crate::prelude::DockerUtil;
 
