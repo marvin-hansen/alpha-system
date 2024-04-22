@@ -4,7 +4,7 @@ use ctx_manager::CtxManager;
 use db_system_manager::SystemDBManager;
 use dns_manager::DnsManager;
 use std::env;
-use test_utils::prelude::TestEnv;
+use test_utils::prelude::EnvUtil;
 
 async fn setup_env() {
     // Do the initial setup
@@ -20,7 +20,7 @@ async fn test_new() {
     setup_env().await;
 
     // Initialize the test environment to ensure all containers are up and running.
-    let _test_env = TestEnv::setup_ci().await.expect("Failed to setup test env");
+    let _test_env = EnvUtil::setup_ci().await.expect("Failed to setup test env");
 
     // Build & configure components for contextual autoconfiguration.
     // Context manager determines the environment type.

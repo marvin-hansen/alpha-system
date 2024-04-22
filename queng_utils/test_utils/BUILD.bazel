@@ -32,9 +32,9 @@ rust_binary(
 
 
 rust_binary(
-    name = "test_env_bin",
-    crate_root = "src/test_env_bin/main.rs",
-    srcs = glob(["src/test_env_bin/*.rs"]),
+    name = "env_util_bin",
+    crate_root = "src/env_util_bin/main.rs",
+    srcs = glob(["src/env_util_bin/*.rs"]),
     aliases = aliases(),
     proc_macro_deps = all_crate_deps(proc_macro = True),
     rustc_flags = select({

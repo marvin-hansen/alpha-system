@@ -15,7 +15,7 @@ path = "src/docker_bin/main.rs"
 
 [[bin]]
 name = "test_env_bin"
-path = "src/test_env_bin/main.rs"
+path = "src/env_util_bin/main.rs"
 
 
 [lib]

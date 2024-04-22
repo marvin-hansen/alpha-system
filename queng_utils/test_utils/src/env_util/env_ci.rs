@@ -1,13 +1,13 @@
-use crate::prelude::{TestEnv, TestEnvError};
-use crate::test_env::ci::clickhouse;
-use crate::test_env::config::clickhouse_container_config::clickhouse_container_config;
-use crate::test_env::shared;
+use crate::env_util::ci::clickhouse;
+use crate::env_util::config::clickhouse_container_config::clickhouse_container_config;
+use crate::env_util::shared;
+use crate::prelude::{EnvUtil, EnvironmentError};
 use std::thread::sleep;
 use std::time::Duration;
 
-impl TestEnv {
-    /// Create a new instance of `TestEnv` for Continuous Integration (CI).
-    pub async fn setup_ci() -> Result<Self, TestEnvError> {
+impl EnvUtil {
+    /// Create a new Continuous Integration (CI) `Environment`
+    pub async fn setup_ci() -> Result<Self, EnvironmentError> {
         // Get docker util
         let mut docker_util =
             shared::get_docker_util().expect("[TestEnv:CI]: Failed to get docker util");
@@ -32,14 +32,13 @@ impl TestEnv {
         sleep(Duration::from_millis(100));
 
         Ok(Self {
-            docker_util,
             clickhouse_container_name,
             clickhouse_container_port,
         })
     }
 
     // teardown CI instance of test environment
-    pub async fn teardown_ci(&self) -> Result<(), TestEnvError> {
+    pub async fn teardown_ci(&self) -> Result<(), EnvironmentError> {
         // get clickhouse client
         let container_config = clickhouse_container_config();
         let client = shared::get_clickhouse_client(&container_config).await;

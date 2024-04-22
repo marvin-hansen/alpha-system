@@ -1,13 +1,13 @@
-use crate::prelude::{ContainerConfig, TestEnvError};
-use crate::test_env::ci::clickhouse;
-use crate::test_env::ci::metadata::{assets, exchanges, instruments};
+use crate::env_util::ci::clickhouse;
+use crate::env_util::ci::metadata::{assets, exchanges, instruments};
+use crate::prelude::{ContainerConfig, EnvironmentError};
 use db_utils::prelude::ClickHouseClient;
 use db_utils::{db, query_utils};
 
 pub(crate) async fn configure_reset_or_reuse_clickhouse_db(
     client: &ClickHouseClient,
     container_config: &ContainerConfig<'_>,
-) -> Result<(), TestEnvError> {
+) -> Result<(), EnvironmentError> {
     // Check if DB is already configured
     let configured = is_clickhouse_configured(container_config);
     // Check if the container configuration should be re-set every time
@@ -42,7 +42,7 @@ pub(crate) fn is_clickhouse_configured(_container_config: &ContainerConfig) -> b
 pub(crate) async fn configure_clickhouse(
     client: &ClickHouseClient,
     reset_config: bool,
-) -> Result<(), TestEnvError> {
+) -> Result<(), EnvironmentError> {
     // here we have to remove & re-create all databases to configure CH anew
     if reset_config {
         // Delete all databases
@@ -70,7 +70,7 @@ pub(crate) async fn configure_clickhouse(
     Ok(())
 }
 
-async fn create_databases(client: &ClickHouseClient) -> Result<(), TestEnvError> {
+async fn create_databases(client: &ClickHouseClient) -> Result<(), EnvironmentError> {
     let ddl = db::create_system_db();
     query_utils::execute_query(client, &ddl)
         .await
@@ -84,7 +84,7 @@ async fn create_databases(client: &ClickHouseClient) -> Result<(), TestEnvError>
     Ok(())
 }
 
-async fn create_tables(client: &ClickHouseClient) -> Result<(), TestEnvError> {
+async fn create_tables(client: &ClickHouseClient) -> Result<(), EnvironmentError> {
     assets::setup_assets_table(client)
         .await
         .expect("Failed to create asset table");
@@ -100,7 +100,7 @@ async fn create_tables(client: &ClickHouseClient) -> Result<(), TestEnvError> {
     Ok(())
 }
 
-async fn import_data(client: &ClickHouseClient) -> Result<(), TestEnvError> {
+async fn import_data(client: &ClickHouseClient) -> Result<(), EnvironmentError> {
     assets::import_assets(client)
         .await
         .expect("Failed to import asset data");
