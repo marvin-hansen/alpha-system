@@ -6,7 +6,7 @@ use klickhouse::{Client, ClientOptions};
 use std::time::Instant;
 
 const VERBOSE: bool = true;
-const TABLE_NAME: &str = "system.services";
+// const TABLE_NAME: &str = "system.services";
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -22,7 +22,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .expect(format!("Failed to connect to {}", &destination).as_str());
 
     print_utils::dbg_print(vrb, "Process data import");
-    process::process(&client, TABLE_NAME, vrb)
+    process::process(&client, vrb)
         .await
         .expect("Failed to import data");
 

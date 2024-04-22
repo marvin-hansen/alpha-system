@@ -15,32 +15,19 @@ use std::error::Error;
 ///
 /// Returns `Ok(())` if the data is successfully inserted, or `Err` if an error occurs.
 ///
-pub(crate) async fn process(
-    client: &Client,
-    table_name: &str,
-    vrb: bool,
-) -> Result<(), Box<dyn Error>> {
+pub(crate) async fn process(client: &Client, vrb: bool) -> Result<(), Box<dyn Error>> {
     //
     print_utils::dbg_print(vrb, "Create the data table if it doesn't exist");
-    let ddl = ddl::generate_services_table_ddl(table_name);
+    let ddl = ddl::generate_create_services_table_ddl();
     query_utils::execute_query(client, &ddl)
         .await
         .expect("Failed to create table");
 
     print_utils::dbg_print(vrb, "Insert data into the table");
-    let query = insert::generate_all_service_insert(table_name);
+    let query = insert::generate_all_service_insert();
     query_utils::execute_query(client, &query)
         .await
         .expect("Failed to insert data into table");
-
-    if vrb {
-        print_utils::dbg_print(vrb, "Count the number of rows in the table");
-        let number_of_rows = query_utils::count_rows(client, table_name)
-            .await
-            .expect("Failed to count rows in table");
-
-        println!("Number of imported data: {}", number_of_rows);
-    }
 
     print_utils::dbg_print(vrb, "Done!");
 

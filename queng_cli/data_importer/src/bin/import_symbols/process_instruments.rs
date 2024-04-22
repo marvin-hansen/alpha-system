@@ -29,7 +29,7 @@ pub async fn process_instruments(
         .await
         .expect("Failed to read instruments from file");
 
-    let ddl = ddl::generate_instruments_table_ddl();
+    let ddl = ddl::generate_create_instruments_table_ddl();
     query_utils::execute_query(client, &ddl)
         .await
         .expect("Failed to create instrument table");

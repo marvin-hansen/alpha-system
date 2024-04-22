@@ -1,9 +1,8 @@
 // Tuple type cannot contain codecs on types,
 // https://clickhouse.com/docs/en/sql-reference/data-types/tuple
-pub fn generate_services_table_ddl(table_name: &str) -> String {
-    format!(
-        r"
-    CREATE TABLE IF NOT EXISTS {table_name}
+pub fn generate_create_services_table_ddl() -> String {
+    r"
+        CREATE TABLE IF NOT EXISTS system.services
     (
         `svc_id` String CODEC(LZ4),
         `name` String CODEC(LZ4),
@@ -34,6 +33,12 @@ pub fn generate_services_table_ddl(table_name: &str) -> String {
     ORDER BY (svc_id)
     SETTINGS index_granularity = 128
     "
-    )
+    .to_string()
+}
+
+pub fn generate_drop_services_table_ddl() -> String {
+    r"
+    DROP TABLE IF EXISTS system.services
+    "
     .to_string()
 }

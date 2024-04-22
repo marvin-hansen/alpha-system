@@ -1,4 +1,4 @@
-pub fn generate_trades_table_ddl(table_name: &str) -> String {
+pub fn generate_create_trades_table_ddl(table_name: &str) -> String {
     format!(
         r"
         CREATE TABLE IF NOT EXISTS default.{table_name}
@@ -11,4 +11,13 @@ pub fn generate_trades_table_ddl(table_name: &str) -> String {
          PRIMARY KEY toStartOfHour(timestamp)
      "
     )
+}
+
+pub fn generate_drop_trades_table_ddl(table_name: &str) -> String {
+    format!(
+        r"
+    DROP TABLE IF EXISTS default.{table_name}
+    "
+    )
+    .to_string()
 }

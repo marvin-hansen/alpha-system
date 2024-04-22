@@ -6,3 +6,7 @@ mod exchange_setup;
 mod exchanges_import;
 mod exchanges_load;
 mod exchanges_teardown;
+mod instruments_import;
+mod instruments_load;
+mod instruments_setup;
+mod instruments_teardown;

@@ -69,7 +69,7 @@ pub(crate) async fn process(
     let symbol = file.to_lowercase();
 
     print_utils::dbg_print(vrb, "Create the trade data table if it doesn't exist");
-    let query = ddl::generate_trades_table_ddl(&table_name);
+    let query = ddl::generate_create_trades_table_ddl(&table_name);
     query_utils::execute_query(&client, &query)
         .await
         .expect("Failed to create trade table");

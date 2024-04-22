@@ -1,4 +1,4 @@
-pub fn generate_instruments_table_ddl() -> String {
+pub fn generate_create_instruments_table_ddl() -> String {
     r"
      CREATE TABLE IF NOT EXISTS default.instruments
      (
@@ -19,4 +19,10 @@ pub fn generate_instruments_table_ddl() -> String {
      SETTINGS index_granularity = 2048
     "
     .to_string()
+}
+
+pub fn generate_drop_instruments_table_ddl() -> String {
+    r"
+    DROP TABLE IF EXISTS default.instruments"
+        .to_string()
 }
