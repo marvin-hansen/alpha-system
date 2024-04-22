@@ -1,3 +1,5 @@
+//
+pub use crate::db;
 pub use crate::ddl;
 pub use crate::error;
 pub use crate::fields;

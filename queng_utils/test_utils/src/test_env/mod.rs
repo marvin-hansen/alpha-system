@@ -1,5 +1,7 @@
 mod ci;
+mod ci_test_env;
 mod config;
+mod shared;
 
 use crate::prelude::DockerUtil;
 

@@ -1,5 +1,5 @@
 pub fn generate_master_symbols_insert(id: u64, code: &str) -> String {
-    let table_name = "default.master_symbols";
+    let table_name = "metadata.master_symbols";
     format!(
         r"
         INSERT INTO {table_name} (*)

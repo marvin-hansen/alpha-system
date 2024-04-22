@@ -1,13 +1,35 @@
 use db_utils::fields::INACTIVE_EXCHANGES;
 use db_utils::prelude::ClickHouseClient;
-use db_utils::types::Instrument;
-use db_utils::{insert, query_utils};
+use db_utils::types::{Instrument, InstrumentsRoot};
+use db_utils::{ddl, insert, query_utils};
 use std::error::Error;
+use std::fs::File;
+use std::path::PathBuf;
 
-pub(crate) async fn import_instruments(
+pub(crate) async fn setup_instruments_table(
     client: &ClickHouseClient,
-    instruments: &Vec<Instrument>,
 ) -> Result<(), Box<dyn Error>> {
+    let ddl = ddl::generate_create_instruments_table_ddl();
+    query_utils::execute_query(client, &ddl)
+        .await
+        .expect("Failed to create instruments table");
+
+    Ok(())
+}
+
+async fn load_instruments(path: &str) -> Result<Vec<Instrument>, Box<dyn Error>> {
+    let file_path = PathBuf::from(path);
+    let file = File::open(file_path).expect("instruments.json file not found");
+    let instruments: InstrumentsRoot = serde_json::from_reader(file).expect("error while reading");
+    Ok(instruments.data)
+}
+
+pub(crate) async fn import_instruments(client: &ClickHouseClient) -> Result<(), Box<dyn Error>> {
+    let path = "";
+    let instruments = load_instruments(path)
+        .await
+        .expect("Failed to load instrument.json file");
+
     for instrument in instruments.iter() {
         // Skip all instruments from inactive exchanges
         if INACTIVE_EXCHANGES.contains(&instrument.exchange_code()) {

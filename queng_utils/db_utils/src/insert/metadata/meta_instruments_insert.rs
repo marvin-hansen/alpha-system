@@ -1,7 +1,7 @@
 use crate::types::{Instrument, InstrumentMetadata};
 
 pub fn generate_instruments_insert(instrument: &Instrument) -> String {
-    let table_name = "default.instruments";
+    let table_name = "metadata.instruments";
     let trade_start_timestamp = instrument.trade_start_timestamp.unwrap_or(0);
     let trade_end_timestamp = instrument.trade_end_timestamp.unwrap_or(0);
     let exchange_code = instrument.exchange_code();

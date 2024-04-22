@@ -1,7 +1,7 @@
 use crate::types::{Asset, AssetMetadata};
 
 pub fn generate_asset_insert(asset: &Asset) -> String {
-    let table_name = "default.assets";
+    let table_name = "metadata.assets";
     let code = &asset.code;
     // ClickHouse needs quotes to be escaped
     // https://github.com/ClickHouse/ClickHouse/issues/191

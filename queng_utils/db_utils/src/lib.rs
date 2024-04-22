@@ -1,3 +1,4 @@
+pub mod db;
 pub mod ddl;
 pub mod error;
 pub mod fields;

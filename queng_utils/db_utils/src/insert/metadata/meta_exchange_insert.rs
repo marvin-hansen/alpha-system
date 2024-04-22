@@ -1,7 +1,7 @@
 use crate::types::Exchange;
 
 pub fn generate_exchange_insert(exchange: &Exchange) -> String {
-    let table_name = "default.exchanges";
+    let table_name = "metadata.exchanges";
     let code = &exchange.code;
     let name = &exchange.name;
     let active = exchange.active;

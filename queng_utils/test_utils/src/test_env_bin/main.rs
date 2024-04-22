@@ -31,7 +31,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!();
 
     // Teardown of the CI test environment
-    test_env.teardown_ci().expect("Failed to teardown test env");
+    test_env
+        .teardown_ci()
+        .await
+        .expect("Failed to teardown test env");
 
     // Verify that the container was deleted
     let exists = docker_util

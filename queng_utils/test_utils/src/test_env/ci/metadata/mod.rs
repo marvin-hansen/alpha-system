@@ -1,12 +1,5 @@
-mod assets_import;
-mod assets_load;
-mod assets_setup;
-mod assets_teardown;
-mod exchange_setup;
-mod exchanges_import;
-mod exchanges_load;
-mod exchanges_teardown;
-mod instruments_import;
-mod instruments_load;
-mod instruments_setup;
-mod instruments_teardown;
+pub(crate) mod assets;
+
+pub(crate) mod exchanges;
+
+pub(crate) mod instruments;
