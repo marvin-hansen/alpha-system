@@ -10,7 +10,7 @@ impl EnvUtil {
         // Get clickhouse container config
         let container_config = clickhouse_container_config();
         let clickhouse_container_name = container_config.name().to_string();
-        let clickhouse_container_port = container_config.port();
+        let clickhouse_container_port = container_config.additional_ports()[0];
 
         // get clickhouse client
         let client = shared::get_clickhouse_client(&container_config).await;

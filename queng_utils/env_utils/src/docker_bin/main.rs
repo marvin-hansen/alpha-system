@@ -1,5 +1,5 @@
+use env_utils::prelude::DockerUtil;
 use std::{thread, time};
-use test_utils::prelude::DockerUtil;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Create a new DockerUtil in debug mode. Without debug, just call new()
@@ -12,11 +12,18 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!();
 
     let name = "clickhouse";
-    let port = 9000;
+    let connection_port = 9000;
+    let additional_ports = &[8123];
     let image = "clickhouse/clickhouse-server:24.3.2";
     let reuse_container = false;
 
-    let result = docker_util.get_or_start_container(name, image, port, reuse_container);
+    let result = docker_util.get_or_start_container(
+        name,
+        image,
+        connection_port,
+        additional_ports,
+        reuse_container,
+    );
     if result.is_err() {
         println!("{}", result.as_ref().unwrap_err());
     }
@@ -47,7 +54,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let reuse_container = true;
 
-    let result = docker_util.get_or_start_container(name, image, port, reuse_container);
+    let result = docker_util.get_or_start_container(
+        name,
+        image,
+        connection_port,
+        additional_ports,
+        reuse_container,
+    );
     if result.is_err() {
         println!("{}", result.as_ref().unwrap_err());
     }

@@ -105,11 +105,18 @@ impl DockerUtil {
         // Unpack values from container config
         let name = container_config.name();
         let image = &container_config.container_image();
-        let port = container_config.port();
+        let connection_port = container_config.connection_port();
+        let additional_ports = container_config.additional_ports();
         let reuse_container = container_config.reuse_container();
 
         // Call get_or_start_container with unpacked values
-        self.get_or_start_container(name, image, port, reuse_container)
+        self.get_or_start_container(
+            name,
+            image,
+            connection_port,
+            additional_ports,
+            reuse_container,
+        )
     }
 
     /// Gets an existing container or starts a new one with the specified name, image, port, and reuse status.
@@ -143,10 +150,11 @@ impl DockerUtil {
         &mut self,
         name: &str,
         image: &str,
-        port: u16,
+        connection_port: u16,
+        additional_ports: &[u16],
         reuse_container: bool,
     ) -> Result<(String, u16), DockerError> {
-        let container_id = &format!("{}-{}", name, port);
+        let container_id = &format!("{}-{}", name, connection_port);
 
         println!("Container ID: {}", container_id);
 
@@ -172,7 +180,7 @@ impl DockerUtil {
 
         self.dbg_print("Container doesn't exist.");
         self.dbg_print("Start new container.");
-        return match self.start_container(container_id, port, image) {
+        return match self.start_container(container_id, connection_port, additional_ports, image) {
             Ok((container_id, port)) => Ok((container_id, port)),
             Err(e) => Err(e),
         };
@@ -246,7 +254,8 @@ impl DockerUtil {
     pub fn start_container(
         &self,
         container_id: &str,
-        port: u16,
+        connection_port: u16,
+        additional_ports: &[u16],
         image: &str,
     ) -> Result<(String, u16), DockerError> {
         // Example: docker run --rm --detach --publish 80:80 --name test-80 nginx:latest
@@ -255,28 +264,47 @@ impl DockerUtil {
             container_id
         ));
 
-        let port_publish = format!("{}:{}", port, port);
+        // construct initial command
+        let mut cmd = Command::new("docker");
+
+        cmd.arg("run").arg("--rm").arg("--detach");
+
+        // Format main connection port for docker
+        let port_publish = format!("{}:{}", connection_port, connection_port);
+        cmd.arg("--publish").arg(port_publish);
+
+        // Publish additional ports for the container, if applicable
+        if additional_ports.len() > 0 {
+            for port in additional_ports {
+                if *port == 0 {
+                    return Err(DockerError::from(format!(
+                        "Error starting container {}: Port cannot be 0.",
+                        container_id,
+                    )));
+                }
+
+                // Example: --publish 80:80
+                // Format port for docker
+                let port_publish = format!("{}:{}", port, port);
+                // Add argument
+                cmd.arg("--publish").arg(port_publish);
+            }
+        }
+
+        // Format the container name
         let container_name = format!("{}", container_id);
 
-        return match Command::new("docker")
-            .arg("run")
-            .arg("--rm")
-            .arg("--detach")
-            .arg("--publish")
-            .arg(port_publish)
-            .arg("--publish")
-            .arg("8123:8123")
-            .arg("--name")
-            .arg(container_name)
-            .arg(image)
-            .status()
-        {
+        // Add all remaining arguments
+        cmd.arg("--name").arg(container_name).arg(image);
+
+        // Run the command & return error in case of failure
+        return match cmd.status() {
             Ok(_) => {
                 self.dbg_print(&format!(
                     "[start_container]: {}",
                     container_id //String::from_utf8_lossy(&out.stdout)
                 ));
-                Ok((container_id.to_string(), port))
+                Ok((container_id.to_string(), connection_port))
             }
             Err(e) => Err(DockerError::from(format!(
                 "Error starting container {}: {}",

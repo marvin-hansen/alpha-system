@@ -25,7 +25,7 @@ rust_binary(
     deps = all_crate_deps(
         normal = True,
     ) + [
-        ":test_utils",
+        ":env_utils",
     ],
     visibility = ["//visibility:public"],
 )
@@ -53,13 +53,13 @@ rust_binary(
     deps = all_crate_deps(
         normal = True,
     ) + [
-        ":test_utils",
+        ":env_utils",
     ],
     visibility = ["//visibility:public"],
 )
 
 rust_library(
-    name = "test_utils",
+    name = "env_utils",
     crate_root = "src/lib.rs",
     srcs = glob([
         "src/**",
@@ -82,12 +82,12 @@ rust_library(
 
 rust_doc(
     name = "doc",
-    crate = ":test_utils",
+    crate = ":env_utils",
     visibility = ["//visibility:public"],
 )
 
 rust_doc_test(
      name = "doc_test",
-     crate = ":test_utils",
+     crate = ":env_utils",
      visibility = ["//visibility:public"],
 )

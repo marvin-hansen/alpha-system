@@ -1,5 +1,5 @@
 {
-  "checksum": "490acb24cf3029d7647eeab3a8de74dc66eabb9f5d7f7aef1b648cf543fa43f3",
+  "checksum": "41992c126a59346da47b815cd7ccc7b4dc28f0921dcec6a249ba90076dfa8a7b",
   "crates": {
     "addr2line 0.21.0": {
       "name": "addr2line",
@@ -4670,6 +4670,50 @@
         "MIT"
       ],
       "license_file": "LICENSE-APACHE"
+    },
+    "env_utils 0.1.0": {
+      "name": "env_utils",
+      "version": "0.1.0",
+      "package_url": "https://github.com/marvin-hansen/quant-engine",
+      "repository": null,
+      "targets": [
+        {
+          "Library": {
+            "crate_name": "test_utils",
+            "crate_root": "src/lib.rs",
+            "srcs": {
+              "allow_empty": false,
+              "include": [
+                "**/*.rs"
+              ]
+            }
+          }
+        }
+      ],
+      "library_target_name": "test_utils",
+      "common_attrs": {
+        "compile_data_glob": [
+          "**"
+        ],
+        "deps": {
+          "common": [
+            {
+              "id": "serde_json 1.0.115",
+              "target": "serde_json"
+            },
+            {
+              "id": "tokio 1.37.0",
+              "target": "tokio"
+            }
+          ],
+          "selects": {}
+        },
+        "edition": "2021",
+        "version": "0.1.0"
+      },
+      "license": null,
+      "license_ids": [],
+      "license_file": null
     },
     "equivalent 1.0.1": {
       "name": "equivalent",
@@ -15490,50 +15534,6 @@
       ],
       "license_file": "LICENSE-APACHE"
     },
-    "test_utils 0.1.0": {
-      "name": "test_utils",
-      "version": "0.1.0",
-      "package_url": "https://github.com/marvin-hansen/quant-engine",
-      "repository": null,
-      "targets": [
-        {
-          "Library": {
-            "crate_name": "test_utils",
-            "crate_root": "src/lib.rs",
-            "srcs": {
-              "allow_empty": false,
-              "include": [
-                "**/*.rs"
-              ]
-            }
-          }
-        }
-      ],
-      "library_target_name": "test_utils",
-      "common_attrs": {
-        "compile_data_glob": [
-          "**"
-        ],
-        "deps": {
-          "common": [
-            {
-              "id": "serde_json 1.0.115",
-              "target": "serde_json"
-            },
-            {
-              "id": "tokio 1.37.0",
-              "target": "tokio"
-            }
-          ],
-          "selects": {}
-        },
-        "edition": "2021",
-        "version": "0.1.0"
-      },
-      "license": null,
-      "license_ids": [],
-      "license_file": null
-    },
     "thiserror 1.0.58": {
       "name": "thiserror",
       "version": "1.0.58",
@@ -20616,6 +20616,7 @@
     "dbgw 0.1.0": "queng_services/dbgw",
     "dbgw_client 0.1.0": "queng_clients/dbgw_client",
     "dns_manager 0.1.0": "queng_components/dns_manager",
+    "env_utils 0.1.0": "queng_utils/env_utils",
     "exchange_specs 0.1.0": "queng_specs/exchange_specs",
     "file_specs 0.1.0": "queng_specs/file_specs",
     "ims_data_client 0.1.0": "queng_clients/ims_data_client",
@@ -20635,8 +20636,7 @@
     "spec_manager 0.1.0": "queng_cli/spec_manager",
     "symbol_manager 0.1.0": "queng_components/symbol_manager",
     "symdb 0.1.0": "queng_services/symdb",
-    "symdb_client 0.1.0": "queng_clients/symdb_client",
-    "test_utils 0.1.0": "queng_utils/test_utils"
+    "symdb_client 0.1.0": "queng_clients/symdb_client"
   },
   "conditions": {
     "aarch64-apple-darwin": [

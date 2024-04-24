@@ -6,7 +6,11 @@ pub(crate) async fn get_clickhouse_client(
     container_config: &ContainerConfig<'_>,
 ) -> ClickHouseClient {
     // DB connection string
-    let dsn = format!("{}:{}", container_config.url(), container_config.port(),);
+    let dsn = format!(
+        "{}:{}",
+        container_config.url(),
+        container_config.connection_port(),
+    );
 
     // Get clickhouse client.
     db_utils::get_clickhouse_client(dsn).await

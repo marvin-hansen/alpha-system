@@ -3,8 +3,8 @@ use config_manager::CfgManager;
 use ctx_manager::CtxManager;
 use db_system_manager::SystemDBManager;
 use dns_manager::DnsManager;
+use env_utils::prelude::EnvUtil;
 use std::env;
-use test_utils::prelude::EnvUtil;
 
 async fn setup_env() {
     // Do the initial setup

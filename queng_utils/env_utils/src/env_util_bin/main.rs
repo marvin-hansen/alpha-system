@@ -1,4 +1,4 @@
-use test_utils::prelude::EnvUtil;
+use env_utils::prelude::EnvUtil;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {

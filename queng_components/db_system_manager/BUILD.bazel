@@ -50,7 +50,7 @@ rust_test(
         "//queng_specs/service_specs:service_specs",
         "//queng_components/config_manager:config_manager",
         "//queng_utils/db_utils:db_utils",
-        "//queng_utils/test_utils:test_utils",
+        "//queng_utils/env_utils:env_utils",
     ],
     proc_macro_deps = all_crate_deps(
         proc_macro_dev = True
