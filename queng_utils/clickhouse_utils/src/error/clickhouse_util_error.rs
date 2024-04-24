@@ -2,31 +2,31 @@ use std::error::Error;
 use std::fmt;
 
 #[derive(Debug, Clone)]
-pub struct EnvironmentError(pub String);
+pub struct ClickHouseUtilError(pub String);
 
-impl EnvironmentError {
+impl ClickHouseUtilError {
     pub fn new(field0: String) -> Self {
         Self(field0)
     }
 }
 
-impl From<String> for EnvironmentError {
+impl From<String> for ClickHouseUtilError {
     fn from(field0: String) -> Self {
         Self(field0)
     }
 }
 
-impl From<&str> for EnvironmentError {
+impl From<&str> for ClickHouseUtilError {
     fn from(field0: &str) -> Self {
         Self(field0.to_string())
     }
 }
 
-impl Error for EnvironmentError {}
+impl Error for ClickHouseUtilError {}
 
-impl fmt::Display for EnvironmentError {
+impl fmt::Display for ClickHouseUtilError {
     #[inline]
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "EnvironmentError: {}", self.0)
+        write!(f, "ClickHouseUtilError: {}", self.0)
     }
 }

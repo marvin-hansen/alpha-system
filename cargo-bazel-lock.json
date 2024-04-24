@@ -1,5 +1,5 @@
 {
-  "checksum": "ba5878f61e18ebe037a7e8d38b7341b7a517182fbce727b64a69f5ea55677b19",
+  "checksum": "7b336b7b360846f347bfa5efb2483e4bf77d04cbb3db802d344f8a85d86eccc3",
   "crates": {
     "addr2line 0.21.0": {
       "name": "addr2line",
@@ -2695,6 +2695,50 @@
       "license_ids": [
         "MIT"
       ],
+      "license_file": null
+    },
+    "clickhouse_utils 0.1.0": {
+      "name": "clickhouse_utils",
+      "version": "0.1.0",
+      "package_url": "https://github.com/marvin-hansen/quant-engine",
+      "repository": null,
+      "targets": [
+        {
+          "Library": {
+            "crate_name": "clickhouse_utils",
+            "crate_root": "src/lib.rs",
+            "srcs": {
+              "allow_empty": false,
+              "include": [
+                "**/*.rs"
+              ]
+            }
+          }
+        }
+      ],
+      "library_target_name": "clickhouse_utils",
+      "common_attrs": {
+        "compile_data_glob": [
+          "**"
+        ],
+        "deps": {
+          "common": [
+            {
+              "id": "klickhouse 0.12.0",
+              "target": "klickhouse"
+            },
+            {
+              "id": "serde 1.0.197",
+              "target": "serde"
+            }
+          ],
+          "selects": {}
+        },
+        "edition": "2021",
+        "version": "0.1.0"
+      },
+      "license": null,
+      "license_ids": [],
       "license_file": null
     },
     "client_utils 0.1.0": {
@@ -20484,6 +20528,7 @@
   "binary_crates": [],
   "workspace_members": {
     "binance_data 0.1.0": "queng_services/ims/data/binance_data",
+    "clickhouse_utils 0.1.0": "queng_utils/clickhouse_utils",
     "client_utils 0.1.0": "queng_utils/client_utils",
     "cmdb 0.1.0": "queng_services/cmdb",
     "cmdb_provider 0.1.0": "queng_providers/cmdb_provider",

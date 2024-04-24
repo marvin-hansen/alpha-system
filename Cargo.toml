@@ -30,6 +30,7 @@ members = [
     "queng_specs/exchange_specs",
     "queng_specs/file_specs",
     "queng_specs/service_specs",
+    "queng_utils/clickhouse_utils",
     "queng_utils/client_utils",
     "queng_utils/db_utils",
     "queng_utils/env_utils",
@@ -82,6 +83,7 @@ exchange_specs = { path = "queng_specs/exchange_specs" }
 file_specs = { path = "queng_specs/file_specs" }
 service_specs = { path = "queng_specs/service_specs" }
 # Utils
+clickhouse_utils = { path = "queng_utils/clickhouse_utils" }
 client_utils = { path = "queng_utils/client_utils" }
 db_utils = { path = "queng_utils/db_utils" }
 env_utils = { path = "queng_utils/env_utils" }

@@ -21,6 +21,10 @@ impl EnvUtil {
             .get_or_start_container_config(&container_config)
             .expect("[TestEnv:CI]: Failed to get or reuse clickhouse container");
 
+        // Give the container some extra time to complete booting up.
+        // Otherwise, you may get a connection refused error when connecting the client. Adjust the time if needed.
+        sleep(Duration::from_millis(100));
+
         self.dbg_print("Get clickhouse client");
         let client = self.get_clickhouse_client(&container_config).await;
 
@@ -28,10 +32,6 @@ impl EnvUtil {
         clickhouse::setup::configure_reset_or_reuse_clickhouse_db(&client, &container_config)
             .await
             .expect("[TestEnv:CI]: Failed to init or reuse clickhouse db");
-
-        // Give the container some extra time to complete initialization.
-        // Otherwise, you may get a connection refused error. Adjust the time if needed.
-        sleep(Duration::from_millis(100));
 
         self.dbg_print("Set container name and port");
         self.set_clickhouse_container_name(clickhouse_container_name);
