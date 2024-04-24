@@ -7,6 +7,7 @@ use std::time::Duration;
 impl EnvUtil {
     /// Create a new Continuous Integration (CI) `Environment`
     pub async fn setup_ci(&mut self) -> Result<(), EnvironmentError> {
+        //
         self.dbg_print("Get docker util");
         let mut docker_util = self
             .get_docker_util()
@@ -20,7 +21,7 @@ impl EnvUtil {
             .get_or_start_container_config(&container_config)
             .expect("[TestEnv:CI]: Failed to get or reuse clickhouse container");
 
-        self.dbg_print("et clickhouse client");
+        self.dbg_print("Get clickhouse client");
         let client = self.get_clickhouse_client(&container_config).await;
 
         self.dbg_print("Init, reset, or reuse clickhouse Database");
@@ -32,7 +33,7 @@ impl EnvUtil {
         // Otherwise, you may get a connection refused error. Adjust the time if needed.
         sleep(Duration::from_millis(100));
 
-        self.dbg_print("Set conainer name and port");
+        self.dbg_print("Set container name and port");
         self.set_clickhouse_container_name(clickhouse_container_name);
         self.set_clickhouse_container_port(clickhouse_container_port);
 
@@ -41,24 +42,24 @@ impl EnvUtil {
 
     // teardown CI instance of test environment
     pub async fn teardown_ci(&self) -> Result<(), EnvironmentError> {
-        // get clickhouse client
+        self.dbg_print("Get clickhouse client");
         let container_config = clickhouse_container_config();
         let client = self.get_clickhouse_client(&container_config).await;
 
-        // Remove all databases
+        self.dbg_print("Remove all databases");
         clickhouse::teardown::drop_databases(&client)
             .await
             .expect("Failed to drop databases");
 
-        // Get docker util
+        self.dbg_print("Get docker util");
         let mut docker_util = self
             .get_docker_util()
             .expect("[TestEnv:CI]: Failed to get docker util");
 
-        // Get Clickhouse container id
+        self.dbg_print("Get container id");
         let container_id = self.clickhouse_container_name();
 
-        // Remove clickhouse container
+        self.dbg_print("Stop and remove container");
         docker_util
             .stop_container(container_id)
             .expect("[TestEnv:CI]: Failed to teardown clickhouse container");

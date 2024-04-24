@@ -139,9 +139,6 @@ crates_repository(
     lockfile = "//:cargo-bazel-lock.json",
     manifests = [
         "//:Cargo.toml",
-        "//:queng_cli/data_importer/Cargo.toml",
-        "//:queng_cli/smdb_manager/Cargo.toml",
-        "//:queng_cli/spec_manager/Cargo.toml",
         "//:queng_clients/dbgw_client/Cargo.toml",
         "//:queng_clients/ims_data_client/Cargo.toml",
         "//:queng_clients/rest_client/Cargo.toml",

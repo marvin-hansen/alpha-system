@@ -35,7 +35,7 @@ impl<'l> ContainerConfig<'l> {
     /// # Examples
     ///
     /// ```
-    /// use test_utils::prelude::ContainerConfig;
+    /// use env_utils::prelude::ContainerConfig;
     ///
     /// let container_config = ContainerConfig::new("my_container", "nginx",":latest", "0.0.0.0" ,80, &[], false, false);
     /// ```
