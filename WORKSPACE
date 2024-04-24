@@ -170,6 +170,7 @@ crates_repository(
         "//queng_utils:clickhouse_utils/Cargo.toml",
         "//:queng_utils/client_utils/Cargo.toml",
         "//:queng_utils/db_utils/Cargo.toml",
+        "//:queng_utils/docker_utils/Cargo.toml",
         "//:queng_utils/env_utils/Cargo.toml",
         "//:queng_utils/proto_utils/Cargo.toml",
         "//:queng_utils/service_utils/Cargo.toml",

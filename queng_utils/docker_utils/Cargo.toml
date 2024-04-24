@@ -1,0 +1,23 @@
+[package]
+name = "docker_utils"
+version = "0.1.0"
+edition.workspace = true
+rust-version.workspace = true
+readme.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+
+[lib]
+name = "docker_utils"
+path = "src/lib.rs"
+
+
+[[bin]]
+name = "test_docker_bin"
+path = "src/docker_bin/main.rs"
+
+
+[dependencies]
+# Internal crates
+common = {workspace = true}

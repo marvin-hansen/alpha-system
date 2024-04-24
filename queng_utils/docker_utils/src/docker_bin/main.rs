@@ -1,4 +1,4 @@
-use env_utils::prelude::DockerUtil;
+use docker_utils::DockerUtil;
 use std::{thread, time};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {

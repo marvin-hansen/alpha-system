@@ -1,8 +1,9 @@
 use crate::env_util::ci::clickhouse;
 use crate::env_util::ci::metadata::{assets, exchanges, instruments};
-use crate::prelude::{ContainerConfig, EnvironmentError};
+use crate::prelude::EnvironmentError;
 use db_utils::prelude::ClickHouseClient;
 use db_utils::{db, query_utils};
+use docker_utils::prelude::ContainerConfig;
 
 // TODO: Add Debug
 

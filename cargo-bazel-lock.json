@@ -1,5 +1,5 @@
 {
-  "checksum": "7b336b7b360846f347bfa5efb2483e4bf77d04cbb3db802d344f8a85d86eccc3",
+  "checksum": "234c5df60ce8a76d5667799d3a80663f0202c1b3dddc0916957343e09d966821",
   "crates": {
     "addr2line 0.21.0": {
       "name": "addr2line",
@@ -4482,6 +4482,37 @@
           ],
           "selects": {}
         },
+        "edition": "2021",
+        "version": "0.1.0"
+      },
+      "license": null,
+      "license_ids": [],
+      "license_file": null
+    },
+    "docker_utils 0.1.0": {
+      "name": "docker_utils",
+      "version": "0.1.0",
+      "package_url": "https://github.com/marvin-hansen/quant-engine",
+      "repository": null,
+      "targets": [
+        {
+          "Library": {
+            "crate_name": "docker_utils",
+            "crate_root": "src/lib.rs",
+            "srcs": {
+              "allow_empty": false,
+              "include": [
+                "**/*.rs"
+              ]
+            }
+          }
+        }
+      ],
+      "library_target_name": "docker_utils",
+      "common_attrs": {
+        "compile_data_glob": [
+          "**"
+        ],
         "edition": "2021",
         "version": "0.1.0"
       },
@@ -20542,6 +20573,7 @@
     "dbgw 0.1.0": "queng_services/dbgw",
     "dbgw_client 0.1.0": "queng_clients/dbgw_client",
     "dns_manager 0.1.0": "queng_components/dns_manager",
+    "docker_utils 0.1.0": "queng_utils/docker_utils",
     "env_utils 0.1.0": "queng_utils/env_utils",
     "exchange_specs 0.1.0": "queng_specs/exchange_specs",
     "file_specs 0.1.0": "queng_specs/file_specs",

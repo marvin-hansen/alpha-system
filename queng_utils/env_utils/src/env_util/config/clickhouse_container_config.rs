@@ -1,4 +1,4 @@
-use crate::prelude::ContainerConfig;
+use docker_utils::prelude::ContainerConfig;
 
 pub(crate) fn clickhouse_container_config() -> ContainerConfig<'static> {
     // Official container image for ClickHouse

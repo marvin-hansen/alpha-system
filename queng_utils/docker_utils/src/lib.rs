@@ -1,4 +1,9 @@
-use crate::prelude::{ContainerConfig, DockerError};
+pub mod container_config;
+pub mod docker_error;
+pub mod prelude;
+
+use crate::container_config::ContainerConfig;
+use crate::docker_error::DockerError;
 use std::process::Command;
 
 // There are multiple ways to spawn a child process and execute an arbitrary command on the machine:
@@ -23,7 +28,7 @@ impl DockerUtil {
     /// # Examples
     ///
     /// ```
-    /// use env_utils::prelude::DockerUtil;
+    /// use docker_utils::DockerUtil;
     ///
     /// // Requires running Docker. Start Docker and uncomment.
     /// //let docker_util = DockerUtil::new();
@@ -42,7 +47,7 @@ impl DockerUtil {
     /// # Examples
     ///
     /// ```
-    /// use env_utils::prelude::DockerUtil;
+    /// use docker_utils::DockerUtil;
     ///
     /// // Requires running Docker. Start Docker and uncomment.
     /// //let docker_util = DockerUtil::with_debug().expect("Failed to create DockerUtil with debug mode");
@@ -135,7 +140,7 @@ impl DockerUtil {
     /// # Examples
     ///
     /// ```
-    /// use env_utils::prelude::DockerUtil;
+    /// use docker_utils::DockerUtil;
     ///
     /// let name = "nginx";
     /// let image = "nginx:latest";
@@ -199,7 +204,7 @@ impl DockerUtil {
     /// # Examples
     ///
     /// ```
-    /// use env_utils::prelude::DockerUtil;
+    /// use docker_utils::DockerUtil;
     ///
     /// // Requires running Docker. Start Docker and uncomment.
     /// // let mut docker_util = DockerUtil::new().expect("Failed to create DockerUtil");

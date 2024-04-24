@@ -9,11 +9,6 @@ authors.workspace = true
 
 
 [[bin]]
-name = "test_docker_bin"
-path = "src/docker_bin/main.rs"
-
-
-[[bin]]
 name = "test_env_bin"
 path = "src/env_util_bin/main.rs"
 
@@ -27,6 +22,7 @@ path = "src/lib.rs"
 # Internal crates
 common = {workspace = true}
 db_utils = {workspace = true}
+docker_utils = {workspace = true}
 # External crates
 tokio = { workspace = true, features = ["rt", "rt-multi-thread", "macros"] }
 serde_json = "1.0.115"

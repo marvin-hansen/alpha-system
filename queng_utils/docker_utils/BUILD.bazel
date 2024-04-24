@@ -4,9 +4,9 @@ load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test")
 
 
 rust_binary(
-    name = "env_util_bin",
-    crate_root = "src/env_util_bin/main.rs",
-    srcs = glob(["src/env_util_bin/*.rs"]),
+    name = "test_docker_bin",
+    crate_root = "src/docker_bin/main.rs",
+    srcs = glob(["src/docker_bin/*.rs"]),
     aliases = aliases(),
     proc_macro_deps = all_crate_deps(proc_macro = True),
     rustc_flags = select({
@@ -24,43 +24,37 @@ rust_binary(
     }),
     deps = all_crate_deps(
         normal = True,
-    ) + [
-        ":env_utils",
+    )+ [
+          ":docker_utils",
     ],
     visibility = ["//visibility:public"],
 )
 
+
 rust_library(
-    name = "env_utils",
+    name = "docker_utils",
     crate_root = "src/lib.rs",
     srcs = glob([
-        "src/**",
+        "src/*.rs",
     ]),
-#    data = [
-#        "//data/assets.json",
-#        "//data/exchanges.json",
-#        "//data/instruments.json",
-#    ],
     aliases = aliases(),
     proc_macro_deps = all_crate_deps(proc_macro = True),
     deps = all_crate_deps(
         normal = True,
     ) + [
         "//queng_common:common",
-        "//queng_utils/db_utils:db_utils",
-        "//queng_utils/docker_utils:docker_utils",
     ],
     visibility = ["//visibility:public"],
 )
 
 rust_doc(
     name = "doc",
-    crate = ":env_utils",
+    crate = ":docker_utils",
     visibility = ["//visibility:public"],
 )
 
 rust_doc_test(
      name = "doc_test",
-     crate = ":env_utils",
+     crate = ":docker_utils",
      visibility = ["//visibility:public"],
 )
