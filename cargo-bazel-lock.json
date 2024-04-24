@@ -1,5 +1,5 @@
 {
-  "checksum": "41992c126a59346da47b815cd7ccc7b4dc28f0921dcec6a249ba90076dfa8a7b",
+  "checksum": "614620828122dd80511210a254ec6b7f10789600e863174923b5647fb5ab095a",
   "crates": {
     "addr2line 0.21.0": {
       "name": "addr2line",
@@ -4679,7 +4679,7 @@
       "targets": [
         {
           "Library": {
-            "crate_name": "test_utils",
+            "crate_name": "env_utils",
             "crate_root": "src/lib.rs",
             "srcs": {
               "allow_empty": false,
@@ -4690,7 +4690,7 @@
           }
         }
       ],
-      "library_target_name": "test_utils",
+      "library_target_name": "env_utils",
       "common_attrs": {
         "compile_data_glob": [
           "**"

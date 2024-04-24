@@ -23,7 +23,7 @@ impl DockerUtil {
     /// # Examples
     ///
     /// ```
-    /// use test_utils::prelude::DockerUtil;
+    /// use env_utils::prelude::DockerUtil;
     ///
     /// // Requires running Docker. Start Docker and uncomment.
     /// //let docker_util = DockerUtil::new();
@@ -42,7 +42,7 @@ impl DockerUtil {
     /// # Examples
     ///
     /// ```
-    /// use test_utils::prelude::DockerUtil;
+    /// use env_utils::prelude::DockerUtil;
     ///
     /// // Requires running Docker. Start Docker and uncomment.
     /// //let docker_util = DockerUtil::with_debug().expect("Failed to create DockerUtil with debug mode");
@@ -135,7 +135,7 @@ impl DockerUtil {
     /// # Examples
     ///
     /// ```
-    /// use test_utils::prelude::DockerUtil;
+    /// use env_utils::prelude::DockerUtil;
     ///
     /// let name = "nginx";
     /// let image = "nginx:latest";
@@ -199,7 +199,7 @@ impl DockerUtil {
     /// # Examples
     ///
     /// ```
-    /// use test_utils::prelude::DockerUtil;
+    /// use env_utils::prelude::DockerUtil;
     ///
     /// // Requires running Docker. Start Docker and uncomment.
     /// // let mut docker_util = DockerUtil::new().expect("Failed to create DockerUtil");

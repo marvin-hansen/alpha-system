@@ -3,11 +3,13 @@ use env_utils::prelude::EnvUtil;
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Initial setup of the CI test environment
-    let test_env = EnvUtil::setup_ci().await.expect("Failed to setup test env");
-    let docker_util = &mut test_env.docker_util();
+    let mut ci_env = EnvUtil::with_debug();
+
+    ci_env.setup_ci().await.expect("Failed to setup test env");
+    let docker_util = &mut ci_env.get_docker_util().expect("Failed to get docker util");
 
     // Verify that the container was created
-    let container_name = test_env.clickhouse_container_name();
+    let container_name = ci_env.clickhouse_container_name();
     let exists = docker_util
         .check_if_container_exists(&container_name)
         .expect("Failed to check if container exists");
@@ -18,7 +20,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // At a later stage, containers will be re-used or re-created
     // depending on the container configuration
-    let test_env = EnvUtil::setup_ci().await.expect("Failed to setup test env");
+    let mut test_env = EnvUtil::with_debug();
+
+    test_env.setup_ci().await.expect("Failed to setup test env");
 
     // Verify that the container was re-used
     let container_name = test_env.clickhouse_container_name();

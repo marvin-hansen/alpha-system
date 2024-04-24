@@ -19,7 +19,7 @@ path = "src/env_util_bin/main.rs"
 
 
 [lib]
-name = "test_utils"
+name = "env_utils"
 path = "src/lib.rs"
 
 
