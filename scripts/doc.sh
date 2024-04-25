@@ -3,4 +3,4 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-command bazel build //:doc --jobs=50
+command bazel build //:doc

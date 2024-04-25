@@ -4,4 +4,4 @@ set -o nounset
 set -o pipefail
 
 
-command bazel build //... --jobs=50
+command bazel build //...

@@ -6,4 +6,4 @@ set -o pipefail
 current=$(cat current.txt)
 
 #echo "$current"
-command bazel build "$current" --jobs=50
+command bazel build "$current"
