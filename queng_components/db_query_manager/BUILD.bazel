@@ -1,5 +1,4 @@
-load("@crate_index//:defs.bzl", "aliases", "all_crate_deps")
-load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test_suite")
 load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test")
 
 
@@ -9,17 +8,43 @@ rust_library(
     srcs = glob([
         "src/**",
     ]),
-    aliases = aliases(),
-    proc_macro_deps = all_crate_deps(proc_macro = True),
-    deps = all_crate_deps(
-        normal = True,
-    ) + [
-        "//queng_common:common",
-        "//queng_utils/db_utils:db_utils",
+    deps = [
+      # Internal crates
+      "//queng_common:common",
+      "//queng_utils/db_utils:db_utils",
+      # External crates
+      "@crate_index//:chrono",
+      "@crate_index//:futures",
+      "@crate_index//:klickhouse",
+      "@crate_index//:rust_decimal",
+      "@crate_index//:serde",
+      "@crate_index//:tokio",
     ],
     visibility = ["//visibility:public"],
 )
 
+rust_test_suite(
+    name = "tests",
+    srcs = glob([
+        "db_query_manager_tests.rs",
+    ]),
+    deps = [
+      # Crate to test
+      ":db_query_manager",
+      # Internal crates
+      "//queng_common:common",
+      "//queng_utils/db_utils:db_utils",
+      # External crates
+      "@crate_index//:chrono",
+      "@crate_index//:futures",
+      "@crate_index//:klickhouse",
+      "@crate_index//:rust_decimal",
+      "@crate_index//:serde",
+      "@crate_index//:tokio",
+    ],
+    tags = ["unit","common"],
+    visibility = ["//visibility:public"],
+)
 
 rust_doc(
     name = "doc",

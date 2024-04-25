@@ -1,14 +1,6 @@
-load("@crate_index//:defs.bzl", "aliases", "all_crate_deps")
-load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test_suite")
 load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test")
 
-filegroup(
-    name = "build",
-    srcs = [
-        "//queng_common:common",
-    ],
-    visibility = ["//visibility:public"],
-)
 
 rust_library(
     name = "common",
@@ -16,29 +8,37 @@ rust_library(
     srcs = glob([
         "src/**",
     ]),
-    aliases = aliases(),
-    proc_macro_deps = all_crate_deps(proc_macro = True),
-    deps = all_crate_deps(normal = True),
+    deps = [
+          # External crates
+          "@crate_index//:chrono",
+          "@crate_index//:rust_decimal",
+          "@crate_index//:serde",
+          "@crate_index//:serde_json",
+    ],
+    proc_macro_deps = [
+          "@crate_index//:rust_decimal_macros",
+    ],
     visibility = ["//visibility:public"],
 )
 
-rust_test(
+
+rust_test_suite(
     name = "tests",
     srcs = glob([
-        "tests/**",
+        "tests/errors/*_tests.rs",
+        "tests/types/*/*_tests.rs",
     ]),
-    crate_root = "tests/mod.rs",
-    deps = all_crate_deps(
-        normal = True,
-        normal_dev = True,
-    ) + [
-        "//queng_common:common",
+    deps = [
+      # Crate to test
+      ":common",
+      # External crates
+      "@crate_index//:chrono",
+      "@crate_index//:rust_decimal",
+      "@crate_index//:serde",
+      "@crate_index//:serde_json",
     ],
-    proc_macro_deps = all_crate_deps(
-        proc_macro_dev = True
-    ),
+    tags = ["unit","common"],
     visibility = ["//visibility:public"],
-    tags = ["unit"],
 )
 
 rust_doc(
@@ -52,3 +52,4 @@ rust_doc_test(
      crate = ":common",
      visibility = ["//visibility:public"],
  )
+

@@ -137,44 +137,129 @@ crates_repository(
     cargo_lockfile = "//:Cargo.lock",
     generator = "@cargo_bazel_bootstrap//:cargo-bazel",
     lockfile = "//:cargo-bazel-lock.json",
-    manifests = [
-        "//:Cargo.toml",
-        "//:queng_clients/dbgw_client/Cargo.toml",
-        "//:queng_clients/ims_data_client/Cargo.toml",
-        "//:queng_clients/rest_client/Cargo.toml",
-        "//:queng_clients/symdb_client/Cargo.toml",
-        "//:queng_common/Cargo.toml",
-        "//:queng_components/config_manager/Cargo.toml",
-        "//:queng_components/ctx_manager/Cargo.toml",
-        "//:queng_components/db_query_manager/Cargo.toml",
-        "//:queng_components/db_system_manager/Cargo.toml",
-        "//:queng_components/dns_manager/Cargo.toml",
-        "//:queng_components/pattern_manager/Cargo.toml",
-        "//:queng_components/symbol_manager/Cargo.toml",
-        "//:queng_proto/Cargo.toml",
-        "//:queng_providers/cmdb_provider/Cargo.toml",
-        "//:queng_providers/smdb_provider/Cargo.toml",
-        "//:queng_sbe/bindings/Cargo.toml",
-        "//:queng_sbe/sbe_messages/Cargo.toml",
-        "//:queng_services/cmdb/Cargo.toml",
-        "//:queng_services/dbgw/Cargo.toml",
-        "//:queng_services/ims/data/binance_data/Cargo.toml",
-        "//:queng_services/ims/data/shared_data/Cargo.toml",
-        "//:queng_services/mdm/Cargo.toml",
-        "//:queng_services/smdb/Cargo.toml",
-        "//:queng_services/symdb/Cargo.toml",
-        "//:queng_specs/db_specs/Cargo.toml",
-        "//:queng_specs/exchange_specs/Cargo.toml",
-        "//:queng_specs/file_specs/Cargo.toml",
-        "//:queng_specs/service_specs/Cargo.toml",
-        "//queng_utils:clickhouse_utils/Cargo.toml",
-        "//:queng_utils/client_utils/Cargo.toml",
-        "//:queng_utils/db_utils/Cargo.toml",
-        "//:queng_utils/docker_utils/Cargo.toml",
-        "//:queng_utils/env_utils/Cargo.toml",
-        "//:queng_utils/proto_utils/Cargo.toml",
-        "//:queng_utils/service_utils/Cargo.toml",
-    ],
+    packages = {
+            "anyhow": crate.spec(
+                          version = "1.0",
+            ),
+
+            "binance-rs-async": crate.spec(
+                         default_features=False,
+                         features = ["rustls-tls"],
+                         version = "1.3",
+            ),
+
+            "chrono": crate.spec(
+                      features = ["serde"],
+                      version = "0.4",
+            ),
+
+            "config-file": crate.spec(
+                         version = "0.2",
+            ),
+
+            "ctrlc": crate.spec(
+                          version = "3.4",
+            ),
+
+            "clickhouse-rs": crate.spec(
+                             version = "1.1.0-alpha.1",
+            ),
+
+            "csv": crate.spec(
+                         default_features=False,
+                         version = "1.3",
+            ),
+
+            "encoding_rs": crate.spec(
+                             version = "0.8",
+            ),
+
+            "futures": crate.spec(
+                         version = "0.3",
+            ),
+
+            "hickory-resolver": crate.spec(
+                         default_features=False,
+                         features = ["tokio-runtime"],
+                         version = "0.24",
+            ),
+
+            "klickhouse": crate.spec(
+                         version = "0.12",
+            ),
+
+            "lru": crate.spec(
+                         version = "0.12",
+            ),
+
+            "parquet": crate.spec(
+                         version = "51.0",
+            ),
+
+            "prost": crate.spec(
+                         version = "0.12",
+            ),
+
+            "prost-types": crate.spec(
+                         default_features=False,
+                         version = "0.12",
+            ),
+
+            "reqwest": crate.spec(
+                         default_features=False,
+                         features = ["rustls-tls", "json"],
+                         version = "0.12",
+            ),
+
+            "rust_decimal": crate.spec(
+                         version = "1.34",
+            ),
+
+            "rust_decimal_macros": crate.spec(
+                       version = "1.34",
+            ),
+
+            "serde": crate.spec(
+                      features = ["derive"],
+                      version = "1.0",
+            ),
+
+            "serde_json": crate.spec(
+                         version = "1",
+            ),
+
+            "tonic": crate.spec(
+                      features = ["transport"],
+                      version = "0.11",
+            ),
+
+            "tonic-build": crate.spec(
+                      version = "0.11",
+            ),
+
+            "tonic-health": crate.spec(
+                      default_features=False,
+                      features = ["transport"],
+                      version = "0.11",
+            ),
+
+            "tokio-tungstenite": crate.spec(
+                     default_features=False,
+                     version = "0.21.0",
+            ),
+
+            "tokio": crate.spec(
+                     default_features=False,
+                     features =  ["macros", "net", "rt-multi-thread", "signal"],
+                     version = "1.17.0",
+            ),
+
+            "tokio-timer": crate.spec(
+                     version = "0.2",
+            ),
+
+    },
+
 )
 
 load("@crate_index//:defs.bzl", "crate_repositories")

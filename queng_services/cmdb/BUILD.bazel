@@ -1,4 +1,3 @@
-load("@crate_index//:defs.bzl", "aliases", "all_crate_deps")
 load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_doc", "rust_doc_test")
 # OCI Container Rules
 load("@rules_pkg//pkg:tar.bzl", "pkg_tar")
@@ -13,8 +12,6 @@ rust_binary(
     srcs = glob([
         "src/**/*.rs",
     ]),
-    aliases = aliases(),
-    proc_macro_deps = all_crate_deps(proc_macro = True),
     rustc_flags = select({
        "//:release": [
             "-Clto",
@@ -28,9 +25,8 @@ rust_binary(
            "-Copt-level=0",
         ],
     }),
-    deps = all_crate_deps(
-        normal = True,
-    ) + [
+    deps = [
+        # Internal crates
         "//queng_common:common",
         "//queng_components/config_manager:config_manager",
         "//queng_components/ctx_manager:ctx_manager",
@@ -38,8 +34,11 @@ rust_binary(
         "//queng_proto:rust_proto",
         "//queng_utils/service_utils:service_utils",
         "//queng_providers/smdb_provider:smdb_provider",
+        # External crates
+        "@crate_index//:tokio",
+        "@crate_index//:tonic",
+        "@crate_index//:prost",
     ],
-    tags = ["manual"],
     visibility = ["//visibility:public"],
 )
 

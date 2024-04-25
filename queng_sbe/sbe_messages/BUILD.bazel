@@ -1,5 +1,4 @@
-load("@crate_index//:defs.bzl", "aliases", "all_crate_deps")
-load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test_suite")
 load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test")
 
 
@@ -9,34 +8,37 @@ rust_library(
     srcs = glob([
         "src/**",
     ]),
-    aliases = aliases(),
-    proc_macro_deps = all_crate_deps(proc_macro = True),
-    tags = ["unit","sbe"],
-    deps = all_crate_deps(
-        normal = True,
-    ) + [
+    deps =[
+        # Internal crates
         "//queng_common:common",
-         "//queng_sbe/bindings:sbe_bindings",
+        "//queng_sbe/bindings:sbe_bindings",
+        # External crates
+        "@crate_index//:rust_decimal",
+        "@crate_index//:serde",
+        "@crate_index//:chrono",
     ],
     visibility = ["//visibility:public"],
 )
 
-rust_test(
+rust_test_suite(
     name = "tests",
     srcs = glob([
-        "tests/**",
+         "tests/errors/*_tests.rs",
+         "tests/messages/*/*_tests.rs",
+         "tests/types/*_tests.rs",
     ]),
-    crate_root = "tests/mod.rs",
-    deps = all_crate_deps(
-        normal = True,
-        normal_dev = True,
-    ) + [
+    deps =[
+        # Crate to test
+        ":sbe_messages",
+        # Internal crates
         "//queng_common:common",
-        "//queng_sbe/sbe_messages:sbe_messages",
+        "//queng_sbe/bindings:sbe_bindings",
+        # External crates
+        "@crate_index//:rust_decimal",
+        "@crate_index//:serde",
+        "@crate_index//:chrono",
     ],
-    proc_macro_deps = all_crate_deps(
-        proc_macro_dev = True
-    ),
+    tags = ["unit","sbe"],
     visibility = ["//visibility:public"],
 )
 

@@ -7,8 +7,6 @@ rust_binary(
     name = "env_util_bin",
     crate_root = "src/env_util_bin/main.rs",
     srcs = glob(["src/env_util_bin/*.rs"]),
-    aliases = aliases(),
-    proc_macro_deps = all_crate_deps(proc_macro = True),
     rustc_flags = select({
        "//:release": [
             "-Clto",
@@ -22,10 +20,10 @@ rust_binary(
            "-Copt-level=0",
         ],
     }),
-    deps = all_crate_deps(
-        normal = True,
-    ) + [
+    deps = [
         ":env_utils",
+        # External crates
+        "@crate_index//:tokio",
     ],
     visibility = ["//visibility:public"],
 )
@@ -36,19 +34,14 @@ rust_library(
     srcs = glob([
         "src/**",
     ]),
-#    data = [
-#        "//data/assets.json",
-#        "//data/exchanges.json",
-#        "//data/instruments.json",
-#    ],
-    aliases = aliases(),
-    proc_macro_deps = all_crate_deps(proc_macro = True),
-    deps = all_crate_deps(
-        normal = True,
-    ) + [
+    deps = [
+        # Internal crates
         "//queng_common:common",
         "//queng_utils/db_utils:db_utils",
         "//queng_utils/docker_utils:docker_utils",
+        # External crates
+        "@crate_index//:tokio",
+        "@crate_index//:serde_json",
     ],
     visibility = ["//visibility:public"],
 )

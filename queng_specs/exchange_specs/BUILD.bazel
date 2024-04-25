@@ -1,5 +1,4 @@
-load("@crate_index//:defs.bzl", "aliases", "all_crate_deps")
-load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test_suite")
 load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test")
 
 rust_library(
@@ -8,36 +7,25 @@ rust_library(
     srcs = glob([
         "src/**/*.rs",
     ]),
-    aliases = aliases(),
-    proc_macro_deps = all_crate_deps(proc_macro = True),
-    deps = all_crate_deps(
-        normal = True,
-    ) + [
+    deps = [
         "//queng_common:common",
     ],
     visibility = ["//visibility:public"],
 )
 
-rust_test(
+rust_test_suite(
     name = "tests",
     srcs = glob([
-        "tests/**",
+        "tests/*/*.rs",
     ]),
+    deps = [
+        "//queng_common:common",
+        "//queng_specs/exchange_specs:exchange_specs",
+    ],
     tags = [
         "spec-test",
         "unit-test",
     ],
-    crate_root = "tests/mod.rs",
-    deps = all_crate_deps(
-        normal = True,
-        normal_dev = True,
-    ) + [
-        "//queng_common:common",
-        "//queng_specs/exchange_specs:exchange_specs",
-    ],
-    proc_macro_deps = all_crate_deps(
-        proc_macro_dev = True
-    ),
     visibility = ["//visibility:public"],
 )
 

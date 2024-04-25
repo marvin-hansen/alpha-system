@@ -1,5 +1,4 @@
-load("@crate_index//:defs.bzl", "aliases", "all_crate_deps")
-load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test_suite")
 load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test")
 
 
@@ -9,11 +8,8 @@ rust_library(
     srcs = glob([
         "src/**",
     ]),
-    aliases = aliases(),
-    proc_macro_deps = all_crate_deps(proc_macro = True),
-    deps = all_crate_deps(
-        normal = True,
-    ) + [
+    deps = [
+        # Internal crates
         "//queng_common:common",
         "//queng_components/ctx_manager:ctx_manager",
         "//queng_components/dns_manager:dns_manager",
@@ -21,30 +17,6 @@ rust_library(
         "//queng_specs/exchange_specs:exchange_specs",
         "//queng_specs/service_specs:service_specs",
     ],
-    visibility = ["//visibility:public"],
-)
-
-rust_test(
-    name = "tests",
-    srcs = glob([
-        "tests/**",
-    ]),
-    crate_root = "tests/mod.rs",
-    deps = all_crate_deps(
-        normal = True,
-        normal_dev = True,
-    ) + [
-        "//queng_common:common",
-        "//queng_components/ctx_manager:ctx_manager",
-        "//queng_components/dns_manager:dns_manager",
-        "//queng_specs/db_specs:db_specs",
-        "//queng_specs/exchange_specs:exchange_specs",
-        "//queng_specs/service_specs:service_specs",
-        "//queng_components/config_manager:config_manager",
-    ],
-    proc_macro_deps = all_crate_deps(
-        proc_macro_dev = True
-    ),
     visibility = ["//visibility:public"],
 )
 

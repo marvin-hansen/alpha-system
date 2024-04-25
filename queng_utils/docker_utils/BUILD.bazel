@@ -1,4 +1,3 @@
-load("@crate_index//:defs.bzl", "aliases", "all_crate_deps")
 load("@rules_rust//rust:defs.bzl", "rust_library", "rust_binary", "rust_test")
 load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test")
 
@@ -7,8 +6,6 @@ rust_binary(
     name = "test_docker_bin",
     crate_root = "src/docker_bin/main.rs",
     srcs = glob(["src/docker_bin/*.rs"]),
-    aliases = aliases(),
-    proc_macro_deps = all_crate_deps(proc_macro = True),
     rustc_flags = select({
        "//:release": [
             "-Clto",
@@ -22,9 +19,7 @@ rust_binary(
            "-Copt-level=0",
         ],
     }),
-    deps = all_crate_deps(
-        normal = True,
-    )+ [
+    deps = [
           ":docker_utils",
     ],
     visibility = ["//visibility:public"],
@@ -37,11 +32,7 @@ rust_library(
     srcs = glob([
         "src/*.rs",
     ]),
-    aliases = aliases(),
-    proc_macro_deps = all_crate_deps(proc_macro = True),
-    deps = all_crate_deps(
-        normal = True,
-    ) + [
+    deps = [
         "//queng_common:common",
     ],
     visibility = ["//visibility:public"],

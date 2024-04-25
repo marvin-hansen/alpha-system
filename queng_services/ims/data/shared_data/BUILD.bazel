@@ -1,4 +1,3 @@
-load("@crate_index//:defs.bzl", "aliases", "all_crate_deps")
 load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
 load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test")
 
@@ -9,11 +8,8 @@ rust_library(
     srcs = glob([
         "src/lib/*.rs",
     ]),
-    aliases = aliases(),
-    proc_macro_deps = all_crate_deps(proc_macro = True),
-    deps = all_crate_deps(
-        normal = True,
-    ) + [
+    deps =  [
+        # Internal crates
         "//queng_common:common",
         "//queng_components/config_manager:config_manager",
         "//queng_components/ctx_manager:ctx_manager",
@@ -23,6 +19,10 @@ rust_library(
         "//queng_utils/service_utils:service_utils",
         "//queng_components/symbol_manager:symbol_manager",
         "//queng_providers/smdb_provider:smdb_provider",
+        # External crates
+        "@crate_index//:tokio",
+        "@crate_index//:tonic",
+        "@crate_index//:prost",
     ],
     visibility = ["//visibility:public"],
 )

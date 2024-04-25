@@ -1,4 +1,3 @@
-load("@crate_index//:defs.bzl", "aliases", "all_crate_deps")
 load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
 load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test")
 
@@ -8,13 +7,25 @@ rust_library(
     srcs = glob([
         "src/**",
     ]),
-    aliases = aliases(),
-    proc_macro_deps = all_crate_deps(proc_macro = True),
-    deps = all_crate_deps(
-        normal = True,
-    ) + [
-        "//queng_common:common",
-        "//queng_utils/db_utils:db_utils",
+    deps = [
+      # Internal crates
+      "//queng_common:common",
+      "//queng_components/ctx_manager:ctx_manager",
+      "//queng_components/config_manager:config_manager",
+      "//queng_components/dns_manager:dns_manager",
+      "//queng_specs/db_specs:db_specs",
+      "//queng_specs/exchange_specs:exchange_specs",
+      "//queng_specs/service_specs:service_specs",
+      "//queng_utils/db_utils:db_utils",
+      "//queng_utils/env_utils:env_utils",
+      # External crates
+      "@crate_index//:chrono",
+      "@crate_index//:clickhouse-rs",
+      "@crate_index//:futures",
+      "@crate_index//:klickhouse",
+      "@crate_index//:rust_decimal",
+      "@crate_index//:serde",
+      "@crate_index//:tokio",
     ],
     visibility = ["//visibility:public"],
 )
@@ -22,9 +33,8 @@ rust_library(
 rust_test(
     name = "tests",
     srcs = glob([
-        "tests/**",
+        "tests/*_tests.rs",
     ]),
-    crate_root = "tests/mod.rs",
     exec_properties = {
         # Tell BuildBuddy to run this test using a Firecracker microVM.
         "test.workload-isolation-type": "firecracker",
@@ -36,25 +46,28 @@ rust_test(
         # because we can't fit all db docker images with the default disk limit.
         # "test.runner-recycling-key": "clickhouse",
     },
-    tags = ["docker","integration"],
-    deps = all_crate_deps(
-        normal = True,
-        normal_dev = True,
-    ) + [
-        ":db_system_manager",
-        "//queng_common:common",
-        "//queng_components/ctx_manager:ctx_manager",
-        "//queng_components/dns_manager:dns_manager",
-        "//queng_specs/db_specs:db_specs",
-        "//queng_specs/exchange_specs:exchange_specs",
-        "//queng_specs/service_specs:service_specs",
-        "//queng_components/config_manager:config_manager",
-        "//queng_utils/db_utils:db_utils",
-        "//queng_utils/env_utils:env_utils",
+    deps = [
+          ":db_system_manager",
+          # Internal crates
+          "//queng_common:common",
+          "//queng_components/ctx_manager:ctx_manager",
+          "//queng_components/config_manager:config_manager",
+          "//queng_components/dns_manager:dns_manager",
+          "//queng_specs/db_specs:db_specs",
+          "//queng_specs/exchange_specs:exchange_specs",
+          "//queng_specs/service_specs:service_specs",
+          "//queng_utils/db_utils:db_utils",
+          "//queng_utils/env_utils:env_utils",
+          # External crates
+          "@crate_index//:chrono",
+          "@crate_index//:clickhouse-rs",
+          "@crate_index//:futures",
+          "@crate_index//:klickhouse",
+          "@crate_index//:rust_decimal",
+          "@crate_index//:serde",
+           "@crate_index//:tokio",
     ],
-    proc_macro_deps = all_crate_deps(
-        proc_macro_dev = True
-    ),
+    tags = ["docker","integration","db_system_manager"],
     visibility = ["//visibility:public"],
 )
 

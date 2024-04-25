@@ -4,7 +4,7 @@ set -o nounset
 set -o pipefail
 
 # Syncs Cargo dependencies to Bazel index
-CARGO_BAZEL_ISOLATED=false CARGO_BAZEL_REPIN=1 bazel sync --only=crate_index
+CARGO_BAZEL_REPIN=true bazel build //...
 
 # Compile everything
 command bazel build //... --jobs=50
