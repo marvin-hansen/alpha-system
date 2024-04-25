@@ -135,7 +135,6 @@ load("@rules_rust//crate_universe:defs.bzl", "crate", "crates_repository", "rend
 crates_repository(
     name = "crate_index",
     cargo_lockfile = "//:Cargo.lock",
-    generator = "@cargo_bazel_bootstrap//:cargo-bazel",
     lockfile = "//:cargo-bazel-lock.json",
     packages = {
             "anyhow": crate.spec(
