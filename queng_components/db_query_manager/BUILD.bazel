@@ -11,7 +11,7 @@ rust_library(
     deps = [
       # Internal crates
       "//queng_common:common",
-      "//queng_utils/db_utils:db_utils",
+      "//queng_utils/clickhouse_utils:clickhouse_utils",
       # External crates
       "@crate_index//:chrono",
       "@crate_index//:futures",

@@ -1,6 +1,6 @@
 use crate::SystemDBManager;
+use clickhouse_utils::error::QueryError;
 use common::prelude::{ServiceConfig, ServiceID};
-use db_utils::error::QueryError;
 use std::fmt::Error;
 
 impl SystemDBManager {

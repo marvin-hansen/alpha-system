@@ -19,3 +19,4 @@ common = {workspace = true}
 # External crates
 klickhouse = { workspace = true }
 serde = { workspace = true }
+serde_json = { workspace = true }

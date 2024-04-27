@@ -1,9 +1,9 @@
 use crate::types::OHLCVRow;
 use crate::QueryDBManager;
 use crate::FN_NAME;
+use clickhouse_utils::error::QueryError;
+use clickhouse_utils::query_utils;
 use common::prelude::{OHLCVBar, TimeResolution};
-use db_utils::error::QueryError;
-use db_utils::query_utils;
 
 impl QueryDBManager {
     /// Retrieves all OHLCV data bars for the given symbol table and time resolution.

@@ -22,7 +22,6 @@ path = "src/lib.rs"
 # Internal crates
 common = {workspace = true}
 clickhouse_utils = {workspace = true}
-db_utils = {workspace = true}
 docker_utils = {workspace = true}
 # External crates
 tokio = { workspace = true }

@@ -2,15 +2,21 @@ mod db;
 
 pub mod error;
 pub(crate) mod fields;
-pub(crate) mod query;
+mod import;
+pub mod prelude;
+pub mod query_utils;
 pub mod setup;
 pub mod teardown;
 pub mod types;
-pub(crate) mod utils;
 
 use crate::db::metadata::Metadata;
 use crate::db::specs::Specs;
-use klickhouse::{Client, ClientOptions};
+use klickhouse::{Client, ClientOptions, KlickhouseError};
+
+// Re-export CH client
+use crate::error::QueryError;
+use crate::types::CountRow;
+pub use klickhouse::Client as ClickHouseClient;
 
 pub struct ClickhouseUtil {
     dbg: bool,
@@ -59,5 +65,34 @@ impl ClickhouseUtil {
         if self.dbg {
             println!("[ClickhouseUtil]: {}", s);
         }
+    }
+}
+
+impl ClickhouseUtil {
+    /// Executes a query on the specified table in the ClickHouse database.
+    pub async fn execute_query(&self, query: &str) -> Result<(), QueryError> {
+        // execute query
+        let res = self.client.execute(query).await;
+
+        // check for errors
+        return match res {
+            Ok(_) => Ok(()),
+            Err(e) => Err(QueryError::QueryFailed(e.to_string())),
+        };
+    }
+
+    /// Counts the number of rows in the specified table in the ClickHouse database.
+    pub async fn count_rows(&self, table_name: &str) -> Result<u64, QueryError> {
+        // Generate count query for the specified table
+        let count_query = format!("SELECT count(*) FROM {table_name}");
+
+        // We need type annotation of the Result type here.
+        let number_of_rows: Result<CountRow, KlickhouseError> =
+            self.client.query_one(&count_query).await;
+
+        return match number_of_rows {
+            Ok(number_of_rows) => Ok(number_of_rows.count()),
+            Err(e) => Err(QueryError::QueryFailed(e.to_string())),
+        };
     }
 }

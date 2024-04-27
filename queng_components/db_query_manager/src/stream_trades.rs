@@ -1,6 +1,6 @@
 use crate::types::TradeRow;
 use crate::{QueryDBManager, FN_NAME};
-use db_utils::query_utils::sanitize_table_name;
+use clickhouse_utils::query_utils::sanitize_table_name;
 use futures::stream::BoxStream;
 use futures::StreamExt;
 use klickhouse::KlickhouseError;

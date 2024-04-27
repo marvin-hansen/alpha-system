@@ -1,8 +1,8 @@
 use crate::types::TradeRow;
 use crate::{QueryDBManager, FN_NAME};
+use clickhouse_utils::error::QueryError;
+use clickhouse_utils::query_utils::sanitize_table_name;
 use common::prelude::TradeBar;
-use db_utils::error::QueryError;
-use db_utils::query_utils::sanitize_table_name;
 
 impl QueryDBManager {
     /// Retrieves all trade bars for the given symbol table from the database.

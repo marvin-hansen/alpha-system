@@ -3,7 +3,6 @@ filegroup(
     srcs = [
         "//queng_utils/clickhouse_utils:clickhouse_utils",
         "//queng_utils/client_utils:client_utils",
-        "//queng_utils/db_utils:db_utils",
         "//queng_utils/env_utils:env_utils",
         "//queng_utils/proto_utils:proto_utils",
         "//queng_utils/service_utils:service_utils",
@@ -16,7 +15,6 @@ filegroup(
     srcs = [
         "//queng_utils/clickhouse_utils:doc",
         "//queng_utils/client_utils:doc",
-        "//queng_utils/db_utils:doc",
         "//queng_utils/env_utils:doc",
         "//queng_utils/proto_utils:doc",
         "//queng_utils/service_utils:doc",

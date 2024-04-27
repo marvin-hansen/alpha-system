@@ -38,7 +38,6 @@ rust_library(
         # Internal crates
         "//queng_common:common",
         "//queng_utils/clickhouse_utils:clickhouse_utils",
-        "//queng_utils/db_utils:db_utils",
         "//queng_utils/docker_utils:docker_utils",
         # External crates
         "@crate_index//:tokio",

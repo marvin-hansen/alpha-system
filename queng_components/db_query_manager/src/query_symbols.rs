@@ -1,7 +1,7 @@
 use crate::types::SymbolRow;
 use crate::{QueryDBManager, FN_NAME};
-use db_utils::error::QueryError;
-use db_utils::query_utils::sanitize_table_name;
+use clickhouse_utils::error::QueryError;
+use clickhouse_utils::query_utils::sanitize_table_name;
 
 impl QueryDBManager {
     /// Retrieves all symbols and their IDs from the given symbol table.

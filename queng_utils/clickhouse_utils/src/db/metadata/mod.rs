@@ -1,5 +1,7 @@
-mod ddl;
-mod inserts;
+mod assets;
+mod exchanges;
+mod instruments;
+mod symbols;
 
 pub(crate) const TABLE_NAME: &str = "metadata";
 

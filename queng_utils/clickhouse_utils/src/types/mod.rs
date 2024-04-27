@@ -1,6 +1,7 @@
 mod assets;
 mod count_row;
 mod exchanges;
+pub mod import_config;
 mod instruments;
 mod master_symbols;
 mod symbol_meta_data;
