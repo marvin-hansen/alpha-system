@@ -42,14 +42,14 @@ build:clippy --aspects=@rules_rust//rust:defs.bzl%rust_clippy_aspect
 build:clippy --output_groups=+clippy_checks
 
 # Enable remote cache for local builds
-build --remote_cache=grpcs://remote.buildbuddy.io
-build --remote_timeout=600
-build --remote_header=x-buildbuddy-api-key=4Ml6AhYICvGtZ3XhqafP
+#build --remote_cache=grpcs://remote.buildbuddy.io
+#build --remote_timeout=600
+#build --remote_header=x-buildbuddy-api-key=4Ml6AhYICvGtZ3XhqafP
 
 # Tweak remote cache settings for performance.
-common --experimental_remote_cache_async
-common --remote_build_event_upload=minimal
-common --experimental_remote_cache_compression
+#common --experimental_remote_cache_async
+#common --remote_build_event_upload=minimal
+#common --experimental_remote_cache_compression
 
 # Flags shared across remote configs
 common:remote-shared --jobs=100
@@ -66,8 +66,8 @@ common:remote-shared --remote_cache=grpcs://remote.buildbuddy.io
 common:remote-shared --remote_header=x-buildbuddy-api-key=4Ml6AhYICvGtZ3XhqafP
 
 # Build with --config=remote to enable Remote Build Execution (RBE)
-common:remote --config=remote-shared
-common:remote --remote_executor=remote.buildbuddy.io
+#common:remote --config=remote-shared
+#common:remote --remote_executor=remote.buildbuddy.io
 
 # This isn't currently the default in Bazel, but we enable it to test we'll be ready if/when it flips.
 # build --incompatible_disallow_empty_glob

@@ -1,1 +1,1 @@
-//queng_utils/env_utils:env_utils
+//queng_utils/clickhouse_utils:clickhouse_utils

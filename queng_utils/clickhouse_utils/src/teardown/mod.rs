@@ -2,12 +2,14 @@ use crate::ClickhouseUtil;
 use std::error::Error;
 
 impl ClickhouseUtil {
-    pub async fn teardown(&self) -> Result<(), Box<dyn Error>> {
-        self.drop_spec_db().await.expect("Failed to drop specs DB");
+    pub async fn teardown_db(&self) -> Result<(), Box<dyn Error>> {
+        self.drop_spec_db()
+            .await
+            .expect("[teardown_db]: Failed to drop specs DB");
 
         self.drop_metadata_db()
             .await
-            .expect("Failed to drop metadata DB");
+            .expect("[teardown_db]: Failed to drop metadata DB");
 
         Ok(())
     }

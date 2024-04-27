@@ -1,3 +1,4 @@
+use clickhouse_utils::ClickhouseUtil;
 use db_utils::prelude::ClickHouseClient;
 use docker_utils::prelude::{ContainerConfig, DockerError, DockerUtil};
 
@@ -6,7 +7,6 @@ mod config;
 mod env_ci;
 mod env_prod;
 
-#[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq)]
 pub struct EnvUtil {
     clickhouse_container_name: String,
     clickhouse_container_port: u16,
@@ -15,17 +15,18 @@ pub struct EnvUtil {
 
 impl EnvUtil {
     pub fn new() -> Self {
-        Self {
-            clickhouse_container_name: String::new(),
-            clickhouse_container_port: 0,
-            dbg: false,
-        }
+        Self::build(false)
     }
+
     pub fn with_debug() -> Self {
+        Self::build(true)
+    }
+
+    fn build(dbg: bool) -> Self {
         Self {
             clickhouse_container_name: String::new(),
             clickhouse_container_port: 0,
-            dbg: true,
+            dbg,
         }
     }
 }
@@ -59,6 +60,15 @@ impl EnvUtil {
             Err(e) => Err(e),
         };
     }
+
+    async fn get_clickhouse_util(&self, client: ClickHouseClient) -> ClickhouseUtil {
+        return if self.dbg {
+            ClickhouseUtil::from_client_with_debug(client)
+        } else {
+            ClickhouseUtil::from_client(client)
+        };
+    }
+
     async fn get_clickhouse_client(
         &self,
         container_config: &ContainerConfig<'_>,
@@ -71,7 +81,7 @@ impl EnvUtil {
         );
 
         // Get clickhouse client.
-        db_utils::get_clickhouse_client(dsn).await
+        ClickhouseUtil::get_clickhouse_client(dsn).await
     }
 }
 

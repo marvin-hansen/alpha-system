@@ -2,25 +2,15 @@ mod db;
 
 pub mod error;
 pub(crate) mod fields;
-
-pub(crate) mod query_utils;
-mod setup;
-mod teardown;
+pub(crate) mod query;
+pub mod setup;
+pub mod teardown;
 pub mod types;
+pub(crate) mod utils;
 
 use crate::db::metadata::Metadata;
 use crate::db::specs::Specs;
 use klickhouse::{Client, ClientOptions};
-
-/// Creates a new clickhouse to connect to the provided DSN.
-/// DSN format: url:port
-pub async fn get_clickhouse_client(dsn: String) -> Client {
-    let client = Client::connect(dsn.clone(), ClientOptions::default())
-        .await
-        .expect(format!("[get_clickhouse_client]: Failed to connect to {}", &dsn).as_str());
-
-    client
-}
 
 pub struct ClickhouseUtil {
     dbg: bool,
@@ -30,11 +20,19 @@ pub struct ClickhouseUtil {
 }
 
 impl ClickhouseUtil {
-    pub fn new(client: Client) -> Self {
+    pub async fn new(dsn: String) -> Self {
+        Self::build(false, Self::get_clickhouse_client(dsn).await)
+    }
+
+    pub async fn with_debug(dsn: String) -> Self {
+        Self::build(true, Self::get_clickhouse_client(dsn).await)
+    }
+
+    pub fn from_client(client: Client) -> Self {
         Self::build(false, client)
     }
 
-    pub fn with_debug(client: Client) -> Self {
+    pub fn from_client_with_debug(client: Client) -> Self {
         Self::build(true, client)
     }
 
@@ -45,6 +43,14 @@ impl ClickhouseUtil {
             metadata: Metadata::new(),
             specs: Specs::new(),
         }
+    }
+
+    pub async fn get_clickhouse_client(dsn: String) -> Client {
+        let client = Client::connect(dsn.clone(), ClientOptions::default())
+            .await
+            .expect(format!("[get_clickhouse_client]: Failed to connect to {}", &dsn).as_str());
+
+        client
     }
 }
 
