@@ -64,3 +64,6 @@ common:remote-shared --remote_header=x-buildbuddy-api-key=4Ml6AhYICvGtZ3XhqafP
 # Build with --config=remote to enable Remote Build Execution (RBE)
 common:remote --config=remote-shared
 common:remote --remote_executor=remote.buildbuddy.io
+
+# Build with --config=remote to enable remote cache only
+common:remote-cache --config=remote-shared

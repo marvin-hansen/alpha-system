@@ -11,10 +11,9 @@ actions:
     bazel_commands:
       - "run   -c opt //:buildbuddy_setup_docker_auth --verbose_failures"
       - "build -c opt //:image --config=remote"
-      - "build -c opt //:doc   --config=remote"
       - "test -c opt  //... --test_tag_filters=unit --config=remote"
-      - "test -c opt  //... --test_tag_filters=env_setup"
-      - "test -c opt  //... --test_tag_filters=clickhouse_utils"
+      - "test -c opt  //... --test_tag_filters=env_setup --config=remote-cache"
+      - "test -c opt  //... --test_tag_filters=clickhouse_utils --config=remote-cache"
 
   - name: "Build and publish all images"
     container_image: ubuntu-20.04
