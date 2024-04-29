@@ -30,7 +30,7 @@ impl EnvUtil {
 
         // Give the container some extra time to complete booting up.
         // Otherwise, you may get a connection refused error when connecting the client.
-        sleep(Duration::from_millis(100));
+        sleep(Duration::from_millis(500));
 
         // Once the container is up & running, configure the DB
         self.dbg_print("Get clickhouse client");

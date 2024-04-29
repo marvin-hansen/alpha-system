@@ -6,11 +6,7 @@ use std::time::Duration;
 async fn test_env_util_setup_ci() {
     // Initial setup of the CI test environment
     let mut ci_env = EnvUtil::with_debug();
-
     ci_env.setup_ci().await.expect("Failed to setup test env");
-
-    // Give some extra time
-    sleep(Duration::from_millis(250));
 
     // Verify that the container was created
     let docker_util = &mut ci_env.get_docker_util().expect("Failed to get docker util");
