@@ -1,14 +1,19 @@
 use env_utils::EnvUtil;
+use std::thread::sleep;
+use std::time::Duration;
 
 #[tokio::test]
-async fn test_env_util() {
+async fn test_env_util_setup_ci() {
     // Initial setup of the CI test environment
     let mut ci_env = EnvUtil::with_debug();
 
     ci_env.setup_ci().await.expect("Failed to setup test env");
-    let docker_util = &mut ci_env.get_docker_util().expect("Failed to get docker util");
+
+    // Give some extra time
+    sleep(Duration::from_millis(250));
 
     // Verify that the container was created
+    let docker_util = &mut ci_env.get_docker_util().expect("Failed to get docker util");
     let container_name = ci_env.clickhouse_container_name();
     let exists = docker_util
         .check_if_container_exists(&container_name)
@@ -33,6 +38,9 @@ async fn test_env_util() {
 
     println!("✅ OK: Container name: {} re-used", container_name);
     println!();
+
+    // Give some extra time
+    sleep(Duration::from_millis(100));
 
     // Teardown of the CI test environment
     test_env
