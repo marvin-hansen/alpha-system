@@ -35,7 +35,7 @@ impl<'l> ContainerConfig<'l> {
     /// # Examples
     ///
     /// ```
-    /// use docker_utils::prelude::ContainerConfig;
+    /// use common::prelude::ContainerConfig;
     ///
     /// let container_config = ContainerConfig::new("my_container", "nginx",":latest", "0.0.0.0" ,80, &[], false, false);
     /// ```

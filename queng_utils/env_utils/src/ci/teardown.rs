@@ -1,5 +1,5 @@
-use crate::config::clickhouse_container_config::clickhouse_container_config;
 use crate::prelude::{EnvUtil, EnvironmentError};
+use container_specs::clickhouse_container_config::clickhouse_container_config;
 
 impl EnvUtil {
     // teardown CI instance of test environment

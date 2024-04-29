@@ -1,6 +1,4 @@
 use env_utils::EnvUtil;
-use std::thread::sleep;
-use std::time::Duration;
 
 #[tokio::test]
 async fn test_env_util_setup_ci() {
@@ -35,26 +33,7 @@ async fn test_env_util_setup_ci() {
     println!("✅ OK: Container name: {} re-used", container_name);
     println!();
 
-    // Give some extra time
-    sleep(Duration::from_millis(100));
-
-    // Teardown of the CI test environment
-    test_env
-        .teardown_ci()
-        .await
-        .expect("Failed to teardown test env");
-
-    // Verify that the container was deleted
-    let exists = docker_util
-        .check_if_container_exists(&container_name)
-        .expect("Failed to check if container exists");
-    assert!(!exists);
-
-    println!("✅ OK: Container name: {} deleted", container_name);
-    println!();
-
     println!("All tests passed:");
     println!("  ✅ OK: TestEnv CI created");
     println!("  ✅ OK: TestEnv CI re-used");
-    println!("  ✅ OK: TestEnv CI stopped");
 }

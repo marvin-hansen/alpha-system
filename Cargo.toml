@@ -26,6 +26,7 @@ members = [
     "queng_services/mdm",
     "queng_services/smdb",
     "queng_services/symdb",
+    "queng_specs/container_specs",
     "queng_specs/db_specs",
     "queng_specs/exchange_specs",
     "queng_specs/file_specs",
@@ -78,6 +79,7 @@ sbe_messages = { path = "queng_sbe/sbe_messages" }
 # Service libs
 lib_data_stream = { path = "queng_services/ims/data/shared_data" }
 # Specs
+container_specs = { path = "queng_specs/container_specs" }
 db_specs = { path = "queng_specs/db_specs" }
 exchange_specs = { path = "queng_specs/exchange_specs" }
 file_specs = { path = "queng_specs/file_specs" }

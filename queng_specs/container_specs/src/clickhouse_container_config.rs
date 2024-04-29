@@ -1,12 +1,12 @@
-use docker_utils::prelude::ContainerConfig;
+use common::prelude::ContainerConfig;
 
-pub(crate) fn clickhouse_container_config() -> ContainerConfig<'static> {
+pub fn clickhouse_container_config() -> ContainerConfig<'static> {
     // Official container image for ClickHouse
     // https://hub.docker.com/r/clickhouse/clickhouse-server/tags
     ContainerConfig::new(
         "clickhouse",
         "clickhouse/clickhouse-server",
-        "22.3.18",
+        "24.3.2",
         "127.0.0.1",
         9000,
         &[8123],

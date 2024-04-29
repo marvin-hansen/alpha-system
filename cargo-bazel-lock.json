@@ -1,5 +1,5 @@
 {
-  "checksum": "42004c4d4586e5248edf93754f615f910594b464c0d55f8797b4e142cbad1d06",
+  "checksum": "bd4daeb15f124b0b6416705305609912c87cb31344f1b2504b2b2845d63a3d4a",
   "crates": {
     "addr2line 0.21.0": {
       "name": "addr2line",
@@ -5639,14 +5639,14 @@
       ],
       "license_file": null
     },
-    "flate2 1.0.28": {
+    "flate2 1.0.29": {
       "name": "flate2",
-      "version": "1.0.28",
+      "version": "1.0.29",
       "package_url": "https://github.com/rust-lang/flate2-rs",
       "repository": {
         "Http": {
-          "url": "https://static.crates.io/crates/flate2/1.0.28/download",
-          "sha256": "46303f565772937ffe1d394a4fac6f411c6013172fadde9dcdb1e147a086940e"
+          "url": "https://static.crates.io/crates/flate2/1.0.29/download",
+          "sha256": "4556222738635b7a3417ae6130d8f52201e45a0c4d1a907f0826383adb5f85e7"
         }
       },
       "targets": [
@@ -5690,7 +5690,7 @@
           "selects": {}
         },
         "edition": "2018",
-        "version": "1.0.28"
+        "version": "1.0.29"
       },
       "license": "MIT OR Apache-2.0",
       "license_ids": [
@@ -11778,7 +11778,7 @@
               "target": "chrono"
             },
             {
-              "id": "flate2 1.0.28",
+              "id": "flate2 1.0.29",
               "target": "flate2"
             },
             {

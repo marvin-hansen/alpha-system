@@ -30,8 +30,6 @@ fn test_new() {
 
 #[test]
 fn test_resolve_internal_dns() {
-    let internal = true;
-
     env::set_var("ENV", "CLUSTER");
     env::set_var("DNS_SERVER", "9.9.9.9");
 
@@ -46,8 +44,6 @@ fn test_resolve_internal_dns() {
 
 #[test]
 fn test_resolve_external_dns() {
-    let internal = false;
-
     env::set_var("ENV", "CLUSTER");
     env::set_var("DNS_SERVER", "9.9.9.9");
 

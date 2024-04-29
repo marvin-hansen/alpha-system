@@ -1,9 +1,8 @@
-pub mod container_config;
 pub mod docker_error;
 pub mod prelude;
 
-use crate::container_config::ContainerConfig;
 use crate::docker_error::DockerError;
+use common::prelude::ContainerConfig;
 use std::process::Command;
 
 // There are multiple ways to spawn a child process and execute an arbitrary command on the machine:

@@ -1,6 +1,6 @@
 use crate::prelude::EnvUtil;
 use clickhouse_utils::{ClickHouseClient, ClickhouseUtil};
-use docker_utils::container_config::ContainerConfig;
+use common::prelude::ContainerConfig;
 use docker_utils::docker_error::DockerError;
 use docker_utils::DockerUtil;
 

@@ -1,10 +1,10 @@
-use crate::config::clickhouse_container_config::clickhouse_container_config;
 use crate::config::meta_data_import_config::meta_data_import_config;
 
 use crate::prelude::{EnvUtil, EnvironmentError};
 use clickhouse_utils::prelude::DataImportConfig;
 use clickhouse_utils::ClickhouseUtil;
-use docker_utils::prelude::ContainerConfig;
+use common::prelude::ContainerConfig;
+use container_specs::clickhouse_container_config::clickhouse_container_config;
 use std::thread::sleep;
 use std::time::Duration;
 
