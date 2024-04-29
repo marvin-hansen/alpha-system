@@ -1,29 +1,5 @@
-load("@rules_rust//rust:defs.bzl", "rust_library", "rust_binary", "rust_test")
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_binary", "rust_test_suite")
 load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test")
-
-
-rust_binary(
-    name = "test_docker_bin",
-    crate_root = "src/docker_bin/main.rs",
-    srcs = glob(["src/docker_bin/*.rs"]),
-    rustc_flags = select({
-       "//:release": [
-            "-Clto",
-            "-Ccodegen-units=1",
-            "-Cpanic=abort",
-            "-Copt-level=3",
-            "-Cstrip=symbols",
-            ],
-        "//conditions:default":
-        [
-           "-Copt-level=0",
-        ],
-    }),
-    deps = [
-          ":docker_utils",
-    ],
-    visibility = ["//visibility:public"],
-)
 
 
 rust_library(
@@ -33,8 +9,40 @@ rust_library(
         "src/*.rs",
     ]),
     deps = [
+        # Internal crates
         "//queng_common:common",
+         # External crates
+        "@crate_index//:tokio",
     ],
+    visibility = ["//visibility:public"],
+)
+
+
+rust_test_suite(
+    name = "tests",
+    srcs = glob([
+        "tests/docker_utils_tests.rs",
+    ]),
+    exec_properties = {
+        # Tell BuildBuddy to run this test using a Firecracker microVM.
+        "test.workload-isolation-type": "firecracker",
+        # Tell BuildBuddy to ensure that the Docker daemon is started
+        "test.init-dockerd": "true",
+        # Tell BuildBuddy to preserve the microVM state across test runs.
+        "test.recycle-runner": "true",
+        # We don't want different different db tests to be assigned to the same recycled runner,
+        # because we can't fit all db docker images with the default disk limit.
+        "test.runner-recycling-key": "clickhouse_docker_utils_tests",
+    },
+    deps = [
+        # Crate under test
+        ":docker_utils",
+        # Internal crates
+        "//queng_common:common",
+         # External crates
+        "@crate_index//:tokio",
+    ],
+    tags = ["docker","integration","db_system_manager"],
     visibility = ["//visibility:public"],
 )
 

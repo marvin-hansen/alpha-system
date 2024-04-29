@@ -54,7 +54,13 @@ impl ClickhouseUtil {
     pub async fn get_clickhouse_client(dsn: String) -> Client {
         let client = Client::connect(dsn.clone(), ClientOptions::default())
             .await
-            .expect(format!("[get_clickhouse_client]: Failed to connect to {}", &dsn).as_str());
+            .expect(
+                format!(
+                    "[ClickhouseUtil::get_clickhouse_client]: Failed to connect to {}",
+                    &dsn
+                )
+                .as_str(),
+            );
 
         client
     }
