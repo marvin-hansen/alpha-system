@@ -1,7 +1,7 @@
-use env_utils::prelude::EnvUtil;
+use env_utils::EnvUtil;
 
-#[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error>> {
+#[tokio::test]
+async fn test_env_util() {
     // Initial setup of the CI test environment
     let mut ci_env = EnvUtil::with_debug();
 
@@ -53,6 +53,4 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("  ✅ OK: TestEnv CI created");
     println!("  ✅ OK: TestEnv CI re-used");
     println!("  ✅ OK: TestEnv CI stopped");
-
-    Ok(())
 }

@@ -9,9 +9,19 @@ impl Metadata {
        `name`String CODEC(LZ4),
        `active` Bool CODEC(LZ4),
        `url` String CODEC(LZ4),
+         PROJECTION projection_exchanges_by_code
+        (
+            SELECT *
+            GROUP BY
+                code,
+                name,
+                active,
+                url
+        )
      )
-     ENGINE = MergeTree()
-     PRIMARY KEY (code, name)
+    ENGINE = MergeTree
+    PRIMARY KEY (code, name)
+    SETTINGS index_granularity = 1024
     "
         )
     }

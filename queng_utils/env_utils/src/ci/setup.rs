@@ -1,8 +1,7 @@
-use crate::env_util::config::clickhouse_container_config::clickhouse_container_config;
-use crate::env_util::config::meta_data_import_config::meta_data_import_config;
+use crate::config::clickhouse_container_config::clickhouse_container_config;
+use crate::config::meta_data_import_config::meta_data_import_config;
 
-use crate::env_util::EnvUtil;
-use crate::prelude::EnvironmentError;
+use crate::prelude::{EnvUtil, EnvironmentError};
 use clickhouse_utils::prelude::DataImportConfig;
 use clickhouse_utils::ClickhouseUtil;
 use docker_utils::prelude::ContainerConfig;
@@ -86,14 +85,14 @@ impl EnvUtil {
             .expect("Failed to create meta data tables");
 
         // Import meta data
-        ch_utils
-            .import_all_data(
-                meta_data_import_config.assets_data_path(),
-                meta_data_import_config.exchanges_data_path(),
-                meta_data_import_config.instruments_data_path(),
-            )
-            .await
-            .expect("");
+        // ch_utils
+        //     .import_all_data(
+        //         meta_data_import_config.assets_data_path(),
+        //         meta_data_import_config.exchanges_data_path(),
+        //         meta_data_import_config.instruments_data_path(),
+        //     )
+        //     .await
+        //     .expect("");
 
         Ok(())
     }

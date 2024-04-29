@@ -8,11 +8,6 @@ repository.workspace = true
 authors.workspace = true
 
 
-[[bin]]
-name = "test_env_bin"
-path = "src/env_util_bin/main.rs"
-
-
 [lib]
 name = "env_utils"
 path = "src/lib.rs"

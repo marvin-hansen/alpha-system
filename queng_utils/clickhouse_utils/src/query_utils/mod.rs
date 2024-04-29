@@ -1,5 +1,4 @@
 use crate::error::QueryError;
-use crate::ClickhouseUtil;
 use common::prelude::ValidationError;
 
 /// Sanitizes the provided table name to prevent SQL injection attacks.

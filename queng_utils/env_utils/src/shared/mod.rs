@@ -1,4 +1,4 @@
-use crate::env_util::EnvUtil;
+use crate::prelude::EnvUtil;
 use clickhouse_utils::{ClickHouseClient, ClickhouseUtil};
 use docker_utils::container_config::ContainerConfig;
 use docker_utils::docker_error::DockerError;

@@ -16,10 +16,24 @@ impl Metadata {
        `class` StringWithDictionary CODEC(LZ4),
        `pair_figi` String CODEC(LZ4),
        `instrument_figi` String CODEC(LZ4),
+            PROJECTION projection_instruments_by_code
+            (
+                SELECT *
+                GROUP BY
+                trade_start_timestamp,
+                trade_end_timestamp,
+                    exchange_code,
+                    exchange_pair_code,
+                    base_asset,
+                    quote_asset,
+                    code,
+                    class,
+                    pair_figi,
+                    instrument_figi
+            )
      )
-     ENGINE = MergeTree()
-     PRIMARY KEY (code)
-     ORDER BY (code, class, exchange_code, exchange_pair_code, base_asset, quote_asset)
+     ENGINE = MergeTree
+     PRIMARY KEY (code, pair_figi)
      SETTINGS index_granularity = 2048
     "
         )

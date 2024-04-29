@@ -3,31 +3,6 @@ load("@rules_rust//rust:defs.bzl", "rust_library", "rust_binary", "rust_test")
 load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test")
 
 
-rust_binary(
-    name = "env_util_bin",
-    crate_root = "src/env_util_bin/main.rs",
-    srcs = glob(["src/env_util_bin/*.rs"]),
-    rustc_flags = select({
-       "//:release": [
-            "-Clto",
-            "-Ccodegen-units=1",
-            "-Cpanic=abort",
-            "-Copt-level=3",
-            "-Cstrip=symbols",
-            ],
-        "//conditions:default":
-        [
-           "-Copt-level=0",
-        ],
-    }),
-    deps = [
-        ":env_utils",
-        # External crates
-        "@crate_index//:tokio",
-    ],
-    visibility = ["//visibility:public"],
-)
-
 rust_library(
     name = "env_utils",
     crate_root = "src/lib.rs",
@@ -45,6 +20,40 @@ rust_library(
     ],
     visibility = ["//visibility:public"],
 )
+
+
+rust_test(
+    name = "tests",
+    srcs = glob([
+        "tests/env_utils_tests.rs",
+    ]),
+    exec_properties = {
+        # Tell BuildBuddy to run this test using a Firecracker microVM.
+        "test.workload-isolation-type": "firecracker",
+        # Tell BuildBuddy to ensure that the Docker daemon is started
+        "test.init-dockerd": "true",
+        # Tell BuildBuddy to preserve the microVM state across test runs.
+        "test.recycle-runner": "true",
+        # We don't want different different db tests to be assigned to the same recycled runner,
+        # because we can't fit all db docker images with the default disk limit.
+        # "test.runner-recycling-key": "clickhouse",
+    },
+    deps = [
+        # Crate under test
+        ":env_utils",
+        # Internal crates
+        "//queng_common:common",
+        "//queng_utils/clickhouse_utils:clickhouse_utils",
+        "//queng_utils/docker_utils:docker_utils",
+        # External crates
+        "@crate_index//:tokio",
+        "@crate_index//:serde_json",
+    ],
+    tags = ["docker","integration","db_system_manager"],
+    visibility = ["//visibility:public"],
+)
+
+
 
 rust_doc(
     name = "doc",
