@@ -11,6 +11,7 @@ rust_library(
     deps = [
         # Internal crates
         "//queng_common:common",
+        "//queng_specs/container_specs:container_specs",
         "//queng_utils/docker_utils:docker_utils",
         # External crates
         "@crate_index//:klickhouse",
@@ -34,13 +35,14 @@ rust_test_suite(
         "test.recycle-runner": "true",
         # We don't want different different db tests to be assigned to the same recycled runner,
         # because we can't fit all db docker images with the default disk limit.
-        "test.runner-recycling-key": "clickhouse_utils_tests",
+        "test.runner-recycling-key": "clickhouse",
     },
     deps = [
         # Crate under test
         ":clickhouse_utils",
         # Internal crates
         "//queng_common:common",
+        "//queng_specs/container_specs:container_specs",
         "//queng_utils/docker_utils:docker_utils",
         # External crates
         "@crate_index//:klickhouse",

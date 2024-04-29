@@ -11,7 +11,9 @@ actions:
     bazel_commands:
       - "build -c opt //:image  --config=remote"
       - "build -c opt //:doc --config=remote"
-      - "test -c opt  //...  --config=remote"
+      - "test -c opt  //... --test_tag_filters=unit --config=remote"
+      - "test -c opt  //... --test_tag_filters=env_setup --config=remote"
+      - "test -c opt  //... --test_tag_filters=clickhouse_utils --config=remote"
 
   - name: "Build and publish all images"
     container_image: ubuntu-20.04

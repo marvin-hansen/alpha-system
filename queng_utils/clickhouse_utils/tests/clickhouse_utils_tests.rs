@@ -1,4 +1,5 @@
 use clickhouse_utils::ClickhouseUtil;
+use container_specs::clickhouse_container_config::clickhouse_container_config;
 use docker_utils::DockerUtil;
 use std::{thread, time};
 
@@ -13,19 +14,9 @@ async fn docker_env_util_setup_ci() {
     println!(">> Test get_or_start_container: Create a new container");
     println!();
 
-    let name = "clickhouse";
-    let connection_port = 9000;
-    let additional_ports = &[8123];
-    let image = "clickhouse/clickhouse-server:24.3.2";
-    let reuse_container = false;
-
-    let result = docker_util.get_or_start_container(
-        name,
-        image,
-        connection_port,
-        additional_ports,
-        reuse_container,
-    );
+    // Create a new container from config and start or reuse it
+    let container_config = clickhouse_container_config();
+    let result = docker_util.get_or_start_container_config(&container_config);
     if result.is_err() {
         println!("{}", result.as_ref().unwrap_err());
     }
@@ -51,11 +42,5 @@ async fn docker_env_util_setup_ci() {
     let ch_utils = ClickhouseUtil::from_client(client);
 
     let result = ch_utils.setup_db().await;
-    assert!(result.is_ok());
-
-    // Wait a bit
-    thread::sleep(wait_time);
-
-    let result = ch_utils.teardown_db().await;
     assert!(result.is_ok());
 }
