@@ -1,4 +1,4 @@
-load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test_suite")
 load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test")
 
 
@@ -11,11 +11,44 @@ rust_library(
     deps = [
         # Internal crates
         "//queng_common:common",
+        "//queng_utils/docker_utils:docker_utils",
         # External crates
         "@crate_index//:klickhouse",
         "@crate_index//:serde",
         "@crate_index//:serde_json",
     ],
+    visibility = ["//visibility:public"],
+)
+
+rust_test_suite(
+    name = "tests",
+    srcs = glob([
+        "tests/clickhouse_utils_tests.rs",
+    ]),
+    exec_properties = {
+        # Tell BuildBuddy to run this test using a Firecracker microVM.
+        "test.workload-isolation-type": "firecracker",
+        # Tell BuildBuddy to ensure that the Docker daemon is started
+        "test.init-dockerd": "true",
+        # Tell BuildBuddy to preserve the microVM state across test runs.
+        "test.recycle-runner": "true",
+        # We don't want different different db tests to be assigned to the same recycled runner,
+        # because we can't fit all db docker images with the default disk limit.
+        "test.runner-recycling-key": "clickhouse_utils_tests",
+    },
+    deps = [
+        # Crate under test
+        ":clickhouse_utils",
+        # Internal crates
+        "//queng_common:common",
+        "//queng_utils/docker_utils:docker_utils",
+        # External crates
+        "@crate_index//:klickhouse",
+        "@crate_index//:serde",
+        "@crate_index//:serde_json",
+        "@crate_index//:tokio",
+    ],
+    tags = ["docker","integration","clickhouse_utils"],
     visibility = ["//visibility:public"],
 )
 

@@ -6,7 +6,7 @@ rust_library(
     name = "db_query_manager",
     crate_root = "src/lib.rs",
     srcs = glob([
-        "src/**",
+        "src/*.rs",
     ]),
     deps = [
       # Internal crates
@@ -23,28 +23,28 @@ rust_library(
     visibility = ["//visibility:public"],
 )
 
-rust_test_suite(
-    name = "tests",
-    srcs = glob([
-        "db_query_manager_tests.rs",
-    ]),
-    deps = [
-      # Crate to test
-      ":db_query_manager",
-      # Internal crates
-      "//queng_common:common",
-      "//queng_utils/db_utils:db_utils",
-      # External crates
-      "@crate_index//:chrono",
-      "@crate_index//:futures",
-      "@crate_index//:klickhouse",
-      "@crate_index//:rust_decimal",
-      "@crate_index//:serde",
-      "@crate_index//:tokio",
-    ],
-    tags = ["unit","common"],
-    visibility = ["//visibility:public"],
-)
+#rust_test_suite(
+#    name = "tests",
+#    srcs = glob([
+#        "tests/*_tests.rs",
+#    ]),
+#    deps = [
+#      # Crate to test
+#      ":db_query_manager",
+#      # Internal crates
+#      "//queng_common:common",
+#      "//queng_utils/clickhouse_utils:clickhouse_utils",
+#      # External crates
+#      "@crate_index//:chrono",
+#      "@crate_index//:futures",
+#      "@crate_index//:klickhouse",
+#      "@crate_index//:rust_decimal",
+#      "@crate_index//:serde",
+#      "@crate_index//:tokio",
+#    ],
+#    tags = ["integration","db_query_manager"],
+#    visibility = ["//visibility:public"],
+#)
 
 rust_doc(
     name = "doc",

@@ -23,8 +23,8 @@ rust_test_suite(
         "//queng_specs/exchange_specs:exchange_specs",
     ],
     tags = [
-        "spec-test",
-        "unit-test",
+        "specs",
+        "unit",
     ],
     visibility = ["//visibility:public"],
 )

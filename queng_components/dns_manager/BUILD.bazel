@@ -1,11 +1,11 @@
-load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test_suite")
 load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test")
 
 rust_library(
     name = "dns_manager",
     crate_root = "src/lib.rs",
     srcs = glob([
-        "src/**",
+        "src/*.rs",
     ]),
     deps = [
         # Internal crates
@@ -14,6 +14,22 @@ rust_library(
         # External crates
         "@crate_index//:hickory-resolver"
     ],
+    visibility = ["//visibility:public"],
+)
+
+rust_test_suite(
+    name = "tests",
+    srcs = glob([
+        "tests/*_tests.rs",
+    ]),
+    deps =  [
+        # Crate under test
+        ":dns_manager",
+        "//queng_common:common",
+        # Internal crates
+        "//queng_components/ctx_manager:ctx_manager",
+    ],
+    tags = ["unit","components", "dns_manager"],
     visibility = ["//visibility:public"],
 )
 

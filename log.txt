@@ -1,27 +1,33 @@
-thread 'main' panicked at /app/queng_components/db_system_manager/src/lib.rs:49:14:
 
- [SystemDBManager]: Failed to connect to
+rust_test_suite(
+    name = "tests",
+    srcs = glob([
+        "tests/env_utils_tests.rs",
+    ]),
+    exec_properties = {
+        # Tell BuildBuddy to run this test using a Firecracker microVM.
+        "test.workload-isolation-type": "firecracker",
+        # Tell BuildBuddy to ensure that the Docker daemon is started
+        "test.init-dockerd": "true",
+        # Tell BuildBuddy to preserve the microVM state across test runs.
+        "test.recycle-runner": "true",
+        # We don't want different different db tests to be assigned to the same recycled runner,
+        # because we can't fit all db docker images with the default disk limit.
+        "test.runner-recycling-key": "clickhouse_env_utils_tests",
+    },
+    deps = [
+        # Crate under test
+        ":env_utils",
+        # Internal crates
+        "//queng_common:common",
+        "//queng_utils/clickhouse_utils:clickhouse_utils",
+        "//queng_utils/docker_utils:docker_utils",
+        # External crates
+        "@crate_index//:tokio",
+        "@crate_index//:serde_json",
+    ],
+    tags = ["docker","integration","db_system_manager"],
+    visibility = ["//visibility:public"],
+)
 
- http://clickhouse.default.svc.cluster.local:8123:
 
-  Io(Custom { kind: Uncategorized, error: "failed to lookup
-
- address information: Name does not resolve" })
- note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
-
-
- bazel build //...
- --remote_executor=remote.buildbuddy.io
- --host_cpu=x86_64
- --cpu=x86_64
- --crosstool_top=@buildbuddy_toolchain//:cc_toolchain_suite
- --host_platform=@buildbuddy_toolchain//:platform_linux
-  --extra_toolchains=@buildbuddy_toolchain//:cc_toolchain
-  --jobs=100
-
-
-   bazel build //... --remote_executor=remote.buildbuddy.io \
-   --crosstool_top=@buildbuddy_toolchain//:cc_toolchain_suite \
-   --host_platform=@buildbuddy_toolchain//:platform_linux \
-   --extra_toolchains=@buildbuddy_toolchain//:cc_toolchain \
-   --jobs=100

@@ -15,7 +15,6 @@ rust_library(
         "//queng_utils/clickhouse_utils:clickhouse_utils",
         "//queng_utils/docker_utils:docker_utils",
         # External crates
-        "@crate_index//:tokio",
         "@crate_index//:serde_json",
     ],
     visibility = ["//visibility:public"],

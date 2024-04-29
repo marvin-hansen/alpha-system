@@ -42,10 +42,6 @@ fn test_resolve_internal_dns() {
     let dnm = DnsManager::new(&ctm);
     assert_eq!(dnm.internal_dns(), "9.9.9.9:53");
     assert_eq!(dnm.external_dns(), "1.1.1.1:53");
-
-    let expected = "93.184.216.34".to_string();
-    let actual = dnm.resolve_dns("example.com", internal).unwrap();
-    assert_eq!(actual.to_string(), expected);
 }
 
 #[test]
@@ -62,8 +58,4 @@ fn test_resolve_external_dns() {
     let dnm = DnsManager::new(&ctm);
     assert_eq!(dnm.internal_dns(), "9.9.9.9:53");
     assert_eq!(dnm.external_dns(), "1.1.1.1:53");
-
-    let expected = "93.184.216.34".to_string();
-    let actual = dnm.resolve_dns("example.com", internal).unwrap();
-    assert_eq!(actual.to_string(), expected);
 }

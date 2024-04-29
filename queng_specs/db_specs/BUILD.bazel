@@ -1,4 +1,4 @@
-load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test_suite")
 load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test")
 
 
@@ -12,6 +12,23 @@ rust_library(
     ],
     visibility = ["//visibility:public"],
 )
+
+rust_test_suite(
+    name = "tests",
+    srcs = glob([
+        "tests/*/*_tests.rs",
+    ]),
+    deps = [
+        ":db_specs",
+        "//queng_common:common",
+    ],
+    tags = [
+        "specs",
+        "unit",
+    ],
+    visibility = ["//visibility:public"],
+)
+
 
 rust_doc(
     name = "doc",

@@ -21,7 +21,7 @@ rust_library(
 rust_test_suite(
     name = "tests",
     srcs = glob([
-        "tests/docker_utils_tests.rs",
+        "tests/*_tests.rs",
     ]),
     exec_properties = {
         # Tell BuildBuddy to run this test using a Firecracker microVM.
@@ -42,7 +42,7 @@ rust_test_suite(
          # External crates
         "@crate_index//:tokio",
     ],
-    tags = ["docker","integration","db_system_manager"],
+    tags = ["docker","integration","docker_utils"],
     visibility = ["//visibility:public"],
 )
 

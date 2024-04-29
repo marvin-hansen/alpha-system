@@ -24,8 +24,8 @@ rust_test_suite(
         "//queng_specs/file_specs:file_specs",
     ],
     tags = [
-        "spec-test",
-        "unit-test",
+        "specs",
+        "unit",
     ],
     visibility = ["//visibility:public"],
 )

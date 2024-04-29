@@ -67,7 +67,7 @@ rust_test(
           "@crate_index//:serde",
            "@crate_index//:tokio",
     ],
-    tags = ["docker","integration","db_system_manager"],
+    tags = ["integration","db_system_manager"],
     visibility = ["//visibility:public"],
 )
 

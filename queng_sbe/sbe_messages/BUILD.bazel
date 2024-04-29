@@ -24,7 +24,7 @@ rust_test_suite(
     name = "tests",
     srcs = glob([
          "tests/errors/*_tests.rs",
-         "tests/messages/*/*_tests.rs",
+         "tests/messages/*/*/*_tests.rs",
          "tests/types/*_tests.rs",
     ]),
     deps =[

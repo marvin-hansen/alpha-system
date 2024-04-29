@@ -1,4 +1,4 @@
-load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test_suite")
 load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test")
 
 
@@ -17,10 +17,10 @@ rust_library(
     visibility = ["//visibility:public"],
 )
 
-rust_test(
+rust_test_suite(
     name = "tests",
     srcs = glob([
-        "tests/symbol_manager_tests.rs",
+        "tests/*_tests.rs",
     ]),
     deps =  [
         # Crate to test

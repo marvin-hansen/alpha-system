@@ -29,6 +29,9 @@ async fn docker_env_util_setup_ci() {
         println!("{}", result.as_ref().unwrap_err());
     }
 
+    // Pause execution to check Docker UI/CLI if the container is up & running
+    thread::sleep(wait_time);
+
     assert!(result.is_ok());
 
     let (container_name, port) = result.unwrap();
