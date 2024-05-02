@@ -1,5 +1,5 @@
 {
-  "checksum": "bd4daeb15f124b0b6416705305609912c87cb31344f1b2504b2b2845d63a3d4a",
+  "checksum": "dc25b5170695d2c4f8c4856f6ac3028eb98b763829c76efe1704a0053b2e914a",
   "crates": {
     "addr2line 0.21.0": {
       "name": "addr2line",
@@ -998,7 +998,7 @@
               "target": "atoi"
             },
             {
-              "id": "base64 0.22.0",
+              "id": "base64 0.22.1",
               "target": "base64"
             },
             {
@@ -1973,14 +1973,14 @@
       ],
       "license_file": "LICENSE-APACHE"
     },
-    "base64 0.22.0": {
+    "base64 0.22.1": {
       "name": "base64",
-      "version": "0.22.0",
+      "version": "0.22.1",
       "package_url": "https://github.com/marshallpierce/rust-base64",
       "repository": {
         "Http": {
-          "url": "https://static.crates.io/crates/base64/0.22.0/download",
-          "sha256": "9475866fec1451be56a3c2400fd081ff546538961565ccb5b7142cbd22bc7a51"
+          "url": "https://static.crates.io/crates/base64/0.22.1/download",
+          "sha256": "72b3254f16251a8381aa12e40e3c4d2f0199f8c6508fbecb9d91f575e0fbb8c6"
         }
       },
       "targets": [
@@ -2011,7 +2011,7 @@
           "selects": {}
         },
         "edition": "2018",
-        "version": "0.22.0"
+        "version": "0.22.1"
       },
       "license": "MIT OR Apache-2.0",
       "license_ids": [
@@ -5639,14 +5639,14 @@
       ],
       "license_file": null
     },
-    "flate2 1.0.29": {
+    "flate2 1.0.30": {
       "name": "flate2",
-      "version": "1.0.29",
+      "version": "1.0.30",
       "package_url": "https://github.com/rust-lang/flate2-rs",
       "repository": {
         "Http": {
-          "url": "https://static.crates.io/crates/flate2/1.0.29/download",
-          "sha256": "4556222738635b7a3417ae6130d8f52201e45a0c4d1a907f0826383adb5f85e7"
+          "url": "https://static.crates.io/crates/flate2/1.0.30/download",
+          "sha256": "5f54427cfd1c7829e2a139fcefea601bf088ebca651d2bf53ebc600eac295dae"
         }
       },
       "targets": [
@@ -5690,7 +5690,7 @@
           "selects": {}
         },
         "edition": "2018",
-        "version": "1.0.29"
+        "version": "1.0.30"
       },
       "license": "MIT OR Apache-2.0",
       "license_ids": [
@@ -11762,7 +11762,7 @@
               "target": "arrow_select"
             },
             {
-              "id": "base64 0.22.0",
+              "id": "base64 0.22.1",
               "target": "base64"
             },
             {
@@ -11778,7 +11778,7 @@
               "target": "chrono"
             },
             {
-              "id": "flate2 1.0.29",
+              "id": "flate2 1.0.30",
               "target": "flate2"
             },
             {
