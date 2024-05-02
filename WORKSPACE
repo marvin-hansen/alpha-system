@@ -29,7 +29,7 @@ http_archive(
 )
 
 RUST_EDITION = "2021"
-RUST_VERSION = "1.77.2"
+RUST_VERSION = "1.78.0"
 
 # Configure Rust Toolchain to use.
 load("@rules_rust//rust:repositories.bzl", "rules_rust_dependencies", "rust_register_toolchains", "rust_repository_set")
