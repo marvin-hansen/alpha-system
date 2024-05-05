@@ -1,5 +1,5 @@
 actions:
-  - name: "Build and test all targets"
+  - name: "Build, test and publish all containers"
     container_image: ubuntu-20.04
     triggers:
       push:
@@ -9,22 +9,15 @@ actions:
         branches:
           - "*"
     bazel_commands:
-      - "run   -c opt //:buildbuddy_setup_docker_auth --verbose_failures"
+      # Setup & Authenticate
+      - "run -c opt //:buildbuddy_setup_docker_auth --verbose_failures"
+      # Build all targets, docs, and images
+      - "build -c opt //...    --config=remote"
+      - "build -c opt //:doc   --config=remote"
       - "build -c opt //:image --config=remote"
-      - "test -c opt  //... --test_tag_filters=unit --config=remote"
-      - "test -c opt  //... --test_tag_filters=env_setup --config=remote-cache"
-      - "test -c opt  //... --test_tag_filters=clickhouse_utils --config=remote-cache"
-
-  - name: "Build and publish all images"
-    container_image: ubuntu-20.04
-    triggers:
-      push:
-        branches:
-          - "main"
-      pull_request:
-        branches:
-          - "*"
-    bazel_commands:
-      - "run   -c opt //:buildbuddy_setup_docker_auth --verbose_failures"
-      - "build -c opt //:image  --config=remote"
-      - "run   -c opt //:push   --config=remote"
+      # Test: Run unit tests, prepare env setup for CI, and run integration tests
+      - "test -c opt  //... --config=remote --jobs=100 --test_tag_filters=unit"
+      - "test -c opt  //... --config=remote-cache --test_tag_filters=env_setup"
+      - "test -c opt  //... --config=remote-cache --test_tag_filters=clickhouse_utils "
+      # Publish images to registry
+      - "run   -c opt //:push --config=remote"
