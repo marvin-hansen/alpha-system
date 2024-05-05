@@ -1,8 +1,10 @@
 filegroup(
     name = "build",
     srcs = [
+        "//queng_clients/binance_client:binance_client",
         "//queng_clients/dbgw_client:dbgw_client",
         "//queng_clients/ims_data_client:ims_data_client",
+        "//queng_clients/kaiko_client:kaiko_client",
         "//queng_clients/rest_client:rest_client",
         "//queng_clients/symdb_client:symdb_client",
     ],
@@ -13,8 +15,10 @@ filegroup(
 filegroup(
     name = "doc",
     srcs = [
-    "//queng_clients/dbgw_client:doc",
+        "//queng_clients/binance_client:doc",
+        "//queng_clients/dbgw_client:doc",
         "//queng_clients/ims_data_client:doc",
+        "//queng_clients/kaiko_client:doc",
         "//queng_clients/rest_client:doc",
         "//queng_clients/symdb_client:doc",
     ],

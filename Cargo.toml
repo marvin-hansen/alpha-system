@@ -2,8 +2,10 @@
 resolver = "2"
 
 members = [
+    "queng_clients/binance_client",
     "queng_clients/dbgw_client",
     "queng_clients/ims_data_client",
+    "queng_clients/kaiko_client",
     "queng_clients/rest_client",
     "queng_clients/symdb_client",
     "queng_common",
@@ -57,8 +59,10 @@ authors = ["Marvin Hansen <marvin.hansen@gmail.com>"]
 #
 common = { path = "queng_common" }
 # Clients
+binance_client = { path = "queng_clients/binance_client" }
 dbgw_client = { path = "queng_clients/dbgw_client" }
 ims_data_client = { path = "queng_clients/ims_data_client" }
+kaiko_client = { path = "queng_clients/kaiko_client" }
 rest_client = { path = "queng_clients/rest_client" }
 symdb_client = { path = "queng_clients/symdb_client" }
 # Components

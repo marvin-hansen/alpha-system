@@ -1,4 +1,4 @@
-use crate::client::binance::binance_client::BinanceRESTClient;
+use binance_client::BinanceRESTClient;
 use std::fmt::Error;
 use std::sync::Arc;
 use tokio::sync::RwLock;

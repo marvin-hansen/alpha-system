@@ -2,16 +2,19 @@ load("@rules_rust//rust:defs.bzl", "rust_library", "rust_doc", "rust_doc_test")
 
 
 rust_library(
-    name = "rest_client",
+    name = "binance_client",
     crate_root = "src/lib.rs",
     srcs = glob([
         "src/*.rs",
+        "src/types/*.rs",
     ]),
   deps = [
+        # Internal crates
+        "//queng_clients/rest_client:rest_client",
         # Exteral crates
         "@crate_index//:anyhow",
-        "@crate_index//:reqwest",
         "@crate_index//:serde",
+        "@crate_index//:tokio",
     ],
     visibility = ["//visibility:public"],
 )
@@ -19,12 +22,12 @@ rust_library(
 
 rust_doc(
     name = "doc",
-    crate = ":rest_client",
+    crate = ":binance_client",
     visibility = ["//visibility:public"],
 )
 
 rust_doc_test(
      name = "doc_test",
-     crate = ":rest_client",
+     crate = ":binance_client",
      visibility = ["//visibility:public"],
  )

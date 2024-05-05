@@ -1,4 +1,6 @@
-use crate::client::binance::symbols::ExchangeInfo;
+pub mod types;
+
+use crate::types::BinanceExchangeInfo;
 use anyhow::{bail, Result};
 use rest_client::RestClient;
 use std::fmt::Error;
@@ -18,8 +20,8 @@ impl BinanceRESTClient {
 }
 
 impl BinanceRESTClient {
-    async fn get_exchange_info(&self) -> Result<ExchangeInfo> {
-        let result: Result<ExchangeInfo> = self.client.get("exchangeInfo", None).await;
+    async fn get_exchange_info(&self) -> Result<BinanceExchangeInfo> {
+        let result: Result<BinanceExchangeInfo> = self.client.get("exchangeInfo", None).await;
         match result {
             Ok(exchange_info) => Ok(exchange_info),
             Err(e) => bail!(format!("Error retrieving channels: {:?}", e)),
@@ -27,7 +29,7 @@ impl BinanceRESTClient {
     }
 
     pub async fn get_available_symbols(&self) -> Result<Vec<String>> {
-        let result: Result<ExchangeInfo> = self.get_exchange_info().await;
+        let result: Result<BinanceExchangeInfo> = self.get_exchange_info().await;
         let exchange_info = match result {
             Ok(exchange_info) => exchange_info,
             Err(e) => bail!(format!("Error retrieving channels: {:?}", e)),

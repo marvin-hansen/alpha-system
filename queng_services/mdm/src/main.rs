@@ -1,6 +1,5 @@
 use crate::service::MetaDataServer;
 
-mod client;
 mod service;
 
 // MVP of loading and verifying symbols from Binance.

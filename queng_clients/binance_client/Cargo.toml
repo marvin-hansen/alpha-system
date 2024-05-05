@@ -1,5 +1,5 @@
 [package]
-name = "mdm"
+name = "binance_client"
 version = "0.1.0"
 edition.workspace = true
 rust-version.workspace = true
@@ -8,16 +8,17 @@ repository.workspace = true
 authors.workspace = true
 
 
-[[bin]]
-name = "mdm"
-path = "src/main.rs"
+[lib]
+name = "binance_client"
+path = "src/lib.rs"
+
 
 [dependencies]
 # Internal crates
-binance_client = {workspace = true}
-
+common = {workspace = true}
+rest_client = {workspace = true}
 # External crates
 anyhow = { workspace = true }
 #binance-rs-async = { workspace = true }
-tokio = { workspace = true }
 serde = {workspace = true}
+tokio = { workspace = true }
