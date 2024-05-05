@@ -35,6 +35,7 @@ members = [
     "queng_utils/client_utils",
     "queng_utils/docker_utils",
     "queng_utils/env_utils",
+    "queng_utils/kaiko_utils",
     "queng_utils/proto_utils",
     "queng_utils/service_utils"
 ]
@@ -89,6 +90,7 @@ clickhouse_utils = { path = "queng_utils/clickhouse_utils" }
 client_utils = { path = "queng_utils/client_utils" }
 docker_utils = { path = "queng_utils/docker_utils" }
 env_utils = { path = "queng_utils/env_utils" }
+kaiko_utils = { path = "queng_utils/kaiko_utils" }
 proto_utils = { path = "queng_utils/proto_utils" }
 service_utils = { path = "queng_utils/service_utils" }
 #
