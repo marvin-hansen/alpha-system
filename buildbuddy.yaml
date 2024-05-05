@@ -16,7 +16,7 @@ actions:
       - "build -c opt //:doc   --config=remote"
       - "build -c opt //:image --config=remote"
       # Test: Run unit tests, prepare env setup for CI, and run integration tests
-      - "test -c opt  //... --config=remote --jobs=100 --test_tag_filters=unit"
+      - "test -c opt  //... --config=remote       --test_tag_filters=unit"
       - "test -c opt  //... --config=remote-cache --test_tag_filters=env_setup"
       - "test -c opt  //... --config=remote-cache --test_tag_filters=clickhouse_utils "
       # Publish images to registry
