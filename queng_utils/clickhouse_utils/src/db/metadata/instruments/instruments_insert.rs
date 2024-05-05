@@ -1,5 +1,5 @@
 use crate::db::metadata::{Metadata, TABLE_NAME};
-use crate::types::{Instrument, InstrumentMetadata};
+use common::prelude::{Instrument, InstrumentMetadata};
 
 impl Metadata {
     pub fn generate_instruments_insert(&self, instrument: &Instrument) -> String {

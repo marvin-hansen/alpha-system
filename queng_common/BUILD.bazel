@@ -21,12 +21,22 @@ rust_library(
     visibility = ["//visibility:public"],
 )
 
+rust_doc(
+    name = "doc",
+    crate = ":common",
+    visibility = ["//visibility:public"],
+)
+
+rust_doc_test(
+     name = "doc_test",
+     crate = ":common",
+     visibility = ["//visibility:public"],
+)
 
 rust_test_suite(
-    name = "tests",
+    name = "common_error_tests",
     srcs = glob([
         "tests/errors/*_tests.rs",
-        "tests/types/*/*_tests.rs",
     ]),
     deps = [
       # Crate to test
@@ -41,15 +51,182 @@ rust_test_suite(
     visibility = ["//visibility:public"],
 )
 
-rust_doc(
-    name = "doc",
-    crate = ":common",
+rust_test_suite(
+    name = "common_config_tests",
+    srcs = glob([
+        "tests/types/config_types/*_tests.rs",
+    ]),
+    deps = [
+      # Crate to test
+      ":common",
+      # External crates
+      "@crate_index//:chrono",
+      "@crate_index//:rust_decimal",
+      "@crate_index//:serde",
+      "@crate_index//:serde_json",
+    ],
+    tags = ["unit","common"],
     visibility = ["//visibility:public"],
 )
 
-rust_doc_test(
-     name = "doc_test",
-     crate = ":common",
-     visibility = ["//visibility:public"],
- )
+rust_test_suite(
+    name = "common_currency_tests",
+    srcs = glob([
+        "tests/types/currency_types/*_tests.rs",
+    ]),
+    deps = [
+      # Crate to test
+      ":common",
+      # External crates
+      "@crate_index//:chrono",
+      "@crate_index//:rust_decimal",
+      "@crate_index//:serde",
+      "@crate_index//:serde_json",
+    ],
+    tags = ["unit","common"],
+    visibility = ["//visibility:public"],
+)
 
+rust_test_suite(
+    name = "common_data_tests",
+    srcs = glob([
+        "tests/types/data_types/*_tests.rs",
+    ]),
+    deps = [
+      # Crate to test
+      ":common",
+      # External crates
+      "@crate_index//:chrono",
+      "@crate_index//:rust_decimal",
+      "@crate_index//:serde",
+      "@crate_index//:serde_json",
+    ],
+    tags = ["unit","common"],
+    visibility = ["//visibility:public"],
+)
+
+rust_test_suite(
+    name = "common_exchanges_tests",
+    srcs = glob([
+        "tests/types/exchange_types/*_tests.rs",
+    ]),
+    deps = [
+      # Crate to test
+      ":common",
+      # External crates
+      "@crate_index//:chrono",
+      "@crate_index//:rust_decimal",
+      "@crate_index//:serde",
+      "@crate_index//:serde_json",
+    ],
+    tags = ["unit","common"],
+    visibility = ["//visibility:public"],
+)
+
+rust_test_suite(
+    name = "common_file_tests",
+    srcs = glob([
+        "tests/types/file_types/*_tests.rs",
+    ]),
+    deps = [
+      # Crate to test
+      ":common",
+      # External crates
+      "@crate_index//:chrono",
+      "@crate_index//:rust_decimal",
+      "@crate_index//:serde",
+      "@crate_index//:serde_json",
+    ],
+    tags = ["unit","common"],
+    visibility = ["//visibility:public"],
+)
+
+rust_test_suite(
+    name = "common_meta_data_tests",
+    srcs = glob([
+        "tests/types/meta_data_types/*_tests.rs",
+    ]),
+    deps = [
+      # Crate to test
+      ":common",
+      # External crates
+      "@crate_index//:chrono",
+      "@crate_index//:rust_decimal",
+      "@crate_index//:serde",
+      "@crate_index//:serde_json",
+    ],
+    tags = ["unit","common"],
+    visibility = ["//visibility:public"],
+)
+
+rust_test_suite(
+    name = "common_pattern_tests",
+    srcs = glob([
+        "tests/types/pattern_types/*_tests.rs",
+    ]),
+    deps = [
+      # Crate to test
+      ":common",
+      # External crates
+      "@crate_index//:chrono",
+      "@crate_index//:rust_decimal",
+      "@crate_index//:serde",
+      "@crate_index//:serde_json",
+    ],
+    tags = ["unit","common"],
+    visibility = ["//visibility:public"],
+)
+
+rust_test_suite(
+    name = "common_portfolio_tests",
+    srcs = glob([
+        "tests/types/portfolio_types/*_tests.rs",
+    ]),
+    deps = [
+      # Crate to test
+      ":common",
+      # External crates
+      "@crate_index//:chrono",
+      "@crate_index//:rust_decimal",
+      "@crate_index//:serde",
+      "@crate_index//:serde_json",
+    ],
+    tags = ["unit","common"],
+    visibility = ["//visibility:public"],
+)
+
+rust_test_suite(
+    name = "common_symbol_tests",
+    srcs = glob([
+        "tests/types/symbol_types/*_tests.rs",
+    ]),
+    deps = [
+      # Crate to test
+      ":common",
+      # External crates
+      "@crate_index//:chrono",
+      "@crate_index//:rust_decimal",
+      "@crate_index//:serde",
+      "@crate_index//:serde_json",
+    ],
+    tags = ["unit","common"],
+    visibility = ["//visibility:public"],
+)
+
+rust_test_suite(
+    name = "common_trade_tests",
+    srcs = glob([
+        "tests/types/trade_types/*_tests.rs",
+    ]),
+    deps = [
+      # Crate to test
+      ":common",
+      # External crates
+      "@crate_index//:chrono",
+      "@crate_index//:rust_decimal",
+      "@crate_index//:serde",
+      "@crate_index//:serde_json",
+    ],
+    tags = ["unit","common"],
+    visibility = ["//visibility:public"],
+)

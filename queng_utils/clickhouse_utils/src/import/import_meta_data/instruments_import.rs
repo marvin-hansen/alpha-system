@@ -1,7 +1,7 @@
 use crate::error::ClickHouseUtilError;
 use crate::fields::inactive_exchanges::INACTIVE_EXCHANGES;
-use crate::types::{Instrument, InstrumentsRoot};
 use crate::ClickhouseUtil;
+use common::prelude::{Instrument, InstrumentsRoot};
 use std::error::Error;
 use std::fs::File;
 use std::path::PathBuf;

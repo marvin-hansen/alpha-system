@@ -17,7 +17,7 @@ pub struct Instrument {
     #[serde(rename = "trade_end_time")]
     pub trade_end_time: Option<String>,
     #[serde(rename = "exchange_code")]
-    exchange_code: String,
+    pub exchange_code: String,
     #[serde(rename = "exchange_pair_code")]
     pub exchange_pair_code: String,
     #[serde(rename = "base_asset")]

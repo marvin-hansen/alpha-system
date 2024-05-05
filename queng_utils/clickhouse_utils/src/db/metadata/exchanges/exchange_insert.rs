@@ -1,5 +1,5 @@
 use crate::db::metadata::{Metadata, TABLE_NAME};
-use crate::types::Exchange;
+use common::prelude::Exchange;
 
 impl Metadata {
     pub fn generate_exchange_insert(&self, exchange: &Exchange) -> String {

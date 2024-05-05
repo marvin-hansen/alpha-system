@@ -1,7 +1,4 @@
-use crate::config::meta_data_import_config::meta_data_import_config;
-
 use crate::prelude::{EnvUtil, EnvironmentError};
-use clickhouse_utils::prelude::DataImportConfig;
 use clickhouse_utils::ClickhouseUtil;
 use common::prelude::ContainerConfig;
 use container_specs::clickhouse_container_config::clickhouse_container_config;
@@ -20,9 +17,6 @@ impl EnvUtil {
         self.dbg_print("Get clickhouse container config");
         let container_config = clickhouse_container_config();
 
-        self.dbg_print("Get meta data import config");
-        let meta_data_import_config = meta_data_import_config();
-
         self.dbg_print("Get or reuse clickhouse container");
         let (clickhouse_container_name, clickhouse_container_port) = docker_util
             .get_or_start_container_config(&container_config)
@@ -40,7 +34,7 @@ impl EnvUtil {
         let ch_utils = self.get_clickhouse_util(client).await;
 
         self.dbg_print("Configure clickhouse DB");
-        self.configure_clickhouse(&ch_utils, &container_config, &meta_data_import_config)
+        self.configure_clickhouse(&ch_utils, &container_config)
             .await
             .expect("Failed to configure clickhouse DB");
 
@@ -54,7 +48,6 @@ impl EnvUtil {
         &self,
         ch_utils: &ClickhouseUtil,
         container_config: &ContainerConfig<'_>,
-        meta_data_import_config: &DataImportConfig<'_>,
     ) -> Result<(), EnvironmentError> {
         // Check if DB is already configured
         let configured = self.is_clickhouse_configured(container_config);

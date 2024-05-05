@@ -9,6 +9,8 @@ mod exchange_types;
 #[cfg(test)]
 mod file_types;
 #[cfg(test)]
+mod meta_data_types;
+#[cfg(test)]
 mod pattern_types;
 #[cfg(test)]
 mod portfolio_types;

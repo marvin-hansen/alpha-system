@@ -36,6 +36,11 @@ pub use crate::types::exchange_types::exchange_id::*;
 // file types
 pub use crate::types::file_types::file_config::*;
 pub use crate::types::file_types::file_config_type::*;
+// Metadata types
+pub use crate::types::meta_data_types::assets::*;
+pub use crate::types::meta_data_types::exchanges::*;
+pub use crate::types::meta_data_types::instruments::*;
+pub use crate::types::meta_data_types::master_symbols::*;
 // pattern types
 pub use crate::types::pattern_types::pattern_config::*;
 pub use crate::types::pattern_types::pattern_type::*;

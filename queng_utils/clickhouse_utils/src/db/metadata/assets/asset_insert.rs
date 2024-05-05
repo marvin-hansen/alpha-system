@@ -1,5 +1,5 @@
 use crate::db::metadata::{Metadata, TABLE_NAME};
-use crate::types::{Asset, AssetMetadata};
+use common::prelude::{Asset, AssetMetadata};
 
 impl Metadata {
     pub fn generate_asset_insert(&self, asset: &Asset) -> String {

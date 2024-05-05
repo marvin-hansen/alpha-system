@@ -1,6 +1,6 @@
 use crate::error::ClickHouseUtilError;
-use crate::types::{Exchange, ExchangesRoot};
 use crate::ClickhouseUtil;
+use common::prelude::{Exchange, ExchangesRoot};
 use std::fs::File;
 use std::path::PathBuf;
 

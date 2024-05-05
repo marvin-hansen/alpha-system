@@ -1,5 +1,4 @@
 mod ci;
-mod config;
 
 pub(crate) mod shared;
 
