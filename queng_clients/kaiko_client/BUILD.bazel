@@ -10,8 +10,11 @@ rust_library(
   deps = [
         # Internal crates
         "//queng_clients/rest_client:rest_client",
-         "//queng_common:common",
+        "//queng_common:common",
         # External crates
+        "@crate_index//:anyhow",
+        "@crate_index//:serde",
+        "@crate_index//:tokio",
     ],
     visibility = ["//visibility:public"],
 )

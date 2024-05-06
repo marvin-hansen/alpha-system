@@ -13,7 +13,8 @@ pub struct BinanceRESTClient {
 
 impl BinanceRESTClient {
     pub fn new() -> Result<Self, Error> {
-        let client = RestClient::new(API_URL.to_string()).expect("Failed to build reqwest client");
+        let client = RestClient::new(API_URL.to_string())
+            .expect("Failed to construct BinanceRESTClient client");
 
         Ok(BinanceRESTClient { client })
     }
