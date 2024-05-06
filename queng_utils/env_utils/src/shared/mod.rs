@@ -3,6 +3,7 @@ use clickhouse_utils::{ClickHouseClient, ClickhouseUtil};
 use common::prelude::ContainerConfig;
 use docker_utils::docker_error::DockerError;
 use docker_utils::DockerUtil;
+use kaiko_utils::{KaikoUtil, KaikoUtilError};
 
 impl EnvUtil {
     pub fn get_docker_util(&self) -> Result<DockerUtil, DockerError> {
@@ -40,5 +41,13 @@ impl EnvUtil {
 
         // Get clickhouse client.
         ClickhouseUtil::get_clickhouse_client(dsn).await
+    }
+
+    pub(crate) async fn get_kaiko_util(&self) -> Result<KaikoUtil, KaikoUtilError> {
+        return if self.dbg {
+            KaikoUtil::with_debug()
+        } else {
+            KaikoUtil::new()
+        };
     }
 }

@@ -1,19 +1,12 @@
 use crate::error::ClickHouseUtilError;
 use crate::ClickhouseUtil;
-use common::prelude::{Exchange, ExchangesRoot};
-use std::fs::File;
-use std::path::PathBuf;
+use common::prelude::Exchange;
 
 impl ClickhouseUtil {
-    pub(crate) async fn import_exchanges_data(
+    pub async fn import_exchanges_metadata(
         &self,
-        path: &str,
+        exchanges: &Vec<Exchange>,
     ) -> Result<(), ClickHouseUtilError> {
-        let exchanges = self
-            .load_exchanges(path)
-            .await
-            .expect("Failed to load exchange.json");
-
         for exchange in exchanges.iter() {
             if exchange.active {
                 let insert_query = self.metadata.generate_exchange_insert(exchange);
@@ -24,12 +17,5 @@ impl ClickhouseUtil {
         }
 
         Ok(())
-    }
-
-    async fn load_exchanges(&self, path: &str) -> Result<Vec<Exchange>, ClickHouseUtilError> {
-        let file_path = PathBuf::from(path);
-        let file = File::open(file_path).expect("file not found");
-        let exchanges: ExchangesRoot = serde_json::from_reader(file).expect("error while reading");
-        Ok(exchanges.data)
     }
 }

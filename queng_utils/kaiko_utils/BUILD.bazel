@@ -11,6 +11,7 @@ rust_library(
     deps = [
         # Internal crates
         "//queng_common:common",
+        "//queng_clients/kaiko_client:kaiko_client",
         # External crates
     ],
     visibility = ["//visibility:public"],

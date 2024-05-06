@@ -1,7 +1,6 @@
 mod db;
 
 pub mod error;
-pub(crate) mod fields;
 mod import;
 pub mod prelude;
 pub mod query_utils;
@@ -89,10 +88,11 @@ impl ClickhouseUtil {
 
     /// Counts the number of rows in the specified table in the ClickHouse database.
     pub async fn count_rows(&self, table_name: &str) -> Result<u64, QueryError> {
-        // Generate count query for the specified table
+        self.dbg_print("Generate count query for the specified table");
         let count_query = format!("SELECT count(*) FROM {table_name}");
 
         // We need type annotation of the Result type here.
+        self.dbg_print("Execute count query");
         let number_of_rows: Result<CountRow, KlickhouseError> =
             self.client.query_one(&count_query).await;
 

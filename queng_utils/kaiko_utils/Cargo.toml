@@ -10,4 +10,5 @@ authors.workspace = true
 [dependencies]
 # Internal crates
 common = {workspace = true}
+kaiko_client = {workspace = true}
 # External crates

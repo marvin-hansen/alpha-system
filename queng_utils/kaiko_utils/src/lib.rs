@@ -1,11 +1,14 @@
-use crate::error::KaikoUtilError;
-use common::prelude::{AssetRoot, ExchangesRoot, InstrumentsRoot};
+use kaiko_client::KaikoClient;
 
 mod error;
+mod getters;
+mod inactive_exchanges;
 
-#[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq)]
+pub use crate::error::KaikoUtilError;
+
 pub struct KaikoUtil {
     dbg: bool,
+    client: KaikoClient,
 }
 
 impl KaikoUtil {
@@ -18,7 +21,9 @@ impl KaikoUtil {
     }
 
     fn build(dbg: bool) -> Result<Self, KaikoUtilError> {
-        Ok(Self { dbg })
+        let kaiko_client = KaikoClient::new();
+        let client = kaiko_client.expect("Failed to construct KaikoClient");
+        Ok(Self { dbg, client })
     }
 }
 
@@ -33,25 +38,5 @@ impl KaikoUtil {
         if self.dbg {
             println!("[DockerUtil]: {}", s);
         }
-    }
-}
-
-impl KaikoUtil {
-    pub fn get_assets(&self) -> Result<AssetRoot, KaikoUtilError> {
-        self.dbg_print("[get_assets]: Download asset metadata from Kaiko.");
-
-        return Ok(AssetRoot::default());
-    }
-
-    pub fn get_exchanges(&self) -> Result<ExchangesRoot, KaikoUtilError> {
-        self.dbg_print("[get_exchanges]: Download exchange metadata from Kaiko.");
-
-        return Ok(ExchangesRoot::default());
-    }
-
-    pub fn get_instruments(&self) -> Result<InstrumentsRoot, KaikoUtilError> {
-        self.dbg_print("[get_instruments]: Download instrument metadata from Kaiko.");
-
-        return Ok(InstrumentsRoot::default());
     }
 }

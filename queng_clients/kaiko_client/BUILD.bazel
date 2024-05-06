@@ -13,8 +13,6 @@ rust_library(
         "//queng_common:common",
         # External crates
         "@crate_index//:anyhow",
-        "@crate_index//:serde",
-        "@crate_index//:tokio",
     ],
     visibility = ["//visibility:public"],
 )
@@ -46,7 +44,6 @@ rust_test_suite(
         "//queng_common:common",
         # External crates
         "@crate_index//:anyhow",
-        "@crate_index//:serde",
         "@crate_index//:tokio",
     ],
     tags = ["unit","kaiko_client"],

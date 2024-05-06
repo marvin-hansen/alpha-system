@@ -1,4 +1,4 @@
-pub const INACTIVE_EXCHANGES: [&str; 37] = [
+pub(crate) const INACTIVE_EXCHANGES: [&str; 37] = [
     "MtGox",
     "BTC38",
     "FTX",

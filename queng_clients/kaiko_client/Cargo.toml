@@ -19,5 +19,4 @@ common = {workspace = true}
 rest_client = {workspace = true}
 # External crates
 anyhow = { workspace = true }
-serde = {workspace = true}
 tokio = { workspace = true }

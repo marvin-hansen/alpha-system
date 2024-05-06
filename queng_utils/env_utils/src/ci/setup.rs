@@ -2,6 +2,7 @@ use crate::prelude::{EnvUtil, EnvironmentError};
 use clickhouse_utils::ClickhouseUtil;
 use common::prelude::ContainerConfig;
 use container_specs::clickhouse_container_config::clickhouse_container_config;
+use kaiko_utils::KaikoUtil;
 use std::thread::sleep;
 use std::time::Duration;
 
@@ -33,8 +34,14 @@ impl EnvUtil {
         self.dbg_print("Get clickhouse utils");
         let ch_utils = self.get_clickhouse_util(client).await;
 
+        self.dbg_print("Get Kaiko util");
+        let kaiko_util = self
+            .get_kaiko_util()
+            .await
+            .expect("Failed to get KaikoUtil");
+
         self.dbg_print("Configure clickhouse DB");
-        self.configure_clickhouse(&ch_utils, &container_config)
+        self.configure_clickhouse(&ch_utils, &container_config, &kaiko_util)
             .await
             .expect("Failed to configure clickhouse DB");
 
@@ -48,6 +55,7 @@ impl EnvUtil {
         &self,
         ch_utils: &ClickhouseUtil,
         container_config: &ContainerConfig<'_>,
+        kaiko_util: &KaikoUtil,
     ) -> Result<(), EnvironmentError> {
         // Check if DB is already configured
         let configured = self.is_clickhouse_configured(container_config);
@@ -71,21 +79,44 @@ impl EnvUtil {
             .await
             .expect("[configure_clickhouse]: Failed to create all databases");
 
-        self.dbg_print("Create all mete data tables");
+        self.dbg_print("Create all metadata tables");
         ch_utils
             .create_metadata_tables()
             .await
-            .expect("Failed to create meta data tables");
+            .expect("Failed to create metadata tables");
 
-        // Import meta data
-        // ch_utils
-        //     .import_all_data(
-        //         meta_data_import_config.assets_data_path(),
-        //         meta_data_import_config.exchanges_data_path(),
-        //         meta_data_import_config.instruments_data_path(),
-        //     )
-        //     .await
-        //     .expect("");
+        self.dbg_print("Download assets metadata");
+        let assets = kaiko_util.get_assets().await.expect("Failed to get assets");
+
+        self.dbg_print("Import assets metadata");
+        ch_utils
+            .import_asset_metadata(&assets)
+            .await
+            .expect("Failed to import assets metadata");
+
+        self.dbg_print("Download exchange metadata");
+        let exchanges = kaiko_util
+            .get_exchanges()
+            .await
+            .expect("Failed to get exchanges");
+
+        self.dbg_print("Import exchanges metadata");
+        ch_utils
+            .import_exchanges_metadata(&exchanges)
+            .await
+            .expect("Failed to import exchanges metadata");
+
+        self.dbg_print("Download instrument metadata");
+        let instruments = kaiko_util
+            .get_instruments()
+            .await
+            .expect("Failed to get instruments");
+
+        self.dbg_print("Import instrument metadata");
+        ch_utils
+            .import_instruments_metadata(&instruments)
+            .await
+            .expect("Failed to import instrument metadata");
 
         Ok(())
     }
