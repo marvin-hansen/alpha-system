@@ -7,7 +7,6 @@ impl Metadata {
      (
        `code` String CODEC(LZ4),
        `name`String CODEC(LZ4),
-       `active` Bool CODEC(LZ4),
        `url` String CODEC(LZ4),
          PROJECTION projection_exchanges_by_code
         (
@@ -15,7 +14,6 @@ impl Metadata {
             GROUP BY
                 code,
                 name,
-                active,
                 url
         )
      )

@@ -6,7 +6,6 @@ impl Metadata {
         let table_name = format!("{TABLE_NAME}.exchanges");
         let code = &exchange.code;
         let name = &exchange.name;
-        let active = exchange.active;
         let url = &exchange.url.clone().unwrap_or("".to_string());
         format!(
             r"
@@ -14,7 +13,6 @@ impl Metadata {
         VALUES (
         '{code}',
         '{name}',
-         {active},
         '{url}'
          )
          "

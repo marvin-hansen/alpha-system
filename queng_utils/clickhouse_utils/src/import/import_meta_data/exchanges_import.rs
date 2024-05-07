@@ -8,12 +8,10 @@ impl ClickhouseUtil {
         exchanges: &Vec<Exchange>,
     ) -> Result<(), ClickHouseUtilError> {
         for exchange in exchanges.iter() {
-            if exchange.active {
-                let insert_query = self.metadata.generate_exchange_insert(exchange);
-                self.execute_query(&insert_query)
-                    .await
-                    .expect("Failed to insert asset")
-            }
+            let insert_query = self.metadata.generate_exchange_insert(exchange);
+            self.execute_query(&insert_query)
+                .await
+                .expect("Failed to insert asset")
         }
 
         Ok(())

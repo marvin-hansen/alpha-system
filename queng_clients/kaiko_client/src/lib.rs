@@ -3,7 +3,7 @@ pub mod error;
 use crate::error::KaikoClientError;
 use anyhow::Result;
 use common::prelude::{AssetRoot, ExchangesRoot, InstrumentsRoot};
-use rest_client::RestClient;
+use rest_client::{HeaderMap, HeaderValue, RestClient};
 
 const API_URL: &str = "https://reference-data-api.kaiko.io/v1/";
 
@@ -13,7 +13,13 @@ pub struct KaikoClient {
 
 impl KaikoClient {
     pub fn new() -> Result<Self, KaikoClientError> {
-        let client = RestClient::new(API_URL.to_string()).expect("Failed to construct KaikoClient");
+        // Set headers
+        let mut header_map = HeaderMap::new();
+        header_map.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // Build client with headers
+        let client = RestClient::with_headers(API_URL.to_string(), header_map)
+            .expect("Failed to construct KaikoClient");
 
         Ok(KaikoClient { client })
     }

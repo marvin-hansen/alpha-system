@@ -23,7 +23,7 @@ impl KaikoUtil {
                 return Err(KaikoUtilError::new(&format!(
                     "Error retrieving exchanges: {}",
                     e.to_string()
-                )))
+                )));
             }
         };
 
@@ -51,7 +51,7 @@ impl KaikoUtil {
                 return Err(KaikoUtilError::new(&format!(
                     "Error retrieving instruments: {}",
                     e.to_string()
-                )))
+                )));
             }
         };
 
@@ -63,9 +63,11 @@ impl KaikoUtil {
 
         self.dbg_print("[get_instruments]: Remove inactive instruments.");
         for instrument in instruments {
-            // Only add active instruments to the return vector
-            if self.is_valid_instrument(&instrument) {
-                res.push(instrument);
+            if !INACTIVE_EXCHANGES.contains(&instrument.exchange_code.as_str()) {
+                // Only add active instruments to the return vector
+                if self.is_valid_instrument(&instrument) {
+                    res.push(instrument);
+                }
             }
         }
 
@@ -81,11 +83,6 @@ impl KaikoUtil {
 
         // Instrument inactive
         if instrument.trade_end_time.is_some() && instrument.trade_end_timestamp.is_some() {
-            return false;
-        }
-
-        // Skip all instruments from inactive exchanges
-        if INACTIVE_EXCHANGES.contains(&instrument.exchange_code()) {
             return false;
         }
 

@@ -1,10 +1,11 @@
 use anyhow::{bail, Result};
-use reqwest::header::{HeaderMap, HeaderValue, USER_AGENT};
 use reqwest::{Response, StatusCode};
 use serde::de::DeserializeOwned;
 use serde::Deserialize;
 use std::fmt;
 use std::fmt::Error;
+
+pub use reqwest::header::{HeaderMap, HeaderValue, USER_AGENT};
 
 pub struct RestClient {
     host: String,
@@ -22,6 +23,18 @@ impl RestClient {
         let mut header_map = HeaderMap::new();
         header_map.insert(USER_AGENT, HeaderValue::from_static("binance-connector"));
 
+        Ok(Self {
+            host,
+            inner_client,
+            header_map,
+        })
+    }
+
+    pub fn with_headers(host: String, header_map: HeaderMap) -> Result<Self, Error> {
+        let inner_client = reqwest::Client::builder()
+            .pool_idle_timeout(None)
+            .build()
+            .expect("Failed to build reqwest client");
         Ok(Self {
             host,
             inner_client,

@@ -36,7 +36,7 @@ impl Default for KaikoUtil {
 impl KaikoUtil {
     fn dbg_print(&self, s: &str) {
         if self.dbg {
-            println!("[DockerUtil]: {}", s);
+            println!("[KaikoUtil]:{}", s);
         }
     }
 }
