@@ -154,6 +154,10 @@ crates_repository(
     cargo_lockfile = "//:Cargo.lock",
     lockfile = "//:cargo-bazel-lock.json",
     packages = {
+            "autometrics": crate.spec(
+                          version = "1.0",
+            ),
+
             "anyhow": crate.spec(
                           version = "1.0",
             ),

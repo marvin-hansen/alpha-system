@@ -1,5 +1,5 @@
 {
-  "checksum": "dc25b5170695d2c4f8c4856f6ac3028eb98b763829c76efe1704a0053b2e914a",
+  "checksum": "bf27713ec308e8f051a4158a3a4c9752a9d5cf9403f5c4581cdaf968fedfaf97",
   "crates": {
     "addr2line 0.21.0": {
       "name": "addr2line",
@@ -859,7 +859,7 @@
               "target": "hashbrown"
             },
             {
-              "id": "num 0.4.2",
+              "id": "num 0.4.3",
               "target": "num"
             }
           ],
@@ -927,7 +927,7 @@
               "target": "half"
             },
             {
-              "id": "num 0.4.2",
+              "id": "num 0.4.3",
               "target": "num"
             }
           ],
@@ -1014,7 +1014,7 @@
               "target": "lexical_core"
             },
             {
-              "id": "num 0.4.2",
+              "id": "num 0.4.3",
               "target": "num"
             },
             {
@@ -1077,7 +1077,7 @@
               "target": "half"
             },
             {
-              "id": "num 0.4.2",
+              "id": "num 0.4.3",
               "target": "num"
             }
           ],
@@ -1261,7 +1261,7 @@
               "target": "arrow_schema"
             },
             {
-              "id": "num 0.4.2",
+              "id": "num 0.4.3",
               "target": "num"
             }
           ],
@@ -1507,7 +1507,7 @@
         "deps": {
           "common": [
             {
-              "id": "num-traits 0.2.18",
+              "id": "num-traits 0.2.19",
               "target": "num_traits"
             }
           ],
@@ -1560,6 +1560,169 @@
         "MIT"
       ],
       "license_file": "LICENSE-APACHE"
+    },
+    "autometrics 1.0.1": {
+      "name": "autometrics",
+      "version": "1.0.1",
+      "package_url": "https://github.com/autometrics-dev/autometrics-rs",
+      "repository": {
+        "Http": {
+          "url": "https://static.crates.io/crates/autometrics/1.0.1/download",
+          "sha256": "10eaae539e7319a3813dc8cd53776a7128bdd6d82067275c12586f5a0fce9137"
+        }
+      },
+      "targets": [
+        {
+          "Library": {
+            "crate_name": "autometrics",
+            "crate_root": "src/lib.rs",
+            "srcs": {
+              "allow_empty": false,
+              "include": [
+                "**/*.rs"
+              ]
+            }
+          }
+        },
+        {
+          "BuildScript": {
+            "crate_name": "build_script_build",
+            "crate_root": "build.rs",
+            "srcs": {
+              "allow_empty": false,
+              "include": [
+                "**/*.rs"
+              ]
+            }
+          }
+        }
+      ],
+      "library_target_name": "autometrics",
+      "common_attrs": {
+        "compile_data_glob": [
+          "**"
+        ],
+        "deps": {
+          "common": [
+            {
+              "id": "autometrics 1.0.1",
+              "target": "build_script_build"
+            },
+            {
+              "id": "linkme 0.3.26",
+              "target": "linkme"
+            },
+            {
+              "id": "once_cell 1.19.0",
+              "target": "once_cell"
+            },
+            {
+              "id": "thiserror 1.0.58",
+              "target": "thiserror"
+            }
+          ],
+          "selects": {}
+        },
+        "edition": "2021",
+        "proc_macro_deps": {
+          "common": [
+            {
+              "id": "autometrics-macros 1.0.1",
+              "target": "autometrics_macros"
+            },
+            {
+              "id": "spez 0.1.2",
+              "target": "spez"
+            }
+          ],
+          "selects": {}
+        },
+        "version": "1.0.1"
+      },
+      "build_script_attrs": {
+        "data_glob": [
+          "**"
+        ],
+        "deps": {
+          "common": [
+            {
+              "id": "cfg_aliases 0.1.1",
+              "target": "cfg_aliases"
+            }
+          ],
+          "selects": {}
+        }
+      },
+      "license": "MIT OR Apache-2.0",
+      "license_ids": [
+        "Apache-2.0",
+        "MIT"
+      ],
+      "license_file": null
+    },
+    "autometrics-macros 1.0.1": {
+      "name": "autometrics-macros",
+      "version": "1.0.1",
+      "package_url": "https://github.com/autometrics-dev/autometrics-rs",
+      "repository": {
+        "Http": {
+          "url": "https://static.crates.io/crates/autometrics-macros/1.0.1/download",
+          "sha256": "fdf7c9ebfee6425011c65788c746adf80fac99ba38957ba1cdb824b593cfc993"
+        }
+      },
+      "targets": [
+        {
+          "ProcMacro": {
+            "crate_name": "autometrics_macros",
+            "crate_root": "src/lib.rs",
+            "srcs": {
+              "allow_empty": false,
+              "include": [
+                "**/*.rs"
+              ]
+            }
+          }
+        }
+      ],
+      "library_target_name": "autometrics_macros",
+      "common_attrs": {
+        "compile_data_glob": [
+          "**"
+        ],
+        "deps": {
+          "common": [
+            {
+              "id": "percent-encoding 2.3.1",
+              "target": "percent_encoding"
+            },
+            {
+              "id": "proc-macro2 1.0.79",
+              "target": "proc_macro2"
+            },
+            {
+              "id": "quote 1.0.35",
+              "target": "quote"
+            },
+            {
+              "id": "regex 1.10.4",
+              "target": "regex"
+            },
+            {
+              "id": "syn 2.0.57",
+              "target": "syn"
+            }
+          ],
+          "selects": {}
+        },
+        "edition": "2021",
+        "version": "1.0.1"
+      },
+      "license": "MIT OR Apache-2.0",
+      "license_ids": [
+        "Apache-2.0",
+        "MIT"
+      ],
+      "license_file": null
     },
     "axum 0.6.20": {
       "name": "axum",
@@ -3150,7 +3313,7 @@
         "deps": {
           "common": [
             {
-              "id": "num-traits 0.2.18",
+              "id": "num-traits 0.2.19",
               "target": "num_traits"
             },
             {
@@ -5087,6 +5250,10 @@
               "target": "anyhow"
             },
             {
+              "id": "autometrics 1.0.1",
+              "target": "autometrics"
+            },
+            {
               "id": "binance-rs-async 1.3.3",
               "target": "binance"
             },
@@ -6760,7 +6927,7 @@
               "target": "cfg_if"
             },
             {
-              "id": "num-traits 0.2.18",
+              "id": "num-traits 0.2.19",
               "target": "num_traits"
             }
           ],
@@ -9876,6 +10043,110 @@
       ],
       "license_file": "LICENSE-APACHE"
     },
+    "linkme 0.3.26": {
+      "name": "linkme",
+      "version": "0.3.26",
+      "package_url": "https://github.com/dtolnay/linkme",
+      "repository": {
+        "Http": {
+          "url": "https://static.crates.io/crates/linkme/0.3.26/download",
+          "sha256": "833222afbfe72868ac8f9770c91a33673f0d5fefc37c9dbe94aa3548b571623f"
+        }
+      },
+      "targets": [
+        {
+          "Library": {
+            "crate_name": "linkme",
+            "crate_root": "src/lib.rs",
+            "srcs": {
+              "allow_empty": false,
+              "include": [
+                "**/*.rs"
+              ]
+            }
+          }
+        }
+      ],
+      "library_target_name": "linkme",
+      "common_attrs": {
+        "compile_data_glob": [
+          "**"
+        ],
+        "edition": "2021",
+        "proc_macro_deps": {
+          "common": [
+            {
+              "id": "linkme-impl 0.3.26",
+              "target": "linkme_impl"
+            }
+          ],
+          "selects": {}
+        },
+        "version": "0.3.26"
+      },
+      "license": "MIT OR Apache-2.0",
+      "license_ids": [
+        "Apache-2.0",
+        "MIT"
+      ],
+      "license_file": "LICENSE-APACHE"
+    },
+    "linkme-impl 0.3.26": {
+      "name": "linkme-impl",
+      "version": "0.3.26",
+      "package_url": "https://github.com/dtolnay/linkme",
+      "repository": {
+        "Http": {
+          "url": "https://static.crates.io/crates/linkme-impl/0.3.26/download",
+          "sha256": "39f0dea92dbea3271557cc2e1848723967bba81f722f95026860974ec9283f08"
+        }
+      },
+      "targets": [
+        {
+          "ProcMacro": {
+            "crate_name": "linkme_impl",
+            "crate_root": "src/lib.rs",
+            "srcs": {
+              "allow_empty": false,
+              "include": [
+                "**/*.rs"
+              ]
+            }
+          }
+        }
+      ],
+      "library_target_name": "linkme_impl",
+      "common_attrs": {
+        "compile_data_glob": [
+          "**"
+        ],
+        "deps": {
+          "common": [
+            {
+              "id": "proc-macro2 1.0.79",
+              "target": "proc_macro2"
+            },
+            {
+              "id": "quote 1.0.35",
+              "target": "quote"
+            },
+            {
+              "id": "syn 2.0.57",
+              "target": "syn"
+            }
+          ],
+          "selects": {}
+        },
+        "edition": "2021",
+        "version": "0.3.26"
+      },
+      "license": "MIT OR Apache-2.0",
+      "license_ids": [
+        "Apache-2.0",
+        "MIT"
+      ],
+      "license_file": null
+    },
     "linux-raw-sys 0.4.13": {
       "name": "linux-raw-sys",
       "version": "0.4.13",
@@ -10814,14 +11085,14 @@
       ],
       "license_file": "LICENSE"
     },
-    "num 0.4.2": {
+    "num 0.4.3": {
       "name": "num",
-      "version": "0.4.2",
+      "version": "0.4.3",
       "package_url": "https://github.com/rust-num/num",
       "repository": {
         "Http": {
-          "url": "https://static.crates.io/crates/num/0.4.2/download",
-          "sha256": "3135b08af27d103b0a51f2ae0f8632117b7b185ccf931445affa8df530576a41"
+          "url": "https://static.crates.io/crates/num/0.4.3/download",
+          "sha256": "35bd024e8b2ff75562e5f34e7f4905839deb4b22955ef5e73d2fea1b9813cb23"
         }
       },
       "targets": [
@@ -10853,11 +11124,11 @@
         "deps": {
           "common": [
             {
-              "id": "num-bigint 0.4.4",
+              "id": "num-bigint 0.4.5",
               "target": "num_bigint"
             },
             {
-              "id": "num-complex 0.4.5",
+              "id": "num-complex 0.4.6",
               "target": "num_complex"
             },
             {
@@ -10865,22 +11136,22 @@
               "target": "num_integer"
             },
             {
-              "id": "num-iter 0.1.44",
+              "id": "num-iter 0.1.45",
               "target": "num_iter"
             },
             {
-              "id": "num-rational 0.4.1",
+              "id": "num-rational 0.4.2",
               "target": "num_rational"
             },
             {
-              "id": "num-traits 0.2.18",
+              "id": "num-traits 0.2.19",
               "target": "num_traits"
             }
           ],
           "selects": {}
         },
-        "edition": "2018",
-        "version": "0.4.2"
+        "edition": "2021",
+        "version": "0.4.3"
       },
       "license": "MIT OR Apache-2.0",
       "license_ids": [
@@ -10889,14 +11160,14 @@
       ],
       "license_file": "LICENSE-APACHE"
     },
-    "num-bigint 0.4.4": {
+    "num-bigint 0.4.5": {
       "name": "num-bigint",
-      "version": "0.4.4",
+      "version": "0.4.5",
       "package_url": "https://github.com/rust-num/num-bigint",
       "repository": {
         "Http": {
-          "url": "https://static.crates.io/crates/num-bigint/0.4.4/download",
-          "sha256": "608e7659b5c3d7cba262d894801b9ec9d00de989e8a82bd4bef91d08da45cdc0"
+          "url": "https://static.crates.io/crates/num-bigint/0.4.5/download",
+          "sha256": "c165a9ab64cf766f73521c0dd2cfdff64f488b8f0b3e621face3462d3db536d7"
         }
       },
       "targets": [
@@ -10904,18 +11175,6 @@
           "Library": {
             "crate_name": "num_bigint",
             "crate_root": "src/lib.rs",
-            "srcs": {
-              "allow_empty": false,
-              "include": [
-                "**/*.rs"
-              ]
-            }
-          }
-        },
-        {
-          "BuildScript": {
-            "crate_name": "build_script_build",
-            "crate_root": "build.rs",
             "srcs": {
               "allow_empty": false,
               "include": [
@@ -10939,36 +11198,18 @@
         "deps": {
           "common": [
             {
-              "id": "num-bigint 0.4.4",
-              "target": "build_script_build"
-            },
-            {
               "id": "num-integer 0.1.46",
               "target": "num_integer"
             },
             {
-              "id": "num-traits 0.2.18",
+              "id": "num-traits 0.2.19",
               "target": "num_traits"
             }
           ],
           "selects": {}
         },
-        "edition": "2018",
-        "version": "0.4.4"
-      },
-      "build_script_attrs": {
-        "data_glob": [
-          "**"
-        ],
-        "deps": {
-          "common": [
-            {
-              "id": "autocfg 1.2.0",
-              "target": "autocfg"
-            }
-          ],
-          "selects": {}
-        }
+        "edition": "2021",
+        "version": "0.4.5"
       },
       "license": "MIT OR Apache-2.0",
       "license_ids": [
@@ -10977,14 +11218,14 @@
       ],
       "license_file": "LICENSE-APACHE"
     },
-    "num-complex 0.4.5": {
+    "num-complex 0.4.6": {
       "name": "num-complex",
-      "version": "0.4.5",
+      "version": "0.4.6",
       "package_url": "https://github.com/rust-num/num-complex",
       "repository": {
         "Http": {
-          "url": "https://static.crates.io/crates/num-complex/0.4.5/download",
-          "sha256": "23c6602fda94a57c990fe0df199a035d83576b496aa29f4e634a8ac6004e68a6"
+          "url": "https://static.crates.io/crates/num-complex/0.4.6/download",
+          "sha256": "73f88a1307638156682bada9d7604135552957b7818057dcef22705b4d509495"
         }
       },
       "targets": [
@@ -11015,14 +11256,14 @@
         "deps": {
           "common": [
             {
-              "id": "num-traits 0.2.18",
+              "id": "num-traits 0.2.19",
               "target": "num_traits"
             }
           ],
           "selects": {}
         },
-        "edition": "2018",
-        "version": "0.4.5"
+        "edition": "2021",
+        "version": "0.4.6"
       },
       "license": "MIT OR Apache-2.0",
       "license_ids": [
@@ -11070,7 +11311,7 @@
         "deps": {
           "common": [
             {
-              "id": "num-traits 0.2.18",
+              "id": "num-traits 0.2.19",
               "target": "num_traits"
             }
           ],
@@ -11086,14 +11327,14 @@
       ],
       "license_file": "LICENSE-APACHE"
     },
-    "num-iter 0.1.44": {
+    "num-iter 0.1.45": {
       "name": "num-iter",
-      "version": "0.1.44",
+      "version": "0.1.45",
       "package_url": "https://github.com/rust-num/num-iter",
       "repository": {
         "Http": {
-          "url": "https://static.crates.io/crates/num-iter/0.1.44/download",
-          "sha256": "d869c01cc0c455284163fd0092f1f93835385ccab5a98a0dcc497b2f8bf055a9"
+          "url": "https://static.crates.io/crates/num-iter/0.1.45/download",
+          "sha256": "1429034a0490724d0075ebb2bc9e875d6503c3cf69e235a8941aa757d83ef5bf"
         }
       },
       "targets": [
@@ -11129,14 +11370,14 @@
               "target": "num_integer"
             },
             {
-              "id": "num-traits 0.2.18",
+              "id": "num-traits 0.2.19",
               "target": "num_traits"
             }
           ],
           "selects": {}
         },
         "edition": "2018",
-        "version": "0.1.44"
+        "version": "0.1.45"
       },
       "license": "MIT OR Apache-2.0",
       "license_ids": [
@@ -11145,14 +11386,14 @@
       ],
       "license_file": "LICENSE-APACHE"
     },
-    "num-rational 0.4.1": {
+    "num-rational 0.4.2": {
       "name": "num-rational",
-      "version": "0.4.1",
+      "version": "0.4.2",
       "package_url": "https://github.com/rust-num/num-rational",
       "repository": {
         "Http": {
-          "url": "https://static.crates.io/crates/num-rational/0.4.1/download",
-          "sha256": "0638a1c9d0a3c0914158145bc76cff373a75a627e6ecbfb71cbe6f453a5a19b0"
+          "url": "https://static.crates.io/crates/num-rational/0.4.2/download",
+          "sha256": "f83d14da390562dca69fc84082e73e548e1ad308d24accdedd2720017cb37824"
         }
       },
       "targets": [
@@ -11160,18 +11401,6 @@
           "Library": {
             "crate_name": "num_rational",
             "crate_root": "src/lib.rs",
-            "srcs": {
-              "allow_empty": false,
-              "include": [
-                "**/*.rs"
-              ]
-            }
-          }
-        },
-        {
-          "BuildScript": {
-            "crate_name": "build_script_build",
-            "crate_root": "build.rs",
             "srcs": {
               "allow_empty": false,
               "include": [
@@ -11197,7 +11426,7 @@
         "deps": {
           "common": [
             {
-              "id": "num-bigint 0.4.4",
+              "id": "num-bigint 0.4.5",
               "target": "num_bigint"
             },
             {
@@ -11205,32 +11434,14 @@
               "target": "num_integer"
             },
             {
-              "id": "num-rational 0.4.1",
-              "target": "build_script_build"
-            },
-            {
-              "id": "num-traits 0.2.18",
+              "id": "num-traits 0.2.19",
               "target": "num_traits"
             }
           ],
           "selects": {}
         },
-        "edition": "2018",
-        "version": "0.4.1"
-      },
-      "build_script_attrs": {
-        "data_glob": [
-          "**"
-        ],
-        "deps": {
-          "common": [
-            {
-              "id": "autocfg 1.2.0",
-              "target": "autocfg"
-            }
-          ],
-          "selects": {}
-        }
+        "edition": "2021",
+        "version": "0.4.2"
       },
       "license": "MIT OR Apache-2.0",
       "license_ids": [
@@ -11239,14 +11450,14 @@
       ],
       "license_file": "LICENSE-APACHE"
     },
-    "num-traits 0.2.18": {
+    "num-traits 0.2.19": {
       "name": "num-traits",
-      "version": "0.2.18",
+      "version": "0.2.19",
       "package_url": "https://github.com/rust-num/num-traits",
       "repository": {
         "Http": {
-          "url": "https://static.crates.io/crates/num-traits/0.2.18/download",
-          "sha256": "da0df0e5185db44f69b44f26786fe401b6c293d1907744beaa7fa62b2e5a517a"
+          "url": "https://static.crates.io/crates/num-traits/0.2.19/download",
+          "sha256": "071dfc062690e90b734c0b2273ce72ad0ffa95f0c74596bc250dcfd960262841"
         }
       },
       "targets": [
@@ -11295,14 +11506,14 @@
               "target": "libm"
             },
             {
-              "id": "num-traits 0.2.18",
+              "id": "num-traits 0.2.19",
               "target": "build_script_build"
             }
           ],
           "selects": {}
         },
-        "edition": "2018",
-        "version": "0.2.18"
+        "edition": "2021",
+        "version": "0.2.19"
       },
       "build_script_attrs": {
         "data_glob": [
@@ -11516,7 +11727,7 @@
         "deps": {
           "common": [
             {
-              "id": "num-traits 0.2.18",
+              "id": "num-traits 0.2.19",
               "target": "num_traits"
             }
           ],
@@ -11794,11 +12005,11 @@
               "target": "lz4_flex"
             },
             {
-              "id": "num 0.4.2",
+              "id": "num 0.4.3",
               "target": "num"
             },
             {
-              "id": "num-bigint 0.4.4",
+              "id": "num-bigint 0.4.5",
               "target": "num_bigint"
             },
             {
@@ -14631,7 +14842,7 @@
               "target": "arrayvec"
             },
             {
-              "id": "num-traits 0.2.18",
+              "id": "num-traits 0.2.19",
               "target": "num_traits"
             },
             {
@@ -16774,6 +16985,61 @@
         "MIT"
       ],
       "license_file": "LICENSE-APACHE"
+    },
+    "spez 0.1.2": {
+      "name": "spez",
+      "version": "0.1.2",
+      "package_url": "https://github.com/m-ou-se/spez",
+      "repository": {
+        "Http": {
+          "url": "https://static.crates.io/crates/spez/0.1.2/download",
+          "sha256": "c87e960f4dca2788eeb86bbdde8dd246be8948790b7618d656e68f9b720a86e8"
+        }
+      },
+      "targets": [
+        {
+          "ProcMacro": {
+            "crate_name": "spez",
+            "crate_root": "src/lib.rs",
+            "srcs": {
+              "allow_empty": false,
+              "include": [
+                "**/*.rs"
+              ]
+            }
+          }
+        }
+      ],
+      "library_target_name": "spez",
+      "common_attrs": {
+        "compile_data_glob": [
+          "**"
+        ],
+        "deps": {
+          "common": [
+            {
+              "id": "proc-macro2 1.0.79",
+              "target": "proc_macro2"
+            },
+            {
+              "id": "quote 1.0.35",
+              "target": "quote"
+            },
+            {
+              "id": "syn 2.0.57",
+              "target": "syn"
+            }
+          ],
+          "selects": {}
+        },
+        "edition": "2021",
+        "version": "0.1.2"
+      },
+      "license": "BSD-2-Clause",
+      "license_ids": [
+        "BSD-2-Clause"
+      ],
+      "license_file": "LICENSE"
     },
     "spin 0.9.8": {
       "name": "spin",
@@ -23453,6 +23719,7 @@
   },
   "direct_deps": [
     "anyhow 1.0.81",
+    "autometrics 1.0.1",
     "binance-rs-async 1.3.3",
     "chrono 0.4.37",
     "clickhouse-rs 1.1.0-alpha.1",
