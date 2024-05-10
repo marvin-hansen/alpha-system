@@ -1,10 +1,9 @@
 use common::prelude::ServiceID;
-use common::prelude::ServiceID::SMDB;
 use config_manager::CfgManager;
 use ctx_manager::CtxManager;
 use dns_manager::DnsManager;
 use proto_bindings::proto::ims_data_service_server::{ImsDataService, ImsDataServiceServer};
-use service_utils::{print_utils, shutdown_utils, ServiceUtil};
+use service_utils::{print_utils, shutdown_utils};
 use smdb_provider::SMDBProvider;
 use std::error::Error;
 use tonic::transport::Server;
@@ -13,22 +12,17 @@ pub async fn run(
     svc_id: ServiceID,
     grpc_svc: ImsDataServiceServer<impl ImsDataService>,
 ) -> Result<(), Box<dyn Error>> {
-    // Pre-init setup
-    let svc_util = ServiceUtil::new();
-    let svc_config = svc_util.get_service_config(&svc_id).await;
-
     //
     //Creates a new instance of the Context Manager.
     let ctx_manager = async { CtxManager::new() }.await;
     //Creates a new instance of the DNS Manager.
     let dns_manager = async { DnsManager::new(&ctx_manager) }.await;
     //Creates a new instance of the Configuration Manager.
-    let cfg_manager =
-        async { CfgManager::new(svc_id, svc_config, &ctx_manager, &dns_manager) }.await;
+    let cfg_manager = async { CfgManager::new(svc_id, &ctx_manager, &dns_manager) }.await;
 
     // pull SMDB endpoint from auto config
     let (smdb_host, smdb_port) = cfg_manager
-        .get_service_host_port()
+        .get_smdb_host_port()
         .expect("[ImsDataBinance]: Failed to get host and port for DBGW");
 
     let smdb_manager = SMDBProvider::new(smdb_host, smdb_port).await;

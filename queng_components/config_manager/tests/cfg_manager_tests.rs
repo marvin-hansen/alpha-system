@@ -17,7 +17,7 @@ fn new_config_manager_default() {
     assert_eq!(dnm.internal_dns(), "9.9.9.9:53");
     assert_eq!(dnm.external_dns(), "1.1.1.1:53");
 
-    let config_manager = CfgManager::new(ServiceID::Default, ServiceConfig::default(), &ctm, &dnm);
+    let config_manager = CfgManager::new(ServiceID::Default, &ctm, &dnm);
 
     assert_eq!(config_manager.get_svc_id(), ServiceID::Default);
     assert_eq!(config_manager.get_env_type(), EnvironmentType::CLUSTER);

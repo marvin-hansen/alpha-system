@@ -1,6 +1,4 @@
-use common::prelude::{
-    ClickHouseConfig, EnvironmentType, HostEndpoint, ServiceConfig, ServiceID, SvcEnvConfig,
-};
+use common::prelude::{ClickHouseConfig, EnvironmentType, ServiceConfig, ServiceID, SvcEnvConfig};
 use db_specs::clickhouse;
 
 pub(crate) fn get_db_config(env_type: &EnvironmentType) -> ClickHouseConfig {

@@ -3,13 +3,12 @@ use std::error::Error;
 use tonic::transport::{Channel, Server, Uri};
 
 use common::prelude::ServiceID;
-use common::prelude::ServiceID::DBGW;
 use ctx_manager::CtxManager;
 use dns_manager::DnsManager;
 use proto_bindings::proto::db_gateway_service_client::DbGatewayServiceClient;
 use proto_bindings::proto::smdb_service_server::SmdbServiceServer;
 use service::SMDBServer;
-use service_utils::{print_utils, shutdown_utils, ServiceUtil};
+use service_utils::{print_utils, shutdown_utils};
 
 mod service;
 
@@ -17,19 +16,14 @@ const SVC_ID: ServiceID = ServiceID::SMDB;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
-    // Pre-init setup
-    let svc_util = ServiceUtil::new();
-    let svc_config = svc_util.get_service_config(&SVC_ID).await;
-
     // Setup autoconfiguration.
     let ctx_manager = async { CtxManager::new() }.await;
     let dns_manager = async { DnsManager::new(&ctx_manager) }.await;
-    let cfg_manager =
-        async { CfgManager::new(SVC_ID, svc_config, &ctx_manager, &dns_manager) }.await;
+    let cfg_manager = async { CfgManager::new(SVC_ID, &ctx_manager, &dns_manager) }.await;
 
     // pull DBGW endpoint from auto config
     let (dbgw_host, dbgw_port) = cfg_manager
-        .get_service_host_port()
+        .get_dbgw_host_port()
         .expect("[SMDB]: Failed to get host and port for DBGW");
 
     // Configure DBGW URI

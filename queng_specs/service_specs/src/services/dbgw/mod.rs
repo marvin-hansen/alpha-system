@@ -35,7 +35,7 @@ fn get_endpoint() -> Endpoint {
     let endpoint_version = 1;
     let endpoint_description = "Access to surreal DB via gRPC on baseUri:7070".to_string();
     let endpoint_uri = "/".to_string();
-    let endpoint_port = 7070;
+    let endpoint_port = 9090;
     let endpoint_protocol = ProtocolType::GRPC;
     let endpoint_encoding = Encoding::Protobuf;
 

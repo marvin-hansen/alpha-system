@@ -40,20 +40,3 @@ impl ServiceUtil {
         }
     }
 }
-
-impl ServiceUtil {
-    pub async fn get_service_config(&self, svc: &ServiceID) -> ServiceConfig {
-        self.dbg_print("Get config for service:", svc);
-
-        match svc {
-            ServiceID::Default => ServiceConfig::default(),
-            ServiceID::CMDB => cmdb_service_config(),
-            ServiceID::DBGW => dbgw_service_config(),
-            ServiceID::QDGW => qdgw_service_config(),
-            ServiceID::SMDB => smdb_service_config(),
-            ServiceID::SYMDB => symdb_service_config(),
-            ServiceID::VEX => vex_service_config(),
-            ServiceID::ImsDataBinance => ims_data_binance_config(),
-        }
-    }
-}

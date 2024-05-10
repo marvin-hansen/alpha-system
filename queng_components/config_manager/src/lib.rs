@@ -8,6 +8,7 @@ use exchange_specs::prelude;
 use exchange_specs::prelude::{
     get_all_exchanges, get_all_exchanges_ids_names, get_exchange_symbol_tables,
 };
+use service_specs::get_service_config;
 use std::collections::HashMap;
 
 mod cfg_getters;
@@ -43,14 +44,9 @@ pub struct CfgManager<'l> {
 }
 
 impl<'l> CfgManager<'l> {
-    pub fn new(
-        svc: ServiceID,
-        svc_config: ServiceConfig,
-        ctx_manager: &'l CtxManager,
-        dns_manager: &'l DnsManager,
-    ) -> Self {
+    pub fn new(svc: ServiceID, ctx_manager: &'l CtxManager, dns_manager: &'l DnsManager) -> Self {
         let env_type = ctx_manager.env_type();
-
+        let svc_config = get_service_config(&svc);
         let svc_env_config = get_svc_env_config(svc, &svc_config);
         let clickhouse_config = utils::get_db_config(&env_type);
 

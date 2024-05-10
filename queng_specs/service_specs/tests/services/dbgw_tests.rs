@@ -32,7 +32,7 @@ fn test_cmdb_service_config() {
         "Access to surreal DB via gRPC on baseUri:7070"
     );
     assert_eq!(endpoint.uri(), String::from("/"));
-    assert_eq!(endpoint.port(), 7070);
+    assert_eq!(endpoint.port(), 9090);
     assert_eq!(endpoint.protocol(), ProtocolType::GRPC);
     assert_eq!(endpoint.encoding(), Encoding::Protobuf);
 }

@@ -5,7 +5,7 @@ use db_system_manager::SystemDBManager;
 use dns_manager::DnsManager;
 use proto_bindings::proto::db_gateway_service_server::DbGatewayServiceServer;
 use service::DBGWServer;
-use service_utils::{print_utils, shutdown_utils, ServiceUtil};
+use service_utils::{print_utils, shutdown_utils};
 use std::error::Error;
 use tonic::transport::Server;
 
@@ -14,15 +14,10 @@ const SVC_ID: ServiceID = ServiceID::DBGW;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
-    // Pre-init setup
-    let svc_util = ServiceUtil::new();
-    let svc_config = svc_util.get_service_config(&SVC_ID).await;
-
     // Setup autoconfiguration.
     let ctx_manager = async { CtxManager::new() }.await;
     let dns_manager = async { DnsManager::new(&ctx_manager) }.await;
-    let cfg_manager =
-        async { CfgManager::new(SVC_ID, svc_config, &ctx_manager, &dns_manager) }.await;
+    let cfg_manager = async { CfgManager::new(SVC_ID, &ctx_manager, &dns_manager) }.await;
 
     // Configure database manager
     let db_config = cfg_manager.clickhouse_config();

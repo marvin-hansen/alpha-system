@@ -1,12 +1,11 @@
 use crate::service::SYMDBServer;
 use common::prelude::ServiceID;
-use common::prelude::ServiceID::SMDB;
 use config_manager::CfgManager;
 use ctx_manager::CtxManager;
 use db_query_manager::QueryDBManager;
 use dns_manager::DnsManager;
 use proto_bindings::proto::symdb_service_server::SymdbServiceServer;
-use service_utils::{print_utils, shutdown_utils, ServiceUtil};
+use service_utils::{print_utils, shutdown_utils};
 use smdb_provider::SMDBProvider;
 use std::error::Error;
 use std::sync::{Arc, RwLock};
@@ -19,19 +18,14 @@ const SVC_ID: ServiceID = ServiceID::SYMDB;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
-    // Pre-init setup
-    let svc_util = ServiceUtil::new();
-    let svc_config = svc_util.get_service_config(&SVC_ID).await;
-
     // Setup autoconfiguration.
     let ctx_manager = async { CtxManager::new() }.await;
     let dns_manager = async { DnsManager::new(&ctx_manager) }.await;
-    let cfg_manager =
-        async { CfgManager::new(SVC_ID, svc_config, &ctx_manager, &dns_manager) }.await;
+    let cfg_manager = async { CfgManager::new(SVC_ID, &ctx_manager, &dns_manager) }.await;
 
     // pull SMDB endpoint from auto config
     let (smdb_host, smdb_port) = cfg_manager
-        .get_service_host_port()
+        .get_smdb_host_port()
         .expect("[SYMDB]: Failed to get host and port for DBGW");
 
     let smdb_manager = SMDBProvider::new(smdb_host, smdb_port).await;
