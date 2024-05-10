@@ -15,7 +15,9 @@ rust_library(
         "//queng_components/dns_manager:dns_manager",
         "//queng_specs/db_specs:db_specs",
         "//queng_specs/exchange_specs:exchange_specs",
-        "//queng_specs/service_specs:service_specs",
+        "//queng_specs/service_specs:cmdb_specs",
+        "//queng_specs/service_specs:dbgw_specs",
+        "//queng_specs/service_specs:smdb_specs",
     ],
     visibility = ["//visibility:public"],
 )
@@ -39,7 +41,6 @@ rust_test_suite(
     tags = ["unit","components", "config_manager"],
     visibility = ["//visibility:public"],
 )
-
 
 rust_doc(
     name = "doc",

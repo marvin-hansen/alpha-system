@@ -20,7 +20,7 @@ fn new_config_manager_smdb() {
     assert_eq!(dnm.internal_dns(), "9.9.9.9:53");
     assert_eq!(dnm.external_dns(), "1.1.1.1:53");
 
-    let config_manager = CfgManager::new(ServiceID::SMDB, &ctm, &dnm);
+    let config_manager = CfgManager::new(ServiceID::SMDB, smdb_service_config(), &ctm, &dnm);
 
     assert_eq!(config_manager.get_svc_id(), ServiceID::SMDB);
     assert_eq!(config_manager.get_env_type(), EnvironmentType::CLUSTER);
@@ -40,7 +40,7 @@ fn new_config_manager_cmdb() {
     assert_eq!(dnm.internal_dns(), "9.9.9.9:53");
     assert_eq!(dnm.external_dns(), "1.1.1.1:53");
 
-    let config_manager = CfgManager::new(ServiceID::CMDB, &ctm, &dnm);
+    let config_manager = CfgManager::new(ServiceID::CMDB, cmdb_service_config(), &ctm, &dnm);
 
     assert_eq!(config_manager.get_svc_id(), ServiceID::CMDB);
     assert_eq!(config_manager.get_env_type(), EnvironmentType::CLUSTER);
@@ -60,7 +60,7 @@ fn new_config_manager_dbgw() {
     assert_eq!(dnm.internal_dns(), "9.9.9.9:53");
     assert_eq!(dnm.external_dns(), "1.1.1.1:53");
 
-    let config_manager = CfgManager::new(ServiceID::DBGW, &ctm, &dnm);
+    let config_manager = CfgManager::new(ServiceID::DBGW, dbgw_service_config(), &ctm, &dnm);
 
     assert_eq!(config_manager.get_svc_id(), ServiceID::DBGW);
     assert_eq!(config_manager.get_env_type(), EnvironmentType::CLUSTER);
@@ -80,7 +80,7 @@ fn new_config_manager_qdgw() {
     assert_eq!(dnm.internal_dns(), "9.9.9.9:53");
     assert_eq!(dnm.external_dns(), "1.1.1.1:53");
 
-    let config_manager = CfgManager::new(ServiceID::QDGW, &ctm, &dnm);
+    let config_manager = CfgManager::new(ServiceID::QDGW, qdgw_service_config(), &ctm, &dnm);
 
     assert_eq!(config_manager.get_svc_id(), ServiceID::QDGW);
     assert_eq!(config_manager.get_env_type(), EnvironmentType::CLUSTER);

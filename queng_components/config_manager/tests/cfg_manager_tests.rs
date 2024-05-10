@@ -1,7 +1,8 @@
-use common::prelude::{EnvironmentType, ServiceConfig, ServiceID};
+use common::prelude::{EnvironmentType, ServiceID};
 use config_manager::CfgManager;
 use ctx_manager::CtxManager;
 use dns_manager::DnsManager;
+use service_specs::prelude::smdb_service_config;
 use std::env;
 
 #[test]
@@ -17,9 +18,9 @@ fn new_config_manager_default() {
     assert_eq!(dnm.internal_dns(), "9.9.9.9:53");
     assert_eq!(dnm.external_dns(), "1.1.1.1:53");
 
-    let config_manager = CfgManager::new(ServiceID::Default, &ctm, &dnm);
+    let config_manager = CfgManager::new(ServiceID::SMDB, smdb_service_config(), &ctm, &dnm);
 
-    assert_eq!(config_manager.get_svc_id(), ServiceID::Default);
+    assert_eq!(config_manager.get_svc_id(), ServiceID::SMDB);
     assert_eq!(config_manager.get_env_type(), EnvironmentType::CLUSTER);
-    assert_eq!(config_manager.get_svc_config(), ServiceConfig::default());
+    assert_eq!(config_manager.get_svc_config(), smdb_service_config());
 }

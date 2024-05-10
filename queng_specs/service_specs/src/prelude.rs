@@ -6,7 +6,4 @@ pub use crate::services::symdb::symdb_service_config;
 pub use crate::services::vex::vex_service_config;
 //
 // IMS Data services
-pub use crate::services::ims_data::binance::ims_data_binance_config;
-
-//
-pub use crate::get_service_config;
+pub use crate::services::ims_data::ims_data_binance_config;

@@ -2,6 +2,7 @@ use common::prelude::ServiceID;
 use config_manager::CfgManager;
 use ctx_manager::CtxManager;
 use db_system_manager::SystemDBManager;
+use dbgw_specs;
 use dns_manager::DnsManager;
 use proto_bindings::proto::db_gateway_service_server::DbGatewayServiceServer;
 use service::DBGWServer;
@@ -15,9 +16,12 @@ const SVC_ID: ServiceID = ServiceID::DBGW;
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
     // Setup autoconfiguration.
+    let svc_config = dbgw_specs::dbgw_service_config();
+
     let ctx_manager = async { CtxManager::new() }.await;
     let dns_manager = async { DnsManager::new(&ctx_manager) }.await;
-    let cfg_manager = async { CfgManager::new(SVC_ID, &ctx_manager, &dns_manager) }.await;
+    let cfg_manager =
+        async { CfgManager::new(SVC_ID, svc_config, &ctx_manager, &dns_manager) }.await;
 
     // Configure database manager
     let db_config = cfg_manager.clickhouse_config();

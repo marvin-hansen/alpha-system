@@ -1,4 +1,5 @@
 use crate::service::CMDBServer;
+use cmdb_specs;
 use common::prelude::ServiceID;
 use config_manager::CfgManager;
 use ctx_manager::CtxManager;
@@ -9,7 +10,6 @@ use service_utils::{print_utils, shutdown_utils};
 use smdb_provider::SMDBProvider;
 use std::error::Error;
 use tonic::transport::{Channel, Server, Uri};
-
 mod service;
 
 const SVC_ID: ServiceID = ServiceID::CMDB;
@@ -17,9 +17,11 @@ const SVC_ID: ServiceID = ServiceID::CMDB;
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
     // Setup autoconfiguration.
+    let svc_config = cmdb_specs::cmdb_service_config();
     let ctx_manager = async { CtxManager::new() }.await;
     let dns_manager = async { DnsManager::new(&ctx_manager) }.await;
-    let cfg_manager = async { CfgManager::new(SVC_ID, &ctx_manager, &dns_manager) }.await;
+    let cfg_manager =
+        async { CfgManager::new(SVC_ID, svc_config, &ctx_manager, &dns_manager) }.await;
 
     // pull SMDB endpoint from auto config
     let (smdb_host, smdb_port) = cfg_manager

@@ -9,7 +9,7 @@ use proto_bindings::proto::db_gateway_service_client::DbGatewayServiceClient;
 use proto_bindings::proto::smdb_service_server::SmdbServiceServer;
 use service::SMDBServer;
 use service_utils::{print_utils, shutdown_utils};
-
+use smdb_specs;
 mod service;
 
 const SVC_ID: ServiceID = ServiceID::SMDB;
@@ -17,9 +17,11 @@ const SVC_ID: ServiceID = ServiceID::SMDB;
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
     // Setup autoconfiguration.
+    let svc_config = smdb_specs::smdb_service_config();
     let ctx_manager = async { CtxManager::new() }.await;
     let dns_manager = async { DnsManager::new(&ctx_manager) }.await;
-    let cfg_manager = async { CfgManager::new(SVC_ID, &ctx_manager, &dns_manager) }.await;
+    let cfg_manager =
+        async { CfgManager::new(SVC_ID, svc_config, &ctx_manager, &dns_manager) }.await;
 
     // pull DBGW endpoint from auto config
     let (dbgw_host, dbgw_port) = cfg_manager

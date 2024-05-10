@@ -1,13 +1,15 @@
 use crate::utils::get_svc_env_config;
 use crate::{CfgManager, DEFAULT_HOST};
+use cmdb_specs::cmdb_service_config;
 use common::prelude::ServiceID::{CMDB, DBGW, SMDB};
 use common::prelude::{EnvironmentType, InitError, ServiceID, SvcEnvConfig};
-use service_specs::get_service_config;
+use dbgw_specs::dbgw_service_config;
+use smdb_specs::smdb_service_config;
 
 impl<'l> CfgManager<'l> {
     pub fn get_smdb_host_port(&self) -> Result<(String, u16), InitError> {
         // Get the configuration of the service
-        let svc_config = get_service_config(&SMDB);
+        let svc_config = smdb_service_config();
 
         // Construct contextual service environment configuration
         let svc_env_config = get_svc_env_config(SMDB, &svc_config);
@@ -18,7 +20,7 @@ impl<'l> CfgManager<'l> {
 
     pub fn get_cmdb_host_port(&self) -> Result<(String, u16), InitError> {
         // Get the configuration of the service
-        let svc_config = get_service_config(&CMDB);
+        let svc_config = cmdb_service_config();
 
         // Construct contextual service environment configuration
         let svc_env_config = get_svc_env_config(CMDB, &svc_config);
@@ -29,7 +31,7 @@ impl<'l> CfgManager<'l> {
 
     pub fn get_dbgw_host_port(&self) -> Result<(String, u16), InitError> {
         // Get the configuration of the service
-        let svc_config = get_service_config(&DBGW);
+        let svc_config = dbgw_service_config();
 
         // Construct contextual service environment configuration
         let svc_env_config = get_svc_env_config(DBGW, &svc_config);

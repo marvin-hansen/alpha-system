@@ -37,6 +37,7 @@ rust_binary(
         "//queng_utils/service_utils:service_utils",
         "//queng_providers/smdb_provider:smdb_provider",
         "//queng_components/symbol_manager:symbol_manager",
+        "//queng_specs/service_specs:ims_data",
          # External crates
         "@crate_index//:anyhow",
         "@crate_index//:binance-rs-async",

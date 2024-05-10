@@ -1,12 +1,103 @@
 load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test_suite")
 load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test")
 
+filegroup(
+    name = "build",
+    srcs = [
+        ":service_specs",
+        ":cmdb_specs",
+        ":dbgw_specs",
+        ":ims_data",
+        ":qdgw_specs",
+        ":smdb_specs",
+        ":symdb_specs",
+        ":vex_specs",
+    ],
+    visibility = ["//visibility:public"],
+)
 
 rust_library(
     name = "service_specs",
     crate_root = "src/lib.rs",
     srcs = glob([
         "src/**/*.rs",
+    ]),
+    deps = [
+        "//queng_common:common",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+rust_library(
+    name = "cmdb_specs",
+    srcs = glob([
+        "src/services/cmdb/mod.rs",
+    ]),
+    deps = [
+        "//queng_common:common",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+rust_library(
+    name = "dbgw_specs",
+    srcs = glob([
+        "src/services/dbgw/mod.rs",
+    ]),
+    deps = [
+        "//queng_common:common",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+rust_library(
+    name = "ims_data",
+    srcs = glob([
+        "src/services/ims_data/mod.rs",
+    ]),
+    deps = [
+        "//queng_common:common",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+rust_library(
+    name = "qdgw_specs",
+    srcs = glob([
+        "src/services/qdgw/mod.rs",
+    ]),
+    deps = [
+        "//queng_common:common",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+rust_library(
+    name = "smdb_specs",
+    srcs = glob([
+        "src/services/smdb/mod.rs",
+    ]),
+    deps = [
+        "//queng_common:common",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+rust_library(
+    name = "symdb_specs",
+    srcs = glob([
+        "src/services/symdb/mod.rs",
+    ]),
+    deps = [
+        "//queng_common:common",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+rust_library(
+    name = "vex_specs",
+    srcs = glob([
+        "src/services/vex/mod.rs",
     ]),
     deps = [
         "//queng_common:common",

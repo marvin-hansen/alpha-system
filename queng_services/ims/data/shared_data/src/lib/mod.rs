@@ -1,4 +1,4 @@
-use common::prelude::ServiceID;
+use common::prelude::{ServiceConfig, ServiceID};
 use config_manager::CfgManager;
 use ctx_manager::CtxManager;
 use dns_manager::DnsManager;
@@ -10,6 +10,7 @@ use tonic::transport::Server;
 
 pub async fn run(
     svc_id: ServiceID,
+    svc_config: ServiceConfig,
     grpc_svc: ImsDataServiceServer<impl ImsDataService>,
 ) -> Result<(), Box<dyn Error>> {
     //
@@ -18,7 +19,8 @@ pub async fn run(
     //Creates a new instance of the DNS Manager.
     let dns_manager = async { DnsManager::new(&ctx_manager) }.await;
     //Creates a new instance of the Configuration Manager.
-    let cfg_manager = async { CfgManager::new(svc_id, &ctx_manager, &dns_manager) }.await;
+    let cfg_manager =
+        async { CfgManager::new(svc_id, svc_config, &ctx_manager, &dns_manager) }.await;
 
     // pull SMDB endpoint from auto config
     let (smdb_host, smdb_port) = cfg_manager
