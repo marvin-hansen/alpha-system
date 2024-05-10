@@ -1,5 +1,5 @@
 use common::prelude::{Encoding, ProtocolType, ServiceID, ServiceType};
-use service_specs::prelude::smdb_service_config;
+use smdb_specs::smdb_service_config;
 
 #[test]
 fn test_smdb_service_config() {

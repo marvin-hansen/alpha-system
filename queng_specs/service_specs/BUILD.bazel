@@ -105,22 +105,6 @@ rust_library(
     visibility = ["//visibility:public"],
 )
 
-rust_test_suite(
-    name = "tests",
-    srcs = glob([
-        "tests/*/*_tests.rs",
-    ]),
-    deps =  [
-        "//queng_common:common",
-        "//queng_specs/service_specs:service_specs",
-    ],
-    tags = [
-        "specs",
-        "unit",
-    ],
-    visibility = ["//visibility:public"],
-)
-
 rust_doc(
     name = "doc",
     crate = ":service_specs",
@@ -131,4 +115,71 @@ rust_doc_test(
      name = "doc_test",
      crate = ":service_specs",
      visibility = ["//visibility:public"],
+)
+
+rust_test_suite(
+    name = "cmdb_tests",
+    srcs = glob([
+        "tests/services/cmdb_tests.rs",
+    ]),
+    deps =  [
+        "//queng_common:common",
+        "//queng_specs/service_specs:cmdb_specs",
+    ],
+    tags = [
+        "specs",
+        "unit",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+
+rust_test_suite(
+    name = "dbgw_tests",
+    srcs = glob([
+        "tests/services/dbgw_tests.rs",
+    ]),
+    deps =  [
+        "//queng_common:common",
+        "//queng_specs/service_specs:dbgw_specs",
+    ],
+    tags = [
+        "specs",
+        "unit",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+
+rust_test_suite(
+    name = "qdgw_tests",
+    srcs = glob([
+        "tests/services/qdgw_tests.rs",
+    ]),
+    deps =  [
+        "//queng_common:common",
+        "//queng_specs/service_specs:qdgw_specs",
+    ],
+    tags = [
+        "specs",
+        "unit",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+
+rust_test_suite(
+    name = "smdb_tests",
+    srcs = glob([
+        "tests/services/smdb_tests.rs",
+    ]),
+    deps =  [
+        "//queng_common:common",
+        "//queng_specs/service_specs:smdb_specs",
+    ],
+    tags = [
+        "specs",
+        "unit",
+    ],
+    visibility = ["//visibility:public"],
 )
