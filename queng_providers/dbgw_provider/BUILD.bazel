@@ -1,31 +1,28 @@
-load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
-load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test")
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_doc", "rust_doc_test")
 
 
 rust_library(
-    name = "service_utils",
+    name = "dbgw_provider",
     crate_root = "src/lib.rs",
     srcs = glob([
         "src/*.rs",
     ]),
-    deps = [
+    deps =[
         # Internal crates
         "//queng_common:common",
-        "//queng_specs/service_specs:service_specs",
         # External crates
-        "@crate_index//:tokio",
     ],
     visibility = ["//visibility:public"],
 )
 
 rust_doc(
     name = "doc",
-    crate = ":service_utils",
+    crate = ":dbgw_provider",
     visibility = ["//visibility:public"],
 )
 
 rust_doc_test(
      name = "doc_test",
-     crate = ":service_utils",
+     crate = ":dbgw_provider",
      visibility = ["//visibility:public"],
 )

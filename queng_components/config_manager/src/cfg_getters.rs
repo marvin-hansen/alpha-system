@@ -1,7 +1,6 @@
 use crate::CfgManager;
 use common::prelude::{
-    ClickHouseConfig, EnvironmentType, ExchangeID, InitError, MessageClientConfig, MetricConfig,
-    ServiceConfig, ServiceID,
+    ClickHouseConfig, EnvironmentType, ExchangeID, InitError, ServiceConfig, ServiceID,
 };
 
 impl<'l> CfgManager<'l> {
@@ -14,38 +13,14 @@ impl<'l> CfgManager<'l> {
     }
 
     pub fn get_svc_config(&self) -> ServiceConfig {
-        self.service_config(&self.svc)
-    }
-    pub fn get_svc_config_by_id(&self, svc_id: &ServiceID) -> ServiceConfig {
-        self.service_config(svc_id)
+        self.svc_config.to_owned()
     }
 
-    pub fn get_message_client_config(&self) -> MessageClientConfig {
-        MessageClientConfig::from_svc_id(self.svc)
-    }
-
-    pub fn get_svc_metric_config(&self) -> MetricConfig {
-        self.get_svc_config_by_id(&self.svc).metrics().to_owned()
-    }
-
-    pub fn get_svc_metric_config_by_id(&self, svc_id: &ServiceID) -> MetricConfig {
-        self.get_svc_config_by_id(svc_id).metrics().to_owned()
-    }
-
-    pub fn get_svc_host_port(&self, svc_id: &ServiceID) -> Result<(String, u16), InitError> {
-        // Check if the service is initialized
-        if !self.is_svc_env_initialized(svc_id) {
-            InitError(format!(
-                "[EnvManager:get_svc_host_port]: Service {:?} is not initialized",
-                svc_id
-            ));
-        };
+    pub fn get_svc_host_port(&self) -> Result<(String, u16), InitError> {
         // Get the configuration of the service
-        let svc_config = self
-            .get_svc_env(svc_id)
-            .expect("Failed to get service config");
+        let svc_config = &self.svc_env_config;
         // Get the host and port of the service
-        self.get_host(&svc_config)
+        self.get_host(svc_config)
     }
 
     pub fn clickhouse_config(&self) -> &ClickHouseConfig {

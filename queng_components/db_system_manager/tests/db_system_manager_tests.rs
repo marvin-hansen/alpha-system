@@ -4,6 +4,7 @@ use ctx_manager::CtxManager;
 use db_system_manager::SystemDBManager;
 use dns_manager::DnsManager;
 use env_utils::prelude::EnvUtil;
+use service_specs::prelude::smdb_service_config;
 use std::env;
 
 async fn setup_env() {
@@ -34,8 +35,8 @@ async fn test_new() {
     assert_eq!(dnm.external_dns(), "1.1.1.1:53");
 
     // Configure manager for context aware auto configuration.
-    let config_manager = CfgManager::new(ServiceID::Default, &ctxm, &dnm);
-    assert_eq!(config_manager.get_svc_id(), ServiceID::Default);
+    let config_manager = CfgManager::new(ServiceID::SMDB, smdb_service_config(), &ctxm, &dnm);
+    assert_eq!(config_manager.get_svc_id(), ServiceID::SMDB);
     assert_eq!(config_manager.get_env_type(), EnvironmentType::CI);
 
     let clickhouse_config = ClickHouseConfig::new(

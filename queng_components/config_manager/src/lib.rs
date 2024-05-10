@@ -1,11 +1,13 @@
-use common::prelude::{ClickHouseConfig, EnvironmentType, ExchangeID, ServiceID, SvcEnvConfig};
+use crate::utils::get_svc_env_config;
+use common::prelude::{
+    ClickHouseConfig, EnvironmentType, ExchangeID, ServiceConfig, ServiceID, SvcEnvConfig,
+};
 use ctx_manager::CtxManager;
 use dns_manager::DnsManager;
 use exchange_specs::prelude;
 use exchange_specs::prelude::{
     get_all_exchanges, get_all_exchanges_ids_names, get_exchange_symbol_tables,
 };
-use std::cell::RefCell;
 use std::collections::HashMap;
 
 mod cfg_getters;
@@ -20,12 +22,16 @@ const DEFAULT_HOST: &str = "0.0.0.0";
 pub struct CfgManager<'l> {
     ctx_manager: &'l CtxManager,
     dns_manager: &'l DnsManager,
-    /// ID of the service.
-    svc: ServiceID,
-    /// ClickHouse configuration.
-    clickhouse_config: ClickHouseConfig,
     /// Type of the environment (e.g., development, testing, production).
     env_type: EnvironmentType,
+    /// ID of the service.
+    svc: ServiceID,
+    /// Service configuration
+    svc_config: ServiceConfig,
+    /// Service environment configuration for each service
+    svc_env_config: SvcEnvConfig,
+    /// ClickHouse configuration.
+    clickhouse_config: ClickHouseConfig,
     /// Default exchange
     default_exchange: ExchangeID,
     /// Vector of all supported exchanges.
@@ -34,20 +40,18 @@ pub struct CfgManager<'l> {
     exchanges_id_names: Vec<(u16, String)>,
     /// Maps exchange IDs to their symbol table. Used to configure Query Manager
     exchanges_symbol_tables: HashMap<ExchangeID, String>,
-    /// Service environment configuration for each service
-    cmdb_env: RefCell<Option<SvcEnvConfig>>,
-    ims_data_env: RefCell<Option<SvcEnvConfig>>,
-    smdb_env: RefCell<Option<SvcEnvConfig>>,
-    symdb_env: RefCell<Option<SvcEnvConfig>>,
-    dbgw_env: RefCell<Option<SvcEnvConfig>>,
-    qdgw_env: RefCell<Option<SvcEnvConfig>>,
-    vex_env: RefCell<Option<SvcEnvConfig>>,
 }
 
 impl<'l> CfgManager<'l> {
-    pub fn new(svc: ServiceID, ctx_manager: &'l CtxManager, dns_manager: &'l DnsManager) -> Self {
+    pub fn new(
+        svc: ServiceID,
+        svc_config: ServiceConfig,
+        ctx_manager: &'l CtxManager,
+        dns_manager: &'l DnsManager,
+    ) -> Self {
         let env_type = ctx_manager.env_type();
-        // Load specifications
+
+        let svc_env_config = get_svc_env_config(svc, &svc_config);
         let clickhouse_config = utils::get_db_config(&env_type);
 
         // Move this into symbol_manager
@@ -59,20 +63,15 @@ impl<'l> CfgManager<'l> {
         Self {
             ctx_manager,
             dns_manager,
-            svc,
-            clickhouse_config,
             env_type,
+            svc,
+            svc_config,
+            svc_env_config,
+            clickhouse_config,
             default_exchange,
             exchanges,
             exchanges_id_names,
             exchanges_symbol_tables,
-            cmdb_env: RefCell::new(None),
-            ims_data_env: RefCell::new(None),
-            smdb_env: RefCell::new(None),
-            symdb_env: RefCell::new(None),
-            dbgw_env: RefCell::new(None),
-            qdgw_env: RefCell::new(None),
-            vex_env: RefCell::new(None),
         }
     }
 }

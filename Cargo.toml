@@ -18,6 +18,7 @@ members = [
     "queng_components/symbol_manager",
     "queng_proto",
     "queng_providers/cmdb_provider",
+    "queng_providers/dbgw_provider",
     "queng_providers/smdb_provider",
     "queng_sbe/bindings",
     "queng_sbe/sbe_messages",
@@ -77,6 +78,7 @@ symbol_manager = { path = "queng_components/symbol_manager" }
 proto_bindings = { path = "queng_proto" }
 # Providers
 cmdb_provider = { path = "queng_providers/cmdb_provider" }
+dbgw_provider = { path = "queng_providers/dbgw_provider" }
 smdb_provider = { path = "queng_providers/smdb_provider" }
 # SBE
 sbe_bindings = { path = "queng_sbe/bindings" }

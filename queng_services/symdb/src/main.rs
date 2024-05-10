@@ -6,7 +6,7 @@ use ctx_manager::CtxManager;
 use db_query_manager::QueryDBManager;
 use dns_manager::DnsManager;
 use proto_bindings::proto::symdb_service_server::SymdbServiceServer;
-use service_utils::{print_utils, shutdown_utils};
+use service_utils::{print_utils, shutdown_utils, ServiceUtil};
 use smdb_provider::SMDBProvider;
 use std::error::Error;
 use std::sync::{Arc, RwLock};
@@ -19,14 +19,19 @@ const SVC_ID: ServiceID = ServiceID::SYMDB;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
+    // Pre-init setup
+    let svc_util = ServiceUtil::new();
+    let svc_config = svc_util.get_service_config(&SVC_ID).await;
+
     // Setup autoconfiguration.
     let ctx_manager = async { CtxManager::new() }.await;
     let dns_manager = async { DnsManager::new(&ctx_manager) }.await;
-    let cfg_manager = async { CfgManager::new(SVC_ID, &ctx_manager, &dns_manager) }.await;
+    let cfg_manager =
+        async { CfgManager::new(SVC_ID, svc_config, &ctx_manager, &dns_manager) }.await;
 
     // pull SMDB endpoint from auto config
     let (smdb_host, smdb_port) = cfg_manager
-        .get_service_host_port(&SMDB)
+        .get_service_host_port()
         .expect("[SYMDB]: Failed to get host and port for DBGW");
 
     let smdb_manager = SMDBProvider::new(smdb_host, smdb_port).await;
@@ -52,12 +57,12 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     // println!("[SYMDB]/main: Configure service ip and port automatically relative to the detected context");
     let service_addr = cfg_manager
-        .configure_svc_socket_addr(&SVC_ID)
+        .get_svc_socket_addr()
         .expect("[SMDB]: Failed to get host and port");
 
     // println!("[SYMDB]: Configuring metrics endpoint");
     let (metrics_addr, metrics_uri) = cfg_manager
-        .configure_metrics_socket_addr_uri(&SVC_ID)
+        .get_metrics_socket_addr_uri()
         .expect("[SYMDB]: Failed to get metric host, uri, and port");
 
     // println!("[SYMDB]: Get the symbol table for the default exchange.");

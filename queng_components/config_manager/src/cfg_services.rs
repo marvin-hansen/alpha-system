@@ -1,35 +1,12 @@
 use crate::{CfgManager, DEFAULT_HOST};
-use common::prelude::{
-    EnvironmentType, HostEndpoint, InitError, MetricConfig, ServiceConfig, ServiceID, SvcEnvConfig,
-};
-use service_specs::prelude::{
-    cmdb_service_config, dbgw_service_config, ims_data_binance_config, qdgw_service_config,
-    smdb_service_config, symdb_service_config, vex_service_config,
-};
+use common::prelude::{EnvironmentType, InitError, ServiceID, SvcEnvConfig};
 
 impl<'l> CfgManager<'l> {
-    pub(crate) fn service_config(&self, svc: &ServiceID) -> ServiceConfig {
-        match svc {
-            ServiceID::Default => ServiceConfig::default(),
-            ServiceID::CMDB => cmdb_service_config(),
-            ServiceID::DBGW => dbgw_service_config(),
-            ServiceID::QDGW => qdgw_service_config(),
-            ServiceID::SMDB => smdb_service_config(),
-            ServiceID::SYMDB => symdb_service_config(),
-            ServiceID::VEX => vex_service_config(),
-            ServiceID::ImsDataBinance => ims_data_binance_config(),
-        }
-    }
-}
-
-impl<'l> CfgManager<'l> {
-    pub fn get_service_host_port(&self, svc_id: &ServiceID) -> Result<(String, u16), InitError> {
-        if !self.is_svc_env_initialized(svc_id) {
-            self.init_service(svc_id)
-                .expect("[ServiceManager]: Failed to initialize service");
-        }
-
-        self.get_svc_host_port(svc_id)
+    pub fn get_service_host_port(&self) -> Result<(String, u16), InitError> {
+        // Get the configuration of the service
+        let svc_config = &self.svc_env_config;
+        // Get the host and port of the service
+        self.get_host(svc_config)
     }
 
     pub fn get_service_dependencies(&self) -> Vec<ServiceID> {
@@ -37,21 +14,9 @@ impl<'l> CfgManager<'l> {
     }
 
     /// returns the socket address to run the service in any context.
-    pub fn configure_svc_socket_addr(&self, svc_id: &ServiceID) -> Result<String, InitError> {
-        if !self.is_svc_env_initialized(svc_id) {
-            let svc_config = self.get_svc_config_by_id(svc_id).to_owned();
-            let binding = svc_config.endpoint();
-            let endpoint = binding.host_endpoint();
-            let metrics_config = svc_config.metrics().to_owned();
-
-            self.init_svc_env(svc_id, endpoint, metrics_config)
-                .expect("Failed to initialize service");
-        }
-
+    pub fn get_svc_socket_addr(&self) -> Result<String, InitError> {
         // Get the configuration of the service
-        let svc_config = self
-            .get_svc_env(svc_id)
-            .expect("Failed to get service config");
+        let svc_config = self.svc_env_config.to_owned();
         // Get the host and port of the service
         let (_, port) = self
             .get_host(&svc_config)
@@ -65,12 +30,9 @@ impl<'l> CfgManager<'l> {
     }
 
     /// Returns the metric socket address and uri to run the service in any
-    pub fn configure_metrics_socket_addr_uri(
-        &self,
-        svc_id: &ServiceID,
-    ) -> Result<(String, String), InitError> {
+    pub fn get_metrics_socket_addr_uri(&self) -> Result<(String, String), InitError> {
         let (metrics_host, metrics_uri, metrics_port) = self
-            .get_svc_metric_host_uri_port(svc_id)
+            .get_svc_metric_host_uri_port()
             .expect("Failed to get metric host, uri, and port");
 
         // Merge the host and port into a socket address i.e. 0.0.0.0:8080
@@ -81,135 +43,8 @@ impl<'l> CfgManager<'l> {
 }
 
 impl<'l> CfgManager<'l> {
-    pub fn init_service(&self, svc_id: &ServiceID) -> Result<(), InitError> {
-        let svc_config = self.get_svc_config_by_id(svc_id).to_owned();
-        let binding = svc_config.endpoint();
-        let endpoint = binding.host_endpoint();
-        let metrics_config = svc_config.metrics().to_owned();
-
-        self.init_svc_env(svc_id, endpoint, metrics_config)
-    }
-
-    /// Initializes the service environment based on the given service ID and host endpoint.
-    ///
-    /// # Arguments
-    /// * `svc_id` - The service ID of the service to be initialized.
-    /// * `endpoint` - The host endpoint of the service.
-    ///
-    /// # Returns
-    /// `Result<(), InitError>` containing a
-    /// * `InitError` in case of an error
-    /// * `Ok(())` if the service environment was successfully initialized.
-    pub fn init_svc_env(
-        &self,
-        svc_id: &ServiceID,
-        endpoint: HostEndpoint,
-        metrics_config: MetricConfig,
-    ) -> Result<(), InitError> {
-        match svc_id {
-            ServiceID::CMDB => {
-                let cmdb_env = self.get_svc_env_config(ServiceID::CMDB, endpoint, metrics_config);
-                *self.cmdb_env.borrow_mut() = Some(cmdb_env);
-                Ok(())
-            }
-            ServiceID::DBGW => {
-                let dbgw_env = self.get_svc_env_config(ServiceID::DBGW, endpoint, metrics_config);
-                *self.dbgw_env.borrow_mut() = Some(dbgw_env);
-                Ok(())
-            }
-            ServiceID::QDGW => {
-                let qdgw_env = self.get_svc_env_config(ServiceID::QDGW, endpoint, metrics_config);
-                *self.qdgw_env.borrow_mut() = Some(qdgw_env);
-                Ok(())
-            }
-            ServiceID::SMDB => {
-                let smdb_env = self.get_svc_env_config(ServiceID::SMDB, endpoint, metrics_config);
-                *self.smdb_env.borrow_mut() = Some(smdb_env);
-                Ok(())
-            }
-            ServiceID::SYMDB => {
-                let symdb_env = self.get_svc_env_config(ServiceID::SYMDB, endpoint, metrics_config);
-                *self.symdb_env.borrow_mut() = Some(symdb_env);
-                Ok(())
-            }
-            ServiceID::VEX => {
-                let vex_env = self.get_svc_env_config(ServiceID::VEX, endpoint, metrics_config);
-                *self.vex_env.borrow_mut() = Some(vex_env);
-                Ok(())
-            }
-            ServiceID::ImsDataBinance => {
-                let vex_env = self.get_svc_env_config(ServiceID::VEX, endpoint, metrics_config);
-                *self.ims_data_env.borrow_mut() = Some(vex_env);
-                Ok(())
-            }
-            ServiceID::Default => Err(InitError(format!(
-                "[EnvManager]: Service {:?} is not supported",
-                svc_id
-            ))),
-        }
-    }
-
-    /// Returns true only if the service environment has been initialized.
-    pub fn is_svc_env_initialized(&self, svc_id: &ServiceID) -> bool {
-        match svc_id {
-            ServiceID::CMDB => self.cmdb_env.borrow().is_some(),
-            ServiceID::DBGW => self.dbgw_env.borrow().is_some(),
-            ServiceID::QDGW => self.qdgw_env.borrow().is_some(),
-            ServiceID::SMDB => self.smdb_env.borrow().is_some(),
-            ServiceID::SYMDB => self.symdb_env.borrow().is_some(),
-            ServiceID::VEX => self.vex_env.borrow().is_some(),
-            ServiceID::ImsDataBinance => self.ims_data_env.borrow().is_some(),
-            ServiceID::Default => false,
-        }
-    }
-}
-
-impl<'l> CfgManager<'l> {
-    // The functions take a HostEndpoint struct as an argument, which contains the hostname and port of the respective service.
-    fn get_svc_env_config(
-        &self,
-        service_id: ServiceID,
-        endpoint: HostEndpoint,
-        metrics_config: MetricConfig,
-    ) -> SvcEnvConfig {
-        let local_host = "0.0.0.0".to_string();
-        let cluster_host = endpoint.host_uri().to_string();
-        let ci_host = "127.0.0.1".to_string();
-        let docker_host = "0.0.0.0".to_string();
-        let service_port = endpoint.port().to_string();
-        let metrics_host = metrics_config.metric_host().to_string();
-        let metrics_uri = metrics_config.metric_uri().to_string();
-        let metrics_port = metrics_config.metric_port();
-
-        SvcEnvConfig::new(
-            service_id,
-            cluster_host,
-            ci_host,
-            local_host,
-            docker_host,
-            service_port,
-            metrics_host,
-            metrics_uri,
-            metrics_port,
-        )
-    }
-
-    fn get_svc_metric_host_uri_port(
-        &self,
-        svc_id: &ServiceID,
-    ) -> Result<(String, String, u16), InitError> {
-        // Check if the service is initialized
-        if !self.is_svc_env_initialized(svc_id) {
-            InitError(format!(
-                "[EnvManager:get_svc_metric_host_uri_port]: Service {:?} is not initialized",
-                svc_id
-            ));
-        };
-
-        let svc = self
-            .get_svc_env(svc_id)
-            .expect("Failed to get service environment");
-
+    fn get_svc_metric_host_uri_port(&self) -> Result<(String, String, u16), InitError> {
+        let svc = self.svc_env_config.to_owned();
         let metric_host = svc.metrics_host().to_string();
         let metrics_uri = svc.metrics_uri().to_string();
         let metrics_port = *svc.metrics_port();
@@ -251,91 +86,5 @@ impl<'l> CfgManager<'l> {
         };
 
         Ok((host, port))
-    }
-
-    pub(crate) fn get_svc_env(&self, svc_id: &ServiceID) -> Result<SvcEnvConfig, InitError> {
-        match svc_id {
-            ServiceID::CMDB => {
-                let svc = self
-                    .cmdb_env
-                    .borrow()
-                    .as_ref()
-                    .expect("[EnvManager]: Failed to get cmdb host and port")
-                    .to_owned();
-
-                Ok(svc)
-            }
-
-            ServiceID::SMDB => {
-                let svc = self
-                    .smdb_env
-                    .borrow()
-                    .as_ref()
-                    .expect("[EnvManager]: Failed to get smdb host and port")
-                    .to_owned();
-
-                Ok(svc)
-            }
-
-            ServiceID::DBGW => {
-                let svc = self
-                    .dbgw_env
-                    .borrow()
-                    .as_ref()
-                    .expect("[EnvManager]: Failed to get dbgw host and port")
-                    .to_owned();
-
-                Ok(svc)
-            }
-
-            ServiceID::QDGW => {
-                let svc = self
-                    .qdgw_env
-                    .borrow()
-                    .as_ref()
-                    .expect("[EnvManager]: Failed to get qdgw host and port")
-                    .to_owned();
-
-                Ok(svc)
-            }
-
-            ServiceID::SYMDB => {
-                let svc = self
-                    .symdb_env
-                    .borrow()
-                    .as_ref()
-                    .expect("[EnvManager]: Failed to get SYMDB host and port")
-                    .to_owned();
-
-                Ok(svc)
-            }
-
-            ServiceID::VEX => {
-                let svc = self
-                    .vex_env
-                    .borrow()
-                    .as_ref()
-                    .expect("[EnvManager]: Failed to get vex host and port")
-                    .to_owned();
-
-                Ok(svc)
-            }
-
-            ServiceID::ImsDataBinance => {
-                let svc = self
-                    .ims_data_env
-                    .borrow()
-                    .as_ref()
-                    .expect("[EnvManager]: Failed to get ImsDataBinance host and port")
-                    .to_owned();
-
-                Ok(svc)
-            }
-
-            ServiceID::Default => Err(InitError(format!(
-                "[EnvManager]: Service {:?} is not supported",
-                svc_id
-            ))),
-        }
     }
 }

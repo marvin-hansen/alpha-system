@@ -1,5 +1,5 @@
 [package]
-name = "service_utils"
+name = "dbgw_provider"
 version = "0.1.0"
 edition.workspace = true
 rust-version.workspace = true
@@ -9,13 +9,11 @@ authors.workspace = true
 
 
 [lib]
-name = "service_utils"
+name = "dbgw_provider"
 path = "src/lib.rs"
 
 
 [dependencies]
 # Internal crates
 common = {workspace = true}
-service_specs = {workspace = true}
 # External crates
-tokio = { workspace = true }
