@@ -1,7 +1,7 @@
-pub mod docker_error;
+pub mod error;
 pub mod prelude;
 
-use crate::docker_error::DockerError;
+use crate::error::DockerError;
 use common::prelude::ContainerConfig;
 use std::process::Command;
 

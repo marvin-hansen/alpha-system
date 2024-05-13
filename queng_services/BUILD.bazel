@@ -3,6 +3,7 @@ load("@rules_multirun//:defs.bzl", "command", "multirun")
 filegroup(
     name = "build",
     srcs = [
+        "//queng_services/aux/file_server:bin",
         "//queng_services/cmdb:bin",
         "//queng_services/dbgw:bin",
         "//queng_services/ims/data/binance_data:bin",
@@ -16,6 +17,7 @@ filegroup(
 filegroup(
     name = "doc",
     srcs = [
+        "//queng_services/aux/file_server:doc",
         "//queng_services/cmdb:doc",
         "//queng_services/dbgw:doc",
         "//queng_services/ims/data/binance_data:doc",
@@ -29,6 +31,7 @@ filegroup(
 filegroup(
     name = "image",
     srcs = [
+        "//queng_services/aux/file_server:image",
         "//queng_services/cmdb:image",
         "//queng_services/dbgw:image",
         "//queng_services/ims/data/binance_data:image",
@@ -41,6 +44,7 @@ filegroup(
 multirun(
     name = "push",
     commands = [
+        "push_aux_file_server",
         "push_cmdb",
         "push_dbgw",
         "push_binance_data",
@@ -49,6 +53,12 @@ multirun(
     ],
     jobs = 0, # Set to 0 to run in parallel, 1 sets to sequential
     visibility = ["//visibility:public"],
+)
+
+command(
+    name = "push_aux_file_server",
+    command = "//queng_services/aux/file_server:push",
+    arguments = [], # Optional arguments passed directly to the tool
 )
 
 command(

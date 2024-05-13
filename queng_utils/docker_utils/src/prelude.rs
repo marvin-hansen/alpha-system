@@ -1,3 +1,3 @@
 pub use crate::DockerUtil;
 
-pub use crate::docker_error::DockerError;
+pub use crate::error::DockerError;

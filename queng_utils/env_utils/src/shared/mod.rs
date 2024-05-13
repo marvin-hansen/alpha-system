@@ -1,7 +1,7 @@
 use crate::prelude::EnvUtil;
 use clickhouse_utils::{ClickHouseClient, ClickhouseUtil};
 use common::prelude::ContainerConfig;
-use docker_utils::docker_error::DockerError;
+use docker_utils::error::DockerError;
 use docker_utils::DockerUtil;
 use kaiko_utils::{KaikoUtil, KaikoUtilError};
 
