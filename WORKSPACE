@@ -216,7 +216,7 @@ crates_repository(
             ),
 
             "klickhouse": crate.spec(
-                         version = "0.12",
+                         version = "0.13",
             ),
 
             "lru": crate.spec(
@@ -238,7 +238,7 @@ crates_repository(
 
             "reqwest": crate.spec(
                          default_features=False,
-                         features = ["rustls-tls", "json"],
+                         features = ["rustls-tls", "json", "blocking"],
                          version = "0.12",
             ),
 
@@ -257,6 +257,11 @@ crates_repository(
 
             "serde_json": crate.spec(
                          version = "1",
+            ),
+
+            "scraper": crate.spec(
+                      default_features=False,
+                      version = "0.19",
             ),
 
             "tonic": crate.spec(

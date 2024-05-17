@@ -1,30 +1,33 @@
-use crate::error::DownloadError;
-use std::process::Command;
+use crate::fields::VALID_EXCHANGES_DOWNLOAD_FILE;
+use std::error::Error;
 
 mod error;
+mod fields;
+mod service;
+mod util_download;
+mod util_json;
+mod util_scraping;
 
-pub const ASSETS_URL: &str = "'https://reference-data-api.kaiko.io/v1/assets'";
-pub const ASSETS_FILE: &str = "assets.json";
+const VRB: bool = true;
 
-fn main() {
-    println!("Hello, world!");
-}
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn Error>> {
+    println!("Scraping valid exchanges");
+    let valid_exchanges = util_scraping::scrap_valid_exchanges(VRB)
+        .await
+        .expect("Error scraping valid exchanges");
 
-async fn download_assets() -> Result<(), DownloadError> {
-    // curl --compressed -H 'Accept: application/json' 'https://reference-data-api.kaiko.io/v1/assets' > assets.json
-    return match Command::new("curl")
-        .arg("--compressed")
-        .arg("-H")
-        .arg("'Accept: application/json'")
-        .arg(ASSETS_URL)
-        .arg(">")
-        .arg(ASSETS_FILE)
-        .status()
-    {
-        Ok(_) => Ok(()),
-        Err(e) => Err(DownloadError::from(format!(
-            "Error downloading assets {}",
-            e.to_string()
-        ))),
-    };
+    println!("Saving valid exchanges to JSON file");
+    util_json::save_to_json(&valid_exchanges, VALID_EXCHANGES_DOWNLOAD_FILE)
+        .await
+        .expect("Error saving valid exchanges to JSON file");
+
+    println!(
+        "Saved {} exchanges to {}",
+        valid_exchanges.len(),
+        VALID_EXCHANGES_DOWNLOAD_FILE
+    );
+
+    println!("Done");
+    Ok(())
 }

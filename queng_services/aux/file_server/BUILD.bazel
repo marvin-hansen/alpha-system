@@ -32,6 +32,10 @@ rust_binary(
         "//queng_components/ctx_manager:ctx_manager",
         "//queng_components/dns_manager:dns_manager",
         # External crates
+        "@crate_index//:reqwest",
+        "@crate_index//:scraper",
+        "@crate_index//:serde",
+        "@crate_index//:serde_json",
         "@crate_index//:tokio",
     ],
     visibility = ["//visibility:public"],
@@ -78,7 +82,7 @@ build_tag(
 oci_push(
     name = "push",
     image = ":image",
-    repository = "asia-northeast1-docker.pkg.dev/future-309012/image-repo/cmdb",
+    repository = "asia-northeast1-docker.pkg.dev/future-309012/image-repo/file_server",
     remote_tags = ":remote_tag",
     visibility = ["//visibility:public"],
 )
