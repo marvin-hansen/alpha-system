@@ -23,7 +23,7 @@ pub(crate) async fn scrap_valid_exchanges(vrb: bool) -> Result<Vec<String>, Down
     // Create a new client
     let client = Client::new();
 
-    // Fetch the webpage
+    // Fetch the content of the webpage
     let response = client
         .get(url)
         .send()
@@ -37,14 +37,14 @@ pub(crate) async fn scrap_valid_exchanges(vrb: bool) -> Result<Vec<String>, Down
     let document = Html::parse_document(&response);
     let script_selector = Selector::parse("script").expect("Failed to parse selector 'Script'");
 
-    // HashSet to store exchange names and remove duplicates
+    // HashSet to store only unique exchange names.
     let mut exchanges_set = HashSet::new();
 
     // Extract the JavaScript array
     for script in document.select(&script_selector) {
         let script_text = script.inner_html();
         if script_text.contains("cextabledata") {
-            //
+            // Find the correct data array of the CEX exchange table.
             let start = script_text
                 .find("cextabledata")
                 .expect("Failed to find cextabledata");
@@ -69,8 +69,20 @@ pub(crate) async fn scrap_valid_exchanges(vrb: bool) -> Result<Vec<String>, Down
             for item in json_array {
                 if let Some(exchange) = item.get("Exchange") {
                     if let Some(name) = exchange.as_str() {
+                        // Remove html fragments
                         let cleaned_name = cleanup(name);
-                        if cleaned_name != "BL3P" {
+                        // Find exchanges marked as renamed
+                        // and split old / new name into two separate entries.
+                        if cleaned_name.contains("now:") {
+                            let (old, new) = split_by_colon(&cleaned_name);
+
+                            if old != new {
+                                exchanges_set.insert(old);
+                                exchanges_set.insert(new);
+                            } else {
+                                exchanges_set.insert(old);
+                            }
+                        } else {
                             exchanges_set.insert(cleaned_name);
                         }
                     }
@@ -80,7 +92,7 @@ pub(crate) async fn scrap_valid_exchanges(vrb: bool) -> Result<Vec<String>, Down
         }
     }
 
-    // Convert the HashSet to a vector and sort it
+    // Convert the HashSet to a vector and sort alphabetically
     let mut exchanges: Vec<String> = exchanges_set.into_iter().collect();
     exchanges.sort();
 
@@ -90,13 +102,6 @@ pub(crate) async fn scrap_valid_exchanges(vrb: bool) -> Result<Vec<String>, Down
     }
 
     Ok(exchanges)
-}
-
-/// Function to print all exchanges
-fn print_exchanges(exchanges: &Vec<String>) {
-    for exchange in exchanges {
-        println!("{}", exchange);
-    }
 }
 
 /// Cleans up the exchange name by truncating any characters following the "&lt;" symbol.
@@ -118,4 +123,25 @@ fn cleanup(name: &str) -> String {
     } else {
         name.to_string()
     }
+}
+
+/// Splits the old and new exchange name by the "now:" marker
+fn split_by_colon(name: &str) -> (String, String) {
+    // Separate the old and new exchange name
+    let res: Vec<&str> = name.split("now: ").collect();
+
+    // Cleanup and return both, the old and new exchange name.
+    (
+        res[0].replace("(", "").trim().to_string(),
+        res[1].replace(")", "").trim().to_string(),
+    )
+}
+
+/// Function to print all exchanges
+fn print_exchanges(exchanges: &Vec<String>) {
+    println!();
+    for exchange in exchanges {
+        println!("{}", exchange);
+    }
+    println!();
 }
