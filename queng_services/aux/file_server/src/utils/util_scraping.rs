@@ -1,5 +1,5 @@
+use crate::errors::DownloadError;
 use crate::fields::CEX_URL;
-use crate::types::error::DownloadError;
 use reqwest::Client;
 use scraper::{Html, Selector};
 use std::collections::HashSet;
