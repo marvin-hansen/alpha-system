@@ -10,6 +10,7 @@ rust_binary(
     name = "bin",
     crate_root = "src/main.rs",
     srcs = glob([
+        "src/*/*.rs",
         "src/*.rs",
     ]),
     rustc_flags = select({

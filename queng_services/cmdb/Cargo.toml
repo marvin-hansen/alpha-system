@@ -24,7 +24,6 @@ proto_bindings = {workspace = true}
 service_utils = {workspace = true}
 smdb_provider = {workspace = true}
 # External crates
-autometrics = { workspace = true }
 tokio = { workspace = true }
 tonic = { workspace = true }
 prost = { workspace = true }

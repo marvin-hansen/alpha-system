@@ -1,5 +1,5 @@
-use crate::error::DownloadError;
 use crate::fields::{ASSETS_DOWNLOAD_FILE, BASE_URL};
+use crate::types::error::DownloadError;
 use std::process::Command;
 
 pub(crate) async fn download_assets() -> Result<(), DownloadError> {

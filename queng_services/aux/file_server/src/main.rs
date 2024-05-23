@@ -1,12 +1,12 @@
 use crate::fields::VALID_EXCHANGES_DOWNLOAD_FILE;
+use crate::utils::{util_json, util_scraping};
 use std::error::Error;
 
-mod error;
 mod fields;
+mod init;
 mod service;
-mod util_download;
-mod util_json;
-mod util_scraping;
+mod types;
+mod utils;
 
 const VRB: bool = true;
 
