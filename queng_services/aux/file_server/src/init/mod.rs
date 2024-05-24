@@ -1,7 +1,8 @@
 mod init;
 mod level_0;
-mod level_1;
-mod level_2;
+mod level_1_exchanges;
+mod level_2_assets;
+mod level_3_instruments;
 
 use serde::{Deserialize, Serialize};
 

@@ -13,8 +13,10 @@ const VRB: bool = true;
 #[tokio::main]
 async fn main() -> Result<(), Box<FileServerError>> {
     let im = InitManager::new(VRB);
-
-    im.init().await.expect("Failed to initialize service.");
+    let _meta_data = im
+        .init()
+        .await
+        .expect("Failed to initialize FileServer service.");
 
     Ok(())
 }

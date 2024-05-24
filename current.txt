@@ -1,1 +1,1 @@
-//queng_utils/clickhouse_utils:clickhouse_utils
+//queng_services/aux/file_server:bin

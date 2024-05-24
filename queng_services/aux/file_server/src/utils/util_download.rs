@@ -1,5 +1,7 @@
 use crate::errors::DownloadError;
-use crate::fields::{ASSETS_DOWNLOAD_FILE, BASE_URL};
+use crate::fields::{
+    ASSETS_DOWNLOAD_FILE, BASE_URL, EXCHANGES_DOWNLOAD_FILE, INSTRUMENTS_DOWNLOAD_FILE,
+};
 use std::process::Command;
 
 pub(crate) async fn download_assets() -> Result<(), DownloadError> {
@@ -18,11 +20,24 @@ pub(crate) async fn download_assets() -> Result<(), DownloadError> {
 pub(crate) async fn download_exchanges() -> Result<(), DownloadError> {
     // curl --compressed -H 'Accept: application/json' 'https://reference-data-api.kaiko.io/v1/assets' > assets.json
     let url = format!("'{}assets' ", BASE_URL);
-    let out_file = ASSETS_DOWNLOAD_FILE;
+    let out_file = EXCHANGES_DOWNLOAD_FILE;
     return match download(&url, out_file).await {
         Ok(_) => Ok(()),
         Err(e) => Err(DownloadError::from(format!(
-            "Error downloading assets {}",
+            "Error downloading exchanges {}",
+            e.to_string()
+        ))),
+    };
+}
+
+pub(crate) async fn download_instruments() -> Result<(), DownloadError> {
+    // curl --compressed -H 'Accept: application/json' 'https://reference-data-api.kaiko.io/v1/assets' > assets.json
+    let url = format!("'{}instruments' ", BASE_URL);
+    let out_file = INSTRUMENTS_DOWNLOAD_FILE;
+    return match download(&url, out_file).await {
+        Ok(_) => Ok(()),
+        Err(e) => Err(DownloadError::from(format!(
+            "Error downloading instruments {}",
             e.to_string()
         ))),
     };
