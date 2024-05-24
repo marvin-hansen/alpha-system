@@ -8,11 +8,18 @@ impl InitManager {
         &self,
         valid_exchanges: &Vec<Exchange>,
     ) -> Result<Vec<Instrument>, InitError> {
-        let downloaded_instruments = self
-            .download_instruments()
+        // Download the instruments data
+        self.download_instruments()
             .await
             .expect("Failed to download reference Instrument data");
 
+        // Load the instruments data from the downloaded file
+        let downloaded_instruments = self
+            .load_instruments()
+            .await
+            .expect("Failed to download reference Instrument data");
+
+        // Process the downloaded instruments
         let valid_instruments = self
             .process_instruments(valid_exchanges, &downloaded_instruments)
             .await
@@ -21,12 +28,20 @@ impl InitManager {
         Ok(valid_instruments)
     }
 
-    async fn download_instruments(&self) -> Result<Vec<Instrument>, InitError> {
+    async fn download_instruments(&self) -> Result<(), InitError> {
         utils::download_instruments()
             .await
             .expect("Failed to download instrument data");
 
-        Ok(Vec::new())
+        Ok(())
+    }
+
+    async fn load_instruments(&self) -> Result<Vec<Instrument>, InitError> {
+        let instruments = utils::load_instruments()
+            .await
+            .expect("Failed to load instruments from download file");
+
+        Ok(instruments)
     }
 
     async fn process_instruments(

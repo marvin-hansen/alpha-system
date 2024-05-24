@@ -8,13 +8,18 @@ impl InitManager {
         &self,
         valid_exchanges: &Vec<Exchange>,
     ) -> Result<Vec<Asset>, InitError> {
-        //
-        let downloaded_assets = self
-            .download_assets()
+        // Download the assets data
+        self.download_assets()
             .await
             .expect("Failed to download reference asset data");
 
-        //
+        // Load the assets data from the downloaded file
+        let downloaded_assets = self
+            .load_assets()
+            .await
+            .expect("Failed to download reference asset data");
+
+        // Process the downloaded assets
         let valid_assets = self
             .process_assets(valid_exchanges, &downloaded_assets)
             .await
@@ -23,12 +28,19 @@ impl InitManager {
         Ok(valid_assets)
     }
 
-    async fn download_assets(&self) -> Result<Vec<Asset>, InitError> {
+    async fn download_assets(&self) -> Result<(), InitError> {
         utils::download_assets()
             .await
             .expect("Failed to download asset data");
 
-        Ok(Vec::new())
+        Ok(())
+    }
+
+    async fn load_assets(&self) -> Result<Vec<Asset>, InitError> {
+        let assets = utils::load_assets()
+            .await
+            .expect("Failed to load assets from download file");
+        Ok(assets)
     }
 
     async fn process_assets(
