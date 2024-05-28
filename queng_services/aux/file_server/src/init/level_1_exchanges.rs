@@ -8,18 +8,19 @@ impl InitManager {
         &self,
         valid_exchanges: &Vec<String>,
     ) -> Result<Vec<Exchange>, InitError> {
-        // Download the exchange data
+        //
+        self.dbg_print("Level 1: Download reference exchange data!");
         self.download_exchanges()
             .await
             .expect("Failed to download exchange reference data");
 
-        // Load the exchange data from the downloaded file
+        self.dbg_print("Load the exchange data from the downloaded file");
         let downloaded_exchanges = self
             .load_exchanges()
             .await
             .expect("Failed to download exchange reference data");
 
-        // Process the downloaded exchanges
+        self.dbg_print("Process the downloaded exchanges");
         let valid_exchanges = self
             .process_exchanges(valid_exchanges, &downloaded_exchanges)
             .await

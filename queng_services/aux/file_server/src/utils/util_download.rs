@@ -19,7 +19,7 @@ pub(crate) async fn download_assets() -> Result<(), DownloadError> {
 
 pub(crate) async fn download_exchanges() -> Result<(), DownloadError> {
     // curl --compressed -H 'Accept: application/json' 'https://reference-data-api.kaiko.io/v1/assets' > assets.json
-    let url = format!("'{}assets' ", BASE_URL);
+    let url = format!("'{}exchanges' ", BASE_URL);
     let out_file = EXCHANGES_DOWNLOAD_FILE;
     return match download(&url, out_file).await {
         Ok(_) => Ok(()),
@@ -60,7 +60,11 @@ pub(crate) async fn download_instruments() -> Result<(), DownloadError> {
 /// Returns `Result<(), DownloadError>` indicating the success or failure of the download operation.
 ///
 async fn download(url: &str, out_file: &str) -> Result<(), DownloadError> {
-    return match Command::new("curl")
+    println!("url: {}", url);
+    println!("out_file: {}", out_file);
+
+    return match Command::new("sh")
+        .arg("/usr/bin/curl")
         .arg("--compressed")
         .arg("-H")
         .arg("'Accept: application/json'")

@@ -27,8 +27,15 @@ help:
 	@echo '    make sbe   		Generates Rust bindings for SBE messages.'
 
 # "---------------------------------------------------------"
-# Service targets
+# Run targets
 # "---------------------------------------------------------"
+
+
+.PHONY: run
+run:
+	@source scripts/run_default.sh
+
+
 .PHONY: cmdb
 cmdb:
 	@source scripts/run_cmdb.sh

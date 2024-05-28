@@ -23,17 +23,17 @@ impl InitManager {
             .await
             .expect("Failed init level 2: Reference asset data");
 
-        self.dbg_print("Level 3: Retrieving reference instrument data!");
-        let instrument_meta_data = self
-            .init_level_3_instruments(&exchanges_meta_data)
-            .await
-            .expect("Failed init level 3: Reference instrument data");
+        // self.dbg_print("Level 3: Retrieving reference instrument data!");
+        // let instrument_meta_data = self
+        //     .init_level_3_instruments(&exchanges_meta_data)
+        //     .await
+        //     .expect("Failed init level 3: Reference instrument data");
 
         let meta_data = MetaDataSet::new(
             asset_meta_data,
             exchanges_meta_data,
             valid_exchanges,
-            instrument_meta_data,
+            Default::default(),
         );
 
         Ok(meta_data)
