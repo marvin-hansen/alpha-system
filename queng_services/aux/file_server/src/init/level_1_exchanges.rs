@@ -10,46 +10,37 @@ impl InitManager {
     ) -> Result<Vec<Exchange>, InitError> {
         //
         self.dbg_print("Level 1: Download reference exchange data!");
-        self.download_exchanges()
-            .await
-            .expect("Failed to download exchange reference data");
-
-        self.dbg_print("Load the exchange data from the downloaded file");
-        let downloaded_exchanges = self
-            .load_exchanges()
-            .await
-            .expect("Failed to download exchange reference data");
-
-        self.dbg_print("Process the downloaded exchanges");
-        let valid_exchanges = self
-            .process_exchanges(valid_exchanges, &downloaded_exchanges)
-            .await
-            .expect("Failed to process reference exchange data");
-
-        Ok(valid_exchanges)
-    }
-
-    async fn download_exchanges(&self) -> Result<Vec<Exchange>, InitError> {
-        utils::download_exchanges()
+        let downloaded_exchanges = utils::download_exchanges()
             .await
             .expect("Failed to download exchange data");
 
-        Ok(Vec::new())
-    }
-
-    async fn load_exchanges(&self) -> Result<Vec<Exchange>, InitError> {
-        let exchanges = utils::load_exchanges()
+        self.dbg_print("Process the downloaded exchanges");
+        let processed_exchanges = self
+            .process_exchanges(valid_exchanges, downloaded_exchanges)
             .await
-            .expect("Failed to load exchanges download file");
+            .expect("Failed to process reference exchange data");
 
-        Ok(exchanges)
+        if self.dbg {
+            let msg = format!("Returning {} valid exchanges", valid_exchanges.len());
+            self.dbg_print(&msg)
+        }
+
+        Ok(processed_exchanges)
     }
 
     async fn process_exchanges(
         &self,
-        _valid_exchanges: &Vec<String>,
-        _downloaded_exchanges: &Vec<Exchange>,
+        valid_exchanges: &Vec<String>,
+        downloaded_exchanges: Vec<Exchange>,
     ) -> Result<Vec<Exchange>, InitError> {
-        Ok(Vec::new())
+        let mut processed_exchanges = Vec::with_capacity(valid_exchanges.len());
+
+        for e in downloaded_exchanges {
+            if valid_exchanges.contains(&e.name.to_uppercase()) {
+                processed_exchanges.push(e);
+            }
+        }
+
+        Ok(processed_exchanges)
     }
 }

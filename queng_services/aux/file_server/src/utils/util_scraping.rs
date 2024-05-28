@@ -16,7 +16,7 @@ use std::collections::HashSet;
 /// Returns `DownloadError` if the request fails, the response cannot be read,
 /// or the JSON cannot be deserialized.
 ///
-pub(crate) async fn scrap_valid_exchanges(vrb: bool) -> Result<Vec<String>, DownloadError> {
+pub(crate) async fn scrap_valid_exchanges() -> Result<Vec<String>, DownloadError> {
     // The URL of the webpage to fetch
     let url = CEX_URL;
 
@@ -77,13 +77,13 @@ pub(crate) async fn scrap_valid_exchanges(vrb: bool) -> Result<Vec<String>, Down
                             let (old, new) = split_by_colon(&cleaned_name);
 
                             if old != new {
-                                exchanges_set.insert(old);
-                                exchanges_set.insert(new);
+                                exchanges_set.insert(old.to_uppercase());
+                                exchanges_set.insert(new.to_uppercase());
                             } else {
-                                exchanges_set.insert(old);
+                                exchanges_set.insert(old.to_uppercase());
                             }
                         } else {
-                            exchanges_set.insert(cleaned_name);
+                            exchanges_set.insert(cleaned_name.to_uppercase());
                         }
                     }
                 }
@@ -95,11 +95,6 @@ pub(crate) async fn scrap_valid_exchanges(vrb: bool) -> Result<Vec<String>, Down
     // Convert the HashSet to a vector and sort alphabetically
     let mut exchanges: Vec<String> = exchanges_set.into_iter().collect();
     exchanges.sort();
-
-    if vrb {
-        println!("Scraped {} exchanges", exchanges.len());
-        print_exchanges(&exchanges);
-    }
 
     Ok(exchanges)
 }
@@ -135,13 +130,4 @@ fn split_by_colon(name: &str) -> (String, String) {
         res[0].replace("(", "").trim().to_string(),
         res[1].replace(")", "").trim().to_string(),
     )
-}
-
-/// Function to print all exchanges
-fn print_exchanges(exchanges: &Vec<String>) {
-    println!();
-    for exchange in exchanges {
-        println!("{}", exchange);
-    }
-    println!();
 }

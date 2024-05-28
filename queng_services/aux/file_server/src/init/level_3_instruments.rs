@@ -1,54 +1,71 @@
 use crate::errors::InitError;
 use crate::init::InitManager;
 use crate::utils;
-use common::prelude::{Exchange, Instrument};
+use common::prelude::Instrument;
 
 impl InitManager {
-    pub(super) async fn init_level_3_instruments(
-        &self,
-        valid_exchanges: &Vec<Exchange>,
-    ) -> Result<Vec<Instrument>, InitError> {
+    pub(super) async fn init_level_3_instruments(&self) -> Result<Vec<Instrument>, InitError> {
         // Download the instruments data
-        self.download_instruments()
-            .await
-            .expect("Failed to download reference Instrument data");
-
-        // Load the instruments data from the downloaded file
-        let downloaded_instruments = self
-            .load_instruments()
-            .await
-            .expect("Failed to download reference Instrument data");
-
-        // Process the downloaded instruments
-        let valid_instruments = self
-            .process_instruments(valid_exchanges, &downloaded_instruments)
-            .await
-            .expect("Failed to process reference Instrument data");
-
-        Ok(valid_instruments)
-    }
-
-    async fn download_instruments(&self) -> Result<(), InitError> {
-        utils::download_instruments()
+        let downloaded_instruments = utils::download_instruments()
             .await
             .expect("Failed to download instrument data");
 
-        Ok(())
-    }
-
-    async fn load_instruments(&self) -> Result<Vec<Instrument>, InitError> {
-        let instruments = utils::load_instruments()
+        // Process the downloaded instruments
+        let processed_instruments = self
+            .process_instruments(downloaded_instruments)
             .await
-            .expect("Failed to load instruments from download file");
+            .expect("Failed to process reference Instrument data");
 
-        Ok(instruments)
+        if self.dbg {
+            let msg = format!(
+                "Returning {} valid Instruments",
+                processed_instruments.len()
+            );
+            self.dbg_print(&msg)
+        }
+
+        Ok(processed_instruments)
     }
 
     async fn process_instruments(
         &self,
-        _valid_exchanges: &Vec<Exchange>,
-        _downloaded_instruments: &Vec<Instrument>,
+        downloaded_instruments: Vec<Instrument>,
     ) -> Result<Vec<Instrument>, InitError> {
-        Ok(Vec::new())
+        // By experience, at least 90% of the reference data are junk ie inactive thus small alloc.
+        let capacity = downloaded_instruments.len() * 0.10 as usize;
+        let mut processed_instruments = Vec::with_capacity(capacity);
+
+        for i in downloaded_instruments.iter() {
+            if is_valid_instrument(i) {
+                processed_instruments.push(i.to_owned())
+            }
+        }
+
+        Ok(processed_instruments)
     }
+}
+
+// Double check if instrument is inactive i.e. from an inactive exchange
+fn is_valid_instrument(instrument: &Instrument) -> bool {
+    // Instrument  inactive
+    if instrument.trade_start_time.is_none() && instrument.trade_end_time.is_none() {
+        return false;
+    }
+
+    // Instrument inactive
+    if instrument.trade_end_time.is_some() && instrument.trade_end_timestamp.is_some() {
+        return false;
+    }
+
+    // Instrument of no interest
+    if instrument.class.eq("option") {
+        return false;
+    }
+
+    // Non-perpetual future contracts.
+    if instrument.class.eq("future") {
+        return false;
+    }
+
+    true
 }
