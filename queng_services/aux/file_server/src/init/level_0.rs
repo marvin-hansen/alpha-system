@@ -10,8 +10,6 @@ impl InitManager {
             .await
             .expect("Error scraping valid exchanges");
 
-        self.dbg_print("Done");
-
         Ok(valid_exchanges)
     }
 }

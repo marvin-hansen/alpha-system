@@ -290,6 +290,10 @@ crates_repository(
                      version = "0.2",
             ),
 
+            "warp": crate.spec(
+                         version = "0.3",
+            ),
+
     },
 
 )

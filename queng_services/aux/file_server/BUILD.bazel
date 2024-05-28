@@ -38,6 +38,7 @@ rust_binary(
         "@crate_index//:serde",
         "@crate_index//:serde_json",
         "@crate_index//:tokio",
+        "@crate_index//:warp",
     ],
     visibility = ["//visibility:public"],
 )
