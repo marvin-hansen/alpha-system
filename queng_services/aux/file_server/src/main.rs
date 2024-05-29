@@ -1,5 +1,7 @@
 use crate::init::InitManager;
 use crate::store::Store;
+use service_utils::print_utils;
+use tokio::time::Instant;
 use warp::Filter;
 
 mod errors;
@@ -19,6 +21,8 @@ const PORT: u16 = 7777;
 
 #[tokio::main]
 async fn main() {
+    let start = Instant::now();
+
     let im = InitManager::new(VRB);
     let meta_data = im
         .init()
@@ -51,6 +55,8 @@ async fn main() {
         .and_then(service::get_instruments_from_store);
 
     let routes = get_assets.or(get_exchanges).or(get_instruments);
+
+    print_utils::print_duration("[main]: Starting server took", &start.elapsed());
 
     dbg_print(format!("Start webserver on Port: {}", PORT).as_str());
     warp::serve(routes).run(([0, 0, 0, 0], PORT)).await;

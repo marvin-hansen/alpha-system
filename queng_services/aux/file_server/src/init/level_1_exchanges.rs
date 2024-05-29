@@ -14,14 +14,17 @@ impl InitManager {
             .await
             .expect("Failed to download exchange data");
 
-        self.dbg_print("Process the downloaded exchanges");
+        self.dbg_print("Level 1: Process downloaded exchanges");
         let processed_exchanges = self
             .process_exchanges(valid_exchanges, downloaded_exchanges)
             .await
             .expect("Failed to process reference exchange data");
 
         if self.dbg {
-            let msg = format!("Returning {} valid exchanges", valid_exchanges.len());
+            let msg = format!(
+                "Level 1: Returning {} valid exchanges",
+                valid_exchanges.len()
+            );
             self.dbg_print(&msg)
         }
 

@@ -27,11 +27,3 @@ impl Default for ServiceUtil {
         Self::new()
     }
 }
-
-impl ServiceUtil {
-    fn dbg_print(&self, s: &str, t: impl Display) {
-        if self.dbg {
-            println!("[ServiceUtil]: {} {}", s, t);
-        }
-    }
-}

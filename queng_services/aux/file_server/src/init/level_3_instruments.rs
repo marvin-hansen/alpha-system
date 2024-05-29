@@ -5,12 +5,12 @@ use common::prelude::Instrument;
 
 impl InitManager {
     pub(super) async fn init_level_3_instruments(&self) -> Result<Vec<Instrument>, InitError> {
-        // Download the instruments data
+        self.dbg_print("Level 3: Download reference instrument data!");
         let downloaded_instruments = utils::download_instruments()
             .await
             .expect("Failed to download instrument data");
 
-        // Process the downloaded instruments
+        self.dbg_print("Level 3: Process the downloaded instrument data");
         let processed_instruments = self
             .process_instruments(downloaded_instruments)
             .await
@@ -18,7 +18,7 @@ impl InitManager {
 
         if self.dbg {
             let msg = format!(
-                "Returning {} valid Instruments",
+                "Level 3: Returning {} valid Instruments",
                 processed_instruments.len()
             );
             self.dbg_print(&msg)

@@ -19,6 +19,7 @@ common = {workspace = true}
 config_manager = {workspace = true}
 ctx_manager = {workspace = true}
 dns_manager = {workspace = true}
+service_utils = {workspace = true}
 # External crates
 tokio = { workspace = true }
 reqwest = { workspace = true }

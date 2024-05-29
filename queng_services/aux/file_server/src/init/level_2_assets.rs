@@ -5,13 +5,17 @@ use common::prelude::Asset;
 
 impl InitManager {
     pub(super) async fn init_level_2_assets(&self) -> Result<Vec<Asset>, InitError> {
-        // Download the assets data
+        //
+        self.dbg_print("Level 2: Download reference asset data!");
         let downloaded_assets = utils::download_assets()
             .await
             .expect("Failed to download asset data");
 
         if self.dbg {
-            let msg = format!("Returning {} valid assets", downloaded_assets.len());
+            let msg = format!(
+                "Level 2: Returning {} valid assets",
+                downloaded_assets.len()
+            );
             self.dbg_print(&msg)
         }
 

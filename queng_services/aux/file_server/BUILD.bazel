@@ -29,6 +29,7 @@ rust_binary(
     deps = [
         # Internal crates
         "//queng_common:common",
+        "//queng_utils/service_utils:service_utils",
         "//queng_components/config_manager:config_manager",
         "//queng_components/ctx_manager:ctx_manager",
         "//queng_components/dns_manager:dns_manager",

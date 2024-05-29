@@ -5,7 +5,7 @@ use crate::utils::util_scraping;
 impl InitManager {
     pub(super) async fn init_level_0(&self) -> Result<Vec<String>, InitError> {
         //
-        self.dbg_print("Scraping valid exchanges");
+        self.dbg_print("Level 0: Loading valid exchanges");
         let valid_exchanges = util_scraping::scrap_valid_exchanges()
             .await
             .expect("Error scraping valid exchanges");

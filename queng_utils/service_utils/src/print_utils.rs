@@ -1,4 +1,5 @@
 use common::prelude::ServiceID;
+use std::time::Duration;
 
 pub fn print_start_header(
     service_id: &ServiceID,
@@ -33,4 +34,12 @@ pub fn print_stop_header(service_id: &ServiceID) {
     println!("==========================================");
     println!("{} service shutdown complete", service_id);
     println!("==========================================");
+}
+
+pub fn print_duration(msg: &str, elapsed: &Duration) {
+    if elapsed.as_millis() > 1000 {
+        println!("{} {} sec.", msg, elapsed.as_secs());
+    } else {
+        println!("{} {} ms.", msg, elapsed.as_millis());
+    }
 }
