@@ -1,4 +1,4 @@
-use std::fmt::{Debug, Display};
+use std::fmt::Debug;
 
 pub mod print_utils;
 pub mod shutdown_utils;

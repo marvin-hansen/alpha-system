@@ -3,6 +3,7 @@ mod level_0;
 mod level_1_exchanges;
 mod level_2_assets;
 mod level_3_instruments;
+mod level_4_symbol_mapping;
 
 use serde::{Deserialize, Serialize};
 use service_utils::print_utils;
