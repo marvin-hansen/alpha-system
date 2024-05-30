@@ -234,7 +234,7 @@ crates_repository(
 
             "reqwest": crate.spec(
                          default_features=False,
-                         features = ["rustls-tls", "json", "blocking"],
+                         features = ["rustls-tls", "json", "blocking", "gzip"],
                          version = "0.12",
             ),
 

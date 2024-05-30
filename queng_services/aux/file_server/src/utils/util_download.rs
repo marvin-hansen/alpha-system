@@ -65,7 +65,19 @@ pub(crate) async fn download_instruments() -> Result<Vec<Instrument>, DownloadEr
 /// Returns `Result<Vec<u8>, DownloadError>` indicating the success or failure of the download operation.
 ///
 async fn download(url: &str) -> Result<Vec<u8>, DownloadError> {
-    let resp = reqwest::get(url).await.expect("request failed");
+    // Enable gzip compressions for requests and responses to reduce download time.
+    // https://dtantsur.github.io/rust-openstack/reqwest/struct.ClientBuilder.html
+    let client = reqwest::Client::builder()
+        .gzip(true)
+        .build()
+        .expect("Failed to build reqwest client");
+
+    let resp = client
+        .get(url)
+        .header("Accept", "application/json")
+        .send()
+        .await
+        .expect("request failed");
 
     let body = resp.bytes().await.expect("body invalid");
 

@@ -1,5 +1,5 @@
 {
-  "checksum": "37b2d435e2e9c5f23c72ccc84916fae90fdc9c8b08c92d6223c450aa3d0da8ef",
+  "checksum": "185a5a20d6d87abb48f253572380c1a9769c74ea3572f1b2f5b17aff8367c213",
   "crates": {
     "addr2line 0.21.0": {
       "name": "addr2line",
@@ -1152,6 +1152,78 @@
         "Apache-2.0"
       ],
       "license_file": null
+    },
+    "async-compression 0.4.10": {
+      "name": "async-compression",
+      "version": "0.4.10",
+      "package_url": "https://github.com/Nullus157/async-compression",
+      "repository": {
+        "Http": {
+          "url": "https://static.crates.io/crates/async-compression/0.4.10/download",
+          "sha256": "9c90a406b4495d129f00461241616194cb8a032c8d1c53c657f0961d5f8e0498"
+        }
+      },
+      "targets": [
+        {
+          "Library": {
+            "crate_name": "async_compression",
+            "crate_root": "src/lib.rs",
+            "srcs": {
+              "allow_empty": false,
+              "include": [
+                "**/*.rs"
+              ]
+            }
+          }
+        }
+      ],
+      "library_target_name": "async_compression",
+      "common_attrs": {
+        "compile_data_glob": [
+          "**"
+        ],
+        "crate_features": {
+          "common": [
+            "flate2",
+            "gzip",
+            "tokio"
+          ],
+          "selects": {}
+        },
+        "deps": {
+          "common": [
+            {
+              "id": "flate2 1.0.28",
+              "target": "flate2"
+            },
+            {
+              "id": "futures-core 0.3.30",
+              "target": "futures_core"
+            },
+            {
+              "id": "memchr 2.7.2",
+              "target": "memchr"
+            },
+            {
+              "id": "pin-project-lite 0.2.14",
+              "target": "pin_project_lite"
+            },
+            {
+              "id": "tokio 1.37.0",
+              "target": "tokio"
+            }
+          ],
+          "selects": {}
+        },
+        "edition": "2018",
+        "version": "0.4.10"
+      },
+      "license": "MIT OR Apache-2.0",
+      "license_ids": [
+        "Apache-2.0",
+        "MIT"
+      ],
+      "license_file": "LICENSE-APACHE"
     },
     "async-stream 0.3.5": {
       "name": "async-stream",
@@ -4136,14 +4208,14 @@
       ],
       "license_file": "LICENSE-APACHE"
     },
-    "crc32fast 1.4.2": {
+    "crc32fast 1.4.0": {
       "name": "crc32fast",
-      "version": "1.4.2",
+      "version": "1.4.0",
       "package_url": "https://github.com/srijs/rust-crc32fast",
       "repository": {
         "Http": {
-          "url": "https://static.crates.io/crates/crc32fast/1.4.2/download",
-          "sha256": "a97769d94ddab943e4510d138150169a2758b5ef3eb191a9ee688de3e23ef7b3"
+          "url": "https://static.crates.io/crates/crc32fast/1.4.0/download",
+          "sha256": "b3855a8a784b474f333699ef2bbca9db2c4a1f6d9088a90a2d25b1eb53111eaa"
         }
       },
       "targets": [
@@ -4151,6 +4223,18 @@
           "Library": {
             "crate_name": "crc32fast",
             "crate_root": "src/lib.rs",
+            "srcs": {
+              "allow_empty": false,
+              "include": [
+                "**/*.rs"
+              ]
+            }
+          }
+        },
+        {
+          "BuildScript": {
+            "crate_name": "build_script_build",
+            "crate_root": "build.rs",
             "srcs": {
               "allow_empty": false,
               "include": [
@@ -4177,12 +4261,21 @@
             {
               "id": "cfg-if 1.0.0",
               "target": "cfg_if"
+            },
+            {
+              "id": "crc32fast 1.4.0",
+              "target": "build_script_build"
             }
           ],
           "selects": {}
         },
         "edition": "2015",
-        "version": "1.4.2"
+        "version": "1.4.0"
+      },
+      "build_script_attrs": {
+        "data_glob": [
+          "**"
+        ]
       },
       "license": "MIT OR Apache-2.0",
       "license_ids": [
@@ -5953,14 +6046,14 @@
       ],
       "license_file": null
     },
-    "flate2 1.0.30": {
+    "flate2 1.0.28": {
       "name": "flate2",
-      "version": "1.0.30",
+      "version": "1.0.28",
       "package_url": "https://github.com/rust-lang/flate2-rs",
       "repository": {
         "Http": {
-          "url": "https://static.crates.io/crates/flate2/1.0.30/download",
-          "sha256": "5f54427cfd1c7829e2a139fcefea601bf088ebca651d2bf53ebc600eac295dae"
+          "url": "https://static.crates.io/crates/flate2/1.0.28/download",
+          "sha256": "46303f565772937ffe1d394a4fac6f411c6013172fadde9dcdb1e147a086940e"
         }
       },
       "targets": [
@@ -5988,12 +6081,109 @@
             "miniz_oxide",
             "rust_backend"
           ],
-          "selects": {}
+          "selects": {
+            "aarch64-apple-darwin": [
+              "default"
+            ],
+            "aarch64-apple-ios": [
+              "default"
+            ],
+            "aarch64-apple-ios-sim": [
+              "default"
+            ],
+            "aarch64-fuchsia": [
+              "default"
+            ],
+            "aarch64-linux-android": [
+              "default"
+            ],
+            "aarch64-pc-windows-msvc": [
+              "default"
+            ],
+            "aarch64-unknown-linux-gnu": [
+              "default"
+            ],
+            "aarch64-unknown-nixos-gnu": [
+              "default"
+            ],
+            "aarch64-unknown-nto-qnx710": [
+              "default"
+            ],
+            "arm-unknown-linux-gnueabi": [
+              "default"
+            ],
+            "armv7-linux-androideabi": [
+              "default"
+            ],
+            "armv7-unknown-linux-gnueabi": [
+              "default"
+            ],
+            "i686-apple-darwin": [
+              "default"
+            ],
+            "i686-linux-android": [
+              "default"
+            ],
+            "i686-pc-windows-msvc": [
+              "default"
+            ],
+            "i686-unknown-freebsd": [
+              "default"
+            ],
+            "i686-unknown-linux-gnu": [
+              "default"
+            ],
+            "powerpc-unknown-linux-gnu": [
+              "default"
+            ],
+            "riscv32imc-unknown-none-elf": [
+              "default"
+            ],
+            "riscv64gc-unknown-none-elf": [
+              "default"
+            ],
+            "s390x-unknown-linux-gnu": [
+              "default"
+            ],
+            "thumbv7em-none-eabi": [
+              "default"
+            ],
+            "thumbv8m.main-none-eabi": [
+              "default"
+            ],
+            "x86_64-apple-darwin": [
+              "default"
+            ],
+            "x86_64-apple-ios": [
+              "default"
+            ],
+            "x86_64-fuchsia": [
+              "default"
+            ],
+            "x86_64-linux-android": [
+              "default"
+            ],
+            "x86_64-pc-windows-msvc": [
+              "default"
+            ],
+            "x86_64-unknown-freebsd": [
+              "default"
+            ],
+            "x86_64-unknown-linux-gnu": [
+              "default"
+            ],
+            "x86_64-unknown-nixos-gnu": [
+              "default"
+            ],
+            "x86_64-unknown-none": [
+              "default"
+            ]
+          }
         },
         "deps": {
           "common": [
             {
-              "id": "crc32fast 1.4.2",
+              "id": "crc32fast 1.4.0",
               "target": "crc32fast"
             },
             {
@@ -6004,7 +6194,7 @@
           "selects": {}
         },
         "edition": "2018",
-        "version": "1.0.30"
+        "version": "1.0.28"
       },
       "license": "MIT OR Apache-2.0",
       "license_ids": [
@@ -12714,7 +12904,7 @@
               "target": "chrono"
             },
             {
-              "id": "flate2 1.0.30",
+              "id": "flate2 1.0.28",
               "target": "flate2"
             },
             {
@@ -15429,6 +15619,7 @@
             "__rustls",
             "__tls",
             "blocking",
+            "gzip",
             "json",
             "rustls-pki-types",
             "rustls-tls",
@@ -15583,6 +15774,10 @@
           "selects": {
             "cfg(not(target_arch = \"wasm32\"))": [
               {
+                "id": "async-compression 0.4.10",
+                "target": "async_compression"
+              },
+              {
                 "id": "futures-channel 0.3.30",
                 "target": "futures_channel"
               },
@@ -15649,6 +15844,10 @@
               {
                 "id": "tokio-rustls 0.25.0",
                 "target": "tokio_rustls"
+              },
+              {
+                "id": "tokio-util 0.7.10",
+                "target": "tokio_util"
               },
               {
                 "id": "webpki-roots 0.26.1",
