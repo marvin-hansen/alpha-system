@@ -2,6 +2,7 @@
 resolver = "2"
 
 members = [
+    "queng_cli/symbol_mapping",
     "queng_clients/binance_client",
     "queng_clients/dbgw_client",
     "queng_clients/ims_data_client",

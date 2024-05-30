@@ -1,0 +1,47 @@
+load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_doc", "rust_doc_test")
+
+# Build binary
+rust_binary(
+    name = "bin",
+    crate_root = "src/main.rs",
+    srcs = glob([
+        "src/*/*.rs",
+        "src/*.rs",
+    ]),
+    rustc_flags = select({
+       "//:release": [
+            "-Clto",
+            "-Ccodegen-units=1",
+            "-Cpanic=abort",
+            "-Copt-level=3",
+            "-Cstrip=symbols",
+            ],
+        "//conditions:default":
+        [
+           "-Copt-level=0",
+        ],
+    }),
+  deps = [
+        # Internal crates
+        "//queng_common:common",
+        "//queng_clients/kaiko_client:kaiko_client",
+        # External crates
+        "@crate_index//:serde",
+        "@crate_index//:serde_json",
+        "@crate_index//:tokio",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+
+rust_doc(
+    name = "doc",
+    crate = ":bin",
+    visibility = ["//visibility:public"],
+)
+
+rust_doc_test(
+     name = "doc_test",
+     crate = ":bin",
+     visibility = ["//visibility:public"],
+ )
