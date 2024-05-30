@@ -1,6 +1,15 @@
 use common::prelude::ServiceID;
 use std::time::Duration;
 
+pub fn print_start_header_simple(service_name: &str, service_addr: &str) {
+    println!();
+    println!("||  {}  ||", service_name);
+    println!("==========================================");
+    println!("Service on endpoint: {}", service_addr);
+    println!("==========================================");
+    println!();
+}
+
 pub fn print_start_header(
     service_id: &ServiceID,
     service_addr: &str,

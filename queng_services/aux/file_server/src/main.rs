@@ -1,6 +1,7 @@
 use crate::init::InitManager;
 use crate::store::Store;
 use service_utils::print_utils;
+use std::time::Duration;
 use tokio::time::Instant;
 use warp::Filter;
 
@@ -12,7 +13,7 @@ mod store;
 mod types;
 mod utils;
 
-const VRB: bool = true;
+const VRB: bool = false;
 const PORT: u16 = 7777;
 
 // Inspired by a log rocket article
@@ -28,6 +29,9 @@ async fn main() {
         .init()
         .await
         .expect("Failed to initialize FileServer service.");
+
+    // Free up some memory.
+    drop(im);
 
     dbg_print("Build meta-data store");
     let store = Store::new(meta_data);
@@ -56,14 +60,20 @@ async fn main() {
 
     let routes = get_assets.or(get_exchanges).or(get_instruments);
 
-    print_utils::print_duration("[main]: Starting server took", &start.elapsed());
+    print_duration("[main]: Starting server took", &start.elapsed());
 
-    dbg_print(format!("Start webserver on Port: {}", PORT).as_str());
+    print_utils::print_start_header_simple("Metadata Integration Service", "0.0.0.0:7777/");
     warp::serve(routes).run(([0, 0, 0, 0], PORT)).await;
 }
 
 fn dbg_print(s: &str) {
     if VRB {
         println!("[main]: {}", s);
+    }
+}
+
+fn print_duration(msg: &str, elapsed: &Duration) {
+    if VRB {
+        print_utils::print_duration(msg, elapsed);
     }
 }
