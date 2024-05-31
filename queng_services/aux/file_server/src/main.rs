@@ -58,7 +58,17 @@ async fn main() {
         .and(store_filter.clone())
         .and_then(service::get_instruments_from_store);
 
-    let routes = get_assets.or(get_exchanges).or(get_instruments);
+    dbg_print("Build symbol mapping route");
+    let get_symbol_mapping = warp::get()
+        .and(warp::path("symbol_mapping"))
+        .and(warp::path::end())
+        .and(store_filter.clone())
+        .and_then(service::get_symbol_mapping_from_store);
+
+    let routes = get_assets
+        .or(get_exchanges)
+        .or(get_instruments)
+        .or(get_symbol_mapping);
 
     print_duration("[main]: Starting server took", &start.elapsed());
 

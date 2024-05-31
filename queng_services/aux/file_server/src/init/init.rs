@@ -49,15 +49,19 @@ impl InitManager {
 
         let start = Instant::now();
         self.dbg_print("Level 4: Building reference symbol mapping!");
-        let _symbol_mapping = self
+        let symbol_mapping = self
             .init_level_4_symbol_mapping(&instrument_meta_data)
             .await
             .expect("Failed init level 4: Building reference symbol mapping");
 
         self.print_duration("Level 4: took", &start.elapsed());
 
-        let meta_data =
-            MetaDataSet::new(asset_meta_data, exchanges_meta_data, instrument_meta_data);
+        let meta_data = MetaDataSet::new(
+            asset_meta_data,
+            exchanges_meta_data,
+            instrument_meta_data,
+            symbol_mapping,
+        );
 
         self.dbg_print("=============");
         self.dbg_print("INIT COMPLETE");

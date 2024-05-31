@@ -1,5 +1,5 @@
 use crate::types::meta_data_set::MetaDataSet;
-use common::prelude::{AssetRoot, ExchangesRoot, InstrumentsRoot};
+use common::prelude::{AssetRoot, ExchangesRoot, InstrumentsRoot, SymbolMappingRoot};
 
 // The _Root wrappers are required to preserver API compatibility
 // with KAIKO and to preserve existing JSON serialization.
@@ -9,6 +9,7 @@ pub(crate) struct Store {
     assets: AssetRoot,
     exchanges: ExchangesRoot,
     instruments: InstrumentsRoot,
+    symbol_mapping: SymbolMappingRoot,
 }
 
 impl Store {
@@ -26,18 +27,25 @@ impl Store {
                 result: "OK".to_string(),
                 data: meta_data.instruments().to_owned(),
             },
+            symbol_mapping: SymbolMappingRoot {
+                result: "OK".to_string(),
+                data: meta_data.symbol_mapping().to_owned(),
+            },
         }
     }
 }
 
 impl Store {
-    pub fn assets(&self) -> AssetRoot {
-        self.assets.to_owned()
+    pub fn assets(&self) -> &AssetRoot {
+        &self.assets
     }
-    pub fn exchanges(&self) -> ExchangesRoot {
-        self.exchanges.to_owned()
+    pub fn exchanges(&self) -> &ExchangesRoot {
+        &self.exchanges
     }
-    pub fn instruments(&self) -> InstrumentsRoot {
-        self.instruments.to_owned()
+    pub fn instruments(&self) -> &InstrumentsRoot {
+        &self.instruments
+    }
+    pub fn symbol_mapping(&self) -> &SymbolMappingRoot {
+        &self.symbol_mapping
     }
 }

@@ -1,4 +1,5 @@
 use crate::errors::InitError;
+use crate::fields::DEX;
 use crate::init::InitManager;
 use crate::utils;
 use common::prelude::Instrument;
@@ -67,8 +68,23 @@ fn is_valid_instrument(instrument: &Instrument) -> bool {
         return false;
     }
 
+    // Instrument of no interest
+    if instrument.class.eq("future_combo") {
+        return false;
+    }
+
     // Non-perpetual future contracts.
     if instrument.class.eq("future") {
+        return false;
+    }
+
+    // Instruments listed on decentralized exchanges (DEX)
+    if DEX.contains(&instrument.exchange_code.as_str()) {
+        return false;
+    }
+
+    // Non-trading instruments
+    if instrument.trade_count == 0 {
         return false;
     }
 
