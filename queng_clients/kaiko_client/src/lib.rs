@@ -13,15 +13,27 @@ pub struct KaikoClient {
 
 impl KaikoClient {
     pub fn new() -> Result<Self, KaikoClientError> {
-        // Set headers
+        let client = Self::get_client(API_URL.to_string());
+
+        Ok(KaikoClient { client })
+    }
+
+    pub fn with_url(url: &str) -> Result<Self, KaikoClientError> {
+        let client = Self::get_client(url.to_string());
+
+        Ok(KaikoClient { client })
+    }
+
+    fn get_client(url: String) -> RestClient {
         let mut header_map = HeaderMap::new();
+
         header_map.insert("Accept", HeaderValue::from_static("application/json"));
 
         // Build client with headers
-        let client = RestClient::with_headers(API_URL.to_string(), header_map)
+        let client = RestClient::with_headers(url, header_map, true)
             .expect("Failed to construct KaikoClient");
 
-        Ok(KaikoClient { client })
+        client
     }
 }
 

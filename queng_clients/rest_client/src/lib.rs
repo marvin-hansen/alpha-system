@@ -15,11 +15,7 @@ pub struct RestClient {
 
 impl RestClient {
     pub fn new(host: String) -> Result<Self, Error> {
-        let inner_client = reqwest::Client::builder()
-            .pool_idle_timeout(None)
-            .build()
-            .expect("Failed to build reqwest client");
-
+        let inner_client = Self::get_client(false);
         let mut header_map = HeaderMap::new();
         header_map.insert(USER_AGENT, HeaderValue::from_static("binance-connector"));
 
@@ -30,11 +26,9 @@ impl RestClient {
         })
     }
 
-    pub fn with_headers(host: String, header_map: HeaderMap) -> Result<Self, Error> {
-        let inner_client = reqwest::Client::builder()
-            .pool_idle_timeout(None)
-            .build()
-            .expect("Failed to build reqwest client");
+    pub fn with_headers(host: String, header_map: HeaderMap, gzip: bool) -> Result<Self, Error> {
+        let inner_client = Self::get_client(gzip);
+
         Ok(Self {
             host,
             inner_client,
@@ -42,12 +36,22 @@ impl RestClient {
         })
     }
 
+    fn get_client(gzip: bool) -> reqwest::Client {
+        reqwest::Client::builder()
+            .gzip(gzip)
+            .build()
+            .expect("RestClient: Failed to build reqwest client")
+    }
+}
+
+impl RestClient {
     async fn handler<T: DeserializeOwned>(&self, response: Response) -> Result<T> {
         match response.status() {
             StatusCode::OK => Ok(response
                 .json::<T>()
                 .await
-                .expect("Failed to parse JSON response")),
+                .expect("RestClient: Failed to parse JSON response")),
+
             StatusCode::INTERNAL_SERVER_ERROR => {
                 bail!("Internal Server Error");
             }
@@ -95,7 +99,7 @@ impl RestClient {
             .headers(headers)
             .send()
             .await
-            .expect("Failed to send POST request");
+            .expect("RestClient: Failed to send POST request");
 
         self.handler(response).await
     }

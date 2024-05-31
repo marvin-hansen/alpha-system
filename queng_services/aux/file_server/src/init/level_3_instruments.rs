@@ -62,6 +62,11 @@ fn is_valid_instrument(instrument: &Instrument) -> bool {
         return false;
     }
 
+    // Instrument of no interest
+    if instrument.class.eq("option_combo") {
+        return false;
+    }
+
     // Non-perpetual future contracts.
     if instrument.class.eq("future") {
         return false;
