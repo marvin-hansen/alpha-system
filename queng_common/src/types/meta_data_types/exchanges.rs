@@ -11,5 +11,4 @@ pub struct Exchange {
     pub code: String,
     pub name: String,
     pub kaiko_legacy_slug: String,
-    pub url: Option<String>,
 }
