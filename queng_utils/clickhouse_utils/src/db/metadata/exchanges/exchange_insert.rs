@@ -6,14 +6,12 @@ impl Metadata {
         let table_name = format!("{TABLE_NAME}.exchanges");
         let code = &exchange.code;
         let name = &exchange.name;
-        let url = &exchange.url.clone().unwrap_or("".to_string());
         format!(
             r"
         INSERT INTO {table_name} (*)
         VALUES (
         '{code}',
         '{name}',
-        '{url}'
          )
          "
         )

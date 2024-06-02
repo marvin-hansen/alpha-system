@@ -6,7 +6,6 @@ fn test_exchanges_root_and_exchange_properties() {
         code: "TEST".to_string(),
         name: "Test Exchange".to_string(),
         kaiko_legacy_slug: "test-exchange".to_string(),
-        url: Some("http://www.testexchange.com".to_string()),
     };
 
     let exchanges_root = ExchangesRoot {
@@ -23,8 +22,4 @@ fn test_exchanges_root_and_exchange_properties() {
     assert_eq!(test_exchange.code, "TEST");
     assert_eq!(test_exchange.name, "Test Exchange");
     assert_eq!(test_exchange.kaiko_legacy_slug, "test-exchange");
-    assert_eq!(
-        test_exchange.url,
-        Some("http://www.testexchange.com".to_string())
-    );
 }
