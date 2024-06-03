@@ -121,7 +121,7 @@ serde_json = { version = "1" } # Dockerbuild requires all default features.
 tonic = { version = "0.11", features = ["transport"]} # Dockerbuild all default features.
 tonic-build = {version = "0.11"}
 tonic-health = { version = "0.11", default-features = false, features = ["transport"]}
-tokio-tungstenite = { version = "0.21.0", default-features = false}
+tokio-tungstenite = { version = "0.23.0", default-features = false}
 tokio = { version = "1", default-features = false,  features = ["macros", "net", "rt-multi-thread", "signal"] }
 tokio-timer = { version = "0.2"}
 
