@@ -169,6 +169,10 @@ crates_repository(
                           version = "1.0",
             ),
 
+            "arc-swap": crate.spec(
+                          version = "1.7",
+            ),
+
             "binance-rs-async": crate.spec(
                          default_features=False,
                          features = ["rustls-tls"],

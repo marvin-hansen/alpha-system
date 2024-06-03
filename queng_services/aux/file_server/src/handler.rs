@@ -1,5 +1,5 @@
-use crate::store::DB;
 use crate::types::health::Health;
+use crate::types::MetaDataStore;
 use warp;
 
 pub(crate) async fn get_health_handler() -> Result<impl warp::Reply, warp::Rejection> {
@@ -7,36 +7,42 @@ pub(crate) async fn get_health_handler() -> Result<impl warp::Reply, warp::Rejec
     Ok(warp::reply::json(&result))
 }
 
-pub(crate) async fn get_assets_handler(store: DB) -> Result<impl warp::Reply, warp::Rejection> {
-    let lock = store.read().await;
-    let result = lock.assets();
+pub(crate) async fn get_assets_handler(
+    store: MetaDataStore,
+) -> Result<impl warp::Reply, warp::Rejection> {
+    let guard = store.load();
+    let result = guard.assets();
     Ok(warp::reply::json(result))
 }
 
-pub(crate) async fn get_exchanges_handler(store: DB) -> Result<impl warp::Reply, warp::Rejection> {
-    let lock = store.read().await;
-    let result = lock.exchanges();
+pub(crate) async fn get_exchanges_handler(
+    store: MetaDataStore,
+) -> Result<impl warp::Reply, warp::Rejection> {
+    let guard = store.load();
+    let result = guard.exchanges();
     Ok(warp::reply::json(result))
 }
 
 pub(crate) async fn get_instruments_handler(
-    store: DB,
+    store: MetaDataStore,
 ) -> Result<impl warp::Reply, warp::Rejection> {
-    let lock = store.read().await;
-    let result = lock.instruments();
+    let guard = store.load();
+    let result = guard.instruments();
     Ok(warp::reply::json(result))
 }
 
 pub(crate) async fn get_symbol_mapping_handler(
-    store: DB,
+    store: MetaDataStore,
 ) -> Result<impl warp::Reply, warp::Rejection> {
-    let lock = store.read().await;
-    let result = lock.symbol_mapping();
+    let guard = store.load();
+    let result = guard.symbol_mapping();
     Ok(warp::reply::json(result))
 }
 
-pub(crate) async fn get_stats_handler(store: DB) -> Result<impl warp::Reply, warp::Rejection> {
-    let lock = store.read().await;
-    let result = lock.stats();
+pub(crate) async fn get_stats_handler(
+    store: MetaDataStore,
+) -> Result<impl warp::Reply, warp::Rejection> {
+    let guard = store.load();
+    let result = guard.stats();
     Ok(warp::reply::json(result))
 }

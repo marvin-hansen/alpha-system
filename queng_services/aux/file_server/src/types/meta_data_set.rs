@@ -1,14 +1,17 @@
 use crate::types::stats::Stats;
-use common::prelude::{Asset, Exchange, Instrument, SymbolMapping};
+use common::prelude::{
+    Asset, AssetRoot, Exchange, ExchangesRoot, Instrument, InstrumentsRoot, SymbolMapping,
+    SymbolMappingRoot,
+};
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeMap;
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct MetaDataSet {
-    assets: Vec<Asset>,
-    exchanges: Vec<Exchange>,
-    instruments: Vec<Instrument>,
-    symbol_mapping: BTreeMap<String, SymbolMapping>,
+    assets: AssetRoot,
+    exchanges: ExchangesRoot,
+    instruments: InstrumentsRoot,
+    symbol_mapping: SymbolMappingRoot,
     stats: Stats,
 }
 
@@ -27,26 +30,38 @@ impl MetaDataSet {
         );
 
         Self {
-            assets,
-            exchanges,
-            instruments,
-            symbol_mapping,
+            assets: AssetRoot {
+                result: "OK".to_string(),
+                data: assets,
+            },
+            exchanges: ExchangesRoot {
+                result: "OK".to_string(),
+                data: exchanges,
+            },
+            instruments: InstrumentsRoot {
+                result: "OK".to_string(),
+                data: instruments,
+            },
+            symbol_mapping: SymbolMappingRoot {
+                result: "OK".to_string(),
+                data: symbol_mapping,
+            },
             stats,
         }
     }
 }
 
 impl MetaDataSet {
-    pub fn assets(&self) -> &Vec<Asset> {
+    pub fn assets(&self) -> &AssetRoot {
         &self.assets
     }
-    pub fn exchanges(&self) -> &Vec<Exchange> {
+    pub fn exchanges(&self) -> &ExchangesRoot {
         &self.exchanges
     }
-    pub fn instruments(&self) -> &Vec<Instrument> {
+    pub fn instruments(&self) -> &InstrumentsRoot {
         &self.instruments
     }
-    pub fn symbol_mapping(&self) -> &BTreeMap<String, SymbolMapping> {
+    pub fn symbol_mapping(&self) -> &SymbolMappingRoot {
         &self.symbol_mapping
     }
     pub fn stats(&self) -> &Stats {
