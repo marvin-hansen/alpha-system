@@ -279,15 +279,20 @@ crates_repository(
                       version = "0.11",
             ),
 
-            "tokio-tungstenite": crate.spec(
-                     default_features=False,
-                     version = "0.21.0",
-            ),
-
             "tokio": crate.spec(
                      default_features=False,
                      features =  ["macros", "net", "rt-multi-thread", "signal"],
-                     version = "1.17.0",
+                     version = "1.38",
+            ),
+
+            "tokio-cron": crate.spec(
+                     version = "0.1.3",
+            ),
+
+
+            "tokio-tungstenite": crate.spec(
+                     default_features=False,
+                     version = "0.23",
             ),
 
             "tokio-timer": crate.spec(
@@ -297,7 +302,6 @@ crates_repository(
             "warp": crate.spec(
                          version = "0.3",
             ),
-
     },
 
 )

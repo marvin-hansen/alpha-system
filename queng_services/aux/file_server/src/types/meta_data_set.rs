@@ -13,6 +13,7 @@ pub struct MetaDataSet {
     instruments: InstrumentsRoot,
     symbol_mapping: SymbolMappingRoot,
     stats: Stats,
+    hash: u64,
 }
 
 impl MetaDataSet {
@@ -28,6 +29,9 @@ impl MetaDataSet {
             instruments.len() as u32,
             symbol_mapping.len() as u32,
         );
+
+        let hash =
+            (assets.len() + exchanges.len() + instruments.len() + symbol_mapping.len()) as u64;
 
         Self {
             assets: AssetRoot {
@@ -47,6 +51,7 @@ impl MetaDataSet {
                 data: symbol_mapping,
             },
             stats,
+            hash,
         }
     }
 }
@@ -66,5 +71,8 @@ impl MetaDataSet {
     }
     pub fn stats(&self) -> &Stats {
         &self.stats
+    }
+    pub fn hash(&self) -> u64 {
+        self.hash
     }
 }

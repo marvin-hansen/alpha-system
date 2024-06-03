@@ -1,10 +1,14 @@
+use crate::errors::InitError;
 use crate::init::InitManager;
+use crate::types::meta_data_set::MetaDataSet;
 use crate::types::MetaDataStore;
 use arc_swap::ArcSwap;
 use service_utils::print_utils;
+use std::ops::Deref;
 use std::sync::Arc;
 use std::time::Duration;
 use tokio::time::Instant;
+use tokio_cron::{daily, Job, Scheduler};
 use warp::Filter;
 
 mod errors;
@@ -17,28 +21,58 @@ mod utils;
 const VRB: bool = false;
 const PORT: u16 = 7777;
 
-// Inspired by a log rocket article
-// Building a REST API in Rust with warp
-// https://blog.logrocket.com/building-rest-api-rust-warp/
-
 #[tokio::main]
 async fn main() {
     let start = Instant::now();
 
-    let im = InitManager::new(VRB);
-    let meta_data = im
-        .init()
+    dbg_print("Load meta-data");
+    let meta_data = run_init()
         .await
-        .expect("Failed to initialize FileServer service.");
-
-    // Free up memory.
-    drop(im);
+        .expect("Failed to run init and failed to download metadata");
 
     dbg_print("Build meta-data store");
     // ArcSwap hot-swaps data in a multi-threaded runtime.
     // https://docs.rs/arc-swap/1.7.1/arc_swap/index.html
     let store: MetaDataStore = Arc::new(ArcSwap::from_pointee(meta_data.clone()));
+    let c = store.clone();
     let with_state = warp::any().map(move || store.clone());
+
+    dbg_print("Build scheduler");
+    let mut scheduler = Scheduler::utc();
+
+    // Run a named async closure "update metadata" every day at 1am UTC.
+    scheduler.add(Job::named("update metadata", daily("1"), move || {
+        dbg_print("Start metadata update");
+        let store = c.clone();
+        async move {
+            dbg_print("Re-download meta-data");
+            let meta_data = match run_init().await {
+                Ok(res) => res,
+                Err(e) => {
+                    eprint!("Updated Error: {}", e);
+                    // Send a message to notify someone.
+                    return;
+                }
+            };
+
+            // 1) Use hash from metadata to determine if anything has changed
+            dbg_print("Load meta-data hash");
+            let guard = store.deref().load();
+            let hash = guard.hash();
+
+            dbg_print("Check meta-data hash");
+            // 2) If no change, drop the downloaded metadata & do nothing
+            if meta_data.hash() == hash {
+                drop(meta_data);
+                dbg_print("Hash unchanged; no update needed");
+            } else {
+                // 3) if change, update the store with the new metadata
+                dbg_print("Hash changed run meta data update");
+                store.store(Arc::new(meta_data));
+            }
+            dbg_print("Update metadata complete");
+        }
+    }));
 
     dbg_print("Build health route");
     let health_check = warp::get()
@@ -97,6 +131,15 @@ fn dbg_print(s: &str) {
     if VRB {
         println!("[main]: {}", s);
     }
+}
+
+async fn run_init() -> Result<MetaDataSet, InitError> {
+    // im drops at the end of the function & released all temporary memory,
+    let im = InitManager::new(VRB);
+    return match im.init().await {
+        Ok(meta_data_set) => Ok(meta_data_set),
+        Err(e) => Err(e),
+    };
 }
 
 fn print_duration(msg: &str, elapsed: &Duration) {

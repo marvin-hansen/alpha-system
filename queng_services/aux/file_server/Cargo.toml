@@ -22,9 +22,10 @@ dns_manager = {workspace = true}
 service_utils = {workspace = true}
 # External crates
 arc-swap = { workspace = true }
-tokio = { workspace = true }
 reqwest = { workspace = true }
 scraper = {workspace = true }
 serde = {workspace = true}
 serde_json = {workspace = true}
+tokio = { workspace = true }
+tokio-cron = { workspace = true }
 warp = {workspace = true}
