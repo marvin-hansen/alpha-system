@@ -1,40 +1,32 @@
 use crate::types::stats::Stats;
-use common::prelude::{
-    Asset, AssetRoot, Exchange, ExchangesRoot, Instrument, InstrumentsRoot, SymbolMapping,
-    SymbolMappingRoot,
-};
+use common::prelude::{Asset, AssetRoot, Exchange, ExchangesRoot, Instrument, InstrumentsRoot};
 use serde::{Deserialize, Serialize};
-use std::collections::BTreeMap;
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct MetaDataSet {
     assets: AssetRoot,
     exchanges: ExchangesRoot,
     instruments: InstrumentsRoot,
-    symbol_mapping: SymbolMappingRoot,
     stats: Stats,
     hash: u64,
 }
 
 impl MetaDataSet {
-    pub fn new(
-        assets: Vec<Asset>,
-        exchanges: Vec<Exchange>,
-        instruments: Vec<Instrument>,
-        symbol_mapping: BTreeMap<String, SymbolMapping>,
-    ) -> Self {
-        // The hash is used internally in the metadata to determine if something has changed.
-        let hash =
-            (assets.len() + exchanges.len() + instruments.len() + symbol_mapping.len()) as u64;
+    pub fn new(assets: Vec<Asset>, exchanges: Vec<Exchange>, instruments: Vec<Instrument>) -> Self {
+        // The sum is used internally in the metadata to determine if something has changed.
+        let sum = (assets.len() + exchanges.len() + instruments.len()) as u64;
 
-        // The same hash is also used externally via the stats endpoint
+        // The hash of the sum is used externally via the stats endpoint
         // to let downstream systems determine if something has changed.
+        // Blake3 is one of the fastest hashes out there.
+        // https://github.com/BLAKE3-team/BLAKE3
+        let hash = blake3::hash(sum.to_string().as_ref());
+
         let stats = Stats::new(
-            hash,
+            hash.to_string(),
             assets.len() as u32,
             exchanges.len() as u32,
             instruments.len() as u32,
-            symbol_mapping.len() as u32,
         );
 
         Self {
@@ -50,12 +42,8 @@ impl MetaDataSet {
                 result: "OK".to_string(),
                 data: instruments,
             },
-            symbol_mapping: SymbolMappingRoot {
-                result: "OK".to_string(),
-                data: symbol_mapping,
-            },
             stats,
-            hash,
+            hash: sum,
         }
     }
 }
@@ -69,9 +57,6 @@ impl MetaDataSet {
     }
     pub fn instruments(&self) -> &InstrumentsRoot {
         &self.instruments
-    }
-    pub fn symbol_mapping(&self) -> &SymbolMappingRoot {
-        &self.symbol_mapping
     }
     pub fn stats(&self) -> &Stats {
         &self.stats

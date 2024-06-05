@@ -2,7 +2,6 @@
 resolver = "2"
 
 members = [
-    "queng_cli/symbol_mapping",
     "queng_clients/binance_client",
     "queng_clients/dbgw_client",
     "queng_clients/ims_data_client",
@@ -109,6 +108,7 @@ service_utils = { path = "queng_utils/service_utils" }
 anyhow = { version = "1.0" }
 arc-swap = {version = "1.7"}
 binance-rs-async = { version = "1.3.3" , default-features = false, features = ["rustls-tls"]}
+blake3 = {version = "1.5"}
 chrono = { version = "0.4", features = ["serde"] }
 config-file = {version = "0.2"}
 ctrlc =  {version = "3.4"}

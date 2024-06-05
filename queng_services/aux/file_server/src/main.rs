@@ -8,7 +8,7 @@ use std::ops::Deref;
 use std::sync::Arc;
 use std::time::Duration;
 use tokio::time::Instant;
-use tokio_cron::{daily, Job, Scheduler};
+use tokio_cron::{daily, hourly, Job, Scheduler};
 use warp::Filter;
 
 mod errors;
@@ -38,10 +38,14 @@ async fn main() {
     let with_state = warp::any().map(move || store.clone());
 
     dbg_print("Build scheduler");
+    // https://github.com/kurtbuilds/tokio-cron
     let mut scheduler = Scheduler::utc();
 
     // Run a named async closure "update metadata" every day at 1am UTC.
-    scheduler.add(Job::named("update metadata", daily("1"), move || {
+    scheduler.add(Job::named("update metadata", hourly("00"), move || {
+        // remove
+        println!("Start metadata update");
+
         dbg_print("Start metadata update");
         let store = c.clone();
         async move {
@@ -71,6 +75,9 @@ async fn main() {
                 store.store(Arc::new(meta_data));
             }
             dbg_print("Update metadata complete");
+
+            // remove
+            println!("Update metadata complete");
         }
     }));
 
@@ -101,13 +108,6 @@ async fn main() {
         .and(with_state.clone())
         .and_then(handler::get_instruments_handler);
 
-    dbg_print("Build symbol mapping route");
-    let get_symbol_mapping = warp::get()
-        .and(warp::path("symbol_mapping"))
-        .and(warp::path::end())
-        .and(with_state.clone())
-        .and_then(handler::get_symbol_mapping_handler);
-
     dbg_print("Build stats route");
     let get_stats = warp::get()
         .and(warp::path("stats"))
@@ -119,7 +119,6 @@ async fn main() {
         .or(get_assets)
         .or(get_exchanges)
         .or(get_instruments)
-        .or(get_symbol_mapping)
         .or(get_stats);
 
     print_duration("[main]: Starting server took", &start.elapsed());

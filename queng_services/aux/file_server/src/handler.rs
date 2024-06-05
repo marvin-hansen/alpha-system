@@ -31,14 +31,6 @@ pub(crate) async fn get_instruments_handler(
     Ok(warp::reply::json(result))
 }
 
-pub(crate) async fn get_symbol_mapping_handler(
-    store: MetaDataStore,
-) -> Result<impl warp::Reply, warp::Rejection> {
-    let guard = store.load();
-    let result = guard.symbol_mapping();
-    Ok(warp::reply::json(result))
-}
-
 pub(crate) async fn get_stats_handler(
     store: MetaDataStore,
 ) -> Result<impl warp::Reply, warp::Rejection> {

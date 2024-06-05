@@ -49,7 +49,6 @@ pub use crate::types::portfolio_types::portfolio_config::*;
 // symbol types
 pub use crate::types::symbol_types::symbol::*;
 pub use crate::types::symbol_types::symbol_id::*;
-pub use crate::types::symbol_types::symbol_mapping::*;
 // Time Types
 pub use crate::types::time_types::month::Month;
 pub use crate::types::time_types::time_scale::TimeScale;

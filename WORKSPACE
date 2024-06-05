@@ -179,6 +179,10 @@ crates_repository(
                          version = "1.3",
             ),
 
+           "blake3": crate.spec(
+                      version = "1.5",
+            ),
+
             "chrono": crate.spec(
                       features = ["serde"],
                       version = "0.4",

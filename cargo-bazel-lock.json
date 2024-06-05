@@ -1,5 +1,5 @@
 {
-  "checksum": "c4415391fd272d1d24b708c04ce1900b7fa771532cecb2e3f2e41fd997dff4c2",
+  "checksum": "1e07a116755a4fc283bfd7f36b45790aa19e1a1458702e84ff52fa51cda3b83a",
   "crates": {
     "addr2line 0.21.0": {
       "name": "addr2line",
@@ -673,6 +673,44 @@
         "MIT"
       ],
       "license_file": "LICENSE-APACHE"
+    },
+    "arrayref 0.3.7": {
+      "name": "arrayref",
+      "version": "0.3.7",
+      "package_url": "https://github.com/droundy/arrayref",
+      "repository": {
+        "Http": {
+          "url": "https://static.crates.io/crates/arrayref/0.3.7/download",
+          "sha256": "6b4930d2cb77ce62f89ee5d5289b4ac049559b1c45539271f5ed4fdc7db34545"
+        }
+      },
+      "targets": [
+        {
+          "Library": {
+            "crate_name": "arrayref",
+            "crate_root": "src/lib.rs",
+            "srcs": {
+              "allow_empty": false,
+              "include": [
+                "**/*.rs"
+              ]
+            }
+          }
+        }
+      ],
+      "library_target_name": "arrayref",
+      "common_attrs": {
+        "compile_data_glob": [
+          "**"
+        ],
+        "edition": "2015",
+        "version": "0.3.7"
+      },
+      "license": "BSD-2-Clause",
+      "license_ids": [
+        "BSD-2-Clause"
+      ],
+      "license_file": "LICENSE"
     },
     "arrayvec 0.7.4": {
       "name": "arrayvec",
@@ -2271,6 +2309,103 @@
         "MIT"
       ],
       "license_file": "LICENSE.txt"
+    },
+    "blake3 1.5.1": {
+      "name": "blake3",
+      "version": "1.5.1",
+      "package_url": "https://github.com/BLAKE3-team/BLAKE3",
+      "repository": {
+        "Http": {
+          "url": "https://static.crates.io/crates/blake3/1.5.1/download",
+          "sha256": "30cca6d3674597c30ddf2c587bf8d9d65c9a84d2326d941cc79c9842dfe0ef52"
+        }
+      },
+      "targets": [
+        {
+          "Library": {
+            "crate_name": "blake3",
+            "crate_root": "src/lib.rs",
+            "srcs": {
+              "allow_empty": false,
+              "include": [
+                "**/*.rs"
+              ]
+            }
+          }
+        },
+        {
+          "BuildScript": {
+            "crate_name": "build_script_build",
+            "crate_root": "build.rs",
+            "srcs": {
+              "allow_empty": false,
+              "include": [
+                "**/*.rs"
+              ]
+            }
+          }
+        }
+      ],
+      "library_target_name": "blake3",
+      "common_attrs": {
+        "compile_data_glob": [
+          "**"
+        ],
+        "crate_features": {
+          "common": [
+            "default",
+            "std"
+          ],
+          "selects": {}
+        },
+        "deps": {
+          "common": [
+            {
+              "id": "arrayref 0.3.7",
+              "target": "arrayref"
+            },
+            {
+              "id": "arrayvec 0.7.4",
+              "target": "arrayvec"
+            },
+            {
+              "id": "blake3 1.5.1",
+              "target": "build_script_build"
+            },
+            {
+              "id": "cfg-if 1.0.0",
+              "target": "cfg_if"
+            },
+            {
+              "id": "constant_time_eq 0.3.0",
+              "target": "constant_time_eq"
+            }
+          ],
+          "selects": {}
+        },
+        "edition": "2021",
+        "version": "1.5.1"
+      },
+      "build_script_attrs": {
+        "data_glob": [
+          "**"
+        ],
+        "deps": {
+          "common": [
+            {
+              "id": "cc 1.0.90",
+              "target": "cc"
+            }
+          ],
+          "selects": {}
+        }
+      },
+      "license": "CC0-1.0 OR Apache-2.0",
+      "license_ids": [
+        "Apache-2.0",
+        "CC0-1.0"
+      ],
+      "license_file": "LICENSE"
     },
     "block-buffer 0.10.4": {
       "name": "block-buffer",
@@ -4074,6 +4209,46 @@
       ],
       "license_file": "LICENSE-APACHE"
     },
+    "constant_time_eq 0.3.0": {
+      "name": "constant_time_eq",
+      "version": "0.3.0",
+      "package_url": "https://github.com/cesarb/constant_time_eq",
+      "repository": {
+        "Http": {
+          "url": "https://static.crates.io/crates/constant_time_eq/0.3.0/download",
+          "sha256": "f7144d30dcf0fafbce74250a3963025d8d52177934239851c917d29f1df280c2"
+        }
+      },
+      "targets": [
+        {
+          "Library": {
+            "crate_name": "constant_time_eq",
+            "crate_root": "src/lib.rs",
+            "srcs": {
+              "allow_empty": false,
+              "include": [
+                "**/*.rs"
+              ]
+            }
+          }
+        }
+      ],
+      "library_target_name": "constant_time_eq",
+      "common_attrs": {
+        "compile_data_glob": [
+          "**"
+        ],
+        "edition": "2021",
+        "version": "0.3.0"
+      },
+      "license": "CC0-1.0 OR MIT-0 OR Apache-2.0",
+      "license_ids": [
+        "Apache-2.0",
+        "CC0-1.0",
+        "MIT-0"
+      ],
+      "license_file": "LICENSE-APACHE"
+    },
     "core-foundation 0.9.4": {
       "name": "core-foundation",
       "version": "0.9.4",
@@ -5463,6 +5638,10 @@
             {
               "id": "binance-rs-async 1.3.3",
               "target": "binance"
+            },
+            {
+              "id": "blake3 1.5.1",
+              "target": "blake3"
             },
             {
               "id": "chrono 0.4.37",
@@ -26149,6 +26328,7 @@
     "anyhow 1.0.81",
     "arc-swap 1.7.1",
     "binance-rs-async 1.3.3",
+    "blake3 1.5.1",
     "chrono 0.4.37",
     "clickhouse-rs 1.1.0-alpha.1",
     "config-file 0.2.3",
