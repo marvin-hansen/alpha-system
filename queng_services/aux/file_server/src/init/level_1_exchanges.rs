@@ -23,7 +23,7 @@ impl InitManager {
         if self.dbg {
             let msg = format!(
                 "Level 1: Returning {} valid exchanges",
-                valid_exchanges.len()
+                processed_exchanges.len()
             );
             self.dbg_print(&msg)
         }
