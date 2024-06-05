@@ -67,7 +67,7 @@ async fn main() {
                 dbg_print("Hash unchanged; no update needed");
             } else {
                 // 3) if change, update the store with the new metadata
-                dbg_print("Hash changed run meta data update");
+                dbg_print("Hash changed run update");
                 store.store(Arc::new(meta_data));
             }
             dbg_print("Update metadata complete");

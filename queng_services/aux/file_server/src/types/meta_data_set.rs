@@ -23,15 +23,19 @@ impl MetaDataSet {
         instruments: Vec<Instrument>,
         symbol_mapping: BTreeMap<String, SymbolMapping>,
     ) -> Self {
+        // The hash is used internally in the metadata to determine if something has changed.
+        let hash =
+            (assets.len() + exchanges.len() + instruments.len() + symbol_mapping.len()) as u64;
+
+        // The same hash is also used externally via the stats endpoint
+        // to let downstream systems determine if something has changed.
         let stats = Stats::new(
+            hash,
             assets.len() as u32,
             exchanges.len() as u32,
             instruments.len() as u32,
             symbol_mapping.len() as u32,
         );
-
-        let hash =
-            (assets.len() + exchanges.len() + instruments.len() + symbol_mapping.len()) as u64;
 
         Self {
             assets: AssetRoot {

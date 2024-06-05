@@ -35,6 +35,7 @@ rust_binary(
         "//queng_components/dns_manager:dns_manager",
         # External crates
         "@crate_index//:arc-swap",
+        "@crate_index//:chrono",
         "@crate_index//:reqwest",
         "@crate_index//:scraper",
         "@crate_index//:serde",
