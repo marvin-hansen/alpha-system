@@ -122,6 +122,15 @@ oci_pull(
     platforms = ["linux/amd64","linux/arm64"],
 )
 
+# https://images.chainguard.dev/directory/image/cc-dynamic/overview
+# https://hub.docker.com/layers/chainguard/cc-dynamic/latest/images/sha256-e308c2f1d052045f0e373c7252c26e0405bd84e386c19a73b3dc818365a8ccf7?context=explore
+oci_pull(
+    name = "cc-dynamic",
+    digest = "sha256:8274e806c70e6b0a5a8905be6d86539b1ab5843a080cdabbe40517faf8c4215e",
+    image = "cgr.dev/chainguard/cc-dynamic",
+    platforms = ["linux/amd64","linux/arm64"],
+)
+
 ###############################################################################
 # BuildBuddy Toolchain
 # Releases: https://github.com/buildbuddy-io/buildbuddy-toolchain/

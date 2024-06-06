@@ -71,7 +71,7 @@ pkg_tar(
 # Build image and add built layer to it
 oci_image(
     name = "image",
-    base = "@distroless",
+    base = "@cc-dynamic",
     tars = [":tar_layer"],
     entrypoint = ["/bin"],
     visibility = ["//visibility:public"],
