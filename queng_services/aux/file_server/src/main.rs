@@ -18,11 +18,6 @@ mod init;
 mod types;
 mod utils;
 
-use mimalloc::MiMalloc;
-
-#[global_allocator]
-static GLOBAL: MiMalloc = MiMalloc;
-
 const VRB: bool = false;
 const PORT: u16 = 7777;
 
@@ -158,7 +153,5 @@ async fn run_init(update: bool) -> Result<MetaDataSet, InitError> {
 }
 
 fn print_duration(msg: &str, elapsed: &Duration) {
-    if VRB {
-        print_utils::print_duration(msg, elapsed);
-    }
+    print_utils::print_duration(msg, elapsed);
 }

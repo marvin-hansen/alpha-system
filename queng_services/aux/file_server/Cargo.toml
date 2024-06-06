@@ -20,8 +20,6 @@ config_manager = {workspace = true}
 ctx_manager = {workspace = true}
 dns_manager = {workspace = true}
 service_utils = {workspace = true}
-# Custom Memory Allocator
-mimalloc = { workspace = true }
 # External crates
 arc-swap = { workspace = true }
 chrono = { workspace = true }
