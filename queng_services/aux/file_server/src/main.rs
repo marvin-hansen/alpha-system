@@ -23,7 +23,7 @@ use mimalloc::MiMalloc;
 #[global_allocator]
 static GLOBAL: MiMalloc = MiMalloc;
 
-const VRB: bool = true;
+const VRB: bool = false;
 const PORT: u16 = 7777;
 
 #[tokio::main]
@@ -49,9 +49,9 @@ async fn main() {
         .await
         .expect("Failed to build job scheduler");
 
-    // Run a async update every day at midnight EST. (EST = UTC+4)
+    // Run a async update every day at 1 am, EST. (EST = UTC+4)
     //                     sec  min  hour  day   month day of week
-    let expression = "0   00    4     *     *     *";
+    let expression = "0   00    1     *     *     *";
     scheduler
         .add(
             Job::new_async(expression, move |_uuid, _l| {
