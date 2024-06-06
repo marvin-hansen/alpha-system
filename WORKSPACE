@@ -107,9 +107,6 @@ load("@rules_oci//oci:repositories.bzl", "LATEST_CRANE_VERSION", "oci_register_t
 oci_register_toolchains(
     name = "oci",
     crane_version = LATEST_CRANE_VERSION,
-    # Uncommenting the zot toolchain will cause it to be used instead of crane for some tasks.
-    # Note that it does not support docker-format images.
-    # zot_version = LATEST_ZOT_VERSION,
 )
 
 # https://images.chainguard.dev/directory/image/static/versions
@@ -117,9 +114,9 @@ oci_register_toolchains(
 load("@rules_oci//oci:pull.bzl", "oci_pull")
 oci_pull(
     name = "distroless",
-    digest = "sha256:8665c8a9fcdab0f8afc09533ee23287c7870de26064d464a10e3baa52f337734",
-    image = "cgr.dev/chainguard/static",
-    platforms = ["linux/amd64","linux/arm64"],
+    digest = "sha256:e1065a1d58800a7294f74e67c32ec4146d09d6cbe471c1fa7ed456b2d2bf06e0",
+    image = "gcr.io/distroless/cc-debian12",
+    platforms = ["linux/amd64", "linux/arm64/v8"],
 )
 
 # https://images.chainguard.dev/directory/image/cc-dynamic/overview

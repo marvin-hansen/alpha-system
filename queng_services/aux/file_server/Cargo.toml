@@ -22,7 +22,6 @@ dns_manager = {workspace = true}
 service_utils = {workspace = true}
 # External crates
 arc-swap = { workspace = true }
-blake3 = { workspace = true }
 chrono = { workspace = true }
 reqwest = { workspace = true }
 scraper = {workspace = true }

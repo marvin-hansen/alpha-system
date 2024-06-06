@@ -3,7 +3,7 @@ load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_doc", "rust_doc_test")
 load("@rules_pkg//pkg:tar.bzl", "pkg_tar")
 load("@rules_oci//oci:defs.bzl", "oci_image", "oci_push",  "oci_image_index")
 # Custom macro
-load("//:build_image.bzl","build_tag")
+load("//:build_image.bzl", "build_image", "build_tag")
 
 # Build binary
 rust_binary(
@@ -35,7 +35,6 @@ rust_binary(
         "//queng_components/dns_manager:dns_manager",
         # External crates
         "@crate_index//:arc-swap",
-        "@crate_index//:blake3",
         "@crate_index//:chrono",
         "@crate_index//:reqwest",
         "@crate_index//:scraper",
@@ -62,18 +61,11 @@ rust_doc_test(
      visibility = ["//visibility:public"],
  )
 
-# Compress bin to layer using pkg_tar
-pkg_tar(
-    name = "tar_layer",
-    srcs = [":bin"],
-)
-
-# Build image and add built layer to it
-oci_image(
+# Build container image
+build_image(
     name = "image",
-    base = "@cc-dynamic",
-    tars = [":tar_layer"],
-    entrypoint = ["/bin"],
+    srcs = [":bin"],
+    exposed_ports = ["7777"],
     visibility = ["//visibility:public"],
 )
 

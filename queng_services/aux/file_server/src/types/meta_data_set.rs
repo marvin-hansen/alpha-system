@@ -16,14 +16,8 @@ impl MetaDataSet {
         // The sum is used internally in the metadata to determine if something has changed.
         let sum = (assets.len() + exchanges.len() + instruments.len()) as u64;
 
-        // The hash of the sum is used externally via the stats endpoint
-        // to let downstream systems determine if something has changed.
-        // Blake3 is one of the fastest hashes out there.
-        // https://github.com/BLAKE3-team/BLAKE3
-        let hash = blake3::hash(sum.to_string().as_ref());
-
         let stats = Stats::new(
-            hash.to_string(),
+            sum.to_string(),
             assets.len() as u32,
             exchanges.len() as u32,
             instruments.len() as u32,
