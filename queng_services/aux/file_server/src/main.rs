@@ -8,7 +8,7 @@ use std::ops::Deref;
 use std::sync::Arc;
 use std::time::Duration;
 use tokio::time::Instant;
-use tokio_cron::{daily, hourly, Job, Scheduler};
+use tokio_cron_scheduler::{Job, JobScheduler};
 use warp::Filter;
 
 mod errors;
@@ -18,7 +18,7 @@ mod init;
 mod types;
 mod utils;
 
-const VRB: bool = false;
+const VRB: bool = true;
 const PORT: u16 = 7777;
 
 #[tokio::main]
@@ -26,7 +26,7 @@ async fn main() {
     let start = Instant::now();
 
     dbg_print("Load meta-data");
-    let meta_data = run_init()
+    let meta_data = run_init(false)
         .await
         .expect("Failed to run init and failed to download metadata");
 
@@ -37,49 +37,60 @@ async fn main() {
     let c = store.clone();
     let with_state = warp::any().map(move || store.clone());
 
+    //  tokio_cron_scheduler
+    // https://github.com/mvniekerk/tokio-cron-scheduler
     dbg_print("Build scheduler");
-    // https://github.com/kurtbuilds/tokio-cron
-    let mut scheduler = Scheduler::utc();
+    let scheduler = JobScheduler::new()
+        .await
+        .expect("Failed to build job scheduler");
 
-    // Run a named async closure "update metadata" every day at 1am UTC.
-    scheduler.add(Job::named("update metadata", hourly("00"), move || {
-        // remove
-        println!("Start metadata update");
+    // Run a async update every day at midnight EST. (EST = UTC+4)
+    //                     sec  min  hour  day   month day of week
+    let expression = "0   00    4     *     *     *";
+    scheduler
+        .add(
+            Job::new_async(expression, move |_uuid, _l| {
+                let store = c.clone();
+                Box::pin(async move {
+                    dbg_print("Start metadata update");
 
-        dbg_print("Start metadata update");
-        let store = c.clone();
-        async move {
-            dbg_print("Re-download meta-data");
-            let meta_data = match run_init().await {
-                Ok(res) => res,
-                Err(e) => {
-                    eprint!("Updated Error: {}", e);
-                    // Send a message to notify someone.
-                    return;
-                }
-            };
+                    dbg_print("Re-download meta-data");
+                    let meta_data = match run_init(true).await {
+                        Ok(res) => res,
+                        Err(e) => {
+                            eprint!("Updated Error:");
+                            eprint!("Updated Error: {}", e);
+                            eprint!("Updated Error:");
+                            //  notify someone...
+                            return;
+                        }
+                    };
 
-            // 1) Use hash from metadata to determine if anything has changed
-            dbg_print("Load meta-data hash");
-            let guard = store.deref().load();
-            let hash = guard.hash();
+                    // 1) Use hash from existing metadata to determine if anything has changed
+                    dbg_print("Load meta-data hash");
+                    let guard = store.deref().load();
+                    let hash = guard.hash();
 
-            dbg_print("Check meta-data hash");
-            // 2) If no change, drop the downloaded metadata & do nothing
-            if meta_data.hash() == hash {
-                drop(meta_data);
-                dbg_print("Hash unchanged; no update needed");
-            } else {
-                // 3) if change, update the store with the new metadata
-                dbg_print("Hash changed run update");
-                store.store(Arc::new(meta_data));
-            }
-            dbg_print("Update metadata complete");
+                    // 2) If no change, drop the downloaded metadata & do nothing
+                    dbg_print("Check meta-data hash");
+                    if meta_data.hash() == hash {
+                        drop(meta_data);
+                        dbg_print("Hash unchanged; no update needed");
+                    } else {
+                        // 3) if change, update the store with the new metadata
+                        dbg_print("Hash changed run update");
+                        store.store(Arc::new(meta_data));
+                    }
+                    dbg_print("Update metadata complete");
+                })
+            })
+            .expect("Failed to create async update job"),
+        )
+        .await
+        .expect("Failed to add update job to scheduler");
 
-            // remove
-            println!("Update metadata complete");
-        }
-    }));
+    dbg_print("Start job scheduler");
+    scheduler.start().await.expect("Failed to start scheduler");
 
     dbg_print("Build health route");
     let health_check = warp::get()
@@ -132,10 +143,10 @@ fn dbg_print(s: &str) {
     }
 }
 
-async fn run_init() -> Result<MetaDataSet, InitError> {
+async fn run_init(update: bool) -> Result<MetaDataSet, InitError> {
     // im drops at the end of the function & released all temporary memory,
     let im = InitManager::new(VRB);
-    return match im.init().await {
+    return match im.init(update).await {
         Ok(meta_data_set) => Ok(meta_data_set),
         Err(e) => Err(e),
     };

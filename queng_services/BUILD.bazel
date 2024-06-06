@@ -44,7 +44,7 @@ filegroup(
 multirun(
     name = "push",
     commands = [
-        "push_aux_file_server",
+        "push_file_server",
         "push_cmdb",
         "push_dbgw",
         "push_binance_data",
@@ -56,7 +56,7 @@ multirun(
 )
 
 command(
-    name = "push_aux_file_server",
+    name = "push_file_server",
     command = "//queng_services/aux/file_server:push",
     arguments = [], # Optional arguments passed directly to the tool
 )

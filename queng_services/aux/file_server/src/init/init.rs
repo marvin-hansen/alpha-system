@@ -4,13 +4,13 @@ use crate::types::meta_data_set::MetaDataSet;
 use tokio::time::Instant;
 
 impl InitManager {
-    pub async fn init(&self) -> Result<MetaDataSet, InitError> {
-        //
+    pub async fn init(&self, update: bool) -> Result<MetaDataSet, InitError> {
+        let s = if update { "UPDATE" } else { "INIT" };
+
         self.dbg_print("==========");
-        self.dbg_print("START INIT");
+        self.dbg_print(&format!("START {}", s));
         self.dbg_print("==========");
 
-        //
         let start = Instant::now();
         self.dbg_print("Level 0: Retrieving list of valid exchanges!");
         let valid_exchanges = self
@@ -53,7 +53,7 @@ impl InitManager {
             MetaDataSet::new(asset_meta_data, exchanges_meta_data, instrument_meta_data);
 
         self.dbg_print("=============");
-        self.dbg_print("INIT COMPLETE");
+        self.dbg_print(&format!("{} COMPLETE", s));
         self.dbg_print("=============");
 
         Ok(meta_data)

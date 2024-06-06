@@ -1,5 +1,5 @@
 {
-  "checksum": "1e07a116755a4fc283bfd7f36b45790aa19e1a1458702e84ff52fa51cda3b83a",
+  "checksum": "b7de79639ca1f42991751693ac40321146d6a6fbb6e1b6434b29f91fee29fa86",
   "crates": {
     "addr2line 0.21.0": {
       "name": "addr2line",
@@ -5720,8 +5720,8 @@
               "target": "tokio"
             },
             {
-              "id": "tokio-cron 0.1.3",
-              "target": "tokio_cron"
+              "id": "tokio-cron-scheduler 0.10.2",
+              "target": "tokio_cron_scheduler"
             },
             {
               "id": "tokio-timer 0.2.13",
@@ -12573,6 +12573,62 @@
       ],
       "license_file": "LICENSE-APACHE"
     },
+    "num-derive 0.3.3": {
+      "name": "num-derive",
+      "version": "0.3.3",
+      "package_url": "https://github.com/rust-num/num-derive",
+      "repository": {
+        "Http": {
+          "url": "https://static.crates.io/crates/num-derive/0.3.3/download",
+          "sha256": "876a53fff98e03a936a674b29568b0e605f06b29372c2489ff4de23f1949743d"
+        }
+      },
+      "targets": [
+        {
+          "ProcMacro": {
+            "crate_name": "num_derive",
+            "crate_root": "src/lib.rs",
+            "srcs": {
+              "allow_empty": false,
+              "include": [
+                "**/*.rs"
+              ]
+            }
+          }
+        }
+      ],
+      "library_target_name": "num_derive",
+      "common_attrs": {
+        "compile_data_glob": [
+          "**"
+        ],
+        "deps": {
+          "common": [
+            {
+              "id": "proc-macro2 1.0.79",
+              "target": "proc_macro2"
+            },
+            {
+              "id": "quote 1.0.35",
+              "target": "quote"
+            },
+            {
+              "id": "syn 1.0.109",
+              "target": "syn"
+            }
+          ],
+          "selects": {}
+        },
+        "edition": "2018",
+        "version": "0.3.3"
+      },
+      "license": "MIT OR Apache-2.0",
+      "license_ids": [
+        "Apache-2.0",
+        "MIT"
+      ],
+      "license_file": "LICENSE-APACHE"
+    },
     "num-integer 0.1.46": {
       "name": "num-integer",
       "version": "0.1.46",
@@ -12794,6 +12850,7 @@
         ],
         "crate_features": {
           "common": [
+            "default",
             "i128",
             "libm",
             "std"
@@ -20442,21 +20499,33 @@
       ],
       "license_file": "LICENSE"
     },
-    "tokio-cron 0.1.3": {
-      "name": "tokio-cron",
-      "version": "0.1.3",
-      "package_url": null,
+    "tokio-cron-scheduler 0.10.2": {
+      "name": "tokio-cron-scheduler",
+      "version": "0.10.2",
+      "package_url": "https://github.com/mvniekerk/tokio-cron-scheduler",
       "repository": {
         "Http": {
-          "url": "https://static.crates.io/crates/tokio-cron/0.1.3/download",
-          "sha256": "b29e8f172aedef409e518b9b88ea7aeb47fd6248cf7673f0a8991c0913601a55"
+          "url": "https://static.crates.io/crates/tokio-cron-scheduler/0.10.2/download",
+          "sha256": "a4c2e3a88f827f597799cf70a6f673074e62f3fc5ba5993b2873345c618a29af"
         }
       },
       "targets": [
         {
           "Library": {
-            "crate_name": "tokio_cron",
+            "crate_name": "tokio_cron_scheduler",
             "crate_root": "src/lib.rs",
+            "srcs": {
+              "allow_empty": false,
+              "include": [
+                "**/*.rs"
+              ]
+            }
+          }
+        },
+        {
+          "BuildScript": {
+            "crate_name": "build_script_build",
+            "crate_root": "build.rs",
             "srcs": {
               "allow_empty": false,
               "include": [
@@ -20466,11 +20535,18 @@
           }
         }
       ],
-      "library_target_name": "tokio_cron",
+      "library_target_name": "tokio_cron_scheduler",
       "common_attrs": {
         "compile_data_glob": [
           "**"
         ],
+        "crate_features": {
+          "common": [
+            "default",
+            "signal"
+          ],
+          "selects": {}
+        },
         "deps": {
           "common": [
             {
@@ -20482,28 +20558,51 @@
               "target": "cron"
             },
             {
-              "id": "futures 0.3.30",
-              "target": "futures"
+              "id": "num-traits 0.2.19",
+              "target": "num_traits"
             },
             {
               "id": "tokio 1.38.0",
               "target": "tokio"
             },
             {
+              "id": "tokio-cron-scheduler 0.10.2",
+              "target": "build_script_build"
+            },
+            {
               "id": "tracing 0.1.40",
               "target": "tracing"
+            },
+            {
+              "id": "uuid 1.8.0",
+              "target": "uuid"
             }
           ],
           "selects": {}
         },
-        "edition": "2021",
-        "version": "0.1.3"
+        "edition": "2018",
+        "proc_macro_deps": {
+          "common": [
+            {
+              "id": "num-derive 0.3.3",
+              "target": "num_derive"
+            }
+          ],
+          "selects": {}
+        },
+        "version": "0.10.2"
       },
-      "license": "MIT",
+      "build_script_attrs": {
+        "data_glob": [
+          "**"
+        ]
+      },
+      "license": "MIT/Apache-2.0",
       "license_ids": [
+        "Apache-2.0",
         "MIT"
       ],
-      "license_file": "LICENSE.md"
+      "license_file": "LICENSE-APACHE"
     },
     "tokio-executor 0.1.10": {
       "name": "tokio-executor",
@@ -26349,7 +26448,7 @@
     "serde 1.0.197",
     "serde_json 1.0.115",
     "tokio 1.38.0",
-    "tokio-cron 0.1.3",
+    "tokio-cron-scheduler 0.10.2",
     "tokio-timer 0.2.13",
     "tokio-tungstenite 0.23.0",
     "tonic 0.11.0",

@@ -42,7 +42,7 @@ rust_binary(
         "@crate_index//:serde",
         "@crate_index//:serde_json",
         "@crate_index//:tokio",
-        "@crate_index//:tokio-cron",
+        "@crate_index//:tokio-cron-scheduler",
         "@crate_index//:warp",
     ],
     visibility = ["//visibility:public"],
@@ -71,7 +71,7 @@ pkg_tar(
 # Build image and add built layer to it
 oci_image(
     name = "image",
-    base = "@curl_image",
+    base = "@distroless",
     tars = [":tar_layer"],
     entrypoint = ["/bin"],
     visibility = ["//visibility:public"],
@@ -89,7 +89,7 @@ build_tag(
 oci_push(
     name = "push",
     image = ":image",
-    repository = "asia-northeast1-docker.pkg.dev/future-309012/image-repo/file_server",
+    repository = "asia-northeast1-docker.pkg.dev/future-309012/image-repo/kaiko_proxy",
     remote_tags = ":remote_tag",
     visibility = ["//visibility:public"],
 )

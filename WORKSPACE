@@ -122,17 +122,6 @@ oci_pull(
     platforms = ["linux/amd64","linux/arm64"],
 )
 
-# https://images.chainguard.dev/directory/image/curl/versions
-# https://hub.docker.com/r/chainguard/curl/tags?page=&page_size=&ordering=&name=latest
-# Releases: https://edu.chainguard.dev/chainguard/chainguard-images/reference/static/tags_history/
-load("@rules_oci//oci:pull.bzl", "oci_pull")
-oci_pull(
-    name = "curl_image",
-    digest = "sha256:ee18838499f08683608f10de1571d1a2a162090e1d10faade140eff5269cb5fb",
-    image = "cgr.dev/chainguard/curl",
-    platforms = ["linux/amd64","linux/arm64"],
-)
-
 ###############################################################################
 # BuildBuddy Toolchain
 # Releases: https://github.com/buildbuddy-io/buildbuddy-toolchain/
@@ -289,10 +278,10 @@ crates_repository(
                      version = "1.38",
             ),
 
-            "tokio-cron": crate.spec(
-                     version = "0.1.3",
+           "tokio-cron-scheduler": crate.spec(
+                     version = "0.10",
+                     features = ["signal"],
             ),
-
 
             "tokio-tungstenite": crate.spec(
                      default_features=False,
@@ -304,7 +293,7 @@ crates_repository(
             ),
 
             "warp": crate.spec(
-                         version = "0.3",
+                    version = "0.3",
             ),
     },
 
