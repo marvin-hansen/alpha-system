@@ -109,23 +109,12 @@ oci_register_toolchains(
     crane_version = LATEST_CRANE_VERSION,
 )
 
-# https://images.chainguard.dev/directory/image/static/versions
-# Releases: https://edu.chainguard.dev/chainguard/chainguard-images/reference/static/tags_history/
 load("@rules_oci//oci:pull.bzl", "oci_pull")
 oci_pull(
     name = "distroless",
     digest = "sha256:e1065a1d58800a7294f74e67c32ec4146d09d6cbe471c1fa7ed456b2d2bf06e0",
     image = "gcr.io/distroless/cc-debian12",
     platforms = ["linux/amd64", "linux/arm64/v8"],
-)
-
-# https://images.chainguard.dev/directory/image/cc-dynamic/overview
-# https://hub.docker.com/layers/chainguard/cc-dynamic/latest/images/sha256-e308c2f1d052045f0e373c7252c26e0405bd84e386c19a73b3dc818365a8ccf7?context=explore
-oci_pull(
-    name = "cc-dynamic",
-    digest = "sha256:8274e806c70e6b0a5a8905be6d86539b1ab5843a080cdabbe40517faf8c4215e",
-    image = "cgr.dev/chainguard/cc-dynamic",
-    platforms = ["linux/amd64","linux/arm64"],
 )
 
 ###############################################################################

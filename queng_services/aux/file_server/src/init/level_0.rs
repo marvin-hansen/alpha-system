@@ -6,10 +6,15 @@ impl InitManager {
     pub(super) async fn init_level_0(&self) -> Result<Vec<String>, InitError> {
         //
         self.dbg_print("Level 0: Loading valid exchanges");
-        let valid_exchanges = util_scraping::scrap_valid_exchanges()
-            .await
-            .expect("Error scraping valid exchanges");
+        let valid_exchanges = get_valid_exchanges().await;
 
         Ok(valid_exchanges)
     }
+}
+
+async fn get_valid_exchanges() -> Vec<String> {
+    let valid_exchanges = util_scraping::scrap_valid_exchanges()
+        .await
+        .expect("Error scraping valid exchanges");
+    valid_exchanges
 }

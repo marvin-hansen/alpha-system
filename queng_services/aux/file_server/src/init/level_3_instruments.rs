@@ -7,13 +7,10 @@ use common::prelude::Instrument;
 impl InitManager {
     pub(super) async fn init_level_3_instruments(&self) -> Result<Vec<Instrument>, InitError> {
         self.dbg_print("Level 3: Download reference instrument data!");
-        let downloaded_instruments = utils::download_instruments()
-            .await
-            .expect("Failed to download instrument data");
+        let downloaded_instruments = get_instruments().await;
 
         self.dbg_print("Level 3: Process the downloaded instrument data");
-        let processed_instruments = self
-            .process_instruments(downloaded_instruments)
+        let processed_instruments = process_instruments(downloaded_instruments)
             .await
             .expect("Failed to process reference Instrument data");
 
@@ -27,23 +24,30 @@ impl InitManager {
 
         Ok(processed_instruments)
     }
+}
 
-    async fn process_instruments(
-        &self,
-        downloaded_instruments: Vec<Instrument>,
-    ) -> Result<Vec<Instrument>, InitError> {
-        // By experience, at least 90% of the reference data are junk ie inactive thus small alloc.
-        let capacity = downloaded_instruments.len() * 0.10 as usize;
-        let mut processed_instruments = Vec::with_capacity(capacity);
+async fn get_instruments() -> Vec<Instrument> {
+    let downloaded_instruments = utils::download_instruments()
+        .await
+        .expect("Failed to download instrument data");
 
-        for i in downloaded_instruments.iter() {
-            if is_valid_instrument(i) {
-                processed_instruments.push(i.to_owned())
-            }
+    downloaded_instruments
+}
+
+async fn process_instruments(
+    downloaded_instruments: Vec<Instrument>,
+) -> Result<Vec<Instrument>, InitError> {
+    // By experience, at least 90% of the reference data are junk ie inactive thus small alloc.
+    let capacity = downloaded_instruments.len() * 0.10 as usize;
+    let mut processed_instruments = Vec::with_capacity(capacity);
+
+    for i in downloaded_instruments.iter() {
+        if is_valid_instrument(i) {
+            processed_instruments.push(i.to_owned())
         }
-
-        Ok(processed_instruments)
     }
+
+    Ok(processed_instruments)
 }
 
 // Double check if instrument is inactive i.e. from an inactive exchange
