@@ -1,5 +1,5 @@
 {
-  "checksum": "b7de79639ca1f42991751693ac40321146d6a6fbb6e1b6434b29f91fee29fa86",
+  "checksum": "12a6c3242fc785267f2de26a486dad136f04baf835fa44dd2c48d0aa64633335",
   "crates": {
     "addr2line 0.21.0": {
       "name": "addr2line",
@@ -5676,12 +5676,20 @@
               "target": "hickory_resolver"
             },
             {
+              "id": "jemallocator 0.5.4",
+              "target": "jemallocator"
+            },
+            {
               "id": "klickhouse 0.13.0",
               "target": "klickhouse"
             },
             {
               "id": "lru 0.12.3",
               "target": "lru"
+            },
+            {
+              "id": "mimalloc 0.1.42",
+              "target": "mimalloc"
             },
             {
               "id": "parquet 51.0.0",
@@ -9980,6 +9988,150 @@
       ],
       "license_file": "LICENSE-APACHE"
     },
+    "jemalloc-sys 0.5.4+5.3.0-patched": {
+      "name": "jemalloc-sys",
+      "version": "0.5.4+5.3.0-patched",
+      "package_url": "https://github.com/tikv/jemallocator",
+      "repository": {
+        "Http": {
+          "url": "https://static.crates.io/crates/jemalloc-sys/0.5.4+5.3.0-patched/download",
+          "sha256": "ac6c1946e1cea1788cbfde01c993b52a10e2da07f4bac608228d1bed20bfebf2"
+        }
+      },
+      "targets": [
+        {
+          "Library": {
+            "crate_name": "jemalloc_sys",
+            "crate_root": "src/lib.rs",
+            "srcs": {
+              "allow_empty": false,
+              "include": [
+                "**/*.rs"
+              ]
+            }
+          }
+        },
+        {
+          "BuildScript": {
+            "crate_name": "build_script_build",
+            "crate_root": "build.rs",
+            "srcs": {
+              "allow_empty": false,
+              "include": [
+                "**/*.rs"
+              ]
+            }
+          }
+        }
+      ],
+      "library_target_name": "jemalloc_sys",
+      "common_attrs": {
+        "compile_data_glob": [
+          "**"
+        ],
+        "crate_features": {
+          "common": [
+            "background_threads_runtime_support"
+          ],
+          "selects": {}
+        },
+        "deps": {
+          "common": [
+            {
+              "id": "jemalloc-sys 0.5.4+5.3.0-patched",
+              "target": "build_script_build"
+            },
+            {
+              "id": "libc 0.2.153",
+              "target": "libc"
+            }
+          ],
+          "selects": {}
+        },
+        "edition": "2018",
+        "version": "0.5.4+5.3.0-patched"
+      },
+      "build_script_attrs": {
+        "data_glob": [
+          "**"
+        ],
+        "deps": {
+          "common": [
+            {
+              "id": "cc 1.0.90",
+              "target": "cc"
+            }
+          ],
+          "selects": {}
+        },
+        "links": "jemalloc"
+      },
+      "license": "MIT/Apache-2.0",
+      "license_ids": [
+        "Apache-2.0",
+        "MIT"
+      ],
+      "license_file": "LICENSE-APACHE"
+    },
+    "jemallocator 0.5.4": {
+      "name": "jemallocator",
+      "version": "0.5.4",
+      "package_url": "https://github.com/tikv/jemallocator",
+      "repository": {
+        "Http": {
+          "url": "https://static.crates.io/crates/jemallocator/0.5.4/download",
+          "sha256": "a0de374a9f8e63150e6f5e8a60cc14c668226d7a347d8aee1a45766e3c4dd3bc"
+        }
+      },
+      "targets": [
+        {
+          "Library": {
+            "crate_name": "jemallocator",
+            "crate_root": "src/lib.rs",
+            "srcs": {
+              "allow_empty": false,
+              "include": [
+                "**/*.rs"
+              ]
+            }
+          }
+        }
+      ],
+      "library_target_name": "jemallocator",
+      "common_attrs": {
+        "compile_data_glob": [
+          "**"
+        ],
+        "crate_features": {
+          "common": [
+            "background_threads_runtime_support",
+            "default"
+          ],
+          "selects": {}
+        },
+        "deps": {
+          "common": [
+            {
+              "id": "jemalloc-sys 0.5.4+5.3.0-patched",
+              "target": "jemalloc_sys"
+            },
+            {
+              "id": "libc 0.2.153",
+              "target": "libc"
+            }
+          ],
+          "selects": {}
+        },
+        "edition": "2018",
+        "version": "0.5.4"
+      },
+      "license": "MIT/Apache-2.0",
+      "license_ids": [
+        "Apache-2.0",
+        "MIT"
+      ],
+      "license_file": "LICENSE-APACHE"
+    },
     "jobserver 0.1.31": {
       "name": "jobserver",
       "version": "0.1.31",
@@ -10931,6 +11083,84 @@
       ],
       "license_file": "LICENSE-APACHE"
     },
+    "libmimalloc-sys 0.1.38": {
+      "name": "libmimalloc-sys",
+      "version": "0.1.38",
+      "package_url": "https://github.com/purpleprotocol/mimalloc_rust/tree/master/libmimalloc-sys",
+      "repository": {
+        "Http": {
+          "url": "https://static.crates.io/crates/libmimalloc-sys/0.1.38/download",
+          "sha256": "0e7bb23d733dfcc8af652a78b7bf232f0e967710d044732185e561e47c0336b6"
+        }
+      },
+      "targets": [
+        {
+          "Library": {
+            "crate_name": "libmimalloc_sys",
+            "crate_root": "src/lib.rs",
+            "srcs": {
+              "allow_empty": false,
+              "include": [
+                "**/*.rs"
+              ]
+            }
+          }
+        },
+        {
+          "BuildScript": {
+            "crate_name": "build_script_build",
+            "crate_root": "build.rs",
+            "srcs": {
+              "allow_empty": false,
+              "include": [
+                "**/*.rs"
+              ]
+            }
+          }
+        }
+      ],
+      "library_target_name": "libmimalloc_sys",
+      "common_attrs": {
+        "compile_data_glob": [
+          "**"
+        ],
+        "deps": {
+          "common": [
+            {
+              "id": "libc 0.2.153",
+              "target": "libc"
+            },
+            {
+              "id": "libmimalloc-sys 0.1.38",
+              "target": "build_script_build"
+            }
+          ],
+          "selects": {}
+        },
+        "edition": "2018",
+        "version": "0.1.38"
+      },
+      "build_script_attrs": {
+        "data_glob": [
+          "**"
+        ],
+        "deps": {
+          "common": [
+            {
+              "id": "cc 1.0.90",
+              "target": "cc"
+            }
+          ],
+          "selects": {}
+        },
+        "links": "mimalloc"
+      },
+      "license": "MIT",
+      "license_ids": [
+        "MIT"
+      ],
+      "license_file": "LICENSE.txt"
+    },
     "linked-hash-map 0.5.6": {
       "name": "linked-hash-map",
       "version": "0.5.6",
@@ -11741,6 +11971,59 @@
         "Unlicense"
       ],
       "license_file": "LICENSE-MIT"
+    },
+    "mimalloc 0.1.42": {
+      "name": "mimalloc",
+      "version": "0.1.42",
+      "package_url": "https://github.com/purpleprotocol/mimalloc_rust",
+      "repository": {
+        "Http": {
+          "url": "https://static.crates.io/crates/mimalloc/0.1.42/download",
+          "sha256": "e9186d86b79b52f4a77af65604b51225e8db1d6ee7e3f41aec1e40829c71a176"
+        }
+      },
+      "targets": [
+        {
+          "Library": {
+            "crate_name": "mimalloc",
+            "crate_root": "src/lib.rs",
+            "srcs": {
+              "allow_empty": false,
+              "include": [
+                "**/*.rs"
+              ]
+            }
+          }
+        }
+      ],
+      "library_target_name": "mimalloc",
+      "common_attrs": {
+        "compile_data_glob": [
+          "**"
+        ],
+        "crate_features": {
+          "common": [
+            "default"
+          ],
+          "selects": {}
+        },
+        "deps": {
+          "common": [
+            {
+              "id": "libmimalloc-sys 0.1.38",
+              "target": "libmimalloc_sys"
+            }
+          ],
+          "selects": {}
+        },
+        "edition": "2018",
+        "version": "0.1.42"
+      },
+      "license": "MIT",
+      "license_ids": [
+        "MIT"
+      ],
+      "license_file": "LICENSE.txt"
     },
     "mime 0.3.17": {
       "name": "mime",
@@ -26436,8 +26719,10 @@
     "encoding_rs 0.8.33",
     "futures 0.3.30",
     "hickory-resolver 0.24.0",
+    "jemallocator 0.5.4",
     "klickhouse 0.13.0",
     "lru 0.12.3",
+    "mimalloc 0.1.42",
     "parquet 51.0.0",
     "prost 0.12.3",
     "prost-types 0.12.3",

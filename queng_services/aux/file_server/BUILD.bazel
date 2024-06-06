@@ -33,6 +33,8 @@ rust_binary(
         "//queng_components/config_manager:config_manager",
         "//queng_components/ctx_manager:ctx_manager",
         "//queng_components/dns_manager:dns_manager",
+        # Custom Memory Allocator
+        "@crate_index//:mimalloc",
         # External crates
         "@crate_index//:arc-swap",
         "@crate_index//:chrono",

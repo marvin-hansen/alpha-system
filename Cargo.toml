@@ -102,6 +102,12 @@ proto_utils = { path = "queng_utils/proto_utils" }
 service_utils = { path = "queng_utils/service_utils" }
 #
 # ==============
+# Custom Memory Allocator
+# ==============
+jemallocator = "0.5.4"
+mimalloc = { version = "0.1.42" }
+#
+# ==============
 # External crates
 # ==============
 #

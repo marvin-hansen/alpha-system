@@ -160,6 +160,15 @@ crates_repository(
     cargo_lockfile = "//:Cargo.lock",
     lockfile = "//:cargo-bazel-lock.json",
     packages = {
+            # Custom Memory Allocator
+            "jemallocator": crate.spec(
+                             version = "0.5.4",
+            ),
+
+            "mimalloc": crate.spec(
+                          version = "0.1.42",
+            ),
+
             "anyhow": crate.spec(
                           version = "1.0",
             ),

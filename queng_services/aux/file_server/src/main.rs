@@ -18,6 +18,11 @@ mod init;
 mod types;
 mod utils;
 
+use mimalloc::MiMalloc;
+
+#[global_allocator]
+static GLOBAL: MiMalloc = MiMalloc;
+
 const VRB: bool = true;
 const PORT: u16 = 7777;
 
