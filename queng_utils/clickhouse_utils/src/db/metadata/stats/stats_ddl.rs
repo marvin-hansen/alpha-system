@@ -1,4 +1,4 @@
-use crate::db::metadata::Metadata;
+use crate::db::metadata::{Metadata, DB_NAME};
 
 impl Metadata {
     pub fn generate_create_stats_table_ddl(&self) -> String {
