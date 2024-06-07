@@ -39,6 +39,14 @@ impl EnvUtil {
         // Otherwise, you may get a connection refused error when connecting the client.
         sleep(Duration::from_millis(500));
 
+        self.dbg_print("Set container names and ports");
+        // API Proxy
+        self.set_api_proxy_container_name(api_proxy_container_name);
+        self.set_api_proxy_container_port(api_proxy_container_port);
+        // ClickHouse
+        self.set_clickhouse_container_name(clickhouse_container_name);
+        self.set_clickhouse_container_port(clickhouse_container_port);
+
         // Once the container is up & running, configure the DB
         self.dbg_print("Get clickhouse client");
         let client = self
@@ -59,14 +67,6 @@ impl EnvUtil {
             .await
             .expect("Failed to configure clickhouse DB");
 
-        self.dbg_print("Set container name and port");
-        // API Proxy
-        self.set_api_proxy_container_name(api_proxy_container_name);
-        self.set_api_proxy_container_port(api_proxy_container_port);
-        // ClickHouse
-        self.set_clickhouse_container_name(clickhouse_container_name);
-        self.set_clickhouse_container_port(clickhouse_container_port);
-
         Ok(())
     }
 
@@ -76,15 +76,26 @@ impl EnvUtil {
         container_config: &ContainerConfig<'_>,
         kaiko_util: &KaikoUtil,
     ) -> Result<(), EnvironmentError> {
-        // Check if DB is already configured
-        let configured = self.is_clickhouse_configured(container_config);
-        if configured {
-            return Ok(());
+        //
+        self.dbg_print("Check if clickhouse is already configured");
+        if self.is_clickhouse_configured(container_config) {
+            // Check if NO reset is required.
+            self.dbg_print("Check if NO reset is required");
+            if !container_config.reset_configuration() {
+                if self.is_data_set_current(ch_utils, kaiko_util) {
+                    // If so, abort & return.
+                    // Nothing to do in this case.
+                    self.dbg_print("Nothing to configure or reset; return.");
+                    return Ok(());
+                }
+            }
         }
 
-        // Check if the container configuration should be re-set
-        let reset_config = container_config.reset_configuration();
-        if reset_config {
+        // Check if the container configuration should be reset
+        // or if the dataset is outdated. If so, delete everything.
+        self.dbg_print("Check if reset is required if data are outdated");
+        if container_config.reset_configuration() || !self.is_data_set_current(ch_utils, kaiko_util)
+        {
             self.dbg_print("Drop all databases");
             ch_utils
                 .teardown_db()
@@ -92,18 +103,58 @@ impl EnvUtil {
                 .expect("[configure_clickhouse]: Failed to drop all databases")
         }
 
+        // We know that the DB is either not configured or has been deleted
+        // so we can re-crete all databases, tables, and import all data;
+        self.dbg_print("Create all databases & tables");
+        self.setup_db_and_tables(ch_utils)
+            .await
+            .expect("[configure_clickhouse]: Failed to create all databases and tables");
+
+        self.import_data(ch_utils, kaiko_util)
+            .await
+            .expect("[configure_clickhouse]: Failed to import data int Clickhouse");
+
+        Ok(())
+    }
+}
+
+impl EnvUtil {
+    fn is_clickhouse_configured(&self, _container_config: &ContainerConfig) -> bool {
+        // read stats table from CH and if there is no error, return true.
+        false
+    }
+
+    fn is_data_set_current(&self, _ch_utils: &ClickhouseUtil, _kaiko_util: &KaikoUtil) -> bool {
+        //
+        // read stats table from CH and extract hash
+        // compare hash from DB to hash from API
+        // return true if they match, otherwise false.
+        false
+    }
+
+    async fn setup_db_and_tables(&self, ch_utils: &ClickhouseUtil) -> Result<(), EnvironmentError> {
+        //
         self.dbg_print("Create all databases");
         ch_utils
             .setup_db()
             .await
-            .expect("[configure_clickhouse]: Failed to create all databases");
+            .expect("[setup_db_and_tables]: Failed to create all databases");
 
         self.dbg_print("Create all metadata tables");
         ch_utils
             .create_metadata_tables()
             .await
-            .expect("Failed to create metadata tables");
+            .expect("[setup_db_and_tables]: Failed to create metadata tables");
 
+        Ok(())
+    }
+
+    pub(crate) async fn import_data(
+        &self,
+        ch_utils: &ClickhouseUtil,
+        kaiko_util: &KaikoUtil,
+    ) -> Result<(), EnvironmentError> {
+        //
         self.dbg_print("Download assets metadata");
         let assets = kaiko_util.get_assets().await.expect("Failed to get assets");
 
@@ -138,9 +189,5 @@ impl EnvUtil {
             .expect("Failed to import instrument metadata");
 
         Ok(())
-    }
-
-    pub(crate) fn is_clickhouse_configured(&self, _container_config: &ContainerConfig) -> bool {
-        false
     }
 }

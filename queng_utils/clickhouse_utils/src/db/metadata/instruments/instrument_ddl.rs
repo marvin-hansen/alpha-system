@@ -1,10 +1,10 @@
-use crate::db::metadata::{Metadata, TABLE_NAME};
+use crate::db::metadata::{Metadata, DB_NAME};
 
 impl Metadata {
     pub fn generate_create_instruments_table_ddl(&self) -> String {
         format!(
             "
-     CREATE TABLE IF NOT EXISTS {TABLE_NAME}.instruments
+     CREATE TABLE IF NOT EXISTS {DB_NAME}.instruments
      (
        `trade_start_timestamp` UInt64 CODEC(Delta, LZ4),
        `trade_end_timestamp` UInt64 CODEC(Delta, LZ4),
@@ -40,6 +40,6 @@ impl Metadata {
     }
 
     pub fn generate_drop_instruments_table_ddl(&self) -> String {
-        format!("DROP TABLE IF EXISTS {TABLE_NAME}.instruments")
+        format!("DROP TABLE IF EXISTS {DB_NAME}.instruments")
     }
 }

@@ -1,9 +1,9 @@
-use crate::db::metadata::{Metadata, TABLE_NAME};
+use crate::db::metadata::{Metadata, DB_NAME};
 use common::prelude::{Asset, AssetMetadata};
 
 impl Metadata {
     pub fn generate_asset_insert(&self, asset: &Asset) -> String {
-        let table_name = format!("{TABLE_NAME}.assets");
+        let table_name = format!("{DB_NAME}.assets");
         let code = &asset.code;
         // ClickHouse needs quotes to be escaped
         // https://github.com/ClickHouse/ClickHouse/issues/191

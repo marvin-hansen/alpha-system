@@ -1,9 +1,9 @@
-use crate::db::metadata::{Metadata, TABLE_NAME};
+use crate::db::metadata::{Metadata, DB_NAME};
 use common::prelude::Exchange;
 
 impl Metadata {
     pub fn generate_exchange_insert(&self, exchange: &Exchange) -> String {
-        let table_name = format!("{TABLE_NAME}.exchanges");
+        let table_name = format!("{DB_NAME}.exchanges");
         let code = &exchange.code;
         let name = &exchange.name;
         format!(

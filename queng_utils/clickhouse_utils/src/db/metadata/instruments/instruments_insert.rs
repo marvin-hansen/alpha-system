@@ -1,9 +1,9 @@
-use crate::db::metadata::{Metadata, TABLE_NAME};
+use crate::db::metadata::{Metadata, DB_NAME};
 use common::prelude::{Instrument, InstrumentMetadata};
 
 impl Metadata {
     pub fn generate_instruments_insert(&self, instrument: &Instrument) -> String {
-        let table_name = format!("{TABLE_NAME}.instruments");
+        let table_name = format!("{DB_NAME}.instruments");
         let trade_start_timestamp = instrument.trade_start_timestamp.unwrap_or(0);
         let trade_end_timestamp = instrument.trade_end_timestamp.unwrap_or(0);
         let exchange_code = instrument.exchange_code();

@@ -1,10 +1,10 @@
-use crate::db::metadata::{Metadata, TABLE_NAME};
+use crate::db::metadata::{Metadata, DB_NAME};
 
 impl Metadata {
     pub fn generate_create_asset_table_ddl(&self) -> String {
         format!(
             "
-    CREATE TABLE IF NOT EXISTS {TABLE_NAME}.assets
+    CREATE TABLE IF NOT EXISTS {DB_NAME}.assets
     (
         `code` String CODEC(LZ4),
         `name` String CODEC(LZ4),
@@ -29,6 +29,6 @@ impl Metadata {
     }
 
     pub fn generate_drop_asset_table_ddl(&self) -> String {
-        format!("DROP TABLE IF EXISTS {TABLE_NAME}.assets")
+        format!("DROP TABLE IF EXISTS {DB_NAME}.assets")
     }
 }
