@@ -3,6 +3,7 @@ use crate::init::InitManager;
 use crate::types::meta_data_set::MetaDataSet;
 use crate::types::MetaDataStore;
 use arc_swap::ArcSwap;
+use jemallocator::Jemalloc;
 use service_utils::print_utils;
 use std::ops::Deref;
 use std::sync::Arc;
@@ -17,6 +18,9 @@ mod handler;
 mod init;
 mod types;
 mod utils;
+
+#[global_allocator]
+static GLOBAL: Jemalloc = Jemalloc;
 
 const VRB: bool = false;
 const PORT: u16 = 7777;
@@ -144,9 +148,11 @@ fn dbg_print(s: &str) {
 }
 
 async fn run_init(update: bool) -> Result<MetaDataSet, InitError> {
-    // im drops at the end of the function & released all temporary memory,
     let im = InitManager::new(VRB);
-    return match im.init(update).await {
+    let result = im.init(update).await;
+    drop(im);
+
+    return match result {
         Ok(meta_data_set) => Ok(meta_data_set),
         Err(e) => Err(e),
     };

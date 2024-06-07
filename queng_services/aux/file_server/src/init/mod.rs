@@ -4,18 +4,22 @@ mod level_1_exchanges;
 mod level_2_assets;
 mod level_3_instruments;
 
-use serde::{Deserialize, Serialize};
+use crate::utils::util_download::DownloadUtils;
 use service_utils::print_utils;
 use std::time::Duration;
 
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone)]
 pub struct InitManager {
     dbg: bool,
+    dl_utils: DownloadUtils,
 }
 
 impl InitManager {
     pub fn new(dbg: bool) -> Self {
-        Self { dbg }
+        Self {
+            dbg,
+            dl_utils: DownloadUtils::new(),
+        }
     }
 }
 

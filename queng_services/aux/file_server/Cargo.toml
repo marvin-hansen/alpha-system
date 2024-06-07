@@ -20,6 +20,9 @@ config_manager = {workspace = true}
 ctx_manager = {workspace = true}
 dns_manager = {workspace = true}
 service_utils = {workspace = true}
+# Custom Memory Allocator
+[target.'cfg(not(target_env = "msvc"))'.dependencies]
+jemallocator = {workspace = true}
 # External crates
 arc-swap = { workspace = true }
 chrono = { workspace = true }

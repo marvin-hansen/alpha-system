@@ -1,6 +1,5 @@
 use crate::errors::InitError;
 use crate::init::InitManager;
-use crate::utils;
 use common::prelude::Exchange;
 
 impl InitManager {
@@ -10,7 +9,11 @@ impl InitManager {
     ) -> Result<Vec<Exchange>, InitError> {
         //
         self.dbg_print("Level 1: Download reference exchange data!");
-        let downloaded_exchanges = get_exchanges().await;
+        let downloaded_exchanges = self
+            .dl_utils
+            .download_exchanges()
+            .await
+            .expect("Failed to download exchange data");
 
         self.dbg_print("Level 1: Process downloaded exchanges");
         let processed_exchanges = process_exchanges(valid_exchanges, downloaded_exchanges)
@@ -27,14 +30,6 @@ impl InitManager {
 
         Ok(processed_exchanges)
     }
-}
-
-async fn get_exchanges() -> Vec<Exchange> {
-    let downloaded_exchanges = utils::download_exchanges()
-        .await
-        .expect("Failed to download exchange data");
-
-    downloaded_exchanges
 }
 
 async fn process_exchanges(

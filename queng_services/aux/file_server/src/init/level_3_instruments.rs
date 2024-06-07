@@ -1,13 +1,16 @@
 use crate::errors::InitError;
 use crate::fields::DEX;
 use crate::init::InitManager;
-use crate::utils;
 use common::prelude::Instrument;
 
 impl InitManager {
     pub(super) async fn init_level_3_instruments(&self) -> Result<Vec<Instrument>, InitError> {
         self.dbg_print("Level 3: Download reference instrument data!");
-        let downloaded_instruments = get_instruments().await;
+        let downloaded_instruments = self
+            .dl_utils
+            .download_instruments()
+            .await
+            .expect("Failed to download instrument data");
 
         self.dbg_print("Level 3: Process the downloaded instrument data");
         let processed_instruments = process_instruments(downloaded_instruments)
@@ -24,14 +27,6 @@ impl InitManager {
 
         Ok(processed_instruments)
     }
-}
-
-async fn get_instruments() -> Vec<Instrument> {
-    let downloaded_instruments = utils::download_instruments()
-        .await
-        .expect("Failed to download instrument data");
-
-    downloaded_instruments
 }
 
 async fn process_instruments(
