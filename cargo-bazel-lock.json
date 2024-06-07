@@ -1,5 +1,5 @@
 {
-  "checksum": "12a6c3242fc785267f2de26a486dad136f04baf835fa44dd2c48d0aa64633335",
+  "checksum": "6be993fe7a4de0ee9de8151e7d4d2fdda95e191e1356e0984644fda1cec7ac1a",
   "crates": {
     "addr2line 0.21.0": {
       "name": "addr2line",
@@ -757,14 +757,14 @@
       ],
       "license_file": "LICENSE-APACHE"
     },
-    "arrow-array 51.0.0": {
+    "arrow-array 52.0.0": {
       "name": "arrow-array",
-      "version": "51.0.0",
+      "version": "52.0.0",
       "package_url": "https://github.com/apache/arrow-rs",
       "repository": {
         "Http": {
-          "url": "https://static.crates.io/crates/arrow-array/51.0.0/download",
-          "sha256": "8010572cf8c745e242d1b632bd97bd6d4f40fefed5ed1290a8f433abaa686fea"
+          "url": "https://static.crates.io/crates/arrow-array/52.0.0/download",
+          "sha256": "d33238427c60271710695f17742f45b1a5dc5bcfc5c15331c25ddfe7abf70d97"
         }
       },
       "targets": [
@@ -789,15 +789,15 @@
         "deps": {
           "common": [
             {
-              "id": "arrow-buffer 51.0.0",
+              "id": "arrow-buffer 52.0.0",
               "target": "arrow_buffer"
             },
             {
-              "id": "arrow-data 51.0.0",
+              "id": "arrow-data 52.0.0",
               "target": "arrow_data"
             },
             {
-              "id": "arrow-schema 51.0.0",
+              "id": "arrow-schema 52.0.0",
               "target": "arrow_schema"
             },
             {
@@ -833,7 +833,7 @@
           }
         },
         "edition": "2021",
-        "version": "51.0.0"
+        "version": "52.0.0"
       },
       "license": "Apache-2.0",
       "license_ids": [
@@ -841,14 +841,14 @@
       ],
       "license_file": null
     },
-    "arrow-buffer 51.0.0": {
+    "arrow-buffer 52.0.0": {
       "name": "arrow-buffer",
-      "version": "51.0.0",
+      "version": "52.0.0",
       "package_url": "https://github.com/apache/arrow-rs",
       "repository": {
         "Http": {
-          "url": "https://static.crates.io/crates/arrow-buffer/51.0.0/download",
-          "sha256": "0d0a2432f0cba5692bf4cb757469c66791394bac9ec7ce63c1afe74744c37b27"
+          "url": "https://static.crates.io/crates/arrow-buffer/52.0.0/download",
+          "sha256": "fe9b95e825ae838efaf77e366c00d3fc8cca78134c9db497d6bda425f2e7b7c1"
         }
       },
       "targets": [
@@ -888,7 +888,7 @@
           "selects": {}
         },
         "edition": "2021",
-        "version": "51.0.0"
+        "version": "52.0.0"
       },
       "license": "Apache-2.0",
       "license_ids": [
@@ -896,14 +896,14 @@
       ],
       "license_file": null
     },
-    "arrow-cast 51.0.0": {
+    "arrow-cast 52.0.0": {
       "name": "arrow-cast",
-      "version": "51.0.0",
+      "version": "52.0.0",
       "package_url": "https://github.com/apache/arrow-rs",
       "repository": {
         "Http": {
-          "url": "https://static.crates.io/crates/arrow-cast/51.0.0/download",
-          "sha256": "9abc10cd7995e83505cc290df9384d6e5412b207b79ce6bdff89a10505ed2cba"
+          "url": "https://static.crates.io/crates/arrow-cast/52.0.0/download",
+          "sha256": "87cf8385a9d5b5fcde771661dd07652b79b9139fea66193eda6a88664400ccab"
         }
       },
       "targets": [
@@ -928,23 +928,23 @@
         "deps": {
           "common": [
             {
-              "id": "arrow-array 51.0.0",
+              "id": "arrow-array 52.0.0",
               "target": "arrow_array"
             },
             {
-              "id": "arrow-buffer 51.0.0",
+              "id": "arrow-buffer 52.0.0",
               "target": "arrow_buffer"
             },
             {
-              "id": "arrow-data 51.0.0",
+              "id": "arrow-data 52.0.0",
               "target": "arrow_data"
             },
             {
-              "id": "arrow-schema 51.0.0",
+              "id": "arrow-schema 52.0.0",
               "target": "arrow_schema"
             },
             {
-              "id": "arrow-select 51.0.0",
+              "id": "arrow-select 52.0.0",
               "target": "arrow_select"
             },
             {
@@ -979,7 +979,7 @@
           "selects": {}
         },
         "edition": "2021",
-        "version": "51.0.0"
+        "version": "52.0.0"
       },
       "license": "Apache-2.0",
       "license_ids": [
@@ -987,14 +987,14 @@
       ],
       "license_file": null
     },
-    "arrow-data 51.0.0": {
+    "arrow-data 52.0.0": {
       "name": "arrow-data",
-      "version": "51.0.0",
+      "version": "52.0.0",
       "package_url": "https://github.com/apache/arrow-rs",
       "repository": {
         "Http": {
-          "url": "https://static.crates.io/crates/arrow-data/51.0.0/download",
-          "sha256": "2742ac1f6650696ab08c88f6dd3f0eb68ce10f8c253958a18c943a68cd04aec5"
+          "url": "https://static.crates.io/crates/arrow-data/52.0.0/download",
+          "sha256": "cb29be98f987bcf217b070512bb7afba2f65180858bca462edf4a39d84a23e10"
         }
       },
       "targets": [
@@ -1019,11 +1019,11 @@
         "deps": {
           "common": [
             {
-              "id": "arrow-buffer 51.0.0",
+              "id": "arrow-buffer 52.0.0",
               "target": "arrow_buffer"
             },
             {
-              "id": "arrow-schema 51.0.0",
+              "id": "arrow-schema 52.0.0",
               "target": "arrow_schema"
             },
             {
@@ -1038,7 +1038,7 @@
           "selects": {}
         },
         "edition": "2021",
-        "version": "51.0.0"
+        "version": "52.0.0"
       },
       "license": "Apache-2.0",
       "license_ids": [
@@ -1046,14 +1046,14 @@
       ],
       "license_file": null
     },
-    "arrow-ipc 51.0.0": {
+    "arrow-ipc 52.0.0": {
       "name": "arrow-ipc",
-      "version": "51.0.0",
+      "version": "52.0.0",
       "package_url": "https://github.com/apache/arrow-rs",
       "repository": {
         "Http": {
-          "url": "https://static.crates.io/crates/arrow-ipc/51.0.0/download",
-          "sha256": "a42ea853130f7e78b9b9d178cb4cd01dee0f78e64d96c2949dc0a915d6d9e19d"
+          "url": "https://static.crates.io/crates/arrow-ipc/52.0.0/download",
+          "sha256": "ffc68f6523970aa6f7ce1dc9a33a7d9284cfb9af77d4ad3e617dbe5d79cc6ec8"
         }
       },
       "targets": [
@@ -1084,34 +1084,34 @@
         "deps": {
           "common": [
             {
-              "id": "arrow-array 51.0.0",
+              "id": "arrow-array 52.0.0",
               "target": "arrow_array"
             },
             {
-              "id": "arrow-buffer 51.0.0",
+              "id": "arrow-buffer 52.0.0",
               "target": "arrow_buffer"
             },
             {
-              "id": "arrow-cast 51.0.0",
+              "id": "arrow-cast 52.0.0",
               "target": "arrow_cast"
             },
             {
-              "id": "arrow-data 51.0.0",
+              "id": "arrow-data 52.0.0",
               "target": "arrow_data"
             },
             {
-              "id": "arrow-schema 51.0.0",
+              "id": "arrow-schema 52.0.0",
               "target": "arrow_schema"
             },
             {
-              "id": "flatbuffers 23.5.26",
+              "id": "flatbuffers 24.3.25",
               "target": "flatbuffers"
             }
           ],
           "selects": {}
         },
         "edition": "2021",
-        "version": "51.0.0"
+        "version": "52.0.0"
       },
       "license": "Apache-2.0",
       "license_ids": [
@@ -1119,14 +1119,14 @@
       ],
       "license_file": null
     },
-    "arrow-schema 51.0.0": {
+    "arrow-schema 52.0.0": {
       "name": "arrow-schema",
-      "version": "51.0.0",
+      "version": "52.0.0",
       "package_url": "https://github.com/apache/arrow-rs",
       "repository": {
         "Http": {
-          "url": "https://static.crates.io/crates/arrow-schema/51.0.0/download",
-          "sha256": "02d9483aaabe910c4781153ae1b6ae0393f72d9ef757d38d09d450070cf2e528"
+          "url": "https://static.crates.io/crates/arrow-schema/52.0.0/download",
+          "sha256": "32aae6a60458a2389c0da89c9de0b7932427776127da1a738e2efc21d32f3393"
         }
       },
       "targets": [
@@ -1149,7 +1149,7 @@
           "**"
         ],
         "edition": "2021",
-        "version": "51.0.0"
+        "version": "52.0.0"
       },
       "license": "Apache-2.0",
       "license_ids": [
@@ -1157,14 +1157,14 @@
       ],
       "license_file": null
     },
-    "arrow-select 51.0.0": {
+    "arrow-select 52.0.0": {
       "name": "arrow-select",
-      "version": "51.0.0",
+      "version": "52.0.0",
       "package_url": "https://github.com/apache/arrow-rs",
       "repository": {
         "Http": {
-          "url": "https://static.crates.io/crates/arrow-select/51.0.0/download",
-          "sha256": "849524fa70e0e3c5ab58394c770cb8f514d0122d20de08475f7b472ed8075830"
+          "url": "https://static.crates.io/crates/arrow-select/52.0.0/download",
+          "sha256": "de36abaef8767b4220d7b4a8c2fe5ffc78b47db81b03d77e2136091c3ba39102"
         }
       },
       "targets": [
@@ -1199,19 +1199,19 @@
               "target": "ahash"
             },
             {
-              "id": "arrow-array 51.0.0",
+              "id": "arrow-array 52.0.0",
               "target": "arrow_array"
             },
             {
-              "id": "arrow-buffer 51.0.0",
+              "id": "arrow-buffer 52.0.0",
               "target": "arrow_buffer"
             },
             {
-              "id": "arrow-data 51.0.0",
+              "id": "arrow-data 52.0.0",
               "target": "arrow_data"
             },
             {
-              "id": "arrow-schema 51.0.0",
+              "id": "arrow-schema 52.0.0",
               "target": "arrow_schema"
             },
             {
@@ -1222,7 +1222,7 @@
           "selects": {}
         },
         "edition": "2021",
-        "version": "51.0.0"
+        "version": "52.0.0"
       },
       "license": "Apache-2.0",
       "license_ids": [
@@ -2649,14 +2649,14 @@
       ],
       "license_file": null
     },
-    "brotli 3.5.0": {
+    "brotli 6.0.0": {
       "name": "brotli",
-      "version": "3.5.0",
+      "version": "6.0.0",
       "package_url": "https://github.com/dropbox/rust-brotli",
       "repository": {
         "Http": {
-          "url": "https://static.crates.io/crates/brotli/3.5.0/download",
-          "sha256": "d640d25bc63c50fb1f0b545ffd80207d2e10a4c965530809b40ba3386825c391"
+          "url": "https://static.crates.io/crates/brotli/6.0.0/download",
+          "sha256": "74f7971dbd9326d58187408ab83117d8ac1bb9c17b085fdacd1cf2f598719b6b"
         }
       },
       "targets": [
@@ -2696,14 +2696,14 @@
               "target": "alloc_stdlib"
             },
             {
-              "id": "brotli-decompressor 2.5.1",
+              "id": "brotli-decompressor 4.0.1",
               "target": "brotli_decompressor"
             }
           ],
           "selects": {}
         },
         "edition": "2015",
-        "version": "3.5.0"
+        "version": "6.0.0"
       },
       "license": "BSD-3-Clause OR MIT",
       "license_ids": [
@@ -2712,14 +2712,14 @@
       ],
       "license_file": "LICENSE"
     },
-    "brotli-decompressor 2.5.1": {
+    "brotli-decompressor 4.0.1": {
       "name": "brotli-decompressor",
-      "version": "2.5.1",
+      "version": "4.0.1",
       "package_url": "https://github.com/dropbox/rust-brotli-decompressor",
       "repository": {
         "Http": {
-          "url": "https://static.crates.io/crates/brotli-decompressor/2.5.1/download",
-          "sha256": "4e2e4afe60d7dd600fdd3de8d0f08c2b7ec039712e3b6137ff98b7004e82de4f"
+          "url": "https://static.crates.io/crates/brotli-decompressor/4.0.1/download",
+          "sha256": "9a45bd2e4095a8b518033b128020dd4a55aab1c0a381ba4404a472630f4bc362"
         }
       },
       "targets": [
@@ -2762,7 +2762,7 @@
           "selects": {}
         },
         "edition": "2015",
-        "version": "2.5.1"
+        "version": "4.0.1"
       },
       "license": "BSD-3-Clause/MIT",
       "license_ids": [
@@ -5692,7 +5692,7 @@
               "target": "mimalloc"
             },
             {
-              "id": "parquet 51.0.0",
+              "id": "parquet 52.0.0",
               "target": "parquet"
             },
             {
@@ -6259,14 +6259,14 @@
       ],
       "license_file": "LICENSE-APACHE"
     },
-    "flatbuffers 23.5.26": {
+    "flatbuffers 24.3.25": {
       "name": "flatbuffers",
-      "version": "23.5.26",
+      "version": "24.3.25",
       "package_url": "https://github.com/google/flatbuffers",
       "repository": {
         "Http": {
-          "url": "https://static.crates.io/crates/flatbuffers/23.5.26/download",
-          "sha256": "4dac53e22462d78c16d64a1cd22371b54cc3fe94aa15e7886a2fa6e5d1ab8640"
+          "url": "https://static.crates.io/crates/flatbuffers/24.3.25/download",
+          "sha256": "8add37afff2d4ffa83bc748a70b4b1370984f6980768554182424ef71447c35f"
         }
       },
       "targets": [
@@ -6307,14 +6307,14 @@
               "target": "bitflags"
             },
             {
-              "id": "flatbuffers 23.5.26",
+              "id": "flatbuffers 24.3.25",
               "target": "build_script_build"
             }
           ],
           "selects": {}
         },
         "edition": "2018",
-        "version": "23.5.26"
+        "version": "24.3.25"
       },
       "build_script_attrs": {
         "data_glob": [
@@ -13533,14 +13533,14 @@
       ],
       "license_file": "LICENSE-APACHE"
     },
-    "parquet 51.0.0": {
+    "parquet 52.0.0": {
       "name": "parquet",
-      "version": "51.0.0",
+      "version": "52.0.0",
       "package_url": "https://github.com/apache/arrow-rs",
       "repository": {
         "Http": {
-          "url": "https://static.crates.io/crates/parquet/51.0.0/download",
-          "sha256": "096795d4f47f65fd3ee1ec5a98b77ab26d602f2cc785b0e4be5443add17ecc32"
+          "url": "https://static.crates.io/crates/parquet/52.0.0/download",
+          "sha256": "29c3b5322cc1bbf67f11c079c42be41a55949099b78732f7dba9e15edde40eab"
         }
       },
       "targets": [
@@ -13579,38 +13579,39 @@
             "lz4",
             "lz4_flex",
             "snap",
-            "zstd"
+            "zstd",
+            "zstd-sys"
           ],
           "selects": {}
         },
         "deps": {
           "common": [
             {
-              "id": "arrow-array 51.0.0",
+              "id": "arrow-array 52.0.0",
               "target": "arrow_array"
             },
             {
-              "id": "arrow-buffer 51.0.0",
+              "id": "arrow-buffer 52.0.0",
               "target": "arrow_buffer"
             },
             {
-              "id": "arrow-cast 51.0.0",
+              "id": "arrow-cast 52.0.0",
               "target": "arrow_cast"
             },
             {
-              "id": "arrow-data 51.0.0",
+              "id": "arrow-data 52.0.0",
               "target": "arrow_data"
             },
             {
-              "id": "arrow-ipc 51.0.0",
+              "id": "arrow-ipc 52.0.0",
               "target": "arrow_ipc"
             },
             {
-              "id": "arrow-schema 51.0.0",
+              "id": "arrow-schema 52.0.0",
               "target": "arrow_schema"
             },
             {
-              "id": "arrow-select 51.0.0",
+              "id": "arrow-select 52.0.0",
               "target": "arrow_select"
             },
             {
@@ -13618,7 +13619,7 @@
               "target": "base64"
             },
             {
-              "id": "brotli 3.5.0",
+              "id": "brotli 6.0.0",
               "target": "brotli"
             },
             {
@@ -13666,7 +13667,7 @@
               "target": "twox_hash"
             },
             {
-              "id": "zstd 0.13.1",
+              "id": "zstd 0.13.0",
               "target": "zstd"
             }
           ],
@@ -13681,6 +13682,12 @@
               {
                 "id": "ahash 0.8.11",
                 "target": "ahash"
+              }
+            ],
+            "cfg(target_family = \"wasm\")": [
+              {
+                "id": "zstd-sys 2.0.9+zstd.1.5.5",
+                "target": "zstd_sys"
               }
             ]
           }
@@ -13699,7 +13706,7 @@
           ],
           "selects": {}
         },
-        "version": "51.0.0"
+        "version": "52.0.0"
       },
       "license": "Apache-2.0",
       "license_ids": [
@@ -25891,14 +25898,14 @@
       ],
       "license_file": "LICENSE-APACHE"
     },
-    "zstd 0.13.1": {
+    "zstd 0.13.0": {
       "name": "zstd",
-      "version": "0.13.1",
+      "version": "0.13.0",
       "package_url": "https://github.com/gyscos/zstd-rs",
       "repository": {
         "Http": {
-          "url": "https://static.crates.io/crates/zstd/0.13.1/download",
-          "sha256": "2d789b1514203a1120ad2429eae43a7bd32b90976a7bb8a05f7ec02fa88cc23a"
+          "url": "https://static.crates.io/crates/zstd/0.13.0/download",
+          "sha256": "bffb3309596d527cfcba7dfc6ed6052f1d39dfbd7c867aa2e865e4a449c10110"
         }
       },
       "targets": [
@@ -25923,14 +25930,14 @@
         "deps": {
           "common": [
             {
-              "id": "zstd-safe 7.1.0",
+              "id": "zstd-safe 7.0.0",
               "target": "zstd_safe"
             }
           ],
           "selects": {}
         },
         "edition": "2018",
-        "version": "0.13.1"
+        "version": "0.13.0"
       },
       "license": "MIT",
       "license_ids": [
@@ -25938,14 +25945,14 @@
       ],
       "license_file": "LICENSE"
     },
-    "zstd-safe 7.1.0": {
+    "zstd-safe 7.0.0": {
       "name": "zstd-safe",
-      "version": "7.1.0",
+      "version": "7.0.0",
       "package_url": "https://github.com/gyscos/zstd-rs",
       "repository": {
         "Http": {
-          "url": "https://static.crates.io/crates/zstd-safe/7.1.0/download",
-          "sha256": "1cd99b45c6bc03a018c8b8a86025678c87e55526064e38f9df301989dce7ec0a"
+          "url": "https://static.crates.io/crates/zstd-safe/7.0.0/download",
+          "sha256": "43747c7422e2924c11144d5229878b98180ef8b06cca4ab5af37afc8a8d8ea3e"
         }
       },
       "targets": [
@@ -25988,18 +25995,18 @@
         "deps": {
           "common": [
             {
-              "id": "zstd-safe 7.1.0",
+              "id": "zstd-safe 7.0.0",
               "target": "build_script_build"
             },
             {
-              "id": "zstd-sys 2.0.10+zstd.1.5.6",
+              "id": "zstd-sys 2.0.9+zstd.1.5.5",
               "target": "zstd_sys"
             }
           ],
           "selects": {}
         },
         "edition": "2018",
-        "version": "7.1.0"
+        "version": "7.0.0"
       },
       "build_script_attrs": {
         "data_glob": [
@@ -26008,7 +26015,7 @@
         "link_deps": {
           "common": [
             {
-              "id": "zstd-sys 2.0.10+zstd.1.5.6",
+              "id": "zstd-sys 2.0.9+zstd.1.5.5",
               "target": "zstd_sys"
             }
           ],
@@ -26022,14 +26029,14 @@
       ],
       "license_file": "LICENSE"
     },
-    "zstd-sys 2.0.10+zstd.1.5.6": {
+    "zstd-sys 2.0.9+zstd.1.5.5": {
       "name": "zstd-sys",
-      "version": "2.0.10+zstd.1.5.6",
+      "version": "2.0.9+zstd.1.5.5",
       "package_url": "https://github.com/gyscos/zstd-rs",
       "repository": {
         "Http": {
-          "url": "https://static.crates.io/crates/zstd-sys/2.0.10+zstd.1.5.6/download",
-          "sha256": "c253a4914af5bafc8fa8c86ee400827e83cf6ec01195ec1f1ed8441bf00d65aa"
+          "url": "https://static.crates.io/crates/zstd-sys/2.0.9+zstd.1.5.5/download",
+          "sha256": "9e16efa8a874a0481a574084d34cc26fdb3b99627480f785888deb6386506656"
         }
       },
       "targets": [
@@ -26072,14 +26079,14 @@
         "deps": {
           "common": [
             {
-              "id": "zstd-sys 2.0.10+zstd.1.5.6",
+              "id": "zstd-sys 2.0.9+zstd.1.5.5",
               "target": "build_script_build"
             }
           ],
           "selects": {}
         },
         "edition": "2018",
-        "version": "2.0.10+zstd.1.5.6"
+        "version": "2.0.9+zstd.1.5.5"
       },
       "build_script_attrs": {
         "data_glob": [
@@ -26581,6 +26588,10 @@
       "wasm32-unknown-unknown",
       "wasm32-wasi"
     ],
+    "cfg(target_family = \"wasm\")": [
+      "wasm32-unknown-unknown",
+      "wasm32-wasi"
+    ],
     "cfg(target_feature = \"atomics\")": [],
     "cfg(target_os = \"android\")": [
       "aarch64-linux-android",
@@ -26723,7 +26734,7 @@
     "klickhouse 0.13.0",
     "lru 0.12.3",
     "mimalloc 0.1.42",
-    "parquet 51.0.0",
+    "parquet 52.0.0",
     "prost 0.12.3",
     "prost-types 0.12.3",
     "reqwest 0.12.2",

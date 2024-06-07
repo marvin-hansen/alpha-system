@@ -221,7 +221,7 @@ crates_repository(
             ),
 
             "parquet": crate.spec(
-                         version = "51.0",
+                         version = "52.0",
             ),
 
             "prost": crate.spec(
