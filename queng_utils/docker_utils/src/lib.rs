@@ -24,15 +24,6 @@ impl DockerUtil {
     ///
     /// Returns a new instance of the `DockerUtil` struct with default values.
     ///
-    /// # Examples
-    ///
-    /// ```
-    /// use docker_utils::DockerUtil;
-    ///
-    /// // Requires running Docker. Start Docker and uncomment.
-    /// //let docker_util = DockerUtil::new();
-    /// ```
-    ///
     pub fn new() -> Result<Self, DockerError> {
         Self::build(false)
     }
@@ -111,6 +102,7 @@ impl DockerUtil {
         let image = &container_config.container_image();
         let connection_port = container_config.connection_port();
         let additional_ports = container_config.additional_ports();
+        let platform = container_config.platform();
         let reuse_container = container_config.reuse_container();
 
         // Call get_or_start_container with unpacked values
@@ -119,6 +111,7 @@ impl DockerUtil {
             image,
             connection_port,
             additional_ports,
+            platform,
             reuse_container,
         )
     }
@@ -155,7 +148,8 @@ impl DockerUtil {
         name: &str,
         image: &str,
         connection_port: u16,
-        additional_ports: &[u16],
+        additional_ports: Option<&[u16]>,
+        platform: Option<&str>,
         reuse_container: bool,
     ) -> Result<(String, u16), DockerError> {
         let container_id = &format!("{}-{}", name, connection_port);
@@ -184,7 +178,13 @@ impl DockerUtil {
 
         self.dbg_print("Container doesn't exist.");
         self.dbg_print("Start new container.");
-        return match self.start_container(container_id, connection_port, additional_ports, image) {
+        return match self.start_container(
+            container_id,
+            connection_port,
+            additional_ports,
+            platform,
+            image,
+        ) {
             Ok((container_id, port)) => Ok((container_id, port)),
             Err(e) => Err(e),
         };
@@ -259,7 +259,8 @@ impl DockerUtil {
         &self,
         container_id: &str,
         connection_port: u16,
-        additional_ports: &[u16],
+        additional_ports: Option<&[u16]>,
+        platform: Option<&str>,
         image: &str,
     ) -> Result<(String, u16), DockerError> {
         // Example: docker run --rm --detach --publish 80:80 --name test-80 nginx:latest
@@ -273,13 +274,18 @@ impl DockerUtil {
 
         cmd.arg("run").arg("--rm").arg("--detach");
 
+        if platform.is_some() {
+            let p = platform.expect("Failed to unwrap Docker platform string");
+            cmd.arg("--platform").arg(p);
+        }
+
         // Format main connection port for docker
         let port_publish = format!("{}:{}", connection_port, connection_port);
         cmd.arg("--publish").arg(port_publish);
 
         // Publish additional ports for the container, if applicable
-        if additional_ports.len() > 0 {
-            for port in additional_ports {
+        if additional_ports.is_some() {
+            for port in additional_ports.expect("Failed to unwrap additional Docker ports") {
                 if *port == 0 {
                     return Err(DockerError::from(format!(
                         "Error starting container {}: Port cannot be 0.",

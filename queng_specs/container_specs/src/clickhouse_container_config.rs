@@ -6,11 +6,12 @@ pub fn clickhouse_container_config() -> ContainerConfig<'static> {
     ContainerConfig::new(
         "clickhouse",
         "clickhouse/clickhouse-server",
-        "24.3.2",
+        "24.5.1",
         "127.0.0.1",
         9000,
-        &[8123],
-        true, // Keep the container running for re-use
-        true, // Keep the same container config across all env. setups.
+        Some(&[8123]),
+        None,
+        true,  // Keep the container running for re-use
+        false, // Keep the same container config across all env. setups.
     )
 }

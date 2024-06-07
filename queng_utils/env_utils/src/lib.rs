@@ -6,6 +6,8 @@ pub mod errors;
 pub mod prelude;
 
 pub struct EnvUtil {
+    api_proxy_container_name: String,
+    api_proxy_container_port: u16,
     clickhouse_container_name: String,
     clickhouse_container_port: u16,
     dbg: bool,
@@ -22,6 +24,8 @@ impl EnvUtil {
 
     fn build(dbg: bool) -> Self {
         Self {
+            api_proxy_container_name: String::new(),
+            api_proxy_container_port: 0,
             clickhouse_container_name: String::new(),
             clickhouse_container_port: 0,
             dbg,
@@ -30,6 +34,18 @@ impl EnvUtil {
 }
 
 impl EnvUtil {
+    pub fn set_api_proxy_container_port(&mut self, api_proxy_container_port: u16) {
+        self.api_proxy_container_port = api_proxy_container_port;
+    }
+    pub fn set_api_proxy_container_name(&mut self, api_proxy_container_name: String) {
+        self.api_proxy_container_name = api_proxy_container_name;
+    }
+    pub fn api_proxy_container_port(&self) -> u16 {
+        self.api_proxy_container_port
+    }
+    pub fn api_proxy_container_name(&self) -> &str {
+        &self.api_proxy_container_name
+    }
     pub fn set_clickhouse_container_name(&mut self, clickhouse_container_name: String) {
         self.clickhouse_container_name = clickhouse_container_name;
     }

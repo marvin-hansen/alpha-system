@@ -1,6 +1,7 @@
 use crate::prelude::{EnvUtil, EnvironmentError};
 use clickhouse_utils::ClickhouseUtil;
 use common::prelude::ContainerConfig;
+use container_specs::api_proxy_container_config::api_proxy_container_config;
 use container_specs::clickhouse_container_config::clickhouse_container_config;
 use kaiko_utils::KaikoUtil;
 use std::thread::sleep;
@@ -15,12 +16,23 @@ impl EnvUtil {
             .get_docker_util()
             .expect("[TestEnv:CI]: Failed to get docker util");
 
+        self.dbg_print("Get api proxy container config");
+        let api_proxy_container_config = api_proxy_container_config();
+
+        self.dbg_print("Get or reuse api proxy container");
+        let (api_proxy_container_name, api_proxy_container_port) = docker_util
+            .get_or_start_container_config(&api_proxy_container_config)
+            .expect("[TestEnv:CI]: Failed to get or reuse clickhouse container");
+
+        // Give the container some extra time to complete booting up.
+        sleep(Duration::from_millis(500));
+
         self.dbg_print("Get clickhouse container config");
-        let container_config = clickhouse_container_config();
+        let clickhouse_container_config = clickhouse_container_config();
 
         self.dbg_print("Get or reuse clickhouse container");
         let (clickhouse_container_name, clickhouse_container_port) = docker_util
-            .get_or_start_container_config(&container_config)
+            .get_or_start_container_config(&clickhouse_container_config)
             .expect("[TestEnv:CI]: Failed to get or reuse clickhouse container");
 
         // Give the container some extra time to complete booting up.
@@ -29,7 +41,9 @@ impl EnvUtil {
 
         // Once the container is up & running, configure the DB
         self.dbg_print("Get clickhouse client");
-        let client = self.get_clickhouse_client(&container_config).await;
+        let client = self
+            .get_clickhouse_client(&clickhouse_container_config)
+            .await;
 
         self.dbg_print("Get clickhouse utils");
         let ch_utils = self.get_clickhouse_util(client).await;
@@ -41,13 +55,18 @@ impl EnvUtil {
             .expect("Failed to get KaikoUtil");
 
         self.dbg_print("Configure clickhouse DB");
-        self.configure_clickhouse(&ch_utils, &container_config, &kaiko_util)
+        self.configure_clickhouse(&ch_utils, &clickhouse_container_config, &kaiko_util)
             .await
             .expect("Failed to configure clickhouse DB");
 
         self.dbg_print("Set container name and port");
+        // API Proxy
+        self.set_api_proxy_container_name(api_proxy_container_name);
+        self.set_api_proxy_container_port(api_proxy_container_port);
+        // ClickHouse
         self.set_clickhouse_container_name(clickhouse_container_name);
         self.set_clickhouse_container_port(clickhouse_container_port);
+
         Ok(())
     }
 

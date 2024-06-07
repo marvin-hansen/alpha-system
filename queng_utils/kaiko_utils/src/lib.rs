@@ -6,6 +6,8 @@ mod inactive_exchanges;
 
 pub use crate::error::KaikoUtilError;
 
+const API_PROXY_URL: &str = "http://localhost:7777/";
+
 pub struct KaikoUtil {
     dbg: bool,
     client: KaikoClient,
@@ -21,7 +23,7 @@ impl KaikoUtil {
     }
 
     fn build(dbg: bool) -> Result<Self, KaikoUtilError> {
-        let kaiko_client = KaikoClient::new();
+        let kaiko_client = KaikoClient::with_url(API_PROXY_URL);
         let client = kaiko_client.expect("Failed to construct KaikoClient");
         Ok(Self { dbg, client })
     }

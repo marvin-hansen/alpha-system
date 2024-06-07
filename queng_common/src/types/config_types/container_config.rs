@@ -7,7 +7,8 @@ pub struct ContainerConfig<'l> {
     tag: &'l str,
     url: &'l str,
     connection_port: u16,
-    additional_ports: &'l [u16],
+    additional_ports: Option<&'l [u16]>,
+    platform: Option<&'l str>,
     reuse_container: bool,
     reset_configuration: bool,
 }
@@ -22,7 +23,8 @@ impl<'l> ContainerConfig<'l> {
     /// * `tag` - The tag of the image.
     /// * `url` - The default URL of the container. Usually 0.0.0.0
     /// * `connection_port` - The port number for the main connection i.e. 80 for a webserver.
-    /// * `additional_ports` - An array of additional ports to publish.
+    /// * `additional_ports` - An optional array of additional ports to publish.
+    /// * `platform` - An optional platform string in case the container image is not multi-arch.
     /// * `reuse_container` - A boolean flag indicating whether to reuse an existing container if found.
     /// * `reset_configuration` -  A boolean flag indication whether to reset the configuration upon
     ///    every environment setup. If set to false, the same configuration will be used across all
@@ -37,7 +39,9 @@ impl<'l> ContainerConfig<'l> {
     /// ```
     /// use common::prelude::ContainerConfig;
     ///
-    /// let container_config = ContainerConfig::new("my_container", "nginx",":latest", "0.0.0.0" ,80, &[], false, false);
+    /// let container_config = ContainerConfig::new(
+    ///     "my_container","nginx",":latest", "0.0.0.0" ,80, None, None, false, false
+    /// );
     /// ```
     pub fn new(
         name: &'l str,
@@ -45,7 +49,8 @@ impl<'l> ContainerConfig<'l> {
         tag: &'l str,
         url: &'l str,
         connection_port: u16,
-        additional_ports: &'l [u16],
+        additional_ports: Option<&'l [u16]>,
+        platform: Option<&'l str>,
         reuse_container: bool,
         reset_configuration: bool,
     ) -> Self {
@@ -56,6 +61,7 @@ impl<'l> ContainerConfig<'l> {
             url,
             connection_port,
             additional_ports,
+            platform,
             reuse_container,
             reset_configuration,
         }
@@ -75,8 +81,11 @@ impl<'l> ContainerConfig<'l> {
     pub fn connection_port(&self) -> u16 {
         self.connection_port
     }
-    pub fn additional_ports(&self) -> &'l [u16] {
+    pub fn additional_ports(&self) -> Option<&'l [u16]> {
         self.additional_ports
+    }
+    pub fn platform(&self) -> Option<&'l str> {
+        self.platform
     }
     pub fn reuse_container(&self) -> bool {
         self.reuse_container
