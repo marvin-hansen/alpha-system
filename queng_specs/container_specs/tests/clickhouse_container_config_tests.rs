@@ -7,11 +7,12 @@ fn test_clickhouse_container_config() {
     assert_eq!(config.name(), "clickhouse");
     assert_eq!(
         config.container_image(),
-        "clickhouse/clickhouse-server:24.3.2"
+        "clickhouse/clickhouse-server:24.5.1"
     );
+
     assert_eq!(config.url(), "127.0.0.1");
     assert_eq!(config.connection_port(), 9000);
     assert_eq!(config.platform(), None);
     assert!(config.reuse_container());
-    assert!(config.reset_configuration());
+    assert!(!config.reset_configuration());
 }
