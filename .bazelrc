@@ -49,7 +49,7 @@ build:clippy --output_groups=+clippy_checks
 
 # Flags shared across remote configs
 common:remote-shared --jobs=100
-common:remote-shared --remote_upload_local_results
+# common:remote-shared --remote_upload_local_results
 common:remote-shared --remote_timeout=600
 common:remote-shared --remote_download_minimal
 common:remote-shared --experimental_remote_cache_compression
@@ -59,12 +59,10 @@ common:remote-shared --verbose_failures
 common:remote-shared --crosstool_top=@buildbuddy_toolchain//:cc_toolchain_suite
 common:remote-shared --host_platform=@buildbuddy_toolchain//:platform_linux
 common:remote-shared --extra_toolchains=@buildbuddy_toolchain//:cc_toolchain
-common:remote-shared --remote_cache=grpcs://remote.buildbuddy.io
+# common:remote-shared --remote_cache=grpcs://remote.buildbuddy.io
 common:remote-shared --remote_header=x-buildbuddy-api-key=4Ml6AhYICvGtZ3XhqafP
 
 # Build with --config=remote to enable Remote Build Execution (RBE)
 common:remote --config=remote-shared
 common:remote --remote_executor=remote.buildbuddy.io
 
-# Build with --config=remote to enable remote cache only
-common:remote-cache --config=remote-shared
