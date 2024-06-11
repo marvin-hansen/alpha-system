@@ -95,16 +95,19 @@ rust_prost_transitive_repositories()
 ###############################################################################
 http_archive(
     name = "rules_oci",
-    sha256 = "02df4efc5c7431904a927c1947fc7b6e2eda838b038b15bdf9a15918e7d6c04b",
-    strip_prefix = "rules_oci-2.0.0-alpha4",
-    url = "https://github.com/bazel-contrib/rules_oci/releases/download/v2.0.0-alpha4/rules_oci-v2.0.0-alpha4.tar.gz",
+    sha256 = "56d5499025d67a6b86b2e6ebae5232c72104ae682b5a21287770bd3bf0661abf",
+    strip_prefix = "rules_oci-1.7.5",
+    url = "https://github.com/bazel-contrib/rules_oci/releases/download/v1.7.5/rules_oci-v1.7.5.tar.gz",
 )
 
 load("@rules_oci//oci:dependencies.bzl", "rules_oci_dependencies")
 rules_oci_dependencies()
 
-load("@rules_oci//oci:repositories.bzl", "oci_register_toolchains")
-oci_register_toolchains(name = "oci")
+load("@rules_oci//oci:repositories.bzl", "LATEST_CRANE_VERSION", "oci_register_toolchains")
+oci_register_toolchains(
+    name = "oci",
+    crane_version = LATEST_CRANE_VERSION,
+)
 
 load("@rules_oci//oci:pull.bzl", "oci_pull")
 oci_pull(
