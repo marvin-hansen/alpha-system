@@ -19,13 +19,17 @@ bazel_dep(name = "rules_pkg", version = "0.10.1")
 bazel_dep(name = "rules_proto", version = "6.0.0.bcr.1")
 # https://github.com/bazelbuild/rules_python/releases
 bazel_dep(name = "rules_python", version = "0.33.1")
+# https://github.com/bazelbuild/platforms/releases
+bazel_dep(name = "platforms", version = "0.0.10")
+# https://github.com/bazel-contrib/toolchains_llvm/releases
+bazel_dep(name = "toolchains_llvm", version = "1.0.0")
 
 ###############################################################################
 # T O O L C H A I N S
 ###############################################################################
 # Rust toolchain
 RUST_EDITION = "2021"
-RUST_VERSION = "1.78.0"
+RUST_VERSION = "1.79.0"
 # https://github.com/bazelbuild/rules_rust/releases
 rust = use_extension("@rules_rust//rust:extensions.bzl", "rust")
 rust.toolchain(edition = RUST_EDITION, versions = [RUST_VERSION])

@@ -23,7 +23,10 @@ build --symlink_prefix=target-bzl/
 
 # Non-empty glob isn't currently the default in Bazel,
 # but we enable it to test that the repo is ready if/when it flips.
-# build --incompatible_disallow_empty_glob
+build --incompatible_disallow_empty_glob
+
+# This flag improves execution throughput by executing more actions in parallel.
+build --jobs=50
 
 ###############################################################################
 ## Test configuration
@@ -61,6 +64,9 @@ common --experimental_profile_include_primary_output
 ## Rust configuration
 ###############################################################################
 
+# Required for cargo_build_script support before Bazel 7
+build --incompatible_merge_fixed_and_default_shell_env
+
 # Enable rustfmt for all targets in the workspace
 build:rustfmt --aspects=@rules_rust//rust:defs.bzl%rustfmt_aspect
 build:rustfmt --output_groups=+rustfmt_checks
@@ -78,6 +84,7 @@ common:remote-shared --jobs=100
 common:remote-shared --remote_timeout=600
 common:remote-shared --remote_download_minimal
 common:remote-shared --experimental_remote_cache_compression
+common:remote-shared --experimental_remote_cache_async
 common:remote-shared --host_cpu=x86_64
 common:remote-shared --cpu=x86_64
 common:remote-shared --verbose_failures
