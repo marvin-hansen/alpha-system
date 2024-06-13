@@ -3,10 +3,16 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-# Run all unit tests first
+echo "=============="
+echo "Run doc tests"
+echo "=============="
+command bazel build //... --build_tag_filters=doc-test
+command bazel test //... --test_tag_filters=doc-test
+
 echo "=============="
 echo "Run unit tests"
 echo "=============="
+command bazel build //... --build_tag_filters=unit
 command bazel test //... --test_tag_filters=unit
 
 echo "=============="

@@ -16,18 +16,21 @@ rust_library(
         "@crates//:tonic",
         "@crates//:prost",
     ],
+    tags = ["client"],
     visibility = ["//visibility:public"],
 )
 
 rust_doc(
     name = "doc",
     crate = ":symdb_client",
+    tags = ["doc"],
     visibility = ["//visibility:public"],
 )
 
 rust_doc_test(
      name = "doc_test",
      crate = ":symdb_client",
+     tags = ["doc-test"],
      visibility = ["//visibility:public"],
  )
 

@@ -13,6 +13,10 @@ common --enable_platform_specific_config
 startup --windows_enable_symlinks
 build:windows --enable_runfiles
 
+###############################################################################
+## Build configuration
+###############################################################################
+
 # Don't create bazel-* symlinks in the WORKSPACE directory.
 # Instead, set a prefix and put it in .gitignore
 build --symlink_prefix=target-bzl/

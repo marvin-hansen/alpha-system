@@ -1,17 +1,1 @@
-filegroup(
-    name = "build",
-    srcs = [
-        "//queng_providers/cmdb_provider:cmdb_provider",
-        "//queng_providers/smdb_provider:smdb_provider",
-    ],
-    visibility = ["//visibility:public"],
-)
 
-filegroup(
-    name = "doc",
-    srcs = [
-        "//queng_providers/cmdb_provider:doc",
-        "//queng_providers/smdb_provider:doc",
-    ],
-    visibility = ["//visibility:public"],
-)

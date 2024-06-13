@@ -14,6 +14,7 @@ rust_library(
          # External crates
         "@crates//:tokio",
     ],
+    tags = ["utils", "docker_utils"],
     visibility = ["//visibility:public"],
 )
 
@@ -21,11 +22,13 @@ rust_library(
 rust_doc(
     name = "doc",
     crate = ":docker_utils",
+    tags = ["doc"],
     visibility = ["//visibility:public"],
 )
 
 rust_doc_test(
      name = "doc_test",
      crate = ":docker_utils",
+     tags = ["doc-test"],
      visibility = ["//visibility:public"],
 )

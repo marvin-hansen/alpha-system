@@ -18,6 +18,7 @@ rust_library(
         "@crates//:tonic",
         "@crates//:prost",
     ],
+    tags = ["provider", "smdb_provider"],
     visibility = ["//visibility:public"],
 )
 
@@ -25,11 +26,13 @@ rust_library(
 rust_doc(
     name = "doc",
     crate = ":smdb_provider",
+    tags = ["doc"],
     visibility = ["//visibility:public"],
 )
 
 rust_doc_test(
      name = "doc_test",
      crate = ":smdb_provider",
+     tags = ["doc-test"],
      visibility = ["//visibility:public"],
 )

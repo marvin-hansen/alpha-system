@@ -18,18 +18,21 @@ rust_library(
     proc_macro_deps = [
           "@crates//:rust_decimal_macros",
     ],
+    tags = ["common"],
     visibility = ["//visibility:public"],
 )
 
 rust_doc(
     name = "doc",
     crate = ":common",
+    tags = ["doc"],
     visibility = ["//visibility:public"],
 )
 
 rust_doc_test(
      name = "doc_test",
      crate = ":common",
+     tags = ["doc-test"],
      visibility = ["//visibility:public"],
 )
 

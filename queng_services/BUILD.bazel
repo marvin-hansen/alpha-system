@@ -1,34 +1,6 @@
 load("@rules_multirun//:defs.bzl", "command", "multirun")
 
 filegroup(
-    name = "build",
-    srcs = [
-        "//queng_services/aux/file_server:bin",
-        "//queng_services/cmdb:bin",
-        "//queng_services/dbgw:bin",
-        "//queng_services/ims/data/binance_data:bin",
-        "//queng_services/ims/data/shared_data:lib_data_stream",
-        "//queng_services/smdb:bin",
-        "//queng_services/symdb:bin",
-    ],
-    visibility = ["//visibility:public"],
-)
-
-filegroup(
-    name = "doc",
-    srcs = [
-        "//queng_services/aux/file_server:doc",
-        "//queng_services/cmdb:doc",
-        "//queng_services/dbgw:doc",
-        "//queng_services/ims/data/binance_data:doc",
-        "//queng_services/ims/data/shared_data:doc",
-        "//queng_services/smdb:doc",
-        "//queng_services/symdb:doc",
-    ],
-    visibility = ["//visibility:public"],
-)
-
-filegroup(
     name = "image",
     srcs = [
         "//queng_services/aux/file_server:image",

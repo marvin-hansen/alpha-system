@@ -7,19 +7,22 @@ actions:
           - "main"
       pull_request:
         branches:
-          - "*"
+          - "main"
     bazel_commands:
       # Setup & Authenticate
       - "run -c opt //:buildbuddy_setup_docker_auth --verbose_failures"
-      # Build all targets, docs, and images
-      - "build -c opt //...    --config=remote"
-      - "build -c opt //:doc   --config=remote"
-      - "build -c opt //:image --config=remote"
+      # Build all targets
+      - "build -c opt //... --config=remote"
+      # Build & test all docs
+      - "build -c opt //... --build_tag_filters=doc --config=remote"
+      - "build -c opt //... --build_tag_filters=doc-test --config=remote"
+      - "test  -c opt //... --test_tag_filters=doc-test --config=remote"
       # Test: Run unit tests, prepare env setup for CI, and run integration tests
       - "test -c opt  //... --config=remote       --test_tag_filters=unit"
       # - "test -c opt  //... --config=remote-cache --test_tag_filters=env_setup"
       # - "test -c opt  //... --config=remote-cache --test_tag_filters=clickhouse_utils "
-      # Publish images to container registry
+      # Build & publish images to container registry
+      - "build -c opt //:image --config=remote"
       - "run   -c opt //:push --config=remote"
     resource_requests:
       cpu: 8  # Add more CPU for Docker

@@ -42,6 +42,7 @@ rust_binary(
         "@crates//:tonic-health",
         "@crates//:prost",
     ],
+    tags = ["service", "dbgw"],
     visibility = ["//visibility:public"],
 )
 
@@ -49,6 +50,7 @@ rust_binary(
 rust_doc(
     name = "doc",
     crate = ":bin",
+    tags = ["doc"],
     visibility = ["//visibility:public"],
 )
 
@@ -56,6 +58,7 @@ rust_doc(
 rust_doc_test(
      name = "doc_test",
      crate = ":bin",
+     tags = ["doc-test"],
      visibility = ["//visibility:public"],
  )
 

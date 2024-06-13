@@ -45,11 +45,13 @@ rust_test_suite(
 rust_doc(
     name = "doc",
     crate = ":config_manager",
+    tags = ["doc"],
     visibility = ["//visibility:public"],
 )
 
 rust_doc_test(
      name = "doc_test",
      crate = ":config_manager",
+     tags = ["doc-test"],
      visibility = ["//visibility:public"],
  )

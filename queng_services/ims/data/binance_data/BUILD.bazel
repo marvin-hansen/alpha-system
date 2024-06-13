@@ -50,6 +50,7 @@ rust_binary(
         "@crates//:tonic",
         "@crates//:prost",
     ],
+    tags = ["service", "binance_data"],
     visibility = ["//visibility:public"],
 )
 
@@ -57,6 +58,7 @@ rust_binary(
 rust_doc(
     name = "doc",
     crate = ":bin",
+    tags = ["doc"],
     visibility = ["//visibility:public"],
 )
 
@@ -64,6 +66,7 @@ rust_doc(
 rust_doc_test(
      name = "doc_test",
      crate = ":bin",
+     tags = ["doc-test"],
      visibility = ["//visibility:public"],
  )
 

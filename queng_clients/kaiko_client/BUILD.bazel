@@ -14,6 +14,7 @@ rust_library(
         # External crates
         "@crates//:anyhow",
     ],
+    tags = ["client"],
     visibility = ["//visibility:public"],
 )
 
@@ -21,12 +22,14 @@ rust_library(
 rust_doc(
     name = "doc",
     crate = ":kaiko_client",
+    tags = ["doc"],
     visibility = ["//visibility:public"],
 )
 
 rust_doc_test(
      name = "doc_test",
      crate = ":kaiko_client",
+     tags = ["doc-test"],
      visibility = ["//visibility:public"],
  )
 

@@ -25,17 +25,20 @@ rust_library(
         "@crates//:rust_decimal",
         "@crates//:serde",
     ],
+    tags = ["utils", "client_utils"],
     visibility = ["//visibility:public"],
 )
 
 rust_doc(
     name = "doc",
     crate = ":client_utils",
+    tags = ["doc"],
     visibility = ["//visibility:public"],
 )
 
 rust_doc_test(
      name = "doc_test",
      crate = ":client_utils",
+     tags = ["doc-test"],
      visibility = ["//visibility:public"],
 )

@@ -10,11 +10,21 @@ rust_library(
         "src/**/*.rs",
     ]),
     deps =[],
+    tags = ["sbe", "sbe_bindings"],
     visibility = ["//visibility:public"],
 )
 
 rust_doc(
     name = "doc",
     crate = ":sbe_bindings",
+    tags = ["doc"],
     visibility = ["//visibility:public"],
+)
+
+# Test documentation
+rust_doc_test(
+     name = "doc_test",
+     crate = ":sbe_bindings",
+     tags = ["doc-test"],
+     visibility = ["//visibility:public"],
 )

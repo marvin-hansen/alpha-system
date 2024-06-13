@@ -14,6 +14,7 @@ rust_library(
         "//queng_clients/kaiko_client:kaiko_client",
         # External crates
     ],
+    tags = ["utils", "kaiko_utils"],
     visibility = ["//visibility:public"],
 )
 
@@ -21,11 +22,13 @@ rust_library(
 rust_doc(
     name = "doc",
     crate = ":kaiko_utils",
+    tags = ["doc"],
     visibility = ["//visibility:public"],
 )
 
 rust_doc_test(
      name = "doc_test",
      crate = ":kaiko_utils",
+     tags = ["doc-test"],
      visibility = ["//visibility:public"],
 )

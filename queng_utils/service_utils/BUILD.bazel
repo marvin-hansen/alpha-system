@@ -1,7 +1,6 @@
 load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
 load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test")
 
-
 rust_library(
     name = "service_utils",
     crate_root = "src/lib.rs",
@@ -14,17 +13,20 @@ rust_library(
         # External crates
         "@crates//:tokio",
     ],
+    tags = ["utils", "service_utils"],
     visibility = ["//visibility:public"],
 )
 
 rust_doc(
     name = "doc",
     crate = ":service_utils",
+    tags = ["doc"],
     visibility = ["//visibility:public"],
 )
 
 rust_doc_test(
      name = "doc_test",
      crate = ":service_utils",
+     tags = ["doc-test"],
      visibility = ["//visibility:public"],
 )
