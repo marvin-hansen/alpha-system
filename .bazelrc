@@ -21,9 +21,9 @@ build:windows --enable_runfiles
 # Instead, set a prefix and put it in .gitignore
 build --symlink_prefix=target-bzl/
 
-# Non-empty glob isn't currently the default in Bazel,
-# but we enable it to test that the repo is ready if/when it flips.
-build --incompatible_disallow_empty_glob
+# Non-empty glob test is disabled because some Bazels deps fail the test.
+# Only use locally and uncomment before pushing to CI.
+# build --incompatible_disallow_empty_glob
 
 # This flag improves execution throughput by executing more actions in parallel.
 build --jobs=50
