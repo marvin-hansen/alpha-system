@@ -16,7 +16,7 @@ bazel_dep(name = "rules_oci", version = "1.7.6")
 # https://github.com/bazelbuild/rules_pkg/releases
 bazel_dep(name = "rules_pkg", version = "0.10.1")
 # https://github.com/bazelbuild/rules_proto/releases
-bazel_dep(name = "rules_proto", version = "6.0.0")
+bazel_dep(name = "rules_proto", version = "6.0.0.bcr.1")
 # https://github.com/bazelbuild/rules_python/releases
 bazel_dep(name = "rules_python", version = "0.33.1")
 
