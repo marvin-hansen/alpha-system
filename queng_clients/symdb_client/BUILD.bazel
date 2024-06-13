@@ -12,9 +12,9 @@ rust_library(
         "//queng_common:common",
         "//queng_proto:rust_proto",
         # Exteral crates
-        "@crate_index//:tokio",
-        "@crate_index//:tonic",
-        "@crate_index//:prost",
+        "@crates//:tokio",
+        "@crates//:tonic",
+        "@crates//:prost",
     ],
     visibility = ["//visibility:public"],
 )

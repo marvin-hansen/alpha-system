@@ -1,4 +1,4 @@
-load("@crate_index//:defs.bzl", "aliases", "all_crate_deps")
+load("@crates//:defs.bzl", "aliases", "all_crate_deps")
 load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
 load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test")
 
@@ -14,9 +14,9 @@ rust_library(
         "//queng_common:common",
         "//queng_proto:rust_proto",
         # External crates
-        "@crate_index//:tokio",
-        "@crate_index//:tonic",
-        "@crate_index//:prost",
+        "@crates//:tokio",
+        "@crates//:tonic",
+        "@crates//:prost",
     ],
     visibility = ["//visibility:public"],
 )

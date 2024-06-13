@@ -12,7 +12,7 @@ rust_library(
         # Internal crates
         "//queng_common:common",
         # External crates
-        "@crate_index//:lru",
+        "@crates//:lru",
     ],
     visibility = ["//visibility:public"],
 )
@@ -28,7 +28,7 @@ rust_test_suite(
         # Internal crates
         "//queng_common:common",
         # External crates
-        "@crate_index//:lru",
+        "@crates//:lru",
     ],
     tags = ["unit","components", "symbol_manager"],
     visibility = ["//visibility:public"],

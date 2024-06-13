@@ -3,4 +3,4 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-command bazel run //queng_cli/symbol_mapping:bin
+command bazel run //queng_services/aux/file_server:bin

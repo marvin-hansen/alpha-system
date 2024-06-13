@@ -12,7 +12,7 @@ rust_library(
         "//queng_common:common",
         "//queng_components/ctx_manager:ctx_manager",
         # External crates
-        "@crate_index//:hickory-resolver"
+        "@crates//:hickory-resolver"
     ],
     visibility = ["//visibility:public"],
 )

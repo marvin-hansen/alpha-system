@@ -1,4 +1,4 @@
-load("@crate_index//:defs.bzl", "aliases", "all_crate_deps")
+load("@crates//:defs.bzl", "aliases", "all_crate_deps")
 load("@rules_rust//rust:defs.bzl", "rust_library", "rust_binary", "rust_test_suite")
 load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test")
 
@@ -17,7 +17,7 @@ rust_library(
         "//queng_utils/docker_utils:docker_utils",
         "//queng_utils/kaiko_utils:kaiko_utils",
         # External crates
-        "@crate_index//:serde_json",
+        "@crates//:serde_json",
     ],
     visibility = ["//visibility:public"],
 )
@@ -48,8 +48,8 @@ rust_test_suite(
         "//queng_utils/docker_utils:docker_utils",
         "//queng_utils/kaiko_utils:kaiko_utils",
         # External crates
-        "@crate_index//:tokio",
-        "@crate_index//:serde_json",
+        "@crates//:tokio",
+        "@crates//:serde_json",
     ],
     tags = ["env_setup"],
     visibility = ["//visibility:public"],
@@ -80,8 +80,8 @@ rust_test_suite(
         "//queng_utils/clickhouse_utils:clickhouse_utils",
         "//queng_utils/docker_utils:docker_utils",
         # External crates
-        "@crate_index//:tokio",
-        "@crate_index//:serde_json",
+        "@crates//:tokio",
+        "@crates//:serde_json",
     ],
     tags = ["env_teardown"],
     visibility = ["//visibility:public"],

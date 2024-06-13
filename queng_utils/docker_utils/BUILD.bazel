@@ -12,7 +12,7 @@ rust_library(
         # Internal crates
         "//queng_common:common",
          # External crates
-        "@crate_index//:tokio",
+        "@crates//:tokio",
     ],
     visibility = ["//visibility:public"],
 )

@@ -20,9 +20,9 @@ rust_library(
         "//queng_components/symbol_manager:symbol_manager",
         "//queng_providers/smdb_provider:smdb_provider",
         # External crates
-        "@crate_index//:tokio",
-        "@crate_index//:tonic",
-        "@crate_index//:prost",
+        "@crates//:tokio",
+        "@crates//:tonic",
+        "@crates//:prost",
     ],
     visibility = ["//visibility:public"],
 )

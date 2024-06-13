@@ -14,9 +14,9 @@ rust_library(
         "//queng_specs/container_specs:container_specs",
         "//queng_utils/docker_utils:docker_utils",
         # External crates
-        "@crate_index//:klickhouse",
-        "@crate_index//:serde",
-        "@crate_index//:serde_json",
+        "@crates//:klickhouse",
+        "@crates//:serde",
+        "@crates//:serde_json",
     ],
     visibility = ["//visibility:public"],
 )
@@ -45,10 +45,10 @@ rust_test_suite(
         "//queng_specs/container_specs:container_specs",
         "//queng_utils/docker_utils:docker_utils",
         # External crates
-        "@crate_index//:klickhouse",
-        "@crate_index//:serde",
-        "@crate_index//:serde_json",
-        "@crate_index//:tokio",
+        "@crates//:klickhouse",
+        "@crates//:serde",
+        "@crates//:serde_json",
+        "@crates//:tokio",
     ],
     tags = ["docker","integration","clickhouse_utils"],
     visibility = ["//visibility:public"],

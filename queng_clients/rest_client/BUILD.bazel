@@ -9,9 +9,9 @@ rust_library(
     ]),
   deps = [
         # Exteral crates
-        "@crate_index//:anyhow",
-        "@crate_index//:reqwest",
-        "@crate_index//:serde",
+        "@crates//:anyhow",
+        "@crates//:reqwest",
+        "@crates//:serde",
     ],
     visibility = ["//visibility:public"],
 )

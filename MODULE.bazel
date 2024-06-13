@@ -1,6 +1,95 @@
+module(name = "queng")
+
 ###############################################################################
-# Bazel now uses Bzlmod by default to manage external dependencies.
-# Please consider migrating your external dependencies from WORKSPACE to MODULE.bazel.
-#
-# For more details, please check https://github.com/bazelbuild/bazel/issues/18958
+# B A Z E L  C E N T R A L  R E G I S T R Y # https://registry.bazel.build/
 ###############################################################################
+# https://github.com/bazelbuild/bazel-skylib/releases/
+bazel_dep(name = "bazel_skylib", version = "1.7.1")
+# https://github.com/bazelbuild/rules_rust/releases
+bazel_dep(name = "rules_rust", version = "0.46.0")
+# https://github.com/aspect-build/bazel-lib/releases
+bazel_dep(name = "aspect_bazel_lib", version = "2.7.7")
+# https://github.com/keith/rules_multirun/releases
+bazel_dep(name = "rules_multirun", version = "0.9.0")
+# https://github.com/bazel-contrib/rules_oci/releases
+bazel_dep(name = "rules_oci", version = "1.7.6")
+# https://github.com/bazelbuild/rules_pkg/releases
+bazel_dep(name = "rules_pkg", version = "0.10.1")
+# https://github.com/bazelbuild/rules_proto/releases
+bazel_dep(name = "rules_proto", version = "6.0.0")
+
+###############################################################################
+# T O O L C H A I N S
+###############################################################################
+# Rust toolchain
+RUST_EDITION = "2021"
+RUST_VERSION = "1.78.0"
+# https://github.com/bazelbuild/rules_rust/releases
+rust = use_extension("@rules_rust//rust:extensions.bzl", "rust")
+rust.toolchain(edition = RUST_EDITION, versions = [RUST_VERSION])
+use_repo(rust, "rust_toolchains")
+register_toolchains("@rust_toolchains//:all")
+
+# Proto toolchain
+register_toolchains("@rules_rust//proto/protobuf:default-proto-toolchain")
+
+# Prost toolchain
+register_toolchains("@rules_rust//proto/prost:default_prost_toolchain")
+
+###############################################################################
+#  O C I  I M A G E: https://github.com/bazel-contrib/rules_oci/releases
+###############################################################################
+oci = use_extension("@rules_oci//oci:extensions.bzl", "oci")
+oci.pull(
+    name = "distroless",
+    digest = "sha256:e1065a1d58800a7294f74e67c32ec4146d09d6cbe471c1fa7ed456b2d2bf06e0",
+    image = "gcr.io/distroless/cc-debian12",
+    platforms = ["linux/amd64", "linux/arm64/v8"],
+)
+use_repo(oci, "distroless")
+
+###############################################################################
+# BuildBuddy Toolchain: https://github.com/buildbuddy-io/buildbuddy-toolchain/
+###############################################################################
+# https://github.com/buildbuddy-io/buildbuddy-toolchain/issues/18
+
+###############################################################################
+# R U S T  C R A T E S
+###############################################################################
+crate = use_extension("@rules_rust//crate_universe:extension.bzl", "crate")
+# Custom Memory Allocator
+crate.spec(package = "jemallocator", version = "0.5.4")
+# External crates
+crate.spec(package = "anyhow", version = "1.0")
+crate.spec(package = "arc-swap", version = "1.7")
+crate.spec(package = "binance-rs-async",default_features=False, features = ["rustls-tls"],version = "1.3")
+crate.spec(package = "chrono", features = ["serde"], version = "0.4")
+crate.spec(package = "config-file", version = "0.2")
+crate.spec(package = "ctrlc", version = "3.4")
+crate.spec(package = "clickhouse-rs", version = "1.1.0-alpha.1")
+crate.spec(package = "csv", default_features=False, version = "1.3")
+crate.spec(package = "encoding_rs", version = "0.8")
+crate.spec(package = "futures", version = "0.3")
+crate.spec(package = "hickory-resolver", default_features=False, features = ["tokio-runtime"], version = "0.24")
+crate.spec(package = "klickhouse", version = "0.13")
+crate.spec(package = "lru", version = "0.12")
+crate.spec(package = "parquet", version = "52.0")
+crate.spec(package = "prost", version = "0.12")
+crate.spec(package = "prost-types", version = "0.12")
+crate.spec(package = "reqwest", default_features=False, features = ["rustls-tls", "json", "blocking", "gzip"], version = "0.12")
+crate.spec(package = "rust_decimal", version = "1.34")
+crate.spec(package = "rust_decimal_macros", version = "1.34")
+crate.spec(package = "serde", features = ["derive"], version = "1.0")
+crate.spec(package = "serde_json", version = "1.0")
+crate.spec(package = "scraper", default_features=False, version = "0.19")
+crate.spec(package = "tonic", features = ["transport"], version = "0.11")
+crate.spec(package = "tonic-build", version = "0.11")
+crate.spec(package = "tonic-health", default_features=False, features = ["transport"], version = "0.11")
+crate.spec(package = "tokio", default_features=False, features = ["macros", "net", "rt-multi-thread", "signal"], version = "1.38")
+crate.spec(package = "tokio-cron-scheduler", features = ["signal"], version = "0.10")
+crate.spec(package = "tokio-tungstenite", default_features=False, version = "0.23")
+crate.spec(package = "tokio-timer", version = "0.2")
+crate.spec(package = "warp", version = "0.3")
+
+crate.from_specs()
+use_repo(crate, "crates")

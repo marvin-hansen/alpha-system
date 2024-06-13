@@ -34,9 +34,9 @@ rust_binary(
         "//queng_utils/service_utils:service_utils",
         "//queng_specs/service_specs:smdb_specs",
         # External crates
-        "@crate_index//:tokio",
-        "@crate_index//:tonic",
-        "@crate_index//:prost",
+        "@crates//:tokio",
+        "@crates//:tonic",
+        "@crates//:prost",
     ],
     visibility = ["//visibility:public"],
 )

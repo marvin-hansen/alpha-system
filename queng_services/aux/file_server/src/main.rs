@@ -22,7 +22,7 @@ mod utils;
 #[global_allocator]
 static GLOBAL: Jemalloc = Jemalloc;
 
-const VRB: bool = false;
+const VRB: bool = true;
 const PORT: u16 = 7777;
 
 #[tokio::main]
