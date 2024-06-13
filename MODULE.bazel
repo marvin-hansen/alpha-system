@@ -17,6 +17,8 @@ bazel_dep(name = "rules_oci", version = "1.7.6")
 bazel_dep(name = "rules_pkg", version = "0.10.1")
 # https://github.com/bazelbuild/rules_proto/releases
 bazel_dep(name = "rules_proto", version = "6.0.0")
+# https://github.com/bazelbuild/rules_python/releases
+bazel_dep(name = "rules_python", version = "0.33.1")
 
 ###############################################################################
 # T O O L C H A I N S
@@ -35,6 +37,14 @@ register_toolchains("@rules_rust//proto/protobuf:default-proto-toolchain")
 
 # Prost toolchain
 register_toolchains("@rules_rust//proto/prost:default_prost_toolchain")
+
+# Python toolchain
+python = use_extension("@rules_python//python/extensions:python.bzl", "python")
+python.toolchain(
+    configure_coverage_tool = False,
+    ignore_root_user_error = True,
+    python_version = "3.11",
+)
 
 ###############################################################################
 #  O C I  I M A G E: https://github.com/bazel-contrib/rules_oci/releases
