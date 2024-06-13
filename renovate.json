@@ -1,8 +1,13 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  
-  "fileMatch": [
-    "(^|/)WORKSPACE(|\\.bazel|\\.bzlmod)$",
-    "\\.bzl$"
+  "extends": ["github>renovatebot/.github"],
+   "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": [
+      "(^|/)WORKSPACE(|\\.bazel|\\.bzlmod)$",
+      "\\.bzl$"
+  ]
+}
   ]
 }
