@@ -1,0 +1,89 @@
+load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_doc", "rust_doc_test")
+# OCI Container Rules
+load("@rules_pkg//pkg:tar.bzl", "pkg_tar")
+load("@rules_oci//oci:defs.bzl", "oci_image", "oci_push",  "oci_image_index")
+# Custom container macro
+load("//:build_image.bzl", "build_image", "build_tag")
+
+rust_binary(
+    name = "bin",
+    crate_root = "src/main.rs",
+    srcs = glob([
+        "src/**/*.rs",
+    ]),
+    rustc_flags = select({
+       "//:release": [
+            "-Clto",
+            "-Ccodegen-units=1",
+            "-Cpanic=abort",
+            "-Copt-level=3",
+            "-Cstrip=symbols",
+            ],
+        "//conditions:default":
+        [
+           "-Copt-level=0",
+        ],
+    }),
+    deps = [
+        # Specs
+        "//queng_specs/service_specs/mddb_specs:mddb_specs",
+        # Internal crates
+        "//queng_common:common",
+        "//queng_components/config_manager:config_manager",
+        "//queng_components/ctx_manager:ctx_manager",
+        "//queng_components/dns_manager:dns_manager",
+        "//queng_components/db_query_manager:db_query_manager",
+        "//queng_proto:rust_proto",
+        "//queng_utils/service_utils:service_utils",
+        "//queng_components/symbol_manager:symbol_manager",
+        "//queng_providers/smdb_provider:smdb_provider",
+        # External crates
+        "@crates//:tokio",
+        "@crates//:tonic",
+        "@crates//:prost",
+    ],
+    tags = ["service", "smdb"],
+    visibility = ["//visibility:public"],
+)
+
+
+# Build documentation
+rust_doc(
+    name = "doc",
+    crate = ":bin",
+    tags = ["doc"],
+    visibility = ["//visibility:public"],
+)
+
+# Test documentation
+rust_doc_test(
+     name = "doc_test",
+     crate = ":bin",
+     tags = ["doc-test"],
+     visibility = ["//visibility:public"],
+ )
+
+# Build container image
+build_image(
+    name = "image",
+    srcs = [":bin"],
+    exposed_ports = ["7070", "8080"],
+    visibility = ["//visibility:public"],
+)
+
+# Build an unique and immutable image tag based on the image SHA265 digest.
+build_tag(
+    name = "remote_tag",
+    image = ":image",
+    input = "image.json.sha256",
+    output = "_tag.txt",
+)
+
+# Publish image to registry
+oci_push(
+    name = "push",
+    image = ":image",
+    repository = "asia-northeast1-docker.pkg.dev/future-309012/image-repo/mddb",
+    remote_tags = ":remote_tag",
+    visibility = ["//visibility:public"],
+)

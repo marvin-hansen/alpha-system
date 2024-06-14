@@ -6,8 +6,8 @@ filegroup(
         "//queng_services/aux/file_server:image",
         "//queng_services/cmdb:image",
         "//queng_services/dbgw:image",
+        "//queng_services/mddb:image",
         "//queng_services/smdb:image",
-        "//queng_services/symdb:image",
     ],
     visibility = ["//visibility:public"],
 )
@@ -18,8 +18,8 @@ multirun(
         "push_file_server",
         "push_cmdb",
         "push_dbgw",
+        "push_mddb",
         "push_smdb",
-        "push_symdb",
     ],
     jobs = 0, # Set to 0 to run in parallel, 1 sets to sequential
     visibility = ["//visibility:public"],
@@ -44,13 +44,13 @@ command(
 )
 
 command(
-    name = "push_smdb",
-    command = "//queng_services/smdb:push",
+    name = "push_mddb",
+    command = "//queng_services/mddb:push",
     arguments = [], # Optional arguments passed directly to the tool
 )
 
 command(
-    name = "push_symdb",
-    command = "//queng_services/symdb:push",
+    name = "push_smdb",
+    command = "//queng_services/smdb:push",
     arguments = [], # Optional arguments passed directly to the tool
 )

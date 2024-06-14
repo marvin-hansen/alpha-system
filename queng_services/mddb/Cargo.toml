@@ -1,31 +1,32 @@
 [package]
-name = "cmdb"
+name = "mddb"
 version = "0.1.0"
-
 edition.workspace = true
-readme.workspace = true
 rust-version.workspace = true
+readme.workspace = true
 repository.workspace = true
 authors.workspace = true
 
 
 [[bin]]
-name = "cmdb"
+name = "mddb"
 path = "src/main.rs"
-
 
 [dependencies]
 # Service specs
-cmdb_specs = { workspace = true }
+mddb_specs = { workspace = true }
 # Internal crates
 common = {workspace = true}
 config_manager = {workspace = true}
 ctx_manager = {workspace = true}
 dns_manager = {workspace = true}
+db_query_manager = {workspace = true}
 proto_bindings = {workspace = true}
 service_utils = {workspace = true}
 smdb_provider = {workspace = true}
+symbol_manager = {workspace = true}
 # External crates
 tokio = { workspace = true }
 tonic = { workspace = true }
 prost = { workspace = true }
+serde = {workspace = true}
