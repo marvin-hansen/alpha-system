@@ -29,7 +29,6 @@ members = [
     "queng_services_ims/ims_data/shared_data",
     "queng_services/mddb",
     "queng_services/smdb",
-    "queng_services/symdb",
     "queng_specs/container_specs",
     "queng_specs/db_specs",
     "queng_specs/exchange_specs",
@@ -119,6 +118,7 @@ service_utils = { path = "queng_utils/service_utils" }
 # ==============
 # Custom Memory Allocator
 # ==============
+#
 jemallocator = {version = "0.5.4"}
 mimalloc = { version = "0.1.42" }
 #
