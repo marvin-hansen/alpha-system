@@ -28,5 +28,4 @@ symbol_manager = {workspace = true}
 # External crates
 tokio = { workspace = true }
 tonic = { workspace = true }
-prost = { workspace = true }
 serde = {workspace = true}

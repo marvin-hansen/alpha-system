@@ -37,7 +37,6 @@ rust_binary(
         # External crates
         "@crates//:tokio",
         "@crates//:tonic",
-        "@crates//:prost",
     ],
     tags = ["service", "smdb"],
     visibility = ["//visibility:public"],

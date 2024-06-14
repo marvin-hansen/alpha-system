@@ -5,6 +5,7 @@ use proto_bindings::proto::cmdb_service_server::CmdbService;
 use proto_bindings::proto::db_gateway_service_client::DbGatewayServiceClient;
 use proto_bindings::proto::*;
 
+
 #[derive(Clone)]
 pub struct CMDBServer {
     dbgw: DbGatewayServiceClient<Channel>,

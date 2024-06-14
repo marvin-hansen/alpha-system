@@ -39,7 +39,6 @@ rust_binary(
         # External crates
         "@crates//:tokio",
         "@crates//:tonic",
-        "@crates//:prost",
     ],
     tags = ["cmdb", "aux_file_server"],
     visibility = ["//visibility:public"],

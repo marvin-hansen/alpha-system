@@ -28,4 +28,3 @@ smdb_provider = {workspace = true}
 # External crates
 tokio = { workspace = true }
 tonic = { workspace = true }
-prost = { workspace = true }

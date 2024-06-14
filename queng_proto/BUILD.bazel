@@ -15,7 +15,6 @@ proto_library(
           "proto_bazel/service_messages.proto",
           "proto_bazel/exchange_symbol_messages.proto",
     ],
-    visibility = ["//visibility:public"],
 )
 
 rust_prost_library(
