@@ -1,5 +1,12 @@
 use common::prelude::ContainerConfig;
 
+/// Constructs the configuration for a ClickHouse container.
+///
+/// This function prepares a `ContainerConfig` specifically tailored for the deployment
+/// of a Clickhouse database container.
+///
+/// # Returns
+/// A `ContainerConfig` instance populated with all the necessary settings for a ClickHouse container.
 pub fn clickhouse_container_config() -> ContainerConfig<'static> {
     // Official container image for ClickHouse
     // https://hub.docker.com/r/clickhouse/clickhouse-server/tags

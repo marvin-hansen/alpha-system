@@ -12,9 +12,9 @@ fn test_from_proto() {
 
     let config = metric_config_from_proto(proto).unwrap();
 
-    assert_eq!(config.metric_uri(), "metrics");
-    assert_eq!(config.metric_host(), "localhost");
-    assert_eq!(config.metric_port(), 8080);
+    assert_eq!(config.uri(), "metrics");
+    assert_eq!(config.host(), "localhost");
+    assert_eq!(config.port(), 8080);
 }
 
 #[test]

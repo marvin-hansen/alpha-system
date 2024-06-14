@@ -2,6 +2,23 @@ use common::prelude::{
     Encoding, Endpoint, MetricConfig, ProtocolType, ServiceConfig, ServiceID, ServiceType,
 };
 
+/// Constructs the configuration for the SMDB service.
+///
+/// This function generates a `ServiceConfig` struct with the following fields:
+/// - `id`: The unique identifier for the service.
+/// - `name`: The human-readable name of the service.
+/// - `version`: The version of the service.
+/// - `online`: A boolean indicating whether the service is online or not.
+/// - `description`: A brief description of the service.
+/// - `health_check_uri`: The URI for the health check endpoint of the service.
+/// - `base_uri`: The base URI for the service.
+/// - `dependencies`: A list of service IDs that this service depends on.
+/// - `exposure_type`: The exposure type of the service (e.g., internal, external).
+/// - `endpoints`: A list of `EndpointConfig` structs defining the endpoints of the service.
+/// - `metrics`: A list of `MetricConfig` structs defining the metrics of the service.
+///
+/// # Returns
+/// A `ServiceConfig` instance with all the necessary settings for the CMDB service.
 pub fn smdb_service_config() -> ServiceConfig {
     let svc_id = ServiceID::SMDB;
     let name = "smdbv1".to_string();

@@ -14,8 +14,8 @@ pub fn metric_config_to_proto(
     metric_config: &MetricConfig,
 ) -> Result<ProtoMetricConfig, fmt::Error> {
     Ok(ProtoMetricConfig {
-        metric_uri: metric_config.metric_uri().to_string(),
-        metric_host: metric_config.metric_host().to_string(),
-        metric_port: metric_config.metric_port() as u32,
+        metric_uri: metric_config.uri().to_string(),
+        metric_host: metric_config.host().to_string(),
+        metric_port: metric_config.port() as u32,
     })
 }

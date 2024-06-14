@@ -3,40 +3,36 @@ use std::fmt::{Display, Formatter};
 
 #[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq)]
 pub struct MetricConfig {
-    metric_uri: String,
-    metric_host: String,
-    metric_port: u16,
+    uri: String,
+    host: String,
+    port: u16,
 }
 
 impl MetricConfig {
-    pub fn new(metric_uri: String, metric_host: String, metric_port: u16) -> Self {
-        Self {
-            metric_uri,
-            metric_host,
-            metric_port,
-        }
+    pub fn new(uri: String, host: String, port: u16) -> Self {
+        Self { uri, host, port }
     }
 }
 
 impl Default for MetricConfig {
     fn default() -> Self {
         Self {
-            metric_uri: String::from("metrics"),
-            metric_host: String::from("127.0.0.1"),
-            metric_port: 8080,
+            uri: String::from("metrics"),
+            host: String::from("127.0.0.1"),
+            port: 8080,
         }
     }
 }
 
 impl MetricConfig {
-    pub fn metric_uri(&self) -> &str {
-        &self.metric_uri
+    pub fn uri(&self) -> &str {
+        &self.uri
     }
-    pub fn metric_host(&self) -> &str {
-        &self.metric_host
+    pub fn host(&self) -> &str {
+        &self.host
     }
-    pub fn metric_port(&self) -> u16 {
-        self.metric_port
+    pub fn port(&self) -> u16 {
+        self.port
     }
 }
 
@@ -45,7 +41,7 @@ impl Display for MetricConfig {
         write!(
             f,
             "metric_uri: {},  metric_host: {},  metric_port: {}",
-            self.metric_uri, self.metric_host, self.metric_port
+            self.uri, self.host, self.port
         )
     }
 }

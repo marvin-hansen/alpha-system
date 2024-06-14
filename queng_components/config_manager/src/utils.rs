@@ -22,9 +22,9 @@ pub(crate) fn get_svc_env_config(
     let ci_host = "127.0.0.1".to_string();
     let docker_host = "0.0.0.0".to_string();
     let service_port = endpoint.port().to_string();
-    let metrics_host = metrics_config.metric_host().to_string();
-    let metrics_uri = metrics_config.metric_uri().to_string();
-    let metrics_port = metrics_config.metric_port();
+    let metrics_host = metrics_config.host().to_string();
+    let metrics_uri = metrics_config.uri().to_string();
+    let metrics_port = metrics_config.port();
 
     SvcEnvConfig::new(
         service_id,

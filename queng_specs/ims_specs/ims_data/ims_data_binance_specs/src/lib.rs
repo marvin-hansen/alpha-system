@@ -3,6 +3,29 @@ use common::prelude::{
     ServiceType,
 };
 
+/// Configures the service for Binance data in the IMS system.
+///
+/// This function generates a `ServiceConfig` tailored for managing data for a specific exchange within the IMS system.
+/// It defines the service ID, name, version, online status, description, health check URI, base URI,
+/// dependencies, exposure type, endpoint configuration, and metric configuration for the service.
+///
+/// # Returns
+/// A `ServiceConfig` instance with all the necessary settings for the IMS service for the specified exchange.
+///
+/// # Fields
+/// * `port` - The port number for the service.
+/// * `id` - The ID of the service.
+/// * `name` - The name of the service.
+/// * `version` - The version of the service.
+/// * `online` - The online status of the service.
+/// * `description` - The description of the service.
+/// * `health_check_uri` - The health check URI for the service.
+/// * `base_uri` - The base URI for the service.
+/// * `dependencies` - The dependencies of the service.
+/// * `exposure` - The exposure type of the service.
+/// * `endpoint` - The endpoint configuration for the service.
+/// * `metrics` - The metric configuration for the service.
+///
 pub fn ims_data_binance_config() -> ServiceConfig {
     ims_service_config(ExchangeID::Binance, ServiceID::ImsDataBinance)
 }

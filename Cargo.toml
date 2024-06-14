@@ -33,7 +33,6 @@ members = [
     "queng_specs/container_specs",
     "queng_specs/db_specs",
     "queng_specs/exchange_specs",
-    "queng_specs/file_specs",
     "queng_specs/ims_specs/ims_data/ims_data_binance_specs",
     "queng_specs/service_specs/cmdb_specs",
     "queng_specs/service_specs/dbgw_specs",
@@ -97,7 +96,6 @@ lib_data_stream = { path = "queng_services/ims/data/shared_data" }
 container_specs = { path = "queng_specs/container_specs" }
 db_specs = { path = "queng_specs/db_specs" }
 exchange_specs = { path = "queng_specs/exchange_specs" }
-file_specs = { path = "queng_specs/file_specs" }
 # IMS Specs
 # Data
 ims_data_binance_specs = {path = "queng_specs/ims_specs/ims_data/ims_data_binance_specs" }
