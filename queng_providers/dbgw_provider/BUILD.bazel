@@ -9,7 +9,6 @@ rust_library(
     ]),
     deps =[
         # Internal crates
-        "//queng_common:common",
         # External crates
     ],
     tags = ["provider", "dbgw_provider"],

@@ -1,2 +1,2 @@
 #[cfg(test)]
-mod qdgw_tests;
+mod qdgw_specs_tests;

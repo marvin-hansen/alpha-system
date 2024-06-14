@@ -17,7 +17,6 @@ path = "src/lib.rs"
 # Internal crates
 common = { workspace = true }
 clickhouse_utils = { workspace = true }
-env_utils = { workspace = true }
 
 # External crates
 chrono = { workspace = true }

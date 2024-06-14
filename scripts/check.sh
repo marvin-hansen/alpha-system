@@ -17,10 +17,10 @@ command cargo outdated --workspace
 
 # Scan for unused dependencies
 # https://crates.io/crates/cargo-udeps
-#command cargo +nightly udeps --all-targets
+command cargo +nightly udeps --all-targets
 
 
-# Scan again to report all unfixed vulnerabilities
+# Scan for security vulnerabilities
 # https://crates.io/crates/cargo-audit
 command cargo audit
 
@@ -28,6 +28,7 @@ command cargo audit
 # Check a package and all of its dependencies for errors.
 # https://doc.rust-lang.org/cargo/commands/cargo-check.html
 command cargo check --all-targets
+
 
 # Consider checking each crate for re-exporting external types
 # https://crates.io/crates/cargo-check-external-types

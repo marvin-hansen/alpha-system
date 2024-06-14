@@ -15,10 +15,8 @@ path = "src/lib.rs"
 
 [dependencies]
 # Internal crates
-common = {workspace = true}
 rest_client = {workspace = true}
 # External crates
 anyhow = { workspace = true }
-#binance-rs-async = { workspace = true }
 serde = {workspace = true}
 tokio = { workspace = true }

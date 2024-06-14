@@ -25,8 +25,8 @@ members = [
     "queng_services/aux/file_server",
     "queng_services/cmdb",
     "queng_services/dbgw",
-    "queng_services/ims/data/binance_data",
-    "queng_services/ims/data/shared_data",
+    "queng_services_ims/ims_data/binance_data",
+    "queng_services_ims/ims_data/shared_data",
     "queng_services/mdm",
     "queng_services/smdb",
     "queng_services/symdb",
@@ -91,7 +91,7 @@ smdb_provider = { path = "queng_providers/smdb_provider" }
 sbe_bindings = { path = "queng_sbe/bindings" }
 sbe_messages = { path = "queng_sbe/sbe_messages" }
 # Service libs
-lib_data_stream = { path = "queng_services/ims/data/shared_data" }
+lib_data_stream = { path = "queng_services_ims/ims_data/shared_data" }
 # Specs
 container_specs = { path = "queng_specs/container_specs" }
 db_specs = { path = "queng_specs/db_specs" }

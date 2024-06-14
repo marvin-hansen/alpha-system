@@ -1,2 +1,2 @@
 #[cfg(test)]
-mod dbgw_tests;
+mod dbgw_specs_tests;

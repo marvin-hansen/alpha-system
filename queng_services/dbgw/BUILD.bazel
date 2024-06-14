@@ -40,7 +40,6 @@ rust_binary(
         # External crates
         "@crates//:tokio",
         "@crates//:tonic",
-        "@crates//:tonic-health",
         "@crates//:prost",
     ],
     tags = ["service", "dbgw"],

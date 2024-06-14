@@ -23,6 +23,7 @@ pub enum ServiceID {
     SYMDB = 0x5_u8,
     VEX = 0x6_u8,
     ImsDataBinance = 0x7_u8,
+    MDDB = 0x8_u8,
 }
 
 impl ServiceID {
@@ -53,6 +54,8 @@ impl From<i32> for ServiceID {
     /// * 4: `QDGW`
     /// * 5: `SYMDB`
     /// * 6: `VEX`
+    /// * 7: `ImsDataBinance`
+    /// * 8: `MDDB`
     ///
     /// If the value does not match a variant, returns `Default`.
     ///
@@ -67,6 +70,7 @@ impl From<i32> for ServiceID {
             0x5_i32 => Self::SYMDB,
             0x6_i32 => Self::VEX,
             0x7_i32 => Self::ImsDataBinance,
+            0x8_i32 => Self::MDDB,
             _ => Self::Default,
         }
     }
@@ -90,6 +94,8 @@ impl From<u8> for ServiceID {
     /// * 4: `QDGW`
     /// * 5: `SYMDB`
     /// * 6: `VEX`
+    /// * 7: `ImsDataBinance`
+    /// * 8: `MDDB`
     ///
     /// If the value does not match a variant, returns `Default`.
     ///
@@ -104,6 +110,7 @@ impl From<u8> for ServiceID {
             5 => Self::SYMDB,
             6 => Self::VEX,
             7 => Self::ImsDataBinance,
+            8 => Self::MDDB,
             _ => Self::Default,
         }
     }
@@ -120,6 +127,7 @@ impl ServiceID {
             "SYMDB" => Some(ServiceID::SYMDB),
             "ImsDataBinance" => Some(ServiceID::ImsDataBinance),
             "VEX" => Some(ServiceID::VEX),
+            "MDDB" => Some(ServiceID::MDDB),
             _ => None,
         }
     }

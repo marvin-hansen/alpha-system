@@ -1,2 +1,2 @@
 #[cfg(test)]
-mod vex_tests;
+mod vex_specs_tests;

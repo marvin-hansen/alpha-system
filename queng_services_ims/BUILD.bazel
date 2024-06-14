@@ -1,0 +1,26 @@
+load("@rules_multirun//:defs.bzl", "command", "multirun")
+
+filegroup(
+    name = "image",
+    srcs = [
+        "//queng_services_ims/ims_data:image",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+
+multirun(
+    name = "push",
+    commands = [
+        "push_ims_data_images",
+    ],
+    jobs = 1, # Set to parallel
+    visibility = ["//visibility:public"],
+)
+
+
+command(
+    name = "push_ims_data_images",
+    command = "//queng_services_ims/ims_data:push",
+    arguments = [], # Optional arguments passed directly to the tool
+)

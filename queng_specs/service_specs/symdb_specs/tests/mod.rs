@@ -1,2 +1,2 @@
 #[cfg(test)]
-mod symdb_tests;
+mod symdb_specs_tests;

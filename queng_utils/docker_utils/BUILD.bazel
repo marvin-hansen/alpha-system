@@ -12,7 +12,6 @@ rust_library(
         # Internal crates
         "//queng_common:common",
          # External crates
-        "@crates//:tokio",
     ],
     tags = ["utils", "docker_utils"],
     visibility = ["//visibility:public"],

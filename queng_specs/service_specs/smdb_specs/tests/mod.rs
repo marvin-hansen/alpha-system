@@ -1,2 +1,2 @@
 #[cfg(test)]
-mod smdb_tests;
+mod smdb_specs_tests;

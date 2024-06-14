@@ -32,4 +32,6 @@ futures = { workspace = true }
 rust_decimal = { workspace = true }
 tokio = { workspace = true }
 serde = { workspace = true }
+smdb_specs = { workspace = true }
+
 

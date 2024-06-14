@@ -12,11 +12,11 @@ sh_binary(
         srcs = ["buildbuddy_setup_docker_auth.sh"]
 )
 
-
 filegroup(
     name = "image",
     srcs = [
         "//queng_services:image",
+        "//queng_services_ims:image",
     ],
     visibility = ["//visibility:public"],
 )
@@ -24,14 +24,21 @@ filegroup(
 multirun(
     name = "push",
     commands = [
-        "push_images",
+        "push_service_images",
+        "push_ims_images",
     ],
     jobs = 0, # Set to parallel
     visibility = ["//visibility:public"],
 )
 
 command(
-    name = "push_images",
+    name = "push_service_images",
     command = "//queng_services:push",
+    arguments = [], # Optional arguments passed directly to the tool
+)
+
+command(
+    name = "push_ims_images",
+    command = "//queng_services_ims:push",
     arguments = [], # Optional arguments passed directly to the tool
 )
