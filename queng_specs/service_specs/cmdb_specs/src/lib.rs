@@ -34,7 +34,7 @@ fn get_endpoint() -> Endpoint {
     let endpoint_name = "cmdb Endpoint".to_string();
     let endpoint_version = 1;
     let endpoint_description =
-        "Access to the configuration service via gRPC on baseUri:7070".to_string();
+        "Access to the service configuration service via gRPC on baseUri:7070".to_string();
     let endpoint_uri = "/".to_string();
     let endpoint_port = 7070;
     let endpoint_protocol = ProtocolType::GRPC;
