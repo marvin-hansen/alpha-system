@@ -32,7 +32,7 @@ fn test_cmdb_service_config() {
     assert_eq!(endpoint.version(), 1);
     assert_eq!(
         endpoint.description(),
-        "Access to the configuration service via gRPC on baseUri:7070"
+        "Access to the service configuration service via gRPC on baseUri:7070"
     );
     assert_eq!(endpoint.uri(), String::from("/"));
     assert_eq!(endpoint.port(), 7070);
