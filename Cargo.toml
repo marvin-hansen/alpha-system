@@ -34,7 +34,14 @@ members = [
     "queng_specs/db_specs",
     "queng_specs/exchange_specs",
     "queng_specs/file_specs",
-    "queng_specs/service_specs",
+    "queng_specs/ims_specs/ims_data/ims_data_binance_specs",
+    "queng_specs/service_specs/cmdb_specs",
+    "queng_specs/service_specs/dbgw_specs",
+    "queng_specs/service_specs/mddb_specs",
+    "queng_specs/service_specs/qdgw_specs",
+    "queng_specs/service_specs/smdb_specs",
+    "queng_specs/service_specs/symdb_specs",
+    "queng_specs/service_specs/vex_specs",
     "queng_utils/clickhouse_utils",
     "queng_utils/client_utils",
     "queng_utils/docker_utils",
@@ -91,7 +98,17 @@ container_specs = { path = "queng_specs/container_specs" }
 db_specs = { path = "queng_specs/db_specs" }
 exchange_specs = { path = "queng_specs/exchange_specs" }
 file_specs = { path = "queng_specs/file_specs" }
-service_specs = { path = "queng_specs/service_specs" }
+# IMS Specs
+# Data
+ims_data_binance_specs = {path = "queng_specs/ims_specs/ims_data/ims_data_binance_specs" }
+# Service specs
+cmdb_specs = {path = "queng_specs/service_specs/cmdb_specs"}
+dbgw_specs = {path = "queng_specs/service_specs/dbgw_specs" }
+mddb_specs = {path = "queng_specs/service_specs/mddb_specs" }
+qdgw_specs = {path = "queng_specs/service_specs/qdgw_specs" }
+smdb_specs = {path = "queng_specs/service_specs/smdb_specs" }
+symdb_specs = {path = "queng_specs/service_specs/symdb_specs" }
+vex_specs = {path = "queng_specs/service_specs/vex_specs" }
 # Utils
 clickhouse_utils = { path = "queng_utils/clickhouse_utils" }
 client_utils = { path = "queng_utils/client_utils" }

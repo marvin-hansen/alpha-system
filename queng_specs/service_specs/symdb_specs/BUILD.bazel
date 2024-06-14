@@ -1,0 +1,47 @@
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test_suite")
+load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test")
+
+rust_library(
+    name = "symdb_specs",
+    srcs = glob([
+        "src/lib.rs",
+    ]),
+    deps = [
+        # Internal dependencies
+        "//queng_common:common",
+    ],
+    tags = ["specs", "service_specs", "symdb_specs"],
+    visibility = ["//visibility:public"],
+)
+
+rust_doc(
+    name = "doc",
+    crate = ":symdb_specs",
+    tags = ["doc"],
+    visibility = ["//visibility:public"],
+)
+
+rust_doc_test(
+     name = "doc_test",
+     crate = ":symdb_specs",
+     tags = ["doc-test"],
+     visibility = ["//visibility:public"],
+)
+
+rust_test_suite(
+    name = "symdb_tests",
+    srcs = glob([
+        "tests/*_tests.rs",
+    ]),
+    deps =  [
+        # Test target
+        ":symdb_specs",
+        # Internal dependencies
+        "//queng_common:common",
+    ],
+    tags = [
+        "specs",
+        "unit",
+    ],
+    visibility = ["//visibility:public"],
+)

@@ -1,10 +1,12 @@
+use cmdb_specs::cmdb_service_config;
 use common::prelude::{EnvironmentType, ServiceID};
 use config_manager::CfgManager;
 use ctx_manager::CtxManager;
+use dbgw_specs::dbgw_service_config;
 use dns_manager::DnsManager;
-use service_specs::prelude::{
-    cmdb_service_config, dbgw_service_config, qdgw_service_config, smdb_service_config,
-};
+use qdgw_specs::qdgw_service_config;
+use smdb_specs::smdb_service_config;
+
 use std::env;
 
 #[test]

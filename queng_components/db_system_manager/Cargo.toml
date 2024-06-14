@@ -21,7 +21,6 @@ config_manager = { workspace = true }
 dns_manager = { workspace = true }
 db_specs = { workspace = true }
 exchange_specs = { workspace = true }
-service_specs = { workspace = true }
 clickhouse_utils = { workspace = true }
 env_utils = { workspace = true }
 

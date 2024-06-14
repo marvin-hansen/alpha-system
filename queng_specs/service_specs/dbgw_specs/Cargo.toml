@@ -1,5 +1,5 @@
 [package]
-name = "service_specs"
+name = "dbgw_specs"
 version = "0.1.0"
 
 edition.workspace = true
@@ -10,10 +10,11 @@ authors.workspace = true
 
 
 [lib]
-name = "service_specs"
+name = "dbgw_specs"
 path = "src/lib.rs"
 
 
 [dependencies]
 # Internal crates
 common = {workspace = true}
+

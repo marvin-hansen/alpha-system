@@ -15,7 +15,6 @@ rust_library(
       "//queng_components/dns_manager:dns_manager",
       "//queng_specs/db_specs:db_specs",
       "//queng_specs/exchange_specs:exchange_specs",
-      "//queng_specs/service_specs:service_specs",
       "//queng_utils/clickhouse_utils:clickhouse_utils",
       "//queng_utils/env_utils:env_utils",
       # External crates
@@ -55,7 +54,7 @@ rust_test(
           "//queng_components/dns_manager:dns_manager",
           "//queng_specs/db_specs:db_specs",
           "//queng_specs/exchange_specs:exchange_specs",
-          "//queng_specs/service_specs:service_specs",
+          "//queng_specs/service_specs:smdb_specs",
           "//queng_utils/clickhouse_utils:clickhouse_utils",
           "//queng_utils/env_utils:env_utils",
           # External crates

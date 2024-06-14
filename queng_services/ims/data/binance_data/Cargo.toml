@@ -15,6 +15,7 @@ path = "src/main.rs"
 
 [dependencies]
 # Internal crates
+ims_data_binance_specs = {workspace = true}
 common = {workspace = true}
 config_manager = {workspace = true}
 ctx_manager = {workspace = true}

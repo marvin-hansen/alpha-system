@@ -1,10 +1,12 @@
 use config_manager::CfgManager;
 use std::env;
 
+use cmdb_specs::cmdb_service_config;
 use common::prelude::{EnvironmentType, ServiceID};
 use ctx_manager::CtxManager;
+use dbgw_specs::dbgw_service_config;
 use dns_manager::DnsManager;
-use service_specs::prelude::{cmdb_service_config, dbgw_service_config, smdb_service_config};
+use smdb_specs::smdb_service_config;
 
 #[test]
 fn test_get_cmdb_host() {

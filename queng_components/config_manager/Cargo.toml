@@ -21,4 +21,7 @@ ctx_manager = { workspace = true }
 dns_manager = { workspace = true }
 db_specs = { workspace = true }
 exchange_specs = { workspace = true }
-service_specs = { workspace = true }
+
+cmdb_specs = { workspace = true }
+dbgw_specs = { workspace = true }
+smdb_specs = { workspace = true }

@@ -4,7 +4,7 @@ use ctx_manager::CtxManager;
 use db_system_manager::SystemDBManager;
 use dns_manager::DnsManager;
 use env_utils::prelude::EnvUtil;
-use service_specs::prelude::smdb_service_config;
+use smdb_specs::smdb_service_config;
 use std::env;
 
 async fn setup_env() {

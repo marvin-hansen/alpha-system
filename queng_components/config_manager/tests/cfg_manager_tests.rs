@@ -2,7 +2,7 @@ use common::prelude::{EnvironmentType, ServiceID};
 use config_manager::CfgManager;
 use ctx_manager::CtxManager;
 use dns_manager::DnsManager;
-use service_specs::prelude::smdb_service_config;
+use smdb_specs::smdb_service_config;
 use std::env;
 
 #[test]
