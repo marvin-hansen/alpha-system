@@ -26,6 +26,8 @@ rust_binary(
         ],
     }),
     deps =  [
+        # Specs
+        "//queng_specs/service_specs/symdb_specs:symdb_specs",
         # Internal crates
         "//queng_common:common",
         "//queng_components/config_manager:config_manager",
@@ -36,7 +38,6 @@ rust_binary(
         "//queng_utils/service_utils:service_utils",
         "//queng_components/symbol_manager:symbol_manager",
         "//queng_providers/smdb_provider:smdb_provider",
-        "//queng_specs/service_specs:symdb_specs",
         # External crates
         "@crates//:tokio",
         "@crates//:tonic",

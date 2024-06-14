@@ -25,6 +25,8 @@ rust_binary(
         ],
     }),
     deps = [
+        # Specs
+        "//queng_specs/service_specs/smdb_specs:smdb_specs",
         # Internal crates
         "//queng_common:common",
         "//queng_components/config_manager:config_manager",
@@ -32,7 +34,6 @@ rust_binary(
         "//queng_components/dns_manager:dns_manager",
         "//queng_proto:rust_proto",
         "//queng_utils/service_utils:service_utils",
-        "//queng_specs/service_specs:smdb_specs",
         # External crates
         "@crates//:tokio",
         "@crates//:tonic",
