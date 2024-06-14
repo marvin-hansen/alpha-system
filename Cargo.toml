@@ -38,7 +38,6 @@ members = [
     "queng_specs/service_specs/mddb_specs",
     "queng_specs/service_specs/qdgw_specs",
     "queng_specs/service_specs/smdb_specs",
-    "queng_specs/service_specs/symdb_specs",
     "queng_specs/service_specs/vex_specs",
     "queng_utils/clickhouse_utils",
     "queng_utils/client_utils",
