@@ -2,7 +2,7 @@ use crate::types::stats::Stats;
 use common::prelude::{Asset, AssetRoot, Exchange, ExchangesRoot, Instrument, InstrumentsRoot};
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, PartialEq, Serialize, Deserialize)]
 pub struct MetaDataSet {
     assets: AssetRoot,
     exchanges: ExchangesRoot,
