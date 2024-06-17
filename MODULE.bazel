@@ -16,13 +16,16 @@ bazel_dep(name = "rules_oci", version = "1.7.6")
 # https://github.com/bazelbuild/rules_pkg/releases
 bazel_dep(name = "rules_pkg", version = "0.10.1")
 # https://github.com/bazelbuild/rules_proto/releases
+# https://github.com/bazelbuild/rules_python/releases
+bazel_dep(name = "rules_python", version = "0.33.1")
+#
+# Rules for proto
+# https://github.com/bazelbuild/rules_proto/releases
 bazel_dep(name = "rules_proto", version = "6.0.0")
 # https://github.com/aspect-build/toolchains_protoc/releases
 bazel_dep(name = "toolchains_protoc", version = "0.3.1")
-# https://github.com/bazelbuild/rules_python/releases
-bazel_dep(name = "rules_python", version = "0.33.1")
-# https://github.com/bazelbuild/platforms/releases
-# bazel_dep(name = "platforms", version = "0.0.10")
+# https://registry.bazel.build/modules/protobuf
+bazel_dep(name = "protobuf", version = "27.1")
 
 ###############################################################################
 # T O O L C H A I N S
@@ -39,8 +42,8 @@ register_toolchains("@rust_toolchains//:all")
 # Proto toolchain
 register_toolchains("@rules_rust//proto/protobuf:default-proto-toolchain")
 
-# Prost toolchain
-register_toolchains("@rules_rust//proto/prost:default_prost_toolchain")
+# Custom Prost toolchain
+register_toolchains("@//build/prost_toolchain")
 
 # Python toolchain
 python = use_extension("@rules_python//python/extensions:python.bzl", "python")
@@ -71,8 +74,20 @@ use_repo(oci, "distroless")
 # R U S T  C R A T E S
 ###############################################################################
 crate = use_extension("@rules_rust//crate_universe:extension.bzl", "crate")
+#
 # Custom Memory Allocator
 crate.spec(package = "jemallocator", version = "0.5.4")
+#
+# protobufs/gRPC in Rust
+crate.spec(package = "prost", version = "0.12")
+crate.spec(package = "prost-types", default_features = False, version = "0.12")
+crate.spec(package = "tonic", features = ["transport"], version = "0.11")
+crate.spec(package = "tonic-build", version = "0.11")
+crate.spec(package = "protoc-gen-prost", version = "0.3.1")
+crate.annotation(crate = "protoc-gen-prost",gen_binaries = ["protoc-gen-prost"],)
+crate.spec(package = "protoc-gen-tonic", version = "0.4.0")
+crate.annotation(   crate = "protoc-gen-tonic",   gen_binaries = ["protoc-gen-tonic"],)
+#
 # External crates
 crate.spec(package = "anyhow", version = "1.0")
 crate.spec(package = "arc-swap", version = "1.7")
@@ -88,16 +103,12 @@ crate.spec(package = "hickory-resolver", default_features=False, features = ["to
 crate.spec(package = "klickhouse", version = "0.13")
 crate.spec(package = "lru", version = "0.12")
 crate.spec(package = "parquet", version = "52.0")
-crate.spec(package = "prost", version = "0.12")
-crate.spec(package = "prost-types",default_features=False, version = "0.12")
 crate.spec(package = "reqwest", default_features=False, features = ["rustls-tls", "json", "blocking", "gzip"], version = "0.12")
 crate.spec(package = "rust_decimal", version = "1.34")
 crate.spec(package = "rust_decimal_macros", version = "1.34")
 crate.spec(package = "serde", features = ["derive"], version = "1.0")
 crate.spec(package = "serde_json", version = "1.0")
 crate.spec(package = "scraper", default_features=False, version = "0.19")
-crate.spec(package = "tonic", features = ["transport"], version = "0.11")
-crate.spec(package = "tonic-build", version = "0.11")
 crate.spec(package = "tonic-health", default_features=False, features = ["transport"], version = "0.11")
 crate.spec(package = "tokio", default_features=False, features = ["macros", "net", "rt-multi-thread", "signal"], version = "1.38")
 crate.spec(package = "tokio-cron-scheduler", features = ["signal"], version = "0.10")
