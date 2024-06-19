@@ -23,4 +23,5 @@ load("@io_buildbuddy_buildbuddy_toolchain//:rules.bzl", "buildbuddy", "UBUNTU20_
 buildbuddy(
     name = "buildbuddy_toolchain",
     container_image = UBUNTU20_04_IMAGE,
+    llvm = True,
 )
