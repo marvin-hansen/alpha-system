@@ -21,21 +21,46 @@ bazel_dep(name = "rules_python", version = "0.33.1")
 #
 # Rules for proto
 # https://github.com/bazelbuild/rules_proto/releases
-bazel_dep(name = "rules_proto", version = "6.0.0")
+bazel_dep(name = "rules_proto", version = "6.0.2")
 # https://github.com/aspect-build/toolchains_protoc/releases
 bazel_dep(name = "toolchains_protoc", version = "0.3.1")
 # https://registry.bazel.build/modules/protobuf
 bazel_dep(name = "protobuf", version = "27.1")
+#
+# Rules for cross compilation
+# https://github.com/bazel-contrib/musl-toolchain/releases
+bazel_dep(name = "toolchains_musl", version = "0.1.16", dev_dependency = True)
+# https://github.com/bazelbuild/platforms/releases
+bazel_dep(name = "platforms", version = "0.0.10")
+# https://github.com/bazel-contrib/toolchains_llvm
+bazel_dep(name = "toolchains_llvm", version = "1.0.0")
 
 ###############################################################################
 # T O O L C H A I N S
 ###############################################################################
+# LLVM Toolchain
+# rules_rust still needs a cpp toolchain for cross-compiling, so provide one here
+llvm = use_extension("@toolchains_llvm//toolchain/extensions:llvm.bzl", "llvm")
+llvm.toolchain(
+    name = "llvm_toolchain",
+    llvm_version = "16.0.0",
+)
+use_repo(llvm, "llvm_toolchain", "llvm_toolchain_llvm")
+
+register_toolchains("@llvm_toolchain//:all")
 # Rust toolchain
 RUST_EDITION = "2021"
 RUST_VERSION = "1.79.0"
 # https://github.com/bazelbuild/rules_rust/releases
 rust = use_extension("@rules_rust//rust:extensions.bzl", "rust")
-rust.toolchain(edition = RUST_EDITION, versions = [RUST_VERSION])
+rust.toolchain(
+    edition = RUST_EDITION,
+    versions = [RUST_VERSION],
+    extra_target_triples = [
+        "x86_64-unknown-linux-musl",
+        "aarch64-unknown-linux-musl",
+    ],
+)
 use_repo(rust, "rust_toolchains")
 register_toolchains("@rust_toolchains//:all")
 
@@ -57,6 +82,8 @@ python.toolchain(
 #  O C I  I M A G E: https://github.com/bazel-contrib/rules_oci/releases
 ###############################################################################
 oci = use_extension("@rules_oci//oci:extensions.bzl", "oci")
+#
+# https://github.com/GoogleContainerTools/distroless
 oci.pull(
     name = "distroless",
     digest = "sha256:e1065a1d58800a7294f74e67c32ec4146d09d6cbe471c1fa7ed456b2d2bf06e0",
@@ -64,6 +91,15 @@ oci.pull(
     platforms = ["linux/amd64", "linux/arm64/v8"],
 )
 use_repo(oci, "distroless")
+#
+# https://hub.docker.com/r/hansenmarvin/rust-scratch/tags
+oci.pull(
+    name = "scratch",
+    digest = "sha256:c6d1c2b62a454d6c5606645b5adfa026516e3aa9213a6f7648b8e9b3cc520f76",
+    image = "index.docker.io/hansenmarvin/rust-scratch",
+    platforms = ["linux/amd64", "linux/arm64"],
+)
+use_repo(oci, "scratch")
 
 ###############################################################################
 # BuildBuddy Toolchain: https://github.com/buildbuddy-io/buildbuddy-toolchain/
