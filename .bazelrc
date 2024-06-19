@@ -41,10 +41,9 @@ test --verbose_failures
 ###############################################################################
 
 # Enable Bzlmod for every Bazel command
-# common --enable_bzlmod
+common --enable_bzlmod
 
-# Enable proto toolchain resolution
-# common --incompatible_enable_proto_toolchain_resolution
+common --sandbox_debug
 
 # Write build outputs in a platform-specific directory;
 # avoid outputs being wiped and rewritten when switching between platforms.
