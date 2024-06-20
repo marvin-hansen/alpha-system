@@ -25,13 +25,13 @@ filegroup(
     name = "image",
     srcs = [
         # Services
-        "//queng_services/aux/file_server:image",
-        "//queng_services/cmdb:image",
-        "//queng_services/dbgw:image",
-        "//queng_services/mddb:image",
-        "//queng_services/smdb:image",
+        "//queng_services/aux/file_server:image_index",
+        "//queng_services/cmdb:image_index",
+        "//queng_services/dbgw:image_index",
+        "//queng_services/mddb:image_index",
+        "//queng_services/smdb:image_index",
         # IMS Services
-        "//queng_services_ims/ims_data/binance_data:image",
+        "//queng_services_ims/ims_data/binance_data:image_index",
     ],
     visibility = ["//visibility:public"],
 )

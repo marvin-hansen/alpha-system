@@ -1,12 +1,8 @@
 load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_doc", "rust_doc_test")
 # OCI Container Rules
-load("@rules_pkg//pkg:tar.bzl", "pkg_tar")
-load("@rules_oci//oci:defs.bzl", "oci_image", "oci_push",  "oci_image_index")
+load("@rules_oci//oci:defs.bzl",  "oci_push")
 # Custom container macro
-load("//:build/container.bzl", "build_image", "build_sha265_tag")
-# Custom platform transition macro
-load("//:build/transition.bzl", "multi_arch")
-
+load("//:build/container.bzl", "build_multi_arch_image", "build_sha265_tag")
 
 rust_binary(
     name = "bin",
@@ -63,37 +59,22 @@ rust_doc_test(
      crate = ":bin",
      tags = ["doc-test"],
      visibility = ["//visibility:public"],
- )
+)
 
-# Build container image
-build_image(
-    name = "image",
+# Build musl container image
+build_multi_arch_image(
+    name = "image_index",
     base = "@scratch",
     srcs = [":bin"],
     exposed_ports = ["7070", "8080"],
-    visibility = ["//visibility:public"],
-)
-
-multi_arch(
-    name = "multi_arch_images",
-    image = ":image",
-    platforms = [
-        "//build/platforms:linux_x86_64_musl",
-    ],
-)
-
-oci_image_index(
-    name = "image_index",
-    images = [
-        ":multi_arch_images",
-    ],
+    platforms = [ "//build/platforms:linux_x86_64_musl",],
     visibility = ["//visibility:public"],
 )
 
 # Build an unique and immutable image tag based on the image SHA265 digest.
 build_sha265_tag(
     name = "remote_tag",
-    image = ":image",
+    image = ":image_index",
     input = "image.json.sha256",
     output = "_tag.txt",
 )
