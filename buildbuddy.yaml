@@ -22,7 +22,6 @@ actions:
       # - "test -c opt  //...  -cache --test_tag_filters=env_setup"
       # - "test -c opt  //...  -cache --test_tag_filters=clickhouse_utils "
       # Build & publish images to container registry
-      - "build -c opt //:image"
       - "run   -c opt //:push"
     resource_requests:
       cpu: 8  # Add more CPU for Docker

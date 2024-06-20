@@ -1,5 +1,8 @@
 load("@rules_multirun//:defs.bzl", "command", "multirun")
 
+###############################################################################
+# RUST RELEASE MODE OPTIMIZATION
+###############################################################################
 config_setting(
     name = "release",
     values = {
@@ -7,38 +10,87 @@ config_setting(
     },
 )
 
+###############################################################################
+# CI DOCKER AUTHENTICATION
+###############################################################################
 sh_binary(
         name = "buildbuddy_setup_docker_auth",
         srcs = ["buildbuddy_setup_docker_auth.sh"]
 )
 
+###############################################################################
+# BUILD CONTAINERS
+###############################################################################
 filegroup(
     name = "image",
     srcs = [
-        "//queng_services:image",
-        "//queng_services_ims:image",
+        # Services
+        "//queng_services/aux/file_server:image",
+        "//queng_services/cmdb:image",
+        "//queng_services/dbgw:image",
+        "//queng_services/mddb:image",
+        "//queng_services/smdb:image",
+        # IMS Services
+        "//queng_services_ims/ims_data/binance_data:image",
     ],
     visibility = ["//visibility:public"],
 )
 
+###############################################################################
+# PUSH CONTAINERS
+###############################################################################
 multirun(
     name = "push",
     commands = [
-        "push_service_images",
-        "push_ims_images",
+        # Services
+        "push_file_server",
+        "push_cmdb",
+        "push_dbgw",
+        "push_mddb",
+        "push_smdb",
+        # IMS Services
+        "push_binance_data",
     ],
-    jobs = 0, # Set to parallel
+    jobs = 0, # Set to 0 to run in parallel, defaults to sequential
     visibility = ["//visibility:public"],
 )
 
+# Services
+
 command(
-    name = "push_service_images",
-    command = "//queng_services:push",
+    name = "push_file_server",
+    command = "//queng_services/aux/file_server:push",
     arguments = [], # Optional arguments passed directly to the tool
 )
 
 command(
-    name = "push_ims_images",
-    command = "//queng_services_ims:push",
+    name = "push_cmdb",
+    command = "//queng_services/cmdb:push",
+    arguments = [], # Optional arguments passed directly to the tool
+)
+
+command(
+    name = "push_dbgw",
+    command = "//queng_services/dbgw:push",
+    arguments = [], # Optional arguments passed directly to the tool
+)
+
+command(
+    name = "push_mddb",
+    command = "//queng_services/mddb:push",
+    arguments = [], # Optional arguments passed directly to the tool
+)
+
+command(
+    name = "push_smdb",
+    command = "//queng_services/smdb:push",
+    arguments = [], # Optional arguments passed directly to the tool
+)
+
+# IMS Services
+
+command(
+    name = "push_binance_data",
+    command = "//queng_services_ims/ims_data/binance_data:push",
     arguments = [], # Optional arguments passed directly to the tool
 )
