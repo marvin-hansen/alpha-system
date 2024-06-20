@@ -9,8 +9,8 @@ rust_library(
     ]),
     deps = [
         # Internal crates
-        "//queng_common:common",
-        "//queng_proto:rust_proto",
+        "//:common",
+        "//:rust_proto",
         # Exteral crates
         "@crates//:tokio",
         "@crates//:tonic",

@@ -10,7 +10,7 @@ rust_library(
     ]),
     deps = [
         # Internal crates
-        "//queng_common:common",
+        "//:common",
         # External crates
         "@crates//:rust_decimal"
     ],
@@ -23,9 +23,9 @@ rust_test_suite(
         "tests/pattern_manager_tests.rs",
     ]),
     deps =  [
-        "//queng_components/pattern_manager:pattern_manager",
+        ":pattern_manager",
         # Internal crates
-        "//queng_common:common",
+        "//:common",
         # External crates
         "@crates//:rust_decimal"
     ],

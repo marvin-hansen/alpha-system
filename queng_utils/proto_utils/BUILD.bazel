@@ -8,8 +8,8 @@ rust_library(
     ]),
     deps =[
         # Internal crates
-        "//queng_common:common",
-        "//queng_proto:rust_proto",
+        "//:common",
+        "//:rust_proto",
     ],
     tags = ["utils", "proto_utils"],
     visibility = ["//visibility:public"],

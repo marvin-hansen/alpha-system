@@ -26,17 +26,17 @@ rust_binary(
     }),
     deps = [
         # Specs
-        "//queng_specs/service_specs/cmdb_specs:cmdb_specs",
+        "//:cmdb_specs",
+        # Internal crates
+        "//:common",
+        "//:config_manager",
+        "//:ctx_manager",
+        "//:dns_manager",
+        "//:rust_proto",
+        "//:service_utils",
+        "//:smdb_provider",
         # Custom Memory Allocator
         "@crates//:jemallocator",
-        # Internal crates
-        "//queng_common:common",
-        "//queng_components/config_manager:config_manager",
-        "//queng_components/ctx_manager:ctx_manager",
-        "//queng_components/dns_manager:dns_manager",
-        "//queng_proto:rust_proto",
-        "//queng_utils/service_utils:service_utils",
-        "//queng_providers/smdb_provider:smdb_provider",
         # External crates
         "@crates//:tokio",
         "@crates//:tonic",
@@ -61,7 +61,7 @@ rust_doc_test(
      visibility = ["//visibility:public"],
 )
 
-# Build musl container image
+# Build musl multi arch container image
 build_multi_arch_image(
     name = "image_index",
     base = "@scratch",

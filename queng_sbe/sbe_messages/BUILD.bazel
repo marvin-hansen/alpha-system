@@ -10,8 +10,8 @@ rust_library(
     ]),
     deps =[
         # Internal crates
-        "//queng_common:common",
-        "//queng_sbe/bindings:sbe_bindings",
+        "//:common",
+        "//:sbe_bindings",
         # External crates
         "@crates//:rust_decimal",
         "@crates//:serde",
@@ -44,8 +44,8 @@ rust_test_suite(
         # Crate to test
         ":sbe_messages",
         # Internal crates
-        "//queng_common:common",
-        "//queng_sbe/bindings:sbe_bindings",
+        "//:common",
+        "//:sbe_bindings",
         # External crates
         "@crates//:rust_decimal",
         "@crates//:serde",

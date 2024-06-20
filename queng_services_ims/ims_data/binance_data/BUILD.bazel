@@ -25,18 +25,18 @@ rust_binary(
     }),
     deps = [
         # Service specs
-        "//queng_specs/ims_specs/ims_data/ims_data_binance_specs",
+        "//:ims_data_binance_specs",
+        # Internal crates
+        "//:common",
+        "//:config_manager",
+        "//:ctx_manager",
+        "//:dns_manager",
+        "//:lib_data_stream",
+        "//:rust_proto",
+        "//:service_utils",
+        "//:smdb_provider",
         # Custom Memory Allocator
         "@crates//:jemallocator",
-        # Internal crates
-        "//queng_common:common",
-        "//queng_components/config_manager:config_manager",
-        "//queng_components/ctx_manager:ctx_manager",
-        "//queng_components/dns_manager:dns_manager",
-        "//queng_services_ims/ims_data/shared_data:lib_data_stream",
-        "//queng_proto:rust_proto",
-        "//queng_utils/service_utils:service_utils",
-        "//queng_providers/smdb_provider:smdb_provider",
          # External crates
         "@crates//:binance_rs_async",
         "@crates//:chrono",

@@ -8,7 +8,7 @@ rust_library(
     ]),
     deps = [
         # Internal dependencies
-        "//queng_common:common",
+        "//:common",
     ],
     tags = ["specs", "service_specs", "smdb_specs"],
     visibility = ["//visibility:public"],
@@ -37,7 +37,7 @@ rust_test_suite(
         # Test target
         ":smdb_specs",
         # Internal dependencies
-        "//queng_common:common",
+        "//:common",
     ],
     tags = [
         "specs",

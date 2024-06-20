@@ -10,9 +10,9 @@ rust_library(
     ]),
     deps = [
         # Internal crates
-        "//queng_common:common",
-        "//queng_specs/container_specs:container_specs",
-        "//queng_utils/docker_utils:docker_utils",
+        "//:common",
+        "//:container_specs",
+        "//:docker_utils",
         # External crates
         "@crates//:klickhouse",
         "@crates//:serde",
@@ -42,9 +42,9 @@ rust_test_suite(
         # Crate under test
         ":clickhouse_utils",
         # Internal crates
-        "//queng_common:common",
-        "//queng_specs/container_specs:container_specs",
-        "//queng_utils/docker_utils:docker_utils",
+        "//:common",
+        "//:container_specs",
+        "//:docker_utils",
         # External crates
         "@crates//:klickhouse",
         "@crates//:serde",

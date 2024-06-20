@@ -27,8 +27,8 @@ rust_binary(
     }),
     deps = [
         # Internal crates
-        "//queng_common:common",
-        "//queng_utils/service_utils:service_utils",
+        "//:common",
+        "//:service_utils",
         # Custom Memory Allocator
         "@crates//:jemallocator",
         # External crates

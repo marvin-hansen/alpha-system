@@ -10,8 +10,8 @@ rust_library(
     ]),
     deps = [
         # Internal crates
-        "//queng_common:common",
-        "//queng_clients/kaiko_client:kaiko_client",
+        "//:common",
+        "//:kaiko_client",
         # External crates
     ],
     tags = ["utils", "kaiko_utils"],

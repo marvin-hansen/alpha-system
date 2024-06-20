@@ -25,16 +25,16 @@ rust_binary(
     }),
     deps = [
         # Specs
-        "//queng_specs/service_specs/dbgw_specs:dbgw_specs",
+        "//:dbgw_specs",
         # Internal crates
-        "//queng_common:common",
-        "//queng_components/config_manager:config_manager",
-        "//queng_components/ctx_manager:ctx_manager",
-        "//queng_components/db_system_manager:db_system_manager",
-        "//queng_components/dns_manager:dns_manager",
-        "//queng_proto:rust_proto",
-        "//queng_utils/proto_utils:proto_utils",
-        "//queng_utils/service_utils:service_utils",
+        "//:common",
+        "//:config_manager",
+        "//:ctx_manager",
+        "//:db_system_manager",
+        "//:dns_manager",
+        "//:rust_proto",
+        "//:proto_utils",
+        "//:service_utils",
         # Jemallocator Memory Allocator fixes a concurrency performance issue in MUSL
         "@crates//:jemallocator",
         # External crates

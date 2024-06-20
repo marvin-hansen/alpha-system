@@ -10,8 +10,8 @@ rust_library(
     ]),
     deps = [
       # Internal crates
-      "//queng_common:common",
-      "//queng_utils/clickhouse_utils:clickhouse_utils",
+      "//:common",
+      "//:clickhouse_utils",
       # External crates
       "@crates//:chrono",
       "@crates//:futures",
@@ -32,8 +32,8 @@ rust_library(
 #      # Crate to test
 #      ":db_query_manager",
 #      # Internal crates
-#      "//queng_common:common",
-#      "//queng_utils/clickhouse_utils:clickhouse_utils",
+#      "//:common",
+#      "//:clickhouse_utils",
 #      # External crates
 #      "@crates//:chrono",
 #      "@crates//:futures",

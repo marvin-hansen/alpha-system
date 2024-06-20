@@ -9,8 +9,8 @@ rust_library(
     ]),
     deps = [
         # Internal crates
-        "//queng_common:common",
-        "//queng_components/ctx_manager:ctx_manager",
+        "//:common",
+        "//:ctx_manager",
         # External crates
         "@crates//:hickory-resolver"
     ],
@@ -25,9 +25,9 @@ rust_test_suite(
     deps =  [
         # Crate under test
         ":dns_manager",
-        "//queng_common:common",
+        "//:common",
         # Internal crates
-        "//queng_components/ctx_manager:ctx_manager",
+        "//:ctx_manager",
     ],
     tags = ["unit","components", "dns_manager"],
     visibility = ["//visibility:public"],

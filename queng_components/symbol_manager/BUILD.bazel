@@ -10,7 +10,7 @@ rust_library(
     ]),
     deps = [
         # Internal crates
-        "//queng_common:common",
+        "//:common",
         # External crates
         "@crates//:lru",
     ],
@@ -24,9 +24,9 @@ rust_test_suite(
     ]),
     deps =  [
         # Crate to test
-        "//queng_components/symbol_manager:symbol_manager",
+        ":symbol_manager",
         # Internal crates
-        "//queng_common:common",
+        "//:common",
         # External crates
         "@crates//:lru",
     ],

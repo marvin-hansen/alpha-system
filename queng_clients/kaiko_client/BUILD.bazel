@@ -9,8 +9,8 @@ rust_library(
     ]),
   deps = [
         # Internal crates
-        "//queng_clients/rest_client:rest_client",
-        "//queng_common:common",
+        "//:rest_client",
+        "//:common",
         # External crates
         "@crates//:anyhow",
     ],
@@ -43,8 +43,8 @@ rust_test_suite(
         # Crate to test
         ":kaiko_client",
         # Internal crates
-        "//queng_clients/rest_client:rest_client",
-        "//queng_common:common",
+        "//:rest_client",
+        "//:common",
         # External crates
         "@crates//:anyhow",
         "@crates//:tokio",

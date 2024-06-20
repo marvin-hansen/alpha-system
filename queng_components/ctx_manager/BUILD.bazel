@@ -9,7 +9,7 @@ rust_library(
         "src/**",
     ]),
      deps = [
-        "//queng_common:common",
+        "//:common",
     ],
     visibility = ["//visibility:public"],
 )
@@ -24,8 +24,8 @@ rust_test_suite(
         "tests/ctx_manager_ci_tests.rs",
     ],
     deps = [
-        "//queng_common:common",
-        "//queng_components/ctx_manager:ctx_manager",
+        "//:common",
+        "//:ctx_manager",
     ],
     tags = ["unit","components", "ctx_manager"],
     visibility = ["//visibility:public"],
@@ -37,8 +37,8 @@ rust_test_suite(
         "tests/ctx_manager_cluster_tests.rs",
     ],
     deps = [
-        "//queng_common:common",
-        "//queng_components/ctx_manager:ctx_manager",
+        "//:common",
+        "//:ctx_manager",
     ],
     tags = ["unit","components", "ctx_manager"],
     visibility = ["//visibility:public"],
@@ -50,8 +50,8 @@ rust_test_suite(
         "tests/ctx_manager_local_tests.rs",
     ],
     deps = [
-        "//queng_common:common",
-        "//queng_components/ctx_manager:ctx_manager",
+        "//:common",
+        "//:ctx_manager",
     ],
     tags = ["unit","components", "ctx_manager"],
     visibility = ["//visibility:public"],

@@ -10,11 +10,11 @@ rust_library(
     ]),
     deps =[
         # Internal crates
-        "//queng_common:common",
-        "//queng_components/config_manager:config_manager",
-        "//queng_components/db_query_manager:db_query_manager",
-        "//queng_specs/db_specs:db_specs",
-        "//queng_components/symbol_manager:symbol_manager",
+        "//:common",
+        "//:config_manager",
+        "//:db_query_manager",
+        "//:db_specs",
+        "//:symbol_manager",
         # External crates
         "@crates//:futures",
         "@crates//:config-file",

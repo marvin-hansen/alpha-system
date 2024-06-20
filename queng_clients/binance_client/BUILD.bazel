@@ -10,7 +10,7 @@ rust_library(
     ]),
   deps = [
         # Internal crates
-        "//queng_clients/rest_client:rest_client",
+        "//:rest_client",
         # External crates
         "@crates//:anyhow",
         "@crates//:serde",

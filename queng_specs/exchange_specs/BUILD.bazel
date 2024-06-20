@@ -8,7 +8,7 @@ rust_library(
         "src/**/*.rs",
     ]),
     deps = [
-        "//queng_common:common",
+        "//:common",
     ],
     tags = ["specs", "exchange_specs"],
     visibility = ["//visibility:public"],
@@ -20,8 +20,8 @@ rust_test_suite(
         "tests/*/*.rs",
     ]),
     deps = [
-        "//queng_common:common",
-        "//queng_specs/exchange_specs:exchange_specs",
+        "//:common",
+        ":exchange_specs",
     ],
     tags = [
         "specs",

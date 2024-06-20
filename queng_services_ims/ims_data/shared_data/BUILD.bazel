@@ -10,13 +10,13 @@ rust_library(
     ]),
     deps =  [
         # Internal crates
-        "//queng_common:common",
-        "//queng_components/config_manager:config_manager",
-        "//queng_components/ctx_manager:ctx_manager",
-        "//queng_components/dns_manager:dns_manager",
-        "//queng_proto:rust_proto",
-        "//queng_utils/service_utils:service_utils",
-        "//queng_providers/smdb_provider:smdb_provider",
+        "//:common",
+        "//:config_manager",
+        "//:ctx_manager",
+        "//:dns_manager",
+        "//:rust_proto",
+        "//:service_utils",
+        "//:smdb_provider",
         # External crates
         "@crates//:tokio",
         "@crates//:tonic",
