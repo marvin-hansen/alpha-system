@@ -1,4 +1,5 @@
 use config_manager::CfgManager;
+use jemallocator::Jemalloc;
 use std::error::Error;
 use tonic::transport::{Channel, Server, Uri};
 
@@ -11,6 +12,9 @@ use service::SMDBServer;
 use service_utils::{print_utils, shutdown_utils};
 use smdb_specs;
 mod service;
+
+#[global_allocator]
+static GLOBAL: Jemalloc = Jemalloc;
 
 const SVC_ID: ServiceID = ServiceID::SMDB;
 

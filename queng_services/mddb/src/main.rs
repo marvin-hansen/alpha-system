@@ -4,6 +4,7 @@ use config_manager::CfgManager;
 use ctx_manager::CtxManager;
 use db_query_manager::QueryDBManager;
 use dns_manager::DnsManager;
+use jemallocator::Jemalloc;
 use proto_bindings::proto::symdb_service_server::SymdbServiceServer;
 use service_utils::{print_utils, shutdown_utils};
 use smdb_provider::SMDBProvider;
@@ -13,6 +14,9 @@ use symbol_manager::SymbolManager;
 use tonic::transport::Server;
 
 mod service;
+
+#[global_allocator]
+static GLOBAL: Jemalloc = Jemalloc;
 
 const SVC_ID: ServiceID = ServiceID::MDDB;
 

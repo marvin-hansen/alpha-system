@@ -4,6 +4,7 @@ use common::prelude::ServiceID;
 use config_manager::CfgManager;
 use ctx_manager::CtxManager;
 use dns_manager::DnsManager;
+use jemallocator::Jemalloc;
 use proto_bindings::proto::cmdb_service_server::CmdbServiceServer;
 use proto_bindings::proto::db_gateway_service_client::DbGatewayServiceClient;
 use service_utils::{print_utils, shutdown_utils};
@@ -11,6 +12,9 @@ use smdb_provider::SMDBProvider;
 use std::error::Error;
 use tonic::transport::{Channel, Server, Uri};
 mod service;
+
+#[global_allocator]
+static GLOBAL: Jemalloc = Jemalloc;
 
 const SVC_ID: ServiceID = ServiceID::CMDB;
 

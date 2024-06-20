@@ -26,6 +26,8 @@ rust_binary(
     deps = [
         # Specs
         "//queng_specs/service_specs/mddb_specs:mddb_specs",
+        # Custom Memory Allocator
+        "@crates//:jemallocator",
         # Internal crates
         "//queng_common:common",
         "//queng_components/config_manager:config_manager",

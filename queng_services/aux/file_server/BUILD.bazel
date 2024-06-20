@@ -67,7 +67,7 @@ build_multi_arch_image(
     name = "image_index",
     base = "@scratch",
     srcs = [":bin"],
-    exposed_ports = ["7070", "8080"],
+    exposed_ports = ["7777"],
     platforms = [ "//build/platforms:linux_x86_64_musl",],
     visibility = ["//visibility:public"],
 )
