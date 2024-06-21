@@ -1,5 +1,4 @@
 use jemallocator::Jemalloc;
-use warp::Filter;
 
 mod errors;
 mod fields;
