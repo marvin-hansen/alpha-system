@@ -17,7 +17,8 @@ actions:
       - "build -c opt //... --build_tag_filters=doc-test --config=remote-cache"
       - "test  -c opt //... --test_tag_filters=doc-test"
       # Test: Run unit tests, prepare env setup for CI, and run integration tests
-      - "test -c opt  //...      --test_tag_filters=unit --config=remote-cache"
+      - "build -c opt  //...      --build_tag_filters=unit --config=remote-cache"
+      - "test -c opt  //...      --test_tag_filters=unit"
       # - "test -c opt  //...  -cache --test_tag_filters=env_setup"
       # - "test -c opt  //...  -cache --test_tag_filters=clickhouse_utils "
       # Build & publish images to container registry
