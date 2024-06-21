@@ -11,7 +11,7 @@ actions:
       # Setup & Authenticate
       - "run -c opt //:buildbuddy_setup_docker_auth --verbose_failures"
       # Build all targets
-      - "build -c opt //... --config=remote"
+      - "build -c opt //..."
       # Build & test all docs
       - "build -c opt //... --build_tag_filters=doc"
       - "build -c opt //... --build_tag_filters=doc-test"
