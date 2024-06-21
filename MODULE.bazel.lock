@@ -21743,7 +21743,7 @@
     "@@toolchains_llvm~//toolchain/extensions:llvm.bzl%llvm": {
       "general": {
         "bzlTransitiveDigest": "1w0wdH2QnKapJmTbk88f5iQjNlw7vw4f4r1cNf1vWVI=",
-        "usagesDigest": "xiIhiPp341vGjggWNXENCoJWeQeKMHEsR9Wls+QsOqA=",
+        "usagesDigest": "cmct3QrbT570fowSPF0m0wtvBPk4J1lnGBi3pASXWlM=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -21760,7 +21760,7 @@
               "llvm_mirror": "",
               "llvm_version": "",
               "llvm_versions": {
-                "": "17.0.6"
+                "": "16.0.0"
               },
               "netrc": "",
               "sha256": {},
@@ -21786,7 +21786,7 @@
               "link_flags": {},
               "link_libs": {},
               "llvm_versions": {
-                "": "17.0.6"
+                "": "16.0.0"
               },
               "opt_compile_flags": {},
               "opt_link_flags": {},
@@ -21815,7 +21815,7 @@
               "link_flags": {},
               "link_libs": {},
               "llvm_versions": {
-                "": "17.0.6"
+                "": "16.0.0"
               },
               "opt_compile_flags": {},
               "opt_link_flags": {},
@@ -21840,7 +21840,7 @@
               "llvm_mirror": "",
               "llvm_version": "",
               "llvm_versions": {
-                "": "17.0.6"
+                "": "16.0.0"
               },
               "netrc": "",
               "sha256": {},
