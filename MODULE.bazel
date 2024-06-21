@@ -36,18 +36,38 @@ bazel_dep(name = "platforms", version = "0.0.10")
 bazel_dep(name = "toolchains_llvm", version = "1.0.0")
 
 ###############################################################################
-# T O O L C H A I N S
+# L L V M
+# https://github.com/bazel-contrib/toolchains_llvm/blob/master/tests/MODULE.bazel
 ###############################################################################
-# LLVM Toolchain
-# rules_rust still needs a cpp toolchain for cross-compiling, so provide one here
 llvm = use_extension("@toolchains_llvm//toolchain/extensions:llvm.bzl", "llvm")
+LLVM_VERSIONS = {
+    "": "16.0.0",
+}
+
 llvm.toolchain(
     name = "llvm_toolchain",
-    llvm_version = "16.0.0",
+    llvm_versions = LLVM_VERSIONS,
 )
 use_repo(llvm, "llvm_toolchain", "llvm_toolchain_llvm")
 
+# LLVM Toolchain with a sysroot.
+llvm.toolchain(
+    name = "llvm_toolchain_with_sysroot",
+    llvm_versions = LLVM_VERSIONS,
+)
+
+llvm.sysroot(
+    name = "llvm_toolchain_with_sysroot",
+    targets = ["linux-x86_64"],
+    label = "@@org_chromium_sysroot_linux_x64//:sysroot",
+)
+use_repo(llvm, "llvm_toolchain_with_sysroot")
+
 register_toolchains("@llvm_toolchain//:all")
+
+###############################################################################
+# T O O L C H A I N S
+###############################################################################
 # Rust toolchain
 RUST_EDITION = "2021"
 RUST_VERSION = "1.79.0"
