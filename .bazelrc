@@ -82,15 +82,12 @@ common:remote-shared --remote_timeout=600
 common:remote-shared --remote_download_minimal
 common:remote-shared --experimental_remote_cache_compression
 common:remote-shared --experimental_remote_cache_async
-common:remote-shared --host_cpu=x86_64
-common:remote-shared --cpu=x86_64
 common:remote-shared --verbose_failures
-common:remote-shared --crosstool_top=@buildbuddy_toolchain//:cc_toolchain_suite
-common:remote-shared --host_platform=@buildbuddy_toolchain//:platform_linux
-common:remote-shared --extra_toolchains=@buildbuddy_toolchain//:cc_toolchain
 
-# common:remote-shared --remote_upload_local_results
-# common:remote-shared --remote_cache=grpcs://remote.buildbuddy.io
+common:remote-shared --host_platform=@buildbuddy_toolchain//:platform
+common:remote-shared --platforms=@buildbuddy_toolchain//:platform
+common:remote-shared --extra_execution_platforms=@buildbuddy_toolchain//:platform
+common:remote-shared --remote_cache=grpcs://remote.buildbuddy.io
 common:remote-shared --remote_header=x-buildbuddy-api-key=4Ml6AhYICvGtZ3XhqafP
 
 # Build with --config=remote to enable Remote Build Execution (RBE)
