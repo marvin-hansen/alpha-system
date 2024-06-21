@@ -17,7 +17,7 @@ bazel_dep(name = "rules_oci", version = "1.7.6")
 bazel_dep(name = "rules_pkg", version = "0.10.1")
 # https://github.com/bazelbuild/rules_proto/releases
 # https://github.com/bazelbuild/rules_python/releases
-bazel_dep(name = "rules_python", version = "0.33.1")
+bazel_dep(name = "rules_python", version = "0.33.2")
 #
 # Rules for proto
 # https://github.com/bazelbuild/rules_proto/releases
@@ -25,7 +25,7 @@ bazel_dep(name = "rules_proto", version = "6.0.2")
 # https://github.com/aspect-build/toolchains_protoc/releases
 bazel_dep(name = "toolchains_protoc", version = "0.3.1")
 # https://registry.bazel.build/modules/protobuf
-bazel_dep(name = "protobuf", version = "27.1")
+bazel_dep(name = "protobuf", version = "27.1.bcr.1")
 #
 # Rules for cross compilation
 # https://github.com/bazel-contrib/musl-toolchain/releases
@@ -41,7 +41,7 @@ bazel_dep(name = "toolchains_llvm", version = "1.0.0")
 ###############################################################################
 llvm = use_extension("@toolchains_llvm//toolchain/extensions:llvm.bzl", "llvm")
 LLVM_VERSIONS = {
-    "": "16.0.0",
+    "": "17.0.6",
 }
 
 llvm.toolchain(

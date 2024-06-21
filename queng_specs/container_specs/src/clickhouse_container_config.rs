@@ -13,7 +13,7 @@ pub fn clickhouse_container_config() -> ContainerConfig<'static> {
     ContainerConfig::new(
         "clickhouse",
         "clickhouse/clickhouse-server",
-        "24.5.1",
+        "24.5.3",
         "127.0.0.1",
         9000,
         Some(&[8123]),

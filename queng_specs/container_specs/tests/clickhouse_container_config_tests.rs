@@ -7,7 +7,7 @@ fn test_clickhouse_container_config() {
     assert_eq!(config.name(), "clickhouse");
     assert_eq!(
         config.container_image(),
-        "clickhouse/clickhouse-server:24.5.1"
+        "clickhouse/clickhouse-server:24.5.3"
     );
 
     assert_eq!(config.url(), "127.0.0.1");
