@@ -1,17 +1,18 @@
-load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test_suite")
-load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test")
-
+load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library", "rust_test_suite")
 
 rust_library(
     name = "container_specs",
     srcs = glob([
         "src/*.rs",
     ]),
-    deps =  [
+    tags = [
+        "container_specs",
+        "specs",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
         "//:common",
     ],
-    tags = ["specs", "container_specs"],
-    visibility = ["//visibility:public"],
 )
 
 rust_test_suite(
@@ -19,17 +20,16 @@ rust_test_suite(
     srcs = glob([
         "tests/*_tests.rs",
     ]),
-    deps = [
-        ":container_specs",
-        "//:common",
-    ],
     tags = [
         "specs",
         "unit",
     ],
     visibility = ["//visibility:public"],
+    deps = [
+        ":container_specs",
+        "//:common",
+    ],
 )
-
 
 rust_doc(
     name = "doc",
@@ -39,8 +39,8 @@ rust_doc(
 )
 
 rust_doc_test(
-     name = "doc_test",
-     crate = ":container_specs",
-     tags = ["doc-test"],
-     visibility = ["//visibility:public"],
+    name = "doc_test",
+    crate = ":container_specs",
+    tags = ["doc-test"],
+    visibility = ["//visibility:public"],
 )

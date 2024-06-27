@@ -1,18 +1,21 @@
-load("@rules_rust//rust:defs.bzl", "rust_library", "rust_doc", "rust_doc_test")
+load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library")
 
 rust_library(
     name = "proto_utils",
-    crate_root = "src/lib.rs",
     srcs = glob([
         "src/*.rs",
     ]),
-    deps =[
+    crate_root = "src/lib.rs",
+    tags = [
+        "proto_utils",
+        "utils",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
         # Internal crates
         "//:common",
         "//:rust_proto",
     ],
-    tags = ["utils", "proto_utils"],
-    visibility = ["//visibility:public"],
 )
 
 rust_doc(
@@ -23,8 +26,8 @@ rust_doc(
 )
 
 rust_doc_test(
-     name = "doc_test",
-     crate = ":proto_utils",
-     tags = ["doc-test"],
-     visibility = ["//visibility:public"],
+    name = "doc_test",
+    crate = ":proto_utils",
+    tags = ["doc-test"],
+    visibility = ["//visibility:public"],
 )

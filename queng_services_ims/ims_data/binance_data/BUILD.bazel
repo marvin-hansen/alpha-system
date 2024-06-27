@@ -1,28 +1,33 @@
-load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_doc", "rust_doc_test")
 # OCI Container Rules
-load("@rules_oci//oci:defs.bzl",  "oci_push")
+load("@rules_oci//oci:defs.bzl", "oci_push")
+load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_doc", "rust_doc_test")
+
 # Custom container macro
 load("//:build/container.bzl", "build_multi_arch_image", "build_sha265_tag")
 
 rust_binary(
     name = "bin",
-    crate_root = "src/main.rs",
     srcs = glob([
         "src/**/*.rs",
     ]),
+    crate_root = "src/main.rs",
     rustc_flags = select({
-       "//:release": [
+        "//:release": [
             "-Clto=true",
             "-Ccodegen-units=1",
             "-Cpanic=abort",
             "-Copt-level=3",
             "-Cstrip=symbols",
-            ],
-        "//conditions:default":
-        [
-           "-Copt-level=0",
+        ],
+        "//conditions:default": [
+            "-Copt-level=0",
         ],
     }),
+    tags = [
+        "binance_data",
+        "service",
+    ],
+    visibility = ["//visibility:public"],
     deps = [
         # Service specs
         "//:ims_data_binance_specs",
@@ -37,7 +42,7 @@ rust_binary(
         "//:smdb_provider",
         # Custom Memory Allocator
         "@crates//:jemallocator",
-         # External crates
+        # External crates
         "@crates//:binance_rs_async",
         "@crates//:chrono",
         "@crates//:futures",
@@ -47,8 +52,6 @@ rust_binary(
         "@crates//:tonic",
         "@crates//:prost",
     ],
-    tags = ["service", "binance_data"],
-    visibility = ["//visibility:public"],
 )
 
 # Build documentation
@@ -61,19 +64,22 @@ rust_doc(
 
 # Test documentation
 rust_doc_test(
-     name = "doc_test",
-     crate = ":bin",
-     tags = ["doc-test"],
-     visibility = ["//visibility:public"],
+    name = "doc_test",
+    crate = ":bin",
+    tags = ["doc-test"],
+    visibility = ["//visibility:public"],
 )
 
 # Build musl container image
 build_multi_arch_image(
     name = "image_index",
-    base = "@scratch",
     srcs = [":bin"],
-    exposed_ports = ["7070", "8080"],
-    platforms = [ "//build/platforms:linux_x86_64_musl",],
+    base = "@scratch",
+    exposed_ports = [
+        "7070",
+        "8080",
+    ],
+    platforms = ["//build/platforms:linux_x86_64_musl"],
     visibility = ["//visibility:public"],
 )
 
@@ -89,7 +95,7 @@ build_sha265_tag(
 oci_push(
     name = "push",
     image = ":image_index",
-    repository = "asia-northeast1-docker.pkg.dev/future-309012/image-repo/binance-data",
     remote_tags = ":remote_tag",
+    repository = "asia-northeast1-docker.pkg.dev/future-309012/image-repo/binance-data",
     visibility = ["//visibility:public"],
 )

@@ -1,15 +1,18 @@
 load("@crates//:defs.bzl", "aliases", "all_crate_deps")
-load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
-load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test")
-
+load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library", "rust_test")
 
 rust_library(
     name = "smdb_provider",
-    crate_root = "src/lib.rs",
     srcs = glob([
         "src/**",
     ]),
-    deps =[
+    crate_root = "src/lib.rs",
+    tags = [
+        "provider",
+        "smdb_provider",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
         # Internal crates
         "//queng_common:common",
         "//queng_proto:rust_proto",
@@ -18,10 +21,7 @@ rust_library(
         "@crates//:tonic",
         "@crates//:prost",
     ],
-    tags = ["provider", "smdb_provider"],
-    visibility = ["//visibility:public"],
 )
-
 
 rust_doc(
     name = "doc",
@@ -31,8 +31,8 @@ rust_doc(
 )
 
 rust_doc_test(
-     name = "doc_test",
-     crate = ":smdb_provider",
-     tags = ["doc-test"],
-     visibility = ["//visibility:public"],
+    name = "doc_test",
+    crate = ":smdb_provider",
+    tags = ["doc-test"],
+    visibility = ["//visibility:public"],
 )

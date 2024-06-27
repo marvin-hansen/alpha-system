@@ -1,20 +1,18 @@
-load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test_suite")
-load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test")
-
+load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library", "rust_test_suite")
 
 rust_library(
     name = "pattern_manager",
-    crate_root = "src/lib.rs",
     srcs = glob([
         "src/**",
     ]),
+    crate_root = "src/lib.rs",
+    visibility = ["//visibility:public"],
     deps = [
         # Internal crates
         "//:common",
         # External crates
-        "@crates//:rust_decimal"
+        "@crates//:rust_decimal",
     ],
-    visibility = ["//visibility:public"],
 )
 
 rust_test_suite(
@@ -22,15 +20,19 @@ rust_test_suite(
     srcs = glob([
         "tests/pattern_manager_tests.rs",
     ]),
-    deps =  [
+    tags = [
+        "components",
+        "pattern_manager",
+        "unit",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
         ":pattern_manager",
         # Internal crates
         "//:common",
         # External crates
-        "@crates//:rust_decimal"
+        "@crates//:rust_decimal",
     ],
-    tags = ["unit","components", "pattern_manager"],
-    visibility = ["//visibility:public"],
 )
 
 rust_doc(
@@ -41,8 +43,8 @@ rust_doc(
 )
 
 rust_doc_test(
-     name = "doc_test",
-     crate = ":pattern_manager",
-     tags = ["doc-test"],
-     visibility = ["//visibility:public"],
- )
+    name = "doc_test",
+    crate = ":pattern_manager",
+    tags = ["doc-test"],
+    visibility = ["//visibility:public"],
+)

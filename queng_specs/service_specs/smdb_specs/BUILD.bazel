@@ -1,17 +1,20 @@
-load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test_suite")
-load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test")
+load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library", "rust_test_suite")
 
 rust_library(
     name = "smdb_specs",
     srcs = glob([
         "src/lib.rs",
     ]),
+    tags = [
+        "service_specs",
+        "smdb_specs",
+        "specs",
+    ],
+    visibility = ["//visibility:public"],
     deps = [
         # Internal dependencies
         "//:common",
     ],
-    tags = ["specs", "service_specs", "smdb_specs"],
-    visibility = ["//visibility:public"],
 )
 
 rust_doc(
@@ -22,10 +25,10 @@ rust_doc(
 )
 
 rust_doc_test(
-     name = "doc_test",
-     crate = ":smdb_specs",
-     tags = ["doc-test"],
-     visibility = ["//visibility:public"],
+    name = "doc_test",
+    crate = ":smdb_specs",
+    tags = ["doc-test"],
+    visibility = ["//visibility:public"],
 )
 
 rust_test_suite(
@@ -33,15 +36,15 @@ rust_test_suite(
     srcs = glob([
         "tests/*_tests.rs",
     ]),
-    deps =  [
-        # Test target
-        ":smdb_specs",
-        # Internal dependencies
-        "//:common",
-    ],
     tags = [
         "specs",
         "unit",
     ],
     visibility = ["//visibility:public"],
+    deps = [
+        # Test target
+        ":smdb_specs",
+        # Internal dependencies
+        "//:common",
+    ],
 )

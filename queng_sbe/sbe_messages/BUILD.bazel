@@ -1,14 +1,17 @@
-load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test_suite")
-load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test")
-
+load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library", "rust_test_suite")
 
 rust_library(
     name = "sbe_messages",
-    crate_root = "src/lib.rs",
     srcs = glob([
         "src/**",
     ]),
-    deps =[
+    crate_root = "src/lib.rs",
+    tags = [
+        "sbe",
+        "sbe_messages",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
         # Internal crates
         "//:common",
         "//:sbe_bindings",
@@ -17,8 +20,6 @@ rust_library(
         "@crates//:serde",
         "@crates//:chrono",
     ],
-    tags = ["sbe", "sbe_messages"],
-    visibility = ["//visibility:public"],
 )
 
 rust_doc(
@@ -29,18 +30,23 @@ rust_doc(
 )
 
 rust_doc_test(
-     name = "doc_test",
-     crate = ":sbe_messages",
-     tags = ["doc-test"],
-     visibility = ["//visibility:public"],
+    name = "doc_test",
+    crate = ":sbe_messages",
+    tags = ["doc-test"],
+    visibility = ["//visibility:public"],
 )
 
 rust_test_suite(
     name = "sbe_error_tests",
     srcs = glob([
-         "tests/errors/*_tests.rs",
+        "tests/errors/*_tests.rs",
     ]),
-    deps =[
+    tags = [
+        "sbe",
+        "unit",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
         # Crate to test
         ":sbe_messages",
         # Internal crates
@@ -51,16 +57,19 @@ rust_test_suite(
         "@crates//:serde",
         "@crates//:chrono",
     ],
-    tags = ["unit","sbe"],
-    visibility = ["//visibility:public"],
 )
 
 rust_test_suite(
     name = "sbe_types_tests",
     srcs = glob([
-         "tests/types/*_tests.rs",
+        "tests/types/*_tests.rs",
     ]),
-    deps =[
+    tags = [
+        "sbe",
+        "unit",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
         # Crate to test
         ":sbe_messages",
         # Internal crates
@@ -71,16 +80,19 @@ rust_test_suite(
         "@crates//:serde",
         "@crates//:chrono",
     ],
-    tags = ["unit","sbe"],
-    visibility = ["//visibility:public"],
 )
 
 rust_test_suite(
     name = "sbe_client_messages_tests",
     srcs = glob([
-         "tests/messages/client_messages/*/*_tests.rs",
+        "tests/messages/client_messages/*/*_tests.rs",
     ]),
-    deps =[
+    tags = [
+        "sbe",
+        "unit",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
         # Crate to test
         ":sbe_messages",
         # Internal crates
@@ -91,16 +103,19 @@ rust_test_suite(
         "@crates//:serde",
         "@crates//:chrono",
     ],
-    tags = ["unit","sbe"],
-    visibility = ["//visibility:public"],
 )
 
 rust_test_suite(
     name = "sbe_data_messages_tests",
     srcs = glob([
-         "tests/messages/data_messages/*/*_tests.rs",
+        "tests/messages/data_messages/*/*_tests.rs",
     ]),
-    deps =[
+    tags = [
+        "sbe",
+        "unit",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
         # Crate to test
         ":sbe_messages",
         # Internal crates
@@ -111,16 +126,19 @@ rust_test_suite(
         "@crates//:serde",
         "@crates//:chrono",
     ],
-    tags = ["unit","sbe"],
-    visibility = ["//visibility:public"],
 )
 
 rust_test_suite(
     name = "sbe_error_messages_tests",
     srcs = glob([
-         "tests/messages/error_messages/*/*_tests.rs",
+        "tests/messages/error_messages/*/*_tests.rs",
     ]),
-    deps =[
+    tags = [
+        "sbe",
+        "unit",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
         # Crate to test
         ":sbe_messages",
         # Internal crates
@@ -131,6 +149,4 @@ rust_test_suite(
         "@crates//:serde",
         "@crates//:chrono",
     ],
-    tags = ["unit","sbe"],
-    visibility = ["//visibility:public"],
 )

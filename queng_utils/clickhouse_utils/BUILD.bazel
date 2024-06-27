@@ -1,13 +1,16 @@
-load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test_suite")
-load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test")
-
+load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library", "rust_test_suite")
 
 rust_library(
     name = "clickhouse_utils",
-    crate_root = "src/lib.rs",
     srcs = glob([
         "src/**",
     ]),
+    crate_root = "src/lib.rs",
+    tags = [
+        "clickhouse_utils",
+        "utils",
+    ],
+    visibility = ["//visibility:public"],
     deps = [
         # Internal crates
         "//:common",
@@ -18,8 +21,6 @@ rust_library(
         "@crates//:serde",
         "@crates//:serde_json",
     ],
-    tags = ["utils", "clickhouse_utils"],
-    visibility = ["//visibility:public"],
 )
 
 rust_test_suite(
@@ -38,6 +39,12 @@ rust_test_suite(
         # because we can't fit all db docker images with the default disk limit.
         # "test.runner-recycling-key": "clickhouse",
     },
+    tags = [
+        "clickhouse_utils",
+        "docker",
+        "integration",
+    ],
+    visibility = ["//visibility:public"],
     deps = [
         # Crate under test
         ":clickhouse_utils",
@@ -51,8 +58,6 @@ rust_test_suite(
         "@crates//:serde_json",
         "@crates//:tokio",
     ],
-    tags = ["docker","integration","clickhouse_utils"],
-    visibility = ["//visibility:public"],
 )
 
 rust_doc(
@@ -63,8 +68,8 @@ rust_doc(
 )
 
 rust_doc_test(
-     name = "doc_test",
-     crate = ":clickhouse_utils",
-     tags = ["doc-test"],
-     visibility = ["//visibility:public"],
+    name = "doc_test",
+    crate = ":clickhouse_utils",
+    tags = ["doc-test"],
+    visibility = ["//visibility:public"],
 )

@@ -1,26 +1,24 @@
-load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test_suite")
-load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test")
-
+load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library", "rust_test_suite")
 
 rust_library(
     name = "db_query_manager",
-    crate_root = "src/lib.rs",
     srcs = glob([
         "src/*.rs",
     ]),
-    deps = [
-      # Internal crates
-      "//:common",
-      "//:clickhouse_utils",
-      # External crates
-      "@crates//:chrono",
-      "@crates//:futures",
-      "@crates//:klickhouse",
-      "@crates//:rust_decimal",
-      "@crates//:serde",
-      "@crates//:tokio",
-    ],
+    crate_root = "src/lib.rs",
     visibility = ["//visibility:public"],
+    deps = [
+        # Internal crates
+        "//:common",
+        "//:clickhouse_utils",
+        # External crates
+        "@crates//:chrono",
+        "@crates//:futures",
+        "@crates//:klickhouse",
+        "@crates//:rust_decimal",
+        "@crates//:serde",
+        "@crates//:tokio",
+    ],
 )
 
 #rust_test_suite(
@@ -54,8 +52,8 @@ rust_doc(
 )
 
 rust_doc_test(
-     name = "doc_test",
-     crate = ":db_query_manager",
-     tags = ["doc-test"],
-     visibility = ["//visibility:public"],
- )
+    name = "doc_test",
+    crate = ":db_query_manager",
+    tags = ["doc-test"],
+    visibility = ["//visibility:public"],
+)

@@ -1,13 +1,14 @@
-load("@rules_rust//rust:defs.bzl", "rust_library", "rust_doc", "rust_doc_test")
-
+load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library")
 
 rust_library(
     name = "symdb_client",
-    crate_root = "src/lib.rs",
     srcs = glob([
         "src/**",
     ]),
-    deps =[
+    crate_root = "src/lib.rs",
+    tags = ["client"],
+    visibility = ["//visibility:public"],
+    deps = [
         # Internal crates
         "//:common",
         "//:rust_proto",
@@ -16,8 +17,6 @@ rust_library(
         "@crates//:tonic",
         "@crates//:prost",
     ],
-    tags = ["client"],
-    visibility = ["//visibility:public"],
 )
 
 rust_doc(
@@ -28,9 +27,8 @@ rust_doc(
 )
 
 rust_doc_test(
-     name = "doc_test",
-     crate = ":symdb_client",
-     tags = ["doc-test"],
-     visibility = ["//visibility:public"],
- )
-
+    name = "doc_test",
+    crate = ":symdb_client",
+    tags = ["doc-test"],
+    visibility = ["//visibility:public"],
+)

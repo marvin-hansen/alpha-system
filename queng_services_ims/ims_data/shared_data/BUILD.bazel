@@ -1,14 +1,13 @@
-load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
-load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test")
-
+load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library", "rust_test")
 
 rust_library(
     name = "lib_data_stream",
-    crate_root = "src/lib/mod.rs",
     srcs = glob([
         "src/lib/*.rs",
     ]),
-    deps =  [
+    crate_root = "src/lib/mod.rs",
+    visibility = ["//visibility:public"],
+    deps = [
         # Internal crates
         "//:common",
         "//:config_manager",
@@ -22,7 +21,6 @@ rust_library(
         "@crates//:tonic",
         "@crates//:prost",
     ],
-    visibility = ["//visibility:public"],
 )
 
 rust_doc(
@@ -32,7 +30,7 @@ rust_doc(
 )
 
 rust_doc_test(
-     name = "doc_test",
-     crate = ":lib_data_stream",
-     visibility = ["//visibility:public"],
+    name = "doc_test",
+    crate = ":lib_data_stream",
+    visibility = ["//visibility:public"],
 )

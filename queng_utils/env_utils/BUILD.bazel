@@ -1,14 +1,17 @@
 load("@crates//:defs.bzl", "aliases", "all_crate_deps")
-load("@rules_rust//rust:defs.bzl", "rust_library", "rust_binary", "rust_test_suite")
-load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test")
-
+load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_doc", "rust_doc_test", "rust_library", "rust_test_suite")
 
 rust_library(
     name = "env_utils",
-    crate_root = "src/lib.rs",
     srcs = glob([
         "src/**",
     ]),
+    crate_root = "src/lib.rs",
+    tags = [
+        "env_utils",
+        "utils",
+    ],
+    visibility = ["//visibility:public"],
     deps = [
         # Internal crates
         "//:common",
@@ -19,8 +22,6 @@ rust_library(
         # External crates
         "@crates//:serde_json",
     ],
-    tags = ["utils", "env_utils"],
-    visibility = ["//visibility:public"],
 )
 
 rust_test_suite(
@@ -39,6 +40,8 @@ rust_test_suite(
         # because we can't fit all db docker images with the default disk limit.
         "test.runner-recycling-key": "clickhouse",
     },
+    tags = ["env_setup"],
+    visibility = ["//visibility:public"],
     deps = [
         # Crate under test
         ":env_utils",
@@ -52,8 +55,6 @@ rust_test_suite(
         "@crates//:tokio",
         "@crates//:serde_json",
     ],
-    tags = ["env_setup"],
-    visibility = ["//visibility:public"],
 )
 
 rust_test_suite(
@@ -72,22 +73,21 @@ rust_test_suite(
         # because we can't fit all db docker images with the default disk limit.
         # "test.runner-recycling-key": "clickhouse",
     },
+    tags = ["env_teardown"],
+    visibility = ["//visibility:public"],
     deps = [
         # Crate under test
         ":env_utils",
         # Internal crates
         "//queng_common:common",
-        "//queng_specs/container_specs:container_specs",
-        "//queng_utils/clickhouse_utils:clickhouse_utils",
-        "//queng_utils/docker_utils:docker_utils",
+        "//queng_specs/container_specs",
+        "//queng_utils/clickhouse_utils",
+        "//queng_utils/docker_utils",
         # External crates
         "@crates//:tokio",
         "@crates//:serde_json",
     ],
-    tags = ["env_teardown"],
-    visibility = ["//visibility:public"],
 )
-
 
 rust_doc(
     name = "doc",
@@ -97,8 +97,8 @@ rust_doc(
 )
 
 rust_doc_test(
-     name = "doc_test",
-     crate = ":env_utils",
-     tags = ["doc-test"],
-     visibility = ["//visibility:public"],
+    name = "doc_test",
+    crate = ":env_utils",
+    tags = ["doc-test"],
+    visibility = ["//visibility:public"],
 )

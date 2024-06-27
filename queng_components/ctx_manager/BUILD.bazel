@@ -1,17 +1,15 @@
-load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test_suite")
-load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test")
-
+load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library", "rust_test_suite")
 
 rust_library(
     name = "ctx_manager",
-    crate_root = "src/lib.rs",
     srcs = glob([
         "src/**",
     ]),
-     deps = [
+    crate_root = "src/lib.rs",
+    visibility = ["//visibility:public"],
+    deps = [
         "//:common",
     ],
-    visibility = ["//visibility:public"],
 )
 
 # Each test suit is a seperated task so that each test runs
@@ -23,12 +21,16 @@ rust_test_suite(
     srcs = [
         "tests/ctx_manager_ci_tests.rs",
     ],
+    tags = [
+        "components",
+        "ctx_manager",
+        "unit",
+    ],
+    visibility = ["//visibility:public"],
     deps = [
         "//:common",
         "//:ctx_manager",
     ],
-    tags = ["unit","components", "ctx_manager"],
-    visibility = ["//visibility:public"],
 )
 
 rust_test_suite(
@@ -36,12 +38,16 @@ rust_test_suite(
     srcs = [
         "tests/ctx_manager_cluster_tests.rs",
     ],
+    tags = [
+        "components",
+        "ctx_manager",
+        "unit",
+    ],
+    visibility = ["//visibility:public"],
     deps = [
         "//:common",
         "//:ctx_manager",
     ],
-    tags = ["unit","components", "ctx_manager"],
-    visibility = ["//visibility:public"],
 )
 
 rust_test_suite(
@@ -49,14 +55,17 @@ rust_test_suite(
     srcs = [
         "tests/ctx_manager_local_tests.rs",
     ],
+    tags = [
+        "components",
+        "ctx_manager",
+        "unit",
+    ],
+    visibility = ["//visibility:public"],
     deps = [
         "//:common",
         "//:ctx_manager",
     ],
-    tags = ["unit","components", "ctx_manager"],
-    visibility = ["//visibility:public"],
 )
-
 
 rust_doc(
     name = "doc",
@@ -66,8 +75,8 @@ rust_doc(
 )
 
 rust_doc_test(
-     name = "doc_test",
-     crate = ":ctx_manager",
-     tags = ["doc-test"],
-     visibility = ["//visibility:public"],
- )
+    name = "doc_test",
+    crate = ":ctx_manager",
+    tags = ["doc-test"],
+    visibility = ["//visibility:public"],
+)

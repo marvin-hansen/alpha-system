@@ -1,20 +1,18 @@
-load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test_suite")
-load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test")
-
+load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library", "rust_test_suite")
 
 rust_library(
     name = "symbol_manager",
-    crate_root = "src/lib.rs",
     srcs = glob([
         "src/**",
     ]),
+    crate_root = "src/lib.rs",
+    visibility = ["//visibility:public"],
     deps = [
         # Internal crates
         "//:common",
         # External crates
         "@crates//:lru",
     ],
-    visibility = ["//visibility:public"],
 )
 
 rust_test_suite(
@@ -22,7 +20,13 @@ rust_test_suite(
     srcs = glob([
         "tests/*_tests.rs",
     ]),
-    deps =  [
+    tags = [
+        "components",
+        "symbol_manager",
+        "unit",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
         # Crate to test
         ":symbol_manager",
         # Internal crates
@@ -30,8 +34,6 @@ rust_test_suite(
         # External crates
         "@crates//:lru",
     ],
-    tags = ["unit","components", "symbol_manager"],
-    visibility = ["//visibility:public"],
 )
 
 rust_doc(
@@ -42,8 +44,8 @@ rust_doc(
 )
 
 rust_doc_test(
-     name = "doc_test",
-     crate = ":symbol_manager",
-     tags = ["doc-test"],
-     visibility = ["//visibility:public"],
- )
+    name = "doc_test",
+    crate = ":symbol_manager",
+    tags = ["doc-test"],
+    visibility = ["//visibility:public"],
+)

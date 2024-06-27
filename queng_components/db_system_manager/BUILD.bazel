@@ -1,32 +1,31 @@
-load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
-load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test")
+load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library", "rust_test")
 
 rust_library(
     name = "db_system_manager",
-    crate_root = "src/lib.rs",
     srcs = glob([
         "src/**",
     ]),
-    deps = [
-      # Internal crates
-      "//:common",
-      "//:ctx_manager",
-      "//:config_manager",
-      "//:dns_manager",
-      "//:db_specs",
-      "//:exchange_specs",
-      "//:clickhouse_utils",
-      "//:env_utils",
-      # External crates
-      "@crates//:chrono",
-      "@crates//:clickhouse-rs",
-      "@crates//:futures",
-      "@crates//:klickhouse",
-      "@crates//:rust_decimal",
-      "@crates//:serde",
-      "@crates//:tokio",
-    ],
+    crate_root = "src/lib.rs",
     visibility = ["//visibility:public"],
+    deps = [
+        # Internal crates
+        "//:common",
+        "//:ctx_manager",
+        "//:config_manager",
+        "//:dns_manager",
+        "//:db_specs",
+        "//:exchange_specs",
+        "//:clickhouse_utils",
+        "//:env_utils",
+        # External crates
+        "@crates//:chrono",
+        "@crates//:clickhouse-rs",
+        "@crates//:futures",
+        "@crates//:klickhouse",
+        "@crates//:rust_decimal",
+        "@crates//:serde",
+        "@crates//:tokio",
+    ],
 )
 
 rust_test(
@@ -45,29 +44,32 @@ rust_test(
         # because we can't fit all db docker images with the default disk limit.
         # "test.runner-recycling-key": "clickhouse",
     },
-    deps = [
-          ":db_system_manager",
-          # Internal crates
-          "//:common",
-          "//:ctx_manager",
-          "//:config_manager",
-          "//:dns_manager",
-          "//:db_specs",
-          "//:exchange_specs",
-          "//:smdb_specs",
-          "//:clickhouse_utils",
-          "//:env_utils",
-          # External crates
-          "@crates//:chrono",
-          "@crates//:clickhouse-rs",
-          "@crates//:futures",
-          "@crates//:klickhouse",
-          "@crates//:rust_decimal",
-          "@crates//:serde",
-           "@crates//:tokio",
+    tags = [
+        "db_system_manager",
+        "integration",
     ],
-    tags = ["integration","db_system_manager"],
     visibility = ["//visibility:public"],
+    deps = [
+        ":db_system_manager",
+        # Internal crates
+        "//:common",
+        "//:ctx_manager",
+        "//:config_manager",
+        "//:dns_manager",
+        "//:db_specs",
+        "//:exchange_specs",
+        "//:smdb_specs",
+        "//:clickhouse_utils",
+        "//:env_utils",
+        # External crates
+        "@crates//:chrono",
+        "@crates//:clickhouse-rs",
+        "@crates//:futures",
+        "@crates//:klickhouse",
+        "@crates//:rust_decimal",
+        "@crates//:serde",
+        "@crates//:tokio",
+    ],
 )
 
 rust_doc(
@@ -78,8 +80,8 @@ rust_doc(
 )
 
 rust_doc_test(
-     name = "doc_test",
-     crate = ":db_system_manager",
-     tags = ["doc-test"],
-     visibility = ["//visibility:public"],
- )
+    name = "doc_test",
+    crate = ":db_system_manager",
+    tags = ["doc-test"],
+    visibility = ["//visibility:public"],
+)

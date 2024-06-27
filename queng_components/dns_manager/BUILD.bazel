@@ -1,20 +1,19 @@
-load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test_suite")
-load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test")
+load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library", "rust_test_suite")
 
 rust_library(
     name = "dns_manager",
-    crate_root = "src/lib.rs",
     srcs = glob([
         "src/*.rs",
     ]),
+    crate_root = "src/lib.rs",
+    visibility = ["//visibility:public"],
     deps = [
         # Internal crates
         "//:common",
         "//:ctx_manager",
         # External crates
-        "@crates//:hickory-resolver"
+        "@crates//:hickory-resolver",
     ],
-    visibility = ["//visibility:public"],
 )
 
 rust_test_suite(
@@ -22,15 +21,19 @@ rust_test_suite(
     srcs = glob([
         "tests/*_tests.rs",
     ]),
-    deps =  [
+    tags = [
+        "components",
+        "dns_manager",
+        "unit",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
         # Crate under test
         ":dns_manager",
         "//:common",
         # Internal crates
         "//:ctx_manager",
     ],
-    tags = ["unit","components", "dns_manager"],
-    visibility = ["//visibility:public"],
 )
 
 rust_doc(
@@ -41,8 +44,8 @@ rust_doc(
 )
 
 rust_doc_test(
-     name = "doc_test",
-     crate = ":dns_manager",
-     tags = ["doc-test"],
-     visibility = ["//visibility:public"],
- )
+    name = "doc_test",
+    crate = ":dns_manager",
+    tags = ["doc-test"],
+    visibility = ["//visibility:public"],
+)

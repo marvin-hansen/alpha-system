@@ -1,23 +1,21 @@
-load("@rules_rust//rust:defs.bzl", "rust_library", "rust_doc", "rust_doc_test", "rust_test_suite")
-
+load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library", "rust_test_suite")
 
 rust_library(
     name = "kaiko_client",
-    crate_root = "src/lib.rs",
     srcs = glob([
         "src/*.rs",
     ]),
-  deps = [
+    crate_root = "src/lib.rs",
+    tags = ["client"],
+    visibility = ["//visibility:public"],
+    deps = [
         # Internal crates
         "//:rest_client",
         "//:common",
         # External crates
         "@crates//:anyhow",
     ],
-    tags = ["client"],
-    visibility = ["//visibility:public"],
 )
-
 
 rust_doc(
     name = "doc",
@@ -27,18 +25,22 @@ rust_doc(
 )
 
 rust_doc_test(
-     name = "doc_test",
-     crate = ":kaiko_client",
-     tags = ["doc-test"],
-     visibility = ["//visibility:public"],
- )
-
+    name = "doc_test",
+    crate = ":kaiko_client",
+    tags = ["doc-test"],
+    visibility = ["//visibility:public"],
+)
 
 rust_test_suite(
     name = "kaiko_client_tests",
     srcs = glob([
         "tests/*_tests.rs",
     ]),
+    tags = [
+        "kaiko_client",
+        "unit",
+    ],
+    visibility = ["//visibility:public"],
     deps = [
         # Crate to test
         ":kaiko_client",
@@ -49,6 +51,4 @@ rust_test_suite(
         "@crates//:anyhow",
         "@crates//:tokio",
     ],
-    tags = ["unit","kaiko_client"],
-    visibility = ["//visibility:public"],
 )

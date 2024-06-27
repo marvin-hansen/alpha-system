@@ -1,18 +1,20 @@
-load("@rules_rust//rust:defs.bzl", "rust_library", "rust_doc", "rust_doc_test")
-
+load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library")
 
 rust_library(
     name = "dbgw_provider",
-    crate_root = "src/lib.rs",
     srcs = glob([
         "src/*.rs",
     ]),
-    deps =[
+    crate_root = "src/lib.rs",
+    tags = [
+        "dbgw_provider",
+        "provider",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
         # Internal crates
         # External crates
     ],
-    tags = ["provider", "dbgw_provider"],
-    visibility = ["//visibility:public"],
 )
 
 rust_doc(
@@ -23,8 +25,8 @@ rust_doc(
 )
 
 rust_doc_test(
-     name = "doc_test",
-     crate = ":dbgw_provider",
-     tags = ["doc-test"],
-     visibility = ["//visibility:public"],
+    name = "doc_test",
+    crate = ":dbgw_provider",
+    tags = ["doc-test"],
+    visibility = ["//visibility:public"],
 )
