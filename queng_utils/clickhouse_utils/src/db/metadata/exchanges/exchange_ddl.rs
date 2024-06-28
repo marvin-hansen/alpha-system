@@ -3,16 +3,18 @@ use crate::db::metadata::{Metadata, DB_NAME};
 impl Metadata {
     pub fn generate_create_exchanges_table_ddl(&self) -> String {
         format!(
-            "CREATE TABLE IF NOT EXISTS {DB_NAME}.exchanges
+            "
+     CREATE TABLE IF NOT EXISTS {DB_NAME}.exchanges
      (
        `code` String CODEC(LZ4),
-       `name`String CODEC(LZ4),
-         PROJECTION projection_exchanges_by_code
+       `name` String CODEC(LZ4),
+
+        PROJECTION projection_exchanges_by_code
         (
             SELECT *
             GROUP BY
                 code,
-                name,
+                name
         )
      )
     ENGINE = MergeTree

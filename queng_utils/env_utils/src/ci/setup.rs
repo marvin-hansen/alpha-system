@@ -188,6 +188,18 @@ impl EnvUtil {
             .await
             .expect("Failed to import instrument metadata");
 
+        self.dbg_print("Download metadata statistic");
+        let stats = kaiko_util
+            .get_stats()
+            .await
+            .expect("Failed to get metadata statistic");
+
+        self.dbg_print("Import metadata statistic");
+        ch_utils
+            .import_stats_metadata(&stats)
+            .await
+            .expect("Failed to import metadata statistic");
+
         Ok(())
     }
 }

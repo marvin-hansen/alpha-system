@@ -1,7 +1,7 @@
 use crate::error::KaikoUtilError;
 use crate::inactive_exchanges::INACTIVE_EXCHANGES;
 use crate::KaikoUtil;
-use common::prelude::{Asset, Exchange, Instrument};
+use common::prelude::{Asset, Exchange, Instrument, Stats};
 
 impl KaikoUtil {
     pub async fn get_assets(&self) -> Result<Vec<Asset>, KaikoUtilError> {
@@ -40,6 +40,19 @@ impl KaikoUtil {
         }
 
         return Ok(res);
+    }
+
+    pub async fn get_stats(&self) -> Result<Stats, KaikoUtilError> {
+        self.dbg_print("[get_instruments]: Download metadata statistics from Kaiko.");
+
+        return match self.client.get_stats().await {
+            Ok(stats) => Ok(stats),
+
+            Err(e) => Err(KaikoUtilError::new(&format!(
+                "Error retrieving metadata statistics: {}",
+                e.to_string()
+            ))),
+        };
     }
 
     pub async fn get_instruments(&self) -> Result<Vec<Instrument>, KaikoUtilError> {

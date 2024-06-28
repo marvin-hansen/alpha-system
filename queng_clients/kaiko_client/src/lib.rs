@@ -2,10 +2,11 @@ pub mod error;
 
 use crate::error::KaikoClientError;
 use anyhow::Result;
-use common::prelude::{AssetRoot, ExchangesRoot, InstrumentsRoot};
+use common::prelude::{AssetRoot, ExchangesRoot, InstrumentsRoot, Stats};
 use rest_client::{HeaderMap, HeaderValue, RestClient};
 
 const API_URL: &str = "https://reference-data-api.kaiko.io/v1/";
+const API_PROXY_URL: &str = "http://localhost:7777/";
 
 pub struct KaikoClient {
     client: RestClient,
@@ -15,6 +16,11 @@ impl KaikoClient {
     pub fn new() -> Result<Self, KaikoClientError> {
         let client = Self::get_client(API_URL.to_string());
 
+        Ok(KaikoClient { client })
+    }
+
+    pub fn with_local_proxy() -> Result<Self, KaikoClientError> {
+        let client = Self::get_client(API_PROXY_URL.to_string());
         Ok(KaikoClient { client })
     }
 
@@ -78,6 +84,17 @@ impl KaikoClient {
             Ok(instruments) => Ok(instruments),
             Err(e) => Err(KaikoClientError::new(&format!(
                 "Error retrieving instruments: {}",
+                e
+            ))),
+        }
+    }
+
+    pub async fn get_stats(&self) -> Result<Stats, KaikoClientError> {
+        let result: Result<Stats> = self.client.get("stats", None).await;
+        match result {
+            Ok(stats) => Ok(stats),
+            Err(e) => Err(KaikoClientError::new(&format!(
+                "Error retrieving stats: {}",
                 e
             ))),
         }
