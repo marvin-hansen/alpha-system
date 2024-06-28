@@ -3,17 +3,14 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
+# Format all code
 command command cargo fmt --all
 
 # Compile everything in release mode
 command bazel build  -c opt //...
 
-# Run all tests & upload results to BES
-command bazel \
-             test \
-             --bes_results_url=https://app.buildbuddy.io/invocation/ \
-             --bes_backend=grpcs://remote.buildbuddy.io \
-              -c opt //... \
+# Run all tests
+command bazel test  -c opt //...
 
 # Build all docs and run doc tests
 command bazel build  -c opt //:doc

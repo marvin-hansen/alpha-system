@@ -75,11 +75,6 @@ rebuild:
 	@source scripts/rebuild.sh
 
 
-.PHONY: remote
-remote:
-	@source scripts/remote.sh
-
-
 .PHONY: check
 check:
 	@source scripts/check.sh
@@ -88,6 +83,7 @@ check:
 .PHONY: container
 container:
 	@source scripts/container.sh
+
 
 .PHONY: doc
 doc:
@@ -117,11 +113,6 @@ release:
 .PHONY: push
 push:
 	@source scripts/push.sh
-
-
-.PHONY: pull
-pull:
-	@source scripts/pull.sh
 
 
 .PHONY: update
