@@ -41,6 +41,7 @@ pub use crate::types::meta_data_types::assets::*;
 pub use crate::types::meta_data_types::exchanges::*;
 pub use crate::types::meta_data_types::instruments::*;
 pub use crate::types::meta_data_types::master_symbols::*;
+pub use crate::types::meta_data_types::stats::*;
 // pattern types
 pub use crate::types::pattern_types::pattern_config::*;
 pub use crate::types::pattern_types::pattern_type::*;
