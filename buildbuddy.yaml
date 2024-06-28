@@ -1,6 +1,5 @@
 actions:
   - name: "Build, test and publish all containers"
-    container_image: ubuntu-20.04
     triggers:
       push:
         branches:
