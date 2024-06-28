@@ -33,7 +33,7 @@ impl ServiceConfig {
     ///
     /// # Arguments
     ///
-    /// * `id` - Service ID.
+    /// * `svc_id` - Service ID.
     /// * `name` - Service name.
     /// * `version` - Service version.
     /// * `online` - Whether the service is online.
@@ -43,6 +43,7 @@ impl ServiceConfig {
     /// * `dependencies` - Service dependencies.
     /// * `exposure` - Service exposure type.
     /// * `endpoint` - Service endpoint.
+    /// * `metrics` - MetricConfig.
     // https://rust-lang.github.io/rust-clippy/master/index.html#/too_many_arguments
     #[allow(clippy::too_many_arguments)]
     pub fn new(
