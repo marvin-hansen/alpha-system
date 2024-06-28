@@ -13,8 +13,8 @@ use crate::prelude::{Encoding, HostEndpoint, ProtocolType};
 /// * `description`: A description of the endpoint.
 /// * `uri`: The Uniform Resource Identifier (URI) of the endpoint.
 /// * `port`: The port number of the endpoint.
-/// * `protocol`: The protocol type of the endpoint.
-/// * `encoding`: The encoding type of the endpoint.
+/// * `protocol`: The protocol Enum type of the endpoint.
+/// * `encoding`: The encoding Enum type of the endpoint.
 #[derive(Serialize, Deserialize, Debug, Default, Clone, Eq, PartialEq)]
 pub struct Endpoint {
     name: String,

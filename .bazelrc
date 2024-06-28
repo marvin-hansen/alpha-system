@@ -90,7 +90,7 @@ common:remote-shared --host_platform=@buildbuddy_toolchain//:platform
 common:remote-shared --platforms=@buildbuddy_toolchain//:platform
 common:remote-shared --crosstool_top=@buildbuddy_toolchain//:toolchain
 
-#common:remote-shared --remote_cache=grpcs://remote.buildbuddy.io
+common:remote-shared --remote_cache=grpcs://remote.buildbuddy.io
 common:remote-shared --remote_header=x-buildbuddy-api-key=4Ml6AhYICvGtZ3XhqafP
 
 # Build with --config=remote-cache to enable Remote Cache
