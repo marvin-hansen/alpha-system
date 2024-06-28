@@ -4,10 +4,10 @@ use common::prelude::{Asset, AssetMetadata};
 impl Metadata {
     pub fn generate_asset_insert(&self, asset: &Asset) -> String {
         let table_name = format!("{DB_NAME}.assets");
-        let code = &asset.code;
+        let code = asset.code.clone();
         // ClickHouse needs quotes to be escaped
         // https://github.com/ClickHouse/ClickHouse/issues/191
-        let name = &asset.name.replace("\'", "\\'");
+        let name = asset.name.replace("\'", "\\'");
         let asset_class = &asset.asset_class;
         let asset_figi = self.extract_asset_figi(&asset.metadata);
 
@@ -18,9 +18,7 @@ impl Metadata {
         '{code}',
         '{name}',
         '{asset_class}',
-        '{asset_figi}'
-        )
-    "
+        '{asset_figi}');"
         )
     }
 

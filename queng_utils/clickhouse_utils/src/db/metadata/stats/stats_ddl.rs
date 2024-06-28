@@ -4,7 +4,7 @@ impl Metadata {
     pub fn generate_create_stats_table_ddl(&self) -> String {
         format!(
             "
-    CREATE TABLE IF NOT EXISTS {DB_NAME}.assets
+    CREATE TABLE IF NOT EXISTS {DB_NAME}.stats
     (
         `download_timestamp` String CODEC(LZ4),
         `hash` String CODEC(LZ4),

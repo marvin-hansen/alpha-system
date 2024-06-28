@@ -8,7 +8,7 @@ impl Metadata {
     (
         `code` String CODEC(LZ4),
         `name` String CODEC(LZ4),
-        `asset_class` StringWithDictionary CODEC(LZ4),
+        `asset_class` LowCardinality(String) CODEC(LZ4),
         `asset_figi` String CODEC(LZ4),
 
         PROJECTION projection_assets_by_class
