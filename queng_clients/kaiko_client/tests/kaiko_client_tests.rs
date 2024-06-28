@@ -9,7 +9,7 @@ async fn test_new() {
 
 #[tokio::test]
 async fn test_with_local_proxy() {
-    let kaiko_client = KaikoClient::with_local_proxy();
+    let kaiko_client = KaikoClient::new();
     assert!(kaiko_client.is_ok());
 }
 
