@@ -35,7 +35,7 @@ rust_binary(
         "//:common",
         "//:service_utils",
         # Custom Memory Allocator
-        "@crates//:jemallocator",
+        "@crates//:mimalloc",
         # External crates
         "@crates//:arc-swap",
         "@crates//:chrono",

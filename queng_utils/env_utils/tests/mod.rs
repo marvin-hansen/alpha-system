@@ -1,2 +1,2 @@
-mod env_test_setup;
-mod env_test_teardown;
+mod env_ci_setup_tests;
+mod env_ci_teardown_tests;

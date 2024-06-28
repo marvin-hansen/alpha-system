@@ -18,8 +18,7 @@ path = "src/main.rs"
 common = {workspace = true}
 service_utils = {workspace = true}
 # Custom Memory Allocator
-[target.'cfg(not(target_env = "msvc"))'.dependencies]
-jemallocator = {workspace = true}
+mimalloc = {workspace = true}
 # External crates
 arc-swap = { workspace = true }
 chrono = { workspace = true }

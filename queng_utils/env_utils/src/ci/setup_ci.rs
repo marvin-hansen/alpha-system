@@ -6,7 +6,6 @@ use container_specs::clickhouse_container_config::clickhouse_container_config;
 use kaiko_utils::KaikoUtil;
 use std::thread::sleep;
 use std::time::Duration;
-
 impl EnvUtil {
     /// Create a new Continuous Integration (CI) `Environment`
     pub async fn setup_ci(&mut self) -> Result<(), EnvironmentError> {
@@ -19,33 +18,24 @@ impl EnvUtil {
         self.dbg_print("Get api proxy container config");
         let api_proxy_container_config = api_proxy_container_config();
 
-        self.dbg_print("Get or reuse api proxy container");
-        let (api_proxy_container_name, api_proxy_container_port) = docker_util
+        self.dbg_print("Reuse api proxy container");
+        let (_, _) = docker_util
             .get_or_start_container_config(&api_proxy_container_config)
             .expect("[TestEnv:CI]: Failed to get or reuse clickhouse container");
 
-        // Give the container some extra time to complete booting up.
-        sleep(Duration::from_millis(500));
+        // Give the api proxy container some extra time to complete booting up.
+        sleep(Duration::from_secs(1));
 
         self.dbg_print("Get clickhouse container config");
         let clickhouse_container_config = clickhouse_container_config();
 
-        self.dbg_print("Get or reuse clickhouse container");
-        let (clickhouse_container_name, clickhouse_container_port) = docker_util
+        self.dbg_print("Reuse clickhouse container");
+        let (_, _) = docker_util
             .get_or_start_container_config(&clickhouse_container_config)
             .expect("[TestEnv:CI]: Failed to get or reuse clickhouse container");
 
-        // Give the container some extra time to complete booting up.
-        // Otherwise, you may get a connection refused error when connecting the client.
-        sleep(Duration::from_millis(500));
-
-        self.dbg_print("Set container names and ports");
-        // API Proxy
-        self.set_api_proxy_container_name(api_proxy_container_name);
-        self.set_api_proxy_container_port(api_proxy_container_port);
-        // ClickHouse
-        self.set_clickhouse_container_name(clickhouse_container_name);
-        self.set_clickhouse_container_port(clickhouse_container_port);
+        // Give the container some extra time.
+        sleep(Duration::from_secs(1));
 
         // Once the container is up & running, configure the DB
         self.dbg_print("Get clickhouse client");
@@ -116,9 +106,7 @@ impl EnvUtil {
 
         Ok(())
     }
-}
 
-impl EnvUtil {
     fn is_clickhouse_configured(&self, _container_config: &ContainerConfig) -> bool {
         // read stats table from CH and if there is no error, return true.
         false

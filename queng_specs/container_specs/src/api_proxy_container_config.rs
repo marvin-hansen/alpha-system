@@ -12,7 +12,7 @@ pub fn api_proxy_container_config() -> ContainerConfig<'static> {
     ContainerConfig::new(
         "apiproxy",
         "asia-northeast1-docker.pkg.dev/future-309012/image-repo/kaiko_proxy",
-        "b4926c4",
+        "3b43a16",
         "0.0.0.0",
         7777,
         None,

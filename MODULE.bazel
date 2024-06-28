@@ -158,6 +158,10 @@ crate.spec(
     package = "jemallocator",
     version = "0.5.4",
 )
+crate.spec(
+    package = "mimalloc",
+    version = "0.1.42",
+)
 
 #
 # protobufs/gRPC in Rust
