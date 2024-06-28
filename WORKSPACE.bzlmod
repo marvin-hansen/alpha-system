@@ -13,7 +13,7 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 http_archive(
     name = "org_chromium_sysroot_linux_x64",
     build_file_content =
-"""
+        """
 filegroup(
   name = "sysroot",
   srcs = glob(["*/**"]),
@@ -34,10 +34,13 @@ http_archive(
     strip_prefix = "buildbuddy-toolchain-fd351ca8f152d66fc97f9d98009e0ae000854e8f",
     urls = ["https://github.com/buildbuddy-io/buildbuddy-toolchain/archive/fd351ca8f152d66fc97f9d98009e0ae000854e8f.tar.gz"],
 )
+
 load("@io_buildbuddy_buildbuddy_toolchain//:deps.bzl", "buildbuddy_deps")
+
 buildbuddy_deps()
 
 load("@io_buildbuddy_buildbuddy_toolchain//:rules.bzl", "buildbuddy")
+
 buildbuddy(
     name = "buildbuddy_toolchain",
     container_image = "ghcr.io/marvin-hansen/rbe-custom/rbe:latest",
