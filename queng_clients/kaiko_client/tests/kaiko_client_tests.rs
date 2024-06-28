@@ -21,7 +21,7 @@ async fn test_with_url() {
 }
 
 fn get_client() -> Result<KaikoClient, KaikoClientError> {
-    let kaiko_client = KaikoClient::with_local_proxy();
+    let kaiko_client = KaikoClient::new();
     assert!(kaiko_client.is_ok());
 
     Ok(kaiko_client.unwrap())
