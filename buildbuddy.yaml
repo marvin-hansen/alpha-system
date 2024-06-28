@@ -12,18 +12,18 @@ actions:
       # Setup & Authenticate
       - "run -c opt //:buildbuddy_setup_docker_auth --verbose_failures"
       # Build all targets
-      - "build -c opt //... --config=remote-cache"
+      - "build -c opt //... --config=remote"
       # Build & test all docs
-      - "build -c opt //... --build_tag_filters=doc --config=remote-cache"
-      - "build -c opt //... --build_tag_filters=doc-test --config=remote-cache"
-      - "test  -c opt //... --test_tag_filters=doc-test --config=remote-cache"
+      - "build -c opt //... --build_tag_filters=doc --config=remote"
+      - "build -c opt //... --build_tag_filters=doc-test --config=remote"
+      - "test  -c opt //... --test_tag_filters=doc-test --config=remote"
       # Test: Run unit tests, prepare env setup for CI, and run integration tests
-      - "build -c opt  //...      --build_tag_filters=unit --config=remote-cache"
-      - "test -c opt  //...      --test_tag_filters=unit --config=remote-cache"
+      - "build -c opt  //...      --build_tag_filters=unit --config=remote"
+      - "test -c opt  //...      --test_tag_filters=unit --config=remote"
       # - "test -c opt  //...  -cache --test_tag_filters=env_setup"
       # - "test -c opt  //...  -cache --test_tag_filters=clickhouse_utils "
       # Build & publish images to container registry
-      - "run   -c opt //:push --config=remote-cache"
+      - "run   -c opt //:push --config=remote"
     resource_requests:
       cpu: 8  # Add more cpu for Docker
       memory: "12GB" # Add more memory for cross compile
