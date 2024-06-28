@@ -11,7 +11,8 @@ actions:
     bazel_commands:
       # Setup & Authenticate
       - "run -c opt //:buildbuddy_setup_docker_auth --verbose_failures"
-      # Build all targets
+      # Build all targets with remote
+      # Do NOT disable remote, otherwise the missing lib .. makes the workflow build fail.
       - "build -c opt //... --config=remote"
       # Build & test all docs
       - "build -c opt //... --build_tag_filters=doc --config=remote"
