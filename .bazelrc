@@ -90,7 +90,7 @@ common:remote-shared --extra_execution_platforms=@buildbuddy_toolchain//:platfor
 common:remote-shared --remote_cache=grpcs://remote.buildbuddy.io
 common:remote-shared --remote_header=x-buildbuddy-api-key=4Ml6AhYICvGtZ3XhqafP
 
-# Build with --config=cache to enable Remote Cache
+# Build with --config=remote-cache to enable Remote Cache
 common:remote-cache --config=remote-shared
 
 # Build with --config=remote to enable Remote Build Execution (RBE)
