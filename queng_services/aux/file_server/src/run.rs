@@ -36,7 +36,7 @@ pub(crate) async fn run() {
 
     // Run a async update every day at 1 am, EST. (EST = UTC+4)
     //                     sec  min  hour  day   month day of week
-    let expression = "0   00    1     *     *     *";
+    let expression = "0   00    1    *     *     *";
     scheduler
         .add(
             Job::new_async(expression, move |_uuid, _l| {
