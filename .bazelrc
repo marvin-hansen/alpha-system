@@ -84,6 +84,8 @@ common:remote-shared --experimental_remote_cache_compression
 common:remote-shared --experimental_remote_cache_async
 common:remote-shared --verbose_failures
 #
+common:remote-shared --host_cpu=x86_64
+common:remote-shared --cpu=x86_64
 common:remote-shared --remote_executor=remote.buildbuddy.io
 common:remote-shared --extra_execution_platforms=@buildbuddy_toolchain//:platform
 common:remote-shared --host_platform=@buildbuddy_toolchain//:platform
