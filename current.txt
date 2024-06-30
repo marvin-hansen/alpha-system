@@ -1,1 +1,1 @@
-//queng_services/aux/file_server:bin
+//queng_utils/env_utils:env_utils

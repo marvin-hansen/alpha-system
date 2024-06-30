@@ -12,12 +12,13 @@ pub fn api_proxy_container_config() -> ContainerConfig<'static> {
     ContainerConfig::new(
         "apiproxy",
         "asia-northeast1-docker.pkg.dev/future-309012/image-repo/kaiko_proxy",
-        "3b43a16",
+        "0a462a2",
         "0.0.0.0",
         7777,
         None,
         Some("linux/amd64"),
         true,  // Keep the container running for re-use
         false, // Keep the same container config across all env. setups.
+        20,    // Wait 20 second until the container finished starting up.
     )
 }

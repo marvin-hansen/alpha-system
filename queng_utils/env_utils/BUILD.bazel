@@ -20,6 +20,7 @@ rust_library(
         "//:docker_utils",
         "//:kaiko_utils",
         # External crates
+        "@crates//:tokio",
         "@crates//:serde_json",
     ],
 )
@@ -153,7 +154,6 @@ rust_test_suite(
         "@crates//:serde_json",
     ],
 )
-
 
 rust_doc(
     name = "doc",

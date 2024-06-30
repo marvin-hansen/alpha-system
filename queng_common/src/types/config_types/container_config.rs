@@ -11,6 +11,7 @@ pub struct ContainerConfig<'l> {
     platform: Option<&'l str>,
     reuse_container: bool,
     reset_configuration: bool,
+    wait_duration: u64,
 }
 
 impl<'l> ContainerConfig<'l> {
@@ -29,6 +30,7 @@ impl<'l> ContainerConfig<'l> {
     /// * `reset_configuration` -  A boolean flag indication whether to reset the configuration upon
     ///    every environment setup. If set to false, the same configuration will be used across all
     ///    environment setups.
+    /// * `wait_duration` - Sets the nr. seconds of how long to wait for the container to complete starting.
     ///
     /// # Returns
     ///
@@ -40,7 +42,7 @@ impl<'l> ContainerConfig<'l> {
     /// use common::prelude::ContainerConfig;
     ///
     /// let container_config = ContainerConfig::new(
-    ///     "my_container","nginx",":latest", "0.0.0.0" ,80, None, None, false, false
+    ///     "my_container","nginx",":latest", "0.0.0.0" ,80, None, None, false, false, 10
     /// );
     /// ```
     pub fn new(
@@ -53,6 +55,7 @@ impl<'l> ContainerConfig<'l> {
         platform: Option<&'l str>,
         reuse_container: bool,
         reset_configuration: bool,
+        wait_duration: u64,
     ) -> Self {
         Self {
             name,
@@ -64,6 +67,7 @@ impl<'l> ContainerConfig<'l> {
             platform,
             reuse_container,
             reset_configuration,
+            wait_duration,
         }
     }
 }
@@ -74,6 +78,9 @@ impl<'l> ContainerConfig<'l> {
     }
     pub fn container_image(&self) -> String {
         format!("{}:{}", self.image, self.tag)
+    }
+    pub fn container_name(&self) -> String {
+        format!("{}-{}", self.name, self.connection_port)
     }
     pub fn url(&self) -> &'l str {
         self.url
@@ -93,13 +100,17 @@ impl<'l> ContainerConfig<'l> {
     pub fn reset_configuration(&self) -> bool {
         self.reset_configuration
     }
+    pub fn wait_duration(&self) -> u64 {
+        self.wait_duration
+    }
 }
 
 impl Display for ContainerConfig<'_> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(
             f,
-            "name: {}, image: {}:{}, url: {} connection_port: {}, additional_ports: {:?}, reuse_container: {}, reset_configuration: {}",
+            "name: {}, image: {}:{}, url: {} connection_port: {}, additional_ports: {:?}, \
+            reuse_container: {}, reset_configuration: {}, wait_duration: {}",
             self.name,
             self.image,
             self.tag,
@@ -108,6 +119,7 @@ impl Display for ContainerConfig<'_> {
             self.additional_ports,
             self.reuse_container,
             self.reset_configuration,
+            self.wait_duration,
         )
     }
 }

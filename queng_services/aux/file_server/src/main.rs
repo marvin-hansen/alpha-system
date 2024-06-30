@@ -1,4 +1,4 @@
-use mimalloc::MiMalloc;
+use jemallocator::Jemalloc;
 
 mod errors;
 mod fields;
@@ -9,7 +9,7 @@ mod types;
 mod utils;
 
 #[global_allocator]
-static GLOBAL: MiMalloc = MiMalloc;
+static GLOBAL: Jemalloc = Jemalloc;
 
 const VRB: bool = false;
 const PORT: u16 = 7777;
