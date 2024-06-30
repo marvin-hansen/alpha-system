@@ -18,6 +18,10 @@ async fn test_clickhouse() {
     let tag = container_config.tag();
     let port = container_config.connection_port();
 
+    println!("image: {}", image);
+    println!("tag: {}", tag);
+    println!("port: {}", port);
+
     let result_image = GenericImage::new(image, tag).pull_image().await;
 
     assert!(result_image.is_ok());
@@ -50,13 +54,12 @@ async fn test_api_proxy() {
     println!("tag: {}", tag);
     println!("port: {}", port);
 
-    // let result_image = GenericImage::new(image, tag)
-    //     .pull_image().await;
-    //
-    // assert!(result_image.is_ok());
-    // let pulled_image = result_image.unwrap().image().to_owned();
+    let result_image = GenericImage::new(image, tag).pull_image().await;
 
-    let container = GenericImage::new(image, tag)
+    assert!(result_image.is_ok());
+    let pulled_image = result_image.unwrap().image().to_owned();
+
+    let container = GenericImage::from(pulled_image)
         .with_exposed_port(port.tcp())
         .with_wait_for(WaitFor::message_on_stdout(
             "Service on endpoint: 0.0.0.0:7777/",

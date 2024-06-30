@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
-set -e
+set -o errexit
+set -o nounset
+set -o pipefail
+
+# Manual registry auth setup
+# https://www.flatcar.org/docs/latest/container-runtimes/registry-authentication/#manual-registry-auth-setup
 
 mkdir -p ~/.docker
 
