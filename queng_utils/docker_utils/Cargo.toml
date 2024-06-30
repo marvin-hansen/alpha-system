@@ -16,4 +16,8 @@ path = "src/lib.rs"
 [dependencies]
 # Internal crates
 common = {workspace = true}
+container_specs = {workspace = true}
 # External crates
+testcontainers = {workspace = true}
+tokio = {workspace = true}
+

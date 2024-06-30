@@ -82,6 +82,7 @@ impl<'l> ContainerConfig<'l> {
     pub fn container_name(&self) -> String {
         format!("{}-{}", self.name, self.connection_port)
     }
+
     pub fn url(&self) -> &'l str {
         self.url
     }
@@ -102,6 +103,14 @@ impl<'l> ContainerConfig<'l> {
     }
     pub fn wait_duration(&self) -> u64 {
         self.wait_duration
+    }
+
+    pub fn image(&self) -> &'l str {
+        self.image
+    }
+
+    pub fn tag(&self) -> &'l str {
+        self.tag
     }
 }
 
