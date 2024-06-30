@@ -37,9 +37,11 @@ async fn docker_env_util_setup_ci() {
 
     let dsn = "127.0.0.1:9000".to_string();
 
-    let client = ClickhouseUtil::get_clickhouse_client(dsn).await;
+    let result = ClickhouseUtil::new(dsn).await;
 
-    let ch_utils = ClickhouseUtil::from_client(client);
+    assert!(result.is_ok());
+
+    let ch_utils = result.unwrap();
 
     let result = ch_utils.setup_db().await;
     assert!(result.is_ok());

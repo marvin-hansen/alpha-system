@@ -3,7 +3,7 @@ use env_utils::EnvUtil;
 #[tokio::test]
 async fn test_env_util_setup_containers() {
     // Create new Env Utils
-    let mut ci_env = EnvUtil::with_debug();
+    let mut ci_env = EnvUtil::with_debug().await.expect("Failed to get EnvUtil");
 
     // Initial setup of the CI containers
     ci_env
@@ -12,7 +12,7 @@ async fn test_env_util_setup_containers() {
         .expect("Failed to setup ci containers");
 
     // get docker utils to run some checks
-    let docker_util = &mut ci_env.get_docker_util().expect("Failed to get docker util");
+    let docker_util = &mut ci_env.docker_util();
 
     // Verify that the api proxy container was created
     let api_proxy_container_name = ci_env.api_proxy_container_name();

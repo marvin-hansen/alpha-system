@@ -11,9 +11,7 @@ impl EnvUtil {
     pub async fn setup_ci(&mut self) -> Result<(), EnvironmentError> {
         //
         self.dbg_print("Get docker util");
-        let mut docker_util = self
-            .get_docker_util()
-            .expect("[TestEnv:CI]: Failed to get docker util");
+        let mut docker_util = self.docker_util();
 
         self.dbg_print("Get api proxy container config");
         let api_proxy_container_config = api_proxy_container_config();
@@ -37,20 +35,14 @@ impl EnvUtil {
         // Give the container some extra time.
         sleep(Duration::from_secs(1));
 
-        // Once the container is up & running, configure the DB
-        self.dbg_print("Get clickhouse client");
-        let client = self
-            .get_clickhouse_client(&clickhouse_container_config)
-            .await;
-
         self.dbg_print("Get clickhouse utils");
-        let ch_utils = self.get_clickhouse_util(client).await;
+        let ch_utils = self
+            .clickhouse_util()
+            .await
+            .expect("Failed to get ClickHouse Util");
 
         self.dbg_print("Get Kaiko util");
-        let kaiko_util = self
-            .get_kaiko_util()
-            .await
-            .expect("Failed to get KaikoUtil");
+        let kaiko_util = self.kaiko_util();
 
         self.dbg_print("Configure clickhouse DB");
         self.configure_clickhouse(&ch_utils, &clickhouse_container_config, &kaiko_util)

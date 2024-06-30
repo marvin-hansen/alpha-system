@@ -13,7 +13,7 @@ use crate::db::specs::Specs;
 use klickhouse::{Client, ClientOptions, KlickhouseError};
 
 // Re-export CH client
-use crate::error::QueryError;
+use crate::error::{ClickHouseUtilError, QueryError};
 use crate::types::CountRow;
 pub use klickhouse::Client as ClickHouseClient;
 
@@ -25,32 +25,38 @@ pub struct ClickhouseUtil {
 }
 
 impl ClickhouseUtil {
-    pub async fn new(dsn: String) -> Self {
-        Self::build(false, Self::get_clickhouse_client(dsn).await)
-    }
-
-    pub async fn with_debug(dsn: String) -> Self {
-        Self::build(true, Self::get_clickhouse_client(dsn).await)
-    }
-
-    pub fn from_client(client: Client) -> Self {
+    pub async fn new(dsn: String) -> Result<Self, ClickHouseUtilError> {
+        let client = Self::get_clickhouse_client(dsn)
+            .await
+            .expect("[ClickhouseUtil::new]: Failed to construct client");
         Self::build(false, client)
     }
 
-    pub fn from_client_with_debug(client: Client) -> Self {
+    pub async fn with_debug(dsn: String) -> Result<Self, ClickHouseUtilError> {
+        let client = Self::get_clickhouse_client(dsn)
+            .await
+            .expect("[ClickhouseUtil::with_debug]: Failed to construct client");
         Self::build(true, client)
     }
 
-    fn build(dbg: bool, client: Client) -> Self {
-        Self {
+    pub fn from_client(client: Client) -> Result<Self, ClickHouseUtilError> {
+        Self::build(false, client)
+    }
+
+    pub fn from_client_with_debug(client: Client) -> Result<Self, ClickHouseUtilError> {
+        Self::build(true, client)
+    }
+
+    fn build(dbg: bool, client: Client) -> Result<Self, ClickHouseUtilError> {
+        Ok(Self {
             dbg,
             client,
             metadata: Metadata::new(),
             specs: Specs::new(),
-        }
+        })
     }
 
-    pub async fn get_clickhouse_client(dsn: String) -> Client {
+    async fn get_clickhouse_client(dsn: String) -> Result<Client, ClickHouseUtilError> {
         let client = Client::connect(dsn.clone(), ClientOptions::default())
             .await
             .expect(
@@ -61,7 +67,7 @@ impl ClickhouseUtil {
                 .as_str(),
             );
 
-        client
+        Ok(client)
     }
 }
 

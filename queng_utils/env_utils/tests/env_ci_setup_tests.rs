@@ -3,11 +3,11 @@ use env_utils::EnvUtil;
 #[tokio::test]
 async fn test_env_util_setup_ci() {
     // Initial setup of the CI test environment
-    let mut ci_env = EnvUtil::with_debug();
+    let mut ci_env = EnvUtil::with_debug().await.expect("Failed to get EnvUtil");
     ci_env.setup_ci().await.expect("Failed to setup ci env");
 
     // Verify that the container was created
-    let docker_util = &mut ci_env.get_docker_util().expect("Failed to get docker util");
+    let docker_util = &mut ci_env.docker_util();
     let clickhouse_container_name = ci_env.clickhouse_container_name();
     let exists = docker_util
         .check_if_container_exists(&clickhouse_container_name)
@@ -34,7 +34,7 @@ async fn test_env_util_setup_ci() {
 
     // At a later stage, containers will be re-used or re-created
     // depending on the container configuration
-    let mut test_env = EnvUtil::with_debug();
+    let mut test_env = EnvUtil::with_debug().await.expect("Failed to get EnvUtil");
 
     test_env.setup_ci().await.expect("Failed to setup test env");
 

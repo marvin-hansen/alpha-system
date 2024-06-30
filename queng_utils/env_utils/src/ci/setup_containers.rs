@@ -10,34 +10,33 @@ use tokio::time::sleep;
 impl EnvUtil {
     pub async fn setup_containers(&mut self) -> Result<(), EnvironmentSetupError> {
         self.dbg_print("Get docker util");
-        let mut docker_util = self
-            .get_docker_util()
-            .expect("[TestEnv:CI]: Failed to get docker util");
+        let mut docker_util = self.docker_util();
 
         self.dbg_print("Setup API proxy container");
-        let api_proxy_container_config = api_proxy_container_config();
-        self.setup_api_proxy_container(&api_proxy_container_config, &mut docker_util)
+        self.setup_api_proxy_container(&mut docker_util)
             .await
             .expect("[TestEnv/CI:setup_containers]: Failed to setup API proxy container");
 
         self.dbg_print("Setup clickhouse container config");
-        let clickhouse_container_config = clickhouse_container_config();
-        self.setup_clickhouse_container(&clickhouse_container_config, &mut docker_util)
+        self.setup_clickhouse_container(&mut docker_util)
             .await
             .expect("[TestEnv/CI:setup_containers]: Failed to setup clickhouse container");
+
+        self.dbg_print("Set containers to created");
+        self.set_containers_crated();
 
         Ok(())
     }
 
     pub async fn setup_clickhouse_container(
         &mut self,
-        clickhouse_container_config: &ContainerConfig<'_>,
         docker_util: &mut DockerUtil,
     ) -> Result<(), EnvironmentSetupError> {
         //
         self.dbg_print("Setup api proxy container");
+        let clickhouse_container_config = clickhouse_container_config();
         let (clickhouse_container_name, clickhouse_container_port) = self
-            .setup_container(clickhouse_container_config, docker_util)
+            .setup_container(&clickhouse_container_config, docker_util)
             .await
             .expect(
                 format!(
@@ -66,13 +65,14 @@ impl EnvUtil {
 
     pub async fn setup_api_proxy_container(
         &mut self,
-        api_proxy_container_config: &ContainerConfig<'_>,
         docker_util: &mut DockerUtil,
     ) -> Result<(), EnvironmentSetupError> {
         //
         self.dbg_print("Setup api proxy container");
+        let api_proxy_container_config = api_proxy_container_config();
+
         let (container_name, container_port) = self
-            .setup_container(api_proxy_container_config, docker_util)
+            .setup_container(&api_proxy_container_config, docker_util)
             .await
             .expect(
                 format!(

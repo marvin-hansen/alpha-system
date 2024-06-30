@@ -15,13 +15,13 @@ async fn setup_env() {
     env::set_var("DNS_SERVER", "9.9.9.9");
 }
 
-// #[tokio::test]
+#[tokio::test]
 async fn test_new() {
     // Setup env variables.
     setup_env().await;
 
     // Initialize the test environment to ensure all containers are up and running.
-    let mut ci_env = EnvUtil::new();
+    let mut ci_env = EnvUtil::new().await.expect("Failed to get EnvUtil");
     ci_env.setup_ci().await.expect("Failed to setup test env");
 
     // Build & configure components for contextual autoconfiguration.
