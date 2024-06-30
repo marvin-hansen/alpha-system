@@ -32,9 +32,10 @@ build --jobs=50
 ## Test configuration
 ###############################################################################
 
-# Reduce test output to just error cases
+# Reduce test output to just error cases and report timeout warnings.
 test --test_output=errors
 test --verbose_failures
+test --test_verbose_timeout_warnings
 
 ###############################################################################
 ## Common configuration
