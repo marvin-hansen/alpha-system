@@ -196,9 +196,6 @@ impl DockerUtil {
         };
     }
 
-    // asia-northeast1-docker.pkg.dev/future-309012/image-repo/kaiko_proxy:0a462a2
-    // asia-northeast1-docker.pkg.dev/future-309012/image-repo/kaiko_proxy:0a462a2
-
     /// Stop a container
     ///
     /// # Arguments
@@ -273,10 +270,6 @@ impl DockerUtil {
             "[pull_container_image]: Pulling container image for: {}.",
             container_id
         ));
-
-        let mut cmd = Command::new("docker");
-        cmd.arg("login");
-        cmd.status().expect("Failed to login");
 
         // construct initial command
         let mut cmd = Command::new("docker");
