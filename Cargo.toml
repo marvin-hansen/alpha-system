@@ -148,7 +148,6 @@ rust_decimal_macros = {version = "1.34"}
 serde = { version = "1", features = ["derive"] }
 serde_json = { version = "1" }
 scraper = {version = "0.19", default-features = false }
-testcontainers = { version = "0.19.0" }
 tonic = { version = "0.11", features = ["transport"]}
 tonic-build = {version = "0.11"}
 tonic-health = { version = "0.11", default-features = false, features = ["transport"]}

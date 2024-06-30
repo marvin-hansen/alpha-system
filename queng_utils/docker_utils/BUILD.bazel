@@ -15,7 +15,6 @@ rust_library(
         # Internal crates
         "//:common",
         # External crates
-        "@crates//:testcontainers",
         "@crates//:tokio",
     ],
 )
@@ -42,7 +41,6 @@ rust_test_suite(
         "//:common",
         "//:container_specs",
         # External crates
-        "@crates//:testcontainers",
         "@crates//:tokio",
     ],
 )

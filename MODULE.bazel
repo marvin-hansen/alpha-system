@@ -298,10 +298,6 @@ crate.spec(
     version = "0.19",
 )
 crate.spec(
-    package = "testcontainers",
-    version = "0.19.0",
-)
-crate.spec(
     default_features = False,
     features = ["transport"],
     package = "tonic-health",

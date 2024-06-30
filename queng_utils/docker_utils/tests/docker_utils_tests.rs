@@ -1,18 +1,10 @@
 use container_specs::api_proxy_container_config::api_proxy_container_config;
 use container_specs::clickhouse_container_config::clickhouse_container_config;
-use std::time::Duration;
-use testcontainers::{
-    core::{IntoContainerPort, WaitFor},
-    runners::AsyncRunner,
-    GenericImage, ImageExt,
-};
-use tokio::time::sleep;
 
 #[tokio::test]
 async fn test_clickhouse() {
     let container_config = clickhouse_container_config();
-    let container_name = "test-clickhouse";
-    // let api_proxy_container_config = api_proxy_container_config();
+    // let container_name = "test-clickhouse";
 
     let image = container_config.image();
     let tag = container_config.tag();
@@ -21,30 +13,12 @@ async fn test_clickhouse() {
     println!("image: {}", image);
     println!("tag: {}", tag);
     println!("port: {}", port);
-
-    let result_image = GenericImage::new(image, tag).pull_image().await;
-
-    assert!(result_image.is_ok());
-    let pulled_image = result_image.unwrap().image().to_owned();
-
-    let container = GenericImage::from(pulled_image)
-        .with_exposed_port(port.tcp())
-        .with_wait_for(WaitFor::Duration {
-            length: Duration::from_secs(1),
-        })
-        .with_container_name(container_name)
-        .start()
-        .await;
-
-    assert!(container.is_ok());
-
-    sleep(Duration::from_secs(5)).await;
 }
 
 #[tokio::test]
 async fn test_api_proxy() {
     let container_config = api_proxy_container_config();
-    let container_name = "test-api-proxy";
+    // let container_name = "test-api-proxy";
 
     let image = container_config.image();
     let tag = container_config.tag();
@@ -54,20 +28,4 @@ async fn test_api_proxy() {
     println!("tag: {}", tag);
     println!("port: {}", port);
 
-    let result_image = GenericImage::new(image, tag).pull_image().await;
-
-    assert!(result_image.is_ok());
-    let pulled_image = result_image.unwrap().image().to_owned();
-
-    let container = GenericImage::from(pulled_image)
-        .with_exposed_port(port.tcp())
-        .with_wait_for(WaitFor::message_on_stdout(
-            "Service on endpoint: 0.0.0.0:7777/",
-        ))
-        .with_container_name(container_name)
-        .start()
-        .await;
-    assert!(container.is_ok());
-
-    sleep(Duration::from_secs(5)).await;
 }

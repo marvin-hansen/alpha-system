@@ -18,6 +18,5 @@ path = "src/lib.rs"
 common = {workspace = true}
 container_specs = {workspace = true}
 # External crates
-testcontainers = {workspace = true}
 tokio = {workspace = true}
 
