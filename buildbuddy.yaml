@@ -17,11 +17,11 @@ actions:
       - "build -c opt //... --build_tag_filters=doc --config=remote"
       - "build -c opt //... --build_tag_filters=doc-test --config=remote"
       - "test  -c opt //... --test_tag_filters=doc-test --config=remote"
-      # Test: Run unit tests, prepare env setup for CI, and run integration tests
+      # Test: Run unit tests only
       - "build -c opt  //...  --build_tag_filters=unit --config=remote"
       - "test -c opt   //...  --test_tag_filters=unit --config=remote"
-      # Not yet ready or integration testing,
-      # - "test -c opt  //...   --test_tag_filters=env_container_setup --config=remote"
+      # Test: integration test setup
+      - "test -c opt  //...   --test_tag_filters=env_container_setup --config=remote"
       # - "test -c opt  //...    --test_tag_filters=kaiko_utils --config=remote"
       # - "test -c opt  //...    --test_tag_filters=clickhouse_utils --config=remote"
       # Build & publish images to container registry
