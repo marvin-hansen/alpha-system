@@ -71,7 +71,10 @@ build_multi_arch_image(
     srcs = [":bin"],
     base = "@scratch",
     exposed_ports = ["7777"],
-    platforms = ["//build/platforms:linux_x86_64_musl"],
+    platforms = [
+        "//build/platforms:linux_x86_64_musl",
+        "//build/platforms:linux_arm64_musl",
+    ],
     visibility = ["//visibility:public"],
 )
 
@@ -88,6 +91,6 @@ oci_push(
     name = "push",
     image = ":image_index",
     remote_tags = ":remote_tag",
-    repository = "asia-northeast1-docker.pkg.dev/future-309012/image-repo/kaiko_proxy",
+    repository = "hansenmarvin/api-proxy",
     visibility = ["//visibility:public"],
 )

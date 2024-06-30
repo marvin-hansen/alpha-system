@@ -50,7 +50,6 @@ def build_multi_arch_image(
 
 def build_image(name, base, srcs, exposed_ports = [], visibility=None):
 
-
     # https://codilime.com/blog/bazel-build-system-build-containerized-applications/
     entry_point = "bin"
     layer_name = "tar_layer"

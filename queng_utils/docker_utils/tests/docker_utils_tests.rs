@@ -18,7 +18,12 @@ async fn test_clickhouse() {
     let tag = container_config.tag();
     let port = container_config.connection_port();
 
-    let container = GenericImage::new(image, tag)
+    let result_image = GenericImage::new(image, tag).pull_image().await;
+
+    assert!(result_image.is_ok());
+    let pulled_image = result_image.unwrap().image().to_owned();
+
+    let container = GenericImage::from(pulled_image)
         .with_exposed_port(port.tcp())
         .with_wait_for(WaitFor::Duration {
             length: Duration::from_secs(1),
@@ -45,6 +50,12 @@ async fn test_api_proxy() {
     println!("tag: {}", tag);
     println!("port: {}", port);
 
+    // let result_image = GenericImage::new(image, tag)
+    //     .pull_image().await;
+    //
+    // assert!(result_image.is_ok());
+    // let pulled_image = result_image.unwrap().image().to_owned();
+
     let container = GenericImage::new(image, tag)
         .with_exposed_port(port.tcp())
         .with_wait_for(WaitFor::message_on_stdout(
@@ -53,7 +64,6 @@ async fn test_api_proxy() {
         .with_container_name(container_name)
         .start()
         .await;
-
     assert!(container.is_ok());
 
     sleep(Duration::from_secs(5)).await;

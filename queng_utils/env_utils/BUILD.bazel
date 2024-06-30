@@ -42,6 +42,7 @@ rust_test_suite(
         "test.runner-recycling-key": "clickhouse",
     },
     tags = ["env_container_setup"],
+    timeout = "short",
     visibility = ["//visibility:public"],
     deps = [
         # Crate under test
@@ -75,6 +76,7 @@ rust_test_suite(
         "test.runner-recycling-key": "clickhouse",
     },
     tags = ["env_setup"],
+    timeout = "short",
     visibility = ["//visibility:public"],
     deps = [
         # Crate under test
@@ -108,6 +110,7 @@ rust_test_suite(
         # "test.runner-recycling-key": "clickhouse",
     },
     tags = ["env_teardown"],
+    timeout = "short",
     visibility = ["//visibility:public"],
     deps = [
         # Crate under test
@@ -139,6 +142,7 @@ rust_test_suite(
         # because we can't fit all db docker images with the default disk limit.
         # "test.runner-recycling-key": "clickhouse",
     },
+    timeout = "short",
     tags = ["env_container_teardown"],
     visibility = ["//visibility:public"],
     deps = [
@@ -166,5 +170,6 @@ rust_doc_test(
     name = "doc_test",
     crate = ":env_utils",
     tags = ["doc-test"],
+    timeout = "short", 
     visibility = ["//visibility:public"],
 )

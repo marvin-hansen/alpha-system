@@ -35,7 +35,7 @@ build --jobs=50
 # Reduce test output to just error cases and report timeout warnings.
 test --test_output=errors
 test --verbose_failures
-test --test_verbose_timeout_warnings
+# test --test_verbose_timeout_warnings
 
 ###############################################################################
 ## Common configuration
