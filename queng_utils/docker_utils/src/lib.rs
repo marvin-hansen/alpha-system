@@ -177,6 +177,12 @@ impl DockerUtil {
         }
 
         self.dbg_print("Container doesn't exist.");
+        self.dbg_print("Pull container image.");
+        match self.pull_container_image(container_id, image, platform) {
+            Ok(_) => {}
+            Err(e) => return Err(e),
+        };
+
         self.dbg_print("Start new container.");
         return match self.start_container(
             container_id,
@@ -189,6 +195,9 @@ impl DockerUtil {
             Err(e) => Err(e),
         };
     }
+
+    // asia-northeast1-docker.pkg.dev/future-309012/image-repo/kaiko_proxy:0a462a2
+    // asia-northeast1-docker.pkg.dev/future-309012/image-repo/kaiko_proxy:0a462a2
 
     /// Stop a container
     ///
@@ -245,6 +254,64 @@ impl DockerUtil {
 }
 
 impl DockerUtil {
+    /// Pulls a container image from registry
+    ///
+    /// # Arguments
+    ///
+    /// * `container_id` - The ID of the container to start.
+    /// * `image` - The container image with tag
+    /// * `platform` - Optional platform tag i.e. linux/amd64
+    ///
+    pub fn pull_container_image(
+        &self,
+        container_id: &str,
+        image: &str,
+        platform: Option<&str>,
+    ) -> Result<(), DockerError> {
+        // Example docker pull --platform linux/amd64  asia-northeast1-docker.pkg.dev/future-309012/image-repo/kaiko_proxy:0a462a2
+        self.dbg_print(&format!(
+            "[pull_container_image]: Pulling container image for: {}.",
+            container_id
+        ));
+
+        let mut cmd = Command::new("docker");
+        cmd.arg("login");
+        cmd.status().expect("Failed to login");
+
+        // construct initial command
+        let mut cmd = Command::new("docker");
+        cmd.arg("pull");
+
+        if platform.is_some() {
+            let p = platform.expect("Failed to unwrap Docker platform string");
+            cmd.arg("--platform").arg(p);
+        }
+
+        // Add the image
+        cmd.arg(image);
+
+        self.dbg_print(&format!(
+            "[pull_container_image]: Pulling command: {:?}.",
+            cmd
+        ));
+
+        // Run the command & return error in case of failure
+        return match cmd.status() {
+            Ok(_) => {
+                self.dbg_print(&format!(
+                    "[pull_container_image]: success. Image Pulled {}",
+                    image
+                ));
+                Ok(())
+            }
+            Err(e) => Err(DockerError::from(format!(
+                "Error pulling container image {}: {}",
+                container_id,
+                e.to_string()
+            ))),
+        };
+    }
+
     /// Start a stopped container by its ID.
     ///
     /// # Arguments
@@ -305,7 +372,9 @@ impl DockerUtil {
         let container_name = format!("{}", container_id);
 
         // Add all remaining arguments
-        cmd.arg("--name").arg(container_name).arg(image);
+        cmd.arg("--name").arg(container_name);
+        // Add the image
+        cmd.arg(image);
 
         // Run the command & return error in case of failure
         return match cmd.status() {

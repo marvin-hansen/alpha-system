@@ -86,6 +86,9 @@ impl EnvUtil {
         assert_eq!(container_name, api_proxy_container_config.container_name());
         assert_eq!(container_port, api_proxy_container_config.connection_port());
 
+        self.dbg_print(&format!("OK: {}", container_name));
+        self.dbg_print(&format!("OK: {}", container_port));
+
         self.dbg_print("Set api proxy container name and ports");
         self.set_api_proxy_container_name(container_name);
         self.set_api_proxy_container_port(container_port);
