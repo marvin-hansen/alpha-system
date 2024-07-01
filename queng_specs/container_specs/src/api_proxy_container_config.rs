@@ -7,12 +7,11 @@ use common::prelude::ContainerConfig;
 /// # Returns
 /// A `ContainerConfig` instance containing all the necessary configuration for the API proxy container.
 pub fn api_proxy_container_config() -> ContainerConfig<'static> {
-    // Private container image
-    // https://console.cloud.google.com/artifacts/docker/future-309012/asia-northeast1/image-repo/kaiko_proxy?project=future-309012
+    // Private container image on GCP
     ContainerConfig::new(
         "apiproxy",
-        "asia-northeast1-docker.pkg.dev/future-309012/image-repo/kaiko_proxy",
-        "ef0f5da",
+        "asia-northeast1-docker.pkg.dev/future-309012/image-repo/api_proxy",
+        "b422ae3",
         "0.0.0.0",
         7777,
         None,
