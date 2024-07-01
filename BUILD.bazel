@@ -19,7 +19,7 @@ sh_binary(
 )
 
 ###############################################################################
-# INTERNAL ALIAS
+# INTERNAL ALIASES
 ###############################################################################
 
 # Common
@@ -261,7 +261,7 @@ filegroup(
     name = "image",
     srcs = [
         # Services
-        "//queng_services/aux/file_server:image_index",
+        "//queng_services/aux/api_proxy:image_index",
         "//queng_services/cmdb:image_index",
         "//queng_services/dbgw:image_index",
         "//queng_services/mddb:image_index",
@@ -279,7 +279,7 @@ multirun(
     name = "push",
     commands = [
         # Services
-        "push_file_server",
+        "push_api_proxy",
         "push_cmdb",
         "push_dbgw",
         "push_mddb",
@@ -294,9 +294,9 @@ multirun(
 # Services
 
 command(
-    name = "push_file_server",
+    name = "push_api_proxy",
     arguments = [],  # Optional arguments passed directly to the tool
-    command = "//queng_services/aux/file_server:push",
+    command = "//queng_services/aux/api_proxy:push",
 )
 
 command(
