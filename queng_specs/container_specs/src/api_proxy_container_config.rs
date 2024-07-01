@@ -11,8 +11,8 @@ pub fn api_proxy_container_config() -> ContainerConfig<'static> {
     // https://console.cloud.google.com/artifacts/docker/future-309012/asia-northeast1/image-repo/kaiko_proxy?project=future-309012
     ContainerConfig::new(
         "apiproxy",
-        "hansenmarvin/api-proxy",
-        "b61f462",
+        "asia-northeast1-docker.pkg.dev/future-309012/image-repo/kaiko_proxy",
+        "ef0f5da",
         "0.0.0.0",
         7777,
         None,
