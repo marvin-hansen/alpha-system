@@ -49,7 +49,7 @@ impl QueryDBManager {
             .client
             .query_collect::<SymbolRow>(&query)
             .await
-            .expect(format!("{} Failed to execute query: {}", FN_NAME, query).as_str());
+            .unwrap_or_else(|_| panic!("{} Failed to execute query: {}", FN_NAME, query));
 
         // Check for empty result
         if result_rows.is_empty() {

@@ -17,7 +17,7 @@ async fn test_env_util_setup_containers() {
     // Verify that the api proxy container was created
     let api_proxy_container_name = ci_env.api_proxy_container_name();
     let exists = docker_util
-        .check_if_container_exists(&api_proxy_container_name)
+        .check_if_container_exists(api_proxy_container_name)
         .expect("Failed to check if container exists");
     assert!(exists);
 
@@ -30,7 +30,7 @@ async fn test_env_util_setup_containers() {
     // Verify that the clickhouse container was created
     let clickhouse_container_name = ci_env.clickhouse_container_name();
     let exists = docker_util
-        .check_if_container_exists(&clickhouse_container_name)
+        .check_if_container_exists(clickhouse_container_name)
         .expect("Failed to check if container exists");
     assert!(exists);
 

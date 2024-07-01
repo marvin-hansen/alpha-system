@@ -45,7 +45,7 @@ impl EnvUtil {
         let kaiko_util = self.kaiko_util();
 
         self.dbg_print("Configure clickhouse DB");
-        self.configure_clickhouse(&ch_utils, &clickhouse_container_config, &kaiko_util)
+        self.configure_clickhouse(&ch_utils, &clickhouse_container_config, kaiko_util)
             .await
             .expect("Failed to configure clickhouse DB");
 
@@ -63,13 +63,13 @@ impl EnvUtil {
         if self.is_clickhouse_configured(container_config) {
             // Check if NO reset is required.
             self.dbg_print("Check if NO reset is required");
-            if !container_config.reset_configuration() {
-                if self.is_data_set_current(ch_utils, kaiko_util) {
-                    // If so, abort & return.
-                    // Nothing to do in this case.
-                    self.dbg_print("Nothing to configure or reset; return.");
-                    return Ok(());
-                }
+            if !container_config.reset_configuration()
+                && self.is_data_set_current(ch_utils, kaiko_util)
+            {
+                // If so, abort & return.
+                // Nothing to do in this case.
+                self.dbg_print("Nothing to configure or reset; return.");
+                return Ok(());
             }
         }
 

@@ -16,9 +16,9 @@ pub(crate) fn _get_stream_handler(
     symbols: Vec<String>,
 ) -> Pin<Box<dyn Future<Output = ()> + Send>> {
     //
-    return match data_type {
+    match data_type {
         DataType::UnknownDataType => Box::pin(trade_websocket::trade_websocket(logger_tx, symbols)),
         DataType::TradeData => Box::pin(trade_websocket::trade_websocket(logger_tx, symbols)),
         DataType::OHLCVData => Box::pin(trade_websocket::trade_websocket(logger_tx, symbols)),
-    };
+    }
 }

@@ -1,6 +1,5 @@
 use crate::types::health::Health;
 use crate::types::MetaDataStore;
-use warp;
 
 pub(crate) async fn get_health_handler() -> Result<impl warp::Reply, warp::Rejection> {
     let result = Health::ok();

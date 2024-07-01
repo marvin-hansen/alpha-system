@@ -34,7 +34,7 @@ impl QueryDBManager {
         self.client
             .query::<TradeRow>(query)
             .await
-            .expect(format!("{} Failed to execute stream_trades query ", FN_NAME).as_str())
+            .unwrap_or_else(|_| panic!("{} Failed to execute stream_trades query ", FN_NAME))
             .boxed()
     }
 }

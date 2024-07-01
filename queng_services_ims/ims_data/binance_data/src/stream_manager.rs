@@ -1,18 +1,18 @@
 use crate::handlers::trade_websocket;
-use crate::types::command::Command;
+use crate::types::command::DataCommand;
 use binance::ws_model::WebsocketEvent;
 use std::collections::HashMap;
 use tokio::select;
 use tokio::sync::mpsc;
 use tokio::sync::mpsc::UnboundedSender;
 
-pub async fn stream_manager(mut command_rx: mpsc::Receiver<Command>) {
+pub async fn stream_manager(mut command_rx: mpsc::Receiver<DataCommand>) {
     //
     let mut streams: HashMap<u32, UnboundedSender<bool>> = HashMap::new();
 
     while let Some(cmd) = command_rx.recv().await {
         match cmd {
-            Command::StartData(id, symbols, _data_type_id) => {
+            DataCommand::Start(id, symbols, _data_type_id) => {
                 let (logger_tx, mut logger_rx) = mpsc::unbounded_channel::<WebsocketEvent>();
                 let (close_tx, mut close_rx) = mpsc::unbounded_channel::<bool>();
 
@@ -46,7 +46,7 @@ pub async fn stream_manager(mut command_rx: mpsc::Receiver<Command>) {
                     }
                 }
             }
-            Command::StopData(id) => {
+            DataCommand::Stop(id) => {
                 if let Some(close_tx) = streams.get(&id) {
                     println!("[StopData]: Closing websocket stream: {}", id);
                     match close_tx.send(true) {
@@ -61,7 +61,7 @@ pub async fn stream_manager(mut command_rx: mpsc::Receiver<Command>) {
                     streams.remove(&id);
                 }
             }
-            Command::StopAllData => {
+            DataCommand::StopAll => {
                 // drain() clears the map, returning all key-value pairs as an iterator.
                 // Keeps the allocated memory for reuse.
                 for (id, close_tx) in streams.drain() {

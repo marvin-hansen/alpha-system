@@ -23,7 +23,7 @@ impl QueryDBManager {
         self.client
             .query::<OHLCVRow>(query)
             .await
-            .expect(format!("{} Failed to execute stream_ohlcv query ", FN_NAME).as_str())
+            .unwrap_or_else(|_| panic!("{} Failed to execute stream_ohlcv query ", FN_NAME))
             .boxed()
     }
 }

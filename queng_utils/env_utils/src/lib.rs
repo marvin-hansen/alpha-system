@@ -120,11 +120,11 @@ impl EnvUtil {
             container_config.connection_port(),
         );
 
-        return if self.dbg {
+        if self.dbg {
             ClickhouseUtil::with_debug(dsn).await
         } else {
             ClickhouseUtil::new(dsn).await
-        };
+        }
     }
 }
 

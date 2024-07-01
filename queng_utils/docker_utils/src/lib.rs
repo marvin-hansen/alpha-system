@@ -184,7 +184,7 @@ impl DockerUtil {
         };
 
         self.dbg_print("Start new container.");
-        return match self.start_container(
+        match self.start_container(
             container_id,
             connection_port,
             additional_ports,
@@ -193,7 +193,7 @@ impl DockerUtil {
         ) {
             Ok((container_id, port)) => Ok((container_id, port)),
             Err(e) => Err(e),
-        };
+        }
     }
 
     /// Stop a container
@@ -240,8 +240,7 @@ impl DockerUtil {
                 Ok(_) => Ok(()),
                 Err(e) => Err(DockerError::from(format!(
                     "[stop_container]: Error stopping container {}: {}",
-                    container_id,
-                    e.to_string()
+                    container_id, e
                 ))),
             };
         }
@@ -289,7 +288,7 @@ impl DockerUtil {
         ));
 
         // Run the command & return error in case of failure
-        return match cmd.status() {
+        match cmd.status() {
             Ok(_) => {
                 self.dbg_print(&format!(
                     "[pull_container_image]: success. Image Pulled {}",
@@ -299,10 +298,9 @@ impl DockerUtil {
             }
             Err(e) => Err(DockerError::from(format!(
                 "Error pulling container image {}: {}",
-                container_id,
-                e.to_string()
+                container_id, e
             ))),
-        };
+        }
     }
 
     /// Start a stopped container by its ID.
@@ -362,7 +360,7 @@ impl DockerUtil {
         }
 
         // Format the container name
-        let container_name = format!("{}", container_id);
+        let container_name = container_id.to_string();
 
         // Add all remaining arguments
         cmd.arg("--name").arg(container_name);
@@ -370,7 +368,7 @@ impl DockerUtil {
         cmd.arg(image);
 
         // Run the command & return error in case of failure
-        return match cmd.status() {
+        match cmd.status() {
             Ok(_) => {
                 self.dbg_print(&format!(
                     "[start_container]: {}",
@@ -380,10 +378,9 @@ impl DockerUtil {
             }
             Err(e) => Err(DockerError::from(format!(
                 "Error starting container {}: {}",
-                container_id,
-                e.to_string()
+                container_id, e
             ))),
-        };
+        }
     }
 
     /// Get information about a running container by its ID.
@@ -407,8 +404,7 @@ impl DockerUtil {
             Err(e) => {
                 return Err(DockerError::from(format!(
                     "Error getting container {}: {}",
-                    container_id,
-                    e.to_string()
+                    container_id, e
                 )));
             }
         };
@@ -420,7 +416,7 @@ impl DockerUtil {
             )));
         }
 
-        let parts = container.split("-").collect::<Vec<&str>>();
+        let parts = container.split('-').collect::<Vec<&str>>();
         let port = parts
             .last()
             .expect("Failed to get container port")
@@ -442,10 +438,10 @@ impl DockerUtil {
     /// Returns `Ok(true)` if the container exists, `Ok(false)` if the container does not exist, or `Err(DockerError)` if an error occurred.
     ///
     pub fn check_if_container_exists(&mut self, container_id: &str) -> Result<bool, DockerError> {
-        return match self.get_running_container(container_id) {
+        match self.get_running_container(container_id) {
             Ok(_) => Ok(true),
             Err(_) => Ok(false),
-        };
+        }
     }
 
     pub fn prune_containers(&mut self) -> Result<(), DockerError> {
@@ -460,7 +456,7 @@ impl DockerUtil {
             Err(e) => {
                 return Err(DockerError::from(format!(
                     "Error pruning containers: {}",
-                    e.to_string()
+                    e
                 )));
             }
         };

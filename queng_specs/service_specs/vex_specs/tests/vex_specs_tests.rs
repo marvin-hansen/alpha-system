@@ -9,7 +9,7 @@ fn test_vex_service_config_accessors() {
     assert_eq!(service_config.svc_id(), &ServiceID::VEX);
     assert_eq!(service_config.name(), "vexv1");
     assert_eq!(service_config.version(), 1);
-    assert_eq!(service_config.online(), false);
+    assert!(!service_config.online());
     assert_eq!(service_config.description(), "vex: Virtual Exchange");
     assert_eq!(
         service_config.health_check_uri(),

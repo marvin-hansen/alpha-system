@@ -1,5 +1,4 @@
 use crate::service::CMDBServer;
-use cmdb_specs;
 use common::prelude::ServiceID;
 use config_manager::CfgManager;
 use ctx_manager::CtxManager;

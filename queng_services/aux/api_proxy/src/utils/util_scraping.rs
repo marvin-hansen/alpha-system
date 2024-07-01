@@ -127,7 +127,7 @@ fn split_by_colon(name: &str) -> (String, String) {
 
     // Cleanup and return both, the old and new exchange name.
     (
-        res[0].replace("(", "").trim().to_string(),
-        res[1].replace(")", "").trim().to_string(),
+        res[0].replace('(', "").trim().to_string(),
+        res[1].replace(')', "").trim().to_string(),
     )
 }

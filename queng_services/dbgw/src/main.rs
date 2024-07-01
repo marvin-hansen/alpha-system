@@ -2,7 +2,6 @@ use common::prelude::ServiceID;
 use config_manager::CfgManager;
 use ctx_manager::CtxManager;
 use db_system_manager::SystemDBManager;
-use dbgw_specs;
 use dns_manager::DnsManager;
 use jemallocator::Jemalloc;
 use proto_bindings::proto::db_gateway_service_server::DbGatewayServiceServer;

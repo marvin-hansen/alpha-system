@@ -8,7 +8,7 @@ async fn test_env_util_teardown_container() {
     // Get docker utils to run some checks
     let docker_util = &mut env_utils.docker_util();
 
-    if env_utils.containers_crated() == false {
+    if !env_utils.containers_crated() {
         panic!("No containers crated thus nothing to teardown. Run setup_containers() to create all containers")
     }
 
@@ -18,10 +18,10 @@ async fn test_env_util_teardown_container() {
 
     // Verify that the api proxy container was created
     let exists = docker_util
-        .check_if_container_exists(&api_proxy_container_name)
+        .check_if_container_exists(api_proxy_container_name)
         .expect("Failed to check if container exists");
 
-    assert_eq!(exists, true);
+    assert!(exists);
     println!("✅ OK: Container exits: {} ", api_proxy_container_name);
     println!();
 
@@ -36,10 +36,10 @@ async fn test_env_util_teardown_container() {
 
     // Verify removal
     let exists = docker_util
-        .check_if_container_exists(&api_proxy_container_name)
+        .check_if_container_exists(api_proxy_container_name)
         .expect("Failed to check if container exists");
 
-    assert_eq!(exists, false);
+    assert!(!exists);
     println!(
         "✅ OK: Container name: {} removed",
         api_proxy_container_name
@@ -47,10 +47,10 @@ async fn test_env_util_teardown_container() {
     println!();
 
     let exists = docker_util
-        .check_if_container_exists(&clickhouse_container_name)
+        .check_if_container_exists(clickhouse_container_name)
         .expect("Failed to check if container exists");
 
-    assert_eq!(exists, false);
+    assert!(!exists);
 
     println!(
         "✅ OK: Container name: {} removed",

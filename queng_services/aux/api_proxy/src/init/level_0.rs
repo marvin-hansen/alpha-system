@@ -13,8 +13,7 @@ impl InitManager {
 }
 
 async fn get_valid_exchanges() -> Vec<String> {
-    let valid_exchanges = util_scraping::scrap_valid_exchanges()
+    util_scraping::scrap_valid_exchanges()
         .await
-        .expect("Error scraping valid exchanges");
-    valid_exchanges
+        .expect("Error scraping valid exchanges")
 }

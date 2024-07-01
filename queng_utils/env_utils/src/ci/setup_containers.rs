@@ -38,13 +38,12 @@ impl EnvUtil {
         let (clickhouse_container_name, clickhouse_container_port) = self
             .setup_container(&clickhouse_container_config, docker_util)
             .await
-            .expect(
-                format!(
+            .unwrap_or_else(|_| {
+                panic!(
                     "[TestEnv/CI:setup_clickhouse_container]: Failed to setup container: {}",
                     &clickhouse_container_config.container_name()
                 )
-                .as_str(),
-            );
+            });
 
         self.dbg_print("Verify clickhouse container name and ports");
         assert_eq!(
@@ -74,13 +73,12 @@ impl EnvUtil {
         let (container_name, container_port) = self
             .setup_container(&api_proxy_container_config, docker_util)
             .await
-            .expect(
-                format!(
+            .unwrap_or_else(|_| {
+                panic!(
                     "[TestEnv/CI:setup_api_proxy_container]: Failed to setup container: {}",
                     &api_proxy_container_config.container_name()
                 )
-                .as_str(),
-            );
+            });
 
         self.dbg_print("Verify api proxy container name and ports");
         assert_eq!(container_name, api_proxy_container_config.container_name());
@@ -108,13 +106,12 @@ impl EnvUtil {
         self.dbg_print(&format!("Check if container exists: {}", &container_name));
         let exists = docker_util
             .check_if_container_exists(&container_name)
-            .expect(
-                format!(
+            .unwrap_or_else(|_| {
+                panic!(
                     "[TestEnv/CI:setup_container]: Failed to check if container exists: {}",
                     &container_name
                 )
-                .as_str(),
-            );
+            });
 
         if exists {
             let container_name = container_config.container_name();
@@ -131,14 +128,13 @@ impl EnvUtil {
 
         self.dbg_print(&format!("Setup Container: {}", &container_name));
         let (container_name, container_port) = docker_util
-            .get_or_start_container_config(&container_config)
-            .expect(
-                format!(
+            .get_or_start_container_config(container_config)
+            .unwrap_or_else(|_| {
+                panic!(
                     "[TestEnv/CI:setup_container]: Failed to setup container: {}",
                     &container_name
                 )
-                .as_str(),
-            );
+            });
 
         self.dbg_print(&format!(
             "Wait {} seconds for {} container to complete setup & finish boot sequence",

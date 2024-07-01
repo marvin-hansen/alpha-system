@@ -7,7 +7,7 @@ impl Metadata {
         let code = asset.code.clone();
         // ClickHouse needs quotes to be escaped
         // https://github.com/ClickHouse/ClickHouse/issues/191
-        let name = asset.name.replace("\'", "\\'");
+        let name = asset.name.replace('\'', "\\'");
         let asset_class = &asset.asset_class;
         let asset_figi = self.extract_asset_figi(&asset.metadata);
 
@@ -24,14 +24,13 @@ impl Metadata {
 
     fn extract_asset_figi(&self, metadata: &Option<AssetMetadata>) -> String {
         let empty_string = "".to_string();
-        let asset_figi = match metadata {
+
+        match metadata {
             Some(metadata) => match &metadata.asset_figi {
                 Some(figi) => figi.to_owned(),
                 None => empty_string,
             },
             None => empty_string,
-        };
-
-        asset_figi
+        }
     }
 }

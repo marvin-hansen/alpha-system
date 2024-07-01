@@ -12,7 +12,7 @@ fn test_ims_data_binance_config() {
         format!("ims-service-{}", ExchangeID::Binance)
     );
     assert_eq!(service_config.version(), 1);
-    assert_eq!(service_config.online(), false);
+    assert!(!service_config.online());
     assert_eq!(
         service_config.description(),
         format!(

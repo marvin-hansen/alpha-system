@@ -13,7 +13,7 @@ async fn test_env_util_teardown_ci() {
     let docker_util = &mut ci_env.docker_util();
     let container_name = ci_env.clickhouse_container_name();
     let exists = docker_util
-        .check_if_container_exists(&container_name)
+        .check_if_container_exists(container_name)
         .expect("Failed to check if container exists");
     assert!(!exists);
 

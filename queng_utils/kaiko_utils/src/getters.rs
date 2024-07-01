@@ -6,13 +6,13 @@ use common::prelude::{Asset, Exchange, Instrument, Stats};
 impl KaikoUtil {
     pub async fn get_assets(&self) -> Result<Vec<Asset>, KaikoUtilError> {
         self.dbg_print("[get_assets]: Download asset metadata from Kaiko.");
-        return match self.client.get_assets().await {
+        match self.client.get_assets().await {
             Ok(assets) => Ok(assets.data),
             Err(e) => Err(KaikoUtilError::new(&format!(
                 "Error retrieving assets: {}",
-                e.to_string()
+                e
             ))),
-        };
+        }
     }
 
     pub async fn get_exchanges(&self) -> Result<Vec<Exchange>, KaikoUtilError> {
@@ -22,7 +22,7 @@ impl KaikoUtil {
             Err(e) => {
                 return Err(KaikoUtilError::new(&format!(
                     "Error retrieving exchanges: {}",
-                    e.to_string()
+                    e
                 )));
             }
         };
@@ -39,20 +39,20 @@ impl KaikoUtil {
             }
         }
 
-        return Ok(res);
+        Ok(res)
     }
 
     pub async fn get_stats(&self) -> Result<Stats, KaikoUtilError> {
         self.dbg_print("[get_instruments]: Download metadata statistics from Kaiko.");
 
-        return match self.client.get_stats().await {
+        match self.client.get_stats().await {
             Ok(stats) => Ok(stats),
 
             Err(e) => Err(KaikoUtilError::new(&format!(
                 "Error retrieving metadata statistics: {}",
-                e.to_string()
+                e
             ))),
-        };
+        }
     }
 
     pub async fn get_instruments(&self) -> Result<Vec<Instrument>, KaikoUtilError> {
@@ -63,7 +63,7 @@ impl KaikoUtil {
             Err(e) => {
                 return Err(KaikoUtilError::new(&format!(
                     "Error retrieving instruments: {}",
-                    e.to_string()
+                    e
                 )));
             }
         };
@@ -84,7 +84,7 @@ impl KaikoUtil {
             }
         }
 
-        return Ok(res);
+        Ok(res)
     }
 
     // Double check if instrument is inactive i.e. from an inactive exchange

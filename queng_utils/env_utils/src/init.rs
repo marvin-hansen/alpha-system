@@ -14,18 +14,18 @@ impl EnvUtil {
             };
         }
 
-        return match DockerUtil::new() {
+        match DockerUtil::new() {
             Ok(docker_util) => Ok(docker_util),
             Err(e) => Err(e),
-        };
+        }
     }
 
     pub(super) async fn init_kaiko_util(dbg: bool) -> Result<KaikoUtil, KaikoUtilError> {
-        return if dbg {
+        if dbg {
             KaikoUtil::with_debug()
         } else {
             KaikoUtil::new()
-        };
+        }
     }
 
     pub(super) fn init_container(
@@ -37,21 +37,20 @@ impl EnvUtil {
 
         let exists = docker_util
             .check_if_container_exists(&container_name)
-            .expect(
-                format!(
+            .unwrap_or_else(|_| {
+                panic!(
                     "[TestEnv/init_container]: Failed to check if container exists: {}",
                     &container_name
                 )
-                .as_str(),
-            );
+            });
 
-        return if exists {
+        if exists {
             let container_name = container_config.container_name();
             let container_port = container_config.connection_port();
 
             Ok((container_name, container_port, true))
         } else {
             Ok((String::from("NOT INITIALIZED"), 0, false))
-        };
+        }
     }
 }

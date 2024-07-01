@@ -25,10 +25,12 @@ impl KaikoUtil {
 
     fn build(dbg: bool) -> Result<Self, KaikoUtilError> {
         let kaiko_client = KaikoClient::with_url(API_PROXY_URL);
-        let client = kaiko_client.expect(&format!(
-            "Failed to construct KaikoClient for PROXY URL {}",
-            API_PROXY_URL
-        ));
+        let client = kaiko_client.unwrap_or_else(|_| {
+            panic!(
+                "Failed to construct KaikoClient for PROXY URL {}",
+                API_PROXY_URL
+            )
+        });
         Ok(Self { dbg, client })
     }
 }

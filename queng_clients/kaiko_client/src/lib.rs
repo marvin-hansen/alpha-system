@@ -36,10 +36,8 @@ impl KaikoClient {
         header_map.insert("Accept", HeaderValue::from_static("application/json"));
 
         // Build client with headers
-        let client = RestClient::with_headers(url, header_map, true)
-            .expect("Failed to construct KaikoClient");
 
-        client
+        RestClient::with_headers(url, header_map, true).expect("Failed to construct KaikoClient")
     }
 }
 

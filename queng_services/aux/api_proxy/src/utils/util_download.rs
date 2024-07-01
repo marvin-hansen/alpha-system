@@ -34,7 +34,7 @@ impl DownloadUtils {
             }
             Err(e) => Err(DownloadError::from(format!(
                 "Error downloading assets {}",
-                e.to_string()
+                e
             ))),
         };
     }
@@ -51,7 +51,7 @@ impl DownloadUtils {
             }
             Err(e) => Err(DownloadError::from(format!(
                 "Error downloading exchanges {}",
-                e.to_string()
+                e
             ))),
         };
     }
@@ -68,7 +68,7 @@ impl DownloadUtils {
             }
             Err(e) => Err(DownloadError::from(format!(
                 "Error downloading instruments {}",
-                e.to_string()
+                e
             ))),
         };
     }

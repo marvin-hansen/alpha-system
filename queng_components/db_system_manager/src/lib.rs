@@ -46,7 +46,7 @@ impl SystemDBManager {
         let destination = db_config.connection_string();
         let client = Client::connect(destination.clone(), ClientOptions::default())
             .await
-            .expect(format!("{} Failed to connect to {}", FN_NAME, &destination).as_str());
+            .unwrap_or_else(|_| panic!("{} Failed to connect to {}", FN_NAME, &destination));
 
         // Initialize the cache
         let service_cache = Arc::new(RwLock::new(HashMap::new()));
@@ -91,7 +91,7 @@ impl SystemDBManager {
             .client
             .query_collect::<TestRow>(&query)
             .await
-            .expect(format!("{} Failed to execute query: {}", FN_NAME, query).as_str());
+            .unwrap_or_else(|_| panic!("{} Failed to execute query: {}", FN_NAME, query));
 
         // Check for empty result
         if result_rows.is_empty() {
@@ -109,7 +109,7 @@ impl SystemDBManager {
             .client
             .query_collect::<TestRow>(&query)
             .await
-            .expect(format!("{} Failed to execute query: {}", FN_NAME, query).as_str());
+            .unwrap_or_else(|_| panic!("{} Failed to execute query: {}", FN_NAME, query));
 
         // Check for empty result
         if result_rows.is_empty() {

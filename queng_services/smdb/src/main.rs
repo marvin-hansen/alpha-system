@@ -10,7 +10,6 @@ use proto_bindings::proto::db_gateway_service_client::DbGatewayServiceClient;
 use proto_bindings::proto::smdb_service_server::SmdbServiceServer;
 use service::SMDBServer;
 use service_utils::{print_utils, shutdown_utils};
-use smdb_specs;
 mod service;
 
 #[global_allocator]

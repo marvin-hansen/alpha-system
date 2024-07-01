@@ -112,6 +112,6 @@ impl ConfigFile {
 
 impl Display for ConfigFile {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "data_folder: {}\n", self.data_folder)
+        writeln!(f, "data_folder: {}", self.data_folder)
     }
 }

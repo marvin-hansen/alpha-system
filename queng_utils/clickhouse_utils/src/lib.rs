@@ -59,13 +59,12 @@ impl ClickhouseUtil {
     async fn get_clickhouse_client(dsn: String) -> Result<Client, ClickHouseUtilError> {
         let client = Client::connect(dsn.clone(), ClientOptions::default())
             .await
-            .expect(
-                format!(
+            .unwrap_or_else(|_| {
+                panic!(
                     "[ClickhouseUtil::get_clickhouse_client]: Failed to connect to {}",
                     &dsn
                 )
-                .as_str(),
-            );
+            });
 
         Ok(client)
     }
@@ -86,10 +85,10 @@ impl ClickhouseUtil {
         let res = self.client.execute(query).await;
 
         // check for errors
-        return match res {
+        match res {
             Ok(_) => Ok(()),
             Err(e) => Err(QueryError::QueryFailed(e.to_string())),
-        };
+        }
     }
 
     /// Counts the number of rows in the specified table in the ClickHouse database.
@@ -102,9 +101,9 @@ impl ClickhouseUtil {
         let number_of_rows: Result<CountRow, KlickhouseError> =
             self.client.query_one(&count_query).await;
 
-        return match number_of_rows {
+        match number_of_rows {
             Ok(number_of_rows) => Ok(number_of_rows.count()),
             Err(e) => Err(QueryError::QueryFailed(e.to_string())),
-        };
+        }
     }
 }

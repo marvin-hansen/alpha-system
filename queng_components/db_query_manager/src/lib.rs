@@ -36,7 +36,7 @@ impl QueryDBManager {
         let destination = db_config.connection_string();
         let client = Client::connect(destination.clone(), ClientOptions::default())
             .await
-            .expect(format!("{} Failed to connect to {}", FN_NAME, &destination).as_str());
+            .unwrap_or_else(|_| panic!("{} Failed to connect to {}", FN_NAME, &destination));
 
         Ok(Self { client })
     }

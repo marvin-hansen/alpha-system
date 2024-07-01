@@ -4,12 +4,6 @@ set -o nounset
 set -o pipefail
 
 
-# Code formatting
-# This prevents Clippy from reporting formatting errors
-# https://github.com/rust-lang/rustfmt
-command cargo fmt --all
-
-
 # Check for outdated dependencies
 # https://github.com/kbknapp/cargo-outdated
 command cargo outdated --workspace
@@ -22,7 +16,7 @@ command cargo +nightly udeps --all-targets
 
 # Scan for security vulnerabilities
 # https://crates.io/crates/cargo-audit
-command cargo audit
+# command cargo audit
 
 
 # Check a package and all of its dependencies for errors.

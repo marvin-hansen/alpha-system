@@ -40,7 +40,7 @@ async fn test_get_assets() {
     // Additional assertions can be performed based on the expected `AssetRoot` structure.
     if let Ok(asset_root) = result {
         // Perform further assertions on `asset_root`
-        assert!(asset_root.data.len() > 0);
+        assert!(!asset_root.data.is_empty());
     }
 }
 
@@ -57,7 +57,7 @@ async fn test_get_exchanges() {
     // Additional assertions can be performed based on the expected `AssetRoot` structure.
     if let Ok(exchanges_root) = result {
         // Perform further assertions on `exchanges_root`
-        assert!(exchanges_root.data.len() > 0);
+        assert!(!exchanges_root.data.is_empty());
     }
 }
 
@@ -74,7 +74,7 @@ async fn test_get_instruments() {
     // Additional assertions can be performed based on the expected `AssetRoot` structure.
     if let Ok(instruments_root) = result {
         // Perform further assertions on `instruments_root`
-        assert!(instruments_root.data.len() > 0);
+        assert!(!instruments_root.data.is_empty());
     }
 }
 

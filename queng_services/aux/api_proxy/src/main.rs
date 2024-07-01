@@ -155,10 +155,10 @@ async fn run_init(update: bool) -> Result<MetaDataSet, InitError> {
     let result = im.init(update).await;
     drop(im);
 
-    return match result {
+    match result {
         Ok(meta_data_set) => Ok(meta_data_set),
         Err(e) => Err(e),
-    };
+    }
 }
 
 fn print_duration(msg: &str, elapsed: &Duration) {

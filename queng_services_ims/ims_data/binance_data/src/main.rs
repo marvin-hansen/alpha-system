@@ -5,9 +5,7 @@ mod types;
 
 use crate::service::ImsDataServer;
 use common::prelude::ServiceID;
-use ims_data_binance_specs;
 use jemallocator::Jemalloc;
-use lib_data_stream;
 use proto_bindings::proto::ims_data_service_server::ImsDataServiceServer;
 
 #[global_allocator]
