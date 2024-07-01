@@ -19,8 +19,6 @@ rust_library(
         "//:env_utils",
         # External crates
         "@crates//:chrono",
-        "@crates//:clickhouse-rs",
-        "@crates//:futures",
         "@crates//:klickhouse",
         "@crates//:rust_decimal",
         "@crates//:serde",

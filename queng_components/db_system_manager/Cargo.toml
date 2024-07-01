@@ -26,9 +26,7 @@ env_utils = { workspace = true }
 
 # External crates
 chrono = { workspace = true }
-clickhouse-rs = { workspace = true }
 klickhouse = { workspace = true }
-futures = { workspace = true }
 rust_decimal = { workspace = true }
 tokio = { workspace = true }
 serde = { workspace = true }

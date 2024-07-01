@@ -48,7 +48,6 @@ rust_binary(
         "@crates//:futures",
         "@crates//:serde",
         "@crates//:tokio",
-        "@crates//:tokio-tungstenite",
         "@crates//:tonic",
         "@crates//:prost",
     ],
