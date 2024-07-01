@@ -12,3 +12,4 @@ authors.workspace = true
 common = {workspace = true}
 kaiko_client = {workspace = true}
 # External crates
+tokio = { workspace = true }

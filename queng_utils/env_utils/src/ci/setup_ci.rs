@@ -4,8 +4,9 @@ use common::prelude::ContainerConfig;
 use container_specs::api_proxy_container_config::api_proxy_container_config;
 use container_specs::clickhouse_container_config::clickhouse_container_config;
 use kaiko_utils::KaikoUtil;
-use std::thread::sleep;
 use std::time::Duration;
+use tokio::time::sleep;
+
 impl EnvUtil {
     /// Create a new Continuous Integration (CI) `Environment`
     pub async fn setup_ci(&mut self) -> Result<(), EnvironmentError> {
@@ -22,7 +23,7 @@ impl EnvUtil {
             .expect("[TestEnv:CI]: Failed to get or reuse clickhouse container");
 
         // Give the api proxy container some extra time to complete booting up.
-        sleep(Duration::from_secs(1));
+        sleep(Duration::from_secs(1)).await;
 
         self.dbg_print("Get clickhouse container config");
         let clickhouse_container_config = clickhouse_container_config();
@@ -33,7 +34,7 @@ impl EnvUtil {
             .expect("[TestEnv:CI]: Failed to get or reuse clickhouse container");
 
         // Give the container some extra time.
-        sleep(Duration::from_secs(1));
+        sleep(Duration::from_secs(1)).await;
 
         self.dbg_print("Get clickhouse utils");
         let ch_utils = self

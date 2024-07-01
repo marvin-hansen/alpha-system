@@ -7,21 +7,9 @@ async fn test_new() {
     assert!(kaiko_client.is_ok());
 }
 
-#[tokio::test]
-async fn test_with_local_proxy() {
-    let kaiko_client = KaikoClient::new();
-    assert!(kaiko_client.is_ok());
-}
-
-#[tokio::test]
-async fn test_with_url() {
+fn get_client() -> Result<KaikoClient, KaikoClientError> {
     let url: &str = "http://localhost:7777/";
     let kaiko_client = KaikoClient::with_url(url);
-    assert!(kaiko_client.is_ok());
-}
-
-fn get_client() -> Result<KaikoClient, KaikoClientError> {
-    let kaiko_client = KaikoClient::new();
     assert!(kaiko_client.is_ok());
 
     Ok(kaiko_client.unwrap())
@@ -77,23 +65,3 @@ async fn test_get_instruments() {
         assert!(!instruments_root.data.is_empty());
     }
 }
-
-// Fails on CI unless Kaiko local proxy is running,
-// #[tokio::test]
-// async fn test_get_stats() {
-//     let kaiko_client = get_client();
-//     assert!(kaiko_client.is_ok());
-//
-//     let kaiko_client = kaiko_client.unwrap();
-//
-//     let result = kaiko_client.get_stats().await;
-//     assert!(result.is_ok());
-//
-//     // Additional assertions can be performed based on the expected `AssetRoot` structure.
-//     if let Ok(stats) = result {
-//         // Perform further assertions on `instruments_root`
-//         assert!(stats.number_assets() > 0);
-//         assert!(stats.number_exchanges() > 0);
-//         assert!(stats.number_instruments() > 0);
-//     }
-// }
