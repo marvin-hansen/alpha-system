@@ -90,8 +90,7 @@ build_sha265_tag(
 oci_push(
     name = "push",
     image = ":image_index",
-    repository = "asia-northeast1-docker.pkg.dev/future-309012/image-repo/kaiko_proxy",
     remote_tags = ":remote_tag",
-    repository = "hansenmarvin/api-proxy",
+    repository = "asia-northeast1-docker.pkg.dev/future-309012/image-repo/kaiko_proxy",
     visibility = ["//visibility:public"],
 )
