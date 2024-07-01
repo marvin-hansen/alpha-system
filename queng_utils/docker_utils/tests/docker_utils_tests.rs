@@ -53,9 +53,6 @@ async fn test_api_proxy() {
     println!("port: {}", port);
     println!("platform: {:?}", platform);
 
-    let res = docker_util.pull_container_image(container_id, image, platform);
-    assert!(res.is_ok());
-
     let res = docker_util.start_container(container_id, port, None, platform, image);
 
     assert!(res.is_ok());
