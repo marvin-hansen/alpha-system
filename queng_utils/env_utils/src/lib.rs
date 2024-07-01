@@ -38,7 +38,7 @@ impl EnvUtil {
         let clickhouse_container_config = clickhouse_container_config();
         let api_proxy_container_config = api_proxy_container_config();
         // Init utils
-        let mut docker_util =
+        let docker_util =
             Self::init_docker_util(dbg).expect("EnvUtil: Failed to create Docker util");
 
         let kaiko_util = Self::init_kaiko_util(dbg)
@@ -47,11 +47,11 @@ impl EnvUtil {
 
         // Init containers to check which one is initialized
         let (api_proxy_container_name, api_proxy_container_port, api_proxy_exists) =
-            Self::init_container(&api_proxy_container_config, &mut docker_util)
+            Self::init_container(&api_proxy_container_config, &docker_util)
                 .expect("EnvUtil: Failed to init / verify api proxy container");
 
         let (clickhouse_container_name, clickhouse_container_port, clickhouse_exists) =
-            Self::init_container(&clickhouse_container_config, &mut docker_util)
+            Self::init_container(&clickhouse_container_config, &docker_util)
                 .expect("EnvUtil: Failed to init / verify api proxy container");
 
         // set the boolean flag for all containers

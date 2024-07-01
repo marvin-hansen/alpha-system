@@ -6,7 +6,7 @@ impl EnvUtil {
         self.dbg_print("Get clickhouse utils");
         let ch_utils = self.clickhouse_util().await.expect("");
         self.dbg_print("Get docker util");
-        let mut docker_util = self.docker_util();
+        let docker_util = self.docker_util();
 
         self.dbg_print("Remove all meta data tables");
         ch_utils
