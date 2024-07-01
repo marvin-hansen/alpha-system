@@ -9,7 +9,7 @@ use common::prelude::ContainerConfig;
 pub fn api_proxy_container_config() -> ContainerConfig<'static> {
     ContainerConfig::new(
         "apiproxy",
-        "hansenmarvin/api_proxy",
+        "index.docker.io/hansenmarvin/api_proxy",
         "b422ae3",
         "0.0.0.0",
         7777,
