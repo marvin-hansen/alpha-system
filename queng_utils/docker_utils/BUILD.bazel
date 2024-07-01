@@ -20,8 +20,24 @@ rust_library(
 )
 
 sh_test(
-    name = "pull_private_images",
-    srcs = ["tests/docker_test.sh"],
+    name = "pull_private_dockerhub",
+    srcs = ["tests/docker_test_docker_hub.sh"],
+    exec_properties = {
+        # Tell BuildBuddy to run this test using a Firecracker microVM.
+        "test.workload-isolation-type": "firecracker",
+        "test.init-dockerd": "true",
+        # Tell BuildBuddy whether to preserve the microVM state across test runs.
+        "test.recycle-runner": "false",
+        # Tell BuildBuddy to create a dedicated microVM to isolate the test.
+        "test.runner-recycling-key": "containers",
+    },
+    tags = ["pull_private_images"],
+    visibility = ["//visibility:public"],
+)
+
+sh_test(
+    name = "pull_private_gcp",
+    srcs = ["tests/docker_test_gcp.sh"],
     exec_properties = {
         # Tell BuildBuddy to run this test using a Firecracker microVM.
         "test.workload-isolation-type": "firecracker",
