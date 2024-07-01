@@ -5,8 +5,8 @@ mod types;
 
 use crate::service::ImsDataServer;
 use common::prelude::ServiceID;
-use proto_bindings::proto::ims_data_service_server::ImsDataServiceServer;
 use mimalloc::MiMalloc;
+use proto_bindings::proto::ims_data_service_server::ImsDataServiceServer;
 
 #[global_allocator]
 static GLOBAL: MiMalloc = MiMalloc;

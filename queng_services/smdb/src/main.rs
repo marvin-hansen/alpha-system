@@ -1,7 +1,7 @@
 use config_manager::CfgManager;
+use mimalloc::MiMalloc;
 use std::error::Error;
 use tonic::transport::{Channel, Server, Uri};
-use mimalloc::MiMalloc;
 
 use common::prelude::ServiceID;
 use ctx_manager::CtxManager;
