@@ -36,7 +36,7 @@ async fn process_exchanges(
     valid_exchanges: &Vec<String>,
     downloaded_exchanges: Vec<Exchange>,
 ) -> Result<Vec<Exchange>, InitError> {
-    let mut processed_exchanges = Vec::with_capacity(valid_exchanges.len());
+    let mut processed_exchanges = Vec::with_capacity(valid_exchanges.len() / 2);
 
     for e in downloaded_exchanges {
         if valid_exchanges.contains(&e.name.to_uppercase()) {

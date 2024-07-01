@@ -27,5 +27,4 @@ async fn test_api_proxy() {
     println!("image: {}", image);
     println!("tag: {}", tag);
     println!("port: {}", port);
-
 }

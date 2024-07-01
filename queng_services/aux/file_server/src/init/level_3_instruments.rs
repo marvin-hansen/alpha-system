@@ -32,7 +32,7 @@ impl InitManager {
 async fn process_instruments(
     downloaded_instruments: Vec<Instrument>,
 ) -> Result<Vec<Instrument>, InitError> {
-    // By experience, at least 90% of the reference data are junk ie inactive thus small alloc.
+    // By experience, at least 90% of the reference data are junk (inactive) thus small alloc.
     let capacity = downloaded_instruments.len() * 0.10 as usize;
     let mut processed_instruments = Vec::with_capacity(capacity);
 
@@ -41,6 +41,9 @@ async fn process_instruments(
             processed_instruments.push(i.to_owned())
         }
     }
+
+    // Free temporary memory.
+    drop(downloaded_instruments);
 
     Ok(processed_instruments)
 }

@@ -26,6 +26,8 @@ impl InitManager {
             .init_level_1_exchanges(&valid_exchanges)
             .await
             .expect("Failed init level 1: Reference exchange data");
+        // Free temporary memory
+        drop(valid_exchanges);
 
         self.print_duration("Level 1: took", &start.elapsed());
 

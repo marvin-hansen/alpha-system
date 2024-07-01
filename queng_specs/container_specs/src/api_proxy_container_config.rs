@@ -12,7 +12,7 @@ pub fn api_proxy_container_config() -> ContainerConfig<'static> {
     ContainerConfig::new(
         "apiproxy",
         "hansenmarvin/api-proxy",
-        "9cccb02",
+        "b61f462",
         "0.0.0.0",
         7777,
         None,

@@ -13,10 +13,7 @@ impl InitManager {
             .expect("Failed to download asset data");
 
         if self.dbg {
-            let msg = format!(
-                "Level 2: Returning {} valid assets",
-                downloaded_assets.len()
-            );
+            let msg = format!("Level 2: Returning {} assets", downloaded_assets.len());
             self.dbg_print(&msg)
         }
 
