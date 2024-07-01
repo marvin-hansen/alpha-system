@@ -9,7 +9,7 @@ fn test_api_proxy_container_config() {
     // Update and add tag test when stabilized
     assert_eq!(
         config.image(),
-        "asia-northeast1-docker.pkg.dev/future-309012/image-repo/kaiko_proxy"
+        "asia-northeast1-docker.pkg.dev/future-309012/image-repo/api_proxy"
     );
     assert_eq!(config.url(), "0.0.0.0");
     assert_eq!(config.connection_port(), 7777);
