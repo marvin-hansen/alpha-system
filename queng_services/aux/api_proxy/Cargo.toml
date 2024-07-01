@@ -1,5 +1,5 @@
 [package]
-name = "file_server"
+name = "api_proxy"
 version = "0.1.0"
 edition.workspace = true
 rust-version.workspace = true
@@ -9,7 +9,7 @@ authors.workspace = true
 
 
 [[bin]]
-name = "file_server"
+name = "api_proxy"
 path = "src/main.rs"
 
 

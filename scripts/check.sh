@@ -14,19 +14,9 @@ command cargo outdated --workspace
 command cargo +nightly udeps --all-targets
 
 
-# Scan for security vulnerabilities
-# https://crates.io/crates/cargo-audit
-# command cargo audit
-
-
 # Check a package and all of its dependencies for errors.
 # https://doc.rust-lang.org/cargo/commands/cargo-check.html
 command cargo check --all-targets
-
-
-# Consider checking each crate for re-exporting external types
-# https://crates.io/crates/cargo-check-external-types
-# cargo +nightly check-external-types
 
 
 # Check for linter errors
@@ -37,3 +27,9 @@ command cargo clippy --all-targets
 # Check code formatting
 # https://github.com/rust-lang/rustfmt
 command cargo fmt --all --check
+
+# The problem of sub-sub dependencies simply not patching known vulnerabilities
+# remains unsolved hence sec scanning has been disabled for the time being.
+# Scan for security vulnerabilities
+# https://crates.io/crates/cargo-audit
+# command cargo audit
