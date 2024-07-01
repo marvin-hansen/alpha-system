@@ -7,10 +7,9 @@ use common::prelude::ContainerConfig;
 /// # Returns
 /// A `ContainerConfig` instance containing all the necessary configuration for the API proxy container.
 pub fn api_proxy_container_config() -> ContainerConfig<'static> {
-    // Private container image on GCP
     ContainerConfig::new(
         "apiproxy",
-        "asia-northeast1-docker.pkg.dev/future-309012/image-repo/api_proxy",
+        "hansenmarvin/api_proxy",
         "b422ae3",
         "0.0.0.0",
         7777,
