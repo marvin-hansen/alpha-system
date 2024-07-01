@@ -6,7 +6,7 @@ use std::{thread, time};
 #[tokio::test]
 async fn docker_env_util_setup_ci() {
     // Create a new DockerUtil in debug mode. Without debug, just call new()
-    let mut docker_util = DockerUtil::with_debug().expect("Failed to create DockerUtil");
+    let docker_util = DockerUtil::with_debug().expect("Failed to create DockerUtil");
     // Set default wait duration
     let wait_time = time::Duration::from_millis(500);
 

@@ -94,7 +94,7 @@ impl DockerUtil {
     /// or a `DockerError` if an error occurs.
     ///
     pub fn get_or_start_container_config(
-        &mut self,
+        &self,
         container_config: &ContainerConfig,
     ) -> Result<(String, u16), DockerError> {
         // Unpack values from container config
@@ -144,7 +144,7 @@ impl DockerUtil {
     /// //let result = docker_util.get_or_start_container(name, image, port, reuse_container);
     /// ```
     pub fn get_or_start_container(
-        &mut self,
+        &self,
         name: &str,
         image: &str,
         connection_port: u16,

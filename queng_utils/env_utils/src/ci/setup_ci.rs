@@ -11,7 +11,7 @@ impl EnvUtil {
     pub async fn setup_ci(&mut self) -> Result<(), EnvironmentError> {
         //
         self.dbg_print("Get docker util");
-        let mut docker_util = self.docker_util();
+        let docker_util = self.docker_util();
 
         self.dbg_print("Get api proxy container config");
         let api_proxy_container_config = api_proxy_container_config();
