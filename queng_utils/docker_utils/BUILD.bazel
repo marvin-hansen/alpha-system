@@ -25,15 +25,12 @@ rust_test_suite(
         "tests/*_tests.rs",
     ]),
     exec_properties = {
-        "include-secrets": "true",
         # Tell BuildBuddy to run this test using a Firecracker microVM.
         "test.workload-isolation-type": "firecracker",
         # Tell BuildBuddy to ensure that the Docker daemon is started
         "test.init-dockerd": "true",
         # Tell BuildBuddy whether to preserve the microVM state across test runs.
         "test.recycle-runner": "false",
-        # Tell BuildBuddy to create a dedicated microVM to isolate the test.
-        "test.runner-recycling-key": "containers",
     },
     tags = ["docker_utils_tests"],
     visibility = ["//visibility:public"],

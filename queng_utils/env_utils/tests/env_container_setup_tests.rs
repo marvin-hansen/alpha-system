@@ -5,7 +5,7 @@ async fn test_env_util_setup_containers() {
     // Create new Env Utils
     let mut ci_env = EnvUtil::with_debug().await.expect("Failed to get EnvUtil");
 
-    // Initial setup of the CI containers
+    // Initial setup of all CI containers
     ci_env
         .setup_containers()
         .await
