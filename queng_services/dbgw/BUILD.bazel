@@ -40,8 +40,8 @@ rust_binary(
         "//:rust_proto",
         "//:proto_utils",
         "//:service_utils",
-        # Jemallocator Memory Allocator fixes a concurrency performance issue in MUSL
-        "@crates//:jemallocator",
+        # Custom Memory Allocator
+        "@crates//:mimalloc",
         # External crates
         "@crates//:tokio",
         "@crates//:tonic",

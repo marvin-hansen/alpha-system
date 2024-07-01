@@ -39,7 +39,7 @@ rust_binary(
         "//:rust_proto",
         "//:service_utils",
         # Custom Memory Allocator
-        "@crates//:jemallocator",
+        "@crates//:mimalloc",
         # External crates
         "@crates//:tokio",
         "@crates//:tonic",

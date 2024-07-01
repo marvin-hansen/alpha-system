@@ -15,8 +15,7 @@ path = "src/main.rs"
 
 [dependencies]
 # Custom Memory Allocator
-[target.'cfg(not(target_env = "msvc"))'.dependencies]
-jemallocator = { workspace = true }
+mimalloc = { workspace = true }
 # Internal crates
 dbgw_specs = { workspace = true }
 common = {workspace = true}

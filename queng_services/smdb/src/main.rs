@@ -1,7 +1,7 @@
 use config_manager::CfgManager;
-use jemallocator::Jemalloc;
 use std::error::Error;
 use tonic::transport::{Channel, Server, Uri};
+use mimalloc::MiMalloc;
 
 use common::prelude::ServiceID;
 use ctx_manager::CtxManager;
@@ -13,7 +13,7 @@ use service_utils::{print_utils, shutdown_utils};
 mod service;
 
 #[global_allocator]
-static GLOBAL: Jemalloc = Jemalloc;
+static GLOBAL: MiMalloc = MiMalloc;
 
 const SVC_ID: ServiceID = ServiceID::SMDB;
 

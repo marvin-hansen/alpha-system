@@ -154,10 +154,7 @@ crate = use_extension("@rules_rust//crate_universe:extension.bzl", "crate")
 
 #
 # Custom Memory Allocator
-crate.spec(
-    package = "jemallocator",
-    version = "0.5.4",
-)
+# https://www.tweag.io/blog/2023-08-10-rust-static-link-with-mimalloc/
 crate.spec(
     package = "mimalloc",
     version = "0.1.42",

@@ -5,11 +5,11 @@ mod types;
 
 use crate::service::ImsDataServer;
 use common::prelude::ServiceID;
-use jemallocator::Jemalloc;
 use proto_bindings::proto::ims_data_service_server::ImsDataServiceServer;
+use mimalloc::MiMalloc;
 
 #[global_allocator]
-static GLOBAL: Jemalloc = Jemalloc;
+static GLOBAL: MiMalloc = MiMalloc;
 
 const SVC_ID: ServiceID = ServiceID::ImsDataBinance;
 

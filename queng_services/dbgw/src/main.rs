@@ -3,7 +3,7 @@ use config_manager::CfgManager;
 use ctx_manager::CtxManager;
 use db_system_manager::SystemDBManager;
 use dns_manager::DnsManager;
-use jemallocator::Jemalloc;
+use mimalloc::MiMalloc;
 use proto_bindings::proto::db_gateway_service_server::DbGatewayServiceServer;
 use service::DBGWServer;
 use service_utils::{print_utils, shutdown_utils};
@@ -13,11 +13,11 @@ use tonic::transport::Server;
 mod service;
 const SVC_ID: ServiceID = ServiceID::DBGW;
 
-// Jemalloc overwrites the default memory allocator.
+// Overwrites the default memory allocator.
 // This fixes a performance issue due to threat contention in the MUSL memory allocator.
 // https://www.linkedin.com/pulse/testing-alternative-c-memory-allocators-pt-2-musl-mystery-gomes
 #[global_allocator]
-static GLOBAL: Jemalloc = Jemalloc;
+static GLOBAL: MiMalloc = MiMalloc;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {

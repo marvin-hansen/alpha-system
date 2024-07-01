@@ -115,15 +115,11 @@ proto_utils = { path = "queng_utils/proto_utils" }
 service_utils = { path = "queng_utils/service_utils" }
 #
 # ==============
-# Custom Memory Allocator
-# ==============
-#
-jemallocator = {version = "0.5.4"}
-mimalloc = { version = "0.1.42" }
-#
-# ==============
 # External crates
 # ==============
+#
+# Custom Memory Allocator
+mimalloc = { version = "0.1.42" }
 #
 anyhow = { version = "1.0" }
 arc-swap = {version = "1.7"}

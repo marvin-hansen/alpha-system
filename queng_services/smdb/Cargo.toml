@@ -17,8 +17,7 @@ path = "src/main.rs"
 # Service specs
 smdb_specs = { workspace = true }
 # Custom Memory Allocator
-[target.'cfg(not(target_env = "msvc"))'.dependencies]
-jemallocator = {workspace = true}
+mimalloc = {workspace = true}
 # Internal crates
 common = {workspace = true}
 config_manager = {workspace = true}
