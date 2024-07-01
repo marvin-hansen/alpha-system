@@ -3,7 +3,7 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-# Manual registry auth setup
+# Manual registry auth setup via config.json file
 # https://www.flatcar.org/docs/latest/container-runtimes/registry-authentication/#manual-registry-auth-setup
 
 # For GPC authentication, the registry the URL *MUST* have the following format (including trailing slash):

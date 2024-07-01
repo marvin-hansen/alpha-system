@@ -264,9 +264,9 @@ impl DockerUtil {
         image: &str,
         platform: Option<&str>,
     ) -> Result<(), DockerError> {
-        // Example docker pull --platform linux/amd64  asia-northeast1-docker.pkg.dev/future-309012/image-repo/kaiko_proxy:0a462a2
+        // Example docker pull --platform linux/amd64  asia-northeast1-docker.pkg.dev/future-309012/image-repo/api_proxy:b422ae3
         self.dbg_print(&format!(
-            "[pull_container_image]: Pulling container image for: {}.",
+            "[pull_container_image]: Pull container image for: {}.",
             container_id
         ));
 
@@ -282,10 +282,7 @@ impl DockerUtil {
         // Add the image
         cmd.arg(image);
 
-        self.dbg_print(&format!(
-            "[pull_container_image]: Pulling command: {:?}.",
-            cmd
-        ));
+        self.dbg_print(&format!("[pull_container_image]: Pull command: {:?}.", cmd));
 
         // Run the command & return error in case of failure
         match cmd.status() {
@@ -296,10 +293,12 @@ impl DockerUtil {
                 ));
                 Ok(())
             }
-            Err(e) => Err(DockerError::from(format!(
-                "Error pulling container image {}: {}",
-                container_id, e
-            ))),
+            Err(e) => {
+                eprintln!();
+                eprintln!("Error pulling container image {}: {}", container_id, e);
+                eprintln!();
+                panic!("")
+            }
         }
     }
 
