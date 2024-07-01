@@ -216,7 +216,7 @@ impl DockerUtil {
     /// // let container_id = "my_container";
     /// // docker_util.stop_container(container_id).expect("Failed to stop container");
     /// ```
-    pub fn stop_container(&mut self, container_id: &str) -> Result<(), DockerError> {
+    pub fn stop_container(&self, container_id: &str) -> Result<(), DockerError> {
         self.dbg_print("[stop_container]: Check if container exists.");
         let exists = self
             .check_if_container_exists(container_id)
@@ -285,11 +285,15 @@ impl DockerUtil {
         self.dbg_print(&format!("[pull_container_image]: Pull command: {:?}.", cmd));
 
         // Run the command & return error in case of failure
-        match cmd.status() {
-            Ok(_) => {
+        match cmd.output() {
+            Ok(out) => {
                 self.dbg_print(&format!(
                     "[pull_container_image]: success. Image Pulled {}",
                     image
+                ));
+                self.dbg_print(&format!(
+                    "[pull_container_image]: success. Status: {} Message: {:?}",
+                    out.status, out.stderr
                 ));
                 Ok(())
             }
@@ -436,7 +440,7 @@ impl DockerUtil {
     ///
     /// Returns `Ok(true)` if the container exists, `Ok(false)` if the container does not exist, or `Err(DockerError)` if an error occurred.
     ///
-    pub fn check_if_container_exists(&mut self, container_id: &str) -> Result<bool, DockerError> {
+    pub fn check_if_container_exists(&self, container_id: &str) -> Result<bool, DockerError> {
         match self.get_running_container(container_id) {
             Ok(_) => Ok(true),
             Err(_) => Ok(false),
