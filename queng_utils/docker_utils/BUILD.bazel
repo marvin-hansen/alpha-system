@@ -30,6 +30,8 @@ sh_test(
         "test.recycle-runner": "false",
         # Tell BuildBuddy to create a dedicated microVM to isolate the test.
         "test.runner-recycling-key": "containers",
+        # opt a specific action into secret
+        "include-secrets": "true",
     },
     tags = ["pull_private_images"],
     visibility = ["//visibility:public"],
@@ -46,6 +48,8 @@ sh_test(
         "test.recycle-runner": "false",
         # Tell BuildBuddy to create a dedicated microVM to isolate the test.
         "test.runner-recycling-key": "containers",
+        # opt a specific action into secret
+        "include-secrets": "true",
     },
     tags = ["pull_private_images"],
     visibility = ["//visibility:public"],
@@ -65,6 +69,8 @@ rust_test_suite(
         "test.recycle-runner": "false",
         # Tell BuildBuddy to create a dedicated microVM to isolate the test.
         "test.runner-recycling-key": "containers",
+        # opt a specific action into secret
+        "include-secrets": "true",
     },
     tags = ["docker_utils_tests"],
     visibility = ["//visibility:public"],
