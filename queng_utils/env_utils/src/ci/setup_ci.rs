@@ -17,7 +17,7 @@ impl EnvUtil {
         self.dbg_print("Get api proxy container config");
         let api_proxy_container_config = api_proxy_container_config();
 
-        self.dbg_print("Reuse api proxy container");
+        self.dbg_print("Get or reuse api proxy container");
         let (_, _) = docker_util
             .get_or_start_container_config(&api_proxy_container_config)
             .expect("[TestEnv:CI]: Failed to get or reuse clickhouse container");

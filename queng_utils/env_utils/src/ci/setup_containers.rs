@@ -100,30 +100,7 @@ impl EnvUtil {
         let container_name = container_config.container_name();
         let wait_duration = container_config.wait_duration();
 
-        self.dbg_print(&format!("Check if container exists: {}", &container_name));
-        let exists = docker_util
-            .check_if_container_exists(&container_name)
-            .unwrap_or_else(|_| {
-                panic!(
-                    "[TestEnv/CI:setup_container]: Failed to check if container exists: {}",
-                    &container_name
-                )
-            });
-
-        if exists {
-            let container_name = container_config.container_name();
-            let container_port = container_config.connection_port();
-
-            self.dbg_print(&format!(
-                "OK: Container name: {} already exists",
-                &container_name
-            ));
-            return Ok((container_name, container_port));
-        }
-
-        self.dbg_print(&format!("NO: Container NOT found: {} ", &container_name));
-
-        self.dbg_print(&format!("Setup Container: {}", &container_name));
+        self.dbg_print(&format!("Get or reuse Container: {}", &container_name));
         let (container_name, container_port) = docker_util
             .get_or_start_container_config(container_config)
             .unwrap_or_else(|_| {
