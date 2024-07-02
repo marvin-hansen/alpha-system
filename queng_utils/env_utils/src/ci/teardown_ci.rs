@@ -21,7 +21,7 @@ impl EnvUtil {
     pub async fn teardown_ci_clickhouse(&self) -> Result<(), EnvironmentError> {
         //
         self.dbg_print("[teardown_ci_clickhouse]: Get docker util");
-        let mut docker_util = self.docker_util();
+        let docker_util = self.docker_util();
 
         self.dbg_print("[teardown_ci_clickhouse]: Get container id");
         let container_id = self.clickhouse_container_name();
@@ -37,7 +37,7 @@ impl EnvUtil {
     pub async fn teardown_ci_api_proxy(&self) -> Result<(), EnvironmentError> {
         //
         self.dbg_print("[teardown_ci_api_proxy]: Get docker util");
-        let mut docker_util = self.docker_util();
+        let docker_util = self.docker_util();
 
         self.dbg_print("[teardown_ci_api_proxy]: Get container id");
         let container_id = self.api_proxy_container_name();
