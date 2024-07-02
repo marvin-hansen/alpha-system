@@ -175,6 +175,9 @@ impl EnvUtil {
             .await
             .expect("[create_tables]: Failed to create metadata tables");
 
+        self.dbg_print("[create_tables]:Create all specs tables");
+        //
+
         Ok(())
     }
 
