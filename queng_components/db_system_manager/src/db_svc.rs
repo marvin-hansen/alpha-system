@@ -1,5 +1,5 @@
 use crate::SystemDBManager;
-use clickhouse_utils::error::QueryError;
+use clickhouse_utils::types::error::QueryError;
 use common::prelude::{ServiceConfig, ServiceID};
 use std::fmt::Error;
 

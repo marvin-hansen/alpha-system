@@ -1,8 +1,8 @@
 use crate::types::OHLCVRow;
 use crate::QueryDBManager;
 use crate::FN_NAME;
-use clickhouse_utils::error::QueryError;
 use clickhouse_utils::query_utils;
+use clickhouse_utils::types::error::QueryError;
 use common::prelude::{OHLCVBar, TimeResolution};
 
 impl QueryDBManager {

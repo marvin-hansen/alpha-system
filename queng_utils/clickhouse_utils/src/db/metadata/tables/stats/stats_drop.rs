@@ -1,5 +1,5 @@
 use crate::db::metadata::{Metadata, DB_NAME};
-use crate::error::ClickHouseUtilError;
+use crate::types::error::ClickHouseUtilError;
 
 impl Metadata {
     pub(crate) async fn drop_stats_table(&self) -> Result<(), ClickHouseUtilError> {

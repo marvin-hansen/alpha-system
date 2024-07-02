@@ -1,4 +1,4 @@
-use crate::error::ClickHouseUtilError;
+use crate::types::error::ClickHouseUtilError;
 use crate::ClickhouseUtil;
 
 impl ClickhouseUtil {

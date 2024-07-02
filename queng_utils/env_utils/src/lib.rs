@@ -1,5 +1,5 @@
 use crate::prelude::EnvironmentError;
-use clickhouse_utils::error::ClickHouseUtilError;
+use clickhouse_utils::types::error::ClickHouseUtilError;
 use clickhouse_utils::ClickhouseUtil;
 use container_specs::api_proxy_container_config::api_proxy_container_config;
 use container_specs::clickhouse_container_config::clickhouse_container_config;

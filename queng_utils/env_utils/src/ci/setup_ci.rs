@@ -8,6 +8,9 @@ impl EnvUtil {
     /// Create and configure a new Continuous Integration (CI) `Environment`
     pub async fn setup_ci(&mut self) -> Result<(), EnvironmentError> {
         //
+        self.dbg_print("[setup_ci]: Set data sample size to 10%");
+        let sample_size = None; // Some(0);
+                                //
         self.dbg_print("[setup_ci]: Get or reuse all containers");
         self.setup_containers()
             .await
@@ -26,11 +29,16 @@ impl EnvUtil {
         let kaiko_util = self.kaiko_util();
 
         self.dbg_print("[setup_ci]: Configure clickhouse DB");
-        self.configure_clickhouse(&ch_utils, &clickhouse_container_config, kaiko_util)
-            .await
-            .expect("[setup_ci]: Failed to configure clickhouse DB");
+        self.configure_clickhouse(
+            &ch_utils,
+            &clickhouse_container_config,
+            kaiko_util,
+            sample_size,
+        )
+        .await
+        .expect("[setup_ci]: Failed to configure clickhouse DB");
 
-        self.verify_clickhouse(&ch_utils, kaiko_util)
+        self.verify_clickhouse(&ch_utils, kaiko_util, sample_size)
             .await
             .expect("[setup_ci]: Failed to verify clickhouse DB");
 
@@ -42,6 +50,7 @@ impl EnvUtil {
         ch_utils: &ClickhouseUtil,
         container_config: &ContainerConfig<'_>,
         kaiko_util: &KaikoUtil,
+        sample_size: Option<u32>,
     ) -> Result<(), EnvironmentError> {
         //
         self.dbg_print("[configure_clickhouse]: Check if clickhouse is already configured");
@@ -98,7 +107,7 @@ impl EnvUtil {
         assert!(tables_created);
 
         self.dbg_print("[configure_clickhouse]: Import data into clickhouse");
-        self.import_metadata(ch_utils, kaiko_util)
+        self.import_metadata(ch_utils, kaiko_util, sample_size)
             .await
             .expect("[configure_clickhouse]: Failed to import data into Clickhouse");
         Ok(())
@@ -130,6 +139,7 @@ impl EnvUtil {
         &self,
         ch_utils: &ClickhouseUtil,
         kaiko_util: &KaikoUtil,
+        _sample_size: Option<u32>,
     ) -> Result<(), EnvironmentError> {
         //
         self.dbg_print("[import_data]: Download assets metadata");
@@ -191,6 +201,7 @@ impl EnvUtil {
         &self,
         ch_utils: &ClickhouseUtil,
         kaiko_util: &KaikoUtil,
+        _sample_size: Option<u32>,
     ) -> Result<(), EnvironmentError> {
         self.dbg_print("[verify_clickhouse]: Check if clickhouse is already configured");
         let tables_created = self

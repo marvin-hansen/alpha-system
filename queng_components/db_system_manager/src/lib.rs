@@ -4,7 +4,7 @@ mod gen_query;
 mod types;
 
 use crate::types::TestRow;
-use clickhouse_utils::error::QueryError;
+use clickhouse_utils::types::error::QueryError;
 use common::prelude::{ClickHouseConfig, PortfolioConfig, ServiceConfig, ServiceID};
 use klickhouse::{Client, ClientOptions};
 use std::collections::HashMap;

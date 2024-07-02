@@ -1,4 +1,4 @@
-use crate::error::QueryError;
+use crate::types::error::QueryError;
 use crate::types::{CountRow, ExistsRow};
 use common::prelude::ValidationError;
 use klickhouse::{Client, KlickhouseError};

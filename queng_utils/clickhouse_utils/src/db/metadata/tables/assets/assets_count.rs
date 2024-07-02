@@ -1,5 +1,5 @@
 use crate::db::metadata::{Metadata, DB_NAME, DB_TABLES};
-use crate::error::ClickHouseUtilError;
+use crate::types::error::ClickHouseUtilError;
 
 impl Metadata {
     pub async fn count_assets(&self) -> Result<u64, ClickHouseUtilError> {

@@ -1,6 +1,6 @@
 use crate::db::metadata::Metadata;
-use crate::error::QueryError;
 use crate::query_utils;
+use crate::types::error::QueryError;
 
 impl Metadata {
     pub(crate) async fn execute_query(&self, query: &str) -> Result<(), QueryError> {

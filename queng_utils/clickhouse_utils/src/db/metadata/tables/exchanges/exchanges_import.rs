@@ -1,5 +1,5 @@
 use crate::db::metadata::Metadata;
-use crate::error::ClickHouseUtilError;
+use crate::types::error::ClickHouseUtilError;
 use common::prelude::Exchange;
 
 impl Metadata {

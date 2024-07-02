@@ -1,7 +1,7 @@
 use crate::types::TradeRow;
 use crate::{QueryDBManager, FN_NAME};
-use clickhouse_utils::error::QueryError;
 use clickhouse_utils::query_utils::sanitize_table_name;
+use clickhouse_utils::types::error::QueryError;
 use common::prelude::TradeBar;
 
 impl QueryDBManager {

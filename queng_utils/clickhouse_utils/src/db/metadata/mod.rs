@@ -1,12 +1,9 @@
 use klickhouse::Client;
 
 // mod symbols;
-mod import;
-mod info;
-mod setup;
+mod db;
+mod db_utils;
 mod tables;
-mod teardown;
-mod utils;
 
 pub(crate) const DB_NAME: &'static str = "metadata";
 pub(crate) const DB_TABLES: [&'static str; 4] = ["assets", "exchanges", "instruments", "stats"];
