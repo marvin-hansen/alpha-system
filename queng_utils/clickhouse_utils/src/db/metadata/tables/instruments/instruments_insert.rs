@@ -2,6 +2,18 @@ use crate::db::metadata::{Metadata, DB_NAME};
 use common::prelude::{Instrument, InstrumentMetadata};
 
 impl Metadata {
+    /// Generates an SQL insert query for inserting instrument metadata into the instruments table.
+    ///
+    /// This method takes an `Instrument` object and generates an SQL insert query for inserting its metadata into the instruments table.
+    ///
+    /// # Arguments
+    ///
+    /// * `instrument` - A reference to the `Instrument` object for which the insert query is generated.
+    ///
+    /// # Returns
+    ///
+    /// * `String` - The SQL insert query as a string.
+    ///
     pub(crate) fn generate_instruments_insert(&self, instrument: &Instrument) -> String {
         let table_name = format!("{DB_NAME}.instruments");
         let trade_start_timestamp = instrument.trade_start_timestamp.unwrap_or(0);
