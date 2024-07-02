@@ -10,7 +10,7 @@ fn test_clickhouse_container_config() {
         "clickhouse/clickhouse-server:24.5.3"
     );
 
-    assert_eq!(config.url(), "127.0.0.1");
+    assert_eq!(config.url(), "0.0.0.0");
     assert_eq!(config.connection_port(), 9000);
     assert_eq!(config.platform(), None);
     assert!(config.reuse_container());
