@@ -1,0 +1,32 @@
+load("@rules_rust//rust:defs.bzl", "rust_test_suite")
+
+rust_test_suite(
+    name = "tests",
+    srcs = glob([
+        "tests/*_tests.rs",
+    ]),
+    exec_properties = {
+        # Tell BuildBuddy to run this test using a Firecracker microVM.
+        "test.workload-isolation-type": "firecracker",
+        # Tell BuildBuddy to ensure that the Docker daemon is started
+        "test.init-dockerd": "true",
+        # Tell BuildBuddy to preserve the microVM state across test runs.
+        "test.recycle-runner": "true",
+        # We want different different tests to be assigned to the same recycled runner,
+        "test.runner-recycling-key": "kaiko",
+    },
+    tags = [
+        "kaiko_integration_tests",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate under test
+        "//:kaiko_utils",
+        "//:kaiko_client",
+        # Internal crates
+        "//:common",
+        "//:env_utils",
+        # External crates
+        "@crates//:tokio",
+    ],
+)

@@ -6,7 +6,6 @@ use dns_manager::DnsManager;
 use env_utils::prelude::EnvUtil;
 use smdb_specs::smdb_service_config;
 use std::env;
-
 async fn setup_env() {
     // Do the initial setup
     // Set the environment variable.
