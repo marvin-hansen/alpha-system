@@ -1,10 +1,21 @@
+use env_utils::EnvUtil;
 use kaiko_client::error::KaikoClientError;
 use kaiko_client::KaikoClient;
+use std::env;
 
-#[tokio::test]
-async fn test_new() {
-    let kaiko_client = KaikoClient::new();
-    assert!(kaiko_client.is_ok());
+// Starts a kaiko api proxy on localhost port 7777
+async fn setup_ci_env() {
+    // Set the environment variable.
+    env::set_var("ENV", "CI");
+
+    // Create new Env Utils
+    let mut ci_env = EnvUtil::with_debug().await.expect("Failed to get EnvUtil");
+
+    // Initiate CI container
+    ci_env
+        .setup_container_api_proxy()
+        .await
+        .expect("Failed to setup ci api proxy container");
 }
 
 fn get_client() -> Result<KaikoClient, KaikoClientError> {
@@ -16,7 +27,15 @@ fn get_client() -> Result<KaikoClient, KaikoClientError> {
 }
 
 #[tokio::test]
+async fn test_new() {
+    let kaiko_client = KaikoClient::new();
+    assert!(kaiko_client.is_ok());
+}
+
+#[tokio::test]
 async fn test_get_assets() {
+    setup_ci_env().await;
+
     let kaiko_client = get_client();
     assert!(kaiko_client.is_ok());
 
@@ -34,6 +53,8 @@ async fn test_get_assets() {
 
 #[tokio::test]
 async fn test_get_exchanges() {
+    setup_ci_env().await;
+
     let kaiko_client = get_client();
     assert!(kaiko_client.is_ok());
 
@@ -51,6 +72,8 @@ async fn test_get_exchanges() {
 
 #[tokio::test]
 async fn test_get_instruments() {
+    setup_ci_env().await;
+
     let kaiko_client = get_client();
     assert!(kaiko_client.is_ok());
 

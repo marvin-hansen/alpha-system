@@ -35,7 +35,7 @@ rust_test_suite(
         # because we can't fit all db docker images with the default disk limit.
         "test.runner-recycling-key": "docker",
     },
-    tags = ["docker_utils_tests"],
+    tags = ["docker_integration_tests"],
     visibility = ["//visibility:public"],
     deps = [
         # Crate under test

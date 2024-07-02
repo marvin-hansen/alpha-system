@@ -30,19 +30,18 @@ rust_test_suite(
         "test.init-dockerd": "true",
         # Tell BuildBuddy to preserve the microVM state across test runs.
         "test.recycle-runner": "true",
-        # We don't want different different db tests to be assigned to the same recycled runner,
-        # because we can't fit all db docker images with the default disk limit.
+        # We want different different tests to be assigned to the same recycled runner,
         "test.runner-recycling-key": "docker",
     },
     tags = [
-        "kaiko_utils_tests",
+        "kaiko_integration_tests",
     ],
     visibility = ["//visibility:public"],
     deps = [
         # Crate under test
         ":kaiko_utils",
         # Internal crates
-        "//:common",
+        "//:env_utils",
         "//:kaiko_client",
         # External crates
         "@crates//:tokio",
