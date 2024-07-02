@@ -2,6 +2,18 @@ use crate::db::metadata::{Metadata, DB_NAME};
 use common::prelude::{Asset, AssetMetadata};
 
 impl Metadata {
+    /// Generates a ClickHouse SQL query to insert an asset into the assets table.
+    ///
+    /// This method generates a SQL query that can be used to insert an asset into the assets table.
+    ///
+    /// # Arguments
+    ///
+    /// * `asset` - A reference to an `Asset` object that contains the asset data to be inserted.
+    ///
+    /// # Returns
+    ///
+    /// * `String` - The generated SQL query.
+    ///
     pub(crate) fn generate_asset_insert(&self, asset: &Asset) -> String {
         let table_name = format!("{DB_NAME}.assets");
         let code = asset.code.clone();

@@ -2,6 +2,10 @@ use crate::db::metadata::{Metadata, DB_NAME};
 use crate::types::error::ClickHouseUtilError;
 
 impl Metadata {
+    ///
+    /// This method creates the assets table in the metadata database if it does not already exist.
+    ///
+
     pub(crate) async fn create_assets_table(&self) -> Result<(), ClickHouseUtilError> {
         let ddl = self.generate_create_asset_table_ddl();
         match self.execute_query(&ddl).await {
