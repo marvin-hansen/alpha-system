@@ -1,7 +1,16 @@
 use crate::db::metadata::{Metadata, DB_NAME};
+use crate::error::ClickHouseUtilError;
 
 impl Metadata {
-    pub fn generate_create_asset_table_ddl(&self) -> String {
+    pub(crate) async fn create_assets_table(&self) -> Result<(), ClickHouseUtilError> {
+        let ddl = self.generate_create_asset_table_ddl();
+        match self.execute_query(&ddl).await {
+            Ok(_) => Ok(()),
+            Err(e) => Err(ClickHouseUtilError::from(e.to_string())),
+        }
+    }
+
+    fn generate_create_asset_table_ddl(&self) -> String {
         format!(
             "
     CREATE TABLE IF NOT EXISTS {DB_NAME}.assets
@@ -27,8 +36,10 @@ impl Metadata {
     "
         )
     }
+}
 
-    pub fn generate_drop_asset_table_ddl(&self) -> String {
+impl Metadata {
+    pub(crate) fn generate_drop_asset_table_ddl(&self) -> String {
         format!("DROP TABLE IF EXISTS {DB_NAME}.assets")
     }
 }

@@ -1,18 +1,20 @@
-#[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq)]
-pub struct Specs {}
+use klickhouse::Client;
 
-impl Specs {
-    pub fn new() -> Self {
-        Self {}
-    }
+mod info;
+mod setup;
+mod teardown;
+
+pub(crate) const DB_NAME: &'static str = "specs";
+
+pub(crate) const DB_TABLES: [&'static str; 1] = ["services"];
+
+#[derive(Clone)]
+pub struct Specs {
+    client: Client,
 }
 
 impl Specs {
-    pub fn create_specs_db(&self) -> String {
-        "CREATE DATABASE IF NOT EXISTS specs".to_string()
-    }
-
-    pub fn drop_specs_db(&self) -> String {
-        "DROP DATABASE IF EXISTS specs".to_string()
+    pub fn new(client: Client) -> Self {
+        Self { client }
     }
 }

@@ -41,17 +41,20 @@ impl EnvUtil {
     ) -> Result<(), EnvironmentError> {
         //
         self.dbg_print("Check if clickhouse is already configured");
-        let configured = self
-            .is_clickhouse_configured(ch_utils)
+        let tables_created = self
+            .verify_tables_created(ch_utils)
             .await
             .expect("[configure_clickhouse]: Failed to check if all database tables configured");
 
-        if configured {
+        self.dbg_print("Check if all clickhouse data are already imported");
+        let imported = true;
+
+        if tables_created && imported {
             // Check if NO reset is required.
             self.dbg_print("Check if NO reset is required");
             if !container_config.reset_configuration() {
                 // If so, abort & return. Nothing to do in this case.
-                self.dbg_print("Nothing to configure or reset; return.");
+                self.dbg_print("Nothing to configure, import, or reset; return.");
                 return Ok(());
             }
         }
@@ -68,25 +71,43 @@ impl EnvUtil {
 
         // We know that the DB is either not configured or has been deleted
         // so we can re-crete all databases, tables, and import all data;
-        self.dbg_print("Create all databases & tables");
-        self.setup_db_and_tables(ch_utils)
+        self.dbg_print("Create all databases");
+        self.setup_db(ch_utils)
             .await
-            .expect("[configure_clickhouse]: Failed to create all databases and tables");
+            .expect("[configure_clickhouse]: Failed to create all databases");
 
-        self.import_data(ch_utils, kaiko_util)
+        self.dbg_print("Create all tables");
+        self.create_tables(ch_utils)
             .await
-            .expect("[configure_clickhouse]: Failed to import data int Clickhouse");
+            .expect("[configure_clickhouse]: Failed to create all tables");
+
+        self.dbg_print("Verify that all tables are created");
+        let tables_created = self
+            .verify_tables_created(ch_utils)
+            .await
+            .expect("[configure_clickhouse]: Failed to verify if all tables are created");
+        assert!(tables_created);
+
+        self.dbg_print("Import data into clickhouse");
+        self.import_metadata(ch_utils, kaiko_util)
+            .await
+            .expect("[configure_clickhouse]: Failed to import data into Clickhouse");
+
+        self.dbg_print("Verify that all data were imported");
+        self.verify_import_data(ch_utils, kaiko_util, None)
+            .await
+            .expect("[configure_clickhouse]: Failed to verify data import Clickhouse");
 
         Ok(())
     }
 
-    async fn is_clickhouse_configured(
+    async fn verify_tables_created(
         &self,
         ch_utils: &ClickhouseUtil,
     ) -> Result<bool, EnvironmentError> {
         //
         self.dbg_print("Check if all metadata tables exist");
-        let exists_metadata_tables = match ch_utils.all_metadata_tables_configured().await {
+        let exists_metadata_tables = match ch_utils.verify_all_metadata_tables().await {
             Ok(exists) => exists,
             Err(e) => return Err(EnvironmentError::from(e.to_string())),
         };
@@ -96,7 +117,7 @@ impl EnvUtil {
         return Ok(all_exists);
     }
 
-    async fn setup_db_and_tables(&self, ch_utils: &ClickhouseUtil) -> Result<(), EnvironmentError> {
+    async fn setup_db(&self, ch_utils: &ClickhouseUtil) -> Result<(), EnvironmentError> {
         //
         self.dbg_print("Create all databases");
         ch_utils
@@ -104,6 +125,11 @@ impl EnvUtil {
             .await
             .expect("[setup_db_and_tables]: Failed to create all databases");
 
+        Ok(())
+    }
+
+    async fn create_tables(&self, ch_utils: &ClickhouseUtil) -> Result<(), EnvironmentError> {
+        //
         self.dbg_print("Create all metadata tables");
         ch_utils
             .create_metadata_tables()
@@ -113,68 +139,73 @@ impl EnvUtil {
         Ok(())
     }
 
-    async fn import_data(
+    async fn import_metadata(
         &self,
         ch_utils: &ClickhouseUtil,
         kaiko_util: &KaikoUtil,
     ) -> Result<(), EnvironmentError> {
         //
         self.dbg_print("Download assets metadata");
-        let assets = kaiko_util.get_assets().await.expect("Failed to get assets");
+        let assets = kaiko_util
+            .get_assets()
+            .await
+            .expect("[import_data]: Failed to get assets");
 
         self.dbg_print("Import assets metadata");
         ch_utils
+            .metadata
             .import_asset_metadata(&assets)
             .await
-            .expect("Failed to import assets metadata");
+            .expect("[import_data]: Failed to import assets metadata");
 
         self.dbg_print("Download exchange metadata");
         let exchanges = kaiko_util
             .get_exchanges()
             .await
-            .expect("Failed to get exchanges");
+            .expect("[import_data]: Failed to get exchanges");
 
         self.dbg_print("Import exchanges metadata");
         ch_utils
+            .metadata
             .import_exchanges_metadata(&exchanges)
             .await
-            .expect("Failed to import exchanges metadata");
+            .expect("[import_data]: Failed to import exchanges metadata");
 
         self.dbg_print("Download instrument metadata");
         let instruments = kaiko_util
             .get_instruments()
             .await
-            .expect("Failed to get instruments");
+            .expect("[import_data]: Failed to get instruments");
 
         self.dbg_print("Import instrument metadata");
         ch_utils
+            .metadata
             .import_instruments_metadata(&instruments)
             .await
-            .expect("Failed to import instrument metadata");
+            .expect("[import_data]: Failed to import instrument metadata");
 
         self.dbg_print("Download metadata statistic");
         let stats = kaiko_util
             .get_stats()
             .await
-            .expect("Failed to get metadata statistic");
+            .expect("[import_data]: Failed to get metadata statistic");
 
         self.dbg_print("Import metadata statistic");
         ch_utils
+            .metadata
             .import_stats_metadata(&stats)
             .await
-            .expect("Failed to import metadata statistic");
+            .expect("[import_data]: Failed to import metadata statistic");
 
         Ok(())
     }
 
-    // async fn verify_import_data(
-    //     &self,
-    //     ch_utils: &ClickhouseUtil,
-    //     kaiko_util: &KaikoUtil,
-    // ) -> Result<(), EnvironmentError> {
-    //
-    //
-    //
-    //     Ok(())
-    // }
+    async fn verify_import_data(
+        &self,
+        _ch_utils: &ClickhouseUtil,
+        _kaiko_util: &KaikoUtil,
+        _sample_size: Option<u32>,
+    ) -> Result<(), EnvironmentError> {
+        Ok(())
+    }
 }

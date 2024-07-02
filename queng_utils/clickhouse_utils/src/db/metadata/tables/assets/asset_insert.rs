@@ -2,7 +2,7 @@ use crate::db::metadata::{Metadata, DB_NAME};
 use common::prelude::{Asset, AssetMetadata};
 
 impl Metadata {
-    pub fn generate_asset_insert(&self, asset: &Asset) -> String {
+    pub(crate) fn generate_asset_insert(&self, asset: &Asset) -> String {
         let table_name = format!("{DB_NAME}.assets");
         let code = asset.code.clone();
         // ClickHouse needs quotes to be escaped

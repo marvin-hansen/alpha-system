@@ -2,7 +2,7 @@ use crate::db::metadata::{Metadata, DB_NAME};
 use common::prelude::Stats;
 
 impl Metadata {
-    pub fn generate_stats_insert(&self, stats: &Stats) -> String {
+    pub(crate) fn generate_stats_insert(&self, stats: &Stats) -> String {
         let table_name = format!("{DB_NAME}.stats");
 
         let download_timestamp = stats.download_timestamp();

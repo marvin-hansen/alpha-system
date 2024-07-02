@@ -1,28 +1,41 @@
-mod assets;
-mod exchanges;
-mod instruments;
+use crate::error::QueryError;
+use crate::query_utils;
+use klickhouse::Client;
+
 // mod symbols;
+mod import;
 mod info;
-mod stats;
+mod setup;
+mod tables;
+mod teardown;
 
 pub(crate) const DB_NAME: &'static str = "metadata";
 pub(crate) const DB_TABLES: [&'static str; 4] = ["assets", "exchanges", "instruments", "stats"];
 
-#[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq)]
-pub struct Metadata {}
+#[derive(Clone)]
+pub struct Metadata {
+    client: Client,
+}
 
 impl Metadata {
-    pub fn new() -> Self {
-        Self {}
+    pub fn new(client: Client) -> Self {
+        Self { client }
     }
 }
 
 impl Metadata {
-    pub fn create_metadata_db(&self) -> String {
-        format!("CREATE DATABASE IF NOT EXISTS {DB_NAME}")
-    }
+    pub(crate) async fn execute_query(&self, query: &str) -> Result<(), QueryError> {
+        query_utils::execute_query(&self.client, &query)
+            .await
+            .expect("Failed to drop specs DB");
 
-    pub fn drop_metadata_db(&self) -> String {
-        format!("DROP DATABASE IF EXISTS {DB_NAME}")
+        Ok(())
+    }
+    pub(crate) async fn verify_table_exists(&self, query: &str) -> Result<bool, QueryError> {
+        let res = query_utils::verify_table_exists(&self.client, &query)
+            .await
+            .expect("Failed to drop specs DB");
+
+        Ok(res)
     }
 }

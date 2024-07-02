@@ -1,5 +1,7 @@
 use crate::error::QueryError;
+use crate::types::{CountRow, ExistsRow};
 use common::prelude::ValidationError;
+use klickhouse::{Client, KlickhouseError};
 
 /// Sanitizes the provided table name to prevent SQL injection attacks.
 ///
@@ -52,4 +54,39 @@ pub fn sanitize_table_name(table_name: &str) -> Result<&str, QueryError> {
     }
 
     Ok(table_name)
+}
+
+/// Executes a query on the specified table in the ClickHouse database.
+pub(crate) async fn execute_query(client: &Client, query: &str) -> Result<(), QueryError> {
+    //
+    let res = client.execute(query).await;
+    match res {
+        Ok(_) => Ok(()),
+        Err(e) => Err(QueryError::QueryFailed(e.to_string())),
+    }
+}
+
+/// Queries whether the table exists. Returns true if so, otherwise false.
+pub(crate) async fn verify_table_exists(client: &Client, query: &str) -> Result<bool, QueryError> {
+    //
+    let res: Result<ExistsRow, KlickhouseError> = client.query_one(query).await;
+
+    match res {
+        Ok(res) => Ok(res.exists()),
+        Err(e) => Err(QueryError::QueryFailed(e.to_string())),
+    }
+}
+
+/// Counts the number of rows in the specified table in the ClickHouse database.
+pub(crate) async fn count_rows(client: &Client, table_name: &str) -> Result<u64, QueryError> {
+    //
+    let count_query = format!("SELECT count(*) FROM {table_name}");
+
+    // We need type annotation of the Result type here.
+    let number_of_rows: Result<CountRow, KlickhouseError> = client.query_one(&count_query).await;
+
+    match number_of_rows {
+        Ok(number_of_rows) => Ok(number_of_rows.count()),
+        Err(e) => Err(QueryError::QueryFailed(e.to_string())),
+    }
 }
