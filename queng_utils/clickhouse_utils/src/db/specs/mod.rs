@@ -1,7 +1,8 @@
 use klickhouse::Client;
 
-mod db;
+mod db_setup;
 
+mod db_teardown;
 mod tables;
 // pub(crate) const DB_NAME: &'static str = "specs";
 //

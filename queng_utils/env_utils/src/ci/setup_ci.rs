@@ -170,7 +170,8 @@ impl EnvUtil {
         //
         self.dbg_print("[create_tables]:Create all metadata tables");
         ch_utils
-            .create_metadata_tables()
+            .metadata
+            .create_all_metadata_tables()
             .await
             .expect("[create_tables]: Failed to create metadata tables");
 
@@ -316,7 +317,7 @@ impl EnvUtil {
     ) -> Result<bool, EnvironmentError> {
         //
         self.dbg_print("[verify_tables_created]: Check if all metadata tables exist");
-        let exists_metadata_tables = match ch_utils.verify_all_metadata_tables().await {
+        let exists_metadata_tables = match ch_utils.metadata.verify_all_metadata_tables().await {
             Ok(exists) => exists,
             Err(e) => return Err(EnvironmentError::from(e.to_string())),
         };

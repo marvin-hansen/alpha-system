@@ -9,6 +9,10 @@ impl Metadata {
 }
 
 impl Metadata {
+    pub async fn verify_all_metadata_tables(&self) -> Result<bool, ClickHouseUtilError> {
+        self.verify_metadata_tables_created().await
+    }
+
     /// Verifies that all metadata tables have been created.
     ///
     /// This method performs the following steps:
@@ -55,32 +59,34 @@ impl Metadata {
     /// This method creates the metadata database if it does not already exist.
     ///
     pub(crate) async fn create_metadata_db(&self) -> Result<(), Box<dyn Error>> {
-        let ddl = self.create_metadata_ddl();
+        let ddl = format!("CREATE DATABASE IF NOT EXISTS {DB_NAME}");
         self.execute_query(&ddl)
             .await
             .expect("Failed to create metadata DB");
 
         Ok(())
     }
-
-    fn create_metadata_ddl(&self) -> String {
-        format!("CREATE DATABASE IF NOT EXISTS {DB_NAME}")
-    }
 }
 
 impl Metadata {
-    ///
-    /// This method drops the metadata database if it exists.
-    ///
-    pub(crate) async fn drop_metadata_db(&self) -> Result<(), Box<dyn Error>> {
-        let ddl = self.drop_metadata_ddl();
-        self.execute_query(&ddl)
+    pub async fn create_all_metadata_tables(&self) -> Result<(), ClickHouseUtilError> {
+        //
+        self.create_stats_table()
             .await
-            .expect("Failed to drop metadata DB");
+            .expect("[ClickhouseUtil]: Failed to create stats table");
+
+        self.create_assets_table()
+            .await
+            .expect("[ClickhouseUtil]: Failed to create asset table");
+
+        self.create_exchanges_table()
+            .await
+            .expect("[ClickhouseUtil]: Failed to create exchanges table");
+
+        self.create_instruments_table()
+            .await
+            .expect("[ClickhouseUtil]: Failed to create instruments table");
 
         Ok(())
-    }
-    fn drop_metadata_ddl(&self) -> String {
-        format!("DROP DATABASE IF EXISTS {DB_NAME}")
     }
 }

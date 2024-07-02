@@ -2,8 +2,6 @@ mod db;
 
 pub mod prelude;
 pub mod query_utils;
-pub mod setup;
-pub mod teardown;
 pub mod types;
 
 use crate::db::metadata::Metadata;
