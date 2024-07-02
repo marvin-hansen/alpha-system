@@ -29,8 +29,11 @@ rust_test_suite(
         "test.workload-isolation-type": "firecracker",
         # Tell BuildBuddy to ensure that the Docker daemon is started
         "test.init-dockerd": "true",
-        # Tell BuildBuddy whether to preserve the microVM state across test runs.
-        "test.recycle-runner": "false",
+        # Tell BuildBuddy to preserve the microVM state across test runs.
+        "test.recycle-runner": "true",
+        # We don't want different different db tests to be assigned to the same recycled runner,
+        # because we can't fit all db docker images with the default disk limit.
+        "test.runner-recycling-key": "docker",
     },
     tags = ["docker_utils_tests"],
     visibility = ["//visibility:public"],

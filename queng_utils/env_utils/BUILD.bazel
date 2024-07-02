@@ -41,7 +41,7 @@ rust_test_suite(
         "test.recycle-runner": "true",
         # We don't want different different db tests to be assigned to the same recycled runner,
         # because we can't fit all db docker images with the default disk limit.
-        "test.runner-recycling-key": "containers",
+        "test.runner-recycling-key": "docker",
     },
     tags = ["env_container_setup"],
     visibility = ["//visibility:public"],
@@ -76,7 +76,7 @@ rust_test_suite(
         "test.recycle-runner": "true",
         # We don't want different different db tests to be assigned to the same recycled runner,
         # because we can't fit all db docker images with the default disk limit.
-        "test.runner-recycling-key": "containers",
+        "test.runner-recycling-key": "docker",
     },
     tags = ["env_setup"],
     visibility = ["//visibility:public"],
@@ -111,7 +111,7 @@ rust_test_suite(
         "test.recycle-runner": "true",
         # We don't want different different db tests to be assigned to the same recycled runner,
         # because we can't fit all db docker images with the default disk limit.
-        "test.runner-recycling-key": "containers",
+        "test.runner-recycling-key": "docker",
     },
     tags = ["env_teardown"],
     visibility = ["//visibility:public"],
@@ -145,7 +145,7 @@ rust_test_suite(
         "test.recycle-runner": "true",
         # We don't want different different db tests to be assigned to the same recycled runner,
         # because we can't fit all db docker images with the default disk limit.
-        "test.runner-recycling-key": "containers",
+        "test.runner-recycling-key": "docker",
     },
     tags = ["env_container_teardown"],
     visibility = ["//visibility:public"],

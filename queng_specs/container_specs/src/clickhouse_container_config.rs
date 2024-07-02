@@ -14,7 +14,7 @@ pub fn clickhouse_container_config() -> ContainerConfig<'static> {
         "clickhouse",
         "clickhouse/clickhouse-server",
         "24.5.3",
-        "127.0.0.1",
+        "0.0.0.0",
         9000,
         Some(&[8123]),
         None,
