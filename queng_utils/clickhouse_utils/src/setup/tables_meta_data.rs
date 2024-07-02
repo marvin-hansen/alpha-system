@@ -2,6 +2,10 @@ use crate::error::ClickHouseUtilError;
 use crate::ClickhouseUtil;
 
 impl ClickhouseUtil {
+    pub async fn all_metadata_tables_configured(&self) -> Result<bool, ClickHouseUtilError> {
+        self.verify_metadata_tables().await
+    }
+
     pub async fn create_metadata_tables(&self) -> Result<(), ClickHouseUtilError> {
         //
         self.create_stats_table()
@@ -53,5 +57,22 @@ impl ClickhouseUtil {
             Ok(_) => Ok(()),
             Err(e) => Err(ClickHouseUtilError::from(e.to_string())),
         }
+    }
+
+    async fn verify_metadata_tables(&self) -> Result<bool, ClickHouseUtilError> {
+        let tables = self.metadata.metadata_tables();
+        for table in tables {
+            let query = self.metadata.generate_table_exists_query(table);
+            match self.verify_table_exists(&query).await {
+                Ok(exists) => {
+                    if !exists {
+                        return Ok(false);
+                    }
+                }
+                Err(e) => return Err(ClickHouseUtilError::from(e.to_string())),
+            }
+        }
+
+        Ok(true)
     }
 }

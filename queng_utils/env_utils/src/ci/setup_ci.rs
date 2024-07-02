@@ -1,40 +1,20 @@
 use crate::prelude::{EnvUtil, EnvironmentError};
 use clickhouse_utils::ClickhouseUtil;
 use common::prelude::ContainerConfig;
-use container_specs::api_proxy_container_config::api_proxy_container_config;
 use container_specs::clickhouse_container_config::clickhouse_container_config;
 use kaiko_utils::KaikoUtil;
-use std::time::Duration;
-use tokio::time::sleep;
 
 impl EnvUtil {
-    /// Create a new Continuous Integration (CI) `Environment`
+    /// Create and configure a new Continuous Integration (CI) `Environment`
     pub async fn setup_ci(&mut self) -> Result<(), EnvironmentError> {
         //
-        self.dbg_print("Get docker util");
-        let docker_util = self.docker_util();
-
-        self.dbg_print("Get api proxy container config");
-        let api_proxy_container_config = api_proxy_container_config();
-
-        self.dbg_print("Get or reuse api proxy container");
-        let (_, _) = docker_util
-            .get_or_start_container_config(&api_proxy_container_config)
-            .expect("[TestEnv:CI]: Failed to get or reuse clickhouse container");
-
-        // Give the api proxy container some extra time to complete booting up.
-        sleep(Duration::from_secs(1)).await;
+        self.dbg_print("Get or reuse all containers");
+        self.setup_containers()
+            .await
+            .expect("[setup_ci]: Failed to setup containers");
 
         self.dbg_print("Get clickhouse container config");
         let clickhouse_container_config = clickhouse_container_config();
-
-        self.dbg_print("Reuse clickhouse container");
-        let (_, _) = docker_util
-            .get_or_start_container_config(&clickhouse_container_config)
-            .expect("[TestEnv:CI]: Failed to get or reuse clickhouse container");
-
-        // Give the container some extra time.
-        sleep(Duration::from_secs(1)).await;
 
         self.dbg_print("Get clickhouse utils");
         let ch_utils = self
@@ -53,7 +33,7 @@ impl EnvUtil {
         Ok(())
     }
 
-    pub(crate) async fn configure_clickhouse(
+    async fn configure_clickhouse(
         &self,
         ch_utils: &ClickhouseUtil,
         container_config: &ContainerConfig<'_>,
@@ -61,24 +41,24 @@ impl EnvUtil {
     ) -> Result<(), EnvironmentError> {
         //
         self.dbg_print("Check if clickhouse is already configured");
-        if self.is_clickhouse_configured(container_config) {
+        let configured = self
+            .is_clickhouse_configured(ch_utils)
+            .await
+            .expect("[configure_clickhouse]: Failed to check if all database tables configured");
+
+        if configured {
             // Check if NO reset is required.
             self.dbg_print("Check if NO reset is required");
-            if !container_config.reset_configuration()
-                && self.is_data_set_current(ch_utils, kaiko_util)
-            {
-                // If so, abort & return.
-                // Nothing to do in this case.
+            if !container_config.reset_configuration() {
+                // If so, abort & return. Nothing to do in this case.
                 self.dbg_print("Nothing to configure or reset; return.");
                 return Ok(());
             }
         }
 
-        // Check if the container configuration should be reset
-        // or if the dataset is outdated. If so, delete everything.
+        // Check if the container configuration should be reset. If so, delete everything.
         self.dbg_print("Check if reset is required if data are outdated");
-        if container_config.reset_configuration() || !self.is_data_set_current(ch_utils, kaiko_util)
-        {
+        if container_config.reset_configuration() {
             self.dbg_print("Drop all databases");
             ch_utils
                 .teardown_db()
@@ -100,17 +80,20 @@ impl EnvUtil {
         Ok(())
     }
 
-    fn is_clickhouse_configured(&self, _container_config: &ContainerConfig) -> bool {
-        // read stats table from CH and if there is no error, return true.
-        false
-    }
-
-    fn is_data_set_current(&self, _ch_utils: &ClickhouseUtil, _kaiko_util: &KaikoUtil) -> bool {
+    async fn is_clickhouse_configured(
+        &self,
+        ch_utils: &ClickhouseUtil,
+    ) -> Result<bool, EnvironmentError> {
         //
-        // read stats table from CH and extract hash
-        // compare hash from DB to hash from API
-        // return true if they match, otherwise false.
-        false
+        self.dbg_print("Check if all metadata tables exist");
+        let exists_metadata_tables = match ch_utils.all_metadata_tables_configured().await {
+            Ok(exists) => exists,
+            Err(e) => return Err(EnvironmentError::from(e.to_string())),
+        };
+
+        let all_exists = exists_metadata_tables;
+
+        return Ok(all_exists);
     }
 
     async fn setup_db_and_tables(&self, ch_utils: &ClickhouseUtil) -> Result<(), EnvironmentError> {
@@ -130,7 +113,7 @@ impl EnvUtil {
         Ok(())
     }
 
-    pub(crate) async fn import_data(
+    async fn import_data(
         &self,
         ch_utils: &ClickhouseUtil,
         kaiko_util: &KaikoUtil,
@@ -183,4 +166,15 @@ impl EnvUtil {
 
         Ok(())
     }
+
+    // async fn verify_import_data(
+    //     &self,
+    //     ch_utils: &ClickhouseUtil,
+    //     kaiko_util: &KaikoUtil,
+    // ) -> Result<(), EnvironmentError> {
+    //
+    //
+    //
+    //     Ok(())
+    // }
 }

@@ -62,8 +62,7 @@ rust_test_suite(
 
 rust_test_suite(
     name = "env_ci_setup_tests",
-    size = "small",
-    timeout = "short",
+    size = "medium",
     srcs = glob([
         "tests/env_ci_setup_tests.rs",
     ]),
@@ -78,7 +77,7 @@ rust_test_suite(
         # because we can't fit all db docker images with the default disk limit.
         "test.runner-recycling-key": "docker",
     },
-    tags = ["env_setup"],
+    tags = ["env_ci_setup"],
     visibility = ["//visibility:public"],
     deps = [
         # Crate under test
