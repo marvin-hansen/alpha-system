@@ -30,7 +30,7 @@ impl EnvUtil {
 
     pub(super) fn init_container(
         container_config: &ContainerConfig<'_>,
-        docker_util: &DockerUtil,
+        docker_util: &mut DockerUtil,
     ) -> Result<(String, u16, bool), EnvironmentSetupError> {
         //
         let container_name = container_config.container_name();

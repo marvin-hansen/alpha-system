@@ -73,7 +73,7 @@ impl DownloadUtils {
         };
     }
 
-    /// Downloads a file from the specified URL and returns the content of the body as Vec<u8> .
+    /// Downloads a file from the specified URL and returns the content of the body as `Vec<u8>`.
     ///
     ///
     /// # Arguments
