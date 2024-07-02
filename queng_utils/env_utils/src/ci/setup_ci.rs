@@ -5,7 +5,22 @@ use container_specs::clickhouse_container_config::clickhouse_container_config;
 use kaiko_utils::KaikoUtil;
 
 impl EnvUtil {
-    /// Create and configure a new Continuous Integration (CI) `Environment`
+    /// Sets up the environment for Continuous Integration (CI) testing.
+    ///
+    /// This function performs the following steps:
+    ///
+    /// 1. Sets the data sample size to 10% of the available data.
+    /// 2. Gets or reuses all containers required for testing.
+    /// 3. Gets the configuration for the ClickHouse container.
+    /// 4. Gets the ClickHouse utilities.
+    /// 5. Gets the Kaiko utilities.
+    /// 6. Configures the ClickHouse database.
+    /// 7. Verifies the ClickHouse database.
+    ///
+    /// # Errors
+    ///
+    /// - `EnvironmentError` if any step fails.
+    ///
     pub async fn setup_ci(&mut self) -> Result<(), EnvironmentError> {
         //
         self.dbg_print("[setup_ci]: Set data sample size to 10%");
@@ -45,6 +60,25 @@ impl EnvUtil {
         Ok(())
     }
 
+    /// Configures the ClickHouse database for Continuous Integration (CI) testing.
+    ///
+    /// This function performs the following steps:
+    ///
+    /// 1. Checks if the ClickHouse database is already configured.
+    /// 2. Checks if all clickhouse data are already imported.
+    /// 3. If the ClickHouse database is not configured or all data are not imported, it proceeds to configure the database.
+    ///
+    /// # Arguments
+    ///
+    /// * `ch_utils` - A reference to a `ClickhouseUtil` object.
+    /// * `container_config` - A reference to a `ContainerConfig` object.
+    /// * `kaiko_util` - A reference to a `KaikoUtil` object.
+    /// * `sample_size` - An optional `u32` representing the sample size.
+    ///
+    /// # Errors
+    ///
+    /// - `EnvironmentError` if any step fails.
+    ///
     async fn configure_clickhouse(
         &self,
         ch_utils: &ClickhouseUtil,
@@ -113,6 +147,14 @@ impl EnvUtil {
         Ok(())
     }
 
+    /// Sets up the ClickHouse database for Continuous Integration (CI) testing.
+    ///
+    /// This function creates all databases required for testing.
+    ///
+    /// # Errors
+    ///
+    /// - `EnvironmentError` if any step fails.
+    ///
     async fn setup_db(&self, ch_utils: &ClickhouseUtil) -> Result<(), EnvironmentError> {
         //
         self.dbg_print("[setup_db]: Create all databases");
@@ -135,6 +177,18 @@ impl EnvUtil {
         Ok(())
     }
 
+    /// Creates all tables required for testing in the ClickHouse database.
+    ///
+    /// This function creates all tables necessary for testing.
+    ///
+    /// # Arguments
+    ///
+    /// * `ch_utils` - A reference to a `ClickhouseUtil` object.
+    ///
+    /// # Errors
+    ///
+    /// - `EnvironmentError` if any step fails.
+    ///
     async fn import_metadata(
         &self,
         ch_utils: &ClickhouseUtil,
@@ -197,6 +251,23 @@ impl EnvUtil {
         Ok(())
     }
 
+    /// Verifies that the ClickHouse database is configured correctly.
+    ///
+    /// This function performs the following steps:
+    ///
+    /// 1. Checks if all database tables have been created.
+    /// 2. Verifies that all data have been imported.
+    ///
+    /// # Arguments
+    ///
+    /// * `ch_utils` - A reference to a `ClickhouseUtil` object.
+    /// * `kaiko_util` - A reference to a `KaikoUtil` object.
+    /// * `sample_size` - An optional `u32` representing the sample size.
+    ///
+    /// # Errors
+    ///
+    /// - `EnvironmentError` if any step fails.
+    ///
     async fn verify_clickhouse(
         &self,
         ch_utils: &ClickhouseUtil,
@@ -223,6 +294,22 @@ impl EnvUtil {
         Ok(())
     }
 
+    /// Verifies that all metadata tables exist in the ClickHouse database.
+    ///
+    /// This function performs the following steps:
+    ///
+    /// 1. Checks if all metadata tables exist in the ClickHouse database.
+    ///
+    /// # Arguments
+    ///
+    /// * `ch_utils` - A reference to a `ClickhouseUtil` object.
+    ///
+    /// # Returns
+    ///
+    /// - `Ok(true)` if all metadata tables exist.
+    /// - `Ok(false)` if any metadata table does not exist.
+    /// - `Err(EnvironmentError)` if an error occurs during the verification process.
+    ///
     async fn verify_tables_created(
         &self,
         ch_utils: &ClickhouseUtil,
@@ -239,6 +326,25 @@ impl EnvUtil {
         return Ok(all_exists);
     }
 
+    /// Verifies that all data have been imported into the metadata database.
+    ///
+    /// This function performs the following steps:
+    ///
+    /// 1. Fetches the metadata statistics from the Kaiko API Proxy.
+    /// 2. Counts the number of assets, exchanges, and instruments in the metadata database.
+    ///
+    /// # Arguments
+    ///
+    /// * `ch_utils` - A reference to a `ClickhouseUtil` object.
+    /// * `kaiko_util` - A reference to a `KaikoUtil` object.
+    /// * `sample_size` - An optional `u32` representing the sample size.
+    ///
+    /// # Returns
+    ///
+    /// - `Ok(true)` if all data have been imported.
+    /// - `Ok(false)` if any data are missing.
+    /// - `Err(EnvironmentError)` if an error occurs during the verification process.
+    ///
     async fn verify_import_data(
         &self,
         ch_utils: &ClickhouseUtil,
