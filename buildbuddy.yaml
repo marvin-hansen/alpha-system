@@ -23,7 +23,7 @@ actions:
       # Test: Docker utils
       - "test -c opt  //...   --test_tag_filters=docker_utils_tests --config=remote"
       # Test: Docker setup
-      # - "test -c opt  //...   --test_tag_filters=env_container_setup --config=remote"
+      - "test -c opt  //...   --test_tag_filters=env_container_setup --config=remote"
       # Test: API Proxy setup
       # - "test -c opt  //...   --test_tag_filters=kaiko_client_tests --config=remote"
       # - "test -c opt  //...   --test_tag_filters=kaiko_utils_tests --config=remote"
