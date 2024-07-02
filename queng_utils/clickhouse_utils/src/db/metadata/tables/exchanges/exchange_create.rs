@@ -33,9 +33,3 @@ impl Metadata {
         )
     }
 }
-
-impl Metadata {
-    pub(crate) fn generate_drop_exchanges_table_ddl(&self) -> String {
-        format!("DROP TABLE IF EXISTS {DB_NAME}.exchanges")
-    }
-}

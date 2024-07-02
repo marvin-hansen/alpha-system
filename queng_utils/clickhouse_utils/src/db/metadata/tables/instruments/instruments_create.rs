@@ -48,9 +48,3 @@ impl Metadata {
         )
     }
 }
-
-impl Metadata {
-    pub(crate) fn generate_drop_instruments_table_ddl(&self) -> String {
-        format!("DROP TABLE IF EXISTS {DB_NAME}.instruments")
-    }
-}

@@ -28,9 +28,3 @@ impl Metadata {
         )
     }
 }
-
-impl Metadata {
-    pub(crate) fn generate_drop_stats_table_ddl(&self) -> String {
-        format!("DROP TABLE IF EXISTS {DB_NAME}.stats")
-    }
-}

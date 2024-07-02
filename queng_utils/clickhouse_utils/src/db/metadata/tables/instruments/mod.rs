@@ -1,2 +1,4 @@
-pub mod instrument_ddl;
+mod instruments_count;
+pub mod instruments_create;
+mod instruments_drop;
 mod instruments_insert;

@@ -9,11 +9,10 @@ pub mod types;
 
 use crate::db::metadata::Metadata;
 use crate::db::specs::Specs;
-use klickhouse::{Client, ClientOptions, KlickhouseError};
+use klickhouse::{Client, ClientOptions};
 
 // Re-export CH client
-use crate::error::{ClickHouseUtilError, QueryError};
-use crate::types::ExistsRow;
+use crate::error::ClickHouseUtilError;
 pub use klickhouse::Client as ClickHouseClient;
 
 pub struct ClickhouseUtil {
@@ -73,34 +72,6 @@ impl ClickhouseUtil {
     fn dbg_print(&self, s: &str) {
         if self.dbg {
             println!("[ClickhouseUtil]: {}", s);
-        }
-    }
-}
-
-impl ClickhouseUtil {
-    /// Executes a query on the specified table in the ClickHouse database.
-    pub(crate) async fn execute_query(&self, query: &str) -> Result<(), QueryError> {
-        //
-        self.dbg_print("[execute_query]: execute query");
-        let res = self.client.execute(query).await;
-
-        self.dbg_print("[execute_query]: check for errors");
-        match res {
-            Ok(_) => Ok(()),
-            Err(e) => Err(QueryError::QueryFailed(e.to_string())),
-        }
-    }
-
-    /// Queries whether the table exists. Returns true if so, otherwise false.
-    pub(crate) async fn verify_table_exists(&self, query: &str) -> Result<bool, QueryError> {
-        //
-        self.dbg_print("[verify_table_exists]: execute table exists query");
-        let res: Result<ExistsRow, KlickhouseError> = self.client.query_one(query).await;
-
-        self.dbg_print("[verify_table_exists]: check for errors");
-        match res {
-            Ok(res) => Ok(res.exists()),
-            Err(e) => Err(QueryError::QueryFailed(e.to_string())),
         }
     }
 }
