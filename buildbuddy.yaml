@@ -30,5 +30,5 @@ actions:
       - "run   -c opt //:push --config=remote"
     resource_requests:
       cpu: 8  # Add more cpu for Docker
-      memory: "12GB" # Add more memory to cross compile and prevent OOM.
+      memory: "12GB" # Add more memory to cross compile without OOM.
       disk: "20GB"  # Default
