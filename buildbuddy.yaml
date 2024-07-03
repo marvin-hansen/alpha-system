@@ -29,7 +29,8 @@ actions:
       - "test -c opt  //...   --test_tag_filters=kaiko_integration_tests --config=remote"
       # - "test -c opt  //...    --test_tag_filters=clickhouse_utils --config=remote"
       # Build & publish images to container registry
-      - "run   -c opt //:push --config=remote"
+      - "build -c opt --platforms=//build/platforms:linux_x86_64_musl //:push --config=remote"
+      - "run   -c opt --platforms=//build/platforms:linux_x86_64_musl //:push --config=remote"
     resource_requests:
       cpu: 8  # Add more cpu for Docker
       memory: "12GB" # Add more memory to cross compile without OOM.
