@@ -30,7 +30,7 @@ rust_test_suite(
         # Tell BuildBuddy to preserve the microVM state across test runs.
         "test.recycle-runner": "true",
         # We want different different tests to be assigned to the same recycled runner,
-        "test.runner-recycling-key": "docker",
+        "test.runner-recycling-key": "kaiko",
     },
     tags = [
         "kaiko_integration_tests",

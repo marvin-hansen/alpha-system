@@ -24,7 +24,7 @@ mod utils;
 #[global_allocator]
 static GLOBAL: MiMalloc = MiMalloc;
 
-const VRB: bool = true;
+const VRB: bool = false;
 const PORT: u16 = 7777;
 
 #[tokio::main]
@@ -94,6 +94,9 @@ async fn main() {
         )
         .await
         .expect("Failed to add update job to scheduler");
+
+    //
+    drop(meta_data);
 
     dbg_print("Start job scheduler");
     scheduler.start().await.expect("Failed to start scheduler");
