@@ -75,8 +75,6 @@ common:remote-shared --remote_download_minimal
 common:remote-shared --experimental_remote_cache_compression
 common:remote-shared --verbose_failures
 
-# Removing host_platform breaks the build since llvm doesnt compile without it.
-# common:remote-shared --host_platform=@buildbuddy_toolchain//:platform
 common:remote-shared --extra_execution_platforms=//build/platforms:linux_arm64_musl
 common:remote-shared --extra_execution_platforms=//build/platforms:linux_x86_64_musl
 
