@@ -35,6 +35,7 @@ build --jobs=50
 # Reduce test output to just error cases and report timeout warnings.
 test --test_output=errors
 test --verbose_failures
+# test --test_verbose_timeout_warnings
 
 ###############################################################################
 ## Common configuration
@@ -61,28 +62,6 @@ common --experimental_profile_include_target_label
 common --experimental_profile_include_primary_output
 
 ###############################################################################
-## Remote configuration
-###############################################################################
-
-# Flags shared across remote configs
-common:remote-shared --jobs=100
-common:remote-shared --remote_timeout=600
-common:remote-shared --remote_download_minimal
-common:remote-shared --experimental_remote_cache_compression
-
-# Suggested by Son on slack to debug toolchain resolution
-common:remote-shared  --toolchain_resolution_debug=@bazel_tools//tools/cc:toolchain_type
-
-common:remote-shared --remote_executor=remote.buildbuddy.io
-common:remote-shared --remote_cache=grpcs://remote.buildbuddy.io
-
-# Build with --config=remote to enable Remote Build Execution (RBE)
-common:remote --config=remote-shared
-common:remote --remote_cache=grpcs://remote.buildbuddy.io
-common:remote --remote_executor=remote.buildbuddy.io
-common:remote --remote_header=x-buildbuddy-api-key=4Ml6AhYICvGtZ3XhqafP
-
-###############################################################################
 ## Rust configuration
 ###############################################################################
 
@@ -93,6 +72,39 @@ build:rustfmt --output_groups=+rustfmt_checks
 # Enable clippy for all targets in the workspace
 build:clippy --aspects=@rules_rust//rust:defs.bzl%rust_clippy_aspect
 build:clippy --output_groups=+clippy_checks
+
+###############################################################################
+## Remote configuration
+###############################################################################
+
+# Debug toolchain resolution
+common:remote-shared --toolchain_resolution_debug=@bazel_tools//tools/cc:toolchain_typ
+
+# Flags shared across remote configs
+common:remote-shared --jobs=100
+common:remote-shared --remote_timeout=600
+common:remote-shared --remote_download_minimal
+common:remote-shared --experimental_remote_cache_compression
+common:remote-shared --verbose_failures
+#
+common:remote-shared --host_cpu=x86_64
+common:remote-shared --extra_execution_platforms=@buildbuddy_toolchain//:platform
+common:remote-shared --host_platform=@buildbuddy_toolchain//:platform
+# common:remote-shared --platforms=@buildbuddy_toolchain//:platform
+# common:remote-shared --crosstool_top=@buildbuddy_toolchain//:toolchain
+
+common:remote-shared --remote_executor=remote.buildbuddy.io
+common:remote-shared --remote_cache=grpcs://remote.buildbuddy.io
+common:remote-shared --remote_header=x-buildbuddy-api-key=4Ml6AhYICvGtZ3XhqafP
+
+# Build with --config=remote-cache to enable Remote Cache
+common:remote-cache --config=remote-shared
+
+# Build with --config=remote to enable Remote Build Execution (RBE)
+common:remote --config=remote-shared
+common:remote --remote_cache=grpcs://remote.buildbuddy.io
+common:remote --remote_executor=remote.buildbuddy.io
+common:remote --remote_header=x-buildbuddy-api-key=4Ml6AhYICvGtZ3XhqafP
 
 ###############################################################################
 ## Custom user flags
