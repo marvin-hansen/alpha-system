@@ -97,23 +97,6 @@ common:remote --remote_executor=remote.buildbuddy.io
 common:remote --remote_header=x-buildbuddy-api-key=4Ml6AhYICvGtZ3XhqafP
 
 ###############################################################################
-## RBE configuration
-###############################################################################
-common:rbe-shared --host_cpu=x86_64
-common:rbe-shared --cpu=x86_64
-common:rbe-shared --remote_executor=remote.buildbuddy.io
-common:rbe-shared --extra_execution_platforms=@buildbuddy_toolchain//:platform
-common:rbe-shared --host_platform=@buildbuddy_toolchain//:platform
-common:rbe-shared --platforms=@buildbuddy_toolchain//:platform
-common:rbe-shared --crosstool_top=@buildbuddy_toolchain//:toolchain
-
-# Build with --config=remote to enable Remote Build Execution (RBE)
-common:rbe --config=remote-shared
-common:rbe --config=rbe-shared
-common:rbe --remote_cache=grpcs://remote.buildbuddy.io
-common:rbe --remote_header=x-buildbuddy-api-key=4Ml6AhYICvGtZ3XhqafP
-
-###############################################################################
 ## Custom user flags
 ##
 ## This should always be the last thing in the `.bazelrc` file to ensure
