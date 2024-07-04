@@ -68,6 +68,9 @@ common --experimental_profile_include_primary_output
 # Debug toolchain resolution
 build --toolchain_resolution_debug=@bazel_tools//tools/cc:toolchain_type
 
+# https://github.com/bazelbuild/bazel/issues/7260
+build --incompatible_enable_cc_toolchain_resolution
+
 # Flags shared across remote configs
 common:remote-shared --jobs=100
 common:remote-shared --remote_timeout=600
