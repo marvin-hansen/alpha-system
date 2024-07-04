@@ -25,5 +25,4 @@ load("@io_buildbuddy_buildbuddy_toolchain//:rules.bzl", "buildbuddy")
 
 buildbuddy(
     name = "buildbuddy_toolchain",
-    container_image = "ghcr.io/marvin-hansen/rbe-custom/rbe:latest",
 )
