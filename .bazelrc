@@ -66,10 +66,7 @@ common --experimental_profile_include_primary_output
 ###############################################################################
 
 # Debug toolchain resolution
-build --toolchain_resolution_debug=@bazel_tools//tools/cc:toolchain_type
-
-# https://github.com/bazelbuild/bazel/issues/7260
-build --incompatible_enable_cc_toolchain_resolution
+build --toolchain_resolution_debug='@bazel_tools//tools/cpp:toolchain_type
 
 # Flags shared across remote configs
 common:remote-shared --jobs=100
@@ -80,6 +77,10 @@ common:remote-shared --verbose_failures
 
 # Removing host_platform breaks the build since llvm doesnt compile without it.
 common:remote-shared --host_platform=@buildbuddy_toolchain//:platform
+
+common:remote-shared --platforms=/build//platforms:linux_x86_64
+common:remote-shared --extra_execution_platforms=//build/platforms:linux_x86_64_musl
+common:remote-shared --extra_execution_platforms=//build/platforms:linux_arm64_musl
 
 # Build with --config=remote to enable Remote Build Execution (RBE)
 common:remote --config=remote-shared
