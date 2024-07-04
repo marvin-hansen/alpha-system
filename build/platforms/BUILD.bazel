@@ -36,6 +36,7 @@ platform(
     ],
 )
 
+# https://github.com/bazelbuild/rules_rust/blob/main/examples/musl_cross_compiling/linker_config/BUILD.bazel
 constraint_setting(
     name = "linker",
     default_constraint_value = ":unknown",
