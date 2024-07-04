@@ -91,13 +91,6 @@ http_archive(
 # LLVM SETUP
 llvm = use_extension("@toolchains_llvm//toolchain/extensions:llvm.bzl", "llvm")
 
-# Host LLVM toolchain.
-llvm.toolchain(
-    name = "llvm_toolchain",
-    llvm_versions = LLVM_VERSIONS,
-)
-use_repo(llvm, "llvm_toolchain", "llvm_toolchain_llvm")
-
 # X86 LLVM Toolchain with sysroot.
 llvm.toolchain(
     name = "llvm_toolchain_x86_with_sysroot",

@@ -35,7 +35,6 @@ build --jobs=50
 # Reduce test output to just error cases and report timeout warnings.
 test --test_output=errors
 test --verbose_failures
-# test --test_verbose_timeout_warnings
 
 ###############################################################################
 ## Common configuration
@@ -62,18 +61,6 @@ common --experimental_profile_include_target_label
 common --experimental_profile_include_primary_output
 
 ###############################################################################
-## Rust configuration
-###############################################################################
-
-# Enable rustfmt for all targets in the workspace
-build:rustfmt --aspects=@rules_rust//rust:defs.bzl%rustfmt_aspect
-build:rustfmt --output_groups=+rustfmt_checks
-
-# Enable clippy for all targets in the workspace
-build:clippy --aspects=@rules_rust//rust:defs.bzl%rust_clippy_aspect
-build:clippy --output_groups=+clippy_checks
-
-###############################################################################
 ## Remote configuration
 ###############################################################################
 
@@ -82,7 +69,6 @@ common:remote-shared --jobs=100
 common:remote-shared --remote_timeout=600
 common:remote-shared --remote_download_minimal
 common:remote-shared --experimental_remote_cache_compression
-common:remote-shared --verbose_failures
 
 # Suggested by Son on slack to debug toolchain resolution
 common:remote-shared  --toolchain_resolution_debug=@bazel_tools//tools/cc:toolchain_type
@@ -95,6 +81,18 @@ common:remote --config=remote-shared
 common:remote --remote_cache=grpcs://remote.buildbuddy.io
 common:remote --remote_executor=remote.buildbuddy.io
 common:remote --remote_header=x-buildbuddy-api-key=4Ml6AhYICvGtZ3XhqafP
+
+###############################################################################
+## Rust configuration
+###############################################################################
+
+# Enable rustfmt for all targets in the workspace
+build:rustfmt --aspects=@rules_rust//rust:defs.bzl%rustfmt_aspect
+build:rustfmt --output_groups=+rustfmt_checks
+
+# Enable clippy for all targets in the workspace
+build:clippy --aspects=@rules_rust//rust:defs.bzl%rust_clippy_aspect
+build:clippy --output_groups=+clippy_checks
 
 ###############################################################################
 ## Custom user flags
