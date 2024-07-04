@@ -9,7 +9,7 @@ platform(
         "@platforms//cpu:x86_64",
         "@platforms//os:linux",
     ],
-     exec_properties = {"container-image": "docker://" + UBUNTU20_04_IMAGE},
+     exec_properties = {"container-image": "docker://" + "ghcr.io/marvin-hansen/rbe-custom/rbe:latest"},
 )
 
 platform(
@@ -19,7 +19,7 @@ platform(
         "@platforms//cpu:arm64",
         "@platforms//os:linux",
     ],
-    exec_properties = {"container-image": "docker://" + UBUNTU20_04_IMAGE},
+    exec_properties = {"container-image": "docker://" + "ghcr.io/marvin-hansen/rbe-custom/rbe:latest"},
 )
 
 platform(
