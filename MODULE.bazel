@@ -1,7 +1,7 @@
 module(name = "queng")
 
 ###############################################################################
-# B A Z E L  C E N T R A L  R E G I S T R Y # https://registry.bazel.build/
+# B A Z E L   D E P E N D E N C I E S # https://registry.bazel.build/
 ###############################################################################
 # https://github.com/bazelbuild/bazel-skylib/releases/
 bazel_dep(name = "bazel_skylib", version = "1.7.1")
@@ -21,11 +21,9 @@ bazel_dep(name = "rules_oci", version = "1.7.6")
 # https://github.com/bazelbuild/rules_pkg/releases
 bazel_dep(name = "rules_pkg", version = "0.10.1")
 
-# https://github.com/bazelbuild/rules_proto/releases
 # https://github.com/bazelbuild/rules_python/releases
 bazel_dep(name = "rules_python", version = "0.33.2")
 
-# Rules for proto
 # https://github.com/bazelbuild/rules_proto/releases
 bazel_dep(name = "rules_proto", version = "6.0.2")
 
@@ -45,20 +43,22 @@ bazel_dep(name = "platforms", version = "0.0.10")
 # https://github.com/bazel-contrib/toolchains_llvm
 bazel_dep(name = "toolchains_llvm", version = "1.0.0")
 
+# https://github.com/bazelbuild/bazel/blob/master/tools/build_defs/repo/http.bzl
+http_archive = use_repo_rule("@bazel_tools//:http.bzl", "http_archive")
+
 ###############################################################################
 # L L V M
 # https://github.com/bazel-contrib/toolchains_llvm/blob/master/tests/MODULE.bazel
 ###############################################################################
-llvm = use_extension("@toolchains_llvm//toolchain/extensions:llvm.bzl", "llvm")
-
+# LLVM Versions and platforms
+# https://github.com/bazel-contrib/toolchains_llvm/blob/master/toolchain/internal/llvm_distributions.bzl
 LLVM_VERSIONS = {
     "": "16.0.0",
+    "darwin-aarch64": "16.0.3",
+    "darwin-x86_64": "15.0.7", # For builds on Intel Macs.
 }
 
-# https://github.com/bazelbuild/bazel/blob/master/tools/build_defs/repo/http.bzl
-http_archive = use_repo_rule("@bazel_tools//:http.bzl", "http_archive")
-
-# Setup for cross compile & MUSL static binary compile.
+# Sysroot for LLVM
 # Both, cross compilation and MUSL still need a C/C++ toolchain with sysroot.
 # https://github.com/bazel-contrib/toolchains_llvm/tree/0d302de75f6ace071ac616fb274481eedcc20e5a?tab=readme-ov-file#sysroots
 _BUILD_FILE_CONTENT = """
@@ -69,22 +69,28 @@ filegroup(
 )
 """
 
-# SYSROOT FOR LLVM CROSS COMPILATION
-# https://github.com/bazel-contrib/toolchains_llvm/tree/master?tab=readme-ov-file#sysroots
+# INTEL/AMD64 Sysroot
+# LastModified: 2024-04-26T19:15
 # https://commondatastorage.googleapis.com/chrome-linux-sysroot/
 http_archive(
     name = "org_chromium_sysroot_linux_x64",
     build_file_content = _BUILD_FILE_CONTENT.format(name = "sysroot"),
-    sha256 = "f6b758d880a6df264e2581788741623320d548508f07ffc2ae6a29d0c13d647d",
-    urls = ["https://commondatastorage.googleapis.com/chrome-linux-sysroot/toolchain/2e7ada854015a4cc60fc812112d261af44213ed0/debian_bullseye_amd64_sysroot.tar.xz"],
+    sha256 = "5df5be9357b425cdd70d92d4697d07e7d55d7a923f037c22dc80a78e85842d2c",
+    urls = ["https://commondatastorage.googleapis.com/chrome-linux-sysroot/toolchain/4f611ec025be98214164d4bf9fbe8843f58533f7/debian_bullseye_amd64_sysroot.tar.xz"],
 )
 
+# ARM 64 Sysroot
+# LastModified: 2024-04-26T18:33
+# https://commondatastorage.googleapis.com/chrome-linux-sysroot/
 http_archive(
     name = "org_chromium_sysroot_linux_aarch64",
     build_file_content = _BUILD_FILE_CONTENT.format(name = "sysroot"),
-    sha256 = "902d1a40a5fd8c3764a36c8d377af5945a92e3d264c6252855bda4d7ef81d3df",
-    urls = ["https://commondatastorage.googleapis.com/chrome-linux-sysroot/toolchain/41a6c8dec4c4304d6509e30cbaf9218dffb4438e/debian_bullseye_arm64_sysroot.tar.xz"],
+    sha256 = "d303cf3faf7804c9dd24c9b6b167d0345d41d7fe4bfb7d34add3ab342f6a236c",
+    urls = ["https://commondatastorage.googleapis.com/chrome-linux-sysroot/toolchain/906cc7c6bf47d4bd969a3221fc0602c6b3153caa/debian_bullseye_arm64_sysroot.tar.xz"],
 )
+
+# LLVM SETUP
+llvm = use_extension("@toolchains_llvm//toolchain/extensions:llvm.bzl", "llvm")
 
 # Host LLVM toolchain.
 llvm.toolchain(
@@ -94,27 +100,25 @@ llvm.toolchain(
 use_repo(llvm, "llvm_toolchain", "llvm_toolchain_llvm")
 
 # X86 LLVM Toolchain with sysroot.
-# https://github.com/bazel-contrib/toolchains_llvm/blob/master/tests/WORKSPACE.bzlmod
 llvm.toolchain(
     name = "llvm_toolchain_x86_with_sysroot",
     llvm_versions = LLVM_VERSIONS,
 )
 llvm.sysroot(
     name = "llvm_toolchain_x86_with_sysroot",
-    label = "@@org_chromium_sysroot_linux_x64//:sysroot",
+    label = "@org_chromium_sysroot_linux_x64//:sysroot",
     targets = ["linux-x86_64"],
 )
 use_repo(llvm, "llvm_toolchain_x86_with_sysroot")
 
 # ARM (aarch64) LLVM Toolchain with sysroot.
-# https://github.com/bazelbuild/rules_rust/blob/main/examples/bzlmod/cross_compile/WORKSPACE.bzlmod
 llvm.toolchain(
     name = "llvm_toolchain_aarch64_with_sysroot",
     llvm_versions = LLVM_VERSIONS,
 )
 llvm.sysroot(
     name = "llvm_toolchain_aarch64_with_sysroot",
-    label = "@@org_chromium_sysroot_linux_aarch64//:sysroot",
+    label = "@org_chromium_sysroot_linux_aarch64//:sysroot",
     targets = ["linux-aarch64"],
 )
 use_repo(llvm, "llvm_toolchain_aarch64_with_sysroot")
@@ -125,7 +129,8 @@ register_toolchains("@llvm_toolchain//:all")
 ###############################################################################
 # T O O L C H A I N S
 ###############################################################################
-# Rust toolchain
+
+# Rust toolchain #
 RUST_EDITION = "2021"
 
 RUST_VERSION = "1.79.0"
@@ -144,13 +149,13 @@ use_repo(rust, "rust_toolchains")
 
 register_toolchains("@rust_toolchains//:all")
 
-# Proto toolchain
+# Proto Toolchain #
 register_toolchains("@rules_rust//proto/protobuf:default-proto-toolchain")
 
-# Custom Prost toolchain
+# Custom Prost Toolchain #
 register_toolchains("@//build/prost_toolchain")
 
-# Python toolchain
+# Python toolchain #
 python = use_extension("@rules_python//python/extensions:python.bzl", "python")
 python.toolchain(
     configure_coverage_tool = False,
@@ -197,16 +202,14 @@ use_repo(oci, "scratch")
 ###############################################################################
 crate = use_extension("@rules_rust//crate_universe:extension.bzl", "crate")
 
-#
-# Custom Memory Allocator
+# Custom Memory Allocator  #
 # https://www.tweag.io/blog/2023-08-10-rust-static-link-with-mimalloc/
 crate.spec(
     package = "mimalloc",
     version = "0.1.42",
 )
 
-#
-# protobufs/gRPC in Rust
+# protobufs/gRPC in Rust #
 crate.spec(
     package = "prost",
     version = "0.12",
@@ -242,8 +245,7 @@ crate.annotation(
     gen_binaries = ["protoc-gen-tonic"],
 )
 
-#
-# External crates
+# Other External Crates #
 crate.spec(
     package = "anyhow",
     version = "1.0",

@@ -17,8 +17,6 @@ data/Kraken_Trading_History
 /target-bzl/
 /target-bzl/*
 /target-bzl/*.*
-/target-bzl/quant-engine/
-/target-bzl/quant-engine/*/*
 
 # Remove Cargo.lock from gitignore if creating an executable, leave it for libraries
 # More information here https://doc.rust-lang.org/cargo/guide/cargo-toml-vs-cargo-lock.html
@@ -37,4 +35,3 @@ Cargo.lock
 # Apple stuff
 .DS_Store
 */.DS_Store
-.aider*

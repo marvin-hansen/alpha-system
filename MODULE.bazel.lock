@@ -21419,7 +21419,7 @@
     "@@toolchains_llvm~//toolchain/extensions:llvm.bzl%llvm": {
       "general": {
         "bzlTransitiveDigest": "1w0wdH2QnKapJmTbk88f5iQjNlw7vw4f4r1cNf1vWVI=",
-        "usagesDigest": "BYfBFGpFH3Tkv1WKyjL581CYZqNfAGhyPd1ShHKq7FI=",
+        "usagesDigest": "rUOkKI9pMkS1/h63NjmDkNG1trqaZe7/N7dWLNnid6o=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -21442,7 +21442,9 @@
               "link_flags": {},
               "link_libs": {},
               "llvm_versions": {
-                "": "16.0.0"
+                "": "16.0.0",
+                "darwin-aarch64": "16.0.3",
+                "darwin-x86_64": "15.0.7"
               },
               "opt_compile_flags": {},
               "opt_link_flags": {},
@@ -21451,7 +21453,7 @@
               "unfiltered_compile_flags": {},
               "toolchain_roots": {},
               "sysroot": {
-                "linux-x86_64": "'@@org_chromium_sysroot_linux_x64//:sysroot'"
+                "linux-x86_64": "'@@_main~_repo_rules~org_chromium_sysroot_linux_x64//:sysroot'"
               }
             }
           },
@@ -21473,7 +21475,9 @@
               "link_flags": {},
               "link_libs": {},
               "llvm_versions": {
-                "": "16.0.0"
+                "": "16.0.0",
+                "darwin-aarch64": "16.0.3",
+                "darwin-x86_64": "15.0.7"
               },
               "opt_compile_flags": {},
               "opt_link_flags": {},
@@ -21496,7 +21500,9 @@
               "llvm_mirror": "",
               "llvm_version": "",
               "llvm_versions": {
-                "": "16.0.0"
+                "": "16.0.0",
+                "darwin-aarch64": "16.0.3",
+                "darwin-x86_64": "15.0.7"
               },
               "netrc": "",
               "sha256": {},
@@ -21522,7 +21528,9 @@
               "link_flags": {},
               "link_libs": {},
               "llvm_versions": {
-                "": "16.0.0"
+                "": "16.0.0",
+                "darwin-aarch64": "16.0.3",
+                "darwin-x86_64": "15.0.7"
               },
               "opt_compile_flags": {},
               "opt_link_flags": {},
@@ -21531,7 +21539,7 @@
               "unfiltered_compile_flags": {},
               "toolchain_roots": {},
               "sysroot": {
-                "linux-aarch64": "'@@org_chromium_sysroot_linux_aarch64//:sysroot'"
+                "linux-aarch64": "'@@_main~_repo_rules~org_chromium_sysroot_linux_aarch64//:sysroot'"
               }
             }
           },
@@ -21547,7 +21555,9 @@
               "llvm_mirror": "",
               "llvm_version": "",
               "llvm_versions": {
-                "": "16.0.0"
+                "": "16.0.0",
+                "darwin-aarch64": "16.0.3",
+                "darwin-x86_64": "15.0.7"
               },
               "netrc": "",
               "sha256": {},
@@ -21567,7 +21577,9 @@
               "llvm_mirror": "",
               "llvm_version": "",
               "llvm_versions": {
-                "": "16.0.0"
+                "": "16.0.0",
+                "darwin-aarch64": "16.0.3",
+                "darwin-x86_64": "15.0.7"
               },
               "netrc": "",
               "sha256": {},
