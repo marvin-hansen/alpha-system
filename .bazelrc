@@ -78,7 +78,7 @@ build:clippy --output_groups=+clippy_checks
 ###############################################################################
 
 # Debug toolchain resolution
-common:remote-shared --toolchain_resolution_debug=@bazel_tools//tools/cc:toolchain_typ
+build --toolchain_resolution_debug=@bazel_tools//tools/cc:toolchain_typ
 
 # Flags shared across remote configs
 common:remote-shared --jobs=100
@@ -86,11 +86,9 @@ common:remote-shared --remote_timeout=600
 common:remote-shared --remote_download_minimal
 common:remote-shared --experimental_remote_cache_compression
 common:remote-shared --verbose_failures
-#
-common:remote-shared --extra_execution_platforms=@buildbuddy_toolchain//:platform
+
 common:remote-shared --host_platform=@buildbuddy_toolchain//:platform
-# common:remote-shared --platforms=@buildbuddy_toolchain//:platform
-# common:remote-shared --crosstool_top=@buildbuddy_toolchain//:toolchain
+
 
 common:remote-shared --remote_executor=remote.buildbuddy.io
 common:remote-shared --remote_cache=grpcs://remote.buildbuddy.io
