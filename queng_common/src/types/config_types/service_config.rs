@@ -4,7 +4,7 @@ use std::fmt::{Display, Formatter};
 
 #[derive(Serialize, Deserialize, Debug, Default, Clone, Eq, PartialEq)]
 pub struct ServiceConfig {
-    /// Unique Service ID.
+    /// Service ID.
     svc_id: ServiceID,
     /// Service name.
     name: String,
