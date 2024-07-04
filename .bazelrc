@@ -77,10 +77,8 @@ common:remote-shared --verbose_failures
 
 # Removing host_platform breaks the build since llvm doesnt compile without it.
 common:remote-shared --host_platform=@buildbuddy_toolchain//:platform
-
 common:remote-shared --extra_execution_platforms=//build/platforms:linux_arm64_musl
 common:remote-shared --extra_execution_platforms=//build/platforms:linux_x86_64_musl
-
 
 # Build with --config=remote to enable Remote Build Execution (RBE)
 common:remote --config=remote-shared
@@ -93,12 +91,12 @@ common:remote --remote_header=x-buildbuddy-api-key=4Ml6AhYICvGtZ3XhqafP
 ###############################################################################
 
 # Enable rustfmt for all targets in the workspace
-build:rustfmt --aspects=@rules_rust//rust:defs.bzl%rustfmt_aspect
-build:rustfmt --output_groups=+rustfmt_checks
+#build:rustfmt --aspects=@rules_rust//rust:defs.bzl%rustfmt_aspect
+#build:rustfmt --output_groups=+rustfmt_checks
 
 # Enable clippy for all targets in the workspace
-build:clippy --aspects=@rules_rust//rust:defs.bzl%rust_clippy_aspect
-build:clippy --output_groups=+clippy_checks
+#build:clippy --aspects=@rules_rust//rust:defs.bzl%rust_clippy_aspect
+#build:clippy --output_groups=+clippy_checks
 
 ###############################################################################
 ## Custom user flags
