@@ -123,7 +123,12 @@ use_repo(llvm, "llvm_toolchain_aarch64_with_sysroot")
 # T O O L C H A I N S
 ###############################################################################
 
-
+# MUSL toolchain #
+toolchains_musl = use_extension("@toolchains_musl//:toolchains_musl.bzl", "toolchains_musl", dev_dependency = True)
+toolchains_musl.config(
+    extra_target_compatible_with = ["@//build/platforms:musl_linker"],
+)
+register_toolchains("@toolchains_musl//:all")
 
 # Rust toolchain #
 RUST_EDITION = "2021"
