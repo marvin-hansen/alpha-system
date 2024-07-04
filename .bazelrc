@@ -86,7 +86,8 @@ common:remote-shared --remote_timeout=600
 common:remote-shared --remote_download_minimal
 common:remote-shared --experimental_remote_cache_compression
 common:remote-shared --verbose_failures
-common:remote-shared --host_platform=@buildbuddy_toolchain//:platform
+
+# common:remote-shared --host_platform=@buildbuddy_toolchain//:platform
 
 # Build with --config=remote to enable Remote Build Execution (RBE)
 common:remote --config=remote-shared
