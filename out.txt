@@ -1,0 +1,82 @@
+Computing main repo mapping:
+Loading:
+Loading: 0 packages loaded
+WARNING: Build option --compilation_mode has changed, discarding analysis cache (this can be expensive, see https://bazel.build/advanced/performance/iteration-speed).
+Analyzing: target //:push (0 packages loaded, 0 targets configured)
+INFO: ToolchainResolution: Performing resolution of @@bazel_tools//tools/cpp:toolchain_type for target platform @@platforms//host:host
+      ToolchainResolution:   Toolchain @@toolchains_llvm~~llvm~llvm_toolchain//:cc-clang-aarch64-darwin is compatible with target plaform, searching for execution platforms:
+      ToolchainResolution:     Compatible execution platform @@platforms//host:host
+      ToolchainResolution:   All execution platforms have been assigned a @@bazel_tools//tools/cpp:toolchain_type toolchain, stopping
+      ToolchainResolution: Recap of selected @@bazel_tools//tools/cpp:toolchain_type toolchains for target platform @@platforms//host:host:
+      ToolchainResolution:   Selected @@toolchains_llvm~~llvm~llvm_toolchain//:cc-clang-aarch64-darwin to run on execution platform @@platforms//host:host
+INFO: ToolchainResolution: Target platform @@platforms//host:host: Selected execution platform @@platforms//host:host, type @@bazel_tools//tools/cpp:toolchain_type -> toolchain @@toolchains_llvm~~llvm~llvm_toolchain//:cc-clang-aarch64-darwin, type @@bazel_tools//tools/python:toolchain_type -> toolchain @@rules_python~~python~python_3_11_aarch64-apple-darwin//:python_runtimes
+INFO: ToolchainResolution: Target platform @@platforms//host:host: Selected execution platform @@platforms//host:host, type @@bazel_tools//tools/cpp:toolchain_type -> toolchain @@toolchains_llvm~~llvm~llvm_toolchain//:cc-clang-aarch64-darwin
+INFO: ToolchainResolution: Performing resolution of @@bazel_tools//tools/cpp:toolchain_type for target platform @@platforms//host:host
+      ToolchainResolution:   Toolchain @@toolchains_llvm~~llvm~llvm_toolchain//:cc-clang-aarch64-darwin is compatible with target plaform, searching for execution platforms:
+      ToolchainResolution:     Compatible execution platform @@platforms//host:host
+      ToolchainResolution:   All execution platforms have been assigned a @@bazel_tools//tools/cpp:toolchain_type toolchain, stopping
+      ToolchainResolution: Recap of selected @@bazel_tools//tools/cpp:toolchain_type toolchains for target platform @@platforms//host:host:
+      ToolchainResolution:   Selected @@toolchains_llvm~~llvm~llvm_toolchain//:cc-clang-aarch64-darwin to run on execution platform @@platforms//host:host
+INFO: ToolchainResolution: Target platform @@platforms//host:host: Selected execution platform @@platforms//host:host, type @@rules_rust~//rust:toolchain_type -> toolchain @@rules_rust~~rust~rust_darwin_aarch64__aarch64-apple-darwin__stable_tools//:rust_toolchain, type @@bazel_tools//tools/cpp:toolchain_type -> toolchain @@toolchains_llvm~~llvm~llvm_toolchain//:cc-clang-aarch64-darwin
+INFO: ToolchainResolution: Target platform @@platforms//host:host: Selected execution platform @@platforms//host:host, type @@bazel_tools//tools/cpp:toolchain_type -> toolchain @@toolchains_llvm~~llvm~llvm_toolchain//:cc-clang-aarch64-darwin
+INFO: ToolchainResolution: Performing resolution of @@bazel_tools//tools/cpp:toolchain_type for target platform @@platforms//host:host
+      ToolchainResolution:   Toolchain @@toolchains_llvm~~llvm~llvm_toolchain//:cc-clang-aarch64-darwin is compatible with target plaform, searching for execution platforms:
+      ToolchainResolution:     Compatible execution platform @@platforms//host:host
+      ToolchainResolution:   All execution platforms have been assigned a @@bazel_tools//tools/cpp:toolchain_type toolchain, stopping
+      ToolchainResolution: Recap of selected @@bazel_tools//tools/cpp:toolchain_type toolchains for target platform @@platforms//host:host:
+      ToolchainResolution:   Selected @@toolchains_llvm~~llvm~llvm_toolchain//:cc-clang-aarch64-darwin to run on execution platform @@platforms//host:host
+INFO: ToolchainResolution: Target platform @@platforms//host:host: Selected execution platform @@platforms//host:host, type @@bazel_tools//tools/cpp:toolchain_type -> toolchain @@toolchains_llvm~~llvm~llvm_toolchain//:cc-clang-aarch64-darwin
+INFO: ToolchainResolution: Performing resolution of @@bazel_tools//tools/cpp:toolchain_type for target platform @@platforms//host:host
+      ToolchainResolution:   Toolchain @@toolchains_llvm~~llvm~llvm_toolchain//:cc-clang-aarch64-darwin is compatible with target plaform, searching for execution platforms:
+      ToolchainResolution:     Compatible execution platform @@platforms//host:host
+      ToolchainResolution:   All execution platforms have been assigned a @@bazel_tools//tools/cpp:toolchain_type toolchain, stopping
+      ToolchainResolution: Recap of selected @@bazel_tools//tools/cpp:toolchain_type toolchains for target platform @@platforms//host:host:
+      ToolchainResolution:   Selected @@toolchains_llvm~~llvm~llvm_toolchain//:cc-clang-aarch64-darwin to run on execution platform @@platforms//host:host
+INFO: ToolchainResolution: Target platform @@platforms//host:host: Selected execution platform @@platforms//host:host, type @@rules_rust~//rust:toolchain_type -> toolchain @@rules_rust~~rust~rust_darwin_aarch64__aarch64-apple-darwin__stable_tools//:rust_toolchain, type @@bazel_tools//tools/cpp:toolchain_type -> toolchain @@toolchains_llvm~~llvm~llvm_toolchain//:cc-clang-aarch64-darwin
+INFO: ToolchainResolution: Target platform @@platforms//host:host: Selected execution platform @@platforms//host:host, type @@bazel_tools//tools/cpp:toolchain_type -> toolchain @@toolchains_llvm~~llvm~llvm_toolchain//:cc-clang-aarch64-darwin
+INFO: ToolchainResolution: Performing resolution of @@bazel_tools//tools/cpp:toolchain_type for target platform //build/platforms:linux_arm64_musl
+      ToolchainResolution:   Rejected toolchain @@toolchains_llvm~~llvm~llvm_toolchain//:cc-clang-aarch64-darwin; mismatching values: osx
+      ToolchainResolution:   Toolchain @@toolchains_musl~~toolchains_musl~musl-1_2_3-platform-aarch64-apple-darwin-target-aarch64-linux-musl//:musl-1_2_3-platform-aarch64-apple-darwin-target-aarch64-linux-musl is compatible with target plaform, searching for execution platforms:
+      ToolchainResolution:     Compatible execution platform @@platforms//host:host
+      ToolchainResolution:   All execution platforms have been assigned a @@bazel_tools//tools/cpp:toolchain_type toolchain, stopping
+      ToolchainResolution: Recap of selected @@bazel_tools//tools/cpp:toolchain_type toolchains for target platform //build/platforms:linux_arm64_musl:
+      ToolchainResolution:   Selected @@toolchains_musl~~toolchains_musl~musl-1_2_3-platform-aarch64-apple-darwin-target-aarch64-linux-musl//:musl-1_2_3-platform-aarch64-apple-darwin-target-aarch64-linux-musl to run on execution platform @@platforms//host:host
+INFO: ToolchainResolution: Performing resolution of @@bazel_tools//tools/cpp:toolchain_type for target platform //build/platforms:linux_x86_64_musl
+      ToolchainResolution:   Rejected toolchain @@toolchains_llvm~~llvm~llvm_toolchain//:cc-clang-aarch64-darwin; mismatching values: aarch64, osx
+      ToolchainResolution:   Rejected toolchain @@toolchains_musl~~toolchains_musl~musl-1_2_3-platform-aarch64-apple-darwin-target-aarch64-linux-musl//:musl-1_2_3-platform-aarch64-apple-darwin-target-aarch64-linux-musl; mismatching values: aarch64
+      ToolchainResolution:   Toolchain @@toolchains_musl~~toolchains_musl~musl-1_2_3-platform-aarch64-apple-darwin-target-x86_64-linux-musl//:musl-1_2_3-platform-aarch64-apple-darwin-target-x86_64-linux-musl is compatible with target plaform, searching for execution platforms:
+      ToolchainResolution:     Compatible execution platform @@platforms//host:host
+      ToolchainResolution:   All execution platforms have been assigned a @@bazel_tools//tools/cpp:toolchain_type toolchain, stopping
+      ToolchainResolution: Recap of selected @@bazel_tools//tools/cpp:toolchain_type toolchains for target platform //build/platforms:linux_x86_64_musl:
+      ToolchainResolution:   Selected @@toolchains_musl~~toolchains_musl~musl-1_2_3-platform-aarch64-apple-darwin-target-x86_64-linux-musl//:musl-1_2_3-platform-aarch64-apple-darwin-target-x86_64-linux-musl to run on execution platform @@platforms//host:host
+INFO: ToolchainResolution: Target platform //build/platforms:linux_arm64_musl: Selected execution platform @@platforms//host:host, type @@rules_rust~//rust:toolchain_type -> toolchain @@rules_rust~~rust~rust_darwin_aarch64__aarch64-unknown-linux-musl__stable_tools//:rust_toolchain, type @@bazel_tools//tools/cpp:toolchain_type -> toolchain @@toolchains_musl~~toolchains_musl~musl-1_2_3-platform-aarch64-apple-darwin-target-aarch64-linux-musl//:musl-1_2_3-platform-aarch64-apple-darwin-target-aarch64-linux-musl
+INFO: ToolchainResolution: Target platform //build/platforms:linux_x86_64_musl: Selected execution platform @@platforms//host:host, type @@rules_rust~//rust:toolchain_type -> toolchain @@rules_rust~~rust~rust_darwin_aarch64__x86_64-unknown-linux-musl__stable_tools//:rust_toolchain, type @@bazel_tools//tools/cpp:toolchain_type -> toolchain @@toolchains_musl~~toolchains_musl~musl-1_2_3-platform-aarch64-apple-darwin-target-x86_64-linux-musl//:musl-1_2_3-platform-aarch64-apple-darwin-target-x86_64-linux-musl
+INFO: ToolchainResolution: Target platform //build/platforms:linux_arm64_musl: Selected execution platform @@platforms//host:host, type @@bazel_tools//tools/cpp:toolchain_type -> toolchain @@toolchains_musl~~toolchains_musl~musl-1_2_3-platform-aarch64-apple-darwin-target-aarch64-linux-musl//:musl-1_2_3-platform-aarch64-apple-darwin-target-aarch64-linux-musl
+INFO: ToolchainResolution: Performing resolution of @@bazel_tools//tools/cpp:toolchain_type for target platform //build/platforms:linux_arm64_musl
+      ToolchainResolution:   Rejected toolchain @@toolchains_llvm~~llvm~llvm_toolchain//:cc-clang-aarch64-darwin; mismatching values: osx
+      ToolchainResolution:   Toolchain @@toolchains_musl~~toolchains_musl~musl-1_2_3-platform-aarch64-apple-darwin-target-aarch64-linux-musl//:musl-1_2_3-platform-aarch64-apple-darwin-target-aarch64-linux-musl is compatible with target plaform, searching for execution platforms:
+      ToolchainResolution:     Compatible execution platform @@platforms//host:host
+      ToolchainResolution:   All execution platforms have been assigned a @@bazel_tools//tools/cpp:toolchain_type toolchain, stopping
+      ToolchainResolution: Recap of selected @@bazel_tools//tools/cpp:toolchain_type toolchains for target platform //build/platforms:linux_arm64_musl:
+      ToolchainResolution:   Selected @@toolchains_musl~~toolchains_musl~musl-1_2_3-platform-aarch64-apple-darwin-target-aarch64-linux-musl//:musl-1_2_3-platform-aarch64-apple-darwin-target-aarch64-linux-musl to run on execution platform @@platforms//host:host
+INFO: ToolchainResolution: Performing resolution of @@bazel_tools//tools/cpp:toolchain_type for target platform //build/platforms:linux_x86_64_musl
+      ToolchainResolution:   Rejected toolchain @@toolchains_llvm~~llvm~llvm_toolchain//:cc-clang-aarch64-darwin; mismatching values: aarch64, osx
+      ToolchainResolution:   Rejected toolchain @@toolchains_musl~~toolchains_musl~musl-1_2_3-platform-aarch64-apple-darwin-target-aarch64-linux-musl//:musl-1_2_3-platform-aarch64-apple-darwin-target-aarch64-linux-musl; mismatching values: aarch64
+      ToolchainResolution:   Toolchain @@toolchains_musl~~toolchains_musl~musl-1_2_3-platform-aarch64-apple-darwin-target-x86_64-linux-musl//:musl-1_2_3-platform-aarch64-apple-darwin-target-x86_64-linux-musl is compatible with target plaform, searching for execution platforms:
+      ToolchainResolution:     Compatible execution platform @@platforms//host:host
+      ToolchainResolution:   All execution platforms have been assigned a @@bazel_tools//tools/cpp:toolchain_type toolchain, stopping
+      ToolchainResolution: Recap of selected @@bazel_tools//tools/cpp:toolchain_type toolchains for target platform //build/platforms:linux_x86_64_musl:
+      ToolchainResolution:   Selected @@toolchains_musl~~toolchains_musl~musl-1_2_3-platform-aarch64-apple-darwin-target-x86_64-linux-musl//:musl-1_2_3-platform-aarch64-apple-darwin-target-x86_64-linux-musl to run on execution platform @@platforms//host:host
+INFO: ToolchainResolution: Target platform //build/platforms:linux_arm64_musl: Selected execution platform @@platforms//host:host, type @@bazel_tools//tools/cpp:toolchain_type -> toolchain @@toolchains_musl~~toolchains_musl~musl-1_2_3-platform-aarch64-apple-darwin-target-aarch64-linux-musl//:musl-1_2_3-platform-aarch64-apple-darwin-target-aarch64-linux-musl
+INFO: ToolchainResolution: Target platform //build/platforms:linux_x86_64_musl: Selected execution platform @@platforms//host:host, type @@bazel_tools//tools/cpp:toolchain_type -> toolchain @@toolchains_musl~~toolchains_musl~musl-1_2_3-platform-aarch64-apple-darwin-target-x86_64-linux-musl//:musl-1_2_3-platform-aarch64-apple-darwin-target-x86_64-linux-musl
+INFO: ToolchainResolution: Target platform //build/platforms:linux_x86_64_musl: Selected execution platform @@platforms//host:host, type @@bazel_tools//tools/cpp:toolchain_type -> toolchain @@toolchains_musl~~toolchains_musl~musl-1_2_3-platform-aarch64-apple-darwin-target-x86_64-linux-musl//:musl-1_2_3-platform-aarch64-apple-darwin-target-x86_64-linux-musl
+INFO: ToolchainResolution: Target platform @@platforms//host:host: Selected execution platform @@platforms//host:host, type @@rules_rust~//proto/prost:toolchain_type -> toolchain //build/prost_toolchain:prost_toolchain_impl, type @@rules_rust~//rust:toolchain_type -> toolchain @@rules_rust~~rust~rust_darwin_aarch64__aarch64-apple-darwin__stable_tools//:rust_toolchain, type @@bazel_tools//tools/cpp:toolchain_type -> toolchain @@toolchains_llvm~~llvm~llvm_toolchain//:cc-clang-aarch64-darwin, type @@rules_rust~//rust/rustfmt:toolchain_type -> toolchain @@rules_rust~~rust~rustfmt_nightly-2024-05-02__aarch64-apple-darwin_tools//:rustfmt_toolchain
+INFO: ToolchainResolution: Target platform //build/platforms:linux_x86_64_musl: Selected execution platform @@platforms//host:host, type @@rules_rust~//proto/prost:toolchain_type -> toolchain //build/prost_toolchain:prost_toolchain_impl, type @@rules_rust~//rust:toolchain_type -> toolchain @@rules_rust~~rust~rust_darwin_aarch64__x86_64-unknown-linux-musl__stable_tools//:rust_toolchain, type @@bazel_tools//tools/cpp:toolchain_type -> toolchain @@toolchains_musl~~toolchains_musl~musl-1_2_3-platform-aarch64-apple-darwin-target-x86_64-linux-musl//:musl-1_2_3-platform-aarch64-apple-darwin-target-x86_64-linux-musl, type @@rules_rust~//rust/rustfmt:toolchain_type -> toolchain @@rules_rust~~rust~rustfmt_nightly-2024-05-02__aarch64-apple-darwin_tools//:rustfmt_toolchain
+INFO: Analyzed target //:push (0 packages loaded, 25062 targets configured).
+INFO: Found 1 target...
+[0 / 5] [Prepa] BazelWorkspaceStatusAction stable-status.txt
+Target //:push up-to-date:
+  target-bzl/bin/push.bash
+INFO: Elapsed time: 0.775s, Critical Path: 0.07s
+INFO: 1 process: 1 internal.
+INFO: Build completed successfully, 1 total action

@@ -7,7 +7,7 @@ platform(
         "@platforms//os:linux",
         ":musl_on",
     ],
-     exec_properties = {"container-image": "docker://ghcr.io/marvin-hansen/rbe-custom/rbe:latest"},
+    exec_properties = {"container-image": "docker://ghcr.io/marvin-hansen/rbe-custom/rbe:latest"},
 )
 
 platform(
