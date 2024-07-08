@@ -10,10 +10,11 @@ rust_library(
     visibility = ["//visibility:public"],
     deps = [
         # Internal crates
-        "//:rest_client",
         "//:common",
         # External crates
         "@crates//:anyhow",
+        "@crates//:reqwest",
+        "@crates//:serde_json",
     ],
 )
 

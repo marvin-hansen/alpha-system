@@ -2,7 +2,6 @@ use kaiko_client::KaikoClient;
 
 mod error;
 mod getters;
-mod inactive_exchanges;
 
 pub use crate::error::KaikoUtilError;
 
@@ -24,13 +23,9 @@ impl KaikoUtil {
     }
 
     fn build(dbg: bool) -> Result<Self, KaikoUtilError> {
-        let kaiko_client = KaikoClient::with_url(API_PROXY_URL);
-        let client = kaiko_client.unwrap_or_else(|_| {
-            panic!(
-                "Failed to construct KaikoClient for PROXY URL {}",
-                API_PROXY_URL
-            )
-        });
+        let kaiko_client = KaikoClient::with_url(API_PROXY_URL, true);
+        let client = kaiko_client
+            .unwrap_or_else(|_| panic!("Failed to construct KaikoClient with local PROXY"));
         Ok(Self { dbg, client })
     }
 }

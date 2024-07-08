@@ -19,6 +19,30 @@ impl DownloadUtils {
 
         Self { client }
     }
+
+    /// Downloads a file from the specified URL and returns the content of the body as `Vec<u8>`.
+    ///
+    /// # Arguments
+    ///
+    /// * `url` - A string slice that holds the URL of the file to be downloaded.
+    ///
+    /// # Returns
+    ///
+    /// Returns `Result<Vec<u8>, DownloadError>` indicating the success or failure of the download operation.
+    ///
+    async fn download(&self, url: &str) -> Result<Vec<u8>, DownloadError> {
+        let resp = self
+            .client
+            .get(url)
+            .header("Accept", "application/json")
+            .send()
+            .await
+            .expect("request failed");
+
+        let body = resp.bytes().await.expect("body invalid");
+
+        Ok(body.to_vec())
+    }
 }
 
 impl DownloadUtils {
@@ -71,30 +95,5 @@ impl DownloadUtils {
                 e
             ))),
         };
-    }
-
-    /// Downloads a file from the specified URL and returns the content of the body as `Vec<u8>`.
-    ///
-    ///
-    /// # Arguments
-    ///
-    /// * `url` - A string slice that holds the URL of the file to be downloaded.
-    ///
-    /// # Returns
-    ///
-    /// Returns `Result<Vec<u8>, DownloadError>` indicating the success or failure of the download operation.
-    ///
-    async fn download(&self, url: &str) -> Result<Vec<u8>, DownloadError> {
-        let resp = self
-            .client
-            .get(url)
-            .header("Accept", "application/json")
-            .send()
-            .await
-            .expect("request failed");
-
-        let body = resp.bytes().await.expect("body invalid");
-
-        Ok(body.to_vec())
     }
 }

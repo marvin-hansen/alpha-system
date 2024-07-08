@@ -20,7 +20,7 @@ async fn setup_ci_env() {
 
 fn get_client() -> Result<KaikoClient, KaikoClientError> {
     let url: &str = "http://localhost:7777/";
-    let kaiko_client = KaikoClient::with_url(url);
+    let kaiko_client = KaikoClient::with_url(url, false);
     assert!(kaiko_client.is_ok());
 
     Ok(kaiko_client.unwrap())
@@ -41,14 +41,17 @@ async fn test_get_assets() {
 
     let kaiko_client = kaiko_client.unwrap();
 
+    let stats = kaiko_client.get_stats().await.expect("Failed to get stats");
+
     let result = kaiko_client.get_assets().await;
     assert!(result.is_ok());
 
-    // Additional assertions can be performed based on the expected `AssetRoot` structure.
-    if let Ok(asset_root) = result {
-        // Perform further assertions on `asset_root`
-        assert!(!asset_root.data.is_empty());
-    }
+    let assets = result.unwrap();
+
+    let expected = stats.number_assets();
+    let actual = assets.len() as u32;
+
+    assert_eq!(actual, expected)
 }
 
 #[tokio::test]
@@ -60,14 +63,17 @@ async fn test_get_exchanges() {
 
     let kaiko_client = kaiko_client.unwrap();
 
-    let result = kaiko_client.get_assets().await;
+    let stats = kaiko_client.get_stats().await.expect("Failed to get stats");
+
+    let result = kaiko_client.get_exchanges().await;
     assert!(result.is_ok());
 
-    // Additional assertions can be performed based on the expected `AssetRoot` structure.
-    if let Ok(exchanges_root) = result {
-        // Perform further assertions on `exchanges_root`
-        assert!(!exchanges_root.data.is_empty());
-    }
+    let exchanges = result.unwrap();
+
+    let expected = stats.number_exchanges();
+    let actual = exchanges.len() as u32;
+
+    assert_eq!(actual, expected)
 }
 
 #[tokio::test]
@@ -79,12 +85,15 @@ async fn test_get_instruments() {
 
     let kaiko_client = kaiko_client.unwrap();
 
-    let result = kaiko_client.get_assets().await;
+    let stats = kaiko_client.get_stats().await.expect("Failed to get stats");
+
+    let result = kaiko_client.get_instruments().await;
     assert!(result.is_ok());
 
-    // Additional assertions can be performed based on the expected `AssetRoot` structure.
-    if let Ok(instruments_root) = result {
-        // Perform further assertions on `instruments_root`
-        assert!(!instruments_root.data.is_empty());
-    }
+    let instruments = result.unwrap();
+
+    let expected = stats.number_instruments();
+    let actual = instruments.len() as u32;
+
+    assert_eq!(actual, expected)
 }

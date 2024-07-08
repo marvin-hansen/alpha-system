@@ -1,5 +1,5 @@
 use crate::errors::InitError;
-use crate::fields::DEX;
+use crate::fields::{DEX, INACTIVE_EXCHANGES};
 use crate::init::InitManager;
 use common::prelude::Instrument;
 
@@ -82,6 +82,11 @@ fn is_valid_instrument(instrument: &Instrument) -> bool {
 
     // Instruments listed on decentralized exchanges (DEX)
     if DEX.contains(&instrument.exchange_code.as_str()) {
+        return false;
+    }
+
+    // Instrument is from a known inactive exchange
+    if !INACTIVE_EXCHANGES.contains(&instrument.exchange_code.as_str()) {
         return false;
     }
 

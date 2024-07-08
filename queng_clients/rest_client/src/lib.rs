@@ -15,9 +15,8 @@ pub struct RestClient {
 
 impl RestClient {
     pub fn new(host: String) -> Result<Self, Error> {
-        let inner_client = Self::get_client(false);
-        let mut header_map = HeaderMap::new();
-        header_map.insert(USER_AGENT, HeaderValue::from_static("binance-connector"));
+        let header_map = HeaderMap::default();
+        let inner_client = Self::get_client(false, header_map.clone());
 
         Ok(Self {
             host,
@@ -27,7 +26,7 @@ impl RestClient {
     }
 
     pub fn with_headers(host: String, header_map: HeaderMap, gzip: bool) -> Result<Self, Error> {
-        let inner_client = Self::get_client(gzip);
+        let inner_client = Self::get_client(gzip, header_map.clone());
 
         Ok(Self {
             host,
@@ -36,8 +35,10 @@ impl RestClient {
         })
     }
 
-    fn get_client(gzip: bool) -> reqwest::Client {
+    fn get_client(gzip: bool, header_map: HeaderMap) -> reqwest::Client {
         reqwest::Client::builder()
+            .default_headers(header_map)
+            .use_rustls_tls()
             .gzip(gzip)
             .build()
             .expect("RestClient: Failed to build reqwest client")
