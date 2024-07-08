@@ -37,7 +37,7 @@ impl Metadata {
         let tables = self.metadata_tables();
         for table in tables {
             let query = self.generate_table_exists_query(table);
-            match self.verify_table_exists(&query).await {
+            match self.verify_exists(&query).await {
                 Ok(exists) => {
                     if !exists {
                         return Ok(false);

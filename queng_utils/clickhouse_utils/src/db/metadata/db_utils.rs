@@ -10,7 +10,7 @@ impl Metadata {
 
         Ok(())
     }
-    pub(crate) async fn verify_table_exists(&self, query: &str) -> Result<bool, QueryError> {
+    pub(crate) async fn verify_exists(&self, query: &str) -> Result<bool, QueryError> {
         let res = query_utils::verify_table_exists(&self.client, &query)
             .await
             .expect("Failed to verify that table exists in metadata DB");

@@ -57,6 +57,8 @@ impl EnvUtil {
             .await
             .expect("[setup_ci]: Failed to verify clickhouse DB");
 
+        // assert!(1 < 3);
+
         Ok(())
     }
 
@@ -87,33 +89,62 @@ impl EnvUtil {
         sample_size: Option<u32>,
     ) -> Result<(), EnvironmentError> {
         //
+        self.dbg_print(
+            "[configure_clickhouse]: Create all clickhouse databases if not already exist",
+        );
+        ch_utils
+            .setup_db()
+            .await
+            .expect("Failed to create databases");
+
         self.dbg_print("[configure_clickhouse]: Check if clickhouse is already configured");
         let tables_created = self
             .verify_tables_created(ch_utils)
             .await
             .expect("[configure_clickhouse]: Failed to check if all database tables configured");
 
+        self.dbg_print(&format!(
+            "[configure_clickhouse]: Clickhouse is already configured: {}",
+            tables_created
+        ));
+
+        if !tables_created {
+            ch_utils
+                .metadata
+                .create_all_metadata_tables()
+                .await
+                .expect("Failed to create metadata tables");
+
+            // ch_utils.specs.create_all_specs_tables().await.expect("Failed to create specs tables");
+        };
+
         self.dbg_print("[configure_clickhouse]: Check if all clickhouse data are already imported");
-        let imported = self
-            .verify_import_data(ch_utils, kaiko_util, None)
+        let data_imported = self
+            .check_if_meta_data_imported(ch_utils)
             .await
             .expect("[configure_clickhouse]: Failed to check if all data imported");
 
-        if tables_created && imported {
-            // Check if NO reset is required.
-            self.dbg_print("[configure_clickhouse]: Check if NO reset is required");
-            if !container_config.reset_configuration() {
-                // If so, abort & return. Nothing to do in this case.
-                self.dbg_print(
-                    "[configure_clickhouse]: Nothing to configure, import, or reset; return.",
-                );
-                return Ok(());
-            }
+        self.dbg_print(&format!(
+            "[configure_clickhouse]: Clickhouse data already imported: {}",
+            data_imported
+        ));
+        self.dbg_print("[configure_clickhouse]: Check whether to keep existing CH config");
+        let keep_data = container_config.keep_configuration();
+        self.dbg_print(&format!(
+            "[configure_clickhouse]: Keep Clickhouse config and data: {}",
+            keep_data
+        ));
+
+        if tables_created && data_imported && keep_data {
+            // If so, abort & return. Nothing to do in this case.
+            self.dbg_print("[configure_clickhouse]: Nothing to configure or import; return.");
+
+            return Ok(());
         }
 
         // Check if the container configuration should be reset. If so, delete everything.
         self.dbg_print("[configure_clickhouse]: Check if reset is required if data are outdated");
-        if container_config.reset_configuration() {
+        if container_config.keep_configuration() {
             self.dbg_print("[configure_clickhouse]: Drop all databases");
             ch_utils
                 .teardown_db()
@@ -200,11 +231,16 @@ impl EnvUtil {
         _sample_size: Option<u32>,
     ) -> Result<(), EnvironmentError> {
         //
-        self.dbg_print("[import_data]: Download assets metadata");
+        self.dbg_print("[import_metadata]: Download assets metadata");
         let assets = kaiko_util
             .get_assets()
             .await
-            .expect("[import_data]: Failed to get assets");
+            .expect("[import_metadata]: Failed to get assets");
+
+        self.dbg_print(&format!(
+            "[import_metadata]: Downloaded assets: {}",
+            assets.len()
+        ));
 
         self.dbg_print("[import_data]: Import assets metadata");
         ch_utils
@@ -219,6 +255,11 @@ impl EnvUtil {
             .await
             .expect("[import_data]: Failed to get exchanges");
 
+        self.dbg_print(&format!(
+            "[import_metadata]: Downloaded exchanges: {}",
+            exchanges.len()
+        ));
+
         self.dbg_print("[import_data]: Import exchanges metadata");
         ch_utils
             .metadata
@@ -231,6 +272,11 @@ impl EnvUtil {
             .get_instruments()
             .await
             .expect("[import_data]: Failed to get instruments");
+
+        self.dbg_print(&format!(
+            "[import_metadata]: Downloaded instruments: {}",
+            instruments.len()
+        ));
 
         self.dbg_print("[import_data]: Import instrument metadata");
         ch_utils
@@ -291,9 +337,16 @@ impl EnvUtil {
         }
 
         self.dbg_print("[verify_clickhouse]: Verify that all data were imported");
-        self.verify_import_data(ch_utils, kaiko_util, None)
+        let data_imported = self
+            .verify_import_data(ch_utils, kaiko_util, None)
             .await
             .expect("[verify_clickhouse]: Failed to verify data import Clickhouse");
+
+        if !data_imported {
+            return Err(EnvironmentError::from(
+                "[verify_clickhouse]: Error: Data were not imported.",
+            ));
+        }
 
         Ok(())
     }
@@ -328,6 +381,56 @@ impl EnvUtil {
         let all_exists = exists_metadata_tables;
 
         return Ok(all_exists);
+    }
+
+    async fn check_if_meta_data_imported(
+        &self,
+        ch_utils: &ClickhouseUtil,
+    ) -> Result<bool, EnvironmentError> {
+        self.dbg_print(
+            "[check_if_meta_data_imported]: Check if all data imported into the metadata DB",
+        );
+
+        self.dbg_print("[check_if_meta_data_imported]: Count assets metadata in DB");
+        let nr_db_assets =
+            ch_utils.metadata.count_assets().await.expect(
+                "[check_if_meta_data_imported]: Failed to get count assets from metadata DB",
+            );
+
+        self.dbg_print(&format!(
+            "[check_if_meta_data_imported]: Counted imported assets: {}",
+            nr_db_assets
+        ));
+
+        self.dbg_print("[check_if_meta_data_imported]: Count exchanges metadata in DB");
+        let nr_db_exchanges = ch_utils.metadata.count_exchanges().await.expect(
+            "[check_if_meta_data_imported]: Failed to get count exchanges from metadata DB",
+        );
+
+        self.dbg_print(&format!(
+            "[check_if_meta_data_imported]: Counted imported exchanges: {}",
+            nr_db_exchanges
+        ));
+
+        self.dbg_print("[check_if_meta_data_imported]: Count instruments metadata in DB");
+        let nr_db_instruments = ch_utils.metadata.count_instruments().await.expect(
+            "[check_if_meta_data_imported]: Failed to get count instruments from metadata DB",
+        );
+
+        self.dbg_print(&format!(
+            "[check_if_meta_data_imported]: Counted imported instruments: {}",
+            nr_db_instruments
+        ));
+
+        let imported =
+            (nr_db_assets > 7_000) && (nr_db_exchanges > 40) && (nr_db_instruments > 14_000);
+
+        self.dbg_print(&format!(
+            "[check_if_meta_data_imported]: All data imported: {}",
+            imported
+        ));
+
+        return Ok(imported);
     }
 
     /// Verifies that all data have been imported into the metadata database.
@@ -374,12 +477,44 @@ impl EnvUtil {
             .await
             .expect("[verify_import_data]: Failed to get count assets from metadata DB");
 
+        self.dbg_print(&format!(
+            "[verify_import_data]: Counted imported assets: {}",
+            nr_db_assets
+        ));
+
+        self.dbg_print(&format!(
+            "[verify_import_data]: API reference assets: {}",
+            nr_stats_assets
+        ));
+
+        let assets_imported = nr_stats_assets == nr_db_assets;
+        self.dbg_print(&format!(
+            "[verify_import_data]: All assets imported: {}",
+            assets_imported
+        ));
+
         self.dbg_print("[verify_import_data]: Count exchanges metadata in DB");
         let nr_db_exchanges = ch_utils
             .metadata
             .count_exchanges()
             .await
             .expect("[verify_import_data]: Failed to get count exchanges from metadata DB");
+
+        self.dbg_print(&format!(
+            "[verify_import_data]: Counted imported exchanges: {}",
+            nr_db_exchanges
+        ));
+
+        self.dbg_print(&format!(
+            "[verify_import_data]: API reference exchanges: {}",
+            nr_stats_exchanges
+        ));
+
+        let exchanges_imported = nr_stats_exchanges == nr_db_exchanges;
+        self.dbg_print(&format!(
+            "[verify_import_data]: All exchanges imported: {}",
+            exchanges_imported
+        ));
 
         self.dbg_print("[verify_import_data]: Count instruments metadata in DB");
         let nr_db_instruments = ch_utils
@@ -388,16 +523,14 @@ impl EnvUtil {
             .await
             .expect("[verify_import_data]: Failed to get count instruments from metadata DB");
 
-        let assets_imported = nr_stats_assets == nr_db_assets;
         self.dbg_print(&format!(
-            "[verify_import_data]: All assets imported: {}",
-            assets_imported
+            "[verify_import_data]: Counted imported instruments: {}",
+            nr_db_instruments
         ));
 
-        let exchanges_imported = nr_stats_exchanges == nr_db_exchanges;
         self.dbg_print(&format!(
-            "[verify_import_data]: All exchanges imported: {}",
-            exchanges_imported
+            "[verify_import_data]: API reference instruments: {}",
+            nr_stats_instruments
         ));
 
         let instruments_imported = nr_stats_instruments == nr_db_instruments;

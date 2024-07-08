@@ -14,5 +14,5 @@ fn test_clickhouse_container_config() {
     assert_eq!(config.connection_port(), 9000);
     assert_eq!(config.platform(), None);
     assert!(config.reuse_container());
-    assert!(!config.reset_configuration());
+    assert!(config.keep_configuration());
 }

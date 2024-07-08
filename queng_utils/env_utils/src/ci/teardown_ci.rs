@@ -20,16 +20,10 @@ impl EnvUtil {
 
     pub async fn teardown_ci_clickhouse(&self) -> Result<(), EnvironmentError> {
         //
-        self.dbg_print("[teardown_ci_clickhouse]: Get docker util");
-        let docker_util = self.docker_util();
+        self.dbg_print("[teardown_ci_clickhouse]: Get clickhouse util");
+        let ch_util = self.clickhouse_util().await.expect("Failed to get CH util");
 
-        self.dbg_print("[teardown_ci_clickhouse]: Get container id");
-        let container_id = self.clickhouse_container_name();
-
-        self.dbg_print("[teardown_ci_clickhouse]: Stop and remove container");
-        docker_util
-            .stop_container(container_id)
-            .expect("[TestEnv:CI/teardown_ci_clickhouse]: Failed to teardown clickhouse container");
+        ch_util.teardown_db().await.expect("Failed to teardown DB");
 
         Ok(())
     }

@@ -16,13 +16,16 @@ impl InitManager {
             .expect("Failed to download exchange data");
 
         self.dbg_print("Level 1: Process downloaded exchanges");
-        let processed_exchanges = process_exchanges(valid_exchanges, downloaded_exchanges)
+        let mut processed_exchanges = process_exchanges(valid_exchanges, downloaded_exchanges)
             .await
             .expect("Failed to process reference exchange data");
 
+        // Remove duplicates
+        processed_exchanges.dedup();
+
         if self.dbg {
             let msg = format!(
-                "Level 1: Returning {} valid exchanges",
+                "Level 1: Returning {} processed exchanges",
                 processed_exchanges.len()
             );
             self.dbg_print(&msg)

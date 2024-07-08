@@ -10,7 +10,7 @@ pub struct ContainerConfig<'l> {
     additional_ports: Option<&'l [u16]>,
     platform: Option<&'l str>,
     reuse_container: bool,
-    reset_configuration: bool,
+    keep_configuration: bool,
     wait_duration: u64,
 }
 
@@ -27,9 +27,9 @@ impl<'l> ContainerConfig<'l> {
     /// * `additional_ports` - An optional array of additional ports to publish.
     /// * `platform` - An optional platform string in case the container image is not multi-arch.
     /// * `reuse_container` - A boolean flag indicating whether to reuse an existing container if found.
-    /// * `reset_configuration` -  A boolean flag indication whether to reset the configuration upon
-    ///    every environment setup. If set to false, the same configuration will be used across all
-    ///    environment setups.
+    /// * `keep_configuration` -  A boolean flag indication whether to keep the configuration upon
+    ///    every environment setup. If set to true, the same configuration will be used across all
+    ///    environment setups. If false, each setup will re-create all tables and import data.,
     /// * `wait_duration` - Sets the nr. seconds of how long to wait for the container to complete starting.
     ///
     /// # Returns
@@ -54,7 +54,7 @@ impl<'l> ContainerConfig<'l> {
         additional_ports: Option<&'l [u16]>,
         platform: Option<&'l str>,
         reuse_container: bool,
-        reset_configuration: bool,
+        keep_configuration: bool,
         wait_duration: u64,
     ) -> Self {
         Self {
@@ -66,7 +66,7 @@ impl<'l> ContainerConfig<'l> {
             additional_ports,
             platform,
             reuse_container,
-            reset_configuration,
+            keep_configuration,
             wait_duration,
         }
     }
@@ -98,8 +98,8 @@ impl<'l> ContainerConfig<'l> {
     pub fn reuse_container(&self) -> bool {
         self.reuse_container
     }
-    pub fn reset_configuration(&self) -> bool {
-        self.reset_configuration
+    pub fn keep_configuration(&self) -> bool {
+        self.keep_configuration
     }
     pub fn wait_duration(&self) -> u64 {
         self.wait_duration
@@ -119,7 +119,7 @@ impl Display for ContainerConfig<'_> {
         write!(
             f,
             "name: {}, image: {}:{}, url: {} connection_port: {}, additional_ports: {:?}, \
-            reuse_container: {}, reset_configuration: {}, wait_duration: {}",
+            reuse_container: {}, keep_configuration: {}, wait_duration: {}",
             self.name,
             self.image,
             self.tag,
@@ -127,7 +127,7 @@ impl Display for ContainerConfig<'_> {
             self.connection_port,
             self.additional_ports,
             self.reuse_container,
-            self.reset_configuration,
+            self.keep_configuration,
             self.wait_duration,
         )
     }
