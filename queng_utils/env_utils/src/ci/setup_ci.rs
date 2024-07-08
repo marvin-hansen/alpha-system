@@ -57,8 +57,6 @@ impl EnvUtil {
             .await
             .expect("[setup_ci]: Failed to verify clickhouse DB");
 
-        // assert!(1 < 3);
-
         Ok(())
     }
 
