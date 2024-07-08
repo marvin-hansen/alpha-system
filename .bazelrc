@@ -17,6 +17,10 @@ build:windows --enable_runfiles
 ## Build configuration
 ###############################################################################
 
+# Debug toolchain resolution
+# Just hope you never need this again.
+# build --toolchain_resolution_debug='@bazel_tools//tools/cpp:toolchain_type
+
 # Don't create bazel-* symlinks in the WORKSPACE directory.
 # Instead, set a prefix and put it in .gitignore
 build --symlink_prefix=target-bzl/
@@ -65,13 +69,6 @@ common --experimental_profile_include_primary_output
 ## Remote configuration
 ###############################################################################
 
-# Debug toolchain resolution
-build --toolchain_resolution_debug='@bazel_tools//tools/cpp:toolchain_type
-
-# Required to resolve MUSL toolchain.
-# https://github.com/bazel-contrib/musl-toolchain?tab=readme-ov-file#setup
-# build --incompatible_enable_cc_toolchain_resolution
-
 # Flags shared across remote configs
 common:remote-shared --jobs=100
 common:remote-shared --remote_timeout=600
@@ -79,6 +76,10 @@ common:remote-shared --remote_download_minimal
 common:remote-shared --experimental_remote_cache_compression
 common:remote-shared --verbose_failures
 
+# Required to resolve MUSL toolchain.
+# https://github.com/bazel-contrib/musl-toolchain?tab=readme-ov-file#setup
+# build --incompatible_enable_cc_toolchain_resolution
+# Remote cross compilation
 common:remote-shared --extra_execution_platforms=//build/platforms:linux_arm64_musl
 common:remote-shared --extra_execution_platforms=//build/platforms:linux_x86_64_musl
 
@@ -93,12 +94,12 @@ common:remote --remote_header=x-buildbuddy-api-key=4Ml6AhYICvGtZ3XhqafP
 ###############################################################################
 
 # Enable rustfmt for all targets in the workspace
-#build:rustfmt --aspects=@rules_rust//rust:defs.bzl%rustfmt_aspect
-#build:rustfmt --output_groups=+rustfmt_checks
+build:rustfmt --aspects=@rules_rust//rust:defs.bzl%rustfmt_aspect
+build:rustfmt --output_groups=+rustfmt_checks
 
 # Enable clippy for all targets in the workspace
-#build:clippy --aspects=@rules_rust//rust:defs.bzl%rust_clippy_aspect
-#build:clippy --output_groups=+clippy_checks
+build:clippy --aspects=@rules_rust//rust:defs.bzl%rust_clippy_aspect
+build:clippy --output_groups=+clippy_checks
 
 ###############################################################################
 ## Custom user flags
