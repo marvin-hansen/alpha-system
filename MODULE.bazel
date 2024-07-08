@@ -54,7 +54,7 @@ http_archive = use_repo_rule("@bazel_tools//:http.bzl", "http_archive")
 # https://github.com/bazel-contrib/toolchains_llvm/blob/master/toolchain/internal/llvm_distributions.bzl
 LLVM_VERSIONS = {
     "": "16.0.0",  # Default
-    "darwin-aarch64": "16.0.3",  # Only supporting newer Apple Silicon Macs
+    "darwin-aarch64": "16.0.3",  # Only support newer Apple Silicon Macs
 }
 
 # Sysroot for LLVM
@@ -133,15 +133,17 @@ register_toolchains("@llvm_toolchain//:all")
 # T O O L C H A I N S
 ###############################################################################
 
+##################
 # MUSL toolchain #
+##################
 toolchains_musl = use_extension("@toolchains_musl//:toolchains_musl.bzl", "toolchains_musl", dev_dependency = True)
 toolchains_musl.config(
     extra_target_compatible_with = ["@//build/linker:musl"],
 )
 
-register_toolchains("@toolchains_musl//:all")
-
+##################
 # Rust toolchain #
+##################
 RUST_EDITION = "2021"
 
 RUST_VERSION = "1.79.0"
@@ -160,13 +162,17 @@ use_repo(rust, "rust_toolchains")
 
 register_toolchains("@rust_toolchains//:all")
 
+###################
 # Proto Toolchain #
+###################
 register_toolchains("@rules_rust//proto/protobuf:default-proto-toolchain")
 
 # Custom Prost Toolchain #
 register_toolchains("@//build/prost_toolchain")
 
+####################
 # Python toolchain #
+###################
 python = use_extension("@rules_python//python/extensions:python.bzl", "python")
 python.toolchain(
     configure_coverage_tool = False,
@@ -179,6 +185,7 @@ python.toolchain(
 ###############################################################################
 oci = use_extension("@rules_oci//oci:extensions.bzl", "oci")
 
+# distroless
 # https://github.com/GoogleContainerTools/distroless
 oci.pull(
     name = "distroless",
@@ -191,6 +198,7 @@ oci.pull(
 )
 use_repo(oci, "distroless")
 
+# scratch
 # https://hub.docker.com/r/hansenmarvin/rust-scratch/tags
 oci.pull(
     name = "scratch",
@@ -206,6 +214,7 @@ use_repo(oci, "scratch")
 ###############################################################################
 # BuildBuddy Toolchain: https://github.com/buildbuddy-io/buildbuddy-toolchain/
 ###############################################################################
+# See WORKSPACE.bzlmod
 # https://github.com/buildbuddy-io/buildbuddy-toolchain/issues/18
 
 ###############################################################################
@@ -213,14 +222,14 @@ use_repo(oci, "scratch")
 ###############################################################################
 crate = use_extension("@rules_rust//crate_universe:extension.bzl", "crate")
 
-# Custom Memory Allocator  #
+# Custom Memory Allocator
 # https://www.tweag.io/blog/2023-08-10-rust-static-link-with-mimalloc/
 crate.spec(
     package = "mimalloc",
     version = "0.1.42",
 )
 
-# protobufs/gRPC in Rust #
+# protobufs/gRPC in Rust
 crate.spec(
     package = "prost",
     version = "0.12",
@@ -256,7 +265,7 @@ crate.annotation(
     gen_binaries = ["protoc-gen-tonic"],
 )
 
-# Other External Crates #
+# Other External Crates
 crate.spec(
     package = "anyhow",
     version = "1.0",
