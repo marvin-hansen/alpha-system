@@ -29,6 +29,7 @@ platform(
 
 # Platform for BB Remote Host
 # This is technically not required, but speeds up host toolchain resolution.
+# https://github.com/buildbuddy-io/buildbuddy/blob/8579ca30f1a1f401ed8279d99d9b47ec5637873f/.bazelrc#L30
 platform(
     name = "linux",
     constraint_values = [
@@ -51,4 +52,3 @@ platform(
     exec_properties = {"container-image": "docker://" + UBUNTU20_04_IMAGE},
     parents = [":linux"],
 )
-
