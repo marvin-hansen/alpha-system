@@ -86,7 +86,7 @@ fn is_valid_instrument(instrument: &Instrument) -> bool {
     }
 
     // Instrument is from a known inactive exchange
-    if !INACTIVE_EXCHANGES.contains(&instrument.exchange_code.as_str()) {
+    if INACTIVE_EXCHANGES.contains(&instrument.exchange_code.as_str()) {
         return false;
     }
 
