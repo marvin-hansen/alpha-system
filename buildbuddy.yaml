@@ -14,10 +14,8 @@ actions:
       - "build -c opt //... --config=remote"
       # Build & test all docs
       - "build -c opt //... --build_tag_filters=doc --config=remote"
-      - "build -c opt //... --build_tag_filters=doc-test --config=remote"
       - "test  -c opt //... --test_tag_filters=doc-test --config=remote"
       # Unit tests
-      - "build -c opt  //...  --build_tag_filters=unit --config=remote"
       - "test -c opt   //...  --test_tag_filters=unit --config=remote"
       # Integration tests
       # Test: Docker integration
