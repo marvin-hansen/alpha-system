@@ -52,6 +52,7 @@ rust_test_suite(
         "//:common",
         "//:container_specs",
         "//:docker_utils",
+        "//:env_utils",
         # External crates
         "@crates//:klickhouse",
         "@crates//:serde",
