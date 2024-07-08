@@ -18,9 +18,7 @@ actions:
       # Unit tests
       - "test -c opt   //...  --test_tag_filters=unit --config=remote"
       # Integration tests
-      # Test: Docker integration
-      - "test -c opt  //...   --test_tag_filters=docker_integration_tests --config=remote"
-      # Test: Docker CI setup
+      # Container CI setup
       - "test -c opt  //...   --test_tag_filters=env_container_setup --config=remote"
       # Test: API Proxy integration
       - "test -c opt  //...   --test_tag_filters=kaiko_utils_integration_tests --config=remote"
