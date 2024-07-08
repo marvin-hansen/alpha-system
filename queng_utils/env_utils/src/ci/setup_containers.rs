@@ -101,6 +101,13 @@ impl EnvUtil {
         let container_name = container_config.container_name();
         let wait_duration = container_config.wait_duration();
 
+        let exists = docker_util
+            .check_if_container_exists(&container_name)
+            .expect(&format!(
+                "Failed to check if container already exists: {}",
+                &container_name
+            ));
+
         self.dbg_print(&format!("Get or reuse Container: {}", &container_name));
         let (container_name, container_port) = docker_util
             .get_or_start_container_config(container_config)
@@ -111,11 +118,13 @@ impl EnvUtil {
                 )
             });
 
-        self.dbg_print(&format!(
-            "Wait {} seconds for {} container to complete setup & finish boot sequence",
-            wait_duration, &container_name
-        ));
-        sleep(Duration::from_secs(wait_duration)).await;
+        if !exists {
+            self.dbg_print(&format!(
+                "Wait {} seconds for {} container to complete setup & finish boot sequence",
+                wait_duration, &container_name
+            ));
+            sleep(Duration::from_secs(wait_duration)).await;
+        }
 
         Ok((container_name, container_port))
     }

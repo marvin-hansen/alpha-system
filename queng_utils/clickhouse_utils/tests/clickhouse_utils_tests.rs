@@ -4,7 +4,7 @@ use docker_utils::DockerUtil;
 use std::{thread, time};
 
 #[tokio::test]
-async fn docker_env_util_setup_ci() {
+async fn docker_env_util_setup_db_test() {
     // Create a new DockerUtil in debug mode. Without debug, just call new()
     let docker_util = DockerUtil::with_debug().expect("Failed to create DockerUtil");
     // Set default wait duration
@@ -36,13 +36,17 @@ async fn docker_env_util_setup_ci() {
     assert!(exists);
 
     let dsn = "127.0.0.1:9000".to_string();
-
     let result = ClickhouseUtil::new(dsn).await;
 
     assert!(result.is_ok());
 
     let ch_utils = result.unwrap();
 
-    let result = ch_utils.setup_db().await;
-    assert!(result.is_ok());
+    let setup_result = ch_utils.setup_db().await;
+    assert!(setup_result.is_ok());
+
+    thread::sleep(wait_time);
+
+    let teardown_result = ch_utils.teardown_db().await;
+    assert!(teardown_result.is_ok());
 }

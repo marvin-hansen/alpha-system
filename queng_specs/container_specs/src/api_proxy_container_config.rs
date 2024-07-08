@@ -17,6 +17,6 @@ pub fn api_proxy_container_config() -> ContainerConfig<'static> {
         Some("linux/amd64"),
         true,  // Keep the container running for re-use
         false, // Keep the same container config across all env. setups.
-        12,    // Wait a few seconds until the container finished starting up.
+        20,    // Wait a few seconds until the container finished starting up.
     )
 }

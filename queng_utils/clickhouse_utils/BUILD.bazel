@@ -40,7 +40,7 @@ rust_test_suite(
         "test.runner-recycling-key": "containers",
     },
     tags = [
-        "clickhouse_utils",
+        "clickhouse_utils_integration_tests",
         "docker",
         "integration",
     ],
