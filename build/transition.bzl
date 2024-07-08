@@ -1,3 +1,7 @@
+###############################################################################
+# Platform transition
+###############################################################################
+
 "a rule transitioning an oci_image to multiple platforms"
 
 def _multiarch_transition(settings, attr):

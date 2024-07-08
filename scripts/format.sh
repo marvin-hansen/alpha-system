@@ -6,9 +6,9 @@ set -o pipefail
 
 # Bazel file formatting (Installed via homebrew)
 # https://github.com/bazelbuild/buildtools
+buildifier -r MODULE.bazel BUILD.bazel WORKSPACE.bzlmod
 buildifier -r build
 buildifier -r queng_*
-buildifier -r MODULE.bazel BUILD.bazel WORKSPACE.bzlmod
 
 # Rust code formatting
 # https://github.com/rust-lang/rustfmt
