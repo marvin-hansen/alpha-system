@@ -148,6 +148,7 @@ async fn main() {
         .or(get_instruments)
         .or(get_stats);
 
+    print_update_status(UPDATE);
     print_duration("[main]: Starting server took", &start.elapsed());
     print_utils::print_start_header_simple("Metadata Integration Service", "0.0.0.0:7777/");
     warp::serve(routes).run(([0, 0, 0, 0], PORT)).await;
@@ -172,4 +173,12 @@ async fn run_init(update: bool) -> Result<MetaDataSet, InitError> {
 
 fn print_duration(msg: &str, elapsed: &Duration) {
     print_utils::print_duration(msg, elapsed);
+}
+
+fn print_update_status(update: bool) {
+    if update {
+        println!("[main]: Update service online!")
+    } else {
+        println!("[main]: Update service DISABLED!")
+    }
 }
