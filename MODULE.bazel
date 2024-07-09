@@ -232,21 +232,27 @@ crate.spec(
 # protobufs/gRPC in Rust
 crate.spec(
     package = "prost",
-    version = "0.12",
+    version = "0.13.0",
 )
 crate.spec(
     default_features = False,
     package = "prost-types",
-    version = "0.12",
+    version = "0.13.0",
 )
 crate.spec(
     features = ["transport"],
     package = "tonic",
-    version = "0.11",
+    version = "0.12.0",
 )
 crate.spec(
     package = "tonic-build",
-    version = "0.11",
+    version = "0.12.0",
+)
+crate.spec(
+    default_features = False,
+    features = ["transport"],
+    package = "tonic-health",
+    version = "0.12.0",
 )
 crate.spec(
     package = "protoc-gen-prost",
@@ -360,12 +366,6 @@ crate.spec(
     default_features = False,
     package = "scraper",
     version = "0.19",
-)
-crate.spec(
-    default_features = False,
-    features = ["transport"],
-    package = "tonic-health",
-    version = "0.11",
 )
 crate.spec(
     default_features = False,
