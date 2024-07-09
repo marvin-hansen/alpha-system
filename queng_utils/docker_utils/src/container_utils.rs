@@ -79,7 +79,7 @@ impl DockerUtil {
             Ok(out) => String::from_utf8_lossy(&out.stdout).to_string(),
             Err(e) => {
                 return Err(DockerError::from(format!(
-                    "Error getting container {}: {}",
+                    "[get_running_container]: Error getting container {}: {}",
                     container_id, e
                 )));
             }
@@ -87,7 +87,7 @@ impl DockerUtil {
 
         if container.is_empty() {
             return Err(DockerError::from(format!(
-                "Error no container found for ID: {}",
+                "[get_running_container]: Error no container found for ID: {}",
                 container_id,
             )));
         }
@@ -95,10 +95,10 @@ impl DockerUtil {
         let parts = container.split('-').collect::<Vec<&str>>();
         let port = parts
             .last()
-            .expect("Failed to get container port")
+            .expect("[get_running_container]: Failed to get container port")
             .trim()
             .parse::<u16>()
-            .expect("Failed to convert container port from string into u16");
+            .expect("[get_running_container]: Failed to convert container port from string to u16");
 
         return Ok((container.trim().to_string(), port));
     }
@@ -111,12 +111,13 @@ impl DockerUtil {
             Ok(_) => {}
             Err(_) => {
                 return Err(DockerError::from(format!(
-                    "[get_container_image_tag]: Error no container found for ID: {}",
+                    "[get_running_container_image_tag]: Error no container found for ID: {}",
                     container_id,
                 )));
             }
         }
 
+        self.dbg_print("");
         let container_image = match Command::new("docker")
             .arg("ps")
             .arg(format!("--filter=name={}", container_id))

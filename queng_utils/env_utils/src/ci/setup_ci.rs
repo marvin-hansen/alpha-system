@@ -91,7 +91,7 @@ impl EnvUtil {
             "[configure_clickhouse]: Create all clickhouse databases if not already exist",
         );
         ch_utils
-            .setup_db()
+            .setup_all_db()
             .await
             .expect("Failed to create databases");
 
@@ -108,12 +108,9 @@ impl EnvUtil {
 
         if !tables_created {
             ch_utils
-                .metadata
-                .create_all_metadata_tables()
+                .setup_all_tables()
                 .await
                 .expect("Failed to create metadata tables");
-
-            // ch_utils.specs.create_all_specs_tables().await.expect("Failed to create specs tables");
         };
 
         self.dbg_print("[configure_clickhouse]: Check if all clickhouse data are already imported");
@@ -145,7 +142,7 @@ impl EnvUtil {
         if container_config.keep_configuration() {
             self.dbg_print("[configure_clickhouse]: Drop all databases");
             ch_utils
-                .teardown_db()
+                .teardown_all_db()
                 .await
                 .expect("[configure_clickhouse]: Failed to drop all databases")
         }
@@ -188,7 +185,7 @@ impl EnvUtil {
         //
         self.dbg_print("[setup_db]: Create all databases");
         ch_utils
-            .setup_db()
+            .setup_all_db()
             .await
             .expect("[setup_db]: Failed to create all databases");
 

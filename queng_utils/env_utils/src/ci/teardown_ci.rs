@@ -31,7 +31,10 @@ impl EnvUtil {
         self.dbg_print("[teardown_ci_clickhouse]: Get clickhouse util");
         let ch_util = self.clickhouse_util().await.expect("Failed to get CH util");
 
-        ch_util.teardown_db().await.expect("Failed to teardown DB");
+        ch_util
+            .teardown_all_db()
+            .await
+            .expect("Failed to teardown DB");
 
         Ok(())
     }
