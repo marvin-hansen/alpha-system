@@ -42,7 +42,7 @@ async fn main() {
     dbg_print("Build meta-data store");
     // ArcSwap hot-swaps data in a multi-threaded runtime.
     // https://docs.rs/arc-swap/1.7.1/arc_swap/index.html
-    let store: MetaDataStore = Arc::new(ArcSwap::from_pointee(meta_data.clone()));
+    let store: MetaDataStore = Arc::new(ArcSwap::from_pointee(meta_data));
 
     if UPDATE {
         // New clone of store
@@ -99,9 +99,6 @@ async fn main() {
             )
             .await
             .expect("Failed to add update job to scheduler");
-
-        //
-        drop(meta_data);
 
         dbg_print("Start job scheduler");
         scheduler.start().await.expect("Failed to start scheduler");
