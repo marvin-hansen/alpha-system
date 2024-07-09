@@ -5,13 +5,11 @@ use container_specs::clickhouse_container_config::clickhouse_container_config;
 use docker_utils::DockerUtil;
 use kaiko_utils::KaikoUtil;
 
-mod ci;
-
+mod env;
 pub mod errors;
 mod getters;
 mod init;
 pub mod prelude;
-mod setters;
 
 pub struct EnvUtil {
     api_proxy_container_name: String,
