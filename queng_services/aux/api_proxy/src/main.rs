@@ -43,10 +43,12 @@ async fn main() {
     // ArcSwap hot-swaps data in a multi-threaded runtime.
     // https://docs.rs/arc-swap/1.7.1/arc_swap/index.html
     let store: MetaDataStore = Arc::new(ArcSwap::from_pointee(meta_data.clone()));
-    let c = store.clone();
     let with_state = warp::any().map(move || store.clone());
 
     if UPDATE {
+        // Fresh clone of store
+        let c = store.clone();
+
         //  tokio_cron_scheduler
         // https://github.com/mvniekerk/tokio-cron-scheduler
         dbg_print("Build scheduler");
