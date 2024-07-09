@@ -26,6 +26,38 @@ impl EnvUtil {
         Ok(())
     }
 
+    pub async fn setup_container_api_proxy(&mut self) -> Result<(), EnvironmentSetupError> {
+        //
+        self.dbg_print("Get docker util");
+        let mut docker_util = self.docker_util();
+
+        self.dbg_print("Setup api proxy container");
+        let api_proxy_container_config = api_proxy_container_config();
+
+        let (container_name, container_port) = self
+            .setup_container(&api_proxy_container_config, &mut docker_util)
+            .await
+            .unwrap_or_else(|_| {
+                panic!(
+                    "[TestEnv/CI:setup_api_proxy_container]: Failed to setup container: {}",
+                    &api_proxy_container_config.container_name()
+                )
+            });
+
+        self.dbg_print("Verify api proxy container name and ports");
+        assert_eq!(container_name, api_proxy_container_config.container_name());
+        assert_eq!(container_port, api_proxy_container_config.connection_port());
+
+        self.dbg_print(&format!("OK container_name: {}", container_name));
+        self.dbg_print(&format!("OK container_port: {}", container_port));
+
+        self.dbg_print("Set api proxy container name and ports");
+        self.set_api_proxy_container_name(container_name);
+        self.set_api_proxy_container_port(container_port);
+
+        Ok(())
+    }
+
     pub async fn setup_container_clickhouse(&mut self) -> Result<(), EnvironmentSetupError> {
         //
         self.dbg_print("Get docker util");
@@ -60,61 +92,70 @@ impl EnvUtil {
         Ok(())
     }
 
-    pub async fn setup_container_api_proxy(&mut self) -> Result<(), EnvironmentSetupError> {
-        //
-        self.dbg_print("Get docker util");
-        let mut docker_util = self.docker_util();
-
-        self.dbg_print("Setup api proxy container");
-        let api_proxy_container_config = api_proxy_container_config();
-
-        let (container_name, container_port) = self
-            .setup_container(&api_proxy_container_config, &mut docker_util)
-            .await
-            .unwrap_or_else(|_| {
-                panic!(
-                    "[TestEnv/CI:setup_api_proxy_container]: Failed to setup container: {}",
-                    &api_proxy_container_config.container_name()
-                )
-            });
-
-        self.dbg_print("Verify api proxy container name and ports");
-        assert_eq!(container_name, api_proxy_container_config.container_name());
-        assert_eq!(container_port, api_proxy_container_config.connection_port());
-
-        self.dbg_print(&format!("OK container_name: {}", container_name));
-        self.dbg_print(&format!("OK container_port: {}", container_port));
-
-        self.dbg_print("Set api proxy container name and ports");
-        self.set_api_proxy_container_name(container_name);
-        self.set_api_proxy_container_port(container_port);
-
-        Ok(())
-    }
-
     async fn setup_container(
         &self,
         container_config: &ContainerConfig<'_>,
         docker_util: &mut DockerUtil,
     ) -> Result<(String, u16), EnvironmentSetupError> {
         //
-        let container_name = container_config.container_name();
+        let container_name = &container_config.container_name();
         let wait_duration = container_config.wait_duration();
+        let target_tag = container_config.tag();
+
+        self.dbg_print(&format!(
+            "Check if Container already exists: {}",
+            container_name
+        ));
 
         let exists = docker_util
-            .check_if_container_exists(&container_name)
+            .check_if_container_exists(container_name)
             .expect(&format!(
-                "Failed to check if container already exists: {}",
-                &container_name
+                "[TestEnv/CI:setup_container]: Failed to check if container already exists: {}",
+                container_name
+            ));
+        self.dbg_print(&format!("Container {} exists: {}", container_name, exists));
+
+        self.dbg_print(&format!(
+            "Check if Container {} uses target tag: {}",
+            container_name, target_tag,
+        ));
+
+        let container_current = docker_util
+            .check_if_running_container_uses_target_tag(container_name, target_tag)
+            .expect(&format!(
+                "[TestEnv/CI:setup_container]: Failed to check if container {} use target tag: {}",
+                container_name, target_tag,
             ));
 
-        self.dbg_print(&format!("Get or reuse Container: {}", &container_name));
+        if !container_current {
+            self.dbg_print(&format!(
+                "Container uses DIFFERENT tag : {}",
+                container_name
+            ));
+            self.dbg_print(&format!("STOP running Container : {}", container_name));
+
+            docker_util.stop_container(container_name).expect(&format!(
+                "[TestEnv/CI:setup_container]: Failed to check stop container {} ",
+                container_name,
+            ))
+        } else {
+            self.dbg_print(&format!(
+                "Container {} uses target tag: {}",
+                container_name, container_current
+            ));
+        }
+
+        self.dbg_print(&format!(
+            "Get or reuse Container {} with target tag {}",
+            container_name, target_tag
+        ));
+
         let (container_name, container_port) = docker_util
             .get_or_start_container_config(container_config)
             .unwrap_or_else(|_| {
                 panic!(
                     "[TestEnv/CI:setup_container]: Failed to setup container: {}",
-                    &container_name
+                    container_name
                 )
             });
 
