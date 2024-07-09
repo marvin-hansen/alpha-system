@@ -3,6 +3,33 @@ use crate::EnvUtil;
 use clickhouse_utils::ClickhouseUtil;
 use common::prelude::ContainerConfig;
 impl EnvUtil {
+    /// Configures the Clickhouse database for the environment.
+    ///
+    /// This method configures the Clickhouse database for the environment by performing the following steps:
+    ///
+    /// 1. Retrieves a new `ClickhouseUtil` object asynchronously.
+    ///
+    /// 2. Retrieves the Kaiko utility.
+    ///
+    /// 3. Creates all Clickhouse databases if they do not already exist using the `setup_all_db` method of the `ClickhouseUtil` object.
+    ///
+    /// # Arguments
+    ///
+    /// * `container_config` - A reference to the `ContainerConfig` object containing configuration details.
+    /// * `sample_size` - An optional `u32` value representing the sample size.
+    ///
+    /// # Returns
+    ///
+    /// Returns `Ok(())` if the Clickhouse database is configured successfully, or an `Err` variant of `EnvironmentError` if an error occurs during the configuration process.
+    ///
+    /// # Errors
+    ///
+    /// Returns an `EnvironmentError` if any of the following errors occur during the configuration process:
+    ///
+    /// - If there is an error retrieving the Clickhouse utility.
+    /// - If there is an error retrieving the Kaiko utility.
+    /// - If there is an error creating the Clickhouse databases.
+    ///
     pub(crate) async fn configure_clickhouse(
         &self,
         container_config: &ContainerConfig<'_>,

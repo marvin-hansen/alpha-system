@@ -6,6 +6,34 @@ use std::time::Duration;
 use tokio::time::sleep;
 
 impl EnvUtil {
+    /// Sets up a container for the environment.
+    ///
+    /// This method sets up a container for the environment by performing the following steps:
+    ///
+    /// 1. Retrieves the `DockerUtil` object.
+    ///
+    /// 2. Retrieves the container configuration from the environment configuration.
+    ///
+    /// 3. Starts the container using the `DockerUtil` object.
+    ///
+    /// 4. Waits for the container to be ready by checking its logs.
+    ///
+    /// # Arguments
+    ///
+    /// * `docker_util` - A reference to a `DockerUtil` object.
+    ///
+    /// # Returns
+    ///
+    /// Returns `Ok(())` if the container is set up successfully, or an `Err` variant of `EnvironmentSetupError` if an error occurs during the setup process.
+    ///
+    /// # Errors
+    ///
+    /// Returns an `Err` variant of `EnvironmentSetupError` if any of the following errors occur during the setup process:
+    ///
+    /// - `ContainerStartError`: If there is an error starting the container.
+    /// - `ContainerLogsError`: If there is an error retrieving the container logs.
+    /// - `ContainerNotReadyError`: If the container is not ready within the specified timeout period.
+    ///
     pub(crate) async fn setup_container(
         &self,
         container_config: &ContainerConfig<'_>,
