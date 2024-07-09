@@ -2,6 +2,7 @@ use crate::prelude::{EnvUtil, EnvironmentError};
 
 impl EnvUtil {
     pub async fn teardown_db(&self) -> Result<(), EnvironmentError> {
+        //
         self.dbg_print("[teardown_ci]: teardown clickhouse container");
         return match self.teardown_ci_clickhouse().await {
             Ok(_) => Ok(()),
@@ -29,7 +30,7 @@ impl EnvUtil {
     pub async fn teardown_ci_clickhouse(&self) -> Result<(), EnvironmentError> {
         //
         self.dbg_print("[teardown_ci_clickhouse]: Get clickhouse util");
-        let ch_util = self.clickhouse_util().await.expect("Failed to get CH util");
+        let ch_util = self.clickhouse_util();
 
         ch_util
             .teardown_all_db()

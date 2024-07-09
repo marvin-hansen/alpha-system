@@ -10,6 +10,12 @@ use tokio::time::sleep;
 impl EnvUtil {
     pub async fn setup_containers(&mut self) -> Result<(), EnvironmentSetupError> {
         //
+        self.dbg_print("[setup_containers]: Check if containers already configured");
+        if self.containers_crated {
+            self.dbg_print("[setup_containers]: Containers already configured.");
+            return Ok(());
+        }
+
         self.dbg_print("Setup API proxy container");
         self.setup_container_api_proxy()
             .await

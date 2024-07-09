@@ -23,6 +23,12 @@ impl EnvUtil {
     ///
     pub async fn setup_ci(&mut self) -> Result<(), EnvironmentError> {
         //
+        self.dbg_print("[setup_ci]: Check if CI environment already configured");
+        if self.ci_env_configured {
+            self.dbg_print("[setup_ci]: CI environment already configured.");
+            return Ok(());
+        }
+
         self.dbg_print("[setup_ci]: Set data sample size to 10%");
         let sample_size = None; // Some(0);
                                 //
@@ -34,28 +40,21 @@ impl EnvUtil {
         self.dbg_print("[setup_ci]: Get clickhouse container config");
         let clickhouse_container_config = clickhouse_container_config();
 
-        self.dbg_print("[setup_ci]: Get clickhouse utils");
-        let ch_utils = self
-            .clickhouse_util()
-            .await
-            .expect("[setup_ci]: Failed to get ClickHouse Util");
-
-        self.dbg_print("Get Kaiko util");
-        let kaiko_util = self.kaiko_util();
-
         self.dbg_print("[setup_ci]: Configure clickhouse DB");
-        self.configure_clickhouse(
-            &ch_utils,
-            &clickhouse_container_config,
-            kaiko_util,
-            sample_size,
-        )
-        .await
-        .expect("[setup_ci]: Failed to configure clickhouse DB");
+        self.configure_clickhouse(&clickhouse_container_config, sample_size)
+            .await
+            .expect("[setup_ci]: Failed to configure clickhouse DB");
 
-        self.verify_clickhouse(&ch_utils, kaiko_util, sample_size)
+        let ch_configured = self
+            .verify_clickhouse()
             .await
             .expect("[setup_ci]: Failed to verify clickhouse DB");
+
+        if !ch_configured {
+            return Err(EnvironmentError::from(
+                "clickhouse not correctly configured",
+            ));
+        }
 
         Ok(())
     }
@@ -81,12 +80,16 @@ impl EnvUtil {
     ///
     async fn configure_clickhouse(
         &self,
-        ch_utils: &ClickhouseUtil,
         container_config: &ContainerConfig<'_>,
-        kaiko_util: &KaikoUtil,
         sample_size: Option<u32>,
     ) -> Result<(), EnvironmentError> {
         //
+        self.dbg_print("[setup_ci]: Get clickhouse utils");
+        let ch_utils = self.clickhouse_util();
+
+        self.dbg_print("Get Kaiko util");
+        let kaiko_util = self.kaiko_util();
+
         self.dbg_print(
             "[configure_clickhouse]: Create all clickhouse databases if not already exist",
         );
@@ -313,12 +316,14 @@ impl EnvUtil {
     ///
     /// - `EnvironmentError` if any step fails.
     ///
-    async fn verify_clickhouse(
-        &self,
-        ch_utils: &ClickhouseUtil,
-        kaiko_util: &KaikoUtil,
-        _sample_size: Option<u32>,
-    ) -> Result<(), EnvironmentError> {
+    pub(crate) async fn verify_clickhouse(&self) -> Result<bool, EnvironmentError> {
+        //
+        self.dbg_print("Get Clickhouse util");
+        let ch_utils = self.clickhouse_util();
+
+        self.dbg_print("Get Kaiko util");
+        let kaiko_util = self.kaiko_util();
+
         self.dbg_print("[verify_clickhouse]: Check if clickhouse is already configured");
         let tables_created = self
             .verify_tables_created(ch_utils)
@@ -343,7 +348,7 @@ impl EnvUtil {
             ));
         }
 
-        Ok(())
+        Ok(true)
     }
 
     /// Verifies that all metadata tables exist in the ClickHouse database.
