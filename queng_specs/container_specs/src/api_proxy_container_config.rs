@@ -10,7 +10,7 @@ pub fn api_proxy_container_config() -> ContainerConfig<'static> {
     ContainerConfig::new(
         "apiproxy",
         "index.docker.io/hansenmarvin/api_proxy",
-        "a230822",
+        "d9f20cd",
         "0.0.0.0",
         7777,
         None,
@@ -18,6 +18,6 @@ pub fn api_proxy_container_config() -> ContainerConfig<'static> {
         None,
         true, // Keep the container running for re-use
         true, // Keep the same container config across all env. setups.
-        20,   // Wait a few seconds until the container finished starting up.
+        12,   // Wait a few seconds until the container finished starting up.
     )
 }
