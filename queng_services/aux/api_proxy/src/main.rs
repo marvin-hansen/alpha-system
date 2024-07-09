@@ -43,10 +43,9 @@ async fn main() {
     // ArcSwap hot-swaps data in a multi-threaded runtime.
     // https://docs.rs/arc-swap/1.7.1/arc_swap/index.html
     let store: MetaDataStore = Arc::new(ArcSwap::from_pointee(meta_data.clone()));
-    let with_state = warp::any().map(move || store.clone());
 
     if UPDATE {
-        // Fresh clone of store
+        // New clone of store
         let c = store.clone();
 
         //  tokio_cron_scheduler
@@ -107,6 +106,9 @@ async fn main() {
         dbg_print("Start job scheduler");
         scheduler.start().await.expect("Failed to start scheduler");
     }
+
+    //
+    let with_state = warp::any().map(move || store.clone());
 
     dbg_print("Build health route");
     let health_check = warp::get()
