@@ -51,7 +51,7 @@ impl DockerUtil {
     ///
     /// Returns a tuple containing the container name and port if successful, or a `DockerError` if an error occurs.
     ////// ```
-    pub (crate) fn get_or_start_container(
+    pub(crate) fn get_or_start_container(
         &self,
         name: &str,
         image: &str,

@@ -9,13 +9,7 @@ async fn test_start_stop_container() {
     let container_config = clickhouse_container_config();
     let container_id = "test-clickhouse-9000";
 
-    let image = container_config.image();
-    let tag = container_config.tag();
-    let port = container_config.connection_port();
-    let image = &format!("{}:{}", image, tag);
-    let platform = container_config.platform();
-
-    let res = docker_util.start_container(container_id, port, None, platform, image);
+    let res = docker_util.get_or_start_container_config(&container_config);
     assert!(res.is_ok());
 
     sleep(Duration::from_secs(3)).await;
