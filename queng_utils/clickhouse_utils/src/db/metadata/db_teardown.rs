@@ -25,9 +25,6 @@ impl Metadata {
 }
 
 impl Metadata {
-    ///
-    /// This method drops the metadata database if it exists.
-    ///
     pub(crate) async fn drop_metadata_db(&self) -> Result<(), Box<dyn Error>> {
         let ddl = format!("DROP DATABASE IF EXISTS {DB_NAME}");
         self.execute_query(&ddl)

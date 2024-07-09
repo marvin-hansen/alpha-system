@@ -1,6 +1,5 @@
 use klickhouse::Client;
 
-// mod symbols;
 mod db_setup;
 mod db_teardown;
 mod db_utils;
@@ -11,11 +10,18 @@ pub(crate) const DB_TABLES: [&'static str; 4] = ["assets", "exchanges", "instrum
 
 #[derive(Clone)]
 pub struct Metadata {
+    dbg: bool,
     client: Client,
 }
 
 impl Metadata {
-    pub fn new(client: Client) -> Self {
-        Self { client }
+    pub fn new(client: Client, dbg: bool) -> Self {
+        Self { client, dbg }
+    }
+
+    fn dbg_print(&self, s: &str) {
+        if self.dbg {
+            println!("[ClickhouseUtil]:[Metadata]: {}", s);
+        }
     }
 }

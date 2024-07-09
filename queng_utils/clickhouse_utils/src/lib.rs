@@ -11,8 +11,6 @@ use types::error::ClickHouseUtilError;
 
 pub struct ClickhouseUtil {
     dbg: bool,
-    client: Client,
-    //
     pub metadata: Metadata,
     pub specs: Specs,
 }
@@ -41,10 +39,13 @@ impl ClickhouseUtil {
     }
 
     fn build(dbg: bool, client: Client) -> Result<Self, ClickHouseUtilError> {
+        if dbg {
+            println!("[ClickhouseUtil]: Debug mode enabled");
+        }
+
         Ok(Self {
             dbg,
-            client: client.clone(),
-            metadata: Metadata::new(client.clone()),
+            metadata: Metadata::new(client.clone(), dbg),
             specs: Specs::new(client.clone()),
         })
     }

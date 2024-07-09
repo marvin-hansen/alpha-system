@@ -99,7 +99,6 @@ impl EnvUtil {
     ) -> Result<(String, u16), EnvironmentSetupError> {
         //
         let container_name = &container_config.container_name();
-        let container_port = &container_config.connection_port();
         let wait_duration = container_config.wait_duration();
         let target_tag = container_config.tag();
 
@@ -150,20 +149,20 @@ impl EnvUtil {
             }
         }
 
+        let (container_name, container_port) = docker_util
+            .get_or_start_container_config(container_config)
+            .unwrap_or_else(|_| {
+                panic!(
+                    "[TestEnv/CI:setup_container]: Failed to setup container: {}",
+                    container_name
+                )
+            });
+
         return if !exists {
             self.dbg_print(&format!(
                 "Start container {} with target tag {}",
                 container_name, target_tag
             ));
-
-            let (container_name, container_port) = docker_util
-                .get_or_start_container_config(container_config)
-                .unwrap_or_else(|_| {
-                    panic!(
-                        "[TestEnv/CI:setup_container]: Failed to setup container: {}",
-                        container_name
-                    )
-                });
 
             self.dbg_print(&format!(
                 "Wait {} seconds for {} container to complete setup & finish boot sequence",
@@ -178,7 +177,7 @@ impl EnvUtil {
                 container_name, target_tag
             ));
 
-            Ok((container_name.to_owned(), container_port.to_owned()))
+            Ok((container_name, container_port))
         };
     }
 }

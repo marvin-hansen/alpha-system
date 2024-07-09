@@ -57,6 +57,22 @@ pub fn sanitize_table_name(table_name: &str) -> Result<&str, QueryError> {
 }
 
 /// Executes a query on the specified table in the ClickHouse database.
+///
+/// This function takes a reference to a `Client` object and a query string as input. It uses the `execute` method of the `Client` to execute the query.
+///
+/// # Arguments
+///
+/// * `client` - A reference to a `Client` object.
+/// * `query` - A string containing the query to be executed.
+///
+/// # Returns
+///
+/// * `Result<(), QueryError>` - Returns `Ok(())` if the query is executed successfully, or an `Err` containing a `QueryError` if it fails.
+///
+/// # Errors
+///
+/// Returns a `QueryError` if there is an error executing the query.
+///
 pub(crate) async fn execute_query(client: &Client, query: &str) -> Result<(), QueryError> {
     //
     let res = client.execute(query).await;
@@ -66,7 +82,23 @@ pub(crate) async fn execute_query(client: &Client, query: &str) -> Result<(), Qu
     }
 }
 
-/// Queries whether the table exists. Returns true if so, otherwise false.
+/// Verifies the existence of a table in the ClickHouse database.
+///
+/// This function takes a reference to a `Client` object and a query string as input. It queries the database to check if the table exists.
+///
+/// # Arguments
+///
+/// * `client` - A reference to a `Client` object.
+/// * `query` - A string containing the query to check the existence of the table.
+///
+/// # Returns
+///
+/// * `Result<bool, QueryError>` - Returns `Ok(true)` if the table exists, `Ok(false)` if it does not exist, or an `Err` containing a `QueryError` if the query fails.
+///
+/// # Errors
+///
+/// Returns a `QueryError` if there is an error executing the query.
+///
 pub(crate) async fn verify_table_exists(client: &Client, query: &str) -> Result<bool, QueryError> {
     //
     let res: Result<ExistsRow, KlickhouseError> = client.query_one(query).await;
@@ -77,7 +109,23 @@ pub(crate) async fn verify_table_exists(client: &Client, query: &str) -> Result<
     }
 }
 
-/// Counts the number of rows in the specified table in the ClickHouse database.
+/// Counts the number of rows in a specified table in the ClickHouse database.
+///
+/// This function takes a reference to a `Client` object and the name of the table as input. It generates a `SELECT count(*)` query for the table and executes it to get the number of rows.
+///
+/// # Arguments
+///
+/// * `client` - A reference to a `Client` object.
+/// * `table_name` - A string containing the name of the table to count rows from.
+///
+/// # Returns
+///
+/// * `Result<u64, QueryError>` - Returns the count of rows in the table as `u64` if successful, or an `Err` containing a `QueryError` if it fails.
+///
+/// # Errors
+///
+/// Returns a `QueryError` if there is an error executing the query.
+///
 pub(crate) async fn count_rows(client: &Client, table_name: &str) -> Result<u64, QueryError> {
     //
     let count_query = format!("SELECT count(*) FROM {table_name}");
