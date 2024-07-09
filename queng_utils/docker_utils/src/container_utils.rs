@@ -103,6 +103,70 @@ impl DockerUtil {
         return Ok((container.trim().to_string(), port));
     }
 
+    pub fn get_running_container_image_tag(
+        &self,
+        container_id: &str,
+    ) -> Result<String, DockerError> {
+        match self.check_if_container_exists(container_id) {
+            Ok(_) => {}
+            Err(_) => {
+                return Err(DockerError::from(format!(
+                    "[get_container_image_tag]: Error no container found for ID: {}",
+                    container_id,
+                )));
+            }
+        }
+
+        let container_image = match Command::new("docker")
+            .arg("ps")
+            .arg(format!("--filter=name={}", container_id))
+            .arg("--format={{.Image}}")
+            .output()
+        {
+            Ok(out) => String::from_utf8_lossy(&out.stdout).to_string(),
+            Err(e) => {
+                return Err(DockerError::from(format!(
+                    "[get_container_image_tag]: Error getting container image for {}: {}",
+                    container_id, e
+                )));
+            }
+        };
+
+        if container_image.is_empty() {
+            return Err(DockerError::from(format!(
+                "[get_container_image_tag]: Error no image found for container ID: {}",
+                container_id,
+            )));
+        }
+
+        let parts = container_image.split(':').collect::<Vec<&str>>();
+        let tag = parts
+            .last()
+            .expect("[get_container_image_tag]: Failed to get container tag")
+            .trim()
+            .to_owned();
+
+        Ok(tag)
+    }
+
+    pub fn check_if_running_container_uses_target_tag(
+        &self,
+        container_id: &str,
+        target_tag: &str,
+    ) -> Result<bool, DockerError> {
+        return match self.get_running_container_image_tag(container_id) {
+            Ok(container_tag) => {
+                Ok(container_tag.eq_ignore_ascii_case(target_tag))
+            }
+            Err(e) => {
+                Err(DockerError::from(format!(
+                    "[check_if_container_uses_target_tag]: Error getting container_tag for container ID: {} {}",
+                    container_id, e.to_string()
+                )))
+            }
+        };
+    }
+
     /// Check if a container exists by its ID.
     ///
     /// # Arguments
