@@ -118,7 +118,7 @@ impl<'l> CfgManager<'l> {
                 cluster_host.to_string()
             }
 
-            EnvironmentType::UnknownEnv => {
+            EnvironmentType::UNKNOWN => {
                 return Err(InitError("[EnvManager]: Unknown Environment".to_string()));
             }
         };

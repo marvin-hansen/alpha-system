@@ -20,3 +20,4 @@ common = { workspace = true }
 ctx_manager = { workspace = true }
 # External crates
 hickory-resolver = { workspace = true }
+mini-moka = { workspace = true }

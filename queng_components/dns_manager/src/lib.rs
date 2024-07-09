@@ -1,3 +1,8 @@
+use common::prelude::EnvironmentType;
+use hickory_resolver::config::*;
+use hickory_resolver::Resolver;
+use mini_moka::sync::Cache;
+use std::env;
 /**
  * This file contains the implementation of the DnsManager, which is responsible for managing DNS resolution for both internal and external hosts.
  *
@@ -12,25 +17,28 @@
  * The implementation is based on the Hickory DNS library.
  */
 use std::net::{IpAddr, SocketAddr};
-
-use hickory_resolver::config::*;
-use hickory_resolver::error::ResolveError;
-use hickory_resolver::Resolver;
-
-use common::prelude::EnvironmentType;
+use std::time::Duration;
 
 use ctx_manager::CtxManager;
+
+mod display;
+mod getters;
+mod resolve_dns;
+
+const DEFAULT_DNS: &str = "1.1.1.1";
 
 /**
  * The DnsManager struct contains two Resolvers, one for internal (cluster) DNS resolution
  * and one for external (Cloudflare) DNS resolution.
  */
-#[derive(Debug, Clone, Eq, PartialEq)]
 pub struct DnsManager {
-    internal_resolver_config: ResolverConfig,
-    internal_dns: String,
-    external_resolver_config: ResolverConfig,
-    external_dns: String,
+    env_type: EnvironmentType,
+    internal_dns_cache: Cache<String, IpAddr>,
+    internal_dns_resolver: Resolver,
+    internal_dns_server: String,
+    external_dns_cache: Cache<String, IpAddr>,
+    external_dns_resolver: Resolver,
+    external_dns_server: String,
 }
 
 impl DnsManager {
@@ -38,92 +46,74 @@ impl DnsManager {
      * Creates a new DnsManager instance.
      */
     pub fn new(ctx: &CtxManager) -> Self {
-        // Build the external (Cloudflare) DNS address resolver
-        let external_resolver_config = build_cloudflare_resolver_config();
-        let external_dns = "1.1.1.1:53".to_string();
+        let env_type = ctx.env_type();
 
-        // Build the internal cluster DNS resolver
-        let internal_dns_host = match ctx.env_type() {
-            EnvironmentType::LOCAL => "127.0.0.1".to_owned(),
-            EnvironmentType::CI => Self::get_internal_context_dns(ctx),
-            EnvironmentType::CLUSTER => Self::get_internal_context_dns(ctx),
-            EnvironmentType::UnknownEnv => "1.1.1.1".to_string(),
+        // Find the internal DNS server based on the env context
+        let internal_dns_host = match env_type {
+            EnvironmentType::LOCAL => Self::get_ci_local_dns(),
+            EnvironmentType::CI => Self::get_ci_context_dns(),
+            EnvironmentType::CLUSTER => Self::get_cluster_context_dns(),
+            EnvironmentType::UNKNOWN => DEFAULT_DNS.to_owned(),
         };
 
-        let internal_dns = format!("{}{}", internal_dns_host, ":53");
-        let internal_resolver_config = build_custom_resolver_config(&internal_dns);
+        // Build the internal DNS resolver to resolve hosts within the system network
+        let internal_dns_server = format!("{}{}", internal_dns_host, ":53");
+        let internal_resolver_config = build_custom_resolver_config(&internal_dns_server);
+        let internal_dns_resolver =
+            Resolver::new(internal_resolver_config, ResolverOpts::default())
+                .expect("Failed to construct internal CLUSTER DNS resolver");
+
+        // Build the external (Cloudflare) DNS address resolver to resolve hosts on the open internet
+        let external_dns_server = "1.1.1.1:53".to_string();
+        let external_resolver_config = build_cloudflare_resolver_config();
+        let external_dns_resolver =
+            Resolver::new(external_resolver_config, ResolverOpts::default())
+                .expect("Failed to construct internal CLUSTER DNS resolver");
+
+        // Build DNS cache to speed up internal and external DNS lookups
+        let internal_dns_cache = Self::get_dns_cache();
+        let external_dns_cache = Self::get_dns_cache();
 
         Self {
-            internal_resolver_config,
-            internal_dns,
-            external_resolver_config,
-            external_dns,
+            env_type,
+            internal_dns_cache,
+            internal_dns_resolver,
+            internal_dns_server,
+            external_dns_cache,
+            external_dns_resolver,
+            external_dns_server,
         }
     }
 
-    fn get_internal_context_dns(ctx: &CtxManager) -> String {
-        return match ctx.int_dns_server() {
-            Some(cluster_dns_server) => cluster_dns_server.to_string(),
-            None => {
-                panic!("Failed to find cluster DNS_SERVER env. Ensure DNS_SERVER is set as environment variable in deployment.yaml");
+    fn get_ci_local_dns() -> String {
+        DEFAULT_DNS.to_owned()
+    }
+
+    fn get_ci_context_dns() -> String {
+        DEFAULT_DNS.to_owned()
+    }
+    fn get_cluster_context_dns() -> String {
+        match env::var("DNS_SERVER") {
+            Ok(cluster_dns_server) => cluster_dns_server,
+            Err(e) => {
+                panic!(
+                    "Failed to read DNS_SERVER environment variable. Ensure DNS_SERVER is set in deployment.yaml:{}",
+                    e
+                );
             }
-        };
-    }
-}
-
-// getters
-impl DnsManager {
-    /**
-     * Returns a reference to the IP address of the internal DNS resolver.
-     */
-    pub fn internal_dns(&self) -> &str {
-        &self.internal_dns
-    }
-
-    /**
-     * Returns a reference to the IP address of the external DNS resolver.
-     */
-    pub fn external_dns(&self) -> &str {
-        &self.external_dns
-    }
-}
-
-impl DnsManager {
-    /**
-     * Resolves a hostname using the appropriate DNS resolver (internal or external).
-     */
-    pub fn resolve_dns(&self, host: &str, internal: bool) -> Result<IpAddr, ResolveError> {
-        if internal {
-            let config = &self.internal_resolver_config;
-            let internal_resolver = Resolver::new(config.clone(), ResolverOpts::default())
-                .expect("Failed to construct internal CLUSTER DNS resolver");
-            // resolve host name using the internal (cluster) DNS server
-            resolve_address(&internal_resolver, host)
-        } else {
-            let config = &self.external_resolver_config;
-
-            let external_resolver = Resolver::new(config.clone(), ResolverOpts::default())
-                .expect("Failed to construct external (Cloudflare) DNS resolver");
-
-            // resolve host name using the external DNS server
-            resolve_address(&external_resolver, host)
         }
     }
-}
 
-/**
- * Resolves a hostname using the specified DNS resolver.
- */
-fn resolve_address(resolver: &Resolver, host: &str) -> Result<IpAddr, ResolveError> {
-    // resolve host name using the external DNS server
-    let response = match resolver.lookup_ip(host) {
-        Ok(response) => response,
-        Err(e) => return Err(e),
-    };
-
-    match response.iter().next() {
-        Some(address) => Ok(address),
-        None => Err(ResolveError::from("Address not found")),
+    fn get_dns_cache() -> Cache<String, IpAddr> {
+        Cache::builder()
+            // Time to live (TTL): 60 minutes
+            .time_to_live(Duration::from_secs(60 * 60))
+            // Time to idle (TTI):  15 minutes
+            .time_to_idle(Duration::from_secs(15 * 60))
+            // This cache will hold up to 4MiB of values.
+            .max_capacity(4 * 1024 * 1024)
+            // Create the cache.
+            .build()
     }
 }
 
@@ -143,9 +133,7 @@ fn build_custom_resolver_config(address: &str) -> ResolverConfig {
         Err(e) => panic!("Failed to parse DNS SERVER address: {}", e),
     };
 
-    let protocol = Protocol::Udp;
-
-    let name_server = NameServerConfig::new(socket_addr, protocol);
+    let name_server = NameServerConfig::new(socket_addr, Protocol::Udp);
 
     let mut config = ResolverConfig::new();
 

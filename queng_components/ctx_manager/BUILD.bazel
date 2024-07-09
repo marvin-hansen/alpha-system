@@ -67,6 +67,23 @@ rust_test_suite(
     ],
 )
 
+rust_test_suite(
+    name = "tests_unknown",
+    srcs = [
+        "tests/ctx_manager_unknown_tests.rs",
+    ],
+    tags = [
+        "components",
+        "ctx_manager",
+        "unit",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//:common",
+        "//:ctx_manager",
+    ],
+)
+
 rust_doc(
     name = "doc",
     crate = ":ctx_manager",

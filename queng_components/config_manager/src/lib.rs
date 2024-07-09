@@ -18,7 +18,6 @@ mod utils;
 const DEFAULT_HOST: &str = "0.0.0.0";
 
 /// Struct that holds the configuration for a specific service.
-#[derive(Debug, Clone, Eq, PartialEq)]
 pub struct CfgManager<'l> {
     ctx_manager: &'l CtxManager,
     dns_manager: &'l DnsManager,

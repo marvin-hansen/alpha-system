@@ -30,8 +30,8 @@ async fn test_new() {
 
     // Build & configure components for DNS autoconfiguration relative to the environment type.
     let dnm = DnsManager::new(&ctxm);
-    assert_eq!(dnm.internal_dns(), "9.9.9.9:53");
-    assert_eq!(dnm.external_dns(), "1.1.1.1:53");
+    assert_eq!(dnm.internal_dns_server(), "9.9.9.9:53");
+    assert_eq!(dnm.external_dns_server(), "1.1.1.1:53");
 
     // Configure manager for context aware auto configuration.
     let config_manager = CfgManager::new(ServiceID::SMDB, smdb_service_config(), &ctxm, &dnm);

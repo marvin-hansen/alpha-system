@@ -4,16 +4,6 @@ use common::prelude::EnvironmentType;
 use ctx_manager::CtxManager;
 use dns_manager::DnsManager;
 
-// LOCAL and unknown environment cannot really be tested otherwise CI test runs breaks
-// because the environment variable must be set in the CI environment (not in the test)
-// Since you can onlu set the environment variable in the CI environment to one value,
-// it was decided to test for the cluster environment as this is most critical.
-// Please ensure the following is added to the CI test GH action:
-
-//         env:
-//           ENV: CLUSTER
-//           DNS_SERVER: 9.9.9.9
-
 #[test]
 fn test_new() {
     env::set_var("ENV", "CLUSTER");
@@ -21,25 +11,39 @@ fn test_new() {
 
     let ctm = CtxManager::new();
     assert_eq!(ctm.env_type(), EnvironmentType::CLUSTER);
-    assert_eq!(ctm.int_dns_server(), &Some("9.9.9.9".to_string()));
 
     let dnm = DnsManager::new(&ctm);
-    assert_eq!(dnm.internal_dns(), "9.9.9.9:53");
-    assert_eq!(dnm.external_dns(), "1.1.1.1:53");
+    assert_eq!(dnm.internal_dns_server(), "9.9.9.9:53");
+    assert_eq!(dnm.external_dns_server(), "1.1.1.1:53");
 }
 
 #[test]
-fn test_resolve_internal_dns() {
+fn test_internal_dns() {
     env::set_var("ENV", "CLUSTER");
     env::set_var("DNS_SERVER", "9.9.9.9");
 
     let ctm = CtxManager::new();
     assert_eq!(ctm.env_type(), EnvironmentType::CLUSTER);
-    assert_eq!(ctm.int_dns_server(), &Some("9.9.9.9".to_string()));
 
     let dnm = DnsManager::new(&ctm);
-    assert_eq!(dnm.internal_dns(), "9.9.9.9:53");
-    assert_eq!(dnm.external_dns(), "1.1.1.1:53");
+    assert_eq!(dnm.internal_dns_server(), "9.9.9.9:53");
+}
+
+// We cannot test the internal DNS resolution since
+// this would require a custom DNS server with custom DNS records.
+// However, this is build for Kubernetes and usually k8s DNS works reliably.
+
+#[test]
+fn test_external_dns() {
+    env::set_var("ENV", "CLUSTER");
+    env::set_var("DNS_SERVER", "9.9.9.9");
+
+    let ctm = CtxManager::new();
+    assert_eq!(ctm.env_type(), EnvironmentType::CLUSTER);
+
+    let dnm = DnsManager::new(&ctm);
+    assert_eq!(dnm.internal_dns_server(), "9.9.9.9:53");
+    assert_eq!(dnm.external_dns_server(), "1.1.1.1:53");
 }
 
 #[test]
@@ -49,9 +53,36 @@ fn test_resolve_external_dns() {
 
     let ctm = CtxManager::new();
     assert_eq!(ctm.env_type(), EnvironmentType::CLUSTER);
-    assert_eq!(ctm.int_dns_server(), &Some("9.9.9.9".to_string()));
 
     let dnm = DnsManager::new(&ctm);
-    assert_eq!(dnm.internal_dns(), "9.9.9.9:53");
-    assert_eq!(dnm.external_dns(), "1.1.1.1:53");
+    assert_eq!(dnm.internal_dns_server(), "9.9.9.9:53");
+    assert_eq!(dnm.external_dns_server(), "1.1.1.1:53");
+
+    // We're hitting each host twice to let the second one hit the cache.
+    let host = "harvard.edu";
+    let res = dnm.resolve_dns(host, false);
+    assert!(res.is_ok());
+
+    let res = dnm.resolve_dns(host, false);
+    assert!(res.is_ok());
+
+    let host = "mit.edu";
+    let res = dnm.resolve_dns(host, false);
+    assert!(res.is_ok());
+
+    let host = "mit.edu";
+    let res = dnm.resolve_dns(host, false);
+    assert!(res.is_ok());
+}
+
+#[test]
+fn test_display() {
+    env::set_var("ENV", "CLUSTER");
+    env::set_var("DNS_SERVER", "9.9.9.9");
+
+    let ctm = CtxManager::new();
+    assert_eq!(ctm.env_type(), EnvironmentType::CLUSTER);
+
+    let dnm = DnsManager::new(&ctm);
+    assert_eq!(dnm.to_string(), "DnsManager: \n env_type: CLUSTER \n internal_dns_server: 9.9.9.9:53 \n external_dns_server 1.1.1.1:53");
 }

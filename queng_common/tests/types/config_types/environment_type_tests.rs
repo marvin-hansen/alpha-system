@@ -3,13 +3,13 @@ use common::prelude::EnvironmentType;
 #[test]
 fn test_default() {
     let protocol = EnvironmentType::default();
-    assert_eq!(protocol, EnvironmentType::UnknownEnv);
+    assert_eq!(protocol, EnvironmentType::UNKNOWN);
 }
 
 #[test]
 fn test_debug() {
-    let e1 = EnvironmentType::UnknownEnv;
-    assert_eq!(format!("{:?}", e1), "UnknownEnv");
+    let e1 = EnvironmentType::UNKNOWN;
+    assert_eq!(format!("{:?}", e1), "UNKNOWN");
 
     let e2 = EnvironmentType::LOCAL;
     assert_eq!(format!("{:?}", e2), "LOCAL");
@@ -23,8 +23,8 @@ fn test_debug() {
 
 #[test]
 fn test_display() {
-    let e1 = EnvironmentType::UnknownEnv;
-    assert_eq!(format!("{}", e1), "UnknownEnv");
+    let e1 = EnvironmentType::UNKNOWN;
+    assert_eq!(format!("{}", e1), "UNKNOWN");
 
     let e2 = EnvironmentType::LOCAL;
     assert_eq!(format!("{}", e2), "LOCAL");

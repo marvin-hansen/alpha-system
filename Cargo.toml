@@ -135,6 +135,7 @@ futures = {version = "0.3"}
 hickory-resolver = { version = "0.24", default-features = false, features = ["tokio-runtime"] }
 klickhouse = {version = "0.13.0" }
 lru = {version = "0.12"}
+mini-moka ={version = "0.10.3"}
 parquet = {version = "52.0" }
 prost = {version = "0.13.0" }
 prost-types = { version = "0.13.0", default-features = false }

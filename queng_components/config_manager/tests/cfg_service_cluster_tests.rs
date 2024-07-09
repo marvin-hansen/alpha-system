@@ -21,11 +21,10 @@ fn test_new() {
 
     let ctm = CtxManager::new();
     assert_eq!(ctm.env_type(), EnvironmentType::CLUSTER);
-    assert_eq!(ctm.int_dns_server(), &Some("9.9.9.9".to_string()));
 
     let dnm = DnsManager::new(&ctm);
-    assert_eq!(dnm.internal_dns(), "9.9.9.9:53");
-    assert_eq!(dnm.external_dns(), "1.1.1.1:53");
+    assert_eq!(dnm.internal_dns_server(), "9.9.9.9:53");
+    assert_eq!(dnm.external_dns_server(), "1.1.1.1:53");
 }
 
 #[test]
@@ -35,11 +34,10 @@ fn test_init_smdb_env() {
 
     let ctm = CtxManager::new();
     assert_eq!(ctm.env_type(), EnvironmentType::CLUSTER);
-    assert_eq!(ctm.int_dns_server(), &Some("9.9.9.9".to_string()));
 
     let dnm = DnsManager::new(&ctm);
-    assert_eq!(dnm.internal_dns(), "9.9.9.9:53");
-    assert_eq!(dnm.external_dns(), "1.1.1.1:53");
+    assert_eq!(dnm.internal_dns_server(), "9.9.9.9:53");
+    assert_eq!(dnm.external_dns_server(), "1.1.1.1:53");
 }
 
 #[test]
@@ -49,11 +47,10 @@ fn test_init_cmdb_env() {
 
     let ctm = CtxManager::new();
     assert_eq!(ctm.env_type(), EnvironmentType::CLUSTER);
-    assert_eq!(ctm.int_dns_server(), &Some("9.9.9.9".to_string()));
 
     let dnm = DnsManager::new(&ctm);
-    assert_eq!(dnm.internal_dns(), "9.9.9.9:53");
-    assert_eq!(dnm.external_dns(), "1.1.1.1:53");
+    assert_eq!(dnm.internal_dns_server(), "9.9.9.9:53");
+    assert_eq!(dnm.external_dns_server(), "1.1.1.1:53");
 }
 
 #[test]
@@ -63,9 +60,8 @@ fn test_init_dbgw_env() {
 
     let ctm = CtxManager::new();
     assert_eq!(ctm.env_type(), EnvironmentType::CLUSTER);
-    assert_eq!(ctm.int_dns_server(), &Some("9.9.9.9".to_string()));
 
     let dnm = DnsManager::new(&ctm);
-    assert_eq!(dnm.internal_dns(), "9.9.9.9:53");
-    assert_eq!(dnm.external_dns(), "1.1.1.1:53");
+    assert_eq!(dnm.internal_dns_server(), "9.9.9.9:53");
+    assert_eq!(dnm.external_dns_server(), "1.1.1.1:53");
 }

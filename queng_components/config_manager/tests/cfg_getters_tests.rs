@@ -16,11 +16,10 @@ fn new_config_manager_smdb() {
 
     let ctm = CtxManager::new();
     assert_eq!(ctm.env_type(), EnvironmentType::CLUSTER);
-    assert_eq!(ctm.int_dns_server(), &Some("9.9.9.9".to_string()));
 
     let dnm = DnsManager::new(&ctm);
-    assert_eq!(dnm.internal_dns(), "9.9.9.9:53");
-    assert_eq!(dnm.external_dns(), "1.1.1.1:53");
+    assert_eq!(dnm.internal_dns_server(), "9.9.9.9:53");
+    assert_eq!(dnm.external_dns_server(), "1.1.1.1:53");
 
     let config_manager = CfgManager::new(ServiceID::SMDB, smdb_service_config(), &ctm, &dnm);
 
@@ -36,11 +35,10 @@ fn new_config_manager_cmdb() {
 
     let ctm = CtxManager::new();
     assert_eq!(ctm.env_type(), EnvironmentType::CLUSTER);
-    assert_eq!(ctm.int_dns_server(), &Some("9.9.9.9".to_string()));
 
     let dnm = DnsManager::new(&ctm);
-    assert_eq!(dnm.internal_dns(), "9.9.9.9:53");
-    assert_eq!(dnm.external_dns(), "1.1.1.1:53");
+    assert_eq!(dnm.internal_dns_server(), "9.9.9.9:53");
+    assert_eq!(dnm.external_dns_server(), "1.1.1.1:53");
 
     let config_manager = CfgManager::new(ServiceID::CMDB, cmdb_service_config(), &ctm, &dnm);
 
@@ -56,11 +54,10 @@ fn new_config_manager_dbgw() {
 
     let ctm = CtxManager::new();
     assert_eq!(ctm.env_type(), EnvironmentType::CLUSTER);
-    assert_eq!(ctm.int_dns_server(), &Some("9.9.9.9".to_string()));
 
     let dnm = DnsManager::new(&ctm);
-    assert_eq!(dnm.internal_dns(), "9.9.9.9:53");
-    assert_eq!(dnm.external_dns(), "1.1.1.1:53");
+    assert_eq!(dnm.internal_dns_server(), "9.9.9.9:53");
+    assert_eq!(dnm.external_dns_server(), "1.1.1.1:53");
 
     let config_manager = CfgManager::new(ServiceID::DBGW, dbgw_service_config(), &ctm, &dnm);
 
@@ -76,11 +73,10 @@ fn new_config_manager_qdgw() {
 
     let ctm = CtxManager::new();
     assert_eq!(ctm.env_type(), EnvironmentType::CLUSTER);
-    assert_eq!(ctm.int_dns_server(), &Some("9.9.9.9".to_string()));
 
     let dnm = DnsManager::new(&ctm);
-    assert_eq!(dnm.internal_dns(), "9.9.9.9:53");
-    assert_eq!(dnm.external_dns(), "1.1.1.1:53");
+    assert_eq!(dnm.internal_dns_server(), "9.9.9.9:53");
+    assert_eq!(dnm.external_dns_server(), "1.1.1.1:53");
 
     let config_manager = CfgManager::new(ServiceID::QDGW, qdgw_service_config(), &ctm, &dnm);
 

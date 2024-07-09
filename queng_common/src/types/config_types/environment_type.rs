@@ -11,7 +11,7 @@ use std::fmt::{Display, Formatter};
 pub enum EnvironmentType {
     /// The unknown environment type.
     #[default]
-    UnknownEnv,
+    UNKNOWN,
     /// The local environment type.
     LOCAL,
     /// The cluster environment type.
@@ -22,11 +22,6 @@ pub enum EnvironmentType {
 
 impl Display for EnvironmentType {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        match self {
-            EnvironmentType::UnknownEnv => write!(f, "UnknownEnv"),
-            EnvironmentType::LOCAL => write!(f, "LOCAL"),
-            EnvironmentType::CLUSTER => write!(f, "CLUSTER"),
-            EnvironmentType::CI => write!(f, "CI"),
-        }
+        write!(f, "{:?}", &self)
     }
 }
