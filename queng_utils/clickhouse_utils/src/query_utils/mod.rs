@@ -1,5 +1,5 @@
 use crate::types::error::QueryError;
-use crate::types::{CountRow, ExistsRow};
+use crate::types::{CountRow, ExistsDBRow, ExistsRow};
 use common::prelude::ValidationError;
 use klickhouse::{Client, KlickhouseError};
 
@@ -107,6 +107,22 @@ pub(crate) async fn verify_table_exists(client: &Client, query: &str) -> Result<
         Ok(res) => Ok(res.exists()),
         Err(e) => Err(QueryError::QueryFailed(e.to_string())),
     }
+}
+
+pub(crate) async fn verify_db_exists(client: &Client, db_name: &str) -> Result<bool, QueryError> {
+    let query = format!("show databases like '{db_name}'");
+
+    let res: Result<ExistsDBRow, KlickhouseError> = client.query_one(query).await;
+    return match res {
+        Ok(row) => {
+            let val = row.value();
+
+            let db_exists = !val.is_empty() && val.eq_ignore_ascii_case(db_name);
+
+            Ok(db_exists)
+        }
+        Err(_) => Ok(false),
+    };
 }
 
 /// Counts the number of rows in a specified table in the ClickHouse database.

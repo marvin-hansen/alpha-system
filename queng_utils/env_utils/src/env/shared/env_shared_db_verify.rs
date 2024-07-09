@@ -1,231 +1,9 @@
 use crate::prelude::EnvironmentError;
 use crate::EnvUtil;
 use clickhouse_utils::ClickhouseUtil;
-use common::prelude::ContainerConfig;
 use kaiko_utils::KaikoUtil;
 
 impl EnvUtil {
-    pub(crate) async fn configure_clickhouse(
-        &self,
-        container_config: &ContainerConfig<'_>,
-        sample_size: Option<u32>,
-    ) -> Result<(), EnvironmentError> {
-        //
-        self.dbg_print("[setup_ci]: Get clickhouse utils");
-        let ch_utils = self.clickhouse_util();
-
-        self.dbg_print("Get Kaiko util");
-        let kaiko_util = self.kaiko_util();
-
-        self.dbg_print(
-            "[configure_clickhouse]: Create all clickhouse databases if not already exist",
-        );
-        ch_utils
-            .setup_all_db()
-            .await
-            .expect("Failed to create databases");
-
-        self.dbg_print("[configure_clickhouse]: Check if clickhouse is already configured");
-        let tables_created = self
-            .verify_tables_created(ch_utils)
-            .await
-            .expect("[configure_clickhouse]: Failed to check if all database tables configured");
-
-        self.dbg_print(&format!(
-            "[configure_clickhouse]: Clickhouse is already configured: {}",
-            tables_created
-        ));
-
-        if !tables_created {
-            ch_utils
-                .setup_all_tables()
-                .await
-                .expect("Failed to create metadata tables");
-        };
-
-        self.dbg_print("[configure_clickhouse]: Check if all clickhouse data are already imported");
-        let data_imported = self
-            .check_if_meta_data_imported(ch_utils)
-            .await
-            .expect("[configure_clickhouse]: Failed to check if all data imported");
-
-        self.dbg_print(&format!(
-            "[configure_clickhouse]: Clickhouse data already imported: {}",
-            data_imported
-        ));
-        self.dbg_print("[configure_clickhouse]: Check whether to keep existing CH config");
-        let keep_data = container_config.keep_configuration();
-        self.dbg_print(&format!(
-            "[configure_clickhouse]: Keep Clickhouse config and data: {}",
-            keep_data
-        ));
-
-        if tables_created && data_imported && keep_data {
-            // If so, abort & return. Nothing to do in this case.
-            self.dbg_print("[configure_clickhouse]: Nothing to configure or import; return.");
-
-            return Ok(());
-        }
-
-        // Check if the container configuration should be reset. If so, delete everything.
-        self.dbg_print("[configure_clickhouse]: Check if reset is required if data are outdated");
-        if container_config.keep_configuration() {
-            self.dbg_print("[configure_clickhouse]: Drop all databases");
-            ch_utils
-                .teardown_all_db()
-                .await
-                .expect("[configure_clickhouse]: Failed to drop all databases")
-        }
-
-        // We know that the DB is either not configured or has been deleted
-        // so we can re-crete all databases, tables, and import all data;
-        self.dbg_print("[configure_clickhouse]: Create all databases");
-        self.setup_db(ch_utils)
-            .await
-            .expect("[configure_clickhouse]: Failed to create all databases");
-
-        self.dbg_print("[configure_clickhouse]: Create all tables");
-        self.create_tables(ch_utils)
-            .await
-            .expect("[configure_clickhouse]: Failed to create all tables");
-
-        self.dbg_print("[configure_clickhouse]: Verify that all tables are created");
-        let tables_created = self
-            .verify_tables_created(ch_utils)
-            .await
-            .expect("[configure_clickhouse]: Failed to verify if all tables are created");
-        assert!(tables_created);
-
-        self.dbg_print("[configure_clickhouse]: Import data into clickhouse");
-        self.import_metadata(ch_utils, kaiko_util, sample_size)
-            .await
-            .expect("[configure_clickhouse]: Failed to import data into Clickhouse");
-        Ok(())
-    }
-
-    /// Sets up the ClickHouse database for Continuous Integration (CI) testing.
-    ///
-    /// This function creates all databases required for testing.
-    ///
-    /// # Errors
-    ///
-    /// - `EnvironmentError` if any step fails.
-    ///
-    async fn setup_db(&self, ch_utils: &ClickhouseUtil) -> Result<(), EnvironmentError> {
-        //
-        self.dbg_print("[setup_db]: Create all databases");
-        ch_utils
-            .setup_all_db()
-            .await
-            .expect("[setup_db]: Failed to create all databases");
-
-        Ok(())
-    }
-
-    async fn create_tables(&self, ch_utils: &ClickhouseUtil) -> Result<(), EnvironmentError> {
-        //
-        self.dbg_print("[create_tables]:Create all metadata tables");
-        ch_utils
-            .metadata
-            .create_all_metadata_tables()
-            .await
-            .expect("[create_tables]: Failed to create metadata tables");
-
-        self.dbg_print("[create_tables]:Create all specs tables");
-        //
-
-        Ok(())
-    }
-
-    /// Creates all tables required for testing in the ClickHouse database.
-    ///
-    /// This function creates all tables necessary for testing.
-    ///
-    /// # Arguments
-    ///
-    /// * `ch_utils` - A reference to a `ClickhouseUtil` object.
-    ///
-    /// # Errors
-    ///
-    /// - `EnvironmentError` if any step fails.
-    ///
-    async fn import_metadata(
-        &self,
-        ch_utils: &ClickhouseUtil,
-        kaiko_util: &KaikoUtil,
-        _sample_size: Option<u32>,
-    ) -> Result<(), EnvironmentError> {
-        //
-        self.dbg_print("[import_metadata]: Download assets metadata");
-        let assets = kaiko_util
-            .get_assets()
-            .await
-            .expect("[import_metadata]: Failed to get assets");
-
-        self.dbg_print(&format!(
-            "[import_metadata]: Downloaded assets: {}",
-            assets.len()
-        ));
-
-        self.dbg_print("[import_data]: Import assets metadata");
-        ch_utils
-            .metadata
-            .import_asset_metadata(&assets)
-            .await
-            .expect("[import_data]: Failed to import assets metadata");
-
-        self.dbg_print("[import_data]: Download exchange metadata");
-        let exchanges = kaiko_util
-            .get_exchanges()
-            .await
-            .expect("[import_data]: Failed to get exchanges");
-
-        self.dbg_print(&format!(
-            "[import_metadata]: Downloaded exchanges: {}",
-            exchanges.len()
-        ));
-
-        self.dbg_print("[import_data]: Import exchanges metadata");
-        ch_utils
-            .metadata
-            .import_exchanges_metadata(&exchanges)
-            .await
-            .expect("[import_data]: Failed to import exchanges metadata");
-
-        self.dbg_print("[import_data]: Download instrument metadata");
-        let instruments = kaiko_util
-            .get_instruments()
-            .await
-            .expect("[import_data]: Failed to get instruments");
-
-        self.dbg_print(&format!(
-            "[import_metadata]: Downloaded instruments: {}",
-            instruments.len()
-        ));
-
-        self.dbg_print("[import_data]: Import instrument metadata");
-        ch_utils
-            .metadata
-            .import_instruments_metadata(&instruments)
-            .await
-            .expect("[import_data]: Failed to import instrument metadata");
-
-        self.dbg_print("[import_data]: Download metadata statistic");
-        let stats = kaiko_util
-            .get_stats()
-            .await
-            .expect("[import_data]: Failed to get metadata statistic");
-
-        self.dbg_print("[import_data]: Import metadata statistic");
-        ch_utils
-            .metadata
-            .import_stats_metadata(&stats)
-            .await
-            .expect("[import_data]: Failed to import metadata statistic");
-
-        Ok(())
-    }
-
     /// Verifies that the ClickHouse database is configured correctly.
     ///
     /// This function performs the following steps:
@@ -246,12 +24,27 @@ impl EnvUtil {
     pub(crate) async fn verify_clickhouse(&self) -> Result<bool, EnvironmentError> {
         //
         self.dbg_print("Get Clickhouse util");
-        let ch_utils = self.clickhouse_util();
+        let ch_utils = &self
+            .get_new_clickhouse_util()
+            .await
+            .expect("Failed to get ClickhouseUtil");
 
         self.dbg_print("Get Kaiko util");
         let kaiko_util = self.kaiko_util();
 
-        self.dbg_print("[verify_clickhouse]: Check if clickhouse is already configured");
+        self.dbg_print("[verify_clickhouse]: Check if all databases are created");
+        let dbs_created = self
+            .verify_databases_created(ch_utils)
+            .await
+            .expect("[verify_clickhouse]: Failed to check if all databases were created");
+
+        if !dbs_created {
+            return Err(EnvironmentError::from(
+                "[verify_clickhouse]: Error: Databases were not created.",
+            ));
+        }
+
+        self.dbg_print("[verify_clickhouse]: Check if clickhouse tables are already configured");
         let tables_created = self
             .verify_tables_created(ch_utils)
             .await
@@ -278,6 +71,33 @@ impl EnvUtil {
         Ok(true)
     }
 
+    /// Verifies if all databases are created in the ClickHouse database.
+    ///
+    /// This method checks if all databases required for the application are created in the ClickHouse database.
+    ///
+    /// # Arguments
+    ///
+    /// * `ch_utils` - A reference to a `ClickhouseUtil` object.
+    ///
+    /// # Returns
+    ///
+    /// * `Ok(true)` if all databases exist.
+    /// * `Ok(false)` if any database does not exist.
+    /// * `Err(EnvironmentError)` if an error occurs during the verification process.
+    ///
+    async fn verify_databases_created(
+        &self,
+        ch_utils: &ClickhouseUtil,
+    ) -> Result<bool, EnvironmentError> {
+        self.dbg_print("[verify_databases_created]: Check if all databases exist");
+        let all_exists = match ch_utils.verify_all_db_exists().await {
+            Ok(exists) => exists,
+            Err(e) => return Err(EnvironmentError::from(e.to_string())),
+        };
+
+        return Ok(all_exists);
+    }
+
     /// Verifies that all metadata tables exist in the ClickHouse database.
     ///
     /// This function performs the following steps:
@@ -294,7 +114,7 @@ impl EnvUtil {
     /// - `Ok(false)` if any metadata table does not exist.
     /// - `Err(EnvironmentError)` if an error occurs during the verification process.
     ///
-    async fn verify_tables_created(
+    pub(crate) async fn verify_tables_created(
         &self,
         ch_utils: &ClickhouseUtil,
     ) -> Result<bool, EnvironmentError> {
@@ -310,7 +130,28 @@ impl EnvUtil {
         return Ok(all_exists);
     }
 
-    async fn check_if_meta_data_imported(
+    /// Checks if all metadata has been imported into the ClickHouse database.
+    ///
+    /// This method checks if all metadata tables have been populated with data in the ClickHouse database.
+    /// It performs the following steps:
+    ///
+    /// 1. Retrieves the `ClickhouseUtil` object.
+    ///
+    /// 2. Counts the number of assets, exchanges, and instruments in the metadata tables.
+    ///
+    /// 3. Compares the counts with predefined thresholds to determine if all metadata has been imported.
+    ///
+    /// # Arguments
+    ///
+    /// * `ch_utils` - A reference to a `ClickhouseUtil` object.
+    ///
+    /// # Returns
+    ///
+    /// - `Ok(true)` if all metadata has been imported.
+    /// - `Ok(false)` if any metadata table is empty.
+    /// - `Err(EnvironmentError)` if an error occurs during the verification process.
+    ///
+    pub(crate) async fn check_if_meta_data_imported(
         &self,
         ch_utils: &ClickhouseUtil,
     ) -> Result<bool, EnvironmentError> {
@@ -362,21 +203,29 @@ impl EnvUtil {
 
     /// Verifies that all data have been imported into the metadata database.
     ///
-    /// This function performs the following steps:
+    /// This method checks if all data have been imported into the metadata database.
+    /// It performs the following steps:
     ///
-    /// 1. Fetches the metadata statistics from the Kaiko API Proxy.
-    /// 2. Counts the number of assets, exchanges, and instruments in the metadata database.
+    /// 1. Retrieves the `ClickhouseUtil` object.
+    ///
+    /// 2. Retrieves the `KaikoUtil` object.
+    ///
+    /// 3. Counts the number of assets, exchanges, and instruments in the metadata tables.
+    ///
+    /// 4. Compares the counts with predefined thresholds to determine if all data have been imported.
     ///
     /// # Arguments
     ///
     /// * `ch_utils` - A reference to a `ClickhouseUtil` object.
+    ///
     /// * `kaiko_util` - A reference to a `KaikoUtil` object.
-    /// * `sample_size` - An optional `u32` representing the sample size.
+    ///
+    /// * `sample_size` - An optional `u32` value representing the sample size.
     ///
     /// # Returns
     ///
     /// - `Ok(true)` if all data have been imported.
-    /// - `Ok(false)` if any data are missing.
+    /// - `Ok(false)` if any data table is empty.
     /// - `Err(EnvironmentError)` if an error occurs during the verification process.
     ///
     async fn verify_import_data(

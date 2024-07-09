@@ -3,8 +3,9 @@ use klickhouse::Client;
 mod db_setup;
 
 mod db_teardown;
+mod db_utils;
 mod tables;
-// pub(crate) const DB_NAME: &'static str = "specs";
+pub(crate) const DB_NAME: &'static str = "specs";
 //
 // pub(crate) const DB_TABLES: [&'static str; 1] = ["services"];
 

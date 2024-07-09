@@ -1,5 +1,4 @@
 use crate::prelude::EnvironmentError;
-use clickhouse_utils::ClickhouseUtil;
 use container_specs::api_proxy_container_config::api_proxy_container_config;
 use container_specs::clickhouse_container_config::clickhouse_container_config;
 use docker_utils::DockerUtil;
@@ -21,7 +20,6 @@ pub struct EnvUtil {
     ci_env_configured: bool,
     //
     docker_util: DockerUtil,
-    clickhouse_util: ClickhouseUtil,
     kaiko_util: KaikoUtil,
     dbg: bool,
 }
@@ -43,10 +41,6 @@ impl EnvUtil {
         // Build utils
         let docker_util =
             Self::init_docker_util(dbg).expect("EnvUtil: Failed to create Docker util");
-
-        let clickhouse_util = Self::init_clickhouse_util(dbg)
-            .await
-            .expect("EnvUtil: Failed to create clickhouse_util");
 
         let kaiko_util = Self::init_kaiko_util(dbg)
             .await
@@ -73,17 +67,19 @@ impl EnvUtil {
             containers_crated,
             ci_env_configured,
             docker_util,
-            clickhouse_util,
             kaiko_util,
             dbg,
         };
 
         if containers_crated {
-            let ci_env_configured = instance
-                .verify_clickhouse()
-                .await
-                .expect("Failed to verify clickhosue ");
-            instance.set_ci_env_configured(ci_env_configured);
+            match instance.verify_clickhouse().await {
+                Ok(ci_env_configured) => {
+                    if ci_env_configured {
+                        instance.set_ci_env_configured(ci_env_configured);
+                    }
+                }
+                Err(_) => {}
+            };
         }
 
         Ok(instance)

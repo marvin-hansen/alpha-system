@@ -1,7 +1,30 @@
 use crate::EnvUtil;
+use clickhouse_utils::prelude::ClickHouseUtilError;
 use clickhouse_utils::ClickhouseUtil;
+use container_specs::clickhouse_container_config::clickhouse_container_config;
 use docker_utils::DockerUtil;
 use kaiko_utils::KaikoUtil;
+
+impl EnvUtil {
+    pub(super) async fn get_new_clickhouse_util(
+        &self,
+    ) -> Result<ClickhouseUtil, ClickHouseUtilError> {
+        let container_config = clickhouse_container_config();
+
+        // DB connection string
+        let dsn = format!(
+            "{}:{}",
+            container_config.url(),
+            container_config.connection_port(),
+        );
+
+        if self.dbg {
+            ClickhouseUtil::with_debug(dsn).await
+        } else {
+            ClickhouseUtil::new(dsn).await
+        }
+    }
+}
 
 impl EnvUtil {
     pub fn api_proxy_container_port(&self) -> u16 {
@@ -21,9 +44,6 @@ impl EnvUtil {
     }
     pub fn docker_util(&self) -> DockerUtil {
         self.docker_util
-    }
-    pub fn clickhouse_util(&self) -> &ClickhouseUtil {
-        &self.clickhouse_util
     }
     pub fn kaiko_util(&self) -> &KaikoUtil {
         &self.kaiko_util

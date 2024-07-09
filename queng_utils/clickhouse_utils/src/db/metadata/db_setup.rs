@@ -37,7 +37,7 @@ impl Metadata {
         let tables = self.metadata_tables();
         for table in tables {
             let query = self.generate_table_exists_query(table);
-            match self.verify_exists(&query).await {
+            match self.verify_table_exists(&query).await {
                 Ok(exists) => {
                     if !exists {
                         return Ok(false);
@@ -77,6 +77,14 @@ impl Metadata {
             .expect("Failed to create metadata DB");
 
         Ok(())
+    }
+    pub async fn verify_metadata_db_exists(&self) -> Result<bool, Box<dyn Error>> {
+        let exists = self
+            .verify_db_exists(DB_NAME)
+            .await
+            .expect("Failed to verify if metadata DB");
+
+        Ok(exists)
     }
 }
 

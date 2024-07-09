@@ -1,11 +1,11 @@
 use crate::db::specs::Specs;
-use crate::query_utils;
+use crate::db::specs::DB_NAME;
 use std::error::Error;
 
 impl Specs {
     pub(crate) async fn create_spec_db(&self) -> Result<(), Box<dyn Error>> {
         let ddl = self.create_specs_db_ddl();
-        query_utils::execute_query(&self.client, &ddl)
+        self.execute_query(&ddl)
             .await
             .expect("Failed to drop specs DB");
 
@@ -13,5 +13,14 @@ impl Specs {
     }
     fn create_specs_db_ddl(&self) -> String {
         "CREATE DATABASE IF NOT EXISTS specs".to_string()
+    }
+
+    pub async fn verify_specs_db_exists(&self) -> Result<bool, Box<dyn Error>> {
+        let exists = self
+            .verify_db_exists(DB_NAME)
+            .await
+            .expect("Failed to verify if metadata DB");
+
+        Ok(exists)
     }
 }
