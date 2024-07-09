@@ -18,6 +18,7 @@ pub fn clickhouse_container_config() -> ContainerConfig<'static> {
         9000,
         Some(&[8123]),
         None,
+        None,
         true, // Keep the container running for re-use
         true, // Keep the same container config across all env. setups.
         5,    // Wait 5 second until the container finished starting up.

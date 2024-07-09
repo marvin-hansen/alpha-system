@@ -9,6 +9,7 @@ pub struct ContainerConfig<'l> {
     connection_port: u16,
     additional_ports: Option<&'l [u16]>,
     platform: Option<&'l str>,
+    env_var: Option<&'l str>,
     reuse_container: bool,
     keep_configuration: bool,
     wait_duration: u64,
@@ -42,7 +43,7 @@ impl<'l> ContainerConfig<'l> {
     /// use common::prelude::ContainerConfig;
     ///
     /// let container_config = ContainerConfig::new(
-    ///     "my_container","nginx",":latest", "0.0.0.0" ,80, None, None, false, false, 10
+    ///     "my_container","nginx",":latest", "0.0.0.0" ,80, None, None, None, false, false, 10
     /// );
     /// ```
     pub fn new(
@@ -53,6 +54,7 @@ impl<'l> ContainerConfig<'l> {
         connection_port: u16,
         additional_ports: Option<&'l [u16]>,
         platform: Option<&'l str>,
+        env_var: Option<&'l str>,
         reuse_container: bool,
         keep_configuration: bool,
         wait_duration: u64,
@@ -65,6 +67,7 @@ impl<'l> ContainerConfig<'l> {
             connection_port,
             additional_ports,
             platform,
+            env_var,
             reuse_container,
             keep_configuration,
             wait_duration,
@@ -112,6 +115,10 @@ impl<'l> ContainerConfig<'l> {
     pub fn tag(&self) -> &'l str {
         self.tag
     }
+
+    pub fn env_var(&self) -> Option<&'l str> {
+        self.env_var
+    }
 }
 
 impl Display for ContainerConfig<'_> {
@@ -119,13 +126,15 @@ impl Display for ContainerConfig<'_> {
         write!(
             f,
             "name: {}, image: {}:{}, url: {} connection_port: {}, additional_ports: {:?}, \
-            reuse_container: {}, keep_configuration: {}, wait_duration: {}",
+            platform: {:?} env_var: {:?}, reuse_container: {}, keep_configuration: {}, wait_duration: {}",
             self.name,
             self.image,
             self.tag,
             self.url,
             self.connection_port,
             self.additional_ports,
+            self.platform,
+            self.env_var,
             self.reuse_container,
             self.keep_configuration,
             self.wait_duration,
