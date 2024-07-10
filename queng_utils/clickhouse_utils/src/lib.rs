@@ -46,7 +46,7 @@ impl ClickhouseUtil {
         Ok(Self {
             dbg,
             metadata: Metadata::new(client.clone(), dbg),
-            specs: Specs::new(client.clone()),
+            specs: Specs::new(client.clone(), dbg),
         })
     }
 

@@ -5,8 +5,19 @@ mod db_teardown;
 mod db_utils;
 mod tables;
 
+pub(crate) const ASSETS_TABLE: &'static str = "assets";
+pub(crate) const EXCHANGES_TABLE: &'static str = "exchanges";
+pub(crate) const INSTRUMENTS_TABLE: &'static str = "instruments";
+pub(crate) const STATS_TABLE: &'static str = "stats";
+
+pub(crate) const DB_TABLES: [&'static str; 4] = [
+    ASSETS_TABLE,
+    EXCHANGES_TABLE,
+    INSTRUMENTS_TABLE,
+    STATS_TABLE,
+];
+
 pub(crate) const DB_NAME: &'static str = "metadata";
-pub(crate) const DB_TABLES: [&'static str; 4] = ["assets", "exchanges", "instruments", "stats"];
 
 #[derive(Clone)]
 pub struct Metadata {
@@ -21,7 +32,7 @@ impl Metadata {
 
     fn dbg_print(&self, s: &str) {
         if self.dbg {
-            println!("[ClickhouseUtil]:[Metadata]: {}", s);
+            println!("[ClickhouseUtil]:[DB]:[Metadata]: {}", s);
         }
     }
 }

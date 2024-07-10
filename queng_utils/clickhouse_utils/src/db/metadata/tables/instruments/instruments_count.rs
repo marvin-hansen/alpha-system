@@ -1,4 +1,4 @@
-use crate::db::metadata::{Metadata, DB_NAME, DB_TABLES};
+use crate::db::metadata::{Metadata, DB_NAME, INSTRUMENTS_TABLE};
 use crate::types::error::ClickHouseUtilError;
 
 impl Metadata {
@@ -10,7 +10,7 @@ impl Metadata {
     /// # Returns
     ///
     pub async fn count_instruments(&self) -> Result<u64, ClickHouseUtilError> {
-        let table_name = &format!("{}.{}", DB_NAME, DB_TABLES[2]);
+        let table_name = &format!("{}.{}", DB_NAME, INSTRUMENTS_TABLE);
 
         return match self.count_rows(table_name).await {
             Ok(count) => Ok(count),

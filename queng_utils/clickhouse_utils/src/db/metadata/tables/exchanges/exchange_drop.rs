@@ -1,4 +1,4 @@
-use crate::db::metadata::{Metadata, DB_NAME};
+use crate::db::metadata::{Metadata, EXCHANGES_TABLE};
 use crate::types::error::ClickHouseUtilError;
 
 impl Metadata {
@@ -17,15 +17,11 @@ impl Metadata {
     /// * `Result<(), ClickHouseUtilError>` - The result of executing the query. Returns `Ok(())` if the table is dropped successfully, or an `Err` containing the error if dropping fails.
     ///
     pub(crate) async fn drop_exchanges_table(&self) -> Result<(), ClickHouseUtilError> {
-        let ddl = self.generate_drop_exchanges_table_ddl();
+        let ddl = self.generate_drop_table_ddl(EXCHANGES_TABLE);
         self.execute_query(&ddl)
             .await
             .expect("Failed to drop exchanges table");
 
         Ok(())
-    }
-
-    fn generate_drop_exchanges_table_ddl(&self) -> String {
-        format!("DROP TABLE IF EXISTS {DB_NAME}.exchanges")
     }
 }

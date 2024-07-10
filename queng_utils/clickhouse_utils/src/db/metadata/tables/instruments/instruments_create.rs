@@ -1,4 +1,4 @@
-use crate::db::metadata::{Metadata, DB_NAME};
+use crate::db::metadata::{Metadata, DB_NAME, INSTRUMENTS_TABLE};
 use crate::types::error::ClickHouseUtilError;
 
 impl Metadata {
@@ -23,7 +23,7 @@ impl Metadata {
     fn generate_create_instruments_table_ddl(&self) -> String {
         format!(
             "
-     CREATE TABLE IF NOT EXISTS {DB_NAME}.instruments
+     CREATE TABLE IF NOT EXISTS {DB_NAME}.{INSTRUMENTS_TABLE}
      (
        `trade_start_timestamp` UInt64 CODEC(Delta, LZ4),
        `trade_end_timestamp` UInt64 CODEC(Delta, LZ4),

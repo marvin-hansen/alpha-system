@@ -1,4 +1,4 @@
-use crate::db::metadata::{Metadata, DB_NAME};
+use crate::db::metadata::{Metadata, ASSETS_TABLE, DB_NAME};
 use crate::types::error::ClickHouseUtilError;
 
 impl Metadata {
@@ -21,7 +21,7 @@ impl Metadata {
     fn generate_create_asset_table_ddl(&self) -> String {
         format!(
             "
-    CREATE TABLE IF NOT EXISTS {DB_NAME}.assets
+    CREATE TABLE IF NOT EXISTS {DB_NAME}.{ASSETS_TABLE}
     (
         `code` String CODEC(LZ4),
         `name` String CODEC(LZ4),

@@ -1,4 +1,4 @@
-use crate::db::metadata::{Metadata, DB_NAME, DB_TABLES};
+use crate::db::metadata::{Metadata, DB_NAME, EXCHANGES_TABLE};
 use crate::types::error::ClickHouseUtilError;
 
 impl Metadata {
@@ -12,7 +12,7 @@ impl Metadata {
     /// * `Result<u64, ClickHouseUtilError>` - The number of exchanges in the table, or an error if the count fails.
     ///
     pub async fn count_exchanges(&self) -> Result<u64, ClickHouseUtilError> {
-        let table_name = &format!("{}.{}", DB_NAME, DB_TABLES[1]);
+        let table_name = &format!("{}.{}", DB_NAME, EXCHANGES_TABLE);
 
         return match self.count_rows(table_name).await {
             Ok(count) => Ok(count),

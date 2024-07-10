@@ -1,4 +1,4 @@
-use crate::db::metadata::{Metadata, DB_NAME};
+use crate::db::metadata::{Metadata, DB_NAME, STATS_TABLE};
 use common::prelude::Stats;
 use std::error::Error;
 
@@ -25,9 +25,7 @@ impl Metadata {
 
         Ok(())
     }
-}
 
-impl Metadata {
     /// Generates an SQL insert query for inserting stats metadata into the stats table.
     ///
     /// This method takes a reference to a `Stats` object and generates an SQL insert query for inserting its metadata into the stats table.
@@ -41,7 +39,7 @@ impl Metadata {
     /// * `String` - The SQL insert query as a string.
     ///
     pub(crate) fn generate_stats_insert(&self, stats: &Stats) -> String {
-        let table_name = format!("{DB_NAME}.stats");
+        let table_name = format!("{DB_NAME}.{STATS_TABLE}");
 
         let download_timestamp = stats.download_timestamp();
         let hash = stats.hash();

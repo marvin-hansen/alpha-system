@@ -1,4 +1,4 @@
-use crate::db::metadata::{Metadata, DB_NAME};
+use crate::db::metadata::{Metadata, DB_NAME, INSTRUMENTS_TABLE};
 use common::prelude::{Instrument, InstrumentMetadata};
 use std::error::Error;
 
@@ -46,7 +46,7 @@ impl Metadata {
     /// * `String` - The SQL insert query as a string.
     ///
     pub(crate) fn generate_instruments_insert(&self, instrument: &Instrument) -> String {
-        let table_name = format!("{DB_NAME}.instruments");
+        let table_name = format!("{DB_NAME}.{INSTRUMENTS_TABLE}");
         let trade_start_timestamp = instrument.trade_start_timestamp.unwrap_or(0);
         let trade_end_timestamp = instrument.trade_end_timestamp.unwrap_or(0);
         let exchange_code = instrument.exchange_code();

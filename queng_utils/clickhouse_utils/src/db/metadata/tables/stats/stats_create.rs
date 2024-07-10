@@ -1,4 +1,4 @@
-use crate::db::metadata::{Metadata, DB_NAME};
+use crate::db::metadata::{Metadata, DB_NAME, STATS_TABLE};
 use crate::types::error::ClickHouseUtilError;
 
 impl Metadata {
@@ -23,7 +23,7 @@ impl Metadata {
     fn generate_create_stats_table_ddl(&self) -> String {
         format!(
             "
-    CREATE TABLE IF NOT EXISTS {DB_NAME}.stats
+    CREATE TABLE IF NOT EXISTS {DB_NAME}.{STATS_TABLE}
     (
         `download_timestamp` String CODEC(LZ4),
         `hash` String CODEC(LZ4),

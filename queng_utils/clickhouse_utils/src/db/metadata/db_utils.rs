@@ -1,8 +1,13 @@
-use crate::db::metadata::Metadata;
+use crate::db::metadata::{Metadata, DB_NAME};
 use crate::query_utils;
+use crate::query_utils::ddl_utils;
 use crate::types::error::QueryError;
 
 impl Metadata {
+    pub(crate) fn generate_drop_table_ddl(&self, table_name: &str) -> String {
+        ddl_utils::generate_drop_table_ddl(table_name, DB_NAME)
+    }
+
     pub(crate) async fn execute_query(&self, query: &str) -> Result<(), QueryError> {
         query_utils::execute_query(&self.client, &query)
             .await

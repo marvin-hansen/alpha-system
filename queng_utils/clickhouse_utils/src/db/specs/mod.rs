@@ -11,11 +11,18 @@ pub(crate) const DB_NAME: &'static str = "specs";
 
 #[derive(Clone)]
 pub struct Specs {
+    dbg: bool,
     client: Client,
 }
 
 impl Specs {
-    pub fn new(client: Client) -> Self {
-        Self { client }
+    pub fn new(client: Client, dbg: bool) -> Self {
+        Self { client, dbg }
+    }
+
+    fn dbg_print(&self, s: &str) {
+        if self.dbg {
+            println!("[ClickhouseUtil]:[DB]:[Specs]: {}", s);
+        }
     }
 }

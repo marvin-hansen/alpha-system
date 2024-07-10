@@ -1,4 +1,4 @@
-use crate::db::metadata::{Metadata, DB_NAME};
+use crate::db::metadata::{Metadata, DB_NAME, EXCHANGES_TABLE};
 use crate::types::error::ClickHouseUtilError;
 
 impl Metadata {
@@ -27,7 +27,7 @@ impl Metadata {
     pub(crate) fn generate_create_exchanges_table_ddl(&self) -> String {
         format!(
             "
-     CREATE TABLE IF NOT EXISTS {DB_NAME}.exchanges
+     CREATE TABLE IF NOT EXISTS {DB_NAME}.{EXCHANGES_TABLE}
      (
        `code` String CODEC(LZ4),
        `name` String CODEC(LZ4),

@@ -1,4 +1,4 @@
-use crate::db::metadata::{Metadata, DB_NAME};
+use crate::db::metadata::{Metadata, DB_NAME, EXCHANGES_TABLE};
 use crate::prelude::ClickHouseUtilError;
 use common::prelude::Exchange;
 
@@ -46,7 +46,7 @@ impl Metadata {
     /// * `String` - The generated SQL query.
     ///
     pub(crate) fn generate_exchange_insert(&self, exchange: &Exchange) -> String {
-        let table_name = format!("{DB_NAME}.exchanges");
+        let table_name = format!("{DB_NAME}.{EXCHANGES_TABLE}");
         let code = &exchange.code;
         let name = &exchange.name;
         format!(

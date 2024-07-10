@@ -1,4 +1,4 @@
-use crate::db::metadata::{Metadata, DB_NAME};
+use crate::db::metadata::{Metadata, ASSETS_TABLE, DB_NAME};
 use crate::types::error::ClickHouseUtilError;
 use common::prelude::{Asset, AssetMetadata};
 
@@ -46,7 +46,7 @@ impl Metadata {
     /// * `String` - The generated SQL query.
     ///
     pub(crate) fn generate_asset_insert(&self, asset: &Asset) -> String {
-        let table_name = format!("{DB_NAME}.assets");
+        let table_name = format!("{DB_NAME}.{ASSETS_TABLE}");
         let code = asset.code.clone();
         // ClickHouse needs quotes to be escaped
         // https://github.com/ClickHouse/ClickHouse/issues/191
