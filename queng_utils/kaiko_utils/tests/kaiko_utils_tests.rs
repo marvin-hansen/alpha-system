@@ -11,7 +11,7 @@ async fn setup_ci_env() {
     // Create new Env Utils
     let mut ci_env = EnvUtil::with_debug().await.expect("Failed to get EnvUtil");
 
-    // Initiate CI container
+    // Setup Kaiko API Proxy container for CI tests to run
     ci_env
         .setup_container_api_proxy()
         .await
