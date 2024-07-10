@@ -1,0 +1,50 @@
+load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library", "rust_test_suite")
+
+rust_library(
+    name = "ims_common",
+    srcs = glob([
+        "src/**",
+    ]),
+    crate_root = "src/lib.rs",
+    tags = ["ims_common"],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Internal crates
+        "//:common",
+        # External crates
+        "@crates//:serde",
+    ],
+)
+
+rust_doc(
+    name = "doc",
+    crate = ":ims_common",
+    visibility = ["//visibility:public"],
+)
+
+rust_doc_test(
+    name = "doc_test",
+    crate = ":ims_common",
+    visibility = ["//visibility:public"],
+)
+
+rust_test_suite(
+    name = "ims_common_binance_type_tests",
+    srcs = glob([
+        "tests/types/binance_types/*_tests.rs",
+    ]),
+    tags = [
+        "binance_types",
+        "ims_common",
+        "unit",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        ":ims_common",
+        # Internal crates
+        "//:common",
+        # External crates
+        "@crates//:serde",
+    ],
+)

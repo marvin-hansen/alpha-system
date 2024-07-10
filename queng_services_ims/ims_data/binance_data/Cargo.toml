@@ -23,6 +23,7 @@ common = {workspace = true}
 config_manager = {workspace = true}
 ctx_manager = {workspace = true}
 dns_manager = {workspace = true}
+ims_common = {workspace = true}
 lib_data_stream = {workspace = true}
 proto_bindings = {workspace = true}
 service_utils = {workspace = true}

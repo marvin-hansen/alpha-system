@@ -1,18 +1,8 @@
 use serde::Deserialize;
 
-#[derive(Debug, Deserialize, Clone)]
-pub struct ExchangeInfo {
-    #[serde(rename = "timezone")]
-    pub timezone: String,
-    #[serde(rename = "serverTime")]
-    pub server_time: u64,
-    #[serde(rename = "symbols")]
-    pub symbols: Vec<Symbol>,
-}
-
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Deserialize, Clone, Eq, PartialEq)]
 #[serde(rename_all = "camelCase")]
-pub struct Symbol {
+pub struct BinanceSymbol {
     pub symbol: String,
     pub status: String,
     // pub baseAsset: String,

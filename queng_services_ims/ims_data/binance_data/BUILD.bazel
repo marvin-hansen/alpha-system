@@ -36,6 +36,7 @@ rust_binary(
         "//:config_manager",
         "//:ctx_manager",
         "//:dns_manager",
+        "//:ims_common",
         "//:lib_data_stream",
         "//:rust_proto",
         "//:service_utils",

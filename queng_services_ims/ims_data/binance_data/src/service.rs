@@ -1,6 +1,6 @@
 use crate::stream_manager::stream_manager;
-use crate::types::command::DataCommand;
 use common::prelude::DataType;
+use ims_common::prelude::BinanceDataCommand;
 use proto_bindings::proto::ims_data_service_server::ImsDataService;
 use proto_bindings::proto::*;
 use std::sync::atomic;
@@ -16,7 +16,7 @@ const ORDER: atomic::Ordering = atomic::Ordering::Relaxed;
 
 pub struct ImsDataServer {
     counter: AtomicU32,
-    tx: Sender<DataCommand>,
+    tx: Sender<BinanceDataCommand>,
 }
 
 impl ImsDataServer {
@@ -56,7 +56,7 @@ impl ImsDataService for ImsDataServer {
         let data_type = DataType::from(req.data_type_id as u8);
 
         println!("[ImsDataBinance/start_data]: Starting data stream...");
-        let start_command = DataCommand::Start(stream_id, symbols, data_type);
+        let start_command = BinanceDataCommand::Start(stream_id, symbols, data_type);
         self.tx
             .send(start_command)
             .await
@@ -82,7 +82,7 @@ impl ImsDataService for ImsDataServer {
         let exchange_id = req.exchange_id;
 
         println!("[ImsDataBinance/StopData]: Stopping data stream...");
-        let stop_command = DataCommand::Stop(stream_id);
+        let stop_command = BinanceDataCommand::Stop(stream_id);
         self.tx
             .send(stop_command)
             .await
@@ -106,7 +106,7 @@ impl ImsDataService for ImsDataServer {
         let exchange_id = req.exchange_id;
 
         println!("[ImsDataBinance/StopAllData]: Stopping all data streams...");
-        let stop_all_command = DataCommand::StopAll;
+        let stop_all_command = BinanceDataCommand::StopAll;
         self.tx
             .send(stop_all_command)
             .await

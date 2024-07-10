@@ -178,10 +178,16 @@ alias(
     visibility = ["//visibility:public"],
 )
 
-# IMS DataSpecs
 alias(
     name = "ims_data_binance_specs",
     actual = "//queng_specs/ims_specs/ims_data/ims_data_binance_specs",
+    visibility = ["//visibility:public"],
+)
+
+# IMS
+alias(
+    name = "ims_common",
+    actual = "//queng_services_ims/ims_common:ims_common",
     visibility = ["//visibility:public"],
 )
 

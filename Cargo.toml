@@ -25,6 +25,7 @@ members = [
     "queng_services/aux/api_proxy",
     "queng_services/cmdb",
     "queng_services/dbgw",
+    "queng_services_ims/ims_common",
     "queng_services_ims/ims_data/binance_data",
     "queng_services_ims/ims_data/shared_data",
     "queng_services/mddb",
@@ -45,7 +46,7 @@ members = [
     "queng_utils/env_utils",
     "queng_utils/kaiko_utils",
     "queng_utils/proto_utils",
-    "queng_utils/service_utils"
+    "queng_utils/service_utils",
 ]
 
 
@@ -88,7 +89,8 @@ smdb_provider = { path = "queng_providers/smdb_provider" }
 # SBE
 sbe_bindings = { path = "queng_sbe/bindings" }
 sbe_messages = { path = "queng_sbe/sbe_messages" }
-# Service libs
+# IMS
+ims_common = {path = "queng_services_ims/ims_common"}
 lib_data_stream = { path = "queng_services_ims/ims_data/shared_data" }
 # Specs
 container_specs = { path = "queng_specs/container_specs" }
