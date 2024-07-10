@@ -1,35 +1,43 @@
 load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library", "rust_test_suite")
 
 rust_library(
-    name = "qdgw_specs",
+    name = "specs_utils",
     srcs = glob([
-        "src/lib.rs",
+        "src/*.rs",
     ]),
+    crate_root = "src/lib.rs",
     tags = [
-        "qdgw_specs",
-        "service_specs",
-        "specs",
+        "specs_utils",
+        "utils",
     ],
     visibility = ["//visibility:public"],
     deps = [
-        # Internal dependencies
+        # Internal crates
         "//:common",
+        # Service specs
+        "//:cmdb_specs",
+        "//:dbgw_specs",
+        "//:mddb_specs",
+        "//:qdgw_specs",
+        "//:smdb_specs",
+        "//:vex_specs",
+        # External crates
     ],
 )
 
 rust_test_suite(
-    name = "qdgw_tests",
+    name = "specs_utils_tests",
     srcs = glob([
         "tests/*_tests.rs",
     ]),
     tags = [
-        "specs",
+        "specs_utils",
         "unit",
     ],
     visibility = ["//visibility:public"],
     deps = [
         # Test target
-        ":qdgw_specs",
+        ":specs_utils",
         # Internal dependencies
         "//:common",
     ],
@@ -37,14 +45,14 @@ rust_test_suite(
 
 rust_doc(
     name = "doc",
-    crate = ":qdgw_specs",
+    crate = ":specs_utils",
     tags = ["doc"],
     visibility = ["//visibility:public"],
 )
 
 rust_doc_test(
     name = "doc_test",
-    crate = ":qdgw_specs",
+    crate = ":specs_utils",
     tags = ["doc-test"],
     visibility = ["//visibility:public"],
 )

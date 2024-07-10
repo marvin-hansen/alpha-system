@@ -15,7 +15,7 @@ impl Metadata {
         let ddl = self.generate_drop_table_ddl(ASSETS_TABLE);
         self.execute_query(&ddl)
             .await
-            .expect("Failed to drop asset table");
+            .expect("Failed to drop assets table");
 
         Ok(())
     }

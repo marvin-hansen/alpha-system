@@ -25,11 +25,11 @@ members = [
     "queng_services/aux/api_proxy",
     "queng_services/cmdb",
     "queng_services/dbgw",
+    "queng_services/mddb",
+    "queng_services/smdb",
     "queng_services_ims/ims_common",
     "queng_services_ims/ims_data/binance_data",
     "queng_services_ims/ims_data/shared_data",
-    "queng_services/mddb",
-    "queng_services/smdb",
     "queng_specs/container_specs",
     "queng_specs/db_specs",
     "queng_specs/exchange_specs",
@@ -47,6 +47,7 @@ members = [
     "queng_utils/kaiko_utils",
     "queng_utils/proto_utils",
     "queng_utils/service_utils",
+    "queng_utils/specs_utils",
 ]
 
 
@@ -90,7 +91,7 @@ smdb_provider = { path = "queng_providers/smdb_provider" }
 sbe_bindings = { path = "queng_sbe/bindings" }
 sbe_messages = { path = "queng_sbe/sbe_messages" }
 # IMS
-ims_common = {path = "queng_services_ims/ims_common"}
+ims_common = { path = "queng_services_ims/ims_common" }
 lib_data_stream = { path = "queng_services_ims/ims_data/shared_data" }
 # Specs
 container_specs = { path = "queng_specs/container_specs" }
@@ -98,15 +99,14 @@ db_specs = { path = "queng_specs/db_specs" }
 exchange_specs = { path = "queng_specs/exchange_specs" }
 # IMS Specs
 # Data
-ims_data_binance_specs = {path = "queng_specs/ims_specs/ims_data/ims_data_binance_specs" }
+ims_data_binance_specs = { path = "queng_specs/ims_specs/ims_data/ims_data_binance_specs" }
 # Service specs
-cmdb_specs = {path = "queng_specs/service_specs/cmdb_specs"}
-dbgw_specs = {path = "queng_specs/service_specs/dbgw_specs" }
-mddb_specs = {path = "queng_specs/service_specs/mddb_specs" }
-qdgw_specs = {path = "queng_specs/service_specs/qdgw_specs" }
-smdb_specs = {path = "queng_specs/service_specs/smdb_specs" }
-symdb_specs = {path = "queng_specs/service_specs/symdb_specs" }
-vex_specs = {path = "queng_specs/service_specs/vex_specs" }
+cmdb_specs = { path = "queng_specs/service_specs/cmdb_specs" }
+dbgw_specs = { path = "queng_specs/service_specs/dbgw_specs" }
+mddb_specs = { path = "queng_specs/service_specs/mddb_specs" }
+qdgw_specs = { path = "queng_specs/service_specs/qdgw_specs" }
+smdb_specs = { path = "queng_specs/service_specs/smdb_specs" }
+vex_specs = { path = "queng_specs/service_specs/vex_specs" }
 # Utils
 clickhouse_utils = { path = "queng_utils/clickhouse_utils" }
 client_utils = { path = "queng_utils/client_utils" }
@@ -115,6 +115,7 @@ env_utils = { path = "queng_utils/env_utils" }
 kaiko_utils = { path = "queng_utils/kaiko_utils" }
 proto_utils = { path = "queng_utils/proto_utils" }
 service_utils = { path = "queng_utils/service_utils" }
+specs_utils = { path = "queng_utils/specs_utils" }
 #
 # ==============
 # External crates
@@ -124,36 +125,36 @@ service_utils = { path = "queng_utils/service_utils" }
 mimalloc = { version = "0.1.42" }
 #
 anyhow = { version = "1.0" }
-arc-swap = {version = "1.7"}
-binance-rs-async = { version = "1.3.3" , default-features = false, features = ["rustls-tls"]}
-blake3 = {version = "1.5"}
+arc-swap = { version = "1.7" }
+binance-rs-async = { version = "1.3.3", default-features = false, features = ["rustls-tls"] }
+blake3 = { version = "1.5" }
 chrono = { version = "0.4", features = ["serde"] }
-config-file = {version = "0.2"}
-ctrlc =  {version = "3.4"}
-clickhouse-rs = {version = "1.1.0-alpha.1"}
-csv = {version = "1.3"}
+config-file = { version = "0.2" }
+ctrlc = { version = "3.4" }
+clickhouse-rs = { version = "1.1.0-alpha.1" }
+csv = { version = "1.3" }
 encoding_rs = "0.8"
-futures = {version = "0.3"}
+futures = { version = "0.3" }
 hickory-resolver = { version = "0.24", default-features = false, features = ["tokio-runtime"] }
-klickhouse = {version = "0.13.0" }
-lru = {version = "0.12"}
-mini-moka ={version = "0.10.3"}
-parquet = {version = "52.0" }
-prost = {version = "0.13.0" }
+klickhouse = { version = "0.13.0" }
+lru = { version = "0.12" }
+mini-moka = { version = "0.10.3" }
+parquet = { version = "52.0" }
+prost = { version = "0.13.0" }
 prost-types = { version = "0.13.0", default-features = false }
-reqwest = { version = "0.12",  default-features = false, features = ["rustls-tls", "json", "blocking", "gzip"]}
-rust_decimal = {version = "1.34"}
-rust_decimal_macros = {version = "1.34"}
+reqwest = { version = "0.12", default-features = false, features = ["rustls-tls", "json", "blocking", "gzip"] }
+rust_decimal = { version = "1.34" }
+rust_decimal_macros = { version = "1.34" }
 serde = { version = "1", features = ["derive"] }
 serde_json = { version = "1" }
-scraper = {version = "0.19", default-features = false }
-tonic = { version = "0.12.0", features = ["transport"]}
-tonic-build = {version = "0.12.0" }
-tonic-health = { version = "0.12.0", default-features = false, features = ["transport"]}
-tokio = { version = "1.38", default-features = false,  features = ["macros", "net", "rt-multi-thread", "signal"] }
-tokio-cron-scheduler = {version = "0.10", features = ["signal"]}
-tokio-timer = { version = "0.2"}
-tokio-tungstenite = { version = "0.23", default-features = false}
+scraper = { version = "0.19", default-features = false }
+tonic = { version = "0.12.0", features = ["transport"] }
+tonic-build = { version = "0.12.0" }
+tonic-health = { version = "0.12.0", default-features = false, features = ["transport"] }
+tokio = { version = "1.38", default-features = false, features = ["macros", "net", "rt-multi-thread", "signal"] }
+tokio-cron-scheduler = { version = "0.10", features = ["signal"] }
+tokio-timer = { version = "0.2" }
+tokio-tungstenite = { version = "0.23", default-features = false }
 warp = "0.3"
 
 

@@ -1,4 +1,4 @@
-use crate::db::specs::{Specs, DB_NAME};
+use crate::db::specs::{Specs, DB_NAME, SERVICES_TABLE};
 use crate::prelude::ClickHouseUtilError;
 
 impl Specs {
@@ -11,6 +11,6 @@ impl Specs {
     }
 
     fn generate_create_service_table_ddl(&self) -> String {
-        format!("CREATE TABLE IF NOT EXISTS {DB_NAME}.instruments")
+        format!("CREATE TABLE IF NOT EXISTS {DB_NAME}.{SERVICES_TABLE}")
     }
 }

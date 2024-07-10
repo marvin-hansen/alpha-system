@@ -17,20 +17,6 @@ rust_library(
     ],
 )
 
-rust_doc(
-    name = "doc",
-    crate = ":cmdb_specs",
-    tags = ["doc"],
-    visibility = ["//visibility:public"],
-)
-
-rust_doc_test(
-    name = "doc_test",
-    crate = ":cmdb_specs",
-    tags = ["doc-test"],
-    visibility = ["//visibility:public"],
-)
-
 rust_test_suite(
     name = "cmdb_tests",
     srcs = glob([
@@ -47,4 +33,18 @@ rust_test_suite(
         # Internal dependencies
         "//:common",
     ],
+)
+
+rust_doc(
+    name = "doc",
+    crate = ":cmdb_specs",
+    tags = ["doc"],
+    visibility = ["//visibility:public"],
+)
+
+rust_doc_test(
+    name = "doc_test",
+    crate = ":cmdb_specs",
+    tags = ["doc-test"],
+    visibility = ["//visibility:public"],
 )

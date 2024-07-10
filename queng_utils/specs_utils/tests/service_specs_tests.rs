@@ -1,0 +1,8 @@
+use specs_utils::prelude::get_all_service_specs;
+
+#[test]
+fn test_get_all_service_specs() {
+    let service_specs = get_all_service_specs();
+
+    assert_eq!(service_specs.len(), 6); // Assuming there are 6 service specs in total
+}

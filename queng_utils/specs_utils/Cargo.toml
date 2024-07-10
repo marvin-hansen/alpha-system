@@ -1,0 +1,24 @@
+[package]
+name = "specs_utils"
+version = "0.1.0"
+edition.workspace = true
+rust-version.workspace = true
+readme.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+[lib]
+name = "specs_utils"
+path = "src/lib.rs"
+
+
+[dependencies]
+# Internal crates
+common = {workspace = true}
+# Service specs
+cmdb_specs = {workspace = true}
+dbgw_specs = {workspace = true}
+mddb_specs = {workspace = true}
+qdgw_specs = {workspace = true}
+smdb_specs = {workspace = true}
+vex_specs = {workspace = true}

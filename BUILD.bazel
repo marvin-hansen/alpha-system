@@ -228,6 +228,12 @@ alias(
     visibility = ["//visibility:public"],
 )
 
+alias(
+    name = "vex_specs",
+    actual = "//queng_specs/service_specs/vex_specs:vex_specs",
+    visibility = ["//visibility:public"],
+)
+
 # Utils
 alias(
     name = "clickhouse_utils",
@@ -268,6 +274,12 @@ alias(
 alias(
     name = "service_utils",
     actual = "//queng_utils/service_utils:service_utils",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "specs_utils",
+    actual = "//queng_utils/specs_utils:specs_utils",
     visibility = ["//visibility:public"],
 )
 
