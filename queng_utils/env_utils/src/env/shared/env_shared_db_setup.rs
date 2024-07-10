@@ -109,12 +109,12 @@ impl EnvUtil {
         // We know that the DB is either not configured or has been deleted
         // so we can re-crete all databases, tables, and import all data;
         self.dbg_print("[configure_clickhouse]: Create all databases");
-        self.setup_db(ch_utils)
+        self.create_all_db(ch_utils)
             .await
             .expect("[configure_clickhouse]: Failed to create all databases");
 
         self.dbg_print("[configure_clickhouse]: Create all tables");
-        self.create_tables(ch_utils)
+        self.create_all_tables(ch_utils)
             .await
             .expect("[configure_clickhouse]: Failed to create all tables");
 
@@ -140,7 +140,7 @@ impl EnvUtil {
     ///
     /// - `EnvironmentError` if any step fails.
     ///
-    async fn setup_db(&self, ch_utils: &ClickhouseUtil) -> Result<(), EnvironmentError> {
+    async fn create_all_db(&self, ch_utils: &ClickhouseUtil) -> Result<(), EnvironmentError> {
         //
         self.dbg_print("[setup_db]: Create metadata databases");
         ch_utils
@@ -159,7 +159,21 @@ impl EnvUtil {
         Ok(())
     }
 
-    async fn create_tables(&self, ch_utils: &ClickhouseUtil) -> Result<(), EnvironmentError> {
+    /// Asynchronously creates all necessary tables in the ClickHouse database for testing purposes.
+    ///
+    /// This method is responsible for creating the following tables:
+    /// - Metadata tables
+    /// - Specs tables
+    ///
+    /// # Arguments
+    ///
+    /// * `ch_utils` - A reference to a `ClickhouseUtil` object.
+    ///
+    /// # Errors
+    ///
+    /// This method can return an error of type `EnvironmentError`.
+    ///
+    async fn create_all_tables(&self, ch_utils: &ClickhouseUtil) -> Result<(), EnvironmentError> {
         //
         self.dbg_print("[create_tables]:Create all metadata tables");
         ch_utils

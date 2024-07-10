@@ -136,6 +136,29 @@ impl EnvUtil {
         return Ok(all_exists);
     }
 
+    /// Asynchronously verifies if all data has been imported into the ClickHouse database.
+    ///
+    /// This method performs the following steps:
+    ///
+    /// 1. Verifies if all metadata data exist in the ClickHouse metadata database.
+    /// 2. Verifies if all specs data exist in the ClickHouse specs database.
+    ///
+    /// # Arguments
+    ///
+    /// * `ch_utils` - A reference to a `ClickhouseUtil` object.
+    /// * `kaiko_util` - A reference to a `KaikoUtil` object.
+    /// * `sample_size` - An optional `u32` value representing the sample size.
+    ///
+    /// # Returns
+    ///
+    /// Returns a `Result` that indicates whether all data has been imported into the ClickHouse database.
+    /// If successful, it returns `Ok(bool)` indicating whether all data has been imported.
+    /// If an error occurs, it returns `Err(EnvironmentError)`.
+    ///
+    /// # Errors
+    ///
+    /// This method can return an error of type `EnvironmentError`.
+    ///
     pub(crate) async fn verify_all_data_imported(
         &self,
         ch_utils: &ClickhouseUtil,
@@ -280,6 +303,22 @@ impl EnvUtil {
         Ok(all_imported)
     }
 
+    /// Asynchronously verifies if all specs data has been imported into the specs database.
+    ///
+    /// # Arguments
+    ///
+    /// * `ch_utils` - A reference to the ClickhouseUtil instance.
+    ///
+    /// # Returns
+    ///
+    /// Returns a `Result` that indicates whether all specs data has been imported into the specs database.
+    /// If successful, it returns `Ok(bool)` indicating whether all data has been imported.
+    /// If an error occurs, it returns `Err(EnvironmentError)`.
+    ///
+    /// # Errors
+    ///
+    /// This method can return an error of type `EnvironmentError`.
+    ///
     async fn verify_specs_data_imported(
         &self,
         ch_utils: &ClickhouseUtil,

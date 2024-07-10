@@ -5,6 +5,18 @@ use kaiko_utils::KaikoUtil;
 use specs_utils;
 
 impl EnvUtil {
+    /// Asynchronously imports all data into all Clickhouse databases.
+    ///
+    /// # Arguments
+    ///
+    /// * `ch_utils` - A reference to the ClickhouseUtil instance.
+    /// * `kaiko_util` - A reference to the KaikoUtil instance.
+    /// * `sample_size` - An optional u32 value representing the sample size.
+    ///
+    /// # Errors
+    ///
+    /// This method can return an error of type EnvironmentError.
+    ///
     pub(crate) async fn import_all_data(
         &self,
         ch_utils: &ClickhouseUtil,
@@ -33,7 +45,7 @@ impl EnvUtil {
     ///
     /// Then, it retrieves the metadata from the Kaiko API using the `get_metadata` method of the `KaikoUtil` object.
     ///
-    /// Finally, it merges the metadata from the Clickhouse database and the Kaiko API using the `merge_metadata` method.
+    /// Finally, it inserts the metadata data from the Kaiko API into the Clickhouse metadata database.
     ///
     /// # Arguments
     ///
@@ -129,6 +141,16 @@ impl EnvUtil {
         Ok(())
     }
 
+    /// Asynchronously imports specs data into the specs database.
+    ///
+    /// # Arguments
+    ///
+    /// * `ch_utils` - A reference to the ClickhouseUtil instance.
+    ///
+    /// # Errors
+    ///
+    /// This method can return an error of type EnvironmentError.
+    ///
     async fn import_specs_data(&self, ch_utils: &ClickhouseUtil) -> Result<(), EnvironmentError> {
         let service_specs = specs_utils::prelude::get_all_service_specs();
 
