@@ -18,6 +18,7 @@ path = "src/lib.rs"
 common = {workspace = true}
 container_specs = {workspace = true}
 docker_utils = {workspace = true}
+specs_utils = {workspace = true}
 # External crates
 klickhouse = { workspace = true }
 serde = { workspace = true }
