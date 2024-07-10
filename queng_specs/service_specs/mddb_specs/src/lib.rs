@@ -22,7 +22,7 @@ pub fn mddb_service_config() -> ServiceConfig {
     let id = ServiceID::MDDB;
     let name = "mddbv1".to_string();
     let version = 1;
-    let online = true;
+    let online = false;
     let description = "MDDB gives access to meta data".to_string();
     let health_check_uri = "dbgwv1-service.default.svc.cluster.local:7070/health".to_string();
     let base_uri = "mddbv1-service.default.svc.cluster.local".to_string();

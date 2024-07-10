@@ -18,7 +18,7 @@ impl Metadata {
     ///
     /// Returns a `Box<dyn Error>` if there is an error executing the `CREATE DATABASE` query.
     ///
-    pub(crate) async fn create_metadata_db(&self) -> Result<(), Box<dyn Error>> {
+    pub async fn create_metadata_db(&self) -> Result<(), Box<dyn Error>> {
         self.dbg_print("create_metadata_db");
         let ddl = format!("CREATE DATABASE IF NOT EXISTS {DB_NAME}");
         self.execute_query(&ddl)

@@ -18,6 +18,7 @@ rust_library(
         "//:container_specs",
         "//:clickhouse_utils",
         "//:docker_utils",
+        "//:specs_utils",
         "//:kaiko_utils",
         # External crates
         "@crates//:tokio",

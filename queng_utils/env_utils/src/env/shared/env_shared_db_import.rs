@@ -2,8 +2,29 @@ use crate::prelude::EnvironmentError;
 use crate::EnvUtil;
 use clickhouse_utils::ClickhouseUtil;
 use kaiko_utils::KaikoUtil;
+use specs_utils;
 
 impl EnvUtil {
+    pub(crate) async fn import_all_data(
+        &self,
+        ch_utils: &ClickhouseUtil,
+        kaiko_util: &KaikoUtil,
+        sample_size: Option<u32>,
+    ) -> Result<(), EnvironmentError> {
+        //
+        self.dbg_print("[import_all_data]: Import metadata into clickhouse");
+        self.import_metadata(ch_utils, kaiko_util, sample_size)
+            .await
+            .expect("[import_all_data]: Failed to import metadata data into Clickhouse");
+
+        self.dbg_print("[import_all_data]: Import specs data into clickhouse");
+        self.import_specs_data(ch_utils)
+            .await
+            .expect("[import_all_data]: Failed to import specs data data into Clickhouse");
+
+        Ok(())
+    }
+
     /// Imports metadata from various sources into the environment.
     ///
     /// This method imports metadata from various sources into the environment. It takes references to a `ClickhouseUtil` object, a `KaikoUtil` object, and an optional `sample_size` argument.
@@ -31,7 +52,7 @@ impl EnvUtil {
     /// - `ClickhouseError`: If there is an error retrieving the metadata from the Clickhouse database.
     /// - `KaikoError`: If there is an error retrieving the metadata from the Kaiko API.
     ///
-    pub(crate) async fn import_metadata(
+    async fn import_metadata(
         &self,
         ch_utils: &ClickhouseUtil,
         kaiko_util: &KaikoUtil,
@@ -49,61 +70,73 @@ impl EnvUtil {
             assets.len()
         ));
 
-        self.dbg_print("[import_data]: Import assets metadata");
+        self.dbg_print("[import_metadata]: Import assets metadata");
         ch_utils
             .metadata
             .import_asset_metadata(&assets)
             .await
-            .expect("[import_data]: Failed to import assets metadata");
+            .expect("[import_metadata]: Failed to import assets metadata");
 
-        self.dbg_print("[import_data]: Download exchange metadata");
+        self.dbg_print("[import_metadata]: Download exchange metadata");
         let exchanges = kaiko_util
             .get_exchanges()
             .await
-            .expect("[import_data]: Failed to get exchanges");
+            .expect("[import_metadata]: Failed to get exchanges");
 
         self.dbg_print(&format!(
             "[import_metadata]: Downloaded exchanges: {}",
             exchanges.len()
         ));
 
-        self.dbg_print("[import_data]: Import exchanges metadata");
+        self.dbg_print("[import_metadata]: Import exchanges metadata");
         ch_utils
             .metadata
             .import_exchanges_metadata(&exchanges)
             .await
-            .expect("[import_data]: Failed to import exchanges metadata");
+            .expect("[import_metadata]: Failed to import exchanges metadata");
 
-        self.dbg_print("[import_data]: Download instrument metadata");
+        self.dbg_print("[import_metadata]: Download instrument metadata");
         let instruments = kaiko_util
             .get_instruments()
             .await
-            .expect("[import_data]: Failed to get instruments");
+            .expect("[import_metadata]: Failed to get instruments");
 
         self.dbg_print(&format!(
             "[import_metadata]: Downloaded instruments: {}",
             instruments.len()
         ));
 
-        self.dbg_print("[import_data]: Import instrument metadata");
+        self.dbg_print("[import_metadata]: Import instrument metadata");
         ch_utils
             .metadata
             .import_instruments_metadata(&instruments)
             .await
-            .expect("[import_data]: Failed to import instrument metadata");
+            .expect("[import_metadata]: Failed to import instrument metadata");
 
-        self.dbg_print("[import_data]: Download metadata statistic");
+        self.dbg_print("[import_metadata]: Download metadata statistic");
         let stats = kaiko_util
             .get_stats()
             .await
-            .expect("[import_data]: Failed to get metadata statistic");
+            .expect("[import_metadata]: Failed to get metadata statistic");
 
-        self.dbg_print("[import_data]: Import metadata statistic");
+        self.dbg_print("[import_metadata]: Import metadata statistic");
         ch_utils
             .metadata
             .import_stats_metadata(&stats)
             .await
-            .expect("[import_data]: Failed to import metadata statistic");
+            .expect("[import_metadata]: Failed to import metadata statistic");
+
+        Ok(())
+    }
+
+    async fn import_specs_data(&self, ch_utils: &ClickhouseUtil) -> Result<(), EnvironmentError> {
+        let service_specs = specs_utils::prelude::get_all_service_specs();
+
+        ch_utils
+            .specs
+            .import_service_specs(&service_specs)
+            .await
+            .expect("[import_specs_data]: Failed to import service specs");
 
         Ok(())
     }

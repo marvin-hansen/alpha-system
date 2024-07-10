@@ -58,7 +58,7 @@ impl EnvUtil {
 
         self.dbg_print("[verify_clickhouse]: Verify that all data were imported");
         let data_imported = self
-            .verify_import_data(ch_utils, kaiko_util, None)
+            .verify_all_data_imported(ch_utils, kaiko_util, None)
             .await
             .expect("[verify_clickhouse]: Failed to verify data import Clickhouse");
 
@@ -125,80 +125,36 @@ impl EnvUtil {
             Err(e) => return Err(EnvironmentError::from(e.to_string())),
         };
 
-        let all_exists = exists_metadata_tables;
+        self.dbg_print("[verify_tables_created]: Check if all specs tables exist");
+        let exists_specs_tables = match ch_utils.specs.verify_all_specs_tables().await {
+            Ok(exists) => exists,
+            Err(e) => return Err(EnvironmentError::from(e.to_string())),
+        };
+
+        let all_exists = exists_metadata_tables && exists_specs_tables;
 
         return Ok(all_exists);
     }
 
-    /// Checks if all metadata has been imported into the ClickHouse database.
-    ///
-    /// This method checks if all metadata tables have been populated with data in the ClickHouse database.
-    /// It performs the following steps:
-    ///
-    /// 1. Retrieves the `ClickhouseUtil` object.
-    ///
-    /// 2. Counts the number of assets, exchanges, and instruments in the metadata tables.
-    ///
-    /// 3. Compares the counts with predefined thresholds to determine if all metadata has been imported.
-    ///
-    /// # Arguments
-    ///
-    /// * `ch_utils` - A reference to a `ClickhouseUtil` object.
-    ///
-    /// # Returns
-    ///
-    /// - `Ok(true)` if all metadata has been imported.
-    /// - `Ok(false)` if any metadata table is empty.
-    /// - `Err(EnvironmentError)` if an error occurs during the verification process.
-    ///
-    pub(crate) async fn check_if_meta_data_imported(
+    pub(crate) async fn verify_all_data_imported(
         &self,
         ch_utils: &ClickhouseUtil,
+        kaiko_util: &KaikoUtil,
+        sample_size: Option<u32>,
     ) -> Result<bool, EnvironmentError> {
-        self.dbg_print(
-            "[check_if_meta_data_imported]: Check if all data imported into the metadata DB",
-        );
+        let metadata_imported = self
+            .verify_metadata_data_imported(ch_utils, kaiko_util, sample_size)
+            .await
+            .expect("[check_if_all_data_imported]: Failed to check if all metadata imported");
 
-        self.dbg_print("[check_if_meta_data_imported]: Count assets metadata in DB");
-        let nr_db_assets =
-            ch_utils.metadata.count_assets().await.expect(
-                "[check_if_meta_data_imported]: Failed to get count assets from metadata DB",
-            );
+        let specs_data_imported = self
+            .verify_specs_data_imported(ch_utils)
+            .await
+            .expect("[check_if_all_data_imported]: Failed to check if all specs data imported");
 
-        self.dbg_print(&format!(
-            "[check_if_meta_data_imported]: Counted imported assets: {}",
-            nr_db_assets
-        ));
+        let all_imported = metadata_imported && specs_data_imported;
 
-        self.dbg_print("[check_if_meta_data_imported]: Count exchanges metadata in DB");
-        let nr_db_exchanges = ch_utils.metadata.count_exchanges().await.expect(
-            "[check_if_meta_data_imported]: Failed to get count exchanges from metadata DB",
-        );
-
-        self.dbg_print(&format!(
-            "[check_if_meta_data_imported]: Counted imported exchanges: {}",
-            nr_db_exchanges
-        ));
-
-        self.dbg_print("[check_if_meta_data_imported]: Count instruments metadata in DB");
-        let nr_db_instruments = ch_utils.metadata.count_instruments().await.expect(
-            "[check_if_meta_data_imported]: Failed to get count instruments from metadata DB",
-        );
-
-        self.dbg_print(&format!(
-            "[check_if_meta_data_imported]: Counted imported instruments: {}",
-            nr_db_instruments
-        ));
-
-        let imported =
-            (nr_db_assets > 7_000) && (nr_db_exchanges > 40) && (nr_db_instruments > 14_000);
-
-        self.dbg_print(&format!(
-            "[check_if_meta_data_imported]: All data imported: {}",
-            imported
-        ));
-
-        return Ok(imported);
+        Ok(all_imported)
     }
 
     /// Verifies that all data have been imported into the metadata database.
@@ -228,7 +184,7 @@ impl EnvUtil {
     /// - `Ok(false)` if any data table is empty.
     /// - `Err(EnvironmentError)` if an error occurs during the verification process.
     ///
-    async fn verify_import_data(
+    async fn verify_metadata_data_imported(
         &self,
         ch_utils: &ClickhouseUtil,
         kaiko_util: &KaikoUtil,
@@ -318,6 +274,47 @@ impl EnvUtil {
         let all_imported = assets_imported && exchanges_imported && instruments_imported;
         self.dbg_print(&format!(
             "[verify_import_data]: All data imported: {}",
+            all_imported
+        ));
+
+        Ok(all_imported)
+    }
+
+    async fn verify_specs_data_imported(
+        &self,
+        ch_utils: &ClickhouseUtil,
+    ) -> Result<bool, EnvironmentError> {
+        self.dbg_print(
+            "[verify_specs_data_imported]: Check if all services data imported into the specs DB",
+        );
+
+        self.dbg_print("[verify_specs_data_imported]: Count services in DB");
+        let nr_db_services = ch_utils
+            .specs
+            .count_services()
+            .await
+            .expect("[verify_specs_data_imported]: Failed to get count services from specs DB");
+
+        self.dbg_print(&format!(
+            "[verify_specs_data_imported]: Counted imported services: {}",
+            nr_db_services
+        ));
+
+        let nr_service_specs = specs_utils::prelude::get_all_service_specs().len() as u64;
+        self.dbg_print(&format!(
+            "[verify_specs_data_imported]: Reference services: {}",
+            nr_service_specs
+        ));
+
+        let services_imported = nr_service_specs == nr_db_services;
+        self.dbg_print(&format!(
+            "[verify_specs_data_imported]: All services imported: {}",
+            services_imported
+        ));
+
+        let all_imported = services_imported;
+        self.dbg_print(&format!(
+            "[verify_specs_data_imported]: All specs data imported: {}",
             all_imported
         ));
 

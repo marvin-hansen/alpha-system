@@ -23,7 +23,7 @@ pub fn dbgw_service_config() -> ServiceConfig {
     let name = "dbgwv1".to_string();
     let version = 1;
     let online = true;
-    let description = "DBGW gives access to surreal DB".to_string();
+    let description = "DBGW gives access to the DB".to_string();
     let health_check_uri = "dbgwv1-service.default.svc.cluster.local:7070/health".to_string();
     let base_uri = "dbgwv1-service.default.svc.cluster.local".to_string();
     let dependencies = vec![];

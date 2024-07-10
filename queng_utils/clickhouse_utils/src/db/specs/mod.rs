@@ -9,7 +9,7 @@ pub(crate) const DB_NAME: &'static str = "specs";
 
 pub(crate) const SERVICES_TABLE: &'static str = "services";
 
-// pub(crate) const DB_TABLES: [&'static str; 1] = [SERVICES_TABLE];
+pub(crate) const DB_TABLES: [&'static str; 1] = [SERVICES_TABLE];
 
 #[derive(Clone)]
 pub struct Specs {

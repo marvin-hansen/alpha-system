@@ -2,7 +2,7 @@ use crate::db::metadata::Metadata;
 use crate::prelude::ClickHouseUtilError;
 
 impl Metadata {
-    pub async fn drop_metadata_tables(&self) -> Result<(), ClickHouseUtilError> {
+    pub async fn drop_all_metadata_tables(&self) -> Result<(), ClickHouseUtilError> {
         self.drop_stats_table()
             .await
             .expect("Failed to drop stats table");

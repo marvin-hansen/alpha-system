@@ -51,10 +51,10 @@ impl Metadata {
         self.verify_metadata_tables_created().await
     }
 
-    pub(crate) async fn verify_metadata_tables_created(&self) -> Result<bool, ClickHouseUtilError> {
+    async fn verify_metadata_tables_created(&self) -> Result<bool, ClickHouseUtilError> {
         let tables = DB_TABLES;
-        for table in tables {
-            let query = self.generate_table_exists_query(table);
+        for table_name in tables {
+            let query = format!("EXISTS TABLE {DB_NAME}.{table_name};");
             match self.verify_table_exists(&query).await {
                 Ok(exists) => {
                     if !exists {
@@ -66,8 +66,5 @@ impl Metadata {
         }
 
         Ok(true)
-    }
-    fn generate_table_exists_query(&self, table_name: &str) -> String {
-        format!("EXISTS TABLE {DB_NAME}.{table_name};")
     }
 }

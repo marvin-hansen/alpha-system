@@ -74,7 +74,7 @@ impl EnvUtil {
 
         self.dbg_print("[configure_clickhouse]: Check if all clickhouse data are already imported");
         let data_imported = self
-            .check_if_meta_data_imported(ch_utils)
+            .verify_all_data_imported(ch_utils, kaiko_util, None)
             .await
             .expect("[configure_clickhouse]: Failed to check if all data imported");
 
@@ -126,7 +126,7 @@ impl EnvUtil {
         assert!(tables_created);
 
         self.dbg_print("[configure_clickhouse]: Import data into clickhouse");
-        self.import_metadata(ch_utils, kaiko_util, sample_size)
+        self.import_all_data(ch_utils, kaiko_util, sample_size)
             .await
             .expect("[configure_clickhouse]: Failed to import data into Clickhouse");
         Ok(())
@@ -134,7 +134,7 @@ impl EnvUtil {
 
     /// Sets up the ClickHouse database for Continuous Integration (CI) testing.
     ///
-    /// This function creates all databases required for testing.
+    /// This function creates all databases required for testing on CI.
     ///
     /// # Errors
     ///
@@ -142,11 +142,19 @@ impl EnvUtil {
     ///
     async fn setup_db(&self, ch_utils: &ClickhouseUtil) -> Result<(), EnvironmentError> {
         //
-        self.dbg_print("[setup_db]: Create all databases");
+        self.dbg_print("[setup_db]: Create metadata databases");
         ch_utils
-            .setup_all_db()
+            .metadata
+            .create_metadata_db()
             .await
-            .expect("[setup_db]: Failed to create all databases");
+            .expect("[setup_db]: Failed to create metadata databases");
+
+        self.dbg_print("[setup_db]: Create specs databases");
+        ch_utils
+            .specs
+            .create_spec_db()
+            .await
+            .expect("[setup_db]: Failed to create specs databases");
 
         Ok(())
     }
@@ -158,7 +166,14 @@ impl EnvUtil {
             .metadata
             .create_all_metadata_tables()
             .await
-            .expect("[create_tables]: Failed to create metadata tables");
+            .expect("[create_tables]: Failed to create all metadata tables");
+
+        self.dbg_print("[create_tables]:Create all specs tables");
+        ch_utils
+            .specs
+            .create_all_specs_tables()
+            .await
+            .expect("[create_tables]: Failed to create all specs tables");
 
         Ok(())
     }

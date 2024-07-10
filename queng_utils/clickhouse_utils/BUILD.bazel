@@ -16,7 +16,6 @@ rust_library(
         "//:common",
         "//:container_specs",
         "//:docker_utils",
-        "//:specs_utils",
         # External crates
         "@crates//:klickhouse",
         "@crates//:serde",
@@ -91,7 +90,6 @@ rust_test_suite(
         "//:common",
         "//:container_specs",
         "//:docker_utils",
-        "//:specs_utils",
         "//:env_utils",
         # External crates
         "@crates//:klickhouse",

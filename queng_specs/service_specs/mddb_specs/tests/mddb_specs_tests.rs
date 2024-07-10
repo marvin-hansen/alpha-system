@@ -9,7 +9,7 @@ fn test_mddb_service_config_accessors() {
     assert_eq!(service_config.svc_id(), &ServiceID::MDDB);
     assert_eq!(service_config.name(), "mddbv1".to_string());
     assert_eq!(service_config.version(), 1);
-    assert!(service_config.online());
+    assert!(!service_config.online());
     assert_eq!(
         service_config.description(),
         "MDDB gives access to meta data".to_string()

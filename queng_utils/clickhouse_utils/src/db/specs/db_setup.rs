@@ -3,7 +3,7 @@ use crate::db::specs::DB_NAME;
 use std::error::Error;
 
 impl Specs {
-    pub(crate) async fn create_spec_db(&self) -> Result<(), Box<dyn Error>> {
+    pub async fn create_spec_db(&self) -> Result<(), Box<dyn Error>> {
         let ddl = format!("CREATE DATABASE IF NOT EXISTS {DB_NAME}");
         self.execute_query(&ddl)
             .await

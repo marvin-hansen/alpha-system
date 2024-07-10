@@ -19,6 +19,7 @@ common = { workspace = true }
 container_specs = { workspace = true }
 clickhouse_utils = { workspace = true }
 docker_utils = { workspace = true }
+specs_utils = {workspace = true}
 kaiko_utils = { workspace = true }
 # External crates
 tokio = { workspace = true }
