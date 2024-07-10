@@ -26,7 +26,7 @@ static GLOBAL: MiMalloc = MiMalloc;
 
 const UPDATE: bool = false;
 
-const VRB: bool = true;
+const VRB: bool = false;
 
 const PORT: u16 = 7777;
 

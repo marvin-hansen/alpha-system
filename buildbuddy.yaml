@@ -21,7 +21,7 @@ actions:
       # Container CI setup
       - "test -c opt  //...   --test_tag_filters=env_container_setup --config=remote"
       # Test: API Proxy integration
-      # - "test -c opt  //...   --test_tag_filters=kaiko_utils_integration_tests --config=remote"
+      - "test -c opt  //...   --test_tag_filters=kaiko_utils_integration_tests --config=remote"
       # Test: Clickhouse Integration
       - "test -c opt  //...   --test_tag_filters=clickhouse_utils_integration_tests --config=remote"
       # Build & publish images to container registry
