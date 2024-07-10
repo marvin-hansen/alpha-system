@@ -31,7 +31,7 @@ rust_test_suite(
     size = "small",
     timeout = "short",
     srcs = glob([
-        "tests/env_container_setup_tests.rs",
+        "tests/env/containers/container_setup_tests.rs",
     ]),
     exec_properties = {
         # Tell BuildBuddy to run this test using a Firecracker microVM.
@@ -65,7 +65,7 @@ rust_test_suite(
     name = "env_ci_setup_tests",
     size = "medium",
     srcs = glob([
-        "tests/env_ci_setup_tests.rs",
+        "tests/env/ci/env_ci_setup_tests.rs",
     ]),
     exec_properties = {
         # Tell BuildBuddy to run this test using a Firecracker microVM.
@@ -100,7 +100,7 @@ rust_test_suite(
     size = "small",
     timeout = "short",
     srcs = glob([
-        "tests/env_ci_teardown_tests.rs",
+        "tests/env/ci/env_ci_teardown_tests.rs",
     ]),
     exec_properties = {
         # Tell BuildBuddy to run this test using a Firecracker microVM.
@@ -134,7 +134,7 @@ rust_test_suite(
     size = "small",
     timeout = "short",
     srcs = glob([
-        "tests/env_container_teardown_tests.rs",
+        "tests/env/containers/container_teardown_tests.rs",
     ]),
     exec_properties = {
         # Tell BuildBuddy to run this test using a Firecracker microVM.

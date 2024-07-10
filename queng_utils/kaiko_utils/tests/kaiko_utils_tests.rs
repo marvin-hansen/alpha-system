@@ -29,59 +29,31 @@ async fn test_with_debug() {
 }
 
 #[tokio::test]
-async fn test_get_assets() {
+async fn test_kaiko_utils() {
     setup_ci_env().await;
 
-    let kaiko_util = get_client();
-    assert!(kaiko_util.is_ok());
+    let res = get_client();
+    assert!(res.is_ok());
+    let kaiko_util = res.unwrap();
 
-    let kaiko_util = kaiko_util.unwrap();
     let assets = kaiko_util.get_assets().await.expect("Failed to get assets");
 
-    assert!(assets.len() > 0)
-}
-
-#[tokio::test]
-async fn test_get_exchanges() {
-    setup_ci_env().await;
-
-    let kaiko_util = get_client();
-    assert!(kaiko_util.is_ok());
-
-    let kaiko_util = kaiko_util.unwrap();
+    assert!(assets.len() > 0);
 
     let exchanges = kaiko_util
         .get_exchanges()
         .await
         .expect("Failed to get exchanges");
 
-    assert!(exchanges.len() > 0)
-}
+    assert!(exchanges.len() > 0);
 
-#[tokio::test]
-async fn test_get_instruments() {
-    setup_ci_env().await;
-
-    let kaiko_util = get_client();
-    assert!(kaiko_util.is_ok());
-
-    let kaiko_util = kaiko_util.unwrap();
     let instruments = kaiko_util
         .get_instruments()
         .await
         .expect("Failed to get instruments");
 
-    assert!(instruments.len() > 0)
-}
+    assert!(instruments.len() > 0);
 
-#[tokio::test]
-async fn test_get_stats() {
-    setup_ci_env().await;
-
-    let kaiko_util = get_client();
-    assert!(kaiko_util.is_ok());
-
-    let kaiko_util = kaiko_util.unwrap();
     let result = kaiko_util.get_stats().await;
     assert!(result.is_ok());
 
