@@ -6,7 +6,7 @@ pub struct ExchangesRoot {
     pub data: Vec<Exchange>,
 }
 
-#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Default, Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Serialize, Deserialize)]
 pub struct Exchange {
     pub code: String,
     pub name: String,

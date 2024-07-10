@@ -7,6 +7,7 @@ help:
 	@echo '    make run   		Runs the default binary.'
 	@echo '    make cmdb   	Runs the cmdb service. Requires DBGW & SMDB'
 	@echo '    make dbgw   	Runs the dbgw service. Requires SurrealDB'
+	@echo '    make proxy          Runs the API proxy service.'
 	@echo '    make smdb   	Runs the smdb service. Requires DBGW'
 	@echo '    make symdb   	Runs the symdb service. Requires DBGW'
 	@echo ''
@@ -15,15 +16,15 @@ help:
 	@echo '    make current   	Builds the current target incrementally (fast) for dev.'
 	@echo '    make rebuild   	Syncs dependencies and builds the code base from scratch (slow).'
 	@echo '    make check   	Checks the code base for security vulnerabilities.'
-	@echo '    make container   Builds the container images.'
+	@echo '    make container      Builds the container images.'
 	@echo '    make doc   		Builds documentation for the project.'
 	@echo '    make fix   		Fixes linting issues as reported by clippy.'
 	@echo '    make format   	Formats call code according to cargo fmt style.'
 	@echo '    make install   	Tests and installs all make script dependencies.'
 	@echo '    make update   	Update rust, pulls from git remote.'
-	@echo '    make pull   		Pull all container images from the remote registry.'
-	@echo '    make push   		Builds, tests, and pushes to git remote.'
-	@echo '    make test   		Tests across all crates.'
+	@echo '    make pull   	Pull all container images from the remote registry.'
+	@echo '    make push   	Builds, tests, and pushes to git remote.'
+	@echo '    make test   	Tests across all crates.'
 	@echo '    make sbe   		Generates Rust bindings for SBE messages.'
 
 # "---------------------------------------------------------"
@@ -44,6 +45,10 @@ cmdb:
 .PHONY: dbgw
 dbgw:
 	@source scripts/run_dbgw.sh
+
+.PHONY: proxy
+proxy:
+	@source scripts/run_proxy.sh
 
 
 .PHONY: smdb

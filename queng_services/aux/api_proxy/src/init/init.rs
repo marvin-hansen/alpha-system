@@ -12,22 +12,11 @@ impl InitManager {
         self.dbg_print("==========");
 
         let start = Instant::now();
-        self.dbg_print("Level 0: Retrieving list of valid exchanges!");
-        let valid_exchanges = self
-            .init_level_0()
-            .await
-            .expect("Failed to complete init level 0");
-
-        self.print_duration("Level 0: took", &start.elapsed());
-
-        let start = Instant::now();
         self.dbg_print("Level 1: Retrieving reference exchange data!");
         let exchanges_meta_data = self
-            .init_level_1_exchanges(&valid_exchanges)
+            .init_level_1_exchanges()
             .await
             .expect("Failed init level 1: Reference exchange data");
-        // Free temporary memory
-        drop(valid_exchanges);
 
         self.print_duration("Level 1: took", &start.elapsed());
 
@@ -48,8 +37,6 @@ impl InitManager {
             .expect("Failed init level 3: Reference instrument data");
 
         self.print_duration("Level 3: took", &start.elapsed());
-
-        self.print_duration("Level 4: took", &start.elapsed());
 
         let meta_data =
             MetaDataSet::new(asset_meta_data, exchanges_meta_data, instrument_meta_data);

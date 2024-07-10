@@ -1,13 +1,10 @@
 use crate::errors::InitError;
-use crate::fields::INACTIVE_EXCHANGES;
+use crate::fields::ACTIVE_EXCHANGES;
 use crate::init::InitManager;
 use common::prelude::Exchange;
 
 impl InitManager {
-    pub(super) async fn init_level_1_exchanges(
-        &self,
-        valid_exchanges: &Vec<String>,
-    ) -> Result<Vec<Exchange>, InitError> {
+    pub(super) async fn init_level_1_exchanges(&self) -> Result<Vec<Exchange>, InitError> {
         //
         self.dbg_print("Level 1: Download reference exchange data!");
         let downloaded_exchanges = self
@@ -16,8 +13,16 @@ impl InitManager {
             .await
             .expect("Failed to download exchange data");
 
+        if self.dbg {
+            let msg = format!(
+                "Level 1: Returning {} downloaded exchanges",
+                downloaded_exchanges.len()
+            );
+            self.dbg_print(&msg)
+        }
+
         self.dbg_print("Level 1: Process downloaded exchanges");
-        let processed_exchanges = process_exchanges(valid_exchanges, downloaded_exchanges)
+        let processed_exchanges = process_exchanges(downloaded_exchanges)
             .await
             .expect("Failed to process reference exchange data");
 
@@ -34,21 +39,21 @@ impl InitManager {
 }
 
 async fn process_exchanges(
-    valid_exchanges: &Vec<String>,
     downloaded_exchanges: Vec<Exchange>,
 ) -> Result<Vec<Exchange>, InitError> {
-    let mut processed_exchanges = Vec::with_capacity(valid_exchanges.len() / 2);
+    let mut processed_exchanges = Vec::with_capacity(50);
 
     for e in downloaded_exchanges {
-        if valid_exchanges.contains(&e.name.to_uppercase())
-            && !INACTIVE_EXCHANGES.contains(&e.name.as_str())
-        {
+        if ACTIVE_EXCHANGES.contains(&e.name.as_str()) {
             processed_exchanges.push(e);
         }
     }
 
     // Remove duplicates
     processed_exchanges.dedup();
+
+    // Sort alphabetically
+    processed_exchanges.sort();
 
     Ok(processed_exchanges)
 }
