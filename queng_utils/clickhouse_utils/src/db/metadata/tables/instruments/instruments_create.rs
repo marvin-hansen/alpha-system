@@ -54,6 +54,7 @@ impl Metadata {
      ENGINE = MergeTree
      PRIMARY KEY (code, pair_figi)
      SETTINGS index_granularity = 2048
+     ;
     "
         )
     }

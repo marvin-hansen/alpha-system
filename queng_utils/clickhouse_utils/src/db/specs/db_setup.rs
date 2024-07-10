@@ -4,15 +4,12 @@ use std::error::Error;
 
 impl Specs {
     pub(crate) async fn create_spec_db(&self) -> Result<(), Box<dyn Error>> {
-        let ddl = self.create_specs_db_ddl();
+        let ddl = format!("CREATE DATABASE IF NOT EXISTS {DB_NAME}");
         self.execute_query(&ddl)
             .await
             .expect("Failed to drop specs DB");
 
         Ok(())
-    }
-    fn create_specs_db_ddl(&self) -> String {
-        "CREATE DATABASE IF NOT EXISTS specs".to_string()
     }
 
     pub async fn verify_specs_db_exists(&self) -> Result<bool, Box<dyn Error>> {

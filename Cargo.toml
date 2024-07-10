@@ -81,7 +81,7 @@ db_system_manager = { path = "queng_components/db_system_manager" }
 dns_manager = { path = "queng_components/dns_manager" }
 pattern_manager = { path = "queng_components/pattern_manager" }
 symbol_manager = { path = "queng_components/symbol_manager" }
-# Proto specs
+# Proto
 proto_bindings = { path = "queng_proto" }
 # Providers
 cmdb_provider = { path = "queng_providers/cmdb_provider" }

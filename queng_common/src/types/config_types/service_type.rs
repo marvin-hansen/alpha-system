@@ -18,6 +18,12 @@ pub enum ServiceType {
     CHANNEL = 0x2_u8,
 }
 
+impl ServiceType {
+    pub fn as_u8(&self) -> u8 {
+        *self as u8
+    }
+}
+
 impl From<i32> for ServiceType {
     /// Converts a raw byte value into a `ServiceType`.
     /// Unknown message type results in NullVal

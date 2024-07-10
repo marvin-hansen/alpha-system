@@ -30,9 +30,7 @@ impl Metadata {
 
         Ok(())
     }
-}
 
-impl Metadata {
     /// Generates an SQL insert query for inserting instrument metadata into the instruments table.
     ///
     /// This method takes an `Instrument` object and generates an SQL insert query for inserting its metadata into the instruments table.
@@ -45,7 +43,7 @@ impl Metadata {
     ///
     /// * `String` - The SQL insert query as a string.
     ///
-    pub(crate) fn generate_instruments_insert(&self, instrument: &Instrument) -> String {
+    fn generate_instruments_insert(&self, instrument: &Instrument) -> String {
         let table_name = format!("{DB_NAME}.{INSTRUMENTS_TABLE}");
         let trade_start_timestamp = instrument.trade_start_timestamp.unwrap_or(0);
         let trade_end_timestamp = instrument.trade_end_timestamp.unwrap_or(0);
@@ -71,7 +69,7 @@ impl Metadata {
         '{class}',
         '{pair_figi}',
         '{instrument_figi}'
-        )"
+        );"
         )
         .to_string()
     }

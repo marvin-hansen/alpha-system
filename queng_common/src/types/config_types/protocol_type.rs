@@ -22,13 +22,31 @@ pub enum ProtocolType {
     UDP = 3,
 }
 
+impl ProtocolType {
+    pub fn as_u8(&self) -> u8 {
+        *self as u8
+    }
+}
+
+impl From<u8> for ProtocolType {
+    #[inline]
+    fn from(value: u8) -> Self {
+        match value {
+            0x1_u8 => Self::GRPC,
+            0x2_u8 => Self::HTTP,
+            0x3_u8 => Self::UDP,
+            _ => Self::NullVal,
+        }
+    }
+}
+
 impl From<i32> for ProtocolType {
     /// All .proto enumeration types convert to the Rust i32 type.
     /// This functions converts a raw i32 byte value back into a `ServiceType`.
     /// Unknown message type results in NullVal
     #[inline]
-    fn from(v: i32) -> Self {
-        match v {
+    fn from(value: i32) -> Self {
+        match value {
             0x1_i32 => Self::GRPC,
             0x2_i32 => Self::HTTP,
             0x3_i32 => Self::UDP,

@@ -4,7 +4,6 @@ use env_utils::EnvUtil;
 use std::{env, time};
 use tokio::time::sleep;
 
-// Starts a kaiko api proxy on localhost port 7777
 async fn setup_ci_env() {
     // Set the environment variable.
     env::set_var("ENV", "CI");

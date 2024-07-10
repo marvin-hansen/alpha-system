@@ -8,7 +8,6 @@ use serde::{Deserialize, Serialize};
 ///
 /// * `Protobuf`: The Protobuf encoding format.
 /// * `SBE`: The SBE (Simple Binary Encoding) format.
-
 #[derive(Serialize, Deserialize, Debug, Copy, Clone, Default, Eq, PartialEq)]
 #[repr(u8)]
 pub enum Encoding {
@@ -19,13 +18,31 @@ pub enum Encoding {
     SBE = 3_u8,
 }
 
+impl Encoding {
+    pub fn as_u8(&self) -> u8 {
+        *self as u8
+    }
+}
+
+impl From<u8> for Encoding {
+    #[inline]
+    fn from(value: u8) -> Self {
+        match value {
+            0x1_u8 => Self::Binary,
+            0x2_u8 => Self::Protobuf,
+            0x3_u8 => Self::SBE,
+            _ => Self::NullVal,
+        }
+    }
+}
+
 impl From<i32> for Encoding {
     /// All .proto enumeration types convert to the Rust i32 type.
     /// Converts a raw byte value into a `ServiceType`.
     /// Unknown message type results in NullVal
     #[inline]
-    fn from(v: i32) -> Self {
-        match v {
+    fn from(value: i32) -> Self {
+        match value {
             0x1_i32 => Self::Binary,
             0x2_i32 => Self::Protobuf,
             0x3_i32 => Self::SBE,

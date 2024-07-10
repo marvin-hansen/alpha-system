@@ -31,11 +31,13 @@ impl Specs {
         Ok(res)
     }
 
-    // pub(crate) async fn count_rows(&self, table_name: &str) -> Result<u64, QueryError> {
-    //     let res = query_utils::count_rows(&self.client, table_name)
-    //         .await
-    //         .expect("Failed to count table rows in metadata DB");
-    //
-    //     Ok(res)
-    // }
+    pub(crate) async fn count_rows(&self, table_name: &str) -> Result<u64, QueryError> {
+        let table_name = &format!("{}.{}", DB_NAME, table_name);
+
+        let res = query_utils::count_rows(&self.client, table_name)
+            .await
+            .expect("Failed to count table rows in metadata DB");
+
+        Ok(res)
+    }
 }

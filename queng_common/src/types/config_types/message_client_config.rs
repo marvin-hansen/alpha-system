@@ -53,7 +53,7 @@ impl MessageClientConfig {
     /// The id is asserted to be less than 20 to avoid clashing with manually created configs.
     ///
     pub fn from_svc_id(svc_id: ServiceID) -> Self {
-        let id = svc_id.id().into();
+        let id = svc_id.as_u8().into();
         let svc_name = svc_id.name();
 
         // Prevents ID clash with manually created configurations
