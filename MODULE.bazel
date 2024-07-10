@@ -7,7 +7,7 @@ module(name = "queng")
 bazel_dep(name = "bazel_skylib", version = "1.7.1")
 
 # https://github.com/bazelbuild/rules_rust/releases
-bazel_dep(name = "rules_rust", version = "0.46.0")
+bazel_dep(name = "rules_rust", version = "0.47.1")
 
 # https://github.com/aspect-build/bazel-lib/releases
 bazel_dep(name = "aspect_bazel_lib", version = "2.7.8")
@@ -19,7 +19,7 @@ bazel_dep(name = "rules_multirun", version = "0.9.0")
 bazel_dep(name = "rules_oci", version = "1.7.6")
 
 # https://github.com/bazelbuild/rules_pkg/releases
-bazel_dep(name = "rules_pkg", version = "0.10.1")
+bazel_dep(name = "rules_pkg", version = "1.0.1")
 
 # https://github.com/bazelbuild/rules_python/releases
 bazel_dep(name = "rules_python", version = "0.33.2")
