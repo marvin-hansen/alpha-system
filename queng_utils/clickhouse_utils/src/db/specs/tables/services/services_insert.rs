@@ -3,6 +3,26 @@ use crate::prelude::ClickHouseUtilError;
 use common::prelude::{Endpoint, MetricConfig, ServiceConfig, ServiceID};
 
 impl Specs {
+    /// Asynchronously imports service configurations into the services table in the ClickHouse database.
+    ///
+    /// This method takes a vector of `ServiceConfig` structs and iterates through each service configuration.
+    /// For each service, it generates an insert query using the `generate_service_insert` method
+    /// and executes the query using the `execute_query` method.
+    ///
+    /// # Arguments
+    ///
+    /// * `services` - A reference to a vector of `ServiceConfig` structs.
+    ///
+    /// # Returns
+    ///
+    /// Returns a `Result` indicating the success or failure of importing the service configurations.
+    /// If successful, it returns `Ok(())`.
+    /// If an error occurs during the import process, it returns `Err(ClickHouseUtilError)`.
+    ///
+    /// # Errors
+    ///
+    /// This method can return an error of type `ClickHouseUtilError`.
+    ///
     pub async fn import_service_specs(
         &self,
         services: &Vec<ServiceConfig>,
