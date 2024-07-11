@@ -6,7 +6,7 @@ fn test_get_local_db_config() {
 
     assert_eq!(config.url(), "127.0.0.1");
     assert_eq!(config.port(), 9000);
-    assert_eq!(config.username(), "");
+    assert_eq!(config.username(), "default");
     assert_eq!(config.password(), "");
     assert_eq!(config.database(), "default");
 }

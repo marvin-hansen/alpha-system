@@ -21,7 +21,7 @@ fn test_click_house_config_default() {
     let config = ClickHouseConfig::default();
     assert_eq!(config.url(), "127.0.0.1");
     assert_eq!(config.port(), 9000);
-    assert_eq!(config.username(), "");
+    assert_eq!(config.username(), "default");
     assert_eq!(config.password(), "");
     assert_eq!(config.database(), "default");
 }
@@ -37,7 +37,7 @@ fn test_click_house_config_accessors() {
     let config = ClickHouseConfig::default();
     assert_eq!(config.url(), "127.0.0.1");
     assert_eq!(config.port(), 9000);
-    assert_eq!(config.username(), "");
+    assert_eq!(config.username(), "default");
     assert_eq!(config.password(), "");
     assert_eq!(config.database(), "default");
 }
@@ -46,7 +46,8 @@ fn test_click_house_config_accessors() {
 fn test_click_house_config_display() {
     let config = ClickHouseConfig::default();
 
-    let expected = "ClickHouseConfig { url: 127.0.0.1, port: 9000, database: default, username:  }";
+    let expected =
+        "ClickHouseConfig { url: 127.0.0.1, port: 9000, database: default, username: default }";
     let actual = format!("{}", config);
     assert_eq!(expected, actual);
 }

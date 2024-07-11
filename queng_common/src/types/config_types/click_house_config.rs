@@ -33,7 +33,7 @@ impl Default for ClickHouseConfig {
         Self {
             url: "127.0.0.1".to_string(),
             port: 9000,
-            username: "".to_string(),
+            username: "default".to_string(),
             password: "".to_string(),
             database: "default".to_string(),
         }
