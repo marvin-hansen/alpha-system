@@ -4,6 +4,6 @@ set -o nounset
 set -o pipefail
 
 
-command cargo fix --lib --allow-dirty
+command cargo fix -k --lib --allow-dirty
 
-command cargo clippy --fix --allow-dirty
+command cargo clippy --fix --lib --allow-dirty

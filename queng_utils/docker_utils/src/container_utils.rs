@@ -206,17 +206,17 @@ impl DockerUtil {
         container_id: &str,
         target_tag: &str,
     ) -> Result<bool, DockerError> {
-        return match self.get_running_container_image_tag(container_id) {
+        match self.get_running_container_image_tag(container_id) {
             Ok(container_tag) => {
                 Ok(container_tag.eq_ignore_ascii_case(target_tag))
             }
             Err(e) => {
                 Err(DockerError::from(format!(
                     "[check_if_container_uses_target_tag]: Error getting container_tag for container ID: {} {}",
-                    container_id, e.to_string()
+                    container_id, e
                 )))
             }
-        };
+        }
     }
 
     /// Check if a container exists by its ID.

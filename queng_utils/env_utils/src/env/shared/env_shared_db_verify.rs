@@ -95,7 +95,7 @@ impl EnvUtil {
             Err(e) => return Err(EnvironmentError::from(e.to_string())),
         };
 
-        return Ok(all_exists);
+        Ok(all_exists)
     }
 
     /// Verifies that all metadata tables exist in the ClickHouse database.
@@ -133,7 +133,7 @@ impl EnvUtil {
 
         let all_exists = exists_metadata_tables && exists_specs_tables;
 
-        return Ok(all_exists);
+        Ok(all_exists)
     }
 
     /// Asynchronously verifies if all data has been imported into the ClickHouse database.

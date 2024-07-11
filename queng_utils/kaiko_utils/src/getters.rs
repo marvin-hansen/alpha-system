@@ -16,15 +16,13 @@ impl KaikoUtil {
 
     pub async fn get_exchanges(&self) -> Result<Vec<MetaExchange>, KaikoUtilError> {
         self.dbg_print("[get_exchanges]: Download exchange metadata from Kaiko.");
-        return match self.client.get_exchanges().await {
+        match self.client.get_exchanges().await {
             Ok(exchanges) => Ok(exchanges),
-            Err(e) => {
-                return Err(KaikoUtilError::new(&format!(
-                    "Error retrieving exchanges: {}",
-                    e
-                )))
-            }
-        };
+            Err(e) => Err(KaikoUtilError::new(&format!(
+                "Error retrieving exchanges: {}",
+                e
+            ))),
+        }
     }
 
     pub async fn get_stats(&self) -> Result<Stats, KaikoUtilError> {
@@ -43,12 +41,12 @@ impl KaikoUtil {
     pub async fn get_instruments(&self) -> Result<Vec<MetaInstrument>, KaikoUtilError> {
         self.dbg_print("[get_instruments]: Download instrument metadata from Kaiko.");
 
-        return match self.client.get_instruments().await {
+        match self.client.get_instruments().await {
             Ok(instruments) => Ok(instruments),
             Err(e) => Err(KaikoUtilError::new(&format!(
                 "Error retrieving instruments: {}",
                 e
             ))),
-        };
+        }
     }
 }

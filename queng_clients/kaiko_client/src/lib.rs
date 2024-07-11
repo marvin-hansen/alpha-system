@@ -52,13 +52,12 @@ impl KaikoClient {
 
         // Enable gzip compressions for requests and responses to reduce download time.
         // https://dtantsur.github.io/rust-openstack/reqwest/struct.ClientBuilder.html
-        let client = reqwest::Client::builder()
+
+        reqwest::Client::builder()
             .default_headers(header_map)
             .gzip(gzip)
             .build()
-            .expect("Failed to build reqwest client");
-
-        client
+            .expect("Failed to build reqwest client")
     }
 }
 

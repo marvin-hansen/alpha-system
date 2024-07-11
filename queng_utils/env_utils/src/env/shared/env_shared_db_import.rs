@@ -2,7 +2,6 @@ use crate::prelude::EnvironmentError;
 use crate::EnvUtil;
 use clickhouse_utils::ClickhouseUtil;
 use kaiko_utils::KaikoUtil;
-use specs_utils;
 
 impl EnvUtil {
     /// Asynchronously imports all data into all Clickhouse databases.

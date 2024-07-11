@@ -51,10 +51,12 @@ impl EnvUtil {
 
         let exists = docker_util
             .check_if_container_exists(container_name)
-            .expect(&format!(
-                "[get_running_container]:  container already exists: {}",
-                container_name
-            ));
+            .unwrap_or_else(|_| {
+                panic!(
+                    "[get_running_container]:  container already exists: {}",
+                    container_name
+                )
+            });
         self.dbg_print(&format!("Container {} exists: {}", container_name, exists));
 
         // If the container already exists, check if its using the current target tag from the config.
@@ -67,10 +69,8 @@ impl EnvUtil {
 
             let container_current = docker_util
                 .check_if_running_container_uses_target_tag(container_name, target_tag)
-                .expect(&format!(
-                    "[TestEnv/CI:setup_container]: Failed to check if container {} use target tag: {}",
-                    container_name, target_tag,
-                ));
+                .unwrap_or_else(|_| panic!("[TestEnv/CI:setup_container]: Failed to check if container {} use target tag: {}",
+                    container_name, target_tag));
 
             if !container_current {
                 self.dbg_print(&format!(
@@ -79,10 +79,14 @@ impl EnvUtil {
                 ));
                 self.dbg_print(&format!("STOP running Container : {}", container_name));
 
-                docker_util.stop_container(container_name).expect(&format!(
-                    "[TestEnv/CI:setup_container]: Failed to check stop container {} ",
-                    container_name,
-                ))
+                docker_util
+                    .stop_container(container_name)
+                    .unwrap_or_else(|_| {
+                        panic!(
+                            "[TestEnv/CI:setup_container]: Failed to check stop container {} ",
+                            container_name
+                        )
+                    })
             } else {
                 self.dbg_print(&format!(
                     "Container {} uses target tag: {}",
@@ -100,7 +104,7 @@ impl EnvUtil {
                 )
             });
 
-        return if !exists {
+        if !exists {
             self.dbg_print(&format!(
                 "Start container {} with target tag {}",
                 container_name, target_tag
@@ -120,6 +124,6 @@ impl EnvUtil {
             ));
 
             Ok((container_name, container_port))
-        };
+        }
     }
 }

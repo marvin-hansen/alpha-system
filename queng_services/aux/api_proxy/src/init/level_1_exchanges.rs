@@ -45,7 +45,7 @@ async fn process_exchanges(
 ) -> Result<Vec<MetaExchange>, InitError> {
     let mut processed_exchanges: Vec<MetaExchange> = Vec::with_capacity(50);
 
-    for e in downloaded_exchanges.into_iter() {
+    for e in downloaded_exchanges.iter() {
         if ACTIVE_EXCHANGES.contains(&e.name.as_str()) {
             processed_exchanges.push(e.to_owned());
         }

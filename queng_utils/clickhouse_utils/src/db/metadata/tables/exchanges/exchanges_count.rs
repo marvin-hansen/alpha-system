@@ -14,9 +14,9 @@ impl Metadata {
     pub async fn count_exchanges(&self) -> Result<u64, ClickHouseUtilError> {
         let table_name = &format!("{}.{}", DB_NAME, EXCHANGES_TABLE);
 
-        return match self.count_rows(table_name).await {
+        match self.count_rows(table_name).await {
             Ok(count) => Ok(count),
             Err(e) => Err(ClickHouseUtilError::from(e.to_string())),
-        };
+        }
     }
 }

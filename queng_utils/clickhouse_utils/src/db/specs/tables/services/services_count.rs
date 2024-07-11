@@ -17,9 +17,9 @@ impl Specs {
     /// This method can return an error of type `ClickHouseUtilError`.
     ///
     pub async fn count_services(&self) -> Result<u64, ClickHouseUtilError> {
-        return match self.count_rows(SERVICES_TABLE).await {
+        match self.count_rows(SERVICES_TABLE).await {
             Ok(count) => Ok(count),
             Err(e) => Err(ClickHouseUtilError::from(e.to_string())),
-        };
+        }
     }
 }

@@ -11,7 +11,7 @@ pub struct ExistsDBRow {
 
 impl ExistsDBRow {
     pub fn value(&self) -> &String {
-        return &self.value;
+        &self.value
     }
 }
 

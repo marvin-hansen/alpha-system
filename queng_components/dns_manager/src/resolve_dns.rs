@@ -11,7 +11,7 @@ impl DnsManager {
     pub fn resolve_dns(&self, host: &str, internal: bool) -> Result<IpAddr, ResolveError> {
         let arc_key = Arc::new(host.to_string());
 
-        return if internal {
+        if internal {
             // Check cache
             if let Some(cached_ip_address) = self.internal_dns_cache.get(&arc_key) {
                 return Ok(cached_ip_address);
@@ -44,7 +44,7 @@ impl DnsManager {
             }
 
             resolved_ip_address
-        };
+        }
     }
 }
 

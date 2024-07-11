@@ -14,7 +14,7 @@ async fn test_pull_clickhouse() {
     let image = &format!("{}:{}", image, tag);
     let platform = container_config.platform();
 
-    let res = docker_util.pull_container_image(container_id, &image, platform);
+    let res = docker_util.pull_container_image(container_id, image, platform);
     assert!(res.is_ok());
 }
 
@@ -30,6 +30,6 @@ async fn test_pull_api_proxy() {
     let image = &format!("{}:{}", image, tag);
     let platform = container_config.platform();
 
-    let res = docker_util.pull_container_image(container_id, &image, platform);
+    let res = docker_util.pull_container_image(container_id, image, platform);
     assert!(res.is_ok());
 }

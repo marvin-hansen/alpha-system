@@ -60,7 +60,7 @@ impl ClickhouseUtil {
 
         let all_db = metadata_db && specs_db;
 
-        return Ok(all_db);
+        Ok(all_db)
     }
 
     /// Asynchronously drops the metadata and specs databases.

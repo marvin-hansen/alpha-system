@@ -14,6 +14,6 @@ async fn test_start_stop_container() {
 
     sleep(Duration::from_secs(3)).await;
 
-    let res = docker_util.stop_container(&container_id);
+    let res = docker_util.stop_container(container_id);
     assert!(res.is_ok());
 }

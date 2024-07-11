@@ -75,7 +75,7 @@ impl Specs {
         for d in dependencies.iter() {
             let svc_dep = format!("{}", d.as_u8());
             s.push_str(&svc_dep);
-            s.push_str(",");
+            s.push(',');
         }
 
         format!("[{s}]")

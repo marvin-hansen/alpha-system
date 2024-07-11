@@ -11,7 +11,7 @@ pub struct ExistsRow {
 
 impl ExistsRow {
     pub fn exists(&self) -> bool {
-        return if self.value > 0 { true } else { false };
+        self.value > 0
     }
 }
 

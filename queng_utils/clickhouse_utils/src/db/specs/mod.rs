@@ -5,11 +5,11 @@ mod db_setup;
 mod db_teardown;
 mod db_utils;
 mod tables;
-pub(crate) const DB_NAME: &'static str = "specs";
+pub(crate) const DB_NAME: &str = "specs";
 
-pub(crate) const SERVICES_TABLE: &'static str = "services";
+pub(crate) const SERVICES_TABLE: &str = "services";
 
-pub(crate) const DB_TABLES: [&'static str; 1] = [SERVICES_TABLE];
+pub(crate) const DB_TABLES: [&str; 1] = [SERVICES_TABLE];
 
 #[derive(Clone)]
 pub struct Specs {
