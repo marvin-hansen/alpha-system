@@ -30,7 +30,8 @@ pub struct CfgManager<'l> {
     /// Service environment configuration for each service
     svc_env_config: SvcEnvConfig,
     /// ClickHouse configuration.
-    clickhouse_config: ClickHouseConfig,
+    db_specs_config: ClickHouseConfig,
+    db_metadata_config: ClickHouseConfig,
     /// Default exchange
     default_exchange: ExchangeID,
     /// Vector of all supported exchanges.
@@ -51,7 +52,9 @@ impl<'l> CfgManager<'l> {
         //
         let env_type = ctx_manager.env_type();
         let svc_env_config = get_svc_env_config(svc, &svc_config);
-        let clickhouse_config = utils::get_db_config(&env_type);
+        // DB Config
+        let db_specs_config = utils::get_db_specs_config(&env_type);
+        let db_metadata_config = utils::get_db_metadata_config(&env_type);
 
         // Move this into symbol_manager
         let default_exchange = prelude::get_default_exchange();
@@ -66,7 +69,8 @@ impl<'l> CfgManager<'l> {
             svc,
             svc_config,
             svc_env_config,
-            clickhouse_config,
+            db_specs_config,
+            db_metadata_config,
             default_exchange,
             exchanges,
             exchanges_id_names,

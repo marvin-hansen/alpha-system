@@ -23,8 +23,12 @@ impl<'l> CfgManager<'l> {
         self.get_host(svc_config)
     }
 
-    pub fn clickhouse_config(&self) -> &ClickHouseConfig {
-        &self.clickhouse_config
+    pub fn clickhouse_db_specs_config(&self) -> &ClickHouseConfig {
+        &self.db_specs_config
+    }
+
+    pub fn clickhouse_db_metadata_config(&self) -> &ClickHouseConfig {
+        &self.db_metadata_config
     }
 }
 

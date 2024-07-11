@@ -1,1 +1,3 @@
-mod clickhouse_config_tests;
+mod ci;
+mod cluster;
+mod local;

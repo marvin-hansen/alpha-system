@@ -1,4 +1,3 @@
-pub use crate::config_utils;
 pub use crate::counter_utils::atomic_counter;
 pub use crate::csv_utils;
 pub use crate::file_utils;

@@ -1,10 +1,20 @@
 use common::prelude::{ClickHouseConfig, EnvironmentType, ServiceConfig, ServiceID, SvcEnvConfig};
-use db_specs::clickhouse;
+use db_specs::prelude::{clickhouse_ci_config, clickhouse_cluster_config, clickhouse_local_config};
 
-pub(crate) fn get_db_config(env_type: &EnvironmentType) -> ClickHouseConfig {
+pub(crate) fn get_db_specs_config(env_type: &EnvironmentType) -> ClickHouseConfig {
     match env_type {
-        EnvironmentType::LOCAL => clickhouse::get_local_db_config(),
-        EnvironmentType::CLUSTER => clickhouse::get_cluster_db_config(),
+        EnvironmentType::LOCAL => clickhouse_local_config::get_local_specs_db_config(),
+        EnvironmentType::CI => clickhouse_ci_config::get_ci_specs_db_config(),
+        EnvironmentType::CLUSTER => clickhouse_cluster_config::get_cluster_specs_db_config(),
+        _ => ClickHouseConfig::default(),
+    }
+}
+
+pub(crate) fn get_db_metadata_config(env_type: &EnvironmentType) -> ClickHouseConfig {
+    match env_type {
+        EnvironmentType::LOCAL => clickhouse_local_config::get_local_metadata_db_config(),
+        EnvironmentType::CI => clickhouse_ci_config::get_ci_metadata_db_config(),
+        EnvironmentType::CLUSTER => clickhouse_cluster_config::get_cluster_metadata_db_config(),
         _ => ClickHouseConfig::default(),
     }
 }

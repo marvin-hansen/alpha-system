@@ -1,0 +1,1 @@
+mod clickhouse_local_config_tests;

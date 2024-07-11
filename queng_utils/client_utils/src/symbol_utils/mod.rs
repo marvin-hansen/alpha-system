@@ -43,7 +43,7 @@ pub async fn get_symbol_id(
     };
 
     // println!("{FN_NAME}: Creating a new QueryDBManager.");
-    let db_config = cfg_manager.clickhouse_config();
+    let db_config = cfg_manager.clickhouse_db_metadata_config();
     let mut db_query_manager = match QueryDBManager::new(db_config.clone()).await {
         Ok(dqm) => dqm,
         Err(err) => {
