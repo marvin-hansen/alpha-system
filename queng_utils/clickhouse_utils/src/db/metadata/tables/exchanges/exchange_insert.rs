@@ -19,7 +19,7 @@ impl Metadata {
     ///
     pub async fn import_exchanges_metadata(
         &self,
-        exchanges: &Vec<MetaExchange>,
+        exchanges: &[MetaExchange],
     ) -> Result<(), ClickHouseUtilError> {
         for exchange in exchanges.iter() {
             let insert_query = self.generate_exchange_insert(exchange);

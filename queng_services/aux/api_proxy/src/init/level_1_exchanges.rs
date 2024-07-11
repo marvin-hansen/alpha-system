@@ -41,7 +41,7 @@ impl InitManager {
 }
 
 async fn process_exchanges(
-    downloaded_exchanges: &Vec<MetaExchange>,
+    downloaded_exchanges: &[MetaExchange],
 ) -> Result<Vec<MetaExchange>, InitError> {
     let mut processed_exchanges: Vec<MetaExchange> = Vec::with_capacity(50);
 

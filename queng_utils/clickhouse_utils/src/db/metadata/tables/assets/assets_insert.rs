@@ -21,7 +21,7 @@ impl Metadata {
     ///
     pub async fn import_asset_metadata(
         &self,
-        assets: &Vec<MetaAsset>,
+        assets: &[MetaAsset],
     ) -> Result<(), ClickHouseUtilError> {
         for asset in assets.iter() {
             let insert_query = self.generate_asset_insert(asset);

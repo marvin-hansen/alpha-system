@@ -33,7 +33,7 @@ impl InitManager {
 }
 
 async fn process_instruments(
-    downloaded_instruments: &Vec<MetaInstrument>,
+    downloaded_instruments: &[MetaInstrument],
 ) -> Result<Vec<MetaInstrument>, InitError> {
     // By experience, at least 90% of the reference data are junk (inactive) thus small alloc.
     let capacity = downloaded_instruments.len() * 0.10 as usize;

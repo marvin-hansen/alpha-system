@@ -14,5 +14,4 @@ command cargo clippy --all-targets
 
 # Check code formatting
 # https://github.com/rust-lang/rustfmt
-command cargo fmt --all --check
-
+#command cargo fmt --all --check

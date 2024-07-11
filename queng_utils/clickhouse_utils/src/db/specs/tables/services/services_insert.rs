@@ -25,7 +25,7 @@ impl Specs {
     ///
     pub async fn import_service_specs(
         &self,
-        services: &Vec<ServiceConfig>,
+        services: &[ServiceConfig],
     ) -> Result<(), ClickHouseUtilError> {
         for service in services.iter() {
             let insert_query = self.generate_service_insert(service);
@@ -70,7 +70,7 @@ impl Specs {
         )
     }
 
-    fn get_dependencies_array(&self, dependencies: &Vec<ServiceID>) -> String {
+    fn get_dependencies_array(&self, dependencies: &[ServiceID]) -> String {
         let mut s = String::new();
         for d in dependencies.iter() {
             let svc_dep = format!("{}", d.as_u8());

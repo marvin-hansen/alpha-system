@@ -8,9 +8,9 @@ pub fn abs(x: f64) -> f64 {
 
 pub fn min(numbers: &[f64]) -> f64 {
     let mut number = numbers[0];
-    for item in 0..numbers.len() {
-        if numbers[item] < number {
-            number = numbers[item]
+    for i in 0..numbers.len() {
+        if numbers[i] < number {
+            number = numbers[i]
         }
     }
     number
@@ -18,9 +18,9 @@ pub fn min(numbers: &[f64]) -> f64 {
 
 pub fn max(numbers: &[f64]) -> f64 {
     let mut number = numbers[0];
-    for item in 0..numbers.len() {
-        if numbers[item] > number {
-            number = numbers[item]
+    for i in 0..numbers.len() {
+        if numbers[i] > number {
+            number = numbers[i]
         }
     }
     number

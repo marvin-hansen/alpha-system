@@ -46,6 +46,7 @@ impl<'l> ContainerConfig<'l> {
     ///     "my_container","nginx",":latest", "0.0.0.0" ,80, None, None, None, false, false, 10
     /// );
     /// ```
+    #[allow(clippy::too_many_arguments)]
     pub fn new(
         name: &'l str,
         image: &'l str,
