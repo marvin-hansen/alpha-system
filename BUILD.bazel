@@ -166,6 +166,14 @@ alias(
     visibility = ["//visibility:public"],
 )
 
+# Config specs
+alias(
+    name = "portfolio_specs",
+    actual = "//queng_specs/config_specs/portfolio_specs:portfolio_specs",
+    visibility = ["//visibility:public"],
+)
+
+# DB Specs
 alias(
     name = "db_specs",
     actual = "//queng_specs/db_specs:db_specs",
