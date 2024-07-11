@@ -10,7 +10,7 @@ pub fn api_proxy_container_config() -> ContainerConfig<'static> {
     ContainerConfig::new(
         "apiproxy",
         "index.docker.io/hansenmarvin/api_proxy",
-        "0180c99",
+        "4e2a8ab",
         "0.0.0.0",
         7777,
         None,
