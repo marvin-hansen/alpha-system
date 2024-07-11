@@ -40,8 +40,10 @@ pub use crate::types::file_types::file_config_type::*;
 pub use crate::types::meta_data_types::assets::*;
 pub use crate::types::meta_data_types::exchanges::*;
 pub use crate::types::meta_data_types::instruments::*;
-pub use crate::types::meta_data_types::master_symbols::*;
 pub use crate::types::meta_data_types::stats::*;
+pub use crate::types::symbol_types::master_symbol::*;
+// Instrument types
+pub use crate::types::instrument_types::instrument::*;
 // pattern types
 pub use crate::types::pattern_types::pattern_config::*;
 pub use crate::types::pattern_types::pattern_type::*;

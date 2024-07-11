@@ -2,14 +2,14 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct AssetRoot {
+pub struct MetaAssetRoot {
     pub result: String,
-    pub data: Vec<Asset>,
+    pub data: Vec<MetaAsset>,
 }
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct Asset {
+pub struct MetaAsset {
     pub code: String,
     pub name: String,
     #[serde(rename = "asset_classes")]

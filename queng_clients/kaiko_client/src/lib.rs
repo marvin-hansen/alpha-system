@@ -3,7 +3,8 @@ pub mod error;
 use crate::error::KaikoClientError;
 use anyhow::Result;
 use common::prelude::{
-    Asset, AssetRoot, Exchange, ExchangesRoot, Instrument, InstrumentsRoot, Stats,
+    MetaAsset, MetaAssetRoot, MetaExchange, MetaExchangesRoot, MetaInstrument, MetaInstrumentsRoot,
+    Stats,
 };
 use reqwest::header::{HeaderMap, HeaderValue};
 use reqwest::Client;
@@ -74,11 +75,11 @@ impl KaikoClient {
 impl KaikoClient {
     /// Returns a list of supported assets.
     /// See <https://docs.kaiko.com/#assets>
-    pub async fn get_assets(&self) -> Result<Vec<Asset>, KaikoClientError> {
+    pub async fn get_assets(&self) -> Result<Vec<MetaAsset>, KaikoClientError> {
         let url = format!("{}assets", self.url);
         return match self.download(&url).await {
             Ok(bytes) => {
-                let assets_root: AssetRoot =
+                let assets_root: MetaAssetRoot =
                     serde_json::from_slice(bytes.as_slice()).expect("Failed to parse assets");
 
                 Ok(assets_root.data)
@@ -92,11 +93,11 @@ impl KaikoClient {
 
     /// Returns a list of supported exchanges.
     /// See <https://docs.kaiko.com/#exchanges>
-    pub async fn get_exchanges(&self) -> std::result::Result<Vec<Exchange>, KaikoClientError> {
+    pub async fn get_exchanges(&self) -> std::result::Result<Vec<MetaExchange>, KaikoClientError> {
         let url = format!("{}exchanges", self.url);
         return match self.download(&url).await {
             Ok(bytes) => {
-                let exchanges_root: ExchangesRoot =
+                let exchanges_root: MetaExchangesRoot =
                     serde_json::from_slice(bytes.as_slice()).expect("Failed to parse exchanges");
 
                 Ok(exchanges_root.data)
@@ -116,11 +117,11 @@ impl KaikoClient {
     ///
     /// See: <https://docs.kaiko.com/#instruments>
     ///
-    pub async fn get_instruments(&self) -> Result<Vec<Instrument>, KaikoClientError> {
+    pub async fn get_instruments(&self) -> Result<Vec<MetaInstrument>, KaikoClientError> {
         let url = format!("{}instruments", self.url);
         return match self.download(&url).await {
             Ok(bytes) => {
-                let instruments_root: InstrumentsRoot =
+                let instruments_root: MetaInstrumentsRoot =
                     serde_json::from_slice(bytes.as_slice()).expect("Failed to parse exchanges");
 
                 Ok(instruments_root.data)

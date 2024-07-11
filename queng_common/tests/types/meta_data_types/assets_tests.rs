@@ -1,4 +1,4 @@
-use common::prelude::{Address, Asset, AssetMetadata, AssetRoot};
+use common::prelude::{Address, AssetMetadata, MetaAsset, MetaAssetRoot};
 
 #[test]
 fn asset_structs_properties_test() {
@@ -17,7 +17,7 @@ fn asset_structs_properties_test() {
         blockchain: "Ethereum".to_string(),
     };
 
-    let asset = Asset {
+    let asset = MetaAsset {
         code: "ASSET1".to_string(),
         name: "Test Asset".to_string(),
         asset_classes: vec!["Class1".to_string(), "Class2".to_string()],
@@ -26,7 +26,7 @@ fn asset_structs_properties_test() {
         addresses: Some(vec![address.clone()]),
     };
 
-    let asset_root = AssetRoot {
+    let asset_root = MetaAssetRoot {
         result: "OK".to_string(),
         data: vec![asset.clone()],
     };

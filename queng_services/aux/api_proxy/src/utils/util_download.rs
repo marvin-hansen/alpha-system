@@ -1,6 +1,8 @@
 use crate::errors::DownloadError;
 use crate::fields::BASE_URL;
-use common::prelude::{Asset, AssetRoot, Exchange, ExchangesRoot, Instrument, InstrumentsRoot};
+use common::prelude::{
+    MetaAsset, MetaAssetRoot, MetaExchange, MetaExchangesRoot, MetaInstrument, MetaInstrumentsRoot,
+};
 use reqwest::Client;
 
 #[derive(Debug, Clone)]
@@ -46,12 +48,12 @@ impl DownloadUtils {
 }
 
 impl DownloadUtils {
-    pub(crate) async fn download_assets(&self) -> Result<Vec<Asset>, DownloadError> {
+    pub(crate) async fn download_assets(&self) -> Result<Vec<MetaAsset>, DownloadError> {
         // curl --compressed -H 'Accept: application/json' 'https://reference-data-api.kaiko.io/v1/assets' > assets.json
         let url = format!("{}assets", BASE_URL);
         return match self.download(&url).await {
             Ok(bytes) => {
-                let assets: AssetRoot =
+                let assets: MetaAssetRoot =
                     serde_json::from_slice(bytes.as_slice()).expect("Failed to parse assets");
 
                 Ok(assets.data)
@@ -63,12 +65,12 @@ impl DownloadUtils {
         };
     }
 
-    pub(crate) async fn download_exchanges(&self) -> Result<Vec<Exchange>, DownloadError> {
+    pub(crate) async fn download_exchanges(&self) -> Result<Vec<MetaExchange>, DownloadError> {
         // curl --compressed -H 'Accept: application/json' 'https://reference-data-api.kaiko.io/v1/assets' > assets.json
         let url = format!("{}exchanges", BASE_URL);
         return match self.download(&url).await {
             Ok(bytes) => {
-                let exchanges: ExchangesRoot =
+                let exchanges: MetaExchangesRoot =
                     serde_json::from_slice(bytes.as_slice()).expect("Failed to parse exchanges");
 
                 Ok(exchanges.data)
@@ -80,12 +82,12 @@ impl DownloadUtils {
         };
     }
 
-    pub(crate) async fn download_instruments(&self) -> Result<Vec<Instrument>, DownloadError> {
+    pub(crate) async fn download_instruments(&self) -> Result<Vec<MetaInstrument>, DownloadError> {
         // curl --compressed -H 'Accept: application/json' 'https://reference-data-api.kaiko.io/v1/assets' > assets.json
         let url = format!("{}instruments", BASE_URL);
         return match self.download(&url).await {
             Ok(bytes) => {
-                let instruments: InstrumentsRoot =
+                let instruments: MetaInstrumentsRoot =
                     serde_json::from_slice(bytes.as_slice()).expect("Failed to parse exchanges");
 
                 Ok(instruments.data)

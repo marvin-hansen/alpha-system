@@ -1,3 +1,4 @@
+mod master_symbols_tests;
 #[cfg(test)]
 mod symbol_id_tests;
 mod symbol_mapping_tests;

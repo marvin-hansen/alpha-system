@@ -1,5 +1,5 @@
-use common::prelude::{AccountType, ExchangeID, PortfolioConfig};
-use proto_bindings::proto::ProtoPortfolioConfig;
+use common::prelude::{AccountType, Instrument, PortfolioConfig};
+use proto_bindings::proto::{ProtoInstrument, ProtoPortfolioConfig};
 use std::fmt::Error;
 
 pub fn portfolio_config_from_proto(proto: ProtoPortfolioConfig) -> Result<PortfolioConfig, Error> {
@@ -8,12 +8,11 @@ pub fn portfolio_config_from_proto(proto: ProtoPortfolioConfig) -> Result<Portfo
         proto.portfolio_description,
         AccountType::from(proto.portfolio_account_type),
         proto.portfolio_account_id,
-        ExchangeID::from(proto.portfolio_exchange_id),
         proto.portfolio_currency,
         proto.portfolio_cash,
         proto.portfolio_margin,
         proto.portfolio_max_drawdown,
-        proto.portfolio_instruments.into_iter().collect(),
+        instrument_from_proto(proto.portfolio_instruments),
         proto.instrument_max_allocation,
         proto.instrument_max_drawdown,
         proto.portfolio_free_margin,
@@ -21,6 +20,26 @@ pub fn portfolio_config_from_proto(proto: ProtoPortfolioConfig) -> Result<Portfo
         proto.portfolio_free_margin_percent,
         proto.portfolio_free_cash_percent,
     ))
+}
+
+pub fn instrument_from_proto(proto: Vec<ProtoInstrument>) -> Vec<Instrument> {
+    let mut v = Vec::new();
+
+    for p in proto.iter() {
+        let i = Instrument::new(
+            p.exchange_code.clone(),
+            p.instrument_class.clone(),
+            p.exchange_code.clone(),
+            p.exchange_pair_code.clone(),
+            p.base_asset.clone(),
+            p.quote_asset.clone(),
+            p.instrument_figi.clone(),
+        );
+
+        v.push(i);
+    }
+
+    v
 }
 
 pub fn portfolio_config_to_proto(
@@ -31,12 +50,13 @@ pub fn portfolio_config_to_proto(
         portfolio_description: portfolio_config.portfolio_description().to_string(),
         portfolio_account_type: portfolio_config.portfolio_account_type() as i32,
         portfolio_account_id: portfolio_config.portfolio_account_id().to_string(),
-        portfolio_exchange_id: portfolio_config.portfolio_exchange_id() as i32,
         portfolio_currency: portfolio_config.portfolio_currency().to_string(),
         portfolio_cash: portfolio_config.portfolio_cash(),
         portfolio_margin: portfolio_config.portfolio_margin(),
         portfolio_max_drawdown: portfolio_config.portfolio_max_drawdown(),
-        portfolio_instruments: portfolio_config.portfolio_instruments().to_owned(),
+        portfolio_instruments: instrument_to_proto(
+            portfolio_config.portfolio_instruments().to_owned(),
+        ),
         instrument_max_allocation: portfolio_config.instrument_max_allocation(),
         instrument_max_drawdown: portfolio_config.instrument_max_drawdown(),
         portfolio_free_margin: portfolio_config.portfolio_free_margin(),
@@ -44,4 +64,21 @@ pub fn portfolio_config_to_proto(
         portfolio_free_margin_percent: portfolio_config.portfolio_free_margin_percent(),
         portfolio_free_cash_percent: portfolio_config.portfolio_free_cash_percent(),
     })
+}
+
+pub fn instrument_to_proto(conf: Vec<Instrument>) -> Vec<ProtoInstrument> {
+    let mut v = Vec::new();
+
+    for i in conf.iter() {
+        v.push(ProtoInstrument {
+            instrument_code: i.code().to_string(),
+            instrument_class: i.class().to_string(),
+            exchange_code: i.exchange_code().to_string(),
+            exchange_pair_code: i.exchange_pair_code().to_string(),
+            base_asset: i.base_asset().to_string(),
+            quote_asset: i.quote_asset().to_string(),
+            instrument_figi: i.instrument_figi().clone(),
+        })
+    }
+    v
 }

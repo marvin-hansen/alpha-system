@@ -1,5 +1,6 @@
 use common::prelude::{
-    Asset, AssetRoot, Exchange, ExchangesRoot, Instrument, InstrumentsRoot, Stats,
+    MetaAsset, MetaAssetRoot, MetaExchange, MetaExchangesRoot, MetaInstrument, MetaInstrumentsRoot,
+    Stats,
 };
 use crypto_utils::prelude::hash_utils;
 
@@ -7,15 +8,19 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Default, Clone, PartialEq, Serialize, Deserialize)]
 pub struct MetaDataSet {
-    assets: AssetRoot,
-    exchanges: ExchangesRoot,
-    instruments: InstrumentsRoot,
+    assets: MetaAssetRoot,
+    exchanges: MetaExchangesRoot,
+    instruments: MetaInstrumentsRoot,
     stats: Stats,
     hash: u64,
 }
 
 impl MetaDataSet {
-    pub fn new(assets: Vec<Asset>, exchanges: Vec<Exchange>, instruments: Vec<Instrument>) -> Self {
+    pub fn new(
+        assets: Vec<MetaAsset>,
+        exchanges: Vec<MetaExchange>,
+        instruments: Vec<MetaInstrument>,
+    ) -> Self {
         let sum = (assets.len() + exchanges.len() + instruments.len()) as u64;
         // The hash of the sum is used to determine if some meta-data have changed.
         let hash = hash_utils::sha512_digest(sum.to_string());
@@ -28,15 +33,15 @@ impl MetaDataSet {
         );
 
         Self {
-            assets: AssetRoot {
+            assets: MetaAssetRoot {
                 result: "OK".to_string(),
                 data: assets,
             },
-            exchanges: ExchangesRoot {
+            exchanges: MetaExchangesRoot {
                 result: "OK".to_string(),
                 data: exchanges,
             },
-            instruments: InstrumentsRoot {
+            instruments: MetaInstrumentsRoot {
                 result: "OK".to_string(),
                 data: instruments,
             },
@@ -47,13 +52,13 @@ impl MetaDataSet {
 }
 
 impl MetaDataSet {
-    pub fn assets(&self) -> &AssetRoot {
+    pub fn assets(&self) -> &MetaAssetRoot {
         &self.assets
     }
-    pub fn exchanges(&self) -> &ExchangesRoot {
+    pub fn exchanges(&self) -> &MetaExchangesRoot {
         &self.exchanges
     }
-    pub fn instruments(&self) -> &InstrumentsRoot {
+    pub fn instruments(&self) -> &MetaInstrumentsRoot {
         &self.instruments
     }
     pub fn stats(&self) -> &Stats {

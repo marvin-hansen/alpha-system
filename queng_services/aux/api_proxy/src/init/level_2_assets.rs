@@ -1,9 +1,9 @@
 use crate::errors::InitError;
 use crate::init::InitManager;
-use common::prelude::Asset;
+use common::prelude::MetaAsset;
 
 impl InitManager {
-    pub(super) async fn init_level_2_assets(&self) -> Result<Vec<Asset>, InitError> {
+    pub(super) async fn init_level_2_assets(&self) -> Result<Vec<MetaAsset>, InitError> {
         //
         self.dbg_print("Level 2: Download reference asset data!");
         let downloaded_assets = self

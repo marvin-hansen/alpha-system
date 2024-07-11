@@ -1,10 +1,10 @@
 use crate::errors::InitError;
 use crate::fields::DEX;
 use crate::init::InitManager;
-use common::prelude::Instrument;
+use common::prelude::MetaInstrument;
 
 impl InitManager {
-    pub(super) async fn init_level_3_instruments(&self) -> Result<Vec<Instrument>, InitError> {
+    pub(super) async fn init_level_3_instruments(&self) -> Result<Vec<MetaInstrument>, InitError> {
         self.dbg_print("Level 3: Download reference instrument data!");
         let downloaded_instruments = self
             .dl_utils
@@ -33,8 +33,8 @@ impl InitManager {
 }
 
 async fn process_instruments(
-    downloaded_instruments: &Vec<Instrument>,
-) -> Result<Vec<Instrument>, InitError> {
+    downloaded_instruments: &Vec<MetaInstrument>,
+) -> Result<Vec<MetaInstrument>, InitError> {
     // By experience, at least 90% of the reference data are junk (inactive) thus small alloc.
     let capacity = downloaded_instruments.len() * 0.10 as usize;
     let mut processed_instruments = Vec::with_capacity(capacity);
@@ -49,7 +49,7 @@ async fn process_instruments(
 }
 
 // Double check if instrument is inactive i.e. from an inactive exchange
-fn is_valid_instrument(instrument: &Instrument) -> bool {
+fn is_valid_instrument(instrument: &MetaInstrument) -> bool {
     // Instrument  inactive
     if instrument.trade_start_time.is_none() && instrument.trade_end_time.is_none() {
         return false;

@@ -2,14 +2,14 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct InstrumentsRoot {
+pub struct MetaInstrumentsRoot {
     pub result: String,
-    pub data: Vec<Instrument>,
+    pub data: Vec<MetaInstrument>,
 }
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct Instrument {
+pub struct MetaInstrument {
     #[serde(rename = "kaiko_legacy_exchange_slug")]
     pub kaiko_legacy_exchange_slug: String,
     #[serde(rename = "trade_start_time")]
@@ -39,7 +39,7 @@ pub struct Instrument {
     pub trade_count: u64,
 }
 
-impl Instrument {
+impl MetaInstrument {
     pub fn exchange_code(&self) -> &str {
         &self.exchange_code
     }

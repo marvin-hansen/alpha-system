@@ -1,6 +1,6 @@
 use crate::db::metadata::{Metadata, DB_NAME, EXCHANGES_TABLE};
 use crate::prelude::ClickHouseUtilError;
-use common::prelude::Exchange;
+use common::prelude::MetaExchange;
 
 impl Metadata {
     /// Imports a list of exchanges metadata into the metadata database.
@@ -19,7 +19,7 @@ impl Metadata {
     ///
     pub async fn import_exchanges_metadata(
         &self,
-        exchanges: &Vec<Exchange>,
+        exchanges: &Vec<MetaExchange>,
     ) -> Result<(), ClickHouseUtilError> {
         for exchange in exchanges.iter() {
             let insert_query = self.generate_exchange_insert(exchange);
@@ -45,7 +45,7 @@ impl Metadata {
     ///
     /// * `String` - The generated SQL query.
     ///
-    pub(crate) fn generate_exchange_insert(&self, exchange: &Exchange) -> String {
+    pub(crate) fn generate_exchange_insert(&self, exchange: &MetaExchange) -> String {
         let table_name = format!("{DB_NAME}.{EXCHANGES_TABLE}");
         let code = &exchange.code;
         let name = &exchange.name;

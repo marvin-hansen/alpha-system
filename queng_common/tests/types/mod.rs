@@ -8,6 +8,7 @@ mod data_types;
 mod exchange_types;
 #[cfg(test)]
 mod file_types;
+mod instrument_types;
 #[cfg(test)]
 mod meta_data_types;
 #[cfg(test)]

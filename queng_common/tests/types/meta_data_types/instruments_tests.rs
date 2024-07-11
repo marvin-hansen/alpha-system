@@ -1,4 +1,4 @@
-use common::prelude::{Instrument, InstrumentMetadata, InstrumentsRoot};
+use common::prelude::{InstrumentMetadata, MetaInstrument, MetaInstrumentsRoot};
 
 #[test]
 fn test_instruments_root_and_instrument_properties() {
@@ -9,7 +9,7 @@ fn test_instruments_root_and_instrument_properties() {
     };
 
     // Construct an Instrument
-    let instrument = Instrument {
+    let instrument = MetaInstrument {
         kaiko_legacy_exchange_slug: "kaiko-exchange".to_string(),
         trade_start_time: Some("2021-01-01T00:00:00Z".to_string()),
         trade_end_time: Some("2021-12-31T23:59:59Z".to_string()),
@@ -28,7 +28,7 @@ fn test_instruments_root_and_instrument_properties() {
     };
 
     // Construct an InstrumentsRoot
-    let instruments_root = InstrumentsRoot {
+    let instruments_root = MetaInstrumentsRoot {
         result: "success".to_string(),
         data: vec![instrument],
     };

@@ -1,9 +1,9 @@
 use crate::error::KaikoUtilError;
 use crate::KaikoUtil;
-use common::prelude::{Asset, Exchange, Instrument, Stats};
+use common::prelude::{MetaAsset, MetaExchange, MetaInstrument, Stats};
 
 impl KaikoUtil {
-    pub async fn get_assets(&self) -> Result<Vec<Asset>, KaikoUtilError> {
+    pub async fn get_assets(&self) -> Result<Vec<MetaAsset>, KaikoUtilError> {
         self.dbg_print("[get_assets]: Download asset metadata from Kaiko.");
         match self.client.get_assets().await {
             Ok(assets) => Ok(assets),
@@ -14,7 +14,7 @@ impl KaikoUtil {
         }
     }
 
-    pub async fn get_exchanges(&self) -> Result<Vec<Exchange>, KaikoUtilError> {
+    pub async fn get_exchanges(&self) -> Result<Vec<MetaExchange>, KaikoUtilError> {
         self.dbg_print("[get_exchanges]: Download exchange metadata from Kaiko.");
         return match self.client.get_exchanges().await {
             Ok(exchanges) => Ok(exchanges),
@@ -40,7 +40,7 @@ impl KaikoUtil {
         }
     }
 
-    pub async fn get_instruments(&self) -> Result<Vec<Instrument>, KaikoUtilError> {
+    pub async fn get_instruments(&self) -> Result<Vec<MetaInstrument>, KaikoUtilError> {
         self.dbg_print("[get_instruments]: Download instrument metadata from Kaiko.");
 
         return match self.client.get_instruments().await {

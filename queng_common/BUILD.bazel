@@ -47,11 +47,6 @@ rust_test_suite(
     deps = [
         # Crate to test
         ":common",
-        # External crates
-        "@crates//:chrono",
-        "@crates//:rust_decimal",
-        "@crates//:serde",
-        "@crates//:serde_json",
     ],
 )
 
@@ -68,11 +63,6 @@ rust_test_suite(
     deps = [
         # Crate to test
         ":common",
-        # External crates
-        "@crates//:chrono",
-        "@crates//:rust_decimal",
-        "@crates//:serde",
-        "@crates//:serde_json",
     ],
 )
 
@@ -89,11 +79,6 @@ rust_test_suite(
     deps = [
         # Crate to test
         ":common",
-        # External crates
-        "@crates//:chrono",
-        "@crates//:rust_decimal",
-        "@crates//:serde",
-        "@crates//:serde_json",
     ],
 )
 
@@ -110,11 +95,6 @@ rust_test_suite(
     deps = [
         # Crate to test
         ":common",
-        # External crates
-        "@crates//:chrono",
-        "@crates//:rust_decimal",
-        "@crates//:serde",
-        "@crates//:serde_json",
     ],
 )
 
@@ -131,11 +111,6 @@ rust_test_suite(
     deps = [
         # Crate to test
         ":common",
-        # External crates
-        "@crates//:chrono",
-        "@crates//:rust_decimal",
-        "@crates//:serde",
-        "@crates//:serde_json",
     ],
 )
 
@@ -152,11 +127,22 @@ rust_test_suite(
     deps = [
         # Crate to test
         ":common",
-        # External crates
-        "@crates//:chrono",
-        "@crates//:rust_decimal",
-        "@crates//:serde",
-        "@crates//:serde_json",
+    ],
+)
+
+rust_test_suite(
+    name = "common_instrument_tests",
+    srcs = glob([
+        "tests/types/instrument_types/*_tests.rs",
+    ]),
+    tags = [
+        "common",
+        "unit",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        ":common",
     ],
 )
 
@@ -173,11 +159,6 @@ rust_test_suite(
     deps = [
         # Crate to test
         ":common",
-        # External crates
-        "@crates//:chrono",
-        "@crates//:rust_decimal",
-        "@crates//:serde",
-        "@crates//:serde_json",
     ],
 )
 
@@ -194,11 +175,6 @@ rust_test_suite(
     deps = [
         # Crate to test
         ":common",
-        # External crates
-        "@crates//:chrono",
-        "@crates//:rust_decimal",
-        "@crates//:serde",
-        "@crates//:serde_json",
     ],
 )
 
@@ -215,11 +191,6 @@ rust_test_suite(
     deps = [
         # Crate to test
         ":common",
-        # External crates
-        "@crates//:chrono",
-        "@crates//:rust_decimal",
-        "@crates//:serde",
-        "@crates//:serde_json",
     ],
 )
 
@@ -237,10 +208,7 @@ rust_test_suite(
         # Crate to test
         ":common",
         # External crates
-        "@crates//:chrono",
         "@crates//:rust_decimal",
-        "@crates//:serde",
-        "@crates//:serde_json",
     ],
 )
 
@@ -257,10 +225,5 @@ rust_test_suite(
     deps = [
         # Crate to test
         ":common",
-        # External crates
-        "@crates//:chrono",
-        "@crates//:rust_decimal",
-        "@crates//:serde",
-        "@crates//:serde_json",
     ],
 )

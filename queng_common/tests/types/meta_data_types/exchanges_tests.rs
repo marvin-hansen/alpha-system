@@ -1,14 +1,14 @@
-use common::prelude::{Exchange, ExchangesRoot};
+use common::prelude::{MetaExchange, MetaExchangesRoot};
 
 #[test]
 fn test_exchanges_root_and_exchange_properties() {
-    let exchange = Exchange {
+    let exchange = MetaExchange {
         code: "TEST".to_string(),
         name: "Test Exchange".to_string(),
         kaiko_legacy_slug: "test-exchange".to_string(),
     };
 
-    let exchanges_root = ExchangesRoot {
+    let exchanges_root = MetaExchangesRoot {
         result: "Success".to_string(),
         data: vec![exchange],
     };

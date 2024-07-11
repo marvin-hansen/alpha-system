@@ -1,10 +1,10 @@
 use crate::errors::InitError;
 use crate::fields::ACTIVE_EXCHANGES;
 use crate::init::InitManager;
-use common::prelude::Exchange;
+use common::prelude::MetaExchange;
 
 impl InitManager {
-    pub(super) async fn init_level_1_exchanges(&self) -> Result<Vec<Exchange>, InitError> {
+    pub(super) async fn init_level_1_exchanges(&self) -> Result<Vec<MetaExchange>, InitError> {
         //
         self.dbg_print("Level 1: Download reference exchange data!");
         let downloaded_exchanges = self
@@ -41,9 +41,9 @@ impl InitManager {
 }
 
 async fn process_exchanges(
-    downloaded_exchanges: &Vec<Exchange>,
-) -> Result<Vec<Exchange>, InitError> {
-    let mut processed_exchanges: Vec<Exchange> = Vec::with_capacity(50);
+    downloaded_exchanges: &Vec<MetaExchange>,
+) -> Result<Vec<MetaExchange>, InitError> {
+    let mut processed_exchanges: Vec<MetaExchange> = Vec::with_capacity(50);
 
     for e in downloaded_exchanges.into_iter() {
         if ACTIVE_EXCHANGES.contains(&e.name.as_str()) {

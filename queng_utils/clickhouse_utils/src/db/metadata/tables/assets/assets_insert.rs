@@ -1,6 +1,6 @@
 use crate::db::metadata::{Metadata, ASSETS_TABLE, DB_NAME};
 use crate::types::error::ClickHouseUtilError;
-use common::prelude::{Asset, AssetMetadata};
+use common::prelude::{AssetMetadata, MetaAsset};
 
 impl Metadata {
     /// Imports asset metadata into the metadata database.
@@ -21,7 +21,7 @@ impl Metadata {
     ///
     pub async fn import_asset_metadata(
         &self,
-        assets: &Vec<Asset>,
+        assets: &Vec<MetaAsset>,
     ) -> Result<(), ClickHouseUtilError> {
         for asset in assets.iter() {
             let insert_query = self.generate_asset_insert(asset);
@@ -45,7 +45,7 @@ impl Metadata {
     ///
     /// * `String` - The generated SQL query.
     ///
-    pub(crate) fn generate_asset_insert(&self, asset: &Asset) -> String {
+    pub(crate) fn generate_asset_insert(&self, asset: &MetaAsset) -> String {
         let table_name = format!("{DB_NAME}.{ASSETS_TABLE}");
         let code = asset.code.clone();
         // ClickHouse needs quotes to be escaped

@@ -4,6 +4,7 @@ pub mod data_types;
 pub mod error_types;
 pub mod exchange_types;
 pub mod file_types;
+pub mod instrument_types;
 pub mod meta_data_types;
 pub mod pattern_types;
 pub mod portfolio_types;
