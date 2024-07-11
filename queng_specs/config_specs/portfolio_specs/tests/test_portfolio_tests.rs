@@ -1,5 +1,5 @@
 use common::prelude::AccountType;
-use portfolio_specs::test_portfolio::get_test_portfolio_config;
+use portfolio_specs::prelude::test_portfolio::get_test_portfolio_config;
 
 #[test]
 fn portfolio_config_portfolio_id_returns_expected_value() {

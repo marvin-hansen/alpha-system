@@ -1,2 +1,2 @@
-mod prelude;
+pub mod prelude;
 pub mod test_portfolio;
