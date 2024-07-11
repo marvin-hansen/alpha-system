@@ -92,13 +92,13 @@ alias(
 
 alias(
     name = "db_query_manager",
-    actual = "//queng_components/db_query_manager:db_query_manager",
+    actual = "//queng_components/db_components/db_query_manager:db_query_manager",
     visibility = ["//visibility:public"],
 )
 
 alias(
     name = "db_system_manager",
-    actual = "//queng_components/db_system_manager:db_system_manager",
+    actual = "//queng_components/db_components/db_system_manager:db_system_manager",
     visibility = ["//visibility:public"],
 )
 
