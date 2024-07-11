@@ -1,0 +1,21 @@
+load("@rules_rust//rust:defs.bzl", "rust_test_suite")
+
+rust_test_suite(
+    name = "dns_manager_tests",
+    srcs = glob([
+        "*_tests.rs",
+    ]),
+    tags = [
+        "components",
+        "dns_manager",
+        "unit",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate under test
+        "//:dns_manager",
+        "//:common",
+        # Internal crates
+        "//:ctx_manager",
+    ],
+)

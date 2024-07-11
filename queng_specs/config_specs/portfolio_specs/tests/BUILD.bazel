@@ -1,0 +1,19 @@
+load("@rules_rust//rust:defs.bzl", "rust_test_suite")
+
+rust_test_suite(
+    name = "portfolio_specs_tests",
+    srcs = glob([
+        "*_tests.rs",
+    ]),
+    tags = [
+        "specs",
+        "unit",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        "//:portfolio_specs",
+        # Internal crates
+        "//:common",
+    ],
+)

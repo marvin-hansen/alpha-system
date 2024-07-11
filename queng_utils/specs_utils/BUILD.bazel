@@ -25,24 +25,6 @@ rust_library(
     ],
 )
 
-rust_test_suite(
-    name = "specs_utils_tests",
-    srcs = glob([
-        "tests/*_tests.rs",
-    ]),
-    tags = [
-        "specs_utils",
-        "unit",
-    ],
-    visibility = ["//visibility:public"],
-    deps = [
-        # Test target
-        ":specs_utils",
-        # Internal dependencies
-        "//:common",
-    ],
-)
-
 rust_doc(
     name = "doc",
     crate = ":specs_utils",

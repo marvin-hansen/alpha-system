@@ -1,0 +1,19 @@
+load("@rules_rust//rust:defs.bzl", "rust_test_suite")
+
+rust_test_suite(
+    name = "mddb_tests",
+    srcs = glob([
+        "*_tests.rs",
+    ]),
+    tags = [
+        "specs",
+        "unit",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Test target
+        "//:mddb_specs",
+        # Internal dependencies
+        "//:common",
+    ],
+)

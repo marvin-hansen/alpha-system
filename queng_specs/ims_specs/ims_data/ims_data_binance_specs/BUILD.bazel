@@ -30,21 +30,3 @@ rust_doc_test(
     tags = ["doc-test"],
     visibility = ["//visibility:public"],
 )
-
-rust_test_suite(
-    name = "ims_data_binance_tests",
-    srcs = glob([
-        "tests/*_tests.rs",
-    ]),
-    tags = [
-        "specs",
-        "unit",
-    ],
-    visibility = ["//visibility:public"],
-    deps = [
-        # Test target
-        ":ims_data_binance_specs",
-        # Internal dependencies
-        "//:common",
-    ],
-)

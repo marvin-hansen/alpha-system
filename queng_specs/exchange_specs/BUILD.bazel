@@ -16,22 +16,6 @@ rust_library(
     ],
 )
 
-rust_test_suite(
-    name = "tests",
-    srcs = glob([
-        "tests/*/*.rs",
-    ]),
-    tags = [
-        "specs",
-        "unit",
-    ],
-    visibility = ["//visibility:public"],
-    deps = [
-        ":exchange_specs",
-        "//:common",
-    ],
-)
-
 rust_doc(
     name = "doc",
     crate = ":exchange_specs",

@@ -1,15 +1,43 @@
-//! Module containing SBE message definitions.
-//!
-//! This includes modules grouping related message types:
-//!
-//! - `client_messages` - Messages from clients
-//! - `data_messages` - Data subscription messages
-//! - `error_messages` - Error response messages
-//!
-//! Grouping messages into modules provides organization and encapsulation.
-//!
-//! The messages are exposed in the prelude for convenient importing.
-//!
-pub mod client_messages;
-pub mod data_messages;
-pub mod error_messages;
+pub mod client_login;
+pub mod client_logout;
+
+pub mod data_start;
+pub mod data_stop;
+pub mod data_stop_all;
+pub mod error_client;
+pub mod error_data;
+/// Module containing data subscription messages.
+///
+/// This includes messages like:
+///
+/// - StartDataMessage
+/// - StopDataMessage
+/// - StartAllDataMessage
+/// - StopAllDataMessage
+/// - OHLCVBarMessage
+/// - TradeBarMessage
+///
+/// Grouping data subscription messages together keeps them organized
+/// separately from client and error messages.
+///
+/// The data messages are exposed in the prelude for convenient importing.
+///
+/// # Exports
+///
+/// - `ohlcv_bar` - OHLCVBarMessage
+/// - `ohlcv_bar_first` - OHLCVBarFirstMessage
+/// - `ohlcv_bar_last` - OHLCVBarLastMessage
+/// - `start_data` - StartDataMessage
+/// - `stop_data` - StopDataMessage
+/// - `start_all_data` - StartAllDataMessage
+/// - `stop_all_data` - StopAllDataMessage
+/// - `trade_bar` - TradeBarMessage
+/// - `trade_bar_first` - TradeBarFirstMessage
+/// - `trade_bar_last` - TradeBarLastMessage
+///
+pub mod ohlcv_bar;
+pub mod ohlcv_bar_first;
+pub mod ohlcv_bar_last;
+pub mod trade_bar;
+pub mod trade_bar_first;
+pub mod trade_bar_last;

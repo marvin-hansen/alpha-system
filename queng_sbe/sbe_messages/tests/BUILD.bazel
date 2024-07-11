@@ -1,0 +1,175 @@
+load("@rules_rust//rust:defs.bzl", "rust_test_suite")
+
+rust_test_suite(
+    name = "error",
+    srcs = glob([
+        "errors/*_tests.rs",
+    ]),
+    tags = [
+        "sbe",
+        "unit",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        "//:sbe_messages",
+    ],
+)
+
+rust_test_suite(
+    name = "types",
+    srcs = glob([
+        "types/*_tests.rs",
+    ]),
+    tags = [
+        "sbe",
+        "unit",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        "//:sbe_messages",
+    ],
+)
+
+rust_test_suite(
+    name = "client_login",
+    srcs = glob([
+        "messages/client_login/*_tests.rs",
+    ]),
+    tags = [
+        "sbe",
+        "unit",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        "//:sbe_messages",
+    ],
+)
+
+rust_test_suite(
+    name = "client_logout",
+    srcs = glob([
+        "messages/client_logout/*_tests.rs",
+    ]),
+    tags = [
+        "sbe",
+        "unit",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        "//:sbe_messages",
+    ],
+)
+
+rust_test_suite(
+    name = "data",
+    srcs = glob([
+        "messages/data_msg/*_tests.rs",
+    ]),
+    tags = [
+        "sbe",
+        "unit",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        "//:sbe_messages",
+        # Internal crates
+        "//queng_common:common",
+        "//queng_sbe/bindings:sbe_bindings",
+        # External crates
+        "@crates//:rust_decimal",
+        "@crates//:chrono",
+    ],
+)
+
+rust_test_suite(
+    name = "error_client",
+    srcs = glob([
+        "messages/error_client/*_tests.rs",
+    ]),
+    tags = [
+        "sbe",
+        "unit",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        "//:sbe_messages",
+        # Internal crates
+        "//queng_common:common",
+        "//queng_sbe/bindings:sbe_bindings",
+        # External crates
+        "@crates//:rust_decimal",
+        "@crates//:chrono",
+    ],
+)
+
+rust_test_suite(
+    name = "error_data",
+    srcs = glob([
+        "messages/error_data/*_tests.rs",
+    ]),
+    tags = [
+        "sbe",
+        "unit",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        "//:sbe_messages",
+        # Internal crates
+        "//queng_common:common",
+        "//queng_sbe/bindings:sbe_bindings",
+        # External crates
+        "@crates//:rust_decimal",
+        "@crates//:chrono",
+    ],
+)
+
+rust_test_suite(
+    name = "ohlcv_bar",
+    srcs = glob([
+        "messages/ohlcv_bar/*_tests.rs",
+    ]),
+    tags = [
+        "sbe",
+        "unit",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        "//:sbe_messages",
+        # Internal crates
+        "//queng_common:common",
+        "//queng_sbe/bindings:sbe_bindings",
+        # External crates
+        "@crates//:rust_decimal",
+        "@crates//:chrono",
+    ],
+)
+
+rust_test_suite(
+    name = "trade_bar",
+    srcs = glob([
+        "messages/trade_bar/*_tests.rs",
+    ]),
+    tags = [
+        "sbe",
+        "unit",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        "//:sbe_messages",
+        # Internal crates
+        "//queng_common:common",
+        "//queng_sbe/bindings:sbe_bindings",
+        # External crates
+        "@crates//:rust_decimal",
+        "@crates//:chrono",
+    ],
+)

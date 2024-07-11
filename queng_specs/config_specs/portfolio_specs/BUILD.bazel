@@ -15,22 +15,6 @@ rust_library(
     ],
 )
 
-rust_test_suite(
-    name = "portfolio_specs_tests",
-    srcs = glob([
-        "tests/*_tests.rs",
-    ]),
-    tags = [
-        "specs",
-        "unit",
-    ],
-    visibility = ["//visibility:public"],
-    deps = [
-        ":portfolio_specs",
-        "//:common",
-    ],
-)
-
 rust_doc(
     name = "doc",
     crate = ":portfolio_specs",

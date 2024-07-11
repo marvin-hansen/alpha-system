@@ -1,4 +1,4 @@
-load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library", "rust_test_suite")
+load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library")
 
 rust_library(
     name = "dns_manager",
@@ -14,26 +14,6 @@ rust_library(
         # External crates
         "@crates//:hickory-resolver",
         "@crates//:mini-moka",
-    ],
-)
-
-rust_test_suite(
-    name = "tests",
-    srcs = glob([
-        "tests/*_tests.rs",
-    ]),
-    tags = [
-        "components",
-        "dns_manager",
-        "unit",
-    ],
-    visibility = ["//visibility:public"],
-    deps = [
-        # Crate under test
-        ":dns_manager",
-        "//:common",
-        # Internal crates
-        "//:ctx_manager",
     ],
 )
 

@@ -17,24 +17,6 @@ rust_library(
     ],
 )
 
-rust_test_suite(
-    name = "smdb_tests",
-    srcs = glob([
-        "tests/*_tests.rs",
-    ]),
-    tags = [
-        "specs",
-        "unit",
-    ],
-    visibility = ["//visibility:public"],
-    deps = [
-        # Test target
-        ":smdb_specs",
-        # Internal dependencies
-        "//:common",
-    ],
-)
-
 rust_doc(
     name = "doc",
     crate = ":smdb_specs",

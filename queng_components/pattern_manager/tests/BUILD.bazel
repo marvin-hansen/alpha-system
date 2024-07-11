@@ -1,0 +1,19 @@
+load("@rules_rust//rust:defs.bzl", "rust_test_suite")
+
+rust_test_suite(
+    name = "pattern_manager_tests",
+    srcs = glob([
+        "pattern_manager_tests.rs",
+    ]),
+    tags = [
+        "components",
+        "pattern_manager",
+        "unit",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//:pattern_manager",
+        # Internal crates
+        "//:common",
+    ],
+)

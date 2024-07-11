@@ -20,33 +20,6 @@ rust_library(
     ],
 )
 
-rust_test_suite(
-    name = "tests",
-    srcs = glob([
-        "tests/*_tests.rs",
-    ]),
-    tags = [
-        "components",
-        "config_manager",
-        "unit",
-    ],
-    visibility = ["//visibility:public"],
-    deps = [
-        # Crate to test
-        ":config_manager",
-        # Internal crates
-        "//:common",
-        "//:ctx_manager",
-        "//:dns_manager",
-        "//:db_specs",
-        "//:exchange_specs",
-        "//:cmdb_specs",
-        "//:dbgw_specs",
-        "//:qdgw_specs",
-        "//:smdb_specs",
-    ],
-)
-
 rust_doc(
     name = "doc",
     crate = ":config_manager",

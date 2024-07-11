@@ -20,22 +20,6 @@ rust_library(
     ],
 )
 
-rust_test_suite(
-    name = "crypto_utils_tests",
-    srcs = glob([
-        "tests/*_tests.rs",
-    ]),
-    tags = [
-        "crypto_utils_tests",
-        "unit",
-    ],
-    visibility = ["//visibility:public"],
-    deps = [
-        # Crate under test
-        ":crypto_utils",
-    ],
-)
-
 rust_doc(
     name = "doc",
     crate = ":crypto_utils",

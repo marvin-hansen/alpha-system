@@ -1,0 +1,18 @@
+load("@rules_rust//rust:defs.bzl", "rust_test_suite")
+
+rust_test_suite(
+    name = "symbol_manager_tests",
+    srcs = glob([
+        "tests/*_tests.rs",
+    ]),
+    tags = [
+        "components",
+        "symbol_manager",
+        "unit",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        ":symbol_manager",
+    ],
+)

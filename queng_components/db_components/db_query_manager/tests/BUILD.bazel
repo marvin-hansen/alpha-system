@@ -1,0 +1,27 @@
+load("@rules_rust//rust:defs.bzl", "rust_test_suite")
+
+rust_test_suite(
+    name = "db_query_manager_tests",
+    srcs = glob([
+        "*_tests.rs",
+    ]),
+    tags = [
+        "db_query_manager",
+        "integration",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        "//:db_query_manager",
+        # Internal crates
+        "//:common",
+        "//:clickhouse_utils",
+        # External crates
+        "@crates//:chrono",
+        "@crates//:futures",
+        "@crates//:klickhouse",
+        "@crates//:rust_decimal",
+        "@crates//:serde",
+        "@crates//:tokio",
+    ],
+)

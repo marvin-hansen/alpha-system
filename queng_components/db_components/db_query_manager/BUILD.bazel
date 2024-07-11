@@ -21,29 +21,6 @@ rust_library(
     ],
 )
 
-#rust_test_suite(
-#    name = "tests",
-#    srcs = glob([
-#        "tests/*_tests.rs",
-#    ]),
-#    deps = [
-#      # Crate to test
-#      ":db_query_manager",
-#      # Internal crates
-#      "//:common",
-#      "//:clickhouse_utils",
-#      # External crates
-#      "@crates//:chrono",
-#      "@crates//:futures",
-#      "@crates//:klickhouse",
-#      "@crates//:rust_decimal",
-#      "@crates//:serde",
-#      "@crates//:tokio",
-#    ],
-#    tags = ["integration","db_query_manager"],
-#    visibility = ["//visibility:public"],
-#)
-
 rust_doc(
     name = "doc",
     crate = ":db_query_manager",

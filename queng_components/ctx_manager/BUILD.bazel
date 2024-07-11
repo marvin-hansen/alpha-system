@@ -1,4 +1,4 @@
-load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library", "rust_test_suite")
+load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library")
 
 rust_library(
     name = "ctx_manager",
@@ -9,78 +9,6 @@ rust_library(
     visibility = ["//visibility:public"],
     deps = [
         "//:common",
-    ],
-)
-
-# Each test suit is a seperated task so that each test runs
-# in a dedicated runner. This isolates the environment and with it the env. variables.
-# If all tests were executed in one runner, then each test would override the env variables used by the other tests
-# which results in non-deterministic & flaky test execution.
-rust_test_suite(
-    name = "tests_ci",
-    srcs = [
-        "tests/ctx_manager_ci_tests.rs",
-    ],
-    tags = [
-        "components",
-        "ctx_manager",
-        "unit",
-    ],
-    visibility = ["//visibility:public"],
-    deps = [
-        "//:common",
-        "//:ctx_manager",
-    ],
-)
-
-rust_test_suite(
-    name = "tests_cluster",
-    srcs = [
-        "tests/ctx_manager_cluster_tests.rs",
-    ],
-    tags = [
-        "components",
-        "ctx_manager",
-        "unit",
-    ],
-    visibility = ["//visibility:public"],
-    deps = [
-        "//:common",
-        "//:ctx_manager",
-    ],
-)
-
-rust_test_suite(
-    name = "tests_local",
-    srcs = [
-        "tests/ctx_manager_local_tests.rs",
-    ],
-    tags = [
-        "components",
-        "ctx_manager",
-        "unit",
-    ],
-    visibility = ["//visibility:public"],
-    deps = [
-        "//:common",
-        "//:ctx_manager",
-    ],
-)
-
-rust_test_suite(
-    name = "tests_unknown",
-    srcs = [
-        "tests/ctx_manager_unknown_tests.rs",
-    ],
-    tags = [
-        "components",
-        "ctx_manager",
-        "unit",
-    ],
-    visibility = ["//visibility:public"],
-    deps = [
-        "//:common",
-        "//:ctx_manager",
     ],
 )
 

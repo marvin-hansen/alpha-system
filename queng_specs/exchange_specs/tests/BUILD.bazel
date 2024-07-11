@@ -1,0 +1,17 @@
+load("@rules_rust//rust:defs.bzl", "rust_test_suite")
+
+rust_test_suite(
+    name = "exchange_specs_tests",
+    srcs = glob([
+        "default/*.rs",
+    ]),
+    tags = [
+        "specs",
+        "unit",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//:common",
+        "//:exchange_specs",
+    ],
+)

@@ -17,24 +17,6 @@ rust_library(
     ],
 )
 
-rust_test_suite(
-    name = "vex_tests",
-    srcs = glob([
-        "tests/*_tests.rs",
-    ]),
-    tags = [
-        "specs",
-        "unit",
-    ],
-    visibility = ["//visibility:public"],
-    deps = [
-        # Test target
-        ":vex_specs",
-        # Internal dependencies
-        "//:common",
-    ],
-)
-
 rust_doc(
     name = "doc",
     crate = ":vex_specs",
