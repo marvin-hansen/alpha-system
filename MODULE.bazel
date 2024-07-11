@@ -229,6 +229,25 @@ crate.spec(
     version = "0.1.42",
 )
 
+# Cryptographic or hash crates
+crate.spec(
+    default_features = False,
+    package = "sha3",
+    version = "0.11.0-pre.3",
+)
+crate.spec(
+    default_features = False,
+    features = ["alloc"],
+    package = "base64ct",
+    version = "1.6.0",
+)
+crate.spec(
+    default_features = False,
+    features = ["alloc"],
+    package = "base16ct",
+    version = "0.2.0",
+)
+
 # protobufs/gRPC in Rust
 crate.spec(
     package = "prost",

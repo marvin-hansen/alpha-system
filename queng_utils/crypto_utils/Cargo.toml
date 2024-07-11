@@ -1,0 +1,20 @@
+[package]
+name = "crypto_utils"
+version = "0.1.0"
+edition.workspace = true
+rust-version.workspace = true
+readme.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+
+[lib]
+name = "crypto_utils"
+path = "src/lib.rs"
+
+[dependencies]
+# Internal dependencies
+
+# External crates
+base16ct = { workspace = true }
+sha3 = {workspace = true}

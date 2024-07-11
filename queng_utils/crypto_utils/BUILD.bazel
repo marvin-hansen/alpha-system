@@ -1,0 +1,51 @@
+load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library", "rust_test_suite")
+
+rust_library(
+    name = "crypto_utils",
+    srcs = glob([
+        "src/**/*.rs",
+    ]),
+    crate_root = "src/lib.rs",
+    tags = [
+        "crypto_utils",
+        "utils",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Internal crates
+
+        # External crates
+        "@crates//:base16ct",
+        "@crates//:sha3",
+    ],
+)
+
+rust_test_suite(
+    name = "crypto_utils_tests",
+    srcs = glob([
+        "tests/*_tests.rs",
+    ]),
+    tags = [
+        "crypto_utils_tests",
+        "unit",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate under test
+        ":crypto_utils",
+    ],
+)
+
+rust_doc(
+    name = "doc",
+    crate = ":crypto_utils",
+    tags = ["doc"],
+    visibility = ["//visibility:public"],
+)
+
+rust_doc_test(
+    name = "doc_test",
+    crate = ":crypto_utils",
+    tags = ["doc-test"],
+    visibility = ["//visibility:public"],
+)

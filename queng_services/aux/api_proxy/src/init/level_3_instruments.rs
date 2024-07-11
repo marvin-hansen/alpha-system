@@ -13,7 +13,7 @@ impl InitManager {
             .expect("Failed to download instrument data");
 
         self.dbg_print("Level 3: Process the downloaded instrument data");
-        let processed_instruments = process_instruments(downloaded_instruments)
+        let processed_instruments = process_instruments(&downloaded_instruments)
             .await
             .expect("Failed to process reference Instrument data");
 
@@ -25,12 +25,15 @@ impl InitManager {
             self.dbg_print(&msg)
         }
 
+        // Free memory.
+        drop(downloaded_instruments);
+
         Ok(processed_instruments)
     }
 }
 
 async fn process_instruments(
-    downloaded_instruments: Vec<Instrument>,
+    downloaded_instruments: &Vec<Instrument>,
 ) -> Result<Vec<Instrument>, InitError> {
     // By experience, at least 90% of the reference data are junk (inactive) thus small alloc.
     let capacity = downloaded_instruments.len() * 0.10 as usize;
@@ -41,9 +44,6 @@ async fn process_instruments(
             processed_instruments.push(i.to_owned())
         }
     }
-
-    // Free temporary memory.
-    drop(downloaded_instruments);
 
     Ok(processed_instruments)
 }

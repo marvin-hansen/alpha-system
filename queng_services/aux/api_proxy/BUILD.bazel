@@ -37,6 +37,7 @@ rust_binary(
     deps = [
         # Internal crates
         "//:common",
+        "//:crypto_utils",
         "//:service_utils",
         # Custom Memory Allocator
         "@crates//:mimalloc",

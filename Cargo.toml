@@ -42,6 +42,7 @@ members = [
     "queng_specs/service_specs/vex_specs",
     "queng_utils/clickhouse_utils",
     "queng_utils/client_utils",
+    "queng_utils/crypto_utils",
     "queng_utils/docker_utils",
     "queng_utils/env_utils",
     "queng_utils/kaiko_utils",
@@ -110,6 +111,7 @@ vex_specs = { path = "queng_specs/service_specs/vex_specs" }
 # Utils
 clickhouse_utils = { path = "queng_utils/clickhouse_utils" }
 client_utils = { path = "queng_utils/client_utils" }
+crypto_utils = { path = "queng_utils/crypto_utils" }
 docker_utils = { path = "queng_utils/docker_utils" }
 env_utils = { path = "queng_utils/env_utils" }
 kaiko_utils = { path = "queng_utils/kaiko_utils" }
@@ -123,7 +125,11 @@ specs_utils = { path = "queng_utils/specs_utils" }
 #
 # Custom Memory Allocator
 mimalloc = { version = "0.1.42" }
-#
+# Pure Rust cryptographic or hash crates
+sha3 = { version = "0.11.0-pre.3", default-features = false }
+base64ct = { version = "1.6.0", default-features = false, features = ["alloc"] }
+base16ct = { version = "0.2.0", default-features = false, features = ["alloc"] }
+# Other external crates
 anyhow = { version = "1.0" }
 arc-swap = { version = "1.7" }
 binance-rs-async = { version = "1.3.3", default-features = false, features = ["rustls-tls"] }

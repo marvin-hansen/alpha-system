@@ -35,7 +35,7 @@ async fn main() {
     let start = Instant::now();
 
     dbg_print("Load meta-data");
-    let meta_data = run_init(false)
+    let meta_data = run_init()
         .await
         .expect("Failed to run init and failed to download metadata");
 
@@ -66,7 +66,7 @@ async fn main() {
                         dbg_print("Start metadata update");
 
                         dbg_print("Re-download meta-data");
-                        let meta_data = match run_init(true).await {
+                        let meta_data = match run_init().await {
                             Ok(res) => res,
                             Err(e) => {
                                 eprint!("Updated Error:");
@@ -160,9 +160,9 @@ fn dbg_print(s: &str) {
     }
 }
 
-async fn run_init(update: bool) -> Result<MetaDataSet, InitError> {
+async fn run_init() -> Result<MetaDataSet, InitError> {
     let im = InitManager::new(VRB);
-    let result = im.init(update).await;
+    let result = im.init().await;
     drop(im);
 
     match result {

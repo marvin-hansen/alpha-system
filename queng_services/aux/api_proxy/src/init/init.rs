@@ -4,13 +4,7 @@ use crate::types::meta_data_set::MetaDataSet;
 use tokio::time::Instant;
 
 impl InitManager {
-    pub async fn init(&self, update: bool) -> Result<MetaDataSet, InitError> {
-        let s = if update { "UPDATE" } else { "INIT" };
-
-        self.dbg_print("==========");
-        self.dbg_print(&format!("START {}", s));
-        self.dbg_print("==========");
-
+    pub async fn init(&self) -> Result<MetaDataSet, InitError> {
         let start = Instant::now();
         self.dbg_print("Level 1: Retrieving reference exchange data!");
         let exchanges_meta_data = self
@@ -42,7 +36,7 @@ impl InitManager {
             MetaDataSet::new(asset_meta_data, exchanges_meta_data, instrument_meta_data);
 
         self.dbg_print("=============");
-        self.dbg_print(&format!("{} COMPLETE", s));
+        self.dbg_print("INIT  COMPLETE");
         self.dbg_print("=============");
 
         Ok(meta_data)

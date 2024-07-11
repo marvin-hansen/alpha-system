@@ -1,6 +1,8 @@
 use common::prelude::{
     Asset, AssetRoot, Exchange, ExchangesRoot, Instrument, InstrumentsRoot, Stats,
 };
+use crypto_utils::prelude::hash_utils;
+
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Default, Clone, PartialEq, Serialize, Deserialize)]
@@ -14,11 +16,12 @@ pub struct MetaDataSet {
 
 impl MetaDataSet {
     pub fn new(assets: Vec<Asset>, exchanges: Vec<Exchange>, instruments: Vec<Instrument>) -> Self {
-        // The sum is used internally in the metadata to determine if something has changed.
         let sum = (assets.len() + exchanges.len() + instruments.len()) as u64;
+        // The hash of the sum is used to determine if some meta-data have changed.
+        let hash = hash_utils::sha512_digest(sum.to_string());
 
         let stats = Stats::new(
-            sum.to_string(),
+            hash,
             assets.len() as u32,
             exchanges.len() as u32,
             instruments.len() as u32,

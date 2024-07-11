@@ -22,7 +22,7 @@ impl InitManager {
         }
 
         self.dbg_print("Level 1: Process downloaded exchanges");
-        let processed_exchanges = process_exchanges(downloaded_exchanges)
+        let processed_exchanges = process_exchanges(&downloaded_exchanges)
             .await
             .expect("Failed to process reference exchange data");
 
@@ -34,20 +34,24 @@ impl InitManager {
             self.dbg_print(&msg)
         }
 
+        drop(downloaded_exchanges);
+
         Ok(processed_exchanges)
     }
 }
 
 async fn process_exchanges(
-    downloaded_exchanges: Vec<Exchange>,
+    downloaded_exchanges: &Vec<Exchange>,
 ) -> Result<Vec<Exchange>, InitError> {
-    let mut processed_exchanges = Vec::with_capacity(50);
+    let mut processed_exchanges: Vec<Exchange> = Vec::with_capacity(50);
 
-    for e in downloaded_exchanges {
+    for e in downloaded_exchanges.into_iter() {
         if ACTIVE_EXCHANGES.contains(&e.name.as_str()) {
-            processed_exchanges.push(e);
+            processed_exchanges.push(e.to_owned());
         }
     }
+
+    // drop(downloaded_exchanges);
 
     // Remove duplicates
     processed_exchanges.dedup();
