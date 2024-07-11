@@ -4,9 +4,11 @@ actions:
       push:
         branches:
           - "main"
-      pull_request:
-        branches:
-          - "main"
+# Renovate Bot triggers too many builds. Disabled PR builds.
+#      pull_request:
+#        branches:
+#          - "main"
+    # When adding new bazel commands, also update scripts/test.sh script with the same command for local testing
     bazel_commands:
       # Setup & Authenticate
       - "run -c opt //:buildbuddy_setup_docker_auth --verbose_failures"
@@ -24,9 +26,9 @@ actions:
       - "test -c opt  //...   --test_tag_filters=kaiko_utils_integration_tests --config=remote"
       # Test: Clickhouse Integration
       - "test -c opt  //...   --test_tag_filters=clickhouse_utils_integration_tests --config=remote"
-      # Build & publish images to container registry
+      # Build & publish container images to container registry
       - "run   -c opt //:push --config=remote"
     resource_requests:
-      cpu: 8  # Add more cpu for Docker
-      memory: "12GB" # Add more memory to cross compile without OOM.
+      cpu: 4  # Add 1 more core for Docker
+      memory: "8GB" # Default
       disk: "20GB"  # Default
