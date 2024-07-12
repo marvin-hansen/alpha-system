@@ -33,7 +33,7 @@ impl MDMClient {
     /// ```no_run
     /// #[tokio::main]
     /// async fn main() {
-    /// use symdb_client::MDMClient;
+    /// use mddb_client::MDMClient;
     /// use common::prelude::HostEndpoint;
     ///
     ///     let config = HostEndpoint::new("127.0.0.1", 7070);

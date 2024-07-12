@@ -1,7 +1,7 @@
 load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library")
 
 rust_library(
-    name = "symdb_client",
+    name = "mddb_client",
     srcs = glob([
         "src/**",
     ]),
@@ -21,14 +21,14 @@ rust_library(
 
 rust_doc(
     name = "doc",
-    crate = ":symdb_client",
+    crate = ":mddb_client",
     tags = ["doc"],
     visibility = ["//visibility:public"],
 )
 
 rust_doc_test(
     name = "doc_test",
-    crate = ":symdb_client",
+    crate = ":mddb_client",
     tags = ["doc-test"],
     visibility = ["//visibility:public"],
 )

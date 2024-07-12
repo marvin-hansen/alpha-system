@@ -7,7 +7,7 @@ members = [
     "queng_clients/ims_data_client",
     "queng_clients/kaiko_client",
     "queng_clients/rest_client",
-    "queng_clients/symdb_client",
+    "queng_clients/mddb_client",
     "queng_common",
     "queng_components/config_manager",
     "queng_components/ctx_manager",
@@ -74,7 +74,7 @@ dbgw_client = { path = "queng_clients/dbgw_client" }
 ims_data_client = { path = "queng_clients/ims_data_client" }
 kaiko_client = { path = "queng_clients/kaiko_client" }
 rest_client = { path = "queng_clients/rest_client" }
-symdb_client = { path = "queng_clients/symdb_client" }
+mddb_client = { path = "queng_clients/mddb_client" }
 # Components
 config_manager = { path = "queng_components/config_manager" }
 ctx_manager = { path = "queng_components/ctx_manager" }

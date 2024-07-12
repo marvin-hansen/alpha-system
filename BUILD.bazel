@@ -72,8 +72,8 @@ alias(
 )
 
 alias(
-    name = "symdb_client",
-    actual = "//queng_clients/symdb_client:symdb_client",
+    name = "mddb_client",
+    actual = "//queng_clients/mddb_client:mddb_client",
     visibility = ["//visibility:public"],
 )
 
