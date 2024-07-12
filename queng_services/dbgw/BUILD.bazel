@@ -35,7 +35,7 @@ rust_binary(
         "//:common",
         "//:config_manager",
         "//:ctx_manager",
-        "//:db_system_manager",
+        "//:db_surreal_manager",
         "//:dns_manager",
         "//:rust_proto",
         "//:proto_utils",

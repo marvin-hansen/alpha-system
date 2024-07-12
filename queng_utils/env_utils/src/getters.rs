@@ -1,15 +1,15 @@
 use crate::EnvUtil;
 use clickhouse_utils::prelude::ClickHouseUtilError;
 use clickhouse_utils::ClickhouseUtil;
-use container_specs::clickhouse_container_specs::clickhouse_container_config;
 use docker_utils::DockerUtil;
 use kaiko_utils::KaikoUtil;
+use specs_utils::prelude::clickhouse_container_specs;
 
 impl EnvUtil {
     pub(super) async fn get_new_clickhouse_util(
         &self,
     ) -> Result<ClickhouseUtil, ClickHouseUtilError> {
-        let container_config = clickhouse_container_config();
+        let container_config = clickhouse_container_specs();
 
         // DB connection string
         let dsn = format!(
@@ -39,8 +39,14 @@ impl EnvUtil {
     pub fn clickhouse_container_port(&self) -> u16 {
         self.clickhouse_container_port
     }
-    pub fn containers_crated(&self) -> bool {
-        self.containers_crated
+    pub fn surreal_db_container_port(&self) -> u16 {
+        self.surreal_db_container_port
+    }
+    pub fn surreal_db_container_name(&self) -> &str {
+        &self.surreal_db_container_name
+    }
+    pub fn all_containers_crated(&self) -> bool {
+        self.all_containers_crated
     }
     pub fn docker_util(&self) -> DockerUtil {
         self.docker_util
@@ -66,8 +72,14 @@ impl EnvUtil {
     pub fn set_clickhouse_container_port(&mut self, clickhouse_container_port: u16) {
         self.clickhouse_container_port = clickhouse_container_port;
     }
-    pub fn set_containers_crated(&mut self) {
-        self.containers_crated = true;
+    pub fn set_surreal_db_container_port(&mut self, surreal_db_container_port: u16) {
+        self.surreal_db_container_port = surreal_db_container_port;
+    }
+    pub fn set_surreal_db_container_name(&mut self, surreal_db_container_name: String) {
+        self.surreal_db_container_name = surreal_db_container_name;
+    }
+    pub fn set_all_containers_crated(&mut self) {
+        self.all_containers_crated = true;
     }
     pub fn set_ci_env_configured(&mut self, ci_env_configured: bool) {
         self.ci_env_configured = ci_env_configured;

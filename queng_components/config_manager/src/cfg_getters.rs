@@ -1,6 +1,7 @@
 use crate::CfgManager;
 use common::prelude::{
     ClickHouseConfig, EnvironmentType, ExchangeID, InitError, ServiceConfig, ServiceID,
+    SurrealDBConfig,
 };
 
 impl<'l> CfgManager<'l> {
@@ -29,6 +30,10 @@ impl<'l> CfgManager<'l> {
 
     pub fn clickhouse_db_metadata_config(&self) -> &ClickHouseConfig {
         &self.db_metadata_config
+    }
+
+    pub fn surreal_db_config(&self) -> &SurrealDBConfig {
+        &self.db_surreal_config
     }
 }
 

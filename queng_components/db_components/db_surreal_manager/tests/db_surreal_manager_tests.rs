@@ -1,10 +1,15 @@
 use common::prelude::SurrealDBConfig;
 use db_surreal_manager::SurrealDBManager;
+use env_utils::EnvUtil;
 use std::env;
 
 async fn setup_env() {
-    env::set_var("ENV", "CLUSTER");
-    env::set_var("DNS_SERVER", "9.9.9.9");
+    env::set_var("ENV", "CI");
+    let mut env = EnvUtil::new().await.expect("Failed to get EnvUtils");
+
+    env.setup_container_surreal_db()
+        .await
+        .expect("Failed to setup SurrealDB container");
 }
 
 #[tokio::test]

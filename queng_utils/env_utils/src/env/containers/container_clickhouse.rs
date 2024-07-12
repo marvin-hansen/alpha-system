@@ -1,6 +1,6 @@
 use crate::prelude::EnvironmentSetupError;
 use crate::EnvUtil;
-use container_specs::clickhouse_container_specs::clickhouse_container_config;
+use specs_utils::prelude::clickhouse_container_specs;
 
 impl EnvUtil {
     pub async fn setup_container_clickhouse(&mut self) -> Result<(), EnvironmentSetupError> {
@@ -9,7 +9,7 @@ impl EnvUtil {
         let mut docker_util = self.docker_util();
 
         self.dbg_print("Setup api proxy container");
-        let clickhouse_container_config = clickhouse_container_config();
+        let clickhouse_container_config = clickhouse_container_specs();
         let (clickhouse_container_name, clickhouse_container_port) = self
             .setup_container(&clickhouse_container_config, &mut docker_util)
             .await

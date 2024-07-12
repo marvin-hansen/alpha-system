@@ -1,8 +1,10 @@
 use crate::prelude::EnvironmentError;
-use container_specs::api_proxy_container_specs::api_proxy_container_config;
-use container_specs::clickhouse_container_specs::clickhouse_container_config;
+
 use docker_utils::DockerUtil;
 use kaiko_utils::KaikoUtil;
+use specs_utils::prelude::{
+    api_proxy_container_specs, clickhouse_container_specs, surreal_db_container_specs,
+};
 
 mod env;
 pub mod errors;
@@ -15,8 +17,10 @@ pub struct EnvUtil {
     api_proxy_container_port: u16,
     clickhouse_container_name: String,
     clickhouse_container_port: u16,
+    surreal_db_container_name: String,
+    surreal_db_container_port: u16,
     //
-    containers_crated: bool,
+    all_containers_crated: bool,
     ci_env_configured: bool,
     //
     docker_util: DockerUtil,
@@ -35,8 +39,9 @@ impl EnvUtil {
 
     async fn build(dbg: bool) -> Result<Self, EnvironmentError> {
         // Get configs
-        let clickhouse_container_config = clickhouse_container_config();
-        let api_proxy_container_config = api_proxy_container_config();
+        let clickhouse_container_config = clickhouse_container_specs();
+        let api_proxy_container_config = api_proxy_container_specs();
+        let surreal_db_container_config = surreal_db_container_specs();
 
         // Build utils
         let docker_util =
@@ -55,8 +60,12 @@ impl EnvUtil {
             Self::init_container(&clickhouse_container_config, &docker_util)
                 .expect("EnvUtil: Failed to init / verify api proxy container");
 
+        let (surreal_db_container_name, surreal_db_container_port, surreal_db_exists) =
+            Self::init_container(&surreal_db_container_config, &docker_util)
+                .expect("EnvUtil: Failed to init / verify api proxy container");
+
         // set the boolean flag for all containers
-        let containers_crated = api_proxy_exists && clickhouse_exists;
+        let containers_crated = api_proxy_exists && clickhouse_exists && surreal_db_exists;
         let ci_env_configured = false;
 
         let mut instance = Self {
@@ -64,7 +73,9 @@ impl EnvUtil {
             api_proxy_container_port,
             clickhouse_container_name,
             clickhouse_container_port,
-            containers_crated,
+            surreal_db_container_name,
+            surreal_db_container_port,
+            all_containers_crated: containers_crated,
             ci_env_configured,
             docker_util,
             kaiko_util,

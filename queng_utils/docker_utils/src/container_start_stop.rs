@@ -109,7 +109,7 @@ impl DockerUtil {
         connection_port: u16,
         additional_ports: Option<&[u16]>,
         platform: Option<&str>,
-        additional_start_commands: Option<&str>,
+        additional_start_commands: Option<&[&str]>,
         image: &str,
     ) -> Result<(String, u16), DockerError> {
         // Example: docker run --rm --detach --publish 80:80 --name test-80 nginx:latest
@@ -154,16 +154,18 @@ impl DockerUtil {
         let container_name = container_id.to_string();
 
         // Add all remaining arguments
-        cmd.arg("--name").arg(container_name);
-        // Add the image
+        cmd.arg("--name");
+        cmd.arg(container_name);
         cmd.arg(image);
 
-        // Add additional start commands if there are some to add.
         if additional_start_commands.is_some() {
-            let args = additional_start_commands.unwrap();
+            // Add additional start commands.
+            let add_args = additional_start_commands.unwrap();
 
-            cmd.arg(args);
+            cmd.args(add_args);
         }
+
+        self.dbg_print(&format!("[start_container]: Run Docker command: {:?}", cmd));
 
         // There are multiple ways to spawn a child process and execute an arbitrary command on the machine:
         //
@@ -173,11 +175,14 @@ impl DockerUtil {
         // https://stackoverflow.com/questions/21011330/how-do-i-invoke-a-system-command-and-capture-its-output
 
         // Run the command & return error in case of failure
-        match cmd.status() {
-            Ok(_) => {
+        match cmd.output() {
+            Ok(out) => {
                 self.dbg_print(&format!(
-                    "[start_container]: {}",
-                    container_id //String::from_utf8_lossy(&out.stdout)
+                    "[start_container]: \n
+                    success: {} \n
+                    Output: {}",
+                    out.status.success(),
+                    String::from_utf8_lossy(out.stdout.as_slice()),
                 ));
                 Ok((container_id.to_string(), connection_port))
             }

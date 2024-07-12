@@ -1,1 +1,2 @@
-pub use crate::service_specs::get_all_service_specs;
+pub use crate::container_specs::*;
+pub use crate::service_specs::*;

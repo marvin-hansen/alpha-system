@@ -14,11 +14,13 @@ path = "src/lib.rs"
 
 [dependencies]
 # Internal crates
-common = {workspace = true}
+common = { workspace = true }
+# Container specs
+container_specs = { workspace = true }
 # Service specs
-cmdb_specs = {workspace = true}
-dbgw_specs = {workspace = true}
-mddb_specs = {workspace = true}
-qdgw_specs = {workspace = true}
-smdb_specs = {workspace = true}
-vex_specs = {workspace = true}
+cmdb_specs = { workspace = true }
+dbgw_specs = { workspace = true }
+mddb_specs = { workspace = true }
+qdgw_specs = { workspace = true }
+smdb_specs = { workspace = true }
+vex_specs = { workspace = true }

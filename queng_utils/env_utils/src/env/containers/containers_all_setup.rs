@@ -4,7 +4,7 @@ impl EnvUtil {
     pub async fn setup_containers(&mut self) -> Result<(), EnvironmentSetupError> {
         //
         self.dbg_print("[setup_containers]: Check if containers already configured");
-        if self.containers_crated {
+        if self.all_containers_crated {
             self.dbg_print("[setup_containers]: Containers already configured.");
             return Ok(());
         }
@@ -19,8 +19,13 @@ impl EnvUtil {
             .await
             .expect("[TestEnv/CI:setup_containers]: Failed to setup clickhouse container");
 
-        self.dbg_print("Set containers to created");
-        self.set_containers_crated();
+        self.dbg_print("Setup SurrealDB container");
+        self.setup_container_surreal_db()
+            .await
+            .expect("[TestEnv/CI:setup_containers]: Failed to setup SurrealDB container");
+
+        self.dbg_print("Set all containers to created");
+        self.set_all_containers_crated();
 
         Ok(())
     }

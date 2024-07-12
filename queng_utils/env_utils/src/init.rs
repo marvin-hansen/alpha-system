@@ -50,7 +50,7 @@ impl EnvUtil {
 
             Ok((container_name, container_port, true))
         } else {
-            Ok((String::from("NOT INITIALIZED"), 0, false))
+            Ok((String::from("CONTAINER NOT INITIALIZED"), 0, false))
         }
     }
 }

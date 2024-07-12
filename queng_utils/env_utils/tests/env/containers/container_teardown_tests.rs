@@ -8,7 +8,7 @@ async fn test_env_util_teardown_container() {
     // Get docker utils to run some checks
     let docker_util = &mut env_utils.docker_util();
 
-    if !env_utils.containers_crated() {
+    if !env_utils.all_containers_crated() {
         panic!("No containers crated thus nothing to teardown. Run setup_containers() to create all containers")
     }
 

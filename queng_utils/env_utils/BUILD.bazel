@@ -15,7 +15,6 @@ rust_library(
     deps = [
         # Internal crates
         "//:common",
-        "//:container_specs",
         "//:clickhouse_utils",
         "//:docker_utils",
         "//:specs_utils",

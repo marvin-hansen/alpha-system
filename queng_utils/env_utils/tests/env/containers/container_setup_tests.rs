@@ -35,6 +35,18 @@ async fn test_env_util_setup_containers() {
     );
     println!();
 
+    let surreal_db_container_name = ci_env.surreal_db_container_name();
+    let exists = docker_util
+        .check_if_container_exists(surreal_db_container_name)
+        .expect("Failed to check if container exists");
+    assert!(exists);
+
+    println!(
+        "✅ OK: Container name: {} created",
+        surreal_db_container_name
+    );
+    println!();
+
     // At a later stage, containers will be re-used or re-created
     // depending on the container configuration
     let mut test_env = EnvUtil::with_debug().await.expect("Failed to get EnvUtil");

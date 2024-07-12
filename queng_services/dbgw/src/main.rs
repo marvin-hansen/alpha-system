@@ -1,7 +1,7 @@
 use common::prelude::ServiceID;
 use config_manager::CfgManager;
 use ctx_manager::CtxManager;
-use db_system_manager::SystemDBManager;
+use db_surreal_manager::SurrealDBManager;
 use dns_manager::DnsManager;
 use mimalloc::MiMalloc;
 use proto_bindings::proto::db_gateway_service_server::DbGatewayServiceServer;
@@ -30,8 +30,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
         async { CfgManager::new(SVC_ID, svc_config, &ctx_manager, &dns_manager) }.await;
 
     // Configure database manager
-    let db_config = cfg_manager.clickhouse_db_metadata_config();
-    let dbm = SystemDBManager::new(db_config)
+    let db_config = cfg_manager.surreal_db_config();
+    let dbm = SurrealDBManager::new(db_config)
         .await
         .expect("Failed to create DB Manager");
 
