@@ -13,7 +13,6 @@ members = [
     "queng_components/ctx_manager",
     "queng_components/db_components/db_query_manager",
     "queng_components/db_components/db_surreal_manager",
-    "queng_components/db_components/db_system_manager",
     "queng_components/dns_manager",
     "queng_components/pattern_manager",
     "queng_components/symbol_manager",
@@ -82,7 +81,6 @@ ctx_manager = { path = "queng_components/ctx_manager" }
 # DB Components
 db_query_manager = { path = "queng_components/db_components/db_query_manager" }
 db_surreal_manager = { path = "queng_components/db_components/db_surreal_manager" }
-db_system_manager = { path = "queng_components/db_components/db_system_manager" }
 #
 dns_manager = { path = "queng_components/dns_manager" }
 pattern_manager = { path = "queng_components/pattern_manager" }

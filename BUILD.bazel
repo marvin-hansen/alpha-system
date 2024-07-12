@@ -103,12 +103,6 @@ alias(
 )
 
 alias(
-    name = "db_system_manager",
-    actual = "//queng_components/db_components/db_system_manager:db_system_manager",
-    visibility = ["//visibility:public"],
-)
-
-alias(
     name = "dns_manager",
     actual = "//queng_components/dns_manager:dns_manager",
     visibility = ["//visibility:public"],
