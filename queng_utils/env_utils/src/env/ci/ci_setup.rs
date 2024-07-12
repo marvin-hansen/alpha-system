@@ -1,5 +1,5 @@
 use crate::prelude::{EnvUtil, EnvironmentError};
-use container_specs::clickhouse_container_config::clickhouse_container_config;
+use container_specs::clickhouse_container_specs::clickhouse_container_config;
 
 impl EnvUtil {
     /// Sets up the environment for Continuous Integration (CI) testing.

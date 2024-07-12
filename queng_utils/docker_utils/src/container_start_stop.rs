@@ -19,23 +19,7 @@ impl DockerUtil {
         &self,
         container_config: &ContainerConfig,
     ) -> Result<(String, u16), DockerError> {
-        // Unpack values from container config
-        let name = container_config.name();
-        let image = &container_config.container_image();
-        let connection_port = container_config.connection_port();
-        let additional_ports = container_config.additional_ports();
-        let platform = container_config.platform();
-        let reuse_container = container_config.reuse_container();
-
-        // Call get_or_start_container with unpacked values
-        self.get_or_start_container(
-            name,
-            image,
-            connection_port,
-            additional_ports,
-            platform,
-            reuse_container,
-        )
+        self.get_or_start_container(container_config)
     }
 
     /// Gets an existing container or starts a new one with the specified name, image, port, and reuse status.
@@ -53,13 +37,17 @@ impl DockerUtil {
     ////// ```
     pub(crate) fn get_or_start_container(
         &self,
-        name: &str,
-        image: &str,
-        connection_port: u16,
-        additional_ports: Option<&[u16]>,
-        platform: Option<&str>,
-        reuse_container: bool,
+        container_config: &ContainerConfig,
     ) -> Result<(String, u16), DockerError> {
+        // Unpack values from container config
+        let name = container_config.name();
+        let image = &container_config.container_image();
+        let connection_port = container_config.connection_port();
+        let additional_ports = container_config.additional_ports();
+        let platform = container_config.platform();
+        let additional_start_commands = container_config.additional_start_commands();
+        let reuse_container = container_config.reuse_container();
+
         let container_id = &format!("{}-{}", name, connection_port);
 
         println!("Container ID: {}", container_id);
@@ -97,6 +85,7 @@ impl DockerUtil {
             connection_port,
             additional_ports,
             platform,
+            additional_start_commands,
             image,
         ) {
             Ok((container_id, port)) => Ok((container_id, port)),
@@ -120,6 +109,7 @@ impl DockerUtil {
         connection_port: u16,
         additional_ports: Option<&[u16]>,
         platform: Option<&str>,
+        additional_start_commands: Option<&str>,
         image: &str,
     ) -> Result<(String, u16), DockerError> {
         // Example: docker run --rm --detach --publish 80:80 --name test-80 nginx:latest
@@ -167,6 +157,13 @@ impl DockerUtil {
         cmd.arg("--name").arg(container_name);
         // Add the image
         cmd.arg(image);
+
+        // Add additional start commands if there are some to add.
+        if additional_start_commands.is_some() {
+            let args = additional_start_commands.unwrap();
+
+            cmd.arg(args);
+        }
 
         // There are multiple ways to spawn a child process and execute an arbitrary command on the machine:
         //

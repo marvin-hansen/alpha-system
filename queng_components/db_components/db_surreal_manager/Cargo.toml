@@ -1,0 +1,25 @@
+[package]
+name = "db_surreal_manager"
+version = "0.1.0"
+edition.workspace = true
+rust-version.workspace = true
+readme.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+
+[lib]
+name = "db_surreal_manager"
+path = "src/lib.rs"
+
+
+[dependencies]
+# Internal crates
+common = { workspace = true }
+ctx_manager = { workspace = true }
+config_manager = { workspace = true }
+env_utils = { workspace = true }
+
+# External crates
+surrealdb = { workspace = true }
+tokio = { workspace = true }

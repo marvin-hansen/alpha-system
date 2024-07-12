@@ -1,6 +1,6 @@
 use crate::prelude::EnvironmentSetupError;
 use crate::EnvUtil;
-use container_specs::clickhouse_container_config::clickhouse_container_config;
+use container_specs::clickhouse_container_specs::clickhouse_container_config;
 
 impl EnvUtil {
     pub async fn setup_container_clickhouse(&mut self) -> Result<(), EnvironmentSetupError> {

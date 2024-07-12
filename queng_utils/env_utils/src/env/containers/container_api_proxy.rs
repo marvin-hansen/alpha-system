@@ -1,6 +1,6 @@
 use crate::prelude::EnvironmentSetupError;
 use crate::EnvUtil;
-use container_specs::api_proxy_container_config::api_proxy_container_config;
+use container_specs::api_proxy_container_specs::api_proxy_container_config;
 
 impl EnvUtil {
     pub async fn setup_container_api_proxy(&mut self) -> Result<(), EnvironmentSetupError> {

@@ -1,0 +1,24 @@
+load("@rules_rust//rust:defs.bzl", "rust_test_suite")
+
+rust_test_suite(
+    name = "db_surreal_manager_tests",
+    srcs = glob([
+        "*_tests.rs",
+    ]),
+    tags = [
+        "db_surreal_manager",
+        "integration",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        "//:db_surreal_manager",
+        # Internal crates
+        "//:common",
+        "//:ctx_manager",
+        "//:config_manager",
+        "//:env_utils",
+        # External crates
+        "@crates//:tokio",
+    ],
+)

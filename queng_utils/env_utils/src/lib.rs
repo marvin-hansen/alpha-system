@@ -1,6 +1,6 @@
 use crate::prelude::EnvironmentError;
-use container_specs::api_proxy_container_config::api_proxy_container_config;
-use container_specs::clickhouse_container_config::clickhouse_container_config;
+use container_specs::api_proxy_container_specs::api_proxy_container_config;
+use container_specs::clickhouse_container_specs::clickhouse_container_config;
 use docker_utils::DockerUtil;
 use kaiko_utils::KaikoUtil;
 

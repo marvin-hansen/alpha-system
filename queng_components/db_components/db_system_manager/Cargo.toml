@@ -18,11 +18,12 @@ path = "src/lib.rs"
 common = { workspace = true }
 ctx_manager = { workspace = true }
 config_manager = { workspace = true }
+clickhouse_utils = { workspace = true }
 dns_manager = { workspace = true }
 db_specs = { workspace = true }
-exchange_specs = { workspace = true }
-clickhouse_utils = { workspace = true }
 env_utils = { workspace = true }
+exchange_specs = { workspace = true }
+smdb_specs = { workspace = true }
 
 # External crates
 chrono = { workspace = true }
@@ -30,6 +31,5 @@ klickhouse = { workspace = true }
 rust_decimal = { workspace = true }
 tokio = { workspace = true }
 serde = { workspace = true }
-smdb_specs = { workspace = true }
 
 

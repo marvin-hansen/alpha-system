@@ -9,7 +9,7 @@ pub struct ContainerConfig<'l> {
     connection_port: u16,
     additional_ports: Option<&'l [u16]>,
     platform: Option<&'l str>,
-    env_var: Option<&'l str>,
+    additional_start_commands: Option<&'l str>,
     reuse_container: bool,
     keep_configuration: bool,
     wait_duration: u64,
@@ -55,7 +55,7 @@ impl<'l> ContainerConfig<'l> {
         connection_port: u16,
         additional_ports: Option<&'l [u16]>,
         platform: Option<&'l str>,
-        env_var: Option<&'l str>,
+        additional_start_commands: Option<&'l str>,
         reuse_container: bool,
         keep_configuration: bool,
         wait_duration: u64,
@@ -68,7 +68,7 @@ impl<'l> ContainerConfig<'l> {
             connection_port,
             additional_ports,
             platform,
-            env_var,
+            additional_start_commands,
             reuse_container,
             keep_configuration,
             wait_duration,
@@ -117,8 +117,8 @@ impl<'l> ContainerConfig<'l> {
         self.tag
     }
 
-    pub fn env_var(&self) -> Option<&'l str> {
-        self.env_var
+    pub fn additional_start_commands(&self) -> Option<&'l str> {
+        self.additional_start_commands
     }
 }
 
@@ -135,7 +135,7 @@ impl Display for ContainerConfig<'_> {
             self.connection_port,
             self.additional_ports,
             self.platform,
-            self.env_var,
+            self.additional_start_commands,
             self.reuse_container,
             self.keep_configuration,
             self.wait_duration,
