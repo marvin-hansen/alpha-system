@@ -2,25 +2,25 @@ use common::prelude::LookupError;
 use std::sync::{Arc, RwLock};
 use tonic::{Request, Response, Status};
 
-use proto_bindings::proto::symdb_service_server::SymdbService;
+use proto_bindings::proto::mdm_service_server::MdmService;
 use proto_bindings::proto::*;
 use symbol_manager::SymbolManager;
 
 const FN_NAME: &str = "[SymdbClient/service]: ";
 
 #[derive(Clone)]
-pub struct SYMDBServer {
+pub struct MDMServer {
     symbol_manager: Arc<RwLock<SymbolManager>>,
 }
 
-impl SYMDBServer {
+impl MDMServer {
     pub fn new(symbol_manager: Arc<RwLock<SymbolManager>>) -> Self {
         Self { symbol_manager }
     }
 }
 
 #[tonic::async_trait]
-impl SymdbService for SYMDBServer {
+impl MdmService for MDMServer {
     /// Looks up the exchange name for the given exchange ID.
     ///
     /// # Arguments

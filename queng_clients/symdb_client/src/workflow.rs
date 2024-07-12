@@ -1,10 +1,10 @@
 use crate::error::SymdbClientError;
-use crate::{utils_proto, SymdbClient};
+use crate::{utils_proto, MDMClient};
 use common::prelude::ExchangeID;
 
 const FN_NAME: &str = "[SymdbClient]: ";
 
-impl SymdbClient {
+impl MDMClient {
     /// Looks up the exchange name for a given exchange ID.
     ///
     /// # Arguments

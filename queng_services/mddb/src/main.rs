@@ -1,11 +1,11 @@
-use crate::service::SYMDBServer;
+use crate::service::MDMServer;
 use common::prelude::ServiceID;
 use config_manager::CfgManager;
 use ctx_manager::CtxManager;
 use db_query_manager::QueryDBManager;
 use dns_manager::DnsManager;
 use mimalloc::MiMalloc;
-use proto_bindings::proto::symdb_service_server::SymdbServiceServer;
+use proto_bindings::proto::mdm_service_server::MdmServiceServer;
 use service_utils::{print_utils, shutdown_utils};
 use smdb_provider::SMDBProvider;
 use std::error::Error;
@@ -99,7 +99,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .expect("[SMDB]: Failed to parse address");
 
     // Create new gRPC service
-    let grpc_svc = SymdbServiceServer::new(SYMDBServer::new(symbol_manager));
+    let grpc_svc = MdmServiceServer::new(MDMServer::new(symbol_manager));
 
     // Build gRPC server with health service and signal sigint handler
     let signal = shutdown_utils::signal_handler("gRPC server");

@@ -1,5 +1,6 @@
 syntax = "proto3";
 package proto;
+
 import "portfolio_messages.proto";
 
 service CMDBService {

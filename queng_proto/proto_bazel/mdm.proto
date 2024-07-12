@@ -1,6 +1,12 @@
 syntax = "proto3";
 package proto;
 
+service MDMService {
+  rpc LookupExchangeName(LookupExchangeNameRequest) returns (LookupExchangeNameResponse){}
+  rpc LookupSymbol(LookupSymbolRequest) returns (LookupSymbolResponse){}
+  rpc LookupSymbolID(LookupSymbolIDRequest) returns (LookupSymbolIDResponse){}
+}
+
 
 // Request
 

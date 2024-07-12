@@ -1,5 +1,7 @@
 syntax = "proto3";
+
 package proto;
+
 import "queng_proto/proto_bazel/portfolio_messages.proto";
 
 service CMDBService {

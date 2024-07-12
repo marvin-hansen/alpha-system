@@ -5,14 +5,12 @@ proto_library(
     name = "proto_bindings",
     srcs = [
         "proto_bazel/cmdb.proto",
-        "proto_bazel/data_messages.proto",
         "proto_bazel/dbgw.proto",
-        "proto_bazel/exchange_symbol_messages.proto",
         "proto_bazel/ims_data.proto",
+        "proto_bazel/mdm.proto",
         "proto_bazel/portfolio_messages.proto",
         "proto_bazel/service_messages.proto",
         "proto_bazel/smdb.proto",
-        "proto_bazel/symdb.proto",
     ],
 )
 
