@@ -3,4 +3,4 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-command bazel run //queng_services/cmdb:bin
+ENV=LOCAL bazel run //queng_services/cmdb:bin
