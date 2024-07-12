@@ -1,7 +1,8 @@
 load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 
 rust_test_suite(
-    name = "tests",
+    name = "kaiko_utils_tests",
+    size = "medium",
     srcs = glob([
         "*_tests.rs",
     ]),
