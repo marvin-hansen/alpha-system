@@ -245,7 +245,13 @@ alias(
 # Utils
 alias(
     name = "clickhouse_utils",
-    actual = "//queng_utils/clickhouse_utils:clickhouse_utils",
+    actual = "//queng_utils/db_utils/clickhouse_utils:clickhouse_utils",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "surreal_utils",
+    actual = "//queng_utils/db_utils/surreal_utils:surreal_utils",
     visibility = ["//visibility:public"],
 )
 

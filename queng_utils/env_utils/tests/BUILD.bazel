@@ -92,10 +92,10 @@ rust_test_suite(
         # Crate under test
         "//:env_utils",
         # Internal crates
-        "//queng_common:common",
-        "//queng_specs/container_specs",
-        "//queng_utils/clickhouse_utils",
-        "//queng_utils/docker_utils",
+        "//:common",
+        "//:container_specs",
+        "//:clickhouse_utils",
+        "//:docker_utils",
         # External crates
         "@crates//:tokio",
         "@crates//:serde_json",
@@ -126,10 +126,10 @@ rust_test_suite(
         # Crate under test
         "//:env_utils",
         # Internal crates
-        "//queng_common:common",
-        "//queng_specs/container_specs",
-        "//queng_utils/clickhouse_utils",
-        "//queng_utils/docker_utils",
+        "//:common",
+        "//:container_specs",
+        "//:clickhouse_utils",
+        "//:docker_utils",
         # External crates
         "@crates//:tokio",
         "@crates//:serde_json",
