@@ -4,14 +4,17 @@ load("@rules_rust//proto/prost:defs.bzl", "rust_prost_library")
 proto_library(
     name = "proto_bindings",
     srcs = [
-        "proto_bazel/cmdb.proto",
-        "proto_bazel/dbgw.proto",
-        "proto_bazel/ims_data.proto",
-        "proto_bazel/mdm.proto",
-        "proto_bazel/portfolio_messages.proto",
-        "proto_bazel/service_messages.proto",
-        "proto_bazel/smdb.proto",
+        "proto/cmdb.proto",
+        "proto/dbgw.proto",
+        "proto/ims_data.proto",
+        "proto/mdm.proto",
+        "proto/portfolio_messages.proto",
+        "proto/service_messages.proto",
+        "proto/smdb.proto",
     ],
+    # strip_import_prefix ensures compatibility with Cargo / Prost proto imports
+    # https://bazel.build/reference/be/protocol-buffer
+    strip_import_prefix = "proto",
 )
 
 rust_prost_library(

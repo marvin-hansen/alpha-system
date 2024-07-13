@@ -5,7 +5,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 "proto/cmdb.proto",
                 "proto/dbgw.proto",
                 "proto/ims_data.proto",
-                "proto/mdmdb.proto",
+                "proto/mdm.proto",
                 "proto/portfolio_messages.proto",
                 "proto/service_messages.proto",
                 "proto/smdb.proto",
