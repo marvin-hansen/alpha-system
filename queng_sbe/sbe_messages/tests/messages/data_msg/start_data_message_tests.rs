@@ -1,4 +1,5 @@
-use common::prelude::{ExchangeID, TimeResolution};
+use common::prelude::TimeResolution;
+use common_exchange::prelude::ExchangeID;
 use sbe_messages::prelude::{DataType, MessageType, StartDataMessage};
 
 fn get_message() -> StartDataMessage {

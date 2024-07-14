@@ -14,6 +14,6 @@ rust_test_suite(
         # Crate to test
         "//alias:portfolio_specs",
         # Internal crates
-        "//alias:common",
+        "//alias:common_exchange",
     ],
 )

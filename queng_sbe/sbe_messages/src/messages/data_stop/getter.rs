@@ -1,6 +1,6 @@
 use crate::messages::data_stop::StopDataMessage;
 use crate::prelude::{DataType, MessageType};
-use common::prelude::ExchangeID;
+use common_exchange::prelude::ExchangeID;
 
 impl StopDataMessage {
     pub fn message_type(&self) -> &MessageType {

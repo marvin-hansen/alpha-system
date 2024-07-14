@@ -1,6 +1,6 @@
 use crate::error::SymdbClientError;
 use crate::{utils_proto, MDMClient};
-use common::prelude::ExchangeID;
+use common_exchange::prelude::ExchangeID;
 
 const FN_NAME: &str = "[SymdbClient]: ";
 

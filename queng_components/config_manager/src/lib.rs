@@ -1,8 +1,8 @@
 use crate::utils::get_svc_env_config;
-use common::prelude::ExchangeID;
 use common_config::prelude::{
     ClickHouseConfig, EnvironmentType, ServiceConfig, ServiceID, SurrealDBConfig, SvcEnvConfig,
 };
+use common_exchange::prelude::ExchangeID;
 use ctx_manager::CtxManager;
 use dns_manager::DnsManager;
 use exchange_specs::prelude;

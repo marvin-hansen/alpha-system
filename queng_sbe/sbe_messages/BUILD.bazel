@@ -14,6 +14,7 @@ rust_library(
     deps = [
         # Internal crates
         "//alias:common",
+        "//alias:common_exchange",
         "//alias:sbe_bindings",
         # External crates
         "@crates//:rust_decimal",

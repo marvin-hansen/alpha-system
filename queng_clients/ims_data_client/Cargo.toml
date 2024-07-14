@@ -17,6 +17,7 @@ path = "src/lib.rs"
 # Internal crates
 common = {workspace = true}
 common_config = {workspace = true}
+common_exchange = {workspace = true}
 proto_bindings = {workspace = true}
 
 # Exteral crates

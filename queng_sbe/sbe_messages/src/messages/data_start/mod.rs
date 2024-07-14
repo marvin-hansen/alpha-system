@@ -1,5 +1,6 @@
 use crate::prelude::{DataType, MessageType};
-use common::prelude::{ExchangeID, TimeResolution};
+use common::prelude::TimeResolution;
+use common_exchange::prelude::ExchangeID;
 use serde::{Deserialize, Serialize};
 
 mod display;

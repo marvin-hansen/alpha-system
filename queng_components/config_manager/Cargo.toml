@@ -19,6 +19,7 @@ path = "src/lib.rs"
 common = { workspace = true }
 common_config = { workspace = true }
 common_errors = { workspace = true }
+common_exchange = { workspace = true }
 ctx_manager = { workspace = true }
 dns_manager = { workspace = true }
 db_specs = { workspace = true }

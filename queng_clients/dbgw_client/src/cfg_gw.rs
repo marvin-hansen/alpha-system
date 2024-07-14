@@ -1,4 +1,4 @@
-use common::prelude::PortfolioConfig;
+use common_exchange::prelude::PortfolioConfig;
 use proto_bindings::proto::{MultiPortfolioRequest, SinglePortfolioRequest};
 use proto_utils::portfolio_proto_utils::{portfolio_config_from_proto, portfolio_config_to_proto};
 

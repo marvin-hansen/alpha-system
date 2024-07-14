@@ -15,6 +15,7 @@ rust_library(
         # Internal crates
         "//alias:common",
         "//alias:common_config",
+        "//alias:common_exchange",
         "//alias:rust_proto",
     ],
 )

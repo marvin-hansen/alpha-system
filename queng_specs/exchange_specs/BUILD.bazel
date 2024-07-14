@@ -12,7 +12,7 @@ rust_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "//alias:common",
+        "//alias:common_exchange",
     ],
 )
 

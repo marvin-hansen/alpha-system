@@ -1,0 +1,19 @@
+load("@rules_rust//rust:defs.bzl", "rust_test_suite")
+
+rust_test_suite(
+    name = "common_exchange",
+    srcs = glob([
+        "exchange_types/*_tests.rs",
+    ]),
+    tags = [
+        "common",
+        "unit",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        "//alias:common_exchange",
+        # External crates
+        "@crates//:rust_decimal",
+    ],
+)

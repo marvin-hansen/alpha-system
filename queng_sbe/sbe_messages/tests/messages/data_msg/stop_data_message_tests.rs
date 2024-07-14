@@ -1,4 +1,4 @@
-use common::prelude::ExchangeID;
+use common_exchange::prelude::ExchangeID;
 use sbe_messages::prelude::{DataType, MessageType, StopDataMessage};
 
 fn get_message() -> StopDataMessage {

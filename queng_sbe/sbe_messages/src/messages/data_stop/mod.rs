@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use common::prelude::ExchangeID;
+use common_exchange::prelude::ExchangeID;
 
 use crate::prelude::{DataType, MessageType};
 

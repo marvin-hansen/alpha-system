@@ -1,5 +1,5 @@
 use crate::SurrealDBManager;
-use common::prelude::PortfolioConfig;
+use common_exchange::prelude::PortfolioConfig;
 use std::fmt::Error;
 
 const PORTFOLIO_CONFIG_TABLE: &str = "portfolio_config";

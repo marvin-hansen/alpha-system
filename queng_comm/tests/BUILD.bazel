@@ -17,24 +17,6 @@ rust_test_suite(
 )
 
 rust_test_suite(
-    name = "exchange",
-    srcs = glob([
-        "types/exchange_types/*_tests.rs",
-    ]),
-    tags = [
-        "common",
-        "unit",
-    ],
-    visibility = ["//visibility:public"],
-    deps = [
-        # Crate to test
-        "//alias:common",
-        # External crates
-       "@crates//:rust_decimal",
-    ],
-)
-
-rust_test_suite(
     name = "trade",
     srcs = glob([
         "types/trade_types/*_tests.rs",

@@ -1,4 +1,4 @@
-use common::prelude::ExchangeID;
+use common_exchange::prelude::ExchangeID;
 use proto_bindings::proto::{
     LookupExchangeNameRequest, LookupSymbolIdRequest, LookupSymbolRequest,
 };

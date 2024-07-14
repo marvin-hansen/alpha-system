@@ -6,7 +6,10 @@ rust_library(
         "src/**",
     ]),
     crate_root = "src/lib.rs",
-    tags = ["common", "common_config"],
+    tags = [
+        "common",
+        "common_config",
+    ],
     visibility = ["//visibility:public"],
     deps = [
         # External crates
