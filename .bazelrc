@@ -30,7 +30,7 @@ build --symlink_prefix=target-bzl/
 # build --incompatible_disallow_empty_glob
 
 # This flag improves execution throughput by executing more actions in parallel.
-build --jobs=50
+build --jobs=32
 
 ###############################################################################
 ## Test configuration
@@ -39,7 +39,6 @@ build --jobs=50
 # Reduce test output to just error cases and report timeout warnings.
 test --test_output=errors
 test --verbose_failures
-# test --test_verbose_timeout_warnings
 
 ###############################################################################
 ## Common configuration
