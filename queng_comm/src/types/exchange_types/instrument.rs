@@ -1,4 +1,3 @@
-use crate::prelude::MetaInstrument;
 use serde::{Deserialize, Serialize};
 use std::fmt::{Display, Formatter};
 
@@ -31,22 +30,6 @@ impl Instrument {
             base_asset,
             quote_asset,
             instrument_figi,
-        }
-    }
-
-    pub fn from_meta_instrument(meta_instrument: MetaInstrument) -> Self {
-        Self {
-            code: meta_instrument.code,
-            class: meta_instrument.class,
-            exchange_code: meta_instrument.exchange_code,
-            exchange_pair_code: meta_instrument.exchange_pair_code,
-            base_asset: meta_instrument.base_asset,
-            quote_asset: meta_instrument.quote_asset,
-            instrument_figi: if meta_instrument.metadata.is_some() {
-                meta_instrument.metadata.unwrap().instrument_figi
-            } else {
-                None
-            },
         }
     }
 }

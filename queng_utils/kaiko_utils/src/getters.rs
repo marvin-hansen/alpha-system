@@ -1,6 +1,6 @@
 use crate::error::KaikoUtilError;
 use crate::KaikoUtil;
-use common::prelude::{MetaAsset, MetaExchange, MetaInstrument, Stats};
+use common_metadata::prelude::{MetaAsset, MetaExchange, MetaInstrument, Stats};
 
 impl KaikoUtil {
     pub async fn get_assets(&self) -> Result<Vec<MetaAsset>, KaikoUtilError> {

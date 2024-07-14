@@ -1,6 +1,6 @@
 use crate::errors::InitError;
 use crate::init::InitManager;
-use common::prelude::MetaAsset;
+use common_metadata::prelude::MetaAsset;
 
 impl InitManager {
     pub(super) async fn init_level_2_assets(&self) -> Result<Vec<MetaAsset>, InitError> {

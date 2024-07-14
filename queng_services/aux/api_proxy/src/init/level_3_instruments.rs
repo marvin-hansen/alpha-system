@@ -1,7 +1,7 @@
 use crate::errors::InitError;
 use crate::fields::DEX;
 use crate::init::InitManager;
-use common::prelude::MetaInstrument;
+use common_metadata::prelude::MetaInstrument;
 
 impl InitManager {
     pub(super) async fn init_level_3_instruments(&self) -> Result<Vec<MetaInstrument>, InitError> {

@@ -1,7 +1,7 @@
 use crate::errors::InitError;
 use crate::fields::ACTIVE_EXCHANGES;
 use crate::init::InitManager;
-use common::prelude::MetaExchange;
+use common_metadata::prelude::MetaExchange;
 
 impl InitManager {
     pub(super) async fn init_level_1_exchanges(&self) -> Result<Vec<MetaExchange>, InitError> {

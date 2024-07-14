@@ -1,4 +1,4 @@
-use common::prelude::{
+use common_metadata::prelude::{
     MetaAsset, MetaAssetRoot, MetaExchange, MetaExchangesRoot, MetaInstrument, MetaInstrumentsRoot,
     Stats,
 };

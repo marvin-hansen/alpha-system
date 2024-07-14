@@ -1,6 +1,6 @@
 use crate::db::metadata::{Metadata, DB_NAME, EXCHANGES_TABLE};
 use crate::prelude::ClickHouseUtilError;
-use common::prelude::MetaExchange;
+use common_metadata::prelude::MetaExchange;
 
 impl Metadata {
     /// Imports a list of exchanges metadata into the metadata database.

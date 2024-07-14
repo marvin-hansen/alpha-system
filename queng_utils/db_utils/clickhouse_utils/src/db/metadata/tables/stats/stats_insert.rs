@@ -1,5 +1,5 @@
 use crate::db::metadata::{Metadata, DB_NAME, STATS_TABLE};
-use common::prelude::Stats;
+use common_metadata::prelude::Stats;
 use std::error::Error;
 
 impl Metadata {

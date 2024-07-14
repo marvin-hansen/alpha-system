@@ -1,33 +1,31 @@
 load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library")
 
 rust_library(
-    name = "kaiko_utils",
+    name = "common_metadata",
     srcs = glob([
-        "src/*.rs",
+        "src/**",
     ]),
     crate_root = "src/lib.rs",
-    tags = [
-        "kaiko_utils",
-        "utils",
-    ],
+    tags = ["common", "common_metadata"],
     visibility = ["//visibility:public"],
     deps = [
-        # Internal crates
-        "//alias:common_metadata",
-        "//alias:kaiko_client",
+        # External crates
+        "@crates//:chrono",
+        "@crates//:serde",
+        "@crates//:serde_json",
     ],
 )
 
 rust_doc(
     name = "doc",
-    crate = ":kaiko_utils",
+    crate = ":common_metadata",
     tags = ["doc"],
     visibility = ["//visibility:public"],
 )
 
 rust_doc_test(
     name = "doc_test",
-    crate = ":kaiko_utils",
+    crate = ":common_metadata",
     tags = ["doc-test"],
     visibility = ["//visibility:public"],
 )

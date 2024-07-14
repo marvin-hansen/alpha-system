@@ -1,7 +1,5 @@
 //
 // Types
-// Currency types
-pub use crate::types::exchange_types::fiat_iso_code::FiatIsoCode;
 // data types
 pub use crate::types::data_types::data_type::*;
 pub use crate::types::data_types::ohlcv_bar::*;
@@ -11,26 +9,19 @@ pub use crate::types::data_types::trade_bar::*;
 // exchange types
 pub use crate::types::exchange_types::account_type::*;
 pub use crate::types::exchange_types::exchange_id::*;
-// Metadata types
-pub use crate::types::exchange_types::master_symbol::*;
-pub use crate::types::meta_data_types::assets::*;
-pub use crate::types::meta_data_types::exchanges::*;
-pub use crate::types::meta_data_types::instruments::*;
-pub use crate::types::meta_data_types::stats::*;
-// Instrument types
+pub use crate::types::exchange_types::fiat_iso_code::FiatIsoCode;
 pub use crate::types::exchange_types::instrument::*;
-// pattern types
-pub use crate::types::trade_types::pattern_config::*;
-pub use crate::types::trade_types::pattern_type::*;
-// portfolio types
+pub use crate::types::exchange_types::master_symbol::*;
 pub use crate::types::exchange_types::portfolio_config::*;
-// symbol types
 pub use crate::types::exchange_types::symbol::*;
 pub use crate::types::exchange_types::symbol_id::*;
+
 // Time Types
 pub use crate::types::time_types::month::Month;
 pub use crate::types::time_types::time_scale::TimeScale;
 // trade types
+pub use crate::types::trade_types::pattern_config::*;
+pub use crate::types::trade_types::pattern_type::*;
 pub use crate::types::trade_types::strategy_config::*;
 pub use crate::types::trade_types::trade_direction::*;
 pub use crate::types::trade_types::trade_entry::*;

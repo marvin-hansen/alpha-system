@@ -10,7 +10,7 @@ rust_library(
     visibility = ["//visibility:public"],
     deps = [
         # Internal crates
-        "//alias:common",
+        "//alias:common_metadata",
         # External crates
         "@crates//:reqwest",
         "@crates//:serde_json",

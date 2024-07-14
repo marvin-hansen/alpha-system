@@ -1,0 +1,22 @@
+load("@rules_rust//rust:defs.bzl", "rust_test_suite")
+
+rust_test_suite(
+    name = "meta_data",
+    srcs = glob([
+        "meta_data_types/*_tests.rs",
+    ]),
+    tags = [
+        "common",
+        "common_meta_data",
+        "unit",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        "//alias:common_metadata",
+        # External crates
+        "@crates//:chrono",
+        "@crates//:serde",
+        "@crates//:serde_json",
+    ],
+)

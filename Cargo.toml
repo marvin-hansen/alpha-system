@@ -9,8 +9,9 @@ members = [
     "queng_clients/rest_client",
     "queng_clients/mddb_client",
     "queng_comm",
-    "queng_common/common_errors",
     "queng_common/common_config",
+    "queng_common/common_errors",
+    "queng_common/common_metadata",
     "queng_components/config_manager",
     "queng_components/ctx_manager",
     "queng_components/db_components/db_query_manager",
@@ -78,8 +79,9 @@ rest_client = { path = "queng_clients/rest_client" }
 mddb_client = { path = "queng_clients/mddb_client" }
 # Common
 common = { path = "queng_comm" }
-common_errors = { path = "queng_common/common_errors"}
 common_config = { path = "queng_common/common_config"}
+common_errors = { path = "queng_common/common_errors"}
+common_metadata = { path = "queng_common/common_metadata"}
 # Components
 config_manager = { path = "queng_components/config_manager" }
 ctx_manager = { path = "queng_components/ctx_manager" }

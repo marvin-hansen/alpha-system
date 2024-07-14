@@ -21,6 +21,12 @@ alias(
     visibility = ["//visibility:public"],
 )
 
+alias(
+    name = "common_metadata",
+    actual = "//queng_common/common_metadata:common_metadata",
+    visibility = ["//visibility:public"],
+)
+
 ###############################################################################
 # Clients
 ###############################################################################

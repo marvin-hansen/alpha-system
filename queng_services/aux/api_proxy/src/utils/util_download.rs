@@ -1,6 +1,6 @@
 use crate::errors::DownloadError;
 use crate::fields::BASE_URL;
-use common::prelude::{
+use common_metadata::prelude::{
     MetaAsset, MetaAssetRoot, MetaExchange, MetaExchangesRoot, MetaInstrument, MetaInstrumentsRoot,
 };
 use reqwest::Client;

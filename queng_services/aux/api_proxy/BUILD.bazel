@@ -36,7 +36,7 @@ rust_binary(
     visibility = ["//visibility:public"],
     deps = [
         # Internal crates
-        "//alias:common",
+        "//alias:common_metadata",
         "//alias:crypto_utils",
         "//alias:service_utils",
         # Custom Memory Allocator
