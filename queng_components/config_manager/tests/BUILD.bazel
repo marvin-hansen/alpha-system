@@ -13,16 +13,16 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Crate to test
-        "//:config_manager",
+        "//alias:config_manager",
         # Internal crates
-        "//:common",
-        "//:ctx_manager",
-        "//:dns_manager",
-        "//:db_specs",
-        "//:exchange_specs",
-        "//:cmdb_specs",
-        "//:dbgw_specs",
-        "//:qdgw_specs",
-        "//:smdb_specs",
+        "//alias:common",
+        "//alias:ctx_manager",
+        "//alias:dns_manager",
+        "//alias:db_specs",
+        "//alias:exchange_specs",
+        "//alias:cmdb_specs",
+        "//alias:dbgw_specs",
+        "//alias:qdgw_specs",
+        "//alias:smdb_specs",
     ],
 )

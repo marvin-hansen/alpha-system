@@ -9,13 +9,13 @@ rust_library(
     visibility = ["//visibility:public"],
     deps = [
         # Internal crates
-        "//:common",
-        "//:config_manager",
-        "//:ctx_manager",
-        "//:dns_manager",
-        "//:rust_proto",
-        "//:service_utils",
-        "//:smdb_provider",
+        "//alias:common",
+        "//alias:config_manager",
+        "//alias:ctx_manager",
+        "//alias:dns_manager",
+        "//alias:rust_proto",
+        "//alias:service_utils",
+        "//alias:smdb_provider",
         # External crates
         "@crates//:tokio",
         "@crates//:tonic",

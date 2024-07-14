@@ -12,12 +12,12 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Crate to test
-        "//:db_surreal_manager",
+        "//alias:db_surreal_manager",
         # Internal crates
-        "//:common",
-        "//:ctx_manager",
-        "//:config_manager",
-        "//:env_utils",
+        "//alias:common",
+        "//alias:ctx_manager",
+        "//alias:config_manager",
+        "//alias:env_utils",
         # External crates
         "@crates//:tokio",
     ],

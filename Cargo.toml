@@ -41,7 +41,6 @@ members = [
     "queng_specs/service_specs/qdgw_specs",
     "queng_specs/service_specs/smdb_specs",
     "queng_specs/service_specs/vex_specs",
-    "queng_utils/client_utils",
     "queng_utils/crypto_utils",
     "queng_utils/db_utils/clickhouse_utils",
     "queng_utils/db_utils/surreal_utils",
@@ -116,7 +115,6 @@ qdgw_specs = { path = "queng_specs/service_specs/qdgw_specs" }
 smdb_specs = { path = "queng_specs/service_specs/smdb_specs" }
 vex_specs = { path = "queng_specs/service_specs/vex_specs" }
 # Utils
-client_utils = { path = "queng_utils/client_utils" }
 crypto_utils = { path = "queng_utils/crypto_utils" }
 # DB Utils
 clickhouse_utils = { path = "queng_utils/db_utils/clickhouse_utils" }

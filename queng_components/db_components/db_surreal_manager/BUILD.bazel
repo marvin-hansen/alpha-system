@@ -9,8 +9,8 @@ rust_library(
     visibility = ["//visibility:public"],
     deps = [
         # Internal crates
-        "//:common",
-        "//:clickhouse_utils",
+        "//alias:common",
+        "//alias:clickhouse_utils",
         # External crates
         "@crates//:surrealdb",
     ],

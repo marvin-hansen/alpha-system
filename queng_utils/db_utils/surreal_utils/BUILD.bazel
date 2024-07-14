@@ -13,8 +13,8 @@ rust_library(
     visibility = ["//visibility:public"],
     deps = [
         # Internal crates
-        "//:common",
-        "//:db_surreal_manager",
+        "//alias:common",
+        "//alias:db_surreal_manager",
         # External crates
     ],
 )

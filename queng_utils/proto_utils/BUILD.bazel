@@ -13,8 +13,8 @@ rust_library(
     visibility = ["//visibility:public"],
     deps = [
         # Internal crates
-        "//:common",
-        "//:rust_proto",
+        "//alias:common",
+        "//alias:rust_proto",
     ],
 )
 

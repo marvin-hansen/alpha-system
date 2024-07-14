@@ -17,8 +17,8 @@ rust_test_suite(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "//:common",
-        "//:ctx_manager",
+        "//alias:common",
+        "//alias:ctx_manager",
     ],
 )
 
@@ -34,8 +34,8 @@ rust_test_suite(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "//:common",
-        "//:ctx_manager",
+        "//alias:common",
+        "//alias:ctx_manager",
     ],
 )
 
@@ -51,8 +51,8 @@ rust_test_suite(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "//:common",
-        "//:ctx_manager",
+        "//alias:common",
+        "//alias:ctx_manager",
     ],
 )
 
@@ -68,7 +68,7 @@ rust_test_suite(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "//:common",
-        "//:ctx_manager",
+        "//alias:common",
+        "//alias:ctx_manager",
     ],
 )

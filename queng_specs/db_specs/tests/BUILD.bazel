@@ -11,8 +11,8 @@ rust_test_suite(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "//:common",
-        "//:db_specs",
+        "//alias:common",
+        "//alias:db_specs",
     ],
 )
 
@@ -27,8 +27,8 @@ rust_test_suite(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "//:common",
-        "//:db_specs",
+        "//alias:common",
+        "//alias:db_specs",
     ],
 )
 
@@ -43,7 +43,7 @@ rust_test_suite(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "//:common",
-        "//:db_specs",
+        "//alias:common",
+        "//alias:db_specs",
     ],
 )

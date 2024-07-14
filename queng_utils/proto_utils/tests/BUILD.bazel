@@ -11,9 +11,9 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Crate under test
-        "//:proto_utils",
+        "//alias:proto_utils",
         # Internal crates
-        "//:common",
-        "//:rust_proto",
+        "//alias:common",
+        "//alias:rust_proto",
     ],
 )

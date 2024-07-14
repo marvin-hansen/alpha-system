@@ -24,12 +24,12 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Crate under test
-        "//:clickhouse_utils",
+        "//alias:clickhouse_utils",
         # Internal crates
-        "//:common",
-        "//:container_specs",
-        "//:docker_utils",
-        "//:env_utils",
+        "//alias:common",
+        "//alias:container_specs",
+        "//alias:docker_utils",
+        "//alias:env_utils",
         # External crates
         "@crates//:klickhouse",
         "@crates//:serde",
@@ -62,12 +62,12 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Crate under test
-        "//:clickhouse_utils",
+        "//alias:clickhouse_utils",
         # Internal crates
-        "//:common",
-        "//:container_specs",
-        "//:docker_utils",
-        "//:env_utils",
+        "//alias:common",
+        "//alias:container_specs",
+        "//alias:docker_utils",
+        "//alias:env_utils",
         # External crates
         "@crates//:klickhouse",
         "@crates//:serde",

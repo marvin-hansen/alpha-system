@@ -22,10 +22,10 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Crate under test
-        "//:kaiko_utils",
+        "//alias:kaiko_utils",
         # Internal crates
-        "//:env_utils",
-        "//:kaiko_client",
+        "//alias:env_utils",
+        "//alias:kaiko_client",
         # External crates
         "@crates//:tokio",
     ],

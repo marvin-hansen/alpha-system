@@ -12,6 +12,6 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Crate under test
-        "//:crypto_utils",
+        "//alias:crypto_utils",
     ],
 )

@@ -30,14 +30,14 @@ rust_binary(
     visibility = ["//visibility:public"],
     deps = [
         # Specs
-        "//:smdb_specs",
+        "//alias:smdb_specs",
         # Internal crates
-        "//:common",
-        "//:config_manager",
-        "//:ctx_manager",
-        "//:dns_manager",
-        "//:rust_proto",
-        "//:service_utils",
+        "//alias:common",
+        "//alias:config_manager",
+        "//alias:ctx_manager",
+        "//alias:dns_manager",
+        "//alias:rust_proto",
+        "//alias:service_utils",
         # Custom Memory Allocator
         "@crates//:mimalloc",
         # External crates

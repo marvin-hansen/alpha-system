@@ -13,9 +13,9 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Crate under test
-        "//:dns_manager",
-        "//:common",
+        "//alias:dns_manager",
+        "//alias:common",
         # Internal crates
-        "//:ctx_manager",
+        "//alias:ctx_manager",
     ],
 )

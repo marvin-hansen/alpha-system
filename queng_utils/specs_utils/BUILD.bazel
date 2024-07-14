@@ -13,16 +13,16 @@ rust_library(
     visibility = ["//visibility:public"],
     deps = [
         # Internal crates
-        "//:common",
+        "//alias:common",
         # Container specs
-        "//:container_specs",
+        "//alias:container_specs",
         # Service specs
-        "//:cmdb_specs",
-        "//:dbgw_specs",
-        "//:mddb_specs",
-        "//:qdgw_specs",
-        "//:smdb_specs",
-        "//:vex_specs",
+        "//alias:cmdb_specs",
+        "//alias:dbgw_specs",
+        "//alias:mddb_specs",
+        "//alias:qdgw_specs",
+        "//alias:smdb_specs",
+        "//alias:vex_specs",
         # External crates
     ],
 )

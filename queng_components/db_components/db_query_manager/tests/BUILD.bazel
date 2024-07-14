@@ -12,10 +12,10 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Crate to test
-        "//:db_query_manager",
+        "//alias:db_query_manager",
         # Internal crates
-        "//:common",
-        "//:clickhouse_utils",
+        "//alias:common",
+        "//alias:clickhouse_utils",
         # External crates
         "@crates//:chrono",
         "@crates//:futures",

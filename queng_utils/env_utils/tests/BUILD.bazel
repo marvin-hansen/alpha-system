@@ -21,13 +21,13 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Crate under test
-        "//:env_utils",
+        "//alias:env_utils",
         # Internal crates
-        "//:common",
-        "//:container_specs",
-        "//:clickhouse_utils",
-        "//:docker_utils",
-        "//:kaiko_utils",
+        "//alias:common",
+        "//alias:container_specs",
+        "//alias:clickhouse_utils",
+        "//alias:docker_utils",
+        "//alias:kaiko_utils",
         # External crates
         "@crates//:tokio",
         "@crates//:serde_json",
@@ -55,13 +55,13 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Crate under test
-        "//:env_utils",
+        "//alias:env_utils",
         # Internal crates
-        "//:common",
-        "//:container_specs",
-        "//:clickhouse_utils",
-        "//:docker_utils",
-        "//:kaiko_utils",
+        "//alias:common",
+        "//alias:container_specs",
+        "//alias:clickhouse_utils",
+        "//alias:docker_utils",
+        "//alias:kaiko_utils",
         # External crates
         "@crates//:tokio",
         "@crates//:serde_json",
@@ -90,12 +90,12 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Crate under test
-        "//:env_utils",
+        "//alias:env_utils",
         # Internal crates
-        "//:common",
-        "//:container_specs",
-        "//:clickhouse_utils",
-        "//:docker_utils",
+        "//alias:common",
+        "//alias:container_specs",
+        "//alias:clickhouse_utils",
+        "//alias:docker_utils",
         # External crates
         "@crates//:tokio",
         "@crates//:serde_json",
@@ -124,12 +124,12 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Crate under test
-        "//:env_utils",
+        "//alias:env_utils",
         # Internal crates
-        "//:common",
-        "//:container_specs",
-        "//:clickhouse_utils",
-        "//:docker_utils",
+        "//alias:common",
+        "//alias:container_specs",
+        "//alias:clickhouse_utils",
+        "//alias:docker_utils",
         # External crates
         "@crates//:tokio",
         "@crates//:serde_json",

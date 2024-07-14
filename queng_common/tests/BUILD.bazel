@@ -12,7 +12,7 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Crate to test
-        "//:common",
+        "//alias:common",
     ],
 )
 
@@ -28,7 +28,7 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Crate to test
-        "//:common",
+        "//alias:common",
     ],
 )
 
@@ -44,7 +44,7 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Crate to test
-        "//:common",
+        "//alias:common",
     ],
 )
 
@@ -60,7 +60,7 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Crate to test
-        "//:common",
+        "//alias:common",
     ],
 )
 
@@ -76,7 +76,7 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Crate to test
-        "//:common",
+        "//alias:common",
     ],
 )
 
@@ -92,7 +92,7 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Crate to test
-        "//:common",
+        "//alias:common",
     ],
 )
 
@@ -108,7 +108,7 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Crate to test
-        "//:common",
+        "//alias:common",
     ],
 )
 
@@ -124,7 +124,7 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Crate to test
-        "//:common",
+        "//alias:common",
     ],
 )
 
@@ -140,7 +140,7 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Crate to test
-        "//:common",
+        "//alias:common",
     ],
 )
 
@@ -156,7 +156,7 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Crate to test
-        "//:common",
+        "//alias:common",
     ],
 )
 
@@ -172,7 +172,7 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Crate to test
-        "//:common",
+        "//alias:common",
         # External crates
         "@crates//:rust_decimal",
     ],
@@ -190,6 +190,6 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Crate to test
-        "//:common",
+        "//alias:common",
     ],
 )

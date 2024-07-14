@@ -12,8 +12,8 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Test target
-        "//:vex_specs",
+        "//alias:vex_specs",
         # Internal dependencies
-        "//:common",
+        "//alias:common",
     ],
 )

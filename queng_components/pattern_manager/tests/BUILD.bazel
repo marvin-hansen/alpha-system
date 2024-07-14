@@ -12,8 +12,8 @@ rust_test_suite(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "//:pattern_manager",
+        "//alias:pattern_manager",
         # Internal crates
-        "//:common",
+        "//alias:common",
     ],
 )

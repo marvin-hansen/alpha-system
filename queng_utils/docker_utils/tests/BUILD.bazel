@@ -20,10 +20,10 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Crate under test
-        "//:docker_utils",
+        "//alias:docker_utils",
         # Internal crates
-        "//:common",
-        "//:container_specs",
+        "//alias:common",
+        "//alias:container_specs",
         # External crates
         "@crates//:tokio",
     ],

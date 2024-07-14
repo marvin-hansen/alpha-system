@@ -13,8 +13,8 @@ rust_library(
     visibility = ["//visibility:public"],
     deps = [
         # Internal crates
-        "//:common",
-        "//:kaiko_client",
+        "//alias:common",
+        "//alias:kaiko_client",
     ],
 )
 

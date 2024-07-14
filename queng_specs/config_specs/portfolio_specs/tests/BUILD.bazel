@@ -12,8 +12,8 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Crate to test
-        "//:portfolio_specs",
+        "//alias:portfolio_specs",
         # Internal crates
-        "//:common",
+        "//alias:common",
     ],
 )

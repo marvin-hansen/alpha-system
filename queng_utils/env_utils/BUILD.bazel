@@ -14,11 +14,11 @@ rust_library(
     visibility = ["//visibility:public"],
     deps = [
         # Internal crates
-        "//:common",
-        "//:clickhouse_utils",
-        "//:docker_utils",
-        "//:specs_utils",
-        "//:kaiko_utils",
+        "//alias:common",
+        "//alias:clickhouse_utils",
+        "//alias:docker_utils",
+        "//alias:specs_utils",
+        "//alias:kaiko_utils",
         # External crates
         "@crates//:tokio",
         "@crates//:serde_json",

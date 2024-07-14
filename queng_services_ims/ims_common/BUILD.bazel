@@ -10,7 +10,7 @@ rust_library(
     visibility = ["//visibility:public"],
     deps = [
         # Internal crates
-        "//:common",
+        "//alias:common",
         # External crates
         "@crates//:serde",
     ],
@@ -43,7 +43,7 @@ rust_test_suite(
         # Crate to test
         ":ims_common",
         # Internal crates
-        "//:common",
+        "//alias:common",
         # External crates
         "@crates//:serde",
     ],

@@ -12,7 +12,7 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Crate to test
-        "//:sbe_messages",
+        "//alias:sbe_messages",
     ],
 )
 
@@ -28,7 +28,7 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Crate to test
-        "//:sbe_messages",
+        "//alias:sbe_messages",
     ],
 )
 
@@ -44,7 +44,7 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Crate to test
-        "//:sbe_messages",
+        "//alias:sbe_messages",
     ],
 )
 
@@ -60,7 +60,7 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Crate to test
-        "//:sbe_messages",
+        "//alias:sbe_messages",
     ],
 )
 
@@ -76,7 +76,7 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Crate to test
-        "//:sbe_messages",
+        "//alias:sbe_messages",
         # Internal crates
         "//queng_common:common",
         "//queng_sbe/bindings:sbe_bindings",
@@ -98,7 +98,7 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Crate to test
-        "//:sbe_messages",
+        "//alias:sbe_messages",
         # Internal crates
         "//queng_common:common",
         "//queng_sbe/bindings:sbe_bindings",
@@ -120,7 +120,7 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Crate to test
-        "//:sbe_messages",
+        "//alias:sbe_messages",
         # Internal crates
         "//queng_common:common",
         "//queng_sbe/bindings:sbe_bindings",
@@ -142,7 +142,7 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Crate to test
-        "//:sbe_messages",
+        "//alias:sbe_messages",
         # Internal crates
         "//queng_common:common",
         "//queng_sbe/bindings:sbe_bindings",
@@ -164,7 +164,7 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Crate to test
-        "//:sbe_messages",
+        "//alias:sbe_messages",
         # Internal crates
         "//queng_common:common",
         "//queng_sbe/bindings:sbe_bindings",

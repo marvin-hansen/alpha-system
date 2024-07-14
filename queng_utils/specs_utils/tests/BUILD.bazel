@@ -12,8 +12,8 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Test target
-        "//:specs_utils",
+        "//alias:specs_utils",
         # Internal dependencies
-        "//:common",
+        "//alias:common",
     ],
 )

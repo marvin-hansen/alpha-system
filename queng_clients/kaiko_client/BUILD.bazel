@@ -10,7 +10,7 @@ rust_library(
     visibility = ["//visibility:public"],
     deps = [
         # Internal crates
-        "//:common",
+        "//alias:common",
         # External crates
         "@crates//:anyhow",
         "@crates//:reqwest",
@@ -41,7 +41,7 @@ rust_test_suite(
         # Crate under test
         ":kaiko_client",
         # Internal crates
-        "//:env_utils",
+        "//alias:env_utils",
         # External crates
         "@crates//:tokio",
     ],
