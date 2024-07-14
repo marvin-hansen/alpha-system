@@ -1,31 +1,31 @@
 load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library")
 
 rust_library(
-    name = "pattern_manager",
+    name = "math_utils",
     srcs = glob([
-        "src/**",
+        "src/*.rs",
     ]),
     crate_root = "src/lib.rs",
+    tags = [
+        "math_utils",
+        "utils",
+    ],
     visibility = ["//visibility:public"],
     deps = [
         # Internal crates
-        "//alias:common",
-        "//alias:math_utils",
-        # External crates
-        "@crates//:rust_decimal",
     ],
 )
 
 rust_doc(
     name = "doc",
-    crate = ":pattern_manager",
+    crate = ":math_utils",
     tags = ["doc"],
     visibility = ["//visibility:public"],
 )
 
 rust_doc_test(
     name = "doc_test",
-    crate = ":pattern_manager",
+    crate = ":math_utils",
     tags = ["doc-test"],
     visibility = ["//visibility:public"],
 )

@@ -276,6 +276,12 @@ alias(
 )
 
 alias(
+    name = "math_utils",
+    actual = "//queng_utils/math_utils:math_utils",
+    visibility = ["//visibility:public"],
+)
+
+alias(
     name = "proto_utils",
     actual = "//queng_utils/proto_utils:proto_utils",
     visibility = ["//visibility:public"],
