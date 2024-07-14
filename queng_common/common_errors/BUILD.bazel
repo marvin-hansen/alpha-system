@@ -1,31 +1,28 @@
 load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library")
 
 rust_library(
-    name = "symbol_manager",
+    name = "common_errors",
     srcs = glob([
-        "src/**",
+        "src/*.rs",
     ]),
     crate_root = "src/lib.rs",
+    tags = ["common", "common_errors"],
     visibility = ["//visibility:public"],
     deps = [
         # Internal crates
-        "//alias:common",
-        "//alias:common_errors",
-        # External crates
-        "@crates//:lru",
     ],
 )
 
 rust_doc(
     name = "doc",
-    crate = ":symbol_manager",
+    crate = ":common_errors",
     tags = ["doc"],
     visibility = ["//visibility:public"],
 )
 
 rust_doc_test(
     name = "doc_test",
-    crate = ":symbol_manager",
+    crate = ":common_errors",
     tags = ["doc-test"],
     visibility = ["//visibility:public"],
 )

@@ -1,20 +1,5 @@
 load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 
-rust_test_suite(
-    name = "errors",
-    srcs = glob([
-        "errors/*_tests.rs",
-    ]),
-    tags = [
-        "common",
-        "unit",
-    ],
-    visibility = ["//visibility:public"],
-    deps = [
-        # Crate to test
-        "//alias:common",
-    ],
-)
 
 rust_test_suite(
     name = "config",

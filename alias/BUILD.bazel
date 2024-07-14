@@ -5,7 +5,13 @@
 
 alias(
     name = "common",
-    actual = "//queng_common:common",
+    actual = "//queng_comm:common",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "common_errors",
+    actual = "//queng_common/common_errors:common_errors",
     visibility = ["//visibility:public"],
 )
 

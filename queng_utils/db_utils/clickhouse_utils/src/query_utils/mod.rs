@@ -2,7 +2,7 @@ pub(crate) mod ddl_utils;
 
 use crate::types::error::QueryError;
 use crate::types::{CountRow, ExistsDBRow, ExistsRow};
-use common::prelude::ValidationError;
+use common_errors::prelude::ValidationError;
 use klickhouse::{Client, KlickhouseError};
 
 /// Sanitizes the provided table name to prevent SQL injection attacks.

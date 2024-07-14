@@ -16,6 +16,7 @@ path = "src/lib.rs"
 [dependencies]
 # Internal crates
 common = {workspace = true}
+common_errors = {workspace = true}
 container_specs = {workspace = true}
 docker_utils = {workspace = true}
 # External crates

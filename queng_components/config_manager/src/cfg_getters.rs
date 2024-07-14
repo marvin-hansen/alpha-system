@@ -1,8 +1,8 @@
 use crate::CfgManager;
 use common::prelude::{
-    ClickHouseConfig, EnvironmentType, ExchangeID, InitError, ServiceConfig, ServiceID,
-    SurrealDBConfig,
+    ClickHouseConfig, EnvironmentType, ExchangeID, ServiceConfig, ServiceID, SurrealDBConfig,
 };
+use common_errors::prelude::InitError;
 
 impl<'l> CfgManager<'l> {
     pub fn get_svc_id(&self) -> ServiceID {

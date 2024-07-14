@@ -1,4 +1,4 @@
-use common::prelude::LookupError;
+use common_errors::prelude::LookupError;
 use std::sync::{Arc, RwLock};
 use tonic::{Request, Response, Status};
 

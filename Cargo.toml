@@ -8,7 +8,8 @@ members = [
     "queng_clients/kaiko_client",
     "queng_clients/rest_client",
     "queng_clients/mddb_client",
-    "queng_common",
+    "queng_comm",
+    "queng_common/common_errors",
     "queng_components/config_manager",
     "queng_components/ctx_manager",
     "queng_components/db_components/db_query_manager",
@@ -68,7 +69,6 @@ authors = ["Marvin Hansen <marvin.hansen@gmail.com>"]
 # Internal Aliases
 # ==============
 #
-common = { path = "queng_common" }
 # Clients
 binance_client = { path = "queng_clients/binance_client" }
 dbgw_client = { path = "queng_clients/dbgw_client" }
@@ -76,6 +76,9 @@ ims_data_client = { path = "queng_clients/ims_data_client" }
 kaiko_client = { path = "queng_clients/kaiko_client" }
 rest_client = { path = "queng_clients/rest_client" }
 mddb_client = { path = "queng_clients/mddb_client" }
+# Common
+common = { path = "queng_comm" }
+common_errors = { path = "queng_common/common_errors"}
 # Components
 config_manager = { path = "queng_components/config_manager" }
 ctx_manager = { path = "queng_components/ctx_manager" }

@@ -3,7 +3,7 @@ mod lookup_exchange_name;
 mod lookup_symbol;
 mod lookup_symbol_table;
 
-use common::prelude::InitError;
+use common_errors::prelude::InitError;
 use lru::LruCache;
 use std::collections::HashMap;
 use std::num::NonZeroUsize;

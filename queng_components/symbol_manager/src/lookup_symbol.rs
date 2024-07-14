@@ -1,5 +1,5 @@
 use crate::SymbolManager;
-use common::prelude::LookupError;
+use common_errors::prelude::LookupError;
 
 impl SymbolManager {
     /// Retrieves the symbol string for the given symbol ID.

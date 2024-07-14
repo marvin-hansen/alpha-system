@@ -1,4 +1,4 @@
-use common::prelude::MessageProcessingError;
+use common_errors::prelude::MessageProcessingError;
 
 #[test]
 fn test_new() {

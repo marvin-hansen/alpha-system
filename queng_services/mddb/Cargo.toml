@@ -19,6 +19,7 @@ mddb_specs = { workspace = true }
 mimalloc = {workspace = true}
 # Internal crates
 common = {workspace = true}
+common_errors = {workspace = true}
 config_manager = {workspace = true}
 ctx_manager = {workspace = true}
 dns_manager = {workspace = true}

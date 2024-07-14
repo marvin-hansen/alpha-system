@@ -1,5 +1,5 @@
 use crate::SymbolManager;
-use common::prelude::LookupError;
+use common_errors::prelude::LookupError;
 
 impl SymbolManager {
     /// Looks up the name of an exchange by its ID.
