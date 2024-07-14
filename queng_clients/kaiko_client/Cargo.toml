@@ -16,9 +16,7 @@ path = "src/lib.rs"
 [dependencies]
 # Internal crates
 common = {workspace = true}
-rest_client = {workspace = true}
 # External crates
-anyhow = { workspace = true }
 reqwest = { workspace = true }
 serde_json = { workspace = true }
 tokio = { workspace = true }

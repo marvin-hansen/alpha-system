@@ -3,7 +3,7 @@ use crate::EnvUtil;
 use common::prelude::ContainerConfig;
 use docker_utils::error::DockerError;
 use docker_utils::DockerUtil;
-use kaiko_utils::{KaikoUtil, KaikoUtilError};
+use kaiko_utils::prelude::{KaikoUtil, KaikoUtilError};
 
 impl EnvUtil {
     pub(super) fn init_docker_util(dbg: bool) -> Result<DockerUtil, DockerError> {

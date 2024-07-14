@@ -1,9 +1,9 @@
+use crate::error::KaikoUtilError;
 use kaiko_client::KaikoClient;
 
 mod error;
 mod getters;
-
-pub use crate::error::KaikoUtilError;
+pub mod prelude;
 
 // Co-located API proxy speeds up data download.
 const API_PROXY_URL: &str = "http://localhost:7777/";

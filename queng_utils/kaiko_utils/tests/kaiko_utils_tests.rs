@@ -1,6 +1,5 @@
 use env_utils::EnvUtil;
-use kaiko_utils::KaikoUtil;
-use kaiko_utils::KaikoUtilError;
+use kaiko_utils::prelude::{KaikoUtil, KaikoUtilError};
 use std::env;
 
 // Starts a kaiko api proxy on localhost port 7777

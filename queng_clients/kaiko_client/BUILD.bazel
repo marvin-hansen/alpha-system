@@ -12,7 +12,6 @@ rust_library(
         # Internal crates
         "//alias:common",
         # External crates
-        "@crates//:anyhow",
         "@crates//:reqwest",
         "@crates//:serde_json",
     ],
