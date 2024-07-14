@@ -1,5 +1,5 @@
 use crate::db::metadata::{Metadata, ASSETS_TABLE, DB_NAME};
-use crate::types::error::ClickHouseUtilError;
+use crate::error::ClickHouseUtilError;
 use common_metadata::prelude::{AssetMetadata, MetaAsset};
 
 impl Metadata {

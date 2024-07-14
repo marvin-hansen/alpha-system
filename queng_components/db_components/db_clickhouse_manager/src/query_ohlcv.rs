@@ -1,11 +1,10 @@
 use crate::types::OHLCVRow;
-use crate::QueryDBManager;
+use crate::ClickhouseDBManager;
 use crate::FN_NAME;
-use clickhouse_utils::query_utils;
-use clickhouse_utils::types::error::QueryError;
+use clickhouse_utils::prelude::{query_utils, ClickHouseQueryError};
 use common_data_bar::prelude::{OHLCVBar, TimeResolution};
 
-impl QueryDBManager {
+impl ClickhouseDBManager {
     /// Retrieves all OHLCV data bars for the given symbol table and time resolution.
     ///
     /// # Parameters
@@ -36,7 +35,7 @@ impl QueryDBManager {
         symbol_id: u16,
         symbol_table: &str,
         time_resolution: &TimeResolution,
-    ) -> Result<Vec<OHLCVBar>, QueryError> {
+    ) -> Result<Vec<OHLCVBar>, ClickHouseQueryError> {
         // Sanitize table name input to prevent SQL injection.
         let sanitized_name =
             query_utils::sanitize_table_name(symbol_table).expect("Failed to sanitize table name");

@@ -96,8 +96,8 @@ alias(
 )
 
 alias(
-    name = "db_query_manager",
-    actual = "//queng_components/db_components/db_query_manager",
+    name = "db_clickhouse_manager",
+    actual = "//queng_components/db_components/db_clickhouse_manager",
     visibility = ["//visibility:public"],
 )
 

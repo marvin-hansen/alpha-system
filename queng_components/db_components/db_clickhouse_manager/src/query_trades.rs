@@ -1,10 +1,9 @@
 use crate::types::TradeRow;
-use crate::{QueryDBManager, FN_NAME};
-use clickhouse_utils::query_utils::sanitize_table_name;
-use clickhouse_utils::types::error::QueryError;
+use crate::{ClickhouseDBManager, FN_NAME};
+use clickhouse_utils::prelude::{query_utils, ClickHouseQueryError};
 use common_data_bar::prelude::TradeBar;
 
-impl QueryDBManager {
+impl ClickhouseDBManager {
     /// Retrieves all trade bars for the given symbol table from the database.
     ///
     /// # Arguments
@@ -30,9 +29,9 @@ impl QueryDBManager {
         &mut self,
         symbol_id: u16,
         symbol_table: &str,
-    ) -> Result<Vec<TradeBar>, QueryError> {
+    ) -> Result<Vec<TradeBar>, ClickHouseQueryError> {
         // Sanitize table name input to prevent SQL injection.
-        let sanitized_name = match sanitize_table_name(symbol_table) {
+        let sanitized_name = match query_utils::sanitize_table_name(symbol_table) {
             Ok(name) => name,
             Err(e) => return Err(e),
         };

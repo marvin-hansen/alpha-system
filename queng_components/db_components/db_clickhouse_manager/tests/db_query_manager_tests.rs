@@ -1,6 +1,6 @@
 use common_config::prelude::ClickHouseConfig;
 use common_data_bar::prelude::TimeResolution;
-use db_query_manager::QueryDBManager;
+use db_clickhouse_manager::ClickhouseDBManager;
 use futures::StreamExt;
 use std::str::FromStr;
 
@@ -11,7 +11,7 @@ fn get_local_db_config() -> ClickHouseConfig {
 #[tokio::test]
 async fn test_get_all_symbol_ids() {
     let db_config = get_local_db_config();
-    let mut manager = QueryDBManager::new(db_config)
+    let mut manager = ClickhouseDBManager::new(db_config)
         .await
         .expect("Failed to create db connection");
 
@@ -41,7 +41,7 @@ async fn test_get_all_symbol_ids() {
 #[tokio::test]
 async fn test_get_all_trades() {
     let db_config = get_local_db_config();
-    let mut manager = QueryDBManager::new(db_config)
+    let mut manager = ClickhouseDBManager::new(db_config)
         .await
         .expect("Failed to create db connection");
 
@@ -60,7 +60,7 @@ async fn test_get_all_trades() {
 #[tokio::test]
 async fn test_stream_trades() {
     let db_config = get_local_db_config();
-    let manager = QueryDBManager::new(db_config)
+    let manager = ClickhouseDBManager::new(db_config)
         .await
         .expect("Failed to create db connection");
 
@@ -79,7 +79,7 @@ async fn test_stream_trades() {
 #[tokio::test]
 async fn test_get_all_ohlcv_bars() {
     let db_config = get_local_db_config();
-    let mut manager = QueryDBManager::new(db_config)
+    let mut manager = ClickhouseDBManager::new(db_config)
         .await
         .expect("Failed to create db connection");
 

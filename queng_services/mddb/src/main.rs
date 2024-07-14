@@ -2,7 +2,7 @@ use crate::service::MDMServer;
 use common_config::prelude::ServiceID;
 use config_manager::CfgManager;
 use ctx_manager::CtxManager;
-use db_query_manager::QueryDBManager;
+use db_clickhouse_manager::ClickhouseDBManager;
 use dns_manager::DnsManager;
 use mimalloc::MiMalloc;
 use proto_bindings::proto::mdm_service_server::MdmServiceServer;
@@ -72,7 +72,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     // println!("[MDDB]: Create a new QueryDBManager instance.");
     let db_config = cfg_manager.clickhouse_db_metadata_config().to_owned();
-    let mut q_manager = QueryDBManager::new(db_config)
+    let mut q_manager = ClickhouseDBManager::new(db_config)
         .await
         .expect("[MDDB]/main: Failed to create QueryDBManager instance.");
 

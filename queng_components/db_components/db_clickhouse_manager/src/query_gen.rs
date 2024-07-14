@@ -1,6 +1,6 @@
 use common_data_bar::prelude::TimeResolution;
 
-impl crate::QueryDBManager {
+impl crate::ClickhouseDBManager {
     /// Builds a SQL query to get all symbol IDs and symbols from a symbol table.
     ///
     /// # Arguments

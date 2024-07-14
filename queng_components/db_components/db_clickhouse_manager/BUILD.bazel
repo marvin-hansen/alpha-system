@@ -1,7 +1,7 @@
 load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library", "rust_test_suite")
 
 rust_library(
-    name = "db_query_manager",
+    name = "db_clickhouse_manager",
     srcs = glob([
         "src/*.rs",
     ]),
@@ -24,14 +24,14 @@ rust_library(
 
 rust_doc(
     name = "doc",
-    crate = ":db_query_manager",
+    crate = ":db_clickhouse_manager",
     tags = ["doc"],
     visibility = ["//visibility:public"],
 )
 
 rust_doc_test(
     name = "doc_test",
-    crate = ":db_query_manager",
+    crate = ":db_clickhouse_manager",
     tags = ["doc-test"],
     visibility = ["//visibility:public"],
 )

@@ -12,11 +12,11 @@ use std::fmt::Error;
 
 const FN_NAME: &str = "[QueryDBManager]:";
 
-pub struct QueryDBManager {
+pub struct ClickhouseDBManager {
     client: Client,
 }
 
-impl QueryDBManager {
+impl ClickhouseDBManager {
     /// Creates a new QueryDBManager instance.
     ///
     /// # Arguments
@@ -42,7 +42,7 @@ impl QueryDBManager {
     }
 }
 
-impl QueryDBManager {
+impl ClickhouseDBManager {
     pub async fn is_open(&self) -> bool {
         !self.client.is_closed()
     }

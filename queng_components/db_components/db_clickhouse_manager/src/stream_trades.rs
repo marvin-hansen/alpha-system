@@ -1,11 +1,11 @@
 use crate::types::TradeRow;
-use crate::{QueryDBManager, FN_NAME};
+use crate::{ClickhouseDBManager, FN_NAME};
 use clickhouse_utils::query_utils::sanitize_table_name;
 use futures::stream::BoxStream;
 use futures::StreamExt;
 use klickhouse::KlickhouseError;
 
-impl QueryDBManager {
+impl ClickhouseDBManager {
     /// Stream trade bars for the given symbol from the database.
     ///
     /// This returns a stream of `TradeBar` structs for the specified `symbol_id`.

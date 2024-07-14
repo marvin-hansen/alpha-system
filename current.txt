@@ -1,1 +1,1 @@
-//queng_utils/clickhouse_utils:clickhouse_utils
+//queng_utils/db_utils/surreal_utils

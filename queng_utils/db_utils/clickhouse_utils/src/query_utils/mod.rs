@@ -1,6 +1,6 @@
 pub(crate) mod ddl_utils;
 
-use crate::types::error::QueryError;
+use crate::error::ClickHouseQueryError;
 use crate::types::{CountRow, ExistsDBRow, ExistsRow};
 use common_errors::prelude::ValidationError;
 use klickhouse::{Client, KlickhouseError};
@@ -30,29 +30,26 @@ use klickhouse::{Client, KlickhouseError};
 /// - Length less than 64 characters
 ///
 /// If valid, it returns the original `table_name`.
-pub fn sanitize_table_name(table_name: &str) -> Result<&str, QueryError> {
+pub fn sanitize_table_name(table_name: &str) -> Result<&str, ClickHouseQueryError> {
     // check for empty name
     if table_name.is_empty() {
-        return Err(QueryError::EmptyTableName(ValidationError::new(format!(
-            "Table: {}",
-            table_name
-        ))));
+        return Err(ClickHouseQueryError::EmptyTableName(ValidationError::new(
+            format!("Table: {}", table_name),
+        )));
     }
 
     // check for invalid characters
     if table_name.chars().any(|c| !c.is_alphanumeric() && c != '_') {
-        return Err(QueryError::InvalidTableName(ValidationError::new(format!(
-            "Table: {}",
-            table_name
-        ))));
+        return Err(ClickHouseQueryError::InvalidTableName(
+            ValidationError::new(format!("Table: {}", table_name)),
+        ));
     }
 
     // check for length
     if table_name.len() > 64 {
-        return Err(QueryError::TableNameTooLong(ValidationError::new(format!(
-            "Table: {}",
-            table_name
-        ))));
+        return Err(ClickHouseQueryError::TableNameTooLong(
+            ValidationError::new(format!("Table: {}", table_name)),
+        ));
     }
 
     Ok(table_name)
@@ -75,12 +72,15 @@ pub fn sanitize_table_name(table_name: &str) -> Result<&str, QueryError> {
 ///
 /// Returns a `QueryError` if there is an error executing the query.
 ///
-pub(crate) async fn execute_query(client: &Client, query: &str) -> Result<(), QueryError> {
+pub(crate) async fn execute_query(
+    client: &Client,
+    query: &str,
+) -> Result<(), ClickHouseQueryError> {
     //
     let res = client.execute(query).await;
     match res {
         Ok(_) => Ok(()),
-        Err(e) => Err(QueryError::QueryFailed(e.to_string())),
+        Err(e) => Err(ClickHouseQueryError::QueryFailed(e.to_string())),
     }
 }
 
@@ -101,17 +101,23 @@ pub(crate) async fn execute_query(client: &Client, query: &str) -> Result<(), Qu
 ///
 /// Returns a `QueryError` if there is an error executing the query.
 ///
-pub(crate) async fn verify_table_exists(client: &Client, query: &str) -> Result<bool, QueryError> {
+pub(crate) async fn verify_table_exists(
+    client: &Client,
+    query: &str,
+) -> Result<bool, ClickHouseQueryError> {
     //
     let res: Result<ExistsRow, KlickhouseError> = client.query_one(query).await;
 
     match res {
         Ok(res) => Ok(res.exists()),
-        Err(e) => Err(QueryError::QueryFailed(e.to_string())),
+        Err(e) => Err(ClickHouseQueryError::QueryFailed(e.to_string())),
     }
 }
 
-pub(crate) async fn verify_db_exists(client: &Client, db_name: &str) -> Result<bool, QueryError> {
+pub(crate) async fn verify_db_exists(
+    client: &Client,
+    db_name: &str,
+) -> Result<bool, ClickHouseQueryError> {
     let query = format!("show databases like '{db_name}'");
 
     let res: Result<ExistsDBRow, KlickhouseError> = client.query_one(query).await;
@@ -144,7 +150,10 @@ pub(crate) async fn verify_db_exists(client: &Client, db_name: &str) -> Result<b
 ///
 /// Returns a `QueryError` if there is an error executing the query.
 ///
-pub(crate) async fn count_rows(client: &Client, table_name: &str) -> Result<u64, QueryError> {
+pub(crate) async fn count_rows(
+    client: &Client,
+    table_name: &str,
+) -> Result<u64, ClickHouseQueryError> {
     //
     let count_query = format!("SELECT count(*) FROM {table_name}");
 
@@ -153,6 +162,6 @@ pub(crate) async fn count_rows(client: &Client, table_name: &str) -> Result<u64,
 
     match number_of_rows {
         Ok(number_of_rows) => Ok(number_of_rows.count()),
-        Err(e) => Err(QueryError::QueryFailed(e.to_string())),
+        Err(e) => Err(ClickHouseQueryError::QueryFailed(e.to_string())),
     }
 }

@@ -1,5 +1,5 @@
 use crate::db::metadata::{Metadata, DB_NAME, EXCHANGES_TABLE};
-use crate::types::error::ClickHouseUtilError;
+use crate::error::ClickHouseUtilError;
 
 impl Metadata {
     /// Counts the number of exchanges in the exchanges table of the metadata database.

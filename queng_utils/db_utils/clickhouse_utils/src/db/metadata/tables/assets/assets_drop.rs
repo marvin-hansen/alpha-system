@@ -1,5 +1,5 @@
 use crate::db::metadata::{Metadata, ASSETS_TABLE};
-use crate::types::error::ClickHouseUtilError;
+use crate::error::ClickHouseUtilError;
 
 impl Metadata {
     /// Drops the assets table in the metadata database, if it exists.

@@ -1,5 +1,5 @@
 use crate::db::metadata::{Metadata, ASSETS_TABLE, DB_NAME};
-use crate::types::error::ClickHouseUtilError;
+use crate::error::ClickHouseUtilError;
 
 impl Metadata {
     /// Counts the number of assets in the assets table of the metadata database.

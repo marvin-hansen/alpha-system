@@ -4,7 +4,7 @@ use std::fmt;
 
 /// Custom error type for DB query errors
 #[derive(Debug)]
-pub enum QueryError {
+pub enum ClickHouseQueryError {
     QueryFailed(String),
     InvalidTableName(ValidationError),
     EmptyTableName(ValidationError),
@@ -12,24 +12,24 @@ pub enum QueryError {
     TableDoesNotExist(String, String),
 }
 
-impl Error for QueryError {}
+impl Error for ClickHouseQueryError {}
 
-impl fmt::Display for QueryError {
+impl fmt::Display for ClickHouseQueryError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            QueryError::QueryFailed(e) =>
+            ClickHouseQueryError::QueryFailed(e) =>
                 write!(f, "Query to DB failed: {e}"),
 
-            QueryError::InvalidTableName(e) =>
+            ClickHouseQueryError::InvalidTableName(e) =>
                 write!(f, "Invalid table name provided: Only use alphanumeric characters and underscores as table name. Error: {e}"),
 
-            QueryError::EmptyTableName(e) =>
+            ClickHouseQueryError::EmptyTableName(e) =>
                 write!(f, "Empty table name provided: Table must have a name. Error: {e}"),
 
-            QueryError::TableNameTooLong(e) =>
+            ClickHouseQueryError::TableNameTooLong(e) =>
                 write!(f, "Table name exceeds maximum length: Table can only be 63 characters long. Error: {e}"),
 
-            QueryError::TableDoesNotExist(table_name, e) =>
+            ClickHouseQueryError::TableDoesNotExist(table_name, e) =>
                 write!(f, "Table does not exist: Table {table_name} does not exist. Error: {e}"),
         }
     }

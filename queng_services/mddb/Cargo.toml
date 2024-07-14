@@ -23,7 +23,7 @@ common_errors = {workspace = true}
 config_manager = {workspace = true}
 ctx_manager = {workspace = true}
 dns_manager = {workspace = true}
-db_query_manager = {workspace = true}
+db_clickhouse_manager = {workspace = true}
 proto_bindings = {workspace = true}
 service_utils = {workspace = true}
 smdb_provider = {workspace = true}

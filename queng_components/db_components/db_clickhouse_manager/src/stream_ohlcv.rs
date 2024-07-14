@@ -1,12 +1,12 @@
 use crate::types::OHLCVRow;
-use crate::{QueryDBManager, FN_NAME};
+use crate::{ClickhouseDBManager, FN_NAME};
 use clickhouse_utils::query_utils::sanitize_table_name;
 use common_data_bar::prelude::TimeResolution;
 use futures::stream::BoxStream;
 use futures::StreamExt;
 use klickhouse::KlickhouseError;
 
-impl QueryDBManager {
+impl ClickhouseDBManager {
     pub async fn stream_ohlcv<'a>(
         &'a self,
         symbol_table: &str,

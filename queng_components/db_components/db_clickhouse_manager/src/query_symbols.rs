@@ -1,9 +1,8 @@
 use crate::types::SymbolRow;
-use crate::{QueryDBManager, FN_NAME};
-use clickhouse_utils::query_utils::sanitize_table_name;
-use clickhouse_utils::types::error::QueryError;
+use crate::{ClickhouseDBManager, FN_NAME};
+use clickhouse_utils::prelude::{query_utils, ClickHouseQueryError};
 
-impl QueryDBManager {
+impl ClickhouseDBManager {
     /// Retrieves all symbols and their IDs from the given symbol table.
     ///
     /// # Arguments
@@ -34,9 +33,9 @@ impl QueryDBManager {
     pub async fn get_all_symbols_with_ids(
         &mut self,
         symbol_table: &str,
-    ) -> Result<Vec<(u16, String)>, QueryError> {
+    ) -> Result<Vec<(u16, String)>, ClickHouseQueryError> {
         // Sanitize table name input to prevent SQL injection.
-        let sanitized_name = match sanitize_table_name(symbol_table) {
+        let sanitized_name = match query_utils::sanitize_table_name(symbol_table) {
             Ok(name) => name,
             Err(e) => return Err(e),
         };

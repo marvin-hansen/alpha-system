@@ -1,5 +1,5 @@
 use crate::db::metadata::{Metadata, DB_NAME, INSTRUMENTS_TABLE};
-use crate::types::error::ClickHouseUtilError;
+use crate::error::ClickHouseUtilError;
 
 impl Metadata {
     /// Counts the number of instruments in the instruments table of the metadata database.
