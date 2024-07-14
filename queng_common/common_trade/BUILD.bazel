@@ -1,32 +1,33 @@
 load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library")
 
 rust_library(
-    name = "pattern_manager",
+    name = "common_trade",
     srcs = glob([
         "src/**",
     ]),
     crate_root = "src/lib.rs",
+    tags = [
+        "common",
+        "common_trade",
+    ],
     visibility = ["//visibility:public"],
     deps = [
-        # Internal crates
-        "//alias:common",
-        "//alias:common_trade",
-        "//alias:math_utils",
         # External crates
-        "@crates//:rust_decimal",
+        "@crates//:serde",
+        "@crates//:serde_json",
     ],
 )
 
 rust_doc(
     name = "doc",
-    crate = ":pattern_manager",
+    crate = ":common_trade",
     tags = ["doc"],
     visibility = ["//visibility:public"],
 )
 
 rust_doc_test(
     name = "doc_test",
-    crate = ":pattern_manager",
+    crate = ":common_trade",
     tags = ["doc-test"],
     visibility = ["//visibility:public"],
 )

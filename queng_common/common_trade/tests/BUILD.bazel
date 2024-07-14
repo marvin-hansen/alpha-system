@@ -1,20 +1,17 @@
 load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 
 rust_test_suite(
-    name = "pattern_manager_tests",
+    name = "trade",
     srcs = glob([
-        "pattern_manager_tests.rs",
+        "trade_types/*_tests.rs",
     ]),
     tags = [
-        "components",
-        "pattern_manager",
+        "common",
         "unit",
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "//alias:pattern_manager",
-        # Internal crates
-        "//alias:common",
+        # Crate to test
         "//alias:common_trade",
     ],
 )

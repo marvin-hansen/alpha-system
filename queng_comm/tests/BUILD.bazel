@@ -15,19 +15,3 @@ rust_test_suite(
         "//alias:common",
     ],
 )
-
-rust_test_suite(
-    name = "trade",
-    srcs = glob([
-        "types/trade_types/*_tests.rs",
-    ]),
-    tags = [
-        "common",
-        "unit",
-    ],
-    visibility = ["//visibility:public"],
-    deps = [
-        # Crate to test
-        "//alias:common",
-    ],
-)

@@ -16,7 +16,7 @@ path = "src/lib.rs"
 [dependencies]
 # Internal crates
 common = { workspace = true }
+common_trade = { workspace = true }
 math_utils = { workspace = true }
 # External crates
 rust_decimal = { workspace = true }
-

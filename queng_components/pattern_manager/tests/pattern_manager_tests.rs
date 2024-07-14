@@ -1,4 +1,5 @@
-use common::prelude::{OHLCVBar, PatternType};
+use common::prelude::OHLCVBar;
+use common_trade::prelude::PatternType;
 use pattern_manager::PatternManager;
 
 #[test]

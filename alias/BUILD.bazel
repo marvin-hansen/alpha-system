@@ -33,6 +33,12 @@ alias(
     visibility = ["//visibility:public"],
 )
 
+alias(
+    name = "common_trade",
+    actual = "//queng_common/common_trade",
+    visibility = ["//visibility:public"],
+)
+
 ###############################################################################
 # Clients
 ###############################################################################

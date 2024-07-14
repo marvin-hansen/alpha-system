@@ -13,6 +13,7 @@ members = [
     "queng_common/common_errors",
     "queng_common/common_exchange",
     "queng_common/common_metadata",
+    "queng_common/common_trade",
     "queng_components/config_manager",
     "queng_components/ctx_manager",
     "queng_components/db_components/db_query_manager",
@@ -84,6 +85,7 @@ common_config = { path = "queng_common/common_config"}
 common_errors = { path = "queng_common/common_errors"}
 common_exchange = { path = "queng_common/common_exchange"}
 common_metadata = { path = "queng_common/common_metadata"}
+common_trade = { path = "queng_common/common_trade"}
 # Components
 config_manager = { path = "queng_components/config_manager" }
 ctx_manager = { path = "queng_components/ctx_manager" }
