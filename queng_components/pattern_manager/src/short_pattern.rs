@@ -4,7 +4,7 @@
 
 use crate::abstract_trait::PatternTrait;
 use crate::fields::{ONE_HUNDRED, POINT_FIVE};
-use common::prelude::OHLCVBar;
+use common_data_bar::prelude::OHLCVBar;
 use rust_decimal::prelude::ToPrimitive;
 
 const SIZE: usize = 9;

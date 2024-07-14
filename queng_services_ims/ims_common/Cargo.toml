@@ -15,6 +15,6 @@ path = "src/lib.rs"
 
 [dependencies]
 # Internal crates
-common = {workspace = true}
+common_data_bar = {workspace = true}
 # External crates
 serde = {workspace = true}

@@ -4,7 +4,7 @@
 
 use crate::abstract_trait::PatternTrait;
 use crate::fields::*;
-use common::prelude::OHLCVBar;
+use common_data_bar::prelude::OHLCVBar;
 use math_utils::arithmetic;
 use rust_decimal::prelude::ToPrimitive;
 

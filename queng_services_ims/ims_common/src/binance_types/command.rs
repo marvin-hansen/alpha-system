@@ -1,4 +1,4 @@
-use common::prelude::DataType;
+use common_data_bar::prelude::DataType;
 
 /// Represents a command for data retrieval from Binance.
 ///

@@ -1,5 +1,5 @@
 use crate::errors::{SbeDecodeError, SbeEncodeError};
-use common::prelude::OHLCVBar;
+use common_data_bar::prelude::OHLCVBar;
 use serde::{Deserialize, Serialize};
 
 pub mod sbe_decoder;

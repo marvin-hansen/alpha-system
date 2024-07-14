@@ -3,7 +3,7 @@ use crate::QueryDBManager;
 use crate::FN_NAME;
 use clickhouse_utils::query_utils;
 use clickhouse_utils::types::error::QueryError;
-use common::prelude::{OHLCVBar, TimeResolution};
+use common_data_bar::prelude::{OHLCVBar, TimeResolution};
 
 impl QueryDBManager {
     /// Retrieves all OHLCV data bars for the given symbol table and time resolution.

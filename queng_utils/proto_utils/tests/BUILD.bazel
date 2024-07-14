@@ -13,7 +13,7 @@ rust_test_suite(
         # Crate under test
         "//alias:proto_utils",
         # Internal crates
-        "//alias:common",
+
         "//alias:common_config",
         "//alias:common_exchange",
         "//alias:rust_proto",

@@ -1,4 +1,4 @@
-use crate::types::data_types::trade_bar::TradeBar;
+use crate::prelude::TradeBar;
 
 impl std::fmt::Display for TradeBar {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {

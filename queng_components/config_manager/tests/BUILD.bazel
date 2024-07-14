@@ -15,7 +15,6 @@ rust_test_suite(
         # Crate to test
         "//alias:config_manager",
         # Internal crates
-        "//alias:common",
         "//alias:common_config",
         "//alias:ctx_manager",
         "//alias:dns_manager",

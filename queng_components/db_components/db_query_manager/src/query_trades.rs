@@ -2,7 +2,7 @@ use crate::types::TradeRow;
 use crate::{QueryDBManager, FN_NAME};
 use clickhouse_utils::query_utils::sanitize_table_name;
 use clickhouse_utils::types::error::QueryError;
-use common::prelude::TradeBar;
+use common_data_bar::prelude::TradeBar;
 
 impl QueryDBManager {
     /// Retrieves all trade bars for the given symbol table from the database.

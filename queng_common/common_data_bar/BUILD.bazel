@@ -1,15 +1,15 @@
 load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library")
 
 rust_library(
-    name = "common",
+    name = "common_data_bar",
     srcs = glob([
         "src/**",
     ]),
     crate_root = "src/lib.rs",
-    proc_macro_deps = [
-        "@crates//:rust_decimal_macros",
+    tags = [
+        "common",
+        "common_data_bar",
     ],
-    tags = ["common"],
     visibility = ["//visibility:public"],
     deps = [
         # External crates
@@ -22,14 +22,14 @@ rust_library(
 
 rust_doc(
     name = "doc",
-    crate = ":common",
+    crate = ":common_data_bar",
     tags = ["doc"],
     visibility = ["//visibility:public"],
 )
 
 rust_doc_test(
     name = "doc_test",
-    crate = ":common",
+    crate = ":common_data_bar",
     tags = ["doc-test"],
     visibility = ["//visibility:public"],
 )

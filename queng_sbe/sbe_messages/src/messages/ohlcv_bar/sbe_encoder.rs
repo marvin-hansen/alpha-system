@@ -1,5 +1,5 @@
 use crate::prelude::SbeEncodeError;
-use common::prelude::OHLCVBar;
+use common_data_bar::prelude::OHLCVBar;
 use rust_decimal::prelude::ToPrimitive;
 
 use sbe_bindings::{

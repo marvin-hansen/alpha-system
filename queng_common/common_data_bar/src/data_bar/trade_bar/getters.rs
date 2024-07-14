@@ -1,4 +1,4 @@
-use crate::types::data_types::trade_bar::TradeBar;
+use crate::prelude::TradeBar;
 use chrono::{DateTime, Utc};
 use rust_decimal::Decimal;
 

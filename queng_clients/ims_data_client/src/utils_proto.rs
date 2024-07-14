@@ -1,4 +1,4 @@
-use common::prelude::DataType;
+use common_data_bar::prelude::DataType;
 use common_exchange::prelude::ExchangeID;
 use proto_bindings::proto::{ProtoStartDataRequest, ProtoStopAllDataRequest, ProtoStopDataRequest};
 

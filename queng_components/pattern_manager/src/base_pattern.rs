@@ -2,7 +2,7 @@ use crate::abstract_trait::PatternTrait;
 use crate::fields::{
     ONE, ONE_HUNDRED, ONE_POINT_FIVE, POINT_FIVE, POINT_SEVEN_FIVE, POINT_TWO, THREE,
 };
-use common::prelude::OHLCVBar;
+use common_data_bar::prelude::OHLCVBar;
 use math_utils::arithmetic;
 use rust_decimal::prelude::ToPrimitive;
 

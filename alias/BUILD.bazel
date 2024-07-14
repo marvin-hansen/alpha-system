@@ -4,14 +4,14 @@
 ###############################################################################
 
 alias(
-    name = "common",
-    actual = "//queng_comm:common",
+    name = "common_config",
+    actual = "//queng_common/common_config",
     visibility = ["//visibility:public"],
 )
 
 alias(
-    name = "common_config",
-    actual = "//queng_common/common_config",
+    name = "common_data_bar",
+    actual = "//queng_common/common_data_bar",
     visibility = ["//visibility:public"],
 )
 

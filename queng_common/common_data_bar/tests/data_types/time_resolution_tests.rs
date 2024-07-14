@@ -1,4 +1,4 @@
-use common::prelude::TimeResolution;
+use common_data_bar::prelude::TimeResolution;
 use std::str::FromStr;
 
 #[test]

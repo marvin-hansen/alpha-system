@@ -1,4 +1,4 @@
-use common::prelude::OHLCVBar;
+use common_data_bar::prelude::OHLCVBar;
 use sbe_messages::prelude::SbeOHLCVBar;
 
 #[test]

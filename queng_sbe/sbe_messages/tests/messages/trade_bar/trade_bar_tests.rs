@@ -1,5 +1,5 @@
 use chrono::{DateTime, Utc};
-use common::prelude::TradeBar;
+use common_data_bar::prelude::TradeBar;
 use rust_decimal::Decimal;
 use sbe_messages::prelude::SbeTradeBar;
 

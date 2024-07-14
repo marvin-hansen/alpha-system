@@ -23,7 +23,7 @@ rust_test_suite(
         # Crate under test
         "//alias:env_utils",
         # Internal crates
-        "//alias:common",
+
         "//alias:container_specs",
         "//alias:clickhouse_utils",
         "//alias:docker_utils",
@@ -57,7 +57,7 @@ rust_test_suite(
         # Crate under test
         "//alias:env_utils",
         # Internal crates
-        "//alias:common",
+
         "//alias:container_specs",
         "//alias:clickhouse_utils",
         "//alias:docker_utils",
@@ -92,7 +92,7 @@ rust_test_suite(
         # Crate under test
         "//alias:env_utils",
         # Internal crates
-        "//alias:common",
+
         "//alias:container_specs",
         "//alias:clickhouse_utils",
         "//alias:docker_utils",
@@ -126,7 +126,7 @@ rust_test_suite(
         # Crate under test
         "//alias:env_utils",
         # Internal crates
-        "//alias:common",
+
         "//alias:container_specs",
         "//alias:clickhouse_utils",
         "//alias:docker_utils",

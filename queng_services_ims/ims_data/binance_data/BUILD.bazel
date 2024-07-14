@@ -32,7 +32,7 @@ rust_binary(
         # Service specs
         "//alias:ims_data_binance_specs",
         # Internal crates
-        "//alias:common",
+        "//alias:common_data_bar",
         "//alias:common_config",
         "//alias:config_manager",
         "//alias:ctx_manager",

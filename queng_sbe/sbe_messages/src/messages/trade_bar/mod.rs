@@ -2,7 +2,7 @@ mod sbe_decode;
 mod sbe_encode;
 
 use crate::errors::{SbeDecodeError, SbeEncodeError};
-use common::prelude::TradeBar;
+use common_data_bar::prelude::TradeBar;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug, Default, Clone, PartialEq)]

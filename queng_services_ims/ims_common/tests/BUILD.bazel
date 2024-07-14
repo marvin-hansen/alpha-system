@@ -1,19 +1,23 @@
 load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 
+
 rust_test_suite(
-    name = "container_specs_tests",
+    name = "ims_common_binance_type_tests",
     srcs = glob([
-        "*_tests.rs",
+        "tests/types/binance_types/*_tests.rs",
     ]),
     tags = [
-        "specs",
+        "binance_types",
+        "ims_common",
         "unit",
     ],
     visibility = ["//visibility:public"],
     deps = [
         # Crate to test
-        "//alias:container_specs",
+        ":common_data_bar",
         # Internal crates
 
+        # External crates
+        "@crates//:serde",
     ],
 )

@@ -78,7 +78,7 @@ rust_test_suite(
         # Crate to test
         "//alias:sbe_messages",
         # Internal crates
-        "//alias:common",
+        "//alias:common_data_bar",
         "//alias:common_exchange",
         "//queng_sbe/bindings:sbe_bindings",
         # External crates
@@ -101,7 +101,6 @@ rust_test_suite(
         # Crate to test
         "//alias:sbe_messages",
         # Internal crates
-        "//alias:common",
         "//queng_sbe/bindings:sbe_bindings",
         # External crates
         "@crates//:rust_decimal",
@@ -123,7 +122,7 @@ rust_test_suite(
         # Crate to test
         "//alias:sbe_messages",
         # Internal crates
-        "//alias:common",
+
         "//queng_sbe/bindings:sbe_bindings",
         # External crates
         "@crates//:rust_decimal",
@@ -145,7 +144,7 @@ rust_test_suite(
         # Crate to test
         "//alias:sbe_messages",
         # Internal crates
-        "//alias:common",
+        "//alias:common_data_bar",
         "//queng_sbe/bindings:sbe_bindings",
         # External crates
         "@crates//:rust_decimal",
@@ -167,7 +166,7 @@ rust_test_suite(
         # Crate to test
         "//alias:sbe_messages",
         # Internal crates
-        "//alias:common",
+        "//alias:common_data_bar",
         "//queng_sbe/bindings:sbe_bindings",
         # External crates
         "@crates//:rust_decimal",

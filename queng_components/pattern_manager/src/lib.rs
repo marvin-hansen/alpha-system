@@ -10,7 +10,7 @@ use crate::extra_pattern::ExtraPattern;
 use crate::long_pattern::LongPattern;
 use crate::short_pattern::ShortPattern;
 use abstract_trait::PatternTrait;
-use common::prelude::OHLCVBar;
+use common_data_bar::prelude::OHLCVBar;
 use common_trade::prelude::PatternType;
 use std::cell::RefCell;
 

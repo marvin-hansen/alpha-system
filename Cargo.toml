@@ -8,9 +8,9 @@ members = [
     "queng_clients/kaiko_client",
     "queng_clients/rest_client",
     "queng_clients/mddb_client",
-    "queng_comm",
     "queng_common/common_config",
     "queng_common/common_errors",
+    "queng_common/common_data_bar",
     "queng_common/common_exchange",
     "queng_common/common_metadata",
     "queng_common/common_trade",
@@ -80,8 +80,8 @@ kaiko_client = { path = "queng_clients/kaiko_client" }
 rest_client = { path = "queng_clients/rest_client" }
 mddb_client = { path = "queng_clients/mddb_client" }
 # Common
-common = { path = "queng_comm" }
 common_config = { path = "queng_common/common_config"}
+common_data_bar = { path = "queng_common/common_data_bar"}
 common_errors = { path = "queng_common/common_errors"}
 common_exchange = { path = "queng_common/common_exchange"}
 common_metadata = { path = "queng_common/common_metadata"}

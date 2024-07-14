@@ -1,5 +1,5 @@
 use crate::prelude::{DataType, MessageType, StartDataMessage};
-use common::prelude::TimeResolution;
+use common_data_bar::prelude::TimeResolution;
 use common_exchange::prelude::ExchangeID;
 
 impl StartDataMessage {

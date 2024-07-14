@@ -15,7 +15,7 @@ path = "src/lib.rs"
 
 [dependencies]
 # Internal crates
-common = { workspace = true }
+common_data_bar = { workspace = true }
 common_config = { workspace = true }
 clickhouse_utils = { workspace = true }
 

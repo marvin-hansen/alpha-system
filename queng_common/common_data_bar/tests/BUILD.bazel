@@ -3,7 +3,7 @@ load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 rust_test_suite(
     name = "data",
     srcs = glob([
-        "types/data_types/*_tests.rs",
+        "data_types/*_tests.rs",
     ]),
     tags = [
         "common",
@@ -12,6 +12,6 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Crate to test
-        "//alias:common",
+        "//alias:common_data_bar",
     ],
 )

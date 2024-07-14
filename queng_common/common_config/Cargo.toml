@@ -9,7 +9,7 @@ authors.workspace = true
 
 
 [lib]
-name = "common_errors"
+name = "common_config"
 path = "src/lib.rs"
 
 

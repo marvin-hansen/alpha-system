@@ -14,7 +14,7 @@ rust_test_suite(
         # Crate to test
         "//alias:db_query_manager",
         # Internal crates
-        "//alias:common",
+        "//alias:common_data_bar",
         "//alias:common_config",
         "//alias:clickhouse_utils",
         # External crates

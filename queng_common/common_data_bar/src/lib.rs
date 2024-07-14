@@ -1,2 +1,2 @@
+mod data_bar;
 pub mod prelude;
-pub mod types;

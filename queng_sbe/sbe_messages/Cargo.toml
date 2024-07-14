@@ -17,7 +17,7 @@ path = "src/lib.rs"
 
 [dependencies]
 # Internal crates
-common = { workspace = true }
+common_data_bar = { workspace = true }
 common_exchange = { workspace = true }
 sbe_bindings = { workspace = true }
 # External crates

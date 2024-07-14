@@ -1,6 +1,6 @@
 use crate::error::ImsDataClientError;
 use crate::{utils_proto, ImsDataClient};
-use common::prelude::DataType;
+use common_data_bar::prelude::DataType;
 use common_exchange::prelude::ExchangeID;
 
 impl ImsDataClient {

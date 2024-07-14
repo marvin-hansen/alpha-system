@@ -1,5 +1,5 @@
 use crate::stream_manager::stream_manager;
-use common::prelude::DataType;
+use common_data_bar::prelude::DataType;
 use ims_common::prelude::BinanceDataCommand;
 use proto_bindings::proto::ims_data_service_server::ImsDataService;
 use proto_bindings::proto::*;
