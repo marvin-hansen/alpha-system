@@ -1,6 +1,6 @@
 use crate::db::specs::{Specs, DB_NAME, SERVICES_TABLE};
 use crate::prelude::ClickHouseUtilError;
-use common::prelude::{Endpoint, MetricConfig, ServiceConfig, ServiceID};
+use common_config::prelude::{Endpoint, MetricConfig, ServiceConfig, ServiceID};
 
 impl Specs {
     /// Asynchronously imports service configurations into the services table in the ClickHouse database.

@@ -2,38 +2,6 @@ load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 
 
 rust_test_suite(
-    name = "config",
-    srcs = glob([
-        "types/config_types/*_tests.rs",
-    ]),
-    tags = [
-        "common",
-        "unit",
-    ],
-    visibility = ["//visibility:public"],
-    deps = [
-        # Crate to test
-        "//alias:common",
-    ],
-)
-
-rust_test_suite(
-    name = "currency",
-    srcs = glob([
-        "types/currency_types/*_tests.rs",
-    ]),
-    tags = [
-        "common",
-        "unit",
-    ],
-    visibility = ["//visibility:public"],
-    deps = [
-        # Crate to test
-        "//alias:common",
-    ],
-)
-
-rust_test_suite(
     name = "data",
     srcs = glob([
         "types/data_types/*_tests.rs",
@@ -62,38 +30,8 @@ rust_test_suite(
     deps = [
         # Crate to test
         "//alias:common",
-    ],
-)
-
-rust_test_suite(
-    name = "file",
-    srcs = glob([
-        "types/file_types/*_tests.rs",
-    ]),
-    tags = [
-        "common",
-        "unit",
-    ],
-    visibility = ["//visibility:public"],
-    deps = [
-        # Crate to test
-        "//alias:common",
-    ],
-)
-
-rust_test_suite(
-    name = "instrument",
-    srcs = glob([
-        "types/instrument_types/*_tests.rs",
-    ]),
-    tags = [
-        "common",
-        "unit",
-    ],
-    visibility = ["//visibility:public"],
-    deps = [
-        # Crate to test
-        "//alias:common",
+        # External crates
+       "@crates//:rust_decimal",
     ],
 )
 
@@ -110,56 +48,6 @@ rust_test_suite(
     deps = [
         # Crate to test
         "//alias:common",
-    ],
-)
-
-rust_test_suite(
-    name = "pattern",
-    srcs = glob([
-        "types/pattern_types/*_tests.rs",
-    ]),
-    tags = [
-        "common",
-        "unit",
-    ],
-    visibility = ["//visibility:public"],
-    deps = [
-        # Crate to test
-        "//alias:common",
-    ],
-)
-
-rust_test_suite(
-    name = "portfolio",
-    srcs = glob([
-        "types/portfolio_types/*_tests.rs",
-    ]),
-    tags = [
-        "common",
-        "unit",
-    ],
-    visibility = ["//visibility:public"],
-    deps = [
-        # Crate to test
-        "//alias:common",
-    ],
-)
-
-rust_test_suite(
-    name = "symbol",
-    srcs = glob([
-        "types/symbol_types/*_tests.rs",
-    ]),
-    tags = [
-        "common",
-        "unit",
-    ],
-    visibility = ["//visibility:public"],
-    deps = [
-        # Crate to test
-        "//alias:common",
-        # External crates
-        "@crates//:rust_decimal",
     ],
 )
 

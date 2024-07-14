@@ -1,8 +1,8 @@
 use crate::utils::get_svc_env_config;
 use crate::{CfgManager, DEFAULT_HOST};
 use cmdb_specs::cmdb_service_config;
-use common::prelude::ServiceID::{CMDB, DBGW, SMDB};
-use common::prelude::{EnvironmentType, ServiceID, SvcEnvConfig};
+use common_config::prelude::ServiceID::{CMDB, DBGW, SMDB};
+use common_config::prelude::{EnvironmentType, ServiceID, SvcEnvConfig};
 use common_errors::prelude::InitError;
 use dbgw_specs::dbgw_service_config;
 use smdb_specs::smdb_service_config;

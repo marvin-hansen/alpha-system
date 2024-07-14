@@ -1,4 +1,4 @@
-use common::prelude::SurrealDBConfig;
+use common_config::prelude::SurrealDBConfig;
 
 pub fn get_cluster_surreal_db_config() -> SurrealDBConfig {
     SurrealDBConfig::new(

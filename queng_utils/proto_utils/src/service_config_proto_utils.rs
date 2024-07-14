@@ -1,6 +1,6 @@
 use crate::endpoint_proto_utils::{endpoint_from_proto, endpoint_to_proto};
 use crate::metric_config_proto_utils::{metric_config_from_proto, metric_config_to_proto};
-use common::prelude::{ServiceConfig, ServiceID, ServiceType};
+use common_config::prelude::{ServiceConfig, ServiceID, ServiceType};
 use proto_bindings::proto::ProtoServiceConfig;
 use std::fmt::Error;
 

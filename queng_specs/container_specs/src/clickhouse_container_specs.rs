@@ -1,4 +1,4 @@
-use common::prelude::ContainerConfig;
+use common_config::prelude::ContainerConfig;
 
 /// Constructs the configuration for a ClickHouse container.
 ///

@@ -1,6 +1,5 @@
-use common::prelude::{
-    Encoding, Endpoint, ExchangeID, MetricConfig, ProtocolType, ServiceConfig, ServiceID,
-    ServiceType,
+use common_config::prelude::{
+    Encoding, Endpoint, MetricConfig, ProtocolType, ServiceConfig, ServiceID, ServiceType,
 };
 
 /// Configures the service for Binance data in the IMS system.
@@ -27,10 +26,10 @@ use common::prelude::{
 /// * `metrics` - The metric configuration for the service.
 ///
 pub fn ims_data_binance_config() -> ServiceConfig {
-    ims_service_config(ExchangeID::Binance, ServiceID::ImsDataBinance)
+    ims_service_config("ExchangeID", ServiceID::ImsDataBinance)
 }
 
-fn ims_service_config(exchange_id: ExchangeID, service_id: ServiceID) -> ServiceConfig {
+fn ims_service_config(exchange_id: &str, service_id: ServiceID) -> ServiceConfig {
     let port = 7070;
     let id = service_id;
     let name = format!("ims-service-{}", exchange_id);
@@ -62,7 +61,7 @@ fn ims_service_config(exchange_id: ExchangeID, service_id: ServiceID) -> Service
     )
 }
 
-fn get_endpoint(exchange_id: ExchangeID, port: u16) -> Endpoint {
+fn get_endpoint(exchange_id: &str, port: u16) -> Endpoint {
     let endpoint_name = format!("{}-ims-data-endpoint", exchange_id);
     let endpoint_version = 1;
     let endpoint_description = format!(

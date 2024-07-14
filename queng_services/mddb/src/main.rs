@@ -1,5 +1,5 @@
 use crate::service::MDMServer;
-use common::prelude::ServiceID;
+use common_config::prelude::ServiceID;
 use config_manager::CfgManager;
 use ctx_manager::CtxManager;
 use db_query_manager::QueryDBManager;

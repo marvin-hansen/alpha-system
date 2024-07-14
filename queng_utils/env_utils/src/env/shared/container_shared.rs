@@ -1,6 +1,6 @@
 use crate::prelude::EnvironmentSetupError;
 use crate::EnvUtil;
-use common::prelude::ContainerConfig;
+use common_config::prelude::ContainerConfig;
 use docker_utils::DockerUtil;
 use std::time::Duration;
 use tokio::time::sleep;

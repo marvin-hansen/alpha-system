@@ -1,4 +1,8 @@
 #[cfg(test)]
+mod pattern_config_tests;
+#[cfg(test)]
+mod pattern_type_tests;
+#[cfg(test)]
 mod strategy_config_tests;
 #[cfg(test)]
 mod trade_direction_tests;

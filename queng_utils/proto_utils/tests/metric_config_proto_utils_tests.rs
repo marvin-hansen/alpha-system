@@ -1,4 +1,4 @@
-use common::prelude::MetricConfig;
+use common_config::prelude::MetricConfig;
 use proto_bindings::proto::ProtoMetricConfig;
 use proto_utils::metric_config_proto_utils::{metric_config_from_proto, metric_config_to_proto};
 

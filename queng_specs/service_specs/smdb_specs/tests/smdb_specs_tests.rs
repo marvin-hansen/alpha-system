@@ -1,4 +1,4 @@
-use common::prelude::{Encoding, ProtocolType, ServiceID, ServiceType};
+use common_config::prelude::{Encoding, ProtocolType, ServiceID, ServiceType};
 use smdb_specs::smdb_service_config;
 
 #[test]

@@ -1,4 +1,4 @@
-use common::prelude::ContainerConfig;
+use common_config::prelude::ContainerConfig;
 
 pub fn surreal_db_container_config() -> ContainerConfig<'static> {
     // Official container image for SurrealDB

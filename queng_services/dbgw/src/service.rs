@@ -1,7 +1,7 @@
 use std::fmt::Error;
 use tonic::{Request, Response, Status};
 
-use common::prelude::{ServiceConfig, ServiceID};
+use common_config::prelude::{ServiceConfig, ServiceID};
 use db_surreal_manager::SurrealDBManager;
 use proto_bindings::proto::db_gateway_service_server::DbGatewayService;
 use proto_bindings::proto::*;

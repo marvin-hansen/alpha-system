@@ -16,6 +16,7 @@ path = "src/lib.rs"
 [dependencies]
 # Internal crates
 common = { workspace = true }
+common_config = { workspace = true }
 ctx_manager = { workspace = true }
 config_manager = { workspace = true }
 env_utils = { workspace = true }

@@ -1,5 +1,5 @@
 use cmdb_specs::cmdb_service_config;
-use common::prelude::{EnvironmentType, ServiceID};
+use common_config::prelude::{EnvironmentType, ServiceID};
 use config_manager::CfgManager;
 use ctx_manager::CtxManager;
 use dbgw_specs::dbgw_service_config;

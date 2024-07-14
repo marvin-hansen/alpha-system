@@ -1,4 +1,4 @@
-use common::prelude::SurrealDBConfig;
+use common_config::prelude::SurrealDBConfig;
 use db_surreal_manager::SurrealDBManager;
 use env_utils::EnvUtil;
 use std::env;

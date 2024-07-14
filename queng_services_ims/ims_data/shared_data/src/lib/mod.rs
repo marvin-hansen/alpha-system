@@ -1,4 +1,4 @@
-use common::prelude::{ServiceConfig, ServiceID};
+use common_config::prelude::{ServiceConfig, ServiceID};
 use config_manager::CfgManager;
 use ctx_manager::CtxManager;
 use dns_manager::DnsManager;

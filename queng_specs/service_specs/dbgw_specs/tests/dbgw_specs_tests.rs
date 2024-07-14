@@ -1,4 +1,4 @@
-use common::prelude::{Encoding, ProtocolType, ServiceID, ServiceType};
+use common_config::prelude::{Encoding, ProtocolType, ServiceID, ServiceType};
 use dbgw_specs::dbgw_service_config;
 
 #[test]

@@ -1,4 +1,4 @@
-use common::prelude::EnvironmentType;
+use common_config::prelude::EnvironmentType;
 use hickory_resolver::config::*;
 use hickory_resolver::Resolver;
 use mini_moka::sync::Cache;

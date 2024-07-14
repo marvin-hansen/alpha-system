@@ -1,4 +1,4 @@
-use common::prelude::{
+use common_config::prelude::{
     ClickHouseConfig, EnvironmentType, ServiceConfig, ServiceID, SurrealDBConfig, SvcEnvConfig,
 };
 use db_specs::prelude::{

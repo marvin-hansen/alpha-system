@@ -1,7 +1,7 @@
 use std::env;
 use std::fmt::{Display, Formatter};
 
-use common::prelude::EnvironmentType;
+use common_config::prelude::EnvironmentType;
 
 /// The CtxManager struct manages the context information for the application,
 /// such as the environment type and the internal DNS server. To work in a cluster context,

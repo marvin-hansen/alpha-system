@@ -1,4 +1,4 @@
-use common::prelude::MetricConfig;
+use common_config::prelude::MetricConfig;
 use proto_bindings::proto::ProtoMetricConfig;
 use std::fmt;
 

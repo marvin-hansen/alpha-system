@@ -20,7 +20,7 @@ cmdb_specs = { workspace = true }
 # Custom Memory Allocator
 mimalloc = {workspace = true}
 # Internal crates
-common = {workspace = true}
+common_config = {workspace = true}
 config_manager = {workspace = true}
 ctx_manager = {workspace = true}
 dns_manager = {workspace = true}

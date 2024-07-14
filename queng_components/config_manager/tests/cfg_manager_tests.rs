@@ -1,4 +1,4 @@
-use common::prelude::{EnvironmentType, ServiceID};
+use common_config::prelude::{EnvironmentType, ServiceID};
 use config_manager::CfgManager;
 use ctx_manager::CtxManager;
 use dns_manager::DnsManager;

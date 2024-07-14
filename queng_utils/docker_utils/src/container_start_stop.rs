@@ -1,6 +1,6 @@
 use crate::error::DockerError;
 use crate::DockerUtil;
-use common::prelude::ContainerConfig;
+use common_config::prelude::ContainerConfig;
 use std::process::Command;
 
 impl DockerUtil {

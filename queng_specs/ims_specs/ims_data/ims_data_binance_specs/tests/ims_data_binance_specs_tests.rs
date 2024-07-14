@@ -1,4 +1,4 @@
-use common::prelude::{Encoding, ExchangeID, ProtocolType, ServiceID, ServiceType};
+use common_config::prelude::{Encoding, ProtocolType, ServiceID, ServiceType};
 use ims_data_binance_specs::ims_data_binance_config;
 
 #[test]
@@ -7,42 +7,27 @@ fn test_ims_data_binance_config() {
 
     // Test all the accessors for the ServiceConfig struct
     assert_eq!(service_config.svc_id(), &ServiceID::ImsDataBinance);
-    assert_eq!(
-        service_config.name(),
-        format!("ims-service-{}", ExchangeID::Binance)
-    );
+    assert_eq!(service_config.name(), "ims-service-Binance");
     assert_eq!(service_config.version(), 1);
     assert!(!service_config.online());
     assert_eq!(
         service_config.description(),
-        format!(
-            "IMS controls streaming data for {} exchange",
-            ExchangeID::Binance
-        )
+        "IMS controls streaming data for Binance exchange",
     );
     assert_eq!(
         service_config.health_check_uri(),
-        format!(
-            "ims-data-service-{}.default.svc.cluster.local:7070/health",
-            ExchangeID::Binance
-        )
+        "ims-data-service-Binance.default.svc.cluster.local:7070/health",
     );
     assert_eq!(
         service_config.base_uri(),
-        format!(
-            "ims-data-service-{}.default.svc.cluster.local",
-            ExchangeID::Binance
-        )
+        "ims-data-service-Binance.default.svc.cluster.local"
     );
     assert_eq!(service_config.dependencies(), &vec![ServiceID::SMDB]);
     assert_eq!(service_config.exposure(), &ServiceType::ENDPOINT);
 
     // Test the accessors for the Endpoint
     let endpoint = service_config.endpoint();
-    assert_eq!(
-        endpoint.name(),
-        format!("{}-ims-data-endpoint", ExchangeID::Binance)
-    );
+    assert_eq!(endpoint.name(), "Binance-ims-data-endpoint");
     assert_eq!(endpoint.version(), 1);
     assert_eq!(
         endpoint.description(),

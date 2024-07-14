@@ -16,7 +16,7 @@ path = "src/lib.rs"
 
 [dependencies]
 # Internal crates
-common = { workspace = true }
+common_config = { workspace = true }
 ctx_manager = { workspace = true }
 # External crates
 hickory-resolver = { workspace = true }

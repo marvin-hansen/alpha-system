@@ -32,7 +32,7 @@ rust_binary(
         # Specs
         "//alias:smdb_specs",
         # Internal crates
-        "//alias:common",
+        "//alias:common_config",
         "//alias:config_manager",
         "//alias:ctx_manager",
         "//alias:dns_manager",

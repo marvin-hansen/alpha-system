@@ -1,4 +1,4 @@
-use common::prelude::{
+use common_config::prelude::{
     Encoding, Endpoint, MetricConfig, ProtocolType, ServiceConfig, ServiceID, ServiceType,
 };
 /// Constructs the configuration for the DBGW service.

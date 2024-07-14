@@ -14,6 +14,6 @@ rust_test_suite(
         # Test target
         "//alias:mddb_specs",
         # Internal dependencies
-        "//alias:common",
+        "//alias:common_config",
     ],
 )

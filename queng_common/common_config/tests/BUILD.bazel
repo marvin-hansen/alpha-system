@@ -1,0 +1,21 @@
+load("@rules_rust//rust:defs.bzl", "rust_test_suite")
+
+rust_test_suite(
+    name = "config",
+    srcs = glob([
+        "config_types/*_tests.rs",
+    ]),
+    tags = [
+        "common",
+        "common_config",
+        "unit",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        "//alias:common_config",
+        # External crates
+        "@crates//:serde",
+        "@crates//:serde_json",
+    ],
+)

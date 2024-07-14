@@ -1,7 +1,7 @@
 use std::fmt::Error;
 use surrealdb::opt::PatchOp;
 
-use common::prelude::{ServiceConfig, ServiceID};
+use common_config::prelude::{ServiceConfig, ServiceID};
 
 use crate::SurrealDBManager;
 

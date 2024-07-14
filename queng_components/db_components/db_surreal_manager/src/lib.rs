@@ -3,7 +3,7 @@ mod db_svc;
 mod error;
 
 use crate::error::SurrealDBError;
-use common::prelude::SurrealDBConfig;
+use common_config::prelude::SurrealDBConfig;
 use std::fmt::{Debug, Display, Formatter};
 use surrealdb::engine::remote::ws::{Client, Ws};
 use surrealdb::opt::auth::Root;

@@ -1,4 +1,4 @@
-use common::prelude::ClickHouseConfig;
+use common_config::prelude::ClickHouseConfig;
 
 pub fn get_cluster_specs_db_config() -> ClickHouseConfig {
     base_cluster_db_config("specs")

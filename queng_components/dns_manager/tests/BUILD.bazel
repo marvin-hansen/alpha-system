@@ -14,7 +14,7 @@ rust_test_suite(
     deps = [
         # Crate under test
         "//alias:dns_manager",
-        "//alias:common",
+        "//alias:common_config",
         # Internal crates
         "//alias:ctx_manager",
     ],

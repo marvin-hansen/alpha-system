@@ -1,4 +1,4 @@
-use common::prelude::HostEndpoint;
+use common_config::prelude::HostEndpoint;
 use proto_bindings::proto::db_gateway_service_client::DbGatewayServiceClient as DBGWClient;
 use tonic::transport::{Channel, Uri};
 

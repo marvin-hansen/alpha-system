@@ -10,6 +10,7 @@ rust_library(
     deps = [
         # Internal crates
         "//alias:common",
+        "//alias:common_config",
         "//alias:clickhouse_utils",
         # External crates
         "@crates//:surrealdb",

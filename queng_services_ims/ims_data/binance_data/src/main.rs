@@ -3,7 +3,7 @@ mod service;
 mod stream_manager;
 
 use crate::service::ImsDataServer;
-use common::prelude::ServiceID;
+use common_config::prelude::ServiceID;
 use mimalloc::MiMalloc;
 use proto_bindings::proto::ims_data_service_server::ImsDataServiceServer;
 

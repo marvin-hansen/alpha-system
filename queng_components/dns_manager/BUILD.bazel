@@ -9,7 +9,7 @@ rust_library(
     visibility = ["//visibility:public"],
     deps = [
         # Internal crates
-        "//alias:common",
+        "//alias:common_config",
         "//alias:ctx_manager",
         # External crates
         "@crates//:hickory-resolver",

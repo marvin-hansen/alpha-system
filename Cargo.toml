@@ -10,6 +10,7 @@ members = [
     "queng_clients/mddb_client",
     "queng_comm",
     "queng_common/common_errors",
+    "queng_common/common_config",
     "queng_components/config_manager",
     "queng_components/ctx_manager",
     "queng_components/db_components/db_query_manager",
@@ -19,7 +20,6 @@ members = [
     "queng_components/symbol_manager",
     "queng_proto",
     "queng_providers/cmdb_provider",
-    "queng_providers/dbgw_provider",
     "queng_providers/smdb_provider",
     "queng_sbe/bindings",
     "queng_sbe/sbe_messages",
@@ -79,6 +79,7 @@ mddb_client = { path = "queng_clients/mddb_client" }
 # Common
 common = { path = "queng_comm" }
 common_errors = { path = "queng_common/common_errors"}
+common_config = { path = "queng_common/common_config"}
 # Components
 config_manager = { path = "queng_components/config_manager" }
 ctx_manager = { path = "queng_components/ctx_manager" }
@@ -93,7 +94,6 @@ symbol_manager = { path = "queng_components/symbol_manager" }
 proto_bindings = { path = "queng_proto" }
 # Providers
 cmdb_provider = { path = "queng_providers/cmdb_provider" }
-dbgw_provider = { path = "queng_providers/dbgw_provider" }
 smdb_provider = { path = "queng_providers/smdb_provider" }
 # SBE
 sbe_bindings = { path = "queng_sbe/bindings" }

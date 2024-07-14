@@ -2,7 +2,7 @@ mod error;
 mod utils_proto;
 mod workflow;
 
-use common::prelude::HostEndpoint;
+use common_config::prelude::HostEndpoint;
 use proto_bindings::proto::mdm_service_client::MdmServiceClient;
 use std::fmt::Error;
 use tonic::transport::{Channel, Uri};
@@ -28,18 +28,6 @@ impl MDMClient {
     ///
     /// Returns a SymdbClient connected to the given address.
     ///
-    /// # Example
-    ///
-    /// ```no_run
-    /// #[tokio::main]
-    /// async fn main() {
-    /// use mddb_client::MDMClient;
-    /// use common::prelude::HostEndpoint;
-    ///
-    ///     let config = HostEndpoint::new("127.0.0.1", 7070);
-    ///     let client = MDMClient::new(config).await.expect("Failed to create SymdbClient");
-    /// }
-    /// ```
     pub async fn new(config: HostEndpoint<'_>) -> Result<Self, Error> {
         // Extract host and port from config
         let port = config.port();

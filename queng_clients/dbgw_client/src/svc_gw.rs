@@ -1,4 +1,4 @@
-use common::prelude::{ServiceConfig, ServiceID};
+use common_config::prelude::{ServiceConfig, ServiceID};
 use proto_bindings::proto::{MultiServicesRequest, SingleServiceRequest};
 use proto_utils::service_config_proto_utils::{service_config_from_proto, service_config_to_proto};
 

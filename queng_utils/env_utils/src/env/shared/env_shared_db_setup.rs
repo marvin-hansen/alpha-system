@@ -1,7 +1,7 @@
 use crate::prelude::EnvironmentError;
 use crate::EnvUtil;
 use clickhouse_utils::ClickhouseUtil;
-use common::prelude::ContainerConfig;
+use common_config::prelude::ContainerConfig;
 impl EnvUtil {
     /// Configures the Clickhouse database for the environment.
     ///

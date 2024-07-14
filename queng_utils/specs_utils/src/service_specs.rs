@@ -1,5 +1,5 @@
 use cmdb_specs::cmdb_service_config;
-use common::prelude::ServiceConfig;
+use common_config::prelude::ServiceConfig;
 use dbgw_specs::dbgw_service_config;
 use mddb_specs::mddb_service_config;
 use qdgw_specs::qdgw_service_config;

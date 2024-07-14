@@ -3,7 +3,7 @@ use mimalloc::MiMalloc;
 use std::error::Error;
 use tonic::transport::{Channel, Server, Uri};
 
-use common::prelude::ServiceID;
+use common_config::prelude::ServiceID;
 use ctx_manager::CtxManager;
 use dns_manager::DnsManager;
 use proto_bindings::proto::db_gateway_service_client::DbGatewayServiceClient;

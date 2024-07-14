@@ -1,4 +1,5 @@
-use common::prelude::{ClickHouseConfig, TimeResolution};
+use common::prelude::TimeResolution;
+use common_config::prelude::ClickHouseConfig;
 use db_query_manager::QueryDBManager;
 use futures::StreamExt;
 use std::str::FromStr;

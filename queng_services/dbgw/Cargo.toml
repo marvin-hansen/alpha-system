@@ -18,7 +18,7 @@ path = "src/main.rs"
 mimalloc = { workspace = true }
 # Internal crates
 dbgw_specs = { workspace = true }
-common = {workspace = true}
+common_config = {workspace = true}
 config_manager = {workspace = true}
 ctx_manager = {workspace = true}
 db_surreal_manager = {workspace = true}

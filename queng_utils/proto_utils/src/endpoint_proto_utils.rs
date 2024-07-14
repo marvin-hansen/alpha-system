@@ -1,4 +1,4 @@
-use common::prelude::{Encoding, Endpoint, ProtocolType};
+use common_config::prelude::{Encoding, Endpoint, ProtocolType};
 use proto_bindings::proto::ProtoEndpoint;
 use std::fmt::Error;
 

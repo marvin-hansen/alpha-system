@@ -10,6 +10,12 @@ alias(
 )
 
 alias(
+    name = "common_config",
+    actual = "//queng_common/common_config:common_config",
+    visibility = ["//visibility:public"],
+)
+
+alias(
     name = "common_errors",
     actual = "//queng_common/common_errors:common_errors",
     visibility = ["//visibility:public"],
@@ -118,12 +124,6 @@ alias(
 alias(
     name = "cmdb_provider",
     actual = "//queng_providers/cmdb_provider:cmdb_provider",
-    visibility = ["//visibility:public"],
-)
-
-alias(
-    name = "dbgw_provider",
-    actual = "//queng_providers/dbgw_provider:dbgw_provider",
     visibility = ["//visibility:public"],
 )
 

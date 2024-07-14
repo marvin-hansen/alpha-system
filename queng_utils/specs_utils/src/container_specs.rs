@@ -1,4 +1,4 @@
-use common::prelude::ContainerConfig;
+use common_config::prelude::ContainerConfig;
 use container_specs::api_proxy_container_specs::api_proxy_container_config;
 use container_specs::clickhouse_container_specs::clickhouse_container_config;
 use container_specs::surreal_db_specs::surreal_db_container_config;

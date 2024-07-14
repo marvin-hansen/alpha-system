@@ -11,6 +11,7 @@ rust_library(
     deps = [
         # Internal crates
         "//alias:common",
+        "//alias:common_config",
         "//alias:rust_proto",
         "//alias:proto_utils",
         # External crates
