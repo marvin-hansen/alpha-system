@@ -15,7 +15,7 @@ impl SymbolManager {
     /// # Example
     ///
     /// ```
-    /// use common::prelude::DBConfig;
+    /// use common_config::prelude::DBConfig;
     /// use symbol_manager::SymbolManager;
     ///
     ///  let exchanges = vec![(1, "kraken".to_string()), (2, "bittrex".to_string())];

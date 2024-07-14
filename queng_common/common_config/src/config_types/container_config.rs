@@ -40,7 +40,7 @@ impl<'l> ContainerConfig<'l> {
     /// # Examples
     ///
     /// ```
-    /// use common::prelude::ContainerConfig;
+    /// use common_config::prelude::ContainerConfig;
     ///
     /// let container_config = ContainerConfig::new(
     ///     "my_container","nginx",":latest", "0.0.0.0" ,80, None, None, None, false, false, 10

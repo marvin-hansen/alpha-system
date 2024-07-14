@@ -10,6 +10,7 @@ rust_library(
     deps = [
         # Internal crates
         "//alias:common",
+        "//alias:common_config",
         "//alias:common_errors",
         # External crates
         "@crates//:lru",

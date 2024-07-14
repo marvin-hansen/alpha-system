@@ -26,7 +26,7 @@ use common_config::prelude::{
 /// * `metrics` - The metric configuration for the service.
 ///
 pub fn ims_data_binance_config() -> ServiceConfig {
-    ims_service_config("ExchangeID", ServiceID::ImsDataBinance)
+    ims_service_config("Binance", ServiceID::ImsDataBinance)
 }
 
 fn ims_service_config(exchange_id: &str, service_id: ServiceID) -> ServiceConfig {
