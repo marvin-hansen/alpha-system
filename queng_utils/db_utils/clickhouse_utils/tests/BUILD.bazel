@@ -26,7 +26,6 @@ rust_test_suite(
         # Crate under test
         "//alias:clickhouse_utils",
         # Internal crates
-
         "//alias:container_specs",
         "//alias:docker_utils",
         "//alias:env_utils",

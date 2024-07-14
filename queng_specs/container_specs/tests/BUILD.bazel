@@ -14,6 +14,5 @@ rust_test_suite(
         # Crate to test
         "//alias:container_specs",
         # Internal crates
-
     ],
 )

@@ -122,7 +122,6 @@ rust_test_suite(
         # Crate to test
         "//alias:sbe_messages",
         # Internal crates
-
         "//queng_sbe/bindings:sbe_bindings",
         # External crates
         "@crates//:rust_decimal",

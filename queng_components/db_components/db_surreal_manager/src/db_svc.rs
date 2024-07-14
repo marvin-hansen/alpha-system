@@ -1,14 +1,14 @@
 use std::fmt::Error;
 use surrealdb::opt::PatchOp;
 
-use common_config::prelude::{ServiceConfig, ServiceID};
-
+use crate::error::SurrealDBError;
 use crate::SurrealDBManager;
+use common_config::prelude::{ServiceConfig, ServiceID};
 
 const SERVICE_TABLE: &str = "service";
 
 impl SurrealDBManager {
-    pub async fn create_service(&self, data: ServiceConfig) -> Result<bool, Error> {
+    pub async fn insert_service(&self, data: ServiceConfig) -> Result<bool, SurrealDBError> {
         let table = SERVICE_TABLE;
         let id = data.svc_id().to_string();
 
@@ -25,11 +25,11 @@ impl SurrealDBManager {
         }
     }
 
-    pub async fn check_if_service_id_exists(&self, id: &ServiceID) -> Result<bool, Error> {
-        let res = self
-            .read_record_by_id(id)
-            .await
-            .expect("Failed to check if service id exists");
+    pub async fn check_if_service_id_exists(&self, id: &ServiceID) -> Result<bool, SurrealDBError> {
+        let res = match self.read_record_by_id(id).await {
+            Ok(res) => res,
+            Err(e) => return Err(SurrealDBError::QueryFailed(e.to_string())),
+        };
 
         match res {
             None => Ok(false),
@@ -37,7 +37,10 @@ impl SurrealDBManager {
         }
     }
 
-    pub async fn check_if_services_exists(&self, services: &Vec<ServiceID>) -> Result<bool, Error> {
+    pub async fn check_if_services_exists(
+        &self,
+        services: &Vec<ServiceID>,
+    ) -> Result<bool, SurrealDBError> {
         for id in services {
             if !self
                 .check_if_service_id_exists(id)
@@ -51,15 +54,14 @@ impl SurrealDBManager {
         Ok(true)
     }
 
-    pub async fn check_if_service_id_online(&self, id: &ServiceID) -> Result<bool, Error> {
+    pub async fn check_if_service_id_online(&self, id: &ServiceID) -> Result<bool, SurrealDBError> {
         // https://surrealdb.com/docs/surrealql/statements/select
         let q = format!("SELECT VALUE online FROM {}:{};", SERVICE_TABLE, id);
 
-        let mut res = self
-            .db
-            .query(q)
-            .await
-            .expect("Failed to check if service id exists");
+        let mut res = match self.db.query(q).await {
+            Ok(res) => res,
+            Err(e) => return Err(SurrealDBError::QueryFailed(e.to_string())),
+        };
 
         let online = res.take(0).expect("Failed to get online status");
 
@@ -69,7 +71,10 @@ impl SurrealDBManager {
         }
     }
 
-    pub async fn check_if_services_online(&self, services: &Vec<ServiceID>) -> Result<bool, Error> {
+    pub async fn check_if_services_online(
+        &self,
+        services: &Vec<ServiceID>,
+    ) -> Result<bool, SurrealDBError> {
         for id in services {
             if !self
                 .check_if_service_id_online(id)
@@ -83,22 +88,23 @@ impl SurrealDBManager {
         Ok(true)
     }
 
-    pub async fn read_all_services(&self) -> Result<Vec<ServiceConfig>, Error> {
-        let res = self
-            .db
-            .select(SERVICE_TABLE)
-            .await
-            .expect("Failed to read all services");
+    pub async fn read_all_services(&self) -> Result<Vec<ServiceConfig>, SurrealDBError> {
+        let res = match self.db.select(SERVICE_TABLE).await {
+            Ok(res) => res,
+            Err(e) => return Err(SurrealDBError::QueryFailed(e.to_string())),
+        };
 
         Ok(res)
     }
 
-    pub async fn read_record_by_id(&self, id: &ServiceID) -> Result<Option<ServiceConfig>, Error> {
-        let res = self
-            .db
-            .select((SERVICE_TABLE, &id.to_string()))
-            .await
-            .expect("Failed to read service by id");
+    pub async fn read_record_by_id(
+        &self,
+        id: &ServiceID,
+    ) -> Result<Option<ServiceConfig>, SurrealDBError> {
+        let res = match self.db.select((SERVICE_TABLE, &id.to_string())).await {
+            Ok(res) => res,
+            Err(e) => return Err(SurrealDBError::QueryFailed(e.to_string())),
+        };
 
         Ok(res)
     }
@@ -143,25 +149,23 @@ impl SurrealDBManager {
     pub async fn update_service(
         &self,
         data: ServiceConfig,
-    ) -> Result<Option<ServiceConfig>, Error> {
+    ) -> Result<Option<ServiceConfig>, SurrealDBError> {
         let id = data.svc_id().to_string();
 
-        let updated = self
-            .db
-            .update((SERVICE_TABLE, id))
-            .content(data)
-            .await
-            .expect("Failed to update service");
+        let updated = match self.db.update((SERVICE_TABLE, id)).content(data).await {
+            Ok(res) => res,
+            Err(e) => return Err(SurrealDBError::UpdateFailed(e.to_string())),
+        };
 
         Ok(updated)
     }
 
-    pub async fn delete_service(&self, id: &ServiceID) -> Result<bool, Error> {
-        let deleted: Option<ServiceConfig> = self
-            .db
-            .delete((SERVICE_TABLE, &id.to_string()))
-            .await
-            .expect("Failed to delete service");
+    pub async fn delete_service(&self, id: &ServiceID) -> Result<bool, SurrealDBError> {
+        let deleted: Option<ServiceConfig> =
+            match self.db.delete((SERVICE_TABLE, &id.to_string())).await {
+                Ok(res) => res,
+                Err(e) => return Err(SurrealDBError::DeleteFailed(e.to_string())),
+            };
 
         match deleted {
             Some(_) => Ok(true),

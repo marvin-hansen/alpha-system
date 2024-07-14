@@ -1,13 +1,16 @@
 mod db_cfg;
 mod db_svc;
-mod error;
+mod db_util;
+pub mod error;
+pub mod prelude;
 
-use crate::error::SurrealDBError;
 use common_config::prelude::SurrealDBConfig;
 use std::fmt::{Debug, Display, Formatter};
 use surrealdb::engine::remote::ws::{Client, Ws};
 use surrealdb::opt::auth::Root;
 use surrealdb::Surreal;
+
+use crate::error::SurrealDBError;
 
 #[derive(Clone, Debug)]
 pub struct SurrealDBManager {

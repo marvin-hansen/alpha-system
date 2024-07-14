@@ -1,8 +1,7 @@
-use std::fmt::Error;
 use tonic::{Request, Response, Status};
 
-use common_config::prelude::{ServiceConfig, ServiceID};
-use db_surreal_manager::SurrealDBManager;
+use common_config::prelude::ServiceID;
+use db_surreal_manager::prelude::SurrealDBManager;
 use proto_bindings::proto::db_gateway_service_server::DbGatewayService;
 use proto_bindings::proto::*;
 use proto_utils::portfolio_proto_utils::{portfolio_config_from_proto, portfolio_config_to_proto};
@@ -28,7 +27,7 @@ impl DbGatewayService for DBGWServer {
         let data =
             portfolio_config_from_proto(request.into_inner()).expect("Failed to parse request");
 
-        let res = self.dbm.add_portfolio_config(&data).await;
+        let res = self.dbm.insert_portfolio_config(&data).await;
 
         match res {
             Ok(portfolio_created) => {
@@ -140,7 +139,7 @@ impl DbGatewayService for DBGWServer {
         let data = service_config_from_proto(rqt.into_inner())
             .expect("Failed to create ServiceConfig from proto");
 
-        let res = self.dbm.create_service(data).await;
+        let res = self.dbm.insert_service(data).await;
 
         match res {
             Ok(service_created) => Ok(Response::new(CreateServiceResponse { service_created })),
@@ -154,7 +153,7 @@ impl DbGatewayService for DBGWServer {
     ) -> Result<Response<CheckServiceIdExistsResponse>, Status> {
         let id = ServiceID::from(request.into_inner().service_id);
 
-        let res: Result<bool, Error> = self.dbm.check_if_service_id_exists(&id).await;
+        let res = self.dbm.check_if_service_id_exists(&id).await;
 
         match res {
             Ok(service_exists) => Ok(Response::new(CheckServiceIdExistsResponse {
@@ -172,7 +171,7 @@ impl DbGatewayService for DBGWServer {
 
         let services: Vec<ServiceID> = proto_services.into_iter().map(|x| x.into()).collect();
 
-        let res: Result<bool, Error> = self.dbm.check_if_services_exists(&services).await;
+        let res = self.dbm.check_if_services_exists(&services).await;
 
         match res {
             Ok(services_exist) => Ok(Response::new(CheckServicesExistsResponse {
@@ -188,7 +187,7 @@ impl DbGatewayService for DBGWServer {
     ) -> Result<Response<CheckServiceIdOnlineResponse>, Status> {
         let id = ServiceID::from(request.into_inner().service_id);
 
-        let res: Result<bool, Error> = self.dbm.check_if_service_id_online(&id).await;
+        let res = self.dbm.check_if_service_id_online(&id).await;
 
         match res {
             Ok(service_online) => Ok(Response::new(CheckServiceIdOnlineResponse {
@@ -204,9 +203,9 @@ impl DbGatewayService for DBGWServer {
     ) -> Result<Response<CheckServicesOnlineResponse>, Status> {
         let proto_services = request.into_inner().services_id;
 
-        let services: Vec<ServiceID> = proto_services.into_iter().map(|x| x.into()).collect();
+        let services = proto_services.into_iter().map(|x| x.into()).collect();
 
-        let res: Result<bool, Error> = self.dbm.check_if_services_online(&services).await;
+        let res = self.dbm.check_if_services_online(&services).await;
 
         match res {
             Ok(services_online) => Ok(Response::new(CheckServicesOnlineResponse {
@@ -222,7 +221,7 @@ impl DbGatewayService for DBGWServer {
     ) -> Result<Response<ReadServiceResponse>, Status> {
         let id = ServiceID::from(request.into_inner().service_id);
 
-        let record: Result<Option<ServiceConfig>, Error> = self.dbm.read_record_by_id(&id).await;
+        let record = self.dbm.read_record_by_id(&id).await;
 
         match record {
             Ok(res) => match res {
@@ -247,7 +246,7 @@ impl DbGatewayService for DBGWServer {
         &self,
         _request: Request<MultiServicesRequest>,
     ) -> Result<Response<ReadAllServicesResponse>, Status> {
-        let records: Result<Vec<ServiceConfig>, Error> = self.dbm.read_all_services().await;
+        let records = self.dbm.read_all_services().await;
 
         match records {
             Ok(res) => {
@@ -277,7 +276,7 @@ impl DbGatewayService for DBGWServer {
     ) -> Result<Response<SetServiceOnlineResponse>, Status> {
         let id = ServiceID::from(request.into_inner().service_id);
 
-        let res: Result<bool, Error> = self.dbm.set_service_online(&id).await;
+        let res = self.dbm.set_service_online(&id).await;
 
         match res {
             Ok(service_online) => Ok(Response::new(SetServiceOnlineResponse { service_online })),
@@ -292,7 +291,7 @@ impl DbGatewayService for DBGWServer {
     ) -> Result<Response<SetServiceOfflineResponse>, Status> {
         let id = ServiceID::from(request.into_inner().service_id);
 
-        let res: Result<bool, Error> = self.dbm.set_service_offline(&id).await;
+        let res = self.dbm.set_service_offline(&id).await;
 
         match res {
             Ok(service_offline) => Ok(Response::new(SetServiceOfflineResponse { service_offline })),
@@ -307,7 +306,7 @@ impl DbGatewayService for DBGWServer {
         let data = service_config_from_proto(request.into_inner())
             .expect("Failed to create ServiceConfig from proto");
 
-        let res: Result<Option<ServiceConfig>, Error> = self.dbm.update_service(data).await;
+        let res = self.dbm.update_service(data).await;
 
         match res {
             Ok(res) => match res {
@@ -329,7 +328,7 @@ impl DbGatewayService for DBGWServer {
     ) -> Result<Response<DeleteServiceResponse>, Status> {
         let id = ServiceID::from(request.into_inner().service_id);
 
-        let res: Result<bool, Error> = self.dbm.delete_service(&id).await;
+        let res = self.dbm.delete_service(&id).await;
 
         match res {
             Ok(service_deleted) => Ok(Response::new(DeleteServiceResponse { service_deleted })),
