@@ -11,6 +11,7 @@ members = [
     "queng_common/common_config",
     "queng_common/common_errors",
     "queng_common/common_data_bar",
+    "queng_common/common_database",
     "queng_common/common_env",
     "queng_common/common_exchange",
     "queng_common/common_metadata",
@@ -18,6 +19,7 @@ members = [
     "queng_components/config_manager",
     "queng_components/ctx_manager",
     "queng_components/db_components/db_clickhouse_manager",
+    "queng_components/db_components/db_spec_manager",
     "queng_components/db_components/db_surreal_manager",
     "queng_components/dns_manager",
     "queng_components/pattern_manager",
@@ -55,7 +57,7 @@ members = [
     "queng_utils/math_utils",
     "queng_utils/proto_utils",
     "queng_utils/service_utils",
-    "queng_utils/specs_utils", "queng_components/db_components/db_spec_manager",
+    "queng_utils/specs_utils",
 ]
 
 
@@ -83,6 +85,7 @@ mddb_client = { path = "queng_clients/mddb_client" }
 # Common
 common_config = { path = "queng_common/common_config"}
 common_data_bar = { path = "queng_common/common_data_bar"}
+common_database = { path = "queng_common/common_database"}
 common_env = { path = "queng_common/common_env"}
 common_errors = { path = "queng_common/common_errors"}
 common_exchange = { path = "queng_common/common_exchange"}
@@ -93,6 +96,7 @@ config_manager = { path = "queng_components/config_manager" }
 ctx_manager = { path = "queng_components/ctx_manager" }
 # DB Components
 db_clickhouse_manager = { path = "queng_components/db_components/db_clickhouse_manager" }
+db_spec_manager = { path = "queng_components/db_components/db_spec_manager" }
 db_surreal_manager = { path = "queng_components/db_components/db_surreal_manager" }
 #
 dns_manager = { path = "queng_components/dns_manager" }
@@ -160,8 +164,7 @@ config-file = { version = "0.2" }
 ctrlc = { version = "3.4" }
 clickhouse-rs = { version = "1.1.0-alpha.1" }
 csv = { version = "1.3" }
-diesel = { version = "2.1.6", default-features = false, features = ["postgres"] }
-diesel-async = { version = "0.4.1", features = ["postgres"] }
+sqlx = { version = "0.7.4", default-features = false, features = ["postgres", "runtime-tokio", "tls-rustls" ] }
 #
 surrealdb = {version = "1.5.4", default-features = false, features = ["protocol-ws"]}
 #

@@ -13,8 +13,7 @@ rust_library(
         "//alias:common_exchange",
         # External crates
         "@crates//:chrono",
-        "@crates//:diesel",
-        "@crates//:diesel-async",
+        "@crates//:sqlx",
         "@crates//:serde",
         "@crates//:tokio",
     ],

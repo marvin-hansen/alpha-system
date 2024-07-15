@@ -5,14 +5,7 @@ use serde::{Deserialize, Serialize};
 
 const BUFFER_SIZE: usize = 50_000;
 
-/// Configuration for the QuestDB database.
-/// Requires both, ILP and Postgres connection parameters.
-/// Default ports are used for the ILP and Postgres connections.
-///
-/// * ILP: 9009
-/// * Postgres Wire: 8812
-///
-/// See <https://questdb.io/docs/develop/connect/>`
+/// Configuration for the Postgres database.
 #[derive(Debug, Eq, Clone, PartialEq, Serialize, Deserialize)]
 pub struct DBConfig {
     /// ILP ort number to connect to at the server host. The default port for the line protocol is 9009.
@@ -32,8 +25,6 @@ pub struct DBConfig {
     pg_port: u16,
     /// Postgres max connections.
     pg_max_connections: u32,
-    // Secure authentication is not implemented.
-    // See: https://github.com/questdb/c-questdb-client/blob/main/questdb-rs/examples/auth.rs
 }
 
 impl DBConfig {

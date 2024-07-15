@@ -19,8 +19,7 @@ common_config = { workspace = true }
 common_exchange = { workspace = true }
 
 # External crates
+sqlx = { workspace = true }
 chrono = { workspace = true }
-diesel = { workspace = true }
-diesel-async = { workspace = true }
 tokio = { workspace = true }
 serde = { workspace = true }
