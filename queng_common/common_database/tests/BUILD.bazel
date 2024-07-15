@@ -1,0 +1,19 @@
+load("@rules_rust//rust:defs.bzl", "rust_test_suite")
+
+rust_test_suite(
+    name = "pg_db_config",
+    srcs = glob([
+        "pg_db_config_tests.rs",
+    ]),
+    tags = [
+        "common",
+        "common_database",
+        "unit",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        "//alias:common_database",
+        # External crates
+    ],
+)

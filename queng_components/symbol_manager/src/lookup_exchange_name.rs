@@ -12,24 +12,6 @@ impl SymbolManager {
     ///
     /// Returns the name of the exchange as a `Result<String, LookupError>`.
     ///
-    /// # Example
-    ///
-    /// ```
-    /// use common_config::prelude::DBConfig;
-    /// use symbol_manager::SymbolManager;
-    ///
-    ///  let exchanges = vec![(1, "kraken".to_string()), (2, "bittrex".to_string())];
-    ///  let symbols =  vec![(1, "apeusdt".to_string()), (2, "btxusdt".to_string())];
-    ///
-    ///  let mut symbol_manager = SymbolManager::new(symbols, exchanges)
-    ///         .expect("Failed to create symbol manager");
-    ///
-    /// let exchange_id = 1;
-    /// let exchange_name = symbol_manager.get_exchange_name(exchange_id)
-    ///                                 .expect("Failed to get exchange name");
-    ///
-    /// println!("exchange: {}", exchange_name);
-    /// ```
     ///
     /// # Errors
     ///

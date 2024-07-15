@@ -1,7 +1,6 @@
 pub mod click_house_config;
 pub mod client_channel;
 pub mod container_config;
-pub mod db_config;
 pub mod db_surreal_config;
 pub mod encoding;
 pub mod endpoint;

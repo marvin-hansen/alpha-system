@@ -2,7 +2,6 @@
 pub use crate::config_types::click_house_config::ClickHouseConfig;
 pub use crate::config_types::client_channel::*;
 pub use crate::config_types::container_config::*;
-pub use crate::config_types::db_config::DBConfig;
 pub use crate::config_types::db_surreal_config::*;
 pub use crate::config_types::encoding::*;
 pub use crate::config_types::endpoint::*;

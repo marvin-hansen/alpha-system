@@ -37,21 +37,6 @@ impl SymbolManager {
     ///
     /// A Result containing the new SymbolManager instance or an InitError.
     ///
-    /// # Example
-    ///
-    /// ```no_run
-    /// use common_config::prelude::DBConfig;
-    /// use symbol_manager::SymbolManager;
-    ///
-    ///  let exchanges = vec![(1, "kraken".to_string()), (2, "bittrex".to_string())];
-    ///  let symbols =  vec![(1, "apeusdt".to_string()), (2, "btxusdt".to_string())];
-    ///
-    ///  let symbol_manager = SymbolManager::new(symbols, exchanges)
-    ///         .expect("[SymbolManager]: Failed to create symbol manager");
-    ///
-    /// let nr_symbols = symbol_manager.number_of_symbols();
-    /// println!("Symbol: {}", nr_symbols);
-    /// ```
     ///
     /// # Noteworthy
     ///

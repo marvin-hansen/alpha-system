@@ -12,21 +12,7 @@ impl SymbolManager {
     ///
     /// Returns a Result with the symbol string if found, or a LookupError if not found.
     ///
-    /// # Example
     ///
-    /// ```
-    /// use common_config::prelude::DBConfig;
-    /// use symbol_manager::SymbolManager;
-    ///
-    ///  let exchanges = vec![(1, "kraken".to_string()), (2, "bittrex".to_string())];
-    ///  let symbols =  vec![(1, "apeusdt".to_string()), (2, "btxusdt".to_string())];
-    ///
-    ///  let mut symbol_manager = SymbolManager::new(symbols, exchanges)
-    ///         .expect("Failed to create symbol manager");
-    ///
-    /// let symbol = symbol_manager.get_symbol(1).expect("Failed to get symbol");
-    /// println!("Symbol: {}", symbol);
-    /// ```
     ///
     /// # Notes
     ///
@@ -62,21 +48,6 @@ impl SymbolManager {
     ///
     /// Returns a Result with the ID if found, or a LookupError if not found.
     ///
-    /// # Example
-    ///
-    /// ```
-    /// use common_config::prelude::DBConfig;
-    /// use symbol_manager::SymbolManager;
-    ///
-    ///  let exchanges = vec![(1, "kraken".to_string()), (2, "bittrex".to_string())];
-    ///  let symbols =  vec![(1, "apeusdt".to_string()), (2, "btxusdt".to_string())];
-    ///
-    ///  let mut symbol_manager = SymbolManager::new(symbols, exchanges)
-    ///         .expect("Failed to create symbol manager");
-    ///
-    /// let id = symbol_manager.get_symbol_id("apeusdt").expect("Failed to get ID");
-    /// println!("ID: {}", id);
-    /// ```
     ///
     /// # Notes
     ///
@@ -109,21 +80,6 @@ impl SymbolManager {
     /// Returns a Result with a vector of String symbols if available,
     /// or a LookupError if no symbols are found.
     ///
-    /// # Example
-    ///
-    /// ```rust
-    /// use common_config::prelude::DBConfig;
-    /// use symbol_manager::SymbolManager;
-    ///
-    ///  let exchanges = vec![(1, "kraken".to_string()), (2, "bittrex".to_string())];
-    ///  let symbols =  vec![(1, "apeusdt".to_string()), (2, "btxusdt".to_string())];
-    ///
-    ///  let mut symbol_manager = SymbolManager::new(symbols, exchanges)
-    ///         .expect("Failed to create symbol manager");
-    ///
-    /// let symbols = symbol_manager.get_all_symbols();
-    /// println!("Symbols: {:?}", symbols);
-    /// ```
     ///
     /// # Notes
     ///
@@ -147,26 +103,6 @@ impl SymbolManager {
     /// Returns a Result with a vector of u16 symbol IDs if available,
     /// or a LookupError if no symbol IDs are found.
     ///
-    /// # Example
-    ///
-    /// ```rust
-    /// use common_config::prelude::DBConfig;
-    /// use symbol_manager::SymbolManager;
-    ///
-    ///  let exchanges = vec![(1, "kraken".to_string()), (2, "bittrex".to_string())];
-    ///  let symbols =  vec![(1, "apeusdt".to_string()), (2, "btxusdt".to_string())];
-    ///
-    ///  let mut symbol_manager = SymbolManager::new(symbols, exchanges)
-    ///         .expect("Failed to create symbol manager");
-    ///
-    ///  let result = symbol_manager.get_all_symbol_ids();
-    ///  assert!(result.is_ok());
-    ///
-    ///  let ids = result.unwrap();
-    ///  assert!(ids.contains(&2));
-    ///
-    ///  println!("Symbol IDs: {:?}", ids);
-    /// ```
     ///
     /// # Notes
     ///

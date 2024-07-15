@@ -19,11 +19,6 @@ impl SpecDBManager {
         Self::build(url).await.unwrap()
     }
 
-    pub async fn with_debug() -> Self {
-        let url = "postgres://postgres:password@localhost/test";
-        Self::build(url).await.unwrap()
-    }
-
     pub async fn build(url: &str) -> Result<Self, SpecDBError> {
         let pool = PgPoolOptions::new()
             .max_connections(5)
