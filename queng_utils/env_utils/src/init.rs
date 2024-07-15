@@ -1,9 +1,10 @@
 use crate::prelude::EnvironmentSetupError;
 use crate::EnvUtil;
-use common_config::prelude::ContainerConfig;
+use common_config::prelude::{ContainerConfig, SurrealDBConfig};
 use docker_utils::error::DockerError;
 use docker_utils::DockerUtil;
 use kaiko_utils::prelude::{KaikoUtil, KaikoUtilError};
+use surreal_utils::prelude::{SurrealUtil, SurrealUtilError};
 
 impl EnvUtil {
     pub(super) fn init_docker_util(dbg: bool) -> Result<DockerUtil, DockerError> {
@@ -25,6 +26,17 @@ impl EnvUtil {
             KaikoUtil::with_debug()
         } else {
             KaikoUtil::new()
+        }
+    }
+
+    pub(super) async fn init_surreal_util(
+        db_config: &SurrealDBConfig,
+        dbg: bool,
+    ) -> Result<SurrealUtil, SurrealUtilError> {
+        if dbg {
+            SurrealUtil::with_debug(db_config).await
+        } else {
+            SurrealUtil::new(db_config).await
         }
     }
 

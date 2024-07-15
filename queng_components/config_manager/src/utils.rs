@@ -1,6 +1,7 @@
 use common_config::prelude::{
-    ClickHouseConfig, EnvironmentType, ServiceConfig, ServiceID, SurrealDBConfig, SvcEnvConfig,
+    ClickHouseConfig, ServiceConfig, ServiceID, SurrealDBConfig, SvcEnvConfig,
 };
+use common_env::prelude::EnvironmentType;
 use db_specs::prelude::{
     clickhouse_ci_config, clickhouse_cluster_config, clickhouse_local_config, surreal_db_ci_config,
     surreal_db_cluster_config, surreal_db_local_config,

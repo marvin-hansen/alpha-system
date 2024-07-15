@@ -1,8 +1,9 @@
 use crate::error::SurrealDBError;
 use crate::SurrealDBManager;
+use common_config::prelude::ServiceConfig;
 use common_exchange::prelude::PortfolioConfig;
 
-const PORTFOLIO_CONFIG_TABLE: &str = "portfolio_config";
+const PORTFOLIO_TABLE: &str = "portfolio";
 
 impl SurrealDBManager {
     /// add_portfolio_config that adds a PortfolioConfig config to the database
@@ -11,8 +12,8 @@ impl SurrealDBManager {
     pub async fn insert_portfolio_config(
         &self,
         config: &PortfolioConfig,
-    ) -> Result<bool, SurrealDBError> {
-        let table = PORTFOLIO_CONFIG_TABLE;
+    ) -> Result<(), SurrealDBError> {
+        let table = PORTFOLIO_TABLE;
         let id = config.portfolio_id().to_string();
 
         let created: Option<PortfolioConfig> = self
@@ -23,14 +24,14 @@ impl SurrealDBManager {
             .expect("Failed to create portfolio config");
 
         match created {
-            None => Ok(false),
-            Some(_) => Ok(true),
+            Some(_) => Ok(()),
+            None => Err(SurrealDBError::InsertFailed("No data inserted".to_string())),
         }
     }
 
     /// returns all the portfolio configs in the database
     pub async fn read_all_portfolio_configs(&self) -> Result<Vec<PortfolioConfig>, SurrealDBError> {
-        let res = match self.db.select(PORTFOLIO_CONFIG_TABLE).await {
+        let res = match self.db.select(PORTFOLIO_TABLE).await {
             Ok(res) => res,
             Err(e) => return Err(SurrealDBError::UpdateFailed(e.to_string())),
         };
@@ -45,12 +46,23 @@ impl SurrealDBManager {
     ) -> Result<Option<PortfolioConfig>, SurrealDBError> {
         let id = id.to_string();
 
-        let res = match self.db.select((PORTFOLIO_CONFIG_TABLE, id)).await {
+        let res = match self.db.select((PORTFOLIO_TABLE, id)).await {
             Ok(res) => res,
             Err(e) => return Err(SurrealDBError::UpdateFailed(e.to_string())),
         };
 
         Ok(res)
+    }
+
+    pub async fn count_portfolio_config(&self) -> Result<u64, SurrealDBError> {
+        let res: Vec<ServiceConfig> = match self.db.select(PORTFOLIO_TABLE).await {
+            Ok(res) => res,
+            Err(e) => return Err(SurrealDBError::QueryFailed(e.to_string())),
+        };
+
+        let count = res.len() as u64;
+
+        Ok(count)
     }
 
     /// updates the portfolio config with the given data
@@ -60,12 +72,7 @@ impl SurrealDBManager {
     ) -> Result<Option<PortfolioConfig>, SurrealDBError> {
         let id = data.portfolio_id().to_string();
 
-        let update = match self
-            .db
-            .update((PORTFOLIO_CONFIG_TABLE, id))
-            .content(data)
-            .await
-        {
+        let update = match self.db.update((PORTFOLIO_TABLE, id)).content(data).await {
             Ok(res) => res,
             Err(e) => return Err(SurrealDBError::UpdateFailed(e.to_string())),
         };
@@ -76,11 +83,10 @@ impl SurrealDBManager {
     pub async fn delete_portfolio_config(&self, id: u16) -> Result<bool, SurrealDBError> {
         let id = id.to_string();
 
-        let deleted: Option<PortfolioConfig> =
-            match self.db.delete((PORTFOLIO_CONFIG_TABLE, id)).await {
-                Ok(res) => res,
-                Err(e) => return Err(SurrealDBError::DeleteFailed(e.to_string())),
-            };
+        let deleted: Option<PortfolioConfig> = match self.db.delete((PORTFOLIO_TABLE, id)).await {
+            Ok(res) => res,
+            Err(e) => return Err(SurrealDBError::DeleteFailed(e.to_string())),
+        };
 
         match deleted {
             Some(_) => Ok(true),

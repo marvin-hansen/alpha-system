@@ -1,21 +1,18 @@
 load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 
 rust_test_suite(
-    name = "dns_manager_tests",
+    name = "common_env",
     srcs = glob([
         "*_tests.rs",
     ]),
     tags = [
-        "components",
-        "dns_manager",
+        "common",
+        "common_env",
         "unit",
     ],
     visibility = ["//visibility:public"],
     deps = [
-        # Crate under test
-        "//alias:dns_manager",
+        # Crate to test
         "//alias:common_env",
-        # Internal crates
-        "//alias:ctx_manager",
     ],
 )

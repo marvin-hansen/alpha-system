@@ -7,7 +7,6 @@ pub use crate::config_types::db_surreal_config::*;
 pub use crate::config_types::encoding::*;
 pub use crate::config_types::endpoint::*;
 pub use crate::config_types::endpoint_host::*;
-pub use crate::config_types::environment_type::*;
 pub use crate::config_types::message_client_config::*;
 pub use crate::config_types::metric_config::*;
 pub use crate::config_types::protocol_type::*;

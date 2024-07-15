@@ -4,31 +4,37 @@ use surrealdb::opt::PatchOp;
 use crate::error::SurrealDBError;
 use crate::SurrealDBManager;
 use common_config::prelude::{ServiceConfig, ServiceID};
+use common_exchange::prelude::PortfolioConfig;
 
 const SERVICE_TABLE: &str = "service";
 
 impl SurrealDBManager {
     pub async fn insert_service(&self, data: &ServiceConfig) -> Result<(), SurrealDBError> {
-        let created: Result<Vec<ServiceConfig>, surrealdb::Error> =
-            self.db.insert(SERVICE_TABLE).content(data).await;
+        let table = SERVICE_TABLE;
+        let id = data.svc_id().to_string();
+
+        let created: Option<PortfolioConfig> = self
+            .db
+            .update((table, id))
+            .merge(data)
+            .await
+            .expect("Failed to create portfolio config");
 
         match created {
-            Ok(_) => Ok(()),
-            Err(e) => Err(SurrealDBError::InsertFailed(e.to_string())),
+            Some(_) => Ok(()),
+            None => Err(SurrealDBError::InsertFailed("No data inserted".to_string())),
         }
     }
 
-    pub async fn insert_service_vec(
-        &self,
-        data: &Vec<ServiceConfig>,
-    ) -> Result<(), SurrealDBError> {
-        let created: Result<Vec<ServiceConfig>, surrealdb::Error> =
-            self.db.insert(SERVICE_TABLE).content(data).await;
+    pub async fn count_services(&self) -> Result<u64, SurrealDBError> {
+        let res: Vec<ServiceConfig> = match self.db.select(SERVICE_TABLE).await {
+            Ok(res) => res,
+            Err(e) => return Err(SurrealDBError::QueryFailed(e.to_string())),
+        };
 
-        match created {
-            Ok(_) => Ok(()),
-            Err(e) => Err(SurrealDBError::InsertFailed(e.to_string())),
-        }
+        let count = res.len() as u64;
+
+        Ok(count)
     }
 
     pub async fn check_if_service_id_exists(&self, id: &ServiceID) -> Result<bool, SurrealDBError> {

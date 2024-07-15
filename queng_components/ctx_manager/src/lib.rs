@@ -1,19 +1,17 @@
 use std::env;
 use std::fmt::{Display, Formatter};
 
-use common_config::prelude::EnvironmentType;
+use common_env::prelude::EnvironmentType;
 
 /// The CtxManager struct manages the context information for the application,
 /// such as the environment type and the internal DNS server. To work in a cluster context,
 /// ensure that the following environment variables are set:
 ///         ENV: CLUSTER
-///         DNS_SERVER: 175.24.54.1 //  IP of your actual cluster DNS server
 ///
-/// PANICS if either one of the variables is not set.
+/// PANICS if the variables is not set.
 ///
 /// # Fields
-/// * `env_type`: The environment type, which can be either `LOCAL`, `CLUSTER`, or `UNKNOWN`.
-/// * `int_dns_server`: The internal DNS server.
+/// * `env_type`: The environment type, which can be either `LOCAL`, `CI`, `CLUSTER`, or `UNKNOWN`.
 #[derive(Debug, Clone, Default, Eq, PartialEq)]
 pub struct CtxManager {
     env_type: EnvironmentType,
@@ -48,15 +46,6 @@ impl CtxManager {
     /// Returns the environment type.
     pub fn env_type(&self) -> EnvironmentType {
         self.env_type
-    }
-
-    pub fn env_var(&self) -> &str {
-        match self.env_type {
-            EnvironmentType::UNKNOWN => "ENV=UNKNOWN",
-            EnvironmentType::LOCAL => "ENV=LOCAL",
-            EnvironmentType::CLUSTER => "ENV=CLUSTER",
-            EnvironmentType::CI => "ENV=CI",
-        }
     }
 }
 

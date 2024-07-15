@@ -16,6 +16,12 @@ alias(
 )
 
 alias(
+    name = "common_env",
+    actual = "//queng_common/common_env",
+    visibility = ["//visibility:public"],
+)
+
+alias(
     name = "common_errors",
     actual = "//queng_common/common_errors",
     visibility = ["//visibility:public"],

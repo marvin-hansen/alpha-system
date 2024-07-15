@@ -30,9 +30,9 @@ impl DbGatewayService for DBGWServer {
         let res = self.dbm.insert_portfolio_config(&data).await;
 
         match res {
-            Ok(portfolio_created) => {
-                Ok(Response::new(CreatePortfolioResponse { portfolio_created }))
-            }
+            Ok(_) => Ok(Response::new(CreatePortfolioResponse {
+                portfolio_created: true,
+            })),
             Err(e) => Err(Status::internal(e.to_string())),
         }
     }

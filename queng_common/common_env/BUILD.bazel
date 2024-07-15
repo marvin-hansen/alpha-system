@@ -1,35 +1,31 @@
-load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library", "rust_test_suite")
+load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library")
 
 rust_library(
-    name = "surreal_utils",
+    name = "common_env",
     srcs = glob([
-        "src/**",
+        "src/*.rs",
     ]),
     crate_root = "src/lib.rs",
     tags = [
-        "surreal_utils",
-        "utils",
+        "common",
+        "common_env",
     ],
     visibility = ["//visibility:public"],
     deps = [
-        # Internal crates
-        "//alias:common_config",
-        "//alias:common_exchange",
-        "//alias:db_surreal_manager",
         # External crates
     ],
 )
 
 rust_doc(
     name = "doc",
-    crate = ":surreal_utils",
+    crate = ":common_env",
     tags = ["doc"],
     visibility = ["//visibility:public"],
 )
 
 rust_doc_test(
     name = "doc_test",
-    crate = ":surreal_utils",
+    crate = ":common_env",
     tags = ["doc-test"],
     visibility = ["//visibility:public"],
 )

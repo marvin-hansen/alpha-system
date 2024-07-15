@@ -11,6 +11,7 @@ members = [
     "queng_common/common_config",
     "queng_common/common_errors",
     "queng_common/common_data_bar",
+    "queng_common/common_env",
     "queng_common/common_exchange",
     "queng_common/common_metadata",
     "queng_common/common_trade",
@@ -82,6 +83,7 @@ mddb_client = { path = "queng_clients/mddb_client" }
 # Common
 common_config = { path = "queng_common/common_config"}
 common_data_bar = { path = "queng_common/common_data_bar"}
+common_env = { path = "queng_common/common_env"}
 common_errors = { path = "queng_common/common_errors"}
 common_exchange = { path = "queng_common/common_exchange"}
 common_metadata = { path = "queng_common/common_metadata"}

@@ -1,9 +1,10 @@
 use db_surreal_manager::SurrealDBManager;
 
 mod specs;
-pub(crate) const DB_NAME: &str = "specs";
 
-pub(crate) const SERVICES_TABLE: &str = "services";
+pub(crate) const SERVICE_TABLE: &str = "service";
+
+pub(crate) const PORTFOLIO_TABLE: &str = "portfolio";
 
 #[derive(Clone)]
 pub struct Specs {

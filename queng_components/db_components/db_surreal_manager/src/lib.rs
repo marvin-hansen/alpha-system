@@ -1,4 +1,4 @@
-mod db_cfg;
+mod db_prtf;
 mod db_svc;
 mod db_util;
 pub mod error;

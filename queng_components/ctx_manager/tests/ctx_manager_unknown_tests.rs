@@ -1,6 +1,6 @@
 use std::env;
 
-use common_config::prelude::EnvironmentType;
+use common_env::prelude::EnvironmentType;
 use ctx_manager::CtxManager;
 
 fn setup() {
@@ -13,7 +13,6 @@ fn test_new() {
 
     let ctm = CtxManager::new();
     assert_eq!(ctm.env_type(), EnvironmentType::UNKNOWN);
-    assert_eq!(ctm.env_var(), "ENV=UNKNOWN");
 }
 
 #[test]
@@ -22,7 +21,6 @@ fn test_env_type() {
 
     let ctm = CtxManager::new();
     assert_eq!(ctm.env_type(), EnvironmentType::UNKNOWN);
-    assert_eq!(ctm.env_var(), "ENV=UNKNOWN");
 }
 
 #[test]
@@ -31,7 +29,5 @@ fn test_display() {
 
     let ctm = CtxManager::new();
     assert_eq!(ctm.env_type(), EnvironmentType::UNKNOWN);
-    assert_eq!(ctm.env_var(), "ENV=UNKNOWN");
-
     assert_eq!(ctm.to_string(), "CtxManager { env_type: UNKNOWN }");
 }

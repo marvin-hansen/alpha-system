@@ -1,4 +1,4 @@
-use common_config::prelude::EnvironmentType;
+use common_env::prelude::EnvironmentType;
 
 #[test]
 fn test_default() {

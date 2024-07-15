@@ -6,7 +6,6 @@ pub mod db_surreal_config;
 pub mod encoding;
 pub mod endpoint;
 pub mod endpoint_host;
-pub mod environment_type;
 pub mod message_client_config;
 pub mod metric_config;
 pub mod protocol_type;

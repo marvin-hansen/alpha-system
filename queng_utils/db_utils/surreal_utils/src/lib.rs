@@ -1,6 +1,6 @@
 mod db;
 mod errors;
-mod prelude;
+pub mod prelude;
 mod query_utils;
 mod types;
 
@@ -10,7 +10,6 @@ use common_config::prelude::SurrealDBConfig;
 use db_surreal_manager::SurrealDBManager;
 
 pub struct SurrealUtil {
-    dbg: bool,
     pub specs: Specs,
 }
 
@@ -32,8 +31,8 @@ impl SurrealUtil {
             .await
             .expect("Failed to build SurrealDBManager");
 
-        let specs = Specs::new(dbg, db.clone());
+        let specs = Specs::new(dbg, db);
 
-        Ok(Self { dbg, specs })
+        Ok(Self { specs })
     }
 }

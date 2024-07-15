@@ -13,6 +13,8 @@ mod init;
 pub mod prelude;
 
 pub struct EnvUtil {
+    //
+    // env: Env,
     api_proxy_container_name: String,
     api_proxy_container_port: u16,
     clickhouse_container_name: String,
@@ -38,7 +40,7 @@ impl EnvUtil {
     }
 
     async fn build(dbg: bool) -> Result<Self, EnvironmentError> {
-        // Get configs
+        // Get container configs
         let clickhouse_container_config = clickhouse_container_specs();
         let api_proxy_container_config = api_proxy_container_specs();
         let surreal_db_container_config = surreal_db_container_specs();

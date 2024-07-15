@@ -1,6 +1,6 @@
 use std::env;
 
-use common_config::prelude::EnvironmentType;
+use common_env::prelude::EnvironmentType;
 use ctx_manager::CtxManager;
 use dns_manager::DnsManager;
 
