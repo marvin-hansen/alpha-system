@@ -19,7 +19,6 @@ common_config = { workspace = true }
 common_env = { workspace = true }
 ctx_manager = { workspace = true }
 clickhouse_utils = { workspace = true }
-surreal_utils = { workspace = true }
 docker_utils = { workspace = true }
 specs_utils = { workspace = true }
 kaiko_utils = { workspace = true }

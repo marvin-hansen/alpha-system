@@ -6,7 +6,6 @@ use kaiko_utils::KaikoUtil;
 use specs_utils::prelude::{
     api_proxy_container_specs, clickhouse_container_specs, surreal_db_container_specs,
 };
-use surreal_utils::SurrealUtil;
 
 mod env;
 pub mod errors;
@@ -28,7 +27,6 @@ pub struct EnvUtil {
     //
     docker_util: DockerUtil,
     kaiko_util: KaikoUtil,
-    surreal_util: SurrealUtil,
     dbg: bool,
 }
 
@@ -59,11 +57,6 @@ impl EnvUtil {
             .await
             .expect("EnvUtil: Failed to get Kaiko util");
 
-        let surreal_config = specs_utils::prelude::db_specs::get_surreal_config(&env);
-        let surreal_util = Self::init_surreal_util(&surreal_config, dbg)
-            .await
-            .expect("EnvUtil: Failed to get Surreal util");
-
         // Init containers to check which one is initialized
         let (api_proxy_container_name, api_proxy_container_port, api_proxy_exists) =
             Self::init_container(&api_proxy_container_config, &docker_util)
@@ -93,7 +86,6 @@ impl EnvUtil {
             ci_env_configured,
             docker_util,
             kaiko_util,
-            surreal_util,
             dbg,
         };
 

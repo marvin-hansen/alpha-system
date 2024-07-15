@@ -18,7 +18,6 @@ rust_library(
         "//alias:common_env",
         "//alias:ctx_manager",
         "//alias:clickhouse_utils",
-        "//alias:surreal_utils",
         "//alias:docker_utils",
         "//alias:specs_utils",
         "//alias:kaiko_utils",
