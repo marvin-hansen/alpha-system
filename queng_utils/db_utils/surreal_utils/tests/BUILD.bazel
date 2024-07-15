@@ -17,9 +17,9 @@ rust_test_suite(
         "test.runner-recycling-key": "surreal_utils",
     },
     tags = [
-        "surreal_utils_integration_tests",
         "docker",
         "integration",
+        "surreal_utils_integration_tests",
     ],
     visibility = ["//visibility:public"],
     deps = [

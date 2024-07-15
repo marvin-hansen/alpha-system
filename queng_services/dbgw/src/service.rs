@@ -139,10 +139,12 @@ impl DbGatewayService for DBGWServer {
         let data = service_config_from_proto(rqt.into_inner())
             .expect("Failed to create ServiceConfig from proto");
 
-        let res = self.dbm.insert_service(data).await;
+        let res = self.dbm.insert_service(&data).await;
 
         match res {
-            Ok(service_created) => Ok(Response::new(CreateServiceResponse { service_created })),
+            Ok(_) => Ok(Response::new(CreateServiceResponse {
+                service_created: true,
+            })),
             Err(e) => Err(Status::internal(e.to_string())),
         }
     }

@@ -3,24 +3,23 @@ use crate::prelude::SurrealUtilError;
 use common_config::prelude::ServiceConfig;
 
 impl Specs {
-    pub(crate) async fn import_service_specs(
+    pub(crate) async fn insert_service_vec(
         &self,
         services: &[ServiceConfig],
     ) -> Result<(), SurrealUtilError> {
-        for service in services.to_vec() {
-            println!("{}", service)
-
-            //self.db.insert_service(service).await.expect()
+        match self.db.insert_service_vec(&services.to_vec()).await {
+            Ok(_) => Ok(()),
+            Err(e) => Err(SurrealUtilError::from(e.to_string())),
         }
-
-        Ok(())
     }
 
     pub(crate) async fn insert_service(
         &self,
         service: &ServiceConfig,
     ) -> Result<(), SurrealUtilError> {
-        let _ = self.db.insert_service(service.to_owned()).await.expect("");
-        Ok(())
+        match self.db.insert_service(service).await {
+            Ok(_) => Ok(()),
+            Err(e) => Err(SurrealUtilError::from(e.to_string())),
+        }
     }
 }

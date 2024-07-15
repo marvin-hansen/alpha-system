@@ -8,20 +8,26 @@ use common_config::prelude::{ServiceConfig, ServiceID};
 const SERVICE_TABLE: &str = "service";
 
 impl SurrealDBManager {
-    pub async fn insert_service(&self, data: ServiceConfig) -> Result<bool, SurrealDBError> {
-        let table = SERVICE_TABLE;
-        let id = data.svc_id().to_string();
-
-        let created: Option<ServiceConfig> = self
-            .db
-            .update((table, id))
-            .merge(data)
-            .await
-            .expect("Failed to create service");
+    pub async fn insert_service(&self, data: &ServiceConfig) -> Result<(), SurrealDBError> {
+        let created: Result<Vec<ServiceConfig>, surrealdb::Error> =
+            self.db.insert(SERVICE_TABLE).content(data).await;
 
         match created {
-            None => Ok(false),
-            Some(_) => Ok(true),
+            Ok(_) => Ok(()),
+            Err(e) => Err(SurrealDBError::InsertFailed(e.to_string())),
+        }
+    }
+
+    pub async fn insert_service_vec(
+        &self,
+        data: &Vec<ServiceConfig>,
+    ) -> Result<(), SurrealDBError> {
+        let created: Result<Vec<ServiceConfig>, surrealdb::Error> =
+            self.db.insert(SERVICE_TABLE).content(data).await;
+
+        match created {
+            Ok(_) => Ok(()),
+            Err(e) => Err(SurrealDBError::InsertFailed(e.to_string())),
         }
     }
 
