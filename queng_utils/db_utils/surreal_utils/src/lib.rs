@@ -1,6 +1,7 @@
 mod db;
 mod errors;
 mod prelude;
+mod query_utils;
 mod types;
 
 use crate::db::Specs;
@@ -34,13 +35,5 @@ impl SurrealUtil {
         let specs = Specs::new(dbg, db.clone());
 
         Ok(Self { dbg, specs })
-    }
-}
-
-impl SurrealUtil {
-    fn dbg_print(&self, s: &str) {
-        if self.dbg {
-            println!("[SurrealUtil]: {}", s);
-        }
     }
 }
