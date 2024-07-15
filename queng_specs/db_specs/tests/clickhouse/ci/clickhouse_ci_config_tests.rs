@@ -1,4 +1,4 @@
-use db_specs::prelude::clickhouse_ci_config;
+use db_specs::clickhouse_db::ci::clickhouse_ci_config;
 
 #[test]
 fn test_get_cluster_specs_db_config() {

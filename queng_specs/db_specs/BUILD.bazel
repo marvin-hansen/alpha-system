@@ -12,6 +12,7 @@ rust_library(
     visibility = ["//visibility:public"],
     deps = [
         "//alias:common_config",
+        "//alias:common_env",
     ],
 )
 

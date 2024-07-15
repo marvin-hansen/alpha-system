@@ -43,7 +43,7 @@ impl EnvUtil {
             .expect("[setup_ci]: Failed to configure clickhouse DB");
 
         let ch_configured = self
-            .verify_clickhouse()
+            .verify_clickhouse_db()
             .await
             .expect("[setup_ci]: Failed to verify clickhouse DB");
 

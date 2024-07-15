@@ -71,7 +71,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     // println!("[MDDB]: Symbol table for the default exchange: {}",exchange_symbol_table);
 
     // println!("[MDDB]: Create a new QueryDBManager instance.");
-    let db_config = cfg_manager.clickhouse_db_metadata_config().to_owned();
+    let db_config = cfg_manager.clickhouse_db_config().to_owned();
     let mut q_manager = ClickhouseDBManager::new(db_config)
         .await
         .expect("[MDDB]/main: Failed to create QueryDBManager instance.");

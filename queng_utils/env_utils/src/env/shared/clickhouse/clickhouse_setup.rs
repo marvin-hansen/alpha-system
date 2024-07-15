@@ -56,7 +56,7 @@ impl EnvUtil {
 
         self.dbg_print("[configure_clickhouse]: Check if clickhouse is already configured");
         let tables_created = self
-            .verify_tables_created(ch_utils)
+            .verify_clickhouse_tables_created(ch_utils)
             .await
             .expect("[configure_clickhouse]: Failed to check if all database tables configured");
 
@@ -74,7 +74,7 @@ impl EnvUtil {
 
         self.dbg_print("[configure_clickhouse]: Check if all clickhouse data are already imported");
         let data_imported = self
-            .verify_all_data_imported(ch_utils, kaiko_util, None)
+            .verify_clickhouse_data_imported(ch_utils, kaiko_util, None)
             .await
             .expect("[configure_clickhouse]: Failed to check if all data imported");
 
@@ -120,7 +120,7 @@ impl EnvUtil {
 
         self.dbg_print("[configure_clickhouse]: Verify that all tables are created");
         let tables_created = self
-            .verify_tables_created(ch_utils)
+            .verify_clickhouse_tables_created(ch_utils)
             .await
             .expect("[configure_clickhouse]: Failed to verify if all tables are created");
         assert!(tables_created);

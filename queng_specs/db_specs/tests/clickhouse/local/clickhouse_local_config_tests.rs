@@ -1,4 +1,4 @@
-use db_specs::prelude::clickhouse_local_config;
+use db_specs::clickhouse_db::local::clickhouse_local_config;
 
 #[test]
 fn test_get_specs_db_config() {

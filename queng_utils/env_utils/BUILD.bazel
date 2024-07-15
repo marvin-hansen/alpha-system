@@ -15,6 +15,8 @@ rust_library(
     deps = [
         # Internal crates
         "//alias:common_config",
+        "//alias:common_env",
+        "//alias:ctx_manager",
         "//alias:clickhouse_utils",
         "//alias:surreal_utils",
         "//alias:docker_utils",

@@ -14,9 +14,9 @@ rust_library(
     deps = [
         # Internal crates
         "//alias:common_config",
-        # Container specs
+        "//alias:common_env",
         "//alias:container_specs",
-        # Service specs
+        "//alias:db_specs",
         "//alias:cmdb_specs",
         "//alias:dbgw_specs",
         "//alias:mddb_specs",

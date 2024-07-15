@@ -1,38 +1,4 @@
-use common_config::prelude::{
-    ClickHouseConfig, ServiceConfig, ServiceID, SurrealDBConfig, SvcEnvConfig,
-};
-use common_env::prelude::EnvironmentType;
-use db_specs::prelude::{
-    clickhouse_ci_config, clickhouse_cluster_config, clickhouse_local_config, surreal_db_ci_config,
-    surreal_db_cluster_config, surreal_db_local_config,
-};
-
-pub(crate) fn get_db_specs_config(env_type: &EnvironmentType) -> ClickHouseConfig {
-    match env_type {
-        EnvironmentType::LOCAL => clickhouse_local_config::get_local_specs_db_config(),
-        EnvironmentType::CI => clickhouse_ci_config::get_ci_specs_db_config(),
-        EnvironmentType::CLUSTER => clickhouse_cluster_config::get_cluster_specs_db_config(),
-        _ => ClickHouseConfig::default(),
-    }
-}
-
-pub(crate) fn get_db_metadata_config(env_type: &EnvironmentType) -> ClickHouseConfig {
-    match env_type {
-        EnvironmentType::LOCAL => clickhouse_local_config::get_local_metadata_db_config(),
-        EnvironmentType::CI => clickhouse_ci_config::get_ci_metadata_db_config(),
-        EnvironmentType::CLUSTER => clickhouse_cluster_config::get_cluster_metadata_db_config(),
-        _ => ClickHouseConfig::default(),
-    }
-}
-
-pub(crate) fn get_db_surreal_config(env_type: &EnvironmentType) -> SurrealDBConfig {
-    match env_type {
-        EnvironmentType::LOCAL => surreal_db_local_config::get_local_surreal_db_config(),
-        EnvironmentType::CI => surreal_db_ci_config::get_ci_surreal_db_config(),
-        EnvironmentType::CLUSTER => surreal_db_cluster_config::get_cluster_surreal_db_config(),
-        _ => SurrealDBConfig::default(),
-    }
-}
+use common_config::prelude::{ServiceConfig, ServiceID, SvcEnvConfig};
 
 pub(crate) fn get_svc_env_config(
     service_id: ServiceID,

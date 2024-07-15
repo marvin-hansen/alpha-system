@@ -1,9 +1,11 @@
 use crate::EnvUtil;
 use clickhouse_utils::prelude::ClickHouseUtilError;
 use clickhouse_utils::ClickhouseUtil;
+use common_env::prelude::EnvironmentType;
 use docker_utils::DockerUtil;
 use kaiko_utils::KaikoUtil;
 use specs_utils::prelude::clickhouse_container_specs;
+use surreal_utils::SurrealUtil;
 
 impl EnvUtil {
     pub(super) async fn get_new_clickhouse_util(
@@ -56,6 +58,15 @@ impl EnvUtil {
     }
     pub fn ci_env_configured(&self) -> bool {
         self.ci_env_configured
+    }
+    pub fn env(&self) -> EnvironmentType {
+        self.env
+    }
+    pub fn surreal_util(&self) -> &SurrealUtil {
+        &self.surreal_util
+    }
+    pub fn dbg(&self) -> bool {
+        self.dbg
     }
 }
 

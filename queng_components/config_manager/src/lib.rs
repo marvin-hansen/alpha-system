@@ -5,6 +5,8 @@ use common_config::prelude::{
 use common_env::prelude::EnvironmentType;
 use common_exchange::prelude::ExchangeID;
 use ctx_manager::CtxManager;
+use db_specs::clickhouse_db;
+use db_specs::prelude::surreal_db;
 use dns_manager::DnsManager;
 use exchange_specs::prelude;
 use exchange_specs::prelude::{
@@ -32,8 +34,7 @@ pub struct CfgManager<'l> {
     /// Service environment configuration for each service
     svc_env_config: SvcEnvConfig,
     /// ClickHouse configuration.
-    db_specs_config: ClickHouseConfig,
-    db_metadata_config: ClickHouseConfig,
+    db_clickhouse_config: ClickHouseConfig,
     db_surreal_config: SurrealDBConfig,
     /// Default exchange
     default_exchange: ExchangeID,
@@ -56,9 +57,8 @@ impl<'l> CfgManager<'l> {
         let env_type = ctx_manager.env_type();
         let svc_env_config = get_svc_env_config(svc, &svc_config);
         // DB Config
-        let db_specs_config = utils::get_db_specs_config(&env_type);
-        let db_metadata_config = utils::get_db_metadata_config(&env_type);
-        let db_surreal_config = utils::get_db_surreal_config(&env_type);
+        let db_clickhouse_config = clickhouse_db::get_clickhouse_config(&env_type);
+        let db_surreal_config = surreal_db::get_surreal_config(&env_type);
 
         // Move this into symbol_manager
         let default_exchange = prelude::get_default_exchange();
@@ -73,8 +73,7 @@ impl<'l> CfgManager<'l> {
             svc,
             svc_config,
             svc_env_config,
-            db_specs_config,
-            db_metadata_config,
+            db_clickhouse_config,
             db_surreal_config,
             default_exchange,
             exchanges,

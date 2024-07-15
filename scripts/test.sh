@@ -22,7 +22,7 @@ command bazel test //... --test_tag_filters=unit
 echo "=============="
 echo "Setup Containers"
 echo "=============="
-command bazel test //... --test_tag_filters=env_container_setup
+command bazel test //... --test_tag_filters=env_container_setup --test_env=ENV=LOCAL
 
 echo "====================="
 echo "Run integration tests"
@@ -33,12 +33,12 @@ echo ""
 echo "====================="
 echo "Test: API Proxy integration"
 echo "====================="
-command bazel test //... --test_tag_filters=clickhouse_utils_integration_tests
+command bazel test //... --test_tag_filters=clickhouse_utils_integration_tests --test_env=ENV=LOCAL
 
 echo "====================="
 echo "Test: Clickhouse Integration"
 echo "====================="
-command bazel test //... --test_tag_filters=clickhouse_utils_integration_tests
+command bazel test //... --test_tag_filters=clickhouse_utils_integration_tests --test_env=ENV=LOCAL
 
 echo "====================="
 echo "Build container images"

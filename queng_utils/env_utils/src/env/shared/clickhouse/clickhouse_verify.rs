@@ -21,7 +21,7 @@ impl EnvUtil {
     ///
     /// - `EnvironmentError` if any step fails.
     ///
-    pub(crate) async fn verify_clickhouse(&self) -> Result<bool, EnvironmentError> {
+    pub(crate) async fn verify_clickhouse_db(&self) -> Result<bool, EnvironmentError> {
         //
         self.dbg_print("Get Clickhouse util");
         let ch_utils = &self
@@ -34,7 +34,7 @@ impl EnvUtil {
 
         self.dbg_print("[verify_clickhouse]: Check if all databases are created");
         let dbs_created = self
-            .verify_databases_created(ch_utils)
+            .verify_clickhouse_databases_created(ch_utils)
             .await
             .expect("[verify_clickhouse]: Failed to check if all databases were created");
 
@@ -46,7 +46,7 @@ impl EnvUtil {
 
         self.dbg_print("[verify_clickhouse]: Check if clickhouse tables are already configured");
         let tables_created = self
-            .verify_tables_created(ch_utils)
+            .verify_clickhouse_tables_created(ch_utils)
             .await
             .expect("[verify_clickhouse]: Failed to check if all database tables configured");
 
@@ -58,7 +58,7 @@ impl EnvUtil {
 
         self.dbg_print("[verify_clickhouse]: Verify that all data were imported");
         let data_imported = self
-            .verify_all_data_imported(ch_utils, kaiko_util, None)
+            .verify_clickhouse_data_imported(ch_utils, kaiko_util, None)
             .await
             .expect("[verify_clickhouse]: Failed to verify data import Clickhouse");
 
@@ -85,7 +85,7 @@ impl EnvUtil {
     /// * `Ok(false)` if any database does not exist.
     /// * `Err(EnvironmentError)` if an error occurs during the verification process.
     ///
-    async fn verify_databases_created(
+    async fn verify_clickhouse_databases_created(
         &self,
         ch_utils: &ClickhouseUtil,
     ) -> Result<bool, EnvironmentError> {
@@ -114,7 +114,7 @@ impl EnvUtil {
     /// - `Ok(false)` if any metadata table does not exist.
     /// - `Err(EnvironmentError)` if an error occurs during the verification process.
     ///
-    pub(crate) async fn verify_tables_created(
+    pub(crate) async fn verify_clickhouse_tables_created(
         &self,
         ch_utils: &ClickhouseUtil,
     ) -> Result<bool, EnvironmentError> {
@@ -159,7 +159,7 @@ impl EnvUtil {
     ///
     /// This method can return an error of type `EnvironmentError`.
     ///
-    pub(crate) async fn verify_all_data_imported(
+    pub(crate) async fn verify_clickhouse_data_imported(
         &self,
         ch_utils: &ClickhouseUtil,
         kaiko_util: &KaikoUtil,

@@ -15,9 +15,9 @@ path = "src/lib.rs"
 [dependencies]
 # Internal crates
 common_config = { workspace = true }
-# Container specs
+common_env = { workspace = true }
 container_specs = { workspace = true }
-# Service specs
+db_specs = { workspace = true }
 cmdb_specs = { workspace = true }
 dbgw_specs = { workspace = true }
 mddb_specs = { workspace = true }
