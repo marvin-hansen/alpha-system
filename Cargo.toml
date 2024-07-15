@@ -55,7 +55,7 @@ members = [
     "queng_utils/math_utils",
     "queng_utils/proto_utils",
     "queng_utils/service_utils",
-    "queng_utils/specs_utils",
+    "queng_utils/specs_utils", "queng_components/db_components/db_spec_manager",
 ]
 
 

@@ -321,6 +321,7 @@ crate.spec(
     package = "diesel-async",
     version = "0.4.1",
 )
+
 #
 crate.spec(
     default_features = False,
@@ -328,6 +329,7 @@ crate.spec(
     package = "surrealdb",
     version = "1.5.4",
 )
+
 #
 crate.spec(
     package = "config-file",
