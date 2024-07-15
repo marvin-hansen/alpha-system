@@ -1,6 +1,10 @@
-use crate::error::SpecDBError;
+use error::spec_db_error::SpecDBError;
 
+mod db_portfolio;
+mod db_service;
 mod error;
+pub mod prelude;
+mod types;
 
 pub struct SpecDBManager {}
 

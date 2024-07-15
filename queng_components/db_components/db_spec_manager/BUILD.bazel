@@ -3,7 +3,7 @@ load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library")
 rust_library(
     name = "db_spec_manager",
     srcs = glob([
-        "src/*.rs",
+        "src/**",
     ]),
     crate_root = "src/lib.rs",
     visibility = ["//visibility:public"],
