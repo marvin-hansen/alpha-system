@@ -114,12 +114,6 @@ alias(
 )
 
 alias(
-    name = "db_spec_manager",
-    actual = "//queng_components/db_components/db_spec_manager",
-    visibility = ["//visibility:public"],
-)
-
-alias(
     name = "db_surreal_manager",
     actual = "//queng_components/db_components/db_surreal_manager",
     visibility = ["//visibility:public"],

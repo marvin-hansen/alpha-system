@@ -51,7 +51,6 @@ impl SymbolManager {
     /// Returns a `String` containing the symbol table name in the format
     /// `{exchange_name}_symbols`, or a `LookupError` if the exchange could not be found.
     ///
-    /// ```
     pub fn get_symbol_table(&mut self, exchange_id: u16) -> Result<String, LookupError> {
         //
         let exchange_name = match self.get_exchange_name(exchange_id) {

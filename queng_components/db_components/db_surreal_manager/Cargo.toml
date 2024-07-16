@@ -22,5 +22,4 @@ ctx_manager = { workspace = true }
 config_manager = { workspace = true }
 
 # External crates
-surrealdb = { workspace = true }
 tokio = { workspace = true }

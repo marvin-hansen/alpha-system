@@ -6,32 +6,26 @@ mod types;
 
 use crate::db::Specs;
 use crate::prelude::SurrealUtilError;
-use common_database::prelude::SurrealDBConfig;
-use db_surreal_manager::SurrealDBManager;
 
 pub struct SurrealUtil {
     pub specs: Specs,
 }
 
 impl SurrealUtil {
-    pub async fn new(db_config: &SurrealDBConfig) -> Result<Self, SurrealUtilError> {
-        Self::build(false, db_config).await
+    pub async fn new() -> Result<Self, SurrealUtilError> {
+        Self::build(false).await
     }
 
-    pub async fn with_debug(db_config: &SurrealDBConfig) -> Result<Self, SurrealUtilError> {
-        Self::build(true, db_config).await
+    pub async fn with_debug() -> Result<Self, SurrealUtilError> {
+        Self::build(true).await
     }
 
-    async fn build(dbg: bool, db_config: &SurrealDBConfig) -> Result<Self, SurrealUtilError> {
+    async fn build(dbg: bool) -> Result<Self, SurrealUtilError> {
         if dbg {
             println!("[ClickhouseUtil]: Debug mode enabled");
         }
 
-        let db = SurrealDBManager::new(db_config)
-            .await
-            .expect("Failed to build SurrealDBManager");
-
-        let specs = Specs::new(dbg, db);
+        let specs = Specs::new(dbg);
 
         Ok(Self { specs })
     }

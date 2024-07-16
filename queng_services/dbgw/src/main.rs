@@ -30,8 +30,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         async { CfgManager::new(SVC_ID, svc_config, &ctx_manager, &dns_manager) }.await;
 
     // Configure database manager
-    let db_config = cfg_manager.surreal_db_config();
-    let dbm = SurrealDBManager::new(db_config)
+    let dbm = SurrealDBManager::new()
         .await
         .expect("Failed to create DB Manager");
 

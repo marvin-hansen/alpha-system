@@ -28,7 +28,6 @@ rust_test_suite(
         # Internal crates
         "//alias:common_config",
         "//alias:common_exchange",
-        "//alias:db_surreal_manager",
         # External crates
         "@crates//:tokio",
     ],

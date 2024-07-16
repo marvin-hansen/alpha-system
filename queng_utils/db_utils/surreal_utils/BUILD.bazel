@@ -16,7 +16,6 @@ rust_library(
         "//alias:common_config",
         "//alias:common_database",
         "//alias:common_exchange",
-        "//alias:db_surreal_manager",
         # External crates
     ],
 )

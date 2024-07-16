@@ -1,2 +1,2 @@
-pub use crate::error::SurrealDBError;
+pub use crate::error::PostgresDBError;
 pub use crate::SurrealDBManager;
