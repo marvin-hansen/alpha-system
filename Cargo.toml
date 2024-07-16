@@ -19,7 +19,7 @@ members = [
     "queng_components/config_manager",
     "queng_components/ctx_manager",
     "queng_components/db_components/db_clickhouse_manager",
-    "queng_components/db_components/db_surreal_manager",
+    "queng_components/db_components/db_postgres_manager",
     "queng_components/dns_manager",
     "queng_components/pattern_manager",
     "queng_components/symbol_manager",
@@ -95,7 +95,7 @@ config_manager = { path = "queng_components/config_manager" }
 ctx_manager = { path = "queng_components/ctx_manager" }
 # DB Components
 db_clickhouse_manager = { path = "queng_components/db_components/db_clickhouse_manager" }
-db_surreal_manager = { path = "queng_components/db_components/db_surreal_manager" }
+db_postgres_manager = { path = "queng_components/db_components/db_postgres_manager" }
 #
 dns_manager = { path = "queng_components/dns_manager" }
 pattern_manager = { path = "queng_components/pattern_manager" }

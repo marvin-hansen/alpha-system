@@ -1,10 +1,10 @@
 use crate::error::PostgresDBError;
-use crate::SurrealDBManager;
+use crate::PostgresDBManager;
 use common_config::prelude::{ServiceConfig, ServiceID};
 
 // const SERVICE_TABLE: &str = "service";
 
-impl SurrealDBManager {
+impl PostgresDBManager {
     pub async fn insert_service(&self, _data: &ServiceConfig) -> Result<(), PostgresDBError> {
         Err(PostgresDBError::NotImplementedError(
             "Function not implemented".to_string(),

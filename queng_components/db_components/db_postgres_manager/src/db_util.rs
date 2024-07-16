@@ -1,7 +1,7 @@
 use crate::error::PostgresDBError;
-use crate::SurrealDBManager;
+use crate::PostgresDBManager;
 
-impl SurrealDBManager {
+impl PostgresDBManager {
     pub async fn query(&self, _query: &str) -> Result<(), PostgresDBError> {
         Err(PostgresDBError::NotImplementedError(
             "Function query".to_string(),

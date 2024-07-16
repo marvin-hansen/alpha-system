@@ -1,7 +1,7 @@
 use tonic::{Request, Response, Status};
 
 use common_config::prelude::ServiceID;
-use db_surreal_manager::prelude::SurrealDBManager;
+use db_postgres_manager::prelude::PostgresDBManager;
 use proto_bindings::proto::db_gateway_service_server::DbGatewayService;
 use proto_bindings::proto::*;
 use proto_utils::portfolio_proto_utils::{portfolio_config_from_proto, portfolio_config_to_proto};
@@ -9,11 +9,11 @@ use proto_utils::service_config_proto_utils::{service_config_from_proto, service
 
 #[derive(Clone)]
 pub struct DBGWServer {
-    dbm: SurrealDBManager,
+    dbm: PostgresDBManager,
 }
 
 impl DBGWServer {
-    pub fn new(dbm: SurrealDBManager) -> Self {
+    pub fn new(dbm: PostgresDBManager) -> Self {
         Self { dbm }
     }
 }

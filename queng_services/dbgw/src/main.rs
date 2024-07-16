@@ -1,7 +1,7 @@
 use common_config::prelude::ServiceID;
 use config_manager::CfgManager;
 use ctx_manager::CtxManager;
-use db_surreal_manager::SurrealDBManager;
+use db_postgres_manager::PostgresDBManager;
 use dns_manager::DnsManager;
 use mimalloc::MiMalloc;
 use proto_bindings::proto::db_gateway_service_server::DbGatewayServiceServer;
@@ -30,7 +30,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         async { CfgManager::new(SVC_ID, svc_config, &ctx_manager, &dns_manager) }.await;
 
     // Configure database manager
-    let dbm = SurrealDBManager::new()
+    let dbm = PostgresDBManager::new()
         .await
         .expect("Failed to create DB Manager");
 

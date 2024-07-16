@@ -114,8 +114,8 @@ alias(
 )
 
 alias(
-    name = "db_surreal_manager",
-    actual = "//queng_components/db_components/db_surreal_manager",
+    name = "db_postgres_manager",
+    actual = "//queng_components/db_components/db_postgres_manager",
     visibility = ["//visibility:public"],
 )
 

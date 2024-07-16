@@ -1,10 +1,10 @@
 use crate::error::PostgresDBError;
-use crate::SurrealDBManager;
+use crate::PostgresDBManager;
 use common_exchange::prelude::PortfolioConfig;
 
 // const PORTFOLIO_TABLE: &str = "portfolio";
 
-impl SurrealDBManager {
+impl PostgresDBManager {
     /// add_portfolio_config that adds a PortfolioConfig config to the database
     /// Returns true in case of success, or false in case of insert error,
     /// or an error in case of a database error.
