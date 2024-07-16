@@ -26,6 +26,7 @@ rust_test_suite(
         # Crate under test
         "//alias:postgres_utils",
         # Internal crates
+        "//alias:env_utils",
         "//alias:common_config",
         "//alias:common_exchange",
         # External crates
