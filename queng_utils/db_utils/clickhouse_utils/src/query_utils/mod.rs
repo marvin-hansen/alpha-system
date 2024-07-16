@@ -2,7 +2,6 @@ pub(crate) mod ddl_utils;
 
 use crate::error::ClickHouseQueryError;
 use crate::types::{CountRow, ExistsDBRow, ExistsRow};
-use common_errors::prelude::ValidationError;
 use klickhouse::{Client, KlickhouseError};
 
 /// Executes a query on the specified table in the ClickHouse database.
