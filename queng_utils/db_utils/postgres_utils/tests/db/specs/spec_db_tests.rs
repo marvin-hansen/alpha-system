@@ -28,15 +28,18 @@ async fn test_spec_db() {
     assert!(res.is_ok());
     let mut pg_utils = res.unwrap();
 
+    // Test create DB
     let result = pg_utils.specs.create_spec_db().await;
     assert!(result.is_ok()); // Check if the operation was successful
 
+    // Test verify DB
     let res = pg_utils.specs.verify_specs_db_exists().await;
     assert!(res.is_ok());
 
     let created = res.unwrap();
     assert!(created);
 
+    // Test delete DB
     let res = pg_utils.specs.drop_spec_db().await;
     assert!(res.is_ok());
 }
