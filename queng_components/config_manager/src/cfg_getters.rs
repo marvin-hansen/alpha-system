@@ -1,6 +1,6 @@
 use crate::CfgManager;
 use common_config::prelude::{ServiceConfig, ServiceID};
-use common_database::prelude::{ClickHouseConfig, SurrealDBConfig};
+use common_database::prelude::{ClickHouseConfig, PostgresDBConfig};
 use common_env::prelude::EnvironmentType;
 use common_errors::prelude::InitError;
 use common_exchange::prelude::ExchangeID;
@@ -29,8 +29,8 @@ impl<'l> CfgManager<'l> {
         &self.db_clickhouse_config
     }
 
-    pub fn surreal_db_config(&self) -> &SurrealDBConfig {
-        &self.db_surreal_config
+    pub fn surreal_db_config(&self) -> &PostgresDBConfig {
+        &self.db_postgres_config
     }
 }
 

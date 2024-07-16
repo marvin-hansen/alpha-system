@@ -1,9 +1,6 @@
 use common_database::prelude::ClickHouseConfig;
 
-pub fn get_local_specs_db_config() -> ClickHouseConfig {
-    base_local_db_config("specs")
-}
-pub fn get_local_metadata_db_config() -> ClickHouseConfig {
+pub fn get_local_db_config() -> ClickHouseConfig {
     base_local_db_config("metadata")
 }
 

@@ -39,6 +39,19 @@ impl PostgresDBConfig {
     }
 }
 
+impl Default for PostgresDBConfig {
+    fn default() -> Self {
+        Self::new(
+            "localhost".to_string(),
+            "postgres".to_string(),
+            "postgres".to_string(),
+            "test".to_string(),
+            5432,
+            5,
+        )
+    }
+}
+
 impl PostgresDBConfig {
     /// PostgresSQL connection string from the DBConfig.
     ///

@@ -1,9 +1,6 @@
 use common_database::prelude::ClickHouseConfig;
 
-pub fn get_ci_specs_db_config() -> ClickHouseConfig {
-    base_ci_db_config("specs")
-}
-pub fn get_ci_metadata_db_config() -> ClickHouseConfig {
+pub fn get_ci_db_config() -> ClickHouseConfig {
     base_ci_db_config("metadata")
 }
 

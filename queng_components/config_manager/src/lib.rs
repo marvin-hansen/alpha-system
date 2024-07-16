@@ -1,11 +1,10 @@
 use crate::utils::get_svc_env_config;
 use common_config::prelude::{ServiceConfig, ServiceID, SvcEnvConfig};
-use common_database::prelude::{ClickHouseConfig, SurrealDBConfig};
+use common_database::prelude::{ClickHouseConfig, PostgresDBConfig};
 use common_env::prelude::EnvironmentType;
 use common_exchange::prelude::ExchangeID;
 use ctx_manager::CtxManager;
-use db_specs::clickhouse_db;
-use db_specs::prelude::surreal_db;
+use db_specs::{clickhouse_db, postgres_db};
 use dns_manager::DnsManager;
 use exchange_specs::prelude;
 use exchange_specs::prelude::{
@@ -34,7 +33,7 @@ pub struct CfgManager<'l> {
     svc_env_config: SvcEnvConfig,
     /// ClickHouse configuration.
     db_clickhouse_config: ClickHouseConfig,
-    db_surreal_config: SurrealDBConfig,
+    db_postgres_config: PostgresDBConfig,
     /// Default exchange
     default_exchange: ExchangeID,
     /// Vector of all supported exchanges.
@@ -57,7 +56,7 @@ impl<'l> CfgManager<'l> {
         let svc_env_config = get_svc_env_config(svc, &svc_config);
         // DB Config
         let db_clickhouse_config = clickhouse_db::get_clickhouse_config(&env_type);
-        let db_surreal_config = surreal_db::get_surreal_config(&env_type);
+        let db_postgres_config = postgres_db::get_postgres_config(&env_type);
 
         // Move this into symbol_manager
         let default_exchange = prelude::get_default_exchange();
@@ -73,7 +72,7 @@ impl<'l> CfgManager<'l> {
             svc_config,
             svc_env_config,
             db_clickhouse_config,
-            db_surreal_config,
+            db_postgres_config,
             default_exchange,
             exchanges,
             exchanges_id_names,
