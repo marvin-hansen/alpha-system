@@ -17,25 +17,17 @@ pub struct ClickhouseUtil {
 }
 
 impl ClickhouseUtil {
-    pub async fn new(dsn: String) -> Result<Self, ClickHouseUtilError> {
+    pub async fn new(dsn: &str) -> Result<Self, ClickHouseUtilError> {
         let client = Self::get_clickhouse_client(dsn)
             .await
             .expect("[ClickhouseUtil::new]: Failed to construct client");
         Self::build(false, client)
     }
 
-    pub async fn with_debug(dsn: String) -> Result<Self, ClickHouseUtilError> {
+    pub async fn with_debug(dsn: &str) -> Result<Self, ClickHouseUtilError> {
         let client = Self::get_clickhouse_client(dsn)
             .await
             .expect("[ClickhouseUtil::with_debug]: Failed to construct client");
-        Self::build(true, client)
-    }
-
-    pub fn from_client(client: Client) -> Result<Self, ClickHouseUtilError> {
-        Self::build(false, client)
-    }
-
-    pub fn from_client_with_debug(client: Client) -> Result<Self, ClickHouseUtilError> {
         Self::build(true, client)
     }
 
@@ -51,8 +43,8 @@ impl ClickhouseUtil {
         })
     }
 
-    async fn get_clickhouse_client(dsn: String) -> Result<Client, ClickHouseUtilError> {
-        let client = Client::connect(dsn.clone(), ClientOptions::default())
+    async fn get_clickhouse_client(dsn: &str) -> Result<Client, ClickHouseUtilError> {
+        let client = Client::connect(dsn, ClientOptions::default())
             .await
             .unwrap_or_else(|_| {
                 panic!(

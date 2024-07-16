@@ -22,7 +22,7 @@ impl PostgresUtil {
 
     async fn build(dbg: bool) -> Result<Self, SurrealUtilError> {
         if dbg {
-            println!("[ClickhouseUtil]: Debug mode enabled");
+            println!("[PostgresUtil]: Debug mode enabled");
         }
 
         let specs = Specs::new(dbg);

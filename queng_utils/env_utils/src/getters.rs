@@ -13,7 +13,7 @@ impl EnvUtil {
         let container_config = clickhouse_container_specs();
 
         // DB connection string
-        let dsn = format!(
+        let dsn = &format!(
             "{}:{}",
             container_config.url(),
             container_config.connection_port(),

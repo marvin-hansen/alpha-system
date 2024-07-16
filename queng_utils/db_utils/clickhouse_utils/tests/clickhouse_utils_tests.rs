@@ -22,7 +22,7 @@ async fn setup_ci_env() {
 async fn setup_db_test() {
     setup_ci_env().await;
 
-    let dsn = "127.0.0.1:9000".to_string();
+    let dsn = "127.0.0.1:9000";
     let result = ClickhouseUtil::new(dsn).await;
 
     assert!(result.is_ok());
