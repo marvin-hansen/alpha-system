@@ -1,8 +1,8 @@
 use crate::db::Specs;
-use crate::prelude::SurrealUtilError;
+use crate::prelude::PostgresUtilError;
 
 impl Specs {
-    pub async fn create_service_table(&self) -> Result<(), SurrealUtilError> {
-        return Err(SurrealUtilError::from("Not implemented".to_string()));
+    pub async fn create_service_table(&self) -> Result<(), PostgresUtilError> {
+        return Err(PostgresUtilError::from("Not implemented".to_string()));
     }
 }

@@ -1,5 +1,5 @@
 use crate::db::Specs;
-use crate::prelude::SurrealUtilError;
+use crate::prelude::PostgresUtilError;
 
 impl Specs {
     /// Asynchronously drops all the necessary tables for the Surreal database.
@@ -17,7 +17,7 @@ impl Specs {
     ///
     /// This method can return an error of type `SurrealUtilError` if any error occurs during the dropping process.
     ///
-    pub async fn drop_all_specs_tables(&self) -> Result<(), SurrealUtilError> {
+    pub async fn drop_all_specs_tables(&self) -> Result<(), PostgresUtilError> {
         self.dbg_print("/drop_all_specs_tables: drop_portfolio_table");
         self.drop_portfolio_table()
             .await

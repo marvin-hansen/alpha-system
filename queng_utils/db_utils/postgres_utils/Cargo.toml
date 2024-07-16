@@ -18,3 +18,6 @@ path = "src/lib.rs"
 common_config = {workspace = true}
 common_database = {workspace = true}
 common_exchange = {workspace = true}
+# External crates
+diesel = {workspace = true}
+diesel-async = {workspace = true}

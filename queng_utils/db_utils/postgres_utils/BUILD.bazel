@@ -17,6 +17,8 @@ rust_library(
         "//alias:common_database",
         "//alias:common_exchange",
         # External crates
+        "@crates//:diesel",
+        "@crates//:diesel-async",
     ],
 )
 

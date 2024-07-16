@@ -18,23 +18,21 @@ pub struct ClickhouseUtil {
 
 impl ClickhouseUtil {
     pub async fn new(dsn: &str) -> Result<Self, ClickHouseUtilError> {
-        let client = Self::get_clickhouse_client(dsn)
-            .await
-            .expect("[ClickhouseUtil::new]: Failed to construct client");
-        Self::build(false, client)
+        Self::build(false, dsn).await
     }
 
     pub async fn with_debug(dsn: &str) -> Result<Self, ClickHouseUtilError> {
-        let client = Self::get_clickhouse_client(dsn)
-            .await
-            .expect("[ClickhouseUtil::with_debug]: Failed to construct client");
-        Self::build(true, client)
+        Self::build(true, dsn).await
     }
 
-    fn build(dbg: bool, client: Client) -> Result<Self, ClickHouseUtilError> {
+    async fn build(dbg: bool, dsn: &str) -> Result<Self, ClickHouseUtilError> {
         if dbg {
             println!("[ClickhouseUtil]: Debug mode enabled");
         }
+
+        let client = Self::get_clickhouse_client(dsn)
+            .await
+            .expect("[ClickhouseUtil::with_debug]: Failed to construct database client");
 
         Ok(Self {
             dbg,
