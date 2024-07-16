@@ -288,8 +288,8 @@ alias(
 )
 
 alias(
-    name = "surreal_utils",
-    actual = "//queng_utils/db_utils/surreal_utils",
+    name = "postgres_utils",
+    actual = "//queng_utils/db_utils/postgres_utils",
     visibility = ["//visibility:public"],
 )
 

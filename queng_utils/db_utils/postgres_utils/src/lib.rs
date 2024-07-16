@@ -7,11 +7,11 @@ mod types;
 use crate::db::Specs;
 use crate::prelude::SurrealUtilError;
 
-pub struct SurrealUtil {
+pub struct PostgresUtil {
     pub specs: Specs,
 }
 
-impl SurrealUtil {
+impl PostgresUtil {
     pub async fn new() -> Result<Self, SurrealUtilError> {
         Self::build(false).await
     }

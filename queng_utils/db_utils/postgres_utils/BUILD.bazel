@@ -1,7 +1,7 @@
 load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library", "rust_test_suite")
 
 rust_library(
-    name = "surreal_utils",
+    name = "postgres_utils",
     srcs = glob([
         "src/**",
     ]),
@@ -22,14 +22,14 @@ rust_library(
 
 rust_doc(
     name = "doc",
-    crate = ":surreal_utils",
+    crate = ":postgres_utils",
     tags = ["doc"],
     visibility = ["//visibility:public"],
 )
 
 rust_doc_test(
     name = "doc_test",
-    crate = ":surreal_utils",
+    crate = ":postgres_utils",
     tags = ["doc-test"],
     visibility = ["//visibility:public"],
 )
