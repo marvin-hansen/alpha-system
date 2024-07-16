@@ -1,4 +1,4 @@
-use common_config::prelude::ClickHouseConfig;
+use common_database::prelude::ClickHouseConfig;
 
 pub fn get_local_specs_db_config() -> ClickHouseConfig {
     base_local_db_config("specs")

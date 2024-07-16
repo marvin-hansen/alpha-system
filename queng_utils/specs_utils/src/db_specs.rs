@@ -1,4 +1,4 @@
-use common_config::prelude::{ClickHouseConfig, SurrealDBConfig};
+use common_database::prelude::{ClickHouseConfig, SurrealDBConfig};
 use common_env::prelude::EnvironmentType;
 
 pub fn get_clickhouse_config(env_type: &EnvironmentType) -> ClickHouseConfig {

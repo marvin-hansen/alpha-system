@@ -1,7 +1,7 @@
 use crate::surreal_db::ci::surreal_db_ci_config;
 use crate::surreal_db::cluster::surreal_db_cluster_config;
 use crate::surreal_db::local::surreal_db_local_config;
-use common_config::prelude::SurrealDBConfig;
+use common_database::prelude::SurrealDBConfig;
 use common_env::prelude::EnvironmentType;
 
 pub mod ci;

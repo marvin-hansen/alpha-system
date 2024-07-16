@@ -1,5 +1,5 @@
-use common_config::prelude::ClickHouseConfig;
 use common_data_bar::prelude::TimeResolution;
+use common_database::prelude::ClickHouseConfig;
 use db_clickhouse_manager::ClickhouseDBManager;
 use futures::StreamExt;
 use std::str::FromStr;

@@ -1,5 +1,3 @@
-mod click_house_config_tests;
-mod db_surreal_config_tests;
 mod encoding_tests;
 mod endpoint_host_tests;
 mod endpoint_tests;

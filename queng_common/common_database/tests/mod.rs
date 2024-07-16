@@ -1,1 +1,2 @@
-mod pg_db_config_tests;
+mod clickhouse;
+mod pg;

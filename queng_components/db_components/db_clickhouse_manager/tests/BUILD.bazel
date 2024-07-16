@@ -15,7 +15,7 @@ rust_test_suite(
         "//alias:db_clickhouse_manager",
         # Internal crates
         "//alias:common_data_bar",
-        "//alias:common_config",
+        "//alias:common_database",
         "//alias:clickhouse_utils",
         # External crates
         "@crates//:chrono",

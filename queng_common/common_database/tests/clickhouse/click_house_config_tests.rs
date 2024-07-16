@@ -1,4 +1,4 @@
-use common_config::prelude::ClickHouseConfig;
+use common_database::prelude::ClickHouseConfig;
 
 #[test]
 fn test_click_house_config_new() {

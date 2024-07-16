@@ -14,7 +14,7 @@ rust_test_suite(
         # Crate to test
         "//alias:db_surreal_manager",
         # Internal crates
-        "//alias:common_config",
+        "//alias:common_database",
         "//alias:ctx_manager",
         "//alias:config_manager",
         "//alias:env_utils",

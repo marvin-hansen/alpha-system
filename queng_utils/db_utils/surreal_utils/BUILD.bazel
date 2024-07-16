@@ -14,6 +14,7 @@ rust_library(
     deps = [
         # Internal crates
         "//alias:common_config",
+        "//alias:common_database",
         "//alias:common_exchange",
         "//alias:db_surreal_manager",
         # External crates

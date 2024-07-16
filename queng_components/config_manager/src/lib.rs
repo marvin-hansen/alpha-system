@@ -1,7 +1,6 @@
 use crate::utils::get_svc_env_config;
-use common_config::prelude::{
-    ClickHouseConfig, ServiceConfig, ServiceID, SurrealDBConfig, SvcEnvConfig,
-};
+use common_config::prelude::{ServiceConfig, ServiceID, SvcEnvConfig};
+use common_database::prelude::{ClickHouseConfig, SurrealDBConfig};
 use common_env::prelude::EnvironmentType;
 use common_exchange::prelude::ExchangeID;
 use ctx_manager::CtxManager;

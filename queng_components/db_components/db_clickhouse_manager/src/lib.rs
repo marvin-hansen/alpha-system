@@ -6,7 +6,7 @@ mod stream_ohlcv;
 mod stream_trades;
 pub mod types;
 
-use common_config::prelude::ClickHouseConfig;
+use common_database::prelude::ClickHouseConfig;
 use klickhouse::{Client, ClientOptions};
 use std::fmt::Error;
 

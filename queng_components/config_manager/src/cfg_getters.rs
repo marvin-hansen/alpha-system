@@ -1,5 +1,6 @@
 use crate::CfgManager;
-use common_config::prelude::{ClickHouseConfig, ServiceConfig, ServiceID, SurrealDBConfig};
+use common_config::prelude::{ServiceConfig, ServiceID};
+use common_database::prelude::{ClickHouseConfig, SurrealDBConfig};
 use common_env::prelude::EnvironmentType;
 use common_errors::prelude::InitError;
 use common_exchange::prelude::ExchangeID;

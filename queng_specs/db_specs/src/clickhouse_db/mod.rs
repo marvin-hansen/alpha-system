@@ -1,7 +1,7 @@
 use crate::clickhouse_db::ci::clickhouse_ci_config;
 use crate::clickhouse_db::cluster::clickhouse_cluster_config;
 use crate::clickhouse_db::local::clickhouse_local_config;
-use common_config::prelude::ClickHouseConfig;
+use common_database::prelude::ClickHouseConfig;
 use common_env::prelude::EnvironmentType;
 
 pub mod ci;

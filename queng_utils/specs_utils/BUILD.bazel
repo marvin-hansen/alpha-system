@@ -15,6 +15,7 @@ rust_library(
         # Internal crates
         "//alias:common_config",
         "//alias:common_env",
+        "//alias:common_database",
         "//alias:container_specs",
         "//alias:db_specs",
         "//alias:cmdb_specs",

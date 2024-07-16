@@ -16,6 +16,7 @@ path = "src/lib.rs"
 # Internal crates
 common_config = { workspace = true }
 common_env = { workspace = true }
+common_database = { workspace = true }
 container_specs = { workspace = true }
 db_specs = { workspace = true }
 cmdb_specs = { workspace = true }
