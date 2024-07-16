@@ -9,7 +9,6 @@ use crate::prelude::PostgresUtilError;
 use deadpool_diesel::postgres::{Manager, Pool};
 
 pub struct PostgresUtil {
-    dbg: bool,
     pub specs: Specs,
 }
 
@@ -33,7 +32,7 @@ impl PostgresUtil {
 
         let specs = Specs::new(dbg, pool);
 
-        Ok(Self { dbg, specs })
+        Ok(Self { specs })
     }
 
     async fn get_pg_pool(database_url: &str, max_size: usize) -> Result<Pool, PostgresUtilError> {
@@ -43,14 +42,6 @@ impl PostgresUtil {
         match Pool::builder(manager).max_size(max_size).build() {
             Ok(res) => Ok(res),
             Err(e) => Err(PostgresUtilError::from(e.to_string())),
-        }
-    }
-}
-
-impl PostgresUtil {
-    fn dbg_print(&self, s: &str) {
-        if self.dbg {
-            println!("[ClickhouseUtil]: {}", s);
         }
     }
 }
