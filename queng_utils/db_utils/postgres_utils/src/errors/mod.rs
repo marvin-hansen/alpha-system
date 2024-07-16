@@ -1,1 +1,2 @@
-pub mod surreal_util_error;
+pub mod query_error;
+pub mod util_error;

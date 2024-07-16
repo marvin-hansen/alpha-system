@@ -5,56 +5,6 @@ use crate::types::{CountRow, ExistsDBRow, ExistsRow};
 use common_errors::prelude::ValidationError;
 use klickhouse::{Client, KlickhouseError};
 
-/// Sanitizes the provided table name to prevent SQL injection attacks.
-///
-/// # Arguments
-///
-/// * `table_name` - The table name to sanitize
-///
-/// # Returns
-///
-/// A `Result` containing the original table name if valid, or a `QueryError`
-/// if the name is invalid.
-///
-/// # Errors
-///
-/// - `QueryError::EmptyTableName` if `table_name` is empty
-/// - `QueryError::InvalidTableName` if `table_name` contains invalid characters
-/// - `QueryError::TableNameTooLong` if `table_name` is longer than 64 characters
-///
-///
-/// This checks `table_name` for:
-///
-/// - Emptiness
-/// - Invalid characters
-/// - Length less than 64 characters
-///
-/// If valid, it returns the original `table_name`.
-pub fn sanitize_table_name(table_name: &str) -> Result<&str, ClickHouseQueryError> {
-    // check for empty name
-    if table_name.is_empty() {
-        return Err(ClickHouseQueryError::EmptyTableName(ValidationError::new(
-            format!("Table: {}", table_name),
-        )));
-    }
-
-    // check for invalid characters
-    if table_name.chars().any(|c| !c.is_alphanumeric() && c != '_') {
-        return Err(ClickHouseQueryError::InvalidTableName(
-            ValidationError::new(format!("Table: {}", table_name)),
-        ));
-    }
-
-    // check for length
-    if table_name.len() > 64 {
-        return Err(ClickHouseQueryError::TableNameTooLong(
-            ValidationError::new(format!("Table: {}", table_name)),
-        ));
-    }
-
-    Ok(table_name)
-}
-
 /// Executes a query on the specified table in the ClickHouse database.
 ///
 /// This function takes a reference to a `Client` object and a query string as input. It uses the `execute` method of the `Client` to execute the query.

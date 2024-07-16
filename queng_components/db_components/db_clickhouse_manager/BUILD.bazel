@@ -11,7 +11,6 @@ rust_library(
         # Internal crates
         "//alias:common_data_bar",
         "//alias:common_database",
-        "//alias:clickhouse_utils",
         # External crates
         "@crates//:chrono",
         "@crates//:futures",

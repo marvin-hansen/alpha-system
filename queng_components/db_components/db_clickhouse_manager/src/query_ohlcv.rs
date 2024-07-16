@@ -1,8 +1,8 @@
+use crate::error::ClickHouseDBError;
 use crate::types::OHLCVRow;
 use crate::ClickhouseDBManager;
-use crate::FN_NAME;
-use clickhouse_utils::prelude::{query_utils, ClickHouseQueryError};
 use common_data_bar::prelude::{OHLCVBar, TimeResolution};
+use common_database::prelude::sanitize_utils;
 
 impl ClickhouseDBManager {
     /// Retrieves all OHLCV data bars for the given symbol table and time resolution.
@@ -35,20 +35,22 @@ impl ClickhouseDBManager {
         symbol_id: u16,
         symbol_table: &str,
         time_resolution: &TimeResolution,
-    ) -> Result<Vec<OHLCVBar>, ClickHouseQueryError> {
+    ) -> Result<Vec<OHLCVBar>, ClickHouseDBError> {
         // Sanitize table name input to prevent SQL injection.
-        let sanitized_name =
-            query_utils::sanitize_table_name(symbol_table).expect("Failed to sanitize table name");
+
+        let sanitized_name = match sanitize_utils::sanitize_table_name(symbol_table) {
+            Ok(name) => name,
+            Err(e) => return Err(ClickHouseDBError::TableSanitizeError(e.to_string())),
+        };
 
         // Build the query
         let query = self.build_get_ohlcv_bars_query(sanitized_name, time_resolution);
 
         // Execute query
-        let ohlcv_rows = self
-            .client
-            .query_collect::<OHLCVRow>(&query)
-            .await
-            .unwrap_or_else(|_| panic!("{} Failed to execute query: {}", FN_NAME, query));
+        let ohlcv_rows = match self.client.query_collect::<OHLCVRow>(&query).await {
+            Ok(res) => res,
+            Err(e) => return Err(ClickHouseDBError::QueryFailed(e.to_string())),
+        };
 
         // Check for empty result
         if ohlcv_rows.is_empty() {

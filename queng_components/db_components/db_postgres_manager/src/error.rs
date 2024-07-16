@@ -11,6 +11,7 @@ pub enum PostgresDBError {
     DeleteFailed(String),
     QueryFailed(String),
     TableDoesNotExist(String, String),
+    TableSanitizeError(String),
     UnknownError(String),
     NotImplementedError(String),
 }
@@ -36,16 +37,27 @@ impl fmt::Display for PostgresDBError {
                 write!(f, "[SurrealDBError]: DB Update failed: {e}")
             }
 
-            PostgresDBError::DeleteFailed(e) => write!(f, "[SurrealDBError]: Delete failed: {e}"),
+            PostgresDBError::DeleteFailed(e) => {
+                write!(f, "[SurrealDBError]: Delete failed: {e}")
+            }
+            PostgresDBError::QueryFailed(e) => {
+                write!(f, "[SurrealDBError]: DB Query failed: {e}")
+            }
 
-            PostgresDBError::QueryFailed(e) => write!(f, "[SurrealDBError]: DB Query failed: {e}"),
+            PostgresDBError::TableDoesNotExist(table_name, err) => {
+                write!(
+                    f,
+                    "Table does not exist: Table {table_name} does not exist. Error: {err}"
+                )
+            }
 
-            PostgresDBError::TableDoesNotExist(table_name, err) => write!(
-                f,
-                "Table does not exist: Table {table_name} does not exist. Error: {err}"
-            ),
+            PostgresDBError::TableSanitizeError(e) => {
+                write!(f, "[SurrealDBError]: Table sanitization error: {e}")
+            }
 
-            PostgresDBError::UnknownError(e) => write!(f, "[SurrealDBError]: Unknown error: {e}"),
+            PostgresDBError::UnknownError(e) => {
+                write!(f, "[SurrealDBError]: Unknown error: {e}")
+            }
 
             PostgresDBError::NotImplementedError(e) => {
                 write!(f, "[SurrealDBError]: Not Implemented error: {e}")

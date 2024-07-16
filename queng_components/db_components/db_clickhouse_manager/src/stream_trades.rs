@@ -1,6 +1,6 @@
 use crate::types::TradeRow;
 use crate::{ClickhouseDBManager, FN_NAME};
-use clickhouse_utils::query_utils::sanitize_table_name;
+use common_database::prelude::sanitize_utils;
 use futures::stream::BoxStream;
 use futures::StreamExt;
 use klickhouse::KlickhouseError;
@@ -26,7 +26,8 @@ impl ClickhouseDBManager {
         &'a self,
         trade_table: &'a str,
     ) -> BoxStream<Result<TradeRow, KlickhouseError>> {
-        let sanitized_name = sanitize_table_name(trade_table).expect("Invalid table name");
+        let sanitized_name =
+            sanitize_utils::sanitize_table_name(trade_table).expect("Invalid table name");
 
         // Build the query
         let query = self.build_get_trades_query(sanitized_name);

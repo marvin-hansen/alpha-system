@@ -1,3 +1,4 @@
+mod error;
 mod query_gen;
 mod query_ohlcv;
 mod query_symbols;
@@ -6,11 +7,11 @@ mod stream_ohlcv;
 mod stream_trades;
 pub mod types;
 
+use crate::error::ClickHouseDBError;
 use common_database::prelude::ClickHouseConfig;
 use klickhouse::{Client, ClientOptions};
-use std::fmt::Error;
 
-const FN_NAME: &str = "[QueryDBManager]:";
+const FN_NAME: &str = "[ClickhouseDBManager]:";
 
 pub struct ClickhouseDBManager {
     client: Client,
@@ -32,11 +33,18 @@ impl ClickhouseDBManager {
     /// Will return an error if the connection to the database fails.
     ///
     ///
-    pub async fn new(db_config: ClickHouseConfig) -> Result<Self, Error> {
+    pub async fn new(db_config: ClickHouseConfig) -> Result<Self, ClickHouseDBError> {
         let destination = db_config.connection_string();
-        let client = Client::connect(destination.clone(), ClientOptions::default())
-            .await
-            .unwrap_or_else(|_| panic!("{} Failed to connect to {}", FN_NAME, &destination));
+        let client = match Client::connect(destination.clone(), ClientOptions::default()).await {
+            Ok(res) => res,
+            Err(e) => {
+                return Err(ClickHouseDBError::ConnectionFailed(format!(
+                    "{FN_NAME} Failed to connect to {} due error {}",
+                    &destination,
+                    e.to_string()
+                )))
+            }
+        };
 
         Ok(Self { client })
     }
