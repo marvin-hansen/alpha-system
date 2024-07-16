@@ -20,6 +20,7 @@ rust_library(
         # External crates
         "@crates//:diesel",
         "@crates//:diesel-async",
+        "@crates//:deadpool-diesel",
     ],
 )
 

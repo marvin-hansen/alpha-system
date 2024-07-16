@@ -1,3 +1,4 @@
+use deadpool_diesel::postgres::Pool;
 use diesel_async::AsyncPgConnection;
 
 mod specs;
@@ -7,12 +8,12 @@ mod specs;
 
 pub struct Specs {
     dbg: bool,
-    db: AsyncPgConnection,
+    pool: Pool,
 }
 
 impl Specs {
-    pub fn new(dbg: bool, db: AsyncPgConnection) -> Self {
-        Self { dbg, db }
+    pub fn new(dbg: bool, pool: Pool) -> Self {
+        Self { dbg, pool }
     }
 
     fn dbg_print(&self, s: &str) {

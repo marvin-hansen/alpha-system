@@ -338,6 +338,11 @@ crate.spec(
     version = "0.4.1",
 )
 crate.spec(
+    features = ["postgres"],
+    package = "deadpool-diesel",
+    version = "0.6.1",
+)
+crate.spec(
     package = "encoding_rs",
     version = "0.8",
 )

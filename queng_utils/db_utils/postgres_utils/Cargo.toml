@@ -22,3 +22,4 @@ common_exchange = {workspace = true}
 # External crates
 diesel = {workspace = true}
 diesel-async = {workspace = true}
+deadpool-diesel = {workspace = true}

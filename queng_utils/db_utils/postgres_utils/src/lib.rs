@@ -6,7 +6,7 @@ mod types;
 
 use crate::db::Specs;
 use crate::prelude::PostgresUtilError;
-use diesel_async::{AsyncConnection, AsyncPgConnection};
+use deadpool_diesel::postgres::{Manager, Pool};
 
 pub struct PostgresUtil {
     dbg: bool,
@@ -27,17 +27,20 @@ impl PostgresUtil {
             println!("[PostgresUtil]: Debug mode enabled");
         }
 
-        let db = Self::get_pg_client(dsn)
+        let pool = Self::get_pg_pool(dsn, 5)
             .await
-            .expect("[PostgresUtil]: Failed to construct database client");
+            .expect("[PostgresUtil]: Failed to construct database connection pool");
 
-        let specs = Specs::new(dbg, db);
+        let specs = Specs::new(dbg, pool);
 
         Ok(Self { dbg, specs })
     }
 
-    async fn get_pg_client(database_url: &str) -> Result<AsyncPgConnection, PostgresUtilError> {
-        match AsyncPgConnection::establish(database_url).await {
+    async fn get_pg_pool(database_url: &str, max_size: usize) -> Result<Pool, PostgresUtilError> {
+        //
+        let manager = Manager::new(database_url.to_string(), deadpool_diesel::Runtime::Tokio1);
+
+        match Pool::builder(manager).max_size(max_size).build() {
             Ok(res) => Ok(res),
             Err(e) => Err(PostgresUtilError::from(e.to_string())),
         }
