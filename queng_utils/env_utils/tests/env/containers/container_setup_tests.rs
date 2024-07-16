@@ -35,7 +35,7 @@ async fn test_env_util_setup_containers() {
     );
     println!();
 
-    let surreal_db_container_name = ci_env.surreal_db_container_name();
+    let surreal_db_container_name = ci_env.postgres_db_container_name();
     let exists = docker_util
         .check_if_container_exists(surreal_db_container_name)
         .expect("Failed to check if container exists");

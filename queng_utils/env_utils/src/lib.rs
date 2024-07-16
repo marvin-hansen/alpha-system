@@ -4,7 +4,7 @@ use ctx_manager::CtxManager;
 use docker_utils::DockerUtil;
 use kaiko_utils::KaikoUtil;
 use specs_utils::prelude::{
-    api_proxy_container_specs, clickhouse_container_specs, surreal_db_container_specs,
+    api_proxy_container_specs, clickhouse_container_specs, postgres_db_container_specs,
 };
 
 mod env;
@@ -19,8 +19,8 @@ pub struct EnvUtil {
     api_proxy_container_port: u16,
     clickhouse_container_name: String,
     clickhouse_container_port: u16,
-    surreal_db_container_name: String,
-    surreal_db_container_port: u16,
+    postgres_db_container_name: String,
+    postgres_db_container_port: u16,
     //
     all_containers_crated: bool,
     ci_env_configured: bool,
@@ -47,7 +47,7 @@ impl EnvUtil {
         // Get container configs
         let clickhouse_container_config = clickhouse_container_specs();
         let api_proxy_container_config = api_proxy_container_specs();
-        let surreal_db_container_config = surreal_db_container_specs();
+        let postgres_db_container_config = postgres_db_container_specs();
 
         // Build utils
         let docker_util =
@@ -66,12 +66,12 @@ impl EnvUtil {
             Self::init_container(&clickhouse_container_config, &docker_util)
                 .expect("EnvUtil: Failed to init / verify api proxy container");
 
-        let (surreal_db_container_name, surreal_db_container_port, surreal_db_exists) =
-            Self::init_container(&surreal_db_container_config, &docker_util)
+        let (postgres_db_container_name, postgres_db_container_port, postgres_db_exists) =
+            Self::init_container(&postgres_db_container_config, &docker_util)
                 .expect("EnvUtil: Failed to init / verify api proxy container");
 
         // set the boolean flag for all containers
-        let all_containers_crated = api_proxy_exists && clickhouse_exists && surreal_db_exists;
+        let all_containers_crated = api_proxy_exists && clickhouse_exists && postgres_db_exists;
         let ci_env_configured = false;
 
         let mut instance = Self {
@@ -80,8 +80,8 @@ impl EnvUtil {
             api_proxy_container_port,
             clickhouse_container_name,
             clickhouse_container_port,
-            surreal_db_container_name,
-            surreal_db_container_port,
+            postgres_db_container_name,
+            postgres_db_container_port,
             all_containers_crated,
             ci_env_configured,
             docker_util,

@@ -20,7 +20,7 @@ impl EnvUtil {
             .expect("[TestEnv/CI:setup_containers]: Failed to setup clickhouse container");
 
         self.dbg_print("Setup SurrealDB container");
-        self.setup_container_surreal_db()
+        self.setup_container_postgres_db()
             .await
             .expect("[TestEnv/CI:setup_containers]: Failed to setup SurrealDB container");
 

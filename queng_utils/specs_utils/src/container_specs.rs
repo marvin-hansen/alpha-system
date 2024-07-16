@@ -19,6 +19,6 @@ pub fn clickhouse_container_specs() -> ContainerConfig<'static> {
     clickhouse_container_config()
 }
 
-pub fn surreal_db_container_specs() -> ContainerConfig<'static> {
+pub fn postgres_db_container_specs() -> ContainerConfig<'static> {
     postgres_db_container_config()
 }

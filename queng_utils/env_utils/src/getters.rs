@@ -40,11 +40,11 @@ impl EnvUtil {
     pub fn clickhouse_container_port(&self) -> u16 {
         self.clickhouse_container_port
     }
-    pub fn surreal_db_container_port(&self) -> u16 {
-        self.surreal_db_container_port
+    pub fn postgres_db_container_port(&self) -> u16 {
+        self.postgres_db_container_port
     }
-    pub fn surreal_db_container_name(&self) -> &str {
-        &self.surreal_db_container_name
+    pub fn postgres_db_container_name(&self) -> &str {
+        &self.postgres_db_container_name
     }
     pub fn all_containers_crated(&self) -> bool {
         self.all_containers_crated
@@ -79,11 +79,11 @@ impl EnvUtil {
     pub fn set_clickhouse_container_port(&mut self, clickhouse_container_port: u16) {
         self.clickhouse_container_port = clickhouse_container_port;
     }
-    pub fn set_surreal_db_container_port(&mut self, surreal_db_container_port: u16) {
-        self.surreal_db_container_port = surreal_db_container_port;
+    pub fn set_postgres_db_container_port(&mut self, postgres_db_container_port: u16) {
+        self.postgres_db_container_port = postgres_db_container_port;
     }
-    pub fn set_surreal_db_container_name(&mut self, surreal_db_container_name: String) {
-        self.surreal_db_container_name = surreal_db_container_name;
+    pub fn set_postgres_db_container_name(&mut self, postgres_db_container_name: String) {
+        self.postgres_db_container_name = postgres_db_container_name;
     }
     pub fn set_all_containers_crated(&mut self) {
         self.all_containers_crated = true;
