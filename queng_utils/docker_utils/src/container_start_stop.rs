@@ -45,7 +45,7 @@ impl DockerUtil {
         let connection_port = container_config.connection_port();
         let additional_ports = container_config.additional_ports();
         let platform = container_config.platform();
-        let additional_start_commands = container_config.additional_env_vars();
+        let additional_env_vars = container_config.additional_env_vars();
         let reuse_container = container_config.reuse_container();
 
         let container_id = &format!("{}-{}", name, connection_port);
@@ -85,7 +85,7 @@ impl DockerUtil {
             connection_port,
             additional_ports,
             platform,
-            additional_start_commands,
+            additional_env_vars,
             image,
         ) {
             Ok((container_id, port)) => Ok((container_id, port)),
@@ -109,7 +109,7 @@ impl DockerUtil {
         connection_port: u16,
         additional_ports: Option<&[u16]>,
         platform: Option<&str>,
-        additional_start_commands: Option<&[&str]>,
+        additional_env_vars: Option<&[&str]>,
         image: &str,
     ) -> Result<(String, u16), DockerError> {
         // Example: docker run --rm --detach --publish 80:80 --name test-80 nginx:latest
@@ -153,17 +153,21 @@ impl DockerUtil {
         // Format the container name
         let container_name = container_id.to_string();
 
-        // Add all remaining arguments
+        // Add container name
         cmd.arg("--name");
         cmd.arg(container_name);
-        cmd.arg(image);
 
-        if additional_start_commands.is_some() {
-            // Add additional start commands.
-            let add_args = additional_start_commands.unwrap();
+        // Add env variables, if available
+        if additional_env_vars.is_some() {
+            // Add additional env variables
+            let add_args = additional_env_vars.unwrap();
 
+            cmd.arg("-e");
             cmd.args(add_args);
         }
+
+        // Add container image to start
+        cmd.arg(image);
 
         self.dbg_print(&format!("[start_container]: Run Docker command: {:?}", cmd));
 

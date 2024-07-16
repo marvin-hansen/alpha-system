@@ -10,7 +10,7 @@ pub fn postgres_db_container_config() -> ContainerConfig<'static> {
         "0.0.0.0",
         5432,
         None,
-        Some(&["-e", "POSTGRES_PASSWORD=postgres"]),
+        Some(&["POSTGRES_PASSWORD=postgres"]),
         None,
         true, // Keep the container running for re-use
         true, // Keep the same container config across all env. setups.
