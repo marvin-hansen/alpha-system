@@ -45,7 +45,7 @@ impl DockerUtil {
         let connection_port = container_config.connection_port();
         let additional_ports = container_config.additional_ports();
         let platform = container_config.platform();
-        let additional_start_commands = container_config.additional_start_commands();
+        let additional_start_commands = container_config.additional_env_vars();
         let reuse_container = container_config.reuse_container();
 
         let container_id = &format!("{}-{}", name, connection_port);

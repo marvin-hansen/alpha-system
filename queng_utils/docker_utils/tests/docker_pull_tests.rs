@@ -1,12 +1,12 @@
 use container_specs::api_proxy_container_specs::api_proxy_container_config;
-use container_specs::surreal_db_specs::surreal_db_container_config;
+use container_specs::postgres_db_specs::postgres_db_container_config;
 use docker_utils::DockerUtil;
 
 #[tokio::test]
 async fn test_pull_surreal_db() {
     let docker_util = DockerUtil::with_debug().expect("Failed to create DockerUtil");
 
-    let container_config = surreal_db_container_config();
+    let container_config = postgres_db_container_config();
     let container_id = "test-surreal-8000";
 
     let image = container_config.image();

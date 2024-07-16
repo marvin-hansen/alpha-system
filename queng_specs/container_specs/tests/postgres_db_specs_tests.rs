@@ -1,8 +1,8 @@
-use container_specs::surreal_db_specs::surreal_db_container_config;
+use container_specs::postgres_db_specs::postgres_db_container_config;
 
 #[test]
 fn test_surreal_db_container_config() {
-    let config = surreal_db_container_config();
+    let config = postgres_db_container_config();
 
     assert_eq!(config.name(), "surrealdb");
     assert_eq!(config.image(), "surrealdb/surrealdb");

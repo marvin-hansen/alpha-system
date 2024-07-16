@@ -8,8 +8,8 @@ pub struct ContainerConfig<'l> {
     url: &'l str,
     connection_port: u16,
     additional_ports: Option<&'l [u16]>,
+    additional_env_vars: Option<&'l [&'l str]>,
     platform: Option<&'l str>,
-    additional_start_commands: Option<&'l [&'l str]>,
     reuse_container: bool,
     keep_configuration: bool,
     wait_duration: u64,
@@ -54,8 +54,8 @@ impl<'l> ContainerConfig<'l> {
         url: &'l str,
         connection_port: u16,
         additional_ports: Option<&'l [u16]>,
+        additional_env_vars: Option<&'l [&'l str]>,
         platform: Option<&'l str>,
-        additional_start_commands: Option<&'l [&'l str]>,
         reuse_container: bool,
         keep_configuration: bool,
         wait_duration: u64,
@@ -67,8 +67,8 @@ impl<'l> ContainerConfig<'l> {
             url,
             connection_port,
             additional_ports,
+            additional_env_vars,
             platform,
-            additional_start_commands,
             reuse_container,
             keep_configuration,
             wait_duration,
@@ -96,6 +96,9 @@ impl<'l> ContainerConfig<'l> {
     pub fn additional_ports(&self) -> Option<&'l [u16]> {
         self.additional_ports
     }
+    pub fn additional_env_vars(&self) -> Option<&'l [&'l str]> {
+        self.additional_env_vars
+    }
     pub fn platform(&self) -> Option<&'l str> {
         self.platform
     }
@@ -108,17 +111,11 @@ impl<'l> ContainerConfig<'l> {
     pub fn wait_duration(&self) -> u64 {
         self.wait_duration
     }
-
     pub fn image(&self) -> &'l str {
         self.image
     }
-
     pub fn tag(&self) -> &'l str {
         self.tag
-    }
-
-    pub fn additional_start_commands(&self) -> Option<&'l [&'l str]> {
-        self.additional_start_commands
     }
 }
 
@@ -127,15 +124,15 @@ impl Display for ContainerConfig<'_> {
         write!(
             f,
             "name: {}, image: {}:{}, url: {} connection_port: {}, additional_ports: {:?}, \
-            platform: {:?} env_var: {:?}, reuse_container: {}, keep_configuration: {}, wait_duration: {}",
+            additional_env_vars: {:?}, platform: {:?},  reuse_container: {}, keep_configuration: {}, wait_duration: {}",
             self.name,
             self.image,
             self.tag,
             self.url,
             self.connection_port,
             self.additional_ports,
+            self.additional_env_vars,
             self.platform,
-            self.additional_start_commands,
             self.reuse_container,
             self.keep_configuration,
             self.wait_duration,
