@@ -1,5 +1,4 @@
 use deadpool_diesel::postgres::Pool;
-use diesel_async::AsyncPgConnection;
 
 mod specs;
 
