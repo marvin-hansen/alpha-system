@@ -5,7 +5,7 @@ pub fn get_cluster_db_config() -> PostgresDBConfig {
         "http://postgres.default.svc.cluster.local".to_string(),
         "username".to_string(),
         "password".to_string(),
-        "prod_db".to_string(),
+        "specs".to_string(),
         5432,
         5,
     )

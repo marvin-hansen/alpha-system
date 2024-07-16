@@ -2,6 +2,8 @@ use deadpool_diesel::postgres::Pool;
 
 mod specs;
 
+pub(crate) const DB_NAME: &str = "specs";
+
 // pub(crate) const SERVICE_TABLE: &str = "service";
 // pub(crate) const PORTFOLIO_TABLE: &str = "portfolio";
 

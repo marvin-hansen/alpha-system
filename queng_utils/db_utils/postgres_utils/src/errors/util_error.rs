@@ -27,6 +27,6 @@ impl Error for PostgresUtilError {}
 impl fmt::Display for PostgresUtilError {
     #[inline]
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "SurrealUtilError: {}", self.0)
+        write!(f, "PostgresUtilError: {}", self.0)
     }
 }

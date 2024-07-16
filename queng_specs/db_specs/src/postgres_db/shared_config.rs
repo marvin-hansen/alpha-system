@@ -5,7 +5,7 @@ pub(crate) fn get_base_postgres_db_config() -> PostgresDBConfig {
         "localhost".to_string(),
         "postgres".to_string(),
         "postgres".to_string(),
-        "test".to_string(),
+        "specs".to_string(),
         5432,
         5,
     )

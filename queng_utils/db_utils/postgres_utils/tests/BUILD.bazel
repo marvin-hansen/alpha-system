@@ -3,7 +3,7 @@ load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 rust_test_suite(
     name = "postgres_utils_tests",
     srcs = glob([
-        "db/specs/*_specs.rs",
+        "db/specs/*_tests.rs",
     ]),
     exec_properties = {
         # Tell BuildBuddy to run this test using a Firecracker microVM.
@@ -24,7 +24,7 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Crate under test
-        "//alias:surreal_utils",
+        "//alias:postgres_utils",
         # Internal crates
         "//alias:common_config",
         "//alias:common_exchange",
