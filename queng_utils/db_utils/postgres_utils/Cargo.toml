@@ -20,7 +20,6 @@ common_database = {workspace = true}
 common_errors = {workspace = true}
 common_exchange = {workspace = true}
 # External crates
-diesel = {workspace = true}
-diesel-async = {workspace = true}
-deadpool-diesel = {workspace = true}
+postgres-types = { workspace = true }
+tokio-postgres = { workspace = true }
 tokio = { workspace = true }

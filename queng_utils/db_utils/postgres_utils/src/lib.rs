@@ -4,11 +4,14 @@ pub mod prelude;
 mod query_utils;
 mod types;
 
+use tokio::task::JoinHandle;
+use tokio_postgres::NoTls;
+
 use crate::db::Specs;
 use crate::prelude::PostgresUtilError;
-use deadpool_diesel::postgres::{Manager, Pool};
 
 pub struct PostgresUtil {
+    handle: JoinHandle<()>,
     pub specs: Specs,
 }
 
@@ -26,22 +29,27 @@ impl PostgresUtil {
             println!("[PostgresUtil]: Debug mode enabled");
         }
 
-        let pool = Self::get_pg_pool(dsn, 5)
+        let (db, connection) = tokio_postgres::connect(dsn, NoTls)
             .await
-            .expect("[PostgresUtil]: Failed to construct database connection pool");
+            .expect("Failed to connect to Postgres database");
 
-        let specs = Specs::new(dbg, pool);
+        // The connection object performs the actual communication with the database,
+        // so spawn it off to run on its own.
+        let handle = tokio::spawn(async move {
+            if let Err(e) = connection.await {
+                eprintln!("Postgres connection error: {}", e);
+            }
+        });
 
-        Ok(Self { specs })
+        let specs = Specs::new(dbg, db);
+
+        Ok(Self { handle, specs })
     }
+}
 
-    async fn get_pg_pool(database_url: &str, max_size: usize) -> Result<Pool, PostgresUtilError> {
-        //
-        let manager = Manager::new(database_url.to_string(), deadpool_diesel::Runtime::Tokio1);
-
-        match Pool::builder(manager).max_size(max_size).build() {
-            Ok(res) => Ok(res),
-            Err(e) => Err(PostgresUtilError::from(e.to_string())),
-        }
+impl PostgresUtil {
+    pub async fn close(&self) {
+        // https://stackoverflow.com/questions/67160923/how-can-you-close-a-tokio-postgres-connection
+        self.handle.abort();
     }
 }

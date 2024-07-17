@@ -18,9 +18,9 @@ rust_library(
         "//alias:common_errors",
         "//alias:common_exchange",
         # External crates
-        "@crates//:diesel",
-        "@crates//:diesel-async",
-        "@crates//:deadpool-diesel",
+        "@crates//:postgres-types",
+        "@crates//:tokio-postgres",
+        "@crates//:tokio",
     ],
 )
 
