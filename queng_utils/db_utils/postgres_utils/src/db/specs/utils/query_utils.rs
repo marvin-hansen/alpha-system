@@ -1,11 +1,11 @@
-use crate::db::specs::queries::ddl_utils;
+use crate::db::specs::queries::ddl;
 use crate::db::Specs;
 use crate::prelude::PostgresUtilError;
 
 impl Specs {
     pub(crate) async fn drop_db(&self, db_name: &str) -> Result<(), PostgresUtilError> {
         self.dbg_print("drop_spec_db");
-        let drop_ddl = &ddl_utils::generate_drop_db_ddl(db_name);
+        let drop_ddl = &ddl::generate_drop_db_ddl(db_name);
         match self.execute_query(drop_ddl).await {
             Ok(_) => (),
             Err(e) => {

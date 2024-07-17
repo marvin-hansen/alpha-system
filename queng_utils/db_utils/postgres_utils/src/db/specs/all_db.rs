@@ -1,4 +1,4 @@
-use crate::db::specs::queries::ddl_utils;
+use crate::db::specs::queries::ddl;
 use crate::db::{Specs, DB_NAME};
 use crate::prelude::PostgresUtilError;
 
@@ -15,7 +15,7 @@ impl Specs {
             }
         };
 
-        let create_ddl = &ddl_utils::generate_create_db_ddl(DB_NAME);
+        let create_ddl = &ddl::generate_create_db_ddl(DB_NAME);
         return match self.execute_query(create_ddl).await {
             Ok(_) => Ok(()),
             Err(e) => Err(PostgresUtilError::new(format!(
@@ -27,7 +27,7 @@ impl Specs {
 
     pub async fn verify_spec_db_exists(&self) -> Result<bool, PostgresUtilError> {
         self.dbg_print("verify_spec_db_exists");
-        let verify_ddl = &ddl_utils::generate_verify_db_ddl(DB_NAME);
+        let verify_ddl = &ddl::generate_verify_db_ddl(DB_NAME);
         match self.execute_verify_query(verify_ddl, DB_NAME).await {
             Ok(res) => Ok(res),
             Err(e) => {
