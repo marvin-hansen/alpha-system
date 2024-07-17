@@ -5,12 +5,11 @@ use crate::query_utils::ddl_utils;
 impl Specs {
     pub async fn create_spec_db(&self) -> Result<(), PostgresUtilError> {
         self.dbg_print("create_spec_db");
-
-        match self.drop_spec_db().await {
+        match self.drop_db(DB_NAME).await {
             Ok(_) => (),
             Err(e) => {
                 return Err(PostgresUtilError::new(format!(
-                    "Failed to drop specs DB: {}",
+                    "Error: Failed to drop specs DB: {}",
                     e.to_string()
                 )))
             }
@@ -31,14 +30,18 @@ impl Specs {
         let verify_ddl = &ddl_utils::generate_verify_db_ddl(DB_NAME);
         match self.execute_verify_query(verify_ddl, DB_NAME).await {
             Ok(res) => Ok(res),
-            Err(e) => return Err(PostgresUtilError::new(e.to_string())),
+            Err(e) => {
+                return Err(PostgresUtilError::new(format!(
+                    "Failed to verify if specs DB exists: {}",
+                    e.to_string()
+                )))
+            }
         }
     }
 
     pub async fn drop_spec_db(&self) -> Result<(), PostgresUtilError> {
         self.dbg_print("drop_spec_db");
-        let drop_ddl = &ddl_utils::generate_drop_db_ddl(DB_NAME);
-        match self.execute_query(drop_ddl).await {
+        match self.drop_db(DB_NAME).await {
             Ok(_) => (),
             Err(e) => {
                 return Err(PostgresUtilError::new(format!(

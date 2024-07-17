@@ -1,9 +1,29 @@
 use crate::db::Specs;
 use crate::prelude::PostgresUtilError;
+use crate::query_utils::ddl_utils;
+
+impl Specs {
+    pub(crate) async fn drop_db(&self, db_name: &str) -> Result<(), PostgresUtilError> {
+        self.dbg_print("drop_spec_db");
+        let drop_ddl = &ddl_utils::generate_drop_db_ddl(db_name);
+        match self.execute_query(drop_ddl).await {
+            Ok(_) => (),
+            Err(e) => {
+                return Err(PostgresUtilError(format!(
+                    "Failed to drop specs DB: {}",
+                    e.to_string()
+                )))
+            }
+        };
+
+        Ok(())
+    }
+}
 
 impl Specs {
     pub(crate) async fn execute_query(&self, query: &str) -> Result<(), PostgresUtilError> {
         self.dbg_print("execute_query");
+        self.dbg_print(query);
 
         match self.db.query(query, &[]).await {
             Ok(_) => Ok(()),
@@ -17,6 +37,7 @@ impl Specs {
         target: &str,
     ) -> Result<bool, PostgresUtilError> {
         self.dbg_print("execute_verify_query");
+        self.dbg_print(query);
 
         return match self.db.query_one(query, &[]).await {
             Ok(row) => {
@@ -33,5 +54,19 @@ impl Specs {
             }
             Err(e) => Err(PostgresUtilError::new(e.to_string())),
         };
+    }
+
+    pub(crate) async fn execute_count_query(&self, query: &str) -> Result<u64, PostgresUtilError> {
+        self.dbg_print("execute_count_query");
+        self.dbg_print(query);
+
+        let row = self.db.query_one(query, &[]).await;
+        match row {
+            Ok(row) => {
+                let count = row.get::<usize, i64>(0);
+                Ok(count as u64)
+            }
+            Err(e) => Err(PostgresUtilError::new(e.to_string())),
+        }
     }
 }
