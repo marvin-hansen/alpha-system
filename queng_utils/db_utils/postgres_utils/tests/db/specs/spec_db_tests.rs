@@ -29,7 +29,7 @@ async fn test_spec_db() {
         "host=localhost user=postgres password=postgres dbname=postgres port=5432 sslmode=disable";
     let res = PostgresUtil::new(dsn).await;
     assert!(res.is_ok());
-    let mut pg_utils = res.unwrap();
+    let pg_utils = res.unwrap();
 
     // Test create DB
     let result = pg_utils.specs.create_spec_db().await;

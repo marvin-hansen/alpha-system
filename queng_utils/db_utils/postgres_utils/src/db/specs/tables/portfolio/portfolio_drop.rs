@@ -1,8 +1,14 @@
-use crate::db::Specs;
+use crate::db::{Specs, PORTFOLIO_TABLE};
 use crate::prelude::PostgresUtilError;
+use crate::query_utils::ddl_utils;
 
 impl Specs {
     pub async fn drop_portfolio_table(&self) -> Result<(), PostgresUtilError> {
-        return Err(PostgresUtilError("Not implemented".to_string()));
+        self.dbg_print("drop_portfolio_table");
+        let ddl = &ddl_utils::generate_drop_table_ddl(PORTFOLIO_TABLE);
+        match self.execute_query(ddl).await {
+            Ok(_) => Ok(()),
+            Err(e) => Err(PostgresUtilError::new(e.to_string())),
+        }
     }
 }

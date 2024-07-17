@@ -4,8 +4,8 @@ use tokio_postgres::Client;
 
 pub(crate) const DB_NAME: &str = "specs";
 
-// pub(crate) const SERVICE_TABLE: &str = "service";
-// pub(crate) const PORTFOLIO_TABLE: &str = "portfolio";
+pub(crate) const SERVICE_TABLE: &str = "service";
+pub(crate) const PORTFOLIO_TABLE: &str = "portfolio";
 
 pub struct Specs {
     dbg: bool,
@@ -17,7 +17,7 @@ impl Specs {
         Self { dbg, db }
     }
 
-    fn dbg_print(&self, s: &str) {
+    pub(crate) fn dbg_print(&self, s: &str) {
         if self.dbg {
             println!("[PostgresUtil]:[Specs]: {}", s);
         }
