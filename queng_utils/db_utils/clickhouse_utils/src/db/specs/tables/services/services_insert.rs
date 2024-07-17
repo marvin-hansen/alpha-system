@@ -85,13 +85,11 @@ impl Specs {
     fn get_endpoint_tuple(&self, endpoint: &Endpoint) -> String {
         let name = endpoint.name();
         let version = endpoint.version();
-        let description = endpoint.description();
         let uri = endpoint.uri();
         let port = endpoint.port();
         let protocol = endpoint.protocol().as_u8();
-        let encoding = endpoint.encoding().as_u8();
 
-        format!(r"('{name}',{version},'{description}','{uri}',{port},{protocol},{encoding})")
+        format!(r"('{name}',{version},'{uri}',{port},{protocol})")
     }
 
     fn get_metric_config_tuple(&self, metrics: &MetricConfig) -> String {

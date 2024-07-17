@@ -2,7 +2,7 @@ use std::fmt::{Display, Formatter};
 
 use serde::{Deserialize, Serialize};
 
-use crate::prelude::{Encoding, HostEndpoint, ProtocolType};
+use crate::prelude::{HostEndpoint, ProtocolType};
 
 /// An Endpoint represents a single endpoint of a service.
 ///
@@ -10,40 +10,26 @@ use crate::prelude::{Encoding, HostEndpoint, ProtocolType};
 ///
 /// * `name`: The name of the endpoint.
 /// * `version`: The version of the endpoint.
-/// * `description`: A description of the endpoint.
 /// * `uri`: The Uniform Resource Identifier (URI) of the endpoint.
 /// * `port`: The port number of the endpoint.
 /// * `protocol`: The protocol Enum type of the endpoint.
-/// * `encoding`: The encoding Enum type of the endpoint.
 #[derive(Serialize, Deserialize, Debug, Default, Clone, Eq, PartialEq)]
 pub struct Endpoint {
     name: String,
     version: u8,
-    description: String,
     uri: String,
     port: u16,
     protocol: ProtocolType,
-    encoding: Encoding,
 }
 
 impl Endpoint {
-    pub fn new(
-        name: String,
-        version: u8,
-        description: String,
-        uri: String,
-        port: u16,
-        protocol: ProtocolType,
-        encoding: Encoding,
-    ) -> Self {
+    pub fn new(name: String, version: u8, uri: String, port: u16, protocol: ProtocolType) -> Self {
         Self {
             name,
             version,
-            description,
             uri,
             port,
             protocol,
-            encoding,
         }
     }
 }
@@ -55,9 +41,6 @@ impl Endpoint {
     pub fn version(&self) -> u8 {
         self.version
     }
-    pub fn description(&self) -> &str {
-        &self.description
-    }
     pub fn uri(&self) -> &str {
         &self.uri
     }
@@ -66,9 +49,6 @@ impl Endpoint {
     }
     pub fn protocol(&self) -> ProtocolType {
         self.protocol
-    }
-    pub fn encoding(&self) -> Encoding {
-        self.encoding
     }
 }
 
@@ -80,9 +60,10 @@ impl Endpoint {
 
 impl Display for Endpoint {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f,
-               "name: {},  version: {},  port: {},  description: {},  uri: {},  protocol: {},  encoding: {}",
-               self.name, self.version, self.port, self.description, self.uri, self.protocol, self.encoding
+        write!(
+            f,
+            "name: {},  version: {},  port: {},  uri: {},  protocol: {}",
+            self.name, self.version, self.port, self.uri, self.protocol
         )
     }
 }

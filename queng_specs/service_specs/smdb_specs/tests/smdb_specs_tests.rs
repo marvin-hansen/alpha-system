@@ -1,4 +1,4 @@
-use common_config::prelude::{Encoding, ProtocolType, ServiceID, ServiceType};
+use common_config::prelude::{ProtocolType, ServiceID, ServiceType};
 use smdb_specs::smdb_service_config;
 
 #[test]
@@ -30,12 +30,8 @@ fn test_smdb_service_config() {
     let endpoint = service_config.endpoint();
     assert_eq!(endpoint.name(), "service-registry");
     assert_eq!(endpoint.version(), 1);
-    assert_eq!(
-        endpoint.description(),
-        "Access to the SMDB service registry via gRPC on baseUri:7070"
-    );
+
     assert_eq!(endpoint.uri(), "/");
     assert_eq!(endpoint.port(), 7070);
     assert_eq!(endpoint.protocol(), ProtocolType::GRPC);
-    assert_eq!(endpoint.encoding(), Encoding::Protobuf);
 }

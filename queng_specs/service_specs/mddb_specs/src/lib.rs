@@ -1,5 +1,5 @@
 use common_config::prelude::{
-    Encoding, Endpoint, MetricConfig, ProtocolType, ServiceConfig, ServiceID, ServiceType,
+    Endpoint, MetricConfig, ProtocolType, ServiceConfig, ServiceID, ServiceType,
 };
 /// Constructs the configuration for the MDDB service.
 ///
@@ -49,20 +49,16 @@ pub fn mddb_service_config() -> ServiceConfig {
 fn get_endpoint() -> Endpoint {
     let endpoint_name = "mddb Endpoint".to_string();
     let endpoint_version = 1;
-    let endpoint_description = "Access to metadata DB via gRPC on baseUri:7070".to_string();
     let endpoint_uri = "/".to_string();
     let endpoint_port = 7070;
     let endpoint_protocol = ProtocolType::GRPC;
-    let endpoint_encoding = Encoding::Protobuf;
 
     Endpoint::new(
         endpoint_name,
         endpoint_version,
-        endpoint_description,
         endpoint_uri,
         endpoint_port,
         endpoint_protocol,
-        endpoint_encoding,
     )
 }
 

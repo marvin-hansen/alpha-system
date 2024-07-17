@@ -1,6 +1,6 @@
+use crate::db::specs::queries::ddl_utils;
 use crate::db::{Specs, DB_NAME};
 use crate::prelude::PostgresUtilError;
-use crate::query_utils::ddl_utils;
 
 impl Specs {
     pub async fn create_spec_db(&self) -> Result<(), PostgresUtilError> {

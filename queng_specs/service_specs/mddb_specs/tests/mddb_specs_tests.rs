@@ -1,4 +1,4 @@
-use common_config::prelude::{Encoding, ProtocolType, ServiceID, ServiceType};
+use common_config::prelude::{ProtocolType, ServiceID, ServiceType};
 use mddb_specs::mddb_service_config;
 
 #[test]
@@ -29,14 +29,9 @@ fn test_mddb_service_config_accessors() {
     let endpoint = service_config.endpoint();
     assert_eq!(endpoint.name(), "mddb Endpoint".to_string());
     assert_eq!(endpoint.version(), 1);
-    assert_eq!(
-        endpoint.description(),
-        "Access to metadata DB via gRPC on baseUri:7070".to_string()
-    );
     assert_eq!(endpoint.uri(), "/".to_string());
     assert_eq!(endpoint.port(), 7070);
     assert_eq!(endpoint.protocol(), ProtocolType::GRPC);
-    assert_eq!(endpoint.encoding(), Encoding::Protobuf);
 
     // Test the accessors for the MetricConfig
     let metric_config = service_config.metrics();

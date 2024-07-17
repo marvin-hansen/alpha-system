@@ -1,4 +1,4 @@
-use common_config::prelude::{Encoding, ProtocolType, ServiceID, ServiceType};
+use common_config::prelude::{ProtocolType, ServiceID, ServiceType};
 use qdgw_specs::qdgw_service_config;
 
 #[test]
@@ -30,12 +30,7 @@ fn test_cmdb_service_config() {
     let endpoint = service_config.endpoint();
     assert_eq!(endpoint.name(), "qdgw Endpoint");
     assert_eq!(endpoint.version(), 1);
-    assert_eq!(
-        endpoint.description(),
-        "Access to quantitative data via gRPC on baseUri:7070"
-    );
     assert_eq!(endpoint.uri(), String::from("/"));
     assert_eq!(endpoint.port(), 7070);
     assert_eq!(endpoint.protocol(), ProtocolType::GRPC);
-    assert_eq!(endpoint.encoding(), Encoding::Protobuf);
 }

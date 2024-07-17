@@ -36,7 +36,7 @@ impl Specs {
             base_uri String,
             dependencies Array(UInt8),
             exposure UInt8,
-            endpoint Tuple (endpoint_name String, endpoint_version UInt8, description String, uri String, port UInt16, protocol UInt8, encoding UInt8),
+            endpoint Tuple (endpoint_name String, endpoint_version UInt8, uri String, port UInt16, protocol UInt8),
             metrics Tuple (uri String, host String, port UInt16),
     )
     ENGINE = MergeTree()

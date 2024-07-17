@@ -1,4 +1,4 @@
-use common_config::prelude::{Encoding, ProtocolType, ServiceID, ServiceType};
+use common_config::prelude::{ProtocolType, ServiceID, ServiceType};
 use vex_specs::vex_service_config;
 
 #[test]
@@ -26,11 +26,9 @@ fn test_vex_service_config_accessors() {
     let endpoint = service_config.endpoint();
     assert_eq!(endpoint.name(), "vex Endpoint");
     assert_eq!(endpoint.version(), 1);
-    assert_eq!(endpoint.description(), "");
     assert_eq!(endpoint.uri(), "/");
     assert_eq!(endpoint.port(), 9999);
     assert_eq!(endpoint.protocol(), ProtocolType::GRPC);
-    assert_eq!(endpoint.encoding(), Encoding::Protobuf);
 
     // Test the accessors for the MetricConfig
     let metric_config = service_config.metrics();

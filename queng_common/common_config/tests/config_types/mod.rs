@@ -1,4 +1,3 @@
-mod encoding_tests;
 mod endpoint_host_tests;
 mod endpoint_tests;
 mod message_client_config_tests;

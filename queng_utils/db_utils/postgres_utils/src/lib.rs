@@ -1,7 +1,6 @@
 mod db;
 mod errors;
 pub mod prelude;
-mod query_utils;
 mod types;
 
 use tokio::task::JoinHandle;

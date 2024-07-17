@@ -1,6 +1,6 @@
+use crate::db::specs::queries::ddl_utils;
 use crate::db::{Specs, SERVICE_TABLE};
 use crate::prelude::PostgresUtilError;
-use crate::query_utils::ddl_utils;
 
 impl Specs {
     pub async fn drop_service_table(&self) -> Result<(), PostgresUtilError> {

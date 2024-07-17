@@ -1,5 +1,6 @@
 mod all_db;
 mod all_tables;
-mod query_utils;
+mod queries;
 mod schema;
 mod tables;
+mod utils;

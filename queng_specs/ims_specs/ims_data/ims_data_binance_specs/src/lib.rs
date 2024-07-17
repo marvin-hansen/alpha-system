@@ -1,5 +1,5 @@
 use common_config::prelude::{
-    Encoding, Endpoint, MetricConfig, ProtocolType, ServiceConfig, ServiceID, ServiceType,
+    Endpoint, MetricConfig, ProtocolType, ServiceConfig, ServiceID, ServiceType,
 };
 
 /// Configures the service for Binance data in the IMS system.
@@ -64,23 +64,16 @@ fn ims_service_config(exchange_id: &str, service_id: ServiceID) -> ServiceConfig
 fn get_endpoint(exchange_id: &str, port: u16) -> Endpoint {
     let endpoint_name = format!("{}-ims-data-endpoint", exchange_id);
     let endpoint_version = 1;
-    let endpoint_description = format!(
-        "Control {} exchange streaming data data via gRPC on baseUri:{}",
-        exchange_id, port
-    );
     let endpoint_uri = "/".to_string();
     let endpoint_port = port;
     let endpoint_protocol = ProtocolType::GRPC;
-    let endpoint_encoding = Encoding::Protobuf;
 
     Endpoint::new(
         endpoint_name,
         endpoint_version,
-        endpoint_description,
         endpoint_uri,
         endpoint_port,
         endpoint_protocol,
-        endpoint_encoding,
     )
 }
 

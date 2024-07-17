@@ -1,4 +1,4 @@
-use common_config::prelude::{Encoding, Endpoint, ProtocolType};
+use common_config::prelude::{Endpoint, ProtocolType};
 use proto_bindings::proto::ProtoEndpoint;
 use proto_utils::endpoint_proto_utils::{endpoint_from_proto, endpoint_to_proto};
 
@@ -7,22 +7,18 @@ fn test_from_proto() {
     let proto = ProtoEndpoint {
         name: "test".to_string(),
         version: 1,
-        description: "description".to_string(),
         uri: "http://localhost".to_string(),
         port: 8080,
         protocol: 1,
-        encoding: 2,
     };
 
     let endpoint = endpoint_from_proto(proto).unwrap();
 
     assert_eq!(endpoint.name(), "test");
     assert_eq!(endpoint.version(), 1);
-    assert_eq!(endpoint.description(), "description");
     assert_eq!(endpoint.uri(), "http://localhost");
     assert_eq!(endpoint.port(), 8080);
     assert_eq!(endpoint.protocol(), ProtocolType::GRPC);
-    assert_eq!(endpoint.encoding(), Encoding::Protobuf);
 }
 
 #[test]
@@ -30,20 +26,16 @@ fn test_to_proto() {
     let endpoint = Endpoint::new(
         "test".to_string(),
         1,
-        "description".to_string(),
         "http://localhost".to_string(),
         8080,
         ProtocolType::GRPC,
-        Encoding::Protobuf,
     );
 
     let proto = endpoint_to_proto(endpoint).unwrap();
 
     assert_eq!(proto.name, "test");
     assert_eq!(proto.version, 1);
-    assert_eq!(proto.description, "description");
     assert_eq!(proto.uri, "http://localhost");
     assert_eq!(proto.port, 8080);
     assert_eq!(proto.protocol, 1);
-    assert_eq!(proto.encoding, 2);
 }

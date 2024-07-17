@@ -1,4 +1,4 @@
-use common_config::prelude::{Encoding, ProtocolType, ServiceID, ServiceType};
+use common_config::prelude::{ProtocolType, ServiceID, ServiceType};
 use ims_data_binance_specs::ims_data_binance_config;
 
 #[test]
@@ -29,14 +29,9 @@ fn test_ims_data_binance_config() {
     let endpoint = service_config.endpoint();
     assert_eq!(endpoint.name(), "Binance-ims-data-endpoint");
     assert_eq!(endpoint.version(), 1);
-    assert_eq!(
-        endpoint.description(),
-        "Control Binance exchange streaming data data via gRPC on baseUri:7070"
-    );
     assert_eq!(endpoint.uri(), "/");
     assert_eq!(endpoint.port(), 7070);
     assert_eq!(endpoint.protocol(), ProtocolType::GRPC);
-    assert_eq!(endpoint.encoding(), Encoding::Protobuf);
 
     // Test the accessors for the MetricConfig
     let metric_config = service_config.metrics();
