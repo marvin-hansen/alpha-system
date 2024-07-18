@@ -1,5 +1,6 @@
-mod all_db;
-mod all_tables;
+mod db_setup;
+mod db_teardown;
+mod relations;
 mod schema;
 mod tables;
 mod utils;

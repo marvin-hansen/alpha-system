@@ -1,2 +1,4 @@
-mod portfolio_table_schema;
-mod service_table_schema;
+mod relation_portfolio_instrument;
+mod table_instrument_schema;
+mod table_portfolio_schema;
+mod table_service_schema;

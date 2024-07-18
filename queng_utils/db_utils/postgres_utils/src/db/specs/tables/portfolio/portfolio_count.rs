@@ -1,5 +1,6 @@
-use crate::db::utils::query;
-use crate::db::{Specs, PORTFOLIO_TABLE};
+use crate::db::all_db_constants::PORTFOLIO_TABLE;
+use crate::db::queries::query;
+use crate::db::Specs;
 use crate::prelude::PostgresUtilError;
 
 impl Specs {

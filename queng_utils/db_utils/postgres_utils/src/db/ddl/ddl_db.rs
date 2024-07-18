@@ -9,6 +9,3 @@ pub(crate) fn generate_drop_db_ddl(db_name: &str) -> String {
 pub(crate) fn generate_verify_db_ddl(db_name: &str) -> String {
     format!("SELECT datname FROM pg_catalog.pg_database WHERE datname = '{db_name}';")
 }
-pub(crate) fn generate_drop_table_ddl(table_name: &str) -> String {
-    format!("DROP TABLE IF EXISTS {table_name}")
-}

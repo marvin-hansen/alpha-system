@@ -1,12 +1,11 @@
+mod all_db_constants;
+mod all_db_setup;
+mod all_db_teardown;
+mod ddl;
+mod queries;
 mod specs;
-mod utils;
 
 use tokio_postgres::Client;
-
-pub(crate) const DB_NAME: &str = "specs";
-
-pub(crate) const SERVICE_TABLE: &str = "service";
-pub(crate) const PORTFOLIO_TABLE: &str = "portfolio";
 
 pub struct Specs {
     dbg: bool,
