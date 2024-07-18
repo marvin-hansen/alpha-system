@@ -3,6 +3,7 @@ use klickhouse::Client;
 mod db_setup;
 mod db_teardown;
 mod db_utils;
+mod schema;
 mod tables;
 
 pub(crate) const ASSETS_TABLE: &str = "assets";

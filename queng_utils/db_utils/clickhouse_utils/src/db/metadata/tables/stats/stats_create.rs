@@ -1,5 +1,5 @@
-use crate::db::metadata::{Metadata, DB_NAME, STATS_TABLE};
-use crate::error::ClickHouseUtilError;
+use crate::db::metadata::Metadata;
+use crate::prelude::ClickHouseUtilError;
 
 impl Metadata {
     /// Creates the stats table in the metadata database if it does not already exist.
@@ -18,23 +18,5 @@ impl Metadata {
             Ok(_) => Ok(()),
             Err(e) => Err(ClickHouseUtilError::from(e.to_string())),
         }
-    }
-
-    fn generate_create_stats_table_ddl(&self) -> String {
-        format!(
-            "
-    CREATE TABLE IF NOT EXISTS {DB_NAME}.{STATS_TABLE}
-    (
-        `download_timestamp` String CODEC(LZ4),
-        `hash` String CODEC(LZ4),
-        `number_assets` UInt32 CODEC(Delta, LZ4),
-        `number_exchanges` UInt32 CODEC(Delta, LZ4),
-        `number_instruments` UInt32 CODEC(Delta, LZ4),
-    )
-    ENGINE = MergeTree
-    PRIMARY KEY (download_timestamp)
-    SETTINGS index_granularity = 10
-    "
-        )
     }
 }

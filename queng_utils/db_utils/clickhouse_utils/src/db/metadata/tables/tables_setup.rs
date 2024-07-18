@@ -2,6 +2,24 @@ use crate::db::metadata::{Metadata, DB_NAME, DB_TABLES};
 use crate::prelude::ClickHouseUtilError;
 
 impl Metadata {
+    /// Creates all the metadata tables in the database.
+    ///
+    /// This method creates all the metadata tables in the database.
+    /// It performs the following steps:
+    ///
+    /// 1. Calls the `create_stats_table` method to create the `stats_table`.
+    /// 2. Calls the `create_assets_table` method to create the `assets_table`.
+    /// 3. Calls the `create_exchanges_table` method to create the `exchanges_table`.
+    /// 4. Calls the `create_instruments_table` method to create the `instruments_table`.
+    ///
+    /// # Returns
+    ///
+    /// Returns `Ok(())` if all the tables were created successfully.
+    ///
+    /// # Errors
+    ///
+    /// Returns an `Err` variant of `ClickHouseUtilError` if any of the table creation operations fail.
+    ///
     pub async fn create_all_metadata_tables(&self) -> Result<(), ClickHouseUtilError> {
         //
         self.dbg_print("/create_all_metadata_tables: create_stats_table");
@@ -48,10 +66,6 @@ impl Metadata {
     /// - `Err(ClickHouseUtilError)` if an error occurs during the verification process.
     ///
     pub async fn verify_all_metadata_tables(&self) -> Result<bool, ClickHouseUtilError> {
-        self.verify_metadata_tables_created().await
-    }
-
-    async fn verify_metadata_tables_created(&self) -> Result<bool, ClickHouseUtilError> {
         let tables = DB_TABLES;
         for table_name in tables {
             let query = format!("EXISTS TABLE {DB_NAME}.{table_name};");

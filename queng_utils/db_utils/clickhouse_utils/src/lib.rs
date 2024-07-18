@@ -2,7 +2,6 @@ mod db;
 
 pub mod error;
 pub mod prelude;
-pub mod query_utils;
 pub mod types;
 
 use crate::db::metadata::Metadata;

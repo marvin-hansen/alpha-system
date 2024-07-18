@@ -1,4 +1,4 @@
-use crate::db::specs::queries::ddl;
+use crate::db::utils::ddl;
 use crate::db::Specs;
 use crate::prelude::PostgresUtilError;
 

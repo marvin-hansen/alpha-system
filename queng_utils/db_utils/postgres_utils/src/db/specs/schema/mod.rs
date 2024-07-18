@@ -1,2 +1,2 @@
-mod portfolio_table;
-mod service_table;
+mod portfolio_table_schema;
+mod service_table_schema;

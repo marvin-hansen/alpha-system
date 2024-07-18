@@ -1,4 +1,4 @@
-use crate::db::specs::queries::query;
+use crate::db::utils::query;
 use crate::db::{Specs, PORTFOLIO_TABLE};
 use crate::prelude::PostgresUtilError;
 
