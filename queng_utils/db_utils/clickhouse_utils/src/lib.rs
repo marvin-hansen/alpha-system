@@ -5,14 +5,12 @@ pub mod prelude;
 pub mod types;
 
 use crate::db::metadata::Metadata;
-use crate::db::specs::Specs;
 use error::ClickHouseUtilError;
 use klickhouse::{Client, ClientOptions};
 
 pub struct ClickhouseUtil {
     dbg: bool,
     pub metadata: Metadata,
-    pub specs: Specs,
 }
 
 impl ClickhouseUtil {
@@ -35,8 +33,7 @@ impl ClickhouseUtil {
 
         Ok(Self {
             dbg,
-            metadata: Metadata::new(client.clone(), dbg),
-            specs: Specs::new(client.clone(), dbg),
+            metadata: Metadata::new(client, dbg),
         })
     }
 

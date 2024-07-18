@@ -27,7 +27,7 @@ impl EnvUtil {
         Ok(())
     }
 
-    pub async fn teardown_ci_clickhouse(&self) -> Result<(), EnvironmentError> {
+    async fn teardown_ci_clickhouse(&self) -> Result<(), EnvironmentError> {
         //
         self.dbg_print("[teardown_ci_clickhouse]: Get clickhouse util");
         let ch_util = &self
@@ -35,15 +35,12 @@ impl EnvUtil {
             .await
             .expect("Failed to get ClickhouseUtil");
 
-        ch_util
-            .teardown_all_db()
-            .await
-            .expect("Failed to teardown DB");
+        ch_util.drop_all_db().await.expect("Failed to teardown DB");
 
         Ok(())
     }
 
-    pub async fn teardown_ci_api_proxy(&self) -> Result<(), EnvironmentError> {
+    async fn teardown_ci_api_proxy(&self) -> Result<(), EnvironmentError> {
         //
         self.dbg_print("[teardown_ci_api_proxy]: Get docker util");
         let docker_util = self.docker_util();

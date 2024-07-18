@@ -2,7 +2,7 @@ use crate::db::metadata::Metadata;
 use crate::error::ClickHouseUtilError;
 
 impl Metadata {
-    pub async fn teardown(&self, drop_db: bool) -> Result<(), ClickHouseUtilError> {
+    pub async fn teardown_metadata_db(&self, drop_db: bool) -> Result<(), ClickHouseUtilError> {
         self.dbg_print("[teardown]: drop_all_metadata_tables");
         match self.drop_all_metadata_tables().await {
             Ok(_) => (),

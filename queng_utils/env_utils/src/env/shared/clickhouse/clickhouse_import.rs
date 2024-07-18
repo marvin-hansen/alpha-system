@@ -27,12 +27,6 @@ impl EnvUtil {
         self.import_metadata(ch_utils, kaiko_util, sample_size)
             .await
             .expect("[import_all_data]: Failed to import metadata data into Clickhouse");
-
-        self.dbg_print("[import_all_data]: Import specs data into clickhouse");
-        self.import_specs_data(ch_utils)
-            .await
-            .expect("[import_all_data]: Failed to import specs data data into Clickhouse");
-
         Ok(())
     }
 
@@ -136,28 +130,6 @@ impl EnvUtil {
             .import_stats_metadata(&stats)
             .await
             .expect("[import_metadata]: Failed to import metadata statistic");
-
-        Ok(())
-    }
-
-    /// Asynchronously imports specs data into the specs database.
-    ///
-    /// # Arguments
-    ///
-    /// * `ch_utils` - A reference to the ClickhouseUtil instance.
-    ///
-    /// # Errors
-    ///
-    /// This method can return an error of type EnvironmentError.
-    ///
-    async fn import_specs_data(&self, ch_utils: &ClickhouseUtil) -> Result<(), EnvironmentError> {
-        let service_specs = specs_utils::prelude::get_all_service_specs();
-
-        ch_utils
-            .specs
-            .import_service_specs(&service_specs)
-            .await
-            .expect("[import_specs_data]: Failed to import service specs");
 
         Ok(())
     }

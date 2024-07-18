@@ -35,6 +35,6 @@ async fn setup_db_test() {
     let wait_time = time::Duration::from_millis(500);
     sleep(wait_time).await;
 
-    let teardown_result = ch_utils.teardown_all_db().await;
+    let teardown_result = ch_utils.teardown_all_db(true).await;
     assert!(teardown_result.is_ok());
 }

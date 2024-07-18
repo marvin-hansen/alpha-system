@@ -1,5 +1,5 @@
+use crate::error::ClickHouseUtilError;
 use crate::ClickhouseUtil;
-use std::error::Error;
 
 impl ClickhouseUtil {
     /// Asynchronously drops the metadata and specs databases.
@@ -13,19 +13,22 @@ impl ClickhouseUtil {
     /// # Errors
     ///
     /// This method can return any error that implements the `Error` trait.
-    pub async fn teardown_all_db(&self) -> Result<(), Box<dyn Error>> {
+    pub async fn teardown_all_db(&self, drop_db: bool) -> Result<(), ClickHouseUtilError> {
         self.dbg_print("[teardown_all_db]: drop_metadata_db");
         self.metadata
-            .drop_metadata_db()
+            .teardown_metadata_db(drop_db)
             .await
             .expect("[teardown_db]: Failed to drop metadata DB");
 
-        self.dbg_print("[teardown_all_db]: drop_spec_db");
-        self.specs
-            .drop_spec_db()
-            .await
-            .expect("[teardown_db]: Failed to drop specs DB");
+        Ok(())
+    }
 
+    pub async fn drop_all_db(&self) -> Result<(), ClickHouseUtilError> {
+        self.dbg_print("[drop_all_db]: drop_metadata_db");
+        self.metadata
+            .drop_metadata_db()
+            .await
+            .expect("[drop_db]: Failed to drop metadata DB");
         Ok(())
     }
 }
