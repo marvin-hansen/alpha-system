@@ -1,4 +1,4 @@
-use crate::db::common_ddl::{ddl_db, ddl_table};
+use crate::db::common_ddl::{ddl_db, ddl_verify};
 use crate::db::Specs;
 use crate::prelude::PostgresUtilError;
 
@@ -25,9 +25,9 @@ impl Specs {
         table_name: &str,
     ) -> Result<bool, PostgresUtilError> {
         self.dbg_print("verify_tables_exists");
-        let verify_ddl = &ddl_table::generate_verify_table_ddl(schema_name, table_name);
+        let verify_ddl = &ddl_verify::generate_verify_table_ddl(schema_name, table_name);
 
-        match self.execute_verify_query(verify_ddl, table_name).await {
+        match self.execute_verify_query(verify_ddl).await {
             Ok(res) => {
                 if !res {
                     return Ok(false);
@@ -59,23 +59,15 @@ impl Specs {
     pub(crate) async fn execute_verify_query(
         &self,
         query: &str,
-        target: &str,
     ) -> Result<bool, PostgresUtilError> {
         self.dbg_print("execute_verify_query");
         self.dbg_print(query);
 
         return match self.db.query_one(query, &[]).await {
             Ok(row) => {
-                let target_row = row.get::<usize, String>(0);
+                let exists = row.get::<usize, bool>(0);
 
-                self.dbg_print(&format!("db_row: {}", target_row));
-                self.dbg_print(&format!("target: {}", target));
-
-                if target_row.to_lowercase().eq(&target.to_lowercase()) {
-                    Ok(true)
-                } else {
-                    Ok(false)
-                }
+                Ok(exists)
             }
             Err(e) => Err(PostgresUtilError::new(e.to_string())),
         };

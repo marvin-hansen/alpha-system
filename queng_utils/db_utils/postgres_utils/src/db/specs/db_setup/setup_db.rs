@@ -1,5 +1,5 @@
 use crate::db::all_db_constants::DB_NAME;
-use crate::db::common_ddl::ddl_db;
+use crate::db::common_ddl::{ddl_db, ddl_verify};
 use crate::db::Specs;
 use crate::prelude::PostgresUtilError;
 
@@ -28,8 +28,8 @@ impl Specs {
 
     pub(crate) async fn verify_spec_db_exists(&self) -> Result<bool, PostgresUtilError> {
         self.dbg_print("verify_spec_db_exists");
-        let verify_ddl = &ddl_db::generate_verify_db_ddl(DB_NAME);
-        match self.execute_verify_query(verify_ddl, DB_NAME).await {
+        let verify_ddl = &ddl_verify::generate_verify_db_ddl(DB_NAME);
+        match self.execute_verify_query(verify_ddl).await {
             Ok(res) => Ok(res),
             Err(e) => {
                 return Err(PostgresUtilError::new(format!(
