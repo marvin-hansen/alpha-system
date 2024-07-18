@@ -1,5 +1,3 @@
-pub(crate) mod ddl_utils;
-
 use crate::error::ClickHouseQueryError;
 use crate::types::{CountRow, ExistsDBRow, ExistsRow};
 use klickhouse::{Client, KlickhouseError};

@@ -1,11 +1,11 @@
+use crate::db::common_ddl::ddl_db;
 use crate::db::specs::{Specs, DB_NAME};
 use crate::db::utils;
-use crate::db::utils::ddl_utils;
 use crate::error::ClickHouseQueryError;
 
 impl Specs {
     pub(crate) fn generate_drop_table_ddl(&self, table_name: &str) -> String {
-        ddl_utils::generate_drop_table_ddl(table_name, DB_NAME)
+        ddl_db::generate_drop_table_ddl(table_name, DB_NAME)
     }
 
     pub(crate) async fn execute_query(&self, query: &str) -> Result<(), ClickHouseQueryError> {

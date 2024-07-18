@@ -1,5 +1,5 @@
 use crate::db::metadata::{Metadata, DB_NAME};
-use std::error::Error;
+use crate::error::ClickHouseUtilError;
 
 impl Metadata {
     /// Creates the metadata database if it does not already exist.
@@ -18,7 +18,7 @@ impl Metadata {
     ///
     /// Returns a `Box<dyn Error>` if there is an error executing the `CREATE DATABASE` query.
     ///
-    pub async fn create_metadata_db(&self) -> Result<(), Box<dyn Error>> {
+    pub async fn create_metadata_db(&self) -> Result<(), ClickHouseUtilError> {
         self.dbg_print("create_metadata_db");
         let ddl = format!("CREATE DATABASE IF NOT EXISTS {DB_NAME}");
         self.execute_query(&ddl)
@@ -27,7 +27,7 @@ impl Metadata {
 
         Ok(())
     }
-    pub async fn verify_metadata_db_exists(&self) -> Result<bool, Box<dyn Error>> {
+    pub async fn verify_metadata_db_exists(&self) -> Result<bool, ClickHouseUtilError> {
         let exists = self
             .verify_db_exists(DB_NAME)
             .await
