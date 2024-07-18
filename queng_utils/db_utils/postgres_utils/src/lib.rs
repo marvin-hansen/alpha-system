@@ -10,6 +10,7 @@ use crate::db::Specs;
 use crate::prelude::PostgresUtilError;
 
 pub struct PostgresUtil {
+    dbg: bool,
     handle: JoinHandle<()>,
     pub specs: Specs,
 }
@@ -42,7 +43,7 @@ impl PostgresUtil {
 
         let specs = Specs::new(dbg, db);
 
-        Ok(Self { handle, specs })
+        Ok(Self { dbg, handle, specs })
     }
 }
 
@@ -50,5 +51,13 @@ impl PostgresUtil {
     pub async fn close(&self) {
         // https://stackoverflow.com/questions/67160923/how-can-you-close-a-tokio-postgres-connection
         self.handle.abort();
+    }
+}
+
+impl PostgresUtil {
+    fn dbg_print(&self, msg: &str) {
+        if self.dbg {
+            println!("[PostgresUtil]: {}", msg);
+        }
     }
 }

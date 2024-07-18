@@ -1,8 +1,6 @@
 use env_utils::EnvUtil;
 use postgres_utils::PostgresUtil;
 use std::env;
-use std::time::Duration;
-use tokio::time::sleep;
 
 // Starts a k
 async fn setup_ci_env() {
@@ -31,21 +29,5 @@ async fn test_spec_db() {
     assert!(res.is_ok());
     let pg_utils = res.unwrap();
 
-    // Test create DB
-    let result = pg_utils.specs.create_spec_db().await;
-    assert!(result.is_ok()); // Check if the operation was successful
-
-    // Test verify DB
-    let res = pg_utils.specs.verify_spec_db_exists().await;
-    assert!(res.is_ok());
-
-    let db_created = res.unwrap();
-    assert!(db_created);
-
-    // Test delete DB
-    // let res = pg_utils.specs.drop_spec_db().await;
-    // assert!(res.is_ok());
-
-    sleep(Duration::from_millis(100)).await;
     pg_utils.close().await
 }

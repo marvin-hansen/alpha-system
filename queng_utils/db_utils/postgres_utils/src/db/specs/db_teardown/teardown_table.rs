@@ -18,15 +18,22 @@ impl Specs {
     /// This method can return an error of type `SurrealUtilError` if any error occurs during the dropping process.
     ///
     pub async fn drop_all_specs_tables(&self) -> Result<(), PostgresUtilError> {
-        self.dbg_print("/drop_all_specs_tables: drop_portfolio_table");
-        self.drop_portfolio_table()
-            .await
-            .expect("[SurrealUtil]/drop_portfolio_table: Failed to drop portfolio table");
+        self.dbg_print("drop_all_specs_tables");
 
         self.dbg_print("/drop_all_specs_tables: drop_services_table");
         self.drop_service_table()
             .await
-            .expect("[SurrealUtil]/drop_all_specs_tables: Failed to drop service table");
+            .expect("[PostgresUtil]/drop_all_specs_tables: Failed to drop service table");
+
+        self.dbg_print("/drop_all_specs_tables: drop_portfolio_table");
+        self.drop_portfolio_table()
+            .await
+            .expect("[PostgresUtil]/drop_portfolio_table: Failed to drop portfolio table");
+
+        self.dbg_print("/drop_all_specs_tables: drop_instrument_table");
+        self.drop_instrument_table()
+            .await
+            .expect("[PostgresUtil]/drop_instrument_table: Failed to drop instruments table");
 
         Ok(())
     }

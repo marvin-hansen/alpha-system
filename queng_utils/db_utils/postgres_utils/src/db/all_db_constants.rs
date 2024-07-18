@@ -28,4 +28,4 @@ pub(crate) const PORTFOLIO_TABLE: &str = "portfolio";
 /// The instrument table contains all the instrument configurations
 /// that are used in the portfolio table.
 pub(crate) const INSTRUMENT_TABLE: &str = "instrument";
-pub(crate) const PORTFOLIO_INSTRUMENT_TABLE: &str = "instrument";
+pub(crate) const PORTFOLIO_INSTRUMENT_TABLE: &str = "portfolio_instrument";

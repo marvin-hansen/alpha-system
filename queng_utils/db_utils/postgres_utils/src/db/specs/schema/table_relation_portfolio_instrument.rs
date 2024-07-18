@@ -7,7 +7,7 @@ use crate::db::Specs;
 // https://medium.com/@emekadc/how-to-implement-one-to-one-one-to-many-and-many-to-many-relationships-when-designing-a-database-9da2de684710
 
 impl Specs {
-    pub(crate) fn generate_portfolio_instrument_relation_ddl(&self) -> String {
+    pub(crate) fn generate_portfolio_instrument_table_ddl(&self) -> String {
         format!(
             "CREATE TABLE IF NOT EXISTS {DEFAULT_SCHEMA}.{PORTFOLIO_INSTRUMENT_TABLE} (
             portfolio_id                    INT NOT NULL,

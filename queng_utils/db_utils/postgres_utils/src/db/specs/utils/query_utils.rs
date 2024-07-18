@@ -1,4 +1,4 @@
-use crate::db::ddl::ddl_db;
+use crate::db::common_ddl::{ddl_db, ddl_table};
 use crate::db::Specs;
 use crate::prelude::PostgresUtilError;
 
@@ -17,6 +17,31 @@ impl Specs {
         };
 
         Ok(())
+    }
+
+    pub(crate) async fn verify_table_exists(
+        &self,
+        schema_name: &str,
+        table_name: &str,
+    ) -> Result<bool, PostgresUtilError> {
+        self.dbg_print("verify_tables_exists");
+        let verify_ddl = &ddl_table::generate_verify_table_ddl(schema_name, table_name);
+
+        match self.execute_verify_query(verify_ddl, table_name).await {
+            Ok(res) => {
+                if !res {
+                    return Ok(false);
+                }
+            }
+            Err(e) => {
+                return Err(PostgresUtilError::new(format!(
+                    "Failed to verify system schema: {}",
+                    e.to_string()
+                )))
+            }
+        };
+
+        Ok(true)
     }
 }
 

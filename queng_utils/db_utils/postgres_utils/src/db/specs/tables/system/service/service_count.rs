@@ -1,5 +1,5 @@
 use crate::db::all_db_constants::SERVICE_TABLE;
-use crate::db::queries::query;
+use crate::db::common_queries::query;
 use crate::db::Specs;
 use crate::prelude::PostgresUtilError;
 
