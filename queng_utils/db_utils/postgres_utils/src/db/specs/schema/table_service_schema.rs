@@ -10,14 +10,19 @@ use crate::db::Specs;
 // https://www.postgresqltutorial.com/postgresql-indexes/postgresql-create-index/
 
 impl Specs {
-    pub(crate) fn generate_service_table_types_ddl(&self) -> String {
+    pub(crate) fn generate_service_table_metric_config_ddl(&self) -> String {
         r#"
         CREATE TYPE "metric_config" AS (
             uri  	 VARCHAR,
             host	 VARCHAR,
             port     smallint
         );
+        "#
+        .to_string()
+    }
 
+    pub(crate) fn generate_service_table_endpoint_ddl(&self) -> String {
+        r#"
         CREATE TYPE "endpoint" AS (
             name     VARCHAR,
             version  smallint,
@@ -25,9 +30,10 @@ impl Specs {
             port     smallint,
             protocol smallint
         );
-"#
+        "#
         .to_string()
     }
+
     pub(crate) fn generate_service_table_ddl(&self) -> String {
         format!(
             "CREATE TABLE IF NOT EXISTS {SYSTEM_SCHEMA}.{SERVICE_TABLE} (
@@ -43,9 +49,13 @@ impl Specs {
             endpoint public.endpoint NOT NULL,
 	        metrics public.metric_config NOT NULL
             );
+            "
+        )
+    }
 
-            CREATE INDEX idx_service_id ON {SYSTEM_SCHEMA}.{SERVICE_TABLE}(id);
-            CREATE INDEX idx_service_name ON {SYSTEM_SCHEMA}.{SERVICE_TABLE}(name);
+    pub(crate) fn generate_service_table_indexes_ddl(&self) -> String {
+        format!(
+            "CREATE INDEX idx_service_id ON {SYSTEM_SCHEMA}.{SERVICE_TABLE}(id);
             "
         )
     }

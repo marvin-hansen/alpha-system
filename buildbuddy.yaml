@@ -14,7 +14,6 @@ actions:
       - "run -c opt //:buildbuddy_setup_docker_auth --verbose_failures"
       # Build all targets with remote. Do NOT disable remote, otherwise the missing lib .. makes the workflow build fail.
       - "build -c opt //...  --config=remote"
-      - "build -c opt //...  --build_tag_filters=doc --config=remote"
       # Doc tests
       - "test  -c opt //...  --test_tag_filters=doc-test --test_env=ENV=CI --config=remote"
       # Unit tests

@@ -17,8 +17,8 @@ rust_test_suite(
         "test.runner-recycling-key": "clickhouse_utils",
     },
     tags = [
-        "integration_test",
         "clickhouse_utils_integration_test",
+        "integration_test",
     ],
     visibility = ["//visibility:public"],
     deps = [

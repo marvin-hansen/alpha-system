@@ -6,6 +6,8 @@ use crate::prelude::PostgresUtilError;
 impl Specs {
     pub(crate) async fn create_spec_db(&self) -> Result<(), PostgresUtilError> {
         self.dbg_print("create_spec_db");
+
+        self.dbg_print("drop_spec_db");
         match self.drop_db(DB_NAME).await {
             Ok(_) => (),
             Err(e) => {
@@ -16,6 +18,7 @@ impl Specs {
             }
         };
 
+        self.dbg_print("create_spec_db");
         let create_ddl = &ddl_db::generate_create_db_ddl(DB_NAME);
         match self.execute_query(create_ddl).await {
             Ok(_) => Ok(()),

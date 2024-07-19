@@ -1,5 +1,6 @@
 use container_specs::postgres_db_specs::postgres_db_container_config;
 use docker_utils::DockerUtil;
+use postgres_utils::PostgresUtil;
 use std::env;
 
 async fn setup_ci_env() {
@@ -19,4 +20,15 @@ async fn setup_ci_env() {
 #[tokio::test]
 async fn postgres_db_test() {
     setup_ci_env().await;
+
+    let dsn =
+        "host=localhost user=postgres password=postgres dbname=postgres port=5432 sslmode=disable";
+
+    let res = PostgresUtil::with_debug(dsn).await;
+
+    assert!(res.is_ok());
+
+    let pg_util = res.unwrap();
+
+    pg_util.close().await;
 }
