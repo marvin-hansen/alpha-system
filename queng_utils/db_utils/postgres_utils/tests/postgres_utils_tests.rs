@@ -20,14 +20,10 @@ async fn setup_ci_env() {
 
 async fn get_client() -> PostgresUtil {
     let dsn = "host=127.0.0.1 user=postgres password=postgres dbname=postgres";
-
     let res = PostgresUtil::with_debug(dsn).await;
-
     assert!(res.is_ok());
 
-    let pg_util = res.unwrap();
-
-    pg_util
+    res.unwrap()
 }
 
 #[tokio::test]
