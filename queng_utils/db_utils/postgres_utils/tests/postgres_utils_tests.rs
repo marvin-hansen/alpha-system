@@ -17,10 +17,8 @@ async fn setup_ci_env() {
         .await
         .expect("Failed to setup ci api proxy container");
 }
-#[tokio::test]
-async fn postgres_db_test() {
-    setup_ci_env().await;
 
+async fn get_client() -> PostgresUtil {
     let dsn = "host=127.0.0.1 user=postgres password=postgres dbname=postgres";
 
     let res = PostgresUtil::with_debug(dsn).await;
@@ -28,6 +26,15 @@ async fn postgres_db_test() {
     assert!(res.is_ok());
 
     let pg_util = res.unwrap();
+
+    pg_util
+}
+
+#[tokio::test]
+async fn postgres_db_test() {
+    setup_ci_env().await;
+
+    let pg_util = get_client().await;
 
     pg_util.close().await;
 }
