@@ -1,5 +1,6 @@
-use env_utils::EnvUtil;
+use docker_utils::DockerUtil;
 use kaiko_utils::prelude::{KaikoUtil, KaikoUtilError};
+use specs_utils::prelude::api_proxy_container_specs;
 use std::env;
 
 // Starts a kaiko api proxy on localhost port 7777
@@ -7,12 +8,13 @@ async fn setup_ci_env() {
     // Set the environment variable.
     env::set_var("ENV", "CI");
 
-    // Create new Env Utils
-    let mut ci_env = EnvUtil::with_debug().await.expect("Failed to get EnvUtil");
+    // Create new DockerUtil
+    let ci_env = DockerUtil::with_debug().expect("Failed to get DockerUtil");
 
-    // Setup Kaiko API Proxy container for CI tests to run
+    // Initiate CI container
+    let container_config = api_proxy_container_specs();
     ci_env
-        .setup_container_api_proxy()
+        .setup_container(&container_config)
         .await
         .expect("Failed to setup ci api proxy container");
 }
