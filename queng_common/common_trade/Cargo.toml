@@ -15,5 +15,4 @@ path = "src/lib.rs"
 
 [dependencies]
 # External crates
-serde_json = { workspace = true }
 serde = { workspace = true }

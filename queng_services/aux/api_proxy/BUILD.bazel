@@ -45,7 +45,6 @@ rust_binary(
         "@crates//:arc-swap",
         "@crates//:chrono",
         "@crates//:reqwest",
-        "@crates//:scraper",
         "@crates//:serde",
         "@crates//:serde_json",
         "@crates//:tokio",

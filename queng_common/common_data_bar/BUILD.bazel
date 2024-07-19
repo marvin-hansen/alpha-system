@@ -16,7 +16,6 @@ rust_library(
         "@crates//:chrono",
         "@crates//:rust_decimal",
         "@crates//:serde",
-        "@crates//:serde_json",
     ],
 )
 

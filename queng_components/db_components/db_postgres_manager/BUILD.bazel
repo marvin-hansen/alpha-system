@@ -12,8 +12,8 @@ rust_library(
         "//alias:common_config",
         "//alias:common_database",
         "//alias:common_exchange",
-        "//alias:clickhouse_utils",
         # External crates
+        "@crates//:tokio",
     ],
 )
 

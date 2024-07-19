@@ -9,5 +9,4 @@ authors.workspace = true
 
 [dependencies]
 # External crates
-serde_json = { workspace = true }
 serde = { workspace = true }

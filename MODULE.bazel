@@ -400,11 +400,6 @@ crate.spec(
 )
 crate.spec(
     default_features = False,
-    package = "scraper",
-    version = "0.19",
-)
-crate.spec(
-    default_features = False,
     features = [
         "macros",
         "net",
