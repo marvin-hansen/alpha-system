@@ -1,26 +1,15 @@
-use crate::prelude::EnvironmentSetupError;
-use crate::EnvUtil;
+use crate::error::DockerError;
+use crate::DockerUtil;
 use common_config::prelude::ContainerConfig;
-use docker_utils::DockerUtil;
 use std::time::Duration;
 use tokio::time::sleep;
-
-impl EnvUtil {
-    /// Sets up a container for the environment.
+impl DockerUtil {
+    /// Sets up a Docker container according to its configuration
     ///
-    /// This method sets up a container for the environment by performing the following steps:
-    ///
-    /// 1. Retrieves the `DockerUtil` object.
-    ///
-    /// 2. Retrieves the container configuration from the environment configuration.
-    ///
-    /// 3. Starts the container using the `DockerUtil` object.
-    ///
-    /// 4. Waits for the container to be ready by checking its logs.
     ///
     /// # Arguments
     ///
-    /// * `docker_util` - A reference to a `DockerUtil` object.
+    /// * `container_config` - A reference to a `ContainerConfig` object.
     ///
     /// # Returns
     ///
@@ -28,18 +17,12 @@ impl EnvUtil {
     ///
     /// # Errors
     ///
-    /// Returns an `Err` variant of `EnvironmentSetupError` if any of the following errors occur during the setup process:
+    /// Returns an `Err` variant of `DockerError` if any of the following errors occur during the setup process:
     ///
-    /// - `ContainerStartError`: If there is an error starting the container.
-    /// - `ContainerLogsError`: If there is an error retrieving the container logs.
-    /// - `ContainerNotReadyError`: If the container is not ready within the specified timeout period.
-    ///
-    pub(crate) async fn setup_container(
+    pub async fn setup_container(
         &self,
         container_config: &ContainerConfig<'_>,
-        docker_util: &mut DockerUtil,
-    ) -> Result<(String, u16), EnvironmentSetupError> {
-        //
+    ) -> Result<(String, u16), DockerError> {
         let container_name = &container_config.container_name();
         let wait_duration = container_config.wait_duration();
         let target_tag = container_config.tag();
@@ -49,7 +32,7 @@ impl EnvUtil {
             container_name
         ));
 
-        let exists = docker_util
+        let exists = self
             .check_if_container_exists(container_name)
             .unwrap_or_else(|_| {
                 panic!(
@@ -59,18 +42,16 @@ impl EnvUtil {
             });
         self.dbg_print(&format!("Container {} exists: {}", container_name, exists));
 
-        // If the container already exists, check if its using the current target tag from the config.
-        // This corrects config drift in case the container config got updated with a newer or different tag.
         if exists {
             self.dbg_print(&format!(
                 "Check if running Container {} uses target tag: {}",
                 container_name, target_tag,
             ));
 
-            let container_current = docker_util
+            let container_current = self
                 .check_if_running_container_uses_target_tag(container_name, target_tag)
                 .unwrap_or_else(|_| panic!("[TestEnv/CI:setup_container]: Failed to check if container {} use target tag: {}",
-                    container_name, target_tag));
+                                           container_name, target_tag));
 
             if !container_current {
                 self.dbg_print(&format!(
@@ -79,14 +60,12 @@ impl EnvUtil {
                 ));
                 self.dbg_print(&format!("STOP running Container : {}", container_name));
 
-                docker_util
-                    .stop_container(container_name)
-                    .unwrap_or_else(|_| {
-                        panic!(
-                            "[TestEnv/CI:setup_container]: Failed to check stop container {} ",
-                            container_name
-                        )
-                    })
+                self.stop_container(container_name).unwrap_or_else(|_| {
+                    panic!(
+                        "[TestEnv/CI:setup_container]: Failed to check stop container {} ",
+                        container_name
+                    )
+                })
             } else {
                 self.dbg_print(&format!(
                     "Container {} uses target tag: {}",
@@ -95,7 +74,7 @@ impl EnvUtil {
             }
         }
 
-        let (container_name, container_port) = docker_util
+        let (container_name, container_port) = self
             .get_or_start_container_config(container_config)
             .unwrap_or_else(|_| {
                 panic!(
@@ -115,15 +94,13 @@ impl EnvUtil {
                 wait_duration, &container_name
             ));
             sleep(Duration::from_secs(wait_duration)).await;
-
-            Ok((container_name, container_port))
         } else {
             self.dbg_print(&format!(
                 "Reuse Container {} with target tag {}",
                 container_name, target_tag
             ));
-
-            Ok((container_name, container_port))
         }
+
+        Ok((container_name, container_port))
     }
 }
