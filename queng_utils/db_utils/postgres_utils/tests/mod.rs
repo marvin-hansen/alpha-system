@@ -1,1 +1,1 @@
-mod db;
+mod postgres_utils_tests;

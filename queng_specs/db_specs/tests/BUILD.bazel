@@ -7,7 +7,7 @@ rust_test_suite(
     ]),
     tags = [
         "specs",
-        "unit",
+        "unit-test",
     ],
     visibility = ["//visibility:public"],
     deps = [
@@ -22,7 +22,7 @@ rust_test_suite(
     ]),
     tags = [
         "specs",
-        "unit",
+        "unit-test",
     ],
     visibility = ["//visibility:public"],
     deps = [
@@ -37,7 +37,7 @@ rust_test_suite(
     ]),
     tags = [
         "specs",
-        "unit",
+        "unit-test",
     ],
     visibility = ["//visibility:public"],
     deps = [

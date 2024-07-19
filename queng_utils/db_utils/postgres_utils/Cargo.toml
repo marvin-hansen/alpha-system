@@ -17,6 +17,8 @@ path = "src/lib.rs"
 # Internal crates
 common_config = {workspace = true}
 common_exchange = {workspace = true}
+container_specs = {workspace = true}
+docker_utils = {workspace = true}
 # External crates
 postgres-types = { workspace = true }
 tokio-postgres = { workspace = true }

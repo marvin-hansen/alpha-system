@@ -13,22 +13,17 @@ actions:
       # Setup & Authenticate
       - "run -c opt //:buildbuddy_setup_docker_auth --verbose_failures"
       # Build all targets with remote. Do NOT disable remote, otherwise the missing lib .. makes the workflow build fail.
-      - "build -c opt //... --config=remote"
-      # Build & test all docs
-      - "build -c opt //... --build_tag_filters=doc --config=remote"
-      - "test  -c opt //... --test_tag_filters=doc-test --config=remote"
+      - "build -c opt //...  --config=remote"
+      - "build -c opt //...  --build_tag_filters=doc --config=remote"
+      # Doc tests
+      - "test  -c opt //...  --test_tag_filters=doc-test --test_env=ENV=CI --config=remote"
       # Unit tests
-      - "test -c opt   //...  --test_tag_filters=unit --config=remote"
+      - "test -c opt  //...  --test_tag_filters=unit-test --test_env=ENV=CI --config=remote"
       # Integration tests
-      # Container CI setup
-      - "test -c opt  //...   --test_tag_filters=env_container_setup --test_env=ENV=CI --config=remote"
-      # Test: API Proxy integration
-      - "test -c opt  //...   --test_tag_filters=kaiko_utils_integration_tests --test_env=ENV=CI --config=remote"
-      # Test: Clickhouse Integration
-      - "test -c opt  //...   --test_tag_filters=clickhouse_utils_integration_tests --test_env=ENV=CI --config=remote"
+      - "test -c opt  //...  --test_tag_filters=integration_test --test_env=ENV=CI --config=remote"
       # Build & publish container images to container registry
       - "run   -c opt //:push --config=remote"
     resource_requests:
-      cpu: 4  # Add 1 more core for Docker
+      cpu: 4  # Default plus one
       memory: "8GB" # Default
       disk: "20GB"  # Default

@@ -6,7 +6,7 @@ rust_test_suite(
         "*_tests.rs",
     ]),
     tags = [
-        "unit",
+        "unit-test",
     ],
     visibility = ["//visibility:public"],
     deps = [

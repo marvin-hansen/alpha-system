@@ -1,7 +1,7 @@
 load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 
 rust_test_suite(
-    name = "kaiko_utils_tests",
+    name = "kaiko_utils_integration_test",
     size = "medium",
     srcs = glob([
         "*_tests.rs",
@@ -17,7 +17,8 @@ rust_test_suite(
         "test.runner-recycling-key": "kaiko_utils",
     },
     tags = [
-        "kaiko_utils_integration_tests",
+        "integration_test",
+        "kaiko_utils_integration_test",
     ],
     visibility = ["//visibility:public"],
     deps = [

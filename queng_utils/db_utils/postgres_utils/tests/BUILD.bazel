@@ -3,7 +3,7 @@ load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 rust_test_suite(
     name = "postgres_utils_tests",
     srcs = glob([
-        "db/specs/*_tests.rs",
+        "*_tests.rs",
     ]),
     exec_properties = {
         # Tell BuildBuddy to run this test using a Firecracker microVM.
@@ -17,8 +17,7 @@ rust_test_suite(
         "test.runner-recycling-key": "postgres_utils",
     },
     tags = [
-        "docker",
-        "integration",
+        "integration_test",
         "postgres_utils_integration_tests",
     ],
     visibility = ["//visibility:public"],
@@ -26,9 +25,10 @@ rust_test_suite(
         # Crate under test
         "//alias:postgres_utils",
         # Internal crates
-        "//alias:env_utils",
+        "//alias:container_specs",
         "//alias:common_config",
         "//alias:common_exchange",
+        "//alias:docker_utils",
         # External crates
         "@crates//:tokio",
     ],

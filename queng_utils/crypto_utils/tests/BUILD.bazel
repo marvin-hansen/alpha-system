@@ -7,7 +7,7 @@ rust_test_suite(
     ]),
     tags = [
         "crypto_utils_tests",
-        "unit",
+        "unit-test",
     ],
     visibility = ["//visibility:public"],
     deps = [

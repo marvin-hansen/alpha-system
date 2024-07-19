@@ -8,7 +8,7 @@ rust_test_suite(
     tags = [
         "common",
         "common_errors",
-        "unit",
+        "unit-test",
     ],
     visibility = ["//visibility:public"],
     deps = [

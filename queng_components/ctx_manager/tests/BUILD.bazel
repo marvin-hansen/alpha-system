@@ -13,7 +13,7 @@ rust_test_suite(
     tags = [
         "components",
         "ctx_manager",
-        "unit",
+        "unit-test",
     ],
     visibility = ["//visibility:public"],
     deps = [
@@ -30,7 +30,7 @@ rust_test_suite(
     tags = [
         "components",
         "ctx_manager",
-        "unit",
+        "unit-test",
     ],
     visibility = ["//visibility:public"],
     deps = [
@@ -47,7 +47,7 @@ rust_test_suite(
     tags = [
         "components",
         "ctx_manager",
-        "unit",
+        "unit-test",
     ],
     visibility = ["//visibility:public"],
     deps = [
@@ -64,7 +64,7 @@ rust_test_suite(
     tags = [
         "components",
         "ctx_manager",
-        "unit",
+        "unit-test",
     ],
     visibility = ["//visibility:public"],
     deps = [

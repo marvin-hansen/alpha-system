@@ -1,7 +1,7 @@
 load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 
 rust_test_suite(
-    name = "docker_utils_pull_tests",
+    name = "docker_utils_integration_test",
     srcs = glob([
         "docker_pull_tests.rs",
     ]),
@@ -14,9 +14,12 @@ rust_test_suite(
         "test.recycle-runner": "true",
         # We don't want different different db tests to be assigned to the same recycled runner,
         # because we can't fit all db docker images with the default disk limit.
-        "test.runner-recycling-key": "container",
+        "test.runner-recycling-key": "docker",
     },
-    tags = ["docker_integration_tests"],
+    tags = [
+        "integration_test",
+        "docker_utils_integration_test"
+    ],
     visibility = ["//visibility:public"],
     deps = [
         # Crate under test

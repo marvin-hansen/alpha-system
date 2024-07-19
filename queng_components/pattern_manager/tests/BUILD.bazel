@@ -8,7 +8,7 @@ rust_test_suite(
     tags = [
         "components",
         "pattern_manager",
-        "unit",
+        "unit-test",
     ],
     visibility = ["//visibility:public"],
     deps = [

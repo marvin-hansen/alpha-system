@@ -21,7 +21,7 @@ async fn setup_ci_env() {
 }
 
 #[tokio::test]
-async fn setup_db_test() {
+async fn clickhouse_db_test() {
     setup_ci_env().await;
 
     let dsn = "127.0.0.1:9000";
