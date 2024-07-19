@@ -28,6 +28,7 @@ async fn get_client() -> PostgresUtil {
 
 #[tokio::test]
 async fn postgres_db_test() {
+    //
     setup_ci_env().await;
 
     let pg_util = get_client().await;
