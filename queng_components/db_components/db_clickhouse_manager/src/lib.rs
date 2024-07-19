@@ -40,8 +40,7 @@ impl ClickhouseDBManager {
             Err(e) => {
                 return Err(ClickHouseDBError::ConnectionFailed(format!(
                     "{FN_NAME} Failed to connect to {} due error {}",
-                    &destination,
-                    e.to_string()
+                    &destination, e
                 )))
             }
         };

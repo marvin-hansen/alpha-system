@@ -38,7 +38,7 @@ impl Specs {
             Err(e) => {
                 return Err(PostgresUtilError::new(format!(
                     "Failed to verify service schema: {}",
-                    e.to_string()
+                    e
                 )))
             }
         };
@@ -55,7 +55,7 @@ impl Specs {
             Err(e) => {
                 return Err(PostgresUtilError::new(format!(
                     "Failed to verify portfolio schema: {}",
-                    e.to_string()
+                    e
                 )))
             }
         };
@@ -72,7 +72,7 @@ impl Specs {
             Err(e) => {
                 return Err(PostgresUtilError::new(format!(
                     "Failed to verify instrument schema: {}",
-                    e.to_string()
+                    e
                 )))
             }
         };

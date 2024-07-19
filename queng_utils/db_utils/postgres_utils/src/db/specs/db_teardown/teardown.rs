@@ -37,7 +37,7 @@ impl Specs {
             Err(e) => {
                 return Err(PostgresUtilError::new(format!(
                     "Error: Failed to drop all relation tables: {}",
-                    e.to_string()
+                    e
                 )))
             }
         }
@@ -48,7 +48,7 @@ impl Specs {
             Err(e) => {
                 return Err(PostgresUtilError::new(format!(
                     "Error: Failed to drop all specs tables: {}",
-                    e.to_string()
+                    e
                 )))
             }
         }
@@ -59,7 +59,7 @@ impl Specs {
             Err(e) => {
                 return Err(PostgresUtilError::new(format!(
                     "Error: Failed to drop all specs schema: {}",
-                    e.to_string()
+                    e
                 )))
             }
         }
@@ -71,7 +71,7 @@ impl Specs {
                 Err(e) => {
                     return Err(PostgresUtilError::new(format!(
                         "Error: Failed to drop specs DB: {}",
-                        e.to_string()
+                        e
                     )))
                 }
             }

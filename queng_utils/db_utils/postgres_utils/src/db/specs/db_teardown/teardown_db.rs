@@ -10,7 +10,7 @@ impl Specs {
             Err(e) => {
                 return Err(PostgresUtilError::new(format!(
                     "Failed to drop specs DB: {}",
-                    e.to_string()
+                    e
                 )))
             }
         };

@@ -39,21 +39,21 @@ async fn test_kaiko_utils() {
 
     let assets = kaiko_util.get_assets().await.expect("Failed to get assets");
 
-    assert!(assets.len() > 0);
+    assert!(!assets.is_empty());
 
     let exchanges = kaiko_util
         .get_exchanges()
         .await
         .expect("Failed to get exchanges");
 
-    assert!(exchanges.len() > 0);
+    assert!(!exchanges.is_empty());
 
     let instruments = kaiko_util
         .get_instruments()
         .await
         .expect("Failed to get instruments");
 
-    assert!(instruments.len() > 0);
+    assert!(!instruments.is_empty());
 
     let result = kaiko_util.get_stats().await;
     assert!(result.is_ok());

@@ -7,7 +7,7 @@ impl Specs {
         self.dbg_print("drop_portfolio_instrument_table");
 
         let ddl = &ddl_table::generate_drop_table_ddl(PORTFOLIO_INSTRUMENT_TABLE);
-        match self.execute_query(&ddl).await {
+        match self.execute_query(ddl).await {
             Ok(_) => Ok(()),
             Err(e) => Err(e.to_string()),
         }

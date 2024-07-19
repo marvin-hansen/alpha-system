@@ -90,13 +90,10 @@ impl EnvUtil {
         };
 
         if all_containers_crated {
-            match instance.verify_clickhouse_db().await {
-                Ok(ci_env_configured) => {
-                    if ci_env_configured {
-                        instance.set_ci_env_configured(ci_env_configured);
-                    }
+            if let Ok(ci_env_configured) = instance.verify_clickhouse_db().await {
+                if ci_env_configured {
+                    instance.set_ci_env_configured(ci_env_configured);
                 }
-                Err(_) => {}
             };
         }
 

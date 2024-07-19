@@ -8,12 +8,7 @@ impl Specs {
         let drop_ddl = &ddl_db::generate_drop_db_ddl(db_name);
         match self.execute_query(drop_ddl).await {
             Ok(_) => (),
-            Err(e) => {
-                return Err(PostgresUtilError(format!(
-                    "Failed to drop specs DB: {}",
-                    e.to_string()
-                )))
-            }
+            Err(e) => return Err(PostgresUtilError(format!("Failed to drop specs DB: {}", e))),
         };
 
         Ok(())
@@ -36,7 +31,7 @@ impl Specs {
             Err(e) => {
                 return Err(PostgresUtilError::new(format!(
                     "Failed to verify system schema: {}",
-                    e.to_string()
+                    e
                 )))
             }
         };
@@ -63,14 +58,14 @@ impl Specs {
         self.dbg_print("execute_verify_query");
         self.dbg_print(query);
 
-        return match self.db.query_one(query, &[]).await {
+        match self.db.query_one(query, &[]).await {
             Ok(row) => {
                 let exists = row.get::<usize, bool>(0);
 
                 Ok(exists)
             }
             Err(e) => Err(PostgresUtilError::new(e.to_string())),
-        };
+        }
     }
 
     pub(crate) async fn execute_count_query(&self, query: &str) -> Result<u64, PostgresUtilError> {

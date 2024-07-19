@@ -24,7 +24,7 @@ impl Specs {
             Ok(res) => Ok(res),
             Err(e) => Err(PostgresUtilError::new(format!(
                 "Failed to verify portfolio_instrument schema: {}",
-                e.to_string()
+                e
             ))),
         }
     }

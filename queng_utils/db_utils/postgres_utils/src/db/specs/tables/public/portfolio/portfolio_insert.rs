@@ -4,6 +4,6 @@ use common_exchange::prelude::PortfolioConfig;
 
 impl Specs {
     pub async fn insert_portfolio(&self, _data: &PortfolioConfig) -> Result<(), PostgresUtilError> {
-        return Err(PostgresUtilError::from("Not implemented".to_string()));
+        Err(PostgresUtilError::from("Not implemented".to_string()))
     }
 }

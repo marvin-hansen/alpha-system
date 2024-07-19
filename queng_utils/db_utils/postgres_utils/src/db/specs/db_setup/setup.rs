@@ -32,7 +32,7 @@ impl Specs {
             Err(e) => {
                 return Err(PostgresUtilError::new(format!(
                     "Error: Failed to create specs DB: {}",
-                    e.to_string()
+                    e
                 )))
             }
         }
@@ -42,7 +42,7 @@ impl Specs {
             Err(e) => {
                 return Err(PostgresUtilError::new(format!(
                     "Error: Failed to verify if specs DB exists: {}",
-                    e.to_string()
+                    e
                 )))
             }
         };
@@ -52,7 +52,7 @@ impl Specs {
             Err(e) => {
                 return Err(PostgresUtilError::new(format!(
                     "Error: Failed to create all specs DB schema: {}",
-                    e.to_string()
+                    e
                 )))
             }
         }
@@ -62,7 +62,7 @@ impl Specs {
             Err(e) => {
                 return Err(PostgresUtilError::new(format!(
                     "Error: Failed to verify if all specs DB schema exists: {}",
-                    e.to_string()
+                    e
                 )))
             }
         }
@@ -72,7 +72,7 @@ impl Specs {
             Err(e) => {
                 return Err(PostgresUtilError::new(format!(
                     "Error: Failed to create all specs tables: {}",
-                    e.to_string()
+                    e
                 )))
             }
         };
@@ -82,7 +82,7 @@ impl Specs {
             Err(e) => {
                 return Err(PostgresUtilError::new(format!(
                     "Error: Failed to verify if all specs tables exists: {}",
-                    e.to_string()
+                    e
                 )))
             }
         }
@@ -92,7 +92,7 @@ impl Specs {
             Err(e) => {
                 return Err(PostgresUtilError::new(format!(
                     "Error: Failed to create all specs relation tables: {}",
-                    e.to_string()
+                    e
                 )))
             }
         }
@@ -102,7 +102,7 @@ impl Specs {
             Err(e) => {
                 return Err(PostgresUtilError::new(format!(
                     "Error: Failed to verify if all specs relation tables exists: {}",
-                    e.to_string()
+                    e
                 )))
             }
         }
