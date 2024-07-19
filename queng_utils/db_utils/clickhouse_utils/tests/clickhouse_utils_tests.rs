@@ -1,6 +1,7 @@
 use clickhouse_utils::ClickhouseUtil;
-use env_utils::EnvUtil;
 
+use container_specs::clickhouse_container_specs::clickhouse_container_config;
+use docker_utils::DockerUtil;
 use std::{env, time};
 use tokio::time::sleep;
 
@@ -8,14 +9,15 @@ async fn setup_ci_env() {
     // Set the environment variable.
     env::set_var("ENV", "CI");
 
-    // Create new Env Utils
-    let mut ci_env = EnvUtil::with_debug().await.expect("Failed to get EnvUtil");
+    // Create new DockerUtil
+    let ci_env = DockerUtil::with_debug().expect("Failed to get DockerUtil");
 
     // Initiate CI container
+    let container_config = clickhouse_container_config();
     ci_env
-        .setup_container_clickhouse()
+        .setup_container(&container_config)
         .await
-        .expect("Failed to setup clickhouse container");
+        .expect("Failed to setup ci api proxy container");
 }
 
 #[tokio::test]

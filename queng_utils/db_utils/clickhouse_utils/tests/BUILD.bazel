@@ -28,7 +28,6 @@ rust_test_suite(
         # Internal crates
         "//alias:container_specs",
         "//alias:docker_utils",
-        "//alias:env_utils",
         # External crates
         "@crates//:klickhouse",
         "@crates//:serde",
