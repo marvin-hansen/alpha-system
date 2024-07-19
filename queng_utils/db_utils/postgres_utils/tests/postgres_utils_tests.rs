@@ -21,8 +21,7 @@ async fn setup_ci_env() {
 async fn postgres_db_test() {
     setup_ci_env().await;
 
-    let dsn =
-        "host=localhost user=postgres password=postgres dbname=postgres port=5432 sslmode=disable";
+    let dsn = "host=127.0.0.1 user=postgres password=postgres dbname=postgres";
 
     let res = PostgresUtil::with_debug(dsn).await;
 
