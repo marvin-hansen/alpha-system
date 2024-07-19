@@ -16,6 +16,8 @@ path = "src/lib.rs"
 [dependencies]
 # Internal crates
 common_metadata = {workspace = true}
+docker_utils = {workspace = true}
+specs_utils = {workspace = true}
 # External crates
 reqwest = { workspace = true }
 serde_json = { workspace = true }
