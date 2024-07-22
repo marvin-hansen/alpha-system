@@ -11,6 +11,8 @@ pub(crate) fn generate_verify_db_ddl(db_name: &str) -> String {
     )
 }
 
+// https://database.guide/5-ways-to-check-if-a-table-exists-in-postgresql/
+
 pub(crate) fn generate_verify_table_ddl(schema_name: &str, table_name: &str) -> String {
     format!(
         "SELECT EXISTS (
