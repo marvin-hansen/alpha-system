@@ -14,10 +14,10 @@ actions:
       - "run -c opt //:buildbuddy_setup_docker_auth --verbose_failures"
       # Build all targets with remote. Do NOT disable remote, otherwise the missing lib .. makes the workflow build fail.
       - "build -c opt //...  --config=remote"
-      # Unit & Doc tests
-      - "test  -c opt //...  --test_tag_filters=unit-test,doc-test --test_env=ENV=CI --config=remote"
-      # Integration & binary-integrity tests
-      - "test -c opt  //...  --test_tag_filters=integration_test,binary-integrity_test --test_env=ENV=CI --config=remote"
+      # Rust tests: Unit, Doc tests, & binary-integrity tests
+      - "test  -c opt //...  --test_tag_filters=unit-test,doc-test,binary-integrity_test --test_env=ENV=CI --config=remote"
+      # Integration tests
+      - "test -c opt  //...  --test_tag_filters=integration_test --test_env=ENV=CI --config=remote"
       # Build & publish container images to container registry
       - "run   -c opt //:push --config=remote"
     resource_requests:
