@@ -10,7 +10,7 @@ impl Specs {
         match self.execute_query(drop_ddl).await {
             Ok(_) => (),
             Err(e) => {
-                self.dbg_print(&format!("Drop query failed: \n {}", e.to_string()));
+                self.dbg_print(&format!("Drop query failed: \n {}", e));
                 return Err(PostgresUtilError::new(e.to_string()));
             }
         };
@@ -33,7 +33,7 @@ impl Specs {
                 }
             }
             Err(e) => {
-                self.dbg_print(&format!("Verify query failed: \n {}", e.to_string()));
+                self.dbg_print(&format!("Verify query failed: \n {}", e));
                 return Err(PostgresUtilError::new(e.to_string()));
             }
         };
@@ -49,7 +49,7 @@ impl Specs {
         match self.db.query(query, &[]).await {
             Ok(_) => Ok(()),
             Err(e) => {
-                self.dbg_print(&format!("Query failed: \n {}", e.to_string()));
+                self.dbg_print(&format!("Query failed: \n {}", e));
                 Err(PostgresUtilError::new(e.to_string()))
             }
         }
@@ -68,7 +68,7 @@ impl Specs {
                 Ok(exists)
             }
             Err(e) => {
-                self.dbg_print(&format!("Verify query failed: \n {}", e.to_string()));
+                self.dbg_print(&format!("Verify query failed: \n {}", e));
                 Err(PostgresUtilError::new(e.to_string()))
             }
         }
@@ -84,7 +84,7 @@ impl Specs {
                 Ok(count as u64)
             }
             Err(e) => {
-                self.dbg_print(&format!("Count query failed: \n {}", e.to_string()));
+                self.dbg_print(&format!("Count query failed: \n {}", e));
                 Err(PostgresUtilError::new(e.to_string()))
             }
         }
