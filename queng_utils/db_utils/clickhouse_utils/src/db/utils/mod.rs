@@ -61,6 +61,25 @@ pub(crate) async fn verify_table_exists(
     }
 }
 
+/// Verifies the existence of a database in ClickHouse.
+///
+/// This method takes a reference to a `Client` object and the name of the database
+/// to verify. It generates a query to check if the database exists in ClickHouse and
+/// executes the query using the `client` provided. If the database exists, it returns
+/// [Ok(true)](cci:4:///Users/marvin/RustroverProjects/quant-engine/queng_utils/db_utils/postgres_utils/src/db/specs/db_setup/setup_db.rs:61:0-77:0), otherwise it returns [Ok(false)](cci:4:///Users/marvin/RustroverProjects/quant-engine/queng_utils/db_utils/postgres_utils/src/db/specs/db_setup/setup_db.rs:61:0-77:0). If there is an error executing the query,
+/// it returns an [Err](cci:4:///Users/marvin/RustroverProjects/quant-engine/queng_utils/db_utils/clickhouse_utils/src/db/all_db_verify.rs:0:0-23:0) containing a `ClickHouseQueryError`.
+///
+/// # Arguments
+///
+/// * `client` - A reference to a `Client` object connected to ClickHouse.
+/// * `db_name` - A string containing the name of the database to verify.
+///
+/// # Returns
+///
+/// * [Ok(true)](cci:4:///Users/marvin/RustroverProjects/quant-engine/queng_utils/db_utils/postgres_utils/src/db/specs/db_setup/setup_db.rs:61:0-77:0) if the database exists.
+/// * [Ok(false)](cci:4:///Users/marvin/RustroverProjects/quant-engine/queng_utils/db_utils/postgres_utils/src/db/specs/db_setup/setup_db.rs:61:0-77:0) if the database does not exist.
+/// * `Err(ClickHouseQueryError)` if there is an error executing the query.
+///
 pub(crate) async fn verify_db_exists(
     client: &Client,
     db_name: &str,
