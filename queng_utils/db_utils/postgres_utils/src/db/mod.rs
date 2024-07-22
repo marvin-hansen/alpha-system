@@ -1,8 +1,5 @@
-mod all_db_constants;
 mod all_db_setup;
 mod all_db_teardown;
-mod common_ddl;
-mod common_queries;
 mod specs;
 
 use tokio_postgres::Client;

@@ -1,4 +1,4 @@
-use crate::db::all_db_constants::{DEFAULT_SCHEMA, PORTFOLIO_INSTRUMENT_TABLE};
+use crate::common::all_db_constants::{DEFAULT_SCHEMA, PORTFOLIO_INSTRUMENT_TABLE};
 use crate::db::Specs;
 use crate::prelude::PostgresUtilError;
 

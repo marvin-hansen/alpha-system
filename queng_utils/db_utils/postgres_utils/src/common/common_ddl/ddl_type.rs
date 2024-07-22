@@ -1,4 +1,4 @@
-use crate::db::all_db_constants::DEFAULT_SCHEMA;
+use crate::common::all_db_constants::DEFAULT_SCHEMA;
 
 // https://www.postgresql.org/docs/current/sql-droptype.html
 

@@ -1,5 +1,5 @@
-use crate::db::all_db_constants::PORTFOLIO_TABLE;
-use crate::db::common_queries::query;
+use crate::common::all_db_constants::PORTFOLIO_TABLE;
+use crate::common::common_queries::query;
 use crate::db::Specs;
 use crate::prelude::PostgresUtilError;
 

@@ -1,4 +1,4 @@
-use crate::db::all_db_constants::{SERVICE_TABLE, SERVICE_TABLE_INDEX, SYSTEM_SCHEMA};
+use crate::common::all_db_constants::{SERVICE_TABLE, SERVICE_TABLE_INDEX, SYSTEM_SCHEMA};
 use crate::db::Specs;
 // Composite Types
 //  https://www.postgresql.org/docs/current/rowtypes.html#ROWTYPES

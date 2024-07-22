@@ -1,5 +1,5 @@
-use crate::db::all_db_constants::{INSTRUMENT_TABLE, PORTFOLIO_INSTRUMENT_TABLE_INDEX};
-use crate::db::common_ddl::{ddl_index, ddl_table};
+use crate::common::all_db_constants::{INSTRUMENT_TABLE, PORTFOLIO_INSTRUMENT_TABLE_INDEX};
+use crate::common::common_ddl::{ddl_index, ddl_table};
 use crate::db::Specs;
 use crate::prelude::PostgresUtilError;
 

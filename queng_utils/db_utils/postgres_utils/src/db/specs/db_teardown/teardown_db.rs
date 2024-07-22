@@ -1,4 +1,4 @@
-use crate::db::all_db_constants::DB_NAME;
+use crate::common::all_db_constants::DB_NAME;
 use crate::db::Specs;
 use crate::prelude::PostgresUtilError;
 

@@ -1,3 +1,4 @@
+mod common;
 mod db;
 mod errors;
 pub mod prelude;

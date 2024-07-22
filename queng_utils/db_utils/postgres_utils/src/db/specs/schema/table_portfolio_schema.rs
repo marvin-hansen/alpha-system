@@ -1,4 +1,4 @@
-use crate::db::all_db_constants::{DEFAULT_SCHEMA, PORTFOLIO_TABLE, PORTFOLIO_TABLE_INDEX};
+use crate::common::all_db_constants::{DEFAULT_SCHEMA, PORTFOLIO_TABLE, PORTFOLIO_TABLE_INDEX};
 use crate::db::Specs;
 
 // Composite Types

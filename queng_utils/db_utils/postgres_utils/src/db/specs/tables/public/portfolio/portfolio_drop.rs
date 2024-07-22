@@ -1,7 +1,7 @@
-use crate::db::all_db_constants::{
+use crate::common::all_db_constants::{
     PORTFOLIO_TABLE, PORTFOLIO_TABLE_ACCOUNT_TYPE, PORTFOLIO_TABLE_INDEX,
 };
-use crate::db::common_ddl::{ddl_index, ddl_table, ddl_type};
+use crate::common::common_ddl::{ddl_index, ddl_table, ddl_type};
 use crate::db::Specs;
 use crate::prelude::PostgresUtilError;
 

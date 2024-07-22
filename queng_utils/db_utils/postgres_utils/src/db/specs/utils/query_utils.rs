@@ -1,4 +1,4 @@
-use crate::db::common_ddl::{ddl_db, ddl_verify};
+use crate::common::common_ddl::{ddl_db, ddl_verify};
 use crate::db::Specs;
 use crate::prelude::PostgresUtilError;
 

@@ -1,5 +1,5 @@
-use crate::db::all_db_constants::PORTFOLIO_INSTRUMENT_TABLE;
-use crate::db::common_ddl::ddl_table;
+use crate::common::all_db_constants::PORTFOLIO_INSTRUMENT_TABLE;
+use crate::common::common_ddl::ddl_table;
 use crate::db::Specs;
 
 impl Specs {

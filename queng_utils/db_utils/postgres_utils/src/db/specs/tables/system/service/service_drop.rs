@@ -1,8 +1,8 @@
-use crate::db::all_db_constants::{
+use crate::common::all_db_constants::{
     SERVICE_TABLE, SERVICE_TABLE_ENDPOINT_TYPE, SERVICE_TABLE_INDEX,
     SERVICE_TABLE_METRIC_CONFIG_TYPE,
 };
-use crate::db::common_ddl::{ddl_index, ddl_table, ddl_type};
+use crate::common::common_ddl::{ddl_index, ddl_table, ddl_type};
 use crate::db::Specs;
 use crate::prelude::PostgresUtilError;
 

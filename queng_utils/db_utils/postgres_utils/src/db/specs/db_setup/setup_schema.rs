@@ -1,5 +1,5 @@
-use crate::db::all_db_constants::SYSTEM_SCHEMA;
-use crate::db::common_ddl::{ddl_schema, ddl_verify};
+use crate::common::all_db_constants::SYSTEM_SCHEMA;
+use crate::common::common_ddl::{ddl_schema, ddl_verify};
 use crate::db::Specs;
 use crate::prelude::PostgresUtilError;
 
