@@ -33,13 +33,16 @@ impl PostgresUtil {
 
         let (db, connection) = tokio_postgres::connect(dsn, NoTls)
             .await
-            .expect("Failed to connect to Postgres database");
+            .expect("[PostgresUtil]: Failed to connect to Postgres database");
 
         // The connection object performs the actual communication with the database,
         // so spawn it off to run on its own.
         let handle = tokio::spawn(async move {
             if let Err(e) = connection.await {
-                eprintln!("Postgres connection error: {}", e);
+                eprintln!(
+                    "[PostgresUtil]: Tokio/Postgres failed to spwan connection task: {}",
+                    e
+                );
             }
         });
 
@@ -51,6 +54,7 @@ impl PostgresUtil {
 
 impl PostgresUtil {
     pub async fn close(&self) {
+        self.dbg_print("Closing Postgres connection via Tokio task handle");
         // https://stackoverflow.com/questions/67160923/how-can-you-close-a-tokio-postgres-connection
         self.handle.abort();
     }
