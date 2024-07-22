@@ -4,6 +4,15 @@ use common_config::prelude::{ServiceConfig, ServiceID, ServiceType};
 use proto_bindings::proto::ProtoServiceConfig;
 use std::fmt::Error;
 
+/// Converts a `ProtoServiceConfig` into a `ServiceConfig`.
+///
+/// This function takes a `ProtoServiceConfig` and converts it into a `ServiceConfig` struct.
+/// It extracts the necessary fields from the `ProtoServiceConfig` and constructs a new `ServiceConfig` with them.
+///
+/// # Errors
+///
+/// If the conversion of any field fails, an `std::fmt::Error` is returned.
+///
 pub fn service_config_from_proto(proto: ProtoServiceConfig) -> Result<ServiceConfig, Error> {
     //
     let proto_svc_id = proto.svc_id;
@@ -41,6 +50,16 @@ pub fn service_config_from_proto(proto: ProtoServiceConfig) -> Result<ServiceCon
     ))
 }
 
+///
+/// Converts a `ServiceConfig` into a `ProtoServiceConfig`.
+///
+/// This function takes a `ServiceConfig` and converts it into a `ProtoServiceConfig` struct.
+/// It extracts the necessary fields from the `ServiceConfig` and constructs a new `ProtoServiceConfig` with them.
+///
+/// # Errors
+///
+/// If the conversion of any field fails, an `std::fmt::Error` is returned.
+///
 pub fn service_config_to_proto(service_config: ServiceConfig) -> Result<ProtoServiceConfig, Error> {
     //
     let proto_endpoint =

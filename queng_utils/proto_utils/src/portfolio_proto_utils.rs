@@ -2,6 +2,16 @@ use common_exchange::prelude::{AccountType, Instrument, PortfolioConfig};
 use proto_bindings::proto::{ProtoInstrument, ProtoPortfolioConfig};
 use std::fmt::Error;
 
+/// Converts a `ProtoPortfolioConfig` into a `PortfolioConfig`.
+///
+/// This function takes a `ProtoPortfolioConfig` and converts it into a `PortfolioConfig` struct.
+/// It extracts the necessary fields from the `ProtoPortfolioConfig` and constructs a new `PortfolioConfig` with them.
+///
+/// # Errors
+///
+/// If the conversion of `portfolio_id` or `portfolio_account_type` to their respective types fails,
+/// an `std::fmt::Error` is returned.
+///
 pub fn portfolio_config_from_proto(proto: ProtoPortfolioConfig) -> Result<PortfolioConfig, Error> {
     Ok(PortfolioConfig::new(
         proto.portfolio_id as u32,
@@ -22,6 +32,12 @@ pub fn portfolio_config_from_proto(proto: ProtoPortfolioConfig) -> Result<Portfo
     ))
 }
 
+/// Converts a vector of `ProtoInstrument` into a vector of `Instrument`.
+///
+/// This function iterates over the provided vector of `ProtoInstrument` and converts each element
+/// into an `Instrument` struct. It extracts specific fields from each `ProtoInstrument`
+/// to construct a new `Instrument`.
+///
 pub fn instrument_from_proto(proto: Vec<ProtoInstrument>) -> Vec<Instrument> {
     let mut v = Vec::new();
 
@@ -42,6 +58,15 @@ pub fn instrument_from_proto(proto: Vec<ProtoInstrument>) -> Vec<Instrument> {
     v
 }
 
+/// Converts a `PortfolioConfig` into a `ProtoPortfolioConfig`.
+///
+/// This function takes a `PortfolioConfig` reference and converts it into a `ProtoPortfolioConfig` struct.
+/// It extracts the necessary fields from the `PortfolioConfig` and constructs a new `ProtoPortfolioConfig` with them.
+///
+/// # Errors
+///
+/// If the conversion of any field fails, an `std::fmt::Error` is returned.
+///
 pub fn portfolio_config_to_proto(
     portfolio_config: PortfolioConfig,
 ) -> Result<ProtoPortfolioConfig, Error> {

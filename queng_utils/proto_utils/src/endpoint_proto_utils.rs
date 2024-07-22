@@ -2,6 +2,16 @@ use common_config::prelude::{Endpoint, ProtocolType};
 use proto_bindings::proto::ProtoEndpoint;
 use std::fmt::Error;
 
+/// Converts a `ProtoEndpoint` into an `Endpoint`.
+///
+/// This function takes a `ProtoEndpoint` and converts it into an `Endpoint` struct.
+/// It extracts the necessary fields from the `ProtoEndpoint` and constructs a new `Endpoint` with them.
+///
+/// # Errors
+///
+/// If the `protocol` field of the `ProtoEndpoint` cannot be converted to a `ProtocolType`,
+/// an `Error` is returned.
+///
 pub fn endpoint_from_proto(proto: ProtoEndpoint) -> Result<Endpoint, Error> {
     let protocol = ProtocolType::from(proto.protocol);
 
@@ -14,6 +24,11 @@ pub fn endpoint_from_proto(proto: ProtoEndpoint) -> Result<Endpoint, Error> {
     ))
 }
 
+/// Converts an `Endpoint` into a `ProtoEndpoint`.
+///
+/// This function takes an `Endpoint` and converts it into a `ProtoEndpoint` struct.
+/// It extracts the necessary fields from the `Endpoint` and constructs a new `ProtoEndpoint` with them.
+///
 pub fn endpoint_to_proto(endpoint: Endpoint) -> Result<ProtoEndpoint, Error> {
     Ok(ProtoEndpoint {
         name: endpoint.name().to_string(),
