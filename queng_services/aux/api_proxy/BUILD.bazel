@@ -1,13 +1,14 @@
-# Aspect rules for testing
-load("@aspect_bazel_lib//lib:transitions.bzl", "platform_transition_binary")
-load("@rules_oci//oci:defs.bzl", "oci_image", "oci_push")
-
-# OCI Container Rules
-load("@rules_pkg//pkg:tar.bzl", "pkg_tar")
 load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_doc", "rust_doc_test")
 
+# Aspect rules for testing
+load("@aspect_bazel_lib//lib:transitions.bzl", "platform_transition_binary")
+
+# OCI Container Rules
+load("@rules_oci//oci:defs.bzl", "oci_push")
+load("@rules_pkg//pkg:tar.bzl", "pkg_tar")
+
 # Custom container macro
-load("//:build/container.bzl", "build_image", "build_multi_arch_image", "build_sha265_tag")
+load("//:build/container.bzl", "build_multi_arch_image", "build_sha265_tag")
 
 # Build binary
 rust_binary(
@@ -72,8 +73,7 @@ sh_test(
     data = [":bin_linux_x86_64_musl"],
     tags = [
         "aux_file_server",
-        "service",
-        "test_musl_bin",
+        # "binary-integrity_test",
     ],
 )
 
@@ -95,8 +95,7 @@ sh_test(
     data = [":bin_linux_arm64_musl"],
     tags = [
         "aux_file_server",
-        "service",
-        "test_musl_bin",
+        "binary-integrity_test",
     ],
 )
 
@@ -116,34 +115,16 @@ rust_doc_test(
     visibility = ["//visibility:public"],
 )
 
-# Disabled until MUSL is fixed.
-# Build multi-arch musl container image
-# build_multi_arch_image(
-#    name = "image_index",
-#    srcs = [":bin"],
-#    base = "@scratch",
-#    exposed_ports = ["7777"],
-#    platforms = [
-#       "//build/platforms:linux_x86_64_musl",
-#       "//build/platforms:linux_arm64_musl",
-#    ],
-#    visibility = ["//visibility:public"],
-#)
 
-# Compress the Rust binary to tar
-pkg_tar(
-    name = "tar",
-    srcs = [":bin"],
-)
-
-# Build container image
-# https://github.com/bazel-contrib/rules_oci/blob/main/docs/image.md
-oci_image(
+build_multi_arch_image(
     name = "image_index",
-    base = "@distroless",
-    entrypoint = ["/bin"],
+    srcs = [":bin",],
+    base = "@scratch",
     exposed_ports = ["7777"],
-    tars = [":tar"],
+    platforms = [
+       "//build/platforms:linux_x86_64_musl",
+       "//build/platforms:linux_arm64_musl",
+    ],
     visibility = ["//visibility:public"],
 )
 
@@ -151,7 +132,7 @@ oci_image(
 build_sha265_tag(
     name = "remote_tag",
     image = ":image_index",
-    input = "image_index.json.sha256",
+    input = "image.json.sha256",
     output = "_tag.txt",
 )
 

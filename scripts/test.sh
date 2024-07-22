@@ -12,24 +12,35 @@ echo "=============="
 command bazel build //...
 command bazel build //... --build_tag_filters=doc-test
 
+echo ""
 echo "=============="
 echo "Run doc tests"
 echo "=============="
 
 command bazel test //... --test_tag_filters=doc-test --test_env=ENV=LOCAL
 
+echo ""
 echo "=============="
 echo "Run unit tests"
 echo "=============="
 
 command bazel test //... --test_tag_filters=unit-test --test_env=ENV=LOCAL
 
+echo ""
+echo "====================="
+echo "Run binary integrity tests"
+echo "====================="
+
+command bazel test //... --test_tag_filters=binary-integrity_test --test_env=ENV=LOCAL
+
+echo ""
 echo "====================="
 echo "Run integration tests"
 echo "====================="
 
 command bazel test //... --test_tag_filters=integration_test --test_env=ENV=LOCAL
 
+echo ""
 echo "====================="
 echo "Build container images"
 echo "====================="

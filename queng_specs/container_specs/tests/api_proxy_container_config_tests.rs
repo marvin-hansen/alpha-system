@@ -10,7 +10,7 @@ fn test_api_proxy_container_config() {
     assert_eq!(config.image(), "index.docker.io/hansenmarvin/api_proxy");
     assert_eq!(config.url(), "0.0.0.0");
     assert_eq!(config.connection_port(), 7777);
-    assert_eq!(config.platform(), Some("linux/amd64"));
+    assert!(config.platform().is_none());
     assert!(config.reuse_container());
     assert!(config.keep_configuration());
 }
