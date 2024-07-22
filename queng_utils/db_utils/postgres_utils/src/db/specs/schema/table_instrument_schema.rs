@@ -1,4 +1,6 @@
-use crate::db::all_db_constants::{DEFAULT_SCHEMA, INSTRUMENT_TABLE};
+use crate::db::all_db_constants::{
+    DEFAULT_SCHEMA, INSTRUMENT_TABLE, PORTFOLIO_INSTRUMENT_TABLE_INDEX,
+};
 use crate::db::Specs;
 
 // ...Many to Many Relationships When Designing A Database.
@@ -23,9 +25,14 @@ impl Specs {
             quote_asset                     VARCHAR NOT NULL,
             instrument_figi                 VARCHAR
             );
+            "
+        )
+    }
 
-            CREATE INDEX idx_instrument_id ON {DEFAULT_SCHEMA}.{INSTRUMENT_TABLE}(id);
-            CREATE INDEX idx_instrument_code ON {DEFAULT_SCHEMA}.{INSTRUMENT_TABLE}(code);
+    pub(crate) fn generate_instrument_table_indexes_ddl(&self) -> String {
+        format!(
+            "
+            CREATE INDEX {PORTFOLIO_INSTRUMENT_TABLE_INDEX} ON {DEFAULT_SCHEMA}.{INSTRUMENT_TABLE}(id);
             "
         )
     }

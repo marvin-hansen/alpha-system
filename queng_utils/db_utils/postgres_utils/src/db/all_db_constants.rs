@@ -18,6 +18,15 @@ pub(crate) const SYSTEM_SCHEMA: &str = "system";
 /// The service table contains a configuration for each microservice of the system.
 pub(crate) const SERVICE_TABLE: &str = "service";
 
+/// Endpoint subtype of the service table
+pub(crate) const SERVICE_TABLE_ENDPOINT_TYPE: &str = "endpoint";
+
+/// Metric config subtype of the service table
+pub(crate) const SERVICE_TABLE_METRIC_CONFIG_TYPE: &str = "metric_config";
+
+/// Primary index of the service table
+pub(crate) const SERVICE_TABLE_INDEX: &str = "idx_service_id";
+
 /// The default schema, which is called public in Postgres,
 /// contains all the domain specific tables the system needs to operate.
 pub(crate) const DEFAULT_SCHEMA: &str = "public";
@@ -25,7 +34,14 @@ pub(crate) const DEFAULT_SCHEMA: &str = "public";
 /// The portfolio table contains all the portfolio configurations of the system.
 pub(crate) const PORTFOLIO_TABLE: &str = "portfolio";
 
+/// The primary index of the portfolio table
+pub(crate) const PORTFOLIO_TABLE_INDEX: &str = "idx_portfolio_id";
+
+/// The account type table contains of the portfolio table.
+pub(crate) const PORTFOLIO_TABLE_ACCOUNT_TYPE: &str = "account_type";
+
 /// The instrument table contains all the instrument configurations
 /// that are used in the portfolio table.
 pub(crate) const INSTRUMENT_TABLE: &str = "instrument";
 pub(crate) const PORTFOLIO_INSTRUMENT_TABLE: &str = "portfolio_instrument";
+pub(crate) const PORTFOLIO_INSTRUMENT_TABLE_INDEX: &str = "idx_instrument_id";

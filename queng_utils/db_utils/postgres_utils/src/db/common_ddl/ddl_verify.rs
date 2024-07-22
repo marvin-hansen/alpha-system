@@ -16,9 +16,9 @@ pub(crate) fn generate_verify_table_ddl(schema_name: &str, table_name: &str) -> 
         "SELECT EXISTS (
         SELECT
             schemaname,
-            tablename,
+            tablename
         FROM
-            pg_tables
+            pg_catalog.pg_tables
         WHERE
             schemaname = '{schema_name}'
             AND

@@ -1,4 +1,4 @@
-use crate::db::all_db_constants::{SERVICE_TABLE, SYSTEM_SCHEMA};
+use crate::db::all_db_constants::{SERVICE_TABLE, SERVICE_TABLE_INDEX, SYSTEM_SCHEMA};
 use crate::db::Specs;
 // Composite Types
 //  https://www.postgresql.org/docs/current/rowtypes.html#ROWTYPES
@@ -53,9 +53,10 @@ impl Specs {
         )
     }
 
-    pub(crate) fn generate_service_table_indexes_ddl(&self) -> String {
+    pub(crate) fn generate_service_table_index_ddl(&self) -> String {
         format!(
-            "CREATE INDEX idx_service_id ON {SYSTEM_SCHEMA}.{SERVICE_TABLE}(id);
+            "
+            CREATE INDEX {SERVICE_TABLE_INDEX} ON {SYSTEM_SCHEMA}.{SERVICE_TABLE}(id);
             "
         )
     }

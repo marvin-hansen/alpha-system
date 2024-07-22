@@ -4,7 +4,8 @@ use crate::prelude::PostgresUtilError;
 impl Specs {
     /// Sets up the specifications database.
     ///
-    /// This method sets up the specifications database by performing the following steps:
+    /// This method is responsible for setting up the specifications database. It performs the following steps:
+    ///
     /// 1. Creates the specifications database using the `create_spec_db` method.
     /// 2. Verifies if the specifications database exists using the `verify_spec_db_exists` method.
     /// 3. Creates the schema for all specifications using the `create_all_spec_schema` method.
@@ -23,6 +24,24 @@ impl Specs {
     /// # Errors
     ///
     /// Returns an `Err` variant of `PostgresUtilError` if any of the setup operations fail.
+    ///
+    /// # Remarks
+    ///
+    /// This method is an asynchronous function and should be awaited in an asynchronous context.
+    /// It is essential to handle errors appropriately when using this method to set up the specifications database.
+    ///
+    /// # Safety
+    ///
+    /// This method assumes the underlying database creation, schema creation, and table creation mechanisms are correctly implemented.
+    /// Ensure that the setup operations are intended and the consequences of setting up the specifications database are understood before calling this method.
+    ///
+    /// # Panics
+    ///
+    /// This method does not panic under normal circumstances. Any unexpected behavior should result in an `Err` variant being returned.
+    ///
+    /// # Aborts
+    ///
+    /// This method does not abort the program. It provides a controlled way to handle setting up the specifications database.
     ///
     pub async fn setup_spec_db(&self) -> Result<(), PostgresUtilError> {
         self.dbg_print("setup_spec_db");

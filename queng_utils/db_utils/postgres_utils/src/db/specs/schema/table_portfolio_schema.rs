@@ -1,4 +1,4 @@
-use crate::db::all_db_constants::{DEFAULT_SCHEMA, PORTFOLIO_TABLE};
+use crate::db::all_db_constants::{DEFAULT_SCHEMA, PORTFOLIO_TABLE, PORTFOLIO_TABLE_INDEX};
 use crate::db::Specs;
 
 // Composite Types
@@ -14,7 +14,7 @@ use crate::db::Specs;
 // https://medium.com/@emekadc/how-to-implement-one-to-one-one-to-many-and-many-to-many-relationships-when-designing-a-database-9da2de684710
 
 impl Specs {
-    pub(crate) fn generate_portfolio_table_types_ddl(&self) -> String {
+    pub(crate) fn generate_portfolio_table_account_type_ddl(&self) -> String {
         r#"
         CREATE TYPE "account_type" AS ENUM(
             'NullVal',
@@ -39,9 +39,14 @@ impl Specs {
             portfolio_max_drawdown          DOUBLE PRECISION NOT NULL,
             portfolio_free_cash_percent     DOUBLE PRECISION NOT NULL
             );
+            "
+        )
+    }
 
-            CREATE INDEX idx_portfolio_id ON {DEFAULT_SCHEMA}.{PORTFOLIO_TABLE}(portfolio_id);
-            CREATE INDEX idx_portfolio_account_id ON {DEFAULT_SCHEMA}.{PORTFOLIO_TABLE}(account_id);
+    pub(crate) fn generate_portfolio_table_index_ddl(&self) -> String {
+        format!(
+            "
+             CREATE INDEX {PORTFOLIO_TABLE_INDEX} ON {DEFAULT_SCHEMA}.{PORTFOLIO_TABLE}(portfolio_id);
             "
         )
     }

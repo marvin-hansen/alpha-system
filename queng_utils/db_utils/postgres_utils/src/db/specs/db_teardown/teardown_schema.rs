@@ -10,11 +10,15 @@ impl Specs {
         self.dbg_print("/drop_all_specs_schema: drop_system_schema");
         let drop_ddl = &ddl_schema::generate_drop_schema_ddl(SYSTEM_SCHEMA);
         match self.execute_query(drop_ddl).await {
-            Ok(_) => Ok(()),
-            Err(e) => Err(PostgresUtilError::new(format!(
-                "Failed to drop system schema: {}",
-                e
-            ))),
-        }
+            Ok(_) => (),
+            Err(e) => {
+                return Err(PostgresUtilError::new(format!(
+                    "Failed to drop system schema: {}",
+                    e
+                )))
+            }
+        };
+
+        Ok(())
     }
 }

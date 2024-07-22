@@ -2,31 +2,48 @@ use crate::db::Specs;
 use crate::prelude::PostgresUtilError;
 
 impl Specs {
-    /// Tears down the specifications database.
+    /// Drops the specifications database and its associated tables and schemas.
     ///
-    /// This method tears down the specifications database by performing the following steps:
-    /// 1. Drops all relation tables using the `drop_all_relation_tables` method.
-    /// 2. Drops all specs tables using the `drop_all_specs_tables` method.
-    /// 3. Drops the specs schema using the `drop_all_specs_schema` method.
-    /// 4. Drops the specs database itself using the `drop_spec_db` method.
+    /// This method is responsible for dropping the specifications database and its associated tables and schemas.
+    /// It performs the following steps:
     ///
-    /// If any of the teardown steps fail, an error is returned describing the cause of the failure.
+    /// - Drops all the relation tables.
+    /// - Drops all the specifications tables.
+    /// - Drops all the specifications schema.
     ///
     /// # Arguments
     ///
-    /// * `drop`: A boolean flag indicating whether to drop the databases at the end of the teardown.
-    ///   If `true`, the databases will be dropped. If `false`, the databases will be preserved.
-    ///
-    /// Note, even if the database is preserved, all tables, types, and schemas will be dropped.
-    ///
+    /// * `drop` - A boolean flag indicating whether to drop the specifications database.
     ///
     /// # Returns
     ///
-    /// Returns `Ok(())` if the specifications database is successfully torn down.
+    /// Returns a `Result` with the following outcomes:
+    ///
+    /// - `Ok(())` if the database and its associated tables and schemas are dropped successfully.
+    /// - `Err` variant containing a `PostgresUtilError` if there is an error while dropping the database or its associated tables and schemas.
+    ///
     ///
     /// # Errors
     ///
-    /// Returns an `Err` variant of `PostgresUtilError` if any of the teardown operations fail.
+    /// Returns an `Err` variant of `PostgresUtilError` if there is a failure in dropping the specifications database or its associated tables and schemas.
+    ///
+    /// # Safety
+    ///
+    /// This method assumes the database to be dropped is correctly specified in the `DB_NAME` constant and that the underlying dropping mechanism is implemented correctly.
+    /// Ensure that the dropping operation is intended and the consequences of dropping the database and its associated tables and schemas are understood before calling this method.
+    ///
+    /// # Panics
+    ///
+    /// This method does not panic under normal circumstances. Any unexpected behavior should result in an `Err` variant being returned.
+    ///
+    /// # Aborts
+    ///
+    /// This method does not abort the program. It provides a controlled way to handle dropping the specifications database and its associated tables and schemas.
+    ///
+    /// # Remarks
+    ///
+    /// This method is an asynchronous function and should be awaited in an asynchronous context.
+    /// It is essential to handle errors appropriately when using this method to drop the specifications tables.
     ///
     pub async fn teardown_spec_db(&self, drop: bool) -> Result<(), PostgresUtilError> {
         self.dbg_print("teardown_spec_db");

@@ -8,8 +8,15 @@ impl Specs {
 
         let ddl = &ddl_table::generate_drop_table_ddl(PORTFOLIO_INSTRUMENT_TABLE);
         match self.execute_query(ddl).await {
-            Ok(_) => Ok(()),
-            Err(e) => Err(e.to_string()),
-        }
+            Ok(_) => (),
+            Err(e) => {
+                return Err(format!(
+                "drop_portfolio_instrument_table: Failed to drop portfolio_instrument table: {}",
+                e
+            ))
+            }
+        };
+
+        Ok(())
     }
 }
