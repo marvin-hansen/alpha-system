@@ -29,6 +29,7 @@ rust_test_suite(
         "//alias:common_config",
         "//alias:common_exchange",
         "//alias:docker_utils",
+        "//alias:smdb_specs",
         # External crates
         "@crates//:tokio",
     ],

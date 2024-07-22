@@ -23,3 +23,6 @@ docker_utils = {workspace = true}
 postgres-types = { workspace = true }
 tokio-postgres = { workspace = true }
 tokio = { workspace = true }
+
+[dev-dependencies]
+smdb_specs = {workspace = true} # For testing
