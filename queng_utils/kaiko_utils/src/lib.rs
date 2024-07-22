@@ -8,6 +8,12 @@ pub mod prelude;
 // Co-located API proxy speeds up data download.
 const API_PROXY_URL: &str = "http://localhost:7777/";
 
+/// `KaikoUtil` is a utility struct for interacting with the Kaiko API.
+///
+/// It provides methods for initializing a new instance, enabling debugging, and printing debug information.
+/// The struct contains a `KaikoClient` instance for making API requests.
+/// Additionally, it provides functionality for handling errors related to Kaiko API interactions.
+///
 pub struct KaikoUtil {
     dbg: bool,
     client: KaikoClient,
