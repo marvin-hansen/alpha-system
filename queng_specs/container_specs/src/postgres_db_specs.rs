@@ -14,6 +14,6 @@ pub fn postgres_db_container_config() -> ContainerConfig<'static> {
         None,
         true, // Keep the container running for re-use
         true, // Keep the same container config across all env. setups.
-        1,    // Wait a few second until the container finished starting up.
+        3,    // Wait a few second until the container finished starting up.
     )
 }

@@ -28,6 +28,7 @@ impl PostgresUtil {
     async fn build(dbg: bool, dsn: &str) -> Result<Self, PostgresUtilError> {
         if dbg {
             println!("[PostgresUtil]: Debug mode enabled");
+            println!("[PostgresUtil]: Connecting to Postgres database: {}", dsn);
         }
 
         let (db, connection) = tokio_postgres::connect(dsn, NoTls)
