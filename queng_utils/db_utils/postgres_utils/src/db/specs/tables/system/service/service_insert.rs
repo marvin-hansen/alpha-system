@@ -19,7 +19,8 @@ use common_config::prelude::ServiceConfig;
 // RETURNING *;
 
 impl Specs {
-    pub async fn insert_service(&self, data: &ServiceConfig) -> Result<(), PostgresUtilError> {
-        Ok(())
+    pub async fn insert_service(&self, _data: &ServiceConfig) -> Result<(), PostgresUtilError> {
+        // Ok(())
+        return Err(PostgresUtilError::from("Not implemented".to_string()));
     }
 }
