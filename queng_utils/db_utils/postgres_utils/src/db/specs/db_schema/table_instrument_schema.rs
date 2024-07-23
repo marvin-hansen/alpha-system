@@ -16,7 +16,7 @@ impl Specs {
     pub(crate) fn generate_instrument_table_ddl(&self) -> String {
         format!(
             "CREATE TABLE IF NOT EXISTS {DEFAULT_SCHEMA}.{INSTRUMENT_TABLE} (
-            id                              INT PRIMARY KEY,
+            id                              SERIAL PRIMARY KEY,
             code                            VARCHAR UNIQUE NOT NULL,
             class                           VARCHAR NOT NULL,
             exchange_code                   VARCHAR NOT NULL,

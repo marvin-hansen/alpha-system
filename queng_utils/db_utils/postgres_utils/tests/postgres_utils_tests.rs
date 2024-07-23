@@ -28,14 +28,13 @@ async fn get_client() -> PostgresUtil {
 
 #[tokio::test]
 async fn postgres_db_test() {
-    //
     setup_ci_env().await;
 
     let pg_util = get_client().await;
 
     postgres_db_setup_test(&pg_util).await;
 
-    postgres_db_import_test(&pg_util).await;
+    postgres_db_specs_import_test(&pg_util).await;
 
     postgres_db_teardown_test(&pg_util).await;
 
@@ -46,7 +45,7 @@ async fn postgres_db_setup_test(util: &PostgresUtil) {
     assert!(res.is_ok());
 }
 
-async fn postgres_db_import_test(util: &PostgresUtil) {
+async fn postgres_db_specs_import_test(util: &PostgresUtil) {
     let svc = smdb_specs::smdb_service_config();
     let res = util.specs.insert_service(&svc).await;
     assert!(res.is_ok());

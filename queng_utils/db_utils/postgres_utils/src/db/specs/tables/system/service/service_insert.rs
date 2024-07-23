@@ -40,7 +40,7 @@ impl Specs {
     pub async fn insert_service(&self, data: &ServiceConfig) -> Result<(), PostgresUtilError> {
         self.dbg_print("insert_service");
 
-        let query = self.build_insert_query(data);
+        let query = self.build_insert_service_query(data);
         // println!("query: {}", query);
         return match self.execute_query(&query).await {
             Ok(_) => Ok(()),
@@ -68,7 +68,7 @@ impl Specs {
     ///
     /// Returns a `String` containing the SQL query for inserting the service.
     ///
-    fn build_insert_query(&self, data: &ServiceConfig) -> String {
+    fn build_insert_service_query(&self, data: &ServiceConfig) -> String {
         format!(
             "INSERT INTO system.service(id, name, version, online, description, health_check_uri, base_uri, dependencies, exposure, endpoint, metrics)
              VALUES({}, '{}', {}, {}, '{}', '{}', '{}', '{}', {},

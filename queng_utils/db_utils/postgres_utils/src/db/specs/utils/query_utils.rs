@@ -165,6 +165,22 @@ impl Specs {
         }
     }
 
+    pub(crate) async fn execute_insert_query(&self, query: &str) -> Result<i64, PostgresUtilError> {
+        self.dbg_print("execute_insert_query");
+
+        match self.db.query_one(query, &[]).await {
+            Ok(row) => {
+                let id = row.get::<usize, i64>(0);
+
+                Ok(id)
+            }
+            Err(e) => {
+                self.dbg_print(&format!("Query failed: \n {}", query));
+                Err(PostgresUtilError::new(e.to_string()))
+            }
+        }
+    }
+
     /// Executes a count query in the database and returns the count as a `u64`.
     ///
     /// This method executes a count query in the database and returns the count as a `u64`.
