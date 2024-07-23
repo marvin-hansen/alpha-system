@@ -26,7 +26,7 @@ impl Specs {
         self.dbg_print("create_spec_db");
 
         self.dbg_print("drop_spec_db");
-        match self.drop_db(DB_NAME).await {
+        match self.teardown_spec_db(true).await {
             Ok(_) => (),
             Err(e) => {
                 return Err(PostgresUtilError::new(format!(

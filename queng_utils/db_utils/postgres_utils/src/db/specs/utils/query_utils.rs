@@ -170,7 +170,9 @@ impl Specs {
 
         match self.db.query_one(query, &[]).await {
             Ok(row) => {
-                let id = row.get::<usize, i64>(0);
+                // PG Sequence primary key seems to be int4, which maps to i32 in Rust
+                // https://gist.github.com/steveh/7c7145409a5eed6b698ee8b609b6d1fc
+                let id = row.get::<usize, i32>(0);
 
                 Ok(id as u64)
             }
