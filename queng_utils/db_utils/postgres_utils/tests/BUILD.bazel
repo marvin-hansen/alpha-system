@@ -14,7 +14,7 @@ rust_test_suite(
         "test.recycle-runner": "true",
         # We don't want different different db tests to be assigned to the same recycled runner,
         # because we can't fit all db docker images with the default disk limit.
-        "test.runner-recycling-key": "postgres_utils",
+        "test.runner-recycling-key": "postgres_utils_integration_tests",
     },
     tags = [
         "integration_test",
