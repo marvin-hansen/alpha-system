@@ -20,7 +20,7 @@ impl Specs {
     /// Returns `Ok(())` if the portfolio_instrument is successfully inserted,
     /// or an `Err` containing a `PostgresUtilError` with a message indicating the failure.
     ///
-    pub async fn insert_portfolio_instrument(
+    pub(crate) async fn insert_portfolio_instrument(
         &self,
         portfolio_id: u64,
         instrument_id: u64,

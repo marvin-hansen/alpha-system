@@ -16,7 +16,10 @@ use common_exchange::prelude::Instrument;
 // RETURNING id;
 
 impl Specs {
-    pub async fn insert_instrument(&self, data: &Instrument) -> Result<u64, PostgresUtilError> {
+    pub(crate) async fn insert_instrument(
+        &self,
+        data: &Instrument,
+    ) -> Result<u64, PostgresUtilError> {
         let query = self.build_insert_instrument_query(data);
         // println!("query: {}", query);
         match self.execute_insert_query(&query).await {
