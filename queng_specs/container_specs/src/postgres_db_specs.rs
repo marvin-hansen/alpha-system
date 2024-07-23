@@ -12,8 +12,11 @@ pub fn postgres_db_container_config() -> ContainerConfig<'static> {
         None,
         Some(&["POSTGRES_PASSWORD=postgres"]),
         None,
-        true,                // Keep the container running for re-use
-        true,                // Keep the same container config across all env. setups.
-        WaitStrategy::Never, // Wait a few second until the container finished starting up.
+        true, // Keep the container running for re-use
+        true, // Keep the same container config across all env. setups.
+        WaitStrategy::WaitUntilConsoleOutputContains(
+            "database system is ready to accept connections".to_string(),
+            30, // Postgres is usually up in <10s
+        ),
     )
 }

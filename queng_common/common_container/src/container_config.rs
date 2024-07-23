@@ -32,7 +32,7 @@ impl<'l> ContainerConfig<'l> {
     /// * `keep_configuration` -  A boolean flag indication whether to keep the configuration upon
     ///    every environment setup. If set to true, the same configuration will be used across all
     ///    environment setups. If false, each setup will re-create all tables and import data.,
-    /// * `wait_duration` - Sets the nr. seconds of how long to wait for the container to complete starting.
+    /// * `wait_strategy` - The wait strategy to use for the container.
     ///
     /// # Returns
     ///
@@ -50,7 +50,7 @@ impl<'l> ContainerConfig<'l> {
         platform: Option<&'l str>,
         reuse_container: bool,
         keep_configuration: bool,
-        wait_duration: WaitStrategy,
+        wait_strategy: WaitStrategy,
     ) -> Self {
         Self {
             name,
@@ -63,7 +63,7 @@ impl<'l> ContainerConfig<'l> {
             platform,
             reuse_container,
             keep_configuration,
-            wait_strategy: wait_duration,
+            wait_strategy,
         }
     }
 }

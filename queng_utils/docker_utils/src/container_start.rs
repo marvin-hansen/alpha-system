@@ -1,7 +1,8 @@
 use crate::error::DockerError;
 use crate::DockerUtil;
-use common_container::prelude::ContainerConfig;
+use common_container::prelude::{ContainerConfig, WaitStrategy};
 use std::process::Command;
+use std::time::{Duration, Instant};
 
 impl DockerUtil {
     /// Gets an existing container or starts a new one with the specified configuration
@@ -34,8 +35,8 @@ impl DockerUtil {
     /// # Returns
     ///
     /// Returns a tuple containing the container name and port if successful, or a `DockerError` if an error occurs.
-    ////// ```
-    pub(crate) fn get_or_start_container(
+    ///
+    fn get_or_start_container(
         &self,
         container_config: &ContainerConfig,
     ) -> Result<(String, u16), DockerError> {
@@ -47,6 +48,7 @@ impl DockerUtil {
         let platform = container_config.platform();
         let additional_env_vars = container_config.additional_env_vars();
         let reuse_container = container_config.reuse_container();
+        let wait_strategy = container_config.wait_strategy();
 
         let container_id = &format!("{}-{}", name, connection_port);
 
@@ -87,21 +89,29 @@ impl DockerUtil {
             platform,
             additional_env_vars,
             image,
+            wait_strategy,
         ) {
             Ok((container_id, port)) => Ok((container_id, port)),
             Err(e) => Err(e),
         }
     }
 
-    /// Start a stopped container by its ID.
+    /// Starts a new Docker container with the specified configuration.
     ///
     /// # Arguments
     ///
-    /// * `container_id` - The ID of the container to start.
+    /// * `container_id` - The ID of the container.
+    /// * `connection_port` - The port number for the main connection i.e. 80 for a webserver.
+    /// * `additional_ports` - An optional array of additional ports to publish.
+    /// * `platform` - An optional platform string in case the container image is not multi-arch.
+    /// * `additional_env_vars` - An optional array of additional environment variables to set.
+    /// * `image` - The image to use for the container.
+    /// * `wait_strategy` - The wait strategy to use for the container.
     ///
     /// # Returns
     ///
-    /// Returns `Ok(())` if the container was successfully started, or `Err(DockerError)` if an error occurred.
+    /// Returns a tuple containing the container name and port if successful,
+    /// or a `DockerError` if an error occurs.
     ///
     pub(crate) fn start_container(
         &self,
@@ -111,6 +121,7 @@ impl DockerUtil {
         platform: Option<&str>,
         additional_env_vars: Option<&[&str]>,
         image: &str,
+        wait_strategy: &WaitStrategy,
     ) -> Result<(String, u16), DockerError> {
         // Example: docker run --rm --detach --publish 80:80 --name test-80 nginx:latest
         self.dbg_print(&format!(
@@ -188,12 +199,104 @@ impl DockerUtil {
                     out.status.success(),
                     String::from_utf8_lossy(out.stdout.as_slice()),
                 ));
-                Ok((container_id.to_string(), connection_port))
             }
-            Err(e) => Err(DockerError::from(format!(
-                "Error starting container {}: {}",
-                container_id, e
-            ))),
+            Err(e) => {
+                return Err(DockerError::from(format!(
+                    "Error starting container {}: {}",
+                    container_id, e
+                )))
+            }
+        };
+
+        match wait_strategy {
+            WaitStrategy::WaitForDuration(duration) => {
+                self.dbg_print(&format!(
+                    "[start_container]: Waiting for {} seconds.",
+                    duration
+                ));
+                std::thread::sleep(Duration::from_secs(*duration));
+            }
+            WaitStrategy::WaitUntilConsoleOutputContains(expected_output, timeout) => {
+                self.dbg_print(&format!(
+                    "[start_container]: Waiting until console output contains {}.",
+                    expected_output
+                ));
+                match self.wait_until_console_output_contains(
+                    container_id,
+                    expected_output,
+                    timeout,
+                ) {
+                    Ok(_) => {}
+                    Err(e) => return Err(e),
+                };
+            }
+            WaitStrategy::NoWait => {
+                self.dbg_print(&"[start_container]: No wait. Return immediately.".to_string());
+                // Do nothing
+            }
         }
+        //
+        Ok((container_id.to_string(), connection_port))
+    }
+
+    /// Waits until the console output of the container with the given ID contains the
+    /// specified expected output. If the expected output is not found within the given
+    /// timeout, an error is returned.
+    ///
+    /// # Arguments
+    ///
+    /// * `container_id` - The ID of the container whose console output to check.
+    /// * `expected_output` - The string to search for in the console output.
+    /// * `timeout` - The timeout duration in seconds.
+    ///
+    /// # Returns
+    ///
+    /// Returns `Ok(())` if the expected output is found within the timeout, or an
+    /// `Err(DockerError)` if the expected output is not found.
+    ///
+    fn wait_until_console_output_contains(
+        &self,
+        container_id: &str,
+        expected_output: &str,
+        timeout: &u64,
+    ) -> Result<(), DockerError> {
+        let start_time = Instant::now();
+        let timeout = Duration::from_secs(*timeout);
+
+        loop {
+            std::thread::sleep(Duration::from_millis(100));
+
+            if start_time.elapsed() > timeout {
+                return Err(DockerError::from(format!(
+                    "[start_container]: !!Timeout!! Waited {} seconds for console output to contain {}",
+                    timeout.as_secs(),
+                    expected_output
+                )));
+            }
+
+            // Example: docker logs apiproxy-7777
+            // https://docs.docker.com/reference/cli/docker/container/logs/
+            let output = match Command::new("docker")
+                .arg("logs")
+                .arg(container_id)
+                .output()
+                .map_err(|e| {
+                    DockerError::from(format!(
+                        "[start_container]: Failed to run docker logs for container: {} Error: {}",
+                        container_id, e
+                    ))
+                }) {
+                Ok(o) => o,
+                Err(e) => return Err(e),
+            };
+
+            if output.status.success() {
+                if String::from_utf8_lossy(&output.stdout).contains(expected_output) {
+                    break;
+                }
+            }
+        }
+
+        Ok(())
     }
 }

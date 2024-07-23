@@ -13,7 +13,7 @@ fn sample_container_config() -> ContainerConfig<'static> {
         Some("linux/amd64"),
         true,
         false,
-        WaitStrategy::default(), // Never is the default wait strategy
+        WaitStrategy::default(), // NoWait is the default wait strategy
     )
 }
 

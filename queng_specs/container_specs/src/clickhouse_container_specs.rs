@@ -22,6 +22,6 @@ pub fn clickhouse_container_config() -> ContainerConfig<'static> {
         None,
         true,               // Keep the container running for re-use
         true,               // Keep the same container config across all env. setups.
-        WaitForDuration(5), // Wait 5 second until the container finished starting up.
+        WaitForDuration(3), // Wait a moment until ClickHouse is ready
     )
 }
