@@ -1,8 +1,7 @@
 use crate::error::DockerError;
 use crate::DockerUtil;
-use common_config::prelude::ContainerConfig;
-use std::time::Duration;
-use tokio::time::sleep;
+use common_container::prelude::ContainerConfig;
+
 impl DockerUtil {
     /// Sets up a Docker container according to its configuration
     ///
@@ -24,7 +23,6 @@ impl DockerUtil {
         container_config: &ContainerConfig<'_>,
     ) -> Result<(String, u16), DockerError> {
         let container_name = &container_config.container_name();
-        let wait_duration = container_config.wait_duration();
         let target_tag = container_config.tag();
 
         self.dbg_print(&format!(
@@ -88,12 +86,6 @@ impl DockerUtil {
                 "Start container {} with target tag {}",
                 container_name, target_tag
             ));
-
-            self.dbg_print(&format!(
-                "Wait {} seconds for {} container to complete setup & finish boot sequence",
-                wait_duration, &container_name
-            ));
-            sleep(Duration::from_secs(wait_duration)).await;
         } else {
             self.dbg_print(&format!(
                 "Reuse Container {} with target tag {}",

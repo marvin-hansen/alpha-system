@@ -14,7 +14,7 @@ rust_library(
     visibility = ["//visibility:public"],
     deps = [
         # Internal crates
-        "//alias:common_config",
+        "//alias:common_container",
         "//alias:common_env",
         "//alias:ctx_manager",
         "//alias:clickhouse_utils",

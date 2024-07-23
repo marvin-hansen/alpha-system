@@ -10,6 +10,12 @@ alias(
 )
 
 alias(
+    name = "common_container",
+    actual = "//queng_common/common_container",
+    visibility = ["//visibility:public"],
+)
+
+alias(
     name = "common_data_bar",
     actual = "//queng_common/common_data_bar",
     visibility = ["//visibility:public"],

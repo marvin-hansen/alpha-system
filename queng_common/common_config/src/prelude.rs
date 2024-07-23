@@ -1,6 +1,5 @@
 // config types
 pub use crate::config_types::client_channel::*;
-pub use crate::config_types::container_config::*;
 pub use crate::config_types::endpoint::*;
 pub use crate::config_types::endpoint_host::*;
 pub use crate::config_types::message_client_config::*;

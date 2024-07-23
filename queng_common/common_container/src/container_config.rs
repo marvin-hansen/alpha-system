@@ -1,6 +1,7 @@
+use crate::container_wait_strategy::WaitStrategy;
 use std::fmt::Display;
 
-#[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq)]
+#[derive(Debug, Default, Clone, Eq, PartialOrd, Ord, PartialEq, Hash)]
 pub struct ContainerConfig<'l> {
     name: &'l str,
     image: &'l str,
@@ -12,7 +13,7 @@ pub struct ContainerConfig<'l> {
     platform: Option<&'l str>,
     reuse_container: bool,
     keep_configuration: bool,
-    wait_duration: u64,
+    wait_strategy: WaitStrategy,
 }
 
 impl<'l> ContainerConfig<'l> {
@@ -37,15 +38,6 @@ impl<'l> ContainerConfig<'l> {
     ///
     /// Returns a new instance of the `ContainerConfig` struct.
     ///
-    /// # Examples
-    ///
-    /// ```
-    /// use common_config::prelude::ContainerConfig;
-    ///
-    /// let container_config = ContainerConfig::new(
-    ///     "my_container","nginx",":latest", "0.0.0.0" ,80, None, None, None, false, false, 10
-    /// );
-    /// ```
     #[allow(clippy::too_many_arguments)]
     pub fn new(
         name: &'l str,
@@ -58,7 +50,7 @@ impl<'l> ContainerConfig<'l> {
         platform: Option<&'l str>,
         reuse_container: bool,
         keep_configuration: bool,
-        wait_duration: u64,
+        wait_duration: WaitStrategy,
     ) -> Self {
         Self {
             name,
@@ -71,7 +63,7 @@ impl<'l> ContainerConfig<'l> {
             platform,
             reuse_container,
             keep_configuration,
-            wait_duration,
+            wait_strategy: wait_duration,
         }
     }
 }
@@ -108,8 +100,8 @@ impl<'l> ContainerConfig<'l> {
     pub fn keep_configuration(&self) -> bool {
         self.keep_configuration
     }
-    pub fn wait_duration(&self) -> u64 {
-        self.wait_duration
+    pub fn wait_strategy(&self) -> &WaitStrategy {
+        &self.wait_strategy
     }
     pub fn image(&self) -> &'l str {
         self.image
@@ -124,7 +116,7 @@ impl Display for ContainerConfig<'_> {
         write!(
             f,
             "name: {}, image: {}:{}, url: {} connection_port: {}, additional_ports: {:?}, \
-            additional_env_vars: {:?}, platform: {:?},  reuse_container: {}, keep_configuration: {}, wait_duration: {}",
+            additional_env_vars: {:?}, platform: {:?},  reuse_container: {}, keep_configuration: {}, wait_strategy: {}",
             self.name,
             self.image,
             self.tag,
@@ -135,7 +127,7 @@ impl Display for ContainerConfig<'_> {
             self.platform,
             self.reuse_container,
             self.keep_configuration,
-            self.wait_duration,
+            self.wait_strategy,
         )
     }
 }

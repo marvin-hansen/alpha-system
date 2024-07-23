@@ -1,4 +1,5 @@
-use common_config::prelude::ContainerConfig;
+use common_container::prelude::ContainerConfig;
+use common_container::prelude::WaitStrategy::WaitForDuration;
 
 /// Constructs the configuration for an API proxy container.
 ///
@@ -16,8 +17,8 @@ pub fn api_proxy_container_config() -> ContainerConfig<'static> {
         None,
         None,
         None,
-        true, // Keep the container running for re-use
-        true, // Keep the same container config across all env. setups.
-        40,   // Wait a few seconds until the container finished starting up.
+        true,                // Keep the container running for re-use
+        true,                // Keep the same container config across all env. setups.
+        WaitForDuration(30), // Wait a few seconds until the container finished starting up.
     )
 }

@@ -9,6 +9,7 @@ members = [
     "queng_clients/rest_client",
     "queng_clients/mddb_client",
     "queng_common/common_config",
+    "queng_common/common_container",
     "queng_common/common_errors",
     "queng_common/common_data_bar",
     "queng_common/common_database",
@@ -83,6 +84,7 @@ rest_client = { path = "queng_clients/rest_client" }
 mddb_client = { path = "queng_clients/mddb_client" }
 # Common
 common_config = { path = "queng_common/common_config" }
+common_container = { path = "queng_common/common_container" }
 common_data_bar = { path = "queng_common/common_data_bar" }
 common_database = { path = "queng_common/common_database" }
 common_env = { path = "queng_common/common_env" }

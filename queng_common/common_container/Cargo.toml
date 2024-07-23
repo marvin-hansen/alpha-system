@@ -1,5 +1,5 @@
 [package]
-name = "common_config"
+name = "common_container"
 version = "0.1.0"
 edition.workspace = true
 rust-version.workspace = true
@@ -10,5 +10,3 @@ authors.workspace = true
 
 [dependencies]
 # External crates
-serde_json = { workspace = true }
-serde = { workspace = true }

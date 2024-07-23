@@ -1,4 +1,4 @@
-use common_config::prelude::ContainerConfig;
+use common_container::prelude::ContainerConfig;
 use container_specs::api_proxy_container_specs::api_proxy_container_config;
 use container_specs::clickhouse_container_specs::clickhouse_container_config;
 use container_specs::postgres_db_specs::postgres_db_container_config;

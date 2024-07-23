@@ -1,6 +1,6 @@
 use crate::prelude::EnvironmentError;
 use crate::EnvUtil;
-use common_config::prelude::ContainerConfig;
+use common_container::prelude::ContainerConfig;
 
 const MTD: &str = "[configure_clickhouse]";
 

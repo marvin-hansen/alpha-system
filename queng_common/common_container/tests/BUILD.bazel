@@ -3,19 +3,16 @@ load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 rust_test_suite(
     name = "tests",
     srcs = glob([
-        "config_types/*_tests.rs",
+        "*_tests.rs",
     ]),
     tags = [
         "common",
-        "common_config",
+        "common_container",
         "unit-test",
     ],
     visibility = ["//visibility:public"],
     deps = [
         # Crate to test
-        "//alias:common_config",
-        # External crates
-        "@crates//:serde",
-        "@crates//:serde_json",
+        "//alias:common_container",
     ],
 )

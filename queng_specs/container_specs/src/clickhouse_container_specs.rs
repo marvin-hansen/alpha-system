@@ -1,4 +1,5 @@
-use common_config::prelude::ContainerConfig;
+use common_container::prelude::ContainerConfig;
+use common_container::prelude::WaitStrategy::WaitForDuration;
 
 /// Constructs the configuration for a ClickHouse container.
 ///
@@ -19,8 +20,8 @@ pub fn clickhouse_container_config() -> ContainerConfig<'static> {
         Some(&[8123]),
         None,
         None,
-        true, // Keep the container running for re-use
-        true, // Keep the same container config across all env. setups.
-        5,    // Wait 5 second until the container finished starting up.
+        true,               // Keep the container running for re-use
+        true,               // Keep the same container config across all env. setups.
+        WaitForDuration(5), // Wait 5 second until the container finished starting up.
     )
 }

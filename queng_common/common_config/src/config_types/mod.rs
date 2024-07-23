@@ -1,5 +1,4 @@
 pub mod client_channel;
-pub mod container_config;
 pub mod endpoint;
 pub mod endpoint_host;
 pub mod message_client_config;
