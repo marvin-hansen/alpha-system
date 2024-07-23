@@ -17,7 +17,7 @@ actions:
       # Rust tests: Unit, Doc tests, & binary-integrity tests
       - "test  -c opt //...  --test_tag_filters=unit-test,doc-test,binary-integrity_test --test_env=ENV=CI --config=remote"
       # Integration tests
-      - "test -c opt  //...  --test_tag_filters=integration_test,docker_utils_integration_test --test_env=ENV=CI --config=remote"
+      - "test -c opt  //...  --test_tag_filters=integration_test --test_env=ENV=CI --config=remote"
       # Build & publish container images to container registry
       - "run   -c opt //:push --config=remote"
     resource_requests:

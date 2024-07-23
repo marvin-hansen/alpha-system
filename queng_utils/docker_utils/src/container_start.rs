@@ -218,16 +218,16 @@ impl DockerUtil {
             }
             WaitStrategy::WaitUntilConsoleOutputContains(expected_output, timeout) => {
                 self.dbg_print(&format!(
-                    "[start_container]: Waiting until console output contains {}.",
+                    "[start_container]: Waiting until console output contains '{}'",
                     expected_output
                 ));
-                match self.wait_until_console_output_contains(
+                return match self.wait_until_console_output_contains(
                     container_id,
                     expected_output,
                     timeout,
                 ) {
-                    Ok(_) => {}
-                    Err(e) => return Err(e),
+                    Ok(_) => Ok((container_id.to_string(), connection_port)),
+                    Err(e) => Err(e),
                 };
             }
             WaitStrategy::NoWait => {
@@ -262,6 +262,7 @@ impl DockerUtil {
     ) -> Result<(), DockerError> {
         let start_time = Instant::now();
         let timeout = Duration::from_secs(*timeout);
+        self.dbg_print("wait_until_console_output_contains");
 
         loop {
             std::thread::sleep(Duration::from_millis(100));
@@ -291,7 +292,10 @@ impl DockerUtil {
             };
 
             if output.status.success() {
+                self.dbg_print("status.success");
                 if String::from_utf8_lossy(&output.stdout).contains(expected_output) {
+                    self.dbg_print("MATCH: stdout contains expected output");
+
                     // Apparently, when the success log message appears in Docker,
                     // some services still need more time to become ready.
                     std::thread::sleep(Duration::from_millis(250));

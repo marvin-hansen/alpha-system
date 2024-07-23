@@ -18,13 +18,14 @@ rust_test_suite(
     },
     tags = [
         "docker_utils_integration_test",
+        "integration_test",
     ],
     visibility = ["//visibility:public"],
     deps = [
         # Crate under test
         "//alias:docker_utils",
         # Internal crates
-        "//alias:container_specs",
+        "//alias:common_container",
         # External crates
         "@crates//:tokio",
     ],
