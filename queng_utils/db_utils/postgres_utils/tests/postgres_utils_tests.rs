@@ -1,7 +1,9 @@
+use std::env;
+
+use common_exchange::prelude::{AccountType, PortfolioConfig};
 use container_specs::postgres_db_specs::postgres_db_container_config;
 use docker_utils::DockerUtil;
 use postgres_utils::PostgresUtil;
-use std::env;
 
 async fn setup_ci_env() {
     // Set the environment variable.
@@ -50,6 +52,11 @@ async fn postgres_db_specs_import_test(util: &PostgresUtil) {
     let res = util.specs.insert_service(&svc).await;
     assert!(res.is_ok());
 }
+async fn postgres_db_portfolio_import_test(util: &PostgresUtil) {
+    let config = get_portfolio_config();
+    let res = util.specs.insert_portfolio(&config).await;
+    assert!(res.is_ok());
+}
 
 async fn postgres_db_teardown_test(util: &PostgresUtil) {
     let res = util.teardown_all_db(false).await;
@@ -57,4 +64,42 @@ async fn postgres_db_teardown_test(util: &PostgresUtil) {
 
     let res = util.drop_all_db().await;
     assert!(res.is_ok());
+}
+
+fn get_portfolio_config() -> PortfolioConfig {
+    let portfolio_id = 1;
+    let portfolio_description = "cash portfolio".to_string();
+    let portfolio_account_type = AccountType::Spot;
+    let portfolio_account_id = "cash_account".to_string();
+    let portfolio_currency = "USD".to_string();
+    let portfolio_cash_balance = 1000.0;
+    let portfolio_max_drawdown = 20.0;
+    let portfolio_instruments = vec![get_test_instrument()];
+    let instrument_max_allocation = 0.0;
+    let instrument_max_drawdown = 10.0;
+
+    PortfolioConfig::new_cash_portfolio(
+        portfolio_id,
+        portfolio_description,
+        portfolio_account_type,
+        portfolio_account_id,
+        portfolio_currency,
+        portfolio_cash_balance,
+        portfolio_max_drawdown,
+        portfolio_instruments,
+        instrument_max_allocation,
+        instrument_max_drawdown,
+    )
+}
+
+fn get_test_instrument() -> common_exchange::prelude::Instrument {
+    common_exchange::prelude::Instrument::new(
+        "ens-krw".to_string(),
+        "spot".to_string(),
+        "cbse".to_string(),
+        "KRW-ENS".to_string(),
+        "ens".to_string(),
+        "krw".to_string(),
+        None,
+    )
 }
