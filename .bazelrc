@@ -81,6 +81,9 @@ common:remote-shared --remote_download_minimal
 common:remote-shared --experimental_remote_cache_compression
 common:remote-shared --verbose_failures
 
+# Avoid inflating blobs smaller than 100 bytes with ZSTD compression.
+common:remote-shared --experimental_remote_cache_compression_threshold=100
+
 # Required to resolve MUSL toolchain.
 # https://github.com/bazel-contrib/musl-toolchain?tab=readme-ov-file#setup
 # build --incompatible_enable_cc_toolchain_resolution
