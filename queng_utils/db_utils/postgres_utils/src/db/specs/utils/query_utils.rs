@@ -165,14 +165,14 @@ impl Specs {
         }
     }
 
-    pub(crate) async fn execute_insert_query(&self, query: &str) -> Result<i64, PostgresUtilError> {
+    pub(crate) async fn execute_insert_query(&self, query: &str) -> Result<u64, PostgresUtilError> {
         self.dbg_print("execute_insert_query");
 
         match self.db.query_one(query, &[]).await {
             Ok(row) => {
                 let id = row.get::<usize, i64>(0);
 
-                Ok(id)
+                Ok(id as u64)
             }
             Err(e) => {
                 self.dbg_print(&format!("Query failed: \n {}", query));
