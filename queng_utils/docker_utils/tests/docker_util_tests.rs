@@ -61,7 +61,7 @@ async fn test_start_container(
     expected_container_id: &str,
     expected_container_port: u16,
 ) {
-    let res = docker_util.get_or_start_container_config(&container_config);
+    let res = docker_util.get_or_start_container_config(container_config);
     assert!(res.is_ok());
 
     let (container_id, container_port) = res.unwrap();
@@ -70,23 +70,23 @@ async fn test_start_container(
 }
 
 async fn test_container_exists(docker_util: &DockerUtil, container_id: &str) {
-    let res = docker_util.check_if_container_exists(&container_id);
+    let res = docker_util.check_if_container_exists(container_id);
     assert!(res.is_ok());
     assert!(res.unwrap());
 }
 
 async fn test_stop_container(docker_util: &DockerUtil, container_id: &str) {
-    let res = docker_util.stop_container(&container_id);
+    let res = docker_util.stop_container(container_id);
     assert!(res.is_ok());
 
-    let res = docker_util.check_if_container_exists(&container_id);
+    let res = docker_util.check_if_container_exists(container_id);
 
     assert!(res.is_ok());
     assert!(!res.unwrap());
 }
 
 async fn test_container_stopped(docker_util: &DockerUtil, container_id: &str) {
-    let res = docker_util.check_if_container_exists(&container_id);
+    let res = docker_util.check_if_container_exists(container_id);
     assert!(res.is_ok());
     assert!(!res.unwrap());
 }

@@ -65,7 +65,6 @@ impl From<&str> for AccountType {
     }
 }
 
-
 impl Display for AccountType {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {

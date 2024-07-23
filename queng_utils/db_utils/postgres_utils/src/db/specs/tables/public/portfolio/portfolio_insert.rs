@@ -74,7 +74,7 @@ impl Specs {
             RETURNING portfolio_id;",
             data.portfolio_id(),
             data.portfolio_description(),
-            data.portfolio_account_type().to_string(),
+            data.portfolio_account_type(),
             data.portfolio_account_id(),
             data.portfolio_currency(),
             data.portfolio_cash(),

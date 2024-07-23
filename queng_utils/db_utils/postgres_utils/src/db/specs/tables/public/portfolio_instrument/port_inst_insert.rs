@@ -29,13 +29,13 @@ impl Specs {
 
         let query = self.build_insert_portfolio_instrument_query(portfolio_id, instrument_id);
         // println!("query: {}", query);
-        return match self.execute_query(&query).await {
+        match self.execute_query(&query).await {
             Ok(_) => Ok(()),
             Err(err) => Err(PostgresUtilError::new(format!(
                 "Failed to insert portfolio_instrument due error: {}",
                 err
             ))),
-        };
+        }
     }
 
     fn build_insert_portfolio_instrument_query(

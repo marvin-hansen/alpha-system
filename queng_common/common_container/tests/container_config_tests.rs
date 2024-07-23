@@ -71,13 +71,13 @@ fn test_platform() {
 #[test]
 fn test_reuse_container() {
     let config = sample_container_config();
-    assert_eq!(config.reuse_container(), true);
+    assert!(config.reuse_container());
 }
 
 #[test]
 fn test_keep_configuration() {
     let config = sample_container_config();
-    assert_eq!(config.keep_configuration(), false);
+    assert!(!config.keep_configuration());
 }
 
 #[test]

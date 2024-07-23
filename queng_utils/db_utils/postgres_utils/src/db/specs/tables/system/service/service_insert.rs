@@ -42,14 +42,14 @@ impl Specs {
 
         let query = self.build_insert_service_query(data);
         // println!("query: {}", query);
-        return match self.execute_query(&query).await {
+        match self.execute_query(&query).await {
             Ok(_) => Ok(()),
             Err(err) => Err(PostgresUtilError::new(format!(
                 "Failed to insert service: {} due error: {}",
                 &data.name(),
                 err
             ))),
-        };
+        }
     }
 
     /// Builds the SQL query for inserting a service into the system.service table.
@@ -81,7 +81,7 @@ impl Specs {
         )
     }
 
-    fn service_ids_to_string(&self, ids: &Vec<ServiceID>) -> String {
+    fn service_ids_to_string(&self, ids: &[ServiceID]) -> String {
         let id_strings: Vec<String> = ids.iter().map(|id| id.as_u8().to_string()).collect();
         format!("{{{}}}", id_strings.join(","))
     }

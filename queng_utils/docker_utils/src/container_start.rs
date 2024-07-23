@@ -113,6 +113,7 @@ impl DockerUtil {
     /// Returns a tuple containing the container name and port if successful,
     /// or a `DockerError` if an error occurs.
     ///
+    #[allow(clippy::too_many_arguments)]
     pub(crate) fn start_container(
         &self,
         container_id: &str,
@@ -231,7 +232,7 @@ impl DockerUtil {
                 };
             }
             WaitStrategy::NoWait => {
-                self.dbg_print(&"[start_container]: No wait. Return immediately.".to_string());
+                self.dbg_print("[start_container]: No wait. Return immediately.");
                 // Do nothing
             }
         }
