@@ -18,6 +18,18 @@ impl AccountType {
     }
 }
 
+impl From<u8> for AccountType {
+    #[inline]
+    fn from(v: u8) -> Self {
+        match v {
+            0x1_u8 => Self::Spot,
+            0x2_u8 => Self::Margin,
+            0x3_u8 => Self::Future,
+            _ => Self::NullVal,
+        }
+    }
+}
+
 impl From<i32> for AccountType {
     #[inline]
     fn from(v: i32) -> Self {
@@ -29,14 +41,38 @@ impl From<i32> for AccountType {
         }
     }
 }
+impl From<String> for AccountType {
+    #[inline]
+    fn from(v: String) -> Self {
+        match v.as_str() {
+            "Spot" => Self::Spot,
+            "Margin" => Self::Margin,
+            "Future" => Self::Future,
+            _ => Self::NullVal,
+        }
+    }
+}
+
+impl From<&str> for AccountType {
+    #[inline]
+    fn from(v: &str) -> Self {
+        match v {
+            "Spot" => Self::Spot,
+            "Margin" => Self::Margin,
+            "Future" => Self::Future,
+            _ => Self::NullVal,
+        }
+    }
+}
+
 
 impl Display for AccountType {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
-            AccountType::NullVal => write!(f, "NullVal"),
             AccountType::Spot => write!(f, "Spot"),
             AccountType::Margin => write!(f, "Margin"),
             AccountType::Future => write!(f, "Future"),
+            AccountType::NullVal => write!(f, "NullVal"),
         }
     }
 }

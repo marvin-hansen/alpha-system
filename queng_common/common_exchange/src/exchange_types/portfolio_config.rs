@@ -15,7 +15,6 @@ pub struct PortfolioConfig {
     portfolio_instruments: Vec<Instrument>,
     instrument_max_allocation: f64,
     instrument_max_drawdown: f64,
-    //
     portfolio_free_margin: f64,
     portfolio_free_cash: f64,
     portfolio_free_margin_percent: f64,
