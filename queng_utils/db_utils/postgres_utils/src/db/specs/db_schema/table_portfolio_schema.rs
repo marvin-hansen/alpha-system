@@ -37,6 +37,11 @@ impl Specs {
             portfolio_cash                  DOUBLE PRECISION NOT NULL,
             portfolio_margin                DOUBLE PRECISION NOT NULL,
             portfolio_max_drawdown          DOUBLE PRECISION NOT NULL,
+            instrument_max_allocation       DOUBLE PRECISION NOT NULL,
+            instrument_max_drawdown         DOUBLE PRECISION NOT NULL,
+            portfolio_free_margin           DOUBLE PRECISION NOT NULL,
+            portfolio_free_cash             DOUBLE PRECISION NOT NULL,
+            portfolio_free_margin_percent   DOUBLE PRECISION NOT NULL,
             portfolio_free_cash_percent     DOUBLE PRECISION NOT NULL
             );
             "

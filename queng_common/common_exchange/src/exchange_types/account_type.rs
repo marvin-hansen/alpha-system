@@ -12,6 +12,12 @@ pub enum AccountType {
     Future = 0x3_u8,
 }
 
+impl AccountType {
+    pub fn as_u8(&self) -> u8 {
+        *self as u8
+    }
+}
+
 impl From<i32> for AccountType {
     #[inline]
     fn from(v: i32) -> Self {
