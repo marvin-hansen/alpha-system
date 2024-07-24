@@ -1,3 +1,5 @@
+use std::cell::RefCell;
+
 use common_env::prelude::EnvironmentType;
 use ctx_manager::CtxManager;
 use docker_utils::DockerUtil;
@@ -17,17 +19,17 @@ pub mod prelude;
 
 pub struct EnvUtil {
     env: EnvironmentType,
-    api_proxy_container_name: String,
-    api_proxy_container_port: u16,
-    clickhouse_container_name: String,
-    clickhouse_container_port: u16,
-    postgres_db_container_name: String,
-    postgres_db_container_port: u16,
+    api_proxy_container_name: RefCell<String>,
+    api_proxy_container_port: RefCell<u16>,
+    clickhouse_container_name: RefCell<String>,
+    clickhouse_container_port: RefCell<u16>,
+    postgres_db_container_name: RefCell<String>,
+    postgres_db_container_port: RefCell<u16>,
     //
-    all_containers_crated: bool,
-    postgres_configured: bool,
-    clickhouse_configured: bool,
-    ci_env_configured: bool,
+    all_containers_crated: RefCell<bool>,
+    postgres_configured: RefCell<bool>,
+    clickhouse_configured: RefCell<bool>,
+    ci_env_configured: RefCell<bool>,
     //
     docker_util: DockerUtil,
     kaiko_util: KaikoUtil,
@@ -60,18 +62,26 @@ impl EnvUtil {
         Self::build(true).await
     }
 
-    /// Builds a new `EnvUtil` instance.
+    /// Asynchronously builds and initializes an `EnvUtil` instance.
     ///
-    /// This function builds a new `EnvUtil` instance with the specified debug flag.
+    /// This function is responsible for setting up the environment by detecting the current
+    /// environment type, retrieving container configurations, and initializing various utilities
+    /// and containers.
     ///
     /// # Arguments
     ///
-    /// * `dbg` - A boolean value indicating whether debug mode is enabled.
+    /// * `dbg` - A boolean flag indicating whether debug mode is enabled.
     ///
     /// # Returns
     ///
-    /// Returns a `Result` containing a `EnvUtil` instance
+    /// Returns a `Result` containing an `EnvUtil` instance if successful,
     /// or an `EnvironmentError` if an error occurs.
+    ///
+    /// # Errors
+    ///
+    /// This function will return an `EnvironmentError` if it fails to initialize the Docker utility,
+    /// Kaiko utility, or any of the specified containers.
+    ///
     async fn build(dbg: bool) -> Result<Self, EnvironmentError> {
         // Autodetect the environment in which the system runs
         let ctx = CtxManager::new();
@@ -104,19 +114,21 @@ impl EnvUtil {
                 .expect("EnvUtil: Failed to init / verify api proxy container");
 
         // set the boolean flag for all containers
-        let all_containers_crated = api_proxy_exists && clickhouse_exists && postgres_db_exists;
-        let postgres_configured = false;
-        let clickhouse_configured = false;
-        let ci_env_configured = false;
+        let containers_crated = api_proxy_exists && clickhouse_exists && postgres_db_exists;
 
-        let mut instance = Self {
+        let all_containers_crated = RefCell::new(containers_crated);
+        let postgres_configured = RefCell::new(false);
+        let clickhouse_configured = RefCell::new(false);
+        let ci_env_configured = RefCell::new(false);
+
+        let instance = Self {
             env,
-            api_proxy_container_name,
-            api_proxy_container_port,
-            clickhouse_container_name,
-            clickhouse_container_port,
-            postgres_db_container_name,
-            postgres_db_container_port,
+            api_proxy_container_name: RefCell::new(api_proxy_container_name),
+            api_proxy_container_port: RefCell::new(api_proxy_container_port),
+            clickhouse_container_name: RefCell::new(clickhouse_container_name),
+            clickhouse_container_port: RefCell::new(clickhouse_container_port),
+            postgres_db_container_name: RefCell::new(postgres_db_container_name),
+            postgres_db_container_port: RefCell::new(postgres_db_container_port),
             all_containers_crated,
             postgres_configured,
             clickhouse_configured,
@@ -126,7 +138,7 @@ impl EnvUtil {
             dbg,
         };
 
-        if all_containers_crated {
+        if containers_crated {
             let clickhouse_configured = match instance.verify_clickhouse_db().await {
                 Ok(_) => true,
                 Err(_) => false,
@@ -138,15 +150,15 @@ impl EnvUtil {
             };
 
             if clickhouse_configured {
-                instance.clickhouse_configured = true;
+                instance.clickhouse_configured.replace(true);
             }
 
             if postgres_configured {
-                instance.postgres_configured = true;
+                instance.postgres_configured.replace(true);
             }
 
             if clickhouse_configured && postgres_configured {
-                instance.ci_env_configured = true;
+                instance.ci_env_configured.replace(true);
             }
         }
 

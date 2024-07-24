@@ -1,9 +1,10 @@
-use crate::prelude::EnvironmentSetupError;
-use crate::EnvUtil;
 use specs_utils::prelude::clickhouse_container_specs;
 
+use crate::prelude::EnvironmentSetupError;
+use crate::EnvUtil;
+
 impl EnvUtil {
-    pub async fn setup_container_clickhouse(&mut self) -> Result<(), EnvironmentSetupError> {
+    pub async fn setup_container_clickhouse(&self) -> Result<(), EnvironmentSetupError> {
         //
         self.dbg_print("Get docker util");
         let docker_util = self.docker_util();

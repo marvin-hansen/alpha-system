@@ -13,23 +13,13 @@ impl PostgresUtil {
     /// If successful, it returns `Ok(true)`.
     /// If an error occurs, it returns `Err(PostgresUtilError)`.
     ///
-    /// # Errors
-    ///
-    /// This method can return an error of type `PostgresUtilError`.
     ///
     pub async fn verify_all_db(&self) -> Result<bool, PostgresUtilError> {
         self.dbg_print("verify_all_db");
 
         match self.specs.verify_spec_db().await {
-            Ok(_) => (),
-            Err(e) => {
-                return Err(PostgresUtilError::new(format!(
-                    "Failed to verify specs DB: {}",
-                    e
-                )))
-            }
+            Ok(_) => Ok(true),
+            Err(_) => Ok(false),
         }
-
-        Ok(true)
     }
 }

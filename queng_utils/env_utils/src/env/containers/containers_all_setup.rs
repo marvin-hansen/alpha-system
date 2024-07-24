@@ -2,10 +2,10 @@ use crate::prelude::EnvironmentSetupError;
 use crate::EnvUtil;
 
 impl EnvUtil {
-    pub async fn setup_all_containers(&mut self) -> Result<(), EnvironmentSetupError> {
+    pub async fn setup_all_containers(&self) -> Result<(), EnvironmentSetupError> {
         //
         self.dbg_print("[setup_containers]: Check if containers already configured");
-        if self.all_containers_crated {
+        if self.all_containers_crated() {
             self.dbg_print("[setup_containers]: Containers already configured.");
             return Ok(());
         }

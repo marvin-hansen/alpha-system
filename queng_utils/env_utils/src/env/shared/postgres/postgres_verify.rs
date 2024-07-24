@@ -4,6 +4,19 @@ use specs_utils::prelude::{get_all_portfolio_specs, get_all_service_specs};
 use crate::prelude::{EnvUtil, EnvironmentError};
 
 impl EnvUtil {
+    /// Asynchronously verifies if the Postgres database is set up correctly.
+    ///
+    /// This method verifies if the Postgres database is set up correctly by performing the following steps:
+    /// - Retrieve the `PostgresUtil` object.
+    /// - Verify if all databases are created.
+    /// - Verify if all data are imported.
+    ///
+    /// # Returns
+    ///
+    /// Returns a `Result` that indicates if the Postgres database is set up correctly.
+    /// If successful, it returns `Ok(true)`.
+    /// If an error occurs, it returns `Err(EnvironmentError)`.
+    ///
     pub(crate) async fn verify_postgres_db(&self) -> Result<bool, EnvironmentError> {
         self.dbg_print("verify_postgres_db");
 

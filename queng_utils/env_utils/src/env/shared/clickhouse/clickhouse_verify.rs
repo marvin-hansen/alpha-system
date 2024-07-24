@@ -5,16 +5,20 @@ use crate::prelude::EnvironmentError;
 use crate::EnvUtil;
 
 impl EnvUtil {
-    /// Verifies that the ClickHouse database is configured correctly.
+    /// Verifies if all databases associated with the ClickHouseUtil object are created.
     ///
-    /// This function performs the following steps:
+    /// This function verifies the specs database by calling the `verify_all_db_exists` method on the `specs` object.
+    /// It returns `Ok(true)` if all databases are successfully verified, and `Err(EnvironmentError)` if any verification fails.
     ///
-    /// 1. Checks if all database tables have been created.
-    /// 2. Verifies that all data have been imported.
+    /// # Returns
+    ///
+    /// Returns a `Result` that indicates whether all databases have been verified.
+    /// If successful, it returns `Ok(true)`.
+    /// If an error occurs, it returns `Err(EnvironmentError)`.
     ///
     /// # Errors
     ///
-    /// - `EnvironmentError` if any step fails.
+    /// This method can return an error of type `EnvironmentError`.
     ///
     pub(crate) async fn verify_clickhouse_db(&self) -> Result<bool, EnvironmentError> {
         //

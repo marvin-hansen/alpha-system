@@ -4,7 +4,7 @@ use crate::prelude::{EnvironmentError, EnvironmentSetupError};
 use crate::EnvUtil;
 
 impl EnvUtil {
-    pub async fn setup_container_api_proxy(&mut self) -> Result<(), EnvironmentSetupError> {
+    pub async fn setup_container_api_proxy(&self) -> Result<(), EnvironmentSetupError> {
         //
         self.dbg_print("Get docker util");
         let docker_util = self.docker_util();
@@ -46,7 +46,7 @@ impl EnvUtil {
 
         self.dbg_print("[teardown_ci_api_proxy]: Stop and remove container");
         docker_util
-            .stop_container(container_id)
+            .stop_container(&container_id)
             .expect("[TestEnv:CI/teardown_ci_api_proxy]: Failed to teardown api_proxy container");
 
         Ok(())

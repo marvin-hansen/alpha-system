@@ -10,11 +10,11 @@ impl EnvUtil {
         self.dbg_print("Remove clickhouse container");
         let container_id = self.clickhouse_container_name();
         docker_util
-            .stop_container(container_id)
+            .stop_container(&container_id)
             .expect("[TestEnv:CI]: Failed to teardown clickhouse container");
 
         self.dbg_print("Remove postgres container");
-        let container_id = self.postgres_db_container_name();
+        let container_id = &self.postgres_db_container_name();
         docker_util
             .stop_container(container_id)
             .expect("[TestEnv:CI]: Failed to teardown postgres container");
@@ -22,7 +22,7 @@ impl EnvUtil {
         self.dbg_print("Remove api proxy container");
         let container_id = self.api_proxy_container_name();
         docker_util
-            .stop_container(container_id)
+            .stop_container(&container_id)
             .expect("[TestEnv:CI]: Failed to teardown api proxy container");
 
         Ok(())

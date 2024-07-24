@@ -3,7 +3,7 @@ use env_utils::EnvUtil;
 #[tokio::test]
 async fn test_env_util_setup_ci() {
     // Initial setup of the CI test environment
-    let mut ci_env = EnvUtil::with_debug().await.expect("Failed to get EnvUtil");
+    let ci_env = EnvUtil::with_debug().await.expect("Failed to get EnvUtil");
     ci_env
         .setup_all_containers()
         .await
@@ -13,7 +13,7 @@ async fn test_env_util_setup_ci() {
     let docker_util = &mut ci_env.docker_util();
     let clickhouse_container_name = ci_env.clickhouse_container_name();
     let exists = docker_util
-        .check_if_container_exists(clickhouse_container_name)
+        .check_if_container_exists(&clickhouse_container_name)
         .expect("Failed to check if clickhouse container exists");
     assert!(exists);
 
@@ -25,7 +25,7 @@ async fn test_env_util_setup_ci() {
 
     let api_proxy_container_name = ci_env.api_proxy_container_name();
     let exists = docker_util
-        .check_if_container_exists(api_proxy_container_name)
+        .check_if_container_exists(&api_proxy_container_name)
         .expect("Failed to check if api_proxy container exists");
     assert!(exists);
 

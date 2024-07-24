@@ -42,7 +42,7 @@ impl EnvUtil {
         self.dbg_print("setup_clickhouse");
 
         self.dbg_print("[setup_clickhouse]: Check if Clickhouse is already configured");
-        if self.clickhouse_configured {
+        if self.clickhouse_configured() {
             self.dbg_print("[setup_clickhouse]: Clickhouse is already configured");
             return Ok(());
         }

@@ -49,11 +49,11 @@ impl EnvUtil {
     /// Returns `Ok(())` if the environment is successfully configured,
     /// or an `Err` variant of `EnvironmentError` if an error occurs during the configuration process.
     ///
-    pub async fn setup_ci(&mut self) -> Result<(), EnvironmentError> {
+    pub async fn setup_ci(&self) -> Result<(), EnvironmentError> {
         self.dbg_print("[setup_ci]: Setup CI environment");
 
         self.dbg_print("[setup_ci]: Check if CI environment already configured");
-        if self.ci_env_configured {
+        if self.ci_env_configured() {
             self.dbg_print("[setup_ci]: CI environment already configured.");
             return Ok(());
         }

@@ -19,7 +19,7 @@ impl EnvUtil {
         self.dbg_print("setup_postgres");
 
         self.dbg_print("[setup_postgres]; Check if Postgres is already configured");
-        if self.postgres_configured {
+        if self.postgres_configured() {
             self.dbg_print("[setup_postgres]; Postgres is already configured; return.");
             return Ok(());
         }

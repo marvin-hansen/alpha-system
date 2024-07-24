@@ -1,10 +1,10 @@
-use crate::prelude::EnvironmentSetupError;
 use specs_utils::prelude::postgres_db_container_specs;
 
+use crate::prelude::EnvironmentSetupError;
 use crate::EnvUtil;
 
 impl EnvUtil {
-    pub async fn setup_container_postgres_db(&mut self) -> Result<(), EnvironmentSetupError> {
+    pub async fn setup_container_postgres_db(&self) -> Result<(), EnvironmentSetupError> {
         //
         self.dbg_print("Get docker util");
         let docker_util = self.docker_util();

@@ -13,12 +13,12 @@ async fn test_env_util_teardown_container() {
     }
 
     // extract the container names to check
-    let api_proxy_container_name = env_utils.api_proxy_container_name();
-    let clickhouse_container_name = env_utils.clickhouse_container_name();
+    let api_proxy_container_name = &env_utils.api_proxy_container_name();
+    let clickhouse_container_name = &env_utils.clickhouse_container_name();
 
     // Verify that the api proxy container was created
     let exists = docker_util
-        .check_if_container_exists(api_proxy_container_name)
+        .check_if_container_exists(&api_proxy_container_name)
         .expect("Failed to check if container exists");
 
     assert!(exists);
