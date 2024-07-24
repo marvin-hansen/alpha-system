@@ -8,11 +8,6 @@ repository.workspace = true
 authors.workspace = true
 
 
-[lib]
-name = "db_postgres_manager"
-path = "src/lib.rs"
-
-
 [dependencies]
 # Internal crates
 common_config = { workspace = true }

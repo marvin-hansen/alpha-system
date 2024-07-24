@@ -1,5 +1,4 @@
-use crate::prelude::EnvironmentError;
-use crate::EnvUtil;
+use crate::prelude::{EnvUtil, EnvironmentError};
 
 impl EnvUtil {
     /// Configures the PostgreSQL database for the environment.
@@ -48,7 +47,7 @@ impl EnvUtil {
         ));
         if data_imported {
             // If so, abort & return. Nothing to do in this case.
-            self.dbg_print(&"[setup_postgres]:Nothing to configure or import; return.".to_string());
+            self.dbg_print("[setup_postgres]:Nothing to configure or import; return.");
 
             return Ok(());
         }
