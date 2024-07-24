@@ -217,10 +217,13 @@ impl PostgresDBManager {
         let query = self.build_read_service_by_id_query(id);
         match self.client.query_one(&query, &[]).await {
             Ok(row) => {
-                let svc = row.get::<usize, ServiceConfig>(0);
+                let svc = ServiceConfig::from_sql_row(&row);
                 Ok(Some(svc))
             }
-            Err(e) => Err(PostgresDBError::QueryFailed(e.to_string())),
+            Err(e) => {
+                self.dbg_print(&format!("Query failed: \n {}", query));
+                Err(PostgresDBError::QueryFailed(e.to_string()))
+            }
         }
     }
 
@@ -239,12 +242,15 @@ impl PostgresDBManager {
             Ok(rows) => {
                 let mut services = Vec::new();
                 for row in rows {
-                    let svc = row.get::<usize, ServiceConfig>(0);
+                    let svc = ServiceConfig::from_sql_row(&row);
                     services.push(svc);
                 }
                 Ok(services)
             }
-            Err(e) => Err(PostgresDBError::QueryFailed(e.to_string())),
+            Err(e) => {
+                self.dbg_print(&format!("Query failed: \n {}", query));
+                Err(PostgresDBError::QueryFailed(e.to_string()))
+            }
         }
     }
 

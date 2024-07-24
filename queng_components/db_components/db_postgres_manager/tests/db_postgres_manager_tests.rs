@@ -31,8 +31,8 @@ async fn test_db_postgres_manager() {
     test_check_if_services_online(&pgm).await;
     test_set_service_online(&pgm).await;
     test_set_service_offline(&pgm).await;
-    // test_read_service_by_id(&pgm).await;
-    // test_read_all_services(&pgm).await;
+    test_read_service_by_id(&pgm).await;
+    test_read_all_services(&pgm).await;
     // test_update_service(&pgm).await;
 
     pgm.close().await
@@ -118,7 +118,7 @@ async fn test_set_service_offline(pgm: &PostgresDBManager) {
     assert!(!online);
 }
 
-async fn _test_read_service_by_id(pgm: &PostgresDBManager) {
+async fn test_read_service_by_id(pgm: &PostgresDBManager) {
     let svc_id = ServiceID::SMDB;
     let res = pgm.read_service_by_id(&svc_id).await;
     assert!(res.is_ok());
@@ -128,7 +128,7 @@ async fn _test_read_service_by_id(pgm: &PostgresDBManager) {
     assert_eq!(svc.svc_id(), &svc_id);
 }
 
-async fn _test_read_all_services(pgm: &PostgresDBManager) {
+async fn test_read_all_services(pgm: &PostgresDBManager) {
     let res = pgm.read_all_services().await;
     assert!(res.is_ok());
     let services = res.unwrap();

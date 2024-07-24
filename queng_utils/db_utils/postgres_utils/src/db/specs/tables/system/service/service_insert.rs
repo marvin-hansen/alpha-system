@@ -1,6 +1,7 @@
+use common_config::prelude::{ServiceConfig, ServiceID};
+
 use crate::db::Specs;
 use crate::prelude::PostgresUtilError;
-use common_config::prelude::{ServiceConfig, ServiceID};
 
 // insert into service(id,name,version,online,description,health_check_uri,base_uri,dependencies,exposure,endpoint,metrics )
 // VALUES(
@@ -70,14 +71,31 @@ impl Specs {
     ///
     fn build_insert_service_query(&self, data: &ServiceConfig) -> String {
         format!(
-            "INSERT INTO system.service(id, name, version, online, description, health_check_uri, base_uri, dependencies, exposure, endpoint, metrics)
+            "INSERT INTO system.service(id, name, version, online, description, health_check_uri,
+            base_uri, dependencies, exposure,
+            endpoint_name, endpoint_version, endpoint_base_uri, endpoint_port, endpoint_protocol,
+            metric_uri, metric_host, metric_port)
              VALUES({}, '{}', {}, {}, '{}', '{}', '{}', '{}', {},
-                ROW('{}', {}, '{}', {}, {}),
-                ROW('{}', '{}', {})
+                '{}', {}, '{}', {}, {},
+                '{}', '{}', {}
             )",
-            data.svc_id().as_u8(), data.name(), data.version(), data.online(), data.description(), data.health_check_uri(), data.base_uri(), self.service_ids_to_string(data.dependencies()), data.exposure().as_u8(),
-            data.endpoint().name(), data.endpoint().version(), data.endpoint().uri(), data.endpoint().port(), data.endpoint().protocol().as_u8(),
-            data.metrics().uri(), data.metrics().host(), data.metrics().port()
+            data.svc_id().as_u8(),
+            data.name(),
+            data.version(),
+            data.online(),
+            data.description(),
+            data.health_check_uri(),
+            data.base_uri(),
+            self.service_ids_to_string(data.dependencies()),
+            data.exposure().as_u8(),
+            data.endpoint().name(),
+            data.endpoint().version(),
+            data.endpoint().uri(),
+            data.endpoint().port(),
+            data.endpoint().protocol().as_u8(),
+            data.metrics().uri(),
+            data.metrics().host(),
+            data.metrics().port()
         )
     }
 

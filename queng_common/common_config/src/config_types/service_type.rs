@@ -1,6 +1,5 @@
 use std::fmt::{Display, Formatter};
 
-use postgres_types::{FromSql, ToSql};
 use serde::{Deserialize, Serialize};
 
 /// A ServiceType represents the type of service.
@@ -9,7 +8,7 @@ use serde::{Deserialize, Serialize};
 ///
 /// * `ENDPOINT`: An endpoint service type.
 /// * `CHANNEL`: The channel service type.
-#[derive(ToSql, FromSql, Serialize, Deserialize, Debug, Default, Copy, Clone, Eq, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, Default, Copy, Clone, Eq, PartialEq)]
 #[repr(u8)]
 pub enum ServiceType {
     NullVal = 0x0_u8,
@@ -23,6 +22,17 @@ pub enum ServiceType {
 impl ServiceType {
     pub fn as_u8(&self) -> u8 {
         *self as u8
+    }
+}
+
+impl From<i16> for ServiceType {
+    fn from(value: i16) -> Self {
+        match value {
+            0x0_i16 => Self::NullVal,
+            0x1_i16 => Self::ENDPOINT,
+            0x2_i16 => Self::CHANNEL,
+            _ => Self::NullVal,
+        }
     }
 }
 

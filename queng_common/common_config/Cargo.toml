@@ -10,6 +10,6 @@ authors.workspace = true
 
 [dependencies]
 # External crates
-postgres-types = { workspace = true }
+tokio-postgres = { workspace = true }
 serde_json = { workspace = true }
 serde = { workspace = true }

@@ -166,7 +166,9 @@ impl PostgresDBManager {
     pub(crate) fn build_read_service_by_id_query(&self, id: &ServiceID) -> String {
         format!(
             "SELECT
-                id, name, version, online, description, health_check_uri, base_uri, dependencies, exposure, endpoint, metrics
+                id, name, version, online, description, health_check_uri, base_uri, dependencies, exposure,
+                endpoint_name, endpoint_version, endpoint_base_uri, endpoint_port, endpoint_protocol,
+                metric_uri, metric_host, metric_port
             FROM
                 system.service
             WHERE
@@ -182,7 +184,9 @@ impl PostgresDBManager {
     /// A PostgreSQL query string that selects all services from the database.
     pub(crate) fn build_read_all_services_query(&self) -> String {
         "SELECT
-            id, name, version, online, description, health_check_uri, base_uri, dependencies, exposure, endpoint, metrics
+             id, name, version, online, description, health_check_uri, base_uri, dependencies, exposure,
+             endpoint_name, endpoint_version, endpoint_base_uri, endpoint_port, endpoint_protocol,
+             metric_uri, metric_host, metric_port
          FROM
            system.service
          ORDER BY

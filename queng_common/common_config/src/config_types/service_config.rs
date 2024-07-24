@@ -1,11 +1,11 @@
 use std::fmt::{Display, Formatter};
 
-use postgres_types::{FromSql, ToSql};
 use serde::{Deserialize, Serialize};
+use tokio_postgres::Row;
 
-use crate::prelude::{Endpoint, MetricConfig, ServiceID, ServiceType};
+use crate::prelude::{Endpoint, MetricConfig, ProtocolType, ServiceID, ServiceType};
 
-#[derive(ToSql, FromSql, Serialize, Deserialize, Debug, Default, Clone, Eq, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, Default, Clone, Eq, PartialEq)]
 pub struct ServiceConfig {
     /// Service ID.
     svc_id: ServiceID,
@@ -79,14 +79,51 @@ impl ServiceConfig {
 }
 
 impl ServiceConfig {
-    /// Converts the service config as a JSON string.
-    pub fn to_json(&self) -> String {
-        serde_json::to_string(&self).unwrap()
-    }
+    pub fn from_sql_row(row: &Row) -> Self {
+        let db_id = row.get::<usize, i16>(0);
+        let db_name = row.get::<usize, String>(1);
+        let db_version = row.get::<usize, i16>(2);
+        let db_online = row.get::<usize, bool>(3);
+        let db_description = row.get::<usize, String>(4);
+        let db_health_check_uri = row.get::<usize, String>(5);
+        let db_base_uri = row.get::<usize, String>(6);
+        let db_dependencies = row.get::<usize, Vec<i16>>(7);
+        let db_exposure = row.get::<usize, i16>(8);
 
-    /// Converts the service config from a JSON string.
-    pub fn from_json(json: &str) -> Self {
-        serde_json::from_str(json).unwrap()
+        let db_endpoint_name = row.get::<usize, String>(9);
+        let db_endpoint_version = row.get::<usize, i16>(10);
+        let db_endpoint_uri = row.get::<usize, String>(11);
+        let db_endpoint_port = row.get::<usize, i16>(12);
+        let db_endpoint_protocol = row.get::<usize, i16>(13);
+
+        let db_metrics_uri = row.get::<usize, String>(14);
+        let db_metrics_host = row.get::<usize, String>(15);
+        let db_metrics_port = row.get::<usize, i16>(16);
+
+        let dependencies: Vec<ServiceID> = db_dependencies
+            .iter()
+            .map(|id| ServiceID::from(*id))
+            .collect();
+
+        ServiceConfig::new(
+            ServiceID::from(db_id),
+            db_name,
+            db_version as u32,
+            db_online,
+            db_description,
+            db_health_check_uri,
+            db_base_uri,
+            dependencies,
+            ServiceType::from(db_exposure),
+            Endpoint::new(
+                db_endpoint_name,
+                db_endpoint_version as u32,
+                db_endpoint_uri,
+                db_endpoint_port as u32,
+                ProtocolType::from(db_endpoint_protocol),
+            ),
+            MetricConfig::new(db_metrics_uri, db_metrics_host, db_metrics_port as u32),
+        )
     }
 }
 

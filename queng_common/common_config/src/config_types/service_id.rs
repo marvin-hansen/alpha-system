@@ -1,6 +1,6 @@
-use postgres_types::{FromSql, ToSql};
-use serde::{Deserialize, Serialize};
 use std::fmt::{Display, Formatter};
+
+use serde::{Deserialize, Serialize};
 
 /// An u8 encoded Enum that represents the unique ID of a service.
 ///
@@ -12,9 +12,7 @@ use std::fmt::{Display, Formatter};
 /// * `CMDB`: The CMDB service.
 /// * `DBGW`: The DBGW service.
 /// * `QDGW`: The QDGW service.
-#[derive(
-    ToSql, FromSql, Serialize, Deserialize, Debug, Default, Copy, Clone, Eq, PartialEq, Hash,
-)]
+#[derive(Serialize, Deserialize, Debug, Default, Copy, Clone, Eq, PartialEq, Hash)]
 #[repr(u8)]
 pub enum ServiceID {
     #[default]
@@ -39,29 +37,24 @@ impl ServiceID {
     }
 }
 
+impl From<i16> for ServiceID {
+    fn from(value: i16) -> Self {
+        match value {
+            0x0_i16 => Self::Default,
+            0x1_i16 => Self::SMDB,
+            0x2_i16 => Self::CMDB,
+            0x3_i16 => Self::DBGW,
+            0x4_i16 => Self::QDGW,
+            0x5_i16 => Self::SYMDB,
+            0x6_i16 => Self::VEX,
+            0x7_i16 => Self::ImsDataBinance,
+            0x8_i16 => Self::MDDB,
+            _ => Self::Default,
+        }
+    }
+}
+
 impl From<i32> for ServiceID {
-    /// Converts an `i32` value to a `ServiceID` variant.
-    ///
-    /// # Arguments
-    ///
-    /// * `value` - The `i32` value to convert
-    ///
-    /// # Returns
-    ///
-    /// The corresponding `ServiceID` variant for the `i32` value:
-    ///
-    /// * 0: `Default`
-    /// * 1: `SMDB`
-    /// * 2: `CMDB`
-    /// * 3: `DBGW`
-    /// * 4: `QDGW`
-    /// * 5: `SYMDB`
-    /// * 6: `VEX`
-    /// * 7: `ImsDataBinance`
-    /// * 8: `MDDB`
-    ///
-    /// If the value does not match a variant, returns `Default`.
-    ///
     #[inline]
     fn from(v: i32) -> Self {
         match v {

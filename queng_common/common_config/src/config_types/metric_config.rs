@@ -1,9 +1,8 @@
 use std::fmt::{Display, Formatter};
 
-use postgres_types::{FromSql, ToSql};
 use serde::{Deserialize, Serialize};
 
-#[derive(ToSql, FromSql, Serialize, Deserialize, Debug, Clone, Eq, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq)]
 pub struct MetricConfig {
     uri: String,
     host: String,

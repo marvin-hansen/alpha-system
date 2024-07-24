@@ -18,12 +18,6 @@ pub(crate) const SYSTEM_SCHEMA: &str = "system";
 /// The service table contains a configuration for each microservice of the system.
 pub(crate) const SERVICE_TABLE: &str = "service";
 
-/// Endpoint subtype of the service table
-pub(crate) const SERVICE_TABLE_ENDPOINT_TYPE: &str = "endpoint";
-
-/// Metric config subtype of the service table
-pub(crate) const SERVICE_TABLE_METRIC_CONFIG_TYPE: &str = "metric_config";
-
 /// Primary index of the service table
 pub(crate) const SERVICE_TABLE_INDEX: &str = "idx_service_id";
 
