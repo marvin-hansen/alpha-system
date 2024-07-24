@@ -23,7 +23,8 @@ impl EnvUtil {
     ///
     /// # Returns
     ///
-    /// Returns `Ok(())` if the Clickhouse database is configured successfully, or an `Err` variant of `EnvironmentError` if an error occurs during the configuration process.
+    /// Returns `Ok(())` if the Clickhouse database is configured successfully,
+    /// or an `Err` variant of `EnvironmentError` if an error occurs during the configuration process.
     ///
     /// # Errors
     ///
@@ -38,9 +39,15 @@ impl EnvUtil {
         container_config: &ContainerConfig<'_>,
         sample_size: Option<u32>,
     ) -> Result<(), EnvironmentError> {
-        //
-        self.dbg_print("[setup_ci]: Get clickhouse utils");
-        self.dbg_print("Get Clickhouse util");
+        self.dbg_print("setup_clickhouse");
+
+        self.dbg_print("[setup_clickhouse]: Check if Clickhouse is already configured");
+        if self.clickhouse_configured {
+            self.dbg_print("[setup_clickhouse]: Clickhouse is already configured");
+            return Ok(());
+        }
+
+        self.dbg_print("[setup_clickhouse]: Get clickhouse utils");
         let ch_utils = &self
             .get_new_clickhouse_util()
             .await
@@ -74,11 +81,11 @@ impl EnvUtil {
                 .expect("Failed to create databases");
         }
 
-        self.dbg_print("[configure_clickhouse]: Check if all clickhouse data are already imported");
+        self.dbg_print("[setup_clickhouse]: Check if all clickhouse data are already imported");
         let data_imported = self
             .verify_clickhouse_data_imported(ch_utils, kaiko_util, None)
             .await
-            .expect("[configure_clickhouse]: Failed to check if all data imported");
+            .expect("[setup_clickhouse]: Failed to check if all data imported");
 
         self.dbg_print(&format!("{MTD}: Data imported: {}", data_imported));
 
@@ -90,10 +97,10 @@ impl EnvUtil {
         }
 
         if !data_imported {
-            self.dbg_print("[configure_clickhouse]: Import data into clickhouse");
+            self.dbg_print("[setup_clickhouse]: Import data into clickhouse");
             self.import_all_ch_data(ch_utils, kaiko_util, sample_size)
                 .await
-                .expect("[configure_clickhouse]: Failed to import data into Clickhouse");
+                .expect("[setup_clickhouse]: Failed to import data into Clickhouse");
         }
 
         Ok(())

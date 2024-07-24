@@ -1,28 +1,28 @@
 use crate::prelude::{EnvUtil, EnvironmentError};
 
 impl EnvUtil {
-    /// Configures the PostgreSQL database for the environment.
+    /// Sets up the Postgres database for testing.
     ///
-    /// This method configures the PostgreSQL database for the environment by performing the following steps:
+    /// This function performs the following steps:
     ///
-    /// 1. Retrieves a new `PostgresUtil` object asynchronously.
-    ///
-    /// 2. Sets up all databases if they do not already exist using the `setup_all_db` method of the `PostgresUtil` object.
-    ///
-    /// # Returns
-    ///
-    /// Returns `Ok(())` if the PostgreSQL database is configured successfully,
-    /// or an `Err` variant of `EnvironmentError` if an error occurs during the configuration process.
+    /// 1. Checks if Postgres is already configured. If it is, the function returns early.
+    /// 2. Retrieves the Postgres utilities.
+    /// 3. Sets up all Postgres databases.
+    /// 4. Verifies if all data has been imported into Postgres.
+    /// 5. If data has not been imported, imports all data into Postgres.
     ///
     /// # Errors
     ///
-    /// Returns an `EnvironmentError` if any of the following errors occur during the configuration process:
-    ///
-    /// - If there is an error retrieving the Postgres utility.
-    /// - If there is an error creating the databases.
+    /// - `EnvironmentError` if any step fails.
     ///
     pub async fn setup_postgres(&self) -> Result<(), EnvironmentError> {
         self.dbg_print("setup_postgres");
+
+        self.dbg_print("[setup_postgres]; Check if Postgres is already configured");
+        if self.postgres_configured {
+            self.dbg_print("[setup_postgres]; Postgres is already configured; return.");
+            return Ok(());
+        }
 
         self.dbg_print("[setup_postgres]; Get Postgres util");
         let pg_util = self

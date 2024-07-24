@@ -1,12 +1,12 @@
 load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 
 rust_test_suite(
-    name = "db_query_manager_tests",
+    name = "db_clickhouse_manager_tests",
     srcs = glob([
         "*_tests.rs",
     ]),
     tags = [
-        "db_query_manager",
+        "db_clickhouse_manager",
         "integration",
     ],
     visibility = ["//visibility:public"],

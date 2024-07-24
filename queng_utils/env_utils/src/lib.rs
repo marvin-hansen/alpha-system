@@ -25,6 +25,8 @@ pub struct EnvUtil {
     postgres_db_container_port: u16,
     //
     all_containers_crated: bool,
+    postgres_configured: bool,
+    clickhouse_configured: bool,
     ci_env_configured: bool,
     //
     docker_util: DockerUtil,
@@ -33,14 +35,43 @@ pub struct EnvUtil {
 }
 
 impl EnvUtil {
+    /// Creates a new `EnvUtil` instance.
+    ///
+    /// This function creates a new `EnvUtil` instance asynchronously.
+    ///
+    /// # Returns
+    ///
+    /// Returns a `Result` containing a `EnvUtil` instance
+    /// or an `EnvironmentError` if an error occurs.
+    ///
     pub async fn new() -> Result<Self, EnvironmentError> {
         Self::build(false).await
     }
 
+    /// Creates a new `EnvUtil` instance with debug mode enabled.
+    ///
+    /// This function creates a new `EnvUtil` instance asynchronously with debug mode enabled.
+    ///
+    /// # Returns
+    ///
+    /// Returns a `Result` containing a `EnvUtil` instance
+    /// or an `EnvironmentError` if an error occurs.
     pub async fn with_debug() -> Result<Self, EnvironmentError> {
         Self::build(true).await
     }
 
+    /// Builds a new `EnvUtil` instance.
+    ///
+    /// This function builds a new `EnvUtil` instance with the specified debug flag.
+    ///
+    /// # Arguments
+    ///
+    /// * `dbg` - A boolean value indicating whether debug mode is enabled.
+    ///
+    /// # Returns
+    ///
+    /// Returns a `Result` containing a `EnvUtil` instance
+    /// or an `EnvironmentError` if an error occurs.
     async fn build(dbg: bool) -> Result<Self, EnvironmentError> {
         // Autodetect the environment in which the system runs
         let ctx = CtxManager::new();
@@ -74,6 +105,8 @@ impl EnvUtil {
 
         // set the boolean flag for all containers
         let all_containers_crated = api_proxy_exists && clickhouse_exists && postgres_db_exists;
+        let postgres_configured = false;
+        let clickhouse_configured = false;
         let ci_env_configured = false;
 
         let mut instance = Self {
@@ -85,6 +118,8 @@ impl EnvUtil {
             postgres_db_container_name,
             postgres_db_container_port,
             all_containers_crated,
+            postgres_configured,
+            clickhouse_configured,
             ci_env_configured,
             docker_util,
             kaiko_util,
@@ -92,11 +127,27 @@ impl EnvUtil {
         };
 
         if all_containers_crated {
-            if let Ok(ci_env_configured) = instance.verify_clickhouse_db().await {
-                if ci_env_configured {
-                    instance.set_ci_env_configured(ci_env_configured);
-                }
+            let clickhouse_configured = match instance.verify_clickhouse_db().await {
+                Ok(_) => true,
+                Err(_) => false,
             };
+
+            let postgres_configured = match instance.verify_postgres_db().await {
+                Ok(_) => true,
+                Err(_) => false,
+            };
+
+            if clickhouse_configured {
+                instance.clickhouse_configured = true;
+            }
+
+            if postgres_configured {
+                instance.postgres_configured = true;
+            }
+
+            if clickhouse_configured && postgres_configured {
+                instance.ci_env_configured = true;
+            }
         }
 
         Ok(instance)

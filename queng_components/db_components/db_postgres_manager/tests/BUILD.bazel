@@ -1,0 +1,21 @@
+load("@rules_rust//rust:defs.bzl", "rust_test_suite")
+
+rust_test_suite(
+    name = "db_postgres_manager_tests",
+    srcs = glob([
+        "*_tests.rs",
+    ]),
+    tags = [
+        "db_postgres_manager",
+        "integration",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        "//alias:db_postgres_manager",
+        # Internal crates
+        "//alias:env_utils",
+        # External crates
+        "@crates//:tokio",
+    ],
+)

@@ -10,14 +10,44 @@ impl EnvUtil {
     /// 1. Sets the data sample size to 10% of the available data.
     /// 2. Gets or reuses all containers required for testing.
     /// 3. Gets the configuration for the ClickHouse container.
-    /// 4. Gets the ClickHouse utilities.
-    /// 5. Gets the Kaiko utilities.
-    /// 6. Configures the ClickHouse database.
-    /// 7. Verifies the ClickHouse database.
+    /// 4. Configures the ClickHouse database.
+    /// 5. Verifies the ClickHouse database.
+    /// 6. Configures the PostgreSQL database.
+    /// 7. Verifies the PostgreSQL database.
     ///
     /// # Errors
     ///
-    /// - `EnvironmentError` if any step fails.
+    /// Returns an `EnvironmentError` if any of the following steps fail:
+    ///
+    /// - Setting up any of the required containers.
+    /// - Configuring or verifying the ClickHouse database.
+    /// - Configuring or verifying the PostgreSQL database.
+    ///
+    /// # Panics
+    ///
+    /// This function will panic if:
+    ///
+    /// - Retrieving the ClickHouse container configuration fails.
+    /// - Setting up the ClickHouse database fails.
+    /// - Verifying the ClickHouse database fails.
+    /// - Setting up the PostgreSQL database fails.
+    /// - Verifying the PostgreSQL database fails.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// # use env_utils::prelude::{EnvUtil, EnvironmentError};
+    /// # async fn example() -> Result<(), EnvironmentError> {
+    /// let mut env_util = EnvUtil::new().await?;
+    /// env_util.setup_ci().await?;
+    /// # Ok(())
+    /// # }
+    /// ```
+    ///
+    /// # Returns
+    ///
+    /// Returns `Ok(())` if the environment is successfully configured,
+    /// or an `Err` variant of `EnvironmentError` if an error occurs during the configuration process.
     ///
     pub async fn setup_ci(&mut self) -> Result<(), EnvironmentError> {
         self.dbg_print("[setup_ci]: Setup CI environment");
