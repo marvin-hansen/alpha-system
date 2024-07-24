@@ -91,7 +91,7 @@ impl EnvUtil {
 
         if !data_imported {
             self.dbg_print("[configure_clickhouse]: Import data into clickhouse");
-            self.import_all_data(ch_utils, kaiko_util, sample_size)
+            self.import_all_ch_data(ch_utils, kaiko_util, sample_size)
                 .await
                 .expect("[configure_clickhouse]: Failed to import data into Clickhouse");
         }

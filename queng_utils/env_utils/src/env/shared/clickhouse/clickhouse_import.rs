@@ -1,7 +1,8 @@
-use crate::prelude::EnvironmentError;
-use crate::EnvUtil;
 use clickhouse_utils::ClickhouseUtil;
 use kaiko_utils::KaikoUtil;
+
+use crate::prelude::EnvironmentError;
+use crate::EnvUtil;
 
 impl EnvUtil {
     /// Asynchronously imports all data into all Clickhouse databases.
@@ -16,7 +17,7 @@ impl EnvUtil {
     ///
     /// This method can return an error of type EnvironmentError.
     ///
-    pub(crate) async fn import_all_data(
+    pub(crate) async fn import_all_ch_data(
         &self,
         ch_utils: &ClickhouseUtil,
         kaiko_util: &KaikoUtil,

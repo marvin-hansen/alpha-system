@@ -37,7 +37,7 @@ members = [
     "queng_services_ims/ims_common",
     "queng_services_ims/ims_data/binance_data",
     "queng_services_ims/ims_data/shared_data",
-    "queng_specs/config_specs/portfolio_specs",
+    "queng_specs/portfolio_specs",
     "queng_specs/container_specs",
     "queng_specs/db_specs",
     "queng_specs/exchange_specs",
@@ -114,7 +114,7 @@ lib_data_stream = { path = "queng_services_ims/ims_data/shared_data" }
 # Specs
 container_specs = { path = "queng_specs/container_specs" }
 # Config specs
-portfolio_specs = { path = "queng_specs/config_specs/portfolio_specs" }
+portfolio_specs = { path = "queng_specs/portfolio_specs" }
 # DB Specs 
 db_specs = { path = "queng_specs/db_specs" }
 exchange_specs = { path = "queng_specs/exchange_specs" }

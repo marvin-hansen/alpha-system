@@ -7,18 +7,16 @@ readme.workspace = true
 repository.workspace = true
 authors.workspace = true
 
-[lib]
-name = "specs_utils"
-path = "src/lib.rs"
-
 
 [dependencies]
 # Internal crates
 common_config = { workspace = true }
 common_container = { workspace = true }
 common_env = { workspace = true }
+common_exchange = { workspace = true }
 common_database = { workspace = true }
 container_specs = { workspace = true }
+portfolio_specs = { workspace = true }
 db_specs = { workspace = true }
 cmdb_specs = { workspace = true }
 dbgw_specs = { workspace = true }

@@ -1,7 +1,7 @@
 use common_container::prelude::ContainerConfig;
 use container_specs::api_proxy_container_specs::api_proxy_container_config;
 use container_specs::clickhouse_container_specs::clickhouse_container_config;
-use container_specs::postgres_db_specs::postgres_db_container_config;
+use container_specs::postgres_container_specs::postgres_db_container_config;
 
 pub fn get_all_container_specs() -> Vec<ContainerConfig<'static>> {
     Vec::from([

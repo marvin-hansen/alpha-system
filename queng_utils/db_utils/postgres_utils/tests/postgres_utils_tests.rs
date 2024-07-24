@@ -1,7 +1,7 @@
 use std::env;
 
 use common_exchange::prelude::{AccountType, PortfolioConfig};
-use container_specs::postgres_db_specs::postgres_db_container_config;
+use container_specs::postgres_container_specs::postgres_db_container_config;
 use docker_utils::DockerUtil;
 use postgres_utils::PostgresUtil;
 
