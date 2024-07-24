@@ -19,3 +19,4 @@ tokio-postgres = { workspace = true }
 
 [dev-dependencies]
 env_utils = { workspace = true }
+db_specs = { workspace = true }

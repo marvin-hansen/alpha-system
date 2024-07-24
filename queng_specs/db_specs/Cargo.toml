@@ -9,11 +9,6 @@ repository.workspace = true
 authors.workspace = true
 
 
-[lib]
-name = "db_specs"
-path = "src/lib.rs"
-
-
 [dependencies]
 # Internal crates
 common_database = {workspace = true}

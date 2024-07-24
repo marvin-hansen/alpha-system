@@ -15,6 +15,7 @@ rust_test_suite(
         "//alias:db_postgres_manager",
         # Internal crates
         "//alias:env_utils",
+        "//alias:db_specs",
         # External crates
         "@crates//:tokio",
     ],

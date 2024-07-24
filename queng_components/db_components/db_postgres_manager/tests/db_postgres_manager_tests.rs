@@ -1,5 +1,6 @@
 use std::env;
 
+use db_postgres_manager::PostgresDBManager;
 use env_utils::EnvUtil;
 
 async fn setup_ci_env() {
@@ -22,4 +23,12 @@ async fn setup_ci_env() {
 #[tokio::test]
 async fn test_db_postgres_manager() {
     setup_ci_env().await;
+
+    let pg_config = db_specs::postgres_db::get_ci_db_config();
+
+    let pgm = PostgresDBManager::with_debug(&pg_config)
+        .await
+        .expect("Failed to get PostgresDBManager");
+
+    pgm.close().await
 }
