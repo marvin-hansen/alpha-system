@@ -4,6 +4,27 @@ use specs_utils::prelude::{get_all_portfolio_specs, get_all_service_specs};
 use crate::prelude::{EnvUtil, EnvironmentError};
 
 impl EnvUtil {
+    /// Verifies if all data has been imported into the Postgres database.
+    ///
+    /// This method performs the following steps:
+    ///
+    /// 1. Verifies if all service data has been imported.
+    /// 2. Verifies if all portfolio data has been imported.
+    ///
+    /// # Arguments
+    ///
+    /// * `pg_util` - A reference to a `PostgresUtil` object.
+    ///
+    /// # Returns
+    ///
+    /// Returns a `Result` that indicates whether all data has been imported into the Postgres database.
+    /// If successful, it returns `Ok(bool)` indicating whether all data has been imported.
+    /// If an error occurs, it returns `Err(EnvironmentError)`.
+    ///
+    /// # Errors
+    ///
+    /// This method can return an error of type `EnvironmentError`.
+    ///
     pub(crate) async fn verify_postgres_data_imported(
         &self,
         pg_util: &PostgresUtil,

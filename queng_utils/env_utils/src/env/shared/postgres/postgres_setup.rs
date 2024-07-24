@@ -2,6 +2,26 @@ use crate::prelude::EnvironmentError;
 use crate::EnvUtil;
 
 impl EnvUtil {
+    /// Configures the PostgreSQL database for the environment.
+    ///
+    /// This method configures the PostgreSQL database for the environment by performing the following steps:
+    ///
+    /// 1. Retrieves a new `PostgresUtil` object asynchronously.
+    ///
+    /// 2. Sets up all databases if they do not already exist using the `setup_all_db` method of the `PostgresUtil` object.
+    ///
+    /// # Returns
+    ///
+    /// Returns `Ok(())` if the PostgreSQL database is configured successfully,
+    /// or an `Err` variant of `EnvironmentError` if an error occurs during the configuration process.
+    ///
+    /// # Errors
+    ///
+    /// Returns an `EnvironmentError` if any of the following errors occur during the configuration process:
+    ///
+    /// - If there is an error retrieving the Postgres utility.
+    /// - If there is an error creating the databases.
+    ///
     pub async fn setup_postgres(&self) -> Result<(), EnvironmentError> {
         self.dbg_print("setup_postgres");
 
