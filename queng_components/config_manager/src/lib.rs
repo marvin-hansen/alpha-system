@@ -1,4 +1,5 @@
-use crate::utils::get_svc_env_config;
+use std::collections::HashMap;
+
 use common_config::prelude::{ServiceConfig, ServiceID, SvcEnvConfig};
 use common_database::prelude::{ClickHouseConfig, PostgresDBConfig};
 use common_env::prelude::EnvironmentType;
@@ -10,7 +11,8 @@ use exchange_specs::prelude;
 use exchange_specs::prelude::{
     get_all_exchanges, get_all_exchanges_ids_names, get_exchange_symbol_tables,
 };
-use std::collections::HashMap;
+
+use crate::utils::get_svc_env_config;
 
 mod cfg_getters;
 mod cfg_services;
@@ -33,6 +35,7 @@ pub struct CfgManager<'l> {
     svc_env_config: SvcEnvConfig,
     /// ClickHouse configuration.
     db_clickhouse_config: ClickHouseConfig,
+    /// Postgres configuration.
     db_postgres_config: PostgresDBConfig,
     /// Default exchange
     default_exchange: ExchangeID,

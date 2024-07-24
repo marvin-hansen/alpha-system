@@ -1,32 +1,83 @@
+use std::fmt::{Debug, Display, Formatter};
+
+use tokio::task::JoinHandle;
+use tokio_postgres::{Client, NoTls};
+
+use common_database::prelude::PostgresDBConfig;
+
+use crate::error::PostgresDBError;
+
 mod db_prtf;
 mod db_svc;
 mod db_util;
 pub mod error;
 pub mod prelude;
 
-use std::fmt::{Debug, Display, Formatter};
-
-use crate::error::PostgresDBError;
-
-#[derive(Clone, Debug)]
-pub struct PostgresDBManager {}
+#[derive(Debug)]
+pub struct PostgresDBManager {
+    dbg: bool,
+    client: Client,
+    handle: JoinHandle<()>,
+}
 
 impl PostgresDBManager {
-    pub async fn new() -> Result<Self, PostgresDBError> {
-        Ok(Self {})
+    pub async fn new(pg_config: &PostgresDBConfig) -> Result<Self, PostgresDBError> {
+        let tsn = &pg_config.tsn();
+        Self::build(false, tsn).await
+    }
+
+    pub async fn with_debug(pg_config: &PostgresDBConfig) -> Result<Self, PostgresDBError> {
+        let tsn = &pg_config.tsn();
+        Self::build(true, tsn).await
+    }
+
+    async fn build(dbg: bool, tsn: &str) -> Result<Self, PostgresDBError> {
+        if dbg {
+            println!("[PostgresDBManager]: Debug mode enabled");
+            println!("[PostgresDBManager]: Connecting to Postgres database:",);
+        }
+
+        let (client, connection) = tokio_postgres::connect(tsn, NoTls)
+            .await
+            .expect("[PostgresUtil]: Failed to connect to Postgres database");
+
+        // The connection object performs the actual communication with the database,
+        // so spawn it off to run on its own.
+        let handle = tokio::spawn(async move {
+            if let Err(e) = connection.await {
+                eprintln!(
+                    "[PostgresUtil]: Tokio/Postgres failed to spwan connection task: {}",
+                    e
+                );
+            }
+        });
+
+        Ok(Self {
+            dbg,
+            client,
+            handle,
+        })
     }
 }
 
 impl PostgresDBManager {
-    pub async fn is_healthy(&self) -> Result<(), PostgresDBError> {
-        Err(PostgresDBError::NotImplementedError(
-            "Function not implemented".to_string(),
-        ))
+    pub async fn close(&self) {
+        self.dbg_print("Closing Postgres connection via Tokio task handle");
+        // https://stackoverflow.com/questions/67160923/how-can-you-close-a-tokio-postgres-connection
+        self.handle.abort();
+    }
+}
+
+impl PostgresDBManager {
+    fn dbg_print(&self, msg: &str) {
+        if self.dbg {
+            println!("[PostgresDBManager]: {}", msg);
+        }
     }
 }
 
 impl Display for PostgresDBManager {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "SurrealDBManager:",)
+        write!(f, "PostgresDBManager:",)
     }
 }

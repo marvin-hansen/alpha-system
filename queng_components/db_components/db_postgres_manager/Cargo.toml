@@ -11,10 +11,11 @@ authors.workspace = true
 [dependencies]
 # Internal crates
 common_config = { workspace = true }
-# common_database = { workspace = true }
+common_database = { workspace = true }
 common_exchange = { workspace = true }
 # External crates
-#tokio = { workspace = true }
+tokio = { workspace = true }
+tokio-postgres = { workspace = true }
 
 [dev-dependencies]
 env_utils = { workspace = true }

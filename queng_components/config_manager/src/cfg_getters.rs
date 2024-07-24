@@ -1,9 +1,10 @@
-use crate::CfgManager;
 use common_config::prelude::{ServiceConfig, ServiceID};
 use common_database::prelude::{ClickHouseConfig, PostgresDBConfig};
 use common_env::prelude::EnvironmentType;
 use common_errors::prelude::InitError;
 use common_exchange::prelude::ExchangeID;
+
+use crate::CfgManager;
 
 impl<'l> CfgManager<'l> {
     pub fn get_svc_id(&self) -> ServiceID {
@@ -29,7 +30,7 @@ impl<'l> CfgManager<'l> {
         &self.db_clickhouse_config
     }
 
-    pub fn surreal_db_config(&self) -> &PostgresDBConfig {
+    pub fn postgres_db_config(&self) -> &PostgresDBConfig {
         &self.db_postgres_config
     }
 }

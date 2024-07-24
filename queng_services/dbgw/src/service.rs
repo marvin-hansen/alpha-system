@@ -1,3 +1,6 @@
+use std::sync::Arc;
+
+use tokio::sync::RwLock;
 use tonic::{Request, Response, Status};
 
 use common_config::prelude::ServiceID;
@@ -7,13 +10,14 @@ use proto_bindings::proto::*;
 use proto_utils::portfolio_proto_utils::{portfolio_config_from_proto, portfolio_config_to_proto};
 use proto_utils::service_config_proto_utils::{service_config_from_proto, service_config_to_proto};
 
-#[derive(Clone)]
+pub(crate) type SafePostgresDBManager = Arc<RwLock<PostgresDBManager>>;
+
 pub struct DBGWServer {
-    dbm: PostgresDBManager,
+    dbm: SafePostgresDBManager,
 }
 
 impl DBGWServer {
-    pub fn new(dbm: PostgresDBManager) -> Self {
+    pub fn new(dbm: SafePostgresDBManager) -> Self {
         Self { dbm }
     }
 }
@@ -27,7 +31,8 @@ impl DbGatewayService for DBGWServer {
         let data =
             portfolio_config_from_proto(request.into_inner()).expect("Failed to parse request");
 
-        let res = self.dbm.insert_portfolio_config(&data).await;
+        let dbm = self.dbm.write().await;
+        let res = dbm.insert_portfolio_config(&data).await;
 
         match res {
             Ok(_) => Ok(Response::new(CreatePortfolioResponse {
@@ -43,7 +48,8 @@ impl DbGatewayService for DBGWServer {
     ) -> Result<Response<ReadPortfolioResponse>, Status> {
         let id = request.into_inner().portfolio_id as u16;
 
-        let record = self.dbm.read_portfolio_config_by_id(id).await;
+        let dbm = self.dbm.read().await;
+        let record = dbm.read_portfolio_config_by_id(id).await;
 
         match record {
             Ok(res) => match res {
@@ -67,7 +73,9 @@ impl DbGatewayService for DBGWServer {
         &self,
         _request: Request<MultiPortfolioRequest>,
     ) -> Result<Response<ReadAllPortfoliosResponse>, Status> {
-        let records = self.dbm.read_all_portfolio_configs().await;
+        //
+        let dbm = self.dbm.read().await;
+        let records = dbm.read_all_portfolio_configs().await;
 
         match records {
             Ok(res) => {
@@ -101,7 +109,8 @@ impl DbGatewayService for DBGWServer {
         let data =
             portfolio_config_from_proto(request.into_inner()).expect("Failed to parse request");
 
-        let res = self.dbm.update_portfolio_config(data).await;
+        let dbm = self.dbm.write().await;
+        let res = dbm.update_portfolio_config(data).await;
 
         match res {
             Ok(res) => match res {
@@ -122,7 +131,8 @@ impl DbGatewayService for DBGWServer {
     ) -> Result<Response<DeletePortfolioResponse>, Status> {
         let id = request.into_inner().portfolio_id as u16;
 
-        let res = self.dbm.delete_portfolio_config(id).await;
+        let dbm = self.dbm.write().await;
+        let res = dbm.delete_portfolio_config(id).await;
 
         match res {
             Ok(portfolio_deleted) => {
@@ -139,7 +149,8 @@ impl DbGatewayService for DBGWServer {
         let data = service_config_from_proto(rqt.into_inner())
             .expect("Failed to create ServiceConfig from proto");
 
-        let res = self.dbm.insert_service(&data).await;
+        let dbm = self.dbm.write().await;
+        let res = dbm.insert_service(&data).await;
 
         match res {
             Ok(_) => Ok(Response::new(CreateServiceResponse {
@@ -155,7 +166,8 @@ impl DbGatewayService for DBGWServer {
     ) -> Result<Response<CheckServiceIdExistsResponse>, Status> {
         let id = ServiceID::from(request.into_inner().service_id);
 
-        let res = self.dbm.check_if_service_id_exists(&id).await;
+        let dbm = self.dbm.read().await;
+        let res = dbm.check_if_service_id_exists(&id).await;
 
         match res {
             Ok(service_exists) => Ok(Response::new(CheckServiceIdExistsResponse {
@@ -172,8 +184,9 @@ impl DbGatewayService for DBGWServer {
         let proto_services = request.into_inner().services_id;
 
         let services: Vec<ServiceID> = proto_services.into_iter().map(|x| x.into()).collect();
+        let dbm = self.dbm.read().await;
 
-        let res = self.dbm.check_if_services_exists(&services).await;
+        let res = dbm.check_if_services_exists(&services).await;
 
         match res {
             Ok(services_exist) => Ok(Response::new(CheckServicesExistsResponse {
@@ -189,7 +202,8 @@ impl DbGatewayService for DBGWServer {
     ) -> Result<Response<CheckServiceIdOnlineResponse>, Status> {
         let id = ServiceID::from(request.into_inner().service_id);
 
-        let res = self.dbm.check_if_service_id_online(&id).await;
+        let dbm = self.dbm.read().await;
+        let res = dbm.check_if_service_id_online(&id).await;
 
         match res {
             Ok(service_online) => Ok(Response::new(CheckServiceIdOnlineResponse {
@@ -207,7 +221,8 @@ impl DbGatewayService for DBGWServer {
 
         let services = proto_services.into_iter().map(|x| x.into()).collect();
 
-        let res = self.dbm.check_if_services_online(&services).await;
+        let dbm = self.dbm.read().await;
+        let res = dbm.check_if_services_online(&services).await;
 
         match res {
             Ok(services_online) => Ok(Response::new(CheckServicesOnlineResponse {
@@ -223,7 +238,8 @@ impl DbGatewayService for DBGWServer {
     ) -> Result<Response<ReadServiceResponse>, Status> {
         let id = ServiceID::from(request.into_inner().service_id);
 
-        let record = self.dbm.read_record_by_id(&id).await;
+        let dbm = self.dbm.read().await;
+        let record = dbm.read_record_by_id(&id).await;
 
         match record {
             Ok(res) => match res {
@@ -248,7 +264,8 @@ impl DbGatewayService for DBGWServer {
         &self,
         _request: Request<MultiServicesRequest>,
     ) -> Result<Response<ReadAllServicesResponse>, Status> {
-        let records = self.dbm.read_all_services().await;
+        let dbm = self.dbm.read().await;
+        let records = dbm.read_all_services().await;
 
         match records {
             Ok(res) => {
@@ -278,7 +295,8 @@ impl DbGatewayService for DBGWServer {
     ) -> Result<Response<SetServiceOnlineResponse>, Status> {
         let id = ServiceID::from(request.into_inner().service_id);
 
-        let res = self.dbm.set_service_online(&id).await;
+        let dbm = self.dbm.write().await;
+        let res = dbm.set_service_online(&id).await;
 
         match res {
             Ok(service_online) => Ok(Response::new(SetServiceOnlineResponse { service_online })),
@@ -293,7 +311,8 @@ impl DbGatewayService for DBGWServer {
     ) -> Result<Response<SetServiceOfflineResponse>, Status> {
         let id = ServiceID::from(request.into_inner().service_id);
 
-        let res = self.dbm.set_service_offline(&id).await;
+        let dbm = self.dbm.write().await;
+        let res = dbm.set_service_offline(&id).await;
 
         match res {
             Ok(service_offline) => Ok(Response::new(SetServiceOfflineResponse { service_offline })),
@@ -308,7 +327,8 @@ impl DbGatewayService for DBGWServer {
         let data = service_config_from_proto(request.into_inner())
             .expect("Failed to create ServiceConfig from proto");
 
-        let res = self.dbm.update_service(data).await;
+        let dbm = self.dbm.write().await;
+        let res = dbm.update_service(data).await;
 
         match res {
             Ok(res) => match res {
@@ -330,7 +350,8 @@ impl DbGatewayService for DBGWServer {
     ) -> Result<Response<DeleteServiceResponse>, Status> {
         let id = ServiceID::from(request.into_inner().service_id);
 
-        let res = self.dbm.delete_service(&id).await;
+        let dbm = self.dbm.write().await;
+        let res = dbm.delete_service(&id).await;
 
         match res {
             Ok(service_deleted) => Ok(Response::new(DeleteServiceResponse { service_deleted })),
