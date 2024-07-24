@@ -1,8 +1,9 @@
-use crate::prelude::EnvironmentError;
-use crate::EnvUtil;
 use common_container::prelude::ContainerConfig;
 
-const MTD: &str = "[configure_clickhouse]";
+use crate::prelude::EnvironmentError;
+use crate::EnvUtil;
+
+const MTD: &str = "[setup_clickhouse]";
 
 impl EnvUtil {
     /// Configures the Clickhouse database for the environment.
@@ -32,7 +33,7 @@ impl EnvUtil {
     /// - If there is an error retrieving the Kaiko utility.
     /// - If there is an error creating the Clickhouse databases.
     ///
-    pub(crate) async fn configure_clickhouse(
+    pub(crate) async fn setup_clickhouse(
         &self,
         container_config: &ContainerConfig<'_>,
         sample_size: Option<u32>,

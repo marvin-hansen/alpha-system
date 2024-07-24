@@ -1,5 +1,6 @@
-use crate::prelude::{EnvUtil, EnvironmentError};
 use specs_utils::prelude::clickhouse_container_specs;
+
+use crate::prelude::{EnvUtil, EnvironmentError};
 
 impl EnvUtil {
     /// Sets up the environment for Continuous Integration (CI) testing.
@@ -38,7 +39,7 @@ impl EnvUtil {
         let clickhouse_container_config = clickhouse_container_specs();
 
         self.dbg_print("[setup_ci]: Configure clickhouse DB");
-        self.configure_clickhouse(&clickhouse_container_config, sample_size)
+        self.setup_clickhouse(&clickhouse_container_config, sample_size)
             .await
             .expect("[setup_ci]: Failed to configure clickhouse DB");
 

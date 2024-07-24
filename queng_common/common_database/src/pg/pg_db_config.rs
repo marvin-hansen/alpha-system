@@ -1,6 +1,7 @@
-use serde::{Deserialize, Serialize};
 use std::fmt;
 use std::fmt::{Debug, Display, Formatter};
+
+use serde::{Deserialize, Serialize};
 
 /// Configuration for the Postgres database.
 #[derive(Debug, Eq, Clone, PartialEq, Serialize, Deserialize)]
@@ -59,6 +60,13 @@ impl PostgresDBConfig {
         format!(
             "postgres://{}:{}@{}:{}/{}",
             self.pg_user, self.pg_password, self.pg_host, self.pg_port, self.pg_database,
+        )
+    }
+
+    pub fn tsn(&self) -> String {
+        format!(
+            "host={} user={} password={} dbname={}",
+            self.pg_host, self.pg_user, self.pg_password, self.pg_database
         )
     }
 }

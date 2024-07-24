@@ -1,31 +1,8 @@
-use crate::EnvUtil;
-use clickhouse_utils::prelude::ClickHouseUtilError;
-use clickhouse_utils::ClickhouseUtil;
 use common_env::prelude::EnvironmentType;
 use docker_utils::DockerUtil;
 use kaiko_utils::KaikoUtil;
-use specs_utils::prelude::clickhouse_container_specs;
 
-impl EnvUtil {
-    pub(super) async fn get_new_clickhouse_util(
-        &self,
-    ) -> Result<ClickhouseUtil, ClickHouseUtilError> {
-        let container_config = clickhouse_container_specs();
-
-        // DB connection string
-        let dsn = &format!(
-            "{}:{}",
-            container_config.url(),
-            container_config.connection_port(),
-        );
-
-        if self.dbg {
-            ClickhouseUtil::with_debug(dsn).await
-        } else {
-            ClickhouseUtil::new(dsn).await
-        }
-    }
-}
+use crate::EnvUtil;
 
 impl EnvUtil {
     pub fn api_proxy_container_port(&self) -> u16 {

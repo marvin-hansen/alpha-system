@@ -21,6 +21,7 @@ rust_library(
         "//alias:docker_utils",
         "//alias:specs_utils",
         "//alias:kaiko_utils",
+        "//alias:postgres_utils",
         # External crates
         "@crates//:tokio",
         "@crates//:serde_json",

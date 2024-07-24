@@ -1,6 +1,7 @@
-use crate::prelude::EnvironmentSetupError;
-use crate::EnvUtil;
 use specs_utils::prelude::api_proxy_container_specs;
+
+use crate::prelude::{EnvironmentError, EnvironmentSetupError};
+use crate::EnvUtil;
 
 impl EnvUtil {
     pub async fn setup_container_api_proxy(&mut self) -> Result<(), EnvironmentSetupError> {
@@ -31,6 +32,22 @@ impl EnvUtil {
         self.dbg_print("Set api proxy container name and ports");
         self.set_api_proxy_container_name(container_name);
         self.set_api_proxy_container_port(container_port);
+
+        Ok(())
+    }
+
+    pub async fn teardown_api_proxy(&self) -> Result<(), EnvironmentError> {
+        //
+        self.dbg_print("[teardown_ci_api_proxy]: Get docker util");
+        let docker_util = self.docker_util();
+
+        self.dbg_print("[teardown_ci_api_proxy]: Get container id");
+        let container_id = self.api_proxy_container_name();
+
+        self.dbg_print("[teardown_ci_api_proxy]: Stop and remove container");
+        docker_util
+            .stop_container(container_id)
+            .expect("[TestEnv:CI/teardown_ci_api_proxy]: Failed to teardown api_proxy container");
 
         Ok(())
     }

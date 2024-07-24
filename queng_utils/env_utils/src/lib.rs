@@ -1,4 +1,3 @@
-use crate::prelude::EnvironmentError;
 use common_env::prelude::EnvironmentType;
 use ctx_manager::CtxManager;
 use docker_utils::DockerUtil;
@@ -7,9 +6,12 @@ use specs_utils::prelude::{
     api_proxy_container_specs, clickhouse_container_specs, postgres_db_container_specs,
 };
 
+use crate::prelude::EnvironmentError;
+
 mod env;
 pub mod errors;
 mod getters;
+mod getters_utils;
 mod init;
 pub mod prelude;
 
