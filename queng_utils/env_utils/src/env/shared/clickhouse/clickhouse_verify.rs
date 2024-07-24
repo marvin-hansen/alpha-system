@@ -1,7 +1,8 @@
-use crate::prelude::EnvironmentError;
-use crate::EnvUtil;
 use clickhouse_utils::ClickhouseUtil;
 use kaiko_utils::KaikoUtil;
+
+use crate::prelude::EnvironmentError;
+use crate::EnvUtil;
 
 impl EnvUtil {
     /// Verifies that the ClickHouse database is configured correctly.

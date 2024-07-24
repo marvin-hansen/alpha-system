@@ -30,7 +30,7 @@ async fn test_env_util_teardown_container() {
 
     println!("Removing all all containers");
     env_utils
-        .teardown_containers()
+        .teardown_all_containers()
         .await
         .expect("Failed to teardown containers");
 

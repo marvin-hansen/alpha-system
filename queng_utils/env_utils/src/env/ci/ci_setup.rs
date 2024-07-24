@@ -20,7 +20,8 @@ impl EnvUtil {
     /// - `EnvironmentError` if any step fails.
     ///
     pub async fn setup_ci(&mut self) -> Result<(), EnvironmentError> {
-        //
+        self.dbg_print("[setup_ci]: Setup CI environment");
+
         self.dbg_print("[setup_ci]: Check if CI environment already configured");
         if self.ci_env_configured {
             self.dbg_print("[setup_ci]: CI environment already configured.");
@@ -31,7 +32,7 @@ impl EnvUtil {
         let sample_size = None; // Some(0);
 
         self.dbg_print("[setup_ci]: Get or reuse all containers");
-        self.setup_containers()
+        self.setup_all_containers()
             .await
             .expect("[setup_ci]: Failed to setup containers");
 
@@ -52,6 +53,21 @@ impl EnvUtil {
             return Err(EnvironmentError::from(
                 "clickhouse not correctly configured",
             ));
+        }
+
+        self.dbg_print("[setup_ci]: Configure Postgres DB");
+        self.setup_postgres()
+            .await
+            .expect("[setup_ci]: Failed to configure Postgres DB");
+
+        self.dbg_print("[setup_ci]: Verify Postgres DB");
+        let pg_configured = self
+            .verify_postgres_db()
+            .await
+            .expect("[setup_ci]: Failed to verify Postgres DB");
+
+        if !pg_configured {
+            return Err(EnvironmentError::from("Postgres not correctly configured"));
         }
 
         Ok(())

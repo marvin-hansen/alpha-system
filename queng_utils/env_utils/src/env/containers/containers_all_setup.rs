@@ -1,7 +1,8 @@
 use crate::prelude::EnvironmentSetupError;
 use crate::EnvUtil;
+
 impl EnvUtil {
-    pub async fn setup_containers(&mut self) -> Result<(), EnvironmentSetupError> {
+    pub async fn setup_all_containers(&mut self) -> Result<(), EnvironmentSetupError> {
         //
         self.dbg_print("[setup_containers]: Check if containers already configured");
         if self.all_containers_crated {
@@ -19,7 +20,7 @@ impl EnvUtil {
             .await
             .expect("[TestEnv/CI:setup_containers]: Failed to setup clickhouse container");
 
-        self.dbg_print("Setup SurrealDB container");
+        self.dbg_print("Setup postgres container");
         self.setup_container_postgres_db()
             .await
             .expect("[TestEnv/CI:setup_containers]: Failed to setup SurrealDB container");

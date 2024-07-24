@@ -1,8 +1,9 @@
+use tokio_postgres::Client;
+
 mod all_db_setup;
 mod all_db_teardown;
+mod all_db_verify;
 mod specs;
-
-use tokio_postgres::Client;
 
 pub struct Specs {
     dbg: bool,

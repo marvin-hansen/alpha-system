@@ -4,6 +4,36 @@ use specs_utils::prelude::{get_all_portfolio_specs, get_all_service_specs};
 use crate::prelude::{EnvUtil, EnvironmentError};
 
 impl EnvUtil {
+    pub(crate) async fn verify_postgres_db(&self) -> Result<bool, EnvironmentError> {
+        self.dbg_print("verify_postgres_db");
+
+        self.dbg_print("[verify_postgres_db]; Get Postgres util");
+        let pg_util = self
+            .get_new_postgres_util()
+            .await
+            .expect("[verify_postgres_db]: Failed to get PostgresUtil");
+
+        let setup = pg_util
+            .verify_all_db()
+            .await
+            .expect("Failed to verify postgres DB");
+        if !setup {
+            return Err(EnvironmentError::from("Failed to verify postgres DB"));
+        }
+
+        let imported = self
+            .verify_postgres_data_imported(&pg_util)
+            .await
+            .expect("Failed to verify postgres data imported");
+        if !imported {
+            return Err(EnvironmentError::from(
+                "Failed to verify postgres data imported",
+            ));
+        }
+
+        Ok(true)
+    }
+
     /// Verifies if all data has been imported into the Postgres database.
     ///
     /// This method performs the following steps:

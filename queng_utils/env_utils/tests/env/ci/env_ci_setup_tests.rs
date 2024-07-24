@@ -5,7 +5,7 @@ async fn test_env_util_setup_ci() {
     // Initial setup of the CI test environment
     let mut ci_env = EnvUtil::with_debug().await.expect("Failed to get EnvUtil");
     ci_env
-        .setup_containers()
+        .setup_all_containers()
         .await
         .expect("Failed to setup ci env");
 
