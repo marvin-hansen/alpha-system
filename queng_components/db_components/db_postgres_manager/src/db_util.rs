@@ -2,6 +2,17 @@ use crate::error::PostgresDBError;
 use crate::PostgresDBManager;
 
 impl PostgresDBManager {
+    /// Executes a query to check if a row exists in the database.
+    ///
+    /// # Arguments
+    ///
+    /// * `query` - The query to execute.
+    ///
+    /// # Returns
+    ///
+    /// * `Result<bool, PostgresDBError>` - A result indicating success or failure.
+    /// If the query executes without error, returns `Ok(true)` if a row exists, `Ok(false)` otherwise.
+    /// If the query fails, returns a `PostgresDBError`.
     pub(crate) async fn execute_exists_query(&self, query: &str) -> Result<bool, PostgresDBError> {
         self.dbg_print("execute_exists_query");
 
@@ -16,6 +27,18 @@ impl PostgresDBManager {
             }
         }
     }
+    /// Executes a query on the Postgres database.
+    ///
+    /// # Arguments
+    ///
+    /// * `query` - The query to execute.
+    ///
+    /// # Returns
+    ///
+    /// * `Result<(), PostgresDBError>` - A result indicating success or failure.
+    /// If the query executes without error, returns `Ok(())`.
+    /// If the query fails, returns a `PostgresDBError`.
+    ///
     pub(crate) async fn execute_query(&self, query: &str) -> Result<(), PostgresDBError> {
         self.dbg_print("execute_query");
 
@@ -27,6 +50,18 @@ impl PostgresDBManager {
             }
         }
     }
+    /// Executes a query to count the number of rows in a table.
+    ///
+    /// # Arguments
+    ///
+    /// * `schema_name` - The name of the schema containing the table.
+    /// * `table_name` - The name of the table to count rows in.
+    ///
+    /// # Returns
+    ///
+    /// * `Result<u64, PostgresDBError>` - A result indicating success or failure.
+    /// If successful, returns the count of rows in the table as a `u64`.
+    ///
     pub(crate) async fn execute_count_query(
         &self,
         schema_name: &str,

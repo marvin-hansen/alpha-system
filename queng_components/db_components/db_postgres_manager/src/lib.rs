@@ -22,16 +22,50 @@ pub struct PostgresDBManager {
 }
 
 impl PostgresDBManager {
+    /// Asynchronously builds a new `PostgresDBManager` instance.
+    ///
+    /// # Arguments
+    ///
+    /// * `pg_config` - The `PostgresDBConfig` for the connection.
+    ///
+    /// # Returns
+    ///
+    /// A result containing a `PostgresDBManager` instance on success, or a
+    /// `PostgresDBError` on failure.
+    ///
     pub async fn new(pg_config: &PostgresDBConfig) -> Result<Self, PostgresDBError> {
         let tsn = &pg_config.tsn();
         Self::build(false, tsn).await
     }
 
+    /// Asynchronously builds a new `PostgresDBManager` instance with debug mode enabled.
+    ///
+    /// # Arguments
+    ///
+    /// * `pg_config` - The `PostgresDBConfig` for the connection.
+    ///
+    /// # Returns
+    ///
+    /// A result containing a `PostgresDBManager` instance on success, or a
+    /// `PostgresDBError` on failure.
+    ///
     pub async fn with_debug(pg_config: &PostgresDBConfig) -> Result<Self, PostgresDBError> {
         let tsn = &pg_config.tsn();
         Self::build(true, tsn).await
     }
 
+    /// Asynchronously builds a new `PostgresDBManager` instance.
+    ///
+    /// # Arguments
+    ///
+    /// * `dbg` - Whether to enable debug mode.
+    /// * `tsn` - The target Postgres server name.
+    ///
+    /// # Returns
+    ///
+    /// A result containing a `PostgresDBManager` instance on success, or a
+    /// `PostgresDBError` on failure.
+    ///
     async fn build(dbg: bool, tsn: &str) -> Result<Self, PostgresDBError> {
         if dbg {
             println!("[PostgresDBManager]: Debug mode enabled");
