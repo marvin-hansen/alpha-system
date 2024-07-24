@@ -33,9 +33,9 @@ pub fn endpoint_from_proto(proto: ProtoEndpoint) -> Result<Endpoint, Error> {
 pub fn endpoint_to_proto(endpoint: Endpoint) -> Result<ProtoEndpoint, Error> {
     Ok(ProtoEndpoint {
         name: endpoint.name().to_string(),
-        version: endpoint.version() as u32,
+        version: endpoint.version(),
         uri: endpoint.uri().to_string(),
-        port: endpoint.port() as u32,
+        port: endpoint.port(),
         protocol: endpoint.protocol() as i32,
     })
 }

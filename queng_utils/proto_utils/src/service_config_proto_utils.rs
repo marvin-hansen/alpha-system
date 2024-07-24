@@ -79,7 +79,7 @@ pub fn service_config_to_proto(service_config: ServiceConfig) -> Result<ProtoSer
     Ok(ProtoServiceConfig {
         svc_id: service_config.svc_id().to_owned() as i32,
         name: service_config.name().to_string(),
-        version: service_config.version() as u32,
+        version: service_config.version(),
         online: service_config.online(),
         description: service_config.description().to_string(),
         health_check_uri: service_config.health_check_uri().to_string(),

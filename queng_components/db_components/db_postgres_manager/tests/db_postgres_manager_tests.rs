@@ -132,7 +132,7 @@ async fn _test_read_all_services(pgm: &PostgresDBManager) {
     let res = pgm.read_all_services().await;
     assert!(res.is_ok());
     let services = res.unwrap();
-    assert!(services.len() > 0);
+    assert!(!services.is_empty());
 }
 
 async fn _test_update_service(pgm: &PostgresDBManager) {

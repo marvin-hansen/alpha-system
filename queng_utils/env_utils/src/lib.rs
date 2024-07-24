@@ -139,15 +139,9 @@ impl EnvUtil {
         };
 
         if containers_crated {
-            let clickhouse_configured = match instance.verify_clickhouse_db().await {
-                Ok(_) => true,
-                Err(_) => false,
-            };
+            let clickhouse_configured = instance.verify_clickhouse_db().await.is_ok();
 
-            let postgres_configured = match instance.verify_postgres_db().await {
-                Ok(_) => true,
-                Err(_) => false,
-            };
+            let postgres_configured = instance.verify_postgres_db().await.is_ok();
 
             if clickhouse_configured {
                 instance.clickhouse_configured.replace(true);

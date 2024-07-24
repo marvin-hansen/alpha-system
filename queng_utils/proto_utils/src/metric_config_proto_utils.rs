@@ -35,6 +35,6 @@ pub fn metric_config_to_proto(
     Ok(ProtoMetricConfig {
         metric_uri: metric_config.uri().to_string(),
         metric_host: metric_config.host().to_string(),
-        metric_port: metric_config.port() as u32,
+        metric_port: metric_config.port(),
     })
 }
