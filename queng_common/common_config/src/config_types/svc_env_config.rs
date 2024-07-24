@@ -21,7 +21,7 @@ pub struct SvcEnvConfig {
     /// The metric endpoint URI of the service
     metrics_uri: String,
     /// The metric endpoint port of the service
-    metrics_port: u16,
+    metrics_port: u32,
 }
 
 impl SvcEnvConfig {
@@ -36,7 +36,7 @@ impl SvcEnvConfig {
         service_port: String,
         metrics_host: String,
         metrics_uri: String,
-        metrics_port: u16,
+        metrics_port: u32,
     ) -> Self {
         Self {
             service_id,
@@ -86,7 +86,7 @@ impl SvcEnvConfig {
         &self.metrics_uri
     }
     /// Returns the metric endpoint port of the service
-    pub fn metrics_port(&self) -> &u16 {
+    pub fn metrics_port(&self) -> &u32 {
         &self.metrics_port
     }
 }
@@ -94,8 +94,8 @@ impl SvcEnvConfig {
 impl Display for SvcEnvConfig {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         write!(f,
-            "SvcEnvConfig {{ service_id: {:?}, cluster_host: {:?}, ci_host: {:?}, local_host: {:?}, docker_host: {:?}, service_port: {:?}, metrics_host: {:?}, metrics_uri: {:?}, metrics_port: {:?} }}",
-            self.service_id, self.cluster_host, self.ci_host, self.local_host, self.docker_host, self.service_port, self.metrics_host, self.metrics_uri, self.metrics_port
+               "SvcEnvConfig {{ service_id: {:?}, cluster_host: {:?}, ci_host: {:?}, local_host: {:?}, docker_host: {:?}, service_port: {:?}, metrics_host: {:?}, metrics_uri: {:?}, metrics_port: {:?} }}",
+               self.service_id, self.cluster_host, self.ci_host, self.local_host, self.docker_host, self.service_port, self.metrics_host, self.metrics_uri, self.metrics_port
         )
     }
 }

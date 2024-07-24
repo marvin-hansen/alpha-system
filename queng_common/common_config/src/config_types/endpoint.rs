@@ -1,5 +1,6 @@
 use std::fmt::{Display, Formatter};
 
+use postgres_types::{FromSql, ToSql};
 use serde::{Deserialize, Serialize};
 
 use crate::prelude::{HostEndpoint, ProtocolType};
@@ -13,17 +14,17 @@ use crate::prelude::{HostEndpoint, ProtocolType};
 /// * `uri`: The Uniform Resource Identifier (URI) of the endpoint.
 /// * `port`: The port number of the endpoint.
 /// * `protocol`: The protocol Enum type of the endpoint.
-#[derive(Serialize, Deserialize, Debug, Default, Clone, Eq, PartialEq)]
+#[derive(ToSql, FromSql, Serialize, Deserialize, Debug, Default, Clone, Eq, PartialEq)]
 pub struct Endpoint {
     name: String,
-    version: u8,
+    version: u32,
     uri: String,
-    port: u16,
+    port: u32,
     protocol: ProtocolType,
 }
 
 impl Endpoint {
-    pub fn new(name: String, version: u8, uri: String, port: u16, protocol: ProtocolType) -> Self {
+    pub fn new(name: String, version: u32, uri: String, port: u32, protocol: ProtocolType) -> Self {
         Self {
             name,
             version,
@@ -38,13 +39,13 @@ impl Endpoint {
     pub fn name(&self) -> &str {
         &self.name
     }
-    pub fn version(&self) -> u8 {
+    pub fn version(&self) -> u32 {
         self.version
     }
     pub fn uri(&self) -> &str {
         &self.uri
     }
-    pub fn port(&self) -> u16 {
+    pub fn port(&self) -> u32 {
         self.port
     }
     pub fn protocol(&self) -> ProtocolType {
@@ -54,7 +55,7 @@ impl Endpoint {
 
 impl Endpoint {
     pub fn host_endpoint(&self) -> HostEndpoint {
-        HostEndpoint::new(self.uri(), self.port())
+        HostEndpoint::new(self.uri(), self.port() as u16)
     }
 }
 

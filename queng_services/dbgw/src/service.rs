@@ -239,7 +239,7 @@ impl DbGatewayService for DBGWServer {
         let id = ServiceID::from(request.into_inner().service_id);
 
         let dbm = self.dbm.read().await;
-        let record = dbm.read_record_by_id(&id).await;
+        let record = dbm.read_service_by_id(&id).await;
 
         match record {
             Ok(res) => match res {

@@ -1,5 +1,6 @@
 use std::fmt::{Display, Formatter};
 
+use postgres_types::{FromSql, ToSql};
 use serde::{Deserialize, Serialize};
 
 /// A ProtocolType represents the protocol type used for communication.
@@ -9,8 +10,8 @@ use serde::{Deserialize, Serialize};
 /// * `GRPC`: The gRPC protocol.
 /// * `HTTP`: The HTTP protocol.
 /// * `UDP`: The UDP protocol.
-#[derive(Serialize, Deserialize, Debug, Copy, Clone, Default, Eq, PartialEq)]
-#[repr(u8)]
+#[derive(ToSql, FromSql, Serialize, Deserialize, Debug, Copy, Clone, Default, Eq, PartialEq)]
+#[repr(i8)]
 pub enum ProtocolType {
     #[default]
     NullVal = 0,
@@ -25,6 +26,17 @@ pub enum ProtocolType {
 impl ProtocolType {
     pub fn as_u8(&self) -> u8 {
         *self as u8
+    }
+}
+
+impl From<i8> for ProtocolType {
+    fn from(value: i8) -> Self {
+        match value {
+            0x1_i8 => Self::GRPC,
+            0x2_i8 => Self::HTTP,
+            0x3_i8 => Self::UDP,
+            _ => Self::NullVal,
+        }
     }
 }
 

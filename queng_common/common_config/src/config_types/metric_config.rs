@@ -1,15 +1,17 @@
-use serde::{Deserialize, Serialize};
 use std::fmt::{Display, Formatter};
 
-#[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq)]
+use postgres_types::{FromSql, ToSql};
+use serde::{Deserialize, Serialize};
+
+#[derive(ToSql, FromSql, Serialize, Deserialize, Debug, Clone, Eq, PartialEq)]
 pub struct MetricConfig {
     uri: String,
     host: String,
-    port: u16,
+    port: u32,
 }
 
 impl MetricConfig {
-    pub fn new(uri: String, host: String, port: u16) -> Self {
+    pub fn new(uri: String, host: String, port: u32) -> Self {
         Self { uri, host, port }
     }
 }
@@ -31,7 +33,7 @@ impl MetricConfig {
     pub fn host(&self) -> &str {
         &self.host
     }
-    pub fn port(&self) -> u16 {
+    pub fn port(&self) -> u32 {
         self.port
     }
 }

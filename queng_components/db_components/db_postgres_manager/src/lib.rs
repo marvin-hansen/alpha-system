@@ -8,6 +8,7 @@ use common_database::prelude::PostgresDBConfig;
 use crate::error::PostgresDBError;
 
 mod db_prtf;
+mod db_query;
 mod db_svc;
 mod db_util;
 pub mod error;
@@ -37,9 +38,12 @@ impl PostgresDBManager {
             println!("[PostgresDBManager]: Connecting to Postgres database:",);
         }
 
-        let (client, connection) = tokio_postgres::connect(tsn, NoTls)
-            .await
-            .expect("[PostgresUtil]: Failed to connect to Postgres database");
+        let (client, connection) = match tokio_postgres::connect(tsn, NoTls).await {
+            Ok((client, connection)) => (client, connection),
+            Err(e) => {
+                return Err(PostgresDBError::ConnectionFailed(e.to_string()));
+            }
+        };
 
         // The connection object performs the actual communication with the database,
         // so spawn it off to run on its own.

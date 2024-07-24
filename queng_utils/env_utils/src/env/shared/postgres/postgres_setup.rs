@@ -24,6 +24,10 @@ impl EnvUtil {
             return Ok(());
         }
 
+        self.setup_container_postgres_db()
+            .await
+            .expect("[setup_postgres]: Failed to setup postgres container");
+
         self.dbg_print("[setup_postgres]; Get Postgres util");
         let pg_util = self
             .get_new_postgres_util()

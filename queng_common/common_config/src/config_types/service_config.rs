@@ -1,15 +1,18 @@
-use crate::prelude::{Endpoint, MetricConfig, ServiceID, ServiceType};
-use serde::{Deserialize, Serialize};
 use std::fmt::{Display, Formatter};
 
-#[derive(Serialize, Deserialize, Debug, Default, Clone, Eq, PartialEq)]
+use postgres_types::{FromSql, ToSql};
+use serde::{Deserialize, Serialize};
+
+use crate::prelude::{Endpoint, MetricConfig, ServiceID, ServiceType};
+
+#[derive(ToSql, FromSql, Serialize, Deserialize, Debug, Default, Clone, Eq, PartialEq)]
 pub struct ServiceConfig {
     /// Service ID.
     svc_id: ServiceID,
     /// Service name.
     name: String,
     /// Service version.
-    version: u8,
+    version: u32,
     /// Whether the service is online.
     online: bool,
     /// Service description.
@@ -49,7 +52,7 @@ impl ServiceConfig {
     pub fn new(
         svc_id: ServiceID,
         name: String,
-        version: u8,
+        version: u32,
         online: bool,
         description: String,
         health_check_uri: String,
@@ -97,7 +100,7 @@ impl ServiceConfig {
         &self.name
     }
     /// Returns the service version.
-    pub fn version(&self) -> u8 {
+    pub fn version(&self) -> u32 {
         self.version
     }
     /// Returns whether the service is online.

@@ -1,5 +1,3 @@
-use crate::utils::get_svc_env_config;
-use crate::{CfgManager, DEFAULT_HOST};
 use cmdb_specs::cmdb_service_config;
 use common_config::prelude::ServiceID::{CMDB, DBGW, SMDB};
 use common_config::prelude::{ServiceID, SvcEnvConfig};
@@ -7,6 +5,9 @@ use common_env::prelude::EnvironmentType;
 use common_errors::prelude::InitError;
 use dbgw_specs::dbgw_service_config;
 use smdb_specs::smdb_service_config;
+
+use crate::utils::get_svc_env_config;
+use crate::{CfgManager, DEFAULT_HOST};
 
 impl<'l> CfgManager<'l> {
     pub fn get_smdb_host_port(&self) -> Result<(String, u16), InitError> {
@@ -83,7 +84,7 @@ impl<'l> CfgManager<'l> {
 }
 
 impl<'l> CfgManager<'l> {
-    fn get_svc_metric_host_uri_port(&self) -> Result<(String, String, u16), InitError> {
+    fn get_svc_metric_host_uri_port(&self) -> Result<(String, String, u32), InitError> {
         let svc = self.svc_env_config.to_owned();
         let metric_host = svc.metrics_host().to_string();
         let metrics_uri = svc.metrics_uri().to_string();

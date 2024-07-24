@@ -1,6 +1,7 @@
+use std::fmt;
+
 use common_config::prelude::MetricConfig;
 use proto_bindings::proto::ProtoMetricConfig;
-use std::fmt;
 
 /// Converts a `ProtoMetricConfig` into a `MetricConfig`.
 ///
@@ -15,7 +16,7 @@ pub fn metric_config_from_proto(proto: ProtoMetricConfig) -> Result<MetricConfig
     Ok(MetricConfig::new(
         proto.metric_uri,
         proto.metric_host,
-        proto.metric_port as u16,
+        proto.metric_port,
     ))
 }
 

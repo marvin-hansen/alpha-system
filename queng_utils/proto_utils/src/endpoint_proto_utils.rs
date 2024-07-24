@@ -1,6 +1,7 @@
+use std::fmt::Error;
+
 use common_config::prelude::{Endpoint, ProtocolType};
 use proto_bindings::proto::ProtoEndpoint;
-use std::fmt::Error;
 
 /// Converts a `ProtoEndpoint` into an `Endpoint`.
 ///
@@ -17,9 +18,9 @@ pub fn endpoint_from_proto(proto: ProtoEndpoint) -> Result<Endpoint, Error> {
 
     Ok(Endpoint::new(
         proto.name.to_string(),
-        proto.version as u8,
+        proto.version,
         proto.uri.to_string(),
-        proto.port as u16,
+        proto.port,
         protocol,
     ))
 }

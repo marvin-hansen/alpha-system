@@ -61,7 +61,7 @@ fn ims_service_config(exchange_id: &str, service_id: ServiceID) -> ServiceConfig
     )
 }
 
-fn get_endpoint(exchange_id: &str, port: u16) -> Endpoint {
+fn get_endpoint(exchange_id: &str, port: u32) -> Endpoint {
     let endpoint_name = format!("{}-ims-data-endpoint", exchange_id);
     let endpoint_version = 1;
     let endpoint_uri = "/".to_string();

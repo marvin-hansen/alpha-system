@@ -1,3 +1,4 @@
+use postgres_types::{FromSql, ToSql};
 use serde::{Deserialize, Serialize};
 use std::fmt::{Display, Formatter};
 
@@ -11,7 +12,9 @@ use std::fmt::{Display, Formatter};
 /// * `CMDB`: The CMDB service.
 /// * `DBGW`: The DBGW service.
 /// * `QDGW`: The QDGW service.
-#[derive(Serialize, Deserialize, Debug, Default, Copy, Clone, Eq, PartialEq, Hash)]
+#[derive(
+    ToSql, FromSql, Serialize, Deserialize, Debug, Default, Copy, Clone, Eq, PartialEq, Hash,
+)]
 #[repr(u8)]
 pub enum ServiceID {
     #[default]

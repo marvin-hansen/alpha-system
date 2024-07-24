@@ -47,6 +47,11 @@ impl EnvUtil {
             return Ok(());
         }
 
+        self.dbg_print("[setup_clickhouse]: Setup Clickhouse container");
+        self.setup_container_clickhouse()
+            .await
+            .expect("[setup_clickhouse]: Failed to setup clickhouse container");
+
         self.dbg_print("[setup_clickhouse]: Get clickhouse utils");
         let ch_utils = &self
             .get_new_clickhouse_util()

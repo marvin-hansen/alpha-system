@@ -1,8 +1,10 @@
-use crate::endpoint_proto_utils::{endpoint_from_proto, endpoint_to_proto};
-use crate::metric_config_proto_utils::{metric_config_from_proto, metric_config_to_proto};
+use std::fmt::Error;
+
 use common_config::prelude::{ServiceConfig, ServiceID, ServiceType};
 use proto_bindings::proto::ProtoServiceConfig;
-use std::fmt::Error;
+
+use crate::endpoint_proto_utils::{endpoint_from_proto, endpoint_to_proto};
+use crate::metric_config_proto_utils::{metric_config_from_proto, metric_config_to_proto};
 
 /// Converts a `ProtoServiceConfig` into a `ServiceConfig`.
 ///
@@ -38,7 +40,7 @@ pub fn service_config_from_proto(proto: ProtoServiceConfig) -> Result<ServiceCon
     Ok(ServiceConfig::new(
         svc_id,
         proto.name,
-        proto.version as u8,
+        proto.version,
         proto.online,
         proto.description,
         proto.health_check_uri,
