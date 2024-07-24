@@ -79,6 +79,22 @@ impl ServiceConfig {
 }
 
 impl ServiceConfig {
+    /// Converts a SQL row into a ServiceConfig object.
+    ///
+    /// This function takes a sql `Row` object, which is typically returned by a SQL query,
+    /// and converts it into a `ServiceConfig` object. The `Row` object must have
+    /// the following fields in the specified order:
+    /// * `id` - Service ID.
+    /// * `name` - Service name.
+    /// * `version` - Service version.
+    /// * `online` - Whether the service is online.
+    /// * `description` - Service description.
+    /// * `health_check_uri` - Health check URI.
+    /// * `base_uri` - Base URI.
+    /// * `dependencies` - Service dependencies.
+    /// * `exposure` - Service exposure type.
+    /// * `endpoint` - Service endpoint.
+    /// * `metrics` - MetricConfig.
     pub fn from_sql_row(row: &Row) -> Self {
         let db_id = row.get::<usize, i16>(0);
         let db_name = row.get::<usize, String>(1);

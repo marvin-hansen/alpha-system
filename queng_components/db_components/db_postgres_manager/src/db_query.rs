@@ -84,21 +84,39 @@ impl PostgresDBManager {
     ///
     /// # Arguments
     ///
-    /// * `data` - The service configuration to insert.
+    /// * `data` - A reference to a `ServiceConfig` object from which a SQL query is generated.
     ///
     /// # Returns
     ///
     /// A PostgreSQL query string that inserts the service into the database.
+    ///
     pub(crate) fn build_insert_service_query(&self, data: &ServiceConfig) -> String {
         format!(
-            "INSERT INTO system.service(id, name, version, online, description, health_check_uri, base_uri, dependencies, exposure, endpoint, metrics)
+            "INSERT INTO system.service(id, name, version, online, description, health_check_uri,
+            base_uri, dependencies, exposure,
+            endpoint_name, endpoint_version, endpoint_base_uri, endpoint_port, endpoint_protocol,
+            metric_uri, metric_host, metric_port)
              VALUES({}, '{}', {}, {}, '{}', '{}', '{}', '{}', {},
-                ROW('{}', {}, '{}', {}, {}),
-                ROW('{}', '{}', {})
+                '{}', {}, '{}', {}, {},
+                '{}', '{}', {}
             )",
-            data.svc_id().as_u8(), data.name(), data.version(), data.online(), data.description(), data.health_check_uri(), data.base_uri(), self.service_ids_to_string(data.dependencies()), data.exposure().as_u8(),
-            data.endpoint().name(), data.endpoint().version(), data.endpoint().uri(), data.endpoint().port(), data.endpoint().protocol().as_u8(),
-            data.metrics().uri(), data.metrics().host(), data.metrics().port()
+            data.svc_id().as_u8(),
+            data.name(),
+            data.version(),
+            data.online(),
+            data.description(),
+            data.health_check_uri(),
+            data.base_uri(),
+            self.service_ids_to_string(data.dependencies()),
+            data.exposure().as_u8(),
+            data.endpoint().name(),
+            data.endpoint().version(),
+            data.endpoint().uri(),
+            data.endpoint().port(),
+            data.endpoint().protocol().as_u8(),
+            data.metrics().uri(),
+            data.metrics().host(),
+            data.metrics().port()
         )
     }
 
@@ -107,9 +125,9 @@ impl PostgresDBManager {
         format!("{{{}}}", id_strings.join(","))
     }
 
-    /// Builds a PostgreSQL query to update a service in the database.
+    /// Builds a PostgreSQL query string that updates a service in the database.
     ///
-    /// # Arguments
+    /// # Args
     ///
     /// * `data` - The service configuration to update.
     ///
@@ -119,20 +137,16 @@ impl PostgresDBManager {
     ///
     pub(crate) fn build_update_service_query(&self, data: &ServiceConfig) -> String {
         format!(
-            "UPDATE system.service
-             SET
-                name = '{}',
-                version = {},
-                online = {},
-                description = '{}',
-                health_check_uri = '{}',
-                base_uri = '{}',
-                dependencies = '{}',
-                exposure = {},
-                endpoint = ROW('{}', {}, '{}', {}, {}),
-                metrics = ROW('{}', '{}', {})
-             WHERE
-                id = {}
+            "
+            UPDATE
+                system.service
+            SET
+                name='{}', version={}, online={}, description='{}', health_check_uri='{}',base_uri='{}',  dependencies='{}', exposure={},
+                endpoint_name='{}', endpoint_version={}, endpoint_base_uri='{}',  endpoint_port={}, endpoint_protocol={},
+                metric_uri='{}', metric_host='{}', metric_port={}
+            WHERE
+                id={}
+            RETURNING service.online
             ",
             data.name(),
             data.version(),
@@ -150,7 +164,7 @@ impl PostgresDBManager {
             data.metrics().uri(),
             data.metrics().host(),
             data.metrics().port(),
-            data.svc_id().as_u8()
+            data.svc_id().as_u8(),
         )
     }
 

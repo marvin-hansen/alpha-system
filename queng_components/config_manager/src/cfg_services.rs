@@ -10,6 +10,12 @@ use crate::utils::get_svc_env_config;
 use crate::{CfgManager, DEFAULT_HOST};
 
 impl<'l> CfgManager<'l> {
+    /// Returns the host and port of the service.
+    ///
+    /// # Returns
+    ///
+    /// A tuple containing the host and port of the service as a string and u16, respectively. Returns an error if the
+    /// host and port cannot be obtained.
     pub fn get_smdb_host_port(&self) -> Result<(String, u16), InitError> {
         // Get the configuration of the service
         let svc_config = smdb_service_config();
@@ -21,6 +27,13 @@ impl<'l> CfgManager<'l> {
         self.get_host(&svc_env_config)
     }
 
+    /// Returns the host and port of the CMDB service.
+    ///
+    /// # Returns
+    ///
+    /// A tuple containing the host and port of the CMDB service as a string and u16, respectively. Returns an error if the
+    /// host and port cannot be obtained.
+    ///
     pub fn get_cmdb_host_port(&self) -> Result<(String, u16), InitError> {
         // Get the configuration of the service
         let svc_config = cmdb_service_config();
@@ -32,6 +45,12 @@ impl<'l> CfgManager<'l> {
         self.get_host(&svc_env_config)
     }
 
+    /// Returns the host and port of the DBGW service.
+    ///
+    /// # Returns
+    ///
+    /// A tuple containing the host and port of the DBGW service as a string and u16, respectively. Returns an error if the
+    /// host and port cannot be obtained.
     pub fn get_dbgw_host_port(&self) -> Result<(String, u16), InitError> {
         // Get the configuration of the service
         let svc_config = dbgw_service_config();
@@ -43,6 +62,12 @@ impl<'l> CfgManager<'l> {
         self.get_host(&svc_env_config)
     }
 
+    /// Returns the host and port of the service.
+    ///
+    /// # Returns
+    ///
+    /// A tuple containing the host and port of the service as a string and u16, respectively. Returns an error if the
+    /// host and port cannot be obtained.
     pub fn get_service_host_port(&self) -> Result<(String, u16), InitError> {
         // Get the configuration of the service
         let svc_config = &self.svc_env_config;
@@ -50,6 +75,11 @@ impl<'l> CfgManager<'l> {
         self.get_host(svc_config)
     }
 
+    /// Returns a vector of `ServiceID`s representing the dependencies of the service.
+    ///
+    /// # Returns
+    ///
+    /// A vector of `ServiceID`s representing the dependencies of the service.
     pub fn get_service_dependencies(&self) -> Vec<ServiceID> {
         self.get_svc_config().dependencies().clone()
     }
