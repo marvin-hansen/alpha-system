@@ -196,30 +196,6 @@ impl PostgresDBManager {
         }
     }
 
-    /// Reads all services from the database.
-    ///
-    /// # Returns
-    ///
-    /// * `Result<Vec<ServiceConfig>, PostgresDBError>` - A result indicating success or failure.
-    /// If successful, returns a vector of all services in the database.
-    ///
-    pub async fn read_all_services(&self) -> Result<Vec<ServiceConfig>, PostgresDBError> {
-        self.dbg_print("read_all_services");
-
-        let query = self.build_read_all_services_query();
-        match self.client.query(&query, &[]).await {
-            Ok(rows) => {
-                let mut services = Vec::new();
-                for row in rows {
-                    let svc = row.get::<usize, ServiceConfig>(0);
-                    services.push(svc);
-                }
-                Ok(services)
-            }
-            Err(e) => Err(PostgresDBError::QueryFailed(e.to_string())),
-        }
-    }
-
     /// Reads a service from the database by its ID.
     ///
     /// # Arguments
@@ -243,6 +219,30 @@ impl PostgresDBManager {
             Ok(row) => {
                 let svc = row.get::<usize, ServiceConfig>(0);
                 Ok(Some(svc))
+            }
+            Err(e) => Err(PostgresDBError::QueryFailed(e.to_string())),
+        }
+    }
+
+    /// Reads all services from the database.
+    ///
+    /// # Returns
+    ///
+    /// * `Result<Vec<ServiceConfig>, PostgresDBError>` - A result indicating success or failure.
+    /// If successful, returns a vector of all services in the database.
+    ///
+    pub async fn read_all_services(&self) -> Result<Vec<ServiceConfig>, PostgresDBError> {
+        self.dbg_print("read_all_services");
+
+        let query = self.build_read_all_services_query();
+        match self.client.query(&query, &[]).await {
+            Ok(rows) => {
+                let mut services = Vec::new();
+                for row in rows {
+                    let svc = row.get::<usize, ServiceConfig>(0);
+                    services.push(svc);
+                }
+                Ok(services)
             }
             Err(e) => Err(PostgresDBError::QueryFailed(e.to_string())),
         }
