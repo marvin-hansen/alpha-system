@@ -1,4 +1,3 @@
-use serde::{Deserialize, Serialize};
 use std::fmt::{Display, Formatter};
 
 /// Enumeration of possible data error types.
@@ -14,9 +13,7 @@ use std::fmt::{Display, Formatter};
 /// * `DataChannelError` - Error getting the clients data channel.
 ///
 /// The enum variants are represented as `u8` values for serialization.
-#[derive(
-    Serialize, Deserialize, Clone, Copy, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash,
-)]
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(u8)]
 pub enum DataErrorType {
     #[default]

@@ -12,4 +12,3 @@ authors.workspace = true
 # External crates
 chrono = { workspace = true }
 rust_decimal = { workspace = true }
-serde = { workspace = true }

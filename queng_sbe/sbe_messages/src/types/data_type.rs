@@ -1,4 +1,3 @@
-use serde::{Deserialize, Serialize};
 use std::fmt::{Display, Formatter};
 
 /// The DataType enum represents the different data types that can be transmitted.
@@ -12,9 +11,7 @@ use std::fmt::{Display, Formatter};
 /// - `QuoteData` - Quote data
 ///
 /// The enum is represented as a `u8` under the hood.
-#[derive(
-    Serialize, Deserialize, Clone, Copy, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash,
-)]
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(u8)]
 pub enum DataType {
     #[default]

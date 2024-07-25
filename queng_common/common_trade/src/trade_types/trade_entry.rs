@@ -1,8 +1,6 @@
 use std::fmt::{Display, Formatter};
 
-use serde::{Deserialize, Serialize};
-
-#[derive(Serialize, Deserialize, Debug, Default, Clone, Eq, PartialEq)]
+#[derive(Debug, Default, Clone, Eq, PartialEq)]
 pub enum TradeEntryType {
     #[default]
     CurrentBar,

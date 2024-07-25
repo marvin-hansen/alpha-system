@@ -1,12 +1,11 @@
+use crate::prelude::MessageType;
+
 mod display;
 mod getters;
 mod sbe_decode;
 mod sbe_encode;
 
-use crate::prelude::MessageType;
-use serde::{Deserialize, Serialize};
-
-#[derive(Serialize, Deserialize, Debug, Default, Clone, PartialEq)]
+#[derive(Debug, Default, Clone, PartialEq)]
 pub struct FirstOHLCVBar {
     message_type: MessageType,
     symbol_id: u16,

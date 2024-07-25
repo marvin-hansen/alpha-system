@@ -1,10 +1,8 @@
 use std::fmt::{Display, Formatter};
 
-use serde::{Deserialize, Serialize};
-
 use crate::prelude::{PatternConfig, TradeEntryType, TradeStrategyType};
 
-#[derive(Serialize, Deserialize, Debug, Default, Clone, Eq, PartialEq)]
+#[derive(Debug, Default, Clone, Eq, PartialEq)]
 pub struct StrategyConfig {
     strategy_id: String,
     strategy_name: String,

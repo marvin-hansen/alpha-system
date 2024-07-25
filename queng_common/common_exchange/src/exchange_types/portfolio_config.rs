@@ -1,11 +1,10 @@
 use std::fmt::{Display, Formatter};
 
-use serde::{Deserialize, Serialize};
 use tokio_postgres::Row;
 
 use crate::prelude::{AccountType, Instrument};
 
-#[derive(Serialize, Deserialize, Debug, Default, Clone, PartialEq)]
+#[derive(Debug, Default, Clone, PartialEq)]
 pub struct PortfolioConfig {
     portfolio_id: u32,
     portfolio_description: String,

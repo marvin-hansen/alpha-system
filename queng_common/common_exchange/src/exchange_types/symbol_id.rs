@@ -1,9 +1,8 @@
-use serde::{Deserialize, Serialize};
 use std::fmt::{Display, Formatter};
-#[derive(
-    Serialize, Deserialize, Clone, Copy, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash,
-)]
-#[repr(u16)] // Type is u16 for direct conversion from proto integer. The smallest possible integer in proto is 16B.
+
+// Type is u16 for direct conversion from proto integer. The smallest possible integer in proto is 16B.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[repr(u16)]
 pub enum SymbolID {
     #[default]
     NullVal = 0xff_u16,

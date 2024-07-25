@@ -1,12 +1,11 @@
 use crate::prelude::{ClientErrorType, MessageType};
-use serde::{Deserialize, Serialize};
 
 mod display;
 mod getters;
 mod sbe_decode;
 mod sbe_encode;
 
-#[derive(Serialize, Deserialize, Debug, Default, Clone, PartialEq)]
+#[derive(Debug, Default, Clone, PartialEq)]
 pub struct ClientErrorMessage {
     message_type: MessageType,
     client_id: u16,

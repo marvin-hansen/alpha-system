@@ -1,7 +1,6 @@
-use serde::{Deserialize, Serialize};
 use std::fmt;
 
-#[derive(Debug, Eq, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Eq, Clone, PartialEq)]
 pub struct ClickHouseConfig {
     url: String,
     port: u16,

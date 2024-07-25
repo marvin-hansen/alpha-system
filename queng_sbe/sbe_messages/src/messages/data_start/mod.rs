@@ -1,14 +1,14 @@
-use crate::prelude::{DataType, MessageType};
 use common_data_bar::prelude::TimeResolution;
 use common_exchange::prelude::ExchangeID;
-use serde::{Deserialize, Serialize};
+
+use crate::prelude::{DataType, MessageType};
 
 mod display;
 mod getter;
 mod sbe_decode;
 mod sbe_encode;
 
-#[derive(Serialize, Deserialize, Debug, Default, Clone, PartialEq)]
+#[derive(Debug, Default, Clone, PartialEq)]
 pub struct StartDataMessage {
     message_type: MessageType,
     client_id: u16,

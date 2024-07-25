@@ -1,11 +1,11 @@
+use common_data_bar::prelude::TradeBar;
+
+use crate::errors::{SbeDecodeError, SbeEncodeError};
+
 mod sbe_decode;
 mod sbe_encode;
 
-use crate::errors::{SbeDecodeError, SbeEncodeError};
-use common_data_bar::prelude::TradeBar;
-use serde::{Deserialize, Serialize};
-
-#[derive(Serialize, Deserialize, Debug, Default, Clone, PartialEq)]
+#[derive(Debug, Default, Clone, PartialEq)]
 pub struct SbeTradeBar {}
 
 impl SbeTradeBar {

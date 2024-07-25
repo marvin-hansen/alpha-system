@@ -1,11 +1,11 @@
-use crate::errors::{SbeDecodeError, SbeEncodeError};
 use common_data_bar::prelude::OHLCVBar;
-use serde::{Deserialize, Serialize};
+
+use crate::errors::{SbeDecodeError, SbeEncodeError};
 
 pub mod sbe_decoder;
 pub mod sbe_encoder;
 
-#[derive(Serialize, Deserialize, Debug, Default, Clone, PartialEq)]
+#[derive(Debug, Default, Clone, PartialEq)]
 pub struct SbeOHLCVBar {}
 
 impl SbeOHLCVBar {

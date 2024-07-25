@@ -1,5 +1,3 @@
-use serde::{Deserialize, Serialize};
-
 use common_exchange::prelude::ExchangeID;
 
 use crate::prelude::MessageType;
@@ -9,7 +7,7 @@ mod getter;
 mod sbe_decode;
 mod sbe_encode;
 
-#[derive(Serialize, Deserialize, Debug, Default, Clone, PartialEq)]
+#[derive(Debug, Default, Clone, PartialEq)]
 pub struct StopAllDataMessage {
     message_type: MessageType,
     client_id: u16,

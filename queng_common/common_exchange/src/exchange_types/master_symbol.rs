@@ -1,11 +1,9 @@
-use serde::{Deserialize, Serialize};
-
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug)]
 pub struct MasterSymbolRow {
     pub data: Vec<String>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone)]
 pub struct MasterSymbol {
     pub master_symbol: String,
     pub asset_class: String,

@@ -1,10 +1,10 @@
-use rust_decimal::Decimal;
-use serde::{Deserialize, Serialize};
 use std::fmt;
+
+use rust_decimal::Decimal;
 
 use crate::prelude::ExchangeID;
 
-#[derive(Serialize, Deserialize, Debug, Default, Clone, Eq, PartialEq)]
+#[derive(Debug, Default, Clone, Eq, PartialEq)]
 pub struct Symbol {
     symbol_id_global: String,
     symbol_id_exchange: String,

@@ -1,4 +1,3 @@
-use serde::{Deserialize, Serialize};
 use std::fmt::{Display, Formatter};
 
 /// ClientErrorType enum representing different client error types.
@@ -22,9 +21,7 @@ use std::fmt::{Display, Formatter};
 ///
 /// Represented as u8 for compactness.
 ///
-#[derive(
-    Serialize, Deserialize, Clone, Copy, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash,
-)]
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(u8)]
 pub enum ClientErrorType {
     #[default]

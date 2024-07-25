@@ -22,5 +22,4 @@ common_exchange = { workspace = true }
 sbe_bindings = { workspace = true }
 # External crates
 rust_decimal = { workspace = true }
-serde = { workspace = true }
 chrono = { workspace = true }

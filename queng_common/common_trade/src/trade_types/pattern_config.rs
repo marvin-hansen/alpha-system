@@ -1,8 +1,8 @@
-use crate::prelude::PatternType;
-use serde::{Deserialize, Serialize};
 use std::fmt::{Display, Formatter};
 
-#[derive(Serialize, Deserialize, Debug, Default, Clone, Eq, PartialEq)]
+use crate::prelude::PatternType;
+
+#[derive(Debug, Default, Clone, Eq, PartialEq)]
 pub struct PatternConfig {
     pattern_config_id: u32,
     pattern_config_name: String,

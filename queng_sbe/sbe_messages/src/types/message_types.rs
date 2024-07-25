@@ -1,4 +1,3 @@
-use serde::{Deserialize, Serialize};
 use std::fmt;
 use std::fmt::Display;
 
@@ -35,9 +34,7 @@ use std::fmt::Display;
 ///
 /// Represented as u16 for compactness.
 ///
-#[derive(
-    Serialize, Deserialize, Clone, Copy, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash,
-)]
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(u16)]
 pub enum MessageType {
     #[default]

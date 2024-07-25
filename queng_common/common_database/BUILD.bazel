@@ -12,8 +12,6 @@ rust_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        # External crates
-        "@crates//:serde",
     ],
 )
 

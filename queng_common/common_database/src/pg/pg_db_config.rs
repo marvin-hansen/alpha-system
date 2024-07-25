@@ -1,10 +1,8 @@
 use std::fmt;
 use std::fmt::{Debug, Display, Formatter};
 
-use serde::{Deserialize, Serialize};
-
 /// Configuration for the Postgres database.
-#[derive(Debug, Eq, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Eq, Clone, PartialEq)]
 pub struct PostgresDBConfig {
     /// DNS resolvable name of the host to connect to.
     pg_host: String,

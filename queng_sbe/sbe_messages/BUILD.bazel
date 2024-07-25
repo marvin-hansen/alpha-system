@@ -18,7 +18,6 @@ rust_library(
         "//alias:sbe_bindings",
         # External crates
         "@crates//:rust_decimal",
-        "@crates//:serde",
         "@crates//:chrono",
     ],
 )

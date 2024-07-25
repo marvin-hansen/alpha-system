@@ -1,9 +1,8 @@
 use std::fmt::{Display, Formatter};
 
-use serde::{Deserialize, Serialize};
 use tokio_postgres::Row;
 
-#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Default, Debug, Clone, PartialEq)]
 pub struct Instrument {
     code: String,
     class: String,

@@ -15,7 +15,6 @@ rust_library(
         # External crates
         "@crates//:chrono",
         "@crates//:rust_decimal",
-        "@crates//:serde",
     ],
 )
 

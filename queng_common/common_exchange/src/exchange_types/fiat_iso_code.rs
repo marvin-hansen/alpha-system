@@ -1,8 +1,6 @@
-use serde::Deserialize;
-use serde::Serialize;
 use std::fmt;
 
-#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Default, Debug, Clone, PartialEq, Eq, Hash)]
 pub struct FiatIsoCode {
     currency: String,
     alphabetic_code: [char; 3],
