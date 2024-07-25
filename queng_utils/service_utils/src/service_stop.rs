@@ -51,7 +51,7 @@ impl ServiceUtil {
                         "service: {}
                          success: {}
                          Output: {}",
-                        svc.to_string(),
+                        svc,
                         out.status.success(),
                         String::from_utf8_lossy(out.stdout.as_slice()),
                     ));
