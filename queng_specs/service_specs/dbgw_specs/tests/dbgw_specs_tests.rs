@@ -8,7 +8,7 @@ fn test_cmdb_service_config() {
     assert_eq!(service_config.svc_id(), &ServiceID::DBGW);
     assert_eq!(service_config.name(), "dbgwv1");
     assert_eq!(service_config.version(), 1);
-    assert!(service_config.online());
+    assert!(!service_config.online());
     assert_eq!(service_config.description(), "DBGW gives access to the DB");
     assert_eq!(
         service_config.health_check_uri(),

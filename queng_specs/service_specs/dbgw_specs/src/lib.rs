@@ -1,6 +1,7 @@
 use common_config::prelude::{
     Endpoint, MetricConfig, ProtocolType, ServiceConfig, ServiceID, ServiceType,
 };
+
 /// Constructs the configuration for the DBGW service.
 ///
 /// This function generates a `ServiceConfig` struct with the following fields:
@@ -22,7 +23,7 @@ pub fn dbgw_service_config() -> ServiceConfig {
     let id = ServiceID::DBGW;
     let name = "dbgwv1".to_string();
     let version = 1;
-    let online = true;
+    let online = false;
     let description = "DBGW gives access to the DB".to_string();
     let health_check_uri = "dbgwv1-service.default.svc.cluster.local:7070/health".to_string();
     let base_uri = "dbgwv1-service.default.svc.cluster.local".to_string();

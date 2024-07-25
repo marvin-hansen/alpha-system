@@ -16,7 +16,7 @@ async fn setup_ci_env() {
 }
 
 #[tokio::test]
-async fn test_db_postgres_manager() {
+async fn test_service() {
     setup_ci_env().await;
 
     let pg_config = db_specs::postgres_db::get_ci_db_config();
@@ -33,7 +33,8 @@ async fn test_db_postgres_manager() {
     test_set_service_offline(&pgm).await;
     test_read_service_by_id(&pgm).await;
     test_read_all_services(&pgm).await;
-    // test_update_service(&pgm).await;
+    test_update_service(&pgm).await;
+    test_read_delete_insert_service(&pgm).await;
 
     pgm.close().await
 }
@@ -135,7 +136,7 @@ async fn test_read_all_services(pgm: &PostgresDBManager) {
     assert!(!services.is_empty());
 }
 
-async fn _test_update_service(pgm: &PostgresDBManager) {
+async fn test_update_service(pgm: &PostgresDBManager) {
     let svc_id = ServiceID::SMDB;
     let res = pgm.read_service_by_id(&svc_id).await;
     assert!(res.is_ok());
@@ -144,5 +145,26 @@ async fn _test_update_service(pgm: &PostgresDBManager) {
     let svc = opt_svc.unwrap();
 
     let res = pgm.update_service(svc).await;
+    assert!(res.is_ok());
+}
+
+async fn test_read_delete_insert_service(pgm: &PostgresDBManager) {
+    let svc_id = ServiceID::SMDB;
+
+    // Read the service
+    let res = pgm.read_service_by_id(&svc_id).await;
+    assert!(res.is_ok());
+    let opt_svc = res.unwrap();
+    assert!(opt_svc.is_some());
+    let svc = opt_svc.unwrap();
+
+    // Delete the service
+    let res = pgm.delete_service(&svc_id).await;
+    assert!(res.is_ok());
+    let deleted = res.unwrap();
+    assert!(deleted);
+
+    // Insert the service again to ensure all future test runs work.
+    let res = pgm.insert_service(&svc).await;
     assert!(res.is_ok());
 }
