@@ -10,11 +10,11 @@ impl Specs {
     pub(crate) fn generate_portfolio_instrument_table_ddl(&self) -> String {
         format!(
             "CREATE TABLE IF NOT EXISTS {DEFAULT_SCHEMA}.{PORTFOLIO_INSTRUMENT_TABLE} (
-            portfolio_id                    INT NOT NULL,
-            instrument_id                   INT NOT NULL,
+            portfolio_id                    INT4 NOT NULL,
+            instrument_id                   VARCHAR NOT NULL,
             PRIMARY KEY(portfolio_id, instrument_id),
             FOREIGN KEY(portfolio_id) REFERENCES {DEFAULT_SCHEMA}.{PORTFOLIO_TABLE}(portfolio_id),
-            FOREIGN KEY(instrument_id) REFERENCES {DEFAULT_SCHEMA}.{INSTRUMENT_TABLE}(id)
+            FOREIGN KEY(instrument_id) REFERENCES {DEFAULT_SCHEMA}.{INSTRUMENT_TABLE}(code)
             );
             "
         )

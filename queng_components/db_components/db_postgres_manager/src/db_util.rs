@@ -51,6 +51,18 @@ impl PostgresDBManager {
         }
     }
 
+    /// Executes an insert query on the Postgres database.
+    ///
+    /// # Arguments
+    ///
+    /// * `query` - The insert query to execute.
+    ///
+    /// # Returns
+    ///
+    /// * `Result<u64, PostgresDBError>` - A result indicating success or failure.
+    /// If the query executes without error, returns the inserted row's primary key as a `u64`.
+    /// If the query fails, returns a `PostgresDBError`.
+    ///
     pub(crate) async fn execute_insert_query(&self, query: &str) -> Result<u64, PostgresDBError> {
         self.dbg_print("execute_insert_query");
 

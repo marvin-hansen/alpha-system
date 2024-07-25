@@ -17,7 +17,7 @@ impl Specs {
     pub(crate) fn generate_portfolio_table_ddl(&self) -> String {
         format!(
             "CREATE TABLE IF NOT EXISTS {DEFAULT_SCHEMA}.{PORTFOLIO_TABLE} (
-            portfolio_id                    INT PRIMARY KEY,
+            portfolio_id                    INT4 PRIMARY KEY,
             portfolio_description           VARCHAR NOT NULL,
             portfolio_account_type          INT2 NOT NULL,
             portfolio_account_id            VARCHAR UNIQUE NOT NULL,

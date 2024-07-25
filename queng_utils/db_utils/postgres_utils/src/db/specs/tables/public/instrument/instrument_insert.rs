@@ -22,13 +22,16 @@ impl Specs {
     pub(crate) async fn insert_instrument(
         &self,
         data: &Instrument,
-    ) -> Result<u64, PostgresUtilError> {
+    ) -> Result<String, PostgresUtilError> {
         self.dbg_print("insert_instrument");
 
         let query = pg_inserts::build_insert_instrument_query(data);
         // println!("query: {}", query);
-        match self.execute_insert_query(&query).await {
-            Ok(id) => Ok(id),
+        match self.db.query_one(&query, &[]).await {
+            Ok(row) => {
+                let code = row.get::<usize, String>(0);
+                Ok(code)
+            }
             Err(err) => Err(PostgresUtilError::new(format!(
                 "Failed to insert instrument: {} due error: {}",
                 &data.code(),

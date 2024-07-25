@@ -16,7 +16,7 @@ async fn setup_ci_env() {
 }
 
 #[tokio::test]
-async fn test_service() {
+async fn test_db_manager() {
     setup_ci_env().await;
 
     let pg_config = db_specs::postgres_db::get_ci_db_config();
@@ -35,6 +35,10 @@ async fn test_service() {
     test_read_all_services(&pgm).await;
     test_update_service(&pgm).await;
     test_read_delete_insert_service(&pgm).await;
+    //
+    test_count_portfolio_config(&pgm).await;
+    test_check_if_portfolio_id_exists(&pgm).await;
+    test_read_delete_insert_portfolio_config(&pgm).await;
 
     pgm.close().await
 }
@@ -166,5 +170,42 @@ async fn test_read_delete_insert_service(pgm: &PostgresDBManager) {
 
     // Insert the service again to ensure all future test runs work.
     let res = pgm.insert_service(&svc).await;
+    assert!(res.is_ok());
+}
+
+async fn test_count_portfolio_config(pgm: &PostgresDBManager) {
+    let res = pgm.count_portfolio_config().await;
+    assert!(res.is_ok());
+    let count = res.unwrap();
+    assert!(count > 0);
+}
+
+async fn test_check_if_portfolio_id_exists(pgm: &PostgresDBManager) {
+    let portfolio_id = 1;
+    let res = pgm.check_if_portfolio_id_exists(portfolio_id).await;
+    assert!(res.is_ok());
+    let exists = res.unwrap();
+    assert!(exists);
+}
+
+async fn test_read_delete_insert_portfolio_config(pgm: &PostgresDBManager) {
+    let portfolio_id = 1;
+
+    println!("[test_db_manager]: Read the portfolio config");
+    let res = pgm.read_portfolio_config_by_id(portfolio_id).await;
+    assert!(res.is_ok());
+    let opt_portfolio = res.unwrap();
+    assert!(opt_portfolio.is_some());
+    let portfolio = opt_portfolio.unwrap();
+
+    println!("[test_db_manager]: Delete the portfolio config");
+    let res = pgm.delete_portfolio_config(portfolio_id).await;
+    assert!(res.is_ok());
+    let deleted = res.unwrap();
+    assert!(deleted);
+
+    // Insert the portfolio config again to ensure all future test runs work.
+    println!("[test_db_manager]: Insert the portfolio config again");
+    let res = pgm.insert_portfolio_config(&portfolio).await;
     assert!(res.is_ok());
 }

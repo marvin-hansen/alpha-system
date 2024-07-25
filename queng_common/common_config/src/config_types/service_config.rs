@@ -96,7 +96,7 @@ impl ServiceConfig {
     /// * `endpoint` - Service endpoint.
     /// * `metrics` - MetricConfig.
     pub fn from_sql_row(row: &Row) -> Self {
-        let db_id = row.get::<usize, i16>(0);
+        let db_id = row.get::<usize, i32>(0);
         let db_name = row.get::<usize, String>(1);
         let db_version = row.get::<usize, i16>(2);
         let db_online = row.get::<usize, bool>(3);

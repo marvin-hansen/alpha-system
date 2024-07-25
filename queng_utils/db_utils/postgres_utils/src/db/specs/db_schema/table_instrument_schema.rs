@@ -16,8 +16,7 @@ impl Specs {
     pub(crate) fn generate_instrument_table_ddl(&self) -> String {
         format!(
             "CREATE TABLE IF NOT EXISTS {DEFAULT_SCHEMA}.{INSTRUMENT_TABLE} (
-            id                              SERIAL PRIMARY KEY,
-            code                            VARCHAR UNIQUE NOT NULL,
+            code                            VARCHAR PRIMARY KEY,
             class                           VARCHAR NOT NULL,
             exchange_code                   VARCHAR NOT NULL,
             exchange_pair_code              VARCHAR NOT NULL,
@@ -32,7 +31,7 @@ impl Specs {
     pub(crate) fn generate_instrument_table_indexes_ddl(&self) -> String {
         format!(
             "
-            CREATE INDEX {PORTFOLIO_INSTRUMENT_TABLE_INDEX} ON {DEFAULT_SCHEMA}.{INSTRUMENT_TABLE}(id);
+            CREATE INDEX {PORTFOLIO_INSTRUMENT_TABLE_INDEX} ON {DEFAULT_SCHEMA}.{INSTRUMENT_TABLE}(code);
             "
         )
     }

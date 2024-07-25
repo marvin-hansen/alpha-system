@@ -25,6 +25,7 @@ impl PostgresDBManager {
     ) -> Result<(), PostgresDBError> {
         self.dbg_print("insert_portfolio");
 
+        self.dbg_print("[insert_portfolio]: insert portfolio");
         let query = pg_inserts::build_insert_portfolio_query(data);
         let portfolio_id = match self.execute_insert_query(&query).await {
             Ok(id) => id,
@@ -36,6 +37,7 @@ impl PostgresDBManager {
             }
         };
 
+        self.dbg_print("[insert_portfolio]: insert instruments");
         for instrument in data.portfolio_instruments() {
             let instrument_id = match self.insert_instrument(instrument).await {
                 Ok(id) => id,
@@ -47,6 +49,9 @@ impl PostgresDBManager {
                 }
             };
 
+            self.dbg_print("[insert_portfolio]: insert_portfolio_instrument");
+            self.dbg_print(&format!("Portfolio id: {}", portfolio_id));
+            self.dbg_print(&format!("Instrument id: {}", instrument_id));
             match self
                 .insert_portfolio_instrument(portfolio_id, instrument_id)
                 .await
@@ -64,13 +69,30 @@ impl PostgresDBManager {
         Ok(())
     }
 
-    async fn insert_instrument(&self, data: &Instrument) -> Result<u64, PostgresDBError> {
+    async fn insert_instrument(&self, data: &Instrument) -> Result<String, PostgresDBError> {
         self.dbg_print("insert_instrument");
 
+        let instrument_id = data.code();
+        let exists = match self.check_if_instrument_id_exists(instrument_id).await {
+            Ok(exists) => exists,
+            Err(err) => {
+                return Err(PostgresDBError::InsertFailed(format!(
+                    "Failed to check if instrument exists: {}",
+                    err
+                )))
+            }
+        };
+
+        if exists {
+            return Ok(instrument_id.to_string());
+        }
+
         let query = pg_inserts::build_insert_instrument_query(data);
-        // println!("query: {}", query);
-        match self.execute_insert_query(&query).await {
-            Ok(id) => Ok(id),
+        match self.client.query_one(&query, &[]).await {
+            Ok(row) => {
+                let code = row.get::<usize, String>(0);
+                Ok(code)
+            }
             Err(err) => Err(PostgresDBError::InsertFailed(format!(
                 "Failed to insert instrument: {} due error: {}",
                 &data.code(),
@@ -82,7 +104,7 @@ impl PostgresDBManager {
     async fn insert_portfolio_instrument(
         &self,
         portfolio_id: u64,
-        instrument_id: u64,
+        instrument_id: String,
     ) -> Result<(), PostgresDBError> {
         self.dbg_print("insert_portfolio_instrument");
 
@@ -123,6 +145,7 @@ impl PostgresDBManager {
         self.dbg_print("Check if portfolio exists");
         match self.check_if_portfolio_id_exists(portfolio_id).await {
             Ok(exists) => {
+                self.dbg_print(&format!("Portfolio exists: {}", exists));
                 if !exists {
                     return Ok(None);
                 }
@@ -136,11 +159,12 @@ impl PostgresDBManager {
         self.dbg_print("Query for portfolio_instrument");
         let query_instrument_ids_ =
             pg_query::build_query_instrument_ids_by_portfolio_id(portfolio_id);
+
         let instrument_ids = match self.client.query(&query_instrument_ids_, &[]).await {
             Ok(res) => {
                 let mut instrument_ids = Vec::new();
                 for row in res {
-                    let instrument_id: i32 = row.get(0);
+                    let instrument_id: String = row.get(0);
                     instrument_ids.push(instrument_id);
                 }
                 instrument_ids
@@ -150,6 +174,8 @@ impl PostgresDBManager {
                 return Err(PostgresDBError::QueryFailed(e.to_string()));
             }
         };
+
+        self.dbg_print(&format!("Instrument ID's {:?}", &instrument_ids.as_slice()));
 
         // Then we have to fetch all the instruments for the portfolio
         self.dbg_print("Query for instruments");
@@ -239,6 +265,34 @@ impl PostgresDBManager {
         }
     }
 
+    /// Checks if an instrument with the given ID exists in the database.
+    ///
+    /// # Arguments
+    ///
+    /// * `instrument_id` - The ID of the instrument to check.
+    ///
+    /// # Returns
+    ///
+    /// * `Result<bool, PostgresDBError>` - A result indicating success or failure.
+    /// If the instrument exists, returns `Ok(true)`, otherwise `Ok(false)`.
+    ///
+    /// # Errors
+    ///
+    /// Returns an PostgresDBError error if the query fails.
+    ///
+    pub async fn check_if_instrument_id_exists(
+        &self,
+        instrument_id: &str,
+    ) -> Result<bool, PostgresDBError> {
+        self.dbg_print("check_if_instrument_id_exists");
+
+        let query = pg_query::build_check_if_instrument_id_exists_query(instrument_id);
+        match self.execute_exists_query(&query).await {
+            Ok(_) => Ok(true),
+            Err(e) => Err(e),
+        }
+    }
+
     /// updates the portfolio config with the given data
     /// Updates the portfolio config with the given data.
     ///
@@ -291,6 +345,16 @@ impl PostgresDBManager {
             }
         }
 
+        self.dbg_print("delete instruments associated with portfolio");
+        let query = pg_query::build_delete_portfolio_instrument_query(id);
+        match self.execute_query(&query).await {
+            Ok(_) => (),
+            Err(e) => {
+                return Err(e);
+            }
+        }
+
+        self.dbg_print("delete actual portfolio");
         let query = pg_query::build_delete_portfolio_query(id);
         match self.execute_query(&query).await {
             Ok(_) => Ok(true),

@@ -25,7 +25,7 @@ impl Specs {
     pub(crate) async fn insert_portfolio_instrument(
         &self,
         portfolio_id: u64,
-        instrument_id: u64,
+        instrument_id: String,
     ) -> Result<(), PostgresUtilError> {
         self.dbg_print("insert_portfolio_instrument");
 

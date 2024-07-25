@@ -28,7 +28,8 @@ pub fn build_insert_service_query(data: &ServiceConfig) -> String {
              VALUES({}, '{}', {}, {}, '{}', '{}', '{}', '{}', {},
                 '{}', {}, '{}', {}, {},
                 '{}', '{}', {}
-            )",
+            )
+            RETURNING id",
         data.svc_id().as_u8(),
         data.name(),
         data.version(),
@@ -111,14 +112,14 @@ pub fn build_insert_instrument_query(data: &Instrument) -> String {
     format!(
         "INSERT INTO public.instrument(code, class, exchange_code, exchange_pair_code, base_asset, quote_asset, instrument_figi)
              VALUES('{}', '{}', '{}', '{}', '{}', '{}', '{}')
-             RETURNING id",
+             RETURNING code",
         data.code(), data.class(), data.exchange_code(), data.exchange_pair_code(), data.base_asset(), data.quote_asset(), data.instrument_figi().clone().unwrap_or_else(|| "null".to_string())
     )
 }
 
-pub fn build_insert_portfolio_instrument_query(portfolio_id: u64, instrument_id: u64) -> String {
+pub fn build_insert_portfolio_instrument_query(portfolio_id: u64, instrument_id: String) -> String {
     format!(
-        "INSERT INTO public.portfolio_instrument (portfolio_id, instrument_id) VALUES ({}, {})",
+        "INSERT INTO public.portfolio_instrument (portfolio_id, instrument_id) VALUES ({}, '{}')",
         portfolio_id, instrument_id
     )
 }

@@ -145,7 +145,7 @@ impl PortfolioConfig {
 
 impl PortfolioConfig {
     pub fn from_sql_row(row: &Row, portfolio_instruments: Vec<Instrument>) -> Self {
-        let portfolio_id = row.get::<usize, u32>(0);
+        let portfolio_id = row.get::<usize, i32>(0);
         let portfolio_description = row.get::<usize, String>(1);
         let portfolio_at = row.get::<usize, i16>(2);
         let portfolio_account_type = AccountType::from(portfolio_at);
@@ -154,15 +154,15 @@ impl PortfolioConfig {
         let portfolio_cash = row.get::<usize, f64>(5);
         let portfolio_margin = row.get::<usize, f64>(6);
         let portfolio_max_drawdown = row.get::<usize, f64>(7);
-        let instrument_max_allocation = row.get::<usize, f64>(9);
-        let instrument_max_drawdown = row.get::<usize, f64>(10);
-        let portfolio_free_margin = row.get::<usize, f64>(11);
-        let portfolio_free_cash = row.get::<usize, f64>(12);
-        let portfolio_free_margin_percent = row.get::<usize, f64>(13);
-        let portfolio_free_cash_percent = row.get::<usize, f64>(14);
+        let instrument_max_allocation = row.get::<usize, f64>(8);
+        let instrument_max_drawdown = row.get::<usize, f64>(9);
+        let portfolio_free_margin = row.get::<usize, f64>(10);
+        let portfolio_free_cash = row.get::<usize, f64>(11);
+        let portfolio_free_margin_percent = row.get::<usize, f64>(12);
+        let portfolio_free_cash_percent = row.get::<usize, f64>(13);
 
         PortfolioConfig::new(
-            portfolio_id,
+            portfolio_id as u32,
             portfolio_description,
             portfolio_account_type,
             portfolio_account_id,

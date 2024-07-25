@@ -68,14 +68,13 @@ impl Instrument {
 
 impl Instrument {
     pub fn from_sql_row(row: &Row) -> Self {
-        // let id = row.get::<usize, i32>(0); // PK
-        let code = row.get::<usize, String>(1);
-        let class = row.get::<usize, String>(2);
-        let exchange_code = row.get::<usize, String>(3);
-        let exchange_pair_code = row.get::<usize, String>(4);
-        let base_asset = row.get::<usize, String>(5);
-        let quote_asset = row.get::<usize, String>(6);
-        let instrument_figi = row.get::<usize, Option<String>>(7);
+        let code = row.get::<usize, String>(0);
+        let class = row.get::<usize, String>(1);
+        let exchange_code = row.get::<usize, String>(2);
+        let exchange_pair_code = row.get::<usize, String>(3);
+        let base_asset = row.get::<usize, String>(4);
+        let quote_asset = row.get::<usize, String>(5);
+        let instrument_figi = row.get::<usize, Option<String>>(6);
         Instrument::new(
             code,
             class,

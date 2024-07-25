@@ -11,7 +11,7 @@ impl Specs {
     pub(crate) fn generate_service_table_ddl(&self) -> String {
         format!(
             "CREATE TABLE IF NOT EXISTS {SYSTEM_SCHEMA}.{SERVICE_TABLE} (
-            id               INT2 PRIMARY KEY,
+            id               INT4 PRIMARY KEY,
             name             VARCHAR  UNIQUE NOT NULL,
             version          INT2 NOT NULL,
             online           boolean NOT NULL,
