@@ -72,7 +72,7 @@ impl Specs {
     // VALUES(
     // 1,
     // 'cash portfolio',
-    // 'Spot',
+    // 2,
     // 'cash_account',
     // 'USD',
     // 1000.0,
@@ -93,11 +93,11 @@ impl Specs {
             portfolio_max_drawdown, instrument_max_allocation, instrument_max_drawdown,
             portfolio_free_margin, portfolio_free_cash, portfolio_free_margin_percent,
             portfolio_free_cash_percent)
-            VALUES ({}, '{}', '{}', '{}', '{}', {}, {}, {}, {}, {}, {}, {}, {}, {})
+            VALUES ({}, '{}', {}, '{}', '{}', {}, {}, {}, {}, {}, {}, {}, {}, {})
             RETURNING portfolio_id;",
             data.portfolio_id(),
             data.portfolio_description(),
-            data.portfolio_account_type(),
+            data.portfolio_account_type().as_u8(),
             data.portfolio_account_id(),
             data.portfolio_currency(),
             data.portfolio_cash(),

@@ -7,9 +7,8 @@ impl Specs {
     /// This method is responsible for creating the portfolio table, its account type, and indexes in the database.
     /// It performs the following steps:
     ///
-    /// 1. Generates and executes the DDL for creating the account type table using `generate_portfolio_table_account_type_ddl`.
-    /// 2. Generates and executes the DDL for creating the portfolio table using `generate_portfolio_table_ddl`.
-    /// 3. Generates and executes the DDL for creating the portfolio table indexes using `generate_portfolio_table_index_ddl`.
+    /// * Generates and executes the DDL for creating the portfolio table using `generate_portfolio_table_ddl`.
+    /// * Generates and executes the DDL for creating the portfolio table indexes using `generate_portfolio_table_index_ddl`.
     ///
     /// If the creation operation is successful, it returns `Ok(())`. Otherwise, it returns an `Err` variant of `PostgresUtilError`.
     ///
@@ -46,18 +45,6 @@ impl Specs {
     ///
     pub async fn create_portfolio_table(&self) -> Result<(), PostgresUtilError> {
         self.dbg_print("create_portfolio_table");
-
-        self.dbg_print("create_portfolio_table/account_type");
-        let types_ddl = self.generate_portfolio_table_account_type_ddl();
-        match self.execute_query(&types_ddl).await {
-            Ok(_) => (),
-            Err(e) => {
-                return Err(PostgresUtilError::new(format!(
-                    "Failed to create portfolio table types: {}",
-                    e
-                )))
-            }
-        };
 
         self.dbg_print("create_portfolio_table");
         let ddl = self.generate_portfolio_table_ddl();

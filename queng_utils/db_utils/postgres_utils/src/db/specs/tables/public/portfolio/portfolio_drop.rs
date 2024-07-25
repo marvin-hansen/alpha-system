@@ -1,7 +1,5 @@
-use crate::common::all_db_constants::{
-    PORTFOLIO_TABLE, PORTFOLIO_TABLE_ACCOUNT_TYPE, PORTFOLIO_TABLE_INDEX,
-};
-use crate::common::common_ddl::{ddl_index, ddl_table, ddl_type};
+use crate::common::all_db_constants::{PORTFOLIO_TABLE, PORTFOLIO_TABLE_INDEX};
+use crate::common::common_ddl::{ddl_index, ddl_table};
 use crate::db::Specs;
 use crate::prelude::PostgresUtilError;
 
@@ -13,7 +11,6 @@ impl Specs {
     ///
     /// 1. Drops the `portfolio_table_index` using the `ddl_index::generate_drop_index_ddl` function.
     /// 2. Drops the `portfolio_table` using the `ddl_table::generate_drop_table_ddl` function.
-    /// 3. Drops the `portfolio_table_account_type` using the `ddl_type::generate_drop_type_ddl` function.
     ///
     /// If the dropping operation is successful, it returns `Ok(())`. Otherwise, it returns an `Err` variant of `PostgresUtilError`.
     ///
@@ -45,18 +42,6 @@ impl Specs {
             Err(e) => {
                 return Err(PostgresUtilError::new(format!(
                     "Failed to drop portfolio table: {}",
-                    e
-                )))
-            }
-        }
-
-        self.dbg_print("drop_portfolio_table/account_type");
-        let ddl = &ddl_type::generate_drop_type_ddl(PORTFOLIO_TABLE_ACCOUNT_TYPE);
-        match self.execute_query(ddl).await {
-            Ok(_) => (),
-            Err(e) => {
-                return Err(PostgresUtilError::new(format!(
-                    "Failed to drop portfolio table index: {}",
                     e
                 )))
             }

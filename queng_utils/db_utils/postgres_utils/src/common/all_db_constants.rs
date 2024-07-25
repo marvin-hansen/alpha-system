@@ -31,9 +31,6 @@ pub(crate) const PORTFOLIO_TABLE: &str = "portfolio";
 /// The primary index of the portfolio table
 pub(crate) const PORTFOLIO_TABLE_INDEX: &str = "idx_portfolio_id";
 
-/// The account type table contains of the portfolio table.
-pub(crate) const PORTFOLIO_TABLE_ACCOUNT_TYPE: &str = "account_type";
-
 /// The instrument table contains all the instrument configurations
 /// that are used in the portfolio table.
 pub(crate) const INSTRUMENT_TABLE: &str = "instrument";

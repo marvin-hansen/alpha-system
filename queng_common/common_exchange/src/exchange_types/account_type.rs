@@ -18,6 +18,18 @@ impl AccountType {
     }
 }
 
+impl From<i16> for AccountType {
+    #[inline]
+    fn from(v: i16) -> Self {
+        match v {
+            0x1_i16 => Self::Spot,
+            0x2_i16 => Self::Margin,
+            0x3_i16 => Self::Future,
+            _ => Self::NullVal,
+        }
+    }
+}
+
 impl From<u8> for AccountType {
     #[inline]
     fn from(v: u8) -> Self {
