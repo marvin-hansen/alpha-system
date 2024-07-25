@@ -210,7 +210,6 @@ impl PostgresDBManager {
         }
     }
 
-    ///
     pub async fn read_all_portfolio_configs(
         &self,
     ) -> Result<Vec<PortfolioConfig>, PostgresDBError> {

@@ -248,7 +248,7 @@ pub fn build_query_instrument_ids_by_portfolio_id(portfolio_id: u16) -> String {
     )
 }
 
-pub fn build_query_instruments_by_ids(instrument_ids: &Vec<String>) -> String {
+pub fn build_query_instruments_by_ids(instrument_ids: &[String]) -> String {
     format!(
         "SELECT
             code, class, exchange_code, exchange_pair_code, base_asset, quote_asset, instrument_figi
