@@ -28,7 +28,7 @@ static GLOBAL: MiMalloc = MiMalloc;
 
 const UPDATE: bool = false;
 
-const VRB: bool = false;
+const DBG: bool = false;
 
 const PORT: u16 = 7777;
 
@@ -157,13 +157,13 @@ async fn main() {
 }
 
 fn dbg_print(s: &str) {
-    if VRB {
+    if DBG {
         println!("[main]: {}", s);
     }
 }
 
 async fn run_init() -> Result<MetaDataSet, InitError> {
-    let im = InitManager::new(VRB);
+    let im = InitManager::new(DBG);
     let result = im.init().await;
     drop(im);
 

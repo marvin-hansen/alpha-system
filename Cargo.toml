@@ -30,7 +30,7 @@ members = [
     "queng_providers/smdb_provider",
     "queng_sbe/bindings",
     "queng_sbe/sbe_messages",
-    "queng_services/aux/api_proxy",
+    "queng_services/aux/kaiko_proxy",
     "queng_services/cmdb",
     "queng_services/dbgw",
     "queng_services/mddb",

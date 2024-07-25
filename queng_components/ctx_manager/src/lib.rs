@@ -14,12 +14,25 @@ use common_env::prelude::EnvironmentType;
 /// * `env_type`: The environment type, which can be either `LOCAL`, `CI`, `CLUSTER`, or `UNKNOWN`.
 #[derive(Debug, Clone, Default, Eq, PartialEq)]
 pub struct CtxManager {
+    dbg: bool,
     env_type: EnvironmentType,
 }
 
 impl CtxManager {
     /// Creates a new CtxManager instance.
     pub fn new() -> Self {
+        Self::build(false)
+    }
+
+    pub fn with_debug() -> Self {
+        Self::build(true)
+    }
+
+    fn build(dbg: bool) -> Self {
+        if dbg {
+            println!("[CtxManager]: Debug mode enabled");
+        }
+
         // Check if the environment variable is set.
         // If so, return local environment as the file only exists locally.
         // If not, return UnknownEnv.
@@ -38,14 +51,36 @@ impl CtxManager {
             }
         };
 
-        Self { env_type }
+        if dbg {
+            println!("[CtxManager]: Detected environment type: {:?}", &env_type);
+        }
+
+        Self { dbg, env_type }
     }
 }
 
 impl CtxManager {
     /// Returns the environment type.
     pub fn env_type(&self) -> EnvironmentType {
+        self.dbg_print("env_type");
         self.env_type
+    }
+
+    pub fn env_var(&self) -> (String, String) {
+        match self.env_type {
+            EnvironmentType::UNKNOWN => ("ENV".to_string(), "UNKNOWN".to_string()),
+            EnvironmentType::LOCAL => ("ENV".to_string(), "LOCAL".to_string()),
+            EnvironmentType::CLUSTER => ("ENV".to_string(), "CLUSTER".to_string()),
+            EnvironmentType::CI => ("ENV".to_string(), "CI".to_string()),
+        }
+    }
+}
+
+impl CtxManager {
+    pub fn dbg_print(&self, msg: &str) {
+        if self.dbg {
+            println!("[CtxManager]: {}", msg);
+        }
     }
 }
 

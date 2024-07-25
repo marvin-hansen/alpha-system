@@ -2,7 +2,7 @@ use std::error::Error;
 use std::fmt;
 use std::fmt::Formatter;
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Eq, PartialEq, Hash)]
 pub enum PostgresDBError {
     ConnectionFailed(String),
     CountFailed(String),

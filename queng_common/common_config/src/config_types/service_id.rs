@@ -21,10 +21,10 @@ pub enum ServiceID {
     CMDB = 0x2_u8,
     DBGW = 0x3_u8,
     QDGW = 0x4_u8,
-    SYMDB = 0x5_u8,
+    MDDB = 0x5_u8,
     VEX = 0x6_u8,
     ImsDataBinance = 0x7_u8,
-    MDDB = 0x8_u8,
+    KaikoProxy = 0x8_u8,
 }
 
 impl ServiceID {
@@ -45,10 +45,10 @@ impl From<i16> for ServiceID {
             0x2_i16 => Self::CMDB,
             0x3_i16 => Self::DBGW,
             0x4_i16 => Self::QDGW,
-            0x5_i16 => Self::SYMDB,
+            0x5_i16 => Self::MDDB,
             0x6_i16 => Self::VEX,
             0x7_i16 => Self::ImsDataBinance,
-            0x8_i16 => Self::MDDB,
+            0x8_i16 => Self::KaikoProxy,
             _ => Self::Default,
         }
     }
@@ -63,38 +63,16 @@ impl From<i32> for ServiceID {
             0x2_i32 => Self::CMDB,
             0x3_i32 => Self::DBGW,
             0x4_i32 => Self::QDGW,
-            0x5_i32 => Self::SYMDB,
+            0x5_i32 => Self::MDDB,
             0x6_i32 => Self::VEX,
             0x7_i32 => Self::ImsDataBinance,
-            0x8_i32 => Self::MDDB,
+            0x8_i32 => Self::KaikoProxy,
             _ => Self::Default,
         }
     }
 }
 
 impl From<u8> for ServiceID {
-    /// Converts a `u8` value to a `ServiceID` variant.
-    ///
-    /// # Arguments
-    ///
-    /// * `value` - The `u8` value to convert
-    ///
-    /// # Returns
-    ///
-    /// The corresponding `ServiceID` variant for the `u8` value:
-    ///
-    /// * 0: `Default`
-    /// * 1: `SMDB`
-    /// * 2: `CMDB`
-    /// * 3: `DBGW`
-    /// * 4: `QDGW`
-    /// * 5: `SYMDB`
-    /// * 6: `VEX`
-    /// * 7: `ImsDataBinance`
-    /// * 8: `MDDB`
-    ///
-    /// If the value does not match a variant, returns `Default`.
-    ///
     #[inline]
     fn from(value: u8) -> Self {
         match value {
@@ -103,10 +81,10 @@ impl From<u8> for ServiceID {
             2 => Self::CMDB,
             3 => Self::DBGW,
             4 => Self::QDGW,
-            5 => Self::SYMDB,
+            5 => Self::MDDB,
             6 => Self::VEX,
             7 => Self::ImsDataBinance,
-            8 => Self::MDDB,
+            8 => Self::KaikoProxy,
             _ => Self::Default,
         }
     }
@@ -120,10 +98,11 @@ impl ServiceID {
             "CMDB" => Some(ServiceID::CMDB),
             "DBGW" => Some(ServiceID::DBGW),
             "QDGW" => Some(ServiceID::QDGW),
-            "SYMDB" => Some(ServiceID::SYMDB),
-            "ImsDataBinance" => Some(ServiceID::ImsDataBinance),
-            "VEX" => Some(ServiceID::VEX),
             "MDDB" => Some(ServiceID::MDDB),
+            "VEX" => Some(ServiceID::VEX),
+            "ImsDataBinance" => Some(ServiceID::ImsDataBinance),
+            "KaikoProxy" => Some(ServiceID::KaikoProxy),
+            "KAIKO_PROXY" => Some(ServiceID::KaikoProxy),
             _ => None,
         }
     }
@@ -131,6 +110,16 @@ impl ServiceID {
 
 impl Display for ServiceID {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        match self {
+            ServiceID::Default => write!(f, "Default"),
+            ServiceID::SMDB => write!(f, "SMDB"),
+            ServiceID::CMDB => write!(f, "CMDB"),
+            ServiceID::DBGW => write!(f, "DBGW"),
+            ServiceID::QDGW => write!(f, "QDGW"),
+            ServiceID::MDDB => write!(f, "MDDB"),
+            ServiceID::VEX => write!(f, "VEX"),
+            ServiceID::ImsDataBinance => write!(f, "Ims_Data_Binance"),
+            ServiceID::KaikoProxy => write!(f, "Kaiko_Proxy"),
+        }
     }
 }

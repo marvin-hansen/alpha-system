@@ -10,4 +10,6 @@ authors.workspace = true
 
 [dependencies]
 # Internal crates
+common_config = {workspace = true}
+ctx_manager = {workspace = true}
 # External crates

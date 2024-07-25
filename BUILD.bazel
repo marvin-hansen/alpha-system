@@ -36,7 +36,7 @@ filegroup(
     name = "image",
     srcs = [
         # Services
-        "//queng_services/aux/api_proxy:image_index",
+        "//queng_services/aux/kaiko_proxy:image_index",
         "//queng_services/cmdb:image_index",
         "//queng_services/dbgw:image_index",
         "//queng_services/mddb:image_index",
@@ -54,7 +54,7 @@ multirun(
     name = "push",
     commands = [
         # Services
-        "push_api_proxy",
+        "push_kaiko_proxy",
         "push_cmdb",
         "push_dbgw",
         "push_mddb",
@@ -69,9 +69,9 @@ multirun(
 # Services
 
 command(
-    name = "push_api_proxy",
+    name = "push_kaiko_proxy",
     arguments = [],  # Optional arguments passed directly to the tool
-    command = "//queng_services/aux/api_proxy:push",
+    command = "//queng_services/aux/kaiko_proxy:push",
 )
 
 command(
