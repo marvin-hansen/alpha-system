@@ -1,5 +1,7 @@
-use serde::{Deserialize, Serialize};
 use std::fmt::{Display, Formatter};
+
+use serde::{Deserialize, Serialize};
+use tokio_postgres::Row;
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Instrument {
@@ -61,6 +63,28 @@ impl Instrument {
 
     pub fn instrument_figi(&self) -> &Option<String> {
         &self.instrument_figi
+    }
+}
+
+impl Instrument {
+    pub fn from_sql_row(row: &Row) -> Self {
+        // let id = row.get::<usize, i32>(0); // PK
+        let code = row.get::<usize, String>(1);
+        let class = row.get::<usize, String>(2);
+        let exchange_code = row.get::<usize, String>(3);
+        let exchange_pair_code = row.get::<usize, String>(4);
+        let base_asset = row.get::<usize, String>(5);
+        let quote_asset = row.get::<usize, String>(6);
+        let instrument_figi = row.get::<usize, Option<String>>(7);
+        Instrument::new(
+            code,
+            class,
+            exchange_code,
+            exchange_pair_code,
+            base_asset,
+            quote_asset,
+            instrument_figi,
+        )
     }
 }
 

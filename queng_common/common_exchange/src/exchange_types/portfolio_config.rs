@@ -1,6 +1,9 @@
-use crate::prelude::{AccountType, Instrument};
-use serde::{Deserialize, Serialize};
 use std::fmt::{Display, Formatter};
+
+use serde::{Deserialize, Serialize};
+use tokio_postgres::Row;
+
+use crate::prelude::{AccountType, Instrument};
 
 #[derive(Serialize, Deserialize, Debug, Default, Clone, PartialEq)]
 pub struct PortfolioConfig {
@@ -137,6 +140,44 @@ impl PortfolioConfig {
     }
     pub fn portfolio_free_cash_percent(&self) -> f64 {
         self.portfolio_free_cash_percent
+    }
+}
+
+impl PortfolioConfig {
+    pub fn from_sql_row(row: &Row, portfolio_instruments: Vec<Instrument>) -> Self {
+        let portfolio_id = row.get::<usize, u32>(0);
+        let portfolio_description = row.get::<usize, String>(1);
+        let portfolio_at = row.get::<usize, i16>(2);
+        let portfolio_account_type = AccountType::from(portfolio_at);
+        let portfolio_account_id = row.get::<usize, String>(3);
+        let portfolio_currency = row.get::<usize, String>(4);
+        let portfolio_cash = row.get::<usize, f64>(5);
+        let portfolio_margin = row.get::<usize, f64>(6);
+        let portfolio_max_drawdown = row.get::<usize, f64>(7);
+        let instrument_max_allocation = row.get::<usize, f64>(9);
+        let instrument_max_drawdown = row.get::<usize, f64>(10);
+        let portfolio_free_margin = row.get::<usize, f64>(11);
+        let portfolio_free_cash = row.get::<usize, f64>(12);
+        let portfolio_free_margin_percent = row.get::<usize, f64>(13);
+        let portfolio_free_cash_percent = row.get::<usize, f64>(14);
+
+        PortfolioConfig::new(
+            portfolio_id,
+            portfolio_description,
+            portfolio_account_type,
+            portfolio_account_id,
+            portfolio_currency,
+            portfolio_cash,
+            portfolio_margin,
+            portfolio_max_drawdown,
+            portfolio_instruments,
+            instrument_max_allocation,
+            instrument_max_drawdown,
+            portfolio_free_margin,
+            portfolio_free_cash,
+            portfolio_free_margin_percent,
+            portfolio_free_cash_percent,
+        )
     }
 }
 

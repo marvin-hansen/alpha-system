@@ -139,3 +139,85 @@ pub fn build_delete_service_query(id: &ServiceID) -> String {
         id.as_u8()
     )
 }
+
+pub fn build_check_if_portfolio_id_exists_query(portfolio_id: u16) -> String {
+    format!(
+        "
+        SELECT EXISTS (
+        SELECT
+            portfolio_id
+        FROM
+            public.portfolio
+        WHERE
+            portfolio_id={}
+        )
+        ",
+        portfolio_id
+    )
+}
+
+pub fn build_delete_portfolio_query(portfolio_id: u16) -> String {
+    format!(
+        "DELETE FROM
+                public.portfolio
+             WHERE
+                portfolio_id={}
+                ",
+        portfolio_id
+    )
+}
+
+pub fn build_query_portfolio_by_id(id: u16) -> String {
+    format!(
+        "SELECT
+                portfolio_id,
+                portfolio_description,
+                portfolio_account_type,
+                portfolio_account_id,
+                portfolio_currency,
+                portfolio_cash,
+                portfolio_margin, portfolio_max_drawdown,
+                instrument_max_allocation,
+                instrument_max_drawdown,
+                portfolio_free_margin,
+                portfolio_free_cash,
+                portfolio_free_margin_percent,
+                portfolio_free_cash_percent
+
+            FROM
+                public.portfolio
+            WHERE
+                portfolio_id={}
+                ;",
+        id
+    )
+}
+
+pub fn build_query_instrument_ids_by_portfolio_id(portfolio_id: u16) -> String {
+    format!(
+        "SELECT
+            instrument_id
+        FROM
+             public.portfolio_instrument
+        WHERE
+            portfolio_id = {}",
+        portfolio_id
+    )
+}
+
+pub fn build_query_instruments_by_ids(instrument_ids: &Vec<i32>) -> String {
+    format!(
+        "SELECT
+            id, code, class, exchange_code, exchange_pair_code, base_asset, quote_asset, instrument_figi
+        FROM
+            public.instrument
+        WHERE
+            id IN ({})
+            ;",
+        instrument_ids
+            .iter()
+            .map(|id| format!("{}", id))
+            .collect::<Vec<String>>()
+            .join(", ")
+    )
+}

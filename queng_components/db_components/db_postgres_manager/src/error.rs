@@ -11,6 +11,8 @@ pub enum PostgresDBError {
     DeleteFailed(String),
     QueryFailed(String),
     TableDoesNotExist(String, String),
+    PortfolioDoesNotExist(String),
+    ServiceDoesNotExist(String),
     TableSanitizeError(String),
     UnknownError(String),
     NotImplementedError(String),
@@ -64,6 +66,12 @@ impl fmt::Display for PostgresDBError {
 
             PostgresDBError::NotImplementedError(e) => {
                 write!(f, "[PostgresDBError]: Not Implemented error: {e}")
+            }
+            PostgresDBError::PortfolioDoesNotExist(e) => {
+                write!(f, "[PostgresDBError]: Portfolio does not exist: {e}")
+            }
+            PostgresDBError::ServiceDoesNotExist(e) => {
+                write!(f, "[PostgresDBError]: Service does not exist: {e}")
             }
         }
     }

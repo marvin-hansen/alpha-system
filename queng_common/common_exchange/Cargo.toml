@@ -12,3 +12,4 @@ authors.workspace = true
 # External crates
 rust_decimal = { workspace = true }
 serde = { workspace = true }
+tokio-postgres = { workspace = true }
