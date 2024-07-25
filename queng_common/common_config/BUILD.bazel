@@ -14,8 +14,6 @@ rust_library(
     deps = [
         # External crates
         "@crates//:tokio-postgres",
-        "@crates//:serde",
-        "@crates//:serde_json",
     ],
 )
 

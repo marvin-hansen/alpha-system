@@ -1,8 +1,6 @@
 use std::fmt::{Display, Formatter};
 
-use serde::{Deserialize, Serialize};
-
-#[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq)]
+#[derive(Debug, Clone, Eq, PartialEq)]
 pub struct MetricConfig {
     uri: String,
     host: String,

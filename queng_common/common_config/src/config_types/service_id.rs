@@ -1,7 +1,5 @@
 use std::fmt::{Display, Formatter};
 
-use serde::{Deserialize, Serialize};
-
 /// An u8 encoded Enum that represents the unique ID of a service.
 ///
 /// # Variants
@@ -12,7 +10,7 @@ use serde::{Deserialize, Serialize};
 /// * `CMDB`: The CMDB service.
 /// * `DBGW`: The DBGW service.
 /// * `QDGW`: The QDGW service.
-#[derive(Serialize, Deserialize, Debug, Default, Copy, Clone, Eq, PartialEq, Hash)]
+#[derive(Debug, Default, Copy, Clone, Eq, PartialEq, Hash)]
 #[repr(u8)]
 pub enum ServiceID {
     #[default]

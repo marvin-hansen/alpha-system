@@ -1,11 +1,10 @@
 use std::fmt::{Display, Formatter};
 
-use serde::{Deserialize, Serialize};
 use tokio_postgres::Row;
 
 use crate::prelude::{Endpoint, MetricConfig, ProtocolType, ServiceID, ServiceType};
 
-#[derive(Serialize, Deserialize, Debug, Default, Clone, Eq, PartialEq)]
+#[derive(Debug, Default, Clone, Eq, PartialEq)]
 pub struct ServiceConfig {
     /// Service ID.
     svc_id: ServiceID,
