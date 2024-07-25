@@ -43,7 +43,7 @@ rust_binary(
         "//alias:dns_manager",
         "//alias:db_clickhouse_manager",
         "//alias:rust_proto",
-        "//alias:service_utils",
+        "//alias:common_service",
         "//alias:symbol_manager",
         "//alias:smdb_provider",
         # Custom Memory Allocator

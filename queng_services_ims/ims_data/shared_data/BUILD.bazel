@@ -14,7 +14,7 @@ rust_library(
         "//alias:ctx_manager",
         "//alias:dns_manager",
         "//alias:rust_proto",
-        "//alias:service_utils",
+        "//alias:common_service",
         "//alias:smdb_provider",
         # External crates
         "@crates//:tokio",

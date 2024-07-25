@@ -8,9 +8,4 @@ repository.workspace = true
 authors.workspace = true
 
 
-[lib]
-name = "common_errors"
-path = "src/lib.rs"
-
-
 [dependencies]

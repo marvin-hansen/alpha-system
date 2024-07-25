@@ -1,11 +1,13 @@
+use std::time::Duration;
+
+use common_service::print_utils;
+
+use crate::utils::util_download::DownloadUtils;
+
 mod init_process;
 mod level_1_exchanges;
 mod level_2_assets;
 mod level_3_instruments;
-
-use crate::utils::util_download::DownloadUtils;
-use service_utils::print_utils;
-use std::time::Duration;
 
 #[derive(Debug, Clone)]
 pub struct InitManager {

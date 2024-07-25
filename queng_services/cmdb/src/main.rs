@@ -1,15 +1,19 @@
-use crate::service::CMDBServer;
+use std::error::Error;
+
+use mimalloc::MiMalloc;
+use tonic::transport::{Channel, Server, Uri};
+
 use common_config::prelude::ServiceID;
+use common_service::{print_utils, shutdown_utils};
 use config_manager::CfgManager;
 use ctx_manager::CtxManager;
 use dns_manager::DnsManager;
-use mimalloc::MiMalloc;
 use proto_bindings::proto::cmdb_service_server::CmdbServiceServer;
 use proto_bindings::proto::db_gateway_service_client::DbGatewayServiceClient;
-use service_utils::{print_utils, shutdown_utils};
 use smdb_provider::SMDBProvider;
-use std::error::Error;
-use tonic::transport::{Channel, Server, Uri};
+
+use crate::service::CMDBServer;
+
 mod service;
 
 #[global_allocator]

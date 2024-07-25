@@ -1,12 +1,14 @@
+use std::error::Error;
+
+use tonic::transport::Server;
+
 use common_config::prelude::{ServiceConfig, ServiceID};
+use common_service::{print_utils, shutdown_utils};
 use config_manager::CfgManager;
 use ctx_manager::CtxManager;
 use dns_manager::DnsManager;
 use proto_bindings::proto::ims_data_service_server::{ImsDataService, ImsDataServiceServer};
-use service_utils::{print_utils, shutdown_utils};
 use smdb_provider::SMDBProvider;
-use std::error::Error;
-use tonic::transport::Server;
 
 pub async fn run(
     svc_id: ServiceID,

@@ -8,9 +8,4 @@ repository.workspace = true
 authors.workspace = true
 
 
-[lib]
-name = "common_env"
-path = "src/lib.rs"
-
-
 [dependencies]

@@ -1,17 +1,20 @@
-use crate::service::MDMServer;
+use std::error::Error;
+use std::sync::{Arc, RwLock};
+
+use mimalloc::MiMalloc;
+use tonic::transport::Server;
+
 use common_config::prelude::ServiceID;
+use common_service::{print_utils, shutdown_utils};
 use config_manager::CfgManager;
 use ctx_manager::CtxManager;
 use db_clickhouse_manager::ClickhouseDBManager;
 use dns_manager::DnsManager;
-use mimalloc::MiMalloc;
 use proto_bindings::proto::mdm_service_server::MdmServiceServer;
-use service_utils::{print_utils, shutdown_utils};
 use smdb_provider::SMDBProvider;
-use std::error::Error;
-use std::sync::{Arc, RwLock};
 use symbol_manager::SymbolManager;
-use tonic::transport::Server;
+
+use crate::service::MDMServer;
 
 mod service;
 

@@ -25,7 +25,7 @@ ctx_manager = {workspace = true}
 dns_manager = {workspace = true}
 db_clickhouse_manager = {workspace = true}
 proto_bindings = {workspace = true}
-service_utils = {workspace = true}
+common_service =  {workspace = true}
 smdb_provider = {workspace = true}
 symbol_manager = {workspace = true}
 # External crates

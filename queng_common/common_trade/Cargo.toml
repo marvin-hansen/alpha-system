@@ -8,11 +8,6 @@ repository.workspace = true
 authors.workspace = true
 
 
-[lib]
-name = "common_trade"
-path = "src/lib.rs"
-
-
 [dependencies]
 # External crates
 serde = { workspace = true }

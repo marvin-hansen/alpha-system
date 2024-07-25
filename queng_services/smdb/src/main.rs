@@ -1,15 +1,17 @@
-use config_manager::CfgManager;
-use mimalloc::MiMalloc;
 use std::error::Error;
+
+use mimalloc::MiMalloc;
 use tonic::transport::{Channel, Server, Uri};
 
 use common_config::prelude::ServiceID;
+use common_service::{print_utils, shutdown_utils};
+use config_manager::CfgManager;
 use ctx_manager::CtxManager;
 use dns_manager::DnsManager;
 use proto_bindings::proto::db_gateway_service_client::DbGatewayServiceClient;
 use proto_bindings::proto::smdb_service_server::SmdbServiceServer;
 use service::SMDBServer;
-use service_utils::{print_utils, shutdown_utils};
+
 mod service;
 
 #[global_allocator]

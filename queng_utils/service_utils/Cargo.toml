@@ -8,13 +8,6 @@ repository.workspace = true
 authors.workspace = true
 
 
-[lib]
-name = "service_utils"
-path = "src/lib.rs"
-
-
 [dependencies]
 # Internal crates
-common_config = {workspace = true}
 # External crates
-tokio = { workspace = true }

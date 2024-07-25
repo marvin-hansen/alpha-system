@@ -43,7 +43,7 @@ rust_binary(
         "//alias:dns_manager",
         "//alias:rust_proto",
         "//alias:proto_utils",
-        "//alias:service_utils",
+        "//alias:common_service",
         # Custom Memory Allocator
         "@crates//:mimalloc",
         # External crates

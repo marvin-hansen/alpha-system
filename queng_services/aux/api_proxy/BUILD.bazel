@@ -38,7 +38,7 @@ rust_binary(
         # Internal crates
         "//alias:common_metadata",
         "//alias:crypto_utils",
-        "//alias:service_utils",
+        "//alias:common_service",
         # Custom Memory Allocator
         "@crates//:mimalloc",
         # External crates

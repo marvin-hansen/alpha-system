@@ -8,11 +8,6 @@ repository.workspace = true
 authors.workspace = true
 
 
-[lib]
-name = "common_exchange"
-path = "src/lib.rs"
-
-
 [dependencies]
 # External crates
 rust_decimal = { workspace = true }

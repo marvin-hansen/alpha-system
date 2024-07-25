@@ -8,11 +8,6 @@ repository.workspace = true
 authors.workspace = true
 
 
-[lib]
-name = "common_metadata"
-path = "src/lib.rs"
-
-
 [dependencies]
 # External crates
 chrono = { workspace = true }

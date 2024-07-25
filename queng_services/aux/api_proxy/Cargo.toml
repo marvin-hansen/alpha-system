@@ -17,7 +17,7 @@ path = "src/main.rs"
 # Internal crates
 common_metadata = {workspace = true}
 crypto_utils = {workspace = true}
-service_utils = {workspace = true}
+common_service =  {workspace = true}
 # Custom Memory Allocator
 mimalloc = {workspace = true}
 # External crates

@@ -6,13 +6,13 @@ use tokio::sync::RwLock;
 use tonic::transport::Server;
 
 use common_config::prelude::ServiceID;
+use common_service::{print_utils, shutdown_utils};
 use config_manager::CfgManager;
 use ctx_manager::CtxManager;
 use db_postgres_manager::PostgresDBManager;
 use dns_manager::DnsManager;
 use proto_bindings::proto::db_gateway_service_server::DbGatewayServiceServer;
 use service::DBGWServer;
-use service_utils::{print_utils, shutdown_utils};
 
 mod service;
 const SVC_ID: ServiceID = ServiceID::DBGW;
