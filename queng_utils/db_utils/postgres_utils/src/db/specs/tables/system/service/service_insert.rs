@@ -1,4 +1,5 @@
-use common_config::prelude::{ServiceConfig, ServiceID};
+use common_config::prelude::ServiceConfig;
+use common_pg_queries::pg_inserts;
 
 use crate::db::Specs;
 use crate::prelude::PostgresUtilError;
@@ -41,7 +42,7 @@ impl Specs {
     pub async fn insert_service(&self, data: &ServiceConfig) -> Result<(), PostgresUtilError> {
         self.dbg_print("insert_service");
 
-        let query = self.build_insert_service_query(data);
+        let query = pg_inserts::build_insert_service_query(data);
         // println!("query: {}", query);
         match self.execute_query(&query).await {
             Ok(_) => Ok(()),
@@ -51,56 +52,5 @@ impl Specs {
                 err
             ))),
         }
-    }
-
-    /// Builds the SQL query for inserting a service into the system.service table.
-    ///
-    /// This method takes a `ServiceConfig` object and generates an SQL query string
-    /// to insert a new service into the system.service table. The query includes all
-    /// the fields of the `ServiceConfig` object, including the service ID, name,
-    /// version, online status, description, health check URI, base URI, dependencies,
-    /// exposure level, endpoint, and metrics.
-    ///
-    /// # Arguments
-    ///
-    /// * `data` - A reference to a `ServiceConfig` object from which a SQL query is generated.
-    ///
-    /// # Returns
-    ///
-    /// Returns a `String` containing the SQL query for inserting the service.
-    ///
-    fn build_insert_service_query(&self, data: &ServiceConfig) -> String {
-        format!(
-            "INSERT INTO system.service(id, name, version, online, description, health_check_uri,
-            base_uri, dependencies, exposure,
-            endpoint_name, endpoint_version, endpoint_base_uri, endpoint_port, endpoint_protocol,
-            metric_uri, metric_host, metric_port)
-             VALUES({}, '{}', {}, {}, '{}', '{}', '{}', '{}', {},
-                '{}', {}, '{}', {}, {},
-                '{}', '{}', {}
-            )",
-            data.svc_id().as_u8(),
-            data.name(),
-            data.version(),
-            data.online(),
-            data.description(),
-            data.health_check_uri(),
-            data.base_uri(),
-            self.service_ids_to_string(data.dependencies()),
-            data.exposure().as_u8(),
-            data.endpoint().name(),
-            data.endpoint().version(),
-            data.endpoint().uri(),
-            data.endpoint().port(),
-            data.endpoint().protocol().as_u8(),
-            data.metrics().uri(),
-            data.metrics().host(),
-            data.metrics().port()
-        )
-    }
-
-    fn service_ids_to_string(&self, ids: &[ServiceID]) -> String {
-        let id_strings: Vec<String> = ids.iter().map(|id| id.as_u8().to_string()).collect();
-        format!("{{{}}}", id_strings.join(","))
     }
 }

@@ -12,6 +12,7 @@ authors.workspace = true
 # Internal crates
 common_config = {workspace = true}
 common_exchange = {workspace = true}
+common_pg_queries = {workspace = true}
 container_specs = {workspace = true}
 docker_utils = {workspace = true}
 # External crates

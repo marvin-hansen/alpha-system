@@ -8,7 +8,6 @@ use common_database::prelude::PostgresDBConfig;
 use crate::error::PostgresDBError;
 
 mod db_prtf;
-mod db_query;
 mod db_svc;
 mod db_util;
 pub mod error;

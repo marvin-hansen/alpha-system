@@ -16,6 +16,7 @@ members = [
     "queng_common/common_env",
     "queng_common/common_exchange",
     "queng_common/common_metadata",
+    "queng_common/common_pg_queries",
     "queng_common/common_service",
     "queng_common/common_trade",
     "queng_components/config_manager",
@@ -92,6 +93,7 @@ common_env = { path = "queng_common/common_env" }
 common_errors = { path = "queng_common/common_errors" }
 common_exchange = { path = "queng_common/common_exchange" }
 common_metadata = { path = "queng_common/common_metadata" }
+common_pg_queries = { path = "queng_common/common_pg_queries" }
 common_service = { path = "queng_common/common_service" }
 common_trade = { path = "queng_common/common_trade" }
 # Components

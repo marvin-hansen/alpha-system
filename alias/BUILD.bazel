@@ -52,6 +52,12 @@ alias(
 )
 
 alias(
+    name = "common_pg_queries",
+    actual = "//queng_common/common_pg_queries",
+    visibility = ["//visibility:public"],
+)
+
+alias(
     name = "common_service",
     actual = "//queng_common/common_service",
     visibility = ["//visibility:public"],

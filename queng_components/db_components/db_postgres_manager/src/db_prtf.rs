@@ -1,6 +1,8 @@
+use common_exchange::prelude::{Instrument, PortfolioConfig};
+use common_pg_queries::pg_inserts;
+
 use crate::error::PostgresDBError;
 use crate::PostgresDBManager;
-use common_exchange::prelude::PortfolioConfig;
 
 // const PORTFOLIO_TABLE: &str = "portfolio";
 
@@ -10,13 +12,85 @@ impl PostgresDBManager {
     /// or an error in case of a database error.
     pub async fn insert_portfolio_config(
         &self,
-        _config: &PortfolioConfig,
+        data: &PortfolioConfig,
     ) -> Result<(), PostgresDBError> {
-        Err(PostgresDBError::NotImplementedError(
-            "Function not implemented".to_string(),
-        ))
+        self.dbg_print("insert_portfolio");
+
+        let query = pg_inserts::build_insert_portfolio_query(data);
+        let portfolio_id = match self.execute_insert_query(&query).await {
+            Ok(id) => id,
+            Err(err) => {
+                return Err(PostgresDBError::InsertFailed(format!(
+                    "Failed to insert portfolio: {}",
+                    err
+                )))
+            }
+        };
+
+        for instrument in data.portfolio_instruments() {
+            let instrument_id = match self.insert_instrument(instrument).await {
+                Ok(id) => id,
+                Err(err) => {
+                    return Err(PostgresDBError::InsertFailed(format!(
+                        "Failed to insert instrument: {}",
+                        err
+                    )))
+                }
+            };
+
+            match self
+                .insert_portfolio_instrument(portfolio_id, instrument_id)
+                .await
+            {
+                Ok(_) => (),
+                Err(err) => {
+                    return Err(PostgresDBError::InsertFailed(format!(
+                        "Failed to insert portfolio_instrument: {}",
+                        err
+                    )))
+                }
+            };
+        }
+
+        Ok(())
     }
 
+    async fn insert_instrument(&self, data: &Instrument) -> Result<u64, PostgresDBError> {
+        self.dbg_print("insert_instrument");
+
+        let query = pg_inserts::build_insert_instrument_query(data);
+        // println!("query: {}", query);
+        match self.execute_insert_query(&query).await {
+            Ok(id) => Ok(id),
+            Err(err) => Err(PostgresDBError::InsertFailed(format!(
+                "Failed to insert instrument: {} due error: {}",
+                &data.code(),
+                err
+            ))),
+        }
+    }
+
+    async fn insert_portfolio_instrument(
+        &self,
+        portfolio_id: u64,
+        instrument_id: u64,
+    ) -> Result<(), PostgresDBError> {
+        self.dbg_print("insert_portfolio_instrument");
+
+        let query =
+            pg_inserts::build_insert_portfolio_instrument_query(portfolio_id, instrument_id);
+        // println!("query: {}", query);
+        match self.execute_query(&query).await {
+            Ok(_) => Ok(()),
+            Err(err) => Err(PostgresDBError::InsertFailed(format!(
+                "Failed to insert portfolio_instrument due error: {}",
+                err
+            ))),
+        }
+    }
+}
+
+impl PostgresDBManager {
     /// returns all the portfolio configs in the database
     pub async fn read_all_portfolio_configs(
         &self,

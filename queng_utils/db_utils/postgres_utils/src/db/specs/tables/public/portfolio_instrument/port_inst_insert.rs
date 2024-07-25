@@ -1,3 +1,5 @@
+use common_pg_queries::pg_inserts;
+
 use crate::db::Specs;
 use crate::prelude::PostgresUtilError;
 
@@ -27,7 +29,8 @@ impl Specs {
     ) -> Result<(), PostgresUtilError> {
         self.dbg_print("insert_portfolio_instrument");
 
-        let query = self.build_insert_portfolio_instrument_query(portfolio_id, instrument_id);
+        let query =
+            pg_inserts::build_insert_portfolio_instrument_query(portfolio_id, instrument_id);
         // println!("query: {}", query);
         match self.execute_query(&query).await {
             Ok(_) => Ok(()),
@@ -36,16 +39,5 @@ impl Specs {
                 err
             ))),
         }
-    }
-
-    fn build_insert_portfolio_instrument_query(
-        &self,
-        portfolio_id: u64,
-        instrument_id: u64,
-    ) -> String {
-        format!(
-            "INSERT INTO public.portfolio_instrument (portfolio_id, instrument_id) VALUES ({}, {})",
-            portfolio_id, instrument_id
-        )
     }
 }

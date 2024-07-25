@@ -50,6 +50,25 @@ impl PostgresDBManager {
             }
         }
     }
+
+    pub(crate) async fn execute_insert_query(&self, query: &str) -> Result<u64, PostgresDBError> {
+        self.dbg_print("execute_insert_query");
+
+        match self.client.query_one(query, &[]).await {
+            Ok(row) => {
+                // PG Sequence primary key seems to be int4, which maps to i32 in Rust
+                // https://gist.github.com/steveh/7c7145409a5eed6b698ee8b609b6d1fc
+                let id = row.get::<usize, i32>(0);
+
+                Ok(id as u64)
+            }
+            Err(e) => {
+                self.dbg_print(&format!("Insert Query failed: \n {}", query));
+                Err(PostgresDBError::InsertFailed(e.to_string()))
+            }
+        }
+    }
+
     /// Executes a query to count the number of rows in a table.
     ///
     /// # Arguments
