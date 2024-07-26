@@ -1,5 +1,5 @@
 ###############################################################################
-# Services
+# Core Services
 ###############################################################################
 
 # The service aliases are used in scripts/run_*.sh to start each service
@@ -41,18 +41,6 @@ alias(
 )
 
 alias(
-    name = "mddb",
-    actual = "//queng_services/core/mddb/mddb_service:bin",
-    visibility = ["//visibility:public"],
-)
-
-alias(
-    name = "mddb_push",
-    actual = "//queng_services/core/mddb/mddb_service:push",
-    visibility = ["//visibility:public"],
-)
-
-alias(
     name = "smdb",
     actual = "//queng_services/core/smdb/smdb_service:bin",
     visibility = ["//visibility:public"],
@@ -63,6 +51,27 @@ alias(
     actual = "//queng_services/core/smdb/smdb_service:push",
     visibility = ["//visibility:public"],
 )
+
+
+###############################################################################
+# Metadata Services
+###############################################################################
+
+alias(
+    name = "mddb",
+    actual = "//queng_services/meta/mddb/mddb_service:bin",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "mddb_push",
+    actual = "//queng_services/meta/mddb/mddb_service:push",
+    visibility = ["//visibility:public"],
+)
+
+###############################################################################
+# IMS Data Services
+###############################################################################
 
 alias(
     name = "binance_data",

@@ -1,5 +1,5 @@
 ###############################################################################
-# Clients
+# Core Clients
 ###############################################################################
 
 alias(
@@ -21,13 +21,27 @@ alias(
 )
 
 alias(
-    name = "mddb_client",
-    actual = "//queng_services/core/mddb/mddb_client",
+    name = "smdb_client",
+    actual = "//queng_services/core/smdb/smdb_client",
     visibility = ["//visibility:public"],
 )
 
+###############################################################################
+# Metadata Clients
+###############################################################################
+
 alias(
-    name = "smdb_client",
-    actual = "//queng_services/core/smdb/smdb_client",
+    name = "mddb_client",
+    actual = "//queng_services/meta/mddb/mddb_client",
+    visibility = ["//visibility:public"],
+)
+
+###############################################################################
+# IMS Clients
+###############################################################################
+
+alias(
+    name = "ims_data_client",
+    actual = "//queng_services/ims/ims_data_client",
     visibility = ["//visibility:public"],
 )
