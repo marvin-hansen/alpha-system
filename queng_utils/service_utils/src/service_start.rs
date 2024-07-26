@@ -31,11 +31,11 @@ impl ServiceUtil {
         self.dbg_print("Constructing initial command");
         let mut cmd = Command::new(program);
 
-        // self.dbg_print("Setting environment variables");
-        // let (env, val) = self.ctx_manager.env_var();
-        // self.dbg_print(format!("{env}={val}").as_str());
-        // cmd.env(env, val);
-        // cmd.arg("&");
+        self.dbg_print("Setting environment variables");
+        let (env, val) = self.ctx_manager.env_var();
+        self.dbg_print(format!("{env}={val}").as_str());
+        cmd.env(env, val);
+        cmd.arg("&");
 
         self.dbg_print(&format!("Run command: {:?}", &cmd));
 

@@ -8,3 +8,13 @@ repository.workspace = true
 authors.workspace = true
 
 [dependencies]
+
+[dev-dependencies]
+# Internal crates
+common_config = {workspace = true}
+ctx_manager = {workspace = true}
+dbgw_client = {workspace = true}
+env_utils = { workspace = true }
+db_specs = { workspace = true }
+# External crates
+tokio = { workspace = true }

@@ -30,7 +30,7 @@ alias(
 
 alias(
     name = "dbgw",
-    actual = "//queng_services/core/dbgw/dbgw_service:bin",
+    actual = "//queng_services/core/dbgw/dbgw_service:dbgw",
     visibility = ["//visibility:public"],
 )
 

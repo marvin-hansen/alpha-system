@@ -1,0 +1,25 @@
+load("@rules_rust//rust:defs.bzl", "rust_test")
+
+rust_test(
+    name = "core_services_tests",
+    srcs = ["core_services_tests.rs"],
+    args = [
+        "$(rootpath //alias/service:dbgw)"
+    ],
+    data = [
+        "//alias/service:dbgw"
+    ],
+    tags = [
+        "core_services_tests",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Internal crates
+        "//alias:common_config",
+        "//alias:ctx_manager",
+        "//alias/client:dbgw_client",
+        "//alias:env_utils",
+        # External crates
+        "@crates//:tokio",
+    ],
+)

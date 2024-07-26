@@ -139,7 +139,7 @@ crypto_utils = { path = "queng_utils/crypto_utils" }
 # DB Utils
 clickhouse_utils = { path = "queng_utils/db_utils/clickhouse_utils" }
 postgres_utils = { path = "queng_utils/db_utils/postgres_utils" }
-#
+# Misd Utils
 docker_utils = { path = "queng_utils/docker_utils" }
 env_utils = { path = "queng_utils/env_utils" }
 kaiko_utils = { path = "queng_utils/kaiko_utils" }
