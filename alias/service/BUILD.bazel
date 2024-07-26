@@ -1,0 +1,34 @@
+###############################################################################
+# Services
+###############################################################################
+
+# These aliases are used in scripts/run_*.sh to start each service
+alias(
+    name = "kaiko_proxy",
+    actual = "//queng_services/aux/kaiko_proxy:bin",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "cmdb",
+    actual = "//queng_services/core/cmdb/cmdb_service:bin",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "dbgw",
+    actual = "//queng_services/core/dbgw/dbgw_service:bin",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "mddb",
+    actual = "//queng_services/core/mddb/mddb_service:bin",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "smdb",
+    actual = "//queng_services/core/smdb/smdb_service:bin",
+    visibility = ["//visibility:public"],
+)
