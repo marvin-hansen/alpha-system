@@ -15,6 +15,7 @@ use proto_bindings::proto::db_gateway_service_server::DbGatewayServiceServer;
 use service::DBGWServer;
 
 mod service;
+const DBG: bool = false;
 const SVC_ID: ServiceID = ServiceID::DBGW;
 
 // Overwrites the default memory allocator.
@@ -25,23 +26,24 @@ static GLOBAL: MiMalloc = MiMalloc;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
-    // Setup autoconfiguration.
+    dbg_print("Setup autoconfiguration");
     let svc_config = dbgw_specs::dbgw_service_config();
 
     let ctx_manager = async { CtxManager::new() }.await;
     let dns_manager = async { DnsManager::new(&ctx_manager) }.await;
     let cfg_manager =
         async { CfgManager::new(SVC_ID, svc_config, &ctx_manager, &dns_manager) }.await;
+    dbg_print(&format!("Detected context: {}", ctx_manager.env_type()));
 
-    // Configure service ip and port automatically relative to the detected context.
+    dbg_print("Configure service ip and port for the detected context");
     let service_addr = cfg_manager
         .get_svc_socket_addr()
         .expect("DBGW: Failed to get host and port");
 
-    // Set up socket address for gRPC and HTTP
+    dbg_print("Set up socket address for gRPC and HTTP");
     let grpc_addr = service_addr.parse().expect("DBGW: Failed to parse address");
 
-    // Configure database manager
+    dbg_print("Configure postgres database manager");
     let pg_config = cfg_manager.postgres_db_config();
     let dbm = PostgresDBManager::new(pg_config)
         .await
@@ -49,10 +51,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     let arc_dbm = Arc::new(RwLock::new(dbm));
 
-    // Construct gRPC server
+    dbg_print("Construct gRPC server");
     let grpc_svc = DbGatewayServiceServer::new(DBGWServer::new(arc_dbm.clone()));
-
-    // Build gRPC server with signal handler
     let signal = shutdown_utils::signal_handler("gRPC server");
     let grpc_server = Server::builder()
         .add_service(grpc_svc)
@@ -63,11 +63,11 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .get_metrics_socket_addr_uri()
         .expect("DBGW: Failed to get metric host, uri, and port");
 
-    // Create a handler for each server https://github.com/hyperium/tonic/discussions/740
+    dbg_print("Create an async handler for gRPC server");
     let grpc_handle = tokio::spawn(grpc_server);
 
-    // Set DBGW service to online
     {
+        dbg_print("Set DBGW service to online");
         let dbm = arc_dbm.write().await;
         dbm.set_service_online(&SVC_ID)
             .await
@@ -88,8 +88,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
         }
     }
 
-    // Set DBGW service to offline before shutting down
     {
+        dbg_print("Set DBGW service to OFFLINE");
         let dbm = arc_dbm.write().await;
         dbm.set_service_offline(&SVC_ID)
             .await
@@ -98,4 +98,10 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     print_utils::print_stop_header(&SVC_ID);
     Ok(())
+}
+
+fn dbg_print(msg: &str) {
+    if DBG {
+        println!("[DBGW/main]: {}", msg)
+    }
 }
