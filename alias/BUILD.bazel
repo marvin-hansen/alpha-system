@@ -202,13 +202,13 @@ alias(
 ###############################################################################
 alias(
     name = "ims_common",
-    actual = "//queng_services_ims/ims_common",
+    actual = "//queng_services/ims/ims_common",
     visibility = ["//visibility:public"],
 )
 
 alias(
     name = "lib_data_stream",
-    actual = "//queng_services_ims/ims_data/shared_data:lib_data_stream",
+    actual = "//queng_services/ims/ims_data/shared_data:lib_data_stream",
     visibility = ["//visibility:public"],
 )
 

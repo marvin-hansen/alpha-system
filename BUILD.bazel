@@ -45,7 +45,7 @@ filegroup(
         "//queng_services/core/mddb:image_index",
         "//queng_services/core/smdb:image_index",
         # IMS Services
-        "//queng_services_ims/ims_data/binance_data:image_index",
+        "//queng_services/ims/ims_data/binance_data:image_index",
     ],
     visibility = ["//visibility:public"],
 )
@@ -107,5 +107,5 @@ command(
 command(
     name = "push_binance_data",
     arguments = [],  # Optional arguments passed directly to the tool
-    command = "//queng_services_ims/ims_data/binance_data:push",
+    command = "//queng_services/ims/ims_data/binance_data:push",
 )
