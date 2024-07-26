@@ -1,0 +1,63 @@
+###############################################################################
+# Services & Clients
+###############################################################################
+
+alias(
+    name = "kaiko_service",
+    actual = "//queng_services/aux/kaiko_proxy:bin",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "kaiko_client",
+    actual = "//queng_services/aux/kaiko_client",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "cmdb_service",
+    actual = "//queng_services/core/cmdb/cmdb_service:bin",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "cmdb_client",
+    actual = "//queng_services/core/cmdb/cmdb_client",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "dbgw_service",
+    actual = "//queng_services/core/dbgw/dbgw_service:bin",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "dbgw_client",
+    actual = "//queng_services/core/dbgw/dbgw_client",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "mddb_service",
+    actual = "//queng_services/core/mddb/mddb_service:bin",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "mddb_client",
+    actual = "//queng_services/core/mddb/mddb_client",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "smdb_service",
+    actual = "//queng_services/core/smdb/smdb_service:bin",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "smdb_client",
+    actual = "//queng_services/core/smdb/smdb_client",
+    visibility = ["//visibility:public"],
+)

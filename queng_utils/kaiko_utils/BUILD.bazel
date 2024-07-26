@@ -14,7 +14,7 @@ rust_library(
     deps = [
         # Internal crates
         "//alias:common_metadata",
-        "//alias:kaiko_client",
+        "//queng_services:kaiko_client",
     ],
 )
 

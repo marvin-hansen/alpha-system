@@ -10,78 +10,8 @@ alias(
 )
 
 alias(
-    name = "ims_data_client",
-    actual = "//queng_clients/ims_data_client",
-    visibility = ["//visibility:public"],
-)
-
-alias(
     name = "rest_client",
     actual = "//queng_clients/rest_client",
-    visibility = ["//visibility:public"],
-)
-
-###############################################################################
-# Services & Clients
-###############################################################################
-
-alias(
-    name = "kaiko_service",
-    actual = "//queng_services/aux/kaiko_proxy:bin",
-    visibility = ["//visibility:public"],
-)
-
-alias(
-    name = "kaiko_client",
-    actual = "//queng_services/aux/kaiko_client",
-    visibility = ["//visibility:public"],
-)
-
-alias(
-    name = "cmdb_service",
-    actual = "//queng_services/core/cmdb:bin",
-    visibility = ["//visibility:public"],
-)
-
-alias(
-    name = "cmdb_client",
-    actual = "//queng_services/core/cmdb_client",
-    visibility = ["//visibility:public"],
-)
-
-alias(
-    name = "dbgw_service",
-    actual = "//queng_services/core/dbgw:bin",
-    visibility = ["//visibility:public"],
-)
-
-alias(
-    name = "dbgw_client",
-    actual = "//queng_services/core/dbgw_client",
-    visibility = ["//visibility:public"],
-)
-
-alias(
-    name = "mddb_service",
-    actual = "//queng_services/core/mddb:bin",
-    visibility = ["//visibility:public"],
-)
-
-alias(
-    name = "mddb_client",
-    actual = "//queng_services/core/mddb_client",
-    visibility = ["//visibility:public"],
-)
-
-alias(
-    name = "smdb_service",
-    actual = "//queng_services/core/smdb:bin",
-    visibility = ["//visibility:public"],
-)
-
-alias(
-    name = "smdb_client",
-    actual = "//queng_services/core/smdb_client",
     visibility = ["//visibility:public"],
 )
 

@@ -40,10 +40,10 @@ filegroup(
     srcs = [
         # Services
         "//queng_services/aux/kaiko_proxy:image_index",
-        "//queng_services/core/cmdb:image_index",
-        "//queng_services/core/dbgw:image_index",
-        "//queng_services/core/mddb:image_index",
-        "//queng_services/core/smdb:image_index",
+        "//queng_services/core/cmdb/cmdb_service:image_index",
+        "//queng_services/core/dbgw/dbgw_service:image_index",
+        "//queng_services/core/mddb/mddb_service:image_index",
+        "//queng_services/core/smdb/smdb_service:image_index",
         # IMS Services
         "//queng_services/ims/ims_data/binance_data:image_index",
     ],
@@ -81,25 +81,25 @@ command(
 command(
     name = "push_cmdb",
     arguments = [],  # Optional arguments passed directly to the tool
-    command = "//queng_services/core/cmdb:push",
+    command = "//queng_services/core/cmdb/cmdb_service:push",
 )
 
 command(
     name = "push_dbgw",
     arguments = [],  # Optional arguments passed directly to the tool
-    command = "//queng_services/core/dbgw:push",
+    command = "//queng_services/core/dbgw/dbgw_service:push",
 )
 
 command(
     name = "push_mddb",
     arguments = [],  # Optional arguments passed directly to the tool
-    command = "//queng_services/core/mddb:push",
+    command = "//queng_services/core/mddb/mddb_service:push",
 )
 
 command(
     name = "push_smdb",
     arguments = [],  # Optional arguments passed directly to the tool
-    command = "//queng_services/core/smdb:push",
+    command = "//queng_services/core/smdb/smdb_service:push",
 )
 
 # IMS Services

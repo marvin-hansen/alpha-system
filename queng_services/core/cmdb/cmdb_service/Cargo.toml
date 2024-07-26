@@ -1,31 +1,32 @@
 [package]
-name = "dbgw"
+name = "cmdb_service"
 version = "0.1.0"
+
 edition.workspace = true
-rust-version.workspace = true
 readme.workspace = true
+rust-version.workspace = true
 repository.workspace = true
 authors.workspace = true
 
 
 [[bin]]
-name = "dbgw"
+name = "cmdb"
 path = "src/main.rs"
 
 
 [dependencies]
+# Service specs
+cmdb_specs = { workspace = true }
 # Custom Memory Allocator
-mimalloc = { workspace = true }
+mimalloc = {workspace = true}
 # Internal crates
-dbgw_specs = { workspace = true }
 common_config = {workspace = true}
 config_manager = {workspace = true}
 ctx_manager = {workspace = true}
-db_postgres_manager = {workspace = true}
 dns_manager = {workspace = true}
 proto_bindings = {workspace = true}
-proto_utils = {workspace = true}
 common_service =  {workspace = true}
+smdb_provider = {workspace = true}
 # External crates
 tokio = { workspace = true }
 tonic = { workspace = true }

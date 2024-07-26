@@ -27,7 +27,6 @@ rust_test_suite(
         # Internal crates
         "//alias:docker_utils",
         "//alias:specs_utils",
-        "//alias:kaiko_client",
         # External crates
         "@crates//:tokio",
     ],
