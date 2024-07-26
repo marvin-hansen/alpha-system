@@ -2,10 +2,17 @@
 # Services
 ###############################################################################
 
-# These aliases are used in scripts/run_*.sh to start each service
+# The service aliases are used in scripts/run_*.sh to start each service
 alias(
     name = "kaiko_proxy",
     actual = "//queng_services/aux/kaiko_proxy:bin",
+    visibility = ["//visibility:public"],
+)
+
+# The push aliases are used in the root folder BUILD file to build & push containers
+alias(
+    name = "kaiko_proxy_push",
+    actual = "//queng_services/aux/kaiko_proxy:push",
     visibility = ["//visibility:public"],
 )
 
@@ -16,8 +23,20 @@ alias(
 )
 
 alias(
+    name = "cmdb_push",
+    actual = "//queng_services/core/cmdb/cmdb_service:push",
+    visibility = ["//visibility:public"],
+)
+
+alias(
     name = "dbgw",
     actual = "//queng_services/core/dbgw/dbgw_service:bin",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "dbgw_push",
+    actual = "//queng_services/core/dbgw/dbgw_service:push",
     visibility = ["//visibility:public"],
 )
 
@@ -28,7 +47,31 @@ alias(
 )
 
 alias(
+    name = "mddb_push",
+    actual = "//queng_services/core/mddb/mddb_service:push",
+    visibility = ["//visibility:public"],
+)
+
+alias(
     name = "smdb",
     actual = "//queng_services/core/smdb/smdb_service:bin",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "smdb_push",
+    actual = "//queng_services/core/smdb/smdb_service:push",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "binance_data",
+    actual = "//queng_services/ims/ims_data/binance_data:bin",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "binance_data_push",
+    actual = "//queng_services/ims/ims_data/binance_data:push",
     visibility = ["//visibility:public"],
 )
