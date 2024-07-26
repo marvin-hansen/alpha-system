@@ -1,15 +1,8 @@
-use std::env;
-use std::time::Duration;
-
-use tokio::process::Command;
-use tokio::time::sleep;
-
-use ctx_manager::CtxManager;
+use common_config::prelude::ServiceID;
+use dbgw_client::DBGatewayClient;
 use env_utils::EnvUtil;
 
 async fn setup_ci_env() {
-    env::set_var("ENV", "CI");
-
     let env_util = EnvUtil::with_debug().await.expect("Failed to get EnvUtil");
 
     env_util
@@ -18,41 +11,22 @@ async fn setup_ci_env() {
         .expect("Failed to setup postgres");
 }
 
-async fn setup_services() {
-    let ctx_manager = CtxManager::with_debug();
+// Add proper integration test that starts DBGW for the test
+// https://github.com/dzbarsky/rules_itest/blob/master/tests/test_env/BUILD.bazel
 
-    let program = "dbgw";
-    let mut cmd = Command::new(program);
-
-    let (env, val) = ctx_manager.env_var();
-    cmd.env(env, val);
-
-    println!("Executing command: {:?}", cmd);
-
-    match cmd.output().await {
-        Ok(out) => {
-            println!(
-                "[start_container]: \n
-                    success: {} \n
-                    Output: {}",
-                out.status.success(),
-                String::from_utf8_lossy(out.stdout.as_slice()),
-            );
-        }
-        Err(e) => {
-            panic!("Error starting binary {}: {}", program, e)
-        }
-    };
-
-    sleep(Duration::from_secs(1)).await
-}
+// Run this test with
+// bazel test //... --test_tag_filters=core_services_tests  --test_env=ENV=LOCAL
 
 #[tokio::test]
 async fn test_core_services() {
     setup_ci_env().await;
-    setup_services().await
 
-    // let dbgw_client = DBGatewayClient::new().await;
+    let url = "http://127.0.0.1:9090";
+    let dbgw_client = DBGatewayClient::from_url(url).await;
 
-    // run tests
+    let res = dbgw_client.read_service_by_id(ServiceID::DBGW).await;
+
+    assert!(res.is_ok());
+    let svc = res.unwrap().unwrap();
+    assert_eq!(svc.svc_id(), &ServiceID::DBGW);
 }

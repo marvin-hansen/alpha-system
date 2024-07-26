@@ -49,6 +49,8 @@ rust_binary(
         # External crates
         "@crates//:tokio",
         "@crates//:tonic",
+        "@crates//:tonic-health",
+        "@crates//:warp",
     ],
 )
 
@@ -119,7 +121,7 @@ build_multi_arch_image(
     srcs = [":dbgw"],
     base = "@scratch",
     exposed_ports = [
-        "7070",
+        "9090",
         "8080",
     ],
     platforms = ["//build/platforms:linux_x86_64_musl"],

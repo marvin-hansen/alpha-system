@@ -4,6 +4,7 @@ use std::sync::Arc;
 use mimalloc::MiMalloc;
 use tokio::sync::RwLock;
 use tonic::transport::Server;
+use warp::Filter;
 
 use common_config::prelude::ServiceID;
 use common_service::{print_utils, shutdown_utils};
@@ -51,21 +52,22 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     let arc_dbm = Arc::new(RwLock::new(dbm));
 
+    dbg_print("Construct gRPC health_service");
+    let (mut health_reporter, health_service) = tonic_health::server::health_reporter();
+    health_reporter
+        .set_serving::<DbGatewayServiceServer<DBGWServer>>()
+        .await;
+
     dbg_print("Construct gRPC server");
     let grpc_svc = DbGatewayServiceServer::new(DBGWServer::new(arc_dbm.clone()));
     let signal = shutdown_utils::signal_handler("gRPC server");
     let grpc_server = Server::builder()
         .add_service(grpc_svc)
+        .add_service(health_service)
         .serve_with_shutdown(grpc_addr, signal);
-
-    // Configure http metrics endpoint ip and port automatically relative to the detected context.
-    let (metrics_addr, metrics_uri) = cfg_manager
-        .get_metrics_socket_addr_uri()
-        .expect("DBGW: Failed to get metric host, uri, and port");
 
     dbg_print("Create an async handler for gRPC server");
     let grpc_handle = tokio::spawn(grpc_server);
-
     {
         dbg_print("Set DBGW service to online");
         let dbm = arc_dbm.write().await;
@@ -74,9 +76,26 @@ async fn main() -> Result<(), Box<dyn Error>> {
             .expect("DBGW: Failed to set service online");
     }
 
-    // Start all servers jointly
+    // Configure http metrics endpoint ip and port automatically relative to the detected context.
+    let (metrics_addr, metrics_uri) = cfg_manager
+        .get_metrics_socket_addr_uri()
+        .expect("DBGW: Failed to get metric host, uri, and port");
+
+    let health_check = warp::get()
+        .and(warp::path("health"))
+        .and(warp::path::end())
+        .and_then(health_handler);
+
+    let signal = shutdown_utils::signal_handler("http server");
+
+    let (_, http_server) =
+        warp::serve(health_check).bind_with_graceful_shutdown(([127, 0, 0, 1], 8080), signal);
+
+    dbg_print("Create an async handler for http server");
+    let http_handle = tokio::spawn(http_server);
+
     print_utils::print_start_header(&SVC_ID, &service_addr, &metrics_addr, &metrics_uri);
-    match tokio::try_join!(grpc_handle) {
+    match tokio::try_join!(grpc_handle, http_handle) {
         Ok(_) => {}
         Err(e) => {
             // Set DBGW service to offline in case of an error during gRPC start up
@@ -98,6 +117,11 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     print_utils::print_stop_header(&SVC_ID);
     Ok(())
+}
+
+pub(crate) async fn health_handler() -> Result<impl warp::Reply, warp::Rejection> {
+    let result = { String::from("OK") };
+    Ok(warp::reply::json(&result))
 }
 
 fn dbg_print(msg: &str) {

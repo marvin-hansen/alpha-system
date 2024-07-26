@@ -1,0 +1,13 @@
+# Integration test rules
+# https://github.com/dzbarsky/rules_itest/blob/master/tests/js_binary/BUILD.bazel
+load("@rules_itest//:itest.bzl", "itest_service")
+
+itest_service(
+    name = "health-test",
+    exe = "//alias/service:dbgw",
+    http_health_check_address = "http://localhost:8080/health",
+    tags = [
+        "dbgw",
+        "service-health-test",
+    ],
+)

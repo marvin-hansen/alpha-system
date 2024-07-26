@@ -1,6 +1,7 @@
+use tonic::transport::{Channel, Uri};
+
 use common_config::prelude::HostEndpoint;
 use proto_bindings::proto::db_gateway_service_client::DbGatewayServiceClient as DBGWClient;
-use tonic::transport::{Channel, Uri};
 
 mod cfg_gw;
 mod error;
@@ -16,19 +17,34 @@ impl DBGatewayClient {
         let port = config.port();
         let host = config.host_uri();
 
-        // "http://[::1]:50051"
         let s = format!("http://{}:{}", host, port);
         let uri = s
             .parse::<Uri>()
             .unwrap_or_else(|_| panic!("DBGatewayClient: Failed to parse server URI: {}", s));
 
-        // println!("DBGatewayClient: Server URI: {}", &s);
+        Self::build(uri).await
+    }
 
+    pub async fn from_url(url: &str) -> Self {
+        let uri = url
+            .parse::<Uri>()
+            .unwrap_or_else(|_| panic!("DBGatewayClient: Failed to parse server URI: {}", url));
+
+        Self::build(uri).await
+    }
+
+    async fn build(uri: Uri) -> Self {
         // creating a channel that connects to server
-        let channel = Channel::builder(uri)
-            .connect()
-            .await
-            .unwrap_or_else(|_| panic!("\r\n DBGatewayClient: Failed to connect to DBGW service on: {} \r\n  \r\n Detail: \r\n", s));
+        let channel = match Channel::builder(uri.clone()).connect().await {
+            Ok(res) => res,
+            Err(e) => {
+                panic!(
+                    "DBGatewayClient: Failed to connect to server: {} due to error: {}",
+                    uri.to_string(),
+                    e
+                );
+            }
+        };
 
         let client = DBGWClient::new(channel);
 

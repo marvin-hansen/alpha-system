@@ -1,14 +1,10 @@
-load("@rules_rust//rust:defs.bzl", "rust_test")
+load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 
-rust_test(
+rust_test_suite(
     name = "core_services_tests",
-    srcs = ["core_services_tests.rs"],
-    args = [
-        "$(rootpath //alias/service:dbgw)"
-    ],
-    data = [
-        "//alias/service:dbgw"
-    ],
+    srcs = glob([
+        "*_tests.rs",
+    ]),
     tags = [
         "core_services_tests",
     ],

@@ -37,6 +37,9 @@ impl PostgresDBManager {
             }
         };
 
+        //
+        // Update to PostgreSQL INSERT IF NOT EXISTS
+        //
         self.dbg_print("[insert_portfolio]: insert instruments");
         for instrument in data.portfolio_instruments() {
             let instrument_id = match self.insert_instrument(instrument).await {
@@ -68,6 +71,9 @@ impl PostgresDBManager {
 
         Ok(())
     }
+
+    // Change to PostgreSQL INSERT IF NOT EXISTS
+    // https://www.commandprompt.com/education/postgresql-insert-if-not-exists/
 
     async fn insert_instrument(&self, data: &Instrument) -> Result<String, PostgresDBError> {
         self.dbg_print("insert_instrument");
