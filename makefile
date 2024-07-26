@@ -9,7 +9,7 @@ help:
 	@echo '    make dbgw   	Runs the dbgw service. Requires SurrealDB'
 	@echo '    make proxy          Runs the API proxy service.'
 	@echo '    make smdb   	Runs the smdb service. Requires DBGW'
-	@echo '    make symdb   	Runs the symdb service. Requires DBGW'
+	@echo '    make mddb   	Runs the mddb service. Requires DBGW'
 	@echo ''
 	@echo ' Development:'
 	@echo '    make build   	Builds the code base incrementally (fast) for dev.'
@@ -56,9 +56,9 @@ smdb:
 	@source scripts/run_smdb.sh
 
 
-.PHONY: symdb
-symdb:
-	@source scripts/run_symdb.sh
+.PHONY: mddb
+mddb:
+	@source scripts/run_mddb.sh
 
 
 # "---------------------------------------------------------"
