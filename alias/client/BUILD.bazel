@@ -42,6 +42,18 @@ alias(
 
 alias(
     name = "ims_data_client",
-    actual = "//queng_services/ims/ims_data_client",
+    actual = "//queng_services/ims/ims_clients/ims_data_client",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "binance_client",
+    actual = "//queng_services/ims/ims_clients/binance_client",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "rest_client",
+    actual = "//queng_services/ims/ims_clients/rest_client",
     visibility = ["//visibility:public"],
 )

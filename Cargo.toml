@@ -2,9 +2,9 @@
 resolver = "2"
 
 members = [
-    "queng_clients/binance_client",
-    "queng_services/ims/ims_data_client",
-    "queng_clients/rest_client",
+    "queng_services/ims/ims_clients/binance_client",
+    "queng_services/ims/ims_clients/ims_data_client",
+    "queng_services/ims/ims_clients/rest_client",
     "queng_common/common_config",
     "queng_common/common_container",
     "queng_common/common_errors",
@@ -81,12 +81,12 @@ authors = ["Marvin Hansen <marvin.hansen@gmail.com>"]
 # ==============
 #
 # Clients
-binance_client = { path = "queng_clients/binance_client" }
+binance_client = { path = "queng_services/ims/ims_clients/binance_client" }
 cmdb_client = { path = "queng_services/core/cmdb/cmdb_client" }
 dbgw_client = { path = "queng_services/core/dbgw/dbgw_client" }
-ims_data_client = { path = "queng_services/ims/ims_data_client" }
+ims_data_client = { path = "queng_services/ims/ims_clients/ims_data_client" }
 kaiko_client = { path = "queng_services/aux/kaiko_client" }
-rest_client = { path = "queng_clients/rest_client" }
+rest_client = { path = "queng_services/ims/ims_clients/rest_client" }
 mddb_client = { path = "queng_services/meta/mddb/mddb_client" }
 smdb_client = { path = "queng_services/core/smdb/smdb_client" }
 # Common
