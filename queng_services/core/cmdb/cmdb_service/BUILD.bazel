@@ -43,7 +43,7 @@ rust_binary(
         "//alias:dns_manager",
         "//alias:rust_proto",
         "//alias:common_service",
-        "//alias:smdb_provider",
+        "//alias/client:smdb_client",
         # Custom Memory Allocator
         "@crates//:mimalloc",
         # External crates

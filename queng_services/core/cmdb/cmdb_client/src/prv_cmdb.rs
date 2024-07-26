@@ -2,9 +2,9 @@ use common_exchange::prelude::PortfolioConfig;
 use proto_bindings::proto::{MultiPortfolioRequest, SinglePortfolioRequest};
 use proto_utils::portfolio_proto_utils::{portfolio_config_from_proto, portfolio_config_to_proto};
 
-use crate::{CMDBError, CmdbManager};
+use crate::{CMDBError, CmdbClient};
 
-impl CmdbManager {
+impl CmdbClient {
     /// Asynchronously creates a portfolio configuration.
     ///
     /// # Arguments

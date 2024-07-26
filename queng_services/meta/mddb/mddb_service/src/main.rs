@@ -11,7 +11,7 @@ use ctx_manager::CtxManager;
 use db_clickhouse_manager::ClickhouseDBManager;
 use dns_manager::DnsManager;
 use proto_bindings::proto::mdm_service_server::MdmServiceServer;
-use smdb_provider::SMDBProvider;
+use smdb_client::SMDBClient;
 use symbol_manager::SymbolManager;
 
 use crate::service::MDMServer;
@@ -37,7 +37,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .get_smdb_host_port()
         .expect("[CMDB]: Failed to get host and port for DBGW");
 
-    let smdb_manager = SMDBProvider::new(smdb_host, smdb_port).await;
+    let smdb_manager = SMDBClient::new(smdb_host, smdb_port).await;
 
     //get all dependencies
     let dependencies = cfg_manager.get_service_dependencies();

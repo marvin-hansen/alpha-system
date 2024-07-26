@@ -1,9 +1,9 @@
 use common_config::prelude::ServiceID;
 use proto_bindings::proto::{MultiServicesRequest, SingleServiceRequest};
 
-use crate::{SMDBError, SMDBProvider};
+use crate::{SMDBClient, SMDBError};
 
-impl SMDBProvider {
+impl SMDBClient {
     /// Checks if a service with the given ID exists in the SMDB.
     ///
     /// # Arguments

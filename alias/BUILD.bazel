@@ -142,22 +142,6 @@ alias(
 )
 
 ###############################################################################
-# Providers
-###############################################################################
-
-alias(
-    name = "cmdb_provider",
-    actual = "//queng_providers/cmdb_provider",
-    visibility = ["//visibility:public"],
-)
-
-alias(
-    name = "smdb_provider",
-    actual = "//queng_providers/smdb_provider",
-    visibility = ["//visibility:public"],
-)
-
-###############################################################################
 # SBE
 ###############################################################################
 

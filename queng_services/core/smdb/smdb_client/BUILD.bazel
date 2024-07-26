@@ -1,4 +1,5 @@
-load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library")
+load("@crates//:defs.bzl", "aliases", "all_crate_deps")
+load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library", "rust_test")
 
 rust_library(
     name = "smdb_client",
@@ -6,13 +7,16 @@ rust_library(
         "src/**",
     ]),
     crate_root = "src/lib.rs",
-    tags = ["client"],
+    tags = [
+        "provider",
+        "smdb_provider",
+    ],
     visibility = ["//visibility:public"],
     deps = [
         # Internal crates
         "//alias:common_config",
         "//alias:rust_proto",
-        # Exteral crates
+        # External crates
         "@crates//:tokio",
         "@crates//:tonic",
         "@crates//:prost",

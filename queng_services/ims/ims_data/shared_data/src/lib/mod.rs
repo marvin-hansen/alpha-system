@@ -8,7 +8,7 @@ use config_manager::CfgManager;
 use ctx_manager::CtxManager;
 use dns_manager::DnsManager;
 use proto_bindings::proto::ims_data_service_server::{ImsDataService, ImsDataServiceServer};
-use smdb_provider::SMDBProvider;
+use smdb_client::SMDBClient;
 
 pub async fn run(
     svc_id: ServiceID,
@@ -29,7 +29,7 @@ pub async fn run(
         .get_smdb_host_port()
         .expect("[ImsDataBinance]: Failed to get host and port for DBGW");
 
-    let smdb_manager = SMDBProvider::new(smdb_host, smdb_port).await;
+    let smdb_manager = SMDBClient::new(smdb_host, smdb_port).await;
 
     //get all dependencies
     let dependencies = cfg_manager.get_service_dependencies();

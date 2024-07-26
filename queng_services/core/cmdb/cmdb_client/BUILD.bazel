@@ -6,13 +6,17 @@ rust_library(
         "src/**",
     ]),
     crate_root = "src/lib.rs",
-    tags = ["client"],
+    tags = [
+        "cmdb_provider",
+        "provider",
+    ],
     visibility = ["//visibility:public"],
     deps = [
         # Internal crates
-        "//alias:common_config",
+        "//alias:common_exchange",
         "//alias:rust_proto",
-        # Exteral crates
+        "//alias:proto_utils",
+        # External crates
         "@crates//:tokio",
         "@crates//:tonic",
         "@crates//:prost",

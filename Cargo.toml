@@ -24,8 +24,6 @@ members = [
     "queng_components/pattern_manager",
     "queng_components/symbol_manager",
     "queng_proto",
-    "queng_providers/cmdb_provider",
-    "queng_providers/smdb_provider",
     "queng_sbe/bindings",
     "queng_sbe/sbe_messages",
     "queng_services/aux/kaiko_proxy",
@@ -113,9 +111,6 @@ pattern_manager = { path = "queng_components/pattern_manager" }
 symbol_manager = { path = "queng_components/symbol_manager" }
 # Proto
 proto_bindings = { path = "queng_proto" }
-# Providers
-cmdb_provider = { path = "queng_providers/cmdb_provider" }
-smdb_provider = { path = "queng_providers/smdb_provider" }
 # SBE
 sbe_bindings = { path = "queng_sbe/bindings" }
 sbe_messages = { path = "queng_sbe/sbe_messages" }
