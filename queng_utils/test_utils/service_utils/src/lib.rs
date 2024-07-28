@@ -6,10 +6,11 @@ use common_config::prelude::ServiceID;
 use ctx_manager::CtxManager;
 
 mod error;
-pub mod prelude;
-mod service_start;
-mod service_stop;
-mod utils;
+mod prelude;
+mod service;
+mod types;
+mod verify;
+
 #[derive(Debug, Clone, Default, Eq, PartialEq)]
 pub struct ServiceUtil {
     dbg: bool,
@@ -36,6 +37,13 @@ impl ServiceUtil {
         } else {
             CtxManager::new()
         };
+
+        match verify::verify_binary::verify_all_binaries() {
+            Ok(_) => {}
+            Err(e) => {
+                panic!("Failed to verify binaries: {}", e)
+            }
+        }
 
         Self {
             dbg,

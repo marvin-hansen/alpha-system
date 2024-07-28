@@ -1,2 +1,2 @@
-pub use crate::error::ServiceUtilError::*;
+pub use crate::error::service_util_error::ServiceUtilError::*;
 pub use crate::ServiceUtil;

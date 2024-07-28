@@ -3,7 +3,7 @@ use std::time::Duration;
 
 use common_config::prelude::ServiceID;
 
-use crate::error::ServiceUtilError;
+use crate::error::service_util_error::ServiceUtilError;
 use crate::ServiceUtil;
 
 impl ServiceUtil {

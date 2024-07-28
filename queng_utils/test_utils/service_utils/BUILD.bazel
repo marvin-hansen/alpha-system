@@ -1,13 +1,21 @@
 load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library", "rust_test")
 
-
+genrule(
+    name = "copy_dbgw_bin",
+    srcs = ["//alias/service:dbgw"],
+    outs = ["dbgw"],
+    cmd = "cp $(SRCS) $(OUTS)",
+)
 
 rust_library(
     name = "service_utils",
     srcs = glob([
-        "src/*.rs",
+        "src/**",
     ]),
     crate_root = "src/lib.rs",
+    data = [
+        ":copy_dbgw_bin",
+    ],
     tags = [
         "service_utils",
         "utils",

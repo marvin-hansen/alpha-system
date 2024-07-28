@@ -2,7 +2,7 @@ use std::process::Command;
 
 use common_config::prelude::ServiceID;
 
-use crate::error::ServiceUtilError;
+use crate::error::service_util_error::ServiceUtilError;
 use crate::prelude::ServiceStartFailed;
 use crate::ServiceUtil;
 
