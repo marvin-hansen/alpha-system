@@ -1,9 +1,8 @@
-use std::cell::RefCell;
-use std::collections::HashMap;
 use std::fmt::{Display, Formatter};
 
-use common_config::prelude::ServiceID;
 use ctx_manager::CtxManager;
+
+use crate::error::service_util_error::ServiceUtilError;
 
 mod error;
 mod fields;
@@ -16,19 +15,32 @@ mod verify;
 pub struct ServiceUtil {
     dbg: bool,
     ctx_manager: CtxManager,
-    services: RefCell<HashMap<ServiceID, String>>,
 }
 
 impl ServiceUtil {
-    pub fn new() -> Self {
+    /// Creates a new `ServiceUtil` instance with debug mode disabled.
+    ///
+    /// # Returns
+    ///
+    /// Returns a `Result` containing a `ServiceUtil` instance on success.
+    /// On failure, returns a `ServiceUtilError`.
+    ///
+    pub fn new() -> Result<Self, ServiceUtilError> {
         Self::build(false)
     }
 
-    pub fn with_debug() -> Self {
+    /// Creates a new `ServiceUtil` instance with debug mode enabled.
+    ///
+    /// # Returns
+    ///
+    /// Returns a `Result` containing a `ServiceUtil` instance on success.
+    /// On failure, returns a `ServiceUtilError`.
+    ///
+    pub fn with_debug() -> Result<Self, ServiceUtilError> {
         Self::build(true)
     }
 
-    pub fn build(dbg: bool) -> Self {
+    pub fn build(dbg: bool) -> Result<Self, ServiceUtilError> {
         if dbg {
             println!("[ServiceUtil]: Debug mode enabled");
         }
@@ -54,11 +66,7 @@ impl ServiceUtil {
             }
         }
 
-        Self {
-            dbg,
-            ctx_manager,
-            services: RefCell::new(HashMap::new()),
-        }
+        Ok(Self { dbg, ctx_manager })
     }
 }
 

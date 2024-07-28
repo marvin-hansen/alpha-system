@@ -14,3 +14,8 @@ common_config = {workspace = true}
 common_env = { workspace = true }
 ctx_manager = {workspace = true}
 # External crates
+
+[dev-dependencies]
+env_utils = { workspace = true }
+# External crates
+tokio = { workspace = true }

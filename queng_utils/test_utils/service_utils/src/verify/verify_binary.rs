@@ -82,6 +82,7 @@ pub(crate) fn verify_binary(
 ///
 fn check_if_binary_exists(binary: &str, dbg: bool) -> Result<(), VerifyBinaryError> {
     // test -f /path/to/binary
+    // https://sentry.io/answers/determine-whether-a-file-exists-or-not-in-bash/
     let binary = format!("{}/{}", PATH, binary);
     let mut cmd = Command::new("test");
     cmd.arg("-f").arg(binary.clone());
@@ -160,7 +161,7 @@ fn check_binary_architecture(
         }
 
         EnvironmentType::LOCAL => {
-            // local run on MacOS, ARM64
+            // Local runs on MacOS, ARM64
             // Mach-O 64-bit executable arm64
             if !msg.contains("Mach-O 64-bit executable arm64") {
                 return Err(VerifyBinaryError::BinaryWrongPlatform(

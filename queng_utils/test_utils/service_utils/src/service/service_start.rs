@@ -51,6 +51,16 @@ impl ServiceUtil {
         Ok(())
     }
 
+    /// Waits until the health check URL responds successfully.
+    ///
+    /// # Arguments
+    ///
+    /// * `health_url` - The URL to ping for health check.
+    ///
+    /// # Returns
+    ///
+    /// Returns a `ServiceUtilError` if the healthcheck times out.
+    ///
     pub fn wait_until_health_check(&self, health_url: &str) -> Result<(), ServiceUtilError> {
         let start_time = Instant::now();
         let timeout = Duration::from_secs(60);
@@ -86,7 +96,8 @@ impl ServiceUtil {
                         }
                     }
                 }
-                Err(_) => {}
+                Err(_) => {} // ignore as curl returns an error in case connection failure
+                             // Instead, try again until curl either receives an OK response or times out
             }
         }
     }

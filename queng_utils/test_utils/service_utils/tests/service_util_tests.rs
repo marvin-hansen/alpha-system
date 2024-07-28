@@ -1,27 +1,35 @@
-use std::env;
-use std::thread::sleep;
 use std::time::Duration;
 
+use tokio::time::sleep;
+
 use common_config::prelude::ServiceID;
+use env_utils::EnvUtil;
 use service_utils::prelude::ServiceUtil;
 
-fn setup_env() {
-    // Set the environment variable.
-    env::set_var("ENV", "LOCAL");
+async fn setup_env() {
+    // dbgw require postgres
+    let env_util = EnvUtil::with_debug().await.expect("Failed to get EnvUtil");
+    env_util
+        .setup_postgres()
+        .await
+        .expect("Failed to setup postgres");
 }
-#[test]
-fn test_start_service_util() {
-    setup_env();
 
+#[tokio::test]
+async fn test_start_service_util() {
+    setup_env().await;
+
+    // Start the service
     let service_id = ServiceID::DBGW;
 
-    let svc_util = ServiceUtil::with_debug();
+    let res = ServiceUtil::with_debug();
+    assert!(res.is_ok());
+    let svc_util = res.unwrap();
 
     let result = svc_util.start_service(&service_id);
     assert!(result.is_ok());
 
-    sleep(Duration::from_secs(5));
+    sleep(Duration::from_secs(1)).await;
 
-    // let result = svc_util.stop_service(&service_id);
-    // assert!(result.is_ok());
+    // the DBGW service shuts down automatically when the test ends
 }
