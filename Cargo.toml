@@ -56,12 +56,12 @@ members = [
     "queng_utils/crypto_utils",
     "queng_utils/db_utils/clickhouse_utils",
     "queng_utils/db_utils/postgres_utils",
-    "queng_utils/docker_utils",
-    "queng_utils/env_utils",
-    "queng_utils/kaiko_utils",
+    "queng_utils/test_utils/docker_utils",
+    "queng_utils/test_utils/env_utils",
+    "queng_utils/test_utils/kaiko_utils",
     "queng_utils/math_utils",
     "queng_utils/proto_utils",
-    "queng_utils/service_utils",
+    "queng_utils/test_utils/service_utils",
     "queng_utils/specs_utils",
 ]
 
@@ -140,12 +140,12 @@ crypto_utils = { path = "queng_utils/crypto_utils" }
 clickhouse_utils = { path = "queng_utils/db_utils/clickhouse_utils" }
 postgres_utils = { path = "queng_utils/db_utils/postgres_utils" }
 # Misd Utils
-docker_utils = { path = "queng_utils/docker_utils" }
-env_utils = { path = "queng_utils/env_utils" }
-kaiko_utils = { path = "queng_utils/kaiko_utils" }
+docker_utils = { path = "queng_utils/test_utils/docker_utils" }
+env_utils = { path = "queng_utils/test_utils/env_utils" }
+kaiko_utils = { path = "queng_utils/test_utils/kaiko_utils" }
 math_utils = { path = "queng_utils/math_utils" }
 proto_utils = { path = "queng_utils/proto_utils" }
-service_utils =  { path = "queng_utils/service_utils" }
+service_utils =  { path = "queng_utils/test_utils/service_utils" }
 specs_utils = { path = "queng_utils/specs_utils" }
 #
 # ==============

@@ -255,24 +255,6 @@ alias(
 )
 
 alias(
-    name = "docker_utils",
-    actual = "//queng_utils/docker_utils",
-    visibility = ["//visibility:public"],
-)
-
-alias(
-    name = "env_utils",
-    actual = "//queng_utils/env_utils",
-    visibility = ["//visibility:public"],
-)
-
-alias(
-    name = "kaiko_utils",
-    actual = "//queng_utils/kaiko_utils",
-    visibility = ["//visibility:public"],
-)
-
-alias(
     name = "math_utils",
     actual = "//queng_utils/math_utils",
     visibility = ["//visibility:public"],
@@ -285,13 +267,33 @@ alias(
 )
 
 alias(
-    name = "service_utils",
-    actual = "//queng_utils/service_utils",
-    visibility = ["//visibility:public"],
-)
-
-alias(
     name = "specs_utils",
     actual = "//queng_utils/specs_utils",
     visibility = ["//visibility:public"],
 )
+
+# Test utils
+alias(
+    name = "docker_utils",
+    actual = "//queng_utils/test_utils/docker_utils",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "env_utils",
+    actual = "//queng_utils/test_utils/env_utils",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "kaiko_utils",
+    actual = "//queng_utils/test_utils/kaiko_utils",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "service_utils",
+    actual = "//queng_utils/test_utils/service_utils",
+    visibility = ["//visibility:public"],
+)
+
