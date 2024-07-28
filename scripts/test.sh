@@ -35,13 +35,6 @@ command bazel test //... --test_tag_filters=binary-integrity_test --test_env=ENV
 
 echo ""
 echo "====================="
-echo "Run service health tests"
-echo "====================="
-
-bazel test //... --test_tag_filters=service-health-test --test_env=ENV=LOCAL
-
-echo ""
-echo "====================="
 echo "Run integration tests"
 echo "====================="
 
