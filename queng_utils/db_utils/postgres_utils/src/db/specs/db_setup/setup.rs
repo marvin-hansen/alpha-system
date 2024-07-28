@@ -1,3 +1,7 @@
+use std::time::Duration;
+
+use tokio::time;
+
 use crate::db::Specs;
 use crate::prelude::PostgresUtilError;
 
@@ -75,6 +79,8 @@ impl Specs {
                 )))
             }
         }
+        // Schema propagation somehow takes a moment; just wait a second.
+        time::sleep(Duration::from_secs(1)).await;
 
         match self.verify_all_spec_schema_exists().await {
             Ok(_) => (),
