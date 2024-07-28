@@ -171,7 +171,7 @@ fn check_binary_architecture(
             };
         }
         EnvironmentType::CLUSTER => {
-            // We ASSUME that the cluster runs on Linux, X86_64
+            // We ASSUME that the cluster runs on Linux, X86_64, STATICALLY linked
             if !msg.contains("ELF 64-bit LSB pie executable, x86-64") {
                 return Err(VerifyBinaryError::BinaryWrongPlatform(
                     "ELF 64-bit LSB pie executable, x86-64".to_string(),
@@ -180,10 +180,10 @@ fn check_binary_architecture(
             };
         }
         EnvironmentType::CI => {
-            // CI server runs on Linux, X86_64
-            if !msg.contains("ELF 64-bit LSB executable") {
+            // CI server runs on Linux, X86_64, regular dynamically linked
+            if !msg.contains("ELF 64-bit LSB shared object, x86-64") {
                 return Err(VerifyBinaryError::BinaryWrongPlatform(
-                    "ELF 64-bit LSB pie executable, x86-64".to_string(),
+                    "ELF 64-bit LSB shared object, x86-64".to_string(),
                     msg,
                 ));
             };
