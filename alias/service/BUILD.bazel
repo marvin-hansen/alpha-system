@@ -18,7 +18,7 @@ alias(
 
 alias(
     name = "cmdb",
-    actual = "//queng_services/core/cmdb/cmdb_service:bin",
+    actual = "//queng_services/core/cmdb/cmdb_service:cmdb",
     visibility = ["//visibility:public"],
 )
 
@@ -42,7 +42,7 @@ alias(
 
 alias(
     name = "smdb",
-    actual = "//queng_services/core/smdb/smdb_service:bin",
+    actual = "//queng_services/core/smdb/smdb_service:smdb",
     visibility = ["//visibility:public"],
 )
 

@@ -10,7 +10,7 @@ load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_doc", "rust_doc_test")
 load("//:build/container.bzl", "build_multi_arch_image", "build_sha265_tag")
 
 rust_binary(
-    name = "bin",
+    name = "smdb",
     srcs = glob([
         "src/**/*.rs",
     ]),
@@ -54,7 +54,7 @@ rust_binary(
 # https://github.com/bazelbuild/rules_rust/issues/2726
 platform_transition_binary(
     name = "bin_linux_x86_64_musl",
-    binary = ":bin",
+    binary = "smdb",
     target_platform = "//build/platforms:linux_x86_64_musl",
 )
 
@@ -76,7 +76,7 @@ sh_test(
 # Build a MUSL ARM64 binary
 platform_transition_binary(
     name = "bin_linux_arm64_musl",
-    binary = ":bin",
+    binary = "smdb",
     target_platform = "//build/platforms:linux_arm64_musl",
 )
 
@@ -98,7 +98,7 @@ sh_test(
 # Build documentation
 rust_doc(
     name = "doc",
-    crate = ":bin",
+    crate = "smdb",
     tags = ["doc"],
     visibility = ["//visibility:public"],
 )
@@ -106,7 +106,7 @@ rust_doc(
 # Test documentation
 rust_doc_test(
     name = "doc_test",
-    crate = ":bin",
+    crate = "smdb",
     tags = ["doc-test"],
     visibility = ["//visibility:public"],
 )
@@ -114,7 +114,7 @@ rust_doc_test(
 # Build musl container image
 build_multi_arch_image(
     name = "image_index",
-    srcs = [":bin"],
+    srcs = ["smdb"],
     base = "@scratch",
     exposed_ports = [
         "7070",

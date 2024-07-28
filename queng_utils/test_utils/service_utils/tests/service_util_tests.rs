@@ -1,7 +1,9 @@
 use std::env;
+use std::thread::sleep;
+use std::time::Duration;
 
 use common_config::prelude::ServiceID;
-use service_utils::ServiceUtil;
+use service_utils::prelude::ServiceUtil;
 
 fn setup_env() {
     // Set the environment variable.
@@ -11,14 +13,15 @@ fn setup_env() {
 fn test_start_service_util() {
     setup_env();
 
-    let service_id = ServiceID::KaikoProxy;
+    let service_id = ServiceID::DBGW;
+
     let svc_util = ServiceUtil::with_debug();
 
-    // let result = svc_util.start_service(&service_id);
-    // assert!(result.is_ok());
-    //
-    // std::thread::sleep(Duration::from_secs(25));
-    //
+    let result = svc_util.start_service(&service_id);
+    assert!(result.is_ok());
+
+    sleep(Duration::from_secs(5));
+
     // let result = svc_util.stop_service(&service_id);
     // assert!(result.is_ok());
 }

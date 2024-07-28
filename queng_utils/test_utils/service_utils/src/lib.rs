@@ -6,7 +6,8 @@ use common_config::prelude::ServiceID;
 use ctx_manager::CtxManager;
 
 mod error;
-mod prelude;
+mod fields;
+pub mod prelude;
 mod service;
 mod types;
 mod verify;
@@ -38,7 +39,15 @@ impl ServiceUtil {
             CtxManager::new()
         };
 
-        match verify::verify_binary::verify_all_binaries() {
+        let env = ctx_manager.env_type();
+
+        if dbg {
+            println!(
+                "[ServiceUtil]: Verify all binaries for environment: {:?}",
+                env
+            );
+        }
+        match verify::verify_binary::verify_all_binaries(dbg, env) {
             Ok(_) => {}
             Err(e) => {
                 panic!("Failed to verify binaries: {}", e)

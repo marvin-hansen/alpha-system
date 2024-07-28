@@ -5,6 +5,7 @@ use std::fmt::Formatter;
 #[derive(Debug, Clone, Eq, PartialEq, Hash)]
 pub enum ServiceUtilError {
     ServiceStartFailed(String),
+    ServiceHealthcheckFailed(String),
     ServiceStopFailed(String),
     ServiceNotSupported(String),
     ServiceNotRunning(String),
@@ -18,6 +19,9 @@ impl fmt::Display for ServiceUtilError {
         match self {
             ServiceUtilError::ServiceStartFailed(e) => {
                 write!(f, "[ServiceUtilError]: Service start failed: {e}")
+            }
+            ServiceUtilError::ServiceHealthcheckFailed(e) => {
+                write!(f, "[ServiceUtilError]: Service healthcheck failed: {e}")
             }
             ServiceUtilError::ServiceStopFailed(e) => {
                 write!(f, "[ServiceUtilError]: Service stop failed: {e}")

@@ -11,5 +11,6 @@ authors.workspace = true
 [dependencies]
 # Internal crates
 common_config = {workspace = true}
+common_env = { workspace = true }
 ctx_manager = {workspace = true}
 # External crates
