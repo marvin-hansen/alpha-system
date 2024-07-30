@@ -1,5 +1,5 @@
 ###############################################################################
-# Core Services
+# Auxiliary Services
 ###############################################################################
 
 # The service aliases are used in scripts/run_*.sh to start each service
@@ -15,6 +15,10 @@ alias(
     actual = "//queng_services/aux/kaiko_proxy:push",
     visibility = ["//visibility:public"],
 )
+
+###############################################################################
+# Core Services
+###############################################################################
 
 alias(
     name = "cmdb",
@@ -51,7 +55,6 @@ alias(
     actual = "//queng_services/core/smdb/smdb_service:push",
     visibility = ["//visibility:public"],
 )
-
 
 ###############################################################################
 # Metadata Services

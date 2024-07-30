@@ -24,9 +24,17 @@ async fn test_core_services() {
     let url = "http://127.0.0.1:9090";
     let dbgw_client = DBGatewayClient::from_url(url).await;
 
-    let res = dbgw_client.read_service_by_id(ServiceID::DBGW).await;
+    let svc_id = ServiceID::DBGW;
+    let res = dbgw_client.read_service_by_id(svc_id).await;
 
     assert!(res.is_ok());
     let svc = res.unwrap().unwrap();
-    assert_eq!(svc.svc_id(), &ServiceID::DBGW);
+    assert_eq!(svc.svc_id(), &svc_id);
+
+    let svc_id = ServiceID::SMDB;
+    let res = dbgw_client.read_service_by_id(svc_id).await;
+
+    assert!(res.is_ok());
+    let svc = res.unwrap().unwrap();
+    assert_eq!(svc.svc_id(), &svc_id);
 }

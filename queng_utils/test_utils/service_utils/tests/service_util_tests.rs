@@ -17,10 +17,10 @@ async fn setup_env() {
 
 #[tokio::test]
 async fn test_start_service_util() {
-    setup_env().await;
+    // setup_env().await;
 
     // Start the service
-    let service_id = ServiceID::DBGW;
+    let service_id = ServiceID::KaikoProxy;
 
     let res = ServiceUtil::with_debug();
     assert!(res.is_ok());
@@ -30,6 +30,4 @@ async fn test_start_service_util() {
     assert!(result.is_ok());
 
     sleep(Duration::from_secs(1)).await;
-
-    // the DBGW service shuts down automatically when the test ends
 }

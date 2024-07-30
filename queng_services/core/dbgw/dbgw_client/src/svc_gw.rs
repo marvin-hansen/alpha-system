@@ -107,10 +107,10 @@ impl DBGatewayClient {
 
     pub async fn read_service_by_id(
         &self,
-        id: ServiceID,
+        svc_id: ServiceID,
     ) -> Result<Option<ServiceConfig>, DBGatewayError> {
         let request = tonic::Request::new(SingleServiceRequest {
-            service_id: id as i32,
+            service_id: svc_id as i32,
         });
 
         let mut client = self.client.clone();

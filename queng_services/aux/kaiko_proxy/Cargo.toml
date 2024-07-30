@@ -10,6 +10,7 @@ authors.workspace = true
 
 [dependencies]
 # Internal crates
+common_config = {workspace = true}
 common_metadata = {workspace = true}
 crypto_utils = {workspace = true}
 common_service =  {workspace = true}

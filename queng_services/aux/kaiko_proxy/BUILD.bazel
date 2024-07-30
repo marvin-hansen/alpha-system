@@ -36,6 +36,7 @@ rust_binary(
     visibility = ["//visibility:public"],
     deps = [
         # Internal crates
+        "//alias:common_config",
         "//alias:common_metadata",
         "//alias:crypto_utils",
         "//alias:common_service",

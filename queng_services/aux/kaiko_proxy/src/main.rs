@@ -1,3 +1,4 @@
+use std::error::Error;
 use std::ops::Deref;
 use std::sync::Arc;
 use std::time::Duration;
@@ -9,7 +10,8 @@ use tokio::time::Instant;
 use tokio_cron_scheduler::{Job, JobScheduler};
 use warp::Filter;
 
-use common_service::print_utils;
+use common_config::prelude::ServiceID;
+use common_service::{print_utils, shutdown_utils};
 
 use crate::errors::InitError;
 use crate::init::InitManager;
@@ -30,10 +32,14 @@ const UPDATE: bool = false;
 
 const DBG: bool = false;
 
-const PORT: u16 = 7777;
+//  Replace with auto-config.
+const PORT_HTTP: u16 = 7777;
+const PORT_HEALTH: u16 = 8080;
+
+const SVC_ID: ServiceID = ServiceID::KaikoProxy;
 
 #[tokio::main]
-async fn main() {
+async fn main() -> Result<(), Box<dyn Error>> {
     let start = Instant::now();
 
     dbg_print("Load meta-data");
@@ -109,12 +115,6 @@ async fn main() {
     //
     let with_state = warp::any().map(move || store.clone());
 
-    dbg_print("Build health route");
-    let health_check = warp::get()
-        .and(warp::path("health"))
-        .and(warp::path::end())
-        .and_then(handler::get_health_handler);
-
     dbg_print("Build assets route");
     let get_assets = warp::get()
         .and(warp::path("assets"))
@@ -144,25 +144,51 @@ async fn main() {
         .and_then(handler::get_stats_handler);
 
     dbg_print("Configure service routes");
-    let routes = health_check
-        .or(get_assets)
+    let routes = get_assets
         .or(get_exchanges)
         .or(get_instruments)
         .or(get_stats);
 
+    dbg_print("Configure http service");
+    let http_signal = shutdown_utils::signal_handler("http server");
+    let (_, http_server) =
+        warp::serve(routes).bind_with_graceful_shutdown(([127, 0, 0, 1], PORT_HTTP), http_signal);
+    let http_handle = tokio::spawn(http_server);
+
+    dbg_print("Configure health check route");
+    let health_check = warp::get()
+        .and(warp::path("health"))
+        .and(warp::path::end())
+        .and_then(handler::get_health_handler);
+
+    dbg_print("Configure health check service");
+    let health_signal = shutdown_utils::signal_handler("http server");
+    let (_, health_server) = warp::serve(health_check)
+        .bind_with_graceful_shutdown(([127, 0, 0, 1], PORT_HEALTH), health_signal);
+    let health_handle = tokio::spawn(health_server);
+
     print_update_status(UPDATE);
     print_duration("[main]: Starting server took", &start.elapsed());
     print_utils::print_start_header_simple("Metadata Integration Service", "0.0.0.0:7777/");
-    warp::serve(routes).run(([0, 0, 0, 0], PORT)).await;
+
+    match tokio::try_join!(http_handle, health_handle) {
+        Ok(_) => {}
+        Err(e) => {
+            println!("Kaiko Proxy: Failed to start HTTP server: {:?}", e);
+        }
+    }
+
+    print_utils::print_stop_header(&SVC_ID);
+    Ok(())
 }
 
-fn dbg_print(s: &str) {
+pub(crate) fn dbg_print(s: &str) {
     if DBG {
         println!("[main]: {}", s);
     }
 }
 
-async fn run_init() -> Result<MetaDataSet, InitError> {
+pub(crate) async fn run_init() -> Result<MetaDataSet, InitError> {
     let im = InitManager::new(DBG);
     let result = im.init().await;
     drop(im);
@@ -173,11 +199,11 @@ async fn run_init() -> Result<MetaDataSet, InitError> {
     }
 }
 
-fn print_duration(msg: &str, elapsed: &Duration) {
+pub(crate) fn print_duration(msg: &str, elapsed: &Duration) {
     print_utils::print_duration(msg, elapsed);
 }
 
-fn print_update_status(update: bool) {
+pub(crate) fn print_update_status(update: bool) {
     if update {
         println!("[main]: Update service online!")
     } else {

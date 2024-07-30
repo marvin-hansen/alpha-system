@@ -1,27 +1,6 @@
 load("@aspect_bazel_lib//lib:copy_file.bzl", "copy_file")
 load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library", "rust_test")
 
-copy_file(
-    name = "copy_cmdb_bin",
-    src = "//alias/service:cmdb",
-    out = "cmdb",
-    is_executable = True,
-)
-
-copy_file(
-    name = "copy_dbgw_bin",
-    src = "//alias/service:dbgw",
-    out = "dbgw",
-    is_executable = True,
-)
-
-copy_file(
-    name = "copy_smdb_bin",
-    src = "//alias/service:smdb",
-    out = "smdb",
-    is_executable = True,
-)
-
 rust_library(
     name = "service_utils",
     srcs = glob([
@@ -29,9 +8,10 @@ rust_library(
     ]),
     crate_root = "src/lib.rs",
     data = [
-        ":copy_cmdb_bin",
-        ":copy_dbgw_bin",
-        ":copy_smdb_bin",
+        ":copy_aux_kaiko_proxy",
+        ":copy_core_cmdb",
+        ":copy_core_dbgw",
+        ":copy_core_smdb",
     ],
     tags = [
         "service_utils",
@@ -58,4 +38,36 @@ rust_doc_test(
     crate = ":service_utils",
     tags = ["doc-test"],
     visibility = ["//visibility:public"],
+)
+
+## Copy service binary files
+
+# Copy aux services
+copy_file(
+    name = "copy_aux_kaiko_proxy",
+    src = "//alias/service:kaiko_proxy",
+    out = "kaiko_proxy",
+    is_executable = True,
+)
+
+# Copy all core services
+copy_file(
+    name = "copy_core_cmdb",
+    src = "//alias/service:cmdb",
+    out = "cmdb",
+    is_executable = True,
+)
+
+copy_file(
+    name = "copy_core_dbgw",
+    src = "//alias/service:dbgw",
+    out = "dbgw",
+    is_executable = True,
+)
+
+copy_file(
+    name = "copy_core_smdb",
+    src = "//alias/service:smdb",
+    out = "smdb",
+    is_executable = True,
 )
