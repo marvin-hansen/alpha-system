@@ -1,14 +1,14 @@
 load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library", "rust_test_suite")
 
 rust_library(
-    name = "vex_specs",
+    name = "ims_data_vex_specs",
     srcs = glob([
         "src/lib.rs",
     ]),
     tags = [
+        "ims_data_vex_specs",
         "service_specs",
         "specs",
-        "vex_specs",
     ],
     visibility = ["//visibility:public"],
     deps = [
@@ -19,14 +19,14 @@ rust_library(
 
 rust_doc(
     name = "doc",
-    crate = ":vex_specs",
+    crate = ":ims_data_vex_specs",
     tags = ["doc"],
     visibility = ["//visibility:public"],
 )
 
 rust_doc_test(
     name = "doc_test",
-    crate = ":vex_specs",
+    crate = ":ims_data_vex_specs",
     tags = ["doc-test"],
     visibility = ["//visibility:public"],
 )

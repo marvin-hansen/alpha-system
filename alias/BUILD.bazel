@@ -70,6 +70,22 @@ alias(
 )
 
 ###############################################################################
+# Common IMS
+###############################################################################
+
+alias(
+    name = "ims_common",
+    actual = "//queng_services/ims/ims_common",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "lib_data_stream",
+    actual = "//queng_services/ims/ims_data/shared_data:lib_data_stream",
+    visibility = ["//visibility:public"],
+)
+
+###############################################################################
 # Components
 ###############################################################################
 
@@ -142,27 +158,6 @@ alias(
 )
 
 ###############################################################################
-# Services IMS
-###############################################################################
-alias(
-    name = "ims_common",
-    actual = "//queng_services/ims/ims_common",
-    visibility = ["//visibility:public"],
-)
-
-alias(
-    name = "lib_data_stream",
-    actual = "//queng_services/ims/ims_data/shared_data:lib_data_stream",
-    visibility = ["//visibility:public"],
-)
-
-alias(
-    name = "ims_data_binance_specs",
-    actual = "//queng_specs/ims_specs/ims_data/ims_data_binance_specs",
-    visibility = ["//visibility:public"],
-)
-
-###############################################################################
 # Specs
 ###############################################################################
 
@@ -194,40 +189,48 @@ alias(
     visibility = ["//visibility:public"],
 )
 
-# Service specs
+# Core service specs
 alias(
     name = "cmdb_specs",
-    actual = "//queng_specs/service_specs/cmdb_specs",
+    actual = "//queng_specs/service_specs/core/cmdb_specs",
     visibility = ["//visibility:public"],
 )
 
 alias(
     name = "dbgw_specs",
-    actual = "//queng_specs/service_specs/dbgw_specs",
-    visibility = ["//visibility:public"],
-)
-
-alias(
-    name = "mddb_specs",
-    actual = "//queng_specs/service_specs/mddb_specs",
+    actual = "//queng_specs/service_specs/core/dbgw_specs",
     visibility = ["//visibility:public"],
 )
 
 alias(
     name = "qdgw_specs",
-    actual = "//queng_specs/service_specs/qdgw_specs",
+    actual = "//queng_specs/service_specs/core/qdgw_specs",
     visibility = ["//visibility:public"],
 )
 
 alias(
     name = "smdb_specs",
-    actual = "//queng_specs/service_specs/smdb_specs",
+    actual = "//queng_specs/service_specs/core/smdb_specs",
+    visibility = ["//visibility:public"],
+)
+
+# Meta service specs
+alias(
+    name = "mddb_specs",
+    actual = "//queng_specs/service_specs/meta/mddb_specs",
+    visibility = ["//visibility:public"],
+)
+
+# IMS service specs
+alias(
+    name = "ims_data_binance_specs",
+    actual = "//queng_specs/service_specs/ims/ims_data/ims_data_binance_specs",
     visibility = ["//visibility:public"],
 )
 
 alias(
-    name = "vex_specs",
-    actual = "//queng_specs/service_specs/vex_specs",
+    name = "ims_data_vex_specs",
+    actual = "//queng_specs/service_specs/ims/ims_data/ims_data_vex_specs",
     visibility = ["//visibility:public"],
 )
 

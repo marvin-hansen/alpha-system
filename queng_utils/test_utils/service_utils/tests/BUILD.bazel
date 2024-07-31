@@ -17,7 +17,6 @@ rust_test_suite(
         "//alias:service_utils",
         # Internal crates
         "//alias:common_config",
-        "//alias:env_utils",
         # External crates
         "@crates//:tokio",
     ],

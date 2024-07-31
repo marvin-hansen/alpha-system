@@ -17,6 +17,7 @@ common_service =  {workspace = true}
 # Custom Memory Allocator
 mimalloc = {workspace = true}
 # External crates
+autometrics = { workspace = true }
 arc-swap = { workspace = true }
 chrono = { workspace = true }
 reqwest = { workspace = true }

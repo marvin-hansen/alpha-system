@@ -1,9 +1,8 @@
-## Remove openssl-sys dependency
+# Next steps
 
-1) Find the package introducing the dependency
+July/30/2024
 
-> cargo tree -p openssl -i
+* Add health-check endpoint auto configuration in ConfigManager
+* Update remaining services with dedicated http health endpoint
+* Update Service Util to start all services and use health check 
 
-should show which dependencies are depending on that crate.
-
-2) Reconfigure the crate to use rust-tls or remove it altogether

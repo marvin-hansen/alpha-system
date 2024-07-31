@@ -12,7 +12,7 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Test target
-        "//alias:vex_specs",
+        "//alias:ims_data_vex_specs",
         # Internal dependencies
         "//alias:common_config",
     ],

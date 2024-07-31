@@ -1,5 +1,5 @@
 use common_config::prelude::{ProtocolType, ServiceID, ServiceType};
-use vex_specs::vex_service_config;
+use ims_data_vex_specs::vex_service_config;
 
 #[test]
 fn test_vex_service_config_accessors() {
