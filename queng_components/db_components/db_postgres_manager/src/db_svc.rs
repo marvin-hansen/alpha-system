@@ -1,5 +1,5 @@
 use common_config::prelude::{ServiceConfig, ServiceID};
-use common_pg_queries::{pg_inserts, pg_query, pg_update};
+use common_pg_queries::{pg_inserts, pg_query_service, pg_update};
 
 use crate::error::PostgresDBError;
 use crate::PostgresDBManager;
@@ -64,7 +64,7 @@ impl PostgresDBManager {
     ) -> Result<bool, PostgresDBError> {
         self.dbg_print("check_if_service_id_exists");
 
-        let query = pg_query::build_check_if_service_id_exists_query(id);
+        let query = pg_query_service::build_check_if_service_id_exists_query(id);
         match self.execute_exists_query(&query).await {
             Ok(exists) => Ok(exists),
             Err(e) => Err(e),
@@ -118,7 +118,7 @@ impl PostgresDBManager {
     ) -> Result<bool, PostgresDBError> {
         self.dbg_print("check_if_service_id_online");
 
-        let query = pg_query::build_check_if_service_id_online_query(id);
+        let query = pg_query_service::build_check_if_service_id_online_query(id);
         match self.execute_exists_query(&query).await {
             Ok(exists) => Ok(exists),
             Err(e) => Err(e),
@@ -190,7 +190,7 @@ impl PostgresDBManager {
     }
 
     async fn set_svc_online(&self, id: &ServiceID, online: bool) -> Result<bool, PostgresDBError> {
-        let query = pg_query::build_set_svc_online_query(id, online);
+        let query = pg_query_service::build_set_svc_online_query(id, online);
         match self.execute_exists_query(&query).await {
             Ok(online) => Ok(online),
             Err(e) => Err(e),
@@ -215,7 +215,7 @@ impl PostgresDBManager {
     ) -> Result<Option<ServiceConfig>, PostgresDBError> {
         self.dbg_print("read_service_by_id");
 
-        let query = pg_query::build_read_service_by_id_query(id);
+        let query = pg_query_service::build_read_service_by_id_query(id);
         match self.client.query_one(&query, &[]).await {
             Ok(row) => {
                 let svc = ServiceConfig::from_sql_row(&row);
@@ -238,7 +238,7 @@ impl PostgresDBManager {
     pub async fn read_all_services(&self) -> Result<Vec<ServiceConfig>, PostgresDBError> {
         self.dbg_print("read_all_services");
 
-        let query = pg_query::build_read_all_services_query();
+        let query = pg_query_service::build_read_all_services_query();
         match self.client.query(&query, &[]).await {
             Ok(rows) => {
                 let mut services = Vec::new();
@@ -304,7 +304,7 @@ impl PostgresDBManager {
             Err(e) => return Err(e),
         };
 
-        let query = pg_query::build_delete_service_query(id);
+        let query = pg_query_service::build_delete_service_query(id);
         match self.execute_query(&query).await {
             Ok(_) => Ok(true),
             Err(e) => Err(e),

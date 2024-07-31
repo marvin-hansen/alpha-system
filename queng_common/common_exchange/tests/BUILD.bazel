@@ -3,10 +3,11 @@ load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 rust_test_suite(
     name = "common_exchange",
     srcs = glob([
-        "exchange_types/*_tests.rs",
+        "*_tests.rs",
     ]),
     tags = [
         "common",
+        "common_exchange",
         "unit-test",
     ],
     visibility = ["//visibility:public"],

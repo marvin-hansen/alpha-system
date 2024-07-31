@@ -15,8 +15,7 @@ use crate::shared::service_ids_to_string;
 ///
 pub fn build_update_service_query(data: &ServiceConfig) -> String {
     format!(
-        "
-            UPDATE
+        "UPDATE
                 system.service
             SET
                 name='{}',
@@ -37,8 +36,7 @@ pub fn build_update_service_query(data: &ServiceConfig) -> String {
                 metric_port={}
             WHERE
                 id={}
-            RETURNING service.online
-            ",
+            RETURNING service.online",
         data.name(),
         data.version(),
         data.online(),
@@ -61,8 +59,7 @@ pub fn build_update_service_query(data: &ServiceConfig) -> String {
 
 pub fn build_update_portfolio_query(data: &PortfolioConfig) -> String {
     format!(
-        "
-            UPDATE
+        "UPDATE
                 system.portfolio
             SET
                 portfolio_id={},
@@ -81,8 +78,7 @@ pub fn build_update_portfolio_query(data: &PortfolioConfig) -> String {
                 portfolio_free_cash_percent={}
             WHERE
                 id={}
-            RETURNING service.online
-            ",
+            RETURNING service.online",
         data.portfolio_id(),
         data.portfolio_description(),
         data.portfolio_account_type().as_u8(),

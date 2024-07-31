@@ -1,8 +1,9 @@
-use common_data_bar::prelude::TimeResolution;
 use std::str::FromStr;
 
+use common_data_bar::prelude::TimeResolution;
+
 #[test]
-fn test_from_str() {
+fn test_time_resolution() {
     assert_eq!(
         TimeResolution::from_str("NoValue"),
         Ok(TimeResolution::NoValue)

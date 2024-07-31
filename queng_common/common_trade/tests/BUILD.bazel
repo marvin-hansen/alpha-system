@@ -1,12 +1,50 @@
 load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 
 rust_test_suite(
-    name = "trade",
+    name = "common_trade_pattern",
     srcs = glob([
-        "trade_types/*_tests.rs",
+        "pattern_config_tests.rs",
+        "pattern_type_tests.rs",
     ]),
     tags = [
         "common",
+        "common_trade",
+        "unit-test",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        "//alias:common_trade",
+    ],
+)
+
+rust_test_suite(
+    name = "common_trade_strategy",
+    srcs = glob([
+        "strategy_config_tests.rs",
+    ]),
+    tags = [
+        "common",
+        "common_trade",
+        "unit-test",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        "//alias:common_trade",
+    ],
+)
+
+rust_test_suite(
+    name = "common_trade_trade",
+    srcs = glob([
+        "trade_direction_tests.rs",
+        "trade_entry_tests.rs",
+        "trade_strategy_type_tests.rs",
+    ]),
+    tags = [
+        "common",
+        "common_trade",
         "unit-test",
     ],
     visibility = ["//visibility:public"],

@@ -1,9 +1,9 @@
 load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 
 rust_test_suite(
-    name = "data",
+    name = "time_resolution_tests",
     srcs = glob([
-        "data_types/*_tests.rs",
+        "time_resolution_tests.rs",
     ]),
     tags = [
         "common",
@@ -13,5 +13,43 @@ rust_test_suite(
     deps = [
         # Crate to test
         "//alias:common_data_bar",
+    ],
+)
+
+rust_test_suite(
+    name = "ohlcv_bar_tests",
+    srcs = glob([
+        "ohlcv_bar_tests.rs",
+    ]),
+    tags = [
+        "common",
+        "unit-test",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        "//alias:common_data_bar",
+        # External crates
+        "@crates//:chrono",
+        "@crates//:rust_decimal",
+    ],
+)
+
+rust_test_suite(
+    name = "trade_bar_tests",
+    srcs = glob([
+        "trade_bar_tests.rs",
+    ]),
+    tags = [
+        "common",
+        "unit-test",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        "//alias:common_data_bar",
+        # External crates
+        "@crates//:chrono",
+        "@crates//:rust_decimal",
     ],
 )

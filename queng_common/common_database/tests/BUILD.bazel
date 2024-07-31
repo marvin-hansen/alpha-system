@@ -3,7 +3,7 @@ load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 rust_test_suite(
     name = "pg_db_config",
     srcs = glob([
-        "pg/pg_db_config_tests.rs",
+        "pg_db_config_tests.rs",
     ]),
     tags = [
         "common",
@@ -21,7 +21,7 @@ rust_test_suite(
 rust_test_suite(
     name = "click_house_config_tests",
     srcs = glob([
-        "clickhouse/click_house_config_tests.rs",
+        "click_house_config_tests.rs",
     ]),
     tags = [
         "common",

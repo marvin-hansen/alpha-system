@@ -11,3 +11,7 @@ authors.workspace = true
 # Internal crates
 common_config = {workspace = true}
 common_exchange = {workspace = true}
+
+[dev-dependencies]
+portfolio_specs = {workspace = true}
+smdb_specs = {workspace = true}

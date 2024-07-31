@@ -1,6 +1,7 @@
-use crate::prelude::TradeBar;
 use chrono::{DateTime, Utc};
 use rust_decimal::Decimal;
+
+use crate::prelude::TradeBar;
 
 impl TradeBar {
     pub fn date_time(&self) -> DateTime<Utc> {
@@ -12,7 +13,6 @@ impl TradeBar {
     pub fn volume(&self) -> Decimal {
         self.volume
     }
-
     pub fn symbol_id(&self) -> u16 {
         self.symbol_id
     }

@@ -1,2 +1,6 @@
 #[cfg(test)]
-mod meta_data_types;
+mod assets_tests;
+#[cfg(test)]
+mod exchanges_tests;
+#[cfg(test)]
+mod instruments_tests;
