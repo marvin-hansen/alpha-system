@@ -2,13 +2,9 @@ use docker_utils::DockerUtil;
 use kaiko_client::error::KaikoClientError;
 use kaiko_client::KaikoClient;
 use specs_utils::prelude::api_proxy_container_specs;
-use std::env;
 
 // Starts a kaiko api proxy on localhost port 7777
 async fn setup_ci_env() {
-    // Set the environment variable.
-    env::set_var("ENV", "CI");
-
     // Create new DockerUtil
     let ci_env = DockerUtil::with_debug().expect("Failed to get DockerUtil");
 
@@ -24,12 +20,13 @@ fn get_client() -> Result<KaikoClient, KaikoClientError> {
     let url: &str = "http://localhost:7777/";
     let kaiko_client = KaikoClient::with_url(url, false);
     assert!(kaiko_client.is_ok());
-
-    Ok(kaiko_client.unwrap())
+    let client = kaiko_client.unwrap();
+    Ok(client)
 }
 
 #[tokio::test]
 async fn test_kaiko_client() {
+    // Setup CI environment
     setup_ci_env().await;
 
     let kaiko_client = get_client();
