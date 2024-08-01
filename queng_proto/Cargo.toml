@@ -8,11 +8,6 @@ repository.workspace = true
 authors.workspace = true
 
 
-[lib]
-name = "proto_bindings"
-path = "src/lib.rs"
-
-
 [dependencies]
 tonic = { workspace = true }
 prost = { workspace = true }
