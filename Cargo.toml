@@ -32,6 +32,7 @@ members = [
     "queng_services/core/cmdb/cmdb_client",
     "queng_services/core/dbgw/dbgw_client",
     "queng_services/core/dbgw/dbgw_service",
+    "queng_services/core/dbgw/dbgw_tests",
     "queng_services/meta/mddb/mddb_service",
     "queng_services/meta/mddb/mddb_client",
     "queng_services/core/smdb/smdb_service",

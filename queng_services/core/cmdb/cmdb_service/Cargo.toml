@@ -9,11 +9,6 @@ repository.workspace = true
 authors.workspace = true
 
 
-[[bin]]
-name = "cmdb"
-path = "src/main.rs"
-
-
 [dependencies]
 # Service specs
 cmdb_specs = { workspace = true }
