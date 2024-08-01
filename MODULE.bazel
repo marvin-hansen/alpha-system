@@ -54,7 +54,7 @@ http_archive = use_repo_rule("@bazel_tools//:http.bzl", "http_archive")
 # https://github.com/bazel-contrib/toolchains_llvm/blob/master/toolchain/internal/llvm_distributions.bzl
 LLVM_VERSIONS = {
     "": "16.0.0",  # Default
-    "darwin-aarch64": "16.0.3",  # Only support newer Apple Silicon Macs
+    "darwin-aarch64": "16.0.5",  # Only support newer Apple Silicon Macs
 }
 
 # Sysroot for LLVM

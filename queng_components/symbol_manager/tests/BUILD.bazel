@@ -3,7 +3,7 @@ load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 rust_test_suite(
     name = "symbol_manager_tests",
     srcs = glob([
-        "tests/*_tests.rs",
+        "*_tests.rs",
     ]),
     tags = [
         "components",
@@ -13,6 +13,6 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Crate to test
-        ":symbol_manager",
+        "//alias:symbol_manager",
     ],
 )

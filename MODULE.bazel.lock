@@ -22287,7 +22287,7 @@
     "@@toolchains_llvm~//toolchain/extensions:llvm.bzl%llvm": {
       "general": {
         "bzlTransitiveDigest": "y9h5L2NtWbogyWSOJgqnUaU50MTPWAW+waelXSirMVg=",
-        "usagesDigest": "qKZCySyFASBngcebMC5Dx0KevPxIM4eUn0DIb4Npb30=",
+        "usagesDigest": "lyxGMqrM1XkTt2QwE0bgMNDXMJnONz5e4VMjlDoyNtE=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -22311,7 +22311,7 @@
               "link_libs": {},
               "llvm_versions": {
                 "": "16.0.0",
-                "darwin-aarch64": "16.0.3"
+                "darwin-aarch64": "16.0.5"
               },
               "opt_compile_flags": {},
               "opt_link_flags": {},
@@ -22343,7 +22343,7 @@
               "link_libs": {},
               "llvm_versions": {
                 "": "16.0.0",
-                "darwin-aarch64": "16.0.3"
+                "darwin-aarch64": "16.0.5"
               },
               "opt_compile_flags": {},
               "opt_link_flags": {},
@@ -22367,7 +22367,7 @@
               "llvm_version": "",
               "llvm_versions": {
                 "": "16.0.0",
-                "darwin-aarch64": "16.0.3"
+                "darwin-aarch64": "16.0.5"
               },
               "netrc": "",
               "sha256": {},
@@ -22394,7 +22394,7 @@
               "link_libs": {},
               "llvm_versions": {
                 "": "16.0.0",
-                "darwin-aarch64": "16.0.3"
+                "darwin-aarch64": "16.0.5"
               },
               "opt_compile_flags": {},
               "opt_link_flags": {},
@@ -22420,7 +22420,7 @@
               "llvm_version": "",
               "llvm_versions": {
                 "": "16.0.0",
-                "darwin-aarch64": "16.0.3"
+                "darwin-aarch64": "16.0.5"
               },
               "netrc": "",
               "sha256": {},
@@ -22441,7 +22441,7 @@
               "llvm_version": "",
               "llvm_versions": {
                 "": "16.0.0",
-                "darwin-aarch64": "16.0.3"
+                "darwin-aarch64": "16.0.5"
               },
               "netrc": "",
               "sha256": {},
