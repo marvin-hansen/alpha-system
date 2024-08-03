@@ -10,11 +10,11 @@ authors.workspace = true
 [lib]
 path = "/dev/null"
 
-[dev-dependencies]
-# Crate under test
-kaiko_client = {workspace = true}
-# Internal crates
-docker_utils = {workspace = true}
-specs_utils = {workspace = true}
-# External crates
-tokio = { workspace = true }
+                                                        [dev-dependencies]
+                                                        # Crate under test
+                                                        kaiko_client = {workspace = true}
+                                                        # Internal crates
+                                                        docker_utils = {workspace = true}
+                                                        specs_utils = {workspace = true}
+                                                        # External crates
+                                                        tokio = { workspace = true }
