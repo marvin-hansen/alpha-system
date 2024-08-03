@@ -8,18 +8,26 @@ July/30/2024
 
 https://youtu.be/gbuWJ48T0bE?si=N9xZzG8AfR6S4DAL
 
-Prebuild the MDDB and all IMS services, clients, proto interfaces, and API's. 
+Aug/3/2024
+
+Prebuild the MDDB and all IMS services, clients, proto interfaces, and API's. The full end to end game for a complete IMS data, execution, and reporting system. 
 
 Template and pre-integrating services. 
 Template and pre-integrating components.
 Very fast and powerful... 
 
 DO NOT implement the API. Do NOT. Not yet,
-Instead, return a dummy value from the actual API. 
+
+Instead, design an API that replicates the COIN.API interface for data and execution. 
+
+Return a dummy value from the actual API. 
 
 Pre-integrate and iterate the API. 
 
-When the API specification is stable, add tests for whatever will be implemented. All tests are suppose to fail. Iterate test design to cover more corner cases so that more tests fail. 
+When the API specification is stable, add tests for one service that will be implemented. 
+
+All tests are suppose to fail. 
+Iterate test design to cover more corner cases, add more tests so that more tests fail. 
 
 Then, draft an implementation, iterate the draft, and then convert the draft into a done implementation that completes the moment all tests pass. 
 
