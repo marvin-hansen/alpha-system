@@ -1,5 +1,12 @@
 # Next steps
 
+
+Aug/7/2024
+
+[] Update ServiceConfig to generalize all endpoints in one singe format
+[] Update all existing service configs to the new format
+[] Update ConfigManger to use the new format 
+
 July/30/2024
 
 * Add health-check endpoint auto configuration in ConfigManager
