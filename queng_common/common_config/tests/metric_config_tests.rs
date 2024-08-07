@@ -14,7 +14,7 @@ fn test_default() {
     let config = MetricConfig::default();
 
     assert_eq!(config.uri(), "metrics");
-    assert_eq!(config.host(), "127.0.0.1");
+    assert_eq!(config.host(), "0.0.0.0");
     assert_eq!(config.port(), 8080);
 }
 

@@ -1,1 +1,1 @@
-//queng_components/db_components/db_postgres_manager
+//queng_common/common_config

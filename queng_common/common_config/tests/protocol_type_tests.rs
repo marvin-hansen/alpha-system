@@ -3,7 +3,7 @@ use common_config::prelude::ProtocolType;
 #[test]
 fn test_default() {
     let protocol = ProtocolType::default();
-    assert_eq!(protocol, ProtocolType::NullVal);
+    assert_eq!(protocol, ProtocolType::UnknownProtocol);
 }
 
 #[test]
@@ -11,7 +11,7 @@ fn test_from() {
     assert_eq!(ProtocolType::from(0x1_i32), ProtocolType::GRPC);
     assert_eq!(ProtocolType::from(0x2_i32), ProtocolType::HTTP);
     assert_eq!(ProtocolType::from(0x3_i32), ProtocolType::UDP);
-    assert_eq!(ProtocolType::from(0x4_i32), ProtocolType::NullVal);
+    assert_eq!(ProtocolType::from(0x4_i32), ProtocolType::UnknownProtocol);
 }
 
 #[test]

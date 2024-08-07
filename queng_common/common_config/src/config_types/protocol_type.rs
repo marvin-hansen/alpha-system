@@ -11,7 +11,7 @@ use std::fmt::{Display, Formatter};
 #[repr(i8)]
 pub enum ProtocolType {
     #[default]
-    NullVal = 0,
+    UnknownProtocol = 0,
     /// The gRPC protocol.
     GRPC = 1,
     /// The HTTP protocol.
@@ -32,7 +32,7 @@ impl From<i16> for ProtocolType {
             0x1_i16 => Self::GRPC,
             0x2_i16 => Self::HTTP,
             0x3_i16 => Self::UDP,
-            _ => Self::NullVal,
+            _ => Self::UnknownProtocol,
         }
     }
 }
@@ -43,7 +43,7 @@ impl From<i8> for ProtocolType {
             0x1_i8 => Self::GRPC,
             0x2_i8 => Self::HTTP,
             0x3_i8 => Self::UDP,
-            _ => Self::NullVal,
+            _ => Self::UnknownProtocol,
         }
     }
 }
@@ -55,7 +55,7 @@ impl From<u8> for ProtocolType {
             0x1_u8 => Self::GRPC,
             0x2_u8 => Self::HTTP,
             0x3_u8 => Self::UDP,
-            _ => Self::NullVal,
+            _ => Self::UnknownProtocol,
         }
     }
 }
@@ -70,7 +70,7 @@ impl From<i32> for ProtocolType {
             0x1_i32 => Self::GRPC,
             0x2_i32 => Self::HTTP,
             0x3_i32 => Self::UDP,
-            _ => Self::NullVal,
+            _ => Self::UnknownProtocol,
         }
     }
 }
@@ -92,7 +92,7 @@ impl Display for ProtocolType {
             ProtocolType::GRPC => write!(f, "GRPC"),
             ProtocolType::HTTP => write!(f, "HTTP"),
             ProtocolType::UDP => write!(f, "UDP"),
-            ProtocolType::NullVal => write!(f, "NullVal"),
+            ProtocolType::UnknownProtocol => write!(f, "UnknownProtocol"),
         }
     }
 }

@@ -90,7 +90,7 @@ fn test_display() {
         metrics,
     );
 
-    let expected = "ServiceConfig { svc_id: SMDB, name: SMDB, version: 1, online: true, description: description, health_check_uri: health_check_uri, base_uri: base_uri, dependencies: [DBGW], exposure: ENDPOINT, endpoint: name: ,  version: 0,  port: 0,  uri: ,  protocol: NullVal metrics: metric_uri: metrics,  metric_host: 127.0.0.1,  metric_port: 8080 }";
+    let expected = "ServiceConfig { svc_id: SMDB, name: SMDB, version: 1, online: true, description: description, health_check_uri: health_check_uri, base_uri: base_uri, dependencies: [DBGW], exposure: ENDPOINT, endpoint: name: ,  version: 0,  port: 0,  uri: ,  protocol: UnknownProtocol metrics: metric_uri: metrics,  metric_host: 0.0.0.0,  metric_port: 8080 }";
     let actual = service_config.to_string();
     assert_eq!(actual, expected);
 }

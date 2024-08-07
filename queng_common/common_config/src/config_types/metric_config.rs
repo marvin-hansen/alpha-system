@@ -1,5 +1,7 @@
 use std::fmt::{Display, Formatter};
 
+use crate::prelude::Endpoint;
+
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct MetricConfig {
     uri: String,
@@ -11,13 +13,20 @@ impl MetricConfig {
     pub fn new(uri: String, host: String, port: u32) -> Self {
         Self { uri, host, port }
     }
+
+    pub fn from_endpoint(endpoint: &Endpoint) -> Self {
+        let uri = endpoint.uri().to_string();
+        let host = String::from("0.0.0.0");
+        let port = endpoint.port();
+        Self { uri, host, port }
+    }
 }
 
 impl Default for MetricConfig {
     fn default() -> Self {
         Self {
             uri: String::from("metrics"),
-            host: String::from("127.0.0.1"),
+            host: String::from("0.0.0.0"),
             port: 8080,
         }
     }
