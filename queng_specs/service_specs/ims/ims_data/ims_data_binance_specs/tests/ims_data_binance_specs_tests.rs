@@ -26,7 +26,7 @@ fn test_ims_data_binance_config() {
     assert_eq!(service_config.exposure(), &ServiceType::ENDPOINT);
 
     // Test the accessors for the Endpoint
-    let endpoint = service_config.endpoint();
+    let endpoint = service_config.service_endpoint();
     assert_eq!(endpoint.name(), "Binance-ims-data-endpoint");
     assert_eq!(endpoint.version(), 1);
     assert_eq!(endpoint.uri(), "/");
@@ -34,7 +34,7 @@ fn test_ims_data_binance_config() {
     assert_eq!(endpoint.protocol(), ProtocolType::GRPC);
 
     // Test the accessors for the MetricConfig
-    let metric_config = service_config.metrics();
+    let metric_config = service_config.metrics_endpoint();
     assert_eq!(metric_config.uri(), "metrics");
     assert_eq!(metric_config.host(), "0.0.0.0");
     assert_eq!(metric_config.port(), 8080);

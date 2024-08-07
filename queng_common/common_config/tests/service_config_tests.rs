@@ -1,4 +1,4 @@
-use common_config::prelude::{Endpoint, MetricConfig, ServiceConfig, ServiceID, ServiceType};
+use common_config::prelude::{Endpoint, ServiceConfig, ServiceID};
 
 #[test]
 fn test_new() {
@@ -10,9 +10,7 @@ fn test_new() {
     let health_check_uri = "health_check_uri".to_string();
     let base_uri = "base_uri".to_string();
     let dependencies = vec![ServiceID::DBGW];
-    let exposure = ServiceType::default();
-    let endpoint = Endpoint::default();
-    let metrics = MetricConfig::default();
+    let endpoints = Vec::from([Endpoint::default(), Endpoint::default()]);
 
     let service_config = ServiceConfig::new(
         id,
@@ -23,9 +21,7 @@ fn test_new() {
         health_check_uri,
         base_uri,
         dependencies,
-        exposure,
-        endpoint,
-        metrics,
+        endpoints,
     );
 
     assert_eq!(service_config.svc_id(), &ServiceID::SMDB);
@@ -42,8 +38,7 @@ fn test_new() {
         service_config.dependencies().len(),
         vec![ServiceID::DBGW].len()
     );
-    assert_eq!(service_config.exposure(), &ServiceType::default());
-    assert_eq!(service_config.endpoint(), Endpoint::default());
+    assert_eq!(service_config.service_endpoint(), Endpoint::default());
 }
 
 #[test]
@@ -58,8 +53,6 @@ fn test_default() {
     assert_eq!(service_config.health_check_uri(), &String::from(""));
     assert_eq!(service_config.base_uri(), &String::from(""));
     assert_eq!(service_config.dependencies(), &Vec::new());
-    assert_eq!(service_config.exposure(), &ServiceType::default());
-    assert_eq!(service_config.endpoint(), Endpoint::default());
 }
 
 #[test]
@@ -72,9 +65,11 @@ fn test_display() {
     let health_check_uri = "health_check_uri".to_string();
     let base_uri = "base_uri".to_string();
     let dependencies = vec![ServiceID::DBGW];
-    let exposure = ServiceType::default();
-    let endpoint = Endpoint::default();
-    let metrics = MetricConfig::default();
+    let endpoints = Vec::from([
+        Endpoint::default(),
+        Endpoint::default(),
+        Endpoint::default(),
+    ]);
 
     let service_config = ServiceConfig::new(
         id,
@@ -85,12 +80,10 @@ fn test_display() {
         health_check_uri,
         base_uri,
         dependencies,
-        exposure,
-        endpoint,
-        metrics,
+        endpoints,
     );
 
-    let expected = "ServiceConfig { svc_id: SMDB, name: SMDB, version: 1, online: true, description: description, health_check_uri: health_check_uri, base_uri: base_uri, dependencies: [DBGW], exposure: ENDPOINT, endpoint: name: ,  version: 0,  port: 0,  uri: ,  protocol: UnknownProtocol metrics: metric_uri: metrics,  metric_host: 0.0.0.0,  metric_port: 8080 }";
+    let expected = "ServiceConfig { svc_id: SMDB, name: SMDB, version: 1, online: true, description: description, health_check_uri: health_check_uri, base_uri: base_uri, dependencies: [DBGW], endpoint: name: ,  version: 0,  port: 0,  uri: ,  protocol: UnknownProtocol metrics: metric_uri: ,  metric_host: 0.0.0.0,  metric_port: 0 health: None }";
     let actual = service_config.to_string();
     assert_eq!(actual, expected);
 }

@@ -2,7 +2,7 @@ use std::fmt::{Display, Formatter};
 
 use tokio_postgres::Row;
 
-use crate::prelude::{Endpoint, MetricConfig, ProtocolType, ServiceID, ServiceType};
+use crate::prelude::{Endpoint, MetricConfig, ProtocolType, ServiceID};
 
 #[derive(Debug, Default, Clone, Eq, PartialEq)]
 pub struct ServiceConfig {
@@ -22,12 +22,8 @@ pub struct ServiceConfig {
     base_uri: String,
     /// Service dependencies.
     dependencies: Vec<ServiceID>,
-    /// Service exposure type.
-    exposure: ServiceType,
     /// Service endpoint.
-    endpoint: Endpoint,
-    /// Service metrics
-    metrics: MetricConfig,
+    endpoints: Vec<Endpoint>,
 }
 
 impl ServiceConfig {
@@ -43,9 +39,7 @@ impl ServiceConfig {
     /// * `health_check_uri` - Health check URI.
     /// * `base_uri` - Base URI.
     /// * `dependencies` - Service dependencies.
-    /// * `exposure` - Service exposure type.
-    /// * `endpoint` - Service endpoint.
-    /// * `metrics` - MetricConfig.
+    /// * `endpoints` - Service endpoint.
     // https://rust-lang.github.io/rust-clippy/master/index.html#/too_many_arguments
     #[allow(clippy::too_many_arguments)]
     pub fn new(
@@ -57,9 +51,7 @@ impl ServiceConfig {
         health_check_uri: String,
         base_uri: String,
         dependencies: Vec<ServiceID>,
-        exposure: ServiceType,
-        endpoint: Endpoint,
-        metrics: MetricConfig,
+        endpoints: Vec<Endpoint>,
     ) -> Self {
         Self {
             svc_id,
@@ -70,9 +62,7 @@ impl ServiceConfig {
             health_check_uri,
             base_uri,
             dependencies,
-            exposure,
-            endpoint,
-            metrics,
+            endpoints,
         }
     }
 }
@@ -103,17 +93,14 @@ impl ServiceConfig {
         let db_health_check_uri = row.get::<usize, String>(5);
         let db_base_uri = row.get::<usize, String>(6);
         let db_dependencies = row.get::<usize, Vec<i16>>(7);
-        let db_exposure = row.get::<usize, i16>(8);
+
+        //let db_exposure = row.get::<usize, i16>(8);
 
         let db_endpoint_name = row.get::<usize, String>(9);
         let db_endpoint_version = row.get::<usize, i16>(10);
         let db_endpoint_uri = row.get::<usize, String>(11);
         let db_endpoint_port = row.get::<usize, i16>(12);
         let db_endpoint_protocol = row.get::<usize, i16>(13);
-
-        let db_metrics_uri = row.get::<usize, String>(14);
-        let db_metrics_host = row.get::<usize, String>(15);
-        let db_metrics_port = row.get::<usize, i16>(16);
 
         let dependencies: Vec<ServiceID> = db_dependencies
             .iter()
@@ -129,15 +116,13 @@ impl ServiceConfig {
             db_health_check_uri,
             db_base_uri,
             dependencies,
-            ServiceType::from(db_exposure),
-            Endpoint::new(
+            Vec::from([Endpoint::new(
                 db_endpoint_name,
                 db_endpoint_version as u32,
                 db_endpoint_uri,
                 db_endpoint_port as u32,
                 ProtocolType::from(db_endpoint_protocol),
-            ),
-            MetricConfig::new(db_metrics_uri, db_metrics_host, db_metrics_port as u32),
+            )]),
         )
     }
 }
@@ -175,24 +160,30 @@ impl ServiceConfig {
     pub fn dependencies(&self) -> &Vec<ServiceID> {
         &self.dependencies
     }
-    /// Returns the service exposure type.
-    pub fn exposure(&self) -> &ServiceType {
-        &self.exposure
+    /// Returns all endpoints of the service
+    pub fn endpoints(&self) -> &Vec<Endpoint> {
+        &self.endpoints
     }
-    /// Returns the service endpoint.
-    pub fn endpoint(&self) -> Endpoint {
-        self.endpoint.to_owned()
+    /// Returns only the service endpoint.
+    pub fn service_endpoint(&self) -> Endpoint {
+        self.endpoints.get(1).unwrap().to_owned()
     }
-    pub fn metrics(&self) -> &MetricConfig {
-        &self.metrics
+    /// Returns only the metrics endpoint.
+    pub fn metrics_endpoint(&self) -> MetricConfig {
+        let endpoint = &self.endpoints.get(2).unwrap().to_owned();
+        MetricConfig::from_endpoint(endpoint)
+    }
+    /// Returns an option to the health endpoint.
+    pub fn health_endpoint(&self) -> Option<&Endpoint> {
+        self.endpoints.get(3).to_owned()
     }
 }
 
 impl Display for ServiceConfig {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         write!(f,
-               "ServiceConfig {{ svc_id: {}, name: {}, version: {}, online: {}, description: {}, health_check_uri: {}, base_uri: {}, dependencies: {:?}, exposure: {}, endpoint: {} metrics: {} }}",
-               self.svc_id, self.name, self.version, self.online, self.description, self.health_check_uri, self.base_uri, self.dependencies, self.exposure, self.endpoint, self.metrics
+               "ServiceConfig {{ svc_id: {}, name: {}, version: {}, online: {}, description: {}, health_check_uri: {}, base_uri: {}, dependencies: {:?}, endpoint: {} metrics: {} health: {:?} }}",
+               self.svc_id, self.name, self.version, self.online, self.description, self.health_check_uri, self.base_uri, self.dependencies, self.service_endpoint(), self.metrics_endpoint(), self.health_endpoint(),
         )
     }
 }

@@ -39,14 +39,14 @@ pub fn build_insert_service_query(data: &ServiceConfig) -> String {
         data.base_uri(),
         shared::service_ids_to_string(data.dependencies()),
         data.exposure().as_u8(),
-        data.endpoint().name(),
-        data.endpoint().version(),
-        data.endpoint().uri(),
-        data.endpoint().port(),
-        data.endpoint().protocol().as_u8(),
-        data.metrics().uri(),
-        data.metrics().host(),
-        data.metrics().port()
+        data.service_endpoint().name(),
+        data.service_endpoint().version(),
+        data.service_endpoint().uri(),
+        data.service_endpoint().port(),
+        data.service_endpoint().protocol().as_u8(),
+        data.metrics_endpoint().uri(),
+        data.metrics_endpoint().host(),
+        data.metrics_endpoint().port()
     )
 }
 

@@ -27,7 +27,7 @@ fn test_cmdb_service_config() {
     );
     assert_eq!(service_config.exposure(), &ServiceType::ENDPOINT);
 
-    let endpoint = service_config.endpoint();
+    let endpoint = service_config.service_endpoint();
     assert_eq!(endpoint.name(), "qdgw Endpoint");
     assert_eq!(endpoint.version(), 1);
     assert_eq!(endpoint.uri(), String::from("/"));

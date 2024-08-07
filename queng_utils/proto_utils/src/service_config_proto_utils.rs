@@ -64,10 +64,10 @@ pub fn service_config_from_proto(proto: ProtoServiceConfig) -> Result<ServiceCon
 ///
 pub fn service_config_to_proto(service_config: ServiceConfig) -> Result<ProtoServiceConfig, Error> {
     //
-    let proto_endpoint =
-        endpoint_to_proto(service_config.endpoint()).expect("Failed to create endpoint from proto");
+    let proto_endpoint = endpoint_to_proto(service_config.service_endpoint())
+        .expect("Failed to create endpoint from proto");
 
-    let proto_metrics = metric_config_to_proto(service_config.metrics())
+    let proto_metrics = metric_config_to_proto(service_config.metrics_endpoint())
         .expect("Failed to create metrics from proto");
 
     let proto_dependencies = service_config

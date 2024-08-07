@@ -23,7 +23,7 @@ fn test_vex_service_config_accessors() {
     assert_eq!(service_config.exposure(), &ServiceType::ENDPOINT);
 
     // Test the accessors for the Endpoint
-    let endpoint = service_config.endpoint();
+    let endpoint = service_config.service_endpoint();
     assert_eq!(endpoint.name(), "vex Endpoint");
     assert_eq!(endpoint.version(), 1);
     assert_eq!(endpoint.uri(), "/");
@@ -31,7 +31,7 @@ fn test_vex_service_config_accessors() {
     assert_eq!(endpoint.protocol(), ProtocolType::GRPC);
 
     // Test the accessors for the MetricConfig
-    let metric_config = service_config.metrics();
+    let metric_config = service_config.metrics_endpoint();
     assert_eq!(metric_config.uri(), "metrics");
     assert_eq!(metric_config.host(), "0.0.0.0");
     assert_eq!(metric_config.port(), 8080);

@@ -42,7 +42,6 @@ rust_test_suite(
     srcs = glob([
         "service_config_tests.rs",
         "service_id_tests.rs",
-        "service_type_tests.rs",
         "svc_env_config_tests.rs",
     ]),
     tags = [
