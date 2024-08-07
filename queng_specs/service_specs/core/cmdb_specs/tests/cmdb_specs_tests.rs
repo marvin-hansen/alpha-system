@@ -1,5 +1,5 @@
 use cmdb_specs::cmdb_service_config;
-use common_config::prelude::{ProtocolType, ServiceID, ServiceType};
+use common_config::prelude::{ProtocolType, ServiceID};
 
 #[test]
 fn test_cmdb_service_config() {
@@ -25,8 +25,6 @@ fn test_cmdb_service_config() {
         service_config.dependencies().len(),
         vec![ServiceID::DBGW, ServiceID::SMDB].len()
     );
-    assert_eq!(service_config.exposure(), &ServiceType::ENDPOINT);
-
     let endpoint = service_config.service_endpoint();
     assert_eq!(endpoint.name(), "cmdb Endpoint");
     assert_eq!(endpoint.version(), 1);

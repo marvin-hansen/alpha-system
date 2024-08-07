@@ -1,6 +1,4 @@
-use common_config::prelude::{
-    Endpoint, MetricConfig, ProtocolType, ServiceConfig, ServiceID, ServiceType,
-};
+use common_config::prelude::{Endpoint, ProtocolType, ServiceConfig, ServiceID};
 
 /// Constructs the configuration for the CMDB service.
 ///
@@ -13,9 +11,7 @@ use common_config::prelude::{
 /// - `health_check_uri`: The URI for the health check endpoint of the service.
 /// - `base_uri`: The base URI for the service.
 /// - `dependencies`: A list of service IDs that this service depends on.
-/// - `exposure_type`: The exposure type of the service (e.g., internal, external).
 /// - `endpoints`: A list of `EndpointConfig` structs defining the endpoints of the service.
-/// - `metrics`: A list of `MetricConfig` structs defining the metrics of the service.
 ///
 /// # Returns
 /// A `ServiceConfig` instance with all the necessary settings for the CMDB service.
@@ -28,9 +24,7 @@ pub fn cmdb_service_config() -> ServiceConfig {
     let health_check_uri = "cmdbv1-service.default.svc.cluster.local:7070/health".to_string();
     let base_uri = "cmdbv1-service.default.svc.cluster.local".to_string();
     let dependencies = vec![ServiceID::DBGW, ServiceID::SMDB];
-    let exposure = ServiceType::ENDPOINT;
-    let endpoint = get_endpoint();
-    let metrics = get_metric_config();
+    let endpoints = vec![service_endpoint(), metric_endpoint(), health_endpoint()];
 
     ServiceConfig::new(
         id,
@@ -41,13 +35,11 @@ pub fn cmdb_service_config() -> ServiceConfig {
         health_check_uri,
         base_uri,
         dependencies,
-        exposure,
-        endpoint,
-        metrics,
+        endpoints,
     )
 }
 
-fn get_endpoint() -> Endpoint {
+fn service_endpoint() -> Endpoint {
     let endpoint_name = "cmdb Endpoint".to_string();
     let endpoint_version = 1;
     let endpoint_uri = "/".to_string();
@@ -63,10 +55,34 @@ fn get_endpoint() -> Endpoint {
     )
 }
 
-fn get_metric_config() -> MetricConfig {
-    let metric_uri = "metrics".to_string();
-    let metric_host = "0.0.0.0".to_string();
-    let metric_port = 8080;
+fn metric_endpoint() -> Endpoint {
+    let endpoint_name = "Metrics Endpoint".to_string();
+    let endpoint_version = 1;
+    let endpoint_uri = "metrics".to_string();
+    let endpoint_port = 8080;
+    let endpoint_protocol = ProtocolType::HTTP;
 
-    MetricConfig::new(metric_uri, metric_host, metric_port)
+    Endpoint::new(
+        endpoint_name,
+        endpoint_version,
+        endpoint_uri,
+        endpoint_port,
+        endpoint_protocol,
+    )
+}
+
+fn health_endpoint() -> Endpoint {
+    let endpoint_name = "Health Endpoint".to_string();
+    let endpoint_version = 1;
+    let endpoint_uri = "health".to_string();
+    let endpoint_port = 8080;
+    let endpoint_protocol = ProtocolType::HTTP;
+
+    Endpoint::new(
+        endpoint_name,
+        endpoint_version,
+        endpoint_uri,
+        endpoint_port,
+        endpoint_protocol,
+    )
 }
