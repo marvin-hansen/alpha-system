@@ -16,8 +16,8 @@ rust_test_suite(
         "test.runner-recycling-key": "dbgw_tests",
     },
     tags = [
-        "integration_test",
         "dbgw_tests",
+        "integration_test",
     ],
     visibility = ["//visibility:public"],
     deps = [

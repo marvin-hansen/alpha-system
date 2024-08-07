@@ -21,7 +21,7 @@ pub fn cmdb_service_config() -> ServiceConfig {
     let version = 1;
     let online = false;
     let description = "CMDB Manages configurations stored in the DB".to_string();
-    let health_check_uri = "cmdbv1-service.default.svc.cluster.local:7070/health".to_string();
+    let health_check_uri = "cmdbv1-service.default.svc.cluster.local:8080/health".to_string();
     let base_uri = "cmdbv1-service.default.svc.cluster.local".to_string();
     let dependencies = vec![ServiceID::DBGW, ServiceID::SMDB];
     let endpoints = vec![service_endpoint(), metric_endpoint(), health_endpoint()];

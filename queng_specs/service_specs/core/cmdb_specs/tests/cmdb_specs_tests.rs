@@ -15,7 +15,7 @@ fn test_cmdb_service_config() {
     );
     assert_eq!(
         service_config.health_check_uri(),
-        "cmdbv1-service.default.svc.cluster.local:7070/health"
+        "cmdbv1-service.default.svc.cluster.local:8080/health"
     );
     assert_eq!(
         service_config.base_uri(),
@@ -31,4 +31,9 @@ fn test_cmdb_service_config() {
     assert_eq!(endpoint.uri(), String::from("/"));
     assert_eq!(endpoint.port(), 7070);
     assert_eq!(endpoint.protocol(), ProtocolType::GRPC);
+
+    let endpoint = service_config.metrics_endpoint();
+    assert_eq!(endpoint.uri(), String::from("metrics"));
+    assert_eq!(endpoint.host(), String::from("0.0.0.0"));
+    assert_eq!(endpoint.port(), 8080);
 }

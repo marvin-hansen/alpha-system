@@ -166,16 +166,16 @@ impl ServiceConfig {
     }
     /// Returns only the service endpoint.
     pub fn service_endpoint(&self) -> Endpoint {
-        self.endpoints.get(1).unwrap().to_owned()
+        self.endpoints.get(0).unwrap().to_owned()
     }
     /// Returns only the metrics endpoint.
     pub fn metrics_endpoint(&self) -> MetricConfig {
-        let endpoint = &self.endpoints.get(2).unwrap().to_owned();
+        let endpoint = &self.endpoints.get(1).unwrap().to_owned();
         MetricConfig::from_endpoint(endpoint)
     }
     /// Returns an option to the health endpoint.
     pub fn health_endpoint(&self) -> Option<&Endpoint> {
-        self.endpoints.get(3).to_owned()
+        self.endpoints.get(2).to_owned()
     }
 }
 
