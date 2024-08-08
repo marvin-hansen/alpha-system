@@ -1,0 +1,19 @@
+load("@rules_rust//rust:defs.bzl", "rust_test_suite")
+
+rust_test_suite(
+    name = "shared_service_specs_tests",
+    srcs = glob([
+        "*_tests.rs",
+    ]),
+    tags = [
+        "specs",
+        "unit-test",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Test target
+        "//alias:shared_service_specs",
+        # Internal dependencies
+        "//alias:common_config",
+    ],
+)

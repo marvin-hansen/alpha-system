@@ -11,16 +11,9 @@ message ProtoServiceConfig {
   string health_check_uri = 6;
   string base_uri = 7;
   repeated int32 dependencies = 8;
-  int32 Exposure = 9;
-  ProtoEndpoint endpoint = 10;
-  ProtoMetricConfig metrics = 11;
+  repeated ProtoEndpoint endpoint = 9;
 }
 
-message ProtoMetricConfig {
-  string metric_uri = 1;
-  string metric_host = 2;
-  uint32 metric_port = 3;
-}
 
 message ProtoEndpoint {
   string name = 1;

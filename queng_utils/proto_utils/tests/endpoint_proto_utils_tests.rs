@@ -12,7 +12,8 @@ fn test_from_proto() {
         protocol: 1,
     };
 
-    let endpoint = endpoint_from_proto(proto).unwrap();
+    let all_endpoints = endpoint_from_proto(Vec::from([proto])).unwrap();
+    let endpoint = all_endpoints.get(0).unwrap();
 
     assert_eq!(endpoint.name(), "test");
     assert_eq!(endpoint.version(), 1);
@@ -31,7 +32,8 @@ fn test_to_proto() {
         ProtocolType::GRPC,
     );
 
-    let proto = endpoint_to_proto(endpoint).unwrap();
+    let all_endpoints = endpoint_to_proto(&Vec::from([endpoint])).unwrap();
+    let proto = all_endpoints.get(0).unwrap();
 
     assert_eq!(proto.name, "test");
     assert_eq!(proto.version, 1);

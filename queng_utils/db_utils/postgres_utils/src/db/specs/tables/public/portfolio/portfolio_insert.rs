@@ -1,5 +1,5 @@
 use common_exchange::prelude::PortfolioConfig;
-use common_pg_queries::pg_inserts;
+use common_pg_queries::portfolio_insert;
 
 use crate::db::Specs;
 use crate::prelude::PostgresUtilError;
@@ -28,7 +28,7 @@ impl Specs {
     pub async fn insert_portfolio(&self, data: &PortfolioConfig) -> Result<(), PostgresUtilError> {
         self.dbg_print("insert_portfolio");
 
-        let query = pg_inserts::build_insert_portfolio_query(data);
+        let query = portfolio_insert::build_insert_portfolio_query(data);
         let portfolio_id = match self.execute_insert_query(&query).await {
             Ok(id) => id,
             Err(err) => {

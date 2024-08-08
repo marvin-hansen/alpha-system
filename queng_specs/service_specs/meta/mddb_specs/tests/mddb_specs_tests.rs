@@ -1,4 +1,4 @@
-use common_config::prelude::{ProtocolType, ServiceID, ServiceType};
+use common_config::prelude::{ProtocolType, ServiceID};
 use mddb_specs::mddb_service_config;
 
 #[test]
@@ -23,7 +23,6 @@ fn test_mddb_service_config_accessors() {
         "mddbv1-service.default.svc.cluster.local".to_string()
     );
     assert_eq!(service_config.dependencies(), &vec![]);
-    assert_eq!(service_config.exposure(), &ServiceType::ENDPOINT);
 
     // Test the accessors for the Endpoint
     let endpoint = service_config.service_endpoint();

@@ -1,5 +1,5 @@
 use common_config::prelude::ServiceID;
-use common_pg_queries::pg_query_service::{
+use common_pg_queries::service_query::{
     build_check_if_service_id_exists_query, build_check_if_service_id_online_query,
     build_delete_service_query, build_read_all_services_query, build_read_service_by_id_query,
     build_set_svc_online_query, generate_count_table_query,

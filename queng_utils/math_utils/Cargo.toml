@@ -7,12 +7,6 @@ readme.workspace = true
 repository.workspace = true
 authors.workspace = true
 
-
-[lib]
-name = "math_utils"
-path = "src/lib.rs"
-
-
 [dependencies]
 # Internal dependencies
 

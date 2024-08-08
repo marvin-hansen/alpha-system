@@ -1,5 +1,5 @@
 use common_exchange::prelude::{Instrument, PortfolioConfig};
-use common_pg_queries::{pg_inserts, pg_query_portfolio, pg_update};
+use common_pg_queries::{portfolio_insert, portfolio_query, portfolio_update};
 
 use crate::error::PostgresDBError;
 use crate::PostgresDBManager;
@@ -26,7 +26,7 @@ impl PostgresDBManager {
         self.dbg_print("insert_portfolio");
 
         self.dbg_print("[insert_portfolio]: insert portfolio");
-        let query = pg_inserts::build_insert_portfolio_query(data);
+        let query = portfolio_insert::build_insert_portfolio_query(data);
         let portfolio_id = match self.execute_insert_query(&query).await {
             Ok(id) => id,
             Err(err) => {
@@ -93,7 +93,7 @@ impl PostgresDBManager {
             return Ok(instrument_id.to_string());
         }
 
-        let query = pg_inserts::build_insert_instrument_query(data);
+        let query = portfolio_insert::build_insert_instrument_query(data);
         match self.client.query_one(&query, &[]).await {
             Ok(row) => {
                 let code = row.get::<usize, String>(0);
@@ -115,7 +115,7 @@ impl PostgresDBManager {
         self.dbg_print("insert_portfolio_instrument");
 
         let query =
-            pg_inserts::build_insert_portfolio_instrument_query(portfolio_id, instrument_id);
+            portfolio_insert::build_insert_portfolio_instrument_query(portfolio_id, instrument_id);
         // println!("query: {}", query);
         match self.execute_query(&query).await {
             Ok(_) => Ok(()),
@@ -164,7 +164,7 @@ impl PostgresDBManager {
         // First, we have to query for all the instruments id's that match the given portfolio_id
         self.dbg_print("Query for portfolio_instrument");
         let query_instrument_ids_ =
-            pg_query_portfolio::build_query_instrument_ids_by_portfolio_id(portfolio_id);
+            portfolio_query::build_query_instrument_ids_by_portfolio_id(portfolio_id);
 
         let instrument_ids = match self.client.query(&query_instrument_ids_, &[]).await {
             Ok(res) => {
@@ -185,7 +185,7 @@ impl PostgresDBManager {
 
         // Then we have to fetch all the instruments for the portfolio
         self.dbg_print("Query for instruments");
-        let query_instruments = pg_query_portfolio::build_query_instruments_by_ids(&instrument_ids);
+        let query_instruments = portfolio_query::build_query_instruments_by_ids(&instrument_ids);
         let instruments = match self.client.query(&query_instruments, &[]).await {
             Ok(res) => {
                 let mut instruments = Vec::new();
@@ -203,7 +203,7 @@ impl PostgresDBManager {
 
         // Then we have to fetch the portfolio
         self.dbg_print("Query for portfolio");
-        let query = pg_query_portfolio::build_query_portfolio_by_id(portfolio_id);
+        let query = portfolio_query::build_query_portfolio_by_id(portfolio_id);
         match self.client.query_one(&query, &[]).await {
             Ok(row) => {
                 let portfolio = PortfolioConfig::from_sql_row(&row, instruments);
@@ -263,7 +263,7 @@ impl PostgresDBManager {
     ) -> Result<bool, PostgresDBError> {
         self.dbg_print("check_if_portfolio_id_exists");
 
-        let query = pg_query_portfolio::build_check_if_portfolio_id_exists_query(portfolio_id);
+        let query = portfolio_query::build_check_if_portfolio_id_exists_query(portfolio_id);
         match self.execute_exists_query(&query).await {
             Ok(_) => Ok(true),
             Err(e) => Err(e),
@@ -291,7 +291,7 @@ impl PostgresDBManager {
     ) -> Result<bool, PostgresDBError> {
         self.dbg_print("check_if_instrument_id_exists");
 
-        let query = pg_query_portfolio::build_check_if_instrument_id_exists_query(instrument_id);
+        let query = portfolio_query::build_check_if_instrument_id_exists_query(instrument_id);
         match self.execute_exists_query(&query).await {
             Ok(_) => Ok(true),
             Err(e) => Err(e),
@@ -317,7 +317,7 @@ impl PostgresDBManager {
     ) -> Result<Option<PortfolioConfig>, PostgresDBError> {
         self.dbg_print("update_portfolio_config");
 
-        let query = pg_update::build_update_portfolio_query(&data);
+        let query = portfolio_update::build_update_portfolio_query(&data);
         match self.execute_query(&query).await {
             Ok(_) => Ok(Some(data)),
             Err(e) => Err(e),
@@ -351,7 +351,7 @@ impl PostgresDBManager {
         }
 
         self.dbg_print("delete instruments associated with portfolio");
-        let query = pg_query_portfolio::build_delete_portfolio_instrument_query(id);
+        let query = portfolio_query::build_delete_portfolio_instrument_query(id);
         match self.execute_query(&query).await {
             Ok(_) => (),
             Err(e) => {
@@ -360,7 +360,7 @@ impl PostgresDBManager {
         }
 
         self.dbg_print("delete actual portfolio");
-        let query = pg_query_portfolio::build_delete_portfolio_query(id);
+        let query = portfolio_query::build_delete_portfolio_query(id);
         match self.execute_query(&query).await {
             Ok(_) => Ok(true),
             Err(e) => Err(e),

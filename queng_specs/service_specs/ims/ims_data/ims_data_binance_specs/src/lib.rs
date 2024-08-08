@@ -1,6 +1,5 @@
-use common_config::prelude::{
-    Endpoint, MetricConfig, ProtocolType, ServiceConfig, ServiceID, ServiceType,
-};
+use common_config::prelude::{ServiceConfig, ServiceID};
+use shared_service_specs::{health_endpoint, ims_endpoint, metric_endpoint};
 
 /// Configures the service for Binance data in the IMS system.
 ///
@@ -42,9 +41,11 @@ fn ims_service_config(exchange_id: &str, service_id: ServiceID) -> ServiceConfig
     );
     let base_uri = format!("ims-data-service-{}.default.svc.cluster.local", exchange_id);
     let dependencies = vec![ServiceID::SMDB];
-    let exposure = ServiceType::ENDPOINT;
-    let endpoint = get_endpoint(exchange_id, port);
-    let metrics = get_metric_config();
+    let endpoints = vec![
+        ims_endpoint(exchange_id, port),
+        metric_endpoint(),
+        health_endpoint(),
+    ];
 
     ServiceConfig::new(
         id,
@@ -55,32 +56,6 @@ fn ims_service_config(exchange_id: &str, service_id: ServiceID) -> ServiceConfig
         health_check_uri,
         base_uri,
         dependencies,
-        exposure,
-        endpoint,
-        metrics,
+        endpoints,
     )
-}
-
-fn get_endpoint(exchange_id: &str, port: u32) -> Endpoint {
-    let endpoint_name = format!("{}-ims-data-endpoint", exchange_id);
-    let endpoint_version = 1;
-    let endpoint_uri = "/".to_string();
-    let endpoint_port = port;
-    let endpoint_protocol = ProtocolType::GRPC;
-
-    Endpoint::new(
-        endpoint_name,
-        endpoint_version,
-        endpoint_uri,
-        endpoint_port,
-        endpoint_protocol,
-    )
-}
-
-fn get_metric_config() -> MetricConfig {
-    let metric_host = "0.0.0.0".to_string();
-    let metric_uri = "metrics".to_string();
-    let metric_port = 8080;
-
-    MetricConfig::new(metric_uri, metric_host, metric_port)
 }

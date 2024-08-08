@@ -26,7 +26,7 @@ fn test_cmdb_service_config() {
         vec![ServiceID::DBGW, ServiceID::SMDB].len()
     );
     let endpoint = service_config.service_endpoint();
-    assert_eq!(endpoint.name(), "cmdb Endpoint");
+    assert_eq!(endpoint.name(), "CMDB Endpoint");
     assert_eq!(endpoint.version(), 1);
     assert_eq!(endpoint.uri(), String::from("/"));
     assert_eq!(endpoint.port(), 7070);

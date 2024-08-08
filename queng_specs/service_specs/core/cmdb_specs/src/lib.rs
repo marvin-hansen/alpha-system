@@ -1,4 +1,5 @@
-use common_config::prelude::{Endpoint, ProtocolType, ServiceConfig, ServiceID};
+use common_config::prelude::{ServiceConfig, ServiceID};
+use shared_service_specs::{default_grpc_service_endpoint, health_endpoint, metric_endpoint};
 
 /// Constructs the configuration for the CMDB service.
 ///
@@ -24,7 +25,11 @@ pub fn cmdb_service_config() -> ServiceConfig {
     let health_check_uri = "cmdbv1-service.default.svc.cluster.local:8080/health".to_string();
     let base_uri = "cmdbv1-service.default.svc.cluster.local".to_string();
     let dependencies = vec![ServiceID::DBGW, ServiceID::SMDB];
-    let endpoints = vec![service_endpoint(), metric_endpoint(), health_endpoint()];
+    let endpoints = vec![
+        default_grpc_service_endpoint("CMDB Endpoint", 7070),
+        metric_endpoint(),
+        health_endpoint(),
+    ];
 
     ServiceConfig::new(
         id,
@@ -36,53 +41,5 @@ pub fn cmdb_service_config() -> ServiceConfig {
         base_uri,
         dependencies,
         endpoints,
-    )
-}
-
-fn service_endpoint() -> Endpoint {
-    let endpoint_name = "cmdb Endpoint".to_string();
-    let endpoint_version = 1;
-    let endpoint_uri = "/".to_string();
-    let endpoint_port = 7070;
-    let endpoint_protocol = ProtocolType::GRPC;
-
-    Endpoint::new(
-        endpoint_name,
-        endpoint_version,
-        endpoint_uri,
-        endpoint_port,
-        endpoint_protocol,
-    )
-}
-
-fn metric_endpoint() -> Endpoint {
-    let endpoint_name = "Metrics Endpoint".to_string();
-    let endpoint_version = 1;
-    let endpoint_uri = "metrics".to_string();
-    let endpoint_port = 8080;
-    let endpoint_protocol = ProtocolType::HTTP;
-
-    Endpoint::new(
-        endpoint_name,
-        endpoint_version,
-        endpoint_uri,
-        endpoint_port,
-        endpoint_protocol,
-    )
-}
-
-fn health_endpoint() -> Endpoint {
-    let endpoint_name = "Health Endpoint".to_string();
-    let endpoint_version = 1;
-    let endpoint_uri = "health".to_string();
-    let endpoint_port = 8080;
-    let endpoint_protocol = ProtocolType::HTTP;
-
-    Endpoint::new(
-        endpoint_name,
-        endpoint_version,
-        endpoint_uri,
-        endpoint_port,
-        endpoint_protocol,
     )
 }

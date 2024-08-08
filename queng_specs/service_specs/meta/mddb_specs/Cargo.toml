@@ -9,12 +9,7 @@ repository.workspace = true
 authors.workspace = true
 
 
-[lib]
-name = "mddb_specs"
-path = "src/lib.rs"
-
-
 [dependencies]
 # Internal crates
 common_config = {workspace = true}
-
+shared_service_specs = {workspace = true}

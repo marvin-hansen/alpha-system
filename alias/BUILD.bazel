@@ -234,6 +234,12 @@ alias(
     visibility = ["//visibility:public"],
 )
 
+alias(
+    name = "shared_service_specs",
+    actual = "//queng_specs/service_specs/shared_service_specs",
+    visibility = ["//visibility:public"],
+)
+
 ###############################################################################
 # Utils
 ###############################################################################

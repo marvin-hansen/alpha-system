@@ -1,11 +1,17 @@
 #[cfg(test)]
-mod pg_insert_tests;
+mod portfolio_insert_tests;
 
 #[cfg(test)]
-mod pg_query_portfolio_tests;
+mod portfolio_query_tests;
 
 #[cfg(test)]
-mod pg_query_service_tests;
+mod portfolio_update_tests;
 
 #[cfg(test)]
-mod pg_update_tests;
+mod service_insert_tests;
+
+#[cfg(test)]
+mod service_query_tests;
+
+#[cfg(test)]
+mod service_update_tests;

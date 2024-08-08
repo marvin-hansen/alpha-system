@@ -1,4 +1,4 @@
-use common_config::prelude::{ProtocolType, ServiceID, ServiceType};
+use common_config::prelude::{ProtocolType, ServiceID};
 use smdb_specs::smdb_service_config;
 
 #[test]
@@ -25,10 +25,9 @@ fn test_smdb_service_config() {
         service_config.dependencies().len(),
         vec![ServiceID::DBGW].len()
     );
-    assert_eq!(service_config.exposure(), &ServiceType::ENDPOINT);
 
     let endpoint = service_config.service_endpoint();
-    assert_eq!(endpoint.name(), "service-registry");
+    assert_eq!(endpoint.name(), "SMDB Endpoint");
     assert_eq!(endpoint.version(), 1);
 
     assert_eq!(endpoint.uri(), "/");

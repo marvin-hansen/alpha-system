@@ -1,4 +1,4 @@
-use common_config::prelude::{ProtocolType, ServiceID, ServiceType};
+use common_config::prelude::{ProtocolType, ServiceID};
 use dbgw_specs::dbgw_service_config;
 
 #[test]
@@ -19,8 +19,6 @@ fn test_cmdb_service_config() {
         "dbgwv1-service.default.svc.cluster.local"
     );
     assert_eq!(service_config.dependencies().len(), 0);
-    assert_eq!(service_config.exposure(), &ServiceType::ENDPOINT);
-
     let endpoint = service_config.service_endpoint();
     assert_eq!(endpoint.name(), "dbgw Endpoint");
     assert_eq!(endpoint.version(), 1);

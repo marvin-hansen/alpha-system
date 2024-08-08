@@ -1,9 +1,9 @@
 load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 
 rust_test_suite(
-    name = "pg_insert_tests",
+    name = "portfolio_insert_tests",
     srcs = glob([
-        "pg_insert_tests.rs",
+        "portfolio_insert_tests.rs",
     ]),
     tags = [
         "common",
@@ -22,9 +22,9 @@ rust_test_suite(
 )
 
 rust_test_suite(
-    name = "pg_query_service_tests",
+    name = "portfolio_query_tests",
     srcs = glob([
-        "pg_query_service_tests.rs",
+        "portfolio_query_tests.rs",
     ]),
     tags = [
         "common",
@@ -37,13 +37,14 @@ rust_test_suite(
         "//alias:common_pg_queries",
         # Internal crates
         "//alias:common_config",
+        "//alias:portfolio_specs",
     ],
 )
 
 rust_test_suite(
-    name = "pg_query_portfolio_tests",
+    name = "portfolio_update_tests",
     srcs = glob([
-        "pg_query_portfolio_tests.rs",
+        "portfolio_update_tests.rs",
     ]),
     tags = [
         "common",
@@ -56,13 +57,56 @@ rust_test_suite(
         "//alias:common_pg_queries",
         # Internal crates
         "//alias:common_config",
+        "//alias:portfolio_specs",
     ],
 )
 
 rust_test_suite(
-    name = "pg_update_tests",
+    name = "service_insert_tests",
     srcs = glob([
-        "pg_update_tests.rs",
+        "service_insert_tests.rs",
+    ]),
+    tags = [
+        "common",
+        "common_pg_query",
+        "unit-test",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        "//alias:common_pg_queries",
+        # Internal crates
+        "//alias:common_config",
+        "//alias:portfolio_specs",
+        "//alias:smdb_specs",
+    ],
+)
+
+rust_test_suite(
+    name = "service_query_tests",
+    srcs = glob([
+        "service_query_tests.rs",
+    ]),
+    tags = [
+        "common",
+        "common_pg_query",
+        "unit-test",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        "//alias:common_pg_queries",
+        # Internal crates
+        "//alias:common_config",
+        "//alias:portfolio_specs",
+        "//alias:smdb_specs",
+    ],
+)
+
+rust_test_suite(
+    name = "service_update_tests",
+    srcs = glob([
+        "service_update_tests.rs",
     ]),
     tags = [
         "common",

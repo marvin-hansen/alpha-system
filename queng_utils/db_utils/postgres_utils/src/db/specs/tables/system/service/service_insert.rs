@@ -1,5 +1,5 @@
 use common_config::prelude::ServiceConfig;
-use common_pg_queries::pg_inserts;
+use common_pg_queries::service_insert;
 
 use crate::db::Specs;
 use crate::prelude::PostgresUtilError;
@@ -42,7 +42,7 @@ impl Specs {
     pub async fn insert_service(&self, data: &ServiceConfig) -> Result<(), PostgresUtilError> {
         self.dbg_print("insert_service");
 
-        let query = pg_inserts::build_insert_service_query(data);
+        let query = service_insert::build_insert_service_query(data);
         // println!("query: {}", query);
         match self.execute_query(&query).await {
             Ok(_) => Ok(()),

@@ -1,4 +1,4 @@
-use common_pg_queries::pg_query_portfolio::{
+use common_pg_queries::portfolio_query::{
     build_check_if_instrument_id_exists_query, build_check_if_portfolio_id_exists_query,
     build_delete_portfolio_instrument_query, build_delete_portfolio_query,
     build_get_instrument_id_if_exists_query, build_query_instruments_by_ids,

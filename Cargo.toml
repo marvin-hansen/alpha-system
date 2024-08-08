@@ -53,6 +53,7 @@ members = [
     "queng_specs/service_specs/core/qdgw_specs",
     "queng_specs/service_specs/core/smdb_specs",
     "queng_specs/service_specs/ims/ims_data/ims_data_vex_specs",
+    "queng_specs/service_specs/shared_service_specs",
     "queng_utils/crypto_utils",
     "queng_utils/db_utils/clickhouse_utils",
     "queng_utils/db_utils/postgres_utils",
@@ -134,6 +135,7 @@ mddb_specs = { path = "queng_specs/service_specs/meta/mddb_specs" }
 qdgw_specs = { path = "queng_specs/service_specs/core/qdgw_specs" }
 smdb_specs = { path = "queng_specs/service_specs/core/smdb_specs" }
 ims_data_vex_specs = { path = "queng_specs/service_specs/ims/ims_data/ims_data_vex_specs" }
+shared_service_specs = { path = "queng_specs/service_specs/shared_service_specs" }
 # Utils
 crypto_utils = { path = "queng_utils/crypto_utils" }
 # DB Utils

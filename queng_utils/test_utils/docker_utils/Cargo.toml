@@ -8,11 +8,6 @@ repository.workspace = true
 authors.workspace = true
 
 
-[lib]
-name = "docker_utils"
-path = "src/lib.rs"
-
-
 [dependencies]
 # Internal crates
 common_container = {workspace = true}

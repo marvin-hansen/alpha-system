@@ -1,4 +1,7 @@
-pub use crate::pg_inserts;
-pub use crate::pg_query_portfolio;
-pub use crate::pg_query_service;
-pub use crate::pg_update;
+pub use crate::portfolio_insert;
+pub use crate::portfolio_query;
+pub use crate::portfolio_update;
+//
+pub use crate::service_insert;
+pub use crate::service_query;
+pub use crate::service_update;

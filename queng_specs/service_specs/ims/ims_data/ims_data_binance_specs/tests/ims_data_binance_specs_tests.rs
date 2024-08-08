@@ -1,4 +1,4 @@
-use common_config::prelude::{ProtocolType, ServiceID, ServiceType};
+use common_config::prelude::{ProtocolType, ServiceID};
 use ims_data_binance_specs::ims_data_binance_config;
 
 #[test]
@@ -23,7 +23,6 @@ fn test_ims_data_binance_config() {
         "ims-data-service-Binance.default.svc.cluster.local"
     );
     assert_eq!(service_config.dependencies(), &vec![ServiceID::SMDB]);
-    assert_eq!(service_config.exposure(), &ServiceType::ENDPOINT);
 
     // Test the accessors for the Endpoint
     let endpoint = service_config.service_endpoint();

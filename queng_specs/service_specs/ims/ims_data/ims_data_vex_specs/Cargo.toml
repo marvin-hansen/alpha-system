@@ -12,5 +12,4 @@ authors.workspace = true
 [dependencies]
 # Internal crates
 common_config = {workspace = true}
-
-
+shared_service_specs = {workspace = true}

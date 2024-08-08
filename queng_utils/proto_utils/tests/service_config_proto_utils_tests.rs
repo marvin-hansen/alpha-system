@@ -1,5 +1,5 @@
-use common_config::prelude::{Endpoint, MetricConfig, ServiceConfig, ServiceID, ServiceType};
-use proto_bindings::proto::{ProtoEndpoint, ProtoMetricConfig, ProtoServiceConfig};
+use common_config::prelude::{Endpoint, ServiceConfig, ServiceID};
+use proto_bindings::proto::{ProtoEndpoint, ProtoServiceConfig};
 use proto_utils::service_config_proto_utils::{service_config_from_proto, service_config_to_proto};
 
 #[test]
@@ -13,9 +13,7 @@ fn test_service_config_from_proto() {
         health_check_uri: "/health".to_string(),
         base_uri: "http://localhost:8080".to_string(),
         dependencies: vec![2, 3],
-        exposure: 1,
-        endpoint: Some(ProtoEndpoint::default()),
-        metrics: Some(ProtoMetricConfig::default()),
+        endpoint: Vec::from([ProtoEndpoint::default()]),
     };
 
     let config = service_config_from_proto(proto).unwrap();
@@ -31,7 +29,6 @@ fn test_service_config_from_proto() {
         config.dependencies(),
         &vec![ServiceID::CMDB, ServiceID::DBGW]
     );
-    assert_eq!(config.exposure(), &ServiceType::ENDPOINT);
 }
 
 #[test]
@@ -45,9 +42,7 @@ fn test_to_proto() {
         "/health".to_string(),
         "http://localhost:8080".to_string(),
         vec![ServiceID::CMDB, ServiceID::DBGW],
-        ServiceType::ENDPOINT,
-        Endpoint::default(),
-        MetricConfig::default(),
+        Vec::from([Endpoint::default()]),
     );
 
     let proto = service_config_to_proto(config).unwrap();
@@ -60,5 +55,4 @@ fn test_to_proto() {
     assert_eq!(proto.health_check_uri, "/health");
     assert_eq!(proto.base_uri, "http://localhost:8080");
     assert_eq!(proto.dependencies, vec![2, 3]);
-    assert_eq!(proto.exposure, 1);
 }

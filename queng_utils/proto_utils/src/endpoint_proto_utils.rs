@@ -13,16 +13,22 @@ use proto_bindings::proto::ProtoEndpoint;
 /// If the `protocol` field of the `ProtoEndpoint` cannot be converted to a `ProtocolType`,
 /// an `Error` is returned.
 ///
-pub fn endpoint_from_proto(proto: ProtoEndpoint) -> Result<Endpoint, Error> {
-    let protocol = ProtocolType::from(proto.protocol);
+pub fn endpoint_from_proto(proto: Vec<ProtoEndpoint>) -> Result<Vec<Endpoint>, Error> {
+    let mut endpoints = Vec::new();
 
-    Ok(Endpoint::new(
-        proto.name.to_string(),
-        proto.version,
-        proto.uri.to_string(),
-        proto.port,
-        protocol,
-    ))
+    for proto_endpoint in proto {
+        let protocol = ProtocolType::from(proto_endpoint.protocol);
+        let endpoint = Endpoint::new(
+            proto_endpoint.name.to_string(),
+            proto_endpoint.version,
+            proto_endpoint.uri.to_string(),
+            proto_endpoint.port,
+            protocol,
+        );
+        endpoints.push(endpoint);
+    }
+
+    Ok(endpoints)
 }
 
 /// Converts an `Endpoint` into a `ProtoEndpoint`.
@@ -30,12 +36,19 @@ pub fn endpoint_from_proto(proto: ProtoEndpoint) -> Result<Endpoint, Error> {
 /// This function takes an `Endpoint` and converts it into a `ProtoEndpoint` struct.
 /// It extracts the necessary fields from the `Endpoint` and constructs a new `ProtoEndpoint` with them.
 ///
-pub fn endpoint_to_proto(endpoint: Endpoint) -> Result<ProtoEndpoint, Error> {
-    Ok(ProtoEndpoint {
-        name: endpoint.name().to_string(),
-        version: endpoint.version(),
-        uri: endpoint.uri().to_string(),
-        port: endpoint.port(),
-        protocol: endpoint.protocol() as i32,
-    })
+pub fn endpoint_to_proto(endpoints: &Vec<Endpoint>) -> Result<Vec<ProtoEndpoint>, Error> {
+    let mut proto_endpoints = Vec::new();
+
+    for endpoint in endpoints {
+        let proto_endpoint = ProtoEndpoint {
+            name: endpoint.name().to_string(),
+            version: endpoint.version(),
+            uri: endpoint.uri().to_string(),
+            port: endpoint.port(),
+            protocol: endpoint.protocol() as i32,
+        };
+        proto_endpoints.push(proto_endpoint);
+    }
+
+    Ok(proto_endpoints)
 }

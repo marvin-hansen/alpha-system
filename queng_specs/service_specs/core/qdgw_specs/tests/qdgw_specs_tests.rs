@@ -1,4 +1,4 @@
-use common_config::prelude::{ProtocolType, ServiceID, ServiceType};
+use common_config::prelude::{ProtocolType, ServiceID};
 use qdgw_specs::qdgw_service_config;
 
 #[test]
@@ -25,7 +25,6 @@ fn test_cmdb_service_config() {
         service_config.dependencies().len(),
         vec![ServiceID::SMDB].len()
     );
-    assert_eq!(service_config.exposure(), &ServiceType::ENDPOINT);
 
     let endpoint = service_config.service_endpoint();
     assert_eq!(endpoint.name(), "qdgw Endpoint");

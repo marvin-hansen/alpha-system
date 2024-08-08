@@ -8,12 +8,7 @@ readme.workspace = true
 repository.workspace = true
 authors.workspace = true
 
-
-[lib]
-name = "qdgw_specs"
-path = "src/lib.rs"
-
-
 [dependencies]
 # Internal crates
 common_config = {workspace = true}
+shared_service_specs = {workspace = true}

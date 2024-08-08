@@ -8,10 +8,6 @@ repository.workspace = true
 authors.workspace = true
 
 
-[lib]
-name = "crypto_utils"
-path = "src/lib.rs"
-
 [dependencies]
 # Internal dependencies
 

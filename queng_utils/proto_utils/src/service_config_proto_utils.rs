@@ -1,10 +1,9 @@
 use std::fmt::Error;
 
-use common_config::prelude::{ServiceConfig, ServiceID, ServiceType};
+use common_config::prelude::{ServiceConfig, ServiceID};
 use proto_bindings::proto::ProtoServiceConfig;
 
 use crate::endpoint_proto_utils::{endpoint_from_proto, endpoint_to_proto};
-use crate::metric_config_proto_utils::{metric_config_from_proto, metric_config_to_proto};
 
 /// Converts a `ProtoServiceConfig` into a `ServiceConfig`.
 ///
@@ -23,19 +22,8 @@ pub fn service_config_from_proto(proto: ProtoServiceConfig) -> Result<ServiceCon
     let proto_dependencies = proto.dependencies;
     let dependencies: Vec<ServiceID> = proto_dependencies.into_iter().map(|x| x.into()).collect();
 
-    let proto_endpoint = proto
-        .endpoint
-        .expect("Failed to create endpoint from proto");
-
     let endpoint =
-        endpoint_from_proto(proto_endpoint).expect("Failed to create endpoint from proto");
-
-    let proto_metrics = proto.metrics.expect("Failed to create metrics from proto");
-    let metrics =
-        metric_config_from_proto(proto_metrics).expect("Failed to create metrics from proto");
-
-    let proto_exposure = proto.exposure;
-    let exposure = ServiceType::from(proto_exposure);
+        endpoint_from_proto(proto.endpoint).expect("Failed to create endpoint from proto");
 
     Ok(ServiceConfig::new(
         svc_id,
@@ -46,9 +34,7 @@ pub fn service_config_from_proto(proto: ProtoServiceConfig) -> Result<ServiceCon
         proto.health_check_uri,
         proto.base_uri,
         dependencies,
-        exposure,
         endpoint,
-        metrics,
     ))
 }
 
@@ -64,11 +50,8 @@ pub fn service_config_from_proto(proto: ProtoServiceConfig) -> Result<ServiceCon
 ///
 pub fn service_config_to_proto(service_config: ServiceConfig) -> Result<ProtoServiceConfig, Error> {
     //
-    let proto_endpoint = endpoint_to_proto(service_config.service_endpoint())
+    let proto_endpoints = endpoint_to_proto(service_config.endpoints())
         .expect("Failed to create endpoint from proto");
-
-    let proto_metrics = metric_config_to_proto(service_config.metrics_endpoint())
-        .expect("Failed to create metrics from proto");
 
     let proto_dependencies = service_config
         .dependencies()
@@ -84,9 +67,7 @@ pub fn service_config_to_proto(service_config: ServiceConfig) -> Result<ProtoSer
         description: service_config.description().to_string(),
         health_check_uri: service_config.health_check_uri().to_string(),
         base_uri: service_config.base_uri().to_string(),
-        endpoint: Some(proto_endpoint),
-        metrics: Some(proto_metrics),
+        endpoint: proto_endpoints,
         dependencies: proto_dependencies,
-        exposure: service_config.exposure().to_owned() as i32,
     })
 }

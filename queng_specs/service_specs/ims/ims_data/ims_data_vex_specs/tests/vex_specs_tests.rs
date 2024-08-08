@@ -1,4 +1,4 @@
-use common_config::prelude::{ProtocolType, ServiceID, ServiceType};
+use common_config::prelude::{ProtocolType, ServiceID};
 use ims_data_vex_specs::vex_service_config;
 
 #[test]
@@ -20,14 +20,13 @@ fn test_vex_service_config_accessors() {
         "vex-service.default.svc.cluster.local"
     );
     assert_eq!(service_config.dependencies(), &vec![ServiceID::SMDB]);
-    assert_eq!(service_config.exposure(), &ServiceType::ENDPOINT);
 
     // Test the accessors for the Endpoint
     let endpoint = service_config.service_endpoint();
-    assert_eq!(endpoint.name(), "vex Endpoint");
+    assert_eq!(endpoint.name(), "vex-ims-data-endpoint");
     assert_eq!(endpoint.version(), 1);
     assert_eq!(endpoint.uri(), "/");
-    assert_eq!(endpoint.port(), 9999);
+    assert_eq!(endpoint.port(), 7070);
     assert_eq!(endpoint.protocol(), ProtocolType::GRPC);
 
     // Test the accessors for the MetricConfig
