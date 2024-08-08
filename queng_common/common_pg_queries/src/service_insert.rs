@@ -20,14 +20,7 @@ use crate::shared;
 ///
 pub fn build_insert_service_query(data: &ServiceConfig) -> String {
     format!(
-        "INSERT INTO system.service(id, name, version, online, description, health_check_uri,
-            base_uri, dependencies,
-            endpoint_name, endpoint_version, endpoint_base_uri, endpoint_port, endpoint_protocol,
-            metric_uri, metric_host, metric_port)
-             VALUES({}, '{}', {}, {}, '{}', '{}', '{}', '{}', {},
-                '{}', {}, '{}', {}, {},
-                '{}', '{}'
-            )
+        "INSERT INTO system.service VALUES({}, '{}', {}, {}, '{}', '{}', '{}', '{}',{})
             RETURNING id",
         data.svc_id().as_u8(),
         data.name(),
@@ -37,13 +30,6 @@ pub fn build_insert_service_query(data: &ServiceConfig) -> String {
         data.health_check_uri(),
         data.base_uri(),
         shared::service_ids_to_string(data.dependencies()),
-        data.service_endpoint().name(),
-        data.service_endpoint().version(),
-        data.service_endpoint().uri(),
-        data.service_endpoint().port(),
-        data.service_endpoint().protocol().as_u8(),
-        data.metrics_endpoint().uri(),
-        data.metrics_endpoint().host(),
-        data.metrics_endpoint().port()
+        shared::service_endpoints_to_string(data.endpoints()),
     )
 }

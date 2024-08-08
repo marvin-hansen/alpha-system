@@ -7,7 +7,6 @@ impl Specs {
     /// This method is responsible for creating the service table, metric config, endpoint type, and indexes in the database.
     /// It performs the following steps:
     ///
-    /// 1. Generates and executes the DDL for creating the metric config table using `generate_service_table_metric_config_ddl`.
     /// 2. Generates and executes the DDL for creating the endpoint type table using `generate_service_table_endpoint_ddl`.
     /// 3. Generates and executes the DDL for creating the service table using `generate_service_table_ddl`.
     /// 4. Generates and executes the DDL for creating the service table indexes using `generate_service_table_index_ddl`.
@@ -47,11 +46,28 @@ impl Specs {
     /// to create the service table, metric config, endpoint type, and indexes.
     ///
     pub async fn create_service_table(&self) -> Result<(), PostgresUtilError> {
-        self.dbg_print("create_service_table");
+        self.dbg_print("drop_endpoint_type");
+        let ddl = self.generate_drop_endpoint_type_ddl();
+        match self.execute_query(&ddl).await {
+            Ok(_) => (),
+            Err(e) => return Err(PostgresUtilError::new(e.to_string())),
+        };
+
+        self.dbg_print("create_endpoint_type");
+        let type_ddl = self.generate_endpoint_type_ddl();
+        match self.execute_query(&type_ddl).await {
+            Ok(_) => (),
+            Err(e) => {
+                return Err(PostgresUtilError::new(format!(
+                    "Failed to create endpoint type for service table: {}",
+                    e
+                )))
+            }
+        };
 
         self.dbg_print("create_service_table");
-        let ddl = self.generate_service_table_ddl();
-        match self.execute_query(&ddl).await {
+        let table_ddl = self.generate_service_table_ddl();
+        match self.execute_query(&table_ddl).await {
             Ok(_) => (),
             Err(e) => {
                 return Err(PostgresUtilError::new(format!(

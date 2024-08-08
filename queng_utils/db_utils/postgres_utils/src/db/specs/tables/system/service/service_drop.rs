@@ -37,6 +37,13 @@ impl Specs {
             Err(e) => return Err(PostgresUtilError::new(e.to_string())),
         };
 
+        self.dbg_print("drop_endpoint_type");
+        let ddl = self.generate_drop_endpoint_type_ddl();
+        match self.execute_query(&ddl).await {
+            Ok(_) => (),
+            Err(e) => return Err(PostgresUtilError::new(e.to_string())),
+        };
+
         Ok(())
     }
 }

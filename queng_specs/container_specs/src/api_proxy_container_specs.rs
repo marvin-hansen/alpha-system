@@ -18,6 +18,6 @@ pub fn api_proxy_container_config() -> ContainerConfig<'static> {
         None,
         true, // Keep the container running for re-use
         true, // Keep the same container config across all env. setups.
-        WaitStrategy::WaitUntilConsoleOutputContains("Service on endpoint:".to_string(), 30),
+        WaitStrategy::WaitUntilConsoleOutputContains("Service on endpoint:".to_string(), 120),
     )
 }
