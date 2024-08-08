@@ -11,6 +11,7 @@ use crate::prelude::{HostEndpoint, ProtocolType};
 /// * `uri`: The Uniform Resource Identifier (URI) of the endpoint.
 /// * `port`: The port number of the endpoint.
 /// * `protocol`: The protocol Enum type of the endpoint.
+///
 #[derive(Debug, Default, Clone, Eq, PartialEq)]
 pub struct Endpoint {
     name: String,

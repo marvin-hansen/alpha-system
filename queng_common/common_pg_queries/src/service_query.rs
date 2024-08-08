@@ -87,10 +87,7 @@ pub fn build_set_svc_online_query(id: &ServiceID, online: bool) -> String {
 /// A PostgreSQL query string that selects the service by ID from the database.
 pub fn build_read_service_by_id_query(id: &ServiceID) -> String {
     format!(
-        "SELECT
-                id, name, version, online, description, health_check_uri, base_uri, dependencies, exposure,
-                endpoint_name, endpoint_version, endpoint_base_uri, endpoint_port, endpoint_protocol,
-                metric_uri, metric_host, metric_port
+        "SELECT *
             FROM
                 system.service
             WHERE

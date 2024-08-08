@@ -2,7 +2,7 @@ use std::fmt::{Display, Formatter};
 
 use tokio_postgres::Row;
 
-use crate::prelude::{Endpoint, MetricConfig, ProtocolType, ServiceID};
+use crate::prelude::{Endpoint, MetricConfig, ServiceID};
 
 #[derive(Debug, Default, Clone, Eq, PartialEq)]
 pub struct ServiceConfig {
@@ -69,21 +69,6 @@ impl ServiceConfig {
 
 impl ServiceConfig {
     /// Converts a SQL row into a ServiceConfig object.
-    ///
-    /// This function takes a sql `Row` object, which is typically returned by a SQL query,
-    /// and converts it into a `ServiceConfig` object. The `Row` object must have
-    /// the following fields in the specified order:
-    /// * `id` - Service ID.
-    /// * `name` - Service name.
-    /// * `version` - Service version.
-    /// * `online` - Whether the service is online.
-    /// * `description` - Service description.
-    /// * `health_check_uri` - Health check URI.
-    /// * `base_uri` - Base URI.
-    /// * `dependencies` - Service dependencies.
-    /// * `exposure` - Service exposure type.
-    /// * `endpoint` - Service endpoint.
-    /// * `metrics` - MetricConfig.
     pub fn from_sql_row(row: &Row) -> Self {
         let db_id = row.get::<usize, i32>(0);
         let db_name = row.get::<usize, String>(1);
@@ -93,19 +78,13 @@ impl ServiceConfig {
         let db_health_check_uri = row.get::<usize, String>(5);
         let db_base_uri = row.get::<usize, String>(6);
         let db_dependencies = row.get::<usize, Vec<i16>>(7);
-
-        //let db_exposure = row.get::<usize, i16>(8);
-
-        let db_endpoint_name = row.get::<usize, String>(9);
-        let db_endpoint_version = row.get::<usize, i16>(10);
-        let db_endpoint_uri = row.get::<usize, String>(11);
-        let db_endpoint_port = row.get::<usize, i16>(12);
-        let db_endpoint_protocol = row.get::<usize, i16>(13);
-
         let dependencies: Vec<ServiceID> = db_dependencies
             .iter()
             .map(|id| ServiceID::from(*id))
             .collect();
+
+        //
+        let db_endpoints = vec![Endpoint::default()];
 
         ServiceConfig::new(
             ServiceID::from(db_id),
@@ -116,13 +95,7 @@ impl ServiceConfig {
             db_health_check_uri,
             db_base_uri,
             dependencies,
-            Vec::from([Endpoint::new(
-                db_endpoint_name,
-                db_endpoint_version as u32,
-                db_endpoint_uri,
-                db_endpoint_port as u32,
-                ProtocolType::from(db_endpoint_protocol),
-            )]),
+            db_endpoints,
         )
     }
 }

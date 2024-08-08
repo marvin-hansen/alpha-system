@@ -9,9 +9,25 @@ use crate::db::Specs;
 // PostgreSQL CREATE INDEX
 // https://www.postgresqltutorial.com/postgresql-indexes/postgresql-create-index/
 
+// Check if a user-defined type already exists in PostgreSQL
+// https://stackoverflow.com/questions/7624919/check-if-a-user-defined-type-already-exists-in-postgresql
+
 impl Specs {
-    // Check if a user-defined type already exists in PostgreSQL
-    // https://stackoverflow.com/questions/7624919/check-if-a-user-defined-type-already-exists-in-postgresql
+    pub(crate) fn generate_drop_protocol_type_ddl(&self) -> String {
+        format!("DROP TYPE IF EXISTS {DEFAULT_SCHEMA}.ProtocolType CASCADE;")
+    }
+
+    pub(crate) fn generate_protocol_type_enum_ddl(&self) -> String {
+        format!(
+            "CREATE TYPE {DEFAULT_SCHEMA}.ProtocolType AS ENUM (
+            'UnknownProtocol',
+            'GRPC',
+            'HTTP',
+            'UDP'
+            );"
+        )
+    }
+
     pub(crate) fn generate_drop_endpoint_type_ddl(&self) -> String {
         format!("DROP TYPE IF EXISTS {DEFAULT_SCHEMA}.Endpoint CASCADE;")
     }
@@ -21,10 +37,10 @@ impl Specs {
             "CREATE TYPE {DEFAULT_SCHEMA}.Endpoint AS
             (
             name       VARCHAR,
-            version    INT2,
+            version    INT4,
             base_uri   VARCHAR,
-            port       INT2,
-            protocol   INT2
+            port       INT4,
+            protocol   ProtocolType
             );"
         )
     }

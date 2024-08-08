@@ -14,12 +14,12 @@ pub(crate) fn service_endpoints_to_string(endpoints: &[Endpoint]) -> String {
 
     for e in endpoints.iter() {
         endpoints_strings.push(format!(
-            "row('{}',{},'{}',{},{})::Endpoint",
+            "row('{}',{},'{}',{},'{}')::Endpoint",
             e.name(),
             e.version(),
             e.uri(),
             e.port(),
-            e.protocol().as_u8()
+            e.protocol().to_string()
         ));
     }
 

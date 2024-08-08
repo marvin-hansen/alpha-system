@@ -11,3 +11,4 @@ authors.workspace = true
 [dependencies]
 # External crates
 tokio-postgres = { workspace = true }
+postgres-types = { workspace = true }

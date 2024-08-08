@@ -8,7 +8,6 @@ use std::fmt::{Display, Formatter};
 /// * `HTTP`: The HTTP protocol.
 /// * `UDP`: The UDP protocol.
 #[derive(Debug, Copy, Clone, Default, Eq, PartialEq)]
-#[repr(i8)]
 pub enum ProtocolType {
     #[default]
     UnknownProtocol = 0,
