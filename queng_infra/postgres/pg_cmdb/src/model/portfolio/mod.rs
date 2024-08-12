@@ -1,0 +1,130 @@
+use crate::schema::cmdb::portfolio;
+use diesel::{AsChangeset, Insertable, Queryable, Selectable};
+
+mod portfolio_impl;
+
+#[derive(Debug, Clone, Queryable, Insertable, AsChangeset, Selectable)]
+#[diesel(table_name=portfolio, primary_key(portfolio_id))]
+pub struct Portfolio {
+    pub portfolio_id: i32,
+    pub portfolio_description: String,
+    pub portfolio_account_type: i32,
+    pub portfolio_account_id: String,
+    pub portfolio_currency: String,
+    pub portfolio_cash: f64,
+    pub portfolio_margin: f64,
+    pub portfolio_max_drawdown: f64,
+    pub instrument_max_allocation: f64,
+    pub instrument_max_drawdown: f64,
+    pub portfolio_free_margin: f64,
+    pub portfolio_free_cash: f64,
+    pub portfolio_free_margin_percent: f64,
+    pub portfolio_free_cash_percent: f64,
+}
+
+#[derive(Debug, Clone, Queryable, Insertable, AsChangeset)]
+#[diesel(table_name=portfolio)]
+pub struct CreatePortfolio {
+    pub portfolio_id: i32,
+    pub portfolio_description: String,
+    pub portfolio_account_type: i32,
+    pub portfolio_account_id: String,
+    pub portfolio_currency: String,
+    pub portfolio_cash: f64,
+    pub portfolio_margin: f64,
+    pub portfolio_max_drawdown: f64,
+    pub instrument_max_allocation: f64,
+    pub instrument_max_drawdown: f64,
+    pub portfolio_free_margin: f64,
+    pub portfolio_free_cash: f64,
+    pub portfolio_free_margin_percent: f64,
+    pub portfolio_free_cash_percent: f64,
+}
+
+impl CreatePortfolio {
+    pub fn new(
+        portfolio_id: i32,
+        portfolio_description: String,
+        portfolio_account_type: i32,
+        portfolio_account_id: String,
+        portfolio_currency: String,
+        portfolio_cash: f64,
+        portfolio_margin: f64,
+        portfolio_max_drawdown: f64,
+        instrument_max_allocation: f64,
+        instrument_max_drawdown: f64,
+        portfolio_free_margin: f64,
+        portfolio_free_cash: f64,
+        portfolio_free_margin_percent: f64,
+        portfolio_free_cash_percent: f64,
+    ) -> Self {
+        Self {
+            portfolio_id,
+            portfolio_description,
+            portfolio_account_type,
+            portfolio_account_id,
+            portfolio_currency,
+            portfolio_cash,
+            portfolio_margin,
+            portfolio_max_drawdown,
+            instrument_max_allocation,
+            instrument_max_drawdown,
+            portfolio_free_margin,
+            portfolio_free_cash,
+            portfolio_free_margin_percent,
+            portfolio_free_cash_percent,
+        }
+    }
+}
+
+#[derive(Debug, Clone, Queryable, Insertable, AsChangeset)]
+#[diesel(table_name=portfolio)]
+pub struct UpdatePortfolio {
+    pub portfolio_description: Option<String>,
+    pub portfolio_account_type: Option<i32>,
+    pub portfolio_account_id: Option<String>,
+    pub portfolio_currency: Option<String>,
+    pub portfolio_cash: Option<f64>,
+    pub portfolio_margin: Option<f64>,
+    pub portfolio_max_drawdown: Option<f64>,
+    pub instrument_max_allocation: Option<f64>,
+    pub instrument_max_drawdown: Option<f64>,
+    pub portfolio_free_margin: Option<f64>,
+    pub portfolio_free_cash: Option<f64>,
+    pub portfolio_free_margin_percent: Option<f64>,
+    pub portfolio_free_cash_percent: Option<f64>,
+}
+
+impl UpdatePortfolio {
+    pub fn new(
+        portfolio_description: Option<String>,
+        portfolio_account_type: Option<i32>,
+        portfolio_account_id: Option<String>,
+        portfolio_currency: Option<String>,
+        portfolio_cash: Option<f64>,
+        portfolio_margin: Option<f64>,
+        portfolio_max_drawdown: Option<f64>,
+        instrument_max_allocation: Option<f64>,
+        instrument_max_drawdown: Option<f64>,
+        portfolio_free_margin: Option<f64>,
+        portfolio_free_cash: Option<f64>,
+        portfolio_free_margin_percent: Option<f64>,
+        portfolio_free_cash_percent: Option<f64>,
+    ) -> Self {
+        Self {
+            portfolio_description,
+            portfolio_account_type,
+            portfolio_account_id,
+            portfolio_currency,
+            portfolio_cash,
+            portfolio_margin,
+            portfolio_max_drawdown,
+            instrument_max_allocation,
+            instrument_max_drawdown,
+            portfolio_free_margin,
+            portfolio_free_cash,
+            portfolio_free_margin_percent,
+            portfolio_free_cash_percent,
+        }
+    }
+}
