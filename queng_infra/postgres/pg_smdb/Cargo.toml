@@ -8,3 +8,6 @@ repository.workspace = true
 authors.workspace = true
 
 [dependencies]
+diesel = { workspace = true }
+serde = { workspace = true }
+dotenv = { workspace = true }

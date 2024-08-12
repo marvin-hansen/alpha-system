@@ -1,14 +1,14 @@
 load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library")
 
 rust_library(
-    name = "pg_cmdb",
+    name = "pg_smdb",
     srcs = glob([
         "src/**",
     ]),
     crate_root = "src/lib.rs",
     tags = [
         "infra",
-        "pg_cmdb",
+        "pg_smdb",
         "postgres",
     ],
     visibility = ["//visibility:public"],
@@ -23,14 +23,14 @@ rust_library(
 
 rust_doc(
     name = "doc",
-    crate = ":pg_cmdb",
+    crate = ":pg_smdb",
     tags = ["doc"],
     visibility = ["//visibility:public"],
 )
 
 rust_doc_test(
     name = "doc_test",
-    crate = ":pg_cmdb",
+    crate = ":pg_smdb",
     tags = ["doc-test"],
     visibility = ["//visibility:public"],
 )

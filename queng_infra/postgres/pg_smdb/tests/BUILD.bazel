@@ -1,20 +1,18 @@
 load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 
 rust_test_suite(
-    name = "db_pg_cmdb_instrument_tests",
+    name = "db_pg_smdb_instrument_tests",
     srcs = glob([
-        "instrument_tests.rs",
-        "portfolio_tests.rs",
-        "portfolio_instrument_tests.rs",
+        "service_tests.rs",
     ]),
     tags = [
-        "db_cmdb_tests",
+        "db_smdb_tests",
         "integration_test",
     ],
     visibility = ["//visibility:public"],
     deps = [
         # Crate to test
-        "//alias:pg_cmdb",
+        "//alias:pg_smdb",
         # Internal crates
         "//alias:common_config",
         "//alias:env_utils",

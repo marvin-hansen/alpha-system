@@ -1,9 +1,26 @@
-use crate::util;
+use diesel::r2d2::{ConnectionManager, Pool};
+use diesel::PgConnection;
+use dotenv::dotenv;
 use pg_cmdb::model::portfolio::{CreatePortfolio, Portfolio, UpdatePortfolio};
+use std::env;
+
+fn postgres_connection_pool() -> Pool<ConnectionManager<PgConnection>> {
+    dotenv().ok();
+
+    let database_url = env::var("DATABASE_URL")
+        .or_else(|_| env::var("POSTGRES_DATABASE_URL"))
+        .expect("DATABASE_URL must be set");
+
+    let manager = ConnectionManager::<PgConnection>::new(database_url);
+    Pool::builder()
+        .test_on_check_out(true)
+        .build(manager)
+        .expect("Could not build connection pool")
+}
 
 #[test]
 fn test_portfolio() {
-    let pool = util::postgres_connection_pool();
+    let pool = postgres_connection_pool();
 
     let portfolio = CreatePortfolio::new(
         1,

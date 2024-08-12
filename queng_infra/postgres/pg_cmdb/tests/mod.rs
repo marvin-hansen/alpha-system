@@ -6,5 +6,3 @@ mod portfolio_tests;
 
 #[cfg(test)]
 mod portfolio_instrument_tests;
-
-pub(crate) mod util;
