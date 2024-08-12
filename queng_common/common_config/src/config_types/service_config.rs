@@ -40,8 +40,6 @@ impl ServiceConfig {
     /// * `base_uri` - Base URI.
     /// * `dependencies` - Service dependencies.
     /// * `endpoints` - Service endpoint.
-    // https://rust-lang.github.io/rust-clippy/master/index.html#/too_many_arguments
-    #[allow(clippy::too_many_arguments)]
     pub fn new(
         svc_id: ServiceID,
         name: String,
@@ -83,8 +81,7 @@ impl ServiceConfig {
             .map(|id| ServiceID::from(*id))
             .collect();
 
-        //
-        let db_endpoints = vec![Endpoint::default()];
+        let db_endpoints = row.get::<usize, Vec<Endpoint>>(8);
 
         ServiceConfig::new(
             ServiceID::from(db_id),

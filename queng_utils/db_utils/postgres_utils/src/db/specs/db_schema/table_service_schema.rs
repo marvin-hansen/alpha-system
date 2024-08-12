@@ -29,13 +29,14 @@ impl Specs {
     }
 
     pub(crate) fn generate_drop_endpoint_type_ddl(&self) -> String {
-        format!("DROP TYPE IF EXISTS {DEFAULT_SCHEMA}.Endpoint CASCADE;")
+        format!("DROP TABLE IF EXISTS {DEFAULT_SCHEMA}.Endpoint CASCADE;")
     }
 
     pub(crate) fn generate_endpoint_type_ddl(&self) -> String {
         format!(
-            "CREATE TYPE {DEFAULT_SCHEMA}.Endpoint AS
+            "CREATE TABLE IF NOT EXISTS {DEFAULT_SCHEMA}.Endpoint
             (
+            id         INT4 PRIMARY KEY,
             name       VARCHAR,
             version    INT4,
             base_uri   VARCHAR,
@@ -56,8 +57,7 @@ impl Specs {
             description      VARCHAR NOT NULL,
             health_check_uri VARCHAR NOT NULL,
             base_uri         VARCHAR NOT NULL,
-            dependencies     INT2[],
-            endpoints        Endpoint[] NOT NULL
+            dependencies     INT2[]
             );"
         )
     }

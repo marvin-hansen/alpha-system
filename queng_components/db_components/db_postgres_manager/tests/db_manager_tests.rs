@@ -148,6 +148,8 @@ async fn test_update_service(pgm: &PostgresDBManager) {
     assert!(opt_svc.is_some());
     let svc = opt_svc.unwrap();
 
+    println!("{}", svc);
+
     let res = pgm.update_service(svc).await;
     assert!(res.is_ok());
 }

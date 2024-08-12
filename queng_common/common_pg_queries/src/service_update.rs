@@ -1,6 +1,6 @@
 use common_config::prelude::ServiceConfig;
 
-use crate::shared::service_ids_to_string;
+use crate::shared;
 
 /// Builds a PostgreSQL query string that updates a service in the database.
 ///
@@ -14,8 +14,7 @@ use crate::shared::service_ids_to_string;
 ///
 pub fn build_update_service_query(data: &ServiceConfig) -> String {
     format!(
-        "UPDATE
-                system.service
+        "UPDATE system.service
             SET
                 name='{}',
                 version={},
@@ -24,14 +23,7 @@ pub fn build_update_service_query(data: &ServiceConfig) -> String {
                 health_check_uri='{}',
                 base_uri='{}',
                 dependencies='{}',
-                endpoint_name='{}',
-                endpoint_version={},
-                endpoint_base_uri='{}',
-                endpoint_port={},
-                endpoint_protocol={},
-                metric_uri='{}',
-                metric_host='{}',
-                metric_port={}
+                endpoints='{}',
             WHERE
                 id={}
             RETURNING service.online",
@@ -41,15 +33,8 @@ pub fn build_update_service_query(data: &ServiceConfig) -> String {
         data.description(),
         data.health_check_uri(),
         data.base_uri(),
-        service_ids_to_string(data.dependencies()),
-        data.service_endpoint().name(),
-        data.service_endpoint().version(),
-        data.service_endpoint().uri(),
-        data.service_endpoint().port(),
-        data.service_endpoint().protocol().as_u8(),
-        data.metrics_endpoint().uri(),
-        data.metrics_endpoint().host(),
-        data.metrics_endpoint().port(),
+        shared::service_ids_to_string(data.dependencies()),
+        shared::service_endpoints_to_string(data.endpoints()),
         data.svc_id().as_u8(),
     )
 }

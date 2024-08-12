@@ -102,14 +102,12 @@ pub fn build_read_service_by_id_query(id: &ServiceID) -> String {
 ///
 /// A PostgreSQL query string that selects all services from the database.
 pub fn build_read_all_services_query() -> String {
-    "SELECT
-             id, name, version, online, description, health_check_uri, base_uri, dependencies, exposure,
-             endpoint_name, endpoint_version, endpoint_base_uri, endpoint_port, endpoint_protocol,
-             metric_uri, metric_host, metric_port
+    "SELECT *
          FROM
            system.service
          ORDER BY
-            id".to_string()
+            id"
+    .to_string()
 }
 
 /// Builds a PostgreSQL query to delete a service by ID from the database.

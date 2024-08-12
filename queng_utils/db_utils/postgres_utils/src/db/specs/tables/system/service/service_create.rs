@@ -47,13 +47,6 @@ impl Specs {
     /// to create the service table, metric config, endpoint type, and indexes.
     ///
     pub async fn create_service_table(&self) -> Result<(), PostgresUtilError> {
-        self.dbg_print("drop_protocol_type");
-        let ddl = self.generate_drop_protocol_type_ddl();
-        match self.execute_query(&ddl).await {
-            Ok(_) => (),
-            Err(e) => return Err(PostgresUtilError::new(e.to_string())),
-        };
-
         self.dbg_print("create_protocol_type");
         let ddl = self.generate_protocol_type_enum_ddl();
         match self.execute_query(&ddl).await {

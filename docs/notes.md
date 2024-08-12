@@ -1,10 +1,27 @@
 # Next steps
 
+Aug/11/2024
+
+[ ] Update all spec config files with input parameter checks in constructor
+[ ] Re-run all unit tests to double check no failure
+[ ] Add test cases to trigger and test config error 
+[ ] Update non-spec and DB config files with input parameter checks in constructor
+[ ] Re-run all unit tests to double check no failure
+[ ] Add test cases to trigger and test config error
 
 Aug/7/2024
 
-[] Update ServiceConfig to generalize all endpoints in one singe format
-[] Update all existing service configs to the new format
+[x] Update ServiceConfig to generalize all endpoints in one singe format
+
+[x] Update all existing service configs to the new format
+
+[ ] Replace PG SQL utils with Diesel
+
+- postgres_utils:	2470 LoC
+- common_pg_queries: 775 LoC
+
+[] Update DB to store new service config format...
+
 [] Update ConfigManger to use the new format 
 
 July/30/2024

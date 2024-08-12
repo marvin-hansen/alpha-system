@@ -20,7 +20,7 @@ use crate::shared;
 ///
 pub fn build_insert_service_query(data: &ServiceConfig) -> String {
     format!(
-        "INSERT INTO system.service VALUES({}, '{}', {}, {}, '{}', '{}', '{}', '{}',{})
+        "INSERT INTO public.service VALUES({}, '{}', {}, {}, '{}', '{}', '{}', '{}',{})
             RETURNING id",
         data.svc_id().as_u8(),
         data.name(),

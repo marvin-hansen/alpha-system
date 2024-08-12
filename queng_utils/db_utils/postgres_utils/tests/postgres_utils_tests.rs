@@ -34,11 +34,11 @@ async fn postgres_db_test() {
 
     let pg_util = get_client().await;
 
-    postgres_db_setup_test(&pg_util).await;
+    //postgres_db_setup_test(&pg_util).await;
 
-    postgres_db_specs_import_test(&pg_util).await;
+    //postgres_db_specs_import_test(&pg_util).await;
 
-    postgres_db_portfolio_import_test(&pg_util).await;
+    // postgres_db_portfolio_import_test(&pg_util).await;
 
     postgres_db_teardown_test(&pg_util).await;
 

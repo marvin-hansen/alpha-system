@@ -1,5 +1,7 @@
 use std::fmt::{Display, Formatter};
 
+use tokio_postgres::types::{FromSql, ToSql};
+
 use crate::prelude::{HostEndpoint, ProtocolType};
 
 /// An Endpoint represents a single endpoint of a service.
@@ -11,13 +13,13 @@ use crate::prelude::{HostEndpoint, ProtocolType};
 /// * `uri`: The Uniform Resource Identifier (URI) of the endpoint.
 /// * `port`: The port number of the endpoint.
 /// * `protocol`: The protocol Enum type of the endpoint.
-///
-#[derive(Debug, Default, Clone, Eq, PartialEq)]
+#[derive(Debug, ToSql, FromSql, Default, Clone, Eq, PartialEq)]
+#[postgres(name = "Endpoint")]
 pub struct Endpoint {
     name: String,
-    version: u32,
+    version: i32,
     uri: String,
-    port: u32,
+    port: i32,
     protocol: ProtocolType,
 }
 
@@ -25,9 +27,9 @@ impl Endpoint {
     pub fn new(name: String, version: u32, uri: String, port: u32, protocol: ProtocolType) -> Self {
         Self {
             name,
-            version,
+            version: version as i32,
             uri,
-            port,
+            port: port as i32,
             protocol,
         }
     }
@@ -38,13 +40,13 @@ impl Endpoint {
         &self.name
     }
     pub fn version(&self) -> u32 {
-        self.version
+        self.version as u32
     }
     pub fn uri(&self) -> &str {
         &self.uri
     }
     pub fn port(&self) -> u32 {
-        self.port
+        self.port as u32
     }
     pub fn protocol(&self) -> ProtocolType {
         self.protocol
