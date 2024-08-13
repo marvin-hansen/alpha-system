@@ -1,12 +1,19 @@
 -- Your SQL goes here
 CREATE SCHEMA IF NOT EXISTS smdb;
 
+CREATE TYPE smdb.protocol_type AS ENUM (
+    'UnknownProtocol',
+    'GRPC',
+    'HTTP',
+    'UDP'
+);
+
 CREATE TYPE smdb.service_endpoint AS (
 	"name" Text,
 	"version" INTEGER,
 	"base_uri" Text,
 	"port" INTEGER,
-	"protocol" INTEGER
+	"protocol" smdb.protocol_type
 );
 
 CREATE TABLE  smdb.service(

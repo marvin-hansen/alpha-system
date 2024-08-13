@@ -2,6 +2,7 @@ use diesel::r2d2::{ConnectionManager, Pool};
 use diesel::PgConnection;
 use dotenv::dotenv;
 use pg_smdb::model::endpoint_type::Endpoint;
+use pg_smdb::model::protocol_type::ProtocolType;
 use pg_smdb::model::service;
 use pg_smdb::model::service::{CreateService, UpdateService};
 use std::env;
@@ -74,7 +75,7 @@ fn test_create_service(conn: &mut pg_smdb::Connection) {
         1,
         "/grpc".to_string(),
         7070,
-        1,
+        ProtocolType::GRPC,
     );
 
     let http_endpoint = Endpoint::new(
@@ -82,10 +83,10 @@ fn test_create_service(conn: &mut pg_smdb::Connection) {
         1,
         "/http".to_string(),
         8080,
-        1,
+        ProtocolType::HTTP,
     );
 
-    let endpoints = vec![Some(grpc_endpoint), Some(http_endpoint)];
+    let endpoints = vec![Some(grpc_endpoint.clone()), Some(http_endpoint.clone())];
 
     let dependencies = vec![Some(42)];
 
@@ -117,7 +118,10 @@ fn test_create_service(conn: &mut pg_smdb::Connection) {
     assert_eq!(service.health_check_uri, "http://example.com");
     assert_eq!(service.base_uri, "http://example.com");
     assert_eq!(service.dependencies, vec![Some(42)]);
-    // assert_eq!(service.endpoints, vec![Some(grpc_endpoint)]);
+    assert_eq!(
+        service.endpoints,
+        vec![Some(grpc_endpoint), Some(http_endpoint)]
+    );
 }
 
 fn test_count_service(conn: &mut pg_smdb::Connection) {

@@ -1,11 +1,10 @@
 use crate::model::endpoint_type::Endpoint;
-use crate::schema::smdb::service;
 use diesel::{AsChangeset, Insertable, Queryable, Selectable};
 
 mod service_impl;
 
 #[derive(Debug, Clone, Queryable, Selectable)]
-#[diesel(table_name=service,  primary_key(service_id))]
+#[diesel(table_name= crate::schema::smdb::service,  primary_key(service_id))]
 pub struct Service {
     pub service_id: i32,
     pub name: String,
@@ -19,7 +18,7 @@ pub struct Service {
 }
 
 #[derive(Debug, Clone, Queryable, Insertable)]
-#[diesel(table_name=service, primary_key(service_id))]
+#[diesel(table_name= crate::schema::smdb::service,  primary_key(service_id))]
 pub struct CreateService {
     pub service_id: i32,
     pub name: String,
@@ -59,7 +58,7 @@ impl CreateService {
 }
 
 #[derive(Debug, Clone, Queryable, Insertable, AsChangeset)]
-#[diesel(table_name=service)]
+#[diesel(table_name= crate::schema::smdb::service)]
 pub struct UpdateService {
     pub name: Option<String>,
     pub version: Option<i32>,
