@@ -6,6 +6,8 @@ use diesel::{
 };
 impl Portfolio {
     pub fn create(db: &mut Connection, item: &CreatePortfolio) -> QueryResult<Self> {
+        // let in
+
         insert_into(portfolio)
             .values(item)
             .returning(Portfolio::as_returning())

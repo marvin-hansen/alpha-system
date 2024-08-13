@@ -2,6 +2,9 @@ use crate::schema::cmdb::instrument;
 use diesel::{AsChangeset, Insertable, Queryable, Selectable};
 
 mod instrument_impl;
+mod instrument_type_conversion;
+mod instrument_type_create_conversion;
+mod instrument_type_update_conversion;
 
 #[derive(Debug, Clone, Queryable, Insertable, AsChangeset, Selectable)]
 #[diesel(table_name=instrument, primary_key(code))]
@@ -16,7 +19,7 @@ pub struct Instrument {
 }
 
 #[derive(Debug, Clone, Queryable, Insertable, AsChangeset)]
-#[diesel(table_name=instrument)]
+#[diesel(table_name=instrument, primary_key(code))]
 pub struct CreateInstrument {
     pub code: String,
     pub class: String,

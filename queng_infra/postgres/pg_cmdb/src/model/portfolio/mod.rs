@@ -2,6 +2,8 @@ use crate::schema::cmdb::portfolio;
 use diesel::{AsChangeset, Insertable, Queryable, Selectable};
 
 mod portfolio_impl;
+mod portfolio_type_conversion;
+mod portfolio_type_create_conversion;
 
 #[derive(Debug, Clone, Queryable, Insertable, AsChangeset, Selectable)]
 #[diesel(table_name=portfolio, primary_key(portfolio_id))]

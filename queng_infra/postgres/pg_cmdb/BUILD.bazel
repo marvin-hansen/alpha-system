@@ -14,7 +14,7 @@ rust_library(
     visibility = ["//visibility:public"],
     deps = [
         # Internal crates
-        "//alias:common_config",
+        "//alias:common_exchange",
         # External crates
         "@crates//:diesel",
         "@crates//:serde",

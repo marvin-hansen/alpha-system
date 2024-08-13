@@ -14,6 +14,10 @@ impl AccountType {
     pub fn as_u8(&self) -> u8 {
         *self as u8
     }
+
+    pub fn as_i32(&self) -> i32 {
+        *self as i32
+    }
 }
 
 impl From<i16> for AccountType {

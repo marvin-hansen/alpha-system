@@ -8,6 +8,10 @@ repository.workspace = true
 authors.workspace = true
 
 [dependencies]
+# Internal crates
+common_exchange = {workspace = true}
+
+# External crates
 diesel = { workspace = true }
 serde = { workspace = true }
 dotenv = { workspace = true }
