@@ -1,7 +1,9 @@
+use common_exchange::prelude::Instrument as CommonInstrument;
+
 use diesel::r2d2::{ConnectionManager, Pool};
 use diesel::PgConnection;
 use dotenv::dotenv;
-use pg_cmdb::model::instrument::{CreateInstrument, Instrument};
+use pg_cmdb::model::instrument::Instrument;
 use pg_cmdb::model::portfolio::{CreatePortfolio, Portfolio};
 use pg_cmdb::model::portfolio_instrument::{CreatePortfolioInstrument, PortfolioInstrument};
 use std::env;
@@ -50,17 +52,17 @@ fn test_portfolio_instrument() {
 
     let instrument_id = "test42";
 
-    let create_instrument = CreateInstrument {
-        code: instrument_id.to_string(),
-        class: "test".to_string(),
-        exchange_code: "test".to_string(),
-        exchange_pair_code: "test".to_string(),
-        base_asset: "test".to_string(),
-        quote_asset: "test".to_string(),
-        instrument_figi: Some("test".to_string()),
-    };
+    let instrument = CommonInstrument::new(
+        "test".to_string(),
+        "test".to_string(),
+        "test".to_string(),
+        "test".to_string(),
+        "test".to_string(),
+        "test".to_string(),
+        Some("test".to_string()),
+    );
 
-    let result = Instrument::create(&mut conn, &create_instrument);
+    let result = Instrument::create(&mut conn, &instrument);
     assert!(result.is_ok());
 
     // Create Portfolio Instrument using the Portfolio ID and Instrument ID

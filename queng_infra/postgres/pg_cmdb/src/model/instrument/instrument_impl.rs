@@ -1,9 +1,8 @@
 use crate::model::instrument::{CreateInstrument, Instrument, UpdateInstrument};
 use crate::schema::cmdb::instrument::dsl::*;
 use crate::Connection;
-use diesel::{ExpressionMethods, QueryDsl, QueryResult, RunQueryDsl, SelectableHelper};
-
 use common_exchange::prelude::Instrument as CommonInstrument;
+use diesel::{ExpressionMethods, QueryDsl, QueryResult, RunQueryDsl, SelectableHelper};
 
 impl Instrument {
     /// Creates a new instrument in the database and returns it as a `CommonInstrument`.
@@ -22,12 +21,31 @@ impl Instrument {
     /// If there is an error with the database connection or the insert fails,
     /// this function will return an `Err` containing the error.
     ///
-    pub fn create(db: &mut Connection, item: &CreateInstrument) -> QueryResult<CommonInstrument> {
+    pub fn create(db: &mut Connection, ins: &CommonInstrument) -> QueryResult<CommonInstrument> {
+        let item = CreateInstrument::from_common_instrument(ins);
         diesel::insert_into(instrument)
             .values(item)
             .returning(Instrument::as_returning())
             .get_result::<Instrument>(db)
             .map(|s| s.to_common_instrument())
+    }
+
+    /// Retrieves the total count of instruments in the database.
+    ///
+    /// # Arguments
+    ///
+    /// * `db` - A mutable reference to the database connection.
+    ///
+    /// # Returns
+    ///
+    /// A `QueryResult` containing the total count of instruments as a `u64`.
+    ///
+    /// # Errors
+    ///
+    /// If there is an error with the database connection, this function will return an `Err` containing the error.
+    ///
+    pub fn count(db: &mut Connection) -> QueryResult<u64> {
+        instrument.count().get_result::<i64>(db).map(|i| i as u64)
     }
 
     /// Checks if an instrument with the given code exists in the database.

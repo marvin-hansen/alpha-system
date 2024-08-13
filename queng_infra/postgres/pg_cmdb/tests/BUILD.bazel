@@ -4,7 +4,55 @@ rust_test_suite(
     name = "db_pg_cmdb_instrument_tests",
     srcs = glob([
         "instrument_tests.rs",
+    ]),
+    tags = [
+        "db_cmdb_tests",
+        "integration_test",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        "//alias:pg_cmdb",
+        # Internal crates
+        "//alias:common_exchange",
+        "//alias:env_utils",
+        "//alias:db_specs",
+        # External crates
+        "@crates//:tokio",
+        "@crates//:diesel",
+        "@crates//:dotenv",
+        "@crates//:serde",
+    ],
+)
+
+rust_test_suite(
+    name = "db_pg_cmdb_portfolio_tests",
+    srcs = glob([
         "portfolio_tests.rs",
+    ]),
+    tags = [
+        "db_cmdb_tests",
+        "integration_test",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        "//alias:pg_cmdb",
+        # Internal crates
+        "//alias:common_exchange",
+        "//alias:env_utils",
+        "//alias:db_specs",
+        # External crates
+        "@crates//:tokio",
+        "@crates//:diesel",
+        "@crates//:dotenv",
+        "@crates//:serde",
+    ],
+)
+
+rust_test_suite(
+    name = "db_pg_cmdb_portfolio_instrument_tests",
+    srcs = glob([
         "portfolio_instrument_tests.rs",
     ]),
     tags = [
@@ -16,7 +64,7 @@ rust_test_suite(
         # Crate to test
         "//alias:pg_cmdb",
         # Internal crates
-        "//alias:common_config",
+        "//alias:common_exchange",
         "//alias:env_utils",
         "//alias:db_specs",
         # External crates
