@@ -2,7 +2,8 @@ use crate::model::protocol_type::ProtocolType;
 use diesel::deserialize::FromSqlRow;
 use diesel::expression::AsExpression;
 
-mod endpoint_type_impl;
+mod endpoint_type_conversion;
+mod endpoint_type_sql;
 
 #[derive(Debug, Clone, FromSqlRow, AsExpression, PartialEq, Eq)]
 #[diesel(sql_type=crate::schema::smdb::sql_types::ServiceEndpoint)]

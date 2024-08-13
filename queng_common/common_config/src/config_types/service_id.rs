@@ -30,6 +30,14 @@ impl ServiceID {
         *self as u8
     }
 
+    pub fn as_i32(&self) -> i32 {
+        *self as i32
+    }
+
+    pub fn as_u32(&self) -> u32 {
+        *self as u32
+    }
+
     pub fn name(&self) -> String {
         self.to_string()
     }

@@ -2,7 +2,8 @@ use diesel::deserialize::FromSqlRow;
 use diesel::expression::AsExpression;
 use diesel::sql_types::SqlType;
 
-mod protocol_type_impl;
+mod protocol_type_conversion;
+mod protocol_type_sql;
 
 //  Diesel type mapping requires a struct to derive a SqlType for custom ToSql and FromSql implementations
 #[derive(SqlType)]

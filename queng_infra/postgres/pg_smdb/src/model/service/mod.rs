@@ -2,6 +2,9 @@ use crate::model::endpoint_type::Endpoint;
 use diesel::{AsChangeset, Insertable, Queryable, Selectable};
 
 mod service_impl;
+mod service_type_conversion;
+mod service_type_create_conversion;
+mod service_type_update_conversion;
 
 #[derive(Debug, Clone, Queryable, Selectable)]
 #[diesel(table_name= crate::schema::smdb::service,  primary_key(service_id))]

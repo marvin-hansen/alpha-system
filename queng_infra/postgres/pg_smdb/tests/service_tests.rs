@@ -1,10 +1,10 @@
+use common_config::prelude::ServiceID::SMDB;
+use common_config::prelude::{ServiceConfig, ServiceID};
 use diesel::r2d2::{ConnectionManager, Pool};
 use diesel::PgConnection;
 use dotenv::dotenv;
-use pg_smdb::model::endpoint_type::Endpoint;
-use pg_smdb::model::protocol_type::ProtocolType;
 use pg_smdb::model::service;
-use pg_smdb::model::service::{CreateService, UpdateService};
+use pg_smdb::model::service::UpdateService;
 use std::env;
 
 fn postgres_connection_pool() -> Pool<ConnectionManager<PgConnection>> {
@@ -70,126 +70,131 @@ fn test_service() {
 }
 
 fn test_create_service(conn: &mut pg_smdb::Connection) {
-    let grpc_endpoint = Endpoint::new(
-        "test_grpc_endpoint".to_string(),
-        1,
-        "/grpc".to_string(),
-        7070,
-        ProtocolType::GRPC,
+    let id = ServiceID::SMDB;
+    let name = "name".to_string();
+    let version = 1;
+    let online = true;
+    let description = "description".to_string();
+    let health_check_uri = "health_check_uri".to_string();
+    let base_uri = "base_uri".to_string();
+    let dependencies = vec![ServiceID::DBGW];
+    let endpoints = Vec::from([
+        common_config::prelude::Endpoint::default(),
+        common_config::prelude::Endpoint::default(),
+    ]);
+
+    let service_config = ServiceConfig::new(
+        id.clone(),
+        name.clone(),
+        version.clone(),
+        online.clone(),
+        description.clone(),
+        health_check_uri.clone(),
+        base_uri.clone(),
+        dependencies.clone(),
+        endpoints.clone(),
     );
 
-    let http_endpoint = Endpoint::new(
-        "test_http_endpoint".to_string(),
-        1,
-        "/http".to_string(),
-        8080,
-        ProtocolType::HTTP,
-    );
-
-    let endpoints = vec![Some(grpc_endpoint.clone()), Some(http_endpoint.clone())];
-
-    let dependencies = vec![Some(42)];
-
-    let service = CreateService {
-        service_id: 1,
-        name: "test".to_string(),
-        version: 1,
-        online: true,
-        description: "test".to_string(),
-        health_check_uri: "http://example.com".to_string(),
-        base_uri: "http://example.com".to_string(),
-        dependencies,
-        endpoints,
-    };
-
-    let result = service::Service::create(conn, &service);
-
-    dbg!(&result);
-
+    let result = service::Service::create(conn, &service_config);
+    // dbg!(&result);
     assert!(result.is_ok());
 
     let service = result.unwrap();
 
-    assert_eq!(service.service_id, 1);
-    assert_eq!(service.name, "test");
-    assert_eq!(service.version, 1);
-    assert_eq!(service.online, true);
-    assert_eq!(service.description, "test");
-    assert_eq!(service.health_check_uri, "http://example.com");
-    assert_eq!(service.base_uri, "http://example.com");
-    assert_eq!(service.dependencies, vec![Some(42)]);
-    assert_eq!(
-        service.endpoints,
-        vec![Some(grpc_endpoint), Some(http_endpoint)]
-    );
+    assert_eq!(service.svc_id(), &id);
+    assert_eq!(service.name(), &name);
+    assert_eq!(service.version(), version);
+    assert_eq!(service.online(), online);
+    assert_eq!(service.description(), &description);
+    assert_eq!(service.health_check_uri(), &health_check_uri);
+    assert_eq!(service.base_uri(), &base_uri);
+    assert_eq!(service.dependencies(), &dependencies);
+    assert_eq!(service.endpoints(), &endpoints);
 }
 
 fn test_count_service(conn: &mut pg_smdb::Connection) {
     let result = service::Service::count(conn);
+    // dbg!(&result);
     assert!(result.is_ok());
     assert_eq!(result.unwrap(), 1);
 }
 
 fn test_check_if_service_id_exists(conn: &mut pg_smdb::Connection) {
-    let result = service::Service::check_if_service_id_exists(conn, 1);
+    let param_service_id = SMDB;
+    let result = service::Service::check_if_service_id_exists(conn, param_service_id);
+    // dbg!(&result);
     assert!(result.is_ok());
     assert!(result.unwrap());
 }
 
 fn test_check_if_service_id_online(conn: &mut pg_smdb::Connection) {
-    let result = service::Service::check_if_service_id_online(conn, 1);
+    let param_service_id = SMDB;
+    let result = service::Service::check_if_service_id_online(conn, param_service_id);
+    // dbg!(&result);
     assert!(result.is_ok());
     assert!(result.unwrap());
 }
 
 fn test_get_all_online_services(conn: &mut pg_smdb::Connection) {
     let result = service::Service::get_all_online_services(conn);
+    // dbg!(&result);
     assert!(result.is_ok());
     assert!(result.unwrap().len() > 0);
 }
 
 fn test_get_all_offline_services(conn: &mut pg_smdb::Connection) {
     let result = service::Service::get_all_offline_services(conn);
+    // dbg!(&result);
     assert!(result.is_ok());
     assert_eq!(result.unwrap().len(), 0);
 }
 
 fn test_get_all_service_dependencies(conn: &mut pg_smdb::Connection) {
-    let service_id = 1;
+    let service_id = SMDB;
 
     let result = service::Service::get_all_service_dependencies(conn, service_id);
+    // dbg!(&result);
     assert!(result.is_ok());
     assert_eq!(result.unwrap().len(), 1);
 }
 
 fn test_get_all_service_endpoints(conn: &mut pg_smdb::Connection) {
-    let service_id = 1;
+    let service_id = SMDB;
 
     let result = service::Service::get_all_service_endpoints(conn, service_id);
+    // dbg!(&result);
     assert!(result.is_ok());
     assert_eq!(result.unwrap().len(), 2);
 }
 
 fn test_service_read(conn: &mut pg_smdb::Connection) {
-    let service_id = 1;
+    let service_id = SMDB;
 
     let result = service::Service::read(conn, service_id);
+    // dbg!(&result);
     assert!(result.is_ok());
 
     let service = result.unwrap();
-
-    assert_eq!(service.service_id, 1);
-    assert_eq!(service.name, "test");
-    assert_eq!(service.version, 1);
-    assert_eq!(service.online, true);
-    assert_eq!(service.description, "test");
-    assert_eq!(service.health_check_uri, "http://example.com");
-    assert_eq!(service.base_uri, "http://example.com");
-    assert_eq!(service.dependencies, vec![Some(42)]);
+    assert_eq!(service.svc_id(), &service_id);
+    assert_eq!(service.name(), "name");
+    assert_eq!(service.version(), 1);
+    assert_eq!(service.online(), true);
+    assert_eq!(service.description(), "description");
+    assert_eq!(service.health_check_uri(), "health_check_uri");
+    assert_eq!(service.base_uri(), "base_uri");
+    assert_eq!(service.dependencies(), &vec![ServiceID::DBGW]);
+    assert_eq!(
+        service.endpoints(),
+        &vec![
+            common_config::prelude::Endpoint::default(),
+            common_config::prelude::Endpoint::default(),
+        ]
+    );
 }
 
 fn test_service_read_all(conn: &mut pg_smdb::Connection) {
     let result = service::Service::read_all(conn);
+    // dbg!(&result);
     assert!(result.is_ok());
 
     let services = result.unwrap();
@@ -197,30 +202,36 @@ fn test_service_read_all(conn: &mut pg_smdb::Connection) {
 }
 
 fn test_set_service_online(conn: &mut pg_smdb::Connection) {
-    let service_id = 1;
+    let service_id = SMDB;
 
     let result = service::Service::set_service_online(conn, service_id);
+    // dbg!(&result);
     assert!(result.is_ok());
 
     let result = service::Service::check_if_service_id_online(conn, service_id);
+    // dbg!(&result);
     assert!(result.is_ok());
     assert!(result.unwrap());
 }
 
 fn test_set_service_offline(conn: &mut pg_smdb::Connection) {
-    let service_id = 1;
+    let service_id = SMDB;
 
     let result = service::Service::set_service_offline(conn, service_id);
+    // dbg!(&result);
     assert!(result.is_ok());
 
     let result = service::Service::check_if_service_id_online(conn, service_id);
+    // dbg!(&result);
     assert!(result.is_ok());
     assert!(!result.unwrap());
 }
 
 fn test_service_update(conn: &mut pg_smdb::Connection) {
     // check if service_id exists so we can update the service
-    let result = service::Service::check_if_service_id_exists(conn, 1);
+    let param_service_id = SMDB;
+    let result = service::Service::check_if_service_id_exists(conn, param_service_id);
+    // dbg!(&result);
     assert!(result.is_ok());
     assert!(result.unwrap());
 
@@ -235,33 +246,42 @@ fn test_service_update(conn: &mut pg_smdb::Connection) {
         None,
     );
 
-    let result = service::Service::update(conn, 1, &update);
+    let result = service::Service::update(conn, param_service_id, &update);
+    // dbg!(&result);
     assert!(result.is_ok());
 
     let service = result.unwrap();
-
-    assert_eq!(service.service_id, 1);
-    assert_eq!(service.name, "new_test");
-    assert_eq!(service.version, 2);
-    assert_eq!(service.online, true);
-    assert_eq!(service.description, "test");
-    assert_eq!(service.health_check_uri, "http://example.com");
-    assert_eq!(service.base_uri, "http://example.com");
-    assert_eq!(service.dependencies.len(), 1);
-    assert_eq!(service.dependencies, vec![Some(42)]);
+    assert_eq!(service.name(), "new_test");
+    assert_eq!(service.version(), 2);
+    assert_eq!(service.online(), true);
+    assert_eq!(service.description(), "description");
+    assert_eq!(service.health_check_uri(), "health_check_uri");
+    assert_eq!(service.base_uri(), "base_uri");
+    assert_eq!(service.dependencies(), &vec![ServiceID::DBGW]);
+    assert_eq!(
+        service.endpoints(),
+        &vec![
+            common_config::prelude::Endpoint::default(),
+            common_config::prelude::Endpoint::default(),
+        ]
+    );
 }
 
 fn test_service_delete(conn: &mut pg_smdb::Connection) {
-    let result = service::Service::read(conn, 1);
+    let result = service::Service::read(conn, SMDB);
+    // dbg!(&result);
     assert!(result.is_ok());
 
     let result = service::Service::delete(conn, 1);
+    // dbg!(&result);
     assert!(result.is_ok());
 
-    let result = service::Service::read(conn, 1);
+    let result = service::Service::read(conn, SMDB);
+    // dbg!(&result);
     assert!(result.is_err());
 
     let result = service::Service::count(conn);
+    // dbg!(&result);
     assert!(result.is_ok());
     assert_eq!(result.unwrap(), 0);
 }
