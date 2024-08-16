@@ -1,4 +1,14 @@
+load("@aspect_bazel_lib//lib:copy_to_directory.bzl", "copy_to_directory")
 load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library")
+
+copy_to_directory(
+    # Name of the rule.
+    name = "copy_migrations",
+    # The directory to make a copy of
+    srcs = ["//queng_infra/postgres/pg_smdb/migrations"],
+    # Path of the output directory, relative to this package.
+    out = "migrations",
+)
 
 rust_library(
     name = "pg_smdb",
@@ -6,6 +16,9 @@ rust_library(
         "src/**",
     ]),
     crate_root = "src/lib.rs",
+    data = [
+        ":copy_migrations",
+    ],
     tags = [
         "infra",
         "pg_smdb",
@@ -17,6 +30,7 @@ rust_library(
         "//alias:common_config",
         # External crates
         "@crates//:diesel",
+        "@crates//:diesel_migrations",
         "@crates//:serde",
     ],
 )

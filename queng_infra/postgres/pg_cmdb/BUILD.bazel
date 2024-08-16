@@ -17,6 +17,7 @@ rust_library(
         "//alias:common_exchange",
         # External crates
         "@crates//:diesel",
+        "@crates//:diesel_migrations",
         "@crates//:serde",
     ],
 )

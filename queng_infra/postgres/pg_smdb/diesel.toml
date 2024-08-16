@@ -8,4 +8,4 @@ custom_type_derives = ["diesel::query_builder::QueryId", "Clone"]
 schema = "smdb"
 
 [migrations_directory]
-dir = "/Users/marvin/RustroverProjects/quant-engine/queng_infra/postgres/pg_smdb/migrations"
+dir = "migrations"

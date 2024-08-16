@@ -4,6 +4,7 @@ use crate::Connection;
 use diesel::{
     insert_into, ExpressionMethods, QueryDsl, QueryResult, RunQueryDsl, SelectableHelper,
 };
+
 impl Portfolio {
     pub fn create(db: &mut Connection, item: &CreatePortfolio) -> QueryResult<Self> {
         // Insert instrument first, then portfolio, and then portfolio_instrument

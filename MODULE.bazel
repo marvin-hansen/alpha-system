@@ -345,6 +345,12 @@ crate.spec(
 )
 crate.spec(
     default_features = False,
+    features = ["postgres"],
+    package = "diesel_migrations",
+    version = "2.2.0",
+)
+crate.spec(
+    default_features = False,
     package = "dotenv",
     version = "0.15",
 )

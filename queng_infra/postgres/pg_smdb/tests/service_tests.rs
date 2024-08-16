@@ -5,6 +5,7 @@ use diesel::PgConnection;
 use dotenv::dotenv;
 use pg_smdb::model::service;
 use pg_smdb::model::service::UpdateService;
+use pg_smdb::run_smdb_db_migration;
 use std::env;
 
 fn postgres_connection_pool() -> Pool<ConnectionManager<PgConnection>> {
@@ -25,6 +26,9 @@ fn postgres_connection_pool() -> Pool<ConnectionManager<PgConnection>> {
 fn test_service() {
     let pool = postgres_connection_pool();
     let conn = &mut pool.get().unwrap();
+
+    println!("Test DB migration");
+    test_db_migration(conn);
 
     println!("Test create!");
     test_create_service(conn);
@@ -69,6 +73,12 @@ fn test_service() {
     test_service_delete(conn);
 }
 
+fn test_db_migration(conn: &mut pg_smdb::Connection) {
+    let res = run_smdb_db_migration(conn);
+    //dbg!(&result);
+    assert!(res.is_ok());
+}
+
 fn test_create_service(conn: &mut pg_smdb::Connection) {
     let id = ServiceID::SMDB;
     let name = "name".to_string();
@@ -96,7 +106,7 @@ fn test_create_service(conn: &mut pg_smdb::Connection) {
     );
 
     let result = service::Service::create(conn, &service_config);
-    // dbg!(&result);
+    //dbg!(&result);
     assert!(result.is_ok());
 
     let service = result.unwrap();
