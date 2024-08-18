@@ -22,6 +22,7 @@ help:
 	@echo '    make format   	Formats call code according to cargo fmt style.'
 	@echo '    make install   	Tests and installs all make script dependencies.'
 	@echo '    make update   	Update rust, pulls from git remote.'
+	@echo '    make postgres   	Starts a Postgres Docker container.'
 	@echo '    make pull   	Pull all container images from the remote registry.'
 	@echo '    make push   	Builds, tests, and pushes to git remote.'
 	@echo '    make test   	Tests across all crates.'
@@ -119,6 +120,9 @@ release:
 push:
 	@source scripts/push.sh
 
+.PHONY: postgres
+postgres:
+	@source scripts/postgres.sh
 
 .PHONY: update
 update:
