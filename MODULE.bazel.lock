@@ -113,8 +113,8 @@
     "https://bcr.bazel.build/modules/rules_python/0.22.1/MODULE.bazel": "26114f0c0b5e93018c0c066d6673f1a2c3737c7e90af95eff30cfee38d0bbac7",
     "https://bcr.bazel.build/modules/rules_python/0.27.1/MODULE.bazel": "65dc875cc1a06c30d5bbdba7ab021fd9e551a6579e408a3943a61303e2228a53",
     "https://bcr.bazel.build/modules/rules_python/0.31.0/MODULE.bazel": "93a43dc47ee570e6ec9f5779b2e64c1476a6ce921c48cc9a1678a91dd5f8fd58",
-    "https://bcr.bazel.build/modules/rules_python/0.34.0/MODULE.bazel": "1d623d026e075b78c9fde483a889cda7996f5da4f36dffb24c246ab30f06513a",
-    "https://bcr.bazel.build/modules/rules_python/0.34.0/source.json": "113116e287eec64a7d005a9db44865d810499fdc4f621e352aff58214f5ea2d8",
+    "https://bcr.bazel.build/modules/rules_python/0.35.0/MODULE.bazel": "c3657951764cdcdb5a7370d5e885fad5e8c1583320aad18d46f9f110d2c22755",
+    "https://bcr.bazel.build/modules/rules_python/0.35.0/source.json": "8fd2681b96184fa441f07f7d58462361366c216ce920f6c3e3c42c27e02c3931",
     "https://bcr.bazel.build/modules/rules_python/0.4.0/MODULE.bazel": "9208ee05fd48bf09ac60ed269791cf17fb343db56c8226a720fbb1cdf467166c",
     "https://bcr.bazel.build/modules/rules_rust/0.49.3/MODULE.bazel": "7c747ca20606b61fdb3c99c537a97a7cc89ac48482c0f25b3e70787297b0ec46",
     "https://bcr.bazel.build/modules/rules_rust/0.49.3/source.json": "0f4627d0ed4cd0d5af58f0162f87dcdf38fe4578e5308a3d7dca4c68cb13e323",
@@ -10307,7 +10307,7 @@
     "@@rules_rust~//rust:extensions.bzl%rust": {
       "general": {
         "bzlTransitiveDigest": "rpRomIchuWUrlrubkCzXcY1DpLBi3miAKtY0bgdRprA=",
-        "usagesDigest": "/wwsGk8FI7CLTgrbGWZNNEpRDNACNkWnz4OPUqBB06M=",
+        "usagesDigest": "5yxjrRm+lBWcAzuADRgsfNzICgZSWyC87Ax4/Y1iUn4=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -10321,7 +10321,7 @@
               "global_allocator_library": "@rules_rust//ffi/cc/global_allocator_library",
               "target_triple": "aarch64-unknown-linux-musl",
               "iso_date": "",
-              "version": "1.80.0",
+              "version": "1.80.1",
               "rustfmt_version": "nightly/2024-07-25",
               "edition": "2021",
               "dev_components": false,
@@ -10375,21 +10375,6 @@
               ]
             }
           },
-          "rust_analyzer_1.80.0_tools": {
-            "bzlFile": "@@rules_rust~//rust:repositories.bzl",
-            "ruleClassName": "rust_analyzer_toolchain_tools_repository",
-            "attributes": {
-              "version": "1.80.0",
-              "iso_date": "",
-              "sha256s": {},
-              "urls": [
-                "https://static.rust-lang.org/dist/{}.tar.xz"
-              ],
-              "auth": {},
-              "netrc": "",
-              "auth_patterns": []
-            }
-          },
           "rustfmt_nightly-2024-07-25__x86_64-apple-darwin": {
             "bzlFile": "@@rules_rust~//rust:repositories.bzl",
             "ruleClassName": "toolchain_repository_proxy",
@@ -10413,7 +10398,7 @@
               "global_allocator_library": "@rules_rust//ffi/cc/global_allocator_library",
               "target_triple": "x86_64-unknown-linux-musl",
               "iso_date": "",
-              "version": "1.80.0",
+              "version": "1.80.1",
               "rustfmt_version": "nightly/2024-07-25",
               "edition": "2021",
               "dev_components": false,
@@ -10438,7 +10423,7 @@
               "global_allocator_library": "@rules_rust//ffi/cc/global_allocator_library",
               "target_triple": "aarch64-unknown-linux-gnu",
               "iso_date": "",
-              "version": "1.80.0",
+              "version": "1.80.1",
               "rustfmt_version": "nightly/2024-07-25",
               "edition": "2021",
               "dev_components": false,
@@ -10545,7 +10530,7 @@
               "global_allocator_library": "@rules_rust//ffi/cc/global_allocator_library",
               "target_triple": "x86_64-unknown-linux-musl",
               "iso_date": "",
-              "version": "1.80.0",
+              "version": "1.80.1",
               "rustfmt_version": "nightly/2024-07-25",
               "edition": "2021",
               "dev_components": false,
@@ -10559,6 +10544,16 @@
               "auth": {},
               "netrc": "",
               "auth_patterns": []
+            }
+          },
+          "rust_analyzer_1.80.1": {
+            "bzlFile": "@@rules_rust~//rust:repositories.bzl",
+            "ruleClassName": "toolchain_repository_proxy",
+            "attributes": {
+              "toolchain": "@rust_analyzer_1.80.1_tools//:rust_analyzer_toolchain",
+              "toolchain_type": "@rules_rust//rust/rust_analyzer:toolchain_type",
+              "exec_compatible_with": [],
+              "target_compatible_with": []
             }
           },
           "rust_linux_x86_64__x86_64-unknown-linux-gnu__stable_tools": {
@@ -10570,7 +10565,7 @@
               "global_allocator_library": "@rules_rust//ffi/cc/global_allocator_library",
               "target_triple": "x86_64-unknown-linux-gnu",
               "iso_date": "",
-              "version": "1.80.0",
+              "version": "1.80.1",
               "rustfmt_version": "nightly/2024-07-25",
               "edition": "2021",
               "dev_components": false,
@@ -10586,16 +10581,6 @@
               "auth_patterns": []
             }
           },
-          "rust_analyzer_1.80.0": {
-            "bzlFile": "@@rules_rust~//rust:repositories.bzl",
-            "ruleClassName": "toolchain_repository_proxy",
-            "attributes": {
-              "toolchain": "@rust_analyzer_1.80.0_tools//:rust_analyzer_toolchain",
-              "toolchain_type": "@rules_rust//rust/rust_analyzer:toolchain_type",
-              "exec_compatible_with": [],
-              "target_compatible_with": []
-            }
-          },
           "rust_windows_aarch64__aarch64-pc-windows-msvc__stable_tools": {
             "bzlFile": "@@rules_rust~//rust:repositories.bzl",
             "ruleClassName": "rust_toolchain_tools_repository",
@@ -10605,7 +10590,7 @@
               "global_allocator_library": "@rules_rust//ffi/cc/global_allocator_library",
               "target_triple": "aarch64-pc-windows-msvc",
               "iso_date": "",
-              "version": "1.80.0",
+              "version": "1.80.1",
               "rustfmt_version": "nightly/2024-07-25",
               "edition": "2021",
               "dev_components": false,
@@ -10641,7 +10626,7 @@
               "global_allocator_library": "@rules_rust//ffi/cc/global_allocator_library",
               "target_triple": "x86_64-unknown-linux-musl",
               "iso_date": "",
-              "version": "1.80.0",
+              "version": "1.80.1",
               "rustfmt_version": "nightly/2024-07-25",
               "edition": "2021",
               "dev_components": false,
@@ -10666,7 +10651,7 @@
               "global_allocator_library": "@rules_rust//ffi/cc/global_allocator_library",
               "target_triple": "x86_64-unknown-linux-musl",
               "iso_date": "",
-              "version": "1.80.0",
+              "version": "1.80.1",
               "rustfmt_version": "nightly/2024-07-25",
               "edition": "2021",
               "dev_components": false,
@@ -10705,7 +10690,7 @@
               "global_allocator_library": "@rules_rust//ffi/cc/global_allocator_library",
               "target_triple": "x86_64-pc-windows-msvc",
               "iso_date": "",
-              "version": "1.80.0",
+              "version": "1.80.1",
               "rustfmt_version": "nightly/2024-07-25",
               "edition": "2021",
               "dev_components": false,
@@ -10746,7 +10731,7 @@
               "global_allocator_library": "@rules_rust//ffi/cc/global_allocator_library",
               "target_triple": "aarch64-unknown-linux-musl",
               "iso_date": "",
-              "version": "1.80.0",
+              "version": "1.80.1",
               "rustfmt_version": "nightly/2024-07-25",
               "edition": "2021",
               "dev_components": false,
@@ -10771,7 +10756,7 @@
               "global_allocator_library": "@rules_rust//ffi/cc/global_allocator_library",
               "target_triple": "x86_64-unknown-linux-musl",
               "iso_date": "",
-              "version": "1.80.0",
+              "version": "1.80.1",
               "rustfmt_version": "nightly/2024-07-25",
               "edition": "2021",
               "dev_components": false,
@@ -10796,7 +10781,7 @@
               "global_allocator_library": "@rules_rust//ffi/cc/global_allocator_library",
               "target_triple": "x86_64-unknown-linux-musl",
               "iso_date": "",
-              "version": "1.80.0",
+              "version": "1.80.1",
               "rustfmt_version": "nightly/2024-07-25",
               "edition": "2021",
               "dev_components": false,
@@ -10821,7 +10806,7 @@
               "global_allocator_library": "@rules_rust//ffi/cc/global_allocator_library",
               "target_triple": "x86_64-unknown-freebsd",
               "iso_date": "",
-              "version": "1.80.0",
+              "version": "1.80.1",
               "rustfmt_version": "nightly/2024-07-25",
               "edition": "2021",
               "dev_components": false,
@@ -10846,7 +10831,7 @@
               "global_allocator_library": "@rules_rust//ffi/cc/global_allocator_library",
               "target_triple": "aarch64-unknown-linux-musl",
               "iso_date": "",
-              "version": "1.80.0",
+              "version": "1.80.1",
               "rustfmt_version": "nightly/2024-07-25",
               "edition": "2021",
               "dev_components": false,
@@ -10871,13 +10856,28 @@
               "global_allocator_library": "@rules_rust//ffi/cc/global_allocator_library",
               "target_triple": "x86_64-unknown-linux-musl",
               "iso_date": "",
-              "version": "1.80.0",
+              "version": "1.80.1",
               "rustfmt_version": "nightly/2024-07-25",
               "edition": "2021",
               "dev_components": false,
               "extra_rustc_flags": [],
               "extra_exec_rustc_flags": [],
               "opt_level": {},
+              "sha256s": {},
+              "urls": [
+                "https://static.rust-lang.org/dist/{}.tar.xz"
+              ],
+              "auth": {},
+              "netrc": "",
+              "auth_patterns": []
+            }
+          },
+          "rust_analyzer_1.80.1_tools": {
+            "bzlFile": "@@rules_rust~//rust:repositories.bzl",
+            "ruleClassName": "rust_analyzer_toolchain_tools_repository",
+            "attributes": {
+              "version": "1.80.1",
+              "iso_date": "",
               "sha256s": {},
               "urls": [
                 "https://static.rust-lang.org/dist/{}.tar.xz"
@@ -10915,7 +10915,7 @@
               "global_allocator_library": "@rules_rust//ffi/cc/global_allocator_library",
               "target_triple": "aarch64-unknown-linux-musl",
               "iso_date": "",
-              "version": "1.80.0",
+              "version": "1.80.1",
               "rustfmt_version": "nightly/2024-07-25",
               "edition": "2021",
               "dev_components": false,
@@ -10978,7 +10978,7 @@
               "global_allocator_library": "@rules_rust//ffi/cc/global_allocator_library",
               "target_triple": "aarch64-unknown-linux-musl",
               "iso_date": "",
-              "version": "1.80.0",
+              "version": "1.80.1",
               "rustfmt_version": "nightly/2024-07-25",
               "edition": "2021",
               "dev_components": false,
@@ -11212,7 +11212,7 @@
               "global_allocator_library": "@rules_rust//ffi/cc/global_allocator_library",
               "target_triple": "aarch64-apple-darwin",
               "iso_date": "",
-              "version": "1.80.0",
+              "version": "1.80.1",
               "rustfmt_version": "nightly/2024-07-25",
               "edition": "2021",
               "dev_components": false,
@@ -11256,7 +11256,7 @@
               "global_allocator_library": "@rules_rust//ffi/cc/global_allocator_library",
               "target_triple": "aarch64-unknown-linux-musl",
               "iso_date": "",
-              "version": "1.80.0",
+              "version": "1.80.1",
               "rustfmt_version": "nightly/2024-07-25",
               "edition": "2021",
               "dev_components": false,
@@ -11371,7 +11371,7 @@
               "global_allocator_library": "@rules_rust//ffi/cc/global_allocator_library",
               "target_triple": "aarch64-unknown-linux-musl",
               "iso_date": "",
-              "version": "1.80.0",
+              "version": "1.80.1",
               "rustfmt_version": "nightly/2024-07-25",
               "edition": "2021",
               "dev_components": false,
@@ -11528,7 +11528,7 @@
             "ruleClassName": "toolchain_repository_hub",
             "attributes": {
               "toolchain_names": [
-                "rust_analyzer_1.80.0",
+                "rust_analyzer_1.80.1",
                 "rust_darwin_aarch64__aarch64-apple-darwin__stable",
                 "rust_darwin_aarch64__x86_64-unknown-linux-musl__stable",
                 "rust_darwin_aarch64__aarch64-unknown-linux-musl__stable",
@@ -11559,7 +11559,7 @@
                 "rustfmt_nightly-2024-07-25__x86_64-unknown-linux-gnu"
               ],
               "toolchain_labels": {
-                "rust_analyzer_1.80.0": "@rust_analyzer_1.80.0_tools//:rust_analyzer_toolchain",
+                "rust_analyzer_1.80.1": "@rust_analyzer_1.80.1_tools//:rust_analyzer_toolchain",
                 "rust_darwin_aarch64__aarch64-apple-darwin__stable": "@rust_darwin_aarch64__aarch64-apple-darwin__stable_tools//:rust_toolchain",
                 "rust_darwin_aarch64__x86_64-unknown-linux-musl__stable": "@rust_darwin_aarch64__x86_64-unknown-linux-musl__stable_tools//:rust_toolchain",
                 "rust_darwin_aarch64__aarch64-unknown-linux-musl__stable": "@rust_darwin_aarch64__aarch64-unknown-linux-musl__stable_tools//:rust_toolchain",
@@ -11590,7 +11590,7 @@
                 "rustfmt_nightly-2024-07-25__x86_64-unknown-linux-gnu": "@rustfmt_nightly-2024-07-25__x86_64-unknown-linux-gnu_tools//:rustfmt_toolchain"
               },
               "toolchain_types": {
-                "rust_analyzer_1.80.0": "@rules_rust//rust/rust_analyzer:toolchain_type",
+                "rust_analyzer_1.80.1": "@rules_rust//rust/rust_analyzer:toolchain_type",
                 "rust_darwin_aarch64__aarch64-apple-darwin__stable": "@rules_rust//rust:toolchain",
                 "rust_darwin_aarch64__x86_64-unknown-linux-musl__stable": "@rules_rust//rust:toolchain",
                 "rust_darwin_aarch64__aarch64-unknown-linux-musl__stable": "@rules_rust//rust:toolchain",
@@ -11621,7 +11621,7 @@
                 "rustfmt_nightly-2024-07-25__x86_64-unknown-linux-gnu": "@rules_rust//rust/rustfmt:toolchain_type"
               },
               "exec_compatible_with": {
-                "rust_analyzer_1.80.0": [],
+                "rust_analyzer_1.80.1": [],
                 "rust_darwin_aarch64__aarch64-apple-darwin__stable": [
                   "@platforms//cpu:aarch64",
                   "@platforms//os:osx"
@@ -11736,7 +11736,7 @@
                 ]
               },
               "target_compatible_with": {
-                "rust_analyzer_1.80.0": [],
+                "rust_analyzer_1.80.1": [],
                 "rust_darwin_aarch64__aarch64-apple-darwin__stable": [
                   "@platforms//cpu:aarch64",
                   "@platforms//os:osx"
@@ -11840,7 +11840,7 @@
               "global_allocator_library": "@rules_rust//ffi/cc/global_allocator_library",
               "target_triple": "x86_64-apple-darwin",
               "iso_date": "",
-              "version": "1.80.0",
+              "version": "1.80.1",
               "rustfmt_version": "nightly/2024-07-25",
               "edition": "2021",
               "dev_components": false,

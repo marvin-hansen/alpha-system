@@ -17,8 +17,9 @@ rust_test_suite(
         "test.runner-recycling-key": "db_postgres_manager_tests",
     },
     tags = [
-        "db_postgres_manager",
-        "integration_test",
+        # Disabled until Diesel migration completed.
+        # "db_postgres_manager",
+        # "integration_test",
     ],
     visibility = ["//visibility:public"],
     deps = [

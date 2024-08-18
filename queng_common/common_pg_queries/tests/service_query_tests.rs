@@ -43,14 +43,15 @@ fn test_build_set_svc_online_query() {
 fn test_build_read_service_by_id_query() {
     let id = ServiceID::SMDB;
     let actual_query = build_read_service_by_id_query(&id);
-    let expected_query = "SELECT\n                id, name, version, online, description, health_check_uri, base_uri, dependencies, exposure,\n                endpoint_name, endpoint_version, endpoint_base_uri, endpoint_port, endpoint_protocol,\n                metric_uri, metric_host, metric_port\n            FROM\n                system.service\n            WHERE\n                id=1".to_string();
+    let expected_query = "SELECT *\n            FROM\n                system.service\n            WHERE\n                id=1";
     assert_eq!(actual_query, expected_query);
 }
 
 #[test]
 fn test_build_read_all_services_query() {
     let actual_query = build_read_all_services_query();
-    let expected_query = "SELECT\n             id, name, version, online, description, health_check_uri, base_uri, dependencies, exposure,\n             endpoint_name, endpoint_version, endpoint_base_uri, endpoint_port, endpoint_protocol,\n             metric_uri, metric_host, metric_port\n         FROM\n           system.service\n         ORDER BY\n            id".to_string();
+    let expected_query =
+        "SELECT *\n         FROM\n           system.service\n         ORDER BY\n            id";
     assert_eq!(actual_query, expected_query);
 }
 

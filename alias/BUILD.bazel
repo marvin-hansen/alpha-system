@@ -135,17 +135,17 @@ alias(
 # Infra
 ###############################################################################
 
-alias(
-    name = "pg_cmdb",
-    actual = "//queng_infra/postgres/pg_cmdb",
-    visibility = ["//visibility:public"],
-)
+#alias(
+#    name = "pg_cmdb",
+#    actual = "//queng_infra/postgres/pg_cmdb",
+#    visibility = ["//visibility:public"],
+#)
 
-alias(
-    name = "pg_smdb",
-    actual = "//queng_infra/postgres/pg_smdb",
-    visibility = ["//visibility:public"],
-)
+#alias(
+#    name = "pg_smdb",
+#    actual = "//queng_infra/postgres/pg_smdb",
+#    visibility = ["//visibility:public"],
+#)
 
 
 ###############################################################################
