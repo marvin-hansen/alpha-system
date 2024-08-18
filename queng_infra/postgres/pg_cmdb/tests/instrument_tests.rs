@@ -3,6 +3,7 @@ use diesel::r2d2::{ConnectionManager, Pool};
 use diesel::PgConnection;
 use dotenv::dotenv;
 use pg_cmdb::model::instrument::{Instrument, UpdateInstrument};
+use pg_cmdb::run_cmdb_db_migration;
 use std::env;
 
 fn postgres_connection_pool() -> Pool<ConnectionManager<PgConnection>> {
@@ -19,10 +20,19 @@ fn postgres_connection_pool() -> Pool<ConnectionManager<PgConnection>> {
         .expect("Could not build connection pool")
 }
 
+fn test_db_migration(conn: &mut pg_cmdb::Connection) {
+    let res = run_cmdb_db_migration(conn);
+    //dbg!(&result);
+    assert!(res.is_ok());
+}
+
 #[test]
 fn test_instrument() {
     let pool = postgres_connection_pool();
     let conn = &mut pool.get().unwrap();
+
+    println!("Test DB migration!");
+    test_db_migration(conn);
 
     println!("Test create!");
     test_create_instrument(conn);

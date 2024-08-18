@@ -2,6 +2,7 @@ use diesel::r2d2::{ConnectionManager, Pool};
 use diesel::PgConnection;
 use dotenv::dotenv;
 use pg_cmdb::model::portfolio::{CreatePortfolio, Portfolio, UpdatePortfolio};
+use pg_cmdb::run_cmdb_db_migration;
 use std::env;
 
 fn postgres_connection_pool() -> Pool<ConnectionManager<PgConnection>> {
@@ -18,9 +19,19 @@ fn postgres_connection_pool() -> Pool<ConnectionManager<PgConnection>> {
         .expect("Could not build connection pool")
 }
 
+fn test_db_migration(conn: &mut pg_cmdb::Connection) {
+    let res = run_cmdb_db_migration(conn);
+    //dbg!(&result);
+    assert!(res.is_ok());
+}
+
 #[test]
 fn test_portfolio() {
     let pool = postgres_connection_pool();
+    let mut conn = &mut pool.get().unwrap();
+
+    println!("Test DB migration!");
+    test_db_migration(conn);
 
     let portfolio = CreatePortfolio::new(
         1,
@@ -38,8 +49,6 @@ fn test_portfolio() {
         50.0,
         100.0,
     );
-
-    let mut conn = &mut pool.get().unwrap();
 
     let result = Portfolio::create(&mut conn, &portfolio);
     assert!(result.is_ok());

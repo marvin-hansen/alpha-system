@@ -6,6 +6,7 @@ use dotenv::dotenv;
 use pg_cmdb::model::instrument::Instrument;
 use pg_cmdb::model::portfolio::{CreatePortfolio, Portfolio};
 use pg_cmdb::model::portfolio_instrument::{CreatePortfolioInstrument, PortfolioInstrument};
+use pg_cmdb::run_cmdb_db_migration;
 use std::env;
 
 fn postgres_connection_pool() -> Pool<ConnectionManager<PgConnection>> {
@@ -22,12 +23,21 @@ fn postgres_connection_pool() -> Pool<ConnectionManager<PgConnection>> {
         .expect("Could not build connection pool")
 }
 
+fn test_db_migration(conn: &mut pg_cmdb::Connection) {
+    let res = run_cmdb_db_migration(conn);
+    //dbg!(&result);
+    assert!(res.is_ok());
+}
+
 #[test]
 fn test_portfolio_instrument() {
     let pool = postgres_connection_pool();
+    let mut conn = &mut pool.get().unwrap();
+
+    println!("Test DB migration!");
+    test_db_migration(conn);
 
     let portfolio_id = 23;
-
     let create_portfolio = CreatePortfolio::new(
         portfolio_id,
         "Test Portfolio".to_string(),
@@ -44,8 +54,6 @@ fn test_portfolio_instrument() {
         50.0,
         100.0,
     );
-
-    let mut conn = &mut pool.get().unwrap();
 
     let result = Portfolio::create(&mut conn, &create_portfolio);
     assert!(result.is_ok());

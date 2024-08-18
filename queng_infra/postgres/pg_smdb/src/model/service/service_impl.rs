@@ -6,7 +6,8 @@ use common_config::prelude::Endpoint as CommonEndpoint;
 use common_config::prelude::ServiceConfig as CommonServiceConfig;
 use common_config::prelude::ServiceID as CommonServiceID;
 use diesel::{
-    insert_into, ExpressionMethods, QueryDsl, QueryResult, RunQueryDsl, SelectableHelper,
+    insert_into, ExpressionMethods, OptionalExtension, QueryDsl, QueryResult, RunQueryDsl,
+    SelectableHelper,
 };
 
 impl Service {
@@ -64,10 +65,11 @@ impl Service {
         db: &mut Connection,
         param_service_id: CommonServiceID,
     ) -> QueryResult<bool> {
-        match service.find(param_service_id.as_i32()).first::<Service>(db) {
-            Ok(_) => Ok(true),
-            Err(_) => Ok(false),
-        }
+        service
+            .find(param_service_id.as_i32())
+            .first::<Service>(db)
+            .optional()
+            .map(|arg0: Option<Service>| Option::is_some(&arg0))
     }
 
     /// Checks if a service ID is online.
@@ -279,8 +281,7 @@ impl Service {
     ) -> QueryResult<()> {
         match diesel::update(service.filter(service_id.eq(param_service_id.as_i32())))
             .set(online.eq(param_online))
-            .returning(Service::as_returning())
-            .get_result::<Service>(db)
+            .execute(db)
         {
             Ok(_) => Ok(()),
             Err(e) => Err(e),

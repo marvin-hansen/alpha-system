@@ -22,6 +22,12 @@ fn postgres_connection_pool() -> Pool<ConnectionManager<PgConnection>> {
         .expect("Could not build connection pool")
 }
 
+fn test_db_migration(conn: &mut pg_smdb::Connection) {
+    let res = run_smdb_db_migration(conn);
+    //dbg!(&result);
+    assert!(res.is_ok());
+}
+
 #[test]
 fn test_service() {
     let pool = postgres_connection_pool();
@@ -73,12 +79,6 @@ fn test_service() {
     test_service_delete(conn);
 }
 
-fn test_db_migration(conn: &mut pg_smdb::Connection) {
-    let res = run_smdb_db_migration(conn);
-    //dbg!(&result);
-    assert!(res.is_ok());
-}
-
 fn test_create_service(conn: &mut pg_smdb::Connection) {
     let id = ServiceID::SMDB;
     let name = "name".to_string();
@@ -106,7 +106,7 @@ fn test_create_service(conn: &mut pg_smdb::Connection) {
     );
 
     let result = service::Service::create(conn, &service_config);
-    //dbg!(&result);
+    dbg!(&result);
     assert!(result.is_ok());
 
     let service = result.unwrap();

@@ -1,6 +1,8 @@
 use crate::model::protocol_type::{PgProtocolType, ProtocolType};
 use diesel::deserialize::FromSql;
 use diesel::pg::{Pg, PgValue};
+use diesel::result::DatabaseErrorKind;
+use diesel::result::Error::DatabaseError;
 use diesel::serialize::{IsNull, Output, ToSql};
 use diesel::{deserialize, serialize};
 use std::io::Write;
@@ -24,7 +26,14 @@ impl FromSql<PgProtocolType, Pg> for ProtocolType {
             b"GRPC" => Ok(ProtocolType::GRPC),
             b"HTTP" => Ok(ProtocolType::HTTP),
             b"UDP" => Ok(ProtocolType::UDP),
-            _ => Ok(ProtocolType::UnknownProtocol),
+            _ => Err(DatabaseError(
+                DatabaseErrorKind::SerializationFailure,
+                Box::new(format!(
+                    "Unrecognized ProtocolType Enum variant: {:?}",
+                    String::from_utf8_lossy(bytes.as_bytes())
+                )),
+            )
+            .into()),
         }
     }
 }
