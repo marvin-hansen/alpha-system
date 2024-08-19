@@ -337,7 +337,6 @@ crate.spec(
     default_features = False,
     features = [
         "postgres",
-        "postgres_backend",
         "r2d2",
     ],
     package = "diesel",

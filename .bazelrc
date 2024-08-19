@@ -104,18 +104,6 @@ common:remote --remote_executor=remote.buildbuddy.io
 common:remote --remote_header=x-buildbuddy-api-key=4Ml6AhYICvGtZ3XhqafP
 
 ###############################################################################
-## Rust configuration
-###############################################################################
-
-# Enable rustfmt for all targets in the workspace
-build:rustfmt --aspects=@rules_rust//rust:defs.bzl%rustfmt_aspect
-build:rustfmt --output_groups=+rustfmt_checks
-
-# Enable clippy for all targets in the workspace
-build:clippy --aspects=@rules_rust//rust:defs.bzl%rust_clippy_aspect
-build:clippy --output_groups=+clippy_checks
-
-###############################################################################
 ## Custom user flags
 ##
 ## This should always be the last thing in the `.bazelrc` file to ensure
