@@ -60,18 +60,23 @@ platform_transition_binary(
     target_platform = "//build/platforms:linux_x86_64_musl",
 )
 
-# Test MUSL x86_64 binary
+# Test x86_64 MUSL binary
+# Because static linking on Linux doesn't work due to issue:
+# https://github.com/bazelbuild/rules_rust/issues/2726
+# This tests for a dynamically linked binary, but only on CI.
 sh_test(
     name = "test_bin_linux_x86_64_musl",
     srcs = ["test_platform.sh"],
     args = [
         "$(rootpath :bin_linux_x86_64_musl)",
         # "'ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), static-pie linked'",
-        "'ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV)'",
+        "'ELF 64-bit LSB shared object, x86-64, version 1 (SYSV)'",
     ],
     data = [":bin_linux_x86_64_musl"],
     tags = [
-        "binary-integrity_test",
+        # Run this test only on CI
+        "ci-binary-integrity_test",
+        # "binary-integrity_test",
     ],
 )
 

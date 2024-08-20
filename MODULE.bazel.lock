@@ -22695,7 +22695,7 @@
     "@@toolchains_llvm~//toolchain/extensions:llvm.bzl%llvm": {
       "general": {
         "bzlTransitiveDigest": "y9h5L2NtWbogyWSOJgqnUaU50MTPWAW+waelXSirMVg=",
-        "usagesDigest": "K4KePOzchnwgtyN2MjUoeIAxiEv6F4ho4KniPBR77jg=",
+        "usagesDigest": "qMJWbEJ4khOike0DgdjrMuEMcjdDUg+9TS3nWHKnMy4=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -22718,7 +22718,7 @@
               "link_flags": {},
               "link_libs": {},
               "llvm_versions": {
-                "": "18.1.4",
+                "": "16.0.0",
                 "darwin-aarch64": "17.0.6",
                 "darwin-x86_64": "15.0.7"
               },
@@ -22751,7 +22751,7 @@
               "link_flags": {},
               "link_libs": {},
               "llvm_versions": {
-                "": "18.1.4",
+                "": "16.0.0",
                 "darwin-aarch64": "17.0.6",
                 "darwin-x86_64": "15.0.7"
               },
@@ -22776,7 +22776,7 @@
               "llvm_mirror": "",
               "llvm_version": "",
               "llvm_versions": {
-                "": "18.1.4",
+                "": "16.0.0",
                 "darwin-aarch64": "17.0.6",
                 "darwin-x86_64": "15.0.7"
               },
@@ -22804,7 +22804,7 @@
               "link_flags": {},
               "link_libs": {},
               "llvm_versions": {
-                "": "18.1.4",
+                "": "16.0.0",
                 "darwin-aarch64": "17.0.6",
                 "darwin-x86_64": "15.0.7"
               },
@@ -22831,7 +22831,7 @@
               "llvm_mirror": "",
               "llvm_version": "",
               "llvm_versions": {
-                "": "18.1.4",
+                "": "16.0.0",
                 "darwin-aarch64": "17.0.6",
                 "darwin-x86_64": "15.0.7"
               },
@@ -22853,7 +22853,7 @@
               "llvm_mirror": "",
               "llvm_version": "",
               "llvm_versions": {
-                "": "18.1.4",
+                "": "16.0.0",
                 "darwin-aarch64": "17.0.6",
                 "darwin-x86_64": "15.0.7"
               },
