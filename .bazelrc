@@ -94,8 +94,8 @@ common:remote-shared --platforms=//build/platforms:linux_x86_64_remote
 common:remote-shared --extra_execution_platforms=//build/platforms:linux_x86_64_remote
 
 # Remote cross compilation
-common:remote-shared --extra_execution_platforms=//build/platforms:linux_arm64
-common:remote-shared --extra_execution_platforms=//build/platforms:linux_x86_64
+common:remote-shared --extra_execution_platforms=//build/platforms:linux_arm64_musl
+common:remote-shared --extra_execution_platforms=//build/platforms:linux_x86_64_musl
 
 # Build with --config=remote to enable Remote Build Execution (RBE)
 common:remote --config=remote-shared
