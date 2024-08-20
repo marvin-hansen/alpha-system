@@ -50,45 +50,44 @@ rust_binary(
     ],
 )
 
-# x86_64_musl MUSL on x86_64 (CI) doesn't work due to issue:
-# https://github.com/bazelbuild/rules_rust/issues/2726
+# Build x86_64 binary
 platform_transition_binary(
-    name = "bin_linux_x86_64_musl",
+    name = "bin_linux_x86_64",
     binary = "smdb",
-    target_platform = "//build/platforms:linux_x86_64_musl",
+    target_platform = "//build/platforms:linux_x86_64",
 )
 
 # Test MUSL x86_64 binary
 sh_test(
-    name = "test_bin_linux_x86_64_musl",
+    name = "test_bin_linux_x86_64",
     srcs = ["test_platform.sh"],
     args = [
-        "$(rootpath :bin_linux_x86_64_musl)",
-        "'ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), static-pie linked'",
+        "$(rootpath :bin_linux_x86_64)",
+        "'ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV)'",
     ],
-    data = [":bin_linux_x86_64_musl"],
+    data = [":bin_linux_x86_64"],
     tags = [
         "aux_file_server",
-        # "binary-integrity_test",
+        "binary-integrity_test",
     ],
 )
 
 # Build a MUSL ARM64 binary
 platform_transition_binary(
-    name = "bin_linux_arm64_musl",
+    name = "bin_linux_arm64",
     binary = "smdb",
-    target_platform = "//build/platforms:linux_arm64_musl",
+    target_platform = "//build/platforms:linux_arm64",
 )
 
 # Test MUSL ARM64 binary
 sh_test(
-    name = "test_bin_linux_arm64_musl",
+    name = "test_bin_linux_arm64",
     srcs = ["test_platform.sh"],
     args = [
-        "$(rootpath :bin_linux_arm64_musl)",
-        "'ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked'",
+        "$(rootpath :bin_linux_arm64)",
+        "'ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV)'",
     ],
-    data = [":bin_linux_arm64_musl"],
+    data = [":bin_linux_arm64"],
     tags = [
         "aux_file_server",
         "binary-integrity_test",
@@ -120,7 +119,10 @@ build_multi_arch_image(
         "7070",
         "8080",
     ],
-    platforms = ["//build/platforms:linux_x86_64_musl"],
+    platforms = [
+        "//build/platforms:linux_x86_64",
+        "//build/platforms:linux_arm64",
+    ],
     visibility = ["//visibility:public"],
 )
 
