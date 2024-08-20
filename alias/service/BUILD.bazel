@@ -62,7 +62,7 @@ alias(
 
 alias(
     name = "mddb",
-    actual = "//queng_services/meta/mddb/mddb_service:bin",
+    actual = "//queng_services/meta/mddb/mddb_service:mddb",
     visibility = ["//visibility:public"],
 )
 
@@ -78,7 +78,7 @@ alias(
 
 alias(
     name = "binance_data",
-    actual = "//queng_services/ims/ims_data/binance_data:bin",
+    actual = "//queng_services/ims/ims_data/binance_data:binance_data",
     visibility = ["//visibility:public"],
 )
 

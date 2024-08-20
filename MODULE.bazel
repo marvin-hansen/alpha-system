@@ -53,8 +53,9 @@ http_archive = use_repo_rule("@bazel_tools//:http.bzl", "http_archive")
 # LLVM Versions and platforms
 # https://github.com/bazel-contrib/toolchains_llvm/blob/master/toolchain/internal/llvm_distributions.bzl
 LLVM_VERSIONS = {
-    "": "16.0.0",  # Default
-    "darwin-aarch64": "16.0.5",  # Only support newer Apple Silicon Macs
+    "": "18.1.4",  # Default for Linux Ubuntu 18.04
+    "darwin-aarch64": "17.0.6",  # Apple Silicon Macs
+    "darwin-x86_64": "15.0.7",  # Apple Intel Macs
 }
 
 # Sysroot for LLVM
@@ -132,14 +133,6 @@ register_toolchains("@llvm_toolchain//:all")
 ###############################################################################
 # T O O L C H A I N S
 ###############################################################################
-
-##################
-# MUSL toolchain #
-##################
-toolchains_musl = use_extension("@toolchains_musl//:toolchains_musl.bzl", "toolchains_musl", dev_dependency = True)
-toolchains_musl.config(
-    extra_target_compatible_with = ["@//build/linker:musl"],
-)
 
 ##################
 # Rust toolchain #

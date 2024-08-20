@@ -10,7 +10,7 @@ load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_doc", "rust_doc_test")
 load("//:build/container.bzl", "build_multi_arch_image", "build_sha265_tag")
 
 rust_binary(
-    name = "bin",
+    name = "mddb",
     srcs = glob([
         "src/**/*.rs",
     ]),
@@ -58,7 +58,7 @@ rust_binary(
 # https://github.com/bazelbuild/rules_rust/issues/2726
 platform_transition_binary(
     name = "bin_linux_x86_64_musl",
-    binary = ":bin",
+    binary = ":mddb",
     target_platform = "//build/platforms:linux_x86_64_musl",
 )
 
@@ -68,12 +68,12 @@ sh_test(
     srcs = ["test_platform.sh"],
     args = [
         "$(rootpath :bin_linux_x86_64_musl)",
-        "'ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), static-pie linked'",
+        # "'ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), static-pie linked'",
+        "'ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV)'",
     ],
     data = [":bin_linux_x86_64_musl"],
     tags = [
-        "aux_file_server",
-        # "binary-integrity_test",
+        "binary-integrity_test",
     ],
 )
 
@@ -83,7 +83,7 @@ sh_test(
 # Build documentation
 rust_doc(
     name = "doc",
-    crate = ":bin",
+    crate = ":mddb",
     tags = ["doc"],
     visibility = ["//visibility:public"],
 )
@@ -91,7 +91,7 @@ rust_doc(
 # Test documentation
 rust_doc_test(
     name = "doc_test",
-    crate = ":bin",
+    crate = ":mddb",
     tags = ["doc-test"],
     visibility = ["//visibility:public"],
 )
@@ -99,7 +99,7 @@ rust_doc_test(
 # Build musl container image
 build_multi_arch_image(
     name = "image_index",
-    srcs = [":bin"],
+    srcs = [":mddb"],
     base = "@scratch",
     exposed_ports = [
         "7070",

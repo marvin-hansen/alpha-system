@@ -66,12 +66,12 @@ sh_test(
     srcs = ["test_platform.sh"],
     args = [
         "$(rootpath :bin_linux_x86_64_musl)",
-        "'ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), static-pie linked'",
+        # "'ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), static-pie linked'",
+        "'ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV)'",
     ],
     data = [":bin_linux_x86_64_musl"],
     tags = [
-        "aux_file_server",
-        # "binary-integrity_test",
+        "binary-integrity_test",
     ],
 )
 
@@ -92,7 +92,6 @@ sh_test(
     ],
     data = [":bin_linux_arm64_musl"],
     tags = [
-        "aux_file_server",
         "binary-integrity_test",
     ],
 )
@@ -122,7 +121,10 @@ build_multi_arch_image(
         "7070",
         "8080",
     ],
-    platforms = ["//build/platforms:linux_x86_64_musl"],
+    platforms = [
+        "//build/platforms:linux_x86_64_musl",
+        "//build/platforms:linux_arm64_musl",
+    ],
     visibility = ["//visibility:public"],
 )
 

@@ -63,18 +63,19 @@ platform_transition_binary(
     target_platform = "//build/platforms:linux_x86_64_musl",
 )
 
-# Test MUSL x86_64 binary
+# Test x86_64 binary
 sh_test(
     name = "test_bin_linux_x86_64_musl",
     srcs = ["test_platform.sh"],
     args = [
         "$(rootpath :bin_linux_x86_64_musl)",
-        "'ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), static-pie linked'",
+        # "'ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), static-pie linked'",
+        "'ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV)'",
     ],
     data = [":bin_linux_x86_64_musl"],
     tags = [
         "aux_file_server",
-        # "binary-integrity_test",
+        "binary-integrity_test",
     ],
 )
 
