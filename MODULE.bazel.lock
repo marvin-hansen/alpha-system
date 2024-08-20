@@ -15,8 +15,8 @@
     "https://bcr.bazel.build/modules/aspect_bazel_lib/1.38.0/MODULE.bazel": "6307fec451ba9962c1c969eb516ebfe1e46528f7fa92e1c9ac8646bef4cdaa3f",
     "https://bcr.bazel.build/modules/aspect_bazel_lib/1.40.3/MODULE.bazel": "668e6bcb4d957fc0e284316dba546b705c8d43c857f87119619ee83c4555b859",
     "https://bcr.bazel.build/modules/aspect_bazel_lib/1.42.1/MODULE.bazel": "b7aca918a7c7f4cb9ea223e7e2cba294760659ec7364cc551df156067e4a3621",
-    "https://bcr.bazel.build/modules/aspect_bazel_lib/2.8.0/MODULE.bazel": "d1170d33a4f6117ecd61aa7574d3d1f3f1a33ac0e2c1573b6bffa5a51c3753fc",
-    "https://bcr.bazel.build/modules/aspect_bazel_lib/2.8.0/source.json": "1562c277dfa738c29f6bc254228cc5689104a8b76b7c670ad4846066243322a1",
+    "https://bcr.bazel.build/modules/aspect_bazel_lib/2.8.1/MODULE.bazel": "812d2dd42f65dca362152101fbec418029cc8fd34cbad1a2fde905383d705838",
+    "https://bcr.bazel.build/modules/aspect_bazel_lib/2.8.1/source.json": "95a6b56904e2d8bfea164dc6c98ccafe8cb75cb0623cb6ef5b3cfb15fdddabd6",
     "https://bcr.bazel.build/modules/aspect_rules_js/1.33.1/MODULE.bazel": "db3e7f16e471cf6827059d03af7c21859e7a0d2bc65429a3a11f005d46fc501b",
     "https://bcr.bazel.build/modules/aspect_rules_js/1.39.0/MODULE.bazel": "aece421d479e3c31dc3e5f6d49a12acc2700457c03c556650ec7a0ff23fc0d95",
     "https://bcr.bazel.build/modules/aspect_rules_js/1.39.0/source.json": "a8f93e4ad8843e8aa407fa5fd7c8b63a63846c0ce255371ff23384582813b13d",
@@ -124,8 +124,6 @@
     "https://bcr.bazel.build/modules/stardoc/0.5.4/MODULE.bazel": "6569966df04610b8520957cb8e97cf2e9faac2c0309657c537ab51c16c18a2a4",
     "https://bcr.bazel.build/modules/stardoc/0.6.2/MODULE.bazel": "7060193196395f5dd668eda046ccbeacebfd98efc77fed418dbe2b82ffaa39fd",
     "https://bcr.bazel.build/modules/stardoc/0.6.2/source.json": "d2ff8063b63b4a85e65fe595c4290f99717434fa9f95b4748a79a7d04dfed349",
-    "https://bcr.bazel.build/modules/toolchains_llvm/1.1.2/MODULE.bazel": "402101d6f73115ec49a3a765a3361c1dd90ba3959fa688ccdcd465c36dbbbc52",
-    "https://bcr.bazel.build/modules/toolchains_llvm/1.1.2/source.json": "27f3cf531bc654c719b50411cac94613b7676d63e60962243d485af63e13b9ff",
     "https://bcr.bazel.build/modules/toolchains_musl/0.1.17/MODULE.bazel": "e94ee0bc910bed92a0fe6ef7920a4a38406f5be2dceadd12b5ff84e5ade2a0fb",
     "https://bcr.bazel.build/modules/toolchains_musl/0.1.17/source.json": "4ea48922299b20fb72605e6a485b1aef9d0dbc07cb785eee5cc575915141e52b",
     "https://bcr.bazel.build/modules/toolchains_protoc/0.3.1/MODULE.bazel": "b6574a2a314cbd40cafb5ed87b03d1996e015315f80a7e33116c8b2e209cb5cf",
@@ -169,8 +167,8 @@
     },
     "@@aspect_bazel_lib~//lib:extensions.bzl%toolchains": {
       "general": {
-        "bzlTransitiveDigest": "4z68+Zupkgvbh3DNKdL/JJXt9QfpOOmPhuzIsf/tfbI=",
-        "usagesDigest": "TeK0lFn5ZWS1arQrmlKecf3s1M6xj6SJ1Vqi7Qo0OEE=",
+        "bzlTransitiveDigest": "o+c8qRBWojmxp6XnxraB8cDLR3egI6E7hjYq4t1rzM8=",
+        "usagesDigest": "eKLedxn8AWG2qV0yFHb0zU3paviFJGAGMBJgQlRz/Os=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -902,7 +900,7 @@
     },
     "@@rules_oci~//oci:extensions.bzl%oci": {
       "general": {
-        "bzlTransitiveDigest": "EM5vKt3luyRFZ4EW/iF98Iwr56EztcEg+lvP8svVjmA=",
+        "bzlTransitiveDigest": "o/ICPom2Op1Ra8QwRi0hp4ubTuOurdmT5CZE+5dn/1g=",
         "usagesDigest": "sq2iOsq/m82/0fAlpQddS63Q12epM3d3ElnpdIWdm6g=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
@@ -22688,191 +22686,6 @@
             "rules_rust~",
             "rules_rust_wasm_bindgen__wasmprinter-0.2.60",
             "rules_rust~~i~rules_rust_wasm_bindgen__wasmprinter-0.2.60"
-          ]
-        ]
-      }
-    },
-    "@@toolchains_llvm~//toolchain/extensions:llvm.bzl%llvm": {
-      "general": {
-        "bzlTransitiveDigest": "y9h5L2NtWbogyWSOJgqnUaU50MTPWAW+waelXSirMVg=",
-        "usagesDigest": "lyxGMqrM1XkTt2QwE0bgMNDXMJnONz5e4VMjlDoyNtE=",
-        "recordedFileInputs": {},
-        "recordedDirentsInputs": {},
-        "envVariables": {},
-        "generatedRepoSpecs": {
-          "llvm_toolchain_x86_with_sysroot": {
-            "bzlFile": "@@toolchains_llvm~//toolchain:rules.bzl",
-            "ruleClassName": "toolchain",
-            "attributes": {
-              "absolute_paths": false,
-              "archive_flags": {},
-              "compile_flags": {},
-              "coverage_compile_flags": {},
-              "coverage_link_flags": {},
-              "cxx_builtin_include_directories": {},
-              "cxx_flags": {},
-              "cxx_standard": {},
-              "dbg_compile_flags": {},
-              "exec_arch": "",
-              "exec_os": "",
-              "link_flags": {},
-              "link_libs": {},
-              "llvm_versions": {
-                "": "16.0.0",
-                "darwin-aarch64": "16.0.5"
-              },
-              "opt_compile_flags": {},
-              "opt_link_flags": {},
-              "stdlib": {},
-              "target_settings": {},
-              "unfiltered_compile_flags": {},
-              "toolchain_roots": {},
-              "sysroot": {
-                "linux_x86_64_musl": "'@@_main~_repo_rules~org_chromium_sysroot_linux_x64//:sysroot'"
-              }
-            }
-          },
-          "llvm_toolchain": {
-            "bzlFile": "@@toolchains_llvm~//toolchain:rules.bzl",
-            "ruleClassName": "toolchain",
-            "attributes": {
-              "absolute_paths": false,
-              "archive_flags": {},
-              "compile_flags": {},
-              "coverage_compile_flags": {},
-              "coverage_link_flags": {},
-              "cxx_builtin_include_directories": {},
-              "cxx_flags": {},
-              "cxx_standard": {},
-              "dbg_compile_flags": {},
-              "exec_arch": "",
-              "exec_os": "",
-              "link_flags": {},
-              "link_libs": {},
-              "llvm_versions": {
-                "": "16.0.0",
-                "darwin-aarch64": "16.0.5"
-              },
-              "opt_compile_flags": {},
-              "opt_link_flags": {},
-              "stdlib": {},
-              "target_settings": {},
-              "unfiltered_compile_flags": {},
-              "toolchain_roots": {},
-              "sysroot": {}
-            }
-          },
-          "llvm_toolchain_aarch64_with_sysroot_llvm": {
-            "bzlFile": "@@toolchains_llvm~//toolchain:rules.bzl",
-            "ruleClassName": "llvm",
-            "attributes": {
-              "alternative_llvm_sources": [],
-              "auth_patterns": {},
-              "distribution": "auto",
-              "exec_arch": "",
-              "exec_os": "",
-              "llvm_mirror": "",
-              "llvm_version": "",
-              "llvm_versions": {
-                "": "16.0.0",
-                "darwin-aarch64": "16.0.5"
-              },
-              "netrc": "",
-              "sha256": {},
-              "strip_prefix": {},
-              "urls": {}
-            }
-          },
-          "llvm_toolchain_aarch64_with_sysroot": {
-            "bzlFile": "@@toolchains_llvm~//toolchain:rules.bzl",
-            "ruleClassName": "toolchain",
-            "attributes": {
-              "absolute_paths": false,
-              "archive_flags": {},
-              "compile_flags": {},
-              "coverage_compile_flags": {},
-              "coverage_link_flags": {},
-              "cxx_builtin_include_directories": {},
-              "cxx_flags": {},
-              "cxx_standard": {},
-              "dbg_compile_flags": {},
-              "exec_arch": "",
-              "exec_os": "",
-              "link_flags": {},
-              "link_libs": {},
-              "llvm_versions": {
-                "": "16.0.0",
-                "darwin-aarch64": "16.0.5"
-              },
-              "opt_compile_flags": {},
-              "opt_link_flags": {},
-              "stdlib": {},
-              "target_settings": {},
-              "unfiltered_compile_flags": {},
-              "toolchain_roots": {},
-              "sysroot": {
-                "linux_arm64_musl": "'@@_main~_repo_rules~org_chromium_sysroot_linux_aarch64//:sysroot'"
-              }
-            }
-          },
-          "llvm_toolchain_llvm": {
-            "bzlFile": "@@toolchains_llvm~//toolchain:rules.bzl",
-            "ruleClassName": "llvm",
-            "attributes": {
-              "alternative_llvm_sources": [],
-              "auth_patterns": {},
-              "distribution": "auto",
-              "exec_arch": "",
-              "exec_os": "",
-              "llvm_mirror": "",
-              "llvm_version": "",
-              "llvm_versions": {
-                "": "16.0.0",
-                "darwin-aarch64": "16.0.5"
-              },
-              "netrc": "",
-              "sha256": {},
-              "strip_prefix": {},
-              "urls": {}
-            }
-          },
-          "llvm_toolchain_x86_with_sysroot_llvm": {
-            "bzlFile": "@@toolchains_llvm~//toolchain:rules.bzl",
-            "ruleClassName": "llvm",
-            "attributes": {
-              "alternative_llvm_sources": [],
-              "auth_patterns": {},
-              "distribution": "auto",
-              "exec_arch": "",
-              "exec_os": "",
-              "llvm_mirror": "",
-              "llvm_version": "",
-              "llvm_versions": {
-                "": "16.0.0",
-                "darwin-aarch64": "16.0.5"
-              },
-              "netrc": "",
-              "sha256": {},
-              "strip_prefix": {},
-              "urls": {}
-            }
-          }
-        },
-        "recordedRepoMappingEntries": [
-          [
-            "toolchains_llvm~",
-            "bazel_skylib",
-            "bazel_skylib~"
-          ],
-          [
-            "toolchains_llvm~",
-            "bazel_tools",
-            "bazel_tools"
-          ],
-          [
-            "toolchains_llvm~",
-            "toolchains_llvm",
-            "toolchains_llvm~"
           ]
         ]
       }
