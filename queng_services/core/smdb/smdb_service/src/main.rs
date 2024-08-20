@@ -1,6 +1,6 @@
-use std::error::Error;
-
 use mimalloc::MiMalloc;
+use std::error::Error;
+use std::net::SocketAddr;
 use tonic::transport::{Channel, Server, Uri};
 
 use common_config::prelude::ServiceID;
@@ -11,7 +11,7 @@ use dns_manager::DnsManager;
 use proto_bindings::proto::db_gateway_service_client::DbGatewayServiceClient;
 use proto_bindings::proto::smdb_service_server::SmdbServiceServer;
 use service::SMDBServer;
-
+use warp::Filter;
 mod service;
 
 #[global_allocator]
@@ -72,8 +72,21 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .get_metrics_socket_addr_uri()
         .expect("[SMDB]: Failed to get metric host, uri, and port");
 
+    // Build http metrics endpoint
+    let routes = warp::get()
+        .and(warp::path("metrics"))
+        .and(warp::path::end())
+        .and_then(get_metrics_handler);
+
+    // Build http metrics server
+    let web_addr: SocketAddr = metrics_addr.parse().expect("Failed to parse web address");
+
+    let signal = shutdown_utils::signal_handler("metric server");
+    let (_, web_server) = warp::serve(routes).bind_with_graceful_shutdown(web_addr, signal);
+
     // Create a handler for each server https://github.com/hyperium/tonic/discussions/740
     let grpc_handle = tokio::spawn(grpc_server);
+    let http_handle = tokio::spawn(web_server);
 
     // Set SMDB service to online
     dbgw_client
@@ -83,7 +96,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     // Start all servers jointly
     print_utils::print_start_header(&SVC_ID, &service_addr, &metrics_addr, &metrics_uri);
-    match tokio::try_join!(grpc_handle) {
+    match tokio::try_join!(grpc_handle, http_handle) {
         Ok(_) => {}
         Err(e) => {
             dbgw_client
@@ -102,4 +115,11 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     print_utils::print_stop_header(&SVC_ID);
     Ok(())
+}
+
+async fn get_metrics_handler() -> Result<impl warp::Reply, warp::Rejection> {
+    match autometrics::prometheus_exporter::encode_to_string() {
+        Ok(metrics) => Ok(warp::reply::json(&metrics)),
+        Err(_) => Err(warp::reject::not_found()),
+    }
 }

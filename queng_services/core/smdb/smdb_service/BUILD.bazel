@@ -45,8 +45,10 @@ rust_binary(
         # Custom Memory Allocator
         "@crates//:mimalloc",
         # External crates
+        "@crates//:autometrics",
         "@crates//:tokio",
         "@crates//:tonic",
+        "@crates//:warp",
     ],
 )
 
