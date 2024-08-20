@@ -11,7 +11,7 @@ load("//:build/container.bzl", "build_multi_arch_image", "build_sha265_tag")
 
 # Build binary
 rust_binary(
-    name = "bin",
+    name = "kaiko_proxy",
     srcs = glob([
         "src/*/*.rs",
         "src/*.rs",
@@ -59,7 +59,7 @@ rust_binary(
 # https://github.com/bazelbuild/rules_rust/issues/2726
 platform_transition_binary(
     name = "bin_linux_x86_64_musl",
-    binary = ":bin",
+    binary = ":kaiko_proxy",
     target_platform = "//build/platforms:linux_x86_64_musl",
 )
 
@@ -86,7 +86,7 @@ sh_test(
 # Build a MUSL ARM64 binary
 platform_transition_binary(
     name = "bin_linux_arm64_musl",
-    binary = ":bin",
+    binary = ":kaiko_proxy",
     target_platform = "//build/platforms:linux_arm64_musl",
 )
 
@@ -107,7 +107,7 @@ sh_test(
 # Build documentation
 rust_doc(
     name = "doc",
-    crate = ":bin",
+    crate = ":kaiko_proxy",
     tags = ["doc"],
     visibility = ["//visibility:public"],
 )
@@ -115,14 +115,14 @@ rust_doc(
 # Test documentation
 rust_doc_test(
     name = "doc_test",
-    crate = ":bin",
+    crate = ":kaiko_proxy",
     tags = ["doc-test"],
     visibility = ["//visibility:public"],
 )
 
 build_multi_arch_image(
     name = "image_index",
-    srcs = [":bin"],
+    srcs = [":kaiko_proxy"],
     base = "@distroless",
     exposed_ports = ["7777"],
     platforms = [

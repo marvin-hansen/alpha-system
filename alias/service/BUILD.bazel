@@ -1,31 +1,16 @@
-###############################################################################
-# Auxiliary Services
-###############################################################################
-
-# The service aliases are used in scripts/run_*.sh to start each service
-alias(
-    name = "kaiko_proxy",
-    actual = "//queng_services/aux/kaiko_proxy:bin",
-    visibility = ["//visibility:public"],
-)
-
-# The push aliases are used in the root folder BUILD file to build & push containers
-alias(
-    name = "kaiko_proxy_push",
-    actual = "//queng_services/aux/kaiko_proxy:push",
-    visibility = ["//visibility:public"],
-)
 
 ###############################################################################
 # Core Services
 ###############################################################################
 
+# The service aliases are used in scripts/run_*.sh to start each service
 alias(
     name = "cmdb",
     actual = "//queng_services/core/cmdb/cmdb_service:cmdb",
     visibility = ["//visibility:public"],
 )
 
+# The push aliases are used in the root folder BUILD file to build & push containers
 alias(
     name = "cmdb_push",
     actual = "//queng_services/core/cmdb/cmdb_service:push",
@@ -59,6 +44,18 @@ alias(
 ###############################################################################
 # Metadata Services
 ###############################################################################
+
+alias(
+    name = "kaiko_proxy",
+    actual = "//queng_services/aux/kaiko_proxy:kaiko_proxy",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "kaiko_proxy_push",
+    actual = "//queng_services/aux/kaiko_proxy:push",
+    visibility = ["//visibility:public"],
+)
 
 alias(
     name = "mddb",
