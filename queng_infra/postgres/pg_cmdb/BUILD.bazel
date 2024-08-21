@@ -8,7 +8,7 @@ genrule(
     outs = ["env_file.txt"],
     cmd = """(
         # Get the absolute path
-        input_path=$$(realpath queng_infra/postgres/pg_cmdb/Cargo.toml)
+        input_path=$$(pwd -P)
 
         # Remove /Cargo.toml from the path
         result_path="$${input_path%/Cargo.toml}"

@@ -1325,11 +1325,11 @@
     },
     "@@rules_rust~//crate_universe:extension.bzl%crate": {
       "general": {
-        "bzlTransitiveDigest": "LgB3t7ADMkdhynNBByfs2m3EdrGkzYznMdyXEmxkpSc=",
+        "bzlTransitiveDigest": "ep9wFsCFL/Yn8xu05VJqhs8TUhrrzOwQuPheGZob3l8=",
         "usagesDigest": "vrx0mY44ZmGnvAplbX8DWZS4y1JFn+UMESAs/ucn8qU=",
         "recordedFileInputs": {
-          "@@rules_rust~~rust_host_tools~rust_host_tools//bin/rustc": "957b8b297855a293f6529ee237e6329c90eafb036f5262c693614cc6826959f6",
-          "@@rules_rust~~rust_host_tools~rust_host_tools//bin/cargo": "34b9eb6680c617bb3e045b3972ef99496519c98a36dd72e5fe3d3bfb0f939fce"
+          "@@rules_rust~~rust_host_tools~rust_host_tools//bin/rustc": "3f89818bb07ef2c1b4191a9289e0871c91b1e693792629d92c864bef5c2484f3",
+          "@@rules_rust~~rust_host_tools~rust_host_tools//bin/cargo": "7046c9b8b9cbce00ad3e757211d7fb6b893d8413accb4ae6c90e4b2ef4c32b33"
         },
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -10382,7 +10382,7 @@
     },
     "@@rules_rust~//rust:extensions.bzl%rust": {
       "general": {
-        "bzlTransitiveDigest": "1xolWxAqVA/c9F/xhVbmUX19G19JIJeFIaokzlAZPk0=",
+        "bzlTransitiveDigest": "Lu32kUJ7KBNa2WFE3eoJXZYxnwgP0cNHASMYeo8ATdo=",
         "usagesDigest": "5yxjrRm+lBWcAzuADRgsfNzICgZSWyC87Ax4/Y1iUn4=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
