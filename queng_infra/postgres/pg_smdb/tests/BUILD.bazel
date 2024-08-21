@@ -1,18 +1,18 @@
 load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 
 rust_test_suite(
-    name = "db_pg_smdb_instrument_tests",
+    name = "db_pg_smdb_migration_tests",
     srcs = glob([
-        "service_tests.rs",
+        "migration_tests.rs",
     ]),
     tags = [
-        "db_smdb_tests",
-        "integration_test",
+        "db_smdb_migration_tests",
+        # "integration_test",
     ],
     visibility = ["//visibility:public"],
     deps = [
         # Crate to test
-        "//alias:pg_smdb",
+        "//queng_infra/postgres/pg_smdb",
         # Internal crates
         "//alias:common_config",
         "//alias:env_utils",
