@@ -41,3 +41,5 @@ rust_doc(
     tags = ["doc"],
     visibility = ["//visibility:public"],
 )
+
+# can't run tests on docs because of the env variable that is unavailable in the test

@@ -11,7 +11,6 @@ pub(crate) mod schema;
 pub type Connection =
     diesel::r2d2::PooledConnection<diesel::r2d2::ConnectionManager<pg::PgConnection>>;
 
-// pub const MIGRATIONS: EmbeddedMigrations = embed_migrations!("migrations");
 pub const MIGRATIONS: EmbeddedMigrations = EMBEDDED_MIGRATIONS;
 
 pub fn run_smdb_db_migration(
