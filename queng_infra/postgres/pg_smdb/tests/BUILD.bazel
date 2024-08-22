@@ -3,11 +3,11 @@ load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 rust_test_suite(
     name = "db_pg_smdb_migration_tests",
     srcs = glob([
-        "migration_tests.rs",
+        "service_tests.rs",
     ]),
     tags = [
         "db_smdb_migration_tests",
-        # "integration_test",
+        "integration_test",
     ],
     visibility = ["//visibility:public"],
     deps = [
