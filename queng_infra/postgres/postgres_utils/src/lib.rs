@@ -1,5 +1,6 @@
 mod common;
 mod db;
+mod db_setup_revert;
 mod errors;
 pub mod prelude;
 mod types;
