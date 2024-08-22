@@ -54,13 +54,13 @@ impl DockerUtil {
     /// Returns a `Result` containing a new instance of the `DockerUtil` struct if successful, or a `DockerError` if an error occurred.
     ///
     fn build(dbg: bool) -> Result<Self, DockerError> {
-        return match Command::new("docker").arg("-v").spawn() {
+        match Command::new("docker").arg("-v").spawn() {
             Ok(_) => Ok(Self { dbg }),
             Err(e) => Err(DockerError::from(format!(
                 "Error connecting to Docker: {}",
                 e
             ))),
-        };
+        }
     }
 }
 

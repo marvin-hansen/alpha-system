@@ -1,20 +1,15 @@
-use std::env;
-
 use common_exchange::prelude::{AccountType, PortfolioConfig};
 use container_specs::postgres_container_specs::postgres_db_container_config;
 use docker_utils::DockerUtil;
 use postgres_utils::PostgresUtil;
 
-async fn setup_ci_env() {
-    // Set the environment variable.
-    env::set_var("ENV", "CI");
-
+async fn setup_test() {
     // Create new DockerUtil
-    let ci_env = DockerUtil::with_debug().expect("Failed to get DockerUtil");
+    let docker_util = DockerUtil::with_debug().expect("Failed to get DockerUtil");
 
     // Initiate CI container
     let container_config = postgres_db_container_config();
-    ci_env
+    docker_util
         .setup_container(&container_config)
         .await
         .expect("Failed to setup ci api proxy container");
@@ -30,7 +25,7 @@ async fn get_client() -> PostgresUtil {
 
 #[tokio::test]
 async fn postgres_db_test() {
-    setup_ci_env().await;
+    setup_test().await;
 
     let pg_util = get_client().await;
 

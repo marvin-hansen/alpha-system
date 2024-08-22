@@ -1,12 +1,26 @@
 use common_config::prelude::ServiceID::SMDB;
 use common_config::prelude::{ServiceConfig, ServiceID};
+use container_specs::postgres_container_specs::postgres_db_container_config;
 use diesel::r2d2::{ConnectionManager, Pool};
 use diesel::PgConnection;
+use docker_utils::DockerUtil;
 use pg_smdb::model::service;
 use pg_smdb::model::service::UpdateService;
 use pg_smdb::run_smdb_db_migration;
 
-fn postgres_connection_pool() -> Pool<ConnectionManager<PgConnection>> {
+async fn setup_test() {
+    // Create new DockerUtil
+    let docker_util = DockerUtil::with_debug().expect("Failed to get DockerUtil");
+
+    // Initiate CI container
+    let container_config = postgres_db_container_config();
+    docker_util
+        .setup_container(&container_config)
+        .await
+        .expect("Failed to setup ci api proxy container");
+}
+
+async fn postgres_connection_pool() -> Pool<ConnectionManager<PgConnection>> {
     let database_url = "postgres://postgres:postgres@localhost/postgres";
 
     let manager = ConnectionManager::<PgConnection>::new(database_url);
@@ -22,9 +36,10 @@ fn test_db_migration(conn: &mut pg_smdb::Connection) {
     assert!(res.is_ok());
 }
 
-#[test]
-fn test_service() {
-    let pool = postgres_connection_pool();
+#[tokio::test]
+async fn test_service() {
+    setup_test().await;
+    let pool = postgres_connection_pool().await;
     let conn = &mut pool.get().unwrap();
 
     println!("Test DB migration");

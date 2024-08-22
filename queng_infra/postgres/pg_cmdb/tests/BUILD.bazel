@@ -5,6 +5,17 @@ rust_test_suite(
     srcs = glob([
         "instrument_tests.rs",
     ]),
+    exec_properties = {
+        # Tell BuildBuddy to run this test using a Firecracker microVM.
+        "test.workload-isolation-type": "firecracker",
+        # Tell BuildBuddy to ensure that the Docker daemon is started
+        "test.init-dockerd": "true",
+        # Tell BuildBuddy to preserve the microVM state across test runs.
+        "test.recycle-runner": "true",
+        # We don't want different different db tests to be assigned to the same recycled runner,
+        # because we can't fit all db docker images with the default disk limit.
+        "test.runner-recycling-key": "db_postgres_diesel_tests",
+    },
     tags = [
         "db_cmdb_tests",
         "integration_test",
@@ -15,6 +26,8 @@ rust_test_suite(
         "//alias:pg_cmdb",
         # Internal crates
         "//alias:common_exchange",
+        "//alias:container_specs",
+        "//alias:docker_utils",
         "//alias:env_utils",
         "//alias:db_specs",
         # External crates
@@ -30,6 +43,17 @@ rust_test_suite(
     srcs = glob([
         "portfolio_tests.rs",
     ]),
+    exec_properties = {
+        # Tell BuildBuddy to run this test using a Firecracker microVM.
+        "test.workload-isolation-type": "firecracker",
+        # Tell BuildBuddy to ensure that the Docker daemon is started
+        "test.init-dockerd": "true",
+        # Tell BuildBuddy to preserve the microVM state across test runs.
+        "test.recycle-runner": "true",
+        # We don't want different different db tests to be assigned to the same recycled runner,
+        # because we can't fit all db docker images with the default disk limit.
+        "test.runner-recycling-key": "db_postgres_diesel_tests",
+    },
     tags = [
         "db_cmdb_tests",
         "integration_test",
@@ -40,6 +64,8 @@ rust_test_suite(
         "//alias:pg_cmdb",
         # Internal crates
         "//alias:common_exchange",
+        "//alias:container_specs",
+        "//alias:docker_utils",
         "//alias:env_utils",
         "//alias:db_specs",
         # External crates
@@ -55,6 +81,17 @@ rust_test_suite(
     srcs = glob([
         "portfolio_instrument_tests.rs",
     ]),
+    exec_properties = {
+        # Tell BuildBuddy to run this test using a Firecracker microVM.
+        "test.workload-isolation-type": "firecracker",
+        # Tell BuildBuddy to ensure that the Docker daemon is started
+        "test.init-dockerd": "true",
+        # Tell BuildBuddy to preserve the microVM state across test runs.
+        "test.recycle-runner": "true",
+        # We don't want different different db tests to be assigned to the same recycled runner,
+        # because we can't fit all db docker images with the default disk limit.
+        "test.runner-recycling-key": "db_postgres_diesel_tests",
+    },
     tags = [
         "db_cmdb_tests",
         "integration_test",
@@ -65,6 +102,8 @@ rust_test_suite(
         "//alias:pg_cmdb",
         # Internal crates
         "//alias:common_exchange",
+        "//alias:container_specs",
+        "//alias:docker_utils",
         "//alias:env_utils",
         "//alias:db_specs",
         # External crates

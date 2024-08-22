@@ -1,7 +1,21 @@
+use container_specs::postgres_container_specs::postgres_db_container_config;
 use diesel::r2d2::{ConnectionManager, Pool};
 use diesel::PgConnection;
+use docker_utils::DockerUtil;
 use pg_cmdb::model::portfolio::{CreatePortfolio, Portfolio, UpdatePortfolio};
 use pg_cmdb::run_cmdb_db_migration;
+
+async fn setup_test() {
+    // Create new DockerUtil
+    let docker_util = DockerUtil::with_debug().expect("Failed to get DockerUtil");
+
+    // Initiate CI container
+    let container_config = postgres_db_container_config();
+    docker_util
+        .setup_container(&container_config)
+        .await
+        .expect("Failed to setup ci api proxy container");
+}
 
 fn postgres_connection_pool() -> Pool<ConnectionManager<PgConnection>> {
     let database_url = "postgres://postgres:postgres@localhost/postgres";
@@ -19,8 +33,10 @@ fn test_db_migration(conn: &mut pg_cmdb::Connection) {
     assert!(res.is_ok());
 }
 
-#[test]
-fn test_portfolio() {
+#[tokio::test]
+async fn test_portfolio() {
+    setup_test().await;
+
     let pool = postgres_connection_pool();
     let mut conn = &mut pool.get().unwrap();
 
