@@ -147,6 +147,17 @@ alias(
     visibility = ["//visibility:public"],
 )
 
+alias(
+    name = "postgres_utils",
+    actual = "//queng_infra/postgres/postgres_utils",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "clickhouse_utils",
+    actual = "//queng_infra/clickhouse/clickhouse_utils",
+    visibility = ["//visibility:public"],
+)
 
 ###############################################################################
 # Proto
@@ -264,19 +275,6 @@ alias(
 alias(
     name = "crypto_utils",
     actual = "//queng_utils/crypto_utils",
-    visibility = ["//visibility:public"],
-)
-
-# DB utils
-alias(
-    name = "clickhouse_utils",
-    actual = "//queng_utils/db_utils/clickhouse_utils",
-    visibility = ["//visibility:public"],
-)
-
-alias(
-    name = "postgres_utils",
-    actual = "//queng_utils/db_utils/postgres_utils",
     visibility = ["//visibility:public"],
 )
 

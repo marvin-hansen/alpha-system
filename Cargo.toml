@@ -54,9 +54,7 @@ members = [
     "queng_specs/service_specs/core/smdb_specs",
     "queng_specs/service_specs/ims/ims_data/ims_data_vex_specs",
     "queng_specs/service_specs/shared_service_specs",
-    "queng_utils/crypto_utils",
-    "queng_utils/db_utils/clickhouse_utils",
-    "queng_utils/db_utils/postgres_utils",
+    "queng_infra/clickhouse/clickhouse_utils",
     "queng_utils/test_utils/docker_utils",
     "queng_utils/test_utils/env_utils",
     "queng_utils/test_utils/kaiko_utils",
@@ -64,7 +62,10 @@ members = [
     "queng_utils/proto_utils",
     "queng_utils/test_utils/service_utils",
     "queng_utils/specs_utils",
-    "queng_infra/postgres/pg_cmdb", "queng_infra/postgres/pg_smdb",
+    "queng_utils/crypto_utils",
+    "queng_infra/postgres/pg_cmdb",
+    "queng_infra/postgres/pg_smdb",
+    "queng_infra/postgres/postgres_utils",
 ]
 
 
@@ -143,8 +144,8 @@ shared_service_specs = { path = "queng_specs/service_specs/shared_service_specs"
 # Utils
 crypto_utils = { path = "queng_utils/crypto_utils" }
 # DB Utils
-clickhouse_utils = { path = "queng_utils/db_utils/clickhouse_utils" }
-postgres_utils = { path = "queng_utils/db_utils/postgres_utils" }
+clickhouse_utils = { path = "queng_infra/clickhouse/clickhouse_utils" }
+postgres_utils = { path = "queng_infra/postgres/postgres_utils" }
 # Misd Utils
 docker_utils = { path = "queng_utils/test_utils/docker_utils" }
 env_utils = { path = "queng_utils/test_utils/env_utils" }
