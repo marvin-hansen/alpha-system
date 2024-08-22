@@ -9,11 +9,14 @@ use tokio_postgres::NoTls;
 
 use crate::db::Specs;
 use crate::prelude::PostgresUtilError;
+use diesel::r2d2::{ConnectionManager, Pool};
+use diesel::PgConnection;
 
 pub struct PostgresUtil {
     dbg: bool,
     handle: JoinHandle<()>,
     pub specs: Specs,
+    pool: Pool<ConnectionManager<PgConnection>>,
 }
 
 impl PostgresUtil {
@@ -48,7 +51,29 @@ impl PostgresUtil {
 
         let specs = Specs::new(dbg, db);
 
-        Ok(Self { dbg, handle, specs })
+        let pool = postgres_connection_pool(dsn)
+            .await
+            .expect("[PostgresUtil]: Failed to connect to Postgres database");
+
+        Ok(Self {
+            dbg,
+            handle,
+            specs,
+            pool,
+        })
+    }
+}
+
+async fn postgres_connection_pool(
+    dsn: &str,
+) -> Result<Pool<ConnectionManager<PgConnection>>, PostgresUtilError> {
+    let manager = ConnectionManager::<PgConnection>::new(dsn);
+    match Pool::builder().test_on_check_out(true).build(manager) {
+        Ok(pool) => Ok(pool),
+        Err(e) => Err(PostgresUtilError::new(format!(
+            "[PostgresUtil]: Failed to build connection pool: {}",
+            e
+        ))),
     }
 }
 

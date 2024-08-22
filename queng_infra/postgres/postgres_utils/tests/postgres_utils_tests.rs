@@ -36,8 +36,6 @@ async fn postgres_db_test() {
     // postgres_db_portfolio_import_test(&pg_util).await;
 
     postgres_db_teardown_test(&pg_util).await;
-
-    pg_util.close().await;
 }
 async fn postgres_db_setup_test(util: &PostgresUtil) {
     let res = util.setup_all_db().await;

@@ -115,6 +115,10 @@ symbol_manager = { path = "queng_components/symbol_manager" }
 # Infra
 # Postgres DB
 pg_cmdb = { path = "queng_infra/postgres/pg_cmdb" }
+pg_smdb = { path = "queng_infra/postgres/pg_smdb" }
+postgres_utils = { path = "queng_infra/postgres/postgres_utils" }
+# Clickhouse DB
+clickhouse_utils = { path = "queng_infra/clickhouse/clickhouse_utils" }
 # Proto
 proto_bindings = { path = "queng_proto" }
 # SBE
@@ -143,10 +147,6 @@ ims_data_vex_specs = { path = "queng_specs/service_specs/ims/ims_data/ims_data_v
 shared_service_specs = { path = "queng_specs/service_specs/shared_service_specs" }
 # Utils
 crypto_utils = { path = "queng_utils/crypto_utils" }
-# DB Utils
-clickhouse_utils = { path = "queng_infra/clickhouse/clickhouse_utils" }
-postgres_utils = { path = "queng_infra/postgres/postgres_utils" }
-# Misd Utils
 docker_utils = { path = "queng_utils/test_utils/docker_utils" }
 env_utils = { path = "queng_utils/test_utils/env_utils" }
 kaiko_utils = { path = "queng_utils/test_utils/kaiko_utils" }
