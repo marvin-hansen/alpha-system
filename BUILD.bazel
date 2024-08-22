@@ -29,6 +29,7 @@ genrule(
     outs = ["envs.sh"],
     cmd = "echo printenv > $@",
     executable = True,
+    visibility = ["//visibility:public"],
 )
 
 ###############################################################################

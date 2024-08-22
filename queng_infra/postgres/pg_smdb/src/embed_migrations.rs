@@ -20,29 +20,21 @@ pub const SERVICE_MIGRATION: EmbeddedMigration = EmbeddedMigration::new(
 
 const DIESEL_NAME: &'static str = "00000000000000_diesel_initial_setup";
 const DIESEL_UP: &'static str = include_str!(concat!(
-    env!("CARGO_MANIFEST_DIR"),
-    "/migrations/00000000000000_diesel_initial_setup/up.sql"
+    env!("MIGRATION_DATA"),
+    "/00000000000000_diesel_initial_setup/up.sql"
 ));
 
 const DIESEL_DOWN: &'static str = include_str!(concat!(
-    env!("CARGO_MANIFEST_DIR"),
-    "/migrations/00000000000000_diesel_initial_setup/down.sql"
+    env!("MIGRATION_DATA"),
+    "/00000000000000_diesel_initial_setup/down.sql"
 ));
 
 const SERVICE_NAME: &'static str = "2024-08-12-093223_smdb";
 const SERVICE_UP: &'static str = include_str!(concat!(
-    env!("CARGO_MANIFEST_DIR"),
-    "/migrations/2024-08-12-093223_smdb/up.sql"
+    env!("MIGRATION_DATA"),
+    "/2024-08-12-093223_smdb/up.sql"
 ));
 const SERVICE_DOWN: &'static str = include_str!(concat!(
-    env!("CARGO_MANIFEST_DIR"),
-    "/migrations/2024-08-12-093223_smdb/down.sql"
+    env!("MIGRATION_DATA"),
+    "/2024-08-12-093223_smdb/down.sql"
 ));
-
-const MIGRATION_FOLDER: &'static str = {
-    if option_env!("MIGRATION_DATA").is_some() {
-        stringify!(env!("MIGRATION_DATA"))
-    } else {
-        "queng_infra/postgres/pg_smdb/migrations"
-    }
-};

@@ -12,7 +12,7 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Crate to test
-        "//queng_infra/postgres/pg_smdb",
+        "//alias:pg_smdb",
         # Internal crates
         "//alias:common_config",
         "//alias:env_utils",

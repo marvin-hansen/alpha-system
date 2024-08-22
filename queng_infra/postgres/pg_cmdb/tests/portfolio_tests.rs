@@ -1,16 +1,10 @@
 use diesel::r2d2::{ConnectionManager, Pool};
 use diesel::PgConnection;
-use dotenv::dotenv;
 use pg_cmdb::model::portfolio::{CreatePortfolio, Portfolio, UpdatePortfolio};
 use pg_cmdb::run_cmdb_db_migration;
-use std::env;
 
 fn postgres_connection_pool() -> Pool<ConnectionManager<PgConnection>> {
-    dotenv().ok();
-
-    let database_url = env::var("DATABASE_URL")
-        .or_else(|_| env::var("POSTGRES_DATABASE_URL"))
-        .expect("DATABASE_URL must be set");
+    let database_url = "postgres://postgres:postgres@localhost/postgres";
 
     let manager = ConnectionManager::<PgConnection>::new(database_url);
     Pool::builder()
