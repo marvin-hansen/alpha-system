@@ -1,5 +1,6 @@
+use diesel::r2d2::{ConnectionManager, Pool};
+use diesel::PgConnection;
 use std::fmt::{Debug, Display, Formatter};
-
 use tokio::task::JoinHandle;
 use tokio_postgres::{Client, NoTls};
 
@@ -16,6 +17,7 @@ pub mod prelude;
 #[derive(Debug)]
 pub struct PostgresDBManager {
     dbg: bool,
+    // pool: Pool<ConnectionManager<PgConnection>>,
     client: Client,
     handle: JoinHandle<()>,
 }
@@ -83,17 +85,32 @@ impl PostgresDBManager {
         let handle = tokio::spawn(async move {
             if let Err(e) = connection.await {
                 eprintln!(
-                    "[PostgresUtil]: Tokio/Postgres failed to spwan connection task: {}",
+                    "[PostgresDBManager]: Tokio/Postgres failed to spwan connection task: {}",
                     e
                 );
             }
         });
 
+        // let pool = postgres_connection_pool(tsn)
+        //     .await
+        //     .expect("[PostgresDBManager]: Failed to connect to Postgres database");
+
         Ok(Self {
+            // pool,
             dbg,
             client,
             handle,
         })
+    }
+}
+
+async fn postgres_connection_pool(
+    dsn: &str,
+) -> Result<Pool<ConnectionManager<PgConnection>>, PostgresDBError> {
+    let manager = ConnectionManager::<PgConnection>::new(dsn);
+    match Pool::builder().test_on_check_out(true).build(manager) {
+        Ok(pool) => Ok(pool),
+        Err(e) => Err(PostgresDBError::ConnectionFailed(e.to_string())),
     }
 }
 
