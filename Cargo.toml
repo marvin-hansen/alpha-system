@@ -64,6 +64,7 @@ members = [
     "queng_utils/specs_utils",
     "queng_utils/crypto_utils",
     "queng_infra/postgres/pg_cmdb",
+    "queng_infra/postgres/pg_migrations",
     "queng_infra/postgres/pg_smdb",
     "queng_infra/postgres/postgres_utils",
 ]
@@ -116,6 +117,7 @@ symbol_manager = { path = "queng_components/symbol_manager" }
 # Postgres DB
 pg_cmdb = { path = "queng_infra/postgres/pg_cmdb" }
 pg_smdb = { path = "queng_infra/postgres/pg_smdb" }
+pg_migrations = { path = "queng_infra/postgres/pg_migrations" }
 postgres_utils = { path = "queng_infra/postgres/postgres_utils" }
 # Clickhouse DB
 clickhouse_utils = { path = "queng_infra/clickhouse/clickhouse_utils" }

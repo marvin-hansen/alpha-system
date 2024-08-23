@@ -34,6 +34,34 @@ impl Service {
             .map(|s| s.to_common_svc_config())
     }
 
+    /// Inserts multiple services into the database.
+    ///
+    /// # Arguments
+    ///
+    /// * `db` - a mutable reference to a postgres database connection
+    /// * `svc` - a slice of `CommonServiceConfig` containing the configuration for the services to add
+    ///
+    /// # Returns
+    ///
+    /// A `QueryResult<bool>` indicating whether the operation was successful.
+    ///
+    pub fn insert_service_collection(
+        db: &mut Connection,
+        svc: &[CommonServiceConfig],
+    ) -> QueryResult<bool> {
+        let items = svc
+            .iter()
+            .map(CreateService::from_common_svc_config)
+            .collect::<Vec<CreateService>>();
+        match insert_into(crate::schema::smdb::service::table)
+            .values(&items)
+            .execute(db)
+        {
+            Ok(_) => Ok(true),
+            Err(e) => Err(e),
+        }
+    }
+
     /// Retrieves the number of services in the database.
     ///
     /// # Arguments

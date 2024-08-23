@@ -1,6 +1,7 @@
 use crate::model::portfolio::{CreatePortfolio, Portfolio, UpdatePortfolio};
 use crate::schema::cmdb::portfolio::dsl::*;
 use crate::Connection;
+use common_exchange::prelude::PortfolioConfig as CommonPortfolioConfig;
 use diesel::{
     insert_into, ExpressionMethods, QueryDsl, QueryResult, RunQueryDsl, SelectableHelper,
 };
@@ -13,6 +14,29 @@ impl Portfolio {
             .values(item)
             .returning(Portfolio::as_returning())
             .get_result(db)
+    }
+    /// Retrieves the number of portfolios in the database.
+    ///
+    /// # Arguments
+    ///
+    /// * `db` - a mutable reference to a postgres database connection
+    ///
+    /// # Returns
+    ///
+    /// A `QueryResult<u64>` containing the number of portfolios,
+    /// or an error if the operation fails.
+    ///
+    pub fn count(db: &mut Connection) -> QueryResult<u64> {
+        portfolio.count().get_result::<i64>(db).map(|c| c as u64)
+    }
+
+    pub fn insert_portfolio_collection(
+        _db: &mut Connection,
+        _ports: &[CommonPortfolioConfig],
+    ) -> QueryResult<bool> {
+        // implement batch insert here
+
+        Ok(false)
     }
 
     pub fn check_if_portfolio_id_exists(

@@ -108,10 +108,10 @@ impl EnvUtil {
 
         let nr_services = get_all_service_specs().len() as u64;
 
-        let nr_db_services =
-            pg_util.specs.count_services().await.expect(
-                "[verify_service_data_imported]: Failed to get nr services from metadata DB",
-            );
+        let nr_db_services = pg_util
+            .count_services()
+            .await
+            .expect("[verify_service_data_imported]: Failed to get nr services from metadata DB");
 
         let services_imported = nr_services == nr_db_services;
         self.dbg_print(
@@ -133,7 +133,7 @@ impl EnvUtil {
 
         let nr_portfolios = get_all_portfolio_specs().len() as u64;
 
-        let nr_db_portfolios = pg_util.specs.count_portfolios().await.expect(
+        let nr_db_portfolios = pg_util.count_portfolios().await.expect(
             "[verify_portfolio_data_imported]: Failed to get nr portfolios from metadata DB",
         );
 

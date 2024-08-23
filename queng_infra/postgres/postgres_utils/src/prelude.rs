@@ -1,2 +1,2 @@
-pub use crate::errors::util_error::PostgresUtilError;
+pub use crate::errors::PostgresUtilError;
 pub use crate::PostgresUtil;

@@ -148,6 +148,12 @@ alias(
 )
 
 alias(
+    name = "pg_migrations",
+    actual = "//queng_infra/postgres/pg_migrations",
+    visibility = ["//visibility:public"],
+)
+
+alias(
     name = "postgres_utils",
     actual = "//queng_infra/postgres/postgres_utils",
     visibility = ["//visibility:public"],

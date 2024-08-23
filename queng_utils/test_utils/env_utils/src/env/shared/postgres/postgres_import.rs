@@ -47,20 +47,14 @@ impl EnvUtil {
 
         let services = get_all_service_specs();
 
-        for service in services {
-            match pg_utils.specs.insert_service(&service).await {
-                Ok(_) => self.dbg_print(&format!(
-                    "[import_pg_service_data]: Imported service: {}",
-                    service.name()
-                )),
-                Err(err) => {
-                    return Err(EnvironmentError::new(format!(
-                        "[import_pg_service_data]: Failed to import service: {} due error: {}",
-                        service.name(),
-                        err
-                    )))
-                }
-            };
+        match pg_utils.import_service_collection(&services).await {
+            Ok(_) => {}
+            Err(err) => {
+                return Err(EnvironmentError::new(format!(
+                    "[import_pg_service_data]: Failed to import services due error: {}",
+                    err
+                )))
+            }
         }
 
         Ok(())
@@ -73,20 +67,14 @@ impl EnvUtil {
 
         let portfolios = get_all_portfolio_specs();
 
-        for portfolio in portfolios {
-            match pg_utils.specs.insert_portfolio(&portfolio).await {
-                Ok(_) => self.dbg_print(&format!(
-                    "[import_pg_portfolio_data]: Imported portfolio: {}",
-                    portfolio.portfolio_id()
-                )),
-                Err(err) => {
-                    return Err(EnvironmentError::new(format!(
-                        "[import_pg_portfolio_data]: Failed to import portfolio: {} due error: {}",
-                        portfolio.portfolio_id(),
-                        err
-                    )))
-                }
-            };
+        match pg_utils.import_portfolio_collection(&portfolios).await {
+            Ok(_) => {}
+            Err(err) => {
+                return Err(EnvironmentError::new(format!(
+                    "[import_pg_portfolio_data]: Failed to import portfolios due error: {}",
+                    err
+                )))
+            }
         }
 
         Ok(())

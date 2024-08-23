@@ -15,14 +15,10 @@ rust_library(
         # Internal crates
         "//alias:common_config",
         "//alias:common_exchange",
-        "//alias:common_pg_queries",
         "@crates//:diesel",
         "//alias:pg_cmdb",
         "//alias:pg_smdb",
         # External crates
-        "@crates//:postgres-types",
-        "@crates//:tokio-postgres",
-        "@crates//:tokio",
     ],
 )
 

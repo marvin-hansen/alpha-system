@@ -1,22 +1,19 @@
-mod common;
-mod db;
-mod db_setup_revert;
+mod db_count;
+mod db_import;
+mod db_setup;
+mod db_teardown;
+mod db_verify;
 mod errors;
 pub mod prelude;
 mod types;
 
-use tokio::task::JoinHandle;
-use tokio_postgres::NoTls;
-
-use crate::db::Specs;
 use crate::prelude::PostgresUtilError;
 use diesel::r2d2::{ConnectionManager, Pool};
 use diesel::PgConnection;
 
 pub struct PostgresUtil {
     dbg: bool,
-    handle: JoinHandle<()>,
-    pub specs: Specs,
+
     pool: Pool<ConnectionManager<PgConnection>>,
 }
 
@@ -35,33 +32,11 @@ impl PostgresUtil {
             println!("[PostgresUtil]: Connecting to Postgres database: {}", dsn);
         }
 
-        let (db, connection) = tokio_postgres::connect(dsn, NoTls)
-            .await
-            .expect("[PostgresUtil]: Failed to connect to Postgres database");
-
-        // The connection object performs the actual communication with the database,
-        // so spawn it off to run on its own.
-        let handle = tokio::spawn(async move {
-            if let Err(e) = connection.await {
-                eprintln!(
-                    "[PostgresUtil]: Tokio/Postgres failed to spwan connection task: {}",
-                    e
-                );
-            }
-        });
-
-        let specs = Specs::new(dbg, db);
-
         let pool = postgres_connection_pool(dsn)
             .await
             .expect("[PostgresUtil]: Failed to connect to Postgres database");
 
-        Ok(Self {
-            dbg,
-            handle,
-            specs,
-            pool,
-        })
+        Ok(Self { dbg, pool })
     }
 }
 
@@ -75,14 +50,6 @@ async fn postgres_connection_pool(
             "[PostgresUtil]: Failed to build connection pool: {}",
             e
         ))),
-    }
-}
-
-impl PostgresUtil {
-    pub async fn close(&self) {
-        self.dbg_print("Closing Postgres connection via Tokio task handle");
-        // https://stackoverflow.com/questions/67160923/how-can-you-close-a-tokio-postgres-connection
-        self.handle.abort();
     }
 }
 

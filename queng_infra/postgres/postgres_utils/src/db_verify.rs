@@ -15,11 +15,28 @@ impl PostgresUtil {
     ///
     ///
     pub async fn verify_all_db(&self) -> Result<bool, PostgresUtilError> {
-        self.dbg_print("verify_all_db");
+        let conn = &mut self.pool.get().unwrap();
 
-        match self.specs.verify_spec_db().await {
-            Ok(_) => Ok(true),
-            Err(_) => Ok(false),
+        self.dbg_print("[verify_all_db]: verify SMDB DB schema");
+        match pg_smdb::check_smdb_db_migration(conn) {
+            Ok(res) => {
+                if !res {
+                    return Ok(false);
+                }
+            }
+            Err(e) => return Err(PostgresUtilError::new(e.to_string())),
         }
+
+        self.dbg_print("[verify_all_db]: verify CMDB DB schema");
+        match pg_cmdb::check_cmdb_db_migration(conn) {
+            Ok(res) => {
+                if !res {
+                    return Ok(false);
+                }
+            }
+            Err(e) => return Err(PostgresUtilError::new(e.to_string())),
+        }
+
+        Ok(true)
     }
 }

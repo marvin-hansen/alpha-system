@@ -14,6 +14,7 @@ common_exchange = {workspace = true}
 # External crates
 diesel = { workspace = true }
 diesel_migrations = { workspace = true }
+pg_migrations = { workspace = true }
 serde = { workspace = true }
 dotenv = { workspace = true }
 

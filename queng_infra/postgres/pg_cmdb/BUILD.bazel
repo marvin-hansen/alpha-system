@@ -28,6 +28,7 @@ rust_library(
     deps = [
         # Internal crates
         "//alias:common_exchange",
+        "//alias:pg_migrations",
         # External crates
         "@crates//:diesel",
         "@crates//:diesel_migrations",
