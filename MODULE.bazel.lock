@@ -124,8 +124,8 @@
     "https://bcr.bazel.build/modules/stardoc/0.5.4/MODULE.bazel": "6569966df04610b8520957cb8e97cf2e9faac2c0309657c537ab51c16c18a2a4",
     "https://bcr.bazel.build/modules/stardoc/0.6.2/MODULE.bazel": "7060193196395f5dd668eda046ccbeacebfd98efc77fed418dbe2b82ffaa39fd",
     "https://bcr.bazel.build/modules/stardoc/0.6.2/source.json": "d2ff8063b63b4a85e65fe595c4290f99717434fa9f95b4748a79a7d04dfed349",
-    "https://bcr.bazel.build/modules/toolchains_llvm/1.1.2/MODULE.bazel": "402101d6f73115ec49a3a765a3361c1dd90ba3959fa688ccdcd465c36dbbbc52",
-    "https://bcr.bazel.build/modules/toolchains_llvm/1.1.2/source.json": "27f3cf531bc654c719b50411cac94613b7676d63e60962243d485af63e13b9ff",
+    "https://bcr.bazel.build/modules/toolchains_llvm/1.0.0/MODULE.bazel": "410c05d8a21179f501e1d0dc6c325eac78c885d4f44c5438331392ba094bf819",
+    "https://bcr.bazel.build/modules/toolchains_llvm/1.0.0/source.json": "85babe13e588c25e032d10984ef3ed33fae30554f97bc3cc48867833e52a21ec",
     "https://bcr.bazel.build/modules/toolchains_musl/0.1.17/MODULE.bazel": "e94ee0bc910bed92a0fe6ef7920a4a38406f5be2dceadd12b5ff84e5ade2a0fb",
     "https://bcr.bazel.build/modules/toolchains_musl/0.1.17/source.json": "4ea48922299b20fb72605e6a485b1aef9d0dbc07cb785eee5cc575915141e52b",
     "https://bcr.bazel.build/modules/toolchains_protoc/0.3.1/MODULE.bazel": "b6574a2a314cbd40cafb5ed87b03d1996e015315f80a7e33116c8b2e209cb5cf",
@@ -22770,7 +22770,7 @@
     },
     "@@toolchains_llvm~//toolchain/extensions:llvm.bzl%llvm": {
       "general": {
-        "bzlTransitiveDigest": "y9h5L2NtWbogyWSOJgqnUaU50MTPWAW+waelXSirMVg=",
+        "bzlTransitiveDigest": "1w0wdH2QnKapJmTbk88f5iQjNlw7vw4f4r1cNf1vWVI=",
         "usagesDigest": "qMJWbEJ4khOike0DgdjrMuEMcjdDUg+9TS3nWHKnMy4=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
@@ -22941,11 +22941,6 @@
           }
         },
         "recordedRepoMappingEntries": [
-          [
-            "toolchains_llvm~",
-            "bazel_skylib",
-            "bazel_skylib~"
-          ],
           [
             "toolchains_llvm~",
             "bazel_tools",
