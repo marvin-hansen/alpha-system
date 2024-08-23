@@ -15,8 +15,6 @@ postgres_migrations = {workspace = true}
 # External crates
 diesel = { workspace = true }
 diesel_migrations = { workspace = true }
-serde = { workspace = true }
-dotenv = { workspace = true }
 
 [dev-dependencies]
 # For testing

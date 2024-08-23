@@ -33,7 +33,6 @@ rust_library(
         # External crates
         "@crates//:diesel",
         "@crates//:diesel_migrations",
-        "@crates//:serde",
     ],
 )
 
