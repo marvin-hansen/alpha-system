@@ -10,7 +10,7 @@ bazel_dep(name = "bazel_skylib", version = "1.7.1")
 bazel_dep(name = "rules_rust", version = "0.49.3")
 
 # https://github.com/aspect-build/bazel-lib/releases
-bazel_dep(name = "aspect_bazel_lib", version = "2.8.0")
+bazel_dep(name = "aspect_bazel_lib", version = "2.8.1")
 
 # https://github.com/keith/rules_multirun/releases
 bazel_dep(name = "rules_multirun", version = "0.9.0")
