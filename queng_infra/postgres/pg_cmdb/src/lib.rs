@@ -29,10 +29,10 @@ pub fn run_cmdb_db_migration(
     conn: &mut Connection,
 ) -> Result<(), Box<dyn Error + Send + Sync + 'static>> {
     // Check if DB has pending migrations
-    let has_pending = pg_migrations::check_db_has_pending_migration(conn, MIGRATIONS)?;
+    let has_pending = postgres_migrations::check_db_has_pending_migration(conn, MIGRATIONS)?;
 
     // Run migrations if there are pending
-    pg_migrations::run_db_migration(conn, MIGRATIONS, has_pending)
+    postgres_migrations::run_db_migration(conn, MIGRATIONS, has_pending)
 }
 
 /// Checks if the database has already been migrated.
@@ -53,7 +53,7 @@ pub fn run_cmdb_db_migration(
 pub fn check_cmdb_db_migration(
     conn: &mut Connection,
 ) -> Result<bool, Box<dyn Error + Send + Sync + 'static>> {
-    pg_migrations::check_db_migration(conn)
+    postgres_migrations::check_db_migration(conn)
 }
 
 /// Revert CMDB database migrations.
@@ -68,5 +68,5 @@ pub fn check_cmdb_db_migration(
 pub fn revert_cmdb_db_migration(
     conn: &mut Connection,
 ) -> Result<(), Box<dyn Error + Send + Sync + 'static>> {
-    pg_migrations::revert_db_migration(conn, MIGRATIONS)
+    postgres_migrations::revert_db_migration(conn, MIGRATIONS)
 }

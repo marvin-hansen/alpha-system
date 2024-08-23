@@ -10,7 +10,7 @@ authors.workspace = true
 [dependencies]
 # Internal crates
 common_config = {workspace = true}
-pg_migrations = {workspace = true}
+postgres_migrations = {workspace = true}
 
 # External crates
 diesel = { workspace = true }
