@@ -24,10 +24,12 @@ async fn postgres_connection_pool() -> Pool<ConnectionManager<PgConnection>> {
     let database_url = "postgres://postgres:postgres@localhost/postgres";
 
     let manager = ConnectionManager::<PgConnection>::new(database_url);
-    Pool::builder()
-        .test_on_check_out(true)
-        .build(manager)
-        .expect("Could not build connection pool")
+    let result = Pool::builder().test_on_check_out(true).build(manager);
+
+    //dbg!(&result);
+    assert!(result.is_ok());
+
+    result.unwrap()
 }
 
 fn test_db_migration(conn: &mut pg_smdb::Connection) {

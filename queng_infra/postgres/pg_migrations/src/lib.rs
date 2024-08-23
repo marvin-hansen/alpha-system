@@ -99,10 +99,7 @@ pub fn check_db_migration(
             // Because we have already checked the DB connection,
             // this can only fail if the DB, schema, or table isn't set up properly.
             // Still print the error for debugging purposes
-            eprint!(
-                "[pg_smdb]: Error loading migrations from the database: {}",
-                e
-            );
+            eprint!("Error loading migrations from the database: {}", e);
             return Ok(false);
         }
     };
