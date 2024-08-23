@@ -1,19 +1,18 @@
 mod db_count;
+mod db_error;
 mod db_import;
 mod db_setup;
 mod db_teardown;
 mod db_verify;
-mod errors;
 pub mod prelude;
-mod types;
 
 use crate::prelude::PostgresUtilError;
 use diesel::r2d2::{ConnectionManager, Pool};
 use diesel::PgConnection;
 
+#[derive(Debug, Clone)]
 pub struct PostgresUtil {
     dbg: bool,
-
     pool: Pool<ConnectionManager<PgConnection>>,
 }
 
