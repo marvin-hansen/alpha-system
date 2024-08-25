@@ -18,7 +18,7 @@ mimalloc = {workspace = true}
 common_config = {workspace = true}
 config_manager = {workspace = true}
 ctx_manager = {workspace = true}
-db_postgres_manager = {workspace = true}
+pg_cmdb_manager = {workspace = true}
 dns_manager = {workspace = true}
 proto_bindings = {workspace = true}
 proto_utils = {workspace = true}

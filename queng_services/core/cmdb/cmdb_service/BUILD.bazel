@@ -47,7 +47,7 @@ rust_binary(
         "//alias:config_manager",
         "//alias:ctx_manager",
         "//alias:dns_manager",
-        "//alias:db_postgres_manager",
+        "//alias:pg_cmdb_manager",
         "//alias:rust_proto",
         "//alias:proto_utils",
         "//alias:common_service",
