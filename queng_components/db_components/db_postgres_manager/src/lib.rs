@@ -68,7 +68,7 @@ impl PostgresDBManager {
     async fn build(dbg: bool, tsn: &str) -> Result<Self, PostgresDBError> {
         if dbg {
             println!("[PostgresDBManager]: Debug mode enabled");
-            println!("[PostgresDBManager]: Connecting to Postgres database:", );
+            println!("[PostgresDBManager]: Connecting to Postgres database:",);
         }
 
         let (client, connection) = match tokio_postgres::connect(tsn, NoTls).await {
@@ -115,6 +115,6 @@ impl PostgresDBManager {
 
 impl Display for PostgresDBManager {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "PostgresDBManager:", )
+        write!(f, "PostgresDBManager:",)
     }
 }
