@@ -7,7 +7,10 @@ use common_config::prelude::ServiceID;
 use pg_smdb_manager::PostgresSMDBManager;
 use proto_bindings::proto::db_gateway_service_server::DbGatewayService;
 use proto_bindings::proto::*;
-use proto_utils::service_config_proto_utils::{service_config_from_proto, service_config_to_proto};
+use proto_utils::endpoint_proto_utils::endpoint_to_proto;
+use proto_utils::service_config_proto_utils::{
+    service_config_collection_to_proto, service_config_from_proto, service_config_to_proto,
+};
 
 use crate::DBG;
 
@@ -43,6 +46,21 @@ impl DbGatewayService for DBGWServer {
             Ok(_) => Ok(Response::new(CreateServiceResponse {
                 service_created: true,
             })),
+            Err(e) => Err(Status::internal(e.to_string())),
+        }
+    }
+
+    async fn count_all_services(
+        &self,
+        _request: Request<CountServiceRequest>,
+    ) -> Result<Response<CountServiceResponse>, Status> {
+        self.dbg_print("count_all_services");
+
+        let mut dbm = self.dbm.write().await;
+        let res = dbm.count_services().await;
+
+        match res {
+            Ok(service_count) => Ok(Response::new(CountServiceResponse { service_count })),
             Err(e) => Err(Status::internal(e.to_string())),
         }
     }
@@ -127,6 +145,123 @@ impl DbGatewayService for DBGWServer {
         }
     }
 
+    async fn get_all_service_dependencies(
+        &self,
+        request: Request<ServiceDependenciesRequest>,
+    ) -> Result<Response<ServiceDependenciesResponse>, Status> {
+        let dbm = self.dbm.read().await;
+
+        let id = ServiceID::from(request.into_inner().service_id);
+
+        let records = dbm.get_all_service_dependencies(&id).await;
+        match records {
+            Ok(res) => {
+                if res.is_empty() {
+                    Ok(Response::new(ServiceDependenciesResponse {
+                        service_id: id.as_i32(),
+                        dependencies: vec![],
+                    }))
+                } else {
+                    // Convert Service IDs to i32
+                    let dependencies: Vec<i32> = res.iter().map(|x| x.as_i32()).collect();
+
+                    Ok(Response::new(ServiceDependenciesResponse {
+                        service_id: id.as_i32(),
+                        dependencies,
+                    }))
+                }
+            }
+            Err(e) => Err(Status::internal(e.to_string())),
+        }
+    }
+
+    async fn get_all_service_endpoints(
+        &self,
+        request: Request<ServiceEndpointsRequest>,
+    ) -> Result<Response<ServiceEndpointsResponse>, Status> {
+        let dbm = self.dbm.read().await;
+
+        let id = ServiceID::from(request.into_inner().service_id);
+
+        let records = dbm.get_all_service_endpoints(&id).await;
+
+        match records {
+            Ok(res) => {
+                if res.is_empty() {
+                    Ok(Response::new(ServiceEndpointsResponse {
+                        service_id: id.as_i32(),
+                        endpoints: vec![],
+                    }))
+                } else {
+                    // Convert endpoints to proto
+                    let endpoints = endpoint_to_proto(&res)
+                        .expect("Failed to convert Rust EndpointCollection to proto");
+
+                    Ok(Response::new(ServiceEndpointsResponse {
+                        service_id: id.as_i32(),
+                        endpoints,
+                    }))
+                }
+            }
+
+            Err(e) => Err(Status::internal(e.to_string())),
+        }
+    }
+
+    async fn get_all_online_services(
+        &self,
+        _request: Request<ServicesOnlineRequest>,
+    ) -> Result<Response<ServicesOnlineResponse>, Status> {
+        let dbm = self.dbm.read().await;
+        let records = dbm.get_all_online_services().await;
+
+        match records {
+            Ok(res) => {
+                if res.is_empty() {
+                    Ok(Response::new(ServicesOnlineResponse {
+                        service_configs: Vec::new(),
+                    }))
+                } else {
+                    let proto_service_configs = service_config_collection_to_proto(&res)
+                        .expect("Failed to convert Rust ServiceConfigCollection to proto");
+
+                    Ok(Response::new(ServicesOnlineResponse {
+                        service_configs: proto_service_configs,
+                    }))
+                }
+            }
+
+            Err(e) => Err(Status::internal(e.to_string())),
+        }
+    }
+
+    async fn get_all_offline_services(
+        &self,
+        _request: Request<ServicesOfflineRequest>,
+    ) -> Result<Response<ServicesOfflineResponse>, Status> {
+        let dbm = self.dbm.read().await;
+        let records = dbm.get_all_offline_services().await;
+
+        match records {
+            Ok(res) => {
+                if res.is_empty() {
+                    Ok(Response::new(ServicesOfflineResponse {
+                        service_configs: Vec::new(),
+                    }))
+                } else {
+                    let proto_service_configs = service_config_collection_to_proto(&res)
+                        .expect("Failed to convert Rust ServiceConfigCollection to proto");
+
+                    Ok(Response::new(ServicesOfflineResponse {
+                        service_configs: proto_service_configs,
+                    }))
+                }
+            }
+
+            Err(e) => Err(Status::internal(e.to_string())),
+        }
+    }
+
     async fn read_service(
         &self,
         request: Request<SingleServiceRequest>,
@@ -168,19 +303,17 @@ impl DbGatewayService for DBGWServer {
 
         match records {
             Ok(res) => {
-                let mut service_configs = Vec::new();
-
                 if res.is_empty() {
-                    Ok(Response::new(ReadAllServicesResponse { service_configs }))
+                    Ok(Response::new(ReadAllServicesResponse {
+                        service_configs: Vec::new(),
+                    }))
                 } else {
-                    for record in res {
-                        let proto_service_config = service_config_to_proto(record)
-                            .expect("Failed to convert Rust ServiceConfig to proto");
+                    let proto_service_configs = service_config_collection_to_proto(&res)
+                        .expect("Failed to convert Rust ServiceConfigCollection to proto");
 
-                        service_configs.push(proto_service_config);
-                    }
-
-                    Ok(Response::new(ReadAllServicesResponse { service_configs }))
+                    Ok(Response::new(ReadAllServicesResponse {
+                        service_configs: proto_service_configs,
+                    }))
                 }
             }
 

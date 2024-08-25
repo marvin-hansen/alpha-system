@@ -1,5 +1,9 @@
-use common_config::prelude::{ServiceConfig, ServiceID};
-use proto_bindings::proto::{MultiServicesRequest, SingleServiceRequest};
+use common_config::prelude::{Endpoint, ServiceConfig, ServiceID};
+use proto_bindings::proto::{
+    CountServiceRequest, MultiServicesRequest, ServiceDependenciesRequest, ServiceEndpointsRequest,
+    ServicesOfflineRequest, ServicesOnlineRequest, SingleServiceRequest,
+};
+use proto_utils::endpoint_proto_utils::endpoint_from_proto;
 use proto_utils::service_config_proto_utils::{service_config_from_proto, service_config_to_proto};
 
 use crate::error::DBGatewayError;
@@ -16,6 +20,17 @@ impl DBGatewayClient {
 
         match client.create_service(request).await {
             Ok(res) => Ok(res.into_inner().service_created),
+            Err(e) => Err(DBGatewayError(e.to_string())),
+        }
+    }
+
+    pub async fn count_all_services(self) -> Result<u64, DBGatewayError> {
+        let request = tonic::Request::new(CountServiceRequest {});
+
+        let mut client = self.client.clone();
+
+        match client.count_all_services(request).await {
+            Ok(res) => Ok(res.into_inner().service_count),
             Err(e) => Err(DBGatewayError(e.to_string())),
         }
     }
@@ -77,6 +92,99 @@ impl DBGatewayClient {
 
         match client.check_services_online(request).await {
             Ok(res) => Ok(res.into_inner().services_online),
+            Err(e) => Err(DBGatewayError(e.to_string())),
+        }
+    }
+
+    pub async fn get_all_service_dependencies(
+        self,
+        id: ServiceID,
+    ) -> Result<Vec<ServiceID>, DBGatewayError> {
+        let request = tonic::Request::new(ServiceDependenciesRequest {
+            service_id: id.as_i32(),
+        });
+
+        let mut client = self.client.clone();
+
+        match client.get_all_service_dependencies(request).await {
+            Ok(res) => {
+                // Convert i32 back into ServiceID
+                let vec = res
+                    .into_inner()
+                    .dependencies
+                    .iter()
+                    .map(|s| ServiceID::from(*s))
+                    .collect::<Vec<ServiceID>>();
+
+                Ok(vec)
+            }
+            Err(e) => Err(DBGatewayError(e.to_string())),
+        }
+    }
+
+    pub async fn get_all_service_endpoints(
+        self,
+        id: ServiceID,
+    ) -> Result<Vec<Endpoint>, DBGatewayError> {
+        let request = tonic::Request::new(ServiceEndpointsRequest {
+            service_id: id.as_i32(),
+        });
+
+        let mut client = self.client.clone();
+
+        match client.get_all_service_endpoints(request).await {
+            Ok(res) => {
+                // Convert proto endpoints back to Rust endpoints
+                let vec = endpoint_from_proto(res.into_inner().endpoints)
+                    .expect("Failed to convert ProtoEndpoints to Rust EndpointCollection");
+
+                Ok(vec)
+            }
+            Err(e) => Err(DBGatewayError(e.to_string())),
+        }
+    }
+
+    pub async fn get_all_online_services(self) -> Result<Vec<ServiceConfig>, DBGatewayError> {
+        let request = tonic::Request::new(ServicesOnlineRequest {});
+
+        let mut client = self.client.clone();
+
+        match client.get_all_online_services(request).await {
+            Ok(res) => {
+                let vec = res
+                    .into_inner()
+                    .service_configs
+                    .iter()
+                    .map(|s| {
+                        service_config_from_proto(s.to_owned())
+                            .expect("Failed to convert ProtoServiceConfig to Rust ServiceConfig")
+                    })
+                    .collect::<Vec<ServiceConfig>>();
+
+                Ok(vec)
+            }
+            Err(e) => Err(DBGatewayError(e.to_string())),
+        }
+    }
+
+    pub async fn get_all_offline_services(self) -> Result<Vec<ServiceConfig>, DBGatewayError> {
+        let request = tonic::Request::new(ServicesOfflineRequest {});
+
+        let mut client = self.client.clone();
+        match client.get_all_offline_services(request).await {
+            Ok(res) => {
+                let vec = res
+                    .into_inner()
+                    .service_configs
+                    .iter()
+                    .map(|s| {
+                        service_config_from_proto(s.to_owned())
+                            .expect("Failed to convert ProtoServiceConfig to Rust ServiceConfig")
+                    })
+                    .collect::<Vec<ServiceConfig>>();
+
+                Ok(vec)
+            }
             Err(e) => Err(DBGatewayError(e.to_string())),
         }
     }

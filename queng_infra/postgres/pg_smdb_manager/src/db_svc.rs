@@ -169,7 +169,7 @@ impl PostgresSMDBManager {
     /// If successful, returns a vector of all online services in the database.
     /// If the operation fails, returns a `PostgresDBError`.
     ///
-    pub async fn get_all_online_services(&mut self) -> Result<Vec<ServiceConfig>, PostgresDBError> {
+    pub async fn get_all_online_services(&self) -> Result<Vec<ServiceConfig>, PostgresDBError> {
         self.dbg_print("get_all_online_services");
 
         let conn = &mut self.pool.get().unwrap();

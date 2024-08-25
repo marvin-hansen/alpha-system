@@ -25,6 +25,20 @@ message ProtoEndpoint {
 
 // Request
 
+message CountServiceRequest {}
+
+message ServicesOnlineRequest {}
+
+message ServicesOfflineRequest {}
+
+message ServiceDependenciesRequest {
+  int32 service_id = 1;
+}
+
+message ServiceEndpointsRequest {
+  int32 service_id = 1;
+}
+
 message SingleServiceRequest {
   int32 service_id = 1;
 }
@@ -35,8 +49,30 @@ message MultiServicesRequest {
 
 // Response
 
+message CountServiceResponse {
+  uint64 service_count = 1;
+}
+
 message CreateServiceResponse {
   bool service_created = 1;
+}
+
+message ServiceDependenciesResponse {
+  int32 service_id = 1;
+  repeated int32 dependencies = 2;
+}
+
+message ServiceEndpointsResponse {
+  int32 service_id = 1;
+  repeated ProtoEndpoint endpoints = 2;
+}
+
+message ServicesOnlineResponse {
+  repeated ProtoServiceConfig service_configs = 1;
+}
+
+message ServicesOfflineResponse {
+  repeated ProtoServiceConfig service_configs = 1;
 }
 
 message CheckServiceIdExistsResponse {

@@ -71,3 +71,18 @@ pub fn service_config_to_proto(service_config: ServiceConfig) -> Result<ProtoSer
         dependencies: proto_dependencies,
     })
 }
+
+pub fn service_config_collection_to_proto(
+    service_configs: &[ServiceConfig],
+) -> Result<Vec<ProtoServiceConfig>, Error> {
+    let mut proto_configs = Vec::new();
+
+    for service_config in service_configs {
+        let p = service_config_to_proto(service_config.to_owned())
+            .expect("Failed to convert Rust ServiceConfig to proto");
+
+        proto_configs.push(p);
+    }
+
+    Ok(proto_configs)
+}
