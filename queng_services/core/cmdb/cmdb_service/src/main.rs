@@ -1,15 +1,16 @@
-use std::error::Error;
-
 use mimalloc::MiMalloc;
-use tonic::transport::{Channel, Server, Uri};
+use std::error::Error;
+use std::sync::Arc;
+use tokio::sync::RwLock;
+use tonic::transport::Server;
 
 use common_config::prelude::ServiceID;
 use common_service::{print_utils, shutdown_utils};
 use config_manager::CfgManager;
 use ctx_manager::CtxManager;
+use db_postgres_manager::PostgresDBManager;
 use dns_manager::DnsManager;
 use proto_bindings::proto::cmdb_service_server::CmdbServiceServer;
-use proto_bindings::proto::db_gateway_service_client::DbGatewayServiceClient;
 use smdb_client::SMDBClient;
 
 use crate::service::CMDBServer;
@@ -55,25 +56,13 @@ async fn main() -> Result<(), Box<dyn Error>> {
         }
     }
 
-    // pull DBGW endpoint from auto config
-    let (dbgw_host, dbgw_port) = cfg_manager
-        .get_dbgw_host_port()
-        .expect("[CMDB]: Failed to get host and port for: DBGW");
+    // Configure DB Manager
+    let pg_config = cfg_manager.postgres_db_config();
+    let dbm = PostgresDBManager::new(pg_config)
+        .await
+        .expect("Failed to create DB Manager");
 
-    // Configure DBGW URI
-    let s = format!("http://{}:{}", dbgw_host, dbgw_port);
-    let uri = s.parse::<Uri>().unwrap();
-
-    // Configure a channel connection to DBGW service
-    let channel = Channel::builder(uri).connect().await.unwrap_or_else(|_| {
-        panic!(
-            "\r\n [CMDB]: Failed to connect to DBGW service on: {} \r\n  \r\n Detail: \r\n",
-            s
-        )
-    });
-
-    // Configure DBGW client
-    let dbgw_client = DbGatewayServiceClient::new(channel);
+    let arc_dbm = Arc::new(RwLock::new(dbm));
 
     // Configure service ip and port automatically relative to the detected context.
     let service_addr = cfg_manager
@@ -86,7 +75,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .expect("[CMDB]: Failed to parse address");
 
     // Construct gRPC server
-    let grpc_svc = CmdbServiceServer::new(CMDBServer::new(dbgw_client.clone()));
+    let grpc_svc = CmdbServiceServer::new(CMDBServer::new(arc_dbm));
 
     // Build gRPC server with health service and signal sigint handler
     let signal = shutdown_utils::signal_handler("gRPC server");

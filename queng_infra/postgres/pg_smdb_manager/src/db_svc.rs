@@ -19,11 +19,11 @@ impl PostgresSMDBManager {
     /// Returns an error if the insert fails.
     ///
     pub async fn insert_service(
-        &mut self,
+        &self,
         service_config: &ServiceConfig,
     ) -> Result<(), PostgresDBError> {
         self.dbg_print("insert_service");
-        let conn = &mut self.conn;
+        let conn = &mut self.pool.get().unwrap();
 
         match service::Service::create(conn, &service_config) {
             Ok(_) => Ok(()),
@@ -40,7 +40,7 @@ impl PostgresSMDBManager {
     ///
     pub async fn count_services(&mut self) -> Result<u64, PostgresDBError> {
         self.dbg_print("count_services");
-        let conn = &mut self.conn;
+        let conn = &mut self.pool.get().unwrap();
 
         match service::Service::count(conn) {
             Ok(count) => Ok(count),
@@ -60,11 +60,11 @@ impl PostgresSMDBManager {
     /// If the service exists, returns `Ok(true)`, otherwise `Ok(false)`.
     ///
     pub async fn check_if_service_id_exists(
-        &mut self,
+        &self,
         id: &ServiceID,
     ) -> Result<bool, PostgresDBError> {
         self.dbg_print("check_if_service_id_exists");
-        let conn = &mut self.conn;
+        let conn = &mut self.pool.get().unwrap();
         match service::Service::check_if_service_id_exists(conn, *id) {
             Ok(exists) => Ok(exists),
             Err(e) => Err(PostgresDBError::CheckIfExistsFailed(e.to_string())),
@@ -84,7 +84,7 @@ impl PostgresSMDBManager {
     /// If all services exist, returns `Ok(true)`, otherwise `Ok(false)`.
     ///
     pub async fn check_if_services_exists(
-        &mut self,
+        &self,
         services: &Vec<ServiceID>,
     ) -> Result<bool, PostgresDBError> {
         self.dbg_print("check_if_services_exists");
@@ -116,14 +116,14 @@ impl PostgresSMDBManager {
     /// If the service does not exist, returns `Ok(false)`.
     ///
     pub async fn check_if_service_id_online(
-        &mut self,
+        &self,
         id: &ServiceID,
     ) -> Result<bool, PostgresDBError> {
         self.dbg_print("check_if_service_id_online");
-        let conn = &mut self.conn;
+        let conn = &mut self.pool.get().unwrap();
 
         match service::Service::check_if_service_id_online(conn, *id) {
-            Ok(exists) => Ok(exists),
+            Ok(online) => Ok(online),
             Err(e) => Err(PostgresDBError::CheckIfExistsFailed(e.to_string())),
         }
     }
@@ -141,13 +141,13 @@ impl PostgresSMDBManager {
     /// If any service does not exist or is not online, returns `Ok(false)`.
     ///
     pub async fn check_if_services_online(
-        &mut self,
+        &self,
         services: &Vec<ServiceID>,
     ) -> Result<bool, PostgresDBError> {
         for id in services {
             match self.check_if_service_id_online(id).await {
-                Ok(exists) => {
-                    if !exists {
+                Ok(online) => {
+                    if !online {
                         return Ok(false);
                     }
                 }
@@ -172,7 +172,7 @@ impl PostgresSMDBManager {
     pub async fn get_all_online_services(&mut self) -> Result<Vec<ServiceConfig>, PostgresDBError> {
         self.dbg_print("get_all_online_services");
 
-        let conn = &mut self.conn;
+        let conn = &mut self.pool.get().unwrap();
         match service::Service::get_all_online_services(conn) {
             Ok(services) => Ok(services),
             Err(e) => Err(PostgresDBError::QueryFailed(e.to_string())),
@@ -191,12 +191,10 @@ impl PostgresSMDBManager {
     /// If successful, returns a vector of all offline services in the database.
     /// If the operation fails, returns a `PostgresDBError`.
     ///
-    pub async fn get_all_offline_services(
-        &mut self,
-    ) -> Result<Vec<ServiceConfig>, PostgresDBError> {
+    pub async fn get_all_offline_services(&self) -> Result<Vec<ServiceConfig>, PostgresDBError> {
         self.dbg_print("get_all_offline_services");
 
-        let conn = &mut self.conn;
+        let conn = &mut self.pool.get().unwrap();
         match service::Service::get_all_offline_services(conn) {
             Ok(services) => Ok(services),
             Err(e) => Err(PostgresDBError::QueryFailed(e.to_string())),
@@ -216,12 +214,12 @@ impl PostgresSMDBManager {
     /// If the operation fails, returns a `PostgresDBError`.
     ///
     pub async fn get_all_service_dependencies(
-        &mut self,
+        &self,
         id: &ServiceID,
     ) -> Result<Vec<ServiceID>, PostgresDBError> {
         self.dbg_print("get_all_service_dependencies");
 
-        let conn = &mut self.conn;
+        let conn = &mut self.pool.get().unwrap();
         match service::Service::get_all_service_dependencies(conn, *id) {
             Ok(services) => Ok(services),
             Err(e) => Err(PostgresDBError::QueryFailed(e.to_string())),
@@ -241,12 +239,12 @@ impl PostgresSMDBManager {
     /// If the operation fails, returns a `PostgresDBError`.
     ///
     pub async fn get_all_service_endpoints(
-        &mut self,
+        &self,
         id: &ServiceID,
     ) -> Result<Vec<Endpoint>, PostgresDBError> {
         self.dbg_print("get_all_service_endpoints");
 
-        let conn = &mut self.conn;
+        let conn = &mut self.pool.get().unwrap();
         match service::Service::get_all_service_endpoints(conn, *id) {
             Ok(services) => Ok(services),
             Err(e) => Err(PostgresDBError::QueryFailed(e.to_string())),
@@ -264,9 +262,9 @@ impl PostgresSMDBManager {
     /// * `Result<(), PostgresDBError>` - A result indicating success or failure.
     /// If the service was set to online, returns `Ok(())`.
     ///
-    pub async fn set_service_online(&mut self, id: &ServiceID) -> Result<(), PostgresDBError> {
+    pub async fn set_service_online(&self, id: &ServiceID) -> Result<(), PostgresDBError> {
         self.dbg_print("set_service_online");
-        let conn = &mut self.conn;
+        let conn = &mut self.pool.get().unwrap();
         match service::Service::set_service_online(conn, *id) {
             Ok(_) => Ok(()),
             Err(e) => Err(PostgresDBError::SetFieldFailed(e.to_string())),
@@ -284,9 +282,9 @@ impl PostgresSMDBManager {
     /// * `Result<(), PostgresDBError>` - A result indicating success or failure.
     /// If the service was set to offline, returns `Ok(())`.
     ///
-    pub async fn set_service_offline(&mut self, id: &ServiceID) -> Result<(), PostgresDBError> {
+    pub async fn set_service_offline(&self, id: &ServiceID) -> Result<(), PostgresDBError> {
         self.dbg_print("set_service_offline");
-        let conn = &mut self.conn;
+        let conn = &mut self.pool.get().unwrap();
 
         match service::Service::set_service_online(conn, *id) {
             Ok(_) => Ok(()),
@@ -307,11 +305,11 @@ impl PostgresSMDBManager {
     /// If the service does not exist, returns `Ok(None)`.
     ///
     pub async fn read_service_by_id(
-        &mut self,
+        &self,
         id: &ServiceID,
     ) -> Result<Option<ServiceConfig>, PostgresDBError> {
         self.dbg_print("read_service_by_id");
-        let conn = &mut self.conn;
+        let conn = &mut self.pool.get().unwrap();
 
         match service::Service::check_if_service_id_exists(conn, *id) {
             Ok(exists) => {
@@ -340,10 +338,10 @@ impl PostgresSMDBManager {
     ///
     /// Returns an PostgresDBError if the query fails.
     ///
-    pub async fn read_all_services(&mut self) -> Result<Vec<ServiceConfig>, PostgresDBError> {
+    pub async fn read_all_services(&self) -> Result<Vec<ServiceConfig>, PostgresDBError> {
         self.dbg_print("read_all_services");
 
-        let conn = &mut self.conn;
+        let conn = &mut self.pool.get().unwrap();
         match service::Service::read_all(conn) {
             Ok(services) => Ok(services),
             Err(e) => Err(PostgresDBError::QueryFailed(e.to_string())),
@@ -367,12 +365,12 @@ impl PostgresSMDBManager {
     /// Returns a PostgresDBError if the update fails.
     ///
     pub async fn update_service(
-        &mut self,
+        &self,
         data: ServiceConfig,
     ) -> Result<Option<ServiceConfig>, PostgresDBError> {
         self.dbg_print("update_service");
 
-        let conn = &mut self.conn;
+        let conn = &mut self.pool.get().unwrap();
 
         let id = data.svc_id().to_owned();
         match service::Service::check_if_service_id_exists(conn, id) {
@@ -402,9 +400,9 @@ impl PostgresSMDBManager {
     /// If the service was deleted, returns `Ok(true)`.
     /// If the service does not exist, returns `Ok(false)`.
     ///
-    pub async fn delete_service(&mut self, id: &ServiceID) -> Result<bool, PostgresDBError> {
+    pub async fn delete_service(&self, id: &ServiceID) -> Result<bool, PostgresDBError> {
         self.dbg_print("delete_service");
-        let conn = &mut self.conn;
+        let conn = &mut self.pool.get().unwrap();
 
         match service::Service::check_if_service_id_exists(conn, *id) {
             Ok(exists) => {

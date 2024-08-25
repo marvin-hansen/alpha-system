@@ -10,8 +10,8 @@ use common_config::prelude::ServiceID;
 use common_service::{print_utils, shutdown_utils};
 use config_manager::CfgManager;
 use ctx_manager::CtxManager;
-use db_postgres_manager::PostgresDBManager;
 use dns_manager::DnsManager;
+use pg_smdb_manager::PostgresSMDBManager;
 use proto_bindings::proto::db_gateway_service_server::DbGatewayServiceServer;
 use service::DBGWServer;
 
@@ -46,7 +46,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     dbg_print("Configure postgres database manager");
     let pg_config = cfg_manager.postgres_db_config();
-    let dbm = PostgresDBManager::new(pg_config)
+    let dbm = PostgresSMDBManager::new(&pg_config.pg_connection_url())
         .await
         .expect("Failed to create DB Manager");
 

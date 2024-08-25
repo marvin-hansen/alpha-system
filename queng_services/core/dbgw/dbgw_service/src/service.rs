@@ -4,16 +4,16 @@ use tokio::sync::RwLock;
 use tonic::{Request, Response, Status};
 
 use common_config::prelude::ServiceID;
-use db_postgres_manager::prelude::PostgresDBManager;
+use pg_smdb_manager::PostgresSMDBManager;
 use proto_bindings::proto::db_gateway_service_server::DbGatewayService;
 use proto_bindings::proto::*;
-use proto_utils::portfolio_proto_utils::{portfolio_config_from_proto, portfolio_config_to_proto};
 use proto_utils::service_config_proto_utils::{service_config_from_proto, service_config_to_proto};
 
 use crate::DBG;
 
-pub(crate) type SafePostgresDBManager = Arc<RwLock<PostgresDBManager>>;
+pub(crate) type SafePostgresDBManager = Arc<RwLock<PostgresSMDBManager>>;
 
+#[derive(Clone)]
 pub struct DBGWServer {
     dbg: bool,
     dbm: SafePostgresDBManager,
@@ -27,133 +27,6 @@ impl DBGWServer {
 
 #[tonic::async_trait]
 impl DbGatewayService for DBGWServer {
-    async fn create_portfolio_config(
-        &self,
-        request: Request<ProtoPortfolioConfig>,
-    ) -> Result<Response<CreatePortfolioResponse>, Status> {
-        self.dbg_print("create_portfolio_config");
-
-        let data =
-            portfolio_config_from_proto(request.into_inner()).expect("Failed to parse request");
-
-        let dbm = self.dbm.write().await;
-        let res = dbm.insert_portfolio_config(&data).await;
-
-        match res {
-            Ok(_) => Ok(Response::new(CreatePortfolioResponse {
-                portfolio_created: true,
-            })),
-            Err(e) => Err(Status::internal(e.to_string())),
-        }
-    }
-
-    async fn read_portfolio_config(
-        &self,
-        request: Request<SinglePortfolioRequest>,
-    ) -> Result<Response<ReadPortfolioResponse>, Status> {
-        self.dbg_print("read_portfolio_config");
-
-        let id = request.into_inner().portfolio_id as u16;
-
-        let dbm = self.dbm.read().await;
-        let record = dbm.read_portfolio_config_by_id(id).await;
-
-        match record {
-            Ok(res) => match res {
-                None => Ok(Response::new(ReadPortfolioResponse {
-                    portfolio_config: None,
-                })),
-                Some(res) => {
-                    let proto_portfolio_config =
-                        portfolio_config_to_proto(res).expect("Failed to convert record to proto");
-
-                    Ok(Response::new(ReadPortfolioResponse {
-                        portfolio_config: Some(proto_portfolio_config),
-                    }))
-                }
-            },
-            Err(e) => Err(Status::internal(e.to_string())),
-        }
-    }
-
-    async fn read_all_portfolio_configs(
-        &self,
-        _request: Request<MultiPortfolioRequest>,
-    ) -> Result<Response<ReadAllPortfoliosResponse>, Status> {
-        self.dbg_print("read_all_portfolio_configs");
-
-        let dbm = self.dbm.read().await;
-        let records = dbm.read_all_portfolio_configs().await;
-
-        match records {
-            Ok(res) => {
-                let mut portfolio_configs: Vec<ProtoPortfolioConfig> = Vec::new();
-
-                if res.is_empty() {
-                    Ok(Response::new(ReadAllPortfoliosResponse {
-                        portfolio_configs,
-                    }))
-                } else {
-                    for record in res {
-                        let proto_portfolio_config = portfolio_config_to_proto(record)
-                            .expect("Failed to convert record to proto");
-
-                        portfolio_configs.push(proto_portfolio_config);
-                    }
-
-                    Ok(Response::new(ReadAllPortfoliosResponse {
-                        portfolio_configs,
-                    }))
-                }
-            }
-            Err(e) => Err(Status::internal(e.to_string())),
-        }
-    }
-
-    async fn update_portfolio_config(
-        &self,
-        request: Request<ProtoPortfolioConfig>,
-    ) -> Result<Response<UpdatePortfolioResponse>, Status> {
-        self.dbg_print("update_portfolio_config");
-
-        let data =
-            portfolio_config_from_proto(request.into_inner()).expect("Failed to parse request");
-
-        let dbm = self.dbm.write().await;
-        let res = dbm.update_portfolio_config(data).await;
-
-        match res {
-            Ok(res) => match res {
-                None => Ok(Response::new(UpdatePortfolioResponse {
-                    portfolio_updated: false,
-                })),
-                Some(_) => Ok(Response::new(UpdatePortfolioResponse {
-                    portfolio_updated: true,
-                })),
-            },
-            Err(e) => Err(Status::internal(e.to_string())),
-        }
-    }
-
-    async fn delete_portfolio_config(
-        &self,
-        request: Request<SinglePortfolioRequest>,
-    ) -> Result<Response<DeletePortfolioResponse>, Status> {
-        self.dbg_print("delete_portfolio_config");
-
-        let id = request.into_inner().portfolio_id as u16;
-
-        let dbm = self.dbm.write().await;
-        let res = dbm.delete_portfolio_config(id).await;
-
-        match res {
-            Ok(portfolio_deleted) => {
-                Ok(Response::new(DeletePortfolioResponse { portfolio_deleted }))
-            }
-            Err(e) => Err(Status::internal(e.to_string())),
-        }
-    }
-
     async fn create_service(
         &self,
         rqt: Request<ProtoServiceConfig>,
@@ -327,7 +200,9 @@ impl DbGatewayService for DBGWServer {
         let res = dbm.set_service_online(&id).await;
 
         match res {
-            Ok(service_online) => Ok(Response::new(SetServiceOnlineResponse { service_online })),
+            Ok(_) => Ok(Response::new(SetServiceOnlineResponse {
+                service_online: true,
+            })),
 
             Err(e) => Err(Status::internal(e.to_string())),
         }
@@ -345,7 +220,9 @@ impl DbGatewayService for DBGWServer {
         let res = dbm.set_service_offline(&id).await;
 
         match res {
-            Ok(service_offline) => Ok(Response::new(SetServiceOfflineResponse { service_offline })),
+            Ok(_) => Ok(Response::new(SetServiceOfflineResponse {
+                service_offline: true,
+            })),
             Err(e) => Err(Status::internal(e.to_string())),
         }
     }

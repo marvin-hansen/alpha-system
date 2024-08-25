@@ -6,13 +6,6 @@ import "portfolio_messages.proto";
 
 // Service definitions: https://developers.google.com/protocol-buffers/docs/proto3#services
 service DBGatewayService {
-  // portfolio
-  rpc CreatePortfolioConfig(ProtoPortfolioConfig) returns (CreatePortfolioResponse){}
-  rpc ReadPortfolioConfig(SinglePortfolioRequest) returns (ReadPortfolioResponse) {}
-  rpc ReadAllPortfolioConfigs(MultiPortfolioRequest) returns (ReadAllPortfoliosResponse){}
-  rpc UpdatePortfolioConfig(ProtoPortfolioConfig) returns (UpdatePortfolioResponse) {}
-  rpc DeletePortfolioConfig(SinglePortfolioRequest) returns (DeletePortfolioResponse) {}
-  // service
   rpc CreateService (ProtoServiceConfig) returns (CreateServiceResponse) {}
   rpc CheckServiceIdExists (SingleServiceRequest) returns (CheckServiceIdExistsResponse) {}
   rpc CheckServicesExists (MultiServicesRequest) returns (CheckServicesExistsResponse) {}

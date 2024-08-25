@@ -148,6 +148,12 @@ alias(
 )
 
 alias(
+    name = "pg_smdb_manager",
+    actual = "//queng_infra/postgres/pg_smdb_manager",
+    visibility = ["//visibility:public"],
+)
+
+alias(
     name = "postgres_utils",
     actual = "//queng_infra/postgres/postgres_utils",
     visibility = ["//visibility:public"],

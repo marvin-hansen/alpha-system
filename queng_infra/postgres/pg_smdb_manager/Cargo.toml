@@ -12,6 +12,7 @@ authors.workspace = true
 common_config = {workspace = true}
 common_errors = {workspace = true}
 pg_smdb = {workspace = true}
+tokio = {workspace = true}
 
 # External crates
 diesel = { workspace = true }
@@ -20,4 +21,3 @@ diesel = { workspace = true }
 # For testing
 container_specs = {workspace = true}
 docker_utils = {workspace = true}
-tokio = {workspace = true}

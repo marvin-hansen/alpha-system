@@ -1,12 +1,15 @@
 mod db_svc;
 
 use common_errors::prelude::PostgresDBError;
-use diesel::{Connection, PgConnection};
+use diesel::r2d2::{ConnectionManager, Pool};
+use diesel::PgConnection;
 use pg_smdb::run_smdb_db_migration;
+use std::fmt::Display;
 
+#[derive(Clone, Debug)]
 pub struct PostgresSMDBManager {
     dbg: bool,
-    conn: PgConnection,
+    pool: Pool<ConnectionManager<PgConnection>>,
 }
 
 impl PostgresSMDBManager {
@@ -37,21 +40,22 @@ impl PostgresSMDBManager {
             println!("[PostgresSMDBManager]: Connecting to Postgres database:",);
         }
 
-        let mut conn = match PgConnection::establish(url) {
-            Ok(conn) => conn,
+        let manager = ConnectionManager::<PgConnection>::new(url);
+        let pool = match Pool::builder().test_on_check_out(true).build(manager) {
+            Ok(pool) => pool,
             Err(e) => {
                 return Err(PostgresDBError::ConnectionFailed(e.to_string()));
             }
         };
 
-        match run_smdb_db_migration(&mut conn) {
+        match run_smdb_db_migration(&mut pool.get().unwrap()) {
             Ok(_) => {}
             Err(e) => {
                 return Err(PostgresDBError::MigrationFailed(e.to_string()));
             }
         }
 
-        Ok(Self { dbg, conn })
+        Ok(Self { dbg, pool })
     }
 }
 
@@ -60,5 +64,11 @@ impl PostgresSMDBManager {
         if self.dbg {
             println!("[PostgresSMDBManager]: {}", msg);
         }
+    }
+}
+
+impl Display for PostgresSMDBManager {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "PostgresSMDBManager")
     }
 }

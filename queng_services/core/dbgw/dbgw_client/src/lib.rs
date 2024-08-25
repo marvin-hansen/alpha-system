@@ -3,7 +3,6 @@ use tonic::transport::{Channel, Uri};
 use common_config::prelude::HostEndpoint;
 use proto_bindings::proto::db_gateway_service_client::DbGatewayServiceClient as DBGWClient;
 
-mod cfg_gw;
 mod error;
 mod svc_gw;
 
