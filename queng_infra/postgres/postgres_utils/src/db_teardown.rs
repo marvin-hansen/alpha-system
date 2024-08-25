@@ -19,7 +19,7 @@ impl PostgresUtil {
     ///
     /// Returns an `Err` variant of `PostgresUtilError` if any of the teardown operations fail.
     ///
-    pub async fn teardown_all_db(&self, drop: bool) -> Result<(), PostgresUtilError> {
+    pub async fn teardown_all_db(&self) -> Result<(), PostgresUtilError> {
         self.dbg_print("teardown_all_db");
 
         let conn = &mut self.pool.get().unwrap();

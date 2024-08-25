@@ -1,7 +1,5 @@
 use std::fmt::{Display, Formatter};
 
-use postgres_types::{FromSql, ToSql};
-
 /// A ProtocolType represents the protocol type used for communication.
 ///
 /// # Variants
@@ -9,8 +7,7 @@ use postgres_types::{FromSql, ToSql};
 /// * `GRPC`: The gRPC protocol.
 /// * `HTTP`: The HTTP protocol.
 /// * `UDP`: The UDP protocol.
-#[derive(Debug, ToSql, FromSql, Copy, Clone, Default, Eq, PartialEq)]
-#[postgres(name = "ProtocolType")]
+#[derive(Debug, Copy, Clone, Default, Eq, PartialEq)]
 pub enum ProtocolType {
     #[default]
     UnknownProtocol = 0,

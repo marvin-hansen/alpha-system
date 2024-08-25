@@ -32,7 +32,7 @@ impl EnvUtil {
             .expect("[teardown_postgres]: Failed to get PostgresUtil");
 
         self.dbg_print("[teardown_postgres]: Teardown postgres database");
-        match pg_util.teardown_all_db(true).await {
+        match pg_util.teardown_all_db().await {
             Ok(_) => Ok(()),
             Err(err) => Err(EnvironmentError::new(format!(
                 "[teardown_postgres]: Failed to teardown databases: {err}"

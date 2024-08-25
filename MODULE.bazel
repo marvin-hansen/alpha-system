@@ -28,7 +28,7 @@ bazel_dep(name = "rules_python", version = "0.35.0")
 bazel_dep(name = "rules_proto", version = "6.0.2")
 
 # https://github.com/aspect-build/toolchains_protoc/releases
-bazel_dep(name = "toolchains_protoc", version = "0.3.1")
+bazel_dep(name = "toolchains_protoc", version = "0.3.2")
 
 # https://registry.bazel.build/modules/protobuf
 bazel_dep(name = "protobuf", version = "27.3")
@@ -388,19 +388,6 @@ crate.spec(
 crate.spec(
     package = "parquet",
     version = "52.0",
-)
-crate.spec(
-    features = [
-        "array-impls",
-        "with-chrono-0_4",
-    ],
-    package = "tokio-postgres",
-    version = "0.7",
-)
-crate.spec(
-    features = ["derive"],
-    package = "postgres-types",
-    version = "0.2.6",
 )
 crate.spec(
     default_features = False,

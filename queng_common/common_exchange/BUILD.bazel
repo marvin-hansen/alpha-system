@@ -14,7 +14,6 @@ rust_library(
     deps = [
         # External crates
         "@crates//:rust_decimal",
-        "@crates//:tokio-postgres",
     ],
 )
 

@@ -1,7 +1,5 @@
 use std::fmt::{Display, Formatter};
 
-use tokio_postgres::Row;
-
 #[derive(Default, Debug, Clone, PartialEq)]
 pub struct Instrument {
     code: String,
@@ -62,27 +60,6 @@ impl Instrument {
 
     pub fn instrument_figi(&self) -> &Option<String> {
         &self.instrument_figi
-    }
-}
-
-impl Instrument {
-    pub fn from_sql_row(row: &Row) -> Self {
-        let code = row.get::<usize, String>(0);
-        let class = row.get::<usize, String>(1);
-        let exchange_code = row.get::<usize, String>(2);
-        let exchange_pair_code = row.get::<usize, String>(3);
-        let base_asset = row.get::<usize, String>(4);
-        let quote_asset = row.get::<usize, String>(5);
-        let instrument_figi = row.get::<usize, Option<String>>(6);
-        Instrument::new(
-            code,
-            class,
-            exchange_code,
-            exchange_pair_code,
-            base_asset,
-            quote_asset,
-            instrument_figi,
-        )
     }
 }
 

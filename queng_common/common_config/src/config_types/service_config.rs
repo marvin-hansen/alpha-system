@@ -1,7 +1,5 @@
 use std::fmt::{Display, Formatter};
 
-use tokio_postgres::Row;
-
 use crate::prelude::{Endpoint, MetricConfig, ServiceID};
 
 #[derive(Debug, Default, Clone, Eq, PartialEq)]
@@ -62,38 +60,6 @@ impl ServiceConfig {
             dependencies,
             endpoints,
         }
-    }
-}
-
-impl ServiceConfig {
-    /// Converts a SQL row into a ServiceConfig object.
-    pub fn from_sql_row(row: &Row) -> Self {
-        let db_id = row.get::<usize, i32>(0);
-        let db_name = row.get::<usize, String>(1);
-        let db_version = row.get::<usize, i16>(2);
-        let db_online = row.get::<usize, bool>(3);
-        let db_description = row.get::<usize, String>(4);
-        let db_health_check_uri = row.get::<usize, String>(5);
-        let db_base_uri = row.get::<usize, String>(6);
-        let db_dependencies = row.get::<usize, Vec<i16>>(7);
-        let dependencies: Vec<ServiceID> = db_dependencies
-            .iter()
-            .map(|id| ServiceID::from(*id))
-            .collect();
-
-        let db_endpoints = row.get::<usize, Vec<Endpoint>>(8);
-
-        ServiceConfig::new(
-            ServiceID::from(db_id),
-            db_name,
-            db_version as u32,
-            db_online,
-            db_description,
-            db_health_check_uri,
-            db_base_uri,
-            dependencies,
-            db_endpoints,
-        )
     }
 }
 

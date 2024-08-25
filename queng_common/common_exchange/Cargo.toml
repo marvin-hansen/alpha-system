@@ -11,4 +11,3 @@ authors.workspace = true
 [dependencies]
 # External crates
 rust_decimal = { workspace = true }
-tokio-postgres = { workspace = true }

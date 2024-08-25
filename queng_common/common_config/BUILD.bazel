@@ -12,9 +12,6 @@ rust_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        # External crates
-        "@crates//:tokio-postgres",
-        "@crates//:postgres-types",
     ],
 )
 
