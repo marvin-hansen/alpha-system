@@ -1,7 +1,6 @@
 use common_exchange::prelude::Instrument as CommonInstrument;
 use container_specs::postgres_container_specs::postgres_db_container_config;
-use diesel::r2d2::{ConnectionManager, Pool};
-use diesel::PgConnection;
+use diesel::{Connection, PgConnection};
 use docker_utils::DockerUtil;
 use pg_cmdb::model::instrument::{Instrument, UpdateInstrument};
 use pg_cmdb::run_cmdb_db_migration;
@@ -18,19 +17,14 @@ async fn setup_test() {
         .expect("Failed to setup ci api proxy container");
 }
 
-fn postgres_connection_pool() -> Pool<ConnectionManager<PgConnection>> {
+fn postgres_connection() -> PgConnection {
     let database_url = "postgres://postgres:postgres@localhost/postgres";
 
-    let manager = ConnectionManager::<PgConnection>::new(database_url);
-    let result = Pool::builder().test_on_check_out(true).build(manager);
-
-    //dbg!(&result);
-    assert!(result.is_ok());
-
-    result.unwrap()
+    PgConnection::establish(&database_url)
+        .unwrap_or_else(|_| panic!("Error connecting to {}", database_url))
 }
 
-fn test_db_migration(conn: &mut pg_cmdb::Connection) {
+fn test_db_migration(conn: &mut PgConnection) {
     let result = run_cmdb_db_migration(conn);
     //dbg!(&result);
     assert!(result.is_ok());
@@ -39,8 +33,8 @@ fn test_db_migration(conn: &mut pg_cmdb::Connection) {
 #[tokio::test]
 async fn test_instrument() {
     setup_test().await;
-    let pool = postgres_connection_pool();
-    let conn = &mut pool.get().unwrap();
+
+    let conn = &mut postgres_connection();
 
     println!("Test DB migration!");
     test_db_migration(conn);
@@ -67,7 +61,7 @@ async fn test_instrument() {
     test_delete_instrument(conn);
 }
 
-fn test_create_instrument(conn: &mut pg_cmdb::Connection) {
+fn test_create_instrument(conn: &mut PgConnection) {
     let instrument = CommonInstrument::new(
         "test_code".to_string(),
         "test_class".to_string(),
@@ -93,21 +87,21 @@ fn test_create_instrument(conn: &mut pg_cmdb::Connection) {
     assert_eq!(instrument.instrument_figi(), &Some("test".to_string()));
 }
 
-fn test_count_instrument(conn: &mut pg_cmdb::Connection) {
+fn test_count_instrument(conn: &mut PgConnection) {
     let result = Instrument::count(conn);
     // dbg!(&result);
     assert!(result.is_ok());
     assert_eq!(result.unwrap(), 1);
 }
 
-fn test_check_if_instrument_code_exists(conn: &mut pg_cmdb::Connection) {
+fn test_check_if_instrument_code_exists(conn: &mut PgConnection) {
     let result = Instrument::check_if_instrument_code_exists(conn, "test_code".to_string());
     // dbg!(&result);
     assert!(result.is_ok());
     assert!(result.unwrap());
 }
 
-fn test_read_instrument(conn: &mut pg_cmdb::Connection) {
+fn test_read_instrument(conn: &mut PgConnection) {
     let result = Instrument::read(conn, "test_code".to_string());
     // dbg!(&result);
 
@@ -123,7 +117,7 @@ fn test_read_instrument(conn: &mut pg_cmdb::Connection) {
     assert_eq!(instrument.instrument_figi(), &Some("test".to_string()));
 }
 
-fn test_read_all_instruments(conn: &mut pg_cmdb::Connection) {
+fn test_read_all_instruments(conn: &mut PgConnection) {
     let result = Instrument::read_all(conn);
     // dbg!(&result);
     assert!(result.is_ok());
@@ -132,7 +126,7 @@ fn test_read_all_instruments(conn: &mut pg_cmdb::Connection) {
     assert!(all_instruments.len() > 0);
 }
 
-fn test_update_instrument(conn: &mut pg_cmdb::Connection) {
+fn test_update_instrument(conn: &mut PgConnection) {
     let update = UpdateInstrument::new(
         Some("new_test_class".to_string()),
         None,
@@ -147,7 +141,7 @@ fn test_update_instrument(conn: &mut pg_cmdb::Connection) {
     assert!(result.is_ok());
 }
 
-fn test_delete_instrument(conn: &mut pg_cmdb::Connection) {
+fn test_delete_instrument(conn: &mut PgConnection) {
     let result = Instrument::check_if_instrument_code_exists(conn, "test_code".to_string());
     // dbg!(&result);
     assert!(result.is_ok());

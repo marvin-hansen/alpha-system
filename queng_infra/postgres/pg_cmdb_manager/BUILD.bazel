@@ -1,0 +1,36 @@
+load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library")
+
+rust_library(
+    name = "pg_cmdb_manager",
+    srcs = glob([
+        "src/**",
+    ]),
+    crate_root = "src/lib.rs",
+    tags = [
+        "infra",
+        "pg_cmdb_manager",
+        "postgres",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Internal crates
+        "//alias:common_config",
+        "//alias:pg_cmdb",
+        # External crates
+        "@crates//:diesel",
+    ],
+)
+
+rust_doc(
+    name = "doc",
+    crate = ":pg_cmdb_manager",
+    tags = ["doc"],
+    visibility = ["//visibility:public"],
+)
+
+rust_doc_test(
+    name = "doc_test",
+    crate = ":pg_cmdb_manager",
+    tags = ["doc-test"],
+    visibility = ["//visibility:public"],
+)

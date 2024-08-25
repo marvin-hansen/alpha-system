@@ -1,6 +1,6 @@
 use container_specs::postgres_container_specs::postgres_db_container_config;
-use diesel::r2d2::{ConnectionManager, Pool};
-use diesel::PgConnection;
+use diesel::{Connection, PgConnection};
+
 use docker_utils::DockerUtil;
 use pg_cmdb::model::portfolio::{CreatePortfolio, Portfolio, UpdatePortfolio};
 use pg_cmdb::run_cmdb_db_migration;
@@ -17,17 +17,14 @@ async fn setup_test() {
         .expect("Failed to setup ci api proxy container");
 }
 
-fn postgres_connection_pool() -> Pool<ConnectionManager<PgConnection>> {
+fn postgres_connection() -> PgConnection {
     let database_url = "postgres://postgres:postgres@localhost/postgres";
 
-    let manager = ConnectionManager::<PgConnection>::new(database_url);
-    Pool::builder()
-        .test_on_check_out(true)
-        .build(manager)
-        .expect("Could not build connection pool")
+    PgConnection::establish(&database_url)
+        .unwrap_or_else(|_| panic!("Error connecting to {}", database_url))
 }
 
-fn test_db_migration(conn: &mut pg_cmdb::Connection) {
+fn test_db_migration(conn: &mut PgConnection) {
     let res = run_cmdb_db_migration(conn);
     //dbg!(&result);
     assert!(res.is_ok());
@@ -37,8 +34,7 @@ fn test_db_migration(conn: &mut pg_cmdb::Connection) {
 async fn test_portfolio() {
     setup_test().await;
 
-    let pool = postgres_connection_pool();
-    let mut conn = &mut pool.get().unwrap();
+    let conn = &mut postgres_connection();
 
     println!("Test DB migration!");
     test_db_migration(conn);
@@ -60,7 +56,7 @@ async fn test_portfolio() {
         100.0,
     );
 
-    let result = Portfolio::create(&mut conn, &portfolio);
+    let result = Portfolio::create(conn, &portfolio);
     assert!(result.is_ok());
 
     let portfolio = result.unwrap();
@@ -84,7 +80,7 @@ async fn test_portfolio() {
     assert!(result.is_ok());
     assert!(result.unwrap());
 
-    let result = Portfolio::read(&mut conn, 1);
+    let result = Portfolio::read(conn, 1);
     assert!(result.is_ok());
 
     let portfolio = result.unwrap();
@@ -104,7 +100,7 @@ async fn test_portfolio() {
     assert_eq!(portfolio.portfolio_free_margin_percent, 50.0);
     assert_eq!(portfolio.portfolio_free_cash_percent, 100.0);
 
-    let result = Portfolio::read_all(&mut conn);
+    let result = Portfolio::read_all(conn);
     assert!(result.is_ok());
 
     let all_portfolios = result.unwrap();
@@ -126,7 +122,7 @@ async fn test_portfolio() {
         Some(100.0),
     );
 
-    let result = Portfolio::update(&mut conn, 1, &update);
+    let result = Portfolio::update(conn, 1, &update);
     assert!(result.is_ok());
 
     let portfolio = result.unwrap();
@@ -145,10 +141,10 @@ async fn test_portfolio() {
     assert_eq!(portfolio.portfolio_free_margin_percent, 50.0);
     assert_eq!(portfolio.portfolio_free_cash_percent, 100.0);
 
-    let result = Portfolio::read(&mut conn, 1);
+    let result = Portfolio::read(conn, 1);
     assert!(result.is_ok());
 
-    let result = Portfolio::delete(&mut conn, 1);
+    let result = Portfolio::delete(conn, 1);
     assert!(result.is_ok());
 
     let result = Portfolio::check_if_portfolio_id_exists(conn, 1);

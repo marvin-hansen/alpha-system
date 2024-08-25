@@ -331,9 +331,10 @@ impl Service {
     ///
     pub fn update(
         db: &mut Connection,
-        param_service_id: CommonServiceID,
-        item: &UpdateService,
+        param_service_id: &CommonServiceID,
+        item: &CommonServiceConfig,
     ) -> QueryResult<CommonServiceConfig> {
+        let item = UpdateService::from_common_svc_config(item);
         diesel::update(service.filter(service_id.eq(param_service_id.as_i32())))
             .set(item)
             .returning(Service::as_returning())
@@ -353,7 +354,7 @@ impl Service {
     /// A `QueryResult<usize>` containing the number of rows deleted,
     /// or an error if the operation fails.
     ///
-    pub fn delete(db: &mut Connection, param_service_id: i32) -> QueryResult<usize> {
-        diesel::delete(service.filter(service_id.eq(param_service_id))).execute(db)
+    pub fn delete(db: &mut Connection, param_service_id: CommonServiceID) -> QueryResult<usize> {
+        diesel::delete(service.filter(service_id.eq(param_service_id.as_i32()))).execute(db)
     }
 }

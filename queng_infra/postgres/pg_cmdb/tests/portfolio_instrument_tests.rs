@@ -1,8 +1,7 @@
 use common_exchange::prelude::Instrument as CommonInstrument;
 
 use container_specs::postgres_container_specs::postgres_db_container_config;
-use diesel::r2d2::{ConnectionManager, Pool};
-use diesel::PgConnection;
+use diesel::{Connection, PgConnection};
 use docker_utils::DockerUtil;
 use pg_cmdb::model::instrument::Instrument;
 use pg_cmdb::model::portfolio::{CreatePortfolio, Portfolio};
@@ -21,17 +20,14 @@ async fn setup_test() {
         .expect("Failed to setup ci api proxy container");
 }
 
-fn postgres_connection_pool() -> Pool<ConnectionManager<PgConnection>> {
+fn postgres_connection() -> PgConnection {
     let database_url = "postgres://postgres:postgres@localhost/postgres";
 
-    let manager = ConnectionManager::<PgConnection>::new(database_url);
-    Pool::builder()
-        .test_on_check_out(true)
-        .build(manager)
-        .expect("Could not build connection pool")
+    PgConnection::establish(&database_url)
+        .unwrap_or_else(|_| panic!("Error connecting to {}", database_url))
 }
 
-fn test_db_migration(conn: &mut pg_cmdb::Connection) {
+fn test_db_migration(conn: &mut PgConnection) {
     let result = run_cmdb_db_migration(conn);
     //dbg!(&result);
     assert!(result.is_ok());
@@ -41,11 +37,10 @@ fn test_db_migration(conn: &mut pg_cmdb::Connection) {
 async fn test_portfolio_instrument() {
     setup_test().await;
 
-    let pool = postgres_connection_pool();
-    let mut conn = &mut pool.get().unwrap();
+    let mut conn = postgres_connection();
 
     println!("Test DB migration!");
-    test_db_migration(conn);
+    test_db_migration(&mut conn);
 
     let portfolio_id = 42;
     let create_portfolio = CreatePortfolio::new(

@@ -1,15 +1,12 @@
 use crate::embed_migrations::EMBEDDED_MIGRATIONS;
-use diesel::pg;
 use diesel_migrations::EmbeddedMigrations;
+use postgres_migrations::Connection;
 use std::error::Error;
 
 mod embed_migrations;
 pub mod model;
 pub mod prelude;
 pub(crate) mod schema;
-
-pub type Connection =
-    diesel::r2d2::PooledConnection<diesel::r2d2::ConnectionManager<pg::PgConnection>>;
 
 pub const MIGRATIONS: EmbeddedMigrations = EMBEDDED_MIGRATIONS;
 
@@ -30,11 +27,8 @@ pub const MIGRATIONS: EmbeddedMigrations = EMBEDDED_MIGRATIONS;
 pub fn run_smdb_db_migration(
     conn: &mut Connection,
 ) -> Result<(), Box<dyn Error + Send + Sync + 'static>> {
-    // Check if DB has pending migrations
-    let has_pending = postgres_migrations::check_db_has_pending_migration(conn, MIGRATIONS)?;
-
     // Run migrations if there are pending
-    postgres_migrations::run_db_migration(conn, MIGRATIONS, has_pending)
+    postgres_migrations::run_db_migration(conn, MIGRATIONS)
 }
 
 /// Checks if the database has already been migrated.

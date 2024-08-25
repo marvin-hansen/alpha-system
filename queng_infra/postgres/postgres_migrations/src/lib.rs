@@ -1,7 +1,14 @@
-use diesel::pg;
 use diesel::r2d2::R2D2Connection;
+use diesel::PgConnection;
 use diesel_migrations::{EmbeddedMigrations, MigrationHarness};
 use std::error::Error;
+
+// Alias for a pooled database connection.
+pub type ConnectionPool =
+    diesel::r2d2::PooledConnection<diesel::r2d2::ConnectionManager<diesel::pg::PgConnection>>;
+
+// Alias for a normal, single, database connection.
+pub type Connection = PgConnection;
 
 /// Runs all pending database migrations.
 ///
@@ -21,49 +28,17 @@ use std::error::Error;
 /// migration operations fail.
 ///
 pub fn run_db_migration(
-    conn: &mut diesel::r2d2::PooledConnection<diesel::r2d2::ConnectionManager<pg::PgConnection>>,
+    conn: &mut Connection,
     embedded_migrations: EmbeddedMigrations,
-    has_pending: bool,
 ) -> Result<(), Box<dyn Error + Send + Sync + 'static>> {
     // Check DB connection!
     check_db_connection(conn)?;
 
     // If so, run all pending migrations.
-    if has_pending {
-        match conn.run_pending_migrations(embedded_migrations) {
-            Ok(_) => Ok(()),
-            Err(e) => {
-                eprint!("[pg_smdb]: Error migrating database: {}", e);
-                Err(e)
-            }
-        }
-    } else {
-        // If nothing pending, just return
-        Ok(())
-    }
-}
-
-/// Checks if the database has any pending migrations.
-///
-/// This function checks if the database has any pending migrations and
-/// returns `true` if there are, and `false` if there are not.
-///
-/// # Arguments
-///
-/// * `conn` - A reference to a mutable `Connection` object that represents the
-///   connection to the database.
-///
-pub fn check_db_has_pending_migration(
-    conn: &mut diesel::r2d2::PooledConnection<diesel::r2d2::ConnectionManager<pg::PgConnection>>,
-    embedded_migrations: EmbeddedMigrations,
-) -> Result<bool, Box<dyn Error + Send + Sync + 'static>> {
-    match conn.has_pending_migration(embedded_migrations) {
-        Ok(has_pending) => Ok(has_pending),
+    match conn.run_pending_migrations(embedded_migrations) {
+        Ok(_) => Ok(()),
         Err(e) => {
-            eprint!(
-                "[pg_smdb]: Error checking for pending database migrations: {}",
-                e
-            );
+            eprint!("[pg_smdb]: Error migrating database: {}", e);
             Err(e)
         }
     }
@@ -87,7 +62,7 @@ pub fn check_db_has_pending_migration(
 /// If an error occurs, it returns `Err(Box<dyn Error + Send + Sync + 'static>)`.
 ///
 pub fn check_db_migration(
-    conn: &mut diesel::r2d2::PooledConnection<diesel::r2d2::ConnectionManager<pg::PgConnection>>,
+    conn: &mut Connection,
 ) -> Result<bool, Box<dyn Error + Send + Sync + 'static>> {
     // Check DB connection!
     check_db_connection(conn)?;
@@ -121,7 +96,7 @@ pub fn check_db_migration(
 /// revert operations fail.
 ///
 pub fn revert_db_migration(
-    conn: &mut diesel::r2d2::PooledConnection<diesel::r2d2::ConnectionManager<pg::PgConnection>>,
+    conn: &mut Connection,
     embedded_migrations: EmbeddedMigrations,
 ) -> Result<(), Box<dyn Error + Send + Sync + 'static>> {
     // Check DB connection!
@@ -152,7 +127,7 @@ pub fn revert_db_migration(
 /// If the connection is live, it returns `Ok(())`.
 ///
 fn check_db_connection(
-    conn: &mut diesel::r2d2::PooledConnection<diesel::r2d2::ConnectionManager<pg::PgConnection>>,
+    conn: &mut Connection,
 ) -> Result<(), Box<dyn Error + Send + Sync + 'static>> {
     match conn.ping() {
         Ok(_) => Ok(()),
