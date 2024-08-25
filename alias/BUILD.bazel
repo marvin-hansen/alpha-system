@@ -96,12 +96,6 @@ alias(
 )
 
 alias(
-    name = "db_clickhouse_manager",
-    actual = "//queng_components/db_components/db_clickhouse_manager",
-    visibility = ["//visibility:public"],
-)
-
-alias(
     name = "dns_manager",
     actual = "//queng_components/dns_manager",
     visibility = ["//visibility:public"],
@@ -163,6 +157,12 @@ alias(
 alias(
     name = "clickhouse_utils",
     actual = "//queng_infra/clickhouse/clickhouse_utils",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "db_clickhouse_manager",
+    actual = "//queng_infra/clickhouse/db_clickhouse_manager",
     visibility = ["//visibility:public"],
 )
 
