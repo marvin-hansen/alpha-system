@@ -13,10 +13,7 @@ rust_library(
         "//alias:common_database",
         "//alias:common_exchange",
         "//alias:common_pg_queries",
-        "//alias:pg_cmdb",
-        "//alias:pg_smdb",
         # External crates
-        "@crates//:diesel",
         "@crates//:tokio",
         "@crates//:tokio-postgres",
     ],

@@ -14,11 +14,7 @@ common_config = { workspace = true }
 common_database = { workspace = true }
 common_pg_queries = { workspace = true }
 common_exchange = { workspace = true }
-pg_cmdb = {workspace = true}
-pg_smdb = {workspace = true}
 # External crates
-diesel = { workspace = true }
-diesel_migrations = { workspace = true }
 tokio = { workspace = true }
 tokio-postgres = { workspace = true }
 

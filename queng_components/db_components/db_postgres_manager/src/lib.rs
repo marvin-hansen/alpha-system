@@ -1,5 +1,3 @@
-use diesel::r2d2::{ConnectionManager, Pool};
-use diesel::PgConnection;
 use std::fmt::{Debug, Display, Formatter};
 use tokio::task::JoinHandle;
 use tokio_postgres::{Client, NoTls};
@@ -70,7 +68,7 @@ impl PostgresDBManager {
     async fn build(dbg: bool, tsn: &str) -> Result<Self, PostgresDBError> {
         if dbg {
             println!("[PostgresDBManager]: Debug mode enabled");
-            println!("[PostgresDBManager]: Connecting to Postgres database:",);
+            println!("[PostgresDBManager]: Connecting to Postgres database:", );
         }
 
         let (client, connection) = match tokio_postgres::connect(tsn, NoTls).await {
@@ -91,26 +89,11 @@ impl PostgresDBManager {
             }
         });
 
-        // let pool = postgres_connection_pool(tsn)
-        //     .await
-        //     .expect("[PostgresDBManager]: Failed to connect to Postgres database");
-
         Ok(Self {
-            // pool,
             dbg,
             client,
             handle,
         })
-    }
-}
-
-async fn postgres_connection_pool(
-    dsn: &str,
-) -> Result<Pool<ConnectionManager<PgConnection>>, PostgresDBError> {
-    let manager = ConnectionManager::<PgConnection>::new(dsn);
-    match Pool::builder().test_on_check_out(true).build(manager) {
-        Ok(pool) => Ok(pool),
-        Err(e) => Err(PostgresDBError::ConnectionFailed(e.to_string())),
     }
 }
 
@@ -132,6 +115,6 @@ impl PostgresDBManager {
 
 impl Display for PostgresDBManager {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "PostgresDBManager:",)
+        write!(f, "PostgresDBManager:", )
     }
 }
