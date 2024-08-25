@@ -1,13 +1,19 @@
-# Aspect rules for testing
-load("@aspect_bazel_lib//lib:transitions.bzl", "platform_transition_binary")
+###############################################################################
+# Imports
+###############################################################################
 
 # OCI Container Rules
 load("@rules_oci//oci:defs.bzl", "oci_push")
-load("@rules_pkg//pkg:tar.bzl", "pkg_tar")
+
+# Rules rust
 load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_doc", "rust_doc_test")
 
 # Custom container macro
-load("//:build/container.bzl", "build_multi_arch_image", "build_sha265_tag")
+load("//:build/container.bzl", "build_image", "build_sha265_tag")
+
+###############################################################################
+# Rust Binary
+###############################################################################
 
 # Build binary
 rust_binary(
@@ -29,8 +35,8 @@ rust_binary(
         ],
     }),
     tags = [
-        "aux_file_server",
         "cmdb",
+        "service",
     ],
     visibility = ["//visibility:public"],
     deps = [
@@ -52,54 +58,9 @@ rust_binary(
     ],
 )
 
-# x86_64_musl MUSL on x86_64 (CI) doesn't work due to issue:
-# https://github.com/bazelbuild/rules_rust/issues/2726
-platform_transition_binary(
-    name = "bin_linux_x86_64_musl",
-    binary = ":cmdb",
-    target_platform = "//build/platforms:linux_x86_64_musl",
-)
-
-# Test x86_64 MUSL binary
-# Because static linking on Linux doesn't work due to issue:
-# https://github.com/bazelbuild/rules_rust/issues/2726
-# This tests for a dynamically linked binary, but only on CI.
-sh_test(
-    name = "test_bin_linux_x86_64_musl",
-    srcs = ["test_platform.sh"],
-    args = [
-        "$(rootpath :bin_linux_x86_64_musl)",
-        # "'ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), static-pie linked'",
-        "'ELF 64-bit LSB shared object, x86-64, version 1 (SYSV)'",
-    ],
-    data = [":bin_linux_x86_64_musl"],
-    tags = [
-        # Run this test only on CI
-        "ci-binary-integrity_test",
-        # "binary-integrity_test",
-    ],
-)
-
-# Build a MUSL ARM64 binary
-platform_transition_binary(
-    name = "bin_linux_arm64_musl",
-    binary = ":cmdb",
-    target_platform = "//build/platforms:linux_arm64_musl",
-)
-
-# Test MUSL ARM64 binary
-sh_test(
-    name = "test_bin_linux_arm64_musl",
-    srcs = ["test_platform.sh"],
-    args = [
-        "$(rootpath :bin_linux_arm64_musl)",
-        "'ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked'",
-    ],
-    data = [":bin_linux_arm64_musl"],
-    tags = [
-        "binary-integrity_test",
-    ],
-)
+###############################################################################
+# Documentation
+###############################################################################
 
 # Build documentation
 rust_doc(
@@ -117,18 +78,18 @@ rust_doc_test(
     visibility = ["//visibility:public"],
 )
 
-# Build musl multi arch container image
-build_multi_arch_image(
-    name = "image_index",
-    srcs = [":cmdb"],
-    base = "@scratch",
+###############################################################################
+# OCI Container Image
+###############################################################################
+
+# Build container image
+build_image(
+    name = "image",
+    srcs = ["cmdb"],
+    base = "@distroless",
     exposed_ports = [
         "7070",
         "8080",
-    ],
-    platforms = [
-        "//build/platforms:linux_x86_64_musl",
-        "//build/platforms:linux_arm64_musl",
     ],
     visibility = ["//visibility:public"],
 )
@@ -136,7 +97,7 @@ build_multi_arch_image(
 # Build an unique and immutable image tag based on the image SHA265 digest.
 build_sha265_tag(
     name = "remote_tag",
-    image = ":image_index",
+    image = ":image",
     input = "image.json.sha256",
     output = "_tag.txt",
 )
@@ -144,7 +105,7 @@ build_sha265_tag(
 # Publish image to registry
 oci_push(
     name = "push",
-    image = ":image_index",
+    image = ":image",
     remote_tags = ":remote_tag",
     repository = "asia-northeast1-docker.pkg.dev/future-309012/image-repo/cmdb",
     visibility = ["//visibility:public"],

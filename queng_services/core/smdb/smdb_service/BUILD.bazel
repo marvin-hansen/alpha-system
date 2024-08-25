@@ -1,12 +1,11 @@
+# OCI Container Rules
+load("@rules_oci//oci:defs.bzl", "oci_push")
 
 ###############################################################################
 # Imports
 ###############################################################################
 # rules rust
 load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_doc", "rust_doc_test")
-
-# OCI Container Rules
-load("@rules_oci//oci:defs.bzl", "oci_push")
 
 # Custom container macro
 load("//:build/container.bzl", "build_image", "build_sha265_tag")
@@ -15,6 +14,7 @@ load("//:build/container.bzl", "build_image", "build_sha265_tag")
 # Rust Binary
 ###############################################################################
 
+# Build rust binary
 rust_binary(
     name = "smdb",
     srcs = glob([
