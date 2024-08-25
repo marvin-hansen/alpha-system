@@ -18,6 +18,19 @@ impl PostgresSMDBManager {
         Self::build(true, url).await
     }
 
+    /// Creates a new PostgresSMDBManager instance.
+    ///
+    /// # Arguments
+    ///
+    /// * `dbg` - If true, enables debug mode which prints debug messages.
+    /// * `url` - The database connection URL.
+    ///
+    /// # Returns
+    ///
+    /// * `Result<Self, PostgresDBError>` - A result indicating success or failure.
+    /// If successful, returns a PostgresSMDBManager instance.
+    /// If the connection fails, returns a PostgresDBError indicating the failure.
+    ///
     async fn build(dbg: bool, url: &str) -> Result<Self, PostgresDBError> {
         if dbg {
             println!("[PostgresSMDBManager]: Debug mode enabled");

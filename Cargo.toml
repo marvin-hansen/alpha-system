@@ -66,13 +66,16 @@ members = [
     "queng_infra/postgres/pg_cmdb",
     "queng_infra/postgres/postgres_migrations",
     "queng_infra/postgres/pg_smdb",
-    "queng_infra/postgres/postgres_utils", "queng_infra/postgres/pg_mddb", "queng_infra/postgres/pg_cmdb_manager", "queng_infra/postgres/pg_smdb_manager",
+    "queng_infra/postgres/postgres_utils",
+    "queng_infra/postgres/pg_mddb",
+    "queng_infra/postgres/pg_cmdb_manager",
+    "queng_infra/postgres/pg_smdb_manager",
 ]
 
 
 [workspace.package]
 edition = "2021"
-rust-version = "1.79.0"
+rust-version = "1.80.0"
 readme = "README.md"
 repository = "https://github.com/marvin-hansen/quant-engine"
 authors = ["Marvin Hansen <marvin.hansen@gmail.com>"]
@@ -117,6 +120,7 @@ symbol_manager = { path = "queng_components/symbol_manager" }
 # Postgres DB
 pg_cmdb = { path = "queng_infra/postgres/pg_cmdb" }
 pg_smdb = { path = "queng_infra/postgres/pg_smdb" }
+pg_smdb_manager = { path = "queng_infra/postgres/pg_smdb_manager" }
 postgres_migrations = { path = "queng_infra/postgres/postgres_migrations" }
 postgres_utils = { path = "queng_infra/postgres/postgres_utils" }
 # Clickhouse DB
