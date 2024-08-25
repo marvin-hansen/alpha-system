@@ -52,12 +52,6 @@ alias(
 )
 
 alias(
-    name = "common_pg_queries",
-    actual = "//queng_common/common_pg_queries",
-    visibility = ["//visibility:public"],
-)
-
-alias(
     name = "common_service",
     actual = "//queng_common/common_service",
     visibility = ["//visibility:public"],
@@ -104,12 +98,6 @@ alias(
 alias(
     name = "db_clickhouse_manager",
     actual = "//queng_components/db_components/db_clickhouse_manager",
-    visibility = ["//visibility:public"],
-)
-
-alias(
-    name = "db_postgres_manager",
-    actual = "//queng_components/db_components/db_postgres_manager",
     visibility = ["//visibility:public"],
 )
 
