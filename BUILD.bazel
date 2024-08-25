@@ -21,18 +21,6 @@ sh_binary(
 )
 
 ###############################################################################
-# Utils
-###############################################################################
-
-genrule(
-    name = "print_env",
-    outs = ["envs.sh"],
-    cmd = "echo printenv > $@",
-    executable = True,
-    visibility = ["//visibility:public"],
-)
-
-###############################################################################
 # PUSH CONTAINERS
 ###############################################################################
 
@@ -41,13 +29,12 @@ multirun(
     commands = [
         "push_kaiko_proxy",
         "cmdb_push",
-        "dbgw_push",
         "mddb_push",
         "smdb_push",
         # IMS Services
         "push_binance_data",
     ],
-    jobs = 0,  # Set to 0 to run in parallel, defaults to sequential
+    jobs = 0,  # Set to 0 to run in parallel
     visibility = ["//visibility:public"],
 )
 
@@ -59,11 +46,6 @@ command(
 command(
     name = "cmdb_push",
     command = "//alias/service:cmdb_push",
-)
-
-command(
-    name = "dbgw_push",
-    command = "//alias/service:dbgw_push",
 )
 
 command(

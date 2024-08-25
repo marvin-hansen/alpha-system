@@ -23,11 +23,6 @@ alias(
     visibility = ["//visibility:public"],
 )
 
-alias(
-    name = "dbgw_push",
-    actual = "//queng_services/core/dbgw/dbgw_service:push",
-    visibility = ["//visibility:public"],
-)
 
 alias(
     name = "smdb",
