@@ -37,7 +37,10 @@ impl PostgresSMDBManager {
     async fn build(dbg: bool, url: &str) -> Result<Self, PostgresDBError> {
         if dbg {
             println!("[PostgresSMDBManager]: Debug mode enabled");
-            println!("[PostgresSMDBManager]: Connecting to Postgres database:",);
+            println!(
+                "[PostgresSMDBManager]: Connecting to Postgres database: {}",
+                &url
+            );
         }
 
         let manager = ConnectionManager::<PgConnection>::new(url);
@@ -48,6 +51,9 @@ impl PostgresSMDBManager {
             }
         };
 
+        if dbg {
+            println!("[PostgresSMDBManager]: Run DB Migration",);
+        }
         match run_smdb_db_migration(&mut pool.get().unwrap()) {
             Ok(_) => {}
             Err(e) => {

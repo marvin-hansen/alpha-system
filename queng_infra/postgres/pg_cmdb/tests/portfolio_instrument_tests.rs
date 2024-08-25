@@ -1,10 +1,12 @@
 use common_exchange::prelude::Instrument as CommonInstrument;
+use common_exchange::prelude::PortfolioConfig as CommonPortfolioConfig;
 
+use common_exchange::prelude::AccountType::Spot;
 use container_specs::postgres_container_specs::postgres_db_container_config;
 use diesel::{Connection, PgConnection};
 use docker_utils::DockerUtil;
 use pg_cmdb::model::instrument::Instrument;
-use pg_cmdb::model::portfolio::{CreatePortfolio, Portfolio};
+use pg_cmdb::model::portfolio::Portfolio;
 use pg_cmdb::model::portfolio_instrument::{CreatePortfolioInstrument, PortfolioInstrument};
 use pg_cmdb::run_cmdb_db_migration;
 
@@ -43,15 +45,16 @@ async fn test_portfolio_instrument() {
     test_db_migration(&mut conn);
 
     let portfolio_id = 42;
-    let create_portfolio = CreatePortfolio::new(
+    let create_portfolio = CommonPortfolioConfig::new(
         portfolio_id,
         "Test Portfolio".to_string(),
-        1,
+        Spot,
         "12345".to_string(),
         "USD".to_string(),
         1000.0,
         500.0,
         20.0,
+        Vec::new(),
         30.0,
         10.0,
         500.0,
@@ -82,7 +85,7 @@ async fn test_portfolio_instrument() {
 
     // Create Portfolio Instrument using the Portfolio ID and Instrument ID
     let create_portfolio_instrument =
-        CreatePortfolioInstrument::new(portfolio_id, instrument_id.to_string());
+        CreatePortfolioInstrument::new(portfolio_id as i32, instrument_id.to_string());
 
     // Insert Portfolio Instrument
     let result = PortfolioInstrument::create(&mut conn, &create_portfolio_instrument);
@@ -94,14 +97,16 @@ async fn test_portfolio_instrument() {
     assert_eq!(portfolio_instrument.portfolio_id, 42);
     assert_eq!(portfolio_instrument.instrument_id, "test42");
 
-    let result = PortfolioInstrument::read_instruments_for_portfolio(&mut conn, portfolio_id);
+    let result =
+        PortfolioInstrument::read_instruments_for_portfolio(&mut conn, portfolio_id as i32);
     //dbg!(&result);
     assert!(result.is_ok());
 
     let portfolio_instruments = result.unwrap();
     assert!(portfolio_instruments.len() > 0);
 
-    let result = PortfolioInstrument::delete(&mut conn, portfolio_id, instrument_id.to_string());
+    let result =
+        PortfolioInstrument::delete(&mut conn, portfolio_id as i32, instrument_id.to_string());
     //dbg!(&result);
     assert!(result.is_ok());
 
@@ -113,7 +118,7 @@ async fn test_portfolio_instrument() {
     //dbg!(&result);
     assert!(result.is_ok());
 
-    let result = Portfolio::delete(&mut conn, portfolio_id);
+    let result = Portfolio::delete(&mut conn, portfolio_id as i32);
     //dbg!(&result);
     assert!(result.is_ok());
 }

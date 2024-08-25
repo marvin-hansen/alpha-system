@@ -12,10 +12,11 @@ authors.workspace = true
 common_config = {workspace = true}
 common_errors = {workspace = true}
 pg_smdb = {workspace = true}
-tokio = {workspace = true}
 
 # External crates
 diesel = { workspace = true }
+tokio = {workspace = true}
+
 
 [dev-dependencies]
 # For testing

@@ -1,8 +1,9 @@
+use common_exchange::prelude::{AccountType, PortfolioConfig as CommonPortfolioConfig};
 use container_specs::postgres_container_specs::postgres_db_container_config;
 use diesel::{Connection, PgConnection};
 
 use docker_utils::DockerUtil;
-use pg_cmdb::model::portfolio::{CreatePortfolio, Portfolio, UpdatePortfolio};
+use pg_cmdb::model::portfolio::Portfolio;
 use pg_cmdb::run_cmdb_db_migration;
 
 async fn setup_test() {
@@ -39,15 +40,16 @@ async fn test_portfolio() {
     println!("Test DB migration!");
     test_db_migration(conn);
 
-    let portfolio = CreatePortfolio::new(
+    let portfolio = CommonPortfolioConfig::new(
         1,
         "Test Portfolio".to_string(),
-        1,
+        AccountType::Spot,
         "12345".to_string(),
         "USD".to_string(),
         1000.0,
         500.0,
         20.0,
+        Vec::new(),
         30.0,
         10.0,
         500.0,
@@ -61,20 +63,19 @@ async fn test_portfolio() {
 
     let portfolio = result.unwrap();
 
-    assert_eq!(portfolio.portfolio_id, 1);
-    assert_eq!(portfolio.portfolio_description, "Test Portfolio");
-    assert_eq!(portfolio.portfolio_account_type, 1);
-    assert_eq!(portfolio.portfolio_account_id, "12345");
-    assert_eq!(portfolio.portfolio_currency, "USD");
-    assert_eq!(portfolio.portfolio_cash, 1000.0);
-    assert_eq!(portfolio.portfolio_margin, 500.0);
-    assert_eq!(portfolio.portfolio_max_drawdown, 20.0);
-    assert_eq!(portfolio.instrument_max_allocation, 30.0);
-    assert_eq!(portfolio.instrument_max_drawdown, 10.0);
-    assert_eq!(portfolio.portfolio_free_margin, 500.0);
-    assert_eq!(portfolio.portfolio_free_cash, 1000.0);
-    assert_eq!(portfolio.portfolio_free_margin_percent, 50.0);
-    assert_eq!(portfolio.portfolio_free_cash_percent, 100.0);
+    assert_eq!(portfolio.portfolio_id(), 1);
+    assert_eq!(portfolio.portfolio_description(), "Test Portfolio");
+    assert_eq!(portfolio.portfolio_account_id(), "12345");
+    assert_eq!(portfolio.portfolio_currency(), "USD");
+    assert_eq!(portfolio.portfolio_cash(), 1000.0);
+    assert_eq!(portfolio.portfolio_margin(), 500.0);
+    assert_eq!(portfolio.portfolio_max_drawdown(), 20.0);
+    assert_eq!(portfolio.instrument_max_allocation(), 30.0);
+    assert_eq!(portfolio.instrument_max_drawdown(), 10.0);
+    assert_eq!(portfolio.portfolio_free_margin(), 500.0);
+    assert_eq!(portfolio.portfolio_free_cash(), 1000.0);
+    assert_eq!(portfolio.portfolio_free_margin_percent(), 50.0);
+    assert_eq!(portfolio.portfolio_free_cash_percent(), 100.0);
 
     let result = Portfolio::check_if_portfolio_id_exists(conn, 1);
     assert!(result.is_ok());
@@ -106,20 +107,22 @@ async fn test_portfolio() {
     let all_portfolios = result.unwrap();
     assert!(all_portfolios.len() > 0);
 
-    let update = UpdatePortfolio::new(
-        Some("Updated Portfolio".to_string()),
-        Some(2),
-        Some("67890".to_string()),
-        Some("EUR".to_string()),
-        Some(2000.0),
-        Some(1000.0),
-        Some(30.0),
-        Some(40.0),
-        Some(20.0),
-        Some(1000.0),
-        Some(2000.0),
-        Some(50.0),
-        Some(100.0),
+    let update = CommonPortfolioConfig::new(
+        1,
+        "Updated Portfolio".to_string(),
+        AccountType::Spot,
+        "67890".to_string(),
+        "EUR".to_string(),
+        1000.0,
+        500.0,
+        20.0,
+        Vec::new(),
+        3.0,
+        10.0,
+        1000.0,
+        2000.0,
+        50.0,
+        100.0,
     );
 
     let result = Portfolio::update(conn, 1, &update);
@@ -131,11 +134,11 @@ async fn test_portfolio() {
     assert_eq!(portfolio.portfolio_account_type, 2);
     assert_eq!(portfolio.portfolio_account_id, "67890");
     assert_eq!(portfolio.portfolio_currency, "EUR");
-    assert_eq!(portfolio.portfolio_cash, 2000.0);
-    assert_eq!(portfolio.portfolio_margin, 1000.0);
-    assert_eq!(portfolio.portfolio_max_drawdown, 30.0);
-    assert_eq!(portfolio.instrument_max_allocation, 40.0);
-    assert_eq!(portfolio.instrument_max_drawdown, 20.0);
+    assert_eq!(portfolio.portfolio_cash, 1000.0);
+    assert_eq!(portfolio.portfolio_margin, 500.0);
+    assert_eq!(portfolio.portfolio_max_drawdown, 20.0);
+    assert_eq!(portfolio.instrument_max_allocation, 3.0);
+    assert_eq!(portfolio.instrument_max_drawdown, 10.0);
     assert_eq!(portfolio.portfolio_free_margin, 1000.0);
     assert_eq!(portfolio.portfolio_free_cash, 2000.0);
     assert_eq!(portfolio.portfolio_free_margin_percent, 50.0);

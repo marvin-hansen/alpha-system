@@ -1,12 +1,13 @@
-use crate::schema::cmdb::portfolio_instrument;
-use diesel::{Insertable, Queryable, Selectable};
+use crate::schema::cmdb::{instrument, portfolio, portfolio_instrument};
+use diesel::{Associations, Identifiable, Insertable, Queryable, Selectable};
 
 mod portfolio_instrument_impl;
 
-#[derive(Debug, Clone, Queryable, Insertable, Selectable)]
-#[diesel(belongs_to(portfolio))]
-#[diesel(belongs_to(instrument))]
-#[diesel(table_name=portfolio_instrument, primary_key(portfolio_id,instrument_id))]
+#[derive(Identifiable, Selectable, Queryable, Associations, Debug)]
+#[diesel(belongs_to(portfolio::dsl::portfolio))]
+#[diesel(belongs_to(instrument::dsl::instrument))]
+#[diesel(table_name=portfolio_instrument)]
+#[diesel(primary_key(portfolio_id, instrument_id))]
 pub struct PortfolioInstrument {
     pub portfolio_id: i32,
     pub instrument_id: String,

@@ -128,19 +128,6 @@ impl PostgresDBManager {
 }
 
 impl PostgresDBManager {
-    /// returns the portfolio config with the given id
-    ///
-    /// # Arguments
-    ///
-    /// * `portfolio_id` - The ID of the portfolio to read.
-    ///
-    /// # Returns
-    ///
-    /// * `Result<Option<PortfolioConfig>, PostgresDBError>` -
-    ///   A result indicating success or failure.
-    ///   If successful, returns a `Some(PortfolioConfig)` with the portfolio data.
-    ///   If the portfolio does not exist, returns `Ok(None)`.
-    ///
     pub async fn read_portfolio_config_by_id(
         &self,
         portfolio_id: u16,
@@ -224,13 +211,6 @@ impl PostgresDBManager {
         ))
     }
 
-    /// Returns the number of portfolio configurations in the database.
-    ///
-    /// # Returns
-    ///
-    /// * `Result<u64, PostgresDBError>` - A result indicating success or failure.
-    /// The number of portfolio configurations is returned as a `u64` if successful.
-    ///
     pub async fn count_portfolio_config(&self) -> Result<u64, PostgresDBError> {
         self.dbg_print("count_portfolios");
 
@@ -243,20 +223,6 @@ impl PostgresDBManager {
         }
     }
 
-    /// Checks if a portfolio configuration with the given ID exists in the database.
-    ///
-    /// # Arguments
-    ///
-    /// * `portfolio_id` - The ID of the portfolio configuration to check.
-    ///
-    /// # Returns
-    ///
-    /// * `Result<bool, PostgresDBError>` - A result indicating success or failure.
-    /// If the portfolio configuration exists, returns `Ok(true)`, otherwise `Ok(false)`.
-    ///
-    /// # Errors
-    ///
-    /// Returns an PostgresDBError error if the query fails.
     pub async fn check_if_portfolio_id_exists(
         &self,
         portfolio_id: u16,
@@ -270,21 +236,6 @@ impl PostgresDBManager {
         }
     }
 
-    /// Checks if an instrument with the given ID exists in the database.
-    ///
-    /// # Arguments
-    ///
-    /// * `instrument_id` - The ID of the instrument to check.
-    ///
-    /// # Returns
-    ///
-    /// * `Result<bool, PostgresDBError>` - A result indicating success or failure.
-    /// If the instrument exists, returns `Ok(true)`, otherwise `Ok(false)`.
-    ///
-    /// # Errors
-    ///
-    /// Returns an PostgresDBError error if the query fails.
-    ///
     pub async fn check_if_instrument_id_exists(
         &self,
         instrument_id: &str,
@@ -298,19 +249,6 @@ impl PostgresDBManager {
         }
     }
 
-    /// updates the portfolio config with the given data
-    /// Updates the portfolio config with the given data.
-    ///
-    /// # Arguments
-    ///
-    /// * `data` - The portfolio config to update.
-    ///
-    /// # Returns
-    ///
-    /// * `Result<Option<PortfolioConfig>, PostgresDBError>` - A result indicating success or failure.
-    /// If the portfolio was updated, returns `Ok(Some(PortfolioConfig))`.
-    /// If the portfolio does not exist, returns `Ok(None)`.
-    ///
     pub async fn update_portfolio_config(
         &self,
         data: PortfolioConfig,
@@ -324,21 +262,10 @@ impl PostgresDBManager {
         }
     }
 
-    /// Deletes a portfolio from the database by its ID.
-    ///
-    /// # Arguments
-    ///
-    /// * `id` - The ID of the portfolio to delete.
-    ///
-    /// # Returns
-    ///
-    /// * `Result<bool, PostgresDBError>` - A result indicating success or failure.
-    /// If the portfolio was deleted, returns `Ok(true)`.
-    /// If the portfolio does not exist, returns `Ok(false)`.
-    ///
     pub async fn delete_portfolio_config(&self, id: u16) -> Result<bool, PostgresDBError> {
         self.dbg_print("delete_portfolio_config");
 
+        self.dbg_print("check_if_portfolio_id_exists");
         match self.check_if_portfolio_id_exists(id).await {
             Ok(exists) => {
                 if !exists {

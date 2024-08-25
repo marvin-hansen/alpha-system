@@ -1,3 +1,4 @@
+use crate::model::instrument::Instrument;
 use crate::model::portfolio::{CreatePortfolio, Portfolio, UpdatePortfolio};
 use crate::schema::cmdb::portfolio::dsl::*;
 use crate::Connection;
@@ -7,13 +8,24 @@ use diesel::{
 };
 
 impl Portfolio {
-    pub fn create(db: &mut Connection, item: &CreatePortfolio) -> QueryResult<Self> {
+    pub fn create(
+        db: &mut Connection,
+        pfc: &CommonPortfolioConfig,
+    ) -> QueryResult<CommonPortfolioConfig> {
         // Insert instrument first, then portfolio, and then portfolio_instrument
+
+        let item = CreatePortfolio::from_common_portfolio(pfc);
+        let instruments = &pfc
+            .portfolio_instruments()
+            .iter()
+            .map(|i| Instrument::from_common_instrument(i))
+            .collect::<Vec<Instrument>>();
 
         insert_into(portfolio)
             .values(item)
             .returning(Portfolio::as_returning())
-            .get_result(db)
+            .get_result::<Portfolio>(db)
+            .map(|p| p.to_common_portfolio(instruments))
     }
     /// Retrieves the number of portfolios in the database.
     ///
@@ -54,6 +66,7 @@ impl Portfolio {
             .filter(portfolio_id.eq(param_portfolio_id))
             .limit(1)
             .get_result::<Self>(db)
+        // .map(|p| p.to_common_portfolio(instruments))
     }
 
     pub fn read_all(db: &mut Connection) -> QueryResult<Vec<Self>> {
@@ -63,8 +76,10 @@ impl Portfolio {
     pub fn update(
         db: &mut Connection,
         param_portfolio_id: i32,
-        item: &UpdatePortfolio,
+        item: &CommonPortfolioConfig,
     ) -> QueryResult<Self> {
+        let item = UpdatePortfolio::from_common_portfolio(item);
+
         diesel::update(portfolio.find(param_portfolio_id))
             .set(item)
             .returning(Portfolio::as_returning())
