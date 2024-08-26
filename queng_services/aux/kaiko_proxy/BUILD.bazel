@@ -55,55 +55,6 @@ rust_binary(
     ],
 )
 
-# x86_64_musl MUSL on x86_64 (CI) doesn't work due to issue:
-# https://github.com/bazelbuild/rules_rust/issues/2726
-platform_transition_binary(
-    name = "bin_linux_x86_64_musl",
-    binary = ":kaiko_proxy",
-    target_platform = "//build/platforms:linux_x86_64_musl",
-)
-
-# Test x86_64 MUSL binary
-# Because static linking on Linux doesn't work due to issue:
-# https://github.com/bazelbuild/rules_rust/issues/2726
-# This tests for a dynamically linked binary, but only on CI.
-sh_test(
-    name = "test_bin_linux_x86_64_musl",
-    srcs = ["test_platform.sh"],
-    args = [
-        "$(rootpath :bin_linux_x86_64_musl)",
-        # "'ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), static-pie linked'",
-        "'ELF 64-bit LSB shared object, x86-64, version 1 (SYSV)'",
-    ],
-    data = [":bin_linux_x86_64_musl"],
-    tags = [
-        # Run this test only on CI
-        "ci-binary-integrity_test",
-        # "binary-integrity_test",
-    ],
-)
-
-# Build a MUSL ARM64 binary
-platform_transition_binary(
-    name = "bin_linux_arm64_musl",
-    binary = ":kaiko_proxy",
-    target_platform = "//build/platforms:linux_arm64_musl",
-)
-
-# Test MUSL ARM64 binary
-sh_test(
-    name = "test_bin_linux_arm64_musl",
-    srcs = ["test_platform.sh"],
-    args = [
-        "$(rootpath :bin_linux_arm64_musl)",
-        "'ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked'",
-    ],
-    data = [":bin_linux_arm64_musl"],
-    tags = [
-        "binary-integrity_test",
-    ],
-)
-
 # Build documentation
 rust_doc(
     name = "doc",

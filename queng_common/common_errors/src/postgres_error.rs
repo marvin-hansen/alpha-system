@@ -16,6 +16,7 @@ pub enum PostgresDBError {
     TableDoesNotExist(String, String),
     DataRecordDoesNotExist(String),
     TableSanitizeError(String),
+    TransactionRollback(String),
     MigrationFailed(String),
     UnknownError(String),
 }
@@ -72,6 +73,13 @@ impl fmt::Display for PostgresDBError {
 
             PostgresDBError::TableSanitizeError(e) => {
                 write!(f, "[PostgresDBError]: Table sanitization error: {e}")
+            }
+
+            PostgresDBError::TransactionRollback(e) => {
+                write!(
+                    f,
+                    "[PostgresDBError]: Transaction failed and rolled back: {e}"
+                )
             }
 
             PostgresDBError::DataRecordDoesNotExist(e) => {
