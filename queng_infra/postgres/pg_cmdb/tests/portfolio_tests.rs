@@ -130,19 +130,19 @@ async fn test_portfolio() {
 
     let portfolio = result.unwrap();
 
-    assert_eq!(portfolio.portfolio_description, "Updated Portfolio");
-    assert_eq!(portfolio.portfolio_account_type, 2);
-    assert_eq!(portfolio.portfolio_account_id, "67890");
-    assert_eq!(portfolio.portfolio_currency, "EUR");
-    assert_eq!(portfolio.portfolio_cash, 1000.0);
-    assert_eq!(portfolio.portfolio_margin, 500.0);
-    assert_eq!(portfolio.portfolio_max_drawdown, 20.0);
-    assert_eq!(portfolio.instrument_max_allocation, 3.0);
-    assert_eq!(portfolio.instrument_max_drawdown, 10.0);
-    assert_eq!(portfolio.portfolio_free_margin, 1000.0);
-    assert_eq!(portfolio.portfolio_free_cash, 2000.0);
-    assert_eq!(portfolio.portfolio_free_margin_percent, 50.0);
-    assert_eq!(portfolio.portfolio_free_cash_percent, 100.0);
+    assert_eq!(portfolio.portfolio_description(), "Updated Portfolio");
+    assert_eq!(portfolio.portfolio_account_type(), AccountType::Spot);
+    assert_eq!(portfolio.portfolio_account_id(), "67890");
+    assert_eq!(portfolio.portfolio_currency(), "EUR");
+    assert_eq!(portfolio.portfolio_cash(), 1000.0);
+    assert_eq!(portfolio.portfolio_margin(), 500.0);
+    assert_eq!(portfolio.portfolio_max_drawdown(), 20.0);
+    assert_eq!(portfolio.instrument_max_allocation(), 3.0);
+    assert_eq!(portfolio.instrument_max_drawdown(), 10.0);
+    assert_eq!(portfolio.portfolio_free_margin(), 1000.0);
+    assert_eq!(portfolio.portfolio_free_cash(), 2000.0);
+    assert_eq!(portfolio.portfolio_free_margin_percent(), 50.0);
+    assert_eq!(portfolio.portfolio_free_cash_percent(), 100.0);
 
     let result = Portfolio::read(conn, 1);
     assert!(result.is_ok());

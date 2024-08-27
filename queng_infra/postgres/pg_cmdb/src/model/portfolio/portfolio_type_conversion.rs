@@ -1,7 +1,9 @@
 use crate::model::portfolio::Portfolio;
 
 use crate::model::instrument::Instrument;
-use common_exchange::prelude::{AccountType, PortfolioConfig as CommonPortfolioConfig};
+use common_exchange::prelude::{
+    AccountType, Instrument as CommonInstrument, PortfolioConfig as CommonPortfolioConfig,
+};
 
 impl Portfolio {
     pub fn from_common_portfolio(portfolio: CommonPortfolioConfig) -> Portfolio {
@@ -23,7 +25,7 @@ impl Portfolio {
         }
     }
 
-    pub fn to_common_portfolio(&self, instrument: &Vec<Instrument>) -> CommonPortfolioConfig {
+    pub fn to_common_portfolio(&self, instruments: &Vec<Instrument>) -> CommonPortfolioConfig {
         CommonPortfolioConfig::new(
             self.portfolio_id as u32,
             self.portfolio_description.to_string(),
@@ -33,10 +35,33 @@ impl Portfolio {
             self.portfolio_cash,
             self.portfolio_margin,
             self.portfolio_max_drawdown,
-            instrument
+            instruments
                 .iter()
                 .map(|i| i.to_common_instrument())
                 .collect(),
+            self.instrument_max_allocation,
+            self.instrument_max_drawdown,
+            self.portfolio_free_margin,
+            self.portfolio_free_cash,
+            self.portfolio_free_margin_percent,
+            self.portfolio_free_cash_percent,
+        )
+    }
+
+    pub fn to_common_portfolio_with_instruments(
+        &self,
+        instruments: Vec<CommonInstrument>,
+    ) -> CommonPortfolioConfig {
+        CommonPortfolioConfig::new(
+            self.portfolio_id as u32,
+            self.portfolio_description.to_string(),
+            AccountType::from(self.portfolio_account_type),
+            self.portfolio_account_id.to_string(),
+            self.portfolio_currency.to_string(),
+            self.portfolio_cash,
+            self.portfolio_margin,
+            self.portfolio_max_drawdown,
+            instruments,
             self.instrument_max_allocation,
             self.instrument_max_drawdown,
             self.portfolio_free_margin,

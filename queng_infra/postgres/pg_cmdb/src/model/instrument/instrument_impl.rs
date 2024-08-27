@@ -123,8 +123,10 @@ impl Instrument {
     pub fn update(
         db: &mut Connection,
         param_code: String,
-        item: &UpdateInstrument,
+        ins: &CommonInstrument,
     ) -> QueryResult<CommonInstrument> {
+        let item = UpdateInstrument::from_common_instrument(ins);
+
         diesel::update(instrument.filter(code.eq(param_code)))
             .set(item)
             .returning(Instrument::as_returning())

@@ -2,7 +2,7 @@ use common_exchange::prelude::Instrument as CommonInstrument;
 use container_specs::postgres_container_specs::postgres_db_container_config;
 use diesel::{Connection, PgConnection};
 use docker_utils::DockerUtil;
-use pg_cmdb::model::instrument::{Instrument, UpdateInstrument};
+use pg_cmdb::model::instrument::Instrument;
 use pg_cmdb::run_cmdb_db_migration;
 
 async fn setup_test() {
@@ -127,13 +127,14 @@ fn test_read_all_instruments(conn: &mut PgConnection) {
 }
 
 fn test_update_instrument(conn: &mut PgConnection) {
-    let update = UpdateInstrument::new(
-        Some("new_test_class".to_string()),
-        None,
-        None,
-        None,
-        None,
-        None,
+    let update = CommonInstrument::new(
+        "test_code".to_string(),
+        "new_test_class".to_string(),
+        "test_exchange_code".to_string(),
+        "test_exchange_pair_code".to_string(),
+        "test_base_asset".to_string(),
+        "test_quote_asset".to_string(),
+        Some("test".to_string()),
     );
 
     let result = Instrument::update(conn, "test_code".to_string(), &update);

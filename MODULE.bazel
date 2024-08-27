@@ -308,6 +308,10 @@ crate.annotation(
     },
 )
 crate.spec(
+    package = "bon",
+    version = "2.0.0",
+)
+crate.spec(
     package = "arc-swap",
     version = "1.7",
 )

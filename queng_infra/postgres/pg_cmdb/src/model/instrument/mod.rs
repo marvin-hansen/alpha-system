@@ -1,4 +1,3 @@
-use crate::schema::cmdb::instrument;
 use diesel::{AsChangeset, Insertable, Queryable, Selectable};
 
 mod instrument_impl;
@@ -6,8 +5,11 @@ mod instrument_type_conversion;
 mod instrument_type_create_conversion;
 mod instrument_type_update_conversion;
 
+use bon::builder;
+
+#[builder]
 #[derive(Debug, Clone, Queryable, Insertable, AsChangeset, Selectable)]
-#[diesel(table_name=instrument, primary_key(code))]
+#[diesel(table_name=crate::schema::cmdb::instrument, primary_key(code))]
 pub struct Instrument {
     pub code: String,
     pub class: String,
@@ -18,8 +20,9 @@ pub struct Instrument {
     pub instrument_figi: Option<String>,
 }
 
+#[builder]
 #[derive(Debug, Clone, Queryable, Insertable, AsChangeset)]
-#[diesel(table_name=instrument, primary_key(code))]
+#[diesel(table_name=crate::schema::cmdb::instrument, primary_key(code))]
 pub struct CreateInstrument {
     pub code: String,
     pub class: String,
@@ -52,8 +55,9 @@ impl CreateInstrument {
     }
 }
 
+#[builder]
 #[derive(Debug, Clone, Queryable, Insertable, AsChangeset)]
-#[diesel(table_name=instrument)]
+#[diesel(table_name=crate::schema::cmdb::instrument)]
 pub struct UpdateInstrument {
     pub class: Option<String>,
     pub exchange_code: Option<String>,

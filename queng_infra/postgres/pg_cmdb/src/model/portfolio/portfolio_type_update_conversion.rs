@@ -1,8 +1,9 @@
 use crate::model::portfolio::UpdatePortfolio;
 
 use crate::model::instrument::Instrument;
-use common_exchange::prelude::{AccountType, PortfolioConfig as CommonPortfolioConfig};
-
+use common_exchange::prelude::{
+    AccountType, Instrument as CommonInstrument, PortfolioConfig as CommonPortfolioConfig,
+};
 impl UpdatePortfolio {
     pub fn from_common_portfolio(portfolio: &CommonPortfolioConfig) -> UpdatePortfolio {
         UpdatePortfolio {
@@ -40,6 +41,30 @@ impl UpdatePortfolio {
                 .iter()
                 .map(|i| i.to_common_instrument())
                 .collect(),
+            self.instrument_max_allocation.unwrap_or_default(),
+            self.instrument_max_drawdown.unwrap_or_default(),
+            self.portfolio_free_margin.unwrap_or_default(),
+            self.portfolio_free_cash.unwrap_or_default(),
+            self.portfolio_free_margin_percent.unwrap_or_default(),
+            self.portfolio_free_cash_percent.unwrap_or_default(),
+        )
+    }
+
+    pub fn to_common_portfolio_with_instruments(
+        &self,
+        portfolio_id: u32,
+        instruments: Vec<CommonInstrument>,
+    ) -> CommonPortfolioConfig {
+        CommonPortfolioConfig::new(
+            portfolio_id,
+            self.portfolio_description.clone().unwrap().to_string(),
+            AccountType::from(self.portfolio_account_type.unwrap_or_default()),
+            self.portfolio_account_id.clone().unwrap().to_string(),
+            self.portfolio_currency.clone().unwrap().to_string(),
+            self.portfolio_cash.unwrap_or_default(),
+            self.portfolio_margin.unwrap_or_default(),
+            self.portfolio_max_drawdown.unwrap_or_default(),
+            instruments,
             self.instrument_max_allocation.unwrap_or_default(),
             self.instrument_max_drawdown.unwrap_or_default(),
             self.portfolio_free_margin.unwrap_or_default(),

@@ -1,39 +1,104 @@
 use crate::model::instrument::Instrument;
 use crate::model::portfolio::{CreatePortfolio, Portfolio, UpdatePortfolio};
+use crate::model::portfolio_instrument::{CreatePortfolioInstrument, PortfolioInstrument};
 use crate::schema::cmdb::portfolio::dsl::*;
-use crate::Connection;
+use crate::schema::cmdb::portfolio_instrument::dsl::portfolio_instrument;
+use crate::schema::cmdb::portfolio_instrument::instrument_id;
+use crate::types::database_information::DatabaseErrorMessage;
+use crate::Connection as PGConnection;
 use common_exchange::prelude::PortfolioConfig as CommonPortfolioConfig;
-use diesel::{
-    insert_into, ExpressionMethods, QueryDsl, QueryResult, RunQueryDsl, SelectableHelper,
-};
+use diesel::result::{DatabaseErrorKind, Error};
+use diesel::{Connection, ExpressionMethods, QueryDsl, QueryResult, RunQueryDsl, SelectableHelper};
 
 impl Portfolio {
     pub fn create(
-        db: &mut Connection,
+        db: &mut PGConnection,
         pfc: &CommonPortfolioConfig,
     ) -> QueryResult<CommonPortfolioConfig> {
-        // Insert instrument first, then portfolio, and then portfolio_instrument
+        // Check if portfolio exists
+        // if NOT, return an error, otherwise continue
+        match Self::check_if_portfolio_id_exists(db, pfc.portfolio_id() as i32) {
+            Ok(exists) => {
+                if !exists {
+                    return Err(Error::DatabaseError(
+                        DatabaseErrorKind::NotNullViolation,
+                        Box::new(DatabaseErrorMessage::new(
+                            "Portfolio ID DOES NOT exist and can therefore cannot be updated",
+                            "portfolio",
+                        )),
+                    ));
+                }
+            }
+            Err(e) => return Err(e),
+        };
 
-        let item = CreatePortfolio::from_common_portfolio(pfc);
-        let instruments = &pfc
-            .portfolio_instruments()
-            .iter()
-            .map(|i| Instrument::from_common_instrument(i))
-            .collect::<Vec<Instrument>>();
+        // Start transaction
+        match db.transaction(|db| {
+            let port_id: i32 = pfc.portfolio_id() as i32;
 
-        insert_into(portfolio)
-            .values(item)
-            .returning(Portfolio::as_returning())
-            .get_result::<Portfolio>(db)
-            .map(|p| p.to_common_portfolio(instruments))
+            let item = CreatePortfolio::from_common_portfolio(pfc);
+            let instruments = pfc.portfolio_instruments();
+
+            // Check for each instrument if it exists.
+            // If so, continue
+            // If not, insert it
+            for create_instrument in instruments {
+                match Instrument::check_if_instrument_code_exists(
+                    db,
+                    create_instrument.code().to_string(),
+                ) {
+                    Ok(exists) => {
+                        if exists {
+                            continue;
+                        } else {
+                            match Instrument::create(db, create_instrument) {
+                                Ok(_) => {}
+                                Err(e) => return Err(e),
+                            };
+                        }
+                    }
+                    Err(e) => return Err(e),
+                }
+            }
+
+            // Then insert portfolio,
+            let inserted_portfolio = match diesel::insert_into(portfolio)
+                .values(item)
+                .returning(Portfolio::as_returning())
+                .get_result(db)
+            {
+                Ok(res) => res,
+                Err(e) => return Err(e),
+            };
+
+            // Next, insert portfolio_instrument for each instrument
+            for i in pfc.portfolio_instruments() {
+                match diesel::insert_into(portfolio_instrument)
+                    .values(&CreatePortfolioInstrument {
+                        portfolio_id: port_id,
+                        instrument_id: i.code().to_string(),
+                    })
+                    .execute(db)
+                {
+                    Ok(_) => {}
+                    Err(e) => return Err(e),
+                };
+            }
+
+            // Finally, return the portfolio converted to a common portfolio
+            Ok(inserted_portfolio.to_common_portfolio_with_instruments(instruments.to_owned()))
+        }) {
+            Ok(res) => Ok(res),
+            Err(e) => Err(e),
+        }
     }
 
-    pub fn count(db: &mut Connection) -> QueryResult<u64> {
+    pub fn count(db: &mut PGConnection) -> QueryResult<u64> {
         portfolio.count().get_result::<i64>(db).map(|c| c as u64)
     }
 
     pub fn insert_portfolio_collection(
-        _db: &mut Connection,
+        _db: &mut PGConnection,
         _ports: &[CommonPortfolioConfig],
     ) -> QueryResult<bool> {
         // implement batch insert here
@@ -42,7 +107,7 @@ impl Portfolio {
     }
 
     pub fn check_if_portfolio_id_exists(
-        db: &mut Connection,
+        db: &mut PGConnection,
         param_portfolio_id: i32,
     ) -> QueryResult<bool> {
         match portfolio.find(param_portfolio_id).first::<Portfolio>(db) {
@@ -51,32 +116,109 @@ impl Portfolio {
         }
     }
 
-    pub fn read(db: &mut Connection, param_portfolio_id: i32) -> QueryResult<Self> {
+    pub fn read(db: &mut PGConnection, param_portfolio_id: i32) -> QueryResult<Self> {
         portfolio
             .filter(portfolio_id.eq(param_portfolio_id))
             .limit(1)
             .get_result::<Self>(db)
-        // .map(|p| p.to_common_portfolio(instruments))
     }
 
-    pub fn read_all(db: &mut Connection) -> QueryResult<Vec<Self>> {
+    pub fn read_all(db: &mut PGConnection) -> QueryResult<Vec<Self>> {
         portfolio.load(db)
     }
 
     pub fn update(
-        db: &mut Connection,
+        db: &mut PGConnection,
         param_portfolio_id: i32,
-        item: &CommonPortfolioConfig,
-    ) -> QueryResult<Self> {
-        let item = UpdatePortfolio::from_common_portfolio(item);
+        pfc: &CommonPortfolioConfig,
+    ) -> QueryResult<CommonPortfolioConfig> {
+        // Check if portfolio exists
+        // if NOT, return an error, otherwise continue
+        match Self::check_if_portfolio_id_exists(db, param_portfolio_id) {
+            Ok(exists) => {
+                if !exists {
+                    return Err(Error::DatabaseError(
+                        DatabaseErrorKind::NotNullViolation,
+                        Box::new(DatabaseErrorMessage::new(
+                            "Portfolio ID DOES NOT exist and can therefore cannot be updated",
+                            "portfolio",
+                        )),
+                    ));
+                }
+            }
+            Err(e) => return Err(e),
+        };
 
-        diesel::update(portfolio.find(param_portfolio_id))
-            .set(item)
-            .returning(Portfolio::as_returning())
-            .get_result(db)
+        // Start transaction
+        match db.transaction(|db| {
+            let item = UpdatePortfolio::from_common_portfolio(pfc);
+
+            // Update portfolio
+            let updated_portfolio = match diesel::update(portfolio.find(param_portfolio_id))
+                .set(item)
+                .returning(Portfolio::as_returning())
+                .get_result::<Portfolio>(db)
+            {
+                Ok(res) => res,
+                Err(e) => return Err(e),
+            };
+
+            // If instruments are to be updated, update them
+
+            let common_instruments = pfc.portfolio_instruments();
+            for i in common_instruments {
+                match Instrument::update(db, i.code().to_string(), i) {
+                    Ok(_) => {}
+                    Err(e) => return Err(e),
+                };
+            }
+
+            Ok(updated_portfolio
+                .to_common_portfolio_with_instruments(common_instruments.to_owned()))
+        }) {
+            Ok(res) => Ok(res),
+            Err(e) => Err(e),
+        }
     }
 
-    pub fn delete(db: &mut Connection, param_portfolio_id: i32) -> QueryResult<usize> {
-        diesel::delete(portfolio.filter(portfolio_id.eq(param_portfolio_id))).execute(db)
+    pub fn delete(db: &mut PGConnection, param_portfolio_id: i32) -> QueryResult<usize> {
+        // Check if portfolio exists
+        match portfolio.find(param_portfolio_id).first::<Portfolio>(db) {
+            Ok(_) => {}
+            Err(e) => return Err(e),
+        };
+
+        // Start transaction
+        match db.transaction(|db| {
+            // Read all portfolio_instrument for portfolio
+            let portfolio_instruments =
+                match PortfolioInstrument::read_instruments_for_portfolio(db, param_portfolio_id) {
+                    Ok(res) => res,
+                    Err(e) => return Err(e),
+                };
+
+            // Delete portfolio
+            let res = match diesel::delete(portfolio.filter(portfolio_id.eq(param_portfolio_id)))
+                .execute(db)
+            {
+                Ok(res) => res,
+                Err(e) => return Err(e),
+            };
+
+            // Delete all portfolio_instrument for portfolio
+            for i in portfolio_instruments {
+                match diesel::delete(portfolio_instrument.filter(instrument_id.eq(i.instrument_id)))
+                    .execute(db)
+                {
+                    Ok(_) => {}
+                    Err(e) => return Err(e),
+                };
+            }
+
+            Ok(res)
+        }) {
+            Ok(res) => Ok(res),
+            Err(e) => Err(e),
+        }
     }
 }
