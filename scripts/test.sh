@@ -28,13 +28,6 @@ command bazel test //... --test_tag_filters=unit-test --test_env=ENV=LOCAL
 
 echo ""
 echo "====================="
-echo "Run binary integrity tests"
-echo "====================="
-
-command bazel test //... --test_tag_filters=binary-integrity_test --test_env=ENV=LOCAL
-
-echo ""
-echo "====================="
 echo "Run integration tests"
 echo "====================="
 

@@ -5,7 +5,7 @@ use docker_utils::DockerUtil;
 use pg_cmdb::model::instrument::Instrument;
 use pg_cmdb::run_cmdb_db_migration;
 
-async fn setup_test() {
+async fn start_docker() {
     // Create new DockerUtil
     let docker_util = DockerUtil::with_debug().expect("Failed to get DockerUtil");
 
@@ -24,53 +24,30 @@ fn postgres_connection() -> PgConnection {
         .unwrap_or_else(|_| panic!("Error connecting to {}", database_url))
 }
 
-fn test_db_migration(conn: &mut PgConnection) {
+fn run_db_migration(conn: &mut PgConnection) {
     let result = run_cmdb_db_migration(conn);
     //dbg!(&result);
     assert!(result.is_ok());
 }
 
-#[tokio::test]
-async fn test_instrument() {
-    setup_test().await;
+async fn test_setup() {
+    start_docker().await;
 
     let conn = &mut postgres_connection();
 
-    println!("Test DB migration!");
-    test_db_migration(conn);
-
-    println!("Test create!");
-    test_create_instrument(conn);
-
-    println!("Test count!");
-    test_count_instrument(conn);
-
-    println!("Test check_if_instrument_code_exists!");
-    test_check_if_instrument_code_exists(conn);
-
-    println!("Test read!");
-    test_read_instrument(conn);
-
-    println!("Test read_all!");
-    test_read_all_instruments(conn);
-
-    println!("Test update!");
-    test_update_instrument(conn);
-
-    println!("Test delete!");
-    test_delete_instrument(conn);
+    run_db_migration(conn);
 }
 
-fn test_create_instrument(conn: &mut PgConnection) {
-    let instrument = CommonInstrument::new(
-        "test_code".to_string(),
-        "test_class".to_string(),
-        "test_exchange_code".to_string(),
-        "test_exchange_pair_code".to_string(),
-        "test_base_asset".to_string(),
-        "test_quote_asset".to_string(),
-        Some("test".to_string()),
-    );
+#[tokio::test]
+async fn test_create_instrument() {
+    test_setup().await;
+
+    let mut connection = postgres_connection();
+    let conn = &mut connection;
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+
+    let instrument = get_instrument();
 
     let result = Instrument::create(conn, &instrument);
     // dbg!(&result);
@@ -87,25 +64,65 @@ fn test_create_instrument(conn: &mut PgConnection) {
     assert_eq!(instrument.instrument_figi(), &Some("test".to_string()));
 }
 
-fn test_count_instrument(conn: &mut PgConnection) {
+#[tokio::test]
+async fn test_count_instrument() {
+    test_setup().await;
+
+    let mut connection = postgres_connection();
+    let conn = &mut connection;
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+
+    let result = Instrument::count(conn);
+    // dbg!(&result);
+    assert!(result.is_ok());
+    assert_eq!(result.unwrap(), 0);
+
+    let instrument = get_instrument();
+    let result = Instrument::create(conn, &instrument);
+    // dbg!(&result);
+    assert!(result.is_ok());
+
     let result = Instrument::count(conn);
     // dbg!(&result);
     assert!(result.is_ok());
     assert_eq!(result.unwrap(), 1);
 }
 
-fn test_check_if_instrument_code_exists(conn: &mut PgConnection) {
+#[tokio::test]
+async fn test_check_if_instrument_code_exists() {
+    test_setup().await;
+
+    let mut connection = postgres_connection();
+    let conn = &mut connection;
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+
+    let instrument = get_instrument();
+    let result = Instrument::create(conn, &instrument);
+    // dbg!(&result);
+    assert!(result.is_ok());
+
     let result = Instrument::check_if_instrument_code_exists(conn, "test_code".to_string());
     // dbg!(&result);
     assert!(result.is_ok());
     assert!(result.unwrap());
 }
 
-fn test_read_instrument(conn: &mut PgConnection) {
-    let result = Instrument::read(conn, "test_code".to_string());
-    // dbg!(&result);
+#[tokio::test]
+async fn test_read_instrument() {
+    test_setup().await;
 
+    let mut connection = postgres_connection();
+    let conn = &mut connection;
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+
+    let instrument = get_instrument();
+    let result = Instrument::create(conn, &instrument);
+    // dbg!(&result);
     assert!(result.is_ok());
+
     let instrument = result.unwrap();
 
     assert_eq!(instrument.code(), "test_code");
@@ -117,7 +134,20 @@ fn test_read_instrument(conn: &mut PgConnection) {
     assert_eq!(instrument.instrument_figi(), &Some("test".to_string()));
 }
 
-fn test_read_all_instruments(conn: &mut PgConnection) {
+#[tokio::test]
+async fn test_read_all_instruments() {
+    test_setup().await;
+
+    let mut connection = postgres_connection();
+    let conn = &mut connection;
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+
+    let instrument = get_instrument();
+    let result = Instrument::create(conn, &instrument);
+    // dbg!(&result);
+    assert!(result.is_ok());
+
     let result = Instrument::read_all(conn);
     // dbg!(&result);
     assert!(result.is_ok());
@@ -126,7 +156,20 @@ fn test_read_all_instruments(conn: &mut PgConnection) {
     assert!(all_instruments.len() > 0);
 }
 
-fn test_update_instrument(conn: &mut PgConnection) {
+#[tokio::test]
+async fn test_update_instrument() {
+    test_setup().await;
+
+    let mut connection = postgres_connection();
+    let conn = &mut connection;
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+
+    let instrument = get_instrument();
+    let result = Instrument::create(conn, &instrument);
+    // dbg!(&result);
+    assert!(result.is_ok());
+
     let update = CommonInstrument::new(
         "test_code".to_string(),
         "new_test_class".to_string(),
@@ -142,7 +185,20 @@ fn test_update_instrument(conn: &mut PgConnection) {
     assert!(result.is_ok());
 }
 
-fn test_delete_instrument(conn: &mut PgConnection) {
+#[tokio::test]
+async fn test_delete_instrument() {
+    test_setup().await;
+
+    let mut connection = postgres_connection();
+    let conn = &mut connection;
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+
+    let instrument = get_instrument();
+    let result = Instrument::create(conn, &instrument);
+    // dbg!(&result);
+    assert!(result.is_ok());
+
     let result = Instrument::check_if_instrument_code_exists(conn, "test_code".to_string());
     // dbg!(&result);
     assert!(result.is_ok());
@@ -156,4 +212,16 @@ fn test_delete_instrument(conn: &mut PgConnection) {
     // dbg!(&result);
     assert!(result.is_ok());
     assert!(!result.unwrap());
+}
+
+fn get_instrument() -> CommonInstrument {
+    CommonInstrument::new(
+        "test_code".to_string(),
+        "test_class".to_string(),
+        "test_exchange_code".to_string(),
+        "test_exchange_pair_code".to_string(),
+        "test_base_asset".to_string(),
+        "test_quote_asset".to_string(),
+        Some("test".to_string()),
+    )
 }

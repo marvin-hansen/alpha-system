@@ -93,8 +93,8 @@ rust_test_suite(
         "test.runner-recycling-key": "db_postgres_diesel_tests",
     },
     tags = [
-        # "db_cmdb_tests",
-        # "integration_test",
+        "db_cmdb_tests",
+        "integration_test",
     ],
     visibility = ["//visibility:public"],
     deps = [
