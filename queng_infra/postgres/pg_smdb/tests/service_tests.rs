@@ -2,10 +2,13 @@ use common_config::prelude::ServiceID::SMDB;
 use common_config::prelude::{ServiceConfig, ServiceID};
 use diesel::{Connection, PgConnection};
 use pg_smdb::model::service;
+use postgres_test_utils::prelude::postgres_full_setup;
 use postgres_test_utils::*;
 
 #[tokio::test]
 async fn test_service() {
+    postgres_full_setup(DB_TEST_URL).await.expect("Failed ");
+
     let mut connection = postgres_connection(DB_TEST_URL).await;
     let conn = &mut connection;
     conn.begin_test_transaction()
