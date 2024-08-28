@@ -160,6 +160,11 @@ alias(
     visibility = ["//visibility:public"],
 )
 
+alias(
+    name = "postgres_test_utils",
+    actual = "//queng_infra/postgres/postgres_test_utils",
+    visibility = ["//visibility:public"],
+)
 
 alias(
     name = "clickhouse_utils",

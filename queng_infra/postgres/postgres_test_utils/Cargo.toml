@@ -1,5 +1,5 @@
 [package]
-name = "pg_cmdb"
+name = "postgres_test_utils"
 version = "0.1.0"
 edition.workspace = true
 rust-version.workspace = true
@@ -9,17 +9,16 @@ authors.workspace = true
 
 [dependencies]
 # Internal crates
+container_specs = {workspace = true}
+common_database = {workspace = true}
 common_exchange = {workspace = true}
-postgres_migrations = { workspace = true }
+docker_utils = {workspace = true}
+# Database crates
+pg_cmdb = {workspace = true}
+pg_smdb = {workspace = true}
+pg_mddb = {workspace = true}
+
 
 # External crates
-bon = {workspace = true}
 diesel = { workspace = true }
-diesel_migrations = { workspace = true }
-
-
-[dev-dependencies]
-# For testing
-common_database = {workspace = true}
-postgres_test_utils = {workspace = true}
 tokio = {workspace = true}

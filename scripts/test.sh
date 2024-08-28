@@ -28,6 +28,13 @@ command bazel test //... --test_tag_filters=unit-test --test_env=ENV=LOCAL
 
 echo ""
 echo "====================="
+echo "Prepare integration tests"
+echo "====================="
+
+command bazel test //... --test_tag_filters=test-setup --test_env=ENV=LOCAL
+
+echo ""
+echo "====================="
 echo "Run integration tests"
 echo "====================="
 

@@ -14,7 +14,7 @@ rust_test_suite(
         "test.recycle-runner": "true",
         # We don't want different different db tests to be assigned to the same recycled runner,
         # because we can't fit all db docker images with the default disk limit.
-        "test.runner-recycling-key": "db_pg_cmdb_instrument_tests",
+        "test.runner-recycling-key": "db_postgres_diesel_tests",
     },
     tags = [
         "db_cmdb_tests",
@@ -27,7 +27,7 @@ rust_test_suite(
         # Internal crates
         "//alias:common_database",
         "//alias:common_exchange",
-        "//alias:database_utils",
+        "//alias:postgres_test_utils",
         # External crates
         "@crates//:tokio",
         "@crates//:diesel",
@@ -48,7 +48,7 @@ rust_test_suite(
         "test.recycle-runner": "true",
         # We don't want different different db tests to be assigned to the same recycled runner,
         # because we can't fit all db docker images with the default disk limit.
-        "test.runner-recycling-key": "db_pg_cmdb_portfolio_tests",
+        "test.runner-recycling-key": "db_postgres_diesel_tests",
     },
     tags = [
         # "db_cmdb_tests",
@@ -61,7 +61,7 @@ rust_test_suite(
         # Internal crates
         "//alias:common_exchange",
         "//alias:container_specs",
-        "//alias:docker_utils",
+        "//alias:postgres_test_utils",
         "//alias:env_utils",
         "//alias:db_specs",
         # External crates
@@ -86,7 +86,7 @@ rust_test_suite(
         "test.recycle-runner": "true",
         # We don't want different different db tests to be assigned to the same recycled runner,
         # because we can't fit all db docker images with the default disk limit.
-        "test.runner-recycling-key": "db_pg_cmdb_portfolio_instrument_tests",
+        "test.runner-recycling-key": "db_postgres_diesel_tests",
     },
     tags = [
         # "db_cmdb_tests",
@@ -99,7 +99,7 @@ rust_test_suite(
         # Internal crates
         "//alias:common_exchange",
         "//alias:container_specs",
-        "//alias:docker_utils",
+        "//alias:postgres_test_utils",
         "//alias:env_utils",
         "//alias:db_specs",
         # External crates

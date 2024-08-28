@@ -2,47 +2,18 @@ use common_exchange::prelude::Instrument as CommonInstrument;
 use common_exchange::prelude::PortfolioConfig as CommonPortfolioConfig;
 
 use common_exchange::prelude::AccountType::Spot;
-use container_specs::postgres_container_specs::postgres_db_container_config;
-use diesel::{Connection, PgConnection};
-use docker_utils::DockerUtil;
+use diesel::Connection;
 use pg_cmdb::model::instrument::Instrument;
 use pg_cmdb::model::portfolio::Portfolio;
 use pg_cmdb::model::portfolio_instrument::{CreatePortfolioInstrument, PortfolioInstrument};
-use pg_cmdb::run_cmdb_db_migration;
-
-async fn setup_test() {
-    // Create new DockerUtil
-    let docker_util = DockerUtil::with_debug().expect("Failed to get DockerUtil");
-
-    // Initiate CI container
-    let container_config = postgres_db_container_config();
-    docker_util
-        .setup_container(&container_config)
-        .await
-        .expect("Failed to setup ci api proxy container");
-}
-
-fn postgres_connection() -> PgConnection {
-    let database_url = "postgres://postgres:postgres@localhost/postgres";
-
-    PgConnection::establish(&database_url)
-        .unwrap_or_else(|_| panic!("Error connecting to {}", database_url))
-}
-
-fn test_db_migration(conn: &mut PgConnection) {
-    let result = run_cmdb_db_migration(conn);
-    //dbg!(&result);
-    assert!(result.is_ok());
-}
+use postgres_test_utils::*;
 
 #[tokio::test]
 async fn test_portfolio_instrument() {
-    setup_test().await;
-
-    let mut conn = postgres_connection();
-
-    println!("Test DB migration!");
-    test_db_migration(&mut conn);
+    let mut connection = postgres_connection(DB_TEST_URL).await;
+    let conn = &mut connection;
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
 
     let portfolio_id = 42;
     let create_portfolio = CommonPortfolioConfig::new(
@@ -63,7 +34,7 @@ async fn test_portfolio_instrument() {
         100.0,
     );
 
-    let result = Portfolio::create(&mut conn, &create_portfolio);
+    let result = Portfolio::create(conn, &create_portfolio);
     // dbg!(&result);
     assert!(result.is_ok());
 
@@ -79,7 +50,7 @@ async fn test_portfolio_instrument() {
         Some("test".to_string()),
     );
 
-    let result = Instrument::create(&mut conn, &instrument);
+    let result = Instrument::create(conn, &instrument);
     // dbg!(&result);
     assert!(result.is_ok());
 
@@ -88,7 +59,7 @@ async fn test_portfolio_instrument() {
         CreatePortfolioInstrument::new(portfolio_id as i32, instrument_id.to_string());
 
     // Insert Portfolio Instrument
-    let result = PortfolioInstrument::create(&mut conn, &create_portfolio_instrument);
+    let result = PortfolioInstrument::create(conn, &create_portfolio_instrument);
     //dbg!(&result);
     assert!(result.is_ok());
 
@@ -97,28 +68,26 @@ async fn test_portfolio_instrument() {
     assert_eq!(portfolio_instrument.portfolio_id, 42);
     assert_eq!(portfolio_instrument.instrument_id, "test42");
 
-    let result =
-        PortfolioInstrument::read_instruments_for_portfolio(&mut conn, portfolio_id as i32);
+    let result = PortfolioInstrument::read_instruments_for_portfolio(conn, portfolio_id as i32);
     //dbg!(&result);
     assert!(result.is_ok());
 
     let portfolio_instruments = result.unwrap();
     assert!(portfolio_instruments.len() > 0);
 
-    let result =
-        PortfolioInstrument::delete(&mut conn, portfolio_id as i32, instrument_id.to_string());
+    let result = PortfolioInstrument::delete(conn, portfolio_id as i32, instrument_id.to_string());
     //dbg!(&result);
     assert!(result.is_ok());
 
-    let result = PortfolioInstrument::read_instruments_for_portfolio(&mut conn, 1);
+    let result = PortfolioInstrument::read_instruments_for_portfolio(conn, 1);
     //dbg!(&result);
     assert!(result.is_err());
 
-    let result = Instrument::delete(&mut conn, instrument_id.to_string());
+    let result = Instrument::delete(conn, instrument_id.to_string());
     //dbg!(&result);
     assert!(result.is_ok());
 
-    let result = Portfolio::delete(&mut conn, portfolio_id as i32);
+    let result = Portfolio::delete(conn, portfolio_id as i32);
     //dbg!(&result);
     assert!(result.is_ok());
 }

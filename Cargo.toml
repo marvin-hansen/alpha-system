@@ -20,6 +20,7 @@ members = [
     "queng_infra/clickhouse/db_clickhouse_manager",
     "queng_infra/postgres/pg_cmdb",
     "queng_infra/postgres/postgres_migrations",
+    "queng_infra/postgres/postgres_test_utils",
     "queng_infra/postgres/pg_smdb",
     "queng_infra/postgres/postgres_utils",
     "queng_infra/postgres/pg_mddb",
@@ -121,6 +122,7 @@ pg_smdb = { path = "queng_infra/postgres/pg_smdb" }
 pg_smdb_manager = { path = "queng_infra/postgres/pg_smdb_manager" }
 pg_mddb = { path = "queng_infra/postgres/pg_mddb" }
 postgres_migrations = { path = "queng_infra/postgres/postgres_migrations" }
+postgres_test_utils = { path = "queng_infra/postgres/postgres_test_utils" }
 postgres_utils = { path = "queng_infra/postgres/postgres_utils" }
 # Clickhouse DB
 clickhouse_utils = { path = "queng_infra/clickhouse/clickhouse_utils" }
