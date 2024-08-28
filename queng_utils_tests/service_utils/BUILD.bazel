@@ -15,7 +15,7 @@ rust_library(
     ],
     tags = [
         "service_utils",
-        "utils",
+        "utils-test",
     ],
     visibility = ["//visibility:public"],
     deps = [

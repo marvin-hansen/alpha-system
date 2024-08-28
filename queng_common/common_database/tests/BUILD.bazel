@@ -35,3 +35,21 @@ rust_test_suite(
         # External crates
     ],
 )
+
+rust_test_suite(
+    name = "pg_db_type_tests",
+    srcs = glob([
+        "pg_db_type_tests.rs",
+    ]),
+    tags = [
+        "common",
+        "common_database",
+        "unit-test",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        "//alias:common_database",
+        # External crates
+    ],
+)

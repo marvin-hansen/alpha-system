@@ -142,6 +142,13 @@ alias(
 )
 
 alias(
+    name = "pg_mddb",
+    actual = "//queng_infra/postgres/pg_mddb",
+    visibility = ["//visibility:public"],
+)
+
+
+alias(
     name = "postgres_utils",
     actual = "//queng_infra/postgres/postgres_utils",
     visibility = ["//visibility:public"],
@@ -303,28 +310,37 @@ alias(
     visibility = ["//visibility:public"],
 )
 
-# Test utils
+###############################################################################
+# Utils - Test
+###############################################################################
+
+alias(
+    name = "database_utils",
+    actual = "//queng_utils_tests/database_utils",
+    visibility = ["//visibility:public"],
+)
+
 alias(
     name = "docker_utils",
-    actual = "//queng_utils/test_utils/docker_utils",
+    actual = "//queng_utils_tests/docker_utils",
     visibility = ["//visibility:public"],
 )
 
 alias(
     name = "env_utils",
-    actual = "//queng_utils/test_utils/env_utils",
+    actual = "//queng_utils_tests/env_utils",
     visibility = ["//visibility:public"],
 )
 
 alias(
     name = "kaiko_utils",
-    actual = "//queng_utils/test_utils/kaiko_utils",
+    actual = "//queng_utils_tests/kaiko_utils",
     visibility = ["//visibility:public"],
 )
 
 alias(
     name = "service_utils",
-    actual = "//queng_utils/test_utils/service_utils",
+    actual = "//queng_utils_tests/service_utils",
     visibility = ["//visibility:public"],
 )
 

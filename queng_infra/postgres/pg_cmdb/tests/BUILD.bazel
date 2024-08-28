@@ -3,7 +3,7 @@ load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 rust_test_suite(
     name = "db_pg_cmdb_instrument_tests",
     srcs = glob([
-        "instrument_tests.rs",
+        "instrument/*_tests.rs",
     ]),
     exec_properties = {
         # Tell BuildBuddy to run this test using a Firecracker microVM.
@@ -25,16 +25,12 @@ rust_test_suite(
         # Crate to test
         "//alias:pg_cmdb",
         # Internal crates
+        "//alias:common_database",
         "//alias:common_exchange",
-        "//alias:container_specs",
-        "//alias:docker_utils",
-        "//alias:env_utils",
-        "//alias:db_specs",
+        "//alias:database_utils",
         # External crates
         "@crates//:tokio",
         "@crates//:diesel",
-        "@crates//:dotenv",
-        "@crates//:serde",
     ],
 )
 
@@ -93,8 +89,8 @@ rust_test_suite(
         "test.runner-recycling-key": "db_postgres_diesel_tests",
     },
     tags = [
-        "db_cmdb_tests",
-        "integration_test",
+        # "db_cmdb_tests",
+        # "integration_test",
     ],
     visibility = ["//visibility:public"],
     deps = [
