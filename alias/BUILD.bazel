@@ -320,12 +320,6 @@ alias(
 ###############################################################################
 
 alias(
-    name = "database_utils",
-    actual = "//queng_utils_tests/database_utils",
-    visibility = ["//visibility:public"],
-)
-
-alias(
     name = "docker_utils",
     actual = "//queng_utils_tests/docker_utils",
     visibility = ["//visibility:public"],

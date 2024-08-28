@@ -65,7 +65,6 @@ members = [
     "queng_utils/proto_utils",
     "queng_utils/specs_utils",
     "queng_utils/crypto_utils",
-    "queng_utils_tests/database_utils",
     "queng_utils_tests/docker_utils",
     "queng_utils_tests/env_utils",
     "queng_utils_tests/kaiko_utils",
@@ -155,7 +154,6 @@ math_utils = { path = "queng_utils/math_utils" }
 proto_utils = { path = "queng_utils/proto_utils" }
 specs_utils = { path = "queng_utils/specs_utils" }
 # Utils - Tests
-database_utils = { path = "queng_utils_tests/database_utils" }
 docker_utils = { path = "queng_utils_tests/docker_utils" }
 env_utils = { path = "queng_utils_tests/env_utils" }
 kaiko_utils = { path = "queng_utils_tests/kaiko_utils" }
