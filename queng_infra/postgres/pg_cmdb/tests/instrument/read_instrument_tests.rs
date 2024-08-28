@@ -20,7 +20,6 @@ async fn test_read_instrument() {
     assert!(result.is_ok());
 
     let instrument = result.unwrap();
-
     assert_eq!(instrument.code(), "test_code");
     assert_eq!(instrument.class(), "test_class");
     assert_eq!(instrument.exchange_code(), "test_exchange_code");
