@@ -59,12 +59,16 @@ rust_test_suite(
         # Crate to test
         "//alias:pg_cmdb",
         # Internal crates
-        "//alias:common_database",
         "//alias:common_exchange",
-        "//alias:database_utils",
+        "//alias:container_specs",
+        "//alias:docker_utils",
+        "//alias:env_utils",
+        "//alias:db_specs",
         # External crates
         "@crates//:tokio",
         "@crates//:diesel",
+        "@crates//:dotenv",
+        "@crates//:serde",
     ],
 )
 
@@ -93,11 +97,15 @@ rust_test_suite(
         # Crate to test
         "//alias:pg_cmdb",
         # Internal crates
-        "//alias:common_database",
         "//alias:common_exchange",
-        "//alias:database_utils",
+        "//alias:container_specs",
+        "//alias:docker_utils",
+        "//alias:env_utils",
+        "//alias:db_specs",
         # External crates
         "@crates//:tokio",
         "@crates//:diesel",
+        "@crates//:dotenv",
+        "@crates//:serde",
     ],
 )
