@@ -54,8 +54,6 @@ rust_test_suite(
     deps = [
         # Crate to test
         "//alias:postgres_test_utils",
-        # Internal crates
-
         # External crates
         "@crates//:tokio",
     ],

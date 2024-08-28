@@ -1,7 +1,7 @@
 load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 
 rust_test_suite(
-    name = "db_pg_smdb_migration_tests",
+    name = "pg_smdb_tests",
     srcs = glob([
         "service_tests.rs",
     ]),

@@ -1,7 +1,7 @@
 load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 
 rust_test_suite(
-    name = "db_pg_cmdb_instrument_tests",
+    name = "pg_cmdb_tests",
     srcs = glob([
         "instrument/*_tests.rs",
         # "portfolio/*_tests.rs",
