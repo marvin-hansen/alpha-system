@@ -4,6 +4,7 @@ use postgres_test_utils::prelude::*;
 
 #[tokio::test]
 async fn test_check_if_instrument_code_exists() {
+    //
     let mut connection = postgres_connection(DB_TEST_URL).await;
     let conn = &mut connection;
     conn.begin_test_transaction()
