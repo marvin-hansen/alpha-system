@@ -1,6 +1,3 @@
-#[cfg(test)]
-mod setup;
-
 mod instrument;
 mod portfolio;
 

@@ -1,7 +1,10 @@
-load("@rules_rust//rust:defs.bzl", "rust_test_suite")
+load("@rules_rust//rust:defs.bzl", "rust_test")
 
-rust_test_suite(
-    name = "postgres_test_cmdb_setup",
+##
+## Setup
+##  - Run once before all tests
+rust_test(
+    name = "postgres_setup",
     srcs = glob([
         "test_full_setup.rs",
     ]),
@@ -14,7 +17,7 @@ rust_test_suite(
         "test.recycle-runner": "true",
         # We don't want different different db tests to be assigned to the same recycled runner,
         # because we can't fit all db docker images with the default disk limit.
-        "test.runner-recycling-key": "db_postgres_cmdb_tests",
+        "test.runner-recycling-key": "db_postgres_utils_tests",
     },
     tags = [
         "test-setup",
@@ -23,17 +26,18 @@ rust_test_suite(
     deps = [
         # Crate to test
         "//alias:postgres_test_utils",
-        # Internal crates
-
         # External crates
         "@crates//:tokio",
     ],
 )
 
-rust_test_suite(
-    name = "postgres_test_smdb_setup",
+##
+## Teardown
+##  - Run once after all tests if you want to reset the database
+rust_test(
+    name = "postgres_teardown",
     srcs = glob([
-        "test_full_setup.rs",
+        "test_full_teardown.rs",
     ]),
     exec_properties = {
         # Tell BuildBuddy to run this test using a Firecracker microVM.
@@ -44,10 +48,10 @@ rust_test_suite(
         "test.recycle-runner": "true",
         # We don't want different different db tests to be assigned to the same recycled runner,
         # because we can't fit all db docker images with the default disk limit.
-        "test.runner-recycling-key": "db_postgres_smdb_tests",
+        "test.runner-recycling-key": "db_postgres_utils_tests",
     },
     tags = [
-        "test-setup",
+        "test-teardown",
     ],
     visibility = ["//visibility:public"],
     deps = [
