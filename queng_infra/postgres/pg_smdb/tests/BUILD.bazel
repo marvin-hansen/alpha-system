@@ -17,7 +17,7 @@ rust_test_suite(
         "test.runner-recycling-key": "db_postgres_smdb_tests",
     },
     tags = [
-        "db_smdb_migration_tests",
+        "smdb_migration_tests",
         "integration_test",
     ],
     visibility = ["//visibility:public"],

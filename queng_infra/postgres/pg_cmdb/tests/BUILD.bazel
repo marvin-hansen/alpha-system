@@ -16,7 +16,7 @@ rust_test_suite(
         "test.recycle-runner": "true",
         # We don't want different different db tests to be assigned to the same recycled runner,
         # because we can't fit all db docker images with the default disk limit.
-        "test.runner-recycling-key": "db_postgres_cmdb_tests",
+        "test.runner-recycling-key": "postgres_cmdb_tests",
     },
     rustc_env = {
         "CMDB_MIGRATION_READY": "False",
