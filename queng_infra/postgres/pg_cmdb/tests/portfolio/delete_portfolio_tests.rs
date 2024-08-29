@@ -12,6 +12,7 @@ async fn test_delete_portfolio() {
 
     let mut connection = postgres_connection(DB_TEST_URL).await;
     let conn = &mut connection;
+
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
