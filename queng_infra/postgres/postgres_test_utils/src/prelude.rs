@@ -1,3 +1,4 @@
+pub use crate::check::*;
 pub use crate::postgres_connection;
 pub use crate::setup::*;
 pub use crate::teardown::*;

@@ -253,7 +253,7 @@ impl DockerUtil {
     /// Returns a `DockerError` if there is an error executing the `docker system prune` command.
     ///
     pub fn prune_containers(&mut self) -> Result<(), DockerError> {
-        return match Command::new("docker")
+        match Command::new("docker")
             .arg("system")
             .arg("prune")
             .arg("--all")
@@ -261,12 +261,10 @@ impl DockerUtil {
             .spawn()
         {
             Ok(_) => Ok(()),
-            Err(e) => {
-                return Err(DockerError::from(format!(
-                    "Error pruning containers: {}",
-                    e
-                )));
-            }
-        };
+            Err(e) => Err(DockerError::from(format!(
+                "Error pruning containers: {}",
+                e
+            ))),
+        }
     }
 }

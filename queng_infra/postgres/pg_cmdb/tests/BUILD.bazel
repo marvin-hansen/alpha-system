@@ -3,6 +3,7 @@ load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 rust_test_suite(
     name = "pg_cmdb_tests",
     srcs = glob([
+        "setup.rs",
         "instrument/*_tests.rs",
         # "portfolio/*_tests.rs",
         # "portfolio_instrument/*_tests",
@@ -17,6 +18,9 @@ rust_test_suite(
         # We don't want different different db tests to be assigned to the same recycled runner,
         # because we can't fit all db docker images with the default disk limit.
         "test.runner-recycling-key": "db_postgres_cmdb_tests",
+    },
+    rustc_env = {
+        "CMDB_MIGRATION_READY": "False",
     },
     tags = [
         "db_cmdb_tests",

@@ -1,8 +1,5 @@
 #[cfg(test)]
-mod portfolio_tests;
-
-#[cfg(test)]
-mod portfolio_instrument_tests;
+mod setup;
 
 mod instrument;
 mod portfolio;

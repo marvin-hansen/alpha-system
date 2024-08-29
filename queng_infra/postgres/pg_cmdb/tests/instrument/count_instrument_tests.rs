@@ -1,9 +1,14 @@
+use common_database::prelude::PostgresDBSchema;
 use diesel::Connection;
 use pg_cmdb::model::instrument::Instrument;
 use postgres_test_utils::prelude::*;
 
 #[tokio::test]
 async fn test_count_instrument() {
+    postgres_schema_setup(PostgresDBSchema::CMDB, DB_TEST_URL)
+        .await
+        .expect("FAILED  to setup CMDB schema");
+
     let mut connection = postgres_connection(DB_TEST_URL).await;
     let conn = &mut connection;
     conn.begin_test_transaction()

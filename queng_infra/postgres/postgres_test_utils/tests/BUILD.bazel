@@ -1,6 +1,5 @@
 load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 
-
 rust_test_suite(
     name = "postgres_test_cmdb_setup",
     srcs = glob([

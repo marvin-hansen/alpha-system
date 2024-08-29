@@ -26,8 +26,7 @@ pub async fn postgres_schema_setup(
     // Initiate CI container
     let container_config = postgres_db_container_config();
     docker_util
-        .setup_container(&container_config)
-        .await
+        .get_or_start_container_config(&container_config)
         .expect("Failed to setup ci api proxy container");
 
     let conn = &mut postgres_connection(database_url).await;

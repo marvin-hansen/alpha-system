@@ -1,3 +1,4 @@
+mod check;
 pub mod prelude;
 pub(crate) mod setup;
 pub(crate) mod teardown;
