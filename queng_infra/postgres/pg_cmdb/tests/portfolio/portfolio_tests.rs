@@ -2,6 +2,7 @@ use common_exchange::prelude::{AccountType, PortfolioConfig as CommonPortfolioCo
 use diesel::Connection;
 
 use pg_cmdb::model::portfolio::Portfolio;
+use postgres_test_utils::prelude::get_test_portfolio;
 use postgres_test_utils::{postgres_connection, DB_TEST_URL};
 
 #[tokio::test]
@@ -11,23 +12,7 @@ async fn test_portfolio() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
-    let portfolio = CommonPortfolioConfig::new(
-        1,
-        "Test Portfolio".to_string(),
-        AccountType::Spot,
-        "12345".to_string(),
-        "USD".to_string(),
-        1000.0,
-        500.0,
-        20.0,
-        Vec::new(),
-        30.0,
-        10.0,
-        500.0,
-        1000.0,
-        50.0,
-        100.0,
-    );
+    let portfolio = get_test_portfolio();
 
     let result = Portfolio::create(conn, &portfolio);
     assert!(result.is_ok());

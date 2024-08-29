@@ -16,7 +16,7 @@ async fn test_check_if_instrument_code_exists() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
-    let instrument = get_instrument();
+    let instrument = get_test_instrument();
     let result = Instrument::create(conn, &instrument);
     // dbg!(&result);
     assert!(result.is_ok());

@@ -19,7 +19,7 @@ async fn test_count_instrument() {
     assert!(result.is_ok());
     assert_eq!(result.unwrap(), 0);
 
-    let instrument = get_instrument();
+    let instrument = get_test_instrument();
     let result = Instrument::create(conn, &instrument);
     // dbg!(&result);
     assert!(result.is_ok());
