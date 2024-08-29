@@ -8,6 +8,7 @@ mod create_portfolio_tests;
 mod delete_portfolio_tests;
 #[cfg(test)]
 mod read_all_portfolios_tests;
+mod read_all_portfolios_tests_error;
 #[cfg(test)]
 mod read_portfolio_tests;
 mod update_portfolio_error_tests;
