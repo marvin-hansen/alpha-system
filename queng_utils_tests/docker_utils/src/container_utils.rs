@@ -46,19 +46,29 @@ impl DockerUtil {
         // Add the image
         cmd.arg(image);
 
-        self.dbg_print(&format!("[pull_container_image]: Pull command: {:?}.", cmd));
+        self.dbg_print(&format!("[pull_container_image]: Pull command: {:?}", cmd));
 
         // Run the command & return error in case of failure
         match cmd.output() {
             Ok(out) => {
-                self.dbg_print(&format!(
-                    "[pull_container_image]: success. Image Pulled {}",
-                    image
-                ));
-                self.dbg_print(&format!(
-                    "[pull_container_image]: success. Status: {} Message: {:?}",
-                    out.status, out.stderr
-                ));
+                if out.status.success() {
+                    self.dbg_print(&format!(
+                        "[pull_container_image]: success. Image Pulled {}",
+                        image
+                    ));
+                } else {
+                    eprintln!(
+                        "Error pulling container image {}: {}",
+                        container_id,
+                        String::from_utf8_lossy(&out.stderr)
+                    );
+                    return Err(DockerError::from(format!(
+                        "Error starting container {}: {}",
+                        container_id,
+                        String::from_utf8_lossy(&out.stderr)
+                    )));
+                }
+
                 Ok(())
             }
             Err(e) => {
@@ -67,6 +77,68 @@ impl DockerUtil {
                 eprintln!();
                 panic!("")
             }
+        }
+    }
+
+    /// Check if a container is starting.
+    ///
+    /// # Arguments
+    ///
+    /// * `container_id` - The ID of the container to check.
+    ///
+    /// # Returns
+    ///
+    /// Returns `Ok(true)` if the container is starting, `Ok(false)` if the container is not starting, or `Err(DockerError)` if an error occurred.
+    ///
+    pub fn check_if_container_is_starting(&self, container_id: &str) -> Result<bool, DockerError> {
+        self.dbg_print(&format!(
+            "[check_if_container_is_starting]: Check container image for: {}.",
+            container_id
+        ));
+
+        // Example docker logs apiproxy-7777
+        match Command::new("docker")
+            .arg("logs")
+            .arg(format!(" {}", container_id))
+            .output()
+        {
+            Ok(out) => {
+                self.dbg_print(&format!(
+                    "[check_if_container_is_starting]: \n
+                    success: {} \n
+                    Output: {}",
+                    out.status.success(),
+                    String::from_utf8_lossy(out.stdout.as_slice()),
+                ));
+
+                if out.status.success() {
+                    if out.stdout.is_empty() {
+                        Ok(false)
+                    } else {
+                        Ok(true)
+                    }
+                } else {
+                    Ok(false)
+                }
+            }
+            Err(_) => Ok(false),
+        }
+    }
+
+    /// Check if a container exists by its ID.
+    ///
+    /// # Arguments
+    ///
+    /// * `container_id` - The ID of the container to check.
+    ///
+    /// # Returns
+    ///
+    /// Returns `Ok(true)` if the container exists, `Ok(false)` if the container does not exist, or `Err(DockerError)` if an error occurred.
+    ///
+    pub fn check_if_container_is_running(&self, container_id: &str) -> Result<bool, DockerError> {
+        match self.get_running_container(container_id) {
+            Ok(_) => Ok(true),
+            Err(_) => Ok(false),
         }
     }
 
@@ -111,7 +183,7 @@ impl DockerUtil {
             .parse::<u16>()
             .expect("[get_running_container]: Failed to convert container port from string to u16");
 
-        return Ok((container.trim().to_string(), port));
+        Ok((container.trim().to_string(), port))
     }
 
     /// Retrieves the image tag of a running container by its ID.
@@ -138,7 +210,7 @@ impl DockerUtil {
         &self,
         container_id: &str,
     ) -> Result<String, DockerError> {
-        match self.check_if_container_exists(container_id) {
+        match self.check_if_container_is_running(container_id) {
             Ok(_) => {}
             Err(_) => {
                 return Err(DockerError::from(format!(
@@ -216,23 +288,6 @@ impl DockerUtil {
                     container_id, e
                 )))
             }
-        }
-    }
-
-    /// Check if a container exists by its ID.
-    ///
-    /// # Arguments
-    ///
-    /// * `container_id` - The ID of the container to check.
-    ///
-    /// # Returns
-    ///
-    /// Returns `Ok(true)` if the container exists, `Ok(false)` if the container does not exist, or `Err(DockerError)` if an error occurred.
-    ///
-    pub fn check_if_container_exists(&self, container_id: &str) -> Result<bool, DockerError> {
-        match self.get_running_container(container_id) {
-            Ok(_) => Ok(true),
-            Err(_) => Ok(false),
         }
     }
 

@@ -46,6 +46,7 @@ async fn test_pull(
     container_config: &ContainerConfig<'static>,
     container_id: &str,
 ) {
+    println!("test_pull");
     let image = container_config.image();
     let tag = container_config.tag();
     let image = &format!("{}:{}", image, tag);
@@ -61,6 +62,8 @@ async fn test_start_container(
     expected_container_id: &str,
     expected_container_port: u16,
 ) {
+    println!("test_start_container");
+
     let res = docker_util.get_or_start_container_config(container_config);
     assert!(res.is_ok());
 
@@ -70,23 +73,29 @@ async fn test_start_container(
 }
 
 async fn test_container_exists(docker_util: &DockerUtil, container_id: &str) {
-    let res = docker_util.check_if_container_exists(container_id);
+    println!("test_container_exists");
+
+    let res = docker_util.check_if_container_is_running(container_id);
     assert!(res.is_ok());
     assert!(res.unwrap());
 }
 
 async fn test_stop_container(docker_util: &DockerUtil, container_id: &str) {
+    println!("test_stop_container");
+
     let res = docker_util.stop_container(container_id);
     assert!(res.is_ok());
 
-    let res = docker_util.check_if_container_exists(container_id);
+    let res = docker_util.check_if_container_is_running(container_id);
 
     assert!(res.is_ok());
     assert!(!res.unwrap());
 }
 
 async fn test_container_stopped(docker_util: &DockerUtil, container_id: &str) {
-    let res = docker_util.check_if_container_exists(container_id);
+    println!("test_container_stopped");
+
+    let res = docker_util.check_if_container_is_running(container_id);
     assert!(res.is_ok());
     assert!(!res.unwrap());
 }

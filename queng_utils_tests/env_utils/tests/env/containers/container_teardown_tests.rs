@@ -18,7 +18,7 @@ async fn test_env_util_teardown_container() {
 
     // Verify that the api proxy container was created
     let exists = docker_util
-        .check_if_container_exists(api_proxy_container_name)
+        .check_if_container_is_running(api_proxy_container_name)
         .expect("Failed to check if container exists");
 
     assert!(exists);
@@ -36,7 +36,7 @@ async fn test_env_util_teardown_container() {
 
     // Verify removal
     let exists = docker_util
-        .check_if_container_exists(api_proxy_container_name)
+        .check_if_container_is_running(api_proxy_container_name)
         .expect("Failed to check if container exists");
 
     assert!(!exists);
@@ -47,7 +47,7 @@ async fn test_env_util_teardown_container() {
     println!();
 
     let exists = docker_util
-        .check_if_container_exists(clickhouse_container_name)
+        .check_if_container_is_running(clickhouse_container_name)
         .expect("Failed to check if container exists");
 
     assert!(!exists);

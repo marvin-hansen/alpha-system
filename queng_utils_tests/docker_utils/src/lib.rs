@@ -57,7 +57,7 @@ impl DockerUtil {
         match Command::new("docker").arg("-v").spawn() {
             Ok(_) => Ok(Self { dbg }),
             Err(e) => Err(DockerError::from(format!(
-                "Error connecting to Docker: {}",
+                "Error connecting to Docker. Is Docker running? Error: {}",
                 e
             ))),
         }

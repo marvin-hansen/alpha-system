@@ -26,7 +26,7 @@ impl DockerUtil {
     pub fn stop_container(&self, container_id: &str) -> Result<(), DockerError> {
         self.dbg_print("[stop_container]: Check if container exists.");
         let exists = self
-            .check_if_container_exists(container_id)
+            .check_if_container_is_running(container_id)
             .expect("Failed to check if container exists");
 
         if !exists {

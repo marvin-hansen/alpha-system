@@ -13,7 +13,7 @@ async fn test_env_util_setup_ci() {
     let docker_util = &mut ci_env.docker_util();
     let clickhouse_container_name = ci_env.clickhouse_container_name();
     let exists = docker_util
-        .check_if_container_exists(&clickhouse_container_name)
+        .check_if_container_is_running(&clickhouse_container_name)
         .expect("Failed to check if clickhouse container exists");
     assert!(exists);
 
@@ -25,7 +25,7 @@ async fn test_env_util_setup_ci() {
 
     let api_proxy_container_name = ci_env.api_proxy_container_name();
     let exists = docker_util
-        .check_if_container_exists(&api_proxy_container_name)
+        .check_if_container_is_running(&api_proxy_container_name)
         .expect("Failed to check if api_proxy container exists");
     assert!(exists);
 

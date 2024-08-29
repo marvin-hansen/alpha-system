@@ -31,7 +31,7 @@ impl DockerUtil {
         ));
 
         let exists = self
-            .check_if_container_exists(container_name)
+            .check_if_container_is_running(container_name)
             .unwrap_or_else(|_| {
                 panic!(
                     "[get_running_container]:  container already exists: {}",

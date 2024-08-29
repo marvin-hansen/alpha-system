@@ -54,24 +54,42 @@ impl DockerUtil {
 
         println!("Container ID: {}", container_id);
 
-        self.dbg_print("Check if container already exists.");
-        let exists = self
-            .check_if_container_exists(container_id)
+        self.dbg_print("Check if container is already running.");
+        let is_running = self
+            .check_if_container_is_running(container_id)
             .expect("Failed to check if container exists");
 
-        if exists {
-            self.dbg_print("Container already exists.");
+        if is_running {
+            self.dbg_print("Container is already running.");
             if reuse_container {
                 self.dbg_print("Re-using running container.");
                 return match self.get_running_container(container_id) {
                     Ok((container_name, port)) => Ok((container_name, port)),
                     Err(e) => return Err(e),
                 };
+            } else {
+                self.dbg_print("Container exists but re-use not wanted.");
             }
 
             self.dbg_print("Stopping running container b/c no re-use wanted.");
             self.stop_container(container_id)
                 .expect("Failed to stop container");
+        } else {
+            self.dbg_print("Container is NOT running.");
+        }
+
+        self.dbg_print("Check if container is starting.");
+        let is_starting = self
+            .check_if_container_is_starting(container_id)
+            .expect("Failed to check if container is starting");
+
+        if is_starting {
+            self.dbg_print("Container is already starting.");
+            // Wait for the container to finish starting
+            self.wait_for_container(container_id, wait_strategy)
+                .expect("Failed to wait for container");
+        } else {
+            self.dbg_print("Container is not starting.");
         }
 
         self.dbg_print("Container doesn't exist.");
@@ -209,6 +227,32 @@ impl DockerUtil {
             }
         };
 
+        match self.wait_for_container(container_id, wait_strategy) {
+            Ok(_) => {}
+            Err(e) => {
+                return Err(e);
+            }
+        }
+        //
+        Ok((container_id.to_string(), connection_port))
+    }
+
+    /// Waits for a new Docker container to finish starting.
+    ///
+    /// # Arguments
+    ///
+    /// * `container_id` - The ID of the container.
+    /// * `wait_strategy` - The wait strategy to use for the container.
+    ///
+    /// # Returns
+    ///
+    /// Returns Ok if successful,
+    /// or a `DockerError` if an error occurs.
+    fn wait_for_container(
+        &self,
+        container_id: &str,
+        wait_strategy: &WaitStrategy,
+    ) -> Result<(), DockerError> {
         match wait_strategy {
             WaitStrategy::WaitForDuration(duration) => {
                 self.dbg_print(&format!(
@@ -216,28 +260,24 @@ impl DockerUtil {
                     duration
                 ));
                 std::thread::sleep(Duration::from_secs(*duration));
+                Ok(())
             }
             WaitStrategy::WaitUntilConsoleOutputContains(expected_output, timeout) => {
                 self.dbg_print(&format!(
                     "[start_container]: Waiting until console output contains '{}'",
                     expected_output
                 ));
-                return match self.wait_until_console_output_contains(
-                    container_id,
-                    expected_output,
-                    timeout,
-                ) {
-                    Ok(_) => Ok((container_id.to_string(), connection_port)),
-                    Err(e) => Err(e),
-                };
+                self.wait_until_console_output_contains(container_id, expected_output, timeout)
+                    .expect("Failed to wait until console output contains");
+
+                Ok(())
             }
             WaitStrategy::NoWait => {
                 self.dbg_print("[start_container]: No wait. Return immediately.");
                 // Do nothing
+                Ok(())
             }
         }
-        //
-        Ok((container_id.to_string(), connection_port))
     }
 
     /// Waits until the console output of the container with the given ID contains the

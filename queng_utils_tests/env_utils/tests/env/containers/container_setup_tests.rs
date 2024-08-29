@@ -13,7 +13,7 @@ async fn test_env_util_setup_containers() {
     let docker_util = &mut ci_env.docker_util();
     let clickhouse_container_name = &ci_env.clickhouse_container_name();
     let exists = docker_util
-        .check_if_container_exists(clickhouse_container_name)
+        .check_if_container_is_running(clickhouse_container_name)
         .expect("Failed to check if container exists");
     assert!(exists);
 
@@ -25,7 +25,7 @@ async fn test_env_util_setup_containers() {
 
     let api_proxy_container_name = &ci_env.api_proxy_container_name();
     let exists = docker_util
-        .check_if_container_exists(api_proxy_container_name)
+        .check_if_container_is_running(api_proxy_container_name)
         .expect("Failed to check if container exists");
     assert!(exists);
 
@@ -37,7 +37,7 @@ async fn test_env_util_setup_containers() {
 
     let postgres_db_container_name = &ci_env.postgres_db_container_name();
     let exists = docker_util
-        .check_if_container_exists(postgres_db_container_name)
+        .check_if_container_is_running(postgres_db_container_name)
         .expect("Failed to check if container exists");
     assert!(exists);
 
@@ -58,7 +58,7 @@ async fn test_env_util_setup_containers() {
 
     // Verify that the clickhouse container was re-used
     let exists = docker_util
-        .check_if_container_exists(clickhouse_container_name)
+        .check_if_container_is_running(clickhouse_container_name)
         .expect("Failed to check if container exists");
     assert!(exists);
 
@@ -70,7 +70,7 @@ async fn test_env_util_setup_containers() {
 
     // Verify that the api proxy container was reused
     let exists = docker_util
-        .check_if_container_exists(api_proxy_container_name)
+        .check_if_container_is_running(api_proxy_container_name)
         .expect("Failed to check if container exists");
     assert!(exists);
 

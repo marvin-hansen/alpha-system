@@ -36,7 +36,7 @@ impl EnvUtil {
         let container_name = container_config.container_name();
 
         let exists = docker_util
-            .check_if_container_exists(&container_name)
+            .check_if_container_is_running(&container_name)
             .unwrap_or_else(|_| {
                 panic!(
                     "[TestEnv/init_container]: Failed to check if container exists: {}",

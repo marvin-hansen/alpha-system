@@ -17,7 +17,6 @@ rust_test_suite(
         "test.runner-recycling-key": "docker_utils_integration_test",
     },
     tags = [
-        "docker_utils_integration_test",
         "integration_test",
     ],
     visibility = ["//visibility:public"],

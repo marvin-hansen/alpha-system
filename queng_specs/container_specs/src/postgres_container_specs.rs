@@ -14,6 +14,9 @@ pub fn postgres_db_container_config() -> ContainerConfig<'static> {
         None,
         true, // Keep the container running for re-use
         true, // Keep the same container config across all env. setups.
-        WaitStrategy::WaitForDuration(3),
+        WaitStrategy::WaitUntilConsoleOutputContains(
+            "database system is ready to accept connections".to_string(),
+            30,
+        ),
     )
 }
