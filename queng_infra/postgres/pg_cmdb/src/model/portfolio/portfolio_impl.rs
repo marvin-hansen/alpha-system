@@ -19,11 +19,11 @@ impl Portfolio {
         // if NOT, return an error, otherwise continue
         match Self::check_if_portfolio_id_exists(db, pfc.portfolio_id() as i32) {
             Ok(exists) => {
-                if !exists {
+                if exists {
                     return Err(Error::DatabaseError(
                         DatabaseErrorKind::NotNullViolation,
                         Box::new(DatabaseErrorMessage::new(
-                            "Portfolio ID DOES NOT exist and can therefore cannot be updated",
+                            "Portfolio ID already exist and can therefore cannot be inserted again",
                             "portfolio",
                         )),
                     ));
