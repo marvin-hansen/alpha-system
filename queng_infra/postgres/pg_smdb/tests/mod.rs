@@ -25,4 +25,6 @@ mod set_service_online_tests;
 #[cfg(test)]
 mod set_service_online_tests;
 #[cfg(test)]
+mod update_service_error_tests;
+#[cfg(test)]
 mod update_service_tests;
