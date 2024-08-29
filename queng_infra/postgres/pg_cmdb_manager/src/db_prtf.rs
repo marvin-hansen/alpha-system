@@ -1,6 +1,7 @@
 use crate::PostgresCMDBManager;
 use common_errors::prelude::PostgresDBError;
 use common_exchange::prelude::PortfolioConfig;
+use diesel::Connection;
 use pg_cmdb::model::instrument::Instrument;
 use pg_cmdb::model::portfolio_instrument::PortfolioInstrument;
 use pg_cmdb::prelude::portfolio::Portfolio;
@@ -200,24 +201,31 @@ impl PostgresCMDBManager {
             Err(e) => return Err(PostgresDBError::CheckFailed(e.to_string())),
         }
 
-        self.dbg_print("delete instruments associated with portfolio");
-        let instruments = match PortfolioInstrument::read_instruments_for_portfolio(conn, id as i32)
-        {
-            Ok(instruments) => instruments,
-            Err(e) => return Err(PostgresDBError::QueryFailed(e.to_string())),
-        };
+        // Start transaction
+        match conn.transaction(|db| {
+            // Read all portfolio_instrument for portfolio
+            let portfolio_instruments =
+                match PortfolioInstrument::read_instruments_for_portfolio(db, id as i32) {
+                    Ok(res) => res,
+                    Err(e) => return Err(e),
+                };
 
-        for i in instruments {
-            match PortfolioInstrument::delete(conn, i.portfolio_id, i.instrument_id) {
-                Ok(_) => (),
-                Err(e) => {
-                    return Err(PostgresDBError::DeleteFailed(e.to_string()));
-                }
+            // Delete portfolio
+            let res = match Portfolio::delete(db, id as i32) {
+                Ok(res) => res,
+                Err(e) => return Err(e),
+            };
+
+            // Delete all portfolio_instrument for portfolio
+            for i in portfolio_instruments {
+                match PortfolioInstrument::delete(db, i.portfolio_id, i.instrument_id) {
+                    Ok(_) => {}
+                    Err(e) => return Err(e),
+                };
             }
-        }
 
-        self.dbg_print("delete actual portfolio");
-        match Portfolio::delete(conn, id as i32) {
+            Ok(res)
+        }) {
             Ok(_) => Ok(true),
             Err(e) => Err(PostgresDBError::DeleteFailed(e.to_string())),
         }

@@ -1,9 +1,8 @@
 use crate::model::instrument::Instrument;
 use crate::model::portfolio::{CreatePortfolio, Portfolio, UpdatePortfolio};
-use crate::model::portfolio_instrument::{CreatePortfolioInstrument, PortfolioInstrument};
+use crate::model::portfolio_instrument::CreatePortfolioInstrument;
 use crate::schema::cmdb::portfolio::dsl::*;
 use crate::schema::cmdb::portfolio_instrument::dsl::portfolio_instrument;
-use crate::schema::cmdb::portfolio_instrument::instrument_id;
 use crate::types::database_information::DatabaseErrorMessage;
 use crate::Connection as PGConnection;
 use common_exchange::prelude::PortfolioConfig as CommonPortfolioConfig;
@@ -97,15 +96,6 @@ impl Portfolio {
         portfolio.count().get_result::<i64>(db).map(|c| c as u64)
     }
 
-    pub fn insert_portfolio_collection(
-        _db: &mut PGConnection,
-        _ports: &[CommonPortfolioConfig],
-    ) -> QueryResult<bool> {
-        // implement batch insert here
-
-        Ok(false)
-    }
-
     pub fn check_if_portfolio_id_exists(
         db: &mut PGConnection,
         param_portfolio_id: i32,
@@ -163,8 +153,6 @@ impl Portfolio {
                 Err(e) => return Err(e),
             };
 
-            // If instruments are to be updated, update them
-
             let common_instruments = pfc.portfolio_instruments();
             for i in common_instruments {
                 match Instrument::update(db, i.code().to_string(), i) {
@@ -182,43 +170,6 @@ impl Portfolio {
     }
 
     pub fn delete(db: &mut PGConnection, param_portfolio_id: i32) -> QueryResult<usize> {
-        // Check if portfolio exists
-        match portfolio.find(param_portfolio_id).first::<Portfolio>(db) {
-            Ok(_) => {}
-            Err(e) => return Err(e),
-        };
-
-        // Start transaction
-        match db.transaction(|db| {
-            // Read all portfolio_instrument for portfolio
-            let portfolio_instruments =
-                match PortfolioInstrument::read_instruments_for_portfolio(db, param_portfolio_id) {
-                    Ok(res) => res,
-                    Err(e) => return Err(e),
-                };
-
-            // Delete portfolio
-            let res = match diesel::delete(portfolio.filter(portfolio_id.eq(param_portfolio_id)))
-                .execute(db)
-            {
-                Ok(res) => res,
-                Err(e) => return Err(e),
-            };
-
-            // Delete all portfolio_instrument for portfolio
-            for i in portfolio_instruments {
-                match diesel::delete(portfolio_instrument.filter(instrument_id.eq(i.instrument_id)))
-                    .execute(db)
-                {
-                    Ok(_) => {}
-                    Err(e) => return Err(e),
-                };
-            }
-
-            Ok(res)
-        }) {
-            Ok(res) => Ok(res),
-            Err(e) => Err(e),
-        }
+        diesel::delete(portfolio.filter(portfolio_id.eq(param_portfolio_id))).execute(db)
     }
 }

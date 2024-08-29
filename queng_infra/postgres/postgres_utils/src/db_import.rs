@@ -3,7 +3,6 @@ use crate::PostgresUtil;
 use common_config::prelude::ServiceConfig;
 use common_exchange::prelude::PortfolioConfig;
 
-use pg_cmdb::prelude::portfolio;
 use pg_smdb::prelude::service;
 impl PostgresUtil {
     /// Imports a collection of service configurations into the SMDB database.
@@ -41,14 +40,9 @@ impl PostgresUtil {
     ///
     pub async fn import_portfolio_collection(
         &self,
-        portfolios: &[PortfolioConfig],
+        _portfolios: &[PortfolioConfig],
     ) -> Result<(), PostgresUtilError> {
-        let conn = &mut self.pool.get().unwrap();
-
-        self.dbg_print("[import_service_data]: Import services into SMDB DB schema");
-        match portfolio::Portfolio::insert_portfolio_collection(conn, portfolios) {
-            Ok(_) => Ok(()),
-            Err(e) => Err(PostgresUtilError::new(e.to_string())),
-        }
+        // Implement
+        Ok(())
     }
 }
