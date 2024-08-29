@@ -9,15 +9,15 @@ authors.workspace = true
 
 [dependencies]
 # Internal crates
-container_specs = {workspace = true}
+common_config = {workspace = true}
 common_database = {workspace = true}
 common_exchange = {workspace = true}
+container_specs = {workspace = true}
 docker_utils = {workspace = true}
 # Database crates
 pg_cmdb = {workspace = true}
 pg_smdb = {workspace = true}
 pg_mddb = {workspace = true}
-
 
 # External crates
 diesel = { workspace = true }

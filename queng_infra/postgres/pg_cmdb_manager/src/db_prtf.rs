@@ -39,7 +39,6 @@ impl PostgresCMDBManager {
     ///
     pub async fn count_portfolio_configs(&mut self) -> Result<u64, PostgresDBError> {
         self.dbg_print("count_portfolio_configs");
-        self.dbg_print("count_portfolio_configs");
         let conn = &mut self.pool.get().unwrap();
 
         match Portfolio::count(conn) {
@@ -104,7 +103,6 @@ impl PostgresCMDBManager {
         }
     }
 
-    /// updates the portfolio config with the given data
     /// Updates the portfolio config with the given data.
     ///
     /// # Arguments
@@ -149,7 +147,6 @@ impl PostgresCMDBManager {
         portfolio_id: u16,
     ) -> Result<Option<PortfolioConfig>, PostgresDBError> {
         self.dbg_print("read_portfolio_config_by_id");
-
         let conn = &mut self.pool.get().unwrap();
 
         self.dbg_print("check_if_portfolio_id_exists");

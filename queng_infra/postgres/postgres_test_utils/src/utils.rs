@@ -1,3 +1,4 @@
+use common_config::prelude::{ServiceConfig, ServiceID};
 use common_exchange::prelude::Instrument as CommonInstrument;
 use common_exchange::prelude::{AccountType, PortfolioConfig as CommonPortfolioConfig};
 
@@ -30,5 +31,22 @@ pub fn get_test_portfolio() -> CommonPortfolioConfig {
         1000.0,
         50.0,
         100.0,
+    )
+}
+
+pub fn get_test_service_config() -> ServiceConfig {
+    ServiceConfig::new(
+        ServiceID::SMDB,
+        "name".to_string(),
+        1,
+        true,
+        "description".to_string(),
+        "health_check_uri".to_string(),
+        "base_uri".to_string(),
+        vec![ServiceID::DBGW],
+        Vec::from([
+            common_config::prelude::Endpoint::default(),
+            common_config::prelude::Endpoint::default(),
+        ]),
     )
 }
