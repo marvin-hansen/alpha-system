@@ -70,7 +70,7 @@ impl Service {
     ///
     /// # Returns
     ///
-    /// A `QueryResult<u64>` containing the number of services,
+    /// A `QueryResult<u64>` containing the number of services, zero where there are none,
     /// or an error if the operation fails.
     ///
     pub fn count(db: &mut Connection) -> QueryResult<u64> {
