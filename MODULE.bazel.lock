@@ -2703,7 +2703,7 @@
     "@@rules_oci~//oci:extensions.bzl%oci": {
       "general": {
         "bzlTransitiveDigest": "o/ICPom2Op1Ra8QwRi0hp4ubTuOurdmT5CZE+5dn/1g=",
-        "usagesDigest": "sq2iOsq/m82/0fAlpQddS63Q12epM3d3ElnpdIWdm6g=",
+        "usagesDigest": "6NCJWWBLTcLOyBy34O+AKqn//OXnsw7TFeQqs+lcf1s=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -14258,7 +14258,7 @@
     "@@rules_rust~//rust:extensions.bzl%rust": {
       "general": {
         "bzlTransitiveDigest": "Lu32kUJ7KBNa2WFE3eoJXZYxnwgP0cNHASMYeo8ATdo=",
-        "usagesDigest": "/wwsGk8FI7CLTgrbGWZNNEpRDNACNkWnz4OPUqBB06M=",
+        "usagesDigest": "kt/ITAGmNN0ltwchxbYCSuofW/ioonPw3GjWqdn+yUg=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -26646,7 +26646,7 @@
     "@@toolchains_llvm~//toolchain/extensions:llvm.bzl%llvm": {
       "general": {
         "bzlTransitiveDigest": "y9h5L2NtWbogyWSOJgqnUaU50MTPWAW+waelXSirMVg=",
-        "usagesDigest": "qMJWbEJ4khOike0DgdjrMuEMcjdDUg+9TS3nWHKnMy4=",
+        "usagesDigest": "AiHgNS+7Hc0IjmBya89akF/vW8U7Bn7fT8HNxEMAlMU=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},

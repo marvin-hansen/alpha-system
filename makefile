@@ -27,6 +27,7 @@ help:
 	@echo '    make push   	Builds, tests, and pushes to git remote.'
 	@echo '    make test   	Tests across all crates.'
 	@echo '    make sbe   		Generates Rust bindings for SBE messages.'
+	@echo '    make vendor         Vendors all Rust dependencies.'
 
 # "---------------------------------------------------------"
 # Run targets
@@ -137,3 +138,7 @@ test:
 .PHONY: sbe
 sbe:
 	@source scripts/sbe.sh
+
+.PHONY: vendor
+vendor:
+	@source scripts/vendor.sh

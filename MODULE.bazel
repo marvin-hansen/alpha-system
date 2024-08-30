@@ -1,4 +1,4 @@
-module(name = "queng")
+module(name = "quant-engine")
 
 ###############################################################################
 # B A Z E L   D E P E N D E N C I E S # https://registry.bazel.build/
