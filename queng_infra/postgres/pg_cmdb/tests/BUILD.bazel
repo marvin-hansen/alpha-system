@@ -37,7 +37,7 @@ rust_test_suite(
     name = "pg_cmdb_portfolio_tests",
     srcs = glob([
         "portfolio/portfolio_tests.rs",
-        "portfolio_instrument/portfolio_instrument_tests.rs"
+        "portfolio_instrument/portfolio_instrument_tests.rs",
     ]),
     exec_properties = {
         # Tell BuildBuddy to run this test using a Firecracker microVM.

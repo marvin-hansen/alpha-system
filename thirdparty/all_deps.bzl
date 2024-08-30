@@ -5,12 +5,7 @@ load("//thirdparty/crates:defs.bzl", all_crate_repositories = "crate_repositorie
 
 def all_deps():
     """
-    This macro loads all dependencies for the repo
-
-    Commonly `*-sys` crates are built on top of some existing library and
-    will have a number of dependencies. The examples here use
-    [crate_universe](https://bazelbuild.github.io/rules_rust/crate_universe.html)
-    to gather these dependencies and make them available in the workspace.
+    This macro loads all vendored dependencies for the repo
     """
 
     # Load the vendored dependencies

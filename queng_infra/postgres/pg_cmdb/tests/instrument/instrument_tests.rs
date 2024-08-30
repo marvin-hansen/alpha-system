@@ -11,10 +11,11 @@ async fn test_instrument() {
         .await
         .expect("FAILED  to setup CMDB schema");
 
-    // Create a new connection
+    println!("Create a new connection!");
     let mut connection = postgres_connection(DB_TEST_URL).await;
     let conn = &mut connection;
-    // Start a new test transaction
+
+    println!("Start a new test transaction!");
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
