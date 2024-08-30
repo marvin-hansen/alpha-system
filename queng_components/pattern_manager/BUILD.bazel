@@ -13,7 +13,7 @@ rust_library(
         "//alias:common_trade",
         "//alias:math_utils",
         # External crates
-        "@crates//:rust_decimal",
+        "//thirdparty/crates:rust_decimal",
     ],
 )
 

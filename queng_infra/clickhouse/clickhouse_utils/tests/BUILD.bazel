@@ -28,9 +28,9 @@ rust_test_suite(
         "//alias:container_specs",
         "//alias:docker_utils",
         # External crates
-        "@crates//:klickhouse",
-        "@crates//:serde",
-        "@crates//:serde_json",
-        "@crates//:tokio",
+        "//thirdparty/crates:klickhouse",
+        "//thirdparty/crates:serde",
+        "//thirdparty/crates:serde_json",
+        "//thirdparty/crates:tokio",
     ],
 )

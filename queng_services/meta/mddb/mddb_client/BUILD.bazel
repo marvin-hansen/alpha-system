@@ -14,9 +14,9 @@ rust_library(
         "//alias:common_exchange",
         "//alias:rust_proto",
         # Exteral crates
-        "@crates//:tokio",
-        "@crates//:tonic",
-        "@crates//:prost",
+        "//thirdparty/crates:tokio",
+        "//thirdparty/crates:tonic",
+        "//thirdparty/crates:prost",
     ],
 )
 

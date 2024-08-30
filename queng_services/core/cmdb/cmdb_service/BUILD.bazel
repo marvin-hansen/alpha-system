@@ -53,10 +53,10 @@ rust_binary(
         "//alias:common_service",
         "//alias/client:smdb_client",
         # Custom Memory Allocator
-        "@crates//:mimalloc",
+        "//thirdparty/crates:mimalloc",
         # External crates
-        "@crates//:tokio",
-        "@crates//:tonic",
+        "//thirdparty/crates:tokio",
+        "//thirdparty/crates:tonic",
     ],
 )
 

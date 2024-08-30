@@ -15,6 +15,6 @@ rust_test_suite(
         # Crate to test
         "//alias:common_exchange",
         # External crates
-        "@crates//:rust_decimal",
+        "//thirdparty/crates:rust_decimal",
     ],
 )

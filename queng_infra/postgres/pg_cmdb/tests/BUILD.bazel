@@ -32,8 +32,8 @@ rust_test_suite(
         "//alias:common_exchange",
         "//alias:postgres_test_utils",
         # External crates
-        "@crates//:tokio",
-        "@crates//:diesel",
+        "//thirdparty/crates:tokio",
+        "//thirdparty/crates:diesel",
     ],
 )
 
@@ -70,7 +70,7 @@ rust_test_suite(
         "//alias:common_exchange",
         "//alias:postgres_test_utils",
         # External crates
-        "@crates//:tokio",
-        "@crates//:diesel",
+        "//thirdparty/crates:tokio",
+        "//thirdparty/crates:diesel",
     ],
 )

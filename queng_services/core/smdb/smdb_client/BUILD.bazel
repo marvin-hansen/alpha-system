@@ -1,4 +1,3 @@
-load("@crates//:defs.bzl", "aliases", "all_crate_deps")
 load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library", "rust_test")
 
 rust_library(
@@ -17,9 +16,9 @@ rust_library(
         "//alias:common_config",
         "//alias:rust_proto",
         # External crates
-        "@crates//:tokio",
-        "@crates//:tonic",
-        "@crates//:prost",
+        "//thirdparty/crates:tokio",
+        "//thirdparty/crates:tonic",
+        "//thirdparty/crates:prost",
     ],
 )
 

@@ -28,8 +28,8 @@ rust_test_suite(
         "//alias:docker_utils",
         "//alias:kaiko_utils",
         # External crates
-        "@crates//:tokio",
-        "@crates//:serde_json",
+        "//thirdparty/crates:tokio",
+        "//thirdparty/crates:serde_json",
     ],
 )
 
@@ -61,8 +61,8 @@ rust_test_suite(
         "//alias:docker_utils",
         "//alias:kaiko_utils",
         # External crates
-        "@crates//:tokio",
-        "@crates//:serde_json",
+        "//thirdparty/crates:tokio",
+        "//thirdparty/crates:serde_json",
     ],
 )
 
@@ -94,8 +94,8 @@ rust_test_suite(
         "//alias:clickhouse_utils",
         "//alias:docker_utils",
         # External crates
-        "@crates//:tokio",
-        "@crates//:serde_json",
+        "//thirdparty/crates:tokio",
+        "//thirdparty/crates:serde_json",
     ],
 )
 
@@ -127,7 +127,7 @@ rust_test_suite(
         "//alias:clickhouse_utils",
         "//alias:docker_utils",
         # External crates
-        "@crates//:tokio",
-        "@crates//:serde_json",
+        "//thirdparty/crates:tokio",
+        "//thirdparty/crates:serde_json",
     ],
 )

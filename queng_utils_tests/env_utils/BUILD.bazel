@@ -1,4 +1,3 @@
-load("@crates//:defs.bzl", "aliases", "all_crate_deps")
 load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library")
 
 rust_library(
@@ -23,8 +22,8 @@ rust_library(
         "//alias:kaiko_utils",
         "//alias:postgres_utils",
         # External crates
-        "@crates//:tokio",
-        "@crates//:serde_json",
+        "//thirdparty/crates:tokio",
+        "//thirdparty/crates:serde_json",
     ],
 )
 

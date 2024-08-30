@@ -17,9 +17,9 @@ rust_library(
         "//alias:common_service",
         "//alias/client:smdb_client",
         # External crates
-        "@crates//:tokio",
-        "@crates//:tonic",
-        "@crates//:prost",
+        "//thirdparty/crates:tokio",
+        "//thirdparty/crates:tonic",
+        "//thirdparty/crates:prost",
     ],
 )
 

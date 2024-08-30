@@ -18,11 +18,11 @@ rust_test_suite(
         "//alias:common_database",
         "//alias:clickhouse_utils",
         # External crates
-        "@crates//:chrono",
-        "@crates//:futures",
-        "@crates//:klickhouse",
-        "@crates//:rust_decimal",
-        "@crates//:serde",
-        "@crates//:tokio",
+        "//thirdparty/crates:chrono",
+        "//thirdparty/crates:futures",
+        "//thirdparty/crates:klickhouse",
+        "//thirdparty/crates:rust_decimal",
+        "//thirdparty/crates:serde",
+        "//thirdparty/crates:tokio",
     ],
 )

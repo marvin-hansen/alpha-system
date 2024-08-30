@@ -15,8 +15,8 @@ rust_library(
         # Internal crates
 
         # External crates
-        "@crates//:base16ct",
-        "@crates//:sha3",
+        "//thirdparty/crates:base16ct",
+        "//thirdparty/crates:sha3",
     ],
 )
 

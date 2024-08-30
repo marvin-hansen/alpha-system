@@ -82,8 +82,8 @@ rust_test_suite(
         "//alias:common_exchange",
         "//queng_sbe/bindings:sbe_bindings",
         # External crates
-        "@crates//:rust_decimal",
-        "@crates//:chrono",
+        "//thirdparty/crates:rust_decimal",
+        "//thirdparty/crates:chrono",
     ],
 )
 
@@ -103,8 +103,8 @@ rust_test_suite(
         # Internal crates
         "//queng_sbe/bindings:sbe_bindings",
         # External crates
-        "@crates//:rust_decimal",
-        "@crates//:chrono",
+        "//thirdparty/crates:rust_decimal",
+        "//thirdparty/crates:chrono",
     ],
 )
 
@@ -124,8 +124,8 @@ rust_test_suite(
         # Internal crates
         "//queng_sbe/bindings:sbe_bindings",
         # External crates
-        "@crates//:rust_decimal",
-        "@crates//:chrono",
+        "//thirdparty/crates:rust_decimal",
+        "//thirdparty/crates:chrono",
     ],
 )
 
@@ -146,8 +146,8 @@ rust_test_suite(
         "//alias:common_data_bar",
         "//queng_sbe/bindings:sbe_bindings",
         # External crates
-        "@crates//:rust_decimal",
-        "@crates//:chrono",
+        "//thirdparty/crates:rust_decimal",
+        "//thirdparty/crates:chrono",
     ],
 )
 
@@ -168,7 +168,7 @@ rust_test_suite(
         "//alias:common_data_bar",
         "//queng_sbe/bindings:sbe_bindings",
         # External crates
-        "@crates//:rust_decimal",
-        "@crates//:chrono",
+        "//thirdparty/crates:rust_decimal",
+        "//thirdparty/crates:chrono",
     ],
 )

@@ -15,9 +15,9 @@ rust_test_suite(
         # Crate to test
         "//alias:common_metadata",
         # External crates
-        "@crates//:chrono",
-        "@crates//:serde",
-        "@crates//:serde_json",
+        "//thirdparty/crates:chrono",
+        "//thirdparty/crates:serde",
+        "//thirdparty/crates:serde_json",
     ],
 )
 
@@ -36,9 +36,9 @@ rust_test_suite(
         # Crate to test
         "//alias:common_metadata",
         # External crates
-        "@crates//:chrono",
-        "@crates//:serde",
-        "@crates//:serde_json",
+        "//thirdparty/crates:chrono",
+        "//thirdparty/crates:serde",
+        "//thirdparty/crates:serde_json",
     ],
 )
 
@@ -57,8 +57,8 @@ rust_test_suite(
         # Crate to test
         "//alias:common_metadata",
         # External crates
-        "@crates//:chrono",
-        "@crates//:serde",
-        "@crates//:serde_json",
+        "//thirdparty/crates:chrono",
+        "//thirdparty/crates:serde",
+        "//thirdparty/crates:serde_json",
     ],
 )

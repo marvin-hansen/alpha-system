@@ -13,9 +13,9 @@ rust_library(
         # Internal crates
         "//alias/client:rest_client",
         # External crates
-        "@crates//:anyhow",
-        "@crates//:serde",
-        "@crates//:tokio",
+        "//thirdparty/crates:anyhow",
+        "//thirdparty/crates:serde",
+        "//thirdparty/crates:tokio",
     ],
 )
 

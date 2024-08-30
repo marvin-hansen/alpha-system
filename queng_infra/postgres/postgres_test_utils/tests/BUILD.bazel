@@ -27,7 +27,7 @@ rust_test(
         # Crate to test
         "//alias:postgres_test_utils",
         # External crates
-        "@crates//:tokio",
+        "//thirdparty/crates:tokio",
     ],
 )
 
@@ -58,6 +58,6 @@ rust_test(
         # Crate to test
         "//alias:postgres_test_utils",
         # External crates
-        "@crates//:tokio",
+        "//thirdparty/crates:tokio",
     ],
 )

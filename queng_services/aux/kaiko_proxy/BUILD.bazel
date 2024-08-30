@@ -41,17 +41,17 @@ rust_binary(
         "//alias:crypto_utils",
         "//alias:common_service",
         # Custom Memory Allocator
-        "@crates//:mimalloc",
+        "//thirdparty/crates:mimalloc",
         # External crates
-        "@crates//:autometrics",
-        "@crates//:arc-swap",
-        "@crates//:chrono",
-        "@crates//:reqwest",
-        "@crates//:serde",
-        "@crates//:serde_json",
-        "@crates//:tokio",
-        "@crates//:tokio-cron-scheduler",
-        "@crates//:warp",
+        "//thirdparty/crates:autometrics",
+        "//thirdparty/crates:arc-swap",
+        "//thirdparty/crates:chrono",
+        "//thirdparty/crates:reqwest",
+        "//thirdparty/crates:serde",
+        "//thirdparty/crates:serde_json",
+        "//thirdparty/crates:tokio",
+        "//thirdparty/crates:tokio-cron-scheduler",
+        "//thirdparty/crates:warp",
     ],
 )
 

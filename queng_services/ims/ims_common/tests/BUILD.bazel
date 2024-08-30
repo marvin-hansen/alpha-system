@@ -17,6 +17,6 @@ rust_test_suite(
         # Internal crates
         "//alias:common_data_bar",
         # External crates
-        "@crates//:serde",
+        "//thirdparty/crates:serde",
     ],
 )

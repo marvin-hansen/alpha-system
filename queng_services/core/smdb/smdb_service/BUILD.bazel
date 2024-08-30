@@ -49,12 +49,12 @@ rust_binary(
         "//alias:rust_proto",
         "//alias:common_service",
         # Custom Memory Allocator
-        "@crates//:mimalloc",
+        "//thirdparty/crates:mimalloc",
         # External crates
-        "@crates//:autometrics",
-        "@crates//:tokio",
-        "@crates//:tonic",
-        "@crates//:warp",
+        "//thirdparty/crates:autometrics",
+        "//thirdparty/crates:tokio",
+        "//thirdparty/crates:tonic",
+        "//thirdparty/crates:warp",
     ],
 )
 

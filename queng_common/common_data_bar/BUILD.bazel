@@ -13,8 +13,8 @@ rust_library(
     visibility = ["//visibility:public"],
     deps = [
         # External crates
-        "@crates//:chrono",
-        "@crates//:rust_decimal",
+        "//thirdparty/crates:chrono",
+        "//thirdparty/crates:rust_decimal",
     ],
 )
 

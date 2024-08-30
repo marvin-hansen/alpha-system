@@ -12,8 +12,8 @@ rust_library(
         # Internal crates
         "//alias:common_metadata",
         # External crates
-        "@crates//:reqwest",
-        "@crates//:serde_json",
+        "//thirdparty/crates:reqwest",
+        "//thirdparty/crates:serde_json",
     ],
 )
 

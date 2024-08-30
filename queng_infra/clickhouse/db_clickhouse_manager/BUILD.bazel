@@ -12,12 +12,12 @@ rust_library(
         "//alias:common_data_bar",
         "//alias:common_database",
         # External crates
-        "@crates//:chrono",
-        "@crates//:futures",
-        "@crates//:klickhouse",
-        "@crates//:rust_decimal",
-        "@crates//:serde",
-        "@crates//:tokio",
+        "//thirdparty/crates:chrono",
+        "//thirdparty/crates:futures",
+        "//thirdparty/crates:klickhouse",
+        "//thirdparty/crates:rust_decimal",
+        "//thirdparty/crates:serde",
+        "//thirdparty/crates:tokio",
     ],
 )
 

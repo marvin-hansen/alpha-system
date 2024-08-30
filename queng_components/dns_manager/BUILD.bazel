@@ -12,8 +12,8 @@ rust_library(
         "//alias:common_env",
         "//alias:ctx_manager",
         # External crates
-        "@crates//:hickory-resolver",
-        "@crates//:mini-moka",
+        "//thirdparty/crates:hickory-resolver",
+        "//thirdparty/crates:mini-moka",
     ],
 )
 

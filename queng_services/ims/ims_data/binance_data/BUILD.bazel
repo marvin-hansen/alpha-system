@@ -46,15 +46,15 @@ rust_binary(
         "//alias:rust_proto",
         "//alias:common_service",
         # Custom Memory Allocator
-        "@crates//:mimalloc",
+        "//thirdparty/crates:mimalloc",
         # External crates
-        "@crates//:binance_rs_async",
-        "@crates//:chrono",
-        "@crates//:futures",
-        "@crates//:serde",
-        "@crates//:tokio",
-        "@crates//:tonic",
-        "@crates//:prost",
+        "//thirdparty/crates:binance_rs_async",
+        "//thirdparty/crates:chrono",
+        "//thirdparty/crates:futures",
+        "//thirdparty/crates:serde",
+        "//thirdparty/crates:tokio",
+        "//thirdparty/crates:tonic",
+        "//thirdparty/crates:prost",
     ],
 )
 

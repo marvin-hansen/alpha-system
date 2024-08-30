@@ -19,8 +19,8 @@ rust_library(
         "//alias:common_exchange",
         "//alias:pg_cmdb",
         # External crates
-        "@crates//:diesel",
-        "@crates//:tokio",
+        "//thirdparty/crates:diesel",
+        "//thirdparty/crates:tokio",
     ],
 )
 

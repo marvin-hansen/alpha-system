@@ -15,7 +15,7 @@ rust_library(
         # Internal crates
         "//alias:common_config",
         # External crates
-        "@crates//:tokio",
+        "//thirdparty/crates:tokio",
     ],
 )
 

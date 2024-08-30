@@ -30,8 +30,8 @@ rust_test_suite(
         # Crate to test
         "//alias:common_data_bar",
         # External crates
-        "@crates//:chrono",
-        "@crates//:rust_decimal",
+        "//thirdparty/crates:chrono",
+        "//thirdparty/crates:rust_decimal",
     ],
 )
 
@@ -49,7 +49,7 @@ rust_test_suite(
         # Crate to test
         "//alias:common_data_bar",
         # External crates
-        "@crates//:chrono",
-        "@crates//:rust_decimal",
+        "//thirdparty/crates:chrono",
+        "//thirdparty/crates:rust_decimal",
     ],
 )

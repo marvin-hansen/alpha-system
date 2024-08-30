@@ -47,10 +47,10 @@ rust_binary(
         "//alias:symbol_manager",
         "//alias/client:smdb_client",
         # Custom Memory Allocator
-        "@crates//:mimalloc",
+        "//thirdparty/crates:mimalloc",
         # External crates
-        "@crates//:tokio",
-        "@crates//:tonic",
+        "//thirdparty/crates:tokio",
+        "//thirdparty/crates:tonic",
     ],
 )
 
