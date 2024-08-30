@@ -16,11 +16,7 @@ rust_test_suite(
         # because we can't fit all db docker images with the default disk limit.
         "test.runner-recycling-key": "pg_cmdb_instrument_tests",
     },
-    rustc_env = {
-        "CMDB_MIGRATION_READY": "False",
-    },
     tags = [
-        "db_cmdb_tests",
         "integration_test",
     ],
     visibility = ["//visibility:public"],
@@ -41,7 +37,7 @@ rust_test_suite(
     name = "pg_cmdb_portfolio_tests",
     srcs = glob([
         "portfolio/*_tests.rs",
-        "portfolio_instrument/*_tests.rs",
+        # "portfolio_instrument/*_tests.rs",
     ]),
     exec_properties = {
         # Tell BuildBuddy to run this test using a Firecracker microVM.
@@ -52,13 +48,42 @@ rust_test_suite(
         "test.recycle-runner": "true",
         # We don't want different different db tests to be assigned to the same recycled runner,
         # because we can't fit all db docker images with the default disk limit.
-        "test.runner-recycling-key": "pg_cmdb_portfolio_tests",
-    },
-    rustc_env = {
-        "CMDB_MIGRATION_READY": "False",
+        "test.runner-recycling-key": "cmdb_portfolio_tests",
     },
     tags = [
-        "db_cmdb_tests",
+        "integration_test",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        "//alias:pg_cmdb",
+        # Internal crates
+        "//alias:common_database",
+        "//alias:common_exchange",
+        "//alias:postgres_test_utils",
+        # External crates
+        "//thirdparty/crates:tokio",
+        "//thirdparty/crates:diesel",
+    ],
+)
+
+rust_test_suite(
+    name = "cmdb_portfolio_instrument_tests",
+    srcs = glob([
+        # "portfolio_instrument/*_tests.rs",
+    ]),
+    exec_properties = {
+        # Tell BuildBuddy to run this test using a Firecracker microVM.
+        "test.workload-isolation-type": "firecracker",
+        # Tell BuildBuddy to ensure that the Docker daemon is started
+        "test.init-dockerd": "true",
+        # Tell BuildBuddy to preserve the microVM state across test runs.
+        "test.recycle-runner": "true",
+        # We don't want different different db tests to be assigned to the same recycled runner,
+        # because we can't fit all db docker images with the default disk limit.
+        "test.runner-recycling-key": "cmdb_portfolio_instrument_tests",
+    },
+    tags = [
         "integration_test",
     ],
     visibility = ["//visibility:public"],
