@@ -28,9 +28,41 @@ pub async fn get_or_wait_for_postgres_connection(
     database_url: &str,
     timeout: Option<u64>,
 ) -> Result<PgConnection, PostgresDBError> {
+    get_or_wait_for_postgres_database_connection(database_url, timeout, false).await
+}
+
+/// Connects to a Postgres database and waits for it to come online if it's not already.
+/// Unlike the regular connection check, this one retries at a much shorter interval
+/// to ensure a DB migration completes before any regular connection can be established.
+/// Use this for Database migration or any test setup.
+///
+/// # Arguments
+///
+/// * `database_url` - The Postgres database connection URL.
+/// * `timeout` - The timeout in seconds to wait for the connection. If not provided,
+/// defaults to 120 seconds (2 minutes).
+///
+/// # Returns
+///
+/// * `Result<PgConnection, PostgresDBError>` - A result indicating success or failure.
+/// If successful, returns a `PgConnection` instance.
+/// If the connection fails, returns a `PostgresDBError` indicating the failure.
+///
+pub async fn get_or_wait_for_postgres_migration_connection(
+    database_url: &str,
+    timeout: Option<u64>,
+) -> Result<PgConnection, PostgresDBError> {
+    get_or_wait_for_postgres_database_connection(database_url, timeout, true).await
+}
+
+async fn get_or_wait_for_postgres_database_connection(
+    database_url: &str,
+    timeout: Option<u64>,
+    migration: bool,
+) -> Result<PgConnection, PostgresDBError> {
     let start_time = Instant::now();
-    let retry_interval = if timeout.is_some() {
-        Duration::from_millis(50)
+    let retry_interval = if migration {
+        Duration::from_millis(10)
     } else {
         Duration::from_millis(500)
     };
