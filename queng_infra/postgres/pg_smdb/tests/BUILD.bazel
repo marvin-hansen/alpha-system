@@ -3,6 +3,7 @@ load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 rust_test_suite(
     name = "pg_smdb_tests",
     srcs = glob([
+        "smdb_setup_tests.rs",
         "service_crud_tests.rs",
     ]),
     exec_properties = {
@@ -14,7 +15,7 @@ rust_test_suite(
         "test.recycle-runner": "true",
         # We don't want different different db tests to be assigned to the same recycled runner,
         # because we can't fit all db docker images with the default disk limit.
-        "test.runner-recycling-key": "pg_smdb_service_tests",
+        "test.runner-recycling-key": "postgres_smdb_tests",
     },
     tags = [
         "integration_test",
