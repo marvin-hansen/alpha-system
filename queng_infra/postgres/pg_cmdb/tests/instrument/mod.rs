@@ -12,3 +12,6 @@ mod read_all_instruments_tests;
 mod read_instrument_tests;
 #[cfg(test)]
 mod update_instrument_tests;
+
+#[cfg(test)]
+mod single_file_test;
