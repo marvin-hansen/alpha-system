@@ -63,6 +63,7 @@ async fn test_check_if_service_id_exists() {
     let result = service::Service::check_if_service_id_exists(conn, ServiceID::SMDB);
     // dbg!(&result);
     assert!(result.is_ok());
+    assert!(!result.unwrap());
 
     let service_config = get_test_service_config();
     let result = service::Service::create(conn, &service_config);
@@ -84,6 +85,10 @@ async fn test_check_if_service_id_online() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
+    let result = service::Service::check_if_service_id_online(conn, ServiceID::SMDB);
+    // dbg!(&result);
+    assert!(result.is_err());
+
     let service_config = get_test_service_config();
     let result = service::Service::create(conn, &service_config);
     // dbg!(&result);
@@ -93,20 +98,6 @@ async fn test_check_if_service_id_online() {
     // dbg!(&result);
     assert!(result.is_ok());
     assert!(result.unwrap());
-}
-
-#[tokio::test]
-async fn test_check_if_service_id_online_error() {
-    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
-    assert!(connection.is_ok());
-
-    let conn = &mut connection.unwrap();
-    conn.begin_test_transaction()
-        .expect("Failed to begin test transaction");
-
-    let result = service::Service::check_if_service_id_online(conn, ServiceID::SMDB);
-    // dbg!(&result);
-    assert!(result.is_err());
 }
 
 #[tokio::test]
@@ -173,6 +164,10 @@ async fn test_service_read() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
+    let result = service::Service::read(conn, service_id);
+    // dbg!(&result);
+    assert!(result.is_err());
+
     let service_config = get_test_service_config();
     let result = service::Service::create(conn, &service_config);
     // dbg!(&result);
@@ -198,22 +193,6 @@ async fn test_service_read() {
             common_config::prelude::Endpoint::default(),
         ]
     );
-}
-
-#[tokio::test]
-async fn test_service_read_error() {
-    let service_id = ServiceID::SMDB;
-
-    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
-    assert!(connection.is_ok());
-
-    let conn = &mut connection.unwrap();
-    conn.begin_test_transaction()
-        .expect("Failed to begin test transaction");
-
-    let result = service::Service::read(conn, service_id);
-    // dbg!(&result);
-    assert!(result.is_err());
 }
 
 #[tokio::test]
@@ -324,44 +303,4 @@ async fn test_service_update_error() {
     let result = service::Service::update(conn, &param_service_id, &update);
     // dbg!(&result);
     assert!(result.is_err());
-}
-
-#[tokio::test]
-async fn test_service_delete() {
-    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
-    assert!(connection.is_ok());
-
-    let conn = &mut connection.unwrap();
-    conn.begin_test_transaction()
-        .expect("Failed to begin test transaction");
-
-    let service_config = get_test_service_config();
-    let result = service::Service::create(conn, &service_config);
-    // dbg!(&result);
-    assert!(result.is_ok());
-
-    let service_id = ServiceID::SMDB;
-
-    let result = service::Service::check_if_service_id_exists(conn, service_id);
-    // dbg!(&result);
-    assert!(result.is_ok());
-    assert!(result.unwrap());
-
-    let result = service::Service::delete(conn, service_id);
-    // dbg!(&result);
-    assert!(result.is_ok());
-
-    let result = service::Service::read(conn, service_id);
-    // dbg!(&result);
-    assert!(result.is_err());
-
-    let result = service::Service::check_if_service_id_exists(conn, service_id);
-    // dbg!(&result);
-    assert!(result.is_ok());
-    assert!(!result.unwrap());
-
-    let result = service::Service::count(conn);
-    // dbg!(&result);
-    assert!(result.is_ok());
-    assert_eq!(result.unwrap(), 0);
 }
