@@ -7,15 +7,17 @@ use pg_cmdb::model::portfolio_instrument::{CreatePortfolioInstrument, PortfolioI
 use pg_cmdb::prelude::portfolio::Portfolio;
 
 impl PostgresCMDBManager {
-    /// Inserts a new portfolio config into the database.
+    /// Inserts a portfolio configuration into the database.
     ///
     /// # Arguments
     ///
-    /// * `data` - The portfolio config to insert.
+    /// * `self` - The `PostgresCMDBManager` instance.
+    /// * `data` - The `PortfolioConfig` to insert.
     ///
     /// # Returns
     ///
-    /// Returns `()` on success, or a `PostgresDBError` on failure.
+    /// A `Result` containing a `()` if the portfolio configuration was successfully inserted,
+    /// or an `Err` containing a `PostgresDBError` if there was an error inserting the portfolio configuration.
     ///
     pub async fn insert_portfolio_config(
         &self,
@@ -24,7 +26,74 @@ impl PostgresCMDBManager {
         self.dbg_print("insert_portfolio_config");
         let conn = &mut self.pool.get().unwrap();
 
-        match Portfolio::create(conn, data) {
+        let portfolio_id = data.portfolio_id() as u16;
+
+        // Check if portfolio exists
+        match self.check_if_portfolio_id_exists(portfolio_id).await {
+            Ok(exists) => {
+                // if not, return error
+                if exists {
+                    return Err(PostgresDBError::DataRecordDoesNotExist(format!(
+                        "portfolio with id {} already exist and cannot be inserted again",
+                        portfolio_id
+                    )));
+                };
+            }
+            Err(e) => return Err(PostgresDBError::CheckFailed(e.to_string())),
+        };
+
+        match conn.transaction(|db| {
+            // Insert portfolio
+            match Portfolio::create(db, &data) {
+                Ok(res) => res,
+                Err(e) => return Err(e),
+            };
+
+            // Insert portfolio instruments
+            let common_instruments = data.portfolio_instruments();
+            for i in common_instruments {
+                // Check if instrument already exists
+                match Instrument::check_if_instrument_code_exists(db, i.code().to_string()) {
+                    Ok(exists) => {
+                        if !exists {
+                            // If not add it
+                            match Instrument::create(db, i) {
+                                Ok(_) => {}
+                                Err(e) => return Err(e),
+                            }
+
+                            // Check if portfolio_instrument relation exists
+                            match PortfolioInstrument::check_if_exists(
+                                db,
+                                portfolio_id as i32,
+                                i.code().to_string(),
+                            ) {
+                                Ok(exists) => {
+                                    if !exists {
+                                        // If not found, insert it
+                                        match PortfolioInstrument::create(
+                                            db,
+                                            &CreatePortfolioInstrument {
+                                                portfolio_id: portfolio_id as i32,
+                                                instrument_id: i.code().to_string(),
+                                            },
+                                        ) {
+                                            // If it exists, do nothing
+                                            Ok(_) => {}
+                                            Err(e) => return Err(e),
+                                        }
+                                    }
+                                }
+                                Err(e) => return Err(e),
+                            }
+                        };
+                    }
+                    Err(e) => return Err(e),
+                }
+            }
+
+            Ok(())
+        }) {
             Ok(_) => Ok(()),
             Err(e) => Err(PostgresDBError::InsertFailed(e.to_string())),
         }
@@ -114,7 +183,10 @@ impl PostgresCMDBManager {
         match Portfolio::check_if_portfolio_id_exists(conn, portfolio_id as i32) {
             Ok(exists) => {
                 if !exists {
-                    return Ok(None);
+                    return Err(PostgresDBError::DataRecordDoesNotExist(format!(
+                        "portfolio with id {} does not exist",
+                        portfolio_id
+                    )));
                 };
             }
             Err(e) => return Err(PostgresDBError::CheckFailed(e.to_string())),
@@ -160,7 +232,7 @@ impl PostgresCMDBManager {
                 // if not, return error
                 if !exists {
                     return Err(PostgresDBError::DataRecordDoesNotExist(format!(
-                        "portfolio with id {} does not exist",
+                        "portfolio with id {} does not exist and cannot be updated",
                         portfolio_id
                     )));
                 };

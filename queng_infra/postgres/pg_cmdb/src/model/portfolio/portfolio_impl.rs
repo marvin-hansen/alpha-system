@@ -1,13 +1,10 @@
-use crate::model::instrument::Instrument;
 use crate::model::portfolio::{CreatePortfolio, Portfolio, UpdatePortfolio};
-use crate::model::portfolio_instrument::CreatePortfolioInstrument;
 use crate::schema::cmdb::portfolio::dsl::*;
-use crate::schema::cmdb::portfolio_instrument::dsl::portfolio_instrument;
 use crate::types::database_information::DatabaseErrorMessage;
 use crate::Connection as PGConnection;
 use common_exchange::prelude::PortfolioConfig as CommonPortfolioConfig;
 use diesel::result::{DatabaseErrorKind, Error};
-use diesel::{Connection, ExpressionMethods, QueryDsl, QueryResult, RunQueryDsl, SelectableHelper};
+use diesel::{ExpressionMethods, QueryDsl, QueryResult, RunQueryDsl, SelectableHelper};
 
 impl Portfolio {
     //
@@ -15,15 +12,14 @@ impl Portfolio {
         db: &mut PGConnection,
         pfc: &CommonPortfolioConfig,
     ) -> QueryResult<CommonPortfolioConfig> {
-        // Check if portfolio exists
-        // if NOT, return an error, otherwise continue
+        // Check if portfolio exists; if so, return an error, otherwise continue
         match Self::check_if_portfolio_id_exists(db, pfc.portfolio_id() as i32) {
             Ok(exists) => {
                 if exists {
                     return Err(Error::DatabaseError(
                         DatabaseErrorKind::NotNullViolation,
                         Box::new(DatabaseErrorMessage::new(
-                            "Portfolio ID already exist and can therefore cannot be inserted again",
+                            "Portfolio ID already exists and thus cannot be inserted again",
                             "portfolio",
                         )),
                     ));
@@ -32,63 +28,15 @@ impl Portfolio {
             Err(e) => return Err(e),
         };
 
-        // Start transaction
-        match db.transaction(|db| {
-            let port_id: i32 = pfc.portfolio_id() as i32;
-
-            let item = CreatePortfolio::from_common_portfolio(pfc);
-            let instruments = pfc.portfolio_instruments();
-
-            // Check for each instrument if it exists.
-            // If so, continue
-            // If not, insert it
-            for create_instrument in instruments {
-                match Instrument::check_if_instrument_code_exists(
-                    db,
-                    create_instrument.code().to_string(),
-                ) {
-                    Ok(exists) => {
-                        if exists {
-                            continue;
-                        } else {
-                            match Instrument::create(db, create_instrument) {
-                                Ok(_) => {}
-                                Err(e) => return Err(e),
-                            };
-                        }
-                    }
-                    Err(e) => return Err(e),
-                }
-            }
-
-            // Then insert portfolio,
-            let inserted_portfolio = match diesel::insert_into(portfolio)
-                .values(item)
-                .returning(Portfolio::as_returning())
-                .get_result(db)
-            {
-                Ok(res) => res,
-                Err(e) => return Err(e),
-            };
-
-            // Next, insert portfolio_instrument for each instrument
-            for i in pfc.portfolio_instruments() {
-                match diesel::insert_into(portfolio_instrument)
-                    .values(&CreatePortfolioInstrument {
-                        portfolio_id: port_id,
-                        instrument_id: i.code().to_string(),
-                    })
-                    .execute(db)
-                {
-                    Ok(_) => {}
-                    Err(e) => return Err(e),
-                };
-            }
-
-            // Finally, return the portfolio converted to a common portfolio
-            Ok(inserted_portfolio.to_common_portfolio_with_instruments(instruments.to_owned()))
-        }) {
-            Ok(res) => Ok(res),
+        let item = CreatePortfolio::from_common_portfolio(pfc);
+        match diesel::insert_into(portfolio)
+            .values(item)
+            .returning(Portfolio::as_returning())
+            .get_result(db)
+        {
+            Ok(res) => Ok(
+                res.to_common_portfolio_with_instruments(pfc.portfolio_instruments().to_owned())
+            ),
             Err(e) => Err(e),
         }
     }
