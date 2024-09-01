@@ -1,2 +1,2 @@
 #[cfg(test)]
-mod service_tests;
+mod service_crud_tests;
