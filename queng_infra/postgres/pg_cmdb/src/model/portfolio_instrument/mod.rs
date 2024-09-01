@@ -1,4 +1,3 @@
-use crate::schema::cmdb::{instrument, portfolio};
 use bon::builder;
 use diesel::{Associations, Identifiable, Insertable, Queryable, Selectable};
 
@@ -6,8 +5,8 @@ mod portfolio_instrument_impl;
 
 #[builder]
 #[derive(Identifiable, Selectable, Queryable, Associations, Debug)]
-#[diesel(belongs_to(portfolio::dsl::portfolio))]
-#[diesel(belongs_to(instrument::dsl::instrument))]
+#[diesel(belongs_to(crate::prelude::portfolio::Portfolio))]
+#[diesel(belongs_to(crate::model::instrument::Instrument))]
 #[diesel(table_name=crate::schema::cmdb::portfolio_instrument)]
 #[diesel(primary_key(portfolio_id, instrument_id))]
 pub struct PortfolioInstrument {

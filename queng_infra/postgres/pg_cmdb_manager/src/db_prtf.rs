@@ -172,37 +172,51 @@ impl PostgresCMDBManager {
         }
     }
 
+    /// Reads a portfolio configuration from the database by ID.
+    ///
+    /// # Arguments
+    ///
+    /// * `self` - The `PostgresCMDBManager` instance.
+    /// * `portfolio_id` - The ID of the portfolio configuration to read.
+    ///
+    /// # Returns
+    ///
+    /// A `Result` containing a `PortfolioConfig` if the portfolio configuration was successfully read,
+    /// or an `Err` containing a `PostgresDBError` if there was an error reading the portfolio configuration.
+    ///
     pub async fn read_portfolio_config_by_id(
         &self,
         portfolio_id: u16,
-    ) -> Result<Option<PortfolioConfig>, PostgresDBError> {
+    ) -> Result<PortfolioConfig, PostgresDBError> {
         self.dbg_print("read_portfolio_config_by_id");
         let conn = &mut self.pool.get().unwrap();
 
         self.dbg_print("check_if_portfolio_id_exists");
-        match Portfolio::check_if_portfolio_id_exists(conn, portfolio_id as i32) {
-            Ok(exists) => {
-                if !exists {
-                    return Err(PostgresDBError::DataRecordDoesNotExist(format!(
-                        "portfolio with id {} does not exist",
-                        portfolio_id
-                    )));
-                };
-            }
-            Err(e) => return Err(PostgresDBError::CheckFailed(e.to_string())),
-        };
-
-        //  Implement later
-        Ok(None)
+        match Portfolio::read(conn, portfolio_id as i32) {
+            Ok(res) => Ok(res),
+            Err(e) => Err(PostgresDBError::QueryFailed(e.to_string())),
+        }
     }
 
+    /// Reads all portfolio configurations from the database.
+    ///
+    /// # Returns
+    ///
+    /// A `Result` containing a `Vec` of `PortfolioConfig` if the portfolio configurations were successfully read,
+    /// or an `Err` containing a `PostgresDBError` if there was an error reading the portfolio configurations.
+    ///
+    /// Notice, if there are no data to read, the vector will be of length 0.
+    ///
     pub async fn read_all_portfolio_configs(
         &self,
     ) -> Result<Vec<PortfolioConfig>, PostgresDBError> {
         self.dbg_print("read_all_portfolio_configs");
+        let conn = &mut self.pool.get().unwrap();
 
-        //  Implement later
-        Ok(Vec::new())
+        match Portfolio::read_all(conn) {
+            Ok(res) => Ok(res),
+            Err(e) => Err(PostgresDBError::QueryFailed(e.to_string())),
+        }
     }
 
     /// Updates a portfolio configuration in the database.

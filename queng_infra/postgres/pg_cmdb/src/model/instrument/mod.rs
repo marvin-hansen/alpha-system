@@ -1,4 +1,4 @@
-use diesel::{AsChangeset, Insertable, Queryable, Selectable};
+use diesel::{AsChangeset, Identifiable, Insertable, Queryable, Selectable};
 
 mod instrument_impl;
 mod instrument_type_conversion;
@@ -8,7 +8,7 @@ mod instrument_type_update_conversion;
 use bon::builder;
 
 #[builder]
-#[derive(Debug, Clone, Queryable, Insertable, AsChangeset, Selectable)]
+#[derive(Debug, Clone, PartialEq, Queryable, Selectable, Identifiable, Insertable, AsChangeset)]
 #[diesel(table_name=crate::schema::cmdb::instrument, primary_key(code))]
 pub struct Instrument {
     pub code: String,

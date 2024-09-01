@@ -49,19 +49,14 @@ impl CmdbService for CMDBServer {
         let record = dbm.read_portfolio_config_by_id(id).await;
 
         match record {
-            Ok(res) => match res {
-                None => Ok(Response::new(ReadPortfolioResponse {
-                    portfolio_config: None,
-                })),
-                Some(res) => {
-                    let proto_portfolio_config =
-                        portfolio_config_to_proto(res).expect("Failed to convert record to proto");
+            Ok(res) => {
+                let proto_portfolio_config =
+                    portfolio_config_to_proto(res).expect("Failed to convert record to proto");
 
-                    Ok(Response::new(ReadPortfolioResponse {
-                        portfolio_config: Some(proto_portfolio_config),
-                    }))
-                }
-            },
+                Ok(Response::new(ReadPortfolioResponse {
+                    portfolio_config: Some(proto_portfolio_config),
+                }))
+            }
             Err(e) => Err(Status::internal(e.to_string())),
         }
     }

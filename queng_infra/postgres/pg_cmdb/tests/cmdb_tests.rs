@@ -417,20 +417,20 @@ async fn test_read_portfolio() {
     assert!(result.is_ok());
 
     let portfolio = result.unwrap();
-    assert_eq!(portfolio.portfolio_id, 1);
-    assert_eq!(portfolio.portfolio_description, "Test Portfolio");
-    assert_eq!(portfolio.portfolio_account_type, 1);
-    assert_eq!(portfolio.portfolio_account_id, "12345");
-    assert_eq!(portfolio.portfolio_currency, "USD");
-    assert_eq!(portfolio.portfolio_cash, 1000.0);
-    assert_eq!(portfolio.portfolio_margin, 500.0);
-    assert_eq!(portfolio.portfolio_max_drawdown, 20.0);
-    assert_eq!(portfolio.instrument_max_allocation, 30.0);
-    assert_eq!(portfolio.instrument_max_drawdown, 10.0);
-    assert_eq!(portfolio.portfolio_free_margin, 500.0);
-    assert_eq!(portfolio.portfolio_free_cash, 1000.0);
-    assert_eq!(portfolio.portfolio_free_margin_percent, 50.0);
-    assert_eq!(portfolio.portfolio_free_cash_percent, 100.0);
+    assert_eq!(portfolio.portfolio_id(), 1);
+    assert_eq!(portfolio.portfolio_description(), "Test Portfolio");
+    assert_eq!(portfolio.portfolio_account_type(), AccountType::Spot);
+    assert_eq!(portfolio.portfolio_account_id(), "12345");
+    assert_eq!(portfolio.portfolio_currency(), "USD");
+    assert_eq!(portfolio.portfolio_cash(), 1000.0);
+    assert_eq!(portfolio.portfolio_margin(), 500.0);
+    assert_eq!(portfolio.portfolio_max_drawdown(), 20.0);
+    assert_eq!(portfolio.instrument_max_allocation(), 30.0);
+    assert_eq!(portfolio.instrument_max_drawdown(), 10.0);
+    assert_eq!(portfolio.portfolio_free_margin(), 500.0);
+    assert_eq!(portfolio.portfolio_free_cash(), 1000.0);
+    assert_eq!(portfolio.portfolio_free_margin_percent(), 50.0);
+    assert_eq!(portfolio.portfolio_free_cash_percent(), 100.0);
 }
 
 #[tokio::test]

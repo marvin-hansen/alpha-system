@@ -48,7 +48,7 @@ impl Portfolio {
         )
     }
 
-    pub fn to_common_portfolio_with_instruments(
+    pub fn to_common_portfolio_with_common_instruments(
         &self,
         instruments: Vec<CommonInstrument>,
     ) -> CommonPortfolioConfig {

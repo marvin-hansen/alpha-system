@@ -7,11 +7,7 @@ use diesel::result::{DatabaseErrorKind, Error};
 use diesel::{ExpressionMethods, QueryDsl, QueryResult, RunQueryDsl, SelectableHelper};
 
 impl Portfolio {
-    //
-    pub fn create(
-        db: &mut PGConnection,
-        pfc: &CommonPortfolioConfig,
-    ) -> QueryResult<CommonPortfolioConfig> {
+    pub fn create(db: &mut PGConnection, pfc: &CommonPortfolioConfig) -> QueryResult<Self> {
         // Check if portfolio exists; if so, return an error, otherwise continue
         match Self::check_if_portfolio_id_exists(db, pfc.portfolio_id() as i32) {
             Ok(exists) => {
@@ -34,12 +30,33 @@ impl Portfolio {
             .returning(Portfolio::as_returning())
             .get_result(db)
         {
-            Ok(res) => Ok(
-                res.to_common_portfolio_with_instruments(pfc.portfolio_instruments().to_owned())
-            ),
+            Ok(res) => Ok(res),
             Err(e) => Err(e),
         }
     }
+
+    pub fn read_all(db: &mut PGConnection) -> QueryResult<Vec<CommonPortfolioConfig>> {
+        let mut v = Vec::new();
+
+        let res = match portfolio.load::<Portfolio>(db) {
+            Ok(res) => {
+                if res.is_empty() {
+                    return Ok(v);
+                }
+
+                for i in &res {
+                    let p = Self::read(db, i.portfolio_id as i32)?;
+                    v.push(p)
+                }
+
+                v
+            }
+            Err(e) => return Err(e),
+        };
+
+        Ok(res)
+    }
+    //
 
     pub fn count(db: &mut PGConnection) -> QueryResult<u64> {
         portfolio.count().get_result::<i64>(db).map(|c| c as u64)
@@ -53,17 +70,6 @@ impl Portfolio {
             Ok(_) => Ok(true),
             Err(_) => Ok(false),
         }
-    }
-
-    pub fn read(db: &mut PGConnection, param_portfolio_id: i32) -> QueryResult<Self> {
-        portfolio
-            .filter(portfolio_id.eq(param_portfolio_id))
-            .limit(1)
-            .get_result::<Self>(db)
-    }
-
-    pub fn read_all(db: &mut PGConnection) -> QueryResult<Vec<Self>> {
-        portfolio.load(db)
     }
 
     pub fn update(

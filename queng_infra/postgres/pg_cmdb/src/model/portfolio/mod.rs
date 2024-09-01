@@ -1,6 +1,7 @@
-use diesel::{AsChangeset, Insertable, Queryable, Selectable};
+use diesel::{AsChangeset, Identifiable, Insertable, Queryable, Selectable};
 
 mod portfolio_impl;
+mod portfolio_instrument_joins_impl;
 mod portfolio_type_conversion;
 mod portfolio_type_create_conversion;
 mod portfolio_type_update_conversion;
@@ -8,7 +9,7 @@ mod portfolio_type_update_conversion;
 use bon::builder;
 
 #[builder]
-#[derive(Debug, Clone, Queryable, Insertable, AsChangeset, Selectable)]
+#[derive(Debug, Clone, PartialEq, Queryable, Selectable, Identifiable, Insertable, AsChangeset)]
 #[diesel(table_name=crate::schema::cmdb::portfolio, primary_key(portfolio_id))]
 pub struct Portfolio {
     pub portfolio_id: i32,
