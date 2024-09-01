@@ -14,7 +14,7 @@ pub const DB_TEST_URL: &str = "postgres://postgres:postgres@localhost/postgres";
 ///
 /// # Arguments
 ///
-/// * `database_url` - The database connection URL.
+/// * `database_url` - The Postgres database connection URL.
 /// * `timeout` - The timeout in seconds to wait for the connection. If not provided, defaults to 90 seconds.
 ///
 /// # Returns
@@ -37,7 +37,7 @@ pub async fn get_or_wait_for_postgres_connection(
             Err(_) => {
                 if start_time.elapsed() > timeout {
                     return Err(PostgresDBError::ConnectionFailed(format!(
-                        "Failed to connect to {} after several retries for 90 seconds",
+                        "Failed to connect to Postgres server at: {} after several retries for 90 seconds",
                         database_url
                     )));
                 }

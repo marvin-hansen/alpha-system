@@ -4,6 +4,7 @@ rust_test_suite(
     name = "pg_cmdb_instrument_tests",
     srcs = glob([
         "instrument/*_tests.rs",
+        "setup/cmdb_setup.rs",
     ]),
     exec_properties = {
         # Tell BuildBuddy to run this test using a Firecracker microVM.
@@ -38,6 +39,7 @@ rust_test_suite(
     srcs = glob([
         "portfolio/portfolio_tests.rs",
         "portfolio_instrument/portfolio_instrument_tests.rs",
+        "setup/cmdb_setup.rs",
     ]),
     exec_properties = {
         # Tell BuildBuddy to run this test using a Firecracker microVM.
@@ -51,7 +53,7 @@ rust_test_suite(
         "test.runner-recycling-key": "cmdb_portfolio_tests",
     },
     tags = [
-        "integration_test",
+        # "integration_test",
     ],
     visibility = ["//visibility:public"],
     deps = [

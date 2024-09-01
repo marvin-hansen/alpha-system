@@ -16,7 +16,10 @@ pub async fn postgres_full_setup(database_url: &str) -> Result<(), Error> {
 /// * `schema` - The schema to run migrations for.
 /// * `database_url` - The database url to connect to.
 ///
-async fn postgres_schema_setup(schema: PostgresDBSchema, database_url: &str) -> Result<(), Error> {
+pub async fn postgres_schema_setup(
+    schema: PostgresDBSchema,
+    database_url: &str,
+) -> Result<(), Error> {
     // Create new DockerUtil
     let docker_util = DockerUtil::with_debug().expect("Failed to get DockerUtil");
 
