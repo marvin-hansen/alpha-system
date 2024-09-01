@@ -3,8 +3,7 @@ load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 rust_test_suite(
     name = "pg_smdb_tests",
     srcs = glob([
-        "smdb_setup_tests.rs",
-        "*_tests.rs",
+        "service_tests.rs",
     ]),
     exec_properties = {
         # Tell BuildBuddy to run this test using a Firecracker microVM.
