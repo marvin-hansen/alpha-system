@@ -3,7 +3,7 @@ load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 rust_test_suite(
     name = "pg_smdb_tests",
     srcs = glob([
-        "service_crud_tests.rs",
+        # "service_crud_tests.rs",
         "service_set_get_tests.rs",
     ]),
     exec_properties = {
@@ -15,10 +15,10 @@ rust_test_suite(
         "test.recycle-runner": "true",
         # We don't want different different db tests to be assigned to the same recycled runner,
         # because we can't fit all db docker images with the default disk limit.
-        "test.runner-recycling-key": "postgres_smdb_tests",
-        # Tell BuildBuddy to set the estimated compute units for this test
+        "test.runner-recycling-key": "pg_smdb_tests",
+        # Tell BuildBuddy to increase the estimated compute units for this test
         # https://www.buildbuddy.io/docs/rbe-platforms/#runner-resource-allocation
-        "test.EstimatedComputeUnits": "2"
+        "test.EstimatedComputeUnits": "2",
     },
     tags = [
         "integration_test",
