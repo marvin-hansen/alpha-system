@@ -1,21 +1,11 @@
+use common_exchange::prelude::AccountType::Spot;
 use common_exchange::prelude::Instrument as CommonInstrument;
 use common_exchange::prelude::PortfolioConfig as CommonPortfolioConfig;
-
-use common_database::prelude::PostgresDBSchema;
-use common_exchange::prelude::AccountType::Spot;
 use diesel::Connection;
 use pg_cmdb::model::instrument::Instrument;
 use pg_cmdb::model::portfolio::Portfolio;
 use pg_cmdb::model::portfolio_instrument::{CreatePortfolioInstrument, PortfolioInstrument};
-use postgres_test_utils::prelude::postgres_schema_setup;
 use postgres_test_utils::*;
-
-#[tokio::test]
-async fn test_cmdb_setup() {
-    let result = postgres_schema_setup(PostgresDBSchema::PostgresDBSchemaCMDB, DB_TEST_URL).await;
-    // dbg!(&result);
-    assert!(result.is_ok());
-}
 
 #[tokio::test]
 async fn test_portfolio_instrument() {

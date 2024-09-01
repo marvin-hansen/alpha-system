@@ -3,7 +3,6 @@ load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 rust_test_suite(
     name = "pg_cmdb_instrument_tests",
     srcs = glob([
-        "cmdb_setup.rs",
         "instrument_tests.rs",
         "portfolio_tests.rs",
         "portfolio_instrument_tests.rs",

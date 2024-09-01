@@ -1,8 +1,16 @@
+use common_database::prelude::PostgresDBSchema;
 use common_exchange::prelude::Instrument as CommonInstrument;
 use diesel::Connection;
 use pg_cmdb::model::instrument::Instrument;
-use postgres_test_utils::prelude::get_test_instrument;
+use postgres_test_utils::prelude::{get_test_instrument, postgres_schema_setup};
 use postgres_test_utils::{get_or_wait_for_postgres_connection, DB_TEST_URL};
+
+#[tokio::test]
+async fn test_cmdb_setup() {
+    let result = postgres_schema_setup(PostgresDBSchema::PostgresDBSchemaCMDB, DB_TEST_URL).await;
+    // dbg!(&result);
+    assert!(result.is_ok());
+}
 
 #[tokio::test]
 async fn test_check_if_instrument_code_exists() {

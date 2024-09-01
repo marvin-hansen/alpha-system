@@ -1,7 +1,4 @@
 #[cfg(test)]
-mod cmdb_setup;
-
-#[cfg(test)]
 mod instrument_tests;
 #[cfg(test)]
 mod portfolio_instrument_tests;
