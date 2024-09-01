@@ -62,7 +62,7 @@ async fn get_or_wait_for_postgres_database_connection(
 ) -> Result<PgConnection, PostgresDBError> {
     let start_time = Instant::now();
     let retry_interval = if migration {
-        Duration::from_millis(10)
+        Duration::from_millis(50)
     } else {
         Duration::from_millis(500)
     };

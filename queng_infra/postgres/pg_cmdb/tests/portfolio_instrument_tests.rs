@@ -13,6 +13,7 @@ async fn test_portfolio_instrument() {
     assert!(connection.is_ok());
     let conn = &mut connection.unwrap();
 
+    //
     // Start a new test transaction
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
