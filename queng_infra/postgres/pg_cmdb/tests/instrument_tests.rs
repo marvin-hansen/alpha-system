@@ -6,7 +6,7 @@ use postgres_test_utils::prelude::{get_test_instrument, postgres_schema_setup};
 use postgres_test_utils::{get_or_wait_for_postgres_connection, DB_TEST_URL};
 
 #[tokio::test]
-async fn test_cmdb_setup() {
+async fn test_all_setup() {
     let result = postgres_schema_setup(PostgresDBSchema::PostgresDBSchemaCMDB, DB_TEST_URL).await;
     // dbg!(&result);
     assert!(result.is_ok());

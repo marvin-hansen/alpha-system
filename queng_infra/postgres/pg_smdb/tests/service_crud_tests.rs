@@ -5,9 +5,9 @@ use pg_smdb::model::service;
 use postgres_test_utils::prelude::*;
 
 #[tokio::test]
-async fn test_smdb_setup() {
+async fn test_all_setup() {
     let result = postgres_schema_setup(PostgresDBSchema::PostgresDBSchemaSMDB, DB_TEST_URL).await;
-    // dbg!(&result);
+    dbg!(&result);
     assert!(result.is_ok());
 }
 
