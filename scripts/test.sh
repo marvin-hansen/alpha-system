@@ -31,7 +31,7 @@ echo "====================="
 echo "Run integration tests"
 echo "====================="
 
-#command bazel test //... --test_tag_filters=postgres_setup, --test_env=ENV=LOCAL
+command bazel test //... --test_tag_filters=postgres_setup, --test_env=ENV=LOCAL
 command bazel test //... --test_tag_filters=integration_test --test_env=ENV=LOCAL
 
 echo ""
