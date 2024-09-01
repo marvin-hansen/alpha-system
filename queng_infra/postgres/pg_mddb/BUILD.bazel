@@ -4,8 +4,8 @@ load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library")
 
 copy_directory(
     name = "copy_migrations",
-    src = "migrations",
-    out = "migrations",
+    src = "src/migrations",
+    out = "src/migrations",
 )
 
 rust_library(

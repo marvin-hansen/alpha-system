@@ -4,6 +4,6 @@ set -o nounset
 set -o pipefail
 
 
-command cargo fix --allow-dirty
+MIGRATION_DATA="migrations"  cargo fix --allow-dirty
 
-command cargo clippy --fix --allow-dirty
+MIGRATION_DATA="migrations"  cargo clippy --fix --allow-dirty
