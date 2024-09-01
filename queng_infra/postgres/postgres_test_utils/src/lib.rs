@@ -29,8 +29,13 @@ pub async fn get_or_wait_for_postgres_connection(
     timeout: Option<u64>,
 ) -> Result<PgConnection, PostgresDBError> {
     let start_time = Instant::now();
+    let retry_interval = if timeout.is_some() {
+        Duration::from_millis(50)
+    } else {
+        Duration::from_millis(500)
+    };
+
     let timeout = Duration::from_secs(timeout.unwrap_or(120));
-    let retry_interval = Duration::from_millis(500);
 
     loop {
         match PgConnection::establish(&database_url) {

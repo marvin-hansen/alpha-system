@@ -29,7 +29,7 @@ pub async fn postgres_schema_setup(
         .get_or_start_container_config(&container_config)
         .expect("Failed to setup ci api proxy container");
 
-    let connection = get_or_wait_for_postgres_connection(database_url, None).await;
+    let connection = get_or_wait_for_postgres_connection(database_url, Some(120)).await;
     assert!(connection.is_ok());
 
     let conn = &mut connection.unwrap();
