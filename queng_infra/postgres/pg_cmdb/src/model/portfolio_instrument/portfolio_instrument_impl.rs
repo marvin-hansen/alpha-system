@@ -14,6 +14,20 @@ impl PortfolioInstrument {
             .get_result::<Self>(db)
     }
 
+    pub fn check_if_exists(
+        db: &mut Connection,
+        param_portfolio_id: i32,
+        param_instrument_id: String,
+    ) -> QueryResult<bool> {
+        match portfolio_instrument
+            .find((param_portfolio_id, param_instrument_id))
+            .first::<PortfolioInstrument>(db)
+        {
+            Ok(_) => Ok(true),
+            Err(_) => Ok(false),
+        }
+    }
+
     pub fn read_instruments_for_portfolio(
         db: &mut Connection,
         param_portfolio_id: i32,

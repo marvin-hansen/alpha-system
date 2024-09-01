@@ -3,7 +3,7 @@ use common_errors::prelude::PostgresDBError;
 use common_exchange::prelude::PortfolioConfig;
 use diesel::Connection;
 use pg_cmdb::model::instrument::Instrument;
-use pg_cmdb::model::portfolio_instrument::PortfolioInstrument;
+use pg_cmdb::model::portfolio_instrument::{CreatePortfolioInstrument, PortfolioInstrument};
 use pg_cmdb::prelude::portfolio::Portfolio;
 
 impl PostgresCMDBManager {
@@ -103,45 +103,6 @@ impl PostgresCMDBManager {
         }
     }
 
-    /// Updates the portfolio config with the given data.
-    ///
-    /// # Arguments
-    ///
-    /// * `data` - The portfolio config to update.
-    ///
-    /// # Returns
-    ///
-    /// * `Result<Option<PortfolioConfig>, PostgresDBError>` - A result indicating success or failure.
-    /// If the portfolio was updated, returns `Ok(Some(PortfolioConfig))`.
-    /// If the portfolio does not exist, returns `Ok(None)`.
-    ///
-    pub async fn update_portfolio_config(
-        &self,
-        data: PortfolioConfig,
-    ) -> Result<Option<PortfolioConfig>, PostgresDBError> {
-        self.dbg_print("update_portfolio_config");
-        let conn = &mut self.pool.get().unwrap();
-
-        let portfolio_id = data.portfolio_id() as i32;
-        match Portfolio::update(conn, portfolio_id, &data) {
-            Ok(_) => Ok(Some(data)),
-            Err(e) => Err(PostgresDBError::UpdateFailed(e.to_string())),
-        }
-    }
-
-    /// returns the portfolio config with the given id
-    ///
-    /// # Arguments
-    ///
-    /// * `portfolio_id` - The ID of the portfolio to read.
-    ///
-    /// # Returns
-    ///
-    /// * `Result<Option<PortfolioConfig>, PostgresDBError>` -
-    ///   A result indicating success or failure.
-    ///   If successful, returns a `Some(PortfolioConfig)` with the portfolio data.
-    ///   If the portfolio does not exist, returns `Ok(None)`.
-    ///
     pub async fn read_portfolio_config_by_id(
         &self,
         portfolio_id: u16,
@@ -170,6 +131,105 @@ impl PostgresCMDBManager {
 
         //  Implement later
         Ok(Vec::new())
+    }
+
+    /// Updates a portfolio configuration in the database.
+    ///
+    /// # Arguments
+    ///
+    /// * `self` - The `PostgresCMDBManager` instance.
+    /// * `data` - The `PortfolioConfig` containing the new data for the portfolio configuration.
+    ///
+    /// # Returns
+    ///
+    /// A `Result` containing a `()` if the portfolio configuration was successfully updated,
+    /// or an `Err` containing a `PostgresDBError` if there was an error updating the portfolio configuration.
+    ///
+    pub async fn update_portfolio_config(
+        &self,
+        data: PortfolioConfig,
+    ) -> Result<(), PostgresDBError> {
+        self.dbg_print("update_portfolio_config");
+        let conn = &mut self.pool.get().unwrap();
+
+        let portfolio_id = data.portfolio_id() as u16;
+
+        // Check if portfolio exists
+        match self.check_if_portfolio_id_exists(portfolio_id).await {
+            Ok(exists) => {
+                // if not, return error
+                if !exists {
+                    return Err(PostgresDBError::DataRecordDoesNotExist(format!(
+                        "portfolio with id {} does not exist",
+                        portfolio_id
+                    )));
+                };
+            }
+            Err(e) => return Err(PostgresDBError::CheckFailed(e.to_string())),
+        };
+
+        // Start transaction
+        match conn.transaction(|db| {
+            // Update portfolio
+            match Portfolio::update(db, portfolio_id as i32, &data) {
+                Ok(res) => res,
+                Err(e) => return Err(e),
+            };
+
+            // Update portfolio instruments
+            let common_instruments = data.portfolio_instruments();
+            for i in common_instruments {
+                // Check if instrument already exists
+                match Instrument::check_if_instrument_code_exists(db, i.code().to_string()) {
+                    Ok(exists) => {
+                        if !exists {
+                            // If not add it
+                            match Instrument::create(db, i) {
+                                Ok(_) => {}
+                                Err(e) => return Err(e),
+                            }
+
+                            // Check if portfolio_instrument relation exists
+                            match PortfolioInstrument::check_if_exists(
+                                db,
+                                portfolio_id as i32,
+                                i.code().to_string(),
+                            ) {
+                                Ok(exists) => {
+                                    if !exists {
+                                        // If not add it
+                                        match PortfolioInstrument::create(
+                                            db,
+                                            &CreatePortfolioInstrument {
+                                                portfolio_id: portfolio_id as i32,
+                                                instrument_id: i.code().to_string(),
+                                            },
+                                        ) {
+                                            // If it exists, do nothing
+                                            Ok(_) => {}
+                                            Err(e) => return Err(e),
+                                        }
+                                    }
+                                }
+                                Err(e) => return Err(e),
+                            }
+                        };
+                    }
+                    Err(e) => return Err(e),
+                }
+
+                // If it exists, update it.
+                match Instrument::update(db, i.code().to_string(), i) {
+                    Ok(_) => {}
+                    Err(e) => return Err(e),
+                };
+            }
+
+            Ok(())
+        }) {
+            Ok(_) => Ok(()),
+            Err(e) => Err(PostgresDBError::UpdateFailed(e.to_string())),
+        }
     }
 
     /// Deletes a portfolio from the database by its ID.

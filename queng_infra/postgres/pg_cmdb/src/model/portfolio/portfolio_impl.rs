@@ -122,16 +122,16 @@ impl Portfolio {
         db: &mut PGConnection,
         param_portfolio_id: i32,
         pfc: &CommonPortfolioConfig,
-    ) -> QueryResult<CommonPortfolioConfig> {
+    ) -> QueryResult<()> {
         // Check if portfolio exists
         // if NOT, return an error, otherwise continue
-        match Self::check_if_portfolio_id_exists(db, param_portfolio_id) {
+        match Self::check_if_portfolio_id_exists(db, pfc.portfolio_id() as i32) {
             Ok(exists) => {
                 if !exists {
                     return Err(Error::DatabaseError(
                         DatabaseErrorKind::NotNullViolation,
                         Box::new(DatabaseErrorMessage::new(
-                            "Portfolio ID DOES NOT exist and can therefore cannot be updated",
+                            "Portfolio ID does not exist and thus cannot be updated",
                             "portfolio",
                         )),
                     ));
@@ -140,32 +140,13 @@ impl Portfolio {
             Err(e) => return Err(e),
         };
 
-        // Start transaction
-        match db.transaction(|db| {
-            let item = UpdatePortfolio::from_common_portfolio(pfc);
-
-            // Update portfolio
-            let updated_portfolio = match diesel::update(portfolio.find(param_portfolio_id))
-                .set(item)
-                .returning(Portfolio::as_returning())
-                .get_result::<Portfolio>(db)
-            {
-                Ok(res) => res,
-                Err(e) => return Err(e),
-            };
-
-            let common_instruments = pfc.portfolio_instruments();
-            for i in common_instruments {
-                match Instrument::update(db, i.code().to_string(), i) {
-                    Ok(_) => {}
-                    Err(e) => return Err(e),
-                };
-            }
-
-            Ok(updated_portfolio
-                .to_common_portfolio_with_instruments(common_instruments.to_owned()))
-        }) {
-            Ok(res) => Ok(res),
+        // If it exists, update it.
+        let item = UpdatePortfolio::from_common_portfolio(pfc);
+        match diesel::update(portfolio.find(param_portfolio_id))
+            .set(item)
+            .execute(db)
+        {
+            Ok(_) => Ok(()),
             Err(e) => Err(e),
         }
     }

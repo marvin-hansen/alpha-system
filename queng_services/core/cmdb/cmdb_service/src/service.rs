@@ -109,14 +109,9 @@ impl CmdbService for CMDBServer {
         let res = dbm.update_portfolio_config(data).await;
 
         match res {
-            Ok(res) => match res {
-                None => Ok(Response::new(UpdatePortfolioResponse {
-                    portfolio_updated: false,
-                })),
-                Some(_) => Ok(Response::new(UpdatePortfolioResponse {
-                    portfolio_updated: true,
-                })),
-            },
+            Ok(_) => Ok(Response::new(UpdatePortfolioResponse {
+                portfolio_updated: true,
+            })),
             Err(e) => Err(Status::internal(e.to_string())),
         }
     }
