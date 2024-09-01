@@ -1,24 +1,26 @@
-use common_config::prelude::ServiceID;
 use diesel::Connection;
-use pg_smdb::model::service;
+use pg_cmdb::model::instrument::Instrument;
 use postgres_test_utils::prelude::*;
 
 #[tokio::test]
-async fn test_get_all_service_endpoints() {
+async fn test_check_if_instrument_code_exists() {
+    // Create a new connection
     let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+    // dbg!(&connection);
     assert!(connection.is_ok());
 
     let conn = &mut connection.unwrap();
+    // Start a new test transaction
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
-    let service_config = get_test_service_config();
-    let result = service::Service::create(conn, &service_config);
+    let instrument = get_test_instrument();
+    let result = Instrument::create(conn, &instrument);
     // dbg!(&result);
     assert!(result.is_ok());
 
-    let result = service::Service::get_all_service_endpoints(conn, ServiceID::SMDB);
+    let result = Instrument::check_if_instrument_code_exists(conn, "test_code".to_string());
     // dbg!(&result);
     assert!(result.is_ok());
-    assert_eq!(result.unwrap().len(), 2);
+    assert!(result.unwrap());
 }

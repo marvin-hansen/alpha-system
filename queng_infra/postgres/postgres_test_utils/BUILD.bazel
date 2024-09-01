@@ -15,6 +15,7 @@ rust_library(
         # Internal crates
         "//alias:common_config",
         "//alias:common_database",
+        "//alias:common_errors",
         "//alias:common_exchange",
         "//alias:container_specs",
         "//alias:docker_utils",

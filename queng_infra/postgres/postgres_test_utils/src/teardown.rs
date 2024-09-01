@@ -1,11 +1,11 @@
-use crate::postgres_connection;
+use crate::get_or_wait_for_postgres_connection;
 use common_database::prelude::PostgresDBSchema;
 use container_specs::postgres_container_specs::postgres_db_container_config;
 use docker_utils::DockerUtil;
 use std::fmt::Error;
 
 pub async fn postgres_full_teardown(database_url: &str) -> Result<(), Error> {
-    postgres_schema_teardown(PostgresDBSchema::ALL, database_url).await
+    postgres_schema_teardown(PostgresDBSchema::PostgresDBSchemaALL, database_url).await
 }
 
 pub async fn postgres_schema_teardown(
@@ -22,10 +22,12 @@ pub async fn postgres_schema_teardown(
         .await
         .expect("Failed to setup ci api proxy container");
 
-    let conn = &mut postgres_connection(database_url).await;
+    let connection = get_or_wait_for_postgres_connection(database_url, None).await;
+    assert!(connection.is_ok());
 
+    let conn = &mut connection.unwrap();
     match schema {
-        PostgresDBSchema::ALL => {
+        PostgresDBSchema::PostgresDBSchemaALL => {
             let result = pg_cmdb::revert_cmdb_db_migration(conn);
             assert!(result.is_ok());
             let result = pg_smdb::revert_smdb_db_migration(conn);
@@ -34,19 +36,19 @@ pub async fn postgres_schema_teardown(
             assert!(result.is_ok());
             Ok(())
         }
-        PostgresDBSchema::CMDB => {
+        PostgresDBSchema::PostgresDBSchemaCMDB => {
             let result = pg_cmdb::revert_cmdb_db_migration(conn);
             //dbg!(&result);
             assert!(result.is_ok());
             Ok(())
         }
-        PostgresDBSchema::SMDB => {
+        PostgresDBSchema::PostgresDBSchemaSMDB => {
             let result = pg_smdb::revert_smdb_db_migration(conn);
             //dbg!(&result);
             assert!(result.is_ok());
             Ok(())
         }
-        PostgresDBSchema::MDDB => {
+        PostgresDBSchema::PostgresDBSchemaMDDB => {
             let result = pg_mddb::revert_mddb_db_migration(conn);
             //dbg!(&result);
             assert!(result.is_ok());

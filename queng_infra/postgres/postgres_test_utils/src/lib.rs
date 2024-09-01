@@ -3,11 +3,46 @@ pub(crate) mod setup;
 pub(crate) mod teardown;
 pub(crate) mod utils;
 
+use common_errors::prelude::PostgresDBError;
 use diesel::{Connection, PgConnection};
+use std::time::Duration;
+use tokio::time::{sleep, Instant};
 
 pub const DB_TEST_URL: &str = "postgres://postgres:postgres@localhost/postgres";
 
-pub async fn postgres_connection(database_url: &str) -> PgConnection {
-    PgConnection::establish(&database_url)
-        .unwrap_or_else(|_| panic!("Error connecting to {}", database_url))
+/// Connects to a Postgres database and waits for it to come online if it's not already.
+///
+/// # Arguments
+///
+/// * `database_url` - The database connection URL.
+/// * `timeout` - The timeout in seconds to wait for the connection. If not provided, defaults to 90 seconds.
+///
+/// # Returns
+///
+/// * `Result<PgConnection, PostgresDBError>` - A result indicating success or failure.
+/// If successful, returns a `PgConnection` instance.
+/// If the connection fails, returns a `PostgresDBError` indicating the failure.
+///
+pub async fn get_or_wait_for_postgres_connection(
+    database_url: &str,
+    timeout: Option<u64>,
+) -> Result<PgConnection, PostgresDBError> {
+    let start_time = Instant::now();
+    let timeout = Duration::from_secs(timeout.unwrap_or(90));
+    let retry_interval = Duration::from_millis(500);
+
+    loop {
+        match PgConnection::establish(&database_url) {
+            Ok(conn) => return Ok(conn),
+            Err(_) => {
+                if start_time.elapsed() > timeout {
+                    return Err(PostgresDBError::ConnectionFailed(format!(
+                        "Failed to connect to {} after several retries for 90 seconds",
+                        database_url
+                    )));
+                }
+                sleep(retry_interval).await;
+            }
+        }
+    }
 }

@@ -1,5 +1,4 @@
 use common_config::prelude::ServiceID;
-use common_database::prelude::PostgresDBSchema;
 use diesel::Connection;
 use pg_smdb::model::service;
 use postgres_test_utils::prelude::*;
@@ -8,12 +7,10 @@ use postgres_test_utils::prelude::*;
 async fn test_service_read() {
     let service_id = ServiceID::SMDB;
 
-    postgres_schema_setup(PostgresDBSchema::SMDB, DB_TEST_URL)
-        .await
-        .expect("FAILED  to setup CMDB schema");
+    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+    assert!(connection.is_ok());
 
-    let mut connection = postgres_connection(DB_TEST_URL).await;
-    let conn = &mut connection;
+    let conn = &mut connection.unwrap();
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 

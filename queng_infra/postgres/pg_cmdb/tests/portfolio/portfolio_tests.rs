@@ -1,18 +1,16 @@
-use common_database::prelude::PostgresDBSchema;
 use common_exchange::prelude::{AccountType, PortfolioConfig as CommonPortfolioConfig};
 use diesel::{Connection, PgConnection};
 use pg_cmdb::model::portfolio::Portfolio;
-use postgres_test_utils::prelude::{get_test_portfolio, postgres_schema_setup};
-use postgres_test_utils::{postgres_connection, DB_TEST_URL};
+use postgres_test_utils::prelude::get_test_portfolio;
+use postgres_test_utils::{get_or_wait_for_postgres_connection, DB_TEST_URL};
 
 #[tokio::test]
 async fn test_portfolio() {
-    postgres_schema_setup(PostgresDBSchema::CMDB, DB_TEST_URL)
-        .await
-        .expect("FAILED  to setup CMDB schema");
+    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+    assert!(connection.is_ok());
+    let conn = &mut connection.unwrap();
 
-    let mut connection = postgres_connection(DB_TEST_URL).await;
-    let conn = &mut connection;
+    // Start a new test transaction
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 

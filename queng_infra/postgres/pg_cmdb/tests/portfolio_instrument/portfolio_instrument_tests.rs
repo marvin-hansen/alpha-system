@@ -10,8 +10,11 @@ use postgres_test_utils::*;
 
 #[tokio::test]
 async fn test_portfolio_instrument() {
-    let mut connection = postgres_connection(DB_TEST_URL).await;
-    let conn = &mut connection;
+    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+    assert!(connection.is_ok());
+    let conn = &mut connection.unwrap();
+
+    // Start a new test transaction
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 

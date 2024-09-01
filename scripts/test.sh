@@ -28,17 +28,10 @@ command bazel test //... --test_tag_filters=unit-test --test_env=ENV=LOCAL
 
 echo ""
 echo "====================="
-echo "Prepare integration tests"
-echo "====================="
-
-command bazel test //... --test_tag_filters=test-setup --test_env=ENV=LOCAL
-
-echo ""
-echo "====================="
 echo "Run integration tests"
 echo "====================="
 
-command bazel test //... --test_tag_filters=integration_test --test_env=ENV=LOCAL
+command bazel test //... --test_tag_filters=postgres_setup,integration_test --test_env=ENV=LOCAL
 
 echo ""
 echo "====================="
