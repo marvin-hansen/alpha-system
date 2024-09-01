@@ -15,7 +15,8 @@ pub const DB_TEST_URL: &str = "postgres://postgres:postgres@localhost/postgres";
 /// # Arguments
 ///
 /// * `database_url` - The Postgres database connection URL.
-/// * `timeout` - The timeout in seconds to wait for the connection. If not provided, defaults to 90 seconds.
+/// * `timeout` - The timeout in seconds to wait for the connection. If not provided,
+/// defaults to 120 seconds (2 minutes).
 ///
 /// # Returns
 ///
@@ -28,7 +29,7 @@ pub async fn get_or_wait_for_postgres_connection(
     timeout: Option<u64>,
 ) -> Result<PgConnection, PostgresDBError> {
     let start_time = Instant::now();
-    let timeout = Duration::from_secs(timeout.unwrap_or(90));
+    let timeout = Duration::from_secs(timeout.unwrap_or(120));
     let retry_interval = Duration::from_millis(500);
 
     loop {
