@@ -196,6 +196,146 @@ async fn test_service_read() {
 }
 
 #[tokio::test]
+async fn test_set_service_online() {
+    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+    assert!(connection.is_ok());
+
+    let conn = &mut connection.unwrap();
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+
+    let service_config = get_test_service_config();
+    let result = service::Service::create(conn, &service_config);
+    // dbg!(&result);
+    assert!(result.is_ok());
+
+    let service_id = ServiceID::SMDB;
+    let result = service::Service::set_service_offline(conn, service_id);
+    // dbg!(&result);
+    assert!(result.is_ok());
+
+    let result = service::Service::check_if_service_id_online(conn, service_id);
+    // dbg!(&result);
+    assert!(result.is_ok());
+    assert!(!result.unwrap());
+}
+
+#[tokio::test]
+async fn test_set_service_offline() {
+    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+    assert!(connection.is_ok());
+
+    let conn = &mut connection.unwrap();
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+
+    let service_config = get_test_service_config();
+    let result = service::Service::create(conn, &service_config);
+    // dbg!(&result);
+    assert!(result.is_ok());
+
+    let service_id = ServiceID::SMDB;
+    let result = service::Service::set_service_offline(conn, service_id);
+    // dbg!(&result);
+    assert!(result.is_ok());
+
+    let result = service::Service::check_if_service_id_online(conn, service_id);
+    // dbg!(&result);
+    assert!(result.is_ok());
+    assert!(!result.unwrap());
+}
+
+#[tokio::test]
+async fn test_get_all_offline_services() {
+    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+    assert!(connection.is_ok());
+
+    let conn = &mut connection.unwrap();
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+
+    let result = service::Service::get_all_offline_services(conn);
+    // dbg!(&result);
+    assert!(result.is_ok());
+    assert_eq!(result.unwrap().len(), 0);
+
+    let service_config = get_test_service_config();
+    let result = service::Service::create(conn, &service_config);
+    // dbg!(&result);
+    assert!(result.is_ok());
+
+    let result = service::Service::get_all_offline_services(conn);
+    // dbg!(&result);
+    assert!(result.is_ok());
+    assert_eq!(result.unwrap().len(), 0);
+}
+
+#[tokio::test]
+async fn test_get_all_online_services() {
+    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+    assert!(connection.is_ok());
+
+    let conn = &mut connection.unwrap();
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+
+    let result = service::Service::get_all_online_services(conn);
+    // dbg!(&result);
+    assert!(result.is_ok());
+    assert_eq!(result.unwrap().len(), 0);
+
+    let service_config = get_test_service_config();
+    let result = service::Service::create(conn, &service_config);
+    // dbg!(&result);
+    assert!(result.is_ok());
+
+    let result = service::Service::get_all_online_services(conn);
+    // dbg!(&result);
+    assert!(result.is_ok());
+    assert_eq!(result.unwrap().len(), 1);
+}
+
+#[tokio::test]
+async fn test_get_all_service_dependencies() {
+    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+    assert!(connection.is_ok());
+
+    let conn = &mut connection.unwrap();
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+
+    let service_config = get_test_service_config();
+    let result = service::Service::create(conn, &service_config);
+    // dbg!(&result);
+    assert!(result.is_ok());
+
+    let result = service::Service::get_all_service_dependencies(conn, ServiceID::SMDB);
+    // dbg!(&result);
+    assert!(result.is_ok());
+    assert_eq!(result.unwrap(), vec![ServiceID::DBGW]);
+}
+
+#[tokio::test]
+async fn test_get_all_service_endpoints() {
+    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+    assert!(connection.is_ok());
+
+    let conn = &mut connection.unwrap();
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+
+    let service_config = get_test_service_config();
+    let result = service::Service::create(conn, &service_config);
+    // dbg!(&result);
+    assert!(result.is_ok());
+
+    let result = service::Service::get_all_service_endpoints(conn, ServiceID::SMDB);
+    // dbg!(&result);
+    assert!(result.is_ok());
+    assert_eq!(result.unwrap().len(), 2);
+}
+
+#[tokio::test]
 async fn test_service_update() {
     let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
     assert!(connection.is_ok());
