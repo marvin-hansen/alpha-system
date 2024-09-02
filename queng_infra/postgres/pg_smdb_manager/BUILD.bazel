@@ -19,7 +19,6 @@ rust_library(
         "//alias:pg_smdb",
         # External crates
         "//thirdparty/crates:diesel",
-        "//thirdparty/crates:tokio",
     ],
 )
 

@@ -12,13 +12,8 @@ authors.workspace = true
 # Internal crates
 common_config = {workspace = true}
 common_exchange = {workspace = true}
-container_specs = {workspace = true}
-docker_utils = {workspace = true}
 pg_cmdb = {workspace = true}
 pg_smdb = {workspace = true}
 # External crates
 diesel = { workspace = true }
-diesel_migrations = { workspace = true }
-
-[dev-dependencies]
-smdb_specs = {workspace = true} # For testing
+# diesel_migrations = { workspace = true }

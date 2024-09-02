@@ -17,7 +17,7 @@ rust_test_suite(
     },
     tags = [
         "integration_test",
-        "kaiko_client_integration_test",
+        "mddb_integration_test",
     ],
     visibility = ["//visibility:public"],
     deps = [

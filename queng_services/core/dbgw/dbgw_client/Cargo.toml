@@ -10,7 +10,6 @@ authors.workspace = true
 
 [dependencies]
 # Internal crates
-common_exchange = {workspace = true}
 common_config = {workspace = true}
 proto_smdb = {workspace = true}
 proto_smdb_utils = {workspace = true}
