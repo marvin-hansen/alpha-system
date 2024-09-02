@@ -58,15 +58,7 @@ fn test_resolve_external_dns() {
     assert_eq!(dnm.internal_dns_server(), "9.9.9.9:53");
     assert_eq!(dnm.external_dns_server(), "1.1.1.1:53");
 
-    // We're hitting each host twice to let the second one hit the cache.
     let host = "harvard.edu";
-    let res = dnm.resolve_dns(host, false);
-    assert!(res.is_ok());
-
-    let res = dnm.resolve_dns(host, false);
-    assert!(res.is_ok());
-
-    let host = "mit.edu";
     let res = dnm.resolve_dns(host, false);
     assert!(res.is_ok());
 

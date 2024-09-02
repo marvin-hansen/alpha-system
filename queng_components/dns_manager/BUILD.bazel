@@ -13,7 +13,7 @@ rust_library(
         "//alias:ctx_manager",
         # External crates
         "//thirdparty/crates:hickory-resolver",
-        "//thirdparty/crates:mini-moka",
+        "//thirdparty/crates:tokio",
     ],
 )
 

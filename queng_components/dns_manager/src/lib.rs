@@ -1,7 +1,6 @@
 use common_env::prelude::EnvironmentType;
 use hickory_resolver::config::*;
 use hickory_resolver::Resolver;
-use mini_moka::sync::Cache;
 use std::env;
 /**
  * This file contains the implementation of the DnsManager, which is responsible for managing DNS resolution for both internal and external hosts.
@@ -16,8 +15,7 @@ use std::env;
  *
  * The implementation is based on the Hickory DNS library.
  */
-use std::net::{IpAddr, SocketAddr};
-use std::time::Duration;
+use std::net::SocketAddr;
 
 use ctx_manager::CtxManager;
 
@@ -33,10 +31,8 @@ const DEFAULT_DNS: &str = "1.1.1.1";
  */
 pub struct DnsManager {
     env_type: EnvironmentType,
-    internal_dns_cache: Cache<String, IpAddr>,
     internal_dns_resolver: Resolver,
     internal_dns_server: String,
-    external_dns_cache: Cache<String, IpAddr>,
     external_dns_resolver: Resolver,
     external_dns_server: String,
 }
@@ -70,16 +66,10 @@ impl DnsManager {
             Resolver::new(external_resolver_config, ResolverOpts::default())
                 .expect("Failed to construct internal CLUSTER DNS resolver");
 
-        // Build DNS cache to speed up internal and external DNS lookups
-        let internal_dns_cache = Self::get_dns_cache();
-        let external_dns_cache = Self::get_dns_cache();
-
         Self {
             env_type,
-            internal_dns_cache,
             internal_dns_resolver,
             internal_dns_server,
-            external_dns_cache,
             external_dns_resolver,
             external_dns_server,
         }
@@ -102,18 +92,6 @@ impl DnsManager {
                 );
             }
         }
-    }
-
-    fn get_dns_cache() -> Cache<String, IpAddr> {
-        Cache::builder()
-            // Time to live (TTL): 60 minutes
-            .time_to_live(Duration::from_secs(60 * 60))
-            // Time to idle (TTI):  15 minutes
-            .time_to_idle(Duration::from_secs(15 * 60))
-            // This cache will hold up to 4MiB of values.
-            .max_capacity(4 * 1024 * 1024)
-            // Create the cache.
-            .build()
     }
 }
 
