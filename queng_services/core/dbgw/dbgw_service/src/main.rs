@@ -87,7 +87,6 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .and_then(health_handler);
 
     let signal = shutdown_utils::signal_handler("http server");
-
     let (_, http_server) =
         warp::serve(health_check).bind_with_graceful_shutdown(([127, 0, 0, 1], 8080), signal);
 

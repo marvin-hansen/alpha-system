@@ -20,6 +20,7 @@ rust_library(
         "//thirdparty/crates:tokio",
         "//thirdparty/crates:tonic",
         "//thirdparty/crates:prost",
+        "//thirdparty/crates:warp",
     ],
 )
 

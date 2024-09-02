@@ -12,6 +12,7 @@ authors.workspace = true
 [dependencies]
 # Service specs
 cmdb_specs = { workspace = true }
+lib_data_stream = { workspace = true }
 # Custom Memory Allocator
 mimalloc = {workspace = true}
 # Internal crates

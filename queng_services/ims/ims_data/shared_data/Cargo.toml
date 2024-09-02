@@ -26,3 +26,4 @@ smdb_client = {workspace = true}
 tokio = { workspace = true }
 tonic = { workspace = true }
 prost = { workspace = true }
+warp = { workspace = true }
