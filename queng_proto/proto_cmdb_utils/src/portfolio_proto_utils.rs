@@ -13,6 +13,14 @@ use std::fmt::Error;
 /// an `std::fmt::Error` is returned.
 ///
 pub fn portfolio_config_from_proto(proto: ProtoPortfolioConfig) -> Result<PortfolioConfig, Error> {
+    if proto.portfolio_id < 0 {
+        return Err(Error);
+    }
+
+    if proto.portfolio_account_type < 0 {
+        return Err(Error);
+    }
+
     Ok(PortfolioConfig::new(
         proto.portfolio_id as u32,
         proto.portfolio_description,
@@ -43,7 +51,7 @@ pub fn instrument_from_proto(proto: Vec<ProtoInstrument>) -> Vec<Instrument> {
 
     for p in proto.iter() {
         let i = Instrument::new(
-            p.exchange_code.clone(),
+            p.instrument_code.clone(),
             p.instrument_class.clone(),
             p.exchange_code.clone(),
             p.exchange_pair_code.clone(),
