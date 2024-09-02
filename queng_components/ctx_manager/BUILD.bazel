@@ -9,6 +9,8 @@ rust_library(
     visibility = ["//visibility:public"],
     deps = [
         "//alias:common_env",
+        # External crates
+        "//thirdparty/crates:tokio",
     ],
 )
 

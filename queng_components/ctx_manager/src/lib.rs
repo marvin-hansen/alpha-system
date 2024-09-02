@@ -20,15 +20,15 @@ pub struct CtxManager {
 
 impl CtxManager {
     /// Creates a new CtxManager instance.
-    pub fn new() -> Self {
-        Self::build(false)
+    pub async fn new() -> Self {
+        Self::build(false).await
     }
 
-    pub fn with_debug() -> Self {
-        Self::build(true)
+    pub async fn with_debug() -> Self {
+        Self::build(true).await
     }
 
-    fn build(dbg: bool) -> Self {
+    async fn build(dbg: bool) -> Self {
         if dbg {
             println!("[CtxManager]: Debug mode enabled");
         }

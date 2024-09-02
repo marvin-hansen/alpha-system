@@ -30,3 +30,5 @@ cmdb_specs = { workspace = true }
 dbgw_specs = { workspace = true }
 smdb_specs = { workspace = true }
 qdgw_specs = { workspace = true }
+# External crates
+tokio = { workspace = true }

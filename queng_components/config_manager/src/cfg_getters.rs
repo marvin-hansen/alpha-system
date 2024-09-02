@@ -19,11 +19,11 @@ impl<'l> CfgManager<'l> {
         self.svc_config.to_owned()
     }
 
-    pub fn get_svc_host_port(&self) -> Result<(String, u16), InitError> {
+    pub async fn get_svc_host_port(&self) -> Result<(String, u16), InitError> {
         // Get the configuration of the service
         let svc_config = &self.svc_env_config;
         // Get the host and port of the service
-        self.get_host(svc_config)
+        self.get_host(svc_config).await
     }
 
     pub fn clickhouse_db_config(&self) -> &ClickHouseConfig {

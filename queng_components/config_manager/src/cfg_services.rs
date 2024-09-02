@@ -16,7 +16,7 @@ impl<'l> CfgManager<'l> {
     ///
     /// A tuple containing the host and port of the service as a string and u16, respectively. Returns an error if the
     /// host and port cannot be obtained.
-    pub fn get_smdb_host_port(&self) -> Result<(String, u16), InitError> {
+    pub async fn get_smdb_host_port(&self) -> Result<(String, u16), InitError> {
         // Get the configuration of the service
         let svc_config = smdb_service_config();
 
@@ -24,7 +24,7 @@ impl<'l> CfgManager<'l> {
         let svc_env_config = get_svc_env_config(SMDB, &svc_config);
 
         // Get the host and port of the service
-        self.get_host(&svc_env_config)
+        self.get_host(&svc_env_config).await
     }
 
     /// Returns the host and port of the CMDB service.
@@ -34,7 +34,7 @@ impl<'l> CfgManager<'l> {
     /// A tuple containing the host and port of the CMDB service as a string and u16, respectively. Returns an error if the
     /// host and port cannot be obtained.
     ///
-    pub fn get_cmdb_host_port(&self) -> Result<(String, u16), InitError> {
+    pub async fn get_cmdb_host_port(&self) -> Result<(String, u16), InitError> {
         // Get the configuration of the service
         let svc_config = cmdb_service_config();
 
@@ -42,7 +42,7 @@ impl<'l> CfgManager<'l> {
         let svc_env_config = get_svc_env_config(CMDB, &svc_config);
 
         // Get the host and port of the service
-        self.get_host(&svc_env_config)
+        self.get_host(&svc_env_config).await
     }
 
     /// Returns the host and port of the DBGW service.
@@ -51,7 +51,7 @@ impl<'l> CfgManager<'l> {
     ///
     /// A tuple containing the host and port of the DBGW service as a string and u16, respectively. Returns an error if the
     /// host and port cannot be obtained.
-    pub fn get_dbgw_host_port(&self) -> Result<(String, u16), InitError> {
+    pub async fn get_dbgw_host_port(&self) -> Result<(String, u16), InitError> {
         // Get the configuration of the service
         let svc_config = dbgw_service_config();
 
@@ -59,7 +59,7 @@ impl<'l> CfgManager<'l> {
         let svc_env_config = get_svc_env_config(DBGW, &svc_config);
 
         // Get the host and port of the service
-        self.get_host(&svc_env_config)
+        self.get_host(&svc_env_config).await
     }
 
     /// Returns the host and port of the service.
@@ -68,11 +68,11 @@ impl<'l> CfgManager<'l> {
     ///
     /// A tuple containing the host and port of the service as a string and u16, respectively. Returns an error if the
     /// host and port cannot be obtained.
-    pub fn get_service_host_port(&self) -> Result<(String, u16), InitError> {
+    pub async fn get_service_host_port(&self) -> Result<(String, u16), InitError> {
         // Get the configuration of the service
         let svc_config = &self.svc_env_config;
         // Get the host and port of the service
-        self.get_host(svc_config)
+        self.get_host(svc_config).await
     }
 
     /// Returns a vector of `ServiceID`s representing the dependencies of the service.
@@ -85,12 +85,13 @@ impl<'l> CfgManager<'l> {
     }
 
     /// returns the socket address to run the service in any context.
-    pub fn get_svc_socket_addr(&self) -> Result<String, InitError> {
+    pub async fn get_svc_socket_addr(&self) -> Result<String, InitError> {
         // Get the configuration of the service
         let svc_config = self.svc_env_config.to_owned();
         // Get the host and port of the service
         let (_, port) = self
             .get_host(&svc_config)
+            .await
             .expect("Failed to get host and port");
         // Set host to default (0.0.0.0) to listen on all interfaces
         let host = DEFAULT_HOST;
@@ -127,7 +128,7 @@ impl<'l> CfgManager<'l> {
     // If the environment type is local, it returns the hostname of the service running locally.
     // If the environment type is cluster, it returns the hostname of the service running in the cluster.
     // If the environment type is unknown, it returns an error.
-    pub(crate) fn get_host(
+    pub(crate) async fn get_host(
         &self,
         svc_env_config: &SvcEnvConfig,
     ) -> Result<(String, u16), InitError> {
@@ -146,6 +147,7 @@ impl<'l> CfgManager<'l> {
                 let cluster_host = self
                     .dns_manager
                     .resolve_dns(svc_env_config.cluster_host(), true)
+                    .await
                     .expect("[EnvManager]: Failed to resolve DNS");
 
                 cluster_host.to_string()

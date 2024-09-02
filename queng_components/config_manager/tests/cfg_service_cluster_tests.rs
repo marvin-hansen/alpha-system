@@ -14,54 +14,54 @@ use dns_manager::DnsManager;
 //           ENV: CLUSTER
 //           DNS_SERVER: 9.9.9.9
 
-#[test]
-fn test_new() {
+#[tokio::test]
+async fn test_new() {
     env::set_var("ENV", "CLUSTER");
     env::set_var("DNS_SERVER", "9.9.9.9");
 
-    let ctm = CtxManager::new();
+    let ctm = CtxManager::new().await;
     assert_eq!(ctm.env_type(), EnvironmentType::CLUSTER);
 
-    let dnm = DnsManager::new(&ctm);
+    let dnm = DnsManager::new(&ctm).await;
     assert_eq!(dnm.internal_dns_server(), "9.9.9.9:53");
     assert_eq!(dnm.external_dns_server(), "1.1.1.1:53");
 }
 
-#[test]
-fn test_init_smdb_env() {
+#[tokio::test]
+async fn test_init_smdb_env() {
     env::set_var("ENV", "CLUSTER");
     env::set_var("DNS_SERVER", "9.9.9.9");
 
-    let ctm = CtxManager::new();
+    let ctm = CtxManager::new().await;
     assert_eq!(ctm.env_type(), EnvironmentType::CLUSTER);
 
-    let dnm = DnsManager::new(&ctm);
+    let dnm = DnsManager::new(&ctm).await;
     assert_eq!(dnm.internal_dns_server(), "9.9.9.9:53");
     assert_eq!(dnm.external_dns_server(), "1.1.1.1:53");
 }
 
-#[test]
-fn test_init_cmdb_env() {
+#[tokio::test]
+async fn test_init_cmdb_env() {
     env::set_var("ENV", "CLUSTER");
     env::set_var("DNS_SERVER", "9.9.9.9");
 
-    let ctm = CtxManager::new();
+    let ctm = CtxManager::new().await;
     assert_eq!(ctm.env_type(), EnvironmentType::CLUSTER);
 
-    let dnm = DnsManager::new(&ctm);
+    let dnm = DnsManager::new(&ctm).await;
     assert_eq!(dnm.internal_dns_server(), "9.9.9.9:53");
     assert_eq!(dnm.external_dns_server(), "1.1.1.1:53");
 }
 
-#[test]
-fn test_init_dbgw_env() {
+#[tokio::test]
+async fn test_init_dbgw_env() {
     env::set_var("ENV", "CLUSTER");
     env::set_var("DNS_SERVER", "9.9.9.9");
 
-    let ctm = CtxManager::new();
+    let ctm = CtxManager::new().await;
     assert_eq!(ctm.env_type(), EnvironmentType::CLUSTER);
 
-    let dnm = DnsManager::new(&ctm);
+    let dnm = DnsManager::new(&ctm).await;
     assert_eq!(dnm.internal_dns_server(), "9.9.9.9:53");
     assert_eq!(dnm.external_dns_server(), "1.1.1.1:53");
 }

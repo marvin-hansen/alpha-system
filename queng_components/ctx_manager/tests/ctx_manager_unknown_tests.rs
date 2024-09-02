@@ -7,27 +7,27 @@ fn setup() {
     env::set_var("ENV", "UNKNOWN");
 }
 
-#[test]
-fn test_new() {
+#[tokio::test]
+async fn test_new() {
     setup();
 
-    let ctm = CtxManager::new();
+    let ctm = CtxManager::new().await;
     assert_eq!(ctm.env_type(), EnvironmentType::UNKNOWN);
 }
 
-#[test]
-fn test_env_type() {
+#[tokio::test]
+async fn test_env_type() {
     setup();
 
-    let ctm = CtxManager::new();
+    let ctm = CtxManager::new().await;
     assert_eq!(ctm.env_type(), EnvironmentType::UNKNOWN);
 }
 
-#[test]
-fn test_display() {
+#[tokio::test]
+async fn test_display() {
     setup();
 
-    let ctm = CtxManager::new();
+    let ctm = CtxManager::new().await;
     assert_eq!(ctm.env_type(), EnvironmentType::UNKNOWN);
     assert_eq!(ctm.to_string(), "CtxManager { env_type: UNKNOWN }");
 }

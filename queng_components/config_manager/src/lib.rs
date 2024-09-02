@@ -48,7 +48,7 @@ pub struct CfgManager<'l> {
 }
 
 impl<'l> CfgManager<'l> {
-    pub fn new(
+    pub async fn new(
         svc: ServiceID,
         svc_config: ServiceConfig,
         ctx_manager: &'l CtxManager,

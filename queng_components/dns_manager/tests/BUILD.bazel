@@ -1,7 +1,7 @@
 load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 
 rust_test_suite(
-    name = "dns_manager_tests",
+    name = "tests",
     srcs = glob([
         "*_tests.rs",
     ]),
@@ -14,8 +14,10 @@ rust_test_suite(
     deps = [
         # Crate under test
         "//alias:dns_manager",
-        "//alias:common_env",
         # Internal crates
+        "//alias:common_env",
         "//alias:ctx_manager",
+        # External crates
+        "//thirdparty/crates:tokio",
     ],
 )

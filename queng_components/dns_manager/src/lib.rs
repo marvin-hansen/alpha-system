@@ -1,6 +1,6 @@
 use common_env::prelude::EnvironmentType;
 use hickory_resolver::config::*;
-use hickory_resolver::Resolver;
+use hickory_resolver::TokioAsyncResolver;
 use std::env;
 /**
  * This file contains the implementation of the DnsManager, which is responsible for managing DNS resolution for both internal and external hosts.
@@ -27,13 +27,13 @@ const DEFAULT_DNS: &str = "1.1.1.1";
 
 /**
  * The DnsManager struct contains two Resolvers, one for internal (cluster) DNS resolution
- * and one for external (Cloudflare) DNS resolution.
+ * and one for external (Internet) DNS resolution.
  */
 pub struct DnsManager {
     env_type: EnvironmentType,
-    internal_dns_resolver: Resolver,
+    internal_dns_resolver: TokioAsyncResolver,
     internal_dns_server: String,
-    external_dns_resolver: Resolver,
+    external_dns_resolver: TokioAsyncResolver,
     external_dns_server: String,
 }
 
@@ -41,14 +41,14 @@ impl DnsManager {
     /**
      * Creates a new DnsManager instance.
      */
-    pub fn new(ctx: &CtxManager) -> Self {
+    pub async fn new(ctx: &CtxManager) -> Self {
         let env_type = ctx.env_type();
 
         // Find the internal DNS server based on the env context
         let internal_dns_host = match env_type {
             EnvironmentType::LOCAL => Self::get_ci_local_dns(),
-            EnvironmentType::CI => Self::get_ci_context_dns(),
-            EnvironmentType::CLUSTER => Self::get_cluster_context_dns(),
+            EnvironmentType::CI => Self::get_ci_dns(),
+            EnvironmentType::CLUSTER => Self::get_cluster_dns(),
             EnvironmentType::UNKNOWN => DEFAULT_DNS.to_owned(),
         };
 
@@ -56,15 +56,13 @@ impl DnsManager {
         let internal_dns_server = format!("{}{}", internal_dns_host, ":53");
         let internal_resolver_config = build_custom_resolver_config(&internal_dns_server);
         let internal_dns_resolver =
-            Resolver::new(internal_resolver_config, ResolverOpts::default())
-                .expect("Failed to construct internal CLUSTER DNS resolver");
+            TokioAsyncResolver::tokio(internal_resolver_config, ResolverOpts::default());
 
         // Build the external (Cloudflare) DNS address resolver to resolve hosts on the open internet
-        let external_dns_server = "1.1.1.1:53".to_string();
+        let external_dns_server = format!("{}{}", DEFAULT_DNS, ":53");
         let external_resolver_config = build_cloudflare_resolver_config();
         let external_dns_resolver =
-            Resolver::new(external_resolver_config, ResolverOpts::default())
-                .expect("Failed to construct internal CLUSTER DNS resolver");
+            TokioAsyncResolver::tokio(external_resolver_config, ResolverOpts::default());
 
         Self {
             env_type,
@@ -79,10 +77,10 @@ impl DnsManager {
         DEFAULT_DNS.to_owned()
     }
 
-    fn get_ci_context_dns() -> String {
+    fn get_ci_dns() -> String {
         DEFAULT_DNS.to_owned()
     }
-    fn get_cluster_context_dns() -> String {
+    fn get_cluster_dns() -> String {
         match env::var("DNS_SERVER") {
             Ok(cluster_dns_server) => cluster_dns_server,
             Err(e) => {

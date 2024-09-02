@@ -25,5 +25,7 @@ rust_test_suite(
         "//alias:dbgw_specs",
         "//alias:qdgw_specs",
         "//alias:smdb_specs",
+        # External crates
+        "//thirdparty/crates:tokio",
     ],
 )

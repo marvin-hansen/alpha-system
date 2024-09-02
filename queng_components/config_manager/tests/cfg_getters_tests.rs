@@ -10,76 +10,76 @@ use smdb_specs::smdb_service_config;
 
 use std::env;
 
-#[test]
-fn new_config_manager_smdb() {
+#[tokio::test]
+async fn new_config_manager_smdb() {
     env::set_var("ENV", "CLUSTER");
     env::set_var("DNS_SERVER", "9.9.9.9");
 
-    let ctm = CtxManager::new();
+    let ctm = CtxManager::new().await;
     assert_eq!(ctm.env_type(), EnvironmentType::CLUSTER);
 
-    let dnm = DnsManager::new(&ctm);
+    let dnm = DnsManager::new(&ctm).await;
     assert_eq!(dnm.internal_dns_server(), "9.9.9.9:53");
     assert_eq!(dnm.external_dns_server(), "1.1.1.1:53");
 
-    let config_manager = CfgManager::new(ServiceID::SMDB, smdb_service_config(), &ctm, &dnm);
+    let config_manager = CfgManager::new(ServiceID::SMDB, smdb_service_config(), &ctm, &dnm).await;
 
     assert_eq!(config_manager.get_svc_id(), ServiceID::SMDB);
     assert_eq!(config_manager.get_env_type(), EnvironmentType::CLUSTER);
     assert_eq!(config_manager.get_svc_config(), smdb_service_config());
 }
 
-#[test]
-fn new_config_manager_cmdb() {
+#[tokio::test]
+async fn new_config_manager_cmdb() {
     env::set_var("ENV", "CLUSTER");
     env::set_var("DNS_SERVER", "9.9.9.9");
 
-    let ctm = CtxManager::new();
+    let ctm = CtxManager::new().await;
     assert_eq!(ctm.env_type(), EnvironmentType::CLUSTER);
 
-    let dnm = DnsManager::new(&ctm);
+    let dnm = DnsManager::new(&ctm).await;
     assert_eq!(dnm.internal_dns_server(), "9.9.9.9:53");
     assert_eq!(dnm.external_dns_server(), "1.1.1.1:53");
 
-    let config_manager = CfgManager::new(ServiceID::CMDB, cmdb_service_config(), &ctm, &dnm);
+    let config_manager = CfgManager::new(ServiceID::CMDB, cmdb_service_config(), &ctm, &dnm).await;
 
     assert_eq!(config_manager.get_svc_id(), ServiceID::CMDB);
     assert_eq!(config_manager.get_env_type(), EnvironmentType::CLUSTER);
     assert_eq!(config_manager.get_svc_config(), cmdb_service_config());
 }
 
-#[test]
-fn new_config_manager_dbgw() {
+#[tokio::test]
+async fn new_config_manager_dbgw() {
     env::set_var("ENV", "CLUSTER");
     env::set_var("DNS_SERVER", "9.9.9.9");
 
-    let ctm = CtxManager::new();
+    let ctm = CtxManager::new().await;
     assert_eq!(ctm.env_type(), EnvironmentType::CLUSTER);
 
-    let dnm = DnsManager::new(&ctm);
+    let dnm = DnsManager::new(&ctm).await;
     assert_eq!(dnm.internal_dns_server(), "9.9.9.9:53");
     assert_eq!(dnm.external_dns_server(), "1.1.1.1:53");
 
-    let config_manager = CfgManager::new(ServiceID::DBGW, dbgw_service_config(), &ctm, &dnm);
+    let config_manager = CfgManager::new(ServiceID::DBGW, dbgw_service_config(), &ctm, &dnm).await;
 
     assert_eq!(config_manager.get_svc_id(), ServiceID::DBGW);
     assert_eq!(config_manager.get_env_type(), EnvironmentType::CLUSTER);
     assert_eq!(config_manager.get_svc_config(), dbgw_service_config());
 }
 
-#[test]
-fn new_config_manager_qdgw() {
+#[tokio::test]
+async fn new_config_manager_qdgw() {
     env::set_var("ENV", "CLUSTER");
     env::set_var("DNS_SERVER", "9.9.9.9");
 
-    let ctm = CtxManager::new();
+    let ctm = CtxManager::new().await;
     assert_eq!(ctm.env_type(), EnvironmentType::CLUSTER);
 
-    let dnm = DnsManager::new(&ctm);
+    let dnm = DnsManager::new(&ctm).await;
     assert_eq!(dnm.internal_dns_server(), "9.9.9.9:53");
     assert_eq!(dnm.external_dns_server(), "1.1.1.1:53");
 
-    let config_manager = CfgManager::new(ServiceID::QDGW, qdgw_service_config(), &ctm, &dnm);
+    let config_manager = CfgManager::new(ServiceID::QDGW, qdgw_service_config(), &ctm, &dnm).await;
 
     assert_eq!(config_manager.get_svc_id(), ServiceID::QDGW);
     assert_eq!(config_manager.get_env_type(), EnvironmentType::CLUSTER);

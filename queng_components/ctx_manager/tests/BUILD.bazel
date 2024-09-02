@@ -19,6 +19,8 @@ rust_test_suite(
     deps = [
         "//alias:common_env",
         "//alias:ctx_manager",
+        # External crates
+        "//thirdparty/crates:tokio",
     ],
 )
 
@@ -36,6 +38,8 @@ rust_test_suite(
     deps = [
         "//alias:common_env",
         "//alias:ctx_manager",
+        # External crates
+        "//thirdparty/crates:tokio",
     ],
 )
 
@@ -53,6 +57,8 @@ rust_test_suite(
     deps = [
         "//alias:common_env",
         "//alias:ctx_manager",
+        # External crates
+        "//thirdparty/crates:tokio",
     ],
 )
 
@@ -70,5 +76,7 @@ rust_test_suite(
     deps = [
         "//alias:common_env",
         "//alias:ctx_manager",
+        # External crates
+        "//thirdparty/crates:tokio",
     ],
 )
