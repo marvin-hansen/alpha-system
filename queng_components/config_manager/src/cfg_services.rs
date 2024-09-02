@@ -119,9 +119,13 @@ impl<'l> CfgManager<'l> {
         let svc = self.svc_env_config.to_owned();
         let metric_host = svc.metrics_host().to_string();
         let metrics_uri = svc.metrics_uri().to_string();
-        let metrics_port = *svc.metrics_port();
+        let port = *svc.metrics_port() as u16;
 
-        Ok((metric_host, metrics_uri, metrics_port))
+        let metrics_port = self
+            .get_port(&svc, port)
+            .expect("[EnvManager]: Failed to get port from config");
+
+        Ok((metric_host, metrics_uri, metrics_port as u32))
     }
 
     // Returns the hostname and port of the service based on the environment type.
@@ -133,10 +137,14 @@ impl<'l> CfgManager<'l> {
         svc_env_config: &SvcEnvConfig,
     ) -> Result<(String, u16), InitError> {
         //
-        let port: u16 = svc_env_config
+        let svc_port: u16 = svc_env_config
             .service_port()
             .parse()
             .expect("[EnvManager]: Failed to parse port from config");
+
+        let port = self
+            .get_port(svc_env_config, svc_port)
+            .expect("[EnvManager]: Failed to get port from config");
 
         let host = match self.ctx_manager.env_type() {
             EnvironmentType::LOCAL => svc_env_config.local_host().to_string(),
@@ -161,16 +169,24 @@ impl<'l> CfgManager<'l> {
         Ok((host, port))
     }
 
-    // pub(crate) async fn get_port(
-    //     &self,
-    //     svc_env_config: &SvcEnvConfig,
-    // ) -> Result<u16, InitError> {
-    //     let port: u16 = svc_env_config
-    //         .service_port()
-    //         .parse()
-    //         .expect("[EnvManager]: Failed to parse port from config");
-    //
-    //
-    //     Ok(port)
-    // }
+    /// Returns the port of the service based on the environment type.
+    ///
+    /// If the environment type is local, it returns the port of the service running locally.
+    /// If the environment type is cluster, it returns the port of the service running in the cluster.
+    /// If the environment type is unknown, it returns an error.
+    ///
+    pub(crate) fn get_port(
+        &self,
+        svc_env_config: &SvcEnvConfig,
+        svc_port: u16,
+    ) -> Result<u16, InitError> {
+        let port = match self.ctx_manager.env_type() {
+            EnvironmentType::UNKNOWN => svc_port,
+            EnvironmentType::LOCAL => svc_port + svc_env_config.service_id().as_u16(),
+            EnvironmentType::CLUSTER => svc_port,
+            EnvironmentType::CI => svc_port + svc_env_config.service_id().as_u16(),
+        };
+
+        Ok(port)
+    }
 }

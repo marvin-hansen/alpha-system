@@ -30,6 +30,10 @@ impl ServiceID {
         *self as u8
     }
 
+    pub fn as_u16(&self) -> u16 {
+        *self as u16
+    }
+
     pub fn as_i32(&self) -> i32 {
         *self as i32
     }
