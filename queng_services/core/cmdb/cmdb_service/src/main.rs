@@ -26,14 +26,14 @@ const SVC_ID: ServiceID = ServiceID::CMDB;
 async fn main() -> Result<(), Box<dyn Error>> {
     // Setup autoconfiguration.
     let svc_config = cmdb_specs::cmdb_service_config();
-    let ctx_manager = async { CtxManager::new() }.await;
-    let dns_manager = async { DnsManager::new(&ctx_manager) }.await;
-    let cfg_manager =
-        async { CfgManager::new(SVC_ID, svc_config, &ctx_manager, &dns_manager) }.await;
+    let ctx_manager = CtxManager::new().await;
+    let dns_manager = DnsManager::new(&ctx_manager).await;
+    let cfg_manager = CfgManager::new(SVC_ID, svc_config, &ctx_manager, &dns_manager).await;
 
     // pull SMDB endpoint from auto config
     let (smdb_host, smdb_port) = cfg_manager
         .get_smdb_host_port()
+        .await
         .expect("[CMDB]: Failed to get host and port for DBGW");
 
     let smdb_manager = SMDBClient::new(smdb_host, smdb_port).await;
@@ -67,6 +67,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     // Configure service ip and port automatically relative to the detected context.
     let service_addr = cfg_manager
         .get_svc_socket_addr()
+        .await
         .expect("[CMDB]: Failed to get host and port");
 
     // Set up socket address for gRPC service

@@ -16,17 +16,14 @@ pub async fn run(
     grpc_svc: ImsDataServiceServer<impl ImsDataService>,
 ) -> Result<(), Box<dyn Error>> {
     //
-    //Creates a new instance of the Context Manager.
-    let ctx_manager = async { CtxManager::new() }.await;
-    //Creates a new instance of the DNS Manager.
-    let dns_manager = async { DnsManager::new(&ctx_manager) }.await;
-    //Creates a new instance of the Configuration Manager.
-    let cfg_manager =
-        async { CfgManager::new(svc_id, svc_config, &ctx_manager, &dns_manager) }.await;
+    let ctx_manager = CtxManager::new().await;
+    let dns_manager = DnsManager::new(&ctx_manager).await;
+    let cfg_manager = CfgManager::new(svc_id, svc_config, &ctx_manager, &dns_manager).await;
 
     // pull SMDB endpoint from auto config
     let (smdb_host, smdb_port) = cfg_manager
         .get_smdb_host_port()
+        .await
         .expect("[ImsDataBinance]: Failed to get host and port for DBGW");
 
     let smdb_manager = SMDBClient::new(smdb_host, smdb_port).await;
@@ -53,6 +50,7 @@ pub async fn run(
     // println!("[ImsDataBinance]/main: Configure service ip and port automatically relative to the detected context");
     let service_addr = cfg_manager
         .get_svc_socket_addr()
+        .await
         .expect("[ImsDataBinance]: Failed to get host and port");
 
     // println!("[ImsDataBinance]: Configuring metrics endpoint");

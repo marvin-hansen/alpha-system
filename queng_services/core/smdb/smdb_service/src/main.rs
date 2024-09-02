@@ -23,14 +23,14 @@ const SVC_ID: ServiceID = ServiceID::SMDB;
 async fn main() -> Result<(), Box<dyn Error>> {
     // Setup autoconfiguration.
     let svc_config = smdb_specs::smdb_service_config();
-    let ctx_manager = async { CtxManager::new() }.await;
-    let dns_manager = async { DnsManager::new(&ctx_manager) }.await;
-    let cfg_manager =
-        async { CfgManager::new(SVC_ID, svc_config, &ctx_manager, &dns_manager) }.await;
+    let ctx_manager = CtxManager::new().await;
+    let dns_manager = DnsManager::new(&ctx_manager).await;
+    let cfg_manager = CfgManager::new(SVC_ID, svc_config, &ctx_manager, &dns_manager).await;
 
     // pull DBGW endpoint from auto config
     let (dbgw_host, dbgw_port) = cfg_manager
         .get_dbgw_host_port()
+        .await
         .expect("[SMDB]: Failed to get host and port for DBGW");
 
     // Configure DBGW URI
@@ -51,6 +51,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     // Configure service ip and port automatically relative to the detected context.
     let service_addr = cfg_manager
         .get_svc_socket_addr()
+        .await
         .expect("[SMDB]: Failed to get host and port");
 
     // Set up socket address for gRPC service

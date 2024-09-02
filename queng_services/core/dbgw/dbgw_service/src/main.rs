@@ -29,16 +29,16 @@ static GLOBAL: MiMalloc = MiMalloc;
 async fn main() -> Result<(), Box<dyn Error>> {
     dbg_print("Setup autoconfiguration");
     let svc_config = dbgw_specs::dbgw_service_config();
+    let ctx_manager = CtxManager::new().await;
+    let dns_manager = DnsManager::new(&ctx_manager).await;
+    let cfg_manager = CfgManager::new(SVC_ID, svc_config, &ctx_manager, &dns_manager).await;
 
-    let ctx_manager = async { CtxManager::new() }.await;
-    let dns_manager = async { DnsManager::new(&ctx_manager) }.await;
-    let cfg_manager =
-        async { CfgManager::new(SVC_ID, svc_config, &ctx_manager, &dns_manager) }.await;
     dbg_print(&format!("Detected context: {}", ctx_manager.env_type()));
 
     dbg_print("Configure service ip and port for the detected context");
     let service_addr = cfg_manager
         .get_svc_socket_addr()
+        .await
         .expect("DBGW: Failed to get host and port");
 
     dbg_print("Set up socket address for gRPC and HTTP");
