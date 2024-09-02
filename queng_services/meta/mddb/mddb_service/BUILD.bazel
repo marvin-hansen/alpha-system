@@ -42,7 +42,7 @@ rust_binary(
         "//alias:ctx_manager",
         "//alias:dns_manager",
         "//alias:db_clickhouse_manager",
-        "//alias:rust_proto",
+        "//alias:proto_mddb",
         "//alias:common_service",
         "//alias:symbol_manager",
         "//alias/client:smdb_client",

@@ -188,6 +188,30 @@ alias(
     visibility = ["//visibility:public"],
 )
 
+alias(
+    name = "proto_cmdb",
+    actual = "//queng_proto/proto_cmdb:proto_cmdb_bindings",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "proto_imdb",
+    actual = "//queng_proto/proto_imdb:proto_imdb_bindings",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "proto_mddb",
+    actual = "//queng_proto/proto_mddb:proto_mddb_bindings",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "proto_smdb",
+    actual = "//queng_proto/proto_smdb:proto_smdb_bindings",
+    visibility = ["//visibility:public"],
+)
+
 ###############################################################################
 # SBE
 ###############################################################################

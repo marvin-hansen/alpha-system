@@ -1,10 +1,12 @@
 use common_errors::prelude::LookupError;
+use proto_mddb::proto::mdm_service_server::MdmService;
+use proto_mddb::proto::{
+    LookupExchangeNameRequest, LookupExchangeNameResponse, LookupSymbolIdRequest,
+    LookupSymbolIdResponse, LookupSymbolRequest, LookupSymbolResponse,
+};
 use std::sync::{Arc, RwLock};
-use tonic::{Request, Response, Status};
-
-use proto_bindings::proto::mdm_service_server::MdmService;
-use proto_bindings::proto::*;
 use symbol_manager::SymbolManager;
+use tonic::{Request, Response, Status};
 
 const FN_NAME: &str = "[SymdbClient/service]: ";
 
@@ -51,10 +53,10 @@ impl MdmService for MDMServer {
             .expect("Failed To lock symbol manager");
 
         // Lock up exchange name & handle error
-        return match sym_manager.get_exchange_name(exchange_id as u16) {
+        match sym_manager.get_exchange_name(exchange_id as u16) {
             Ok(exchange_name) => Ok(Response::new(LookupExchangeNameResponse { exchange_name })),
             Err(e) => Err(Status::internal(e.to_string())),
-        };
+        }
     }
 
     /// Looks up a symbol for a given ID.
@@ -97,16 +99,16 @@ impl MdmService for MDMServer {
         };
         // println!("{} Found Exchange Name: {}", FN_NAME, exchange_name);
 
-        return match sym_manager.get_symbol(symbol_id as u16) {
+        match sym_manager.get_symbol(symbol_id as u16) {
             Ok(symbol) => Ok(Response::new(LookupSymbolResponse {
                 exchange_name,
                 symbol,
             })),
             Err(e) => {
                 let msg = format!("Symbol not found for ID: {}", symbol_id);
-                return Err(get_status(msg.as_str(), e));
+                Err(get_status(msg.as_str(), e))
             }
-        };
+        }
     }
 
     /// Looks up the symbol ID for the given symbol name and exchange ID.
@@ -149,7 +151,7 @@ impl MdmService for MDMServer {
         // println!("{} Found Exchange Name: {}", FN_NAME, exchange_name);
 
         // Lookup ID for Sy,bol & handle error
-        return match sym_manager.get_symbol_id(&symbol) {
+        match sym_manager.get_symbol_id(&symbol) {
             Ok(symbol_id) => Ok(Response::new(LookupSymbolIdResponse {
                 exchange_name,
                 symbol_id: symbol_id as i32,
@@ -161,7 +163,7 @@ impl MdmService for MDMServer {
                 );
                 return Err(get_status(msg.as_str(), e));
             }
-        };
+        }
     }
 }
 

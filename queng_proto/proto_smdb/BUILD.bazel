@@ -1,0 +1,22 @@
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@rules_rust//proto/prost:defs.bzl", "rust_prost_library")
+
+
+# The proto library must have the same name as the crate in Cargo.toml to build with Bazel and Cargo
+proto_library(
+    name = "proto_smdb",
+    srcs = [
+        "proto/dbgw.proto",
+        "proto/service_messages.proto",
+        "proto/smdb.proto",
+    ],
+    # strip_import_prefix ensures compatibility with Cargo / Prost proto imports
+    # https://bazel.build/reference/be/protocol-buffer
+    strip_import_prefix = "proto",
+)
+
+rust_prost_library(
+    name = "proto_smdb_bindings",
+    proto = ":proto_smdb",
+    visibility = ["//visibility:public"],
+)

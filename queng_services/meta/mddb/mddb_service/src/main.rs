@@ -10,7 +10,7 @@ use config_manager::CfgManager;
 use ctx_manager::CtxManager;
 use db_clickhouse_manager::ClickhouseDBManager;
 use dns_manager::DnsManager;
-use proto_bindings::proto::mdm_service_server::MdmServiceServer;
+use proto_mddb::proto::mdm_service_server::MdmServiceServer;
 use smdb_client::SMDBClient;
 use symbol_manager::SymbolManager;
 
