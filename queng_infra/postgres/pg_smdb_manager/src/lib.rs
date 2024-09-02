@@ -31,8 +31,8 @@ impl PostgresSMDBManager {
     /// # Returns
     ///
     /// * `Result<Self, PostgresDBError>` - A result indicating success or failure.
-    /// If successful, returns a PostgresSMDBManager instance.
-    /// If the connection fails, returns a PostgresDBError indicating the failure.
+    ///    If successful, returns a PostgresSMDBManager instance.
+    ///    If the connection fails, returns a PostgresDBError indicating the failure.
     ///
     async fn build(dbg: bool, url: &str) -> Result<Self, PostgresDBError> {
         if dbg {

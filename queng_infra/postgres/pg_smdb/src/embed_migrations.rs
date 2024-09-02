@@ -18,23 +18,23 @@ pub const SERVICE_MIGRATION: EmbeddedMigration = EmbeddedMigration::new(
     TomlMetadataWrapper::new(true),
 );
 
-const DIESEL_NAME: &'static str = "00000000000000_diesel_initial_setup";
-const DIESEL_UP: &'static str = include_str!(concat!(
+const DIESEL_NAME: &str = "00000000000000_diesel_initial_setup";
+const DIESEL_UP: &str = include_str!(concat!(
     env!("MIGRATION_DATA"),
     "/00000000000000_diesel_initial_setup/up.sql"
 ));
 
-const DIESEL_DOWN: &'static str = include_str!(concat!(
+const DIESEL_DOWN: &str = include_str!(concat!(
     env!("MIGRATION_DATA"),
     "/00000000000000_diesel_initial_setup/down.sql"
 ));
 
-const SERVICE_NAME: &'static str = "2024-08-12-093223_smdb";
-const SERVICE_UP: &'static str = include_str!(concat!(
+const SERVICE_NAME: &str = "2024-08-12-093223_smdb";
+const SERVICE_UP: &str = include_str!(concat!(
     env!("MIGRATION_DATA"),
     "/2024-08-12-093223_smdb/up.sql"
 ));
-const SERVICE_DOWN: &'static str = include_str!(concat!(
+const SERVICE_DOWN: &str = include_str!(concat!(
     env!("MIGRATION_DATA"),
     "/2024-08-12-093223_smdb/down.sql"
 ));

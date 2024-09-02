@@ -17,25 +17,25 @@ pub(crate) const CMDB_MIGRATION: EmbeddedMigration = EmbeddedMigration::new(
     TomlMetadataWrapper::new(true),
 );
 
-const DIESEL_NAME: &'static str = "00000000000000_diesel_initial_setup";
-const DIESEL_UP: &'static str = include_str!(concat!(
+const DIESEL_NAME: &str = "00000000000000_diesel_initial_setup";
+const DIESEL_UP: &str = include_str!(concat!(
     env!("MIGRATION_DATA"),
     "/00000000000000_diesel_initial_setup/up.sql"
 ));
 
-const DIESEL_DOWN: &'static str = include_str!(concat!(
+const DIESEL_DOWN: &str = include_str!(concat!(
     env!("MIGRATION_DATA"),
     "/00000000000000_diesel_initial_setup/down.sql"
 ));
 
-const CMDB_NAME: &'static str = "2024-08-12-083114_cmdb";
+const CMDB_NAME: &str = "2024-08-12-083114_cmdb";
 
-const CMDB_UP: &'static str = include_str!(concat!(
+const CMDB_UP: &str = include_str!(concat!(
     env!("MIGRATION_DATA"),
     "/2024-08-12-083114_cmdb/up.sql"
 ));
 
-const CMDB_DOWN: &'static str = include_str!(concat!(
+const CMDB_DOWN: &str = include_str!(concat!(
     env!("MIGRATION_DATA"),
     "/2024-08-12-083114_cmdb/down.sql"
 ));

@@ -25,7 +25,7 @@ impl PostgresSMDBManager {
         self.dbg_print("insert_service");
         let conn = &mut self.pool.get().unwrap();
 
-        match service::Service::create(conn, &service_config) {
+        match service::Service::create(conn, service_config) {
             Ok(_) => Ok(()),
             Err(e) => Err(PostgresDBError::InsertFailed(e.to_string())),
         }
@@ -36,7 +36,7 @@ impl PostgresSMDBManager {
     /// # Returns
     ///
     /// * `Result<u64, PostgresDBError>` - A result indicating success or failure.
-    /// The number of services is returned as a `u64` if successful.
+    ///    The number of services is returned as a `u64` if successful.
     ///
     pub async fn count_services(&mut self) -> Result<u64, PostgresDBError> {
         self.dbg_print("count_services");
@@ -57,7 +57,7 @@ impl PostgresSMDBManager {
     /// # Returns
     ///
     /// * `Result<bool, PostgresDBError>` - A result indicating success or failure.
-    /// If the service exists, returns `Ok(true)`, otherwise `Ok(false)`.
+    ///    If the service exists, returns `Ok(true)`, otherwise `Ok(false)`.
     ///
     pub async fn check_if_service_id_exists(
         &self,
@@ -81,7 +81,7 @@ impl PostgresSMDBManager {
     /// # Returns
     ///
     /// * `Result<bool, PostgresDBError>` - A result indicating success or failure.
-    /// If all services exist, returns `Ok(true)`, otherwise `Ok(false)`.
+    ///    If all services exist, returns `Ok(true)`, otherwise `Ok(false)`.
     ///
     pub async fn check_if_services_exists(
         &self,
@@ -112,8 +112,8 @@ impl PostgresSMDBManager {
     /// # Returns
     ///
     /// * `Result<bool, PostgresDBError>` - A result indicating success or failure.
-    /// If the service exists and is online, returns `Ok(true)`.
-    /// If the service does not exist, returns `Ok(false)`.
+    ///    If the service exists and is online, returns `Ok(true)`.
+    ///    If the service does not exist, returns `Ok(false)`.
     ///
     pub async fn check_if_service_id_online(
         &self,
@@ -137,8 +137,8 @@ impl PostgresSMDBManager {
     /// # Returns
     ///
     /// * `Result<bool, PostgresDBError>` - A result indicating success or failure.
-    /// If all services exist and are online, returns `Ok(true)`.
-    /// If any service does not exist or is not online, returns `Ok(false)`.
+    ///    If all services exist and are online, returns `Ok(true)`.
+    ///    If any service does not exist or is not online, returns `Ok(false)`.
     ///
     pub async fn check_if_services_online(
         &self,
@@ -166,8 +166,8 @@ impl PostgresSMDBManager {
     /// # Returns
     ///
     /// * `Result<Vec<ServiceConfig>, PostgresDBError>` - A result indicating success or failure.
-    /// If successful, returns a vector of all online services in the database.
-    /// If the operation fails, returns a `PostgresDBError`.
+    ///    If successful, returns a vector of all online services in the database.
+    ///    If the operation fails, returns a `PostgresDBError`.
     ///
     pub async fn get_all_online_services(&self) -> Result<Vec<ServiceConfig>, PostgresDBError> {
         self.dbg_print("get_all_online_services");
@@ -188,8 +188,8 @@ impl PostgresSMDBManager {
     /// # Returns
     ///
     /// * `Result<Vec<ServiceConfig>, PostgresDBError>` - A result indicating success or failure.
-    /// If successful, returns a vector of all offline services in the database.
-    /// If the operation fails, returns a `PostgresDBError`.
+    ///    If successful, returns a vector of all offline services in the database.
+    ///    If the operation fails, returns a `PostgresDBError`.
     ///
     pub async fn get_all_offline_services(&self) -> Result<Vec<ServiceConfig>, PostgresDBError> {
         self.dbg_print("get_all_offline_services");
@@ -210,8 +210,8 @@ impl PostgresSMDBManager {
     /// # Returns
     ///
     /// * `Result<Vec<ServiceID>, PostgresDBError>` - A result indicating success or failure.
-    /// If successful, returns a vector of all service dependencies for the given service ID.
-    /// If the operation fails, returns a `PostgresDBError`.
+    ///    If successful, returns a vector of all service dependencies for the given service ID.
+    ///    If the operation fails, returns a `PostgresDBError`.
     ///
     pub async fn get_all_service_dependencies(
         &self,
@@ -235,8 +235,8 @@ impl PostgresSMDBManager {
     /// # Returns
     ///
     /// * `Result<Vec<Endpoint>, PostgresDBError>` - A result indicating success or failure.
-    /// If successful, returns a vector of all service endpoints for the given service ID.
-    /// If the operation fails, returns a `PostgresDBError`.
+    ///    If successful, returns a vector of all service endpoints for the given service ID.
+    ///    If the operation fails, returns a `PostgresDBError`.
     ///
     pub async fn get_all_service_endpoints(
         &self,
@@ -260,7 +260,7 @@ impl PostgresSMDBManager {
     /// # Returns
     ///
     /// * `Result<(), PostgresDBError>` - A result indicating success or failure.
-    /// If the service was set to online, returns `Ok(())`.
+    ///    If the service was set to online, returns `Ok(())`.
     ///
     pub async fn set_service_online(&self, id: &ServiceID) -> Result<(), PostgresDBError> {
         self.dbg_print("set_service_online");
@@ -280,7 +280,7 @@ impl PostgresSMDBManager {
     /// # Returns
     ///
     /// * `Result<(), PostgresDBError>` - A result indicating success or failure.
-    /// If the service was set to offline, returns `Ok(())`.
+    ///    If the service was set to offline, returns `Ok(())`.
     ///
     pub async fn set_service_offline(&self, id: &ServiceID) -> Result<(), PostgresDBError> {
         self.dbg_print("set_service_offline");
@@ -301,8 +301,8 @@ impl PostgresSMDBManager {
     /// # Returns
     ///
     /// * `Result<Option<ServiceConfig>, PostgresDBError>` - A result indicating success or failure.
-    /// If successful, returns a `Some(ServiceConfig)` with the service data.
-    /// If the service does not exist, returns `Ok(None)`.
+    ///    If successful, returns a `Some(ServiceConfig)` with the service data.
+    ///    If the service does not exist, returns `Ok(None)`.
     ///
     pub async fn read_service_by_id(
         &self,
@@ -331,8 +331,7 @@ impl PostgresSMDBManager {
     /// # Returns
     ///
     /// * `Result<Vec<ServiceConfig>, PostgresDBError>` - A result indicating success or failure.
-    /// If successful, returns a vector of all services in the database.
-    ///
+    ///    If successful, returns a vector of all services in the database.
     ///
     /// # Errors
     ///
@@ -357,8 +356,8 @@ impl PostgresSMDBManager {
     /// # Returns
     ///
     /// * `Result<Option<ServiceConfig>, PostgresDBError>` - A result indicating success or failure.
-    /// If successful, returns the updated service data.
-    /// If the service does not exist, returns `Ok(None)`.
+    ///    If successful, returns the updated service data.
+    ///    If the service does not exist, returns `Ok(None)`.
     ///
     /// # Errors
     ///
@@ -397,8 +396,8 @@ impl PostgresSMDBManager {
     /// # Returns
     ///
     /// * `Result<bool, PostgresDBError>` - A result indicating success or failure.
-    /// If the service was deleted, returns `Ok(true)`.
-    /// If the service does not exist, returns `Ok(false)`.
+    ///    If the service was deleted, returns `Ok(true)`.
+    ///    If the service does not exist, returns `Ok(false)`.
     ///
     pub async fn delete_service(&self, id: &ServiceID) -> Result<bool, PostgresDBError> {
         self.dbg_print("delete_service");
