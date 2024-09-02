@@ -183,12 +183,6 @@ alias(
 ###############################################################################
 
 alias(
-    name = "rust_proto",
-    actual = "//queng_proto:rust_proto",
-    visibility = ["//visibility:public"],
-)
-
-alias(
     name = "proto_cmdb",
     actual = "//queng_proto/proto_cmdb:proto_cmdb_bindings",
     visibility = ["//visibility:public"],

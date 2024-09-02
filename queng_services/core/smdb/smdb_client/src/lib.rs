@@ -3,7 +3,7 @@ use std::fmt;
 
 use tonic::transport::{Channel, Uri};
 
-use proto_bindings::proto::smdb_service_client::SmdbServiceClient;
+use proto_smdb::proto::smdb_service_client::SmdbServiceClient;
 
 mod prv_smdb;
 

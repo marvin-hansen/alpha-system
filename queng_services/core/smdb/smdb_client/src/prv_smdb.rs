@@ -1,5 +1,5 @@
 use common_config::prelude::ServiceID;
-use proto_bindings::proto::{MultiServicesRequest, SingleServiceRequest};
+use proto_smdb::proto::{MultiServicesRequest, SingleServiceRequest};
 
 use crate::{SMDBClient, SMDBError};
 

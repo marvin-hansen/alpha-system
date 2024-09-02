@@ -10,7 +10,7 @@ authors.workspace = true
 [dependencies]
 # Internal crates
 common_config = {workspace = true}
-proto_bindings = {workspace = true}
+proto_smdb = {workspace = true}
 # External crates
 tokio = { workspace = true }
 tonic = { workspace = true }
