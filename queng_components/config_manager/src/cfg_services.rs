@@ -160,4 +160,17 @@ impl<'l> CfgManager<'l> {
 
         Ok((host, port))
     }
+
+    // pub(crate) async fn get_port(
+    //     &self,
+    //     svc_env_config: &SvcEnvConfig,
+    // ) -> Result<u16, InitError> {
+    //     let port: u16 = svc_env_config
+    //         .service_port()
+    //         .parse()
+    //         .expect("[EnvManager]: Failed to parse port from config");
+    //
+    //
+    //     Ok(port)
+    // }
 }

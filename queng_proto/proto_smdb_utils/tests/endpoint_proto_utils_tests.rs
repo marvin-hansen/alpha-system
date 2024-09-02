@@ -13,7 +13,7 @@ fn test_from_proto() {
     };
 
     let all_endpoints = endpoint_from_proto(Vec::from([proto])).unwrap();
-    let endpoint = all_endpoints.get(0).unwrap();
+    let endpoint = all_endpoints.first().unwrap();
 
     assert_eq!(endpoint.name(), "test");
     assert_eq!(endpoint.version(), 1);
@@ -33,7 +33,7 @@ fn test_to_proto() {
     );
 
     let all_endpoints = endpoint_to_proto(&Vec::from([endpoint])).unwrap();
-    let proto = all_endpoints.get(0).unwrap();
+    let proto = all_endpoints.first().unwrap();
 
     assert_eq!(proto.name, "test");
     assert_eq!(proto.version, 1);
