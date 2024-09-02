@@ -12,6 +12,7 @@ authors.workspace = true
 # Internal crates
 common_exchange = {workspace = true}
 common_config = {workspace = true}
+proto_utils = {workspace = true}
 proto_smdb = {workspace = true}
 
 # Exteral crates
