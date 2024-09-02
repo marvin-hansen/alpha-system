@@ -129,8 +129,6 @@ postgres_utils = { path = "queng_infra/postgres/postgres_utils" }
 # Clickhouse DB
 clickhouse_utils = { path = "queng_infra/clickhouse/clickhouse_utils" }
 # Proto
-proto_bindings = { path = "queng_proto" }
-#
 proto_cmdb = { path = "queng_proto/proto_cmdb" }
 proto_imdb = { path = "queng_proto/proto_imdb" }
 proto_mddb = { path = "queng_proto/proto_mddb" }
