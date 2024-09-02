@@ -10,7 +10,7 @@ async fn test_start_service_util() {
     // Start the service
     let service_id = ServiceID::KaikoProxy;
 
-    let res = ServiceUtil::with_debug();
+    let res = ServiceUtil::with_debug().await;
     assert!(res.is_ok());
     let svc_util = res.unwrap();
 

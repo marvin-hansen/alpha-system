@@ -23,6 +23,8 @@ rust_library(
         "//alias:common_config",
         "//alias:common_env",
         "//alias:ctx_manager",
+        # External crates
+        "//thirdparty/crates:tokio",
     ],
 )
 

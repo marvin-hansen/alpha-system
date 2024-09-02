@@ -84,7 +84,7 @@ impl EnvUtil {
     ///
     async fn build(dbg: bool) -> Result<Self, EnvironmentError> {
         // Autodetect the environment in which the system runs
-        let ctx = CtxManager::new();
+        let ctx = CtxManager::new().await;
         let env = ctx.env_type();
 
         // Get container configs

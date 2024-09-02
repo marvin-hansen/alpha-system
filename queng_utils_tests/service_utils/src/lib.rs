@@ -25,8 +25,8 @@ impl ServiceUtil {
     /// Returns a `Result` containing a `ServiceUtil` instance on success.
     /// On failure, returns a `ServiceUtilError`.
     ///
-    pub fn new() -> Result<Self, ServiceUtilError> {
-        Self::build(false)
+    pub async fn new() -> Result<Self, ServiceUtilError> {
+        Self::build(false).await
     }
 
     /// Creates a new `ServiceUtil` instance with debug mode enabled.
@@ -36,19 +36,19 @@ impl ServiceUtil {
     /// Returns a `Result` containing a `ServiceUtil` instance on success.
     /// On failure, returns a `ServiceUtilError`.
     ///
-    pub fn with_debug() -> Result<Self, ServiceUtilError> {
-        Self::build(true)
+    pub async fn with_debug() -> Result<Self, ServiceUtilError> {
+        Self::build(true).await
     }
 
-    pub fn build(dbg: bool) -> Result<Self, ServiceUtilError> {
+    async fn build(dbg: bool) -> Result<Self, ServiceUtilError> {
         if dbg {
             println!("[ServiceUtil]: Debug mode enabled");
         }
 
         let ctx_manager = if dbg {
-            CtxManager::with_debug()
+            CtxManager::with_debug().await
         } else {
-            CtxManager::new()
+            CtxManager::new().await
         };
 
         let env = ctx_manager.env_type();
