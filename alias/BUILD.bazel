@@ -207,6 +207,13 @@ alias(
 )
 
 alias(
+    name = "proto_mddb_utils",
+    actual = "//queng_proto/proto_mddb_utils",
+    visibility = ["//visibility:public"],
+)
+
+
+alias(
     name = "proto_smdb",
     actual = "//queng_proto/proto_smdb:proto_smdb_bindings",
     visibility = ["//visibility:public"],

@@ -1,6 +1,7 @@
 use crate::error::SymdbClientError;
-use crate::{utils_proto, MDMClient};
+use crate::MDMClient;
 use common_exchange::prelude::ExchangeID;
+use proto_mddb_utils::request_utils_proto;
 
 const FN_NAME: &str = "[SymdbClient]: ";
 
@@ -25,7 +26,7 @@ impl MDMClient {
         exchange_id: ExchangeID,
     ) -> Result<String, SymdbClientError> {
         //
-        let request = utils_proto::get_exchange_request(exchange_id);
+        let request = request_utils_proto::get_exchange_request(exchange_id);
 
         let res = self.client.lookup_exchange_name(request).await;
 
@@ -55,7 +56,7 @@ impl MDMClient {
         exchange_id: ExchangeID,
         symbol_id: u16,
     ) -> Result<String, SymdbClientError> {
-        let request = utils_proto::get_symbol_request(exchange_id, symbol_id);
+        let request = request_utils_proto::get_symbol_request(exchange_id, symbol_id);
 
         let res = self.client.lookup_symbol(request).await;
 
@@ -83,7 +84,7 @@ impl MDMClient {
         exchange_id: ExchangeID,
         symbol: String,
     ) -> Result<u16, SymdbClientError> {
-        let request = utils_proto::get_symbol_id_request(exchange_id, symbol.clone());
+        let request = request_utils_proto::get_symbol_id_request(exchange_id, symbol.clone());
 
         let res = self.client.lookup_symbol_id(request);
 

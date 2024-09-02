@@ -12,6 +12,7 @@ authors.workspace = true
 common_config = {workspace = true}
 common_exchange = {workspace = true}
 proto_mddb = {workspace = true}
+proto_mddb_utils = {workspace = true}
 
 # Exteral crates
 tokio = { workspace = true }

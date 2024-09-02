@@ -1,36 +1,33 @@
 load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library")
 
 rust_library(
-    name = "mddb_client",
+    name = "proto_mddb_utils",
     srcs = glob([
-        "src/**",
+        "src/*.rs",
     ]),
     crate_root = "src/lib.rs",
-    tags = ["client"],
+    tags = [
+        "proto_utils",
+        "utils",
+    ],
     visibility = ["//visibility:public"],
     deps = [
         # Internal crates
-        "//alias:common_config",
         "//alias:common_exchange",
         "//alias:proto_mddb",
-        "//alias:proto_mddb_utils",
-        # Exteral crates
-        "//thirdparty/crates:tokio",
-        "//thirdparty/crates:tonic",
-        "//thirdparty/crates:prost",
     ],
 )
 
 rust_doc(
     name = "doc",
-    crate = ":mddb_client",
+    crate = ":proto_mddb_utils",
     tags = ["doc"],
     visibility = ["//visibility:public"],
 )
 
 rust_doc_test(
     name = "doc_test",
-    crate = ":mddb_client",
+    crate = ":proto_mddb_utils",
     tags = ["doc-test"],
     visibility = ["//visibility:public"],
 )

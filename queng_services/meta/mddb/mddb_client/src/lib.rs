@@ -1,5 +1,4 @@
 mod error;
-mod utils_proto;
 mod workflow;
 
 use common_config::prelude::HostEndpoint;

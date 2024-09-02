@@ -12,7 +12,7 @@ use proto_mddb::proto::{LookupExchangeNameRequest, LookupSymbolIdRequest, Lookup
 /// Returns a tonic::Request with the GetExchange RPC request populated
 /// with the provided exchange ID.
 ///
-pub(crate) fn get_exchange_request(exchange_id: ExchangeID) -> LookupExchangeNameRequest {
+pub fn get_exchange_request(exchange_id: ExchangeID) -> LookupExchangeNameRequest {
     let exchange_id = exchange_id as i32;
     LookupExchangeNameRequest { exchange_id }
 }
@@ -28,7 +28,7 @@ pub(crate) fn get_exchange_request(exchange_id: ExchangeID) -> LookupExchangeNam
 /// Returns a tonic::Request with the GetSymbol RPC request populated
 /// with the provided symbol ID.
 ///
-pub(crate) fn get_symbol_request(exchange_id: ExchangeID, symbol_id: u16) -> LookupSymbolRequest {
+pub fn get_symbol_request(exchange_id: ExchangeID, symbol_id: u16) -> LookupSymbolRequest {
     let exchange_id = exchange_id as i32;
     let symbol_id = symbol_id as i32;
 
@@ -49,10 +49,7 @@ pub(crate) fn get_symbol_request(exchange_id: ExchangeID, symbol_id: u16) -> Loo
 /// Returns a tonic::Request with the GetSymbolId RPC request populated
 /// with the provided symbol string.
 ///
-pub(crate) fn get_symbol_id_request(
-    exchange_id: ExchangeID,
-    symbol: String,
-) -> LookupSymbolIdRequest {
+pub fn get_symbol_id_request(exchange_id: ExchangeID, symbol: String) -> LookupSymbolIdRequest {
     let exchange_id = exchange_id as i32;
     LookupSymbolIdRequest {
         exchange_id,
