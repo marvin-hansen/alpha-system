@@ -13,7 +13,7 @@ rust_library(
         "//alias:config_manager",
         "//alias:ctx_manager",
         "//alias:dns_manager",
-        "//alias:rust_proto",
+        "//alias:proto_imdb",
         "//alias:common_service",
         "//alias/client:smdb_client",
         # External crates

@@ -1,5 +1,5 @@
 use common_config::prelude::{Endpoint, ServiceConfig, ServiceID};
-use proto_bindings::proto::{
+use proto_smdb::proto::{
     CountServiceRequest, MultiServicesRequest, ServiceDependenciesRequest, ServiceEndpointsRequest,
     ServicesOfflineRequest, ServicesOnlineRequest, SingleServiceRequest,
 };

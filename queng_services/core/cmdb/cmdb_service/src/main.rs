@@ -10,7 +10,7 @@ use config_manager::CfgManager;
 use ctx_manager::CtxManager;
 use dns_manager::DnsManager;
 use pg_cmdb_manager::PostgresCMDBManager;
-use proto_bindings::proto::cmdb_service_server::CmdbServiceServer;
+use proto_cmdb::proto::cmdb_service_server::CmdbServiceServer;
 use smdb_client::SMDBClient;
 
 use crate::service::CMDBServer;

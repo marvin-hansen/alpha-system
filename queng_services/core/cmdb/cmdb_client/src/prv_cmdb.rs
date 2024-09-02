@@ -1,5 +1,5 @@
 use common_exchange::prelude::PortfolioConfig;
-use proto_bindings::proto::{MultiPortfolioRequest, SinglePortfolioRequest};
+use proto_cmdb::proto::{MultiPortfolioRequest, SinglePortfolioRequest};
 use proto_utils::portfolio_proto_utils::{portfolio_config_from_proto, portfolio_config_to_proto};
 
 use crate::{CMDBError, CmdbClient};

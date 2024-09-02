@@ -18,7 +18,7 @@ config_manager = {workspace = true}
 ctx_manager = {workspace = true}
 pg_smdb_manager = {workspace = true}
 dns_manager = {workspace = true}
-proto_bindings = {workspace = true}
+proto_smdb = {workspace = true}
 proto_utils = {workspace = true}
 common_service =  {workspace = true}
 # External crates

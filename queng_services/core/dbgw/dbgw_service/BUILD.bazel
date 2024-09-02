@@ -48,7 +48,7 @@ rust_binary(
         "//alias:ctx_manager",
         "//alias:pg_smdb_manager",
         "//alias:dns_manager",
-        "//alias:rust_proto",
+        "//alias:proto_smdb",
         "//alias:proto_utils",
         "//alias:common_service",
         # Custom Memory Allocator

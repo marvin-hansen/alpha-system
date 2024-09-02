@@ -15,6 +15,7 @@ rust_test_suite(
         # Internal crates
         "//alias:common_config",
         "//alias:common_exchange",
-        "//alias:rust_proto",
+        "//alias:proto_cmdb",
+        "//alias:proto_smdb",
     ],
 )

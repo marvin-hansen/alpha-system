@@ -1,7 +1,7 @@
 use tonic::transport::{Channel, Uri};
 
 use common_config::prelude::HostEndpoint;
-use proto_bindings::proto::db_gateway_service_client::DbGatewayServiceClient as DBGWClient;
+use proto_smdb::proto::db_gateway_service_client::DbGatewayServiceClient as DBGWClient;
 
 mod error;
 mod svc_gw;

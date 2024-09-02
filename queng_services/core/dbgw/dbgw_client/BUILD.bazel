@@ -12,7 +12,7 @@ rust_library(
         # Internal crates
         "//alias:common_exchange",
         "//alias:common_config",
-        "//alias:rust_proto",
+        "//alias:proto_smdb",
         "//alias:proto_utils",
         # External crates
         "//thirdparty/crates:tokio",

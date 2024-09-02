@@ -1,5 +1,5 @@
 use common_config::prelude::{Endpoint, ProtocolType};
-use proto_bindings::proto::ProtoEndpoint;
+use proto_smdb::proto::ProtoEndpoint;
 use proto_utils::endpoint_proto_utils::{endpoint_from_proto, endpoint_to_proto};
 
 #[test]

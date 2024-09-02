@@ -1,5 +1,5 @@
 use common_exchange::prelude::{AccountType, Instrument, PortfolioConfig};
-use proto_bindings::proto::{ProtoInstrument, ProtoPortfolioConfig};
+use proto_cmdb::proto::{ProtoInstrument, ProtoPortfolioConfig};
 use std::fmt::Error;
 
 /// Converts a `ProtoPortfolioConfig` into a `PortfolioConfig`.

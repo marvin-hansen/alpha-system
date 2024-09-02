@@ -13,7 +13,7 @@ rust_library(
         "//alias:common_data_bar",
         "//alias:common_config",
         "//alias:common_exchange",
-        "//alias:rust_proto",
+        "//alias:proto_imdb",
         # Exteral crates
         "//thirdparty/crates:tokio",
         "//thirdparty/crates:tonic",

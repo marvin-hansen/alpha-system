@@ -7,7 +7,7 @@ use common_service::{print_utils, shutdown_utils};
 use config_manager::CfgManager;
 use ctx_manager::CtxManager;
 use dns_manager::DnsManager;
-use proto_bindings::proto::ims_data_service_server::{ImsDataService, ImsDataServiceServer};
+use proto_imdb::proto::ims_data_service_server::{ImsDataService, ImsDataServiceServer};
 use smdb_client::SMDBClient;
 
 pub async fn run(

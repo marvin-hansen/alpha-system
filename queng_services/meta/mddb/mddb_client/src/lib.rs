@@ -3,7 +3,7 @@ mod utils_proto;
 mod workflow;
 
 use common_config::prelude::HostEndpoint;
-use proto_bindings::proto::mdm_service_client::MdmServiceClient;
+use proto_mddb::proto::mdm_service_client::MdmServiceClient;
 use std::fmt::Error;
 use tonic::transport::{Channel, Uri};
 

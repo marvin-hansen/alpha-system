@@ -1,7 +1,7 @@
 use std::fmt::Error;
 
 use common_config::prelude::{Endpoint, ProtocolType};
-use proto_bindings::proto::ProtoEndpoint;
+use proto_smdb::proto::ProtoEndpoint;
 
 /// Converts a `ProtoEndpoint` into an `Endpoint`.
 ///

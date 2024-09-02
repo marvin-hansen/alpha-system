@@ -26,7 +26,7 @@ ctx_manager = {workspace = true}
 dns_manager = {workspace = true}
 ims_common = {workspace = true}
 lib_data_stream = {workspace = true}
-proto_bindings = {workspace = true}
+proto_imdb = {workspace = true}
 common_service =  {workspace = true}
 # External crates
 binance-rs-async = { workspace = true }

@@ -5,7 +5,7 @@ mod stream_manager;
 use crate::service::ImsDataServer;
 use common_config::prelude::ServiceID;
 use mimalloc::MiMalloc;
-use proto_bindings::proto::ims_data_service_server::ImsDataServiceServer;
+use proto_imdb::proto::ims_data_service_server::ImsDataServiceServer;
 
 #[global_allocator]
 static GLOBAL: MiMalloc = MiMalloc;
