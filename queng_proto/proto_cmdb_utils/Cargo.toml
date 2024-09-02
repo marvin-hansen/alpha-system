@@ -8,3 +8,7 @@ repository.workspace = true
 authors.workspace = true
 
 [dependencies]
+# Internal dependencies
+common_exchange = { workspace = true }
+proto_cmdb = { workspace = true }
+# External dependencies

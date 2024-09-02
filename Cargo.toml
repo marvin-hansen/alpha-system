@@ -27,6 +27,7 @@ members = [
     "queng_infra/postgres/pg_cmdb_manager",
     "queng_infra/postgres/pg_smdb_manager",
     "queng_proto/proto_cmdb",
+    "queng_proto/proto_cmdb_utils",
     "queng_proto/proto_imdb",
     "queng_proto/proto_mddb",
     "queng_proto/proto_smdb",
@@ -66,13 +67,12 @@ members = [
     "queng_specs/service_specs/shared_service_specs",
     "queng_infra/clickhouse/clickhouse_utils",
     "queng_utils/math_utils",
-    "queng_utils/proto_utils",
     "queng_utils/specs_utils",
     "queng_utils/crypto_utils",
     "queng_utils_tests/docker_utils",
     "queng_utils_tests/env_utils",
     "queng_utils_tests/kaiko_utils",
-    "queng_utils_tests/service_utils", "queng_proto/proto_cmdb_utils",
+    "queng_utils_tests/service_utils",
 ]
 
 
@@ -132,6 +132,7 @@ postgres_utils = { path = "queng_infra/postgres/postgres_utils" }
 
 # Proto
 proto_cmdb = { path = "queng_proto/proto_cmdb" }
+proto_cmdb_utils = { path = "queng_proto/proto_cmdb_utils" }
 proto_imdb = { path = "queng_proto/proto_imdb" }
 proto_mddb = { path = "queng_proto/proto_mddb" }
 proto_smdb = { path = "queng_proto/proto_smdb" }
@@ -160,7 +161,6 @@ shared_service_specs = { path = "queng_specs/service_specs/shared_service_specs"
 # Utils
 crypto_utils = { path = "queng_utils/crypto_utils" }
 math_utils = { path = "queng_utils/math_utils" }
-proto_utils = { path = "queng_utils/proto_utils" }
 specs_utils = { path = "queng_utils/specs_utils" }
 # Utils - Tests
 docker_utils = { path = "queng_utils_tests/docker_utils" }

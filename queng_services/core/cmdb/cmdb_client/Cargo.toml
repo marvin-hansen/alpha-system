@@ -12,7 +12,7 @@ authors.workspace = true
 # Internal crates
 common_exchange = {workspace = true}
 proto_cmdb = {workspace = true}
-proto_utils = {workspace = true}
+proto_cmdb_utils = {workspace = true}
 # External crates
 tokio = { workspace = true }
 tonic = { workspace = true }

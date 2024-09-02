@@ -1,7 +1,9 @@
 use pg_cmdb_manager::PostgresCMDBManager;
 use proto_cmdb::proto::cmdb_service_server::CmdbService;
 use proto_cmdb::proto::*;
-use proto_utils::portfolio_proto_utils::{portfolio_config_from_proto, portfolio_config_to_proto};
+use proto_cmdb_utils::portfolio_proto_utils::{
+    portfolio_config_from_proto, portfolio_config_to_proto,
+};
 use std::sync::Arc;
 use tokio::sync::RwLock;
 use tonic::{Request, Response, Status};

@@ -1,7 +1,7 @@
 load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library")
 
 rust_library(
-    name = "proto_utils",
+    name = "proto_cmdb_utils",
     srcs = glob([
         "src/*.rs",
     ]),
@@ -13,23 +13,21 @@ rust_library(
     visibility = ["//visibility:public"],
     deps = [
         # Internal crates
-        "//alias:common_config",
         "//alias:common_exchange",
         "//alias:proto_cmdb",
-        "//alias:proto_smdb",
     ],
 )
 
 rust_doc(
     name = "doc",
-    crate = ":proto_utils",
+    crate = ":proto_cmdb_utils",
     tags = ["doc"],
     visibility = ["//visibility:public"],
 )
 
 rust_doc_test(
     name = "doc_test",
-    crate = ":proto_utils",
+    crate = ":proto_cmdb_utils",
     tags = ["doc-test"],
     visibility = ["//visibility:public"],
 )

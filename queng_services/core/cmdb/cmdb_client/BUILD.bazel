@@ -15,7 +15,7 @@ rust_library(
         # Internal crates
         "//alias:common_exchange",
         "//alias:proto_cmdb",
-        "//alias:proto_utils",
+        "//alias:proto_cmdb_utils",
         # External crates
         "//thirdparty/crates:tokio",
         "//thirdparty/crates:tonic",

@@ -189,6 +189,12 @@ alias(
 )
 
 alias(
+    name = "proto_cmdb_utils",
+    actual = "//queng_proto/proto_cmdb_utils",
+    visibility = ["//visibility:public"],
+)
+
+alias(
     name = "proto_imdb",
     actual = "//queng_proto/proto_imdb:proto_imdb_bindings",
     visibility = ["//visibility:public"],
@@ -324,12 +330,6 @@ alias(
 alias(
     name = "math_utils",
     actual = "//queng_utils/math_utils",
-    visibility = ["//visibility:public"],
-)
-
-alias(
-    name = "proto_utils",
-    actual = "//queng_utils/proto_utils",
     visibility = ["//visibility:public"],
 )
 

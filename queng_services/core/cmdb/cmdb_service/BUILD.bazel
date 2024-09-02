@@ -49,7 +49,7 @@ rust_binary(
         "//alias:dns_manager",
         "//alias:pg_cmdb_manager",
         "//alias:proto_cmdb",
-        "//alias:proto_utils",
+        "//alias:proto_cmdb_utils",
         "//alias:common_service",
         "//alias/client:smdb_client",
         # Custom Memory Allocator
