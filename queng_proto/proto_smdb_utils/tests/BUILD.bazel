@@ -1,0 +1,19 @@
+load("@rules_rust//rust:defs.bzl", "rust_test_suite")
+
+rust_test_suite(
+    name = "tests",
+    srcs = glob([
+        "*_tests.rs",
+    ]),
+    tags = [
+        "unit-test",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate under test
+        "//alias:proto_smdb_utils",
+        # Internal crates
+        "//alias:common_config",
+        "//alias:proto_smdb",
+    ],
+)

@@ -30,6 +30,7 @@ members = [
     "queng_proto/proto_imdb",
     "queng_proto/proto_mddb",
     "queng_proto/proto_smdb",
+    "queng_proto/proto_smdb_utils",
     "queng_sbe/bindings",
     "queng_sbe/sbe_messages",
     "queng_services/aux/kaiko_proxy",
@@ -71,7 +72,7 @@ members = [
     "queng_utils_tests/docker_utils",
     "queng_utils_tests/env_utils",
     "queng_utils_tests/kaiko_utils",
-    "queng_utils_tests/service_utils",
+    "queng_utils_tests/service_utils", "queng_proto/proto_cmdb_utils",
 ]
 
 
@@ -112,11 +113,13 @@ common_trade = { path = "queng_common/common_trade" }
 # Components
 config_manager = { path = "queng_components/config_manager" }
 ctx_manager = { path = "queng_components/ctx_manager" }
-db_clickhouse_manager = { path = "queng_infra/clickhouse/db_clickhouse_manager" }
 dns_manager = { path = "queng_components/dns_manager" }
 pattern_manager = { path = "queng_components/pattern_manager" }
 symbol_manager = { path = "queng_components/symbol_manager" }
 # Infra
+# Clickhouse DB
+clickhouse_utils = { path = "queng_infra/clickhouse/clickhouse_utils" }
+db_clickhouse_manager = { path = "queng_infra/clickhouse/db_clickhouse_manager" }
 # Postgres DB
 pg_cmdb = { path = "queng_infra/postgres/pg_cmdb" }
 pg_cmdb_manager = { path = "queng_infra/postgres/pg_cmdb_manager" }
@@ -126,13 +129,13 @@ pg_mddb = { path = "queng_infra/postgres/pg_mddb" }
 postgres_migrations = { path = "queng_infra/postgres/postgres_migrations" }
 postgres_test_utils = { path = "queng_infra/postgres/postgres_test_utils" }
 postgres_utils = { path = "queng_infra/postgres/postgres_utils" }
-# Clickhouse DB
-clickhouse_utils = { path = "queng_infra/clickhouse/clickhouse_utils" }
+
 # Proto
 proto_cmdb = { path = "queng_proto/proto_cmdb" }
 proto_imdb = { path = "queng_proto/proto_imdb" }
 proto_mddb = { path = "queng_proto/proto_mddb" }
 proto_smdb = { path = "queng_proto/proto_smdb" }
+proto_smdb_utils = { path = "queng_proto/proto_smdb_utils" }
 # SBE
 sbe_bindings = { path = "queng_sbe/bindings" }
 sbe_messages = { path = "queng_sbe/sbe_messages" }

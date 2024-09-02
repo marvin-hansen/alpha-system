@@ -3,8 +3,10 @@ use proto_smdb::proto::{
     CountServiceRequest, MultiServicesRequest, ServiceDependenciesRequest, ServiceEndpointsRequest,
     ServicesOfflineRequest, ServicesOnlineRequest, SingleServiceRequest,
 };
-use proto_utils::endpoint_proto_utils::endpoint_from_proto;
-use proto_utils::service_config_proto_utils::{service_config_from_proto, service_config_to_proto};
+use proto_smdb_utils::endpoint_proto_utils::endpoint_from_proto;
+use proto_smdb_utils::service_config_proto_utils::{
+    service_config_from_proto, service_config_to_proto,
+};
 
 use crate::error::DBGatewayError;
 use crate::DBGatewayClient;

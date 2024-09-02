@@ -49,7 +49,7 @@ rust_binary(
         "//alias:pg_smdb_manager",
         "//alias:dns_manager",
         "//alias:proto_smdb",
-        "//alias:proto_utils",
+        "//alias:proto_smdb_utils",
         "//alias:common_service",
         # Custom Memory Allocator
         "//thirdparty/crates:mimalloc",

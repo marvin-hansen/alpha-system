@@ -206,6 +206,12 @@ alias(
     visibility = ["//visibility:public"],
 )
 
+alias(
+    name = "proto_smdb_utils",
+    actual = "//queng_proto/proto_smdb_utils",
+    visibility = ["//visibility:public"],
+)
+
 ###############################################################################
 # SBE
 ###############################################################################
