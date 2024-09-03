@@ -15,7 +15,11 @@ fn test_service_config_from_proto() {
         health_check_uri: "/health".to_string(),
         base_uri: "http://localhost:8080".to_string(),
         dependencies: vec![2, 3],
-        endpoint: Vec::from([ProtoEndpoint::default()]),
+        endpoint: Vec::from([
+            ProtoEndpoint::default(),
+            ProtoEndpoint::default(),
+            ProtoEndpoint::default(),
+        ]),
     };
 
     let config = service_config_from_proto(proto).unwrap();
@@ -44,7 +48,11 @@ fn test_to_proto() {
         "/health".to_string(),
         "http://localhost:8080".to_string(),
         vec![ServiceID::CMDB, ServiceID::DBGW],
-        Vec::from([Endpoint::default()]),
+        Vec::from([
+            Endpoint::default(),
+            Endpoint::default(),
+            Endpoint::default(),
+        ]),
     );
 
     let proto = service_config_to_proto(config).unwrap();

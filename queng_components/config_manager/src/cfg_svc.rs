@@ -101,31 +101,6 @@ impl CfgManager {
         Ok(socket_addr)
     }
 
-    /// Returns the metric socket address and uri to run the service in any
-    pub fn get_metrics_socket_addr_uri(&self) -> Result<(String, String), InitError> {
-        let (metrics_host, metrics_uri, metrics_port) = self
-            .get_svc_metric_host_uri_port()
-            .expect("Failed to get metric host, uri, and port");
-
-        // Merge the host and port into a socket address i.e. 0.0.0.0:8080
-        let socket_addr = format!("{}:{}", metrics_host, metrics_port);
-
-        Ok((socket_addr, metrics_uri))
-    }
-
-    fn get_svc_metric_host_uri_port(&self) -> Result<(String, String, u32), InitError> {
-        let svc = self.svc_env_config.to_owned();
-        let metric_host = svc.metrics_host().to_string();
-        let metrics_uri = svc.metrics_uri().to_string();
-        let port = *svc.metrics_port() as u16;
-
-        let metrics_port = self
-            .get_port(&svc, port)
-            .expect("[EnvManager]: Failed to get port from config");
-
-        Ok((metric_host, metrics_uri, metrics_port as u32))
-    }
-
     // Returns the hostname and port of the service based on the environment type.
     // If the environment type is local, it returns the hostname of the service running locally.
     // If the environment type is cluster, it returns the hostname of the service running in the cluster.
@@ -141,29 +116,39 @@ impl CfgManager {
             .expect("[EnvManager]: Failed to parse port from config");
 
         let port = self
-            .get_port(svc_env_config, svc_port)
+            .get_port(svc_port)
             .expect("[EnvManager]: Failed to get port from config");
 
-        let host = match self.env_type {
-            EnvironmentType::LOCAL => svc_env_config.local_host().to_string(),
+        let host = match self.get_service_host().await {
+            Ok(host) => host,
 
-            EnvironmentType::CI => svc_env_config.ci_host().to_string(),
-
-            EnvironmentType::CLUSTER => {
-                let cluster_host = self
-                    .resolve_dns(svc_env_config.cluster_host(), true)
-                    .await
-                    .expect("[EnvManager]: Failed to resolve DNS");
-
-                cluster_host.to_string()
-            }
-
-            EnvironmentType::UNKNOWN => {
-                return Err(InitError("[EnvManager]: Unknown Environment".to_string()));
+            Err(err) => {
+                return Err(err);
             }
         };
 
         Ok((host, port))
+    }
+
+    pub(crate) async fn get_service_host(&self) -> Result<String, InitError> {
+        match self.env_type {
+            EnvironmentType::LOCAL => Ok(self.svc_env_config.local_host().to_string()),
+
+            EnvironmentType::CI => Ok(self.svc_env_config.ci_host().to_string()),
+
+            EnvironmentType::CLUSTER => {
+                let cluster_host = self
+                    .resolve_dns(self.svc_env_config.cluster_host(), true)
+                    .await
+                    .expect("[EnvManager]: Failed to resolve DNS");
+
+                Ok(cluster_host.to_string())
+            }
+
+            EnvironmentType::UNKNOWN => {
+                Err(InitError("[EnvManager]: Unknown Environment".to_string()))
+            }
+        }
     }
 
     /// Returns the port of the service based on the environment type.
@@ -172,16 +157,12 @@ impl CfgManager {
     /// If the environment type is cluster, it returns the port of the service running in the cluster.
     /// If the environment type is unknown, it returns an error.
     ///
-    pub(crate) fn get_port(
-        &self,
-        svc_env_config: &SvcEnvConfig,
-        svc_port: u16,
-    ) -> Result<u16, InitError> {
+    pub(crate) fn get_port(&self, svc_port: u16) -> Result<u16, InitError> {
         let port = match self.env_type {
             EnvironmentType::UNKNOWN => svc_port,
-            EnvironmentType::LOCAL => svc_port + svc_env_config.service_id().as_u16(),
+            EnvironmentType::LOCAL => svc_port + self.svc_env_config.service_id().as_u16(),
             EnvironmentType::CLUSTER => svc_port,
-            EnvironmentType::CI => svc_port + svc_env_config.service_id().as_u16(),
+            EnvironmentType::CI => svc_port + self.svc_env_config.service_id().as_u16(),
         };
 
         Ok(port)

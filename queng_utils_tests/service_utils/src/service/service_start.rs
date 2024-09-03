@@ -17,7 +17,7 @@ impl ServiceUtil {
     /// # Returns
     ///
     /// Returns a `ServiceUtilError` if the service could not be started.
-    pub fn start_service(&self, svc: &ServiceID) -> Result<(), ServiceUtilError> {
+    pub async fn start_service(&self, svc: &ServiceID) -> Result<(), ServiceUtilError> {
         self.dbg_print("start_service");
         self.dbg_print(&format!(
             "Starting service: {}",
@@ -25,6 +25,10 @@ impl ServiceUtil {
         ));
 
         let program = format!("{}/{}", PATH, svc.to_string().to_lowercase());
+        let health_url = match self.config_manager.get_health_check_uri().await {
+            Ok(uri) => uri,
+            Err(e) => return Err(ServiceUtilError::UnknownError(e.to_string())),
+        };
 
         self.dbg_print("Setting program to executable");
         let mut cmd = Command::new("chmod");
@@ -43,7 +47,7 @@ impl ServiceUtil {
         cmd.spawn().expect("Failed to run command");
 
         self.dbg_print("Waiting for service to start");
-        self.wait_until_health_check("http://127.0.0.1:8080/health")
+        self.wait_until_health_check(&health_url)
             .expect("Failed to wait for service to start");
 
         self.dbg_print("Service started");

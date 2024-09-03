@@ -15,11 +15,13 @@ pub fn print_start_header(
     service_addr: &str,
     metrics_addr: &str,
     metrics_uri: &str,
+    health_uri: &str,
 ) {
     println!("||  {}  ||", service_id);
     println!("==========================================");
     println!("Service on endpoint: {}", service_addr);
     println!("Metrics on endpoint: {}/{}", metrics_addr, metrics_uri);
+    println!("Health  on endpoint: {}/{}", metrics_addr, health_uri);
     println!("==========================================");
     println!();
 }

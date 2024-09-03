@@ -1,4 +1,5 @@
 use std::error::Error;
+use std::net::SocketAddr;
 use std::sync::Arc;
 
 use mimalloc::MiMalloc;
@@ -37,6 +38,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .get_svc_socket_addr()
         .await
         .expect("DBGW: Failed to get host and port");
+    dbg_print(&service_addr);
 
     dbg_print("Set up socket address for gRPC and HTTP");
     let grpc_addr = service_addr.parse().expect("DBGW: Failed to parse address");
@@ -65,6 +67,30 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     dbg_print("Create an async handler for gRPC server");
     let grpc_handle = tokio::spawn(grpc_server);
+
+    dbg_print("Configuring metrics endpoint");
+    let (metrics_addr, metrics_uri) = cfg_manager
+        .get_metrics_socket_addr_uri()
+        .expect("DBGW: Failed to get metric host, uri, and port");
+    dbg_print(&metrics_addr);
+
+    let health_uri = "health";
+    let health_check = warp::get()
+        .and(warp::path(health_uri))
+        .and(warp::path::end())
+        .and_then(health_handler);
+
+    dbg_print("Configuring socket address for http service");
+    let http_addr: SocketAddr = metrics_addr
+        .parse()
+        .expect("[DBGW/main]: Failed to parse address");
+
+    let signal = shutdown_utils::signal_handler("http server");
+    let (_, http_server) = warp::serve(health_check).bind_with_graceful_shutdown(http_addr, signal);
+
+    dbg_print("Create an async handler for http server");
+    let http_handle = tokio::spawn(http_server);
+
     {
         dbg_print("Set DBGW service to online");
         let dbm = arc_dbm.write().await;
@@ -73,25 +99,13 @@ async fn main() -> Result<(), Box<dyn Error>> {
             .expect("DBGW: Failed to set service online");
     }
 
-    // Configure http metrics endpoint ip and port automatically relative to the detected context.
-    let (metrics_addr, metrics_uri) = cfg_manager
-        .get_metrics_socket_addr_uri()
-        .expect("DBGW: Failed to get metric host, uri, and port");
-
-    let health_check = warp::get()
-        .and(warp::path("health"))
-        .and(warp::path::end())
-        .and_then(health_handler);
-
-    let signal = shutdown_utils::signal_handler("http server");
-
-    let (_, http_server) =
-        warp::serve(health_check).bind_with_graceful_shutdown(([127, 0, 0, 1], 8080), signal);
-
-    dbg_print("Create an async handler for http server");
-    let http_handle = tokio::spawn(http_server);
-
-    print_utils::print_start_header(&SVC_ID, &service_addr, &metrics_addr, &metrics_uri);
+    print_utils::print_start_header(
+        &SVC_ID,
+        &service_addr,
+        &metrics_addr,
+        &metrics_uri,
+        health_uri,
+    );
     match tokio::try_join!(grpc_handle, http_handle) {
         Ok(_) => {}
         Err(e) => {

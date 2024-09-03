@@ -21,7 +21,7 @@ rust_test_suite(
         "test.EstimatedComputeUnits": "2",
     },
     tags = [
-        "integration_test",
+        # "integration_test",
     ],
     visibility = ["//visibility:public"],
     deps = [

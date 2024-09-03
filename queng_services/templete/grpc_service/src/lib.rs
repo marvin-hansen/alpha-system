@@ -63,7 +63,7 @@ where
     let service_addr = cfg_manager
         .get_svc_socket_addr()
         .await
-        .expect("Failed to get service host and port");
+        .expect("Failed to get service host a       nd port");
 
     dbg_print("Configuring socket address for gRPC service");
     let grpc_addr = service_addr
@@ -87,8 +87,9 @@ where
         .expect("[ImsDataBinance]: Failed to parse address");
 
     dbg_print("Configuring health endpoint");
+    let health_uri = "health";
     let get_health_check = warp::get()
-        .and(warp::path("health"))
+        .and(warp::path(health_uri))
         .and(warp::path::end())
         .and_then(health_handler);
 
@@ -117,7 +118,13 @@ where
         .expect("Failed to set service online");
 
     // Print service start header
-    print_utils::print_start_header(&svc_id, &service_addr, &metrics_addr, &metrics_uri);
+    print_utils::print_start_header(
+        &svc_id,
+        &service_addr,
+        &metrics_addr,
+        &metrics_uri,
+        health_uri,
+    );
     // Free up some memory before starting the service,
     drop(cfg_manager);
     drop(metrics_uri);

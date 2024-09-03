@@ -1,4 +1,3 @@
-use common_database::prelude::PostgresDBSchema;
 use common_exchange::prelude::AccountType::Spot;
 use common_exchange::prelude::PortfolioConfig as CommonPortfolioConfig;
 use common_exchange::prelude::{AccountType, Instrument as CommonInstrument};
@@ -6,17 +5,8 @@ use diesel::Connection;
 use pg_cmdb::model::instrument::Instrument;
 use pg_cmdb::model::portfolio::Portfolio;
 use pg_cmdb::model::portfolio_instrument::{CreatePortfolioInstrument, PortfolioInstrument};
-use postgres_test_utils::prelude::{
-    get_test_instrument, get_test_portfolio, postgres_schema_setup,
-};
+use postgres_test_utils::prelude::{get_test_instrument, get_test_portfolio};
 use postgres_test_utils::{get_or_wait_for_postgres_connection, DB_TEST_URL};
-
-#[tokio::test]
-async fn test_all_setup() {
-    let result = postgres_schema_setup(PostgresDBSchema::PostgresDBSchemaCMDB, DB_TEST_URL).await;
-    dbg!(&result);
-    assert!(result.is_ok());
-}
 
 #[tokio::test]
 async fn test_check_if_instrument_code_exists() {
@@ -29,6 +19,9 @@ async fn test_check_if_instrument_code_exists() {
     // Start a new test transaction
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
+
+    let result = pg_cmdb::run_cmdb_db_migration(conn);
+    assert!(result.is_ok());
 
     let instrument = get_test_instrument();
     let result = Instrument::create(conn, &instrument);
@@ -50,6 +43,9 @@ async fn test_count_instrument() {
     let conn = &mut connection.unwrap();
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
+
+    let result = pg_cmdb::run_cmdb_db_migration(conn);
+    assert!(result.is_ok());
 
     let result = Instrument::count(conn);
     // dbg!(&result);
@@ -77,6 +73,9 @@ async fn test_create_instrument() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
+    let result = pg_cmdb::run_cmdb_db_migration(conn);
+    assert!(result.is_ok());
+
     let instrument = get_test_instrument();
     let result = Instrument::create(conn, &instrument);
     // dbg!(&result);
@@ -101,6 +100,9 @@ async fn test_delete_instrument() {
     let conn = &mut connection.unwrap();
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
+
+    let result = pg_cmdb::run_cmdb_db_migration(conn);
+    assert!(result.is_ok());
 
     let instrument = get_test_instrument();
     let result = Instrument::create(conn, &instrument);
@@ -134,6 +136,9 @@ async fn test_read_all_instruments() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
+    let result = pg_cmdb::run_cmdb_db_migration(conn);
+    assert!(result.is_ok());
+
     let instrument = get_test_instrument();
     let result = Instrument::create(conn, &instrument);
     // dbg!(&result);
@@ -158,6 +163,9 @@ async fn test_read_instrument() {
     // Start a new test transaction
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
+
+    let result = pg_cmdb::run_cmdb_db_migration(conn);
+    assert!(result.is_ok());
 
     let instrument = get_test_instrument();
     let result = Instrument::create(conn, &instrument);
@@ -185,6 +193,9 @@ async fn test_update_instrument() {
     // Start a new test transaction
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
+
+    let result = pg_cmdb::run_cmdb_db_migration(conn);
+    assert!(result.is_ok());
 
     let instrument = get_test_instrument();
     let result = Instrument::create(conn, &instrument);
@@ -216,6 +227,9 @@ async fn test_portfolio_instrument() {
     // Start a new test transaction
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
+
+    let result = pg_cmdb::run_cmdb_db_migration(conn);
+    assert!(result.is_ok());
 
     let portfolio_id = 42;
     let create_portfolio = CommonPortfolioConfig::new(
@@ -307,6 +321,9 @@ async fn test_create_portfolio() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
+    let result = pg_cmdb::run_cmdb_db_migration(conn);
+    assert!(result.is_ok());
+
     let portfolio = get_test_portfolio();
     let result = Portfolio::create(conn, &portfolio);
     // dbg!(&result);
@@ -324,6 +341,9 @@ async fn test_check_if_portfolio_id_exists() {
     // Start a new test transaction
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
+
+    let result = pg_cmdb::run_cmdb_db_migration(conn);
+    assert!(result.is_ok());
 
     let portfolio = get_test_portfolio();
     let result = Portfolio::create(conn, &portfolio);
@@ -347,6 +367,9 @@ async fn test_count_portfolio() {
     // Start a new test transaction
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
+
+    let result = pg_cmdb::run_cmdb_db_migration(conn);
+    assert!(result.is_ok());
 
     let result = Portfolio::count(conn);
     // dbg!(&result);
@@ -375,6 +398,9 @@ async fn test_read_all_portfolio() {
     // Start a new test transaction
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
+
+    let result = pg_cmdb::run_cmdb_db_migration(conn);
+    assert!(result.is_ok());
 
     let result = Portfolio::read_all(conn);
     // dbg!(&result);
@@ -406,6 +432,9 @@ async fn test_read_portfolio() {
     // Start a new test transaction
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
+
+    let result = pg_cmdb::run_cmdb_db_migration(conn);
+    assert!(result.is_ok());
 
     let portfolio = get_test_portfolio();
     let result = Portfolio::create(conn, &portfolio);
@@ -444,6 +473,9 @@ async fn test_update_portfolio() {
     // Start a new test transaction
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
+
+    let result = pg_cmdb::run_cmdb_db_migration(conn);
+    assert!(result.is_ok());
 
     let portfolio = get_test_portfolio();
     let result = Portfolio::create(conn, &portfolio);
@@ -484,6 +516,9 @@ async fn test_update_portfolio_error() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
+    let result = pg_cmdb::run_cmdb_db_migration(conn);
+    assert!(result.is_ok());
+
     let portfolio_id = 23;
 
     let update = CommonPortfolioConfig::new(
@@ -519,6 +554,9 @@ async fn test_delete_portfolio() {
     // Start a new test transaction
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
+
+    let result = pg_cmdb::run_cmdb_db_migration(conn);
+    assert!(result.is_ok());
 
     let result = Portfolio::delete(conn, 1);
     dbg!(&result);

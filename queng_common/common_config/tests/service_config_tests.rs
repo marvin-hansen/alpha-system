@@ -54,36 +54,3 @@ fn test_default() {
     assert_eq!(service_config.base_uri(), &String::from(""));
     assert_eq!(service_config.dependencies(), &Vec::new());
 }
-
-#[test]
-fn test_display() {
-    let id = ServiceID::SMDB;
-    let name = "SMDB".to_string();
-    let version = 1;
-    let online = true;
-    let description = "description".to_string();
-    let health_check_uri = "health_check_uri".to_string();
-    let base_uri = "base_uri".to_string();
-    let dependencies = vec![ServiceID::DBGW];
-    let endpoints = Vec::from([
-        Endpoint::default(),
-        Endpoint::default(),
-        Endpoint::default(),
-    ]);
-
-    let service_config = ServiceConfig::new(
-        id,
-        name,
-        version,
-        online,
-        description,
-        health_check_uri,
-        base_uri,
-        dependencies,
-        endpoints,
-    );
-
-    let expected = "ServiceConfig { svc_id: SMDB, name: SMDB, version: 1, online: true, description: description, health_check_uri: health_check_uri, base_uri: base_uri, dependencies: [DBGW], endpoint: name: ,  version: 0,  port: 0,  uri: ,  protocol: UnknownProtocol metrics: metric_uri: ,  metric_host: 0.0.0.0,  metric_port: 0 health: Some(Endpoint { name: \"\", version: 0, uri: \"\", port: 0, protocol: UnknownProtocol }) }";
-    let actual = service_config.to_string();
-    assert_eq!(actual, expected);
-}

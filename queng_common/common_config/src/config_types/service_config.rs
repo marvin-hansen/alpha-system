@@ -49,6 +49,14 @@ impl ServiceConfig {
         dependencies: Vec<ServiceID>,
         endpoints: Vec<Endpoint>,
     ) -> Self {
+        if endpoints.is_empty() {
+            panic!("endpoints cannot be empty");
+        }
+
+        if endpoints.len() < 2 {
+            panic!("endpoints cannot be less than 2. Just must specify at least a service endpoint, a metrics endpoint, and a health endpoint");
+        }
+
         Self {
             svc_id,
             name,
@@ -110,8 +118,8 @@ impl ServiceConfig {
         MetricConfig::from_endpoint(endpoint)
     }
     /// Returns an option to the health endpoint.
-    pub fn health_endpoint(&self) -> Option<&Endpoint> {
-        self.endpoints.get(2).to_owned()
+    pub fn health_endpoint(&self) -> Endpoint {
+        self.endpoints.get(2).unwrap().to_owned()
     }
 }
 

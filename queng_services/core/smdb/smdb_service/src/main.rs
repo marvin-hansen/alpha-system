@@ -72,10 +72,20 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .expect("[SMDB]: Failed to get metric host, uri, and port");
 
     // Build http metrics endpoint
-    let routes = warp::get()
+    let get_metrics = warp::get()
         .and(warp::path(metrics_uri.clone()))
         .and(warp::path::end())
         .and_then(get_metrics_handler);
+
+    // dbg_print("Configuring health endpoint");
+    let health_uri = "health";
+    let get_health_check = warp::get()
+        .and(warp::path(health_uri))
+        .and(warp::path::end())
+        .and_then(health_handler);
+
+    // dbg_print("Configure http service routes");
+    let routes = get_health_check.or(get_metrics);
 
     // Build http metrics server
     let web_addr: SocketAddr = metrics_addr.parse().expect("Failed to parse web address");
@@ -94,7 +104,13 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .expect("[SMDB]: Failed to set service online");
 
     // Start all servers jointly
-    print_utils::print_start_header(&SVC_ID, &service_addr, &metrics_addr, &metrics_uri);
+    print_utils::print_start_header(
+        &SVC_ID,
+        &service_addr,
+        &metrics_addr,
+        &metrics_uri,
+        health_uri,
+    );
     match tokio::try_join!(grpc_handle, http_handle) {
         Ok(_) => {}
         Err(e) => {
@@ -114,6 +130,11 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     print_utils::print_stop_header(&SVC_ID);
     Ok(())
+}
+
+pub(crate) async fn health_handler() -> Result<impl warp::Reply, warp::Rejection> {
+    let result = { String::from("OK") };
+    Ok(warp::reply::json(&result))
 }
 
 async fn get_metrics_handler() -> Result<impl warp::Reply, warp::Rejection> {

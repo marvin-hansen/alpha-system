@@ -15,7 +15,9 @@ use std::collections::HashMap;
 use std::net::SocketAddr;
 
 mod cfg_getters;
-mod cfg_services;
+mod cfg_svc;
+mod cfg_svc_health_check;
+mod cfg_svc_metrics;
 mod dns;
 mod dns_resolve;
 mod env;
