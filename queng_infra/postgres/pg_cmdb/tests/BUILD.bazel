@@ -1,9 +1,9 @@
 load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 
 rust_test_suite(
-    name = "pg_cmdb_tests",
+    name = "instrument_tests",
     srcs = glob([
-        "cmdb_tests.rs",
+        "instrument_tests.rs",
     ]),
     exec_properties = {
         # Tell BuildBuddy to run this test using a Firecracker microVM.
@@ -14,7 +14,7 @@ rust_test_suite(
         "test.recycle-runner": "true",
         # We don't want different different db tests to be assigned to the same recycled runner,
         # because we can't fit all db docker images with the default disk limit.
-        "test.runner-recycling-key": "postgres_cmdb_tests",
+        "test.runner-recycling-key": "cmdb_instrument_tests",
         # Tell BuildBuddy to increase the estimated compute units for this test
         # https://www.buildbuddy.io/docs/rbe-platforms/#runner-resource-allocation
         "test.EstimatedComputeUnits": "2",
