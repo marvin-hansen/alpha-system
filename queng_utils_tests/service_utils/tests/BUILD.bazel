@@ -8,7 +8,7 @@ rust_test_suite(
     # The Kaiko API Proxy used for testing doesn't need Docker,
     # hence no VM config needed for this integration test.
     tags = [
-        "integration_test",
+        # "integration_test",
         #"service_utils_test",
     ],
     visibility = ["//visibility:public"],
