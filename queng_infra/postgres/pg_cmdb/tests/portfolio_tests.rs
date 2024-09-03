@@ -18,6 +18,7 @@ async fn test_create_portfolio() {
         .expect("Failed to begin test transaction");
 
     let result = pg_cmdb::run_cmdb_db_migration(conn);
+    // dbg!(&result);
     assert!(result.is_ok());
 
     let portfolio = get_test_portfolio();
@@ -39,6 +40,7 @@ async fn test_check_if_portfolio_id_exists() {
         .expect("Failed to begin test transaction");
 
     let result = pg_cmdb::run_cmdb_db_migration(conn);
+    // dbg!(&result);
     assert!(result.is_ok());
 
     let portfolio = get_test_portfolio();

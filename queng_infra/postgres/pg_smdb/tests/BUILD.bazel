@@ -3,7 +3,7 @@ load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 rust_test_suite(
     name = "pg_smdb_tests",
     srcs = glob([
-        "smdb_tests.rs",
+        "*_tests.rs",
     ]),
     exec_properties = {
         # Tell BuildBuddy to run this test using a Firecracker microVM.
@@ -21,7 +21,7 @@ rust_test_suite(
         "test.EstimatedComputeUnits": "2",
     },
     tags = [
-        "integration_test",
+        # "integration_test",
     ],
     visibility = ["//visibility:public"],
     deps = [
@@ -31,6 +31,7 @@ rust_test_suite(
         "//alias:container_specs",
         "//alias:common_database",
         "//alias:common_config",
+        "//alias:env_utils",
         "//alias:postgres_test_utils",
         # External crates
         "//thirdparty/crates:tokio",
