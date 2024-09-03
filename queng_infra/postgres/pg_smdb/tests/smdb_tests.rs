@@ -1,24 +1,19 @@
 use common_config::prelude::{ServiceConfig, ServiceID};
-use common_database::prelude::PostgresDBSchema;
 use diesel::Connection;
 use pg_smdb::model::service;
 use postgres_test_utils::prelude::*;
 
 #[tokio::test]
-async fn test_all_setup() {
-    let result = postgres_schema_setup(PostgresDBSchema::PostgresDBSchemaSMDB, DB_TEST_URL).await;
-    dbg!(&result);
-    assert!(result.is_ok());
-}
-
-#[tokio::test]
-async fn test_create_instrument() {
+async fn test_create_service() {
     let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
     assert!(connection.is_ok());
 
     let conn = &mut connection.unwrap();
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
+
+    let result = pg_smdb::run_smdb_db_migration(conn);
+    assert!(result.is_ok());
 
     let service_config = get_test_service_config();
     let result = service::Service::create(conn, &service_config);
@@ -60,6 +55,9 @@ async fn test_check_if_service_id_exists() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
+    let result = pg_smdb::run_smdb_db_migration(conn);
+    assert!(result.is_ok());
+
     let result = service::Service::check_if_service_id_exists(conn, ServiceID::SMDB);
     // dbg!(&result);
     assert!(result.is_ok());
@@ -85,6 +83,9 @@ async fn test_check_if_service_id_online() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
+    let result = pg_smdb::run_smdb_db_migration(conn);
+    assert!(result.is_ok());
+
     let result = service::Service::check_if_service_id_online(conn, ServiceID::SMDB);
     // dbg!(&result);
     assert!(result.is_err());
@@ -108,6 +109,9 @@ async fn test_count_instrument() {
     let conn = &mut connection.unwrap();
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
+
+    let result = pg_smdb::run_smdb_db_migration(conn);
+    assert!(result.is_ok());
 
     let result = service::Service::count(conn);
     // dbg!(&result);
@@ -133,7 +137,8 @@ async fn test_service_read_all() {
     let conn = &mut connection.unwrap();
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
-
+    let result = pg_smdb::run_smdb_db_migration(conn);
+    assert!(result.is_ok());
     let result = service::Service::read_all(conn);
     // dbg!(&result);
     assert!(result.is_ok());
@@ -163,7 +168,8 @@ async fn test_service_read() {
     let conn = &mut connection.unwrap();
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
-
+    let result = pg_smdb::run_smdb_db_migration(conn);
+    assert!(result.is_ok());
     let result = service::Service::read(conn, service_id);
     // dbg!(&result);
     assert!(result.is_err());
@@ -203,7 +209,8 @@ async fn test_set_service_online() {
     let conn = &mut connection.unwrap();
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
-
+    let result = pg_smdb::run_smdb_db_migration(conn);
+    assert!(result.is_ok());
     let service_config = get_test_service_config();
     let result = service::Service::create(conn, &service_config);
     // dbg!(&result);
@@ -228,7 +235,8 @@ async fn test_set_service_offline() {
     let conn = &mut connection.unwrap();
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
-
+    let result = pg_smdb::run_smdb_db_migration(conn);
+    assert!(result.is_ok());
     let service_config = get_test_service_config();
     let result = service::Service::create(conn, &service_config);
     // dbg!(&result);
@@ -253,7 +261,8 @@ async fn test_get_all_offline_services() {
     let conn = &mut connection.unwrap();
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
-
+    let result = pg_smdb::run_smdb_db_migration(conn);
+    assert!(result.is_ok());
     let result = service::Service::get_all_offline_services(conn);
     // dbg!(&result);
     assert!(result.is_ok());
@@ -278,7 +287,8 @@ async fn test_get_all_online_services() {
     let conn = &mut connection.unwrap();
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
-
+    let result = pg_smdb::run_smdb_db_migration(conn);
+    assert!(result.is_ok());
     let result = service::Service::get_all_online_services(conn);
     // dbg!(&result);
     assert!(result.is_ok());
@@ -303,7 +313,8 @@ async fn test_get_all_service_dependencies() {
     let conn = &mut connection.unwrap();
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
-
+    let result = pg_smdb::run_smdb_db_migration(conn);
+    assert!(result.is_ok());
     let service_config = get_test_service_config();
     let result = service::Service::create(conn, &service_config);
     // dbg!(&result);
@@ -323,7 +334,8 @@ async fn test_get_all_service_endpoints() {
     let conn = &mut connection.unwrap();
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
-
+    let result = pg_smdb::run_smdb_db_migration(conn);
+    assert!(result.is_ok());
     let service_config = get_test_service_config();
     let result = service::Service::create(conn, &service_config);
     // dbg!(&result);
@@ -343,7 +355,8 @@ async fn test_service_update() {
     let conn = &mut connection.unwrap();
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
-
+    let result = pg_smdb::run_smdb_db_migration(conn);
+    assert!(result.is_ok());
     let service_config = get_test_service_config();
     let result = service::Service::create(conn, &service_config);
     // dbg!(&result);
@@ -408,6 +421,9 @@ async fn test_service_update_error() {
     let conn = &mut connection.unwrap();
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
+
+    let result = pg_smdb::run_smdb_db_migration(conn);
+    assert!(result.is_ok());
 
     // Double check the service isn't in the database
     let param_service_id = ServiceID::SMDB;
