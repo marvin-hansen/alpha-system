@@ -15,9 +15,6 @@ rust_test_suite(
         # We don't want different different db tests to be assigned to the same recycled runner,
         # because we can't fit all db docker images with the default disk limit.
         "test.runner-recycling-key": "cmdb_instrument_tests",
-        # Tell BuildBuddy to increase the estimated compute units for this test
-        # https://www.buildbuddy.io/docs/rbe-platforms/#runner-resource-allocation
-        "test.EstimatedComputeUnits": "2",
     },
     tags = [
         "integration_test",

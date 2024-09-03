@@ -6,7 +6,7 @@ use postgres_test_utils::prelude::get_test_instrument;
 use postgres_test_utils::{get_or_wait_for_postgres_connection, DB_TEST_URL};
 
 #[tokio::test]
-async fn test_setup() {
+async fn all_setup() {
     let env = EnvUtil::with_debug().await.expect("Failed to get EnvUtil");
 
     // Start or reuse a test postgres container
