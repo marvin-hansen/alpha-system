@@ -5,6 +5,8 @@ use pg_cmdb::model::instrument::Instrument;
 use postgres_test_utils::prelude::get_test_instrument;
 use postgres_test_utils::{get_or_wait_for_postgres_connection, DB_TEST_URL};
 
+// Somehow tests seem to be executed or sorted in alphabetical order, so make sure that the
+// setup is on top of the stack.
 #[tokio::test]
 async fn all_setup() {
     let env = EnvUtil::with_debug().await.expect("Failed to get EnvUtil");
