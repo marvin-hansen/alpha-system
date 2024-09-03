@@ -15,6 +15,8 @@ path = "src/main.rs"
 [dependencies]
 # Service specs
 mddb_specs = { workspace = true }
+# Service template
+grpc_service = { workspace = true }
 # Custom Memory Allocator
 mimalloc = {workspace = true}
 # Internal crates

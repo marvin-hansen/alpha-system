@@ -1,3 +1,4 @@
+use autometrics::prometheus_exporter;
 use common_config::prelude::ServiceID;
 use common_service::{print_utils, shutdown_utils};
 use config_manager::CfgManager;
@@ -32,6 +33,9 @@ where
             println!("[{}]: {}", svc_id.to_string(), msg)
         }
     };
+
+    dbg_print("Setup autometrics");
+    prometheus_exporter::init();
 
     dbg_print("get SMDB endpoint from auto config");
     let (smdb_host, smdb_port) = cfg_manager
@@ -92,7 +96,7 @@ where
     let get_metrics = warp::get()
         .and(warp::path(metrics_uri.clone()))
         .and(warp::path::end())
-        .and_then(get_metrics_handler);
+        .and_then(metrics_handler);
 
     dbg_print("Configure http service routes");
     let routes = get_health_check.or(get_metrics);
@@ -152,7 +156,7 @@ async fn health_handler() -> Result<impl warp::Reply, warp::Rejection> {
     Ok(warp::reply::json(&result))
 }
 
-async fn get_metrics_handler() -> Result<impl warp::Reply, warp::Rejection> {
+async fn metrics_handler() -> Result<impl warp::Reply, warp::Rejection> {
     match autometrics::prometheus_exporter::encode_to_string() {
         Ok(metrics) => Ok(warp::reply::json(&metrics)),
         Err(_) => Err(warp::reject::not_found()),

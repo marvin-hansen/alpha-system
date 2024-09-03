@@ -1,7 +1,7 @@
+use autometrics::prometheus_exporter;
+use mimalloc::MiMalloc;
 use std::error::Error;
 use std::sync::Arc;
-
-use mimalloc::MiMalloc;
 use tokio::sync::RwLock;
 use tonic::transport::Server;
 use warp::Filter;
@@ -27,6 +27,9 @@ static GLOBAL: MiMalloc = MiMalloc;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
+    dbg_print("Setup autometrics");
+    prometheus_exporter::init();
+
     dbg_print("Setup autoconfiguration");
     let svc_config = dbgw_specs::dbgw_service_config();
     let ctx_manager = CtxManager::new().await;
@@ -81,14 +84,24 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .get_metrics_socket_addr_uri()
         .expect("DBGW: Failed to get metric host, uri, and port");
 
-    let health_check = warp::get()
+    dbg_print("Configuring health endpoint");
+    let get_health_check = warp::get()
         .and(warp::path("health"))
         .and(warp::path::end())
         .and_then(health_handler);
 
+    dbg_print("Build metrics endpoint");
+    let get_metrics = warp::get()
+        .and(warp::path(metrics_uri.clone()))
+        .and(warp::path::end())
+        .and_then(metrics_handler);
+
+    dbg_print("Configure http service routes");
+    let routes = get_health_check.or(get_metrics);
+
     let signal = shutdown_utils::signal_handler("http server");
     let (_, http_server) =
-        warp::serve(health_check).bind_with_graceful_shutdown(([127, 0, 0, 1], 8080), signal);
+        warp::serve(routes).bind_with_graceful_shutdown(([0, 0, 0, 0], 8083), signal);
 
     dbg_print("Create an async handler for http server");
     let http_handle = tokio::spawn(http_server);
@@ -118,9 +131,16 @@ async fn main() -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 
-pub(crate) async fn health_handler() -> Result<impl warp::Reply, warp::Rejection> {
+async fn health_handler() -> Result<impl warp::Reply, warp::Rejection> {
     let result = { String::from("OK") };
     Ok(warp::reply::json(&result))
+}
+
+async fn metrics_handler() -> Result<impl warp::Reply, warp::Rejection> {
+    match autometrics::prometheus_exporter::encode_to_string() {
+        Ok(metrics) => Ok(warp::reply::json(&metrics)),
+        Err(_) => Err(warp::reject::not_found()),
+    }
 }
 
 fn dbg_print(msg: &str) {

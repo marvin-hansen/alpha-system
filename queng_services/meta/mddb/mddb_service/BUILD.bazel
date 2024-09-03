@@ -35,6 +35,8 @@ rust_binary(
     deps = [
         # Specs
         "//alias:mddb_specs",
+        # Service template
+        "//alias/service:grpc_service",
         # Internal crates
         "//alias:common_config",
         "//alias:common_errors",

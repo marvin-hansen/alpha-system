@@ -22,6 +22,7 @@ proto_smdb = {workspace = true}
 proto_smdb_utils = {workspace = true}
 common_service =  {workspace = true}
 # External crates
+autometrics = { workspace = true }
 tokio = { workspace = true }
 tonic = { workspace = true }
 tonic-health = { workspace = true }

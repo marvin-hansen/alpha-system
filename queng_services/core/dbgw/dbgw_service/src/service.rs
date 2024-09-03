@@ -1,5 +1,5 @@
+use autometrics::autometrics;
 use std::sync::Arc;
-
 use tokio::sync::RwLock;
 use tonic::{Request, Response, Status};
 
@@ -11,6 +11,17 @@ use proto_smdb_utils::endpoint_proto_utils::endpoint_to_proto;
 use proto_smdb_utils::service_config_proto_utils::{
     service_config_collection_to_proto, service_config_from_proto, service_config_to_proto,
 };
+
+use autometrics::objectives::{Objective, ObjectiveLatency, ObjectivePercentile};
+
+// Add autometrics Service-Level Objectives (SLOs)
+// https://docs.autometrics.dev/rust/adding-alerts-and-slos
+const API_SLO: Objective = Objective::new("DBGWServer")
+    // We expect 99.9% of all requests to succeed.
+    .success_rate(ObjectivePercentile::P99_9)
+    // We expect 99% of all latencies to be below 250ms.
+    .latency(ObjectiveLatency::Ms250, ObjectivePercentile::P99);
+// Autometrics raises an alert whenever any of the SLO objectives fail.
 
 use crate::DBG;
 
@@ -28,6 +39,8 @@ impl DBGWServer {
     }
 }
 
+// Notice, all API functions are instrumented with the same SLO.
+#[autometrics(objective = API_SLO)]
 #[tonic::async_trait]
 impl DbGatewayService for DBGWServer {
     async fn create_service(
