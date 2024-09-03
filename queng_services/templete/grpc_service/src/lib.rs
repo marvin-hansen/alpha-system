@@ -17,7 +17,7 @@ use smdb_client::SMDBClient;
 pub async fn start<S>(
     dbg: bool,
     svc_id: ServiceID,
-    cfg_manager: CfgManager<'_>,
+    cfg_manager: CfgManager,
     grpc_svc: S,
 ) -> Result<(), Box<dyn Error>>
 where

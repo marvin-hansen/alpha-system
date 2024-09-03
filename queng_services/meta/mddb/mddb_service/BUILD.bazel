@@ -41,8 +41,6 @@ rust_binary(
         "//alias:common_config",
         "//alias:common_errors",
         "//alias:config_manager",
-        "//alias:ctx_manager",
-        "//alias:dns_manager",
         "//alias:db_clickhouse_manager",
         "//alias:proto_mddb",
         "//alias:common_service",

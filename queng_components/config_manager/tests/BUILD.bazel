@@ -1,9 +1,9 @@
 load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 
 rust_test_suite(
-    name = "tests",
+    name = "cfg_tests",
     srcs = glob([
-        "*_tests.rs",
+        "config/*_tests.rs",
     ]),
     tags = [
         "components",
@@ -17,13 +17,134 @@ rust_test_suite(
         # Internal crates
         "//alias:common_config",
         "//alias:common_env",
-        "//alias:ctx_manager",
-        "//alias:dns_manager",
         "//alias:db_specs",
         "//alias:exchange_specs",
         "//alias:cmdb_specs",
         "//alias:dbgw_specs",
         "//alias:qdgw_specs",
+        "//alias:smdb_specs",
+        # External crates
+        "//thirdparty/crates:tokio",
+    ],
+)
+
+rust_test_suite(
+    name = "dns_tests",
+    srcs = glob([
+        "dns/*_tests.rs",
+    ]),
+    tags = [
+        "components",
+        "config_manager",
+        "unit-test",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        "//alias:config_manager",
+        # Internal crates
+        "//alias:common_config",
+        "//alias:common_env",
+        "//alias:db_specs",
+        "//alias:exchange_specs",
+        "//alias:cmdb_specs",
+        "//alias:dbgw_specs",
+        "//alias:qdgw_specs",
+        "//alias:smdb_specs",
+        # External crates
+        "//thirdparty/crates:tokio",
+    ],
+)
+
+# Each test suit is a seperated task so that each test runs
+# in a dedicated runner. This isolates the environment and with it the env. variables.
+# If all tests were executed in one runner, then each test would override the env variables used by the other tests
+# which results in non-deterministic & flaky test execution.
+
+rust_test_suite(
+    name = "tests_ci_env",
+    srcs = [
+        "env/env_ci_tests.rs",
+    ],
+    tags = [
+        #"components",
+        #"ctx_manager",
+        "unit-test",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        "//alias:config_manager",
+        # Internal crates
+        "//alias:common_config",
+        "//alias:common_env",
+        "//alias:smdb_specs",
+        # External crates
+        "//thirdparty/crates:tokio",
+    ],
+)
+
+rust_test_suite(
+    name = "tests_cluster_env",
+    srcs = [
+        "env/env_cluster_tests.rs",
+    ],
+    tags = [
+        # "unit-test",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        "//alias:config_manager",
+        # Internal crates
+        "//alias:common_config",
+        "//alias:common_env",
+        "//alias:smdb_specs",
+        # External crates
+        "//thirdparty/crates:tokio",
+    ],
+)
+
+rust_test_suite(
+    name = "tests_local_env",
+    srcs = [
+        "env/env_local_tests.rs",
+    ],
+    tags = [
+        #"components",
+        #"ctx_manager",
+        #"unit-test",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        "//alias:config_manager",
+        # Internal crates
+        "//alias:common_config",
+        "//alias:common_env",
+        "//alias:smdb_specs",
+        # External crates
+        "//thirdparty/crates:tokio",
+    ],
+)
+
+rust_test_suite(
+    name = "tests_unknown_env",
+    srcs = [
+        "env/env_unknown_tests.rs",
+    ],
+    tags = [
+        #"components",
+        #"ctx_manager",
+        #"unit-test",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        "//alias:config_manager",
+        # Internal crates
+        "//alias:common_config",
+        "//alias:common_env",
         "//alias:smdb_specs",
         # External crates
         "//thirdparty/crates:tokio",

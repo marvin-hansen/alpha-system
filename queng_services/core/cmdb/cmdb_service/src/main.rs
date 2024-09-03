@@ -5,8 +5,7 @@ use tokio::sync::RwLock;
 
 use common_config::prelude::ServiceID;
 use config_manager::CfgManager;
-use ctx_manager::CtxManager;
-use dns_manager::DnsManager;
+
 use pg_cmdb_manager::PostgresCMDBManager;
 use proto_cmdb::proto::cmdb_service_server::CmdbServiceServer;
 
@@ -24,9 +23,7 @@ const DBG: bool = false;
 async fn main() -> Result<(), Box<dyn Error>> {
     // Setup autoconfiguration.
     let svc_config = cmdb_specs::cmdb_service_config();
-    let ctx_manager = CtxManager::new().await;
-    let dns_manager = DnsManager::new(&ctx_manager).await;
-    let cfg_manager = CfgManager::new(SVC_ID, svc_config, &ctx_manager, &dns_manager).await;
+    let cfg_manager = CfgManager::new(SVC_ID, svc_config).await;
 
     // Configure DB Manager
     let pg_config = cfg_manager.postgres_db_config();

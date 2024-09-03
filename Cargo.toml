@@ -13,8 +13,6 @@ members = [
     "queng_common/common_service",
     "queng_common/common_trade",
     "queng_components/config_manager",
-    "queng_components/ctx_manager",
-    "queng_components/dns_manager",
     "queng_components/pattern_manager",
     "queng_components/symbol_manager",
     "queng_infra/clickhouse/db_clickhouse_manager",
@@ -115,8 +113,6 @@ common_trade = { path = "queng_common/common_trade" }
 
 # Components
 config_manager = { path = "queng_components/config_manager" }
-ctx_manager = { path = "queng_components/ctx_manager" }
-dns_manager = { path = "queng_components/dns_manager" }
 pattern_manager = { path = "queng_components/pattern_manager" }
 symbol_manager = { path = "queng_components/symbol_manager" }
 

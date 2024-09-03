@@ -19,8 +19,8 @@ mimalloc = {workspace = true}
 common_data_bar = {workspace = true}
 common_config = {workspace = true}
 config_manager = {workspace = true}
-ctx_manager = {workspace = true}
-dns_manager = {workspace = true}
+
+
 ims_common = {workspace = true}
 proto_imdb = {workspace = true}
 common_service =  {workspace = true}

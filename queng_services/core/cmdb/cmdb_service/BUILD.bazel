@@ -47,8 +47,6 @@ rust_binary(
         # Internal crates
         "//alias:common_config",
         "//alias:config_manager",
-        "//alias:ctx_manager",
-        "//alias:dns_manager",
         "//alias:pg_cmdb_manager",
         "//alias:proto_cmdb",
         "//alias:proto_cmdb_utils",

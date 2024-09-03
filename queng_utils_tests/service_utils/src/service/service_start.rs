@@ -36,7 +36,7 @@ impl ServiceUtil {
         cmd.arg("&");
 
         self.dbg_print("Setting environment variables");
-        let (env, val) = self.ctx_manager.env_var();
+        let (env, val) = self.config_manager.env_var();
         cmd.env(env, val);
 
         self.dbg_print(&format!("Run command: {:?}", &cmd));

@@ -14,14 +14,13 @@ rust_library(
         "//alias:common_env",
         "//alias:common_errors",
         "//alias:common_exchange",
-        "//alias:ctx_manager",
-        "//alias:dns_manager",
         "//alias:db_specs",
         "//alias:exchange_specs",
         "//alias:cmdb_specs",
         "//alias:dbgw_specs",
         "//alias:smdb_specs",
         # External crates
+        "//thirdparty/crates:hickory-resolver",
         "//thirdparty/crates:tokio",
     ],
 )

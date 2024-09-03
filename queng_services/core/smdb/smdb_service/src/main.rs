@@ -6,8 +6,7 @@ use tonic::transport::{Channel, Server, Uri};
 use common_config::prelude::ServiceID;
 use common_service::{print_utils, shutdown_utils};
 use config_manager::CfgManager;
-use ctx_manager::CtxManager;
-use dns_manager::DnsManager;
+
 use proto_smdb::proto::db_gateway_service_client::DbGatewayServiceClient;
 use proto_smdb::proto::smdb_service_server::SmdbServiceServer;
 use service::SMDBServer;
@@ -23,9 +22,8 @@ const SVC_ID: ServiceID = ServiceID::SMDB;
 async fn main() -> Result<(), Box<dyn Error>> {
     // Setup autoconfiguration.
     let svc_config = smdb_specs::smdb_service_config();
-    let ctx_manager = CtxManager::new().await;
-    let dns_manager = DnsManager::new(&ctx_manager).await;
-    let cfg_manager = CfgManager::new(SVC_ID, svc_config, &ctx_manager, &dns_manager).await;
+
+    let cfg_manager = CfgManager::new(SVC_ID, svc_config).await;
 
     // pull DBGW endpoint from auto config
     let (dbgw_host, dbgw_port) = cfg_manager

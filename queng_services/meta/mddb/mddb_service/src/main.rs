@@ -5,9 +5,7 @@ use mimalloc::MiMalloc;
 
 use common_config::prelude::ServiceID;
 use config_manager::CfgManager;
-use ctx_manager::CtxManager;
 use db_clickhouse_manager::ClickhouseDBManager;
-use dns_manager::DnsManager;
 use proto_mddb::proto::mdm_service_server::MdmServiceServer;
 use symbol_manager::SymbolManager;
 
@@ -25,9 +23,8 @@ const DBG: bool = false;
 async fn main() -> Result<(), Box<dyn Error>> {
     // Setup autoconfiguration.
     let svc_config = mddb_specs::mddb_service_config();
-    let ctx_manager = CtxManager::new().await;
-    let dns_manager = DnsManager::new(&ctx_manager).await;
-    let cfg_manager = CfgManager::new(SVC_ID, svc_config, &ctx_manager, &dns_manager).await;
+
+    let cfg_manager = CfgManager::new(SVC_ID, svc_config).await;
 
     // println!("[MDDB]: Create a new QueryDBManager instance.");
     let db_config = cfg_manager.clickhouse_db_config().to_owned();

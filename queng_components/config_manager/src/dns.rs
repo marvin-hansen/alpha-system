@@ -1,7 +1,6 @@
-use crate::DnsManager;
+use crate::CfgManager;
 
-// getters
-impl DnsManager {
+impl CfgManager {
     /**
      * Returns a reference to the IP address of the internal DNS resolver.
      */

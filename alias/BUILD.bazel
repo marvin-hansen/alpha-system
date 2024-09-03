@@ -73,17 +73,6 @@ alias(
     visibility = ["//visibility:public"],
 )
 
-alias(
-    name = "ctx_manager",
-    actual = "//queng_components/ctx_manager",
-    visibility = ["//visibility:public"],
-)
-
-alias(
-    name = "dns_manager",
-    actual = "//queng_components/dns_manager",
-    visibility = ["//visibility:public"],
-)
 
 alias(
     name = "pattern_manager",

@@ -1,8 +1,6 @@
-use std::fmt::{Display, Formatter};
-
-use ctx_manager::CtxManager;
-
 use crate::error::service_util_error::ServiceUtilError;
+use config_manager::CfgManager;
+use std::fmt::{Display, Formatter};
 
 mod error;
 mod fields;
@@ -11,10 +9,9 @@ mod service;
 mod types;
 mod verify;
 
-#[derive(Debug, Clone, Default, Eq, PartialEq)]
 pub struct ServiceUtil {
     dbg: bool,
-    ctx_manager: CtxManager,
+    config_manager: CfgManager,
 }
 
 impl ServiceUtil {
@@ -46,9 +43,9 @@ impl ServiceUtil {
         }
 
         let ctx_manager = if dbg {
-            CtxManager::with_debug().await
+            CfgManager::default_with_debug()
         } else {
-            CtxManager::new().await
+            CfgManager::default()
         };
 
         let env = ctx_manager.env_type();
@@ -66,7 +63,10 @@ impl ServiceUtil {
             }
         }
 
-        Ok(Self { dbg, ctx_manager })
+        Ok(Self {
+            dbg,
+            config_manager: ctx_manager,
+        })
     }
 }
 

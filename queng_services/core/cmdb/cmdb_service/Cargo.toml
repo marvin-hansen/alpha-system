@@ -19,9 +19,7 @@ mimalloc = {workspace = true}
 # Internal crates
 common_config = {workspace = true}
 config_manager = {workspace = true}
-ctx_manager = {workspace = true}
 pg_cmdb_manager = {workspace = true}
-dns_manager = {workspace = true}
 proto_cmdb = {workspace = true}
 proto_cmdb_utils = {workspace = true}
 common_service =  {workspace = true}

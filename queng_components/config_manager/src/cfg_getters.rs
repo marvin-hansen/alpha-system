@@ -1,18 +1,13 @@
 use common_config::prelude::{ServiceConfig, ServiceID};
 use common_database::prelude::{ClickHouseConfig, PostgresDBConfig};
-use common_env::prelude::EnvironmentType;
 use common_errors::prelude::InitError;
 use common_exchange::prelude::ExchangeID;
 
 use crate::CfgManager;
 
-impl<'l> CfgManager<'l> {
+impl CfgManager {
     pub fn get_svc_id(&self) -> ServiceID {
         self.svc
-    }
-
-    pub fn get_env_type(&self) -> EnvironmentType {
-        self.env_type
     }
 
     pub fn get_svc_config(&self) -> ServiceConfig {
@@ -33,9 +28,7 @@ impl<'l> CfgManager<'l> {
     pub fn postgres_db_config(&self) -> &PostgresDBConfig {
         &self.db_postgres_config
     }
-}
 
-impl<'l> CfgManager<'l> {
     /// Get the default ExchangeID configured for this service.
     ///
     /// # Returns

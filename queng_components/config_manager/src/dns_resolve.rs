@@ -1,9 +1,9 @@
-use crate::DnsManager;
+use crate::CfgManager;
 use hickory_resolver::error::ResolveError;
 use hickory_resolver::TokioAsyncResolver;
 use std::net::IpAddr;
 
-impl DnsManager {
+impl CfgManager {
     /**
      * Resolves a hostname using the appropriate DNS resolver (internal or external).
      */

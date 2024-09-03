@@ -1,7 +1,7 @@
 use std::cell::RefCell;
 
 use common_env::prelude::EnvironmentType;
-use ctx_manager::CtxManager;
+use config_manager::CfgManager;
 use docker_utils::DockerUtil;
 use kaiko_utils::KaikoUtil;
 use specs_utils::prelude::{
@@ -84,8 +84,7 @@ impl EnvUtil {
     ///
     async fn build(dbg: bool) -> Result<Self, EnvironmentError> {
         // Autodetect the environment in which the system runs
-        let ctx = CtxManager::new().await;
-        let env = ctx.env_type();
+        let env = CfgManager::detect_env_type(dbg);
 
         // Get container configs
         let clickhouse_container_config = clickhouse_container_specs();

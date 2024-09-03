@@ -8,7 +8,7 @@ use service_utils::prelude::ServiceUtil;
 #[tokio::test]
 async fn test_start_service_util() {
     // Start the service
-    let service_id = ServiceID::KaikoProxy;
+    let service_id = ServiceID::DBGW;
 
     let res = ServiceUtil::with_debug().await;
     assert!(res.is_ok());

@@ -11,8 +11,8 @@ authors.workspace = true
 # Internal crates
 common_config = {workspace = true}
 config_manager = {workspace = true}
-ctx_manager = {workspace = true}
-dns_manager = {workspace = true}
+
+
 proto_imdb = {workspace = true}
 common_service =  {workspace = true}
 smdb_client = {workspace = true}

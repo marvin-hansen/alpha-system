@@ -9,7 +9,7 @@ use smdb_specs::smdb_service_config;
 use crate::utils::get_svc_env_config;
 use crate::{CfgManager, DEFAULT_HOST};
 
-impl<'l> CfgManager<'l> {
+impl CfgManager {
     /// Returns the host and port of the service.
     ///
     /// # Returns
@@ -112,9 +112,7 @@ impl<'l> CfgManager<'l> {
 
         Ok((socket_addr, metrics_uri))
     }
-}
 
-impl<'l> CfgManager<'l> {
     fn get_svc_metric_host_uri_port(&self) -> Result<(String, String, u32), InitError> {
         let svc = self.svc_env_config.to_owned();
         let metric_host = svc.metrics_host().to_string();
@@ -146,14 +144,13 @@ impl<'l> CfgManager<'l> {
             .get_port(svc_env_config, svc_port)
             .expect("[EnvManager]: Failed to get port from config");
 
-        let host = match self.ctx_manager.env_type() {
+        let host = match self.env_type {
             EnvironmentType::LOCAL => svc_env_config.local_host().to_string(),
 
             EnvironmentType::CI => svc_env_config.ci_host().to_string(),
 
             EnvironmentType::CLUSTER => {
                 let cluster_host = self
-                    .dns_manager
                     .resolve_dns(svc_env_config.cluster_host(), true)
                     .await
                     .expect("[EnvManager]: Failed to resolve DNS");
@@ -180,7 +177,7 @@ impl<'l> CfgManager<'l> {
         svc_env_config: &SvcEnvConfig,
         svc_port: u16,
     ) -> Result<u16, InitError> {
-        let port = match self.ctx_manager.env_type() {
+        let port = match self.env_type {
             EnvironmentType::UNKNOWN => svc_port,
             EnvironmentType::LOCAL => svc_port + svc_env_config.service_id().as_u16(),
             EnvironmentType::CLUSTER => svc_port,

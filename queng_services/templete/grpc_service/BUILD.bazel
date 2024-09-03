@@ -11,8 +11,6 @@ rust_library(
         # Internal crates
         "//alias:common_config",
         "//alias:config_manager",
-        "//alias:ctx_manager",
-        "//alias:dns_manager",
         "//alias:proto_imdb",
         "//alias:common_service",
         "//alias/client:smdb_client",

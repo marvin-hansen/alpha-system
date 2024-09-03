@@ -5,8 +5,7 @@ mod stream_manager;
 use crate::service::ImsDataServer;
 use common_config::prelude::ServiceID;
 use config_manager::CfgManager;
-use ctx_manager::CtxManager;
-use dns_manager::DnsManager;
+
 use grpc_service;
 use mimalloc::MiMalloc;
 use proto_imdb::proto::ims_data_service_server::ImsDataServiceServer;
@@ -22,9 +21,8 @@ const DBG: bool = false;
 async fn main() -> Result<(), Box<dyn Error>> {
     // Create auto configuration
     let svc_config = ims_data_binance_specs::ims_data_binance_config();
-    let ctx_manager = CtxManager::new().await;
-    let dns_manager = DnsManager::new(&ctx_manager).await;
-    let cfg_manager = CfgManager::new(SVC_ID, svc_config, &ctx_manager, &dns_manager).await;
+
+    let cfg_manager = CfgManager::new(SVC_ID, svc_config).await;
 
     // Create new gRPC server
     let grpc_svc = ImsDataServiceServer::new(ImsDataServer::new());

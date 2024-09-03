@@ -1,0 +1,17 @@
+use crate::CfgManager;
+use common_env::prelude::EnvironmentType;
+
+impl CfgManager {
+    pub fn env_type(&self) -> EnvironmentType {
+        self.env_type
+    }
+
+    pub fn env_var(&self) -> (String, String) {
+        match self.env_type {
+            EnvironmentType::UNKNOWN => ("ENV".to_string(), "UNKNOWN".to_string()),
+            EnvironmentType::LOCAL => ("ENV".to_string(), "LOCAL".to_string()),
+            EnvironmentType::CLUSTER => ("ENV".to_string(), "CLUSTER".to_string()),
+            EnvironmentType::CI => ("ENV".to_string(), "CI".to_string()),
+        }
+    }
+}

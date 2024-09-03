@@ -15,7 +15,7 @@ rust_library(
         # Internal crates
         "//alias:common_container",
         "//alias:common_env",
-        "//alias:ctx_manager",
+        "//alias:config_manager",
         "//alias:clickhouse_utils",
         "//alias:docker_utils",
         "//alias:specs_utils",
