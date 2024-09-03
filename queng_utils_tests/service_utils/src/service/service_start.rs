@@ -25,10 +25,11 @@ impl ServiceUtil {
         ));
 
         let program = format!("{}/{}", PATH, svc.to_string().to_lowercase());
-        let health_url = match self.config_manager.get_health_check_uri().await {
+        let health_url = match self.config_manager.get_health_check_url(svc).await {
             Ok(uri) => uri,
             Err(e) => return Err(ServiceUtilError::UnknownError(e.to_string())),
         };
+        self.dbg_print(&health_url);
 
         self.dbg_print("Setting program to executable");
         let mut cmd = Command::new("chmod");
@@ -67,7 +68,7 @@ impl ServiceUtil {
     ///
     pub fn wait_until_health_check(&self, health_url: &str) -> Result<(), ServiceUtilError> {
         let start_time = Instant::now();
-        let timeout = Duration::from_secs(60);
+        let timeout = Duration::from_secs(12);
 
         loop {
             std::thread::sleep(Duration::from_millis(100));
@@ -85,7 +86,7 @@ impl ServiceUtil {
             match cmd.output() {
                 Ok(out) => {
                     self.dbg_print(&format!(
-                        "[start_service]: \n
+                        "[wait_until_health_check]: \n
                         success: {} \n
                         Output: {}",
                         out.status.success(),

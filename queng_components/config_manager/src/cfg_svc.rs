@@ -116,7 +116,7 @@ impl CfgManager {
             .expect("[EnvManager]: Failed to parse port from config");
 
         let port = self
-            .get_port(svc_port)
+            .get_port(svc_port, &svc_env_config.service_id())
             .expect("[EnvManager]: Failed to get port from config");
 
         let host = match self.get_service_host().await {
@@ -157,12 +157,16 @@ impl CfgManager {
     /// If the environment type is cluster, it returns the port of the service running in the cluster.
     /// If the environment type is unknown, it returns an error.
     ///
-    pub(crate) fn get_port(&self, svc_port: u16) -> Result<u16, InitError> {
+    pub(crate) fn get_port(&self, svc_port: u16, service_id: &ServiceID) -> Result<u16, InitError> {
+        self.dbg_print("get_port");
+        self.dbg_print("env_type");
+        self.dbg_print(self.env_type.to_string().as_str());
+
         let port = match self.env_type {
-            EnvironmentType::UNKNOWN => svc_port,
-            EnvironmentType::LOCAL => svc_port + self.svc_env_config.service_id().as_u16(),
+            EnvironmentType::LOCAL => svc_port + service_id.as_u16(),
             EnvironmentType::CLUSTER => svc_port,
-            EnvironmentType::CI => svc_port + self.svc_env_config.service_id().as_u16(),
+            EnvironmentType::CI => svc_port + service_id.as_u16(),
+            EnvironmentType::UNKNOWN => svc_port,
         };
 
         Ok(port)

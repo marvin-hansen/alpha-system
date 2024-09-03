@@ -21,7 +21,7 @@ impl CfgManager {
         let port = *svc.metrics_port() as u16;
 
         let metrics_port = self
-            .get_port(port)
+            .get_port(port, &self.svc)
             .expect("[EnvManager]: Failed to get port from config");
 
         Ok((metric_host, metrics_uri, metrics_port as u32))

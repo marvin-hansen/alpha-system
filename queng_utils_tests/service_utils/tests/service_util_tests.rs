@@ -7,6 +7,10 @@ use service_utils::prelude::ServiceUtil;
 
 #[tokio::test]
 async fn test_start_service_util() {
+    // Start the PG Docker container
+
+    // Run Service data migration to ensure SMDB fully working.
+
     // Start the service
     let service_id = ServiceID::DBGW;
 
@@ -16,6 +20,16 @@ async fn test_start_service_util() {
 
     let result = svc_util.start_service(&service_id).await;
     assert!(result.is_ok());
+
+    // Start the service
+    let service_id = ServiceID::SMDB;
+    let result = svc_util.start_service(&service_id).await;
+    assert!(result.is_ok());
+
+    // // Start the service
+    // let service_id = ServiceID::CMDB;
+    // let result = svc_util.start_service(&service_id).await;
+    // assert!(result.is_ok());
 
     sleep(Duration::from_secs(1)).await;
 }
