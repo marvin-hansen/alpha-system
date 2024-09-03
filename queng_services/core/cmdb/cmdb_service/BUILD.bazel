@@ -42,7 +42,8 @@ rust_binary(
     deps = [
         # Specs
         "//alias:cmdb_specs",
-        "//alias:lib_data_stream",
+        # Service template
+        "//alias/service:grpc_service",
         # Internal crates
         "//alias:common_config",
         "//alias:config_manager",

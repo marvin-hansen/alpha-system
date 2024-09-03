@@ -75,7 +75,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     // Build http metrics endpoint
     let routes = warp::get()
-        .and(warp::path("metrics"))
+        .and(warp::path(metrics_uri.clone()))
         .and(warp::path::end())
         .and_then(get_metrics_handler);
 

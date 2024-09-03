@@ -79,3 +79,20 @@ alias(
     actual = "//queng_services/ims/ims_data/binance_data:push",
     visibility = ["//visibility:public"],
 )
+
+alias(
+    name = "ims_common",
+    actual = "//queng_services/ims/ims_common",
+    visibility = ["//visibility:public"],
+)
+
+
+###############################################################################
+# Template
+###############################################################################
+
+alias(
+    name = "grpc_service",
+    actual = "//queng_services/templete/grpc_service",
+    visibility = ["//visibility:public"],
+)

@@ -1,11 +1,11 @@
 load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library", "rust_test")
 
 rust_library(
-    name = "lib_data_stream",
+    name = "grpc_service",
     srcs = glob([
-        "src/lib/*.rs",
+        "src/lib.rs",
     ]),
-    crate_root = "src/lib/mod.rs",
+    crate_root = "src/lib.rs",
     visibility = ["//visibility:public"],
     deps = [
         # Internal crates
@@ -17,6 +17,7 @@ rust_library(
         "//alias:common_service",
         "//alias/client:smdb_client",
         # External crates
+        "//thirdparty/crates:autometrics",
         "//thirdparty/crates:tokio",
         "//thirdparty/crates:tonic",
         "//thirdparty/crates:prost",
@@ -26,12 +27,12 @@ rust_library(
 
 rust_doc(
     name = "doc",
-    crate = ":lib_data_stream",
+    crate = ":grpc_service",
     visibility = ["//visibility:public"],
 )
 
 rust_doc_test(
     name = "doc_test",
-    crate = ":lib_data_stream",
+    crate = ":grpc_service",
     visibility = ["//visibility:public"],
 )

@@ -13,7 +13,7 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Crate to test
-        "//alias:ims_common",
+        "//alias/service:ims_common",
         # Internal crates
         "//alias:common_data_bar",
         # External crates

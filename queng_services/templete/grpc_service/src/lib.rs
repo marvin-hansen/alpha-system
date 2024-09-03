@@ -13,7 +13,7 @@ use warp::Filter;
 
 use smdb_client::SMDBClient;
 
-pub async fn run<S>(
+pub async fn start<S>(
     dbg: bool,
     svc_id: ServiceID,
     cfg_manager: CfgManager<'_>,
@@ -83,14 +83,23 @@ where
         .expect("[ImsDataBinance]: Failed to parse address");
 
     dbg_print("Configuring health endpoint");
-    let health_check = warp::get()
+    let get_health_check = warp::get()
         .and(warp::path("health"))
         .and(warp::path::end())
         .and_then(health_handler);
 
+    dbg_print("Build metrics endpoint");
+    let get_metrics = warp::get()
+        .and(warp::path(metrics_uri.clone()))
+        .and(warp::path::end())
+        .and_then(get_metrics_handler);
+
+    dbg_print("Configure http service routes");
+    let routes = get_health_check.or(get_metrics);
+
     dbg_print("Configuring http server with health service and signal handler");
     let signal = shutdown_utils::signal_handler("http server");
-    let (_, http_server) = warp::serve(health_check).bind_with_graceful_shutdown(http_addr, signal);
+    let (_, http_server) = warp::serve(routes).bind_with_graceful_shutdown(http_addr, signal);
 
     dbg_print("Configuring a new Tokio task for gRPC and HTTP server");
     // https://github.com/hyperium/tonic/discussions/740
@@ -138,7 +147,14 @@ where
     Ok(())
 }
 
-pub(crate) async fn health_handler() -> Result<impl warp::Reply, warp::Rejection> {
+async fn health_handler() -> Result<impl warp::Reply, warp::Rejection> {
     let result = { String::from("OK") };
     Ok(warp::reply::json(&result))
+}
+
+async fn get_metrics_handler() -> Result<impl warp::Reply, warp::Rejection> {
+    match autometrics::prometheus_exporter::encode_to_string() {
+        Ok(metrics) => Ok(warp::reply::json(&metrics)),
+        Err(_) => Err(warp::reject::not_found()),
+    }
 }

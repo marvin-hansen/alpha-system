@@ -51,9 +51,9 @@ members = [
     "queng_services/ims/ims_clients/rest_client",
     "queng_services/ims/ims_common",
     "queng_services/ims/ims_data/binance_data",
-    "queng_services/ims/ims_data/shared_data",
     "queng_services/aux/kaiko_tests",
     "queng_services/meta/mddb/mddb_tests",
+    "queng_services/templete/grpc_service",
     "queng_specs/portfolio_specs",
     "queng_specs/container_specs",
     "queng_specs/db_specs",
@@ -100,6 +100,7 @@ kaiko_client = { path = "queng_services/aux/kaiko_client" }
 rest_client = { path = "queng_services/ims/ims_clients/rest_client" }
 mddb_client = { path = "queng_services/meta/mddb/mddb_client" }
 smdb_client = { path = "queng_services/core/smdb/smdb_client" }
+
 # Common
 common_config = { path = "queng_common/common_config" }
 common_container = { path = "queng_common/common_container" }
@@ -111,12 +112,14 @@ common_exchange = { path = "queng_common/common_exchange" }
 common_metadata = { path = "queng_common/common_metadata" }
 common_service = { path = "queng_common/common_service" }
 common_trade = { path = "queng_common/common_trade" }
+
 # Components
 config_manager = { path = "queng_components/config_manager" }
 ctx_manager = { path = "queng_components/ctx_manager" }
 dns_manager = { path = "queng_components/dns_manager" }
 pattern_manager = { path = "queng_components/pattern_manager" }
 symbol_manager = { path = "queng_components/symbol_manager" }
+
 # Infra
 # Clickhouse DB
 clickhouse_utils = { path = "queng_infra/clickhouse/clickhouse_utils" }
@@ -139,31 +142,42 @@ proto_mddb = { path = "queng_proto/proto_mddb" }
 proto_mddb_utils = { path = "queng_proto/proto_mddb_utils" }
 proto_smdb = { path = "queng_proto/proto_smdb" }
 proto_smdb_utils = { path = "queng_proto/proto_smdb_utils" }
+
 # SBE
 sbe_bindings = { path = "queng_sbe/bindings" }
 sbe_messages = { path = "queng_sbe/sbe_messages" }
-# IMS
+
+# Services
+cmdb = { path = "queng_services/core/cmdb" }
+dbgw = { path = "queng_services/core/dbgw" }
+smdb = { path = "queng_services/core/smdb" }
 ims_common = { path = "queng_services/ims/ims_common" }
-lib_data_stream = { path = "queng_services/ims/ims_data/shared_data" }
+binance_data = { path = "queng_services/ims/ims_data/binance_data" }
+mddb = { path = "queng_services/meta/mddb" }
+# Service template
+grpc_service = { path = "queng_services/templete/grpc_service" }
+
 # Specs
 container_specs = { path = "queng_specs/container_specs" }
 portfolio_specs = { path = "queng_specs/portfolio_specs" }
 db_specs = { path = "queng_specs/db_specs" }
 exchange_specs = { path = "queng_specs/exchange_specs" }
-# IMS Specs
-ims_data_binance_specs = { path = "queng_specs/service_specs/ims/ims_data/ims_data_binance_specs" }
+
 # Service specs
 cmdb_specs = { path = "queng_specs/service_specs/core/cmdb_specs" }
 dbgw_specs = { path = "queng_specs/service_specs/core/dbgw_specs" }
 mddb_specs = { path = "queng_specs/service_specs/meta/mddb_specs" }
 qdgw_specs = { path = "queng_specs/service_specs/core/qdgw_specs" }
 smdb_specs = { path = "queng_specs/service_specs/core/smdb_specs" }
+ims_data_binance_specs = { path = "queng_specs/service_specs/ims/ims_data/ims_data_binance_specs" }
 ims_data_vex_specs = { path = "queng_specs/service_specs/ims/ims_data/ims_data_vex_specs" }
 shared_service_specs = { path = "queng_specs/service_specs/shared_service_specs" }
+
 # Utils
 crypto_utils = { path = "queng_utils/crypto_utils" }
 math_utils = { path = "queng_utils/math_utils" }
 specs_utils = { path = "queng_utils/specs_utils" }
+
 # Utils - Tests
 docker_utils = { path = "queng_utils_tests/docker_utils" }
 env_utils = { path = "queng_utils_tests/env_utils" }

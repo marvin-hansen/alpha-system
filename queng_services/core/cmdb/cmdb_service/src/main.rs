@@ -39,5 +39,5 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let grpc_svc = CmdbServiceServer::new(CMDBServer::new(arc_dbm));
 
     // Run gRPC service
-    lib_data_stream::run(DBG, SVC_ID, cfg_manager, grpc_svc).await
+    grpc_service::start(DBG, SVC_ID, cfg_manager, grpc_svc).await
 }

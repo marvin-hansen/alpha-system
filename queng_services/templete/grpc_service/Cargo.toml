@@ -1,17 +1,11 @@
 [package]
-name = "lib_data_stream"
+name = "grpc_service"
 version = "0.1.0"
 edition.workspace = true
 rust-version.workspace = true
 readme.workspace = true
 repository.workspace = true
 authors.workspace = true
-
-
-[lib]
-name = "lib_data_stream"
-path = "src/lib/mod.rs"
-
 
 [dependencies]
 # Internal crates
@@ -23,6 +17,7 @@ proto_imdb = {workspace = true}
 common_service =  {workspace = true}
 smdb_client = {workspace = true}
 # External crates
+autometrics = { workspace = true }
 tokio = { workspace = true }
 tonic = { workspace = true }
 prost = { workspace = true }

@@ -8,14 +8,11 @@ repository.workspace = true
 authors.workspace = true
 
 
-[[bin]]
-name = "binance_data"
-path = "src/main.rs"
-
-
 [dependencies]
 # Service specs
 ims_data_binance_specs = {workspace = true}
+# Service template
+grpc_service = { workspace = true }
 # Custom Memory Allocator
 mimalloc = {workspace = true}
 # Internal crates
@@ -25,7 +22,6 @@ config_manager = {workspace = true}
 ctx_manager = {workspace = true}
 dns_manager = {workspace = true}
 ims_common = {workspace = true}
-lib_data_stream = {workspace = true}
 proto_imdb = {workspace = true}
 common_service =  {workspace = true}
 # External crates
