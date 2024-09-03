@@ -42,13 +42,13 @@ alias(
 
 alias(
     name = "kaiko_proxy",
-    actual = "//queng_services/aux/kaiko_proxy:kaiko_proxy",
+    actual = "//queng_services/meta/kaiko/kaiko_proxy:kaiko_proxy",
     visibility = ["//visibility:public"],
 )
 
 alias(
     name = "kaiko_proxy_push",
-    actual = "//queng_services/aux/kaiko_proxy:push",
+    actual = "//queng_services/meta/kaiko/kaiko_proxy:push",
     visibility = ["//visibility:public"],
 )
 
