@@ -28,14 +28,14 @@ const MDDB_MIGRATION: EmbeddedMigration = EmbeddedMigration::new(
     TomlMetadataWrapper::new(true),
 );
 
-const MDDB_NAME: &str = "2024-08-23-093731_mddb";
+const MDDB_NAME: &str = "2024-09-04-145651_mddb";
 
 const MDDB_UP: &str = include_str!(concat!(
     env!("MIGRATION_DATA"),
-    "/2024-08-23-093731_mddb/up.sql"
+    "/2024-09-04-145651_mddb/up.sql"
 ));
 
 const MDDB_DOWN: &str = include_str!(concat!(
     env!("MIGRATION_DATA"),
-    "/2024-08-23-093731_mddb/down.sql"
+    "/2024-09-04-145651_mddb/down.sql"
 ));

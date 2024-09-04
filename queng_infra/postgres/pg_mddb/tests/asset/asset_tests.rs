@@ -1,6 +1,7 @@
 use diesel::Connection;
 use env_utils::EnvUtil;
 use pg_mddb::prelude::Asset;
+use postgres_test_utils::prelude::get_test_asset;
 use postgres_test_utils::{get_or_wait_for_postgres_connection, DB_TEST_URL};
 
 // Somehow tests seem to be executed or sorted in alphabetical order, so make sure that the
@@ -16,42 +17,142 @@ async fn all_setup() {
 }
 
 #[tokio::test]
-async fn test_delete_error() {
+async fn test_count() {
+    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+    assert!(connection.is_ok());
+
+    let conn = &mut connection.unwrap();
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+
+    let result = pg_mddb::run_mddb_db_migration(conn);
+    assert!(result.is_ok());
+
+    let count = Asset::count(conn);
+    assert!(count.is_ok());
+    assert_eq!(count.unwrap(), 0);
+
+    let asset = get_test_asset().to_meta_asset();
+    let result = Asset::create(conn, asset);
+    assert!(result.is_ok());
+    let count = Asset::count(conn);
+    assert!(count.is_ok());
+    assert_eq!(count.unwrap(), 1);
+}
+
+#[tokio::test]
+async fn test_create() {
+    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+    assert!(connection.is_ok());
+
+    let conn = &mut connection.unwrap();
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+
+    let result = pg_mddb::run_mddb_db_migration(conn);
+    assert!(result.is_ok());
+
+    let asset = get_test_asset().to_meta_asset();
+    let result = Asset::create(conn, asset);
+    assert!(result.is_ok());
+}
+
+#[tokio::test]
+async fn test_create_error() {
+    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+    assert!(connection.is_ok());
+
+    let conn = &mut connection.unwrap();
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+
+    let result = pg_mddb::run_mddb_db_migration(conn);
+    assert!(result.is_ok());
+
+    let asset = get_test_asset().to_meta_asset();
+    let result = Asset::create(conn, asset.clone());
+    assert!(result.is_ok());
+
+    // Simulate an error scenario by trying to create the same asset again with the same code (primary key)
+    let result = Asset::create(conn, asset.clone());
+    assert!(result.is_err());
+}
+
+#[tokio::test]
+async fn test_read() {
+    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+    assert!(connection.is_ok());
+
+    let conn = &mut connection.unwrap();
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+
+    let result = pg_mddb::run_mddb_db_migration(conn);
+    assert!(result.is_ok());
+
+    let asset = get_test_asset().to_meta_asset();
+    let result = Asset::create(conn, asset);
+    assert!(result.is_ok());
+
+    let result = Asset::read(conn, "test_asset_code".to_string());
+    assert!(result.is_ok());
+
+    let asset = result.unwrap();
+    assert_eq!(asset.code, "test_asset_code".to_string());
+}
+
+#[tokio::test]
+async fn test_read_error() {
+    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+    assert!(connection.is_ok());
+
+    let conn = &mut connection.unwrap();
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+
+    let result = pg_mddb::run_mddb_db_migration(conn);
+    assert!(result.is_ok());
+
+    // Simulate an error scenario
+    let result = Asset::read(conn, "DoesNotExists".to_string());
+    // dbg!(&result);
+    assert!(result.is_err());
+}
+
+#[tokio::test]
+async fn test_delete() {
     let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
     assert!(connection.is_ok());
     let conn = &mut connection.unwrap();
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
     let result = pg_mddb::run_mddb_db_migration(conn);
-    dbg!(&result);
+    // dbg!(&result);
     assert!(result.is_ok());
 
-    // Docker version 27.1.2, build d01f264
-    // test test_delete_error ... FAILED
-    // test all_setup ... ok
-    //
-    // failures:
-    //
-    // ---- test_delete_error stdout ----
-    // [pg_smdb]: Error migrating database: Failed to run 2024-08-23-093731_mddb with:
-    // Received an empty query[queng_infra/postgres/pg_mddb/tests/asset/asset_tests.rs:24:5] &result = Err(
-    //     QueryError(
-    //         DieselMigrationName {
-    //             name: "2024-08-23-093731_mddb",
-    //             version: MigrationVersion(
-    //                 "20240823093731",
-    //             ),
-    //         },
-    //         DatabaseError(
-    //             Unknown,
-    //             "Received an empty query",
-    //         ),
-    //     ),
-    // )
-    // thread 'test_delete_error' panicked at queng_infra/postgres/pg_mddb/tests/asset/asset_tests.rs:25:5:
-    // assertion failed: result.is_ok()
-    // note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+    let asset = get_test_asset().to_meta_asset();
+    let result = Asset::create(conn, asset);
+    assert!(result.is_ok());
+
+    let result = Asset::delete(conn, "test_asset_code".to_string());
+    assert!(result.is_ok());
+}
+
+#[tokio::test]
+async fn test_delete_error() {
+    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+    assert!(connection.is_ok());
+
+    let conn = &mut connection.unwrap();
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+
+    let result = pg_mddb::run_mddb_db_migration(conn);
+    // dbg!(&result);
+    assert!(result.is_ok());
 
     let result = Asset::delete(conn, "DoesNotExists".to_string());
-    assert!(result.is_err());
+    dbg!(&result);
+    assert!(result.is_ok());
+    assert_eq!(result.unwrap(), 0);
 }

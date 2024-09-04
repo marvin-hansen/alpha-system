@@ -145,6 +145,10 @@ impl Asset {
     /// # Returns
     ///
     /// Returns a `QueryResult` containing the number of rows affected by the delete operation.
+    /// If the asset does not exist, the query will return `Ok(0)`.
+    /// If the asset exists and was deleted, the query will return `Ok(1)`.
+    ///
+    /// Note, delete only returns an error when either the database connection or the query fails.
     ///
     pub fn delete(db: &mut Connection, asset_id: String) -> QueryResult<usize> {
         diesel::delete(assets.find(asset_id)).execute(db)

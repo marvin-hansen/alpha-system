@@ -1,6 +1,16 @@
 use common_config::prelude::{ServiceConfig, ServiceID};
 use common_exchange::prelude::Instrument as CommonInstrument;
 use common_exchange::prelude::{AccountType, PortfolioConfig as CommonPortfolioConfig};
+use pg_mddb::prelude::Asset;
+
+pub fn get_test_asset() -> Asset {
+    Asset {
+        asset_code: "test_asset_code".to_string(),
+        asset_name: "test_asset_name".to_string(),
+        asset_classes: vec![],
+        asset_figi: None,
+    }
+}
 
 pub fn get_test_instrument() -> CommonInstrument {
     CommonInstrument::new(

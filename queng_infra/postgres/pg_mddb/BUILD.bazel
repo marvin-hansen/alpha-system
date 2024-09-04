@@ -10,9 +10,12 @@ copy_directory(
 
 rust_library(
     name = "pg_mddb",
-    srcs = glob([
-        "src/**",
-    ]),
+    srcs = glob(
+        ["src/**"],
+        exclude = [
+            "src/migrations/**",
+        ],
+    ),
     compile_data = [
         ":copy_migrations",
     ],

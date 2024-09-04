@@ -26,6 +26,11 @@ async fn test_start_service_util() {
     let result = svc_util.start_service(&service_id).await;
     assert!(result.is_ok());
 
+    // thread 'main' panicked at queng_services/templete/grpc_service/src/lib.rs:58:13:
+    // Service dependency DBGW is unavailable; please start it
+    // note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+    // test test_start_service_util ... FAILED
+
     // // Start the service
     // let service_id = ServiceID::CMDB;
     // let result = svc_util.start_service(&service_id).await;

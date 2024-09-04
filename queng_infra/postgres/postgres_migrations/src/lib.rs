@@ -34,7 +34,6 @@ pub fn run_db_migration(
     // Check DB connection!
     check_db_connection(conn)?;
 
-    // If so, run all pending migrations.
     match conn.run_pending_migrations(embedded_migrations) {
         Ok(_) => Ok(()),
         Err(e) => {
