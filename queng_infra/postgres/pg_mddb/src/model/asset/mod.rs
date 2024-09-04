@@ -1,10 +1,8 @@
 mod asset_impl;
 pub mod asset_type_conversion;
 
-use bon::builder;
 use diesel::{AsChangeset, Identifiable, Insertable, Queryable, Selectable};
 
-#[builder]
 #[derive(Debug, Clone, PartialEq, Queryable, Selectable, Identifiable, Insertable, AsChangeset)]
 #[diesel(table_name=crate::schema::mddb::assets, primary_key(asset_code))]
 pub struct Asset {
@@ -14,7 +12,6 @@ pub struct Asset {
     pub asset_figi: Option<String>,
 }
 
-#[builder]
 #[derive(Debug, Clone, Queryable, Insertable, AsChangeset)]
 #[diesel(table_name=crate::schema::mddb::assets, primary_key(asset_code))]
 pub struct CreateAsset {
@@ -24,7 +21,6 @@ pub struct CreateAsset {
     pub asset_figi: Option<String>,
 }
 
-#[builder]
 #[derive(Debug, Clone, Queryable, Insertable, AsChangeset)]
 #[diesel(table_name=crate::schema::mddb::assets)]
 pub struct UpdateAsset {

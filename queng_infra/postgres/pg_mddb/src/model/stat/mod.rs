@@ -1,9 +1,7 @@
 mod stat_type_conversion;
 
-use bon::builder;
 use diesel::{AsChangeset, Insertable, Queryable, Selectable};
 
-#[builder]
 #[derive(Debug, Clone, Queryable, Selectable)]
 #[diesel(table_name=crate::schema::mddb::stats , primary_key(stats_id))]
 pub struct Stat {
@@ -15,7 +13,6 @@ pub struct Stat {
     pub stats_number_instruments: i32,
 }
 
-#[builder]
 #[derive(Debug, Clone, Queryable, Insertable, AsChangeset)]
 #[diesel(table_name=crate::schema::mddb::stats , primary_key(stats_id))]
 pub struct CreateStat {
@@ -26,7 +23,6 @@ pub struct CreateStat {
     pub stats_number_instruments: i32,
 }
 
-#[builder]
 #[derive(Debug, Clone, Queryable, Insertable, AsChangeset)]
 #[diesel(table_name=crate::schema::mddb::stats , primary_key(stats_id))]
 pub struct UpdateStat {

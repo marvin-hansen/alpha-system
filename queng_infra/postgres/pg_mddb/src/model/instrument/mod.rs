@@ -1,9 +1,7 @@
 mod instrument_type_conversion;
 
-use bon::builder;
 use diesel::{AsChangeset, Identifiable, Insertable, Queryable, Selectable};
 
-#[builder]
 #[derive(Debug, Clone, PartialEq, Queryable, Selectable, Identifiable, Insertable, AsChangeset)]
 #[diesel(table_name=crate::schema::mddb::instruments)]
 #[diesel(primary_key(instrument_id))]
@@ -18,7 +16,6 @@ pub struct Instrument {
     pub instrument_trade_end_timestamp: Option<i64>,
 }
 
-#[builder]
 #[derive(Debug, Clone, Queryable, Insertable, AsChangeset)]
 #[diesel(table_name=crate::schema::mddb::instruments)]
 #[diesel(primary_key(instrument_id))]
@@ -33,7 +30,6 @@ pub struct CreateInstrument {
     pub instrument_trade_end_timestamp: Option<i64>,
 }
 
-#[builder]
 #[derive(Debug, Clone, Queryable, Insertable, AsChangeset)]
 #[diesel(table_name=crate::schema::mddb::instruments)]
 pub struct UpdateInstrument {

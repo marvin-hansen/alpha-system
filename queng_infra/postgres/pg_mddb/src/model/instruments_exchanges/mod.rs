@@ -1,7 +1,5 @@
-use bon::builder;
 use diesel::{Associations, Identifiable, Insertable, Queryable, Selectable};
 
-#[builder]
 #[derive(Identifiable, Selectable, Queryable, Associations, Debug)]
 #[diesel(belongs_to(crate::model::exchange::Exchange))]
 #[diesel(belongs_to(crate::model::instrument::Instrument))]
@@ -12,7 +10,6 @@ pub struct InstrumentsExchanges {
     pub exchange_id: String,
 }
 
-#[builder]
 #[derive(Debug, Clone, Queryable, Insertable, Selectable)]
 #[diesel(table_name=crate::schema::mddb::instruments_exchanges)]
 pub struct CreateInstrumentsExchanges {

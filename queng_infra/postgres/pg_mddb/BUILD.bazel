@@ -34,7 +34,6 @@ rust_library(
         "//alias:common_metadata",
         "//alias:postgres_migrations",
         # External crates
-        "//thirdparty/crates:bon",
         "//thirdparty/crates:diesel",
         "//thirdparty/crates:diesel_migrations",
     ],
