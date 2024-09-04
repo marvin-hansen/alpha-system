@@ -6,3 +6,5 @@ mod exchange;
 mod instrument;
 #[cfg(test)]
 mod stat;
+#[cfg(test)]
+mod type_conversion;

@@ -3,10 +3,7 @@ load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 rust_test_suite(
     name = "tests",
     srcs = glob([
-        "asset/asset_type_conversion_tests.rs",
-        "exchange/exchange_type_conversion_tests.rs",
-        "instrument/instrument_type_conversion_tests.rs",
-        "stat/stat_type_conversion_tests.rs",
+        "type_conversion/*_tests.rs",
     ]),
     tags = [
         "unit-test",
