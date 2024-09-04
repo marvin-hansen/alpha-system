@@ -38,7 +38,7 @@ pub fn run_db_migration(
     match conn.run_pending_migrations(embedded_migrations) {
         Ok(_) => Ok(()),
         Err(e) => {
-            eprint!("[pg_smdb]: Error migrating database: {}", e);
+            eprint!("Error migrating database: {}", e);
             Err(e)
         }
     }

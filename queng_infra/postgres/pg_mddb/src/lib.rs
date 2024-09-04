@@ -13,6 +13,8 @@ pub const MIGRATIONS: EmbeddedMigrations = EMBEDDED_MIGRATIONS;
 pub fn run_mddb_db_migration(
     conn: &mut Connection,
 ) -> Result<(), Box<dyn Error + Send + Sync + 'static>> {
+    println!("[PostgresMddb]: Run DB Migration()");
+
     // Run migrations if there are pending
     postgres_migrations::run_db_migration(conn, MIGRATIONS)
 }

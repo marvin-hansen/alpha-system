@@ -10,13 +10,6 @@ const DIESEL_MIGRATION: EmbeddedMigration = EmbeddedMigration::new(
     TomlMetadataWrapper::new(true),
 );
 
-const MDDB_MIGRATION: EmbeddedMigration = EmbeddedMigration::new(
-    MDDB_UP,
-    Some(MDDB_DOWN),
-    EmbeddedName::new(MDDB_NAME),
-    TomlMetadataWrapper::new(true),
-);
-
 const DIESEL_NAME: &str = "00000000000000_diesel_initial_setup";
 const DIESEL_UP: &str = include_str!(concat!(
     env!("MIGRATION_DATA"),
@@ -27,6 +20,13 @@ const DIESEL_DOWN: &str = include_str!(concat!(
     env!("MIGRATION_DATA"),
     "/00000000000000_diesel_initial_setup/down.sql"
 ));
+
+const MDDB_MIGRATION: EmbeddedMigration = EmbeddedMigration::new(
+    MDDB_UP,
+    Some(MDDB_DOWN),
+    EmbeddedName::new(MDDB_NAME),
+    TomlMetadataWrapper::new(true),
+);
 
 const MDDB_NAME: &str = "2024-08-23-093731_mddb";
 
