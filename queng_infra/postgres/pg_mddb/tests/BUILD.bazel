@@ -36,7 +36,7 @@ rust_test_suite(
         "test.recycle-runner": "true",
         # We don't want different different db tests to be assigned to the same recycled runner,
         # because we can't fit all db docker images with the default disk limit.
-        "test.runner-recycling-key": "mddb_asset_tests",
+        "test.runner-recycling-key": "pg_mddb_asset_tests",
     },
     tags = [
         "integration_test",
@@ -74,7 +74,7 @@ rust_test_suite(
         "test.runner-recycling-key": "mddb_exchange_tests",
     },
     tags = [
-        "integration_test",
+        # "integration_test",
     ],
     visibility = ["//visibility:public"],
     deps = [
@@ -109,7 +109,7 @@ rust_test_suite(
         "test.runner-recycling-key": "mddb_instrument_tests",
     },
     tags = [
-        "integration_test",
+        # "integration_test",
     ],
     visibility = ["//visibility:public"],
     deps = [
@@ -144,7 +144,7 @@ rust_test_suite(
         "test.runner-recycling-key": "stat_tests",
     },
     tags = [
-        "integration_test",
+        # "integration_test",
     ],
     visibility = ["//visibility:public"],
     deps = [
