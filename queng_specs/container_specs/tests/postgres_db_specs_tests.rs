@@ -1,10 +1,10 @@
 use container_specs::postgres_container_specs::postgres_db_container_config;
 
 #[test]
-fn test_surreal_db_container_config() {
+fn test_postgres_db_container_config() {
     let config = postgres_db_container_config();
 
-    assert_eq!(config.name(), "postgresdb");
+    assert_eq!(config.name(), "postgres");
     assert_eq!(config.image(), "postgres");
     assert_eq!(config.tag(), "16.3-bookworm");
     assert_eq!(config.url(), "0.0.0.0");

@@ -1,10 +1,9 @@
 use common_container::prelude::{ContainerConfig, WaitStrategy};
 
 pub fn postgres_db_container_config() -> ContainerConfig<'static> {
-    // Official container image for SurrealDB
-    // https://hub.docker.com/r/surrealdb/surrealdb/tags
+    // Ensure name matches exactly the generated name by the DockerUtil
     ContainerConfig::new(
-        "postgresdb",
+        "postgres",
         "postgres",
         "16.3-bookworm",
         "0.0.0.0",
@@ -15,7 +14,7 @@ pub fn postgres_db_container_config() -> ContainerConfig<'static> {
         true, // Keep the container running for re-use
         true, // Keep the same container config across all env. setups.
         WaitStrategy::WaitUntilConsoleOutputContains(
-            "database system is ready to accept connections".to_string(),
+            "PostgreSQL init process complete; ready for start up.".to_string(),
             30,
         ),
     )

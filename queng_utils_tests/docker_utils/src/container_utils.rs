@@ -153,12 +153,23 @@ impl DockerUtil {
     /// Either returns the name and port of a container if its running, otherwise an DockerError.
     ///
     pub fn get_running_container(&self, container_id: &str) -> Result<(String, u16), DockerError> {
-        let container = match Command::new("docker")
-            .arg("ps")
-            .arg(format!("--filter=name={}", container_id))
-            .arg("--format={{.Names}}")
-            .output()
-        {
+        self.dbg_print(&format!(
+            "[get_running_container]: Check container image for: {}.",
+            container_id
+        ));
+
+        let mut cmd = Command::new("docker");
+        cmd.arg("ps");
+        cmd.arg("--filter=status=running".to_string());
+        cmd.arg(format!("--filter=name={container_id}"));
+        cmd.arg("--format={{.Names}}");
+
+        self.dbg_print(&format!(
+            "[get_running_container]: Run Docker command: {:?}",
+            cmd
+        ));
+
+        let container = match cmd.output() {
             Ok(out) => String::from_utf8_lossy(&out.stdout).to_string(),
             Err(e) => {
                 return Err(DockerError::from(format!(
@@ -168,6 +179,11 @@ impl DockerUtil {
             }
         };
 
+        self.dbg_print(&format!(
+            "[get_running_container]: Empty output: {}.",
+            container.is_empty()
+        ));
+
         if container.is_empty() {
             return Err(DockerError::from(format!(
                 "[get_running_container]: Error no container found for ID: {}",
@@ -175,7 +191,7 @@ impl DockerUtil {
             )));
         }
 
-        let parts = container.split('-').collect::<Vec<&str>>();
+        let parts = container_id.split('-').collect::<Vec<&str>>();
         let port = parts
             .last()
             .expect("[get_running_container]: Failed to get container port")
@@ -183,7 +199,7 @@ impl DockerUtil {
             .parse::<u16>()
             .expect("[get_running_container]: Failed to convert container port from string to u16");
 
-        Ok((container.trim().to_string(), port))
+        Ok((container_id.to_string(), port))
     }
 
     /// Retrieves the image tag of a running container by its ID.

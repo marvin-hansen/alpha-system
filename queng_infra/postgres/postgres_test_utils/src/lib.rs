@@ -28,7 +28,7 @@ pub async fn get_or_wait_for_postgres_connection(
     database_url: &str,
     timeout: Option<u64>,
 ) -> Result<PgConnection, PostgresDBError> {
-    get_or_wait_for_postgres_database_connection(database_url, timeout, false).await
+    get_or_wait_for_postgres_database_connection(database_url, timeout).await
 }
 
 /// Connects to a Postgres database and waits for it to come online if it's not already.
@@ -48,24 +48,12 @@ pub async fn get_or_wait_for_postgres_connection(
 /// If successful, returns a `PgConnection` instance.
 /// If the connection fails, returns a `PostgresDBError` indicating the failure.
 ///
-pub async fn get_or_wait_for_postgres_migration_connection(
-    database_url: &str,
-    timeout: Option<u64>,
-) -> Result<PgConnection, PostgresDBError> {
-    get_or_wait_for_postgres_database_connection(database_url, timeout, true).await
-}
-
 async fn get_or_wait_for_postgres_database_connection(
     database_url: &str,
     timeout: Option<u64>,
-    migration: bool,
 ) -> Result<PgConnection, PostgresDBError> {
     let start_time = Instant::now();
-    let retry_interval = if migration {
-        Duration::from_millis(50)
-    } else {
-        Duration::from_millis(500)
-    };
+    let retry_interval = Duration::from_millis(500);
 
     let timeout = Duration::from_secs(timeout.unwrap_or(120));
 
