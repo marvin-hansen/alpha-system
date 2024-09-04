@@ -1,3 +1,4 @@
+use chrono::Utc;
 use common_metadata::prelude::{
     MetaAsset, MetaAssetRoot, MetaExchange, MetaExchangesRoot, MetaInstrument, MetaInstrumentsRoot,
     Stats,
@@ -25,7 +26,10 @@ impl MetaDataSet {
         // The hash of the sum is used to determine if some meta-data have changed.
         let hash = hash_utils::sha512_digest(sum.to_string());
 
+        let download_timestamp = Utc::now().to_rfc2822();
+
         let stats = Stats::new(
+            download_timestamp,
             hash,
             assets.len() as u32,
             exchanges.len() as u32,

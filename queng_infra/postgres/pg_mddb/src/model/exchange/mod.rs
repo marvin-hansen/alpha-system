@@ -1,3 +1,5 @@
+mod exchange_type_conversion;
+
 use bon::builder;
 use diesel::{AsChangeset, Identifiable, Insertable, Queryable, Selectable};
 

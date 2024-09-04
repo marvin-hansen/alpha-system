@@ -1,4 +1,3 @@
-use chrono::Utc;
 use serde::{Deserialize, Serialize};
 use std::fmt::{Debug, Display, Formatter};
 
@@ -13,13 +12,14 @@ pub struct Stats {
 
 impl Stats {
     pub fn new(
+        download_timestamp: String,
         hash: String,
         number_assets: u32,
         number_exchanges: u32,
         number_instruments: u32,
     ) -> Self {
         Self {
-            download_timestamp: Utc::now().to_rfc2822(),
+            download_timestamp,
             hash,
             number_assets,
             number_exchanges,
