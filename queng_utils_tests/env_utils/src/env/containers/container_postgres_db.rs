@@ -18,7 +18,7 @@ impl EnvUtil {
             .await
             .unwrap_or_else(|_| {
                 panic!(
-                    "[TestEnv/CI:setup_api_proxy_container]: Failed to setup container: {}",
+                    "[TestEnv/CI:setup_container_postgres_db]: Failed to setup container: {}",
                     &container_config.container_name()
                 )
             });

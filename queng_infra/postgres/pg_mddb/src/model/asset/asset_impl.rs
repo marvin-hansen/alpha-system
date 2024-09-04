@@ -1,3 +1,3 @@
-use crate::model::asset::PostgresAsset;
+use crate::model::asset::Asset;
 
-impl PostgresAsset {}
+impl Asset {}

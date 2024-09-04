@@ -1,5 +1,5 @@
 use common_metadata::prelude::MetaAsset;
-use pg_mddb::prelude::PostgresAsset;
+use pg_mddb::prelude::Asset;
 
 #[test]
 fn test_asset_conversion() {
@@ -13,7 +13,7 @@ fn test_asset_conversion() {
     };
 
     // Test conversion from MetaAsset to PostgresAsset
-    let postgres_asset = PostgresAsset::from_meta_asset(meta_asset.clone());
+    let postgres_asset = Asset::from_meta_asset(meta_asset.clone());
 
     // Test conversion from PostgresAsset to MetaAsset
     let converted_meta_asset = postgres_asset.to_meta_asset();

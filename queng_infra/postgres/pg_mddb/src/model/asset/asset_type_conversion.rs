@@ -1,9 +1,9 @@
-use crate::model::asset::PostgresAsset;
+use crate::model::asset::Asset;
 use common_metadata::prelude::MetaAsset;
 
-impl PostgresAsset {
+impl Asset {
     pub fn from_meta_asset(meta_asset: MetaAsset) -> Self {
-        PostgresAsset {
+        Asset {
             asset_code: meta_asset.code,
             asset_name: meta_asset.name,
             asset_classes: meta_asset.asset_classes.into_iter().map(Some).collect(),

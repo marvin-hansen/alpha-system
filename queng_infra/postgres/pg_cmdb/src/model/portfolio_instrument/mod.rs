@@ -5,7 +5,7 @@ mod portfolio_instrument_impl;
 
 #[builder]
 #[derive(Identifiable, Selectable, Queryable, Associations, Debug)]
-#[diesel(belongs_to(crate::prelude::portfolio::Portfolio))]
+#[diesel(belongs_to(crate::model::portfolio::Portfolio))]
 #[diesel(belongs_to(crate::model::instrument::Instrument))]
 #[diesel(table_name=crate::schema::cmdb::portfolio_instrument)]
 #[diesel(primary_key(portfolio_id, instrument_id))]

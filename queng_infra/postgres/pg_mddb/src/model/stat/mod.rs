@@ -6,7 +6,7 @@ use diesel::{AsChangeset, Insertable, Queryable, Selectable};
 #[builder]
 #[derive(Debug, Clone, Queryable, Selectable)]
 #[diesel(table_name=crate::schema::mddb::stats , primary_key(stats_id))]
-pub struct PostgresStat {
+pub struct Stat {
     pub stats_id: i32,
     pub stats_hash: String,
     pub stats_download_timestamp: String,
@@ -18,7 +18,7 @@ pub struct PostgresStat {
 #[builder]
 #[derive(Debug, Clone, Queryable, Insertable, AsChangeset)]
 #[diesel(table_name=crate::schema::mddb::stats , primary_key(stats_id))]
-pub struct CreatePostgresStat {
+pub struct CreateStat {
     pub stats_hash: String,
     pub stats_download_timestamp: String,
     pub stats_number_assets: i32,
@@ -29,7 +29,7 @@ pub struct CreatePostgresStat {
 #[builder]
 #[derive(Debug, Clone, Queryable, Insertable, AsChangeset)]
 #[diesel(table_name=crate::schema::mddb::stats , primary_key(stats_id))]
-pub struct UpdatePostgresStat {
+pub struct UpdateStat {
     pub stats_id: i32,
     pub stats_hash: String,
     pub stats_download_timestamp: String,

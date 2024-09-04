@@ -1,10 +1,10 @@
-use crate::prelude::PostgresInstrument;
+use crate::model::instrument::Instrument;
 use common_metadata::prelude::MetaInstrument;
 
-impl PostgresInstrument {
+impl Instrument {
     pub fn from_meta_instrument(meta_instrument: MetaInstrument) -> Self {
-        PostgresInstrument {
-            instrument_code: meta_instrument.code,
+        Instrument {
+            instrument_id: meta_instrument.code,
             instrument_class: meta_instrument.class,
             instrument_base_asset: meta_instrument.base_asset,
             instrument_quote_asset: meta_instrument.quote_asset,
@@ -27,7 +27,7 @@ impl PostgresInstrument {
             base_asset: self.instrument_base_asset.clone(),
             quote_asset: self.instrument_quote_asset.clone(),
             kaiko_legacy_symbol: String::new(), // Assuming kaiko_legacy_symbol is not used
-            code: self.instrument_code.clone(),
+            code: self.instrument_id.clone(),
             class: self.instrument_class.clone(),
             metadata: None, // Assuming metadata is not used
             trade_start_timestamp: self.instrument_trade_start_timestamp.map(|ts| ts as u64),

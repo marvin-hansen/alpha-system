@@ -1,18 +1,18 @@
-use crate::model::exchange::PostgresExchange;
+use crate::model::exchange::Exchange;
 use common_metadata::prelude::MetaExchange;
 
-impl PostgresExchange {
+impl Exchange {
     pub fn from_meta_exchange(meta_exchange: MetaExchange) -> Self {
-        PostgresExchange {
-            exchanges_code: meta_exchange.code,
-            exchanges_name: meta_exchange.name,
+        Exchange {
+            exchange_id: meta_exchange.code,
+            exchange_name: meta_exchange.name,
         }
     }
 
     pub fn to_meta_exchange(&self) -> MetaExchange {
         MetaExchange {
-            code: self.exchanges_code.clone(),
-            name: self.exchanges_name.clone(),
+            code: self.exchange_id.clone(),
+            name: self.exchange_name.clone(),
             kaiko_legacy_slug: String::new(), // Assuming kaiko_legacy_slug is not used
         }
     }

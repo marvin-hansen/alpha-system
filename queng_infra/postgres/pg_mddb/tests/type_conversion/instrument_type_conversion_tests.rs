@@ -1,5 +1,5 @@
 use common_metadata::prelude::MetaInstrument;
-use pg_mddb::prelude::PostgresInstrument;
+use pg_mddb::prelude::Instrument;
 
 #[test]
 fn test_from_meta_instrument() {
@@ -21,9 +21,9 @@ fn test_from_meta_instrument() {
         trade_count: 0,
     };
 
-    let postgres_instrument = PostgresInstrument::from_meta_instrument(meta_instrument.clone());
+    let postgres_instrument = Instrument::from_meta_instrument(meta_instrument.clone());
 
-    assert_eq!(postgres_instrument.instrument_code, meta_instrument.code);
+    assert_eq!(postgres_instrument.instrument_id, meta_instrument.code);
     assert_eq!(postgres_instrument.instrument_class, meta_instrument.class);
     assert_eq!(
         postgres_instrument.instrument_base_asset,
@@ -53,8 +53,8 @@ fn test_from_meta_instrument() {
 
 #[test]
 fn test_to_meta_instrument() {
-    let postgres_instrument = PostgresInstrument {
-        instrument_code: "instrument_code".to_string(),
+    let postgres_instrument = Instrument {
+        instrument_id: "instrument_code".to_string(),
         instrument_class: "instrument_class".to_string(),
         instrument_base_asset: "base_asset".to_string(),
         instrument_quote_asset: "quote_asset".to_string(),
@@ -66,7 +66,7 @@ fn test_to_meta_instrument() {
 
     let meta_instrument = postgres_instrument.to_meta_instrument();
 
-    assert_eq!(meta_instrument.code, postgres_instrument.instrument_code);
+    assert_eq!(meta_instrument.code, postgres_instrument.instrument_id);
     assert_eq!(meta_instrument.class, postgres_instrument.instrument_class);
     assert_eq!(
         meta_instrument.base_asset,

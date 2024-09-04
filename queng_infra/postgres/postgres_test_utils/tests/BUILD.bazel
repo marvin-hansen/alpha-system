@@ -20,7 +20,7 @@ rust_test(
         "test.runner-recycling-key": "db_postgres_utils_tests",
     },
     tags = [
-        "postgres_setup",
+        # "postgres_setup",
     ],
     visibility = ["//visibility:public"],
     deps = [
@@ -51,7 +51,7 @@ rust_test(
         "test.runner-recycling-key": "db_postgres_utils_tests",
     },
     tags = [
-        "postgres_teardown",
+        # "postgres_teardown",
     ],
     visibility = ["//visibility:public"],
     deps = [

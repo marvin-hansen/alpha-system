@@ -1,7 +1,7 @@
-use crate::prelude::PostgresStat;
+use crate::model::stat::Stat;
 use common_metadata::prelude::Stats;
 
-impl PostgresStat {
+impl Stat {
     /// Converts `Stats` to `PostgresStat`
     ///
     /// This method takes `Stats` and returns `PostgresStat` for saving to the database.

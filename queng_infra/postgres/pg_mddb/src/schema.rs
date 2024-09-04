@@ -11,17 +11,15 @@ pub mod mddb {
     }
 
     diesel::table! {
-        mddb.exchanges (exchanges_code) {
-            exchanges_code -> Varchar,
-            exchanges_name -> Varchar,
+        mddb.exchanges (exchange_id) {
+            exchange_id -> Varchar,
+            exchange_name -> Varchar,
         }
     }
 
     diesel::table! {
-        mddb.instruments (instrument_code) {
-            #[max_length = 12]
-            instrument_code -> Varchar,
-            #[max_length = 12]
+        mddb.instruments (instrument_id) {
+            instrument_id -> Varchar,
             instrument_class -> Varchar,
             instrument_base_asset -> Varchar,
             instrument_quote_asset -> Varchar,
@@ -31,6 +29,13 @@ pub mod mddb {
             instrument_figi -> Nullable<Varchar>,
             instrument_trade_start_timestamp -> Int8,
             instrument_trade_end_timestamp -> Int8,
+        }
+    }
+
+    diesel::table! {
+        mddb.instruments_exchanges (instrument_id, exchange_id) {
+            instrument_id -> Varchar,
+            exchange_id -> Varchar,
         }
     }
 
@@ -45,5 +50,14 @@ pub mod mddb {
         }
     }
 
-    diesel::allow_tables_to_appear_in_same_query!(assets, exchanges, instruments, stats,);
+    diesel::joinable!(instruments_exchanges -> exchanges (exchange_id));
+    diesel::joinable!(instruments_exchanges -> instruments (instrument_id));
+
+    diesel::allow_tables_to_appear_in_same_query!(
+        assets,
+        exchanges,
+        instruments,
+        instruments_exchanges,
+        stats,
+    );
 }
