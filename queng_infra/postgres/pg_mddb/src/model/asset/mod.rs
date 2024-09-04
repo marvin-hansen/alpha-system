@@ -1,3 +1,5 @@
+mod asset_impl;
+
 use bon::builder;
 use diesel::{AsChangeset, Identifiable, Insertable, Queryable, Selectable};
 

@@ -1,4 +1,4 @@
-mod assets;
-mod exchanges;
-mod instruments;
-mod stats;
+mod asset;
+mod exchange;
+mod instrument;
+mod stat;
