@@ -8,4 +8,4 @@ custom_type_derives = ["diesel::query_builder::QueryId", "Clone"]
 schema = "mddb"
 
 [migrations_directory]
-dir = "migrations"
+dir = "src/migrations"
