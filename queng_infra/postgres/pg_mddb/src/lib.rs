@@ -6,6 +6,7 @@ use std::error::Error;
 mod embed_migrations;
 mod model;
 pub mod prelude;
+mod schema;
 
 pub const MIGRATIONS: EmbeddedMigrations = EMBEDDED_MIGRATIONS;
 

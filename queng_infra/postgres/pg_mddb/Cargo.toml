@@ -9,8 +9,17 @@ authors.workspace = true
 
 [dependencies]
 # Internal crates
+common_metadata = {workspace = true}
 postgres_migrations = {workspace = true}
 
 # External crates
+bon = {workspace = true}
 diesel = { workspace = true }
 diesel_migrations = { workspace = true }
+
+[dev-dependencies]
+# For testing
+common_database = {workspace = true}
+env_utils = {workspace = true}
+postgres_test_utils = {workspace = true}
+tokio = {workspace = true}

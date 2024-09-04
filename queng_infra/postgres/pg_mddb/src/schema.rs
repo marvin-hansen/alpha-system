@@ -5,7 +5,7 @@ pub mod mddb {
         mddb.assets (asset_code) {
             asset_code -> Varchar,
             asset_name -> Varchar,
-            asset_class -> Varchar,
+            asset_classes -> Array<Nullable<Text>>,
             asset_figi -> Nullable<Varchar>,
         }
     }
@@ -29,19 +29,19 @@ pub mod mddb {
             instrument_exchange_pair_code -> Varchar,
             instrument_pair_figi -> Nullable<Varchar>,
             instrument_figi -> Nullable<Varchar>,
-            trade_start_timestamp -> Int8,
-            trade_end_timestamp -> Int8,
+            instrument_trade_start_timestamp -> Int8,
+            instrument_trade_end_timestamp -> Int8,
         }
     }
 
     diesel::table! {
         mddb.stats (stats_id) {
             stats_id -> Int4,
-            stats_download_timestamp -> Varchar,
             stats_hash -> Varchar,
-            stats_assets -> Int4,
-            stats_exchanges -> Int4,
-            stats_instruments -> Int4,
+            stats_download_timestamp -> Varchar,
+            stats_number_assets -> Int4,
+            stats_number_exchanges -> Int4,
+            stats_number_instruments -> Int4,
         }
     }
 
