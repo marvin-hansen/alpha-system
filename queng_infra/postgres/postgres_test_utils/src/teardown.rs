@@ -32,8 +32,9 @@ pub async fn postgres_schema_teardown(
             assert!(result.is_ok());
             let result = pg_smdb::revert_smdb_db_migration(conn);
             assert!(result.is_ok());
-            // let result = pg_mddb::revert_mddb_db_migration(conn);
-            // assert!(result.is_ok());
+            let result = pg_metadb::revert_metadb_db_migration(conn);
+            //dbg!(&result);
+            assert!(result.is_ok());
             Ok(())
         }
         PostgresDBSchema::PostgresDBSchemaCMDB => {
@@ -49,9 +50,9 @@ pub async fn postgres_schema_teardown(
             Ok(())
         }
         PostgresDBSchema::PostgresDBSchemaMDDB => {
-            // let result = pg_mddb::revert_mddb_db_migration(conn);
-            // //dbg!(&result);
-            // assert!(result.is_ok());
+            let result = pg_metadb::revert_metadb_db_migration(conn);
+            //dbg!(&result);
+            assert!(result.is_ok());
             Ok(())
         }
 

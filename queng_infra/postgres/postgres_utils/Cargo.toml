@@ -16,4 +16,3 @@ pg_cmdb = {workspace = true}
 pg_smdb = {workspace = true}
 # External crates
 diesel = { workspace = true }
-# diesel_migrations = { workspace = true }

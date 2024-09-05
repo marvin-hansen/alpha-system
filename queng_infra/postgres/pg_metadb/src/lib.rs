@@ -4,12 +4,13 @@ use postgres_migrations::Connection;
 use std::error::Error;
 
 mod embed_migrations;
-
+mod model;
+pub mod prelude;
 mod schema;
 
 pub const MIGRATIONS: EmbeddedMigrations = EMBEDDED_MIGRATIONS;
 
-pub fn run_mddb_db_migration(
+pub fn run_metadb_migration(
     conn: &mut Connection,
 ) -> Result<(), Box<dyn Error + Send + Sync + 'static>> {
     println!("[PostgresMddb]: Run DB Migration()");
@@ -18,13 +19,13 @@ pub fn run_mddb_db_migration(
     postgres_migrations::run_db_migration(conn, MIGRATIONS)
 }
 
-pub fn check_mddb_db_migration(
+pub fn check_metadb_db_migration(
     conn: &mut Connection,
 ) -> Result<bool, Box<dyn Error + Send + Sync + 'static>> {
     postgres_migrations::check_db_migration(conn)
 }
 
-pub fn revert_mddb_db_migration(
+pub fn revert_metadb_db_migration(
     conn: &mut Connection,
 ) -> Result<(), Box<dyn Error + Send + Sync + 'static>> {
     postgres_migrations::revert_db_migration(conn, MIGRATIONS)

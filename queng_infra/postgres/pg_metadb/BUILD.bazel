@@ -9,7 +9,7 @@ copy_directory(
 )
 
 rust_library(
-    name = "pg_tmp",
+    name = "pg_metadb",
     srcs = glob(
         ["src/**"],
     ),
@@ -35,3 +35,13 @@ rust_library(
         "//thirdparty/crates:diesel_migrations",
     ],
 )
+
+
+rust_doc(
+    name = "doc",
+    crate = ":pg_metadb",
+    tags = ["doc"],
+    visibility = ["//visibility:public"],
+)
+
+# can't run tests on docs because of the env variable that is unavailable in the test

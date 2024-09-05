@@ -40,8 +40,9 @@ pub async fn postgres_schema_setup(
             assert!(result.is_ok());
             let result = pg_smdb::run_smdb_db_migration(conn);
             assert!(result.is_ok());
-            // let result = pg_mddb::run_mddb_db_migration(conn);
-            // assert!(result.is_ok());
+            let result = pg_metadb::run_metadb_migration(conn);
+            //dbg!(&result);
+            assert!(result.is_ok());
             Ok(())
         }
         PostgresDBSchema::PostgresDBSchemaCMDB => {
@@ -57,9 +58,9 @@ pub async fn postgres_schema_setup(
             Ok(())
         }
         PostgresDBSchema::PostgresDBSchemaMDDB => {
-            // let result = pg_mddb::run_mddb_db_migration(conn);
-            // //dbg!(&result);
-            // assert!(result.is_ok());
+            let result = pg_metadb::run_metadb_migration(conn);
+            //dbg!(&result);
+            assert!(result.is_ok());
             Ok(())
         }
 
