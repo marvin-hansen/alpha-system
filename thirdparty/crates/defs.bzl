@@ -317,7 +317,7 @@ _NORMAL_DEPENDENCIES = {
             "lru": Label("@queng_vendored__lru-0.12.4//:lru"),
             "mimalloc": Label("@queng_vendored__mimalloc-0.1.43//:mimalloc"),
             "mini-moka": Label("@queng_vendored__mini-moka-0.10.3//:mini_moka"),
-            "parquet": Label("@queng_vendored__parquet-52.2.0//:parquet"),
+            "parquet": Label("@queng_vendored__parquet-53.0.0//:parquet"),
             "prost": Label("@queng_vendored__prost-0.13.2//:prost"),
             "prost-types": Label("@queng_vendored__prost-types-0.13.2//:prost_types"),
             "protoc-gen-prost": Label("@queng_vendored__protoc-gen-prost-0.3.1//:protoc_gen_prost"),
@@ -641,72 +641,72 @@ def crate_repositories():
 
     maybe(
         http_archive,
-        name = "queng_vendored__arrow-array-52.2.0",
-        sha256 = "16f4a9468c882dc66862cef4e1fd8423d47e67972377d85d80e022786427768c",
+        name = "queng_vendored__arrow-array-53.0.0",
+        sha256 = "cd2bf348cf9f02a5975c5962c7fa6dee107a2009a7b41ac5fb1a027e12dc033f",
         type = "tar.gz",
-        urls = ["https://static.crates.io/crates/arrow-array/52.2.0/download"],
-        strip_prefix = "arrow-array-52.2.0",
-        build_file = Label("//thirdparty/crates:BUILD.arrow-array-52.2.0.bazel"),
+        urls = ["https://static.crates.io/crates/arrow-array/53.0.0/download"],
+        strip_prefix = "arrow-array-53.0.0",
+        build_file = Label("//thirdparty/crates:BUILD.arrow-array-53.0.0.bazel"),
     )
 
     maybe(
         http_archive,
-        name = "queng_vendored__arrow-buffer-52.2.0",
-        sha256 = "c975484888fc95ec4a632cdc98be39c085b1bb518531b0c80c5d462063e5daa1",
+        name = "queng_vendored__arrow-buffer-53.0.0",
+        sha256 = "3092e37715f168976012ce52273c3989b5793b0db5f06cbaa246be25e5f0924d",
         type = "tar.gz",
-        urls = ["https://static.crates.io/crates/arrow-buffer/52.2.0/download"],
-        strip_prefix = "arrow-buffer-52.2.0",
-        build_file = Label("//thirdparty/crates:BUILD.arrow-buffer-52.2.0.bazel"),
+        urls = ["https://static.crates.io/crates/arrow-buffer/53.0.0/download"],
+        strip_prefix = "arrow-buffer-53.0.0",
+        build_file = Label("//thirdparty/crates:BUILD.arrow-buffer-53.0.0.bazel"),
     )
 
     maybe(
         http_archive,
-        name = "queng_vendored__arrow-cast-52.2.0",
-        sha256 = "da26719e76b81d8bc3faad1d4dbdc1bcc10d14704e63dc17fc9f3e7e1e567c8e",
+        name = "queng_vendored__arrow-cast-53.0.0",
+        sha256 = "7ce1018bb710d502f9db06af026ed3561552e493e989a79d0d0f5d9cf267a785",
         type = "tar.gz",
-        urls = ["https://static.crates.io/crates/arrow-cast/52.2.0/download"],
-        strip_prefix = "arrow-cast-52.2.0",
-        build_file = Label("//thirdparty/crates:BUILD.arrow-cast-52.2.0.bazel"),
+        urls = ["https://static.crates.io/crates/arrow-cast/53.0.0/download"],
+        strip_prefix = "arrow-cast-53.0.0",
+        build_file = Label("//thirdparty/crates:BUILD.arrow-cast-53.0.0.bazel"),
     )
 
     maybe(
         http_archive,
-        name = "queng_vendored__arrow-data-52.2.0",
-        sha256 = "dd9d6f18c65ef7a2573ab498c374d8ae364b4a4edf67105357491c031f716ca5",
+        name = "queng_vendored__arrow-data-53.0.0",
+        sha256 = "4e4ac0c4ee79150afe067dc4857154b3ee9c1cd52b5f40d59a77306d0ed18d65",
         type = "tar.gz",
-        urls = ["https://static.crates.io/crates/arrow-data/52.2.0/download"],
-        strip_prefix = "arrow-data-52.2.0",
-        build_file = Label("//thirdparty/crates:BUILD.arrow-data-52.2.0.bazel"),
+        urls = ["https://static.crates.io/crates/arrow-data/53.0.0/download"],
+        strip_prefix = "arrow-data-53.0.0",
+        build_file = Label("//thirdparty/crates:BUILD.arrow-data-53.0.0.bazel"),
     )
 
     maybe(
         http_archive,
-        name = "queng_vendored__arrow-ipc-52.2.0",
-        sha256 = "e786e1cdd952205d9a8afc69397b317cfbb6e0095e445c69cda7e8da5c1eeb0f",
+        name = "queng_vendored__arrow-ipc-53.0.0",
+        sha256 = "bb307482348a1267f91b0912e962cd53440e5de0f7fb24c5f7b10da70b38c94a",
         type = "tar.gz",
-        urls = ["https://static.crates.io/crates/arrow-ipc/52.2.0/download"],
-        strip_prefix = "arrow-ipc-52.2.0",
-        build_file = Label("//thirdparty/crates:BUILD.arrow-ipc-52.2.0.bazel"),
+        urls = ["https://static.crates.io/crates/arrow-ipc/53.0.0/download"],
+        strip_prefix = "arrow-ipc-53.0.0",
+        build_file = Label("//thirdparty/crates:BUILD.arrow-ipc-53.0.0.bazel"),
     )
 
     maybe(
         http_archive,
-        name = "queng_vendored__arrow-schema-52.2.0",
-        sha256 = "9e972cd1ff4a4ccd22f86d3e53e835c2ed92e0eea6a3e8eadb72b4f1ac802cf8",
+        name = "queng_vendored__arrow-schema-53.0.0",
+        sha256 = "c85320a3a2facf2b2822b57aa9d6d9d55edb8aee0b6b5d3b8df158e503d10858",
         type = "tar.gz",
-        urls = ["https://static.crates.io/crates/arrow-schema/52.2.0/download"],
-        strip_prefix = "arrow-schema-52.2.0",
-        build_file = Label("//thirdparty/crates:BUILD.arrow-schema-52.2.0.bazel"),
+        urls = ["https://static.crates.io/crates/arrow-schema/53.0.0/download"],
+        strip_prefix = "arrow-schema-53.0.0",
+        build_file = Label("//thirdparty/crates:BUILD.arrow-schema-53.0.0.bazel"),
     )
 
     maybe(
         http_archive,
-        name = "queng_vendored__arrow-select-52.2.0",
-        sha256 = "600bae05d43483d216fb3494f8c32fdbefd8aa4e1de237e790dbb3d9f44690a3",
+        name = "queng_vendored__arrow-select-53.0.0",
+        sha256 = "9cc7e6b582e23855fd1625ce46e51647aa440c20ea2e71b1d748e0839dd73cba",
         type = "tar.gz",
-        urls = ["https://static.crates.io/crates/arrow-select/52.2.0/download"],
-        strip_prefix = "arrow-select-52.2.0",
-        build_file = Label("//thirdparty/crates:BUILD.arrow-select-52.2.0.bazel"),
+        urls = ["https://static.crates.io/crates/arrow-select/53.0.0/download"],
+        strip_prefix = "arrow-select-53.0.0",
+        build_file = Label("//thirdparty/crates:BUILD.arrow-select-53.0.0.bazel"),
     )
 
     maybe(
@@ -2931,12 +2931,12 @@ def crate_repositories():
 
     maybe(
         http_archive,
-        name = "queng_vendored__parquet-52.2.0",
-        sha256 = "e977b9066b4d3b03555c22bdc442f3fadebd96a39111249113087d0edb2691cd",
+        name = "queng_vendored__parquet-53.0.0",
+        sha256 = "f0fbf928021131daaa57d334ca8e3904fe9ae22f73c56244fc7db9b04eedc3d8",
         type = "tar.gz",
-        urls = ["https://static.crates.io/crates/parquet/52.2.0/download"],
-        strip_prefix = "parquet-52.2.0",
-        build_file = Label("//thirdparty/crates:BUILD.parquet-52.2.0.bazel"),
+        urls = ["https://static.crates.io/crates/parquet/53.0.0/download"],
+        strip_prefix = "parquet-53.0.0",
+        build_file = Label("//thirdparty/crates:BUILD.parquet-53.0.0.bazel"),
     )
 
     maybe(
@@ -3591,12 +3591,12 @@ def crate_repositories():
 
     maybe(
         http_archive,
-        name = "queng_vendored__rustix-0.38.35",
-        sha256 = "a85d50532239da68e9addb745ba38ff4612a242c1c7ceea689c4bc7c2f43c36f",
+        name = "queng_vendored__rustix-0.38.36",
+        sha256 = "3f55e80d50763938498dd5ebb18647174e0c76dc38c5505294bb224624f30f36",
         type = "tar.gz",
-        urls = ["https://static.crates.io/crates/rustix/0.38.35/download"],
-        strip_prefix = "rustix-0.38.35",
-        build_file = Label("//thirdparty/crates:BUILD.rustix-0.38.35.bazel"),
+        urls = ["https://static.crates.io/crates/rustix/0.38.36/download"],
+        strip_prefix = "rustix-0.38.36",
+        build_file = Label("//thirdparty/crates:BUILD.rustix-0.38.36.bazel"),
     )
 
     maybe(
@@ -5081,12 +5081,12 @@ def crate_repositories():
 
     maybe(
         http_archive,
-        name = "queng_vendored__zstd-sys-2.0.12-zstd.1.5.6",
-        sha256 = "0a4e40c320c3cb459d9a9ff6de98cff88f4751ee9275d140e2be94a2b74e4c13",
+        name = "queng_vendored__zstd-sys-2.0.13-zstd.1.5.6",
+        sha256 = "38ff0f21cfee8f97d94cef41359e0c89aa6113028ab0291aa8ca0038995a95aa",
         type = "tar.gz",
-        urls = ["https://static.crates.io/crates/zstd-sys/2.0.12+zstd.1.5.6/download"],
-        strip_prefix = "zstd-sys-2.0.12+zstd.1.5.6",
-        build_file = Label("//thirdparty/crates:BUILD.zstd-sys-2.0.12+zstd.1.5.6.bazel"),
+        urls = ["https://static.crates.io/crates/zstd-sys/2.0.13+zstd.1.5.6/download"],
+        strip_prefix = "zstd-sys-2.0.13+zstd.1.5.6",
+        build_file = Label("//thirdparty/crates:BUILD.zstd-sys-2.0.13+zstd.1.5.6.bazel"),
     )
 
     return [
@@ -5112,7 +5112,7 @@ def crate_repositories():
         struct(repo = "queng_vendored__lru-0.12.4", is_dev_dep = False),
         struct(repo = "queng_vendored__mimalloc-0.1.43", is_dev_dep = False),
         struct(repo = "queng_vendored__mini-moka-0.10.3", is_dev_dep = False),
-        struct(repo = "queng_vendored__parquet-52.2.0", is_dev_dep = False),
+        struct(repo = "queng_vendored__parquet-53.0.0", is_dev_dep = False),
         struct(repo = "queng_vendored__prost-0.13.2", is_dev_dep = False),
         struct(repo = "queng_vendored__prost-types-0.13.2", is_dev_dep = False),
         struct(repo = "queng_vendored__protoc-gen-prost-0.3.1", is_dev_dep = False),

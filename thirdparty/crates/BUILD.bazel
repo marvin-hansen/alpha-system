@@ -165,7 +165,7 @@ alias(
 
 alias(
     name = "parquet",
-    actual = "@queng_vendored__parquet-52.2.0//:parquet",
+    actual = "@queng_vendored__parquet-53.0.0//:parquet",
     tags = ["manual"],
 )
 
