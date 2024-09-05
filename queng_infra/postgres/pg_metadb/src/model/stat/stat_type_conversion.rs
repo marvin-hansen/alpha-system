@@ -1,5 +1,5 @@
 use crate::model::stat::Stat;
-use common_metadata::prelude::Stats;
+use common_metadata::prelude::MetaStats;
 
 impl Stat {
     /// Converts `Stats` to `PostgresStat`
@@ -13,7 +13,7 @@ impl Stat {
     /// - When retrieving meta data set from database the `PostgresStat` is converted to `Stats`
     ///   and returned to the user.
     ///
-    pub fn from_meta_stats(meta_stats: Stats) -> Self {
+    pub fn from_meta_stats(meta_stats: MetaStats) -> Self {
         Self {
             stats_id: 0, // Assuming stats_id is auto-generated
             stats_hash: meta_stats.hash().to_string(),
@@ -34,8 +34,8 @@ impl Stat {
     /// - When retrieving meta data set from database the `PostgresStat` is converted to `Stats`
     ///   and returned to the user.
     ///
-    pub fn to_meta_stats(&self) -> Stats {
-        Stats::new(
+    pub fn to_meta_stats(&self) -> MetaStats {
+        MetaStats::new(
             self.stats_download_timestamp.clone(),
             self.stats_hash.clone(),
             self.stats_number_assets as u32,

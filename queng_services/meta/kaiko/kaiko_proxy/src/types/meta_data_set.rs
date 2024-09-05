@@ -1,7 +1,7 @@
 use chrono::Utc;
 use common_metadata::prelude::{
     MetaAsset, MetaAssetRoot, MetaExchange, MetaExchangesRoot, MetaInstrument, MetaInstrumentsRoot,
-    Stats,
+    MetaStats,
 };
 use crypto_utils::prelude::hash_utils;
 
@@ -12,7 +12,7 @@ pub struct MetaDataSet {
     assets: MetaAssetRoot,
     exchanges: MetaExchangesRoot,
     instruments: MetaInstrumentsRoot,
-    stats: Stats,
+    stats: MetaStats,
     hash: u64,
 }
 
@@ -28,7 +28,7 @@ impl MetaDataSet {
 
         let download_timestamp = Utc::now().to_rfc2822();
 
-        let stats = Stats::new(
+        let stats = MetaStats::new(
             download_timestamp,
             hash,
             assets.len() as u32,
@@ -65,7 +65,7 @@ impl MetaDataSet {
     pub fn instruments(&self) -> &MetaInstrumentsRoot {
         &self.instruments
     }
-    pub fn stats(&self) -> &Stats {
+    pub fn stats(&self) -> &MetaStats {
         &self.stats
     }
     pub fn hash(&self) -> u64 {

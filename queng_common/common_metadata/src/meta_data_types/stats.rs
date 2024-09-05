@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 use std::fmt::{Debug, Display, Formatter};
 
 #[derive(Debug, Default, Clone, PartialEq, Serialize, Deserialize)]
-pub struct Stats {
+pub struct MetaStats {
     download_timestamp: String,
     hash: String,
     number_assets: u32,
@@ -10,7 +10,7 @@ pub struct Stats {
     number_instruments: u32,
 }
 
-impl Stats {
+impl MetaStats {
     pub fn new(
         download_timestamp: String,
         hash: String,
@@ -28,7 +28,7 @@ impl Stats {
     }
 }
 
-impl Stats {
+impl MetaStats {
     pub fn download_timestamp(&self) -> &str {
         &self.download_timestamp
     }
@@ -50,7 +50,7 @@ impl Stats {
     }
 }
 
-impl Display for Stats {
+impl Display for MetaStats {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         write!(
             f,

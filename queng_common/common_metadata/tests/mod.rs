@@ -4,3 +4,6 @@ mod assets_tests;
 mod exchanges_tests;
 #[cfg(test)]
 mod instruments_tests;
+
+#[cfg(test)]
+mod stats_tests;

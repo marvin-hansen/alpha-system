@@ -1,10 +1,10 @@
-use common_metadata::prelude::Stats;
+use common_metadata::prelude::MetaStats;
 use pg_metadb::prelude::Stat;
 
 #[test]
 fn test_from_meta_stats() {
     let stats_download_timestamp = "test_timestamp".to_string();
-    let meta_stats = Stats::new(stats_download_timestamp, "test_hash".to_string(), 10, 5, 20);
+    let meta_stats = MetaStats::new(stats_download_timestamp, "test_hash".to_string(), 10, 5, 20);
     let postgres_stat = Stat::from_meta_stats(meta_stats.clone());
     assert_eq!(postgres_stat.stats_hash, meta_stats.hash());
     assert_eq!(

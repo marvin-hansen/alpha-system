@@ -1,6 +1,6 @@
 use crate::error::KaikoUtilError;
 use crate::KaikoUtil;
-use common_metadata::prelude::{MetaAsset, MetaExchange, MetaInstrument, Stats};
+use common_metadata::prelude::{MetaAsset, MetaExchange, MetaInstrument, MetaStats};
 
 impl KaikoUtil {
     /// Retrieves asset metadata from the Kaiko API.
@@ -66,7 +66,7 @@ impl KaikoUtil {
     /// If there is an error retrieving the metadata statistics from the Kaiko API, a `KaikoUtilError` is returned.
     /// The error message contains the specific error encountered.
     ///
-    pub async fn get_stats(&self) -> Result<Stats, KaikoUtilError> {
+    pub async fn get_stats(&self) -> Result<MetaStats, KaikoUtilError> {
         self.dbg_print("[get_instruments]: Download metadata statistics from Kaiko.");
 
         match self.client.get_stats().await {

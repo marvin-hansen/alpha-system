@@ -3,7 +3,7 @@ pub mod error;
 use crate::error::KaikoClientError;
 use common_metadata::prelude::{
     MetaAsset, MetaAssetRoot, MetaExchange, MetaExchangesRoot, MetaInstrument, MetaInstrumentsRoot,
-    Stats,
+    MetaStats,
 };
 use reqwest::header::{HeaderMap, HeaderValue};
 use reqwest::Client;
@@ -131,12 +131,12 @@ impl KaikoClient {
         };
     }
 
-    pub async fn get_stats(&self) -> Result<Stats, KaikoClientError> {
+    pub async fn get_stats(&self) -> Result<MetaStats, KaikoClientError> {
         let url = format!("{}stats", self.url);
 
         return match self.download(&url).await {
             Ok(bytes) => {
-                let stats: Stats =
+                let stats: MetaStats =
                     serde_json::from_slice(bytes.as_slice()).expect("Failed to parse exchanges");
 
                 Ok(stats)

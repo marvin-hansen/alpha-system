@@ -1,5 +1,5 @@
 use crate::db::metadata::{Metadata, DB_NAME, STATS_TABLE};
-use common_metadata::prelude::Stats;
+use common_metadata::prelude::MetaStats;
 use std::error::Error;
 
 impl Metadata {
@@ -17,7 +17,7 @@ impl Metadata {
     ///
     /// * `Result<(), Box<dyn Error>>` - A result indicating the success of the import operation. Returns `Ok(())` if the import is successful, or an `Err` containing the error if it fails.
     ///
-    pub async fn import_stats_metadata(&self, stats: &Stats) -> Result<(), Box<dyn Error>> {
+    pub async fn import_stats_metadata(&self, stats: &MetaStats) -> Result<(), Box<dyn Error>> {
         let insert_query = self.generate_stats_insert(stats);
         self.execute_query(&insert_query)
             .await
@@ -38,7 +38,7 @@ impl Metadata {
     ///
     /// * `String` - The SQL insert query as a string.
     ///
-    pub(crate) fn generate_stats_insert(&self, stats: &Stats) -> String {
+    pub(crate) fn generate_stats_insert(&self, stats: &MetaStats) -> String {
         let table_name = format!("{DB_NAME}.{STATS_TABLE}");
 
         let download_timestamp = stats.download_timestamp();

@@ -1,7 +1,7 @@
 use common_config::prelude::{ServiceConfig, ServiceID};
 use common_exchange::prelude::Instrument as CommonInstrument;
 use common_exchange::prelude::{AccountType, PortfolioConfig as CommonPortfolioConfig};
-use common_metadata::prelude::{InstrumentMetadata, MetaExchange, MetaInstrument};
+use common_metadata::prelude::{InstrumentMetadata, MetaExchange, MetaInstrument, MetaStats};
 use pg_metadb::prelude::Asset;
 
 pub fn get_test_asset() -> Asset {
@@ -43,6 +43,22 @@ pub fn get_test_meta_instrument() -> MetaInstrument {
         trade_compressed_size: 1024,
         trade_count: 10000,
     }
+}
+
+pub fn get_test_meta_stats() -> MetaStats {
+    let download_timestamp = "2023-10-01T12:00:00Z".to_string();
+    let hash = "abc123".to_string();
+    let number_assets = 100;
+    let number_exchanges = 10;
+    let number_instruments = 50;
+
+    MetaStats::new(
+        download_timestamp.clone(),
+        hash.clone(),
+        number_assets,
+        number_exchanges,
+        number_instruments,
+    )
 }
 
 pub fn get_test_instrument() -> CommonInstrument {
