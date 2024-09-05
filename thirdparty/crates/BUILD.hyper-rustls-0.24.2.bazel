@@ -83,7 +83,7 @@ rust_library(
         "@queng_vendored__http-0.2.12//:http",
         "@queng_vendored__hyper-0.14.30//:hyper",
         "@queng_vendored__rustls-0.21.12//:rustls",
-        "@queng_vendored__tokio-1.39.3//:tokio",
+        "@queng_vendored__tokio-1.40.0//:tokio",
         "@queng_vendored__tokio-rustls-0.24.1//:tokio_rustls",
     ],
 )

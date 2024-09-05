@@ -11,7 +11,7 @@ load("@rules_rust//rust:defs.bzl", "rust_library")
 package(default_visibility = ["//visibility:public"])
 
 rust_library(
-    name = "diesel",
+    name = "quinn_udp",
     srcs = glob(
         include = ["**/*.rs"],
         allow_empty = True,
@@ -28,22 +28,14 @@ rust_library(
             "WORKSPACE.bazel",
         ],
     ),
-    crate_features = [
-        "postgres",
-        "postgres_backend",
-        "r2d2",
-    ],
     crate_root = "src/lib.rs",
     edition = "2021",
-    proc_macro_deps = [
-        "@queng_vendored__diesel_derives-2.2.3//:diesel_derives",
-    ],
     rustc_flags = [
         "--cap-lints=allow",
     ],
     tags = [
         "cargo-bazel",
-        "crate-name=diesel",
+        "crate-name=quinn-udp",
         "manual",
         "noclippy",
         "norustfmt",
@@ -85,12 +77,23 @@ rust_library(
         "@rules_rust//rust/platform:x86_64-unknown-none": [],
         "//conditions:default": ["@platforms//:incompatible"],
     }),
-    version = "2.2.3",
+    version = "0.5.5",
     deps = [
-        "@queng_vendored__bitflags-2.6.0//:bitflags",
-        "@queng_vendored__byteorder-1.5.0//:byteorder",
-        "@queng_vendored__itoa-1.0.11//:itoa",
-        "@queng_vendored__pq-sys-0.6.1//:pq_sys",
-        "@queng_vendored__r2d2-0.8.10//:r2d2",
-    ],
+        "@queng_vendored__libc-0.2.158//:libc",
+        "@queng_vendored__socket2-0.5.7//:socket2",
+    ] + select({
+        "@rules_rust//rust/platform:aarch64-pc-windows-msvc": [
+            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(windows)
+            "@queng_vendored__windows-sys-0.59.0//:windows_sys",  # cfg(windows)
+        ],
+        "@rules_rust//rust/platform:i686-pc-windows-msvc": [
+            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(windows)
+            "@queng_vendored__windows-sys-0.59.0//:windows_sys",  # cfg(windows)
+        ],
+        "@rules_rust//rust/platform:x86_64-pc-windows-msvc": [
+            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(windows)
+            "@queng_vendored__windows-sys-0.59.0//:windows_sys",  # cfg(windows)
+        ],
+        "//conditions:default": [],
+    }),
 )

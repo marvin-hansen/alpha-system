@@ -301,13 +301,13 @@ _NORMAL_DEPENDENCIES = {
             "base16ct": Label("@queng_vendored__base16ct-0.2.0//:base16ct"),
             "base64ct": Label("@queng_vendored__base64ct-1.6.0//:base64ct"),
             "binance_rs_async": Label("@queng_vendored__binance-rs-async-1.3.3//:binance"),
-            "bon": Label("@queng_vendored__bon-2.0.1//:bon"),
+            "bon": Label("@queng_vendored__bon-2.1.1//:bon"),
             "chrono": Label("@queng_vendored__chrono-0.4.38//:chrono"),
             "clickhouse-rs": Label("@queng_vendored__clickhouse-rs-1.1.0-alpha.1//:clickhouse_rs"),
             "config-file": Label("@queng_vendored__config-file-0.2.3//:config_file"),
             "csv": Label("@queng_vendored__csv-1.3.0//:csv"),
             "ctrlc": Label("@queng_vendored__ctrlc-3.4.5//:ctrlc"),
-            "diesel": Label("@queng_vendored__diesel-2.2.3//:diesel"),
+            "diesel": Label("@queng_vendored__diesel-2.2.4//:diesel"),
             "diesel_migrations": Label("@queng_vendored__diesel_migrations-2.2.0//:diesel_migrations"),
             "dotenv": Label("@queng_vendored__dotenv-0.15.0//:dotenv"),
             "encoding_rs": Label("@queng_vendored__encoding_rs-0.8.34//:encoding_rs"),
@@ -318,16 +318,16 @@ _NORMAL_DEPENDENCIES = {
             "mimalloc": Label("@queng_vendored__mimalloc-0.1.43//:mimalloc"),
             "mini-moka": Label("@queng_vendored__mini-moka-0.10.3//:mini_moka"),
             "parquet": Label("@queng_vendored__parquet-52.2.0//:parquet"),
-            "prost": Label("@queng_vendored__prost-0.13.1//:prost"),
-            "prost-types": Label("@queng_vendored__prost-types-0.13.1//:prost_types"),
+            "prost": Label("@queng_vendored__prost-0.13.2//:prost"),
+            "prost-types": Label("@queng_vendored__prost-types-0.13.2//:prost_types"),
             "protoc-gen-prost": Label("@queng_vendored__protoc-gen-prost-0.3.1//:protoc_gen_prost"),
             "protoc-gen-tonic": Label("@queng_vendored__protoc-gen-tonic-0.4.1//:protoc_gen_tonic"),
             "reqwest": Label("@queng_vendored__reqwest-0.12.7//:reqwest"),
             "rust_decimal": Label("@queng_vendored__rust_decimal-1.36.0//:rust_decimal"),
             "serde": Label("@queng_vendored__serde-1.0.209//:serde"),
-            "serde_json": Label("@queng_vendored__serde_json-1.0.127//:serde_json"),
+            "serde_json": Label("@queng_vendored__serde_json-1.0.128//:serde_json"),
             "sha3": Label("@queng_vendored__sha3-0.11.0-pre.4//:sha3"),
-            "tokio": Label("@queng_vendored__tokio-1.39.3//:tokio"),
+            "tokio": Label("@queng_vendored__tokio-1.40.0//:tokio"),
             "tokio-cron-scheduler": Label("@queng_vendored__tokio-cron-scheduler-0.11.0//:tokio_cron_scheduler"),
             "tokio-timer": Label("@queng_vendored__tokio-timer-0.2.13//:tokio_timer"),
             "tokio-tungstenite": Label("@queng_vendored__tokio-tungstenite-0.23.1//:tokio_tungstenite"),
@@ -741,12 +741,12 @@ def crate_repositories():
 
     maybe(
         http_archive,
-        name = "queng_vendored__async-trait-0.1.81",
-        sha256 = "6e0c28dcc82d7c8ead5cb13beb15405b57b8546e93215673ff8ca0349a028107",
+        name = "queng_vendored__async-trait-0.1.82",
+        sha256 = "a27b8a3a6e1a44fa4c8baf1f653e4172e81486d4941f2237e20dc2d0cf4ddff1",
         type = "tar.gz",
-        urls = ["https://static.crates.io/crates/async-trait/0.1.81/download"],
-        strip_prefix = "async-trait-0.1.81",
-        build_file = Label("//thirdparty/crates:BUILD.async-trait-0.1.81.bazel"),
+        urls = ["https://static.crates.io/crates/async-trait/0.1.82/download"],
+        strip_prefix = "async-trait-0.1.82",
+        build_file = Label("//thirdparty/crates:BUILD.async-trait-0.1.82.bazel"),
     )
 
     maybe(
@@ -931,22 +931,22 @@ def crate_repositories():
 
     maybe(
         http_archive,
-        name = "queng_vendored__bon-2.0.1",
-        sha256 = "c3b71187ef9d11cfa48c023d574a00ec5e4850dcb145ef51619d99cc119486cb",
+        name = "queng_vendored__bon-2.1.1",
+        sha256 = "e1fa7e488fcdc4688b7872e6fdf3d6a8ecbf2611621fee099bdb953f160eec2e",
         type = "tar.gz",
-        urls = ["https://static.crates.io/crates/bon/2.0.1/download"],
-        strip_prefix = "bon-2.0.1",
-        build_file = Label("//thirdparty/crates:BUILD.bon-2.0.1.bazel"),
+        urls = ["https://static.crates.io/crates/bon/2.1.1/download"],
+        strip_prefix = "bon-2.1.1",
+        build_file = Label("//thirdparty/crates:BUILD.bon-2.1.1.bazel"),
     )
 
     maybe(
         http_archive,
-        name = "queng_vendored__bon-macros-2.0.1",
-        sha256 = "1f8407447d440da7b3de982f286d15e30e7646bef4ebca994eebebaa1690fd9c",
+        name = "queng_vendored__bon-macros-2.1.1",
+        sha256 = "7839989c32a79e473193cbc65e5750d6bf7e41fe75afa24b41728ee66a57b283",
         type = "tar.gz",
-        urls = ["https://static.crates.io/crates/bon-macros/2.0.1/download"],
-        strip_prefix = "bon-macros-2.0.1",
-        build_file = Label("//thirdparty/crates:BUILD.bon-macros-2.0.1.bazel"),
+        urls = ["https://static.crates.io/crates/bon-macros/2.1.1/download"],
+        strip_prefix = "bon-macros-2.1.1",
+        build_file = Label("//thirdparty/crates:BUILD.bon-macros-2.1.1.bazel"),
     )
 
     maybe(
@@ -1091,12 +1091,12 @@ def crate_repositories():
 
     maybe(
         http_archive,
-        name = "queng_vendored__cc-1.1.15",
-        sha256 = "57b6a275aa2903740dc87da01c62040406b8812552e97129a63ea8850a17c6e6",
+        name = "queng_vendored__cc-1.1.16",
+        sha256 = "e9d013ecb737093c0e86b151a7b837993cf9ec6c502946cfb44bedc392421e0b",
         type = "tar.gz",
-        urls = ["https://static.crates.io/crates/cc/1.1.15/download"],
-        strip_prefix = "cc-1.1.15",
-        build_file = Label("//thirdparty/crates:BUILD.cc-1.1.15.bazel"),
+        urls = ["https://static.crates.io/crates/cc/1.1.16/download"],
+        strip_prefix = "cc-1.1.16",
+        build_file = Label("//thirdparty/crates:BUILD.cc-1.1.16.bazel"),
     )
 
     maybe(
@@ -1511,12 +1511,12 @@ def crate_repositories():
 
     maybe(
         http_archive,
-        name = "queng_vendored__diesel-2.2.3",
-        sha256 = "65e13bab2796f412722112327f3e575601a3e9cdcbe426f0d30dbf43f3f5dc71",
+        name = "queng_vendored__diesel-2.2.4",
+        sha256 = "158fe8e2e68695bd615d7e4f3227c0727b151330d3e253b525086c348d055d5e",
         type = "tar.gz",
-        urls = ["https://static.crates.io/crates/diesel/2.2.3/download"],
-        strip_prefix = "diesel-2.2.3",
-        build_file = Label("//thirdparty/crates:BUILD.diesel-2.2.3.bazel"),
+        urls = ["https://static.crates.io/crates/diesel/2.2.4/download"],
+        strip_prefix = "diesel-2.2.4",
+        build_file = Label("//thirdparty/crates:BUILD.diesel-2.2.4.bazel"),
     )
 
     maybe(
@@ -2131,12 +2131,12 @@ def crate_repositories():
 
     maybe(
         http_archive,
-        name = "queng_vendored__hyper-rustls-0.27.2",
-        sha256 = "5ee4be2c948921a1a5320b629c4193916ed787a7f7f293fd3f7f5a6c9de74155",
+        name = "queng_vendored__hyper-rustls-0.27.3",
+        sha256 = "08afdbb5c31130e3034af566421053ab03787c640246a446327f550d11bcb333",
         type = "tar.gz",
-        urls = ["https://static.crates.io/crates/hyper-rustls/0.27.2/download"],
-        strip_prefix = "hyper-rustls-0.27.2",
-        build_file = Label("//thirdparty/crates:BUILD.hyper-rustls-0.27.2.bazel"),
+        urls = ["https://static.crates.io/crates/hyper-rustls/0.27.3/download"],
+        strip_prefix = "hyper-rustls-0.27.3",
+        build_file = Label("//thirdparty/crates:BUILD.hyper-rustls-0.27.3.bazel"),
     )
 
     maybe(
@@ -2221,12 +2221,12 @@ def crate_repositories():
 
     maybe(
         http_archive,
-        name = "queng_vendored__indexmap-2.4.0",
-        sha256 = "93ead53efc7ea8ed3cfb0c79fc8023fbb782a5432b52830b6518941cebe6505c",
+        name = "queng_vendored__indexmap-2.5.0",
+        sha256 = "68b900aa2f7301e21c36462b170ee99994de34dff39a4a6a528e80e7376d07e5",
         type = "tar.gz",
-        urls = ["https://static.crates.io/crates/indexmap/2.4.0/download"],
-        strip_prefix = "indexmap-2.4.0",
-        build_file = Label("//thirdparty/crates:BUILD.indexmap-2.4.0.bazel"),
+        urls = ["https://static.crates.io/crates/indexmap/2.5.0/download"],
+        strip_prefix = "indexmap-2.5.0",
+        build_file = Label("//thirdparty/crates:BUILD.indexmap-2.5.0.bazel"),
     )
 
     maybe(
@@ -2851,12 +2851,12 @@ def crate_repositories():
 
     maybe(
         http_archive,
-        name = "queng_vendored__object-0.36.3",
-        sha256 = "27b64972346851a39438c60b341ebc01bba47464ae329e55cf343eb93964efd9",
+        name = "queng_vendored__object-0.36.4",
+        sha256 = "084f1a5821ac4c651660a94a7153d27ac9d8a53736203f58b31945ded098070a",
         type = "tar.gz",
-        urls = ["https://static.crates.io/crates/object/0.36.3/download"],
-        strip_prefix = "object-0.36.3",
-        build_file = Label("//thirdparty/crates:BUILD.object-0.36.3.bazel"),
+        urls = ["https://static.crates.io/crates/object/0.36.4/download"],
+        strip_prefix = "object-0.36.4",
+        build_file = Label("//thirdparty/crates:BUILD.object-0.36.4.bazel"),
     )
 
     maybe(
@@ -3191,12 +3191,12 @@ def crate_repositories():
 
     maybe(
         http_archive,
-        name = "queng_vendored__prost-0.13.1",
-        sha256 = "e13db3d3fde688c61e2446b4d843bc27a7e8af269a69440c0308021dc92333cc",
+        name = "queng_vendored__prost-0.13.2",
+        sha256 = "3b2ecbe40f08db5c006b5764a2645f7f3f141ce756412ac9e1dd6087e6d32995",
         type = "tar.gz",
-        urls = ["https://static.crates.io/crates/prost/0.13.1/download"],
-        strip_prefix = "prost-0.13.1",
-        build_file = Label("//thirdparty/crates:BUILD.prost-0.13.1.bazel"),
+        urls = ["https://static.crates.io/crates/prost/0.13.2/download"],
+        strip_prefix = "prost-0.13.2",
+        build_file = Label("//thirdparty/crates:BUILD.prost-0.13.2.bazel"),
     )
 
     maybe(
@@ -3211,12 +3211,12 @@ def crate_repositories():
 
     maybe(
         http_archive,
-        name = "queng_vendored__prost-build-0.13.1",
-        sha256 = "5bb182580f71dd070f88d01ce3de9f4da5021db7115d2e1c3605a754153b77c1",
+        name = "queng_vendored__prost-build-0.13.2",
+        sha256 = "f8650aabb6c35b860610e9cff5dc1af886c9e25073b7b1712a68972af4281302",
         type = "tar.gz",
-        urls = ["https://static.crates.io/crates/prost-build/0.13.1/download"],
-        strip_prefix = "prost-build-0.13.1",
-        build_file = Label("//thirdparty/crates:BUILD.prost-build-0.13.1.bazel"),
+        urls = ["https://static.crates.io/crates/prost-build/0.13.2/download"],
+        strip_prefix = "prost-build-0.13.2",
+        build_file = Label("//thirdparty/crates:BUILD.prost-build-0.13.2.bazel"),
     )
 
     maybe(
@@ -3231,12 +3231,12 @@ def crate_repositories():
 
     maybe(
         http_archive,
-        name = "queng_vendored__prost-derive-0.13.1",
-        sha256 = "18bec9b0adc4eba778b33684b7ba3e7137789434769ee3ce3930463ef904cfca",
+        name = "queng_vendored__prost-derive-0.13.2",
+        sha256 = "acf0c195eebb4af52c752bec4f52f645da98b6e92077a04110c7f349477ae5ac",
         type = "tar.gz",
-        urls = ["https://static.crates.io/crates/prost-derive/0.13.1/download"],
-        strip_prefix = "prost-derive-0.13.1",
-        build_file = Label("//thirdparty/crates:BUILD.prost-derive-0.13.1.bazel"),
+        urls = ["https://static.crates.io/crates/prost-derive/0.13.2/download"],
+        strip_prefix = "prost-derive-0.13.2",
+        build_file = Label("//thirdparty/crates:BUILD.prost-derive-0.13.2.bazel"),
     )
 
     maybe(
@@ -3251,12 +3251,12 @@ def crate_repositories():
 
     maybe(
         http_archive,
-        name = "queng_vendored__prost-types-0.13.1",
-        sha256 = "cee5168b05f49d4b0ca581206eb14a7b22fafd963efe729ac48eb03266e25cc2",
+        name = "queng_vendored__prost-types-0.13.2",
+        sha256 = "60caa6738c7369b940c3d49246a8d1749323674c65cb13010134f5c9bad5b519",
         type = "tar.gz",
-        urls = ["https://static.crates.io/crates/prost-types/0.13.1/download"],
-        strip_prefix = "prost-types-0.13.1",
-        build_file = Label("//thirdparty/crates:BUILD.prost-types-0.13.1.bazel"),
+        urls = ["https://static.crates.io/crates/prost-types/0.13.2/download"],
+        strip_prefix = "prost-types-0.13.2",
+        build_file = Label("//thirdparty/crates:BUILD.prost-types-0.13.2.bazel"),
     )
 
     maybe(
@@ -3341,32 +3341,32 @@ def crate_repositories():
 
     maybe(
         http_archive,
-        name = "queng_vendored__quinn-0.11.3",
-        sha256 = "b22d8e7369034b9a7132bc2008cac12f2013c8132b45e0554e6e20e2617f2156",
+        name = "queng_vendored__quinn-0.11.5",
+        sha256 = "8c7c5fdde3cdae7203427dc4f0a68fe0ed09833edc525a03456b153b79828684",
         type = "tar.gz",
-        urls = ["https://static.crates.io/crates/quinn/0.11.3/download"],
-        strip_prefix = "quinn-0.11.3",
-        build_file = Label("//thirdparty/crates:BUILD.quinn-0.11.3.bazel"),
+        urls = ["https://static.crates.io/crates/quinn/0.11.5/download"],
+        strip_prefix = "quinn-0.11.5",
+        build_file = Label("//thirdparty/crates:BUILD.quinn-0.11.5.bazel"),
     )
 
     maybe(
         http_archive,
-        name = "queng_vendored__quinn-proto-0.11.6",
-        sha256 = "ba92fb39ec7ad06ca2582c0ca834dfeadcaf06ddfc8e635c80aa7e1c05315fdd",
+        name = "queng_vendored__quinn-proto-0.11.8",
+        sha256 = "fadfaed2cd7f389d0161bb73eeb07b7b78f8691047a6f3e73caaeae55310a4a6",
         type = "tar.gz",
-        urls = ["https://static.crates.io/crates/quinn-proto/0.11.6/download"],
-        strip_prefix = "quinn-proto-0.11.6",
-        build_file = Label("//thirdparty/crates:BUILD.quinn-proto-0.11.6.bazel"),
+        urls = ["https://static.crates.io/crates/quinn-proto/0.11.8/download"],
+        strip_prefix = "quinn-proto-0.11.8",
+        build_file = Label("//thirdparty/crates:BUILD.quinn-proto-0.11.8.bazel"),
     )
 
     maybe(
         http_archive,
-        name = "queng_vendored__quinn-udp-0.5.4",
-        sha256 = "8bffec3605b73c6f1754535084a85229fa8a30f86014e6c81aeec4abb68b0285",
+        name = "queng_vendored__quinn-udp-0.5.5",
+        sha256 = "4fe68c2e9e1a1234e218683dbdf9f9dfcb094113c5ac2b938dfcb9bab4c4140b",
         type = "tar.gz",
-        urls = ["https://static.crates.io/crates/quinn-udp/0.5.4/download"],
-        strip_prefix = "quinn-udp-0.5.4",
-        build_file = Label("//thirdparty/crates:BUILD.quinn-udp-0.5.4.bazel"),
+        urls = ["https://static.crates.io/crates/quinn-udp/0.5.5/download"],
+        strip_prefix = "quinn-udp-0.5.5",
+        build_file = Label("//thirdparty/crates:BUILD.quinn-udp-0.5.5.bazel"),
     )
 
     maybe(
@@ -3801,12 +3801,12 @@ def crate_repositories():
 
     maybe(
         http_archive,
-        name = "queng_vendored__serde_json-1.0.127",
-        sha256 = "8043c06d9f82bd7271361ed64f415fe5e12a77fdb52e573e7f06a516dea329ad",
+        name = "queng_vendored__serde_json-1.0.128",
+        sha256 = "6ff5456707a1de34e7e37f2a6fd3d3f808c318259cbd01ab6377795054b483d8",
         type = "tar.gz",
-        urls = ["https://static.crates.io/crates/serde_json/1.0.127/download"],
-        strip_prefix = "serde_json-1.0.127",
-        build_file = Label("//thirdparty/crates:BUILD.serde_json-1.0.127.bazel"),
+        urls = ["https://static.crates.io/crates/serde_json/1.0.128/download"],
+        strip_prefix = "serde_json-1.0.128",
+        build_file = Label("//thirdparty/crates:BUILD.serde_json-1.0.128.bazel"),
     )
 
     maybe(
@@ -4031,12 +4031,12 @@ def crate_repositories():
 
     maybe(
         http_archive,
-        name = "queng_vendored__syn-2.0.76",
-        sha256 = "578e081a14e0cefc3279b0472138c513f37b41a08d5a3cca9b6e4e8ceb6cd525",
+        name = "queng_vendored__syn-2.0.77",
+        sha256 = "9f35bcdf61fd8e7be6caf75f429fdca8beb3ed76584befb503b1569faee373ed",
         type = "tar.gz",
-        urls = ["https://static.crates.io/crates/syn/2.0.76/download"],
-        strip_prefix = "syn-2.0.76",
-        build_file = Label("//thirdparty/crates:BUILD.syn-2.0.76.bazel"),
+        urls = ["https://static.crates.io/crates/syn/2.0.77/download"],
+        strip_prefix = "syn-2.0.77",
+        build_file = Label("//thirdparty/crates:BUILD.syn-2.0.77.bazel"),
     )
 
     maybe(
@@ -4181,12 +4181,12 @@ def crate_repositories():
 
     maybe(
         http_archive,
-        name = "queng_vendored__tokio-1.39.3",
-        sha256 = "9babc99b9923bfa4804bd74722ff02c0381021eafa4db9949217e3be8e84fff5",
+        name = "queng_vendored__tokio-1.40.0",
+        sha256 = "e2b070231665d27ad9ec9b8df639893f46727666c6767db40317fbe920a5d998",
         type = "tar.gz",
-        urls = ["https://static.crates.io/crates/tokio/1.39.3/download"],
-        strip_prefix = "tokio-1.39.3",
-        build_file = Label("//thirdparty/crates:BUILD.tokio-1.39.3.bazel"),
+        urls = ["https://static.crates.io/crates/tokio/1.40.0/download"],
+        strip_prefix = "tokio-1.40.0",
+        build_file = Label("//thirdparty/crates:BUILD.tokio-1.40.0.bazel"),
     )
 
     maybe(
@@ -4251,12 +4251,12 @@ def crate_repositories():
 
     maybe(
         http_archive,
-        name = "queng_vendored__tokio-stream-0.1.15",
-        sha256 = "267ac89e0bec6e691e5813911606935d77c476ff49024f98abcea3e7b15e37af",
+        name = "queng_vendored__tokio-stream-0.1.16",
+        sha256 = "4f4e6ce100d0eb49a2734f8c0812bcd324cf357d21810932c5df6b96ef2b86f1",
         type = "tar.gz",
-        urls = ["https://static.crates.io/crates/tokio-stream/0.1.15/download"],
-        strip_prefix = "tokio-stream-0.1.15",
-        build_file = Label("//thirdparty/crates:BUILD.tokio-stream-0.1.15.bazel"),
+        urls = ["https://static.crates.io/crates/tokio-stream/0.1.16/download"],
+        strip_prefix = "tokio-stream-0.1.16",
+        build_file = Label("//thirdparty/crates:BUILD.tokio-stream-0.1.16.bazel"),
     )
 
     maybe(
@@ -4291,12 +4291,12 @@ def crate_repositories():
 
     maybe(
         http_archive,
-        name = "queng_vendored__tokio-util-0.7.11",
-        sha256 = "9cf6b47b3771c49ac75ad09a6162f53ad4b8088b76ac60e8ec1455b31a189fe1",
+        name = "queng_vendored__tokio-util-0.7.12",
+        sha256 = "61e7c3654c13bcd040d4a03abee2c75b1d14a37b423cf5a813ceae1cc903ec6a",
         type = "tar.gz",
-        urls = ["https://static.crates.io/crates/tokio-util/0.7.11/download"],
-        strip_prefix = "tokio-util-0.7.11",
-        build_file = Label("//thirdparty/crates:BUILD.tokio-util-0.7.11.bazel"),
+        urls = ["https://static.crates.io/crates/tokio-util/0.7.12/download"],
+        strip_prefix = "tokio-util-0.7.12",
+        build_file = Label("//thirdparty/crates:BUILD.tokio-util-0.7.12.bazel"),
     )
 
     maybe(
@@ -4711,12 +4711,12 @@ def crate_repositories():
 
     maybe(
         http_archive,
-        name = "queng_vendored__webpki-roots-0.26.3",
-        sha256 = "bd7c23921eeb1713a4e851530e9b9756e4fb0e89978582942612524cf09f01cd",
+        name = "queng_vendored__webpki-roots-0.26.5",
+        sha256 = "0bd24728e5af82c6c4ec1b66ac4844bdf8156257fccda846ec58b42cd0cdbe6a",
         type = "tar.gz",
-        urls = ["https://static.crates.io/crates/webpki-roots/0.26.3/download"],
-        strip_prefix = "webpki-roots-0.26.3",
-        build_file = Label("//thirdparty/crates:BUILD.webpki-roots-0.26.3.bazel"),
+        urls = ["https://static.crates.io/crates/webpki-roots/0.26.5/download"],
+        strip_prefix = "webpki-roots-0.26.5",
+        build_file = Label("//thirdparty/crates:BUILD.webpki-roots-0.26.5.bazel"),
     )
 
     maybe(
@@ -5096,13 +5096,13 @@ def crate_repositories():
         struct(repo = "queng_vendored__base16ct-0.2.0", is_dev_dep = False),
         struct(repo = "queng_vendored__base64ct-1.6.0", is_dev_dep = False),
         struct(repo = "queng_vendored__binance-rs-async-1.3.3", is_dev_dep = False),
-        struct(repo = "queng_vendored__bon-2.0.1", is_dev_dep = False),
+        struct(repo = "queng_vendored__bon-2.1.1", is_dev_dep = False),
         struct(repo = "queng_vendored__chrono-0.4.38", is_dev_dep = False),
         struct(repo = "queng_vendored__clickhouse-rs-1.1.0-alpha.1", is_dev_dep = False),
         struct(repo = "queng_vendored__config-file-0.2.3", is_dev_dep = False),
         struct(repo = "queng_vendored__csv-1.3.0", is_dev_dep = False),
         struct(repo = "queng_vendored__ctrlc-3.4.5", is_dev_dep = False),
-        struct(repo = "queng_vendored__diesel-2.2.3", is_dev_dep = False),
+        struct(repo = "queng_vendored__diesel-2.2.4", is_dev_dep = False),
         struct(repo = "queng_vendored__diesel_migrations-2.2.0", is_dev_dep = False),
         struct(repo = "queng_vendored__dotenv-0.15.0", is_dev_dep = False),
         struct(repo = "queng_vendored__encoding_rs-0.8.34", is_dev_dep = False),
@@ -5113,17 +5113,17 @@ def crate_repositories():
         struct(repo = "queng_vendored__mimalloc-0.1.43", is_dev_dep = False),
         struct(repo = "queng_vendored__mini-moka-0.10.3", is_dev_dep = False),
         struct(repo = "queng_vendored__parquet-52.2.0", is_dev_dep = False),
-        struct(repo = "queng_vendored__prost-0.13.1", is_dev_dep = False),
-        struct(repo = "queng_vendored__prost-types-0.13.1", is_dev_dep = False),
+        struct(repo = "queng_vendored__prost-0.13.2", is_dev_dep = False),
+        struct(repo = "queng_vendored__prost-types-0.13.2", is_dev_dep = False),
         struct(repo = "queng_vendored__protoc-gen-prost-0.3.1", is_dev_dep = False),
         struct(repo = "queng_vendored__protoc-gen-tonic-0.4.1", is_dev_dep = False),
         struct(repo = "queng_vendored__reqwest-0.12.7", is_dev_dep = False),
         struct(repo = "queng_vendored__rust_decimal-1.36.0", is_dev_dep = False),
         struct(repo = "queng_vendored__rust_decimal_macros-1.36.0", is_dev_dep = False),
         struct(repo = "queng_vendored__serde-1.0.209", is_dev_dep = False),
-        struct(repo = "queng_vendored__serde_json-1.0.127", is_dev_dep = False),
+        struct(repo = "queng_vendored__serde_json-1.0.128", is_dev_dep = False),
         struct(repo = "queng_vendored__sha3-0.11.0-pre.4", is_dev_dep = False),
-        struct(repo = "queng_vendored__tokio-1.39.3", is_dev_dep = False),
+        struct(repo = "queng_vendored__tokio-1.40.0", is_dev_dep = False),
         struct(repo = "queng_vendored__tokio-cron-scheduler-0.11.0", is_dev_dep = False),
         struct(repo = "queng_vendored__tokio-timer-0.2.13", is_dev_dep = False),
         struct(repo = "queng_vendored__tokio-tungstenite-0.23.1", is_dev_dep = False),

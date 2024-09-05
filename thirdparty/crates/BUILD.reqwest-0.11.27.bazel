@@ -97,7 +97,7 @@ rust_library(
         "@queng_vendored__futures-util-0.3.30//:futures_util",
         "@queng_vendored__http-0.2.12//:http",
         "@queng_vendored__serde-1.0.209//:serde",
-        "@queng_vendored__serde_json-1.0.127//:serde_json",
+        "@queng_vendored__serde_json-1.0.128//:serde_json",
         "@queng_vendored__serde_urlencoded-0.7.1//:serde_urlencoded",
         "@queng_vendored__sync_wrapper-0.1.2//:sync_wrapper",
         "@queng_vendored__tower-service-0.3.3//:tower_service",
@@ -118,7 +118,7 @@ rust_library(
             "@queng_vendored__rustls-0.21.12//:rustls",  # aarch64-apple-darwin
             "@queng_vendored__rustls-pemfile-1.0.4//:rustls_pemfile",  # aarch64-apple-darwin
             "@queng_vendored__system-configuration-0.5.1//:system_configuration",  # cfg(target_os = "macos")
-            "@queng_vendored__tokio-1.39.3//:tokio",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__tokio-1.40.0//:tokio",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__tokio-rustls-0.24.1//:tokio_rustls",  # aarch64-apple-darwin
             "@queng_vendored__webpki-roots-0.25.4//:webpki_roots",  # aarch64-apple-darwin
         ],
@@ -136,7 +136,7 @@ rust_library(
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.21.12//:rustls",  # aarch64-apple-ios
             "@queng_vendored__rustls-pemfile-1.0.4//:rustls_pemfile",  # aarch64-apple-ios
-            "@queng_vendored__tokio-1.39.3//:tokio",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__tokio-1.40.0//:tokio",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__tokio-rustls-0.24.1//:tokio_rustls",  # aarch64-apple-ios
             "@queng_vendored__webpki-roots-0.25.4//:webpki_roots",  # aarch64-apple-ios
         ],
@@ -154,7 +154,7 @@ rust_library(
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.21.12//:rustls",  # aarch64-apple-ios-sim
             "@queng_vendored__rustls-pemfile-1.0.4//:rustls_pemfile",  # aarch64-apple-ios-sim
-            "@queng_vendored__tokio-1.39.3//:tokio",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__tokio-1.40.0//:tokio",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__tokio-rustls-0.24.1//:tokio_rustls",  # aarch64-apple-ios-sim
             "@queng_vendored__webpki-roots-0.25.4//:webpki_roots",  # aarch64-apple-ios-sim
         ],
@@ -172,7 +172,7 @@ rust_library(
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.21.12//:rustls",  # aarch64-fuchsia
             "@queng_vendored__rustls-pemfile-1.0.4//:rustls_pemfile",  # aarch64-fuchsia
-            "@queng_vendored__tokio-1.39.3//:tokio",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__tokio-1.40.0//:tokio",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__tokio-rustls-0.24.1//:tokio_rustls",  # aarch64-fuchsia
             "@queng_vendored__webpki-roots-0.25.4//:webpki_roots",  # aarch64-fuchsia
         ],
@@ -190,7 +190,7 @@ rust_library(
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.21.12//:rustls",  # aarch64-linux-android
             "@queng_vendored__rustls-pemfile-1.0.4//:rustls_pemfile",  # aarch64-linux-android
-            "@queng_vendored__tokio-1.39.3//:tokio",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__tokio-1.40.0//:tokio",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__tokio-rustls-0.24.1//:tokio_rustls",  # aarch64-linux-android
             "@queng_vendored__webpki-roots-0.25.4//:webpki_roots",  # aarch64-linux-android
         ],
@@ -208,7 +208,7 @@ rust_library(
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.21.12//:rustls",  # aarch64-pc-windows-msvc
             "@queng_vendored__rustls-pemfile-1.0.4//:rustls_pemfile",  # aarch64-pc-windows-msvc
-            "@queng_vendored__tokio-1.39.3//:tokio",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__tokio-1.40.0//:tokio",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__tokio-rustls-0.24.1//:tokio_rustls",  # aarch64-pc-windows-msvc
             "@queng_vendored__webpki-roots-0.25.4//:webpki_roots",  # aarch64-pc-windows-msvc
             "@queng_vendored__winreg-0.50.0//:winreg",  # cfg(windows)
@@ -227,7 +227,7 @@ rust_library(
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.21.12//:rustls",  # aarch64-unknown-linux-gnu
             "@queng_vendored__rustls-pemfile-1.0.4//:rustls_pemfile",  # aarch64-unknown-linux-gnu
-            "@queng_vendored__tokio-1.39.3//:tokio",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__tokio-1.40.0//:tokio",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__tokio-rustls-0.24.1//:tokio_rustls",  # aarch64-unknown-linux-gnu
             "@queng_vendored__webpki-roots-0.25.4//:webpki_roots",  # aarch64-unknown-linux-gnu
         ],
@@ -245,7 +245,7 @@ rust_library(
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.21.12//:rustls",  # aarch64-unknown-linux-gnu, aarch64-unknown-nixos-gnu
             "@queng_vendored__rustls-pemfile-1.0.4//:rustls_pemfile",  # aarch64-unknown-linux-gnu, aarch64-unknown-nixos-gnu
-            "@queng_vendored__tokio-1.39.3//:tokio",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__tokio-1.40.0//:tokio",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__tokio-rustls-0.24.1//:tokio_rustls",  # aarch64-unknown-linux-gnu, aarch64-unknown-nixos-gnu
             "@queng_vendored__webpki-roots-0.25.4//:webpki_roots",  # aarch64-unknown-linux-gnu, aarch64-unknown-nixos-gnu
         ],
@@ -263,7 +263,7 @@ rust_library(
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.21.12//:rustls",  # aarch64-unknown-nto-qnx710
             "@queng_vendored__rustls-pemfile-1.0.4//:rustls_pemfile",  # aarch64-unknown-nto-qnx710
-            "@queng_vendored__tokio-1.39.3//:tokio",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__tokio-1.40.0//:tokio",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__tokio-rustls-0.24.1//:tokio_rustls",  # aarch64-unknown-nto-qnx710
             "@queng_vendored__webpki-roots-0.25.4//:webpki_roots",  # aarch64-unknown-nto-qnx710
         ],
@@ -281,7 +281,7 @@ rust_library(
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.21.12//:rustls",  # arm-unknown-linux-gnueabi
             "@queng_vendored__rustls-pemfile-1.0.4//:rustls_pemfile",  # arm-unknown-linux-gnueabi
-            "@queng_vendored__tokio-1.39.3//:tokio",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__tokio-1.40.0//:tokio",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__tokio-rustls-0.24.1//:tokio_rustls",  # arm-unknown-linux-gnueabi
             "@queng_vendored__webpki-roots-0.25.4//:webpki_roots",  # arm-unknown-linux-gnueabi
         ],
@@ -299,7 +299,7 @@ rust_library(
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.21.12//:rustls",  # armv7-linux-androideabi
             "@queng_vendored__rustls-pemfile-1.0.4//:rustls_pemfile",  # armv7-linux-androideabi
-            "@queng_vendored__tokio-1.39.3//:tokio",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__tokio-1.40.0//:tokio",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__tokio-rustls-0.24.1//:tokio_rustls",  # armv7-linux-androideabi
             "@queng_vendored__webpki-roots-0.25.4//:webpki_roots",  # armv7-linux-androideabi
         ],
@@ -317,7 +317,7 @@ rust_library(
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.21.12//:rustls",  # armv7-unknown-linux-gnueabi
             "@queng_vendored__rustls-pemfile-1.0.4//:rustls_pemfile",  # armv7-unknown-linux-gnueabi
-            "@queng_vendored__tokio-1.39.3//:tokio",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__tokio-1.40.0//:tokio",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__tokio-rustls-0.24.1//:tokio_rustls",  # armv7-unknown-linux-gnueabi
             "@queng_vendored__webpki-roots-0.25.4//:webpki_roots",  # armv7-unknown-linux-gnueabi
         ],
@@ -336,7 +336,7 @@ rust_library(
             "@queng_vendored__rustls-0.21.12//:rustls",  # i686-apple-darwin
             "@queng_vendored__rustls-pemfile-1.0.4//:rustls_pemfile",  # i686-apple-darwin
             "@queng_vendored__system-configuration-0.5.1//:system_configuration",  # cfg(target_os = "macos")
-            "@queng_vendored__tokio-1.39.3//:tokio",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__tokio-1.40.0//:tokio",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__tokio-rustls-0.24.1//:tokio_rustls",  # i686-apple-darwin
             "@queng_vendored__webpki-roots-0.25.4//:webpki_roots",  # i686-apple-darwin
         ],
@@ -354,7 +354,7 @@ rust_library(
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.21.12//:rustls",  # i686-linux-android
             "@queng_vendored__rustls-pemfile-1.0.4//:rustls_pemfile",  # i686-linux-android
-            "@queng_vendored__tokio-1.39.3//:tokio",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__tokio-1.40.0//:tokio",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__tokio-rustls-0.24.1//:tokio_rustls",  # i686-linux-android
             "@queng_vendored__webpki-roots-0.25.4//:webpki_roots",  # i686-linux-android
         ],
@@ -372,7 +372,7 @@ rust_library(
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.21.12//:rustls",  # i686-pc-windows-msvc
             "@queng_vendored__rustls-pemfile-1.0.4//:rustls_pemfile",  # i686-pc-windows-msvc
-            "@queng_vendored__tokio-1.39.3//:tokio",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__tokio-1.40.0//:tokio",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__tokio-rustls-0.24.1//:tokio_rustls",  # i686-pc-windows-msvc
             "@queng_vendored__webpki-roots-0.25.4//:webpki_roots",  # i686-pc-windows-msvc
             "@queng_vendored__winreg-0.50.0//:winreg",  # cfg(windows)
@@ -391,7 +391,7 @@ rust_library(
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.21.12//:rustls",  # i686-unknown-freebsd
             "@queng_vendored__rustls-pemfile-1.0.4//:rustls_pemfile",  # i686-unknown-freebsd
-            "@queng_vendored__tokio-1.39.3//:tokio",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__tokio-1.40.0//:tokio",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__tokio-rustls-0.24.1//:tokio_rustls",  # i686-unknown-freebsd
             "@queng_vendored__webpki-roots-0.25.4//:webpki_roots",  # i686-unknown-freebsd
         ],
@@ -409,7 +409,7 @@ rust_library(
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.21.12//:rustls",  # i686-unknown-linux-gnu
             "@queng_vendored__rustls-pemfile-1.0.4//:rustls_pemfile",  # i686-unknown-linux-gnu
-            "@queng_vendored__tokio-1.39.3//:tokio",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__tokio-1.40.0//:tokio",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__tokio-rustls-0.24.1//:tokio_rustls",  # i686-unknown-linux-gnu
             "@queng_vendored__webpki-roots-0.25.4//:webpki_roots",  # i686-unknown-linux-gnu
         ],
@@ -427,7 +427,7 @@ rust_library(
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.21.12//:rustls",  # powerpc-unknown-linux-gnu
             "@queng_vendored__rustls-pemfile-1.0.4//:rustls_pemfile",  # powerpc-unknown-linux-gnu
-            "@queng_vendored__tokio-1.39.3//:tokio",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__tokio-1.40.0//:tokio",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__tokio-rustls-0.24.1//:tokio_rustls",  # powerpc-unknown-linux-gnu
             "@queng_vendored__webpki-roots-0.25.4//:webpki_roots",  # powerpc-unknown-linux-gnu
         ],
@@ -445,7 +445,7 @@ rust_library(
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.21.12//:rustls",  # riscv32imc-unknown-none-elf
             "@queng_vendored__rustls-pemfile-1.0.4//:rustls_pemfile",  # riscv32imc-unknown-none-elf
-            "@queng_vendored__tokio-1.39.3//:tokio",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__tokio-1.40.0//:tokio",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__tokio-rustls-0.24.1//:tokio_rustls",  # riscv32imc-unknown-none-elf
             "@queng_vendored__webpki-roots-0.25.4//:webpki_roots",  # riscv32imc-unknown-none-elf
         ],
@@ -463,7 +463,7 @@ rust_library(
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.21.12//:rustls",  # riscv64gc-unknown-none-elf
             "@queng_vendored__rustls-pemfile-1.0.4//:rustls_pemfile",  # riscv64gc-unknown-none-elf
-            "@queng_vendored__tokio-1.39.3//:tokio",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__tokio-1.40.0//:tokio",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__tokio-rustls-0.24.1//:tokio_rustls",  # riscv64gc-unknown-none-elf
             "@queng_vendored__webpki-roots-0.25.4//:webpki_roots",  # riscv64gc-unknown-none-elf
         ],
@@ -481,7 +481,7 @@ rust_library(
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.21.12//:rustls",  # s390x-unknown-linux-gnu
             "@queng_vendored__rustls-pemfile-1.0.4//:rustls_pemfile",  # s390x-unknown-linux-gnu
-            "@queng_vendored__tokio-1.39.3//:tokio",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__tokio-1.40.0//:tokio",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__tokio-rustls-0.24.1//:tokio_rustls",  # s390x-unknown-linux-gnu
             "@queng_vendored__webpki-roots-0.25.4//:webpki_roots",  # s390x-unknown-linux-gnu
         ],
@@ -499,7 +499,7 @@ rust_library(
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.21.12//:rustls",  # thumbv7em-none-eabi
             "@queng_vendored__rustls-pemfile-1.0.4//:rustls_pemfile",  # thumbv7em-none-eabi
-            "@queng_vendored__tokio-1.39.3//:tokio",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__tokio-1.40.0//:tokio",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__tokio-rustls-0.24.1//:tokio_rustls",  # thumbv7em-none-eabi
             "@queng_vendored__webpki-roots-0.25.4//:webpki_roots",  # thumbv7em-none-eabi
         ],
@@ -517,7 +517,7 @@ rust_library(
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.21.12//:rustls",  # thumbv8m.main-none-eabi
             "@queng_vendored__rustls-pemfile-1.0.4//:rustls_pemfile",  # thumbv8m.main-none-eabi
-            "@queng_vendored__tokio-1.39.3//:tokio",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__tokio-1.40.0//:tokio",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__tokio-rustls-0.24.1//:tokio_rustls",  # thumbv8m.main-none-eabi
             "@queng_vendored__webpki-roots-0.25.4//:webpki_roots",  # thumbv8m.main-none-eabi
         ],
@@ -548,7 +548,7 @@ rust_library(
             "@queng_vendored__rustls-0.21.12//:rustls",  # x86_64-apple-darwin
             "@queng_vendored__rustls-pemfile-1.0.4//:rustls_pemfile",  # x86_64-apple-darwin
             "@queng_vendored__system-configuration-0.5.1//:system_configuration",  # cfg(target_os = "macos")
-            "@queng_vendored__tokio-1.39.3//:tokio",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__tokio-1.40.0//:tokio",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__tokio-rustls-0.24.1//:tokio_rustls",  # x86_64-apple-darwin
             "@queng_vendored__webpki-roots-0.25.4//:webpki_roots",  # x86_64-apple-darwin
         ],
@@ -566,7 +566,7 @@ rust_library(
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.21.12//:rustls",  # x86_64-apple-ios
             "@queng_vendored__rustls-pemfile-1.0.4//:rustls_pemfile",  # x86_64-apple-ios
-            "@queng_vendored__tokio-1.39.3//:tokio",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__tokio-1.40.0//:tokio",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__tokio-rustls-0.24.1//:tokio_rustls",  # x86_64-apple-ios
             "@queng_vendored__webpki-roots-0.25.4//:webpki_roots",  # x86_64-apple-ios
         ],
@@ -584,7 +584,7 @@ rust_library(
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.21.12//:rustls",  # x86_64-fuchsia
             "@queng_vendored__rustls-pemfile-1.0.4//:rustls_pemfile",  # x86_64-fuchsia
-            "@queng_vendored__tokio-1.39.3//:tokio",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__tokio-1.40.0//:tokio",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__tokio-rustls-0.24.1//:tokio_rustls",  # x86_64-fuchsia
             "@queng_vendored__webpki-roots-0.25.4//:webpki_roots",  # x86_64-fuchsia
         ],
@@ -602,7 +602,7 @@ rust_library(
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.21.12//:rustls",  # x86_64-linux-android
             "@queng_vendored__rustls-pemfile-1.0.4//:rustls_pemfile",  # x86_64-linux-android
-            "@queng_vendored__tokio-1.39.3//:tokio",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__tokio-1.40.0//:tokio",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__tokio-rustls-0.24.1//:tokio_rustls",  # x86_64-linux-android
             "@queng_vendored__webpki-roots-0.25.4//:webpki_roots",  # x86_64-linux-android
         ],
@@ -620,7 +620,7 @@ rust_library(
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.21.12//:rustls",  # x86_64-pc-windows-msvc
             "@queng_vendored__rustls-pemfile-1.0.4//:rustls_pemfile",  # x86_64-pc-windows-msvc
-            "@queng_vendored__tokio-1.39.3//:tokio",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__tokio-1.40.0//:tokio",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__tokio-rustls-0.24.1//:tokio_rustls",  # x86_64-pc-windows-msvc
             "@queng_vendored__webpki-roots-0.25.4//:webpki_roots",  # x86_64-pc-windows-msvc
             "@queng_vendored__winreg-0.50.0//:winreg",  # cfg(windows)
@@ -639,7 +639,7 @@ rust_library(
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.21.12//:rustls",  # x86_64-unknown-freebsd
             "@queng_vendored__rustls-pemfile-1.0.4//:rustls_pemfile",  # x86_64-unknown-freebsd
-            "@queng_vendored__tokio-1.39.3//:tokio",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__tokio-1.40.0//:tokio",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__tokio-rustls-0.24.1//:tokio_rustls",  # x86_64-unknown-freebsd
             "@queng_vendored__webpki-roots-0.25.4//:webpki_roots",  # x86_64-unknown-freebsd
         ],
@@ -657,7 +657,7 @@ rust_library(
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.21.12//:rustls",  # x86_64-unknown-linux-gnu
             "@queng_vendored__rustls-pemfile-1.0.4//:rustls_pemfile",  # x86_64-unknown-linux-gnu
-            "@queng_vendored__tokio-1.39.3//:tokio",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__tokio-1.40.0//:tokio",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__tokio-rustls-0.24.1//:tokio_rustls",  # x86_64-unknown-linux-gnu
             "@queng_vendored__webpki-roots-0.25.4//:webpki_roots",  # x86_64-unknown-linux-gnu
         ],
@@ -675,7 +675,7 @@ rust_library(
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.21.12//:rustls",  # x86_64-unknown-linux-gnu, x86_64-unknown-nixos-gnu
             "@queng_vendored__rustls-pemfile-1.0.4//:rustls_pemfile",  # x86_64-unknown-linux-gnu, x86_64-unknown-nixos-gnu
-            "@queng_vendored__tokio-1.39.3//:tokio",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__tokio-1.40.0//:tokio",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__tokio-rustls-0.24.1//:tokio_rustls",  # x86_64-unknown-linux-gnu, x86_64-unknown-nixos-gnu
             "@queng_vendored__webpki-roots-0.25.4//:webpki_roots",  # x86_64-unknown-linux-gnu, x86_64-unknown-nixos-gnu
         ],
@@ -693,7 +693,7 @@ rust_library(
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.21.12//:rustls",  # x86_64-unknown-none
             "@queng_vendored__rustls-pemfile-1.0.4//:rustls_pemfile",  # x86_64-unknown-none
-            "@queng_vendored__tokio-1.39.3//:tokio",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__tokio-1.40.0//:tokio",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__tokio-rustls-0.24.1//:tokio_rustls",  # x86_64-unknown-none
             "@queng_vendored__webpki-roots-0.25.4//:webpki_roots",  # x86_64-unknown-none
         ],

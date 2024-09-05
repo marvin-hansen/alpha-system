@@ -6,12 +6,12 @@
 #     bazel run @@//thirdparty:crates_vendor
 ###############################################################################
 
-load("@rules_rust//rust:defs.bzl", "rust_proc_macro")
+load("@rules_rust//rust:defs.bzl", "rust_library")
 
 package(default_visibility = ["//visibility:public"])
 
-rust_proc_macro(
-    name = "prost_derive",
+rust_library(
+    name = "tokio_stream",
     srcs = glob(
         include = ["**/*.rs"],
         allow_empty = True,
@@ -28,6 +28,11 @@ rust_proc_macro(
             "WORKSPACE.bazel",
         ],
     ),
+    crate_features = [
+        "default",
+        "net",
+        "time",
+    ],
     crate_root = "src/lib.rs",
     edition = "2021",
     rustc_flags = [
@@ -35,7 +40,7 @@ rust_proc_macro(
     ],
     tags = [
         "cargo-bazel",
-        "crate-name=prost-derive",
+        "crate-name=tokio-stream",
         "manual",
         "noclippy",
         "norustfmt",
@@ -77,12 +82,10 @@ rust_proc_macro(
         "@rules_rust//rust/platform:x86_64-unknown-none": [],
         "//conditions:default": ["@platforms//:incompatible"],
     }),
-    version = "0.13.1",
+    version = "0.1.16",
     deps = [
-        "@queng_vendored__anyhow-1.0.86//:anyhow",
-        "@queng_vendored__itertools-0.13.0//:itertools",
-        "@queng_vendored__proc-macro2-1.0.86//:proc_macro2",
-        "@queng_vendored__quote-1.0.37//:quote",
-        "@queng_vendored__syn-2.0.76//:syn",
+        "@queng_vendored__futures-core-0.3.30//:futures_core",
+        "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",
+        "@queng_vendored__tokio-1.40.0//:tokio",
     ],
 )

@@ -84,9 +84,9 @@ rust_library(
     version = "0.4.0",
     deps = [
         "@queng_vendored__once_cell-1.19.0//:once_cell",
-        "@queng_vendored__prost-0.13.1//:prost",
-        "@queng_vendored__prost-build-0.13.1//:prost_build",
-        "@queng_vendored__prost-types-0.13.1//:prost_types",
+        "@queng_vendored__prost-0.13.2//:prost",
+        "@queng_vendored__prost-build-0.13.2//:prost_build",
+        "@queng_vendored__prost-types-0.13.2//:prost_types",
         "@queng_vendored__regex-1.10.6//:regex",
     ],
 )
@@ -162,9 +162,9 @@ rust_binary(
     deps = [
         ":protoc_gen_prost",
         "@queng_vendored__once_cell-1.19.0//:once_cell",
-        "@queng_vendored__prost-0.13.1//:prost",
-        "@queng_vendored__prost-build-0.13.1//:prost_build",
-        "@queng_vendored__prost-types-0.13.1//:prost_types",
+        "@queng_vendored__prost-0.13.2//:prost",
+        "@queng_vendored__prost-build-0.13.2//:prost_build",
+        "@queng_vendored__prost-types-0.13.2//:prost_types",
         "@queng_vendored__regex-1.10.6//:regex",
     ],
 )

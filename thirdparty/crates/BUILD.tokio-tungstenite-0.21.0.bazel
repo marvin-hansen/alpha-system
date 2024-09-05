@@ -95,9 +95,9 @@ rust_library(
         "@queng_vendored__log-0.4.22//:log",
         "@queng_vendored__rustls-0.22.4//:rustls",
         "@queng_vendored__rustls-pki-types-1.8.0//:rustls_pki_types",
-        "@queng_vendored__tokio-1.39.3//:tokio",
+        "@queng_vendored__tokio-1.40.0//:tokio",
         "@queng_vendored__tokio-rustls-0.25.0//:tokio_rustls",
         "@queng_vendored__tungstenite-0.21.0//:tungstenite",
-        "@queng_vendored__webpki-roots-0.26.3//:webpki_roots",
+        "@queng_vendored__webpki-roots-0.26.5//:webpki_roots",
     ],
 )

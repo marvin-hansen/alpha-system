@@ -86,6 +86,6 @@ rust_proc_macro(
         "@queng_vendored__proc-macro-error-1.0.4//:proc_macro_error",
         "@queng_vendored__proc-macro2-1.0.86//:proc_macro2",
         "@queng_vendored__quote-1.0.37//:quote",
-        "@queng_vendored__syn-2.0.76//:syn",
+        "@queng_vendored__syn-2.0.77//:syn",
     ],
 )

@@ -79,6 +79,6 @@ rust_library(
     }),
     version = "0.2.0",
     deps = [
-        "@queng_vendored__syn-2.0.76//:syn",
+        "@queng_vendored__syn-2.0.77//:syn",
     ],
 )

@@ -90,7 +90,7 @@ rust_library(
         "@queng_vendored__chrono-0.4.38//:chrono",
         "@queng_vendored__cron-0.12.1//:cron",
         "@queng_vendored__num-traits-0.2.19//:num_traits",
-        "@queng_vendored__tokio-1.39.3//:tokio",
+        "@queng_vendored__tokio-1.40.0//:tokio",
         "@queng_vendored__tokio-cron-scheduler-0.11.0//:build_script_build",
         "@queng_vendored__tracing-0.1.40//:tracing",
         "@queng_vendored__uuid-1.10.0//:uuid",

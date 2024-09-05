@@ -1,8 +1,8 @@
+use autometrics::{autometrics, prometheus_exporter};
+use mimalloc::MiMalloc;
 use std::error::Error;
 use std::net::SocketAddr;
 use std::sync::Arc;
-
-use mimalloc::MiMalloc;
 use tokio::sync::RwLock;
 use tonic::transport::Server;
 use warp::Filter;
@@ -27,6 +27,9 @@ static GLOBAL: MiMalloc = MiMalloc;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
+    dbg_print("Setup autometrics");
+    prometheus_exporter::init();
+
     dbg_print("Setup autoconfiguration");
     let svc_config = dbgw_specs::dbgw_service_config();
     let cfg_manager = CfgManager::new(SVC_ID, svc_config).await;
@@ -74,11 +77,21 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .expect("DBGW: Failed to get metric host, uri, and port");
     dbg_print(&metrics_addr);
 
+    dbg_print("Configuring health endpoint");
     let health_uri = "health";
-    let health_check = warp::get()
+    let get_health_check = warp::get()
         .and(warp::path(health_uri))
         .and(warp::path::end())
         .and_then(health_handler);
+
+    dbg_print("Build metrics endpoint");
+    let get_metrics = warp::get()
+        .and(warp::path(metrics_uri.clone()))
+        .and(warp::path::end())
+        .and_then(metrics_handler);
+
+    dbg_print("Configure http service routes");
+    let routes = get_health_check.or(get_metrics);
 
     dbg_print("Configuring socket address for http service");
     let http_addr: SocketAddr = metrics_addr
@@ -86,7 +99,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .expect("[DBGW/main]: Failed to parse address");
 
     let signal = shutdown_utils::signal_handler("http server");
-    let (_, http_server) = warp::serve(health_check).bind_with_graceful_shutdown(http_addr, signal);
+    let (_, http_server) = warp::serve(routes).bind_with_graceful_shutdown(http_addr, signal);
 
     dbg_print("Create an async handler for http server");
     let http_handle = tokio::spawn(http_server);
@@ -130,9 +143,18 @@ async fn main() -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 
+#[autometrics]
 pub(crate) async fn health_handler() -> Result<impl warp::Reply, warp::Rejection> {
     let result = { String::from("OK") };
     Ok(warp::reply::json(&result))
+}
+
+#[autometrics]
+async fn metrics_handler() -> Result<impl warp::Reply, warp::Rejection> {
+    match prometheus_exporter::encode_to_string() {
+        Ok(metrics) => Ok(metrics),
+        Err(_) => Err(warp::reject::not_found()),
+    }
 }
 
 fn dbg_print(msg: &str) {

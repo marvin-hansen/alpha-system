@@ -6,12 +6,12 @@
 #     bazel run @@//thirdparty:crates_vendor
 ###############################################################################
 
-load("@rules_rust//rust:defs.bzl", "rust_proc_macro")
+load("@rules_rust//rust:defs.bzl", "rust_library")
 
 package(default_visibility = ["//visibility:public"])
 
-rust_proc_macro(
-    name = "bon_macros",
+rust_library(
+    name = "object",
     srcs = glob(
         include = ["**/*.rs"],
         allow_empty = True,
@@ -29,13 +29,13 @@ rust_proc_macro(
         ],
     ),
     crate_root = "src/lib.rs",
-    edition = "2021",
+    edition = "2018",
     rustc_flags = [
         "--cap-lints=allow",
     ],
     tags = [
         "cargo-bazel",
-        "crate-name=bon-macros",
+        "crate-name=object",
         "manual",
         "noclippy",
         "norustfmt",
@@ -77,12 +77,8 @@ rust_proc_macro(
         "@rules_rust//rust/platform:x86_64-unknown-none": [],
         "//conditions:default": ["@platforms//:incompatible"],
     }),
-    version = "2.0.1",
+    version = "0.36.4",
     deps = [
-        "@queng_vendored__darling-0.20.10//:darling",
-        "@queng_vendored__ident_case-1.0.1//:ident_case",
-        "@queng_vendored__proc-macro2-1.0.86//:proc_macro2",
-        "@queng_vendored__quote-1.0.37//:quote",
-        "@queng_vendored__syn-2.0.76//:syn",
+        "@queng_vendored__memchr-2.7.4//:memchr",
     ],
 )

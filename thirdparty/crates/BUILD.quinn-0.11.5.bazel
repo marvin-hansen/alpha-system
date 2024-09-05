@@ -11,11 +11,15 @@ load("@rules_rust//rust:defs.bzl", "rust_library")
 package(default_visibility = ["//visibility:public"])
 
 rust_library(
-    name = "object",
+    name = "quinn",
     srcs = glob(
         include = ["**/*.rs"],
         allow_empty = True,
     ),
+    aliases = {
+        "@queng_vendored__quinn-proto-0.11.8//:quinn_proto": "proto",
+        "@queng_vendored__quinn-udp-0.5.5//:quinn_udp": "udp",
+    },
     compile_data = glob(
         include = ["**"],
         allow_empty = True,
@@ -29,13 +33,13 @@ rust_library(
         ],
     ),
     crate_root = "src/lib.rs",
-    edition = "2018",
+    edition = "2021",
     rustc_flags = [
         "--cap-lints=allow",
     ],
     tags = [
         "cargo-bazel",
-        "crate-name=object",
+        "crate-name=quinn",
         "manual",
         "noclippy",
         "norustfmt",
@@ -77,8 +81,16 @@ rust_library(
         "@rules_rust//rust/platform:x86_64-unknown-none": [],
         "//conditions:default": ["@platforms//:incompatible"],
     }),
-    version = "0.36.3",
+    version = "0.11.5",
     deps = [
-        "@queng_vendored__memchr-2.7.4//:memchr",
+        "@queng_vendored__bytes-1.7.1//:bytes",
+        "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",
+        "@queng_vendored__quinn-proto-0.11.8//:quinn_proto",
+        "@queng_vendored__quinn-udp-0.5.5//:quinn_udp",
+        "@queng_vendored__rustc-hash-2.0.0//:rustc_hash",
+        "@queng_vendored__socket2-0.5.7//:socket2",
+        "@queng_vendored__thiserror-1.0.63//:thiserror",
+        "@queng_vendored__tokio-1.40.0//:tokio",
+        "@queng_vendored__tracing-0.1.40//:tracing",
     ],
 )

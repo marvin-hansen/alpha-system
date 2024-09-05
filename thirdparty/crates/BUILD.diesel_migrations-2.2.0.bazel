@@ -85,7 +85,7 @@ rust_library(
     }),
     version = "2.2.0",
     deps = [
-        "@queng_vendored__diesel-2.2.3//:diesel",
+        "@queng_vendored__diesel-2.2.4//:diesel",
         "@queng_vendored__migrations_internals-2.2.0//:migrations_internals",
     ],
 )

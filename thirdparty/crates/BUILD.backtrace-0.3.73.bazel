@@ -88,187 +88,187 @@ rust_library(
             "@queng_vendored__addr2line-0.22.0//:addr2line",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__libc-0.2.158//:libc",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__miniz_oxide-0.7.4//:miniz_oxide",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
-            "@queng_vendored__object-0.36.3//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
+            "@queng_vendored__object-0.36.4//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
         ],
         "@rules_rust//rust/platform:aarch64-apple-ios": [
             "@queng_vendored__addr2line-0.22.0//:addr2line",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__libc-0.2.158//:libc",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__miniz_oxide-0.7.4//:miniz_oxide",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
-            "@queng_vendored__object-0.36.3//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
+            "@queng_vendored__object-0.36.4//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
         ],
         "@rules_rust//rust/platform:aarch64-apple-ios-sim": [
             "@queng_vendored__addr2line-0.22.0//:addr2line",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__libc-0.2.158//:libc",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__miniz_oxide-0.7.4//:miniz_oxide",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
-            "@queng_vendored__object-0.36.3//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
+            "@queng_vendored__object-0.36.4//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
         ],
         "@rules_rust//rust/platform:aarch64-fuchsia": [
             "@queng_vendored__addr2line-0.22.0//:addr2line",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__libc-0.2.158//:libc",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__miniz_oxide-0.7.4//:miniz_oxide",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
-            "@queng_vendored__object-0.36.3//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
+            "@queng_vendored__object-0.36.4//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
         ],
         "@rules_rust//rust/platform:aarch64-linux-android": [
             "@queng_vendored__addr2line-0.22.0//:addr2line",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__libc-0.2.158//:libc",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__miniz_oxide-0.7.4//:miniz_oxide",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
-            "@queng_vendored__object-0.36.3//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
+            "@queng_vendored__object-0.36.4//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
         ],
         "@rules_rust//rust/platform:aarch64-unknown-linux-gnu": [
             "@queng_vendored__addr2line-0.22.0//:addr2line",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__libc-0.2.158//:libc",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__miniz_oxide-0.7.4//:miniz_oxide",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
-            "@queng_vendored__object-0.36.3//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
+            "@queng_vendored__object-0.36.4//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
         ],
         "@rules_rust//rust/platform:aarch64-unknown-nixos-gnu": [
             "@queng_vendored__addr2line-0.22.0//:addr2line",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__libc-0.2.158//:libc",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__miniz_oxide-0.7.4//:miniz_oxide",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
-            "@queng_vendored__object-0.36.3//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
+            "@queng_vendored__object-0.36.4//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
         ],
         "@rules_rust//rust/platform:aarch64-unknown-nto-qnx710": [
             "@queng_vendored__addr2line-0.22.0//:addr2line",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__libc-0.2.158//:libc",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__miniz_oxide-0.7.4//:miniz_oxide",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
-            "@queng_vendored__object-0.36.3//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
+            "@queng_vendored__object-0.36.4//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
         ],
         "@rules_rust//rust/platform:arm-unknown-linux-gnueabi": [
             "@queng_vendored__addr2line-0.22.0//:addr2line",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__libc-0.2.158//:libc",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__miniz_oxide-0.7.4//:miniz_oxide",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
-            "@queng_vendored__object-0.36.3//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
+            "@queng_vendored__object-0.36.4//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
         ],
         "@rules_rust//rust/platform:armv7-linux-androideabi": [
             "@queng_vendored__addr2line-0.22.0//:addr2line",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__libc-0.2.158//:libc",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__miniz_oxide-0.7.4//:miniz_oxide",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
-            "@queng_vendored__object-0.36.3//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
+            "@queng_vendored__object-0.36.4//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
         ],
         "@rules_rust//rust/platform:armv7-unknown-linux-gnueabi": [
             "@queng_vendored__addr2line-0.22.0//:addr2line",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__libc-0.2.158//:libc",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__miniz_oxide-0.7.4//:miniz_oxide",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
-            "@queng_vendored__object-0.36.3//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
+            "@queng_vendored__object-0.36.4//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
         ],
         "@rules_rust//rust/platform:i686-apple-darwin": [
             "@queng_vendored__addr2line-0.22.0//:addr2line",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__libc-0.2.158//:libc",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__miniz_oxide-0.7.4//:miniz_oxide",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
-            "@queng_vendored__object-0.36.3//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
+            "@queng_vendored__object-0.36.4//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
         ],
         "@rules_rust//rust/platform:i686-linux-android": [
             "@queng_vendored__addr2line-0.22.0//:addr2line",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__libc-0.2.158//:libc",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__miniz_oxide-0.7.4//:miniz_oxide",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
-            "@queng_vendored__object-0.36.3//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
+            "@queng_vendored__object-0.36.4//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
         ],
         "@rules_rust//rust/platform:i686-unknown-freebsd": [
             "@queng_vendored__addr2line-0.22.0//:addr2line",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__libc-0.2.158//:libc",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__miniz_oxide-0.7.4//:miniz_oxide",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
-            "@queng_vendored__object-0.36.3//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
+            "@queng_vendored__object-0.36.4//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
         ],
         "@rules_rust//rust/platform:i686-unknown-linux-gnu": [
             "@queng_vendored__addr2line-0.22.0//:addr2line",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__libc-0.2.158//:libc",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__miniz_oxide-0.7.4//:miniz_oxide",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
-            "@queng_vendored__object-0.36.3//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
+            "@queng_vendored__object-0.36.4//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
         ],
         "@rules_rust//rust/platform:powerpc-unknown-linux-gnu": [
             "@queng_vendored__addr2line-0.22.0//:addr2line",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__libc-0.2.158//:libc",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__miniz_oxide-0.7.4//:miniz_oxide",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
-            "@queng_vendored__object-0.36.3//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
+            "@queng_vendored__object-0.36.4//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
         ],
         "@rules_rust//rust/platform:riscv32imc-unknown-none-elf": [
             "@queng_vendored__addr2line-0.22.0//:addr2line",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__libc-0.2.158//:libc",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__miniz_oxide-0.7.4//:miniz_oxide",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
-            "@queng_vendored__object-0.36.3//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
+            "@queng_vendored__object-0.36.4//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
         ],
         "@rules_rust//rust/platform:riscv64gc-unknown-none-elf": [
             "@queng_vendored__addr2line-0.22.0//:addr2line",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__libc-0.2.158//:libc",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__miniz_oxide-0.7.4//:miniz_oxide",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
-            "@queng_vendored__object-0.36.3//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
+            "@queng_vendored__object-0.36.4//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
         ],
         "@rules_rust//rust/platform:s390x-unknown-linux-gnu": [
             "@queng_vendored__addr2line-0.22.0//:addr2line",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__libc-0.2.158//:libc",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__miniz_oxide-0.7.4//:miniz_oxide",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
-            "@queng_vendored__object-0.36.3//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
+            "@queng_vendored__object-0.36.4//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
         ],
         "@rules_rust//rust/platform:thumbv7em-none-eabi": [
             "@queng_vendored__addr2line-0.22.0//:addr2line",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__libc-0.2.158//:libc",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__miniz_oxide-0.7.4//:miniz_oxide",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
-            "@queng_vendored__object-0.36.3//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
+            "@queng_vendored__object-0.36.4//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
         ],
         "@rules_rust//rust/platform:thumbv8m.main-none-eabi": [
             "@queng_vendored__addr2line-0.22.0//:addr2line",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__libc-0.2.158//:libc",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__miniz_oxide-0.7.4//:miniz_oxide",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
-            "@queng_vendored__object-0.36.3//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
+            "@queng_vendored__object-0.36.4//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
         ],
         "@rules_rust//rust/platform:wasm32-unknown-unknown": [
             "@queng_vendored__addr2line-0.22.0//:addr2line",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__libc-0.2.158//:libc",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__miniz_oxide-0.7.4//:miniz_oxide",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
-            "@queng_vendored__object-0.36.3//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
+            "@queng_vendored__object-0.36.4//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
         ],
         "@rules_rust//rust/platform:wasm32-wasi": [
             "@queng_vendored__addr2line-0.22.0//:addr2line",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__libc-0.2.158//:libc",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__miniz_oxide-0.7.4//:miniz_oxide",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
-            "@queng_vendored__object-0.36.3//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
+            "@queng_vendored__object-0.36.4//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
         ],
         "@rules_rust//rust/platform:x86_64-apple-darwin": [
             "@queng_vendored__addr2line-0.22.0//:addr2line",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__libc-0.2.158//:libc",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__miniz_oxide-0.7.4//:miniz_oxide",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
-            "@queng_vendored__object-0.36.3//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
+            "@queng_vendored__object-0.36.4//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
         ],
         "@rules_rust//rust/platform:x86_64-apple-ios": [
             "@queng_vendored__addr2line-0.22.0//:addr2line",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__libc-0.2.158//:libc",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__miniz_oxide-0.7.4//:miniz_oxide",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
-            "@queng_vendored__object-0.36.3//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
+            "@queng_vendored__object-0.36.4//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
         ],
         "@rules_rust//rust/platform:x86_64-fuchsia": [
             "@queng_vendored__addr2line-0.22.0//:addr2line",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__libc-0.2.158//:libc",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__miniz_oxide-0.7.4//:miniz_oxide",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
-            "@queng_vendored__object-0.36.3//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
+            "@queng_vendored__object-0.36.4//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
         ],
         "@rules_rust//rust/platform:x86_64-linux-android": [
             "@queng_vendored__addr2line-0.22.0//:addr2line",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__libc-0.2.158//:libc",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__miniz_oxide-0.7.4//:miniz_oxide",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
-            "@queng_vendored__object-0.36.3//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
+            "@queng_vendored__object-0.36.4//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
         ],
         "@rules_rust//rust/platform:x86_64-unknown-freebsd": [
             "@queng_vendored__addr2line-0.22.0//:addr2line",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__libc-0.2.158//:libc",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__miniz_oxide-0.7.4//:miniz_oxide",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
-            "@queng_vendored__object-0.36.3//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
+            "@queng_vendored__object-0.36.4//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
         ],
         "@rules_rust//rust/platform:x86_64-unknown-linux-gnu": [
             "@queng_vendored__addr2line-0.22.0//:addr2line",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__libc-0.2.158//:libc",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__miniz_oxide-0.7.4//:miniz_oxide",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
-            "@queng_vendored__object-0.36.3//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
+            "@queng_vendored__object-0.36.4//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
         ],
         "@rules_rust//rust/platform:x86_64-unknown-nixos-gnu": [
             "@queng_vendored__addr2line-0.22.0//:addr2line",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__libc-0.2.158//:libc",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__miniz_oxide-0.7.4//:miniz_oxide",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
-            "@queng_vendored__object-0.36.3//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
+            "@queng_vendored__object-0.36.4//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
         ],
         "@rules_rust//rust/platform:x86_64-unknown-none": [
             "@queng_vendored__addr2line-0.22.0//:addr2line",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__libc-0.2.158//:libc",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
             "@queng_vendored__miniz_oxide-0.7.4//:miniz_oxide",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
-            "@queng_vendored__object-0.36.3//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
+            "@queng_vendored__object-0.36.4//:object",  # cfg(not(all(windows, target_env = "msvc", not(target_vendor = "uwp"))))
         ],
         "//conditions:default": [],
     }),
@@ -309,7 +309,7 @@ cargo_build_script(
     version = "0.3.73",
     visibility = ["//visibility:private"],
     deps = [
-        "@queng_vendored__cc-1.1.15//:cc",
+        "@queng_vendored__cc-1.1.16//:cc",
     ],
 )
 

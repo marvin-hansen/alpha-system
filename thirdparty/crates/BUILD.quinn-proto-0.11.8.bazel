@@ -11,7 +11,7 @@ load("@rules_rust//rust:defs.bzl", "rust_library")
 package(default_visibility = ["//visibility:public"])
 
 rust_library(
-    name = "bon",
+    name = "quinn_proto",
     srcs = glob(
         include = ["**/*.rs"],
         allow_empty = True,
@@ -28,22 +28,14 @@ rust_library(
             "WORKSPACE.bazel",
         ],
     ),
-    crate_features = [
-        "alloc",
-        "default",
-        "std",
-    ],
     crate_root = "src/lib.rs",
     edition = "2021",
-    proc_macro_deps = [
-        "@queng_vendored__bon-macros-2.0.1//:bon_macros",
-    ],
     rustc_flags = [
         "--cap-lints=allow",
     ],
     tags = [
         "cargo-bazel",
-        "crate-name=bon",
+        "crate-name=quinn-proto",
         "manual",
         "noclippy",
         "norustfmt",
@@ -85,5 +77,14 @@ rust_library(
         "@rules_rust//rust/platform:x86_64-unknown-none": [],
         "//conditions:default": ["@platforms//:incompatible"],
     }),
-    version = "2.0.1",
+    version = "0.11.8",
+    deps = [
+        "@queng_vendored__bytes-1.7.1//:bytes",
+        "@queng_vendored__rand-0.8.5//:rand",
+        "@queng_vendored__rustc-hash-2.0.0//:rustc_hash",
+        "@queng_vendored__slab-0.4.9//:slab",
+        "@queng_vendored__thiserror-1.0.63//:thiserror",
+        "@queng_vendored__tinyvec-1.8.0//:tinyvec",
+        "@queng_vendored__tracing-0.1.40//:tracing",
+    ],
 )

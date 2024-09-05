@@ -85,6 +85,6 @@ rust_library(
     version = "0.24.1",
     deps = [
         "@queng_vendored__rustls-0.21.12//:rustls",
-        "@queng_vendored__tokio-1.39.3//:tokio",
+        "@queng_vendored__tokio-1.40.0//:tokio",
     ],
 )

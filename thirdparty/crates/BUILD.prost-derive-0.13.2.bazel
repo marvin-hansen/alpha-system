@@ -6,12 +6,12 @@
 #     bazel run @@//thirdparty:crates_vendor
 ###############################################################################
 
-load("@rules_rust//rust:defs.bzl", "rust_library")
+load("@rules_rust//rust:defs.bzl", "rust_proc_macro")
 
 package(default_visibility = ["//visibility:public"])
 
-rust_library(
-    name = "syn",
+rust_proc_macro(
+    name = "prost_derive",
     srcs = glob(
         include = ["**/*.rs"],
         allow_empty = True,
@@ -28,19 +28,6 @@ rust_library(
             "WORKSPACE.bazel",
         ],
     ),
-    crate_features = [
-        "clone-impls",
-        "default",
-        "derive",
-        "extra-traits",
-        "fold",
-        "full",
-        "parsing",
-        "printing",
-        "proc-macro",
-        "visit",
-        "visit-mut",
-    ],
     crate_root = "src/lib.rs",
     edition = "2021",
     rustc_flags = [
@@ -48,7 +35,7 @@ rust_library(
     ],
     tags = [
         "cargo-bazel",
-        "crate-name=syn",
+        "crate-name=prost-derive",
         "manual",
         "noclippy",
         "norustfmt",
@@ -90,10 +77,12 @@ rust_library(
         "@rules_rust//rust/platform:x86_64-unknown-none": [],
         "//conditions:default": ["@platforms//:incompatible"],
     }),
-    version = "2.0.76",
+    version = "0.13.2",
     deps = [
+        "@queng_vendored__anyhow-1.0.86//:anyhow",
+        "@queng_vendored__itertools-0.13.0//:itertools",
         "@queng_vendored__proc-macro2-1.0.86//:proc_macro2",
         "@queng_vendored__quote-1.0.37//:quote",
-        "@queng_vendored__unicode-ident-1.0.12//:unicode_ident",
+        "@queng_vendored__syn-2.0.77//:syn",
     ],
 )

@@ -6,13 +6,12 @@
 #     bazel run @@//thirdparty:crates_vendor
 ###############################################################################
 
-load("@rules_rust//cargo:defs.bzl", "cargo_build_script")
 load("@rules_rust//rust:defs.bzl", "rust_library")
 
 package(default_visibility = ["//visibility:public"])
 
 rust_library(
-    name = "serde_json",
+    name = "prost_build",
     srcs = glob(
         include = ["**/*.rs"],
         allow_empty = True,
@@ -31,7 +30,7 @@ rust_library(
     ),
     crate_features = [
         "default",
-        "std",
+        "format",
     ],
     crate_root = "src/lib.rs",
     edition = "2021",
@@ -40,7 +39,7 @@ rust_library(
     ],
     tags = [
         "cargo-bazel",
-        "crate-name=serde_json",
+        "crate-name=prost-build",
         "manual",
         "noclippy",
         "norustfmt",
@@ -82,58 +81,20 @@ rust_library(
         "@rules_rust//rust/platform:x86_64-unknown-none": [],
         "//conditions:default": ["@platforms//:incompatible"],
     }),
-    version = "1.0.127",
+    version = "0.13.2",
     deps = [
-        "@queng_vendored__itoa-1.0.11//:itoa",
-        "@queng_vendored__memchr-2.7.4//:memchr",
-        "@queng_vendored__ryu-1.0.18//:ryu",
-        "@queng_vendored__serde-1.0.209//:serde",
-        "@queng_vendored__serde_json-1.0.127//:build_script_build",
+        "@queng_vendored__bytes-1.7.1//:bytes",
+        "@queng_vendored__heck-0.5.0//:heck",
+        "@queng_vendored__itertools-0.13.0//:itertools",
+        "@queng_vendored__log-0.4.22//:log",
+        "@queng_vendored__multimap-0.10.0//:multimap",
+        "@queng_vendored__once_cell-1.19.0//:once_cell",
+        "@queng_vendored__petgraph-0.6.5//:petgraph",
+        "@queng_vendored__prettyplease-0.2.22//:prettyplease",
+        "@queng_vendored__prost-0.13.2//:prost",
+        "@queng_vendored__prost-types-0.13.2//:prost_types",
+        "@queng_vendored__regex-1.10.6//:regex",
+        "@queng_vendored__syn-2.0.77//:syn",
+        "@queng_vendored__tempfile-3.12.0//:tempfile",
     ],
-)
-
-cargo_build_script(
-    name = "_bs",
-    srcs = glob(
-        include = ["**/*.rs"],
-        allow_empty = True,
-    ),
-    crate_features = [
-        "default",
-        "std",
-    ],
-    crate_name = "build_script_build",
-    crate_root = "build.rs",
-    data = glob(
-        include = ["**"],
-        allow_empty = True,
-        exclude = [
-            "**/* *",
-            ".tmp_git_root/**/*",
-            "BUILD",
-            "BUILD.bazel",
-            "WORKSPACE",
-            "WORKSPACE.bazel",
-        ],
-    ),
-    edition = "2021",
-    pkg_name = "serde_json",
-    rustc_flags = [
-        "--cap-lints=allow",
-    ],
-    tags = [
-        "cargo-bazel",
-        "crate-name=serde_json",
-        "manual",
-        "noclippy",
-        "norustfmt",
-    ],
-    version = "1.0.127",
-    visibility = ["//visibility:private"],
-)
-
-alias(
-    name = "build_script_build",
-    actual = ":_bs",
-    tags = ["manual"],
 )

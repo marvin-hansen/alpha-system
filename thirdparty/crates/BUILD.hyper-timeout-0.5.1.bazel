@@ -82,7 +82,7 @@ rust_library(
         "@queng_vendored__hyper-1.4.1//:hyper",
         "@queng_vendored__hyper-util-0.1.7//:hyper_util",
         "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",
-        "@queng_vendored__tokio-1.39.3//:tokio",
+        "@queng_vendored__tokio-1.40.0//:tokio",
         "@queng_vendored__tower-service-0.3.3//:tower_service",
     ],
 )

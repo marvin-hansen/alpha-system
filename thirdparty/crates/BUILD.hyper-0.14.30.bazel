@@ -200,7 +200,7 @@ rust_library(
         "@queng_vendored__itoa-1.0.11//:itoa",
         "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",
         "@queng_vendored__socket2-0.5.7//:socket2",
-        "@queng_vendored__tokio-1.39.3//:tokio",
+        "@queng_vendored__tokio-1.40.0//:tokio",
         "@queng_vendored__tower-service-0.3.3//:tower_service",
         "@queng_vendored__tracing-0.1.40//:tracing",
         "@queng_vendored__want-0.3.1//:want",

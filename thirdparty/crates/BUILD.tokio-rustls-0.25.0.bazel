@@ -90,6 +90,6 @@ rust_library(
     deps = [
         "@queng_vendored__rustls-0.22.4//:rustls",
         "@queng_vendored__rustls-pki-types-1.8.0//:rustls_pki_types",
-        "@queng_vendored__tokio-1.39.3//:tokio",
+        "@queng_vendored__tokio-1.40.0//:tokio",
     ],
 )

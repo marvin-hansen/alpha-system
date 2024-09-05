@@ -92,7 +92,7 @@ rust_library(
         "@queng_vendored__rand-0.8.5//:rand",
         "@queng_vendored__smallvec-1.13.2//:smallvec",
         "@queng_vendored__thiserror-1.0.63//:thiserror",
-        "@queng_vendored__tokio-1.39.3//:tokio",
+        "@queng_vendored__tokio-1.40.0//:tokio",
         "@queng_vendored__tracing-0.1.40//:tracing",
     ],
 )

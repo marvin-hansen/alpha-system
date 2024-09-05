@@ -6,12 +6,12 @@
 #     bazel run @@//thirdparty:crates_vendor
 ###############################################################################
 
-load("@rules_rust//rust:defs.bzl", "rust_proc_macro")
+load("@rules_rust//rust:defs.bzl", "rust_library")
 
 package(default_visibility = ["//visibility:public"])
 
-rust_proc_macro(
-    name = "async_trait",
+rust_library(
+    name = "diesel",
     srcs = glob(
         include = ["**/*.rs"],
         allow_empty = True,
@@ -28,14 +28,22 @@ rust_proc_macro(
             "WORKSPACE.bazel",
         ],
     ),
+    crate_features = [
+        "postgres",
+        "postgres_backend",
+        "r2d2",
+    ],
     crate_root = "src/lib.rs",
     edition = "2021",
+    proc_macro_deps = [
+        "@queng_vendored__diesel_derives-2.2.3//:diesel_derives",
+    ],
     rustc_flags = [
         "--cap-lints=allow",
     ],
     tags = [
         "cargo-bazel",
-        "crate-name=async-trait",
+        "crate-name=diesel",
         "manual",
         "noclippy",
         "norustfmt",
@@ -77,10 +85,12 @@ rust_proc_macro(
         "@rules_rust//rust/platform:x86_64-unknown-none": [],
         "//conditions:default": ["@platforms//:incompatible"],
     }),
-    version = "0.1.81",
+    version = "2.2.4",
     deps = [
-        "@queng_vendored__proc-macro2-1.0.86//:proc_macro2",
-        "@queng_vendored__quote-1.0.37//:quote",
-        "@queng_vendored__syn-2.0.76//:syn",
+        "@queng_vendored__bitflags-2.6.0//:bitflags",
+        "@queng_vendored__byteorder-1.5.0//:byteorder",
+        "@queng_vendored__itoa-1.0.11//:itoa",
+        "@queng_vendored__pq-sys-0.6.1//:pq_sys",
+        "@queng_vendored__r2d2-0.8.10//:r2d2",
     ],
 )

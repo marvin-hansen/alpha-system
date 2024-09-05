@@ -85,7 +85,7 @@ rust_library(
     }),
     version = "0.22.20",
     deps = [
-        "@queng_vendored__indexmap-2.4.0//:indexmap",
+        "@queng_vendored__indexmap-2.5.0//:indexmap",
         "@queng_vendored__serde-1.0.209//:serde",
         "@queng_vendored__serde_spanned-0.6.7//:serde_spanned",
         "@queng_vendored__toml_datetime-0.6.8//:toml_datetime",

@@ -40,8 +40,8 @@ impl DBGWServer {
 }
 
 // Notice, all API functions are instrumented with the same SLO.
-#[autometrics(objective = API_SLO)]
 #[tonic::async_trait]
+#[autometrics(objective = API_SLO)]
 impl DbGatewayService for DBGWServer {
     async fn create_service(
         &self,

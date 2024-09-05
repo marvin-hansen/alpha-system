@@ -81,7 +81,7 @@ rust_library(
     deps = [
         "@queng_vendored__futures-util-0.3.30//:futures_util",
         "@queng_vendored__log-0.4.22//:log",
-        "@queng_vendored__tokio-1.39.3//:tokio",
+        "@queng_vendored__tokio-1.40.0//:tokio",
         "@queng_vendored__tungstenite-0.23.0//:tungstenite",
     ],
 )

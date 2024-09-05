@@ -1,4 +1,4 @@
-use autometrics::prometheus_exporter;
+use autometrics::{autometrics, prometheus_exporter};
 use common_config::prelude::ServiceID;
 use common_service::{print_utils, shutdown_utils};
 use config_manager::CfgManager;
@@ -158,14 +158,16 @@ where
     Ok(())
 }
 
+#[autometrics]
 async fn health_handler() -> Result<impl warp::Reply, warp::Rejection> {
     let result = { String::from("OK") };
     Ok(warp::reply::json(&result))
 }
 
+#[autometrics]
 async fn metrics_handler() -> Result<impl warp::Reply, warp::Rejection> {
-    match autometrics::prometheus_exporter::encode_to_string() {
-        Ok(metrics) => Ok(warp::reply::json(&metrics)),
+    match prometheus_exporter::encode_to_string() {
+        Ok(metrics) => Ok(metrics),
         Err(_) => Err(warp::reject::not_found()),
     }
 }

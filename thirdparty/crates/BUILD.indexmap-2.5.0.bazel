@@ -11,7 +11,7 @@ load("@rules_rust//rust:defs.bzl", "rust_library")
 package(default_visibility = ["//visibility:public"])
 
 rust_library(
-    name = "prost_types",
+    name = "indexmap",
     srcs = glob(
         include = ["**/*.rs"],
         allow_empty = True,
@@ -28,6 +28,10 @@ rust_library(
             "WORKSPACE.bazel",
         ],
     ),
+    crate_features = [
+        "default",
+        "std",
+    ],
     crate_root = "src/lib.rs",
     edition = "2021",
     rustc_flags = [
@@ -35,7 +39,7 @@ rust_library(
     ],
     tags = [
         "cargo-bazel",
-        "crate-name=prost-types",
+        "crate-name=indexmap",
         "manual",
         "noclippy",
         "norustfmt",
@@ -77,8 +81,9 @@ rust_library(
         "@rules_rust//rust/platform:x86_64-unknown-none": [],
         "//conditions:default": ["@platforms//:incompatible"],
     }),
-    version = "0.13.1",
+    version = "2.5.0",
     deps = [
-        "@queng_vendored__prost-0.13.1//:prost",
+        "@queng_vendored__equivalent-1.0.1//:equivalent",
+        "@queng_vendored__hashbrown-0.14.5//:hashbrown",
     ],
 )

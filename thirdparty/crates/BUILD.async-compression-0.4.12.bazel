@@ -88,6 +88,6 @@ rust_library(
         "@queng_vendored__futures-core-0.3.30//:futures_core",
         "@queng_vendored__memchr-2.7.4//:memchr",
         "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",
-        "@queng_vendored__tokio-1.39.3//:tokio",
+        "@queng_vendored__tokio-1.40.0//:tokio",
     ],
 )

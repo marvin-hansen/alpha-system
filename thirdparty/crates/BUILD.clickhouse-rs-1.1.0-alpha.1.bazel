@@ -101,7 +101,7 @@ rust_library(
         "@queng_vendored__percent-encoding-2.3.1//:percent_encoding",
         "@queng_vendored__pin-project-1.1.5//:pin_project",
         "@queng_vendored__thiserror-1.0.63//:thiserror",
-        "@queng_vendored__tokio-1.39.3//:tokio",
+        "@queng_vendored__tokio-1.40.0//:tokio",
         "@queng_vendored__url-2.5.2//:url",
         "@queng_vendored__uuid-1.10.0//:uuid",
     ],

@@ -40,7 +40,7 @@ rust_library(
     crate_root = "src/lib.rs",
     edition = "2021",
     proc_macro_deps = [
-        "@queng_vendored__async-trait-0.1.81//:async_trait",
+        "@queng_vendored__async-trait-0.1.82//:async_trait",
     ],
     rustc_flags = [
         "--cap-lints=allow",
@@ -104,10 +104,10 @@ rust_library(
         "@queng_vendored__hyper-util-0.1.7//:hyper_util",
         "@queng_vendored__percent-encoding-2.3.1//:percent_encoding",
         "@queng_vendored__pin-project-1.1.5//:pin_project",
-        "@queng_vendored__prost-0.13.1//:prost",
+        "@queng_vendored__prost-0.13.2//:prost",
         "@queng_vendored__socket2-0.5.7//:socket2",
-        "@queng_vendored__tokio-1.39.3//:tokio",
-        "@queng_vendored__tokio-stream-0.1.15//:tokio_stream",
+        "@queng_vendored__tokio-1.40.0//:tokio",
+        "@queng_vendored__tokio-stream-0.1.16//:tokio_stream",
         "@queng_vendored__tower-0.4.13//:tower",
         "@queng_vendored__tower-layer-0.3.3//:tower_layer",
         "@queng_vendored__tower-service-0.3.3//:tower_service",

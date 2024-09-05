@@ -82,7 +82,7 @@ rust_library(
     deps = [
         "@queng_vendored__prettyplease-0.2.22//:build_script_build",
         "@queng_vendored__proc-macro2-1.0.86//:proc_macro2",
-        "@queng_vendored__syn-2.0.76//:syn",
+        "@queng_vendored__syn-2.0.77//:syn",
     ],
 )
 

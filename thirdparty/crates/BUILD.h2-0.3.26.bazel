@@ -85,10 +85,10 @@ rust_library(
         "@queng_vendored__futures-sink-0.3.30//:futures_sink",
         "@queng_vendored__futures-util-0.3.30//:futures_util",
         "@queng_vendored__http-0.2.12//:http",
-        "@queng_vendored__indexmap-2.4.0//:indexmap",
+        "@queng_vendored__indexmap-2.5.0//:indexmap",
         "@queng_vendored__slab-0.4.9//:slab",
-        "@queng_vendored__tokio-1.39.3//:tokio",
-        "@queng_vendored__tokio-util-0.7.11//:tokio_util",
+        "@queng_vendored__tokio-1.40.0//:tokio",
+        "@queng_vendored__tokio-util-0.7.12//:tokio_util",
         "@queng_vendored__tracing-0.1.40//:tracing",
     ],
 )

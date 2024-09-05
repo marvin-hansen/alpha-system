@@ -1,3 +1,4 @@
+use autometrics::{autometrics, prometheus_exporter};
 use mimalloc::MiMalloc;
 use std::error::Error;
 use std::net::SocketAddr;
@@ -75,7 +76,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let get_metrics = warp::get()
         .and(warp::path(metrics_uri.clone()))
         .and(warp::path::end())
-        .and_then(get_metrics_handler);
+        .and_then(metrics_handler);
 
     // dbg_print("Configuring health endpoint");
     let health_uri = "health";
@@ -132,14 +133,16 @@ async fn main() -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 
-pub(crate) async fn health_handler() -> Result<impl warp::Reply, warp::Rejection> {
+#[autometrics]
+async fn health_handler() -> Result<impl warp::Reply, warp::Rejection> {
     let result = { String::from("OK") };
     Ok(warp::reply::json(&result))
 }
 
-async fn get_metrics_handler() -> Result<impl warp::Reply, warp::Rejection> {
-    match autometrics::prometheus_exporter::encode_to_string() {
-        Ok(metrics) => Ok(warp::reply::json(&metrics)),
+#[autometrics]
+async fn metrics_handler() -> Result<impl warp::Reply, warp::Rejection> {
+    match prometheus_exporter::encode_to_string() {
+        Ok(metrics) => Ok(metrics),
         Err(_) => Err(warp::reject::not_found()),
     }
 }

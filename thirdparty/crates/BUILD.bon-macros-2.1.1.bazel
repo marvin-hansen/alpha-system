@@ -6,12 +6,12 @@
 #     bazel run @@//thirdparty:crates_vendor
 ###############################################################################
 
-load("@rules_rust//rust:defs.bzl", "rust_library")
+load("@rules_rust//rust:defs.bzl", "rust_proc_macro")
 
 package(default_visibility = ["//visibility:public"])
 
-rust_library(
-    name = "quinn_udp",
+rust_proc_macro(
+    name = "bon_macros",
     srcs = glob(
         include = ["**/*.rs"],
         allow_empty = True,
@@ -35,7 +35,7 @@ rust_library(
     ],
     tags = [
         "cargo-bazel",
-        "crate-name=quinn-udp",
+        "crate-name=bon-macros",
         "manual",
         "noclippy",
         "norustfmt",
@@ -77,23 +77,12 @@ rust_library(
         "@rules_rust//rust/platform:x86_64-unknown-none": [],
         "//conditions:default": ["@platforms//:incompatible"],
     }),
-    version = "0.5.4",
+    version = "2.1.1",
     deps = [
-        "@queng_vendored__libc-0.2.158//:libc",
-        "@queng_vendored__socket2-0.5.7//:socket2",
-    ] + select({
-        "@rules_rust//rust/platform:aarch64-pc-windows-msvc": [
-            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(windows)
-            "@queng_vendored__windows-sys-0.52.0//:windows_sys",  # cfg(windows)
-        ],
-        "@rules_rust//rust/platform:i686-pc-windows-msvc": [
-            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(windows)
-            "@queng_vendored__windows-sys-0.52.0//:windows_sys",  # cfg(windows)
-        ],
-        "@rules_rust//rust/platform:x86_64-pc-windows-msvc": [
-            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(windows)
-            "@queng_vendored__windows-sys-0.52.0//:windows_sys",  # cfg(windows)
-        ],
-        "//conditions:default": [],
-    }),
+        "@queng_vendored__darling-0.20.10//:darling",
+        "@queng_vendored__ident_case-1.0.1//:ident_case",
+        "@queng_vendored__proc-macro2-1.0.86//:proc_macro2",
+        "@queng_vendored__quote-1.0.37//:quote",
+        "@queng_vendored__syn-2.0.77//:syn",
+    ],
 )

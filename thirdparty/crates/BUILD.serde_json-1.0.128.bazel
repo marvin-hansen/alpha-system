@@ -6,19 +6,17 @@
 #     bazel run @@//thirdparty:crates_vendor
 ###############################################################################
 
+load("@rules_rust//cargo:defs.bzl", "cargo_build_script")
 load("@rules_rust//rust:defs.bzl", "rust_library")
 
 package(default_visibility = ["//visibility:public"])
 
 rust_library(
-    name = "hyper_rustls",
+    name = "serde_json",
     srcs = glob(
         include = ["**/*.rs"],
         allow_empty = True,
     ),
-    aliases = {
-        "@queng_vendored__rustls-pki-types-1.8.0//:rustls_pki_types": "pki_types",
-    },
     compile_data = glob(
         include = ["**"],
         allow_empty = True,
@@ -32,11 +30,8 @@ rust_library(
         ],
     ),
     crate_features = [
-        "http1",
-        "ring",
-        "tls12",
-        "webpki-roots",
-        "webpki-tokio",
+        "default",
+        "std",
     ],
     crate_root = "src/lib.rs",
     edition = "2021",
@@ -45,7 +40,7 @@ rust_library(
     ],
     tags = [
         "cargo-bazel",
-        "crate-name=hyper-rustls",
+        "crate-name=serde_json",
         "manual",
         "noclippy",
         "norustfmt",
@@ -87,17 +82,58 @@ rust_library(
         "@rules_rust//rust/platform:x86_64-unknown-none": [],
         "//conditions:default": ["@platforms//:incompatible"],
     }),
-    version = "0.27.2",
+    version = "1.0.128",
     deps = [
-        "@queng_vendored__futures-util-0.3.30//:futures_util",
-        "@queng_vendored__http-1.1.0//:http",
-        "@queng_vendored__hyper-1.4.1//:hyper",
-        "@queng_vendored__hyper-util-0.1.7//:hyper_util",
-        "@queng_vendored__rustls-0.23.12//:rustls",
-        "@queng_vendored__rustls-pki-types-1.8.0//:rustls_pki_types",
-        "@queng_vendored__tokio-1.39.3//:tokio",
-        "@queng_vendored__tokio-rustls-0.26.0//:tokio_rustls",
-        "@queng_vendored__tower-service-0.3.3//:tower_service",
-        "@queng_vendored__webpki-roots-0.26.3//:webpki_roots",
+        "@queng_vendored__itoa-1.0.11//:itoa",
+        "@queng_vendored__memchr-2.7.4//:memchr",
+        "@queng_vendored__ryu-1.0.18//:ryu",
+        "@queng_vendored__serde-1.0.209//:serde",
+        "@queng_vendored__serde_json-1.0.128//:build_script_build",
     ],
+)
+
+cargo_build_script(
+    name = "_bs",
+    srcs = glob(
+        include = ["**/*.rs"],
+        allow_empty = True,
+    ),
+    crate_features = [
+        "default",
+        "std",
+    ],
+    crate_name = "build_script_build",
+    crate_root = "build.rs",
+    data = glob(
+        include = ["**"],
+        allow_empty = True,
+        exclude = [
+            "**/* *",
+            ".tmp_git_root/**/*",
+            "BUILD",
+            "BUILD.bazel",
+            "WORKSPACE",
+            "WORKSPACE.bazel",
+        ],
+    ),
+    edition = "2021",
+    pkg_name = "serde_json",
+    rustc_flags = [
+        "--cap-lints=allow",
+    ],
+    tags = [
+        "cargo-bazel",
+        "crate-name=serde_json",
+        "manual",
+        "noclippy",
+        "norustfmt",
+    ],
+    version = "1.0.128",
+    visibility = ["//visibility:private"],
+)
+
+alias(
+    name = "build_script_build",
+    actual = ":_bs",
+    tags = ["manual"],
 )

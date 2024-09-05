@@ -79,10 +79,10 @@ rust_proc_macro(
     }),
     version = "0.2.0",
     deps = [
-        "@queng_vendored__indexmap-2.4.0//:indexmap",
+        "@queng_vendored__indexmap-2.5.0//:indexmap",
         "@queng_vendored__proc-macro2-1.0.86//:proc_macro2",
         "@queng_vendored__quote-1.0.37//:quote",
         "@queng_vendored__regex-1.10.6//:regex",
-        "@queng_vendored__syn-2.0.76//:syn",
+        "@queng_vendored__syn-2.0.77//:syn",
     ],
 )
