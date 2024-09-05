@@ -36,7 +36,6 @@ rust_library(
     ],
 )
 
-
 rust_doc(
     name = "doc",
     crate = ":pg_metadb",
