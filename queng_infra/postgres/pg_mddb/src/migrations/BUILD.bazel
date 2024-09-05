@@ -1,9 +1,0 @@
-filegroup(
-    name = "migrations",
-    srcs = glob([
-        "00000000000000_diesel_initial_setup/**",
-        "2024-09-04-145651_mddb/**",
-        "**",
-    ]),
-    visibility = ["//visibility:public"],
-)
