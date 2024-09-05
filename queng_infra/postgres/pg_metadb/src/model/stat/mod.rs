@@ -18,6 +18,7 @@ pub struct Stat {
 #[diesel(table_name=crate::schema::mddb::stats , primary_key(stats_id))]
 #[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct CreateStat {
+    pub stats_id: i32,
     pub stats_hash: String,
     pub stats_download_timestamp: String,
     pub stats_number_assets: i32,
@@ -29,7 +30,6 @@ pub struct CreateStat {
 #[diesel(table_name=crate::schema::mddb::stats , primary_key(stats_id))]
 #[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct UpdateStat {
-    pub stats_id: i32,
     pub stats_hash: String,
     pub stats_download_timestamp: String,
     pub stats_number_assets: i32,
