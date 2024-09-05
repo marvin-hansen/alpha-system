@@ -1,7 +1,9 @@
 use common_config::prelude::{ServiceConfig, ServiceID};
 use common_exchange::prelude::Instrument as CommonInstrument;
 use common_exchange::prelude::{AccountType, PortfolioConfig as CommonPortfolioConfig};
-use common_metadata::prelude::{InstrumentMetadata, MetaExchange, MetaInstrument, MetaStats};
+use common_metadata::prelude::{
+    InstrumentMetadata, MetaAsset, MetaExchange, MetaInstrument, MetaStats,
+};
 use pg_metadb::prelude::Asset;
 
 pub fn get_test_asset() -> Asset {
@@ -10,6 +12,17 @@ pub fn get_test_asset() -> Asset {
         asset_name: "test_asset_name".to_string(),
         asset_classes: vec![],
         asset_figi: None,
+    }
+}
+
+pub fn get_test_meta_asset() -> MetaAsset {
+    MetaAsset {
+        code: "test_asset_code".to_string(),
+        name: "test_asset_name".to_string(),
+        asset_classes: vec![],
+        asset_class: "test_asset_class".to_string(),
+        metadata: None,
+        addresses: None,
     }
 }
 
