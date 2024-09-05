@@ -1,8 +1,8 @@
 use crate::model::instrument::Instrument;
 use crate::model::portfolio::Portfolio;
 use crate::model::portfolio_instrument::PortfolioInstrument;
-use crate::types::database_information::DatabaseErrorMessage;
 use crate::Connection as PGConnection;
+use common_database::prelude::DatabaseErrorMessage;
 use common_exchange::prelude::PortfolioConfig as CommonPortfolioConfig;
 use diesel::result::DatabaseErrorKind;
 use diesel::{

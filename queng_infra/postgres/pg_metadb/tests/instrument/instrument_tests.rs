@@ -1,5 +1,8 @@
+use common_metadata::prelude::MetaInstrument;
 use diesel::Connection;
 use env_utils::EnvUtil;
+use pg_metadb::prelude::Instrument;
+use postgres_test_utils::prelude::get_test_meta_instrument;
 use postgres_test_utils::{get_or_wait_for_postgres_connection, DB_TEST_URL};
 
 // Somehow tests seem to be executed or sorted in alphabetical order, so make sure that the
@@ -25,4 +28,301 @@ async fn test_migration() {
 
     let result = pg_metadb::run_metadb_migration(conn);
     assert!(result.is_ok());
+}
+
+#[tokio::test]
+async fn test_create_instrument() {
+    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+    assert!(connection.is_ok());
+    let conn = &mut connection.unwrap();
+
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+    let result = pg_metadb::run_metadb_migration(conn);
+    assert!(result.is_ok());
+
+    let instrument = get_test_meta_instrument();
+    let result = Instrument::create(conn, instrument);
+    assert!(result.is_ok());
+}
+
+#[tokio::test]
+async fn test_create_instrument_collection_success() {
+    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+    assert!(connection.is_ok());
+    let conn = &mut connection.unwrap();
+
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+    let result = pg_metadb::run_metadb_migration(conn);
+    assert!(result.is_ok());
+
+    let meta_instruments = vec![get_test_meta_instrument()];
+    let result = Instrument::create_instrument_collection(conn, meta_instruments);
+    assert!(result.is_ok());
+    assert_eq!(result.unwrap(), true);
+}
+
+#[tokio::test]
+async fn test_create_instrument_collection_empty() {
+    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+    assert!(connection.is_ok());
+    let conn = &mut connection.unwrap();
+
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+    let result = pg_metadb::run_metadb_migration(conn);
+    assert!(result.is_ok());
+
+    let meta_instruments: Vec<MetaInstrument> = vec![];
+    let result = Instrument::create_instrument_collection(conn, meta_instruments);
+    assert!(result.is_err());
+}
+
+#[tokio::test]
+async fn test_create_instrument_collection_error() {
+    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+    assert!(connection.is_ok());
+    let conn = &mut connection.unwrap();
+
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+    let result = pg_metadb::run_metadb_migration(conn);
+    assert!(result.is_ok());
+
+    // All test data have the same instrument code (primary key)
+    // hence triggering a unique constraint violation error
+    let meta_instruments = vec![
+        get_test_meta_instrument(),
+        get_test_meta_instrument(),
+        get_test_meta_instrument(),
+    ];
+    let result = Instrument::create_instrument_collection(conn, meta_instruments);
+    assert!(result.is_err());
+}
+
+#[tokio::test]
+async fn test_count_instruments_with_entries() {
+    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+    assert!(connection.is_ok());
+
+    let conn = &mut connection.unwrap();
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+
+    let result = pg_metadb::run_metadb_migration(conn);
+    assert!(result.is_ok());
+
+    let test_data = get_test_meta_instrument();
+    let result = Instrument::create(conn, test_data);
+    assert!(result.is_ok());
+
+    let result = Instrument::count(conn);
+    assert!(result.is_ok());
+    assert_eq!(result.unwrap(), 1);
+}
+
+#[tokio::test]
+async fn test_count_instruments_no_entries() {
+    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+    assert!(connection.is_ok());
+
+    let conn = &mut connection.unwrap();
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+
+    let result = pg_metadb::run_metadb_migration(conn);
+    assert!(result.is_ok());
+
+    let result = Instrument::count(conn);
+    assert!(result.is_ok());
+    assert_eq!(result.unwrap(), 0);
+}
+
+#[tokio::test]
+async fn test_check_if_instrument_id_exists_returns_true() {
+    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+    assert!(connection.is_ok());
+    let conn = &mut connection.unwrap();
+
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+    let result = pg_metadb::run_metadb_migration(conn);
+    assert!(result.is_ok());
+
+    let instrument = get_test_meta_instrument();
+    let instrument_id = instrument.code.to_string();
+    let result = Instrument::create(conn, instrument);
+    assert!(result.is_ok());
+
+    let exists = Instrument::check_if_instrument_id_exists(conn, &instrument_id)
+        .expect("Failed to check if instrument ID exists");
+    assert!(exists);
+}
+
+#[tokio::test]
+async fn test_check_if_instrument_id_exists_returns_false() {
+    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+    assert!(connection.is_ok());
+    let conn = &mut connection.unwrap();
+
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+    let result = pg_metadb::run_metadb_migration(conn);
+    assert!(result.is_ok());
+
+    let instrument_id = "non_existent_id";
+    let exists = Instrument::check_if_instrument_id_exists(conn, instrument_id)
+        .expect("Failed to check if instrument ID exists");
+    assert!(!exists);
+}
+
+#[tokio::test]
+async fn test_read_instrument() {
+    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+    assert!(connection.is_ok());
+    let conn = &mut connection.unwrap();
+
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+    let result = pg_metadb::run_metadb_migration(conn);
+    assert!(result.is_ok());
+
+    let instrument = get_test_meta_instrument();
+    let instrument_id = instrument.code.to_string();
+    let result = Instrument::create(conn, instrument);
+    assert!(result.is_ok());
+
+    let result = Instrument::read(conn, &instrument_id);
+    assert!(result.is_ok());
+}
+
+#[tokio::test]
+async fn test_read_instrument_error() {
+    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+    assert!(connection.is_ok());
+    let conn = &mut connection.unwrap();
+
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+    let result = pg_metadb::run_metadb_migration(conn);
+    assert!(result.is_ok());
+
+    let instrument_id = "Non-Existent".to_string();
+
+    let result = Instrument::read(conn, &instrument_id);
+    assert!(result.is_err());
+}
+
+#[tokio::test]
+async fn test_read_all_instrument() {
+    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+    assert!(connection.is_ok());
+    let conn = &mut connection.unwrap();
+
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+    let result = pg_metadb::run_metadb_migration(conn);
+    assert!(result.is_ok());
+
+    let instrument = get_test_meta_instrument();
+    let result = Instrument::create(conn, instrument);
+    assert!(result.is_ok());
+
+    let result = Instrument::read_all(conn);
+    assert!(result.is_ok());
+    assert_eq!(result.unwrap().len(), 1);
+}
+
+#[tokio::test]
+async fn test_read_all_instrument_no_entries() {
+    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+    assert!(connection.is_ok());
+    let conn = &mut connection.unwrap();
+
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+    let result = pg_metadb::run_metadb_migration(conn);
+    assert!(result.is_ok());
+
+    let result = Instrument::read_all(conn);
+    assert!(result.is_ok());
+    assert_eq!(result.unwrap().len(), 0);
+}
+
+#[tokio::test]
+async fn test_update_instrument() {
+    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+    assert!(connection.is_ok());
+    let conn = &mut connection.unwrap();
+
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+    let result = pg_metadb::run_metadb_migration(conn);
+    assert!(result.is_ok());
+
+    let instrument = get_test_meta_instrument();
+    let instrument_id = instrument.code.to_string();
+    let result = Instrument::create(conn, instrument);
+    assert!(result.is_ok());
+
+    let update_data = get_test_meta_instrument();
+    let result = Instrument::update(conn, &instrument_id, update_data);
+    assert!(result.is_ok());
+    assert_eq!(result.unwrap(), 1)
+}
+
+#[tokio::test]
+async fn test_update_instrument_non_existent() {
+    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+    assert!(connection.is_ok());
+    let conn = &mut connection.unwrap();
+
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+    let result = pg_metadb::run_metadb_migration(conn);
+    assert!(result.is_ok());
+
+    let instrument_id = String::from("Non-Existent");
+    let update_data = get_test_meta_instrument();
+    let result = Instrument::update(conn, &instrument_id, update_data);
+    assert!(result.is_ok());
+    assert_eq!(result.unwrap(), 0)
+}
+
+#[tokio::test]
+async fn test_delete_instrument() {
+    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+    assert!(connection.is_ok());
+    let conn = &mut connection.unwrap();
+
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+    let result = pg_metadb::run_metadb_migration(conn);
+    assert!(result.is_ok());
+
+    let instrument = get_test_meta_instrument();
+    let instrument_id = instrument.code.to_string();
+    Instrument::create(conn, instrument).expect("Failed to create instrument");
+
+    let result = Instrument::delete(conn, &instrument_id);
+    assert!(result.is_ok());
+    assert_eq!(result.unwrap(), 1)
+}
+
+#[tokio::test]
+async fn test_delete_instrument_non_existent() {
+    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+    assert!(connection.is_ok());
+    let conn = &mut connection.unwrap();
+
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+    let result = pg_metadb::run_metadb_migration(conn);
+    assert!(result.is_ok());
+
+    let instrument_id = String::from("Non-Existent");
+    let result = Instrument::delete(conn, &instrument_id);
+    assert!(result.is_ok());
+    assert_eq!(result.unwrap(), 0)
 }

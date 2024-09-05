@@ -12,6 +12,7 @@ rust_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
+        "//thirdparty/crates:diesel",
     ],
 )
 

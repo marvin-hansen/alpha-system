@@ -7,7 +7,6 @@ pub(crate) mod embed_migrations;
 pub mod model;
 pub mod prelude;
 pub(crate) mod schema;
-pub mod types;
 
 pub const MIGRATIONS: EmbeddedMigrations = EMBEDDED_MIGRATIONS;
 /// Run all pending migrations.

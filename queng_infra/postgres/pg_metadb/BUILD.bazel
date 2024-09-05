@@ -29,6 +29,7 @@ rust_library(
     deps = [
         # Internal crates
         "//alias:common_metadata",
+        "//alias:common_database",
         "//alias:postgres_migrations",
         # External crates
         "//thirdparty/crates:diesel",

@@ -1,7 +1,9 @@
 use crate::model::instrument::{Instrument, UpdateInstrument};
 use crate::schema::mddb::instruments::table as instruments_table;
 use crate::Connection;
+use common_database::prelude::DatabaseErrorMessage;
 use common_metadata::prelude::MetaInstrument;
+use diesel::result::Error::DatabaseError;
 use diesel::{ExpressionMethods, OptionalExtension, QueryDsl, QueryResult, RunQueryDsl};
 
 impl Instrument {
@@ -45,10 +47,21 @@ impl Instrument {
         conn: &mut Connection,
         meta_instruments: Vec<MetaInstrument>,
     ) -> Result<bool, diesel::result::Error> {
+        if meta_instruments.is_empty() {
+            return Err(DatabaseError(
+                diesel::result::DatabaseErrorKind::Unknown,
+                Box::new(DatabaseErrorMessage::new(
+                    "No instruments provided. Collection is empty.",
+                    "mddb.instruments",
+                )),
+            ));
+        }
+
         let instruments: Vec<Instrument> = meta_instruments
             .iter()
             .map(|meta_instrument| Instrument::from_meta_instrument(meta_instrument.clone()))
             .collect();
+
         diesel::insert_into(instruments_table)
             .values(&instruments)
             .execute(conn)

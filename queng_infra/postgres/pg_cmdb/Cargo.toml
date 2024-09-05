@@ -11,6 +11,7 @@ authors.workspace = true
 # Internal crates
 common_exchange = {workspace = true}
 postgres_migrations = { workspace = true }
+common_database = {workspace = true}
 
 # External crates
 bon = {workspace = true}
@@ -20,7 +21,6 @@ diesel_migrations = { workspace = true }
 
 [dev-dependencies]
 # For testing
-common_database = {workspace = true}
 env_utils = {workspace = true}
 postgres_test_utils = {workspace = true}
 tokio = {workspace = true}
