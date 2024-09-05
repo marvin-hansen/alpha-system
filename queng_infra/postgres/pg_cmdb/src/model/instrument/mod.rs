@@ -10,6 +10,7 @@ use bon::builder;
 #[builder]
 #[derive(Debug, Clone, PartialEq, Queryable, Selectable, Identifiable, Insertable, AsChangeset)]
 #[diesel(table_name=crate::schema::cmdb::instrument, primary_key(code))]
+#[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct Instrument {
     pub code: String,
     pub class: String,
@@ -23,6 +24,7 @@ pub struct Instrument {
 #[builder]
 #[derive(Debug, Clone, Queryable, Insertable, AsChangeset)]
 #[diesel(table_name=crate::schema::cmdb::instrument, primary_key(code))]
+#[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct CreateInstrument {
     pub code: String,
     pub class: String,
@@ -58,6 +60,7 @@ impl CreateInstrument {
 #[builder]
 #[derive(Debug, Clone, Queryable, Insertable, AsChangeset)]
 #[diesel(table_name=crate::schema::cmdb::instrument)]
+#[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct UpdateInstrument {
     pub class: Option<String>,
     pub exchange_code: Option<String>,

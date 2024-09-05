@@ -1,16 +1,40 @@
 use crate::model::instrument::Instrument;
 use crate::prelude::{CreateInstrument, UpdateInstrument};
-use common_metadata::prelude::MetaInstrument;
+use common_metadata::prelude::{InstrumentMetadata, MetaInstrument};
 
 impl Instrument {
     pub fn from_meta_instrument(meta_instrument: MetaInstrument) -> Self {
         Instrument {
-            instrument_id: meta_instrument.code,
-            instrument_class: meta_instrument.class,
-            instrument_base_asset: meta_instrument.base_asset,
-            instrument_quote_asset: meta_instrument.quote_asset,
-            instrument_exchanges_code: meta_instrument.exchange_code,
-            instrument_exchange_pair_code: meta_instrument.exchange_pair_code,
+            instrument_id: meta_instrument.code.to_string(),
+            instrument_class: meta_instrument.class.to_string(),
+            instrument_base_asset: meta_instrument.base_asset.to_string(),
+            instrument_quote_asset: meta_instrument.quote_asset.to_string(),
+            instrument_exchanges_code: meta_instrument.exchange_code.to_string(),
+            instrument_exchange_pair_code: meta_instrument.exchange_pair_code.to_string(),
+            instrument_pair_figi: if meta_instrument.metadata.is_some() {
+                Some(
+                    meta_instrument
+                        .clone()
+                        .metadata
+                        .unwrap()
+                        .pair_figi
+                        .unwrap_or_default(),
+                )
+            } else {
+                None
+            },
+            instrument_figi: if meta_instrument.metadata.is_some() {
+                Some(
+                    meta_instrument
+                        .clone()
+                        .metadata
+                        .unwrap()
+                        .instrument_figi
+                        .unwrap_or_default(),
+                )
+            } else {
+                None
+            },
             instrument_trade_start_timestamp: meta_instrument
                 .trade_start_timestamp
                 .map(|ts| ts as i64),
@@ -19,22 +43,31 @@ impl Instrument {
     }
 
     pub fn to_meta_instrument(&self) -> MetaInstrument {
+        let metadata = if self.instrument_figi.is_some() || self.instrument_pair_figi.is_some() {
+            Some(InstrumentMetadata {
+                pair_figi: self.instrument_pair_figi.clone(),
+                instrument_figi: self.instrument_figi.clone(),
+            })
+        } else {
+            None
+        };
+
         MetaInstrument {
-            kaiko_legacy_exchange_slug: String::new(), // Assuming kaiko_legacy_exchange_slug is not used
+            kaiko_legacy_exchange_slug: String::new(), //  kaiko_legacy_exchange_slug is not used
             trade_start_time: Some(self.instrument_trade_start_timestamp.unwrap().to_string()),
             trade_end_time: Some(self.instrument_trade_start_timestamp.unwrap().to_string()),
             exchange_code: self.instrument_exchanges_code.clone(),
             exchange_pair_code: self.instrument_exchange_pair_code.clone(),
             base_asset: self.instrument_base_asset.clone(),
             quote_asset: self.instrument_quote_asset.clone(),
-            kaiko_legacy_symbol: String::new(), // Assuming kaiko_legacy_symbol is not used
+            kaiko_legacy_symbol: String::new(), //  kaiko_legacy_symbol is not used
             code: self.instrument_id.clone(),
             class: self.instrument_class.clone(),
-            metadata: None, // Assuming metadata is not used
+            metadata,
             trade_start_timestamp: self.instrument_trade_start_timestamp.map(|ts| ts as u64),
             trade_end_timestamp: self.instrument_trade_end_timestamp,
-            trade_compressed_size: 0, // Assuming trade_compressed_size is not used
-            trade_count: 0,           // Assuming trade_count is not used
+            trade_compressed_size: 0, //  trade_compressed_size is not used
+            trade_count: 0,           //  trade_count is not used
         }
     }
 }
@@ -42,12 +75,36 @@ impl Instrument {
 impl CreateInstrument {
     pub fn from_meta_instrument(meta_instrument: MetaInstrument) -> Self {
         CreateInstrument {
-            instrument_id: meta_instrument.code,
-            instrument_class: meta_instrument.class,
-            instrument_base_asset: meta_instrument.base_asset,
-            instrument_quote_asset: meta_instrument.quote_asset,
-            instrument_exchanges_code: meta_instrument.exchange_code,
-            instrument_exchange_pair_code: meta_instrument.exchange_pair_code,
+            instrument_id: meta_instrument.code.to_string(),
+            instrument_class: meta_instrument.class.to_string(),
+            instrument_base_asset: meta_instrument.base_asset.to_string(),
+            instrument_quote_asset: meta_instrument.quote_asset.to_string(),
+            instrument_exchanges_code: meta_instrument.exchange_code.to_string(),
+            instrument_exchange_pair_code: meta_instrument.exchange_pair_code.to_string(),
+            instrument_pair_figi: if meta_instrument.metadata.is_some() {
+                Some(
+                    meta_instrument
+                        .clone()
+                        .metadata
+                        .unwrap()
+                        .pair_figi
+                        .unwrap_or_default(),
+                )
+            } else {
+                None
+            },
+            instrument_figi: if meta_instrument.metadata.is_some() {
+                Some(
+                    meta_instrument
+                        .clone()
+                        .metadata
+                        .unwrap()
+                        .instrument_figi
+                        .unwrap_or_default(),
+                )
+            } else {
+                None
+            },
             instrument_trade_start_timestamp: meta_instrument
                 .trade_start_timestamp
                 .map(|ts| ts as i64),
@@ -59,11 +116,35 @@ impl CreateInstrument {
 impl UpdateInstrument {
     pub fn from_meta_instrument(meta_instrument: MetaInstrument) -> Self {
         UpdateInstrument {
-            instrument_class: meta_instrument.class,
-            instrument_base_asset: meta_instrument.base_asset,
-            instrument_quote_asset: meta_instrument.quote_asset,
-            instrument_exchanges_code: meta_instrument.exchange_code,
-            instrument_exchange_pair_code: meta_instrument.exchange_pair_code,
+            instrument_class: meta_instrument.class.to_string(),
+            instrument_base_asset: meta_instrument.base_asset.to_string(),
+            instrument_quote_asset: meta_instrument.quote_asset.to_string(),
+            instrument_exchanges_code: meta_instrument.exchange_code.to_string(),
+            instrument_exchange_pair_code: meta_instrument.exchange_pair_code.to_string(),
+            instrument_pair_figi: if meta_instrument.metadata.is_some() {
+                Some(
+                    meta_instrument
+                        .clone()
+                        .metadata
+                        .unwrap()
+                        .pair_figi
+                        .unwrap_or_default(),
+                )
+            } else {
+                None
+            },
+            instrument_figi: if meta_instrument.metadata.is_some() {
+                Some(
+                    meta_instrument
+                        .clone()
+                        .metadata
+                        .unwrap()
+                        .instrument_figi
+                        .unwrap_or_default(),
+                )
+            } else {
+                None
+            },
             instrument_trade_start_timestamp: meta_instrument
                 .trade_start_timestamp
                 .map(|ts| ts as i64),

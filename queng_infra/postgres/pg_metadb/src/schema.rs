@@ -27,8 +27,8 @@ pub mod mddb {
             instrument_exchange_pair_code -> Varchar,
             instrument_pair_figi -> Nullable<Varchar>,
             instrument_figi -> Nullable<Varchar>,
-            instrument_trade_start_timestamp -> Int8,
-            instrument_trade_end_timestamp -> Int8,
+            instrument_trade_start_timestamp -> Nullable<Int8>,
+            instrument_trade_end_timestamp -> Nullable<Int8>,
         }
     }
 

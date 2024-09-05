@@ -22,8 +22,8 @@ CREATE TABLE mddb.instruments(
     "instrument_exchange_pair_code" VARCHAR NOT NULL,
 	"instrument_pair_figi" VARCHAR,
 	"instrument_figi" VARCHAR,
-	"instrument_trade_start_timestamp" BIGINT NOT NULL,
-	"instrument_trade_end_timestamp" BIGINT NOT NULL
+	"instrument_trade_start_timestamp" BIGINT,
+	"instrument_trade_end_timestamp" BIGINT
 );
 
 -- FIGI (Financial Instrument Global Identifier) is a unique identifier for an instrument similar to ISIN

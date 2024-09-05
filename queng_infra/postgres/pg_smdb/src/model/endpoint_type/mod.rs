@@ -7,6 +7,7 @@ mod endpoint_type_sql;
 
 #[derive(Debug, Clone, FromSqlRow, AsExpression, PartialEq, Eq)]
 #[diesel(sql_type=crate::schema::smdb::sql_types::ServiceEndpoint)]
+#[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct Endpoint {
     pub name: String,
     pub version: i32,

@@ -54,40 +54,6 @@ impl Asset {
         }
     }
 
-    /// Read an asset from the database by asset ID.
-    ///
-    /// # Arguments
-    ///
-    /// * `db` - A mutable reference to the database connection.
-    /// * `asset_id` - The ID of the asset to read.
-    ///
-    /// # Returns
-    ///
-    /// Returns a `QueryResult` containing the retrieved `MetaAsset` if successful, or an error.
-    ///
-    pub fn read(db: &mut Connection, asset_id: String) -> QueryResult<MetaAsset> {
-        match assets_table.find(asset_id).first::<Asset>(db) {
-            Ok(asset) => Ok(asset.to_meta_asset()),
-            Err(e) => Err(e),
-        }
-    }
-
-    /// Read all assets from the database.
-    ///
-    /// # Arguments
-    ///
-    /// * `db` - A mutable reference to the database connection.
-    ///
-    /// # Returns
-    ///
-    /// Returns a `QueryResult` containing a vector of `MetaAsset` if successful, or an error.
-    ///
-    pub fn read_all(db: &mut Connection) -> QueryResult<Vec<MetaAsset>> {
-        assets_table
-            .load::<Asset>(db)
-            .map(|a| a.into_iter().map(|asset| asset.to_meta_asset()).collect())
-    }
-
     /// Count the total number of assets in the database.
     ///
     /// # Arguments
@@ -120,6 +86,40 @@ impl Asset {
             .optional()?
             .is_some();
         Ok(exists)
+    }
+
+    /// Read an asset from the database by asset ID.
+    ///
+    /// # Arguments
+    ///
+    /// * `db` - A mutable reference to the database connection.
+    /// * `asset_id` - The ID of the asset to read.
+    ///
+    /// # Returns
+    ///
+    /// Returns a `QueryResult` containing the retrieved `MetaAsset` if successful, or an error.
+    ///
+    pub fn read(db: &mut Connection, asset_id: String) -> QueryResult<MetaAsset> {
+        match assets_table.find(asset_id).first::<Asset>(db) {
+            Ok(asset) => Ok(asset.to_meta_asset()),
+            Err(e) => Err(e),
+        }
+    }
+
+    /// Read all assets from the database.
+    ///
+    /// # Arguments
+    ///
+    /// * `db` - A mutable reference to the database connection.
+    ///
+    /// # Returns
+    ///
+    /// Returns a `QueryResult` containing a vector of `MetaAsset` if successful, or an error.
+    ///
+    pub fn read_all(db: &mut Connection) -> QueryResult<Vec<MetaAsset>> {
+        assets_table
+            .load::<Asset>(db)
+            .map(|a| a.into_iter().map(|asset| asset.to_meta_asset()).collect())
     }
 
     /// Update an asset in the database by asset ID.

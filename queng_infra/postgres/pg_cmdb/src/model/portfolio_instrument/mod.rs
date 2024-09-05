@@ -9,6 +9,7 @@ mod portfolio_instrument_impl;
 #[diesel(belongs_to(crate::model::instrument::Instrument))]
 #[diesel(table_name=crate::schema::cmdb::portfolio_instrument)]
 #[diesel(primary_key(portfolio_id, instrument_id))]
+#[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct PortfolioInstrument {
     pub portfolio_id: i32,
     pub instrument_id: String,
@@ -17,6 +18,7 @@ pub struct PortfolioInstrument {
 #[builder]
 #[derive(Debug, Clone, Queryable, Insertable, Selectable)]
 #[diesel(table_name=crate::schema::cmdb::portfolio_instrument)]
+#[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct CreatePortfolioInstrument {
     pub portfolio_id: i32,
     pub instrument_id: String,

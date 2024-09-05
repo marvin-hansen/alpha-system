@@ -6,6 +6,7 @@ use diesel::{AsChangeset, Identifiable, Insertable, Queryable, Selectable};
 #[derive(Debug, Clone, PartialEq, Queryable, Selectable, Identifiable, Insertable, AsChangeset)]
 #[diesel(table_name=crate::schema::mddb::exchanges)]
 #[diesel(primary_key(exchange_id))]
+#[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct Exchange {
     pub exchange_id: String,
     pub exchange_name: String,
@@ -14,6 +15,7 @@ pub struct Exchange {
 #[derive(Debug, Clone, Queryable, Insertable, AsChangeset)]
 #[diesel(table_name=crate::schema::mddb::exchanges)]
 #[diesel(primary_key(exchange_id))]
+#[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct CreateExchange {
     pub exchange_id: String,
     pub exchange_name: String,
@@ -21,6 +23,7 @@ pub struct CreateExchange {
 
 #[derive(Debug, Clone, Queryable, Insertable, AsChangeset)]
 #[diesel(table_name=crate::schema::mddb::exchanges)]
+#[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct UpdateExchange {
     pub exchange_name: String,
 }

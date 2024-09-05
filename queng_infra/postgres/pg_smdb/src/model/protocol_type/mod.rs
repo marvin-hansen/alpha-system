@@ -9,11 +9,13 @@ mod protocol_type_sql;
 #[derive(SqlType)]
 #[diesel(sql_type = protocol_type)]
 #[diesel(postgres_type(name = "protocol_type", schema = "smdb"))]
+#[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct PgProtocolType;
 
 #[derive(Debug, Clone, FromSqlRow, AsExpression, PartialEq, Eq)]
 #[diesel(sql_type = PgProtocolType)]
 #[allow(clippy::upper_case_acronyms)]
+#[diesel(check_for_backend(diesel::pg::Pg))]
 pub enum ProtocolType {
     UnknownProtocol,
     GRPC,

@@ -11,6 +11,7 @@ use bon::builder;
 #[builder]
 #[derive(Debug, Clone, PartialEq, Queryable, Selectable, Identifiable, Insertable, AsChangeset)]
 #[diesel(table_name=crate::schema::cmdb::portfolio, primary_key(portfolio_id))]
+#[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct Portfolio {
     pub portfolio_id: i32,
     pub portfolio_description: String,
@@ -31,6 +32,7 @@ pub struct Portfolio {
 #[builder]
 #[derive(Debug, Clone, Queryable, Insertable, AsChangeset)]
 #[diesel(table_name=crate::schema::cmdb::portfolio)]
+#[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct CreatePortfolio {
     pub portfolio_id: i32,
     pub portfolio_description: String,
@@ -87,6 +89,7 @@ impl CreatePortfolio {
 #[builder]
 #[derive(Debug, Clone, Queryable, Insertable, AsChangeset)]
 #[diesel(table_name=crate::schema::cmdb::portfolio)]
+#[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct UpdatePortfolio {
     pub portfolio_description: Option<String>,
     pub portfolio_account_type: Option<i32>,

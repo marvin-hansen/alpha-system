@@ -8,6 +8,7 @@ mod service_type_update_conversion;
 
 #[derive(Debug, Clone, Queryable, Selectable)]
 #[diesel(table_name= crate::schema::smdb::service,  primary_key(service_id))]
+#[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct Service {
     pub service_id: i32,
     pub name: String,
@@ -22,6 +23,7 @@ pub struct Service {
 
 #[derive(Debug, Clone, Queryable, Insertable)]
 #[diesel(table_name= crate::schema::smdb::service,  primary_key(service_id))]
+#[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct CreateService {
     pub service_id: i32,
     pub name: String,
@@ -62,6 +64,7 @@ impl CreateService {
 
 #[derive(Debug, Clone, Queryable, Insertable, AsChangeset)]
 #[diesel(table_name= crate::schema::smdb::service)]
+#[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct UpdateService {
     pub name: Option<String>,
     pub version: Option<i32>,

@@ -60,6 +60,8 @@ fn test_to_meta_instrument() {
         instrument_quote_asset: "quote_asset".to_string(),
         instrument_exchanges_code: "exchange_code".to_string(),
         instrument_exchange_pair_code: "exchange_pair_code".to_string(),
+        instrument_pair_figi: None,
+        instrument_figi: None,
         instrument_trade_start_timestamp: Some(1622548800),
         instrument_trade_end_timestamp: Some(1625130800),
     };
@@ -84,6 +86,7 @@ fn test_to_meta_instrument() {
         meta_instrument.exchange_pair_code,
         postgres_instrument.instrument_exchange_pair_code
     );
+    assert_eq!(meta_instrument.metadata, None);
     assert_eq!(
         meta_instrument.trade_start_timestamp,
         postgres_instrument
