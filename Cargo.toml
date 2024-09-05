@@ -22,7 +22,6 @@ members = [
     "queng_infra/postgres/pg_metadb",
     "queng_infra/postgres/pg_smdb",
     "queng_infra/postgres/pg_smdb_manager",
-    "queng_infra/postgres/pg_mddb",
     "queng_infra/postgres/postgres_migrations",
     "queng_infra/postgres/postgres_test_utils",
     "queng_infra/postgres/postgres_utils",
