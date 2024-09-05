@@ -21,7 +21,7 @@ impl PortfolioInstrument {
     ) -> QueryResult<bool> {
         match portfolio_instrument
             .find((param_portfolio_id, param_instrument_id))
-            .first::<PortfolioInstrument>(db)
+            .first::<Self>(db)
         {
             Ok(_) => Ok(true),
             Err(_) => Ok(false),
