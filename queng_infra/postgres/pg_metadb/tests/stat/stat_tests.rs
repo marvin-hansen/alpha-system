@@ -1,5 +1,8 @@
+use common_metadata::prelude::MetaStats;
 use diesel::Connection;
 use env_utils::EnvUtil;
+use pg_metadb::prelude::Stat;
+use postgres_test_utils::prelude::get_test_meta_stats;
 use postgres_test_utils::{get_or_wait_for_postgres_connection, DB_TEST_URL};
 
 // Somehow tests seem to be executed or sorted in alphabetical order, so make sure that the
@@ -25,4 +28,373 @@ async fn test_migration() {
 
     let result = pg_metadb::run_metadb_migration(conn);
     assert!(result.is_ok());
+}
+
+#[tokio::test]
+async fn test_create_stat() {
+    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+    assert!(connection.is_ok());
+
+    let mut conn = &mut connection.unwrap();
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+
+    let result = pg_metadb::run_metadb_migration(conn);
+    assert!(result.is_ok());
+
+    let meta_stats = MetaStats::new("timestamp".to_string(), "hash".to_string(), 10, 5, 15);
+    let result = Stat::create(&mut conn, meta_stats);
+
+    assert!(result.is_ok());
+    let created_stat = result.unwrap();
+    assert_eq!(created_stat.hash(), "hash");
+    assert_eq!(created_stat.download_timestamp(), "timestamp");
+    assert_eq!(created_stat.number_assets(), 10);
+    assert_eq!(created_stat.number_exchanges(), 5);
+    assert_eq!(created_stat.number_instruments(), 15);
+}
+
+#[tokio::test]
+async fn test_create_stat_err() {
+    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+    assert!(connection.is_ok());
+
+    let mut conn = &mut connection.unwrap();
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+
+    let result = pg_metadb::run_metadb_migration(conn);
+    assert!(result.is_ok());
+
+    let meta_stats = MetaStats::new("timestamp".to_string(), "hash".to_string(), 10, 5, 15);
+    let result = Stat::create(&mut conn, meta_stats);
+
+    assert!(result.is_ok());
+
+    let meta_stats = MetaStats::new("timestamp".to_string(), "hash".to_string(), 10, 5, 15);
+    let result = Stat::create(&mut conn, meta_stats);
+    assert!(result.is_err());
+}
+
+#[tokio::test]
+async fn test_create_stat_collection_success() {
+    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+    assert!(connection.is_ok());
+
+    let mut conn = &mut connection.unwrap();
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+
+    let result = pg_metadb::run_metadb_migration(conn);
+    assert!(result.is_ok());
+
+    let meta_stats_collection = vec![MetaStats::new(
+        "timestamp1".to_string(),
+        "hash1".to_string(),
+        10,
+        5,
+        15,
+    )];
+    let result = Stat::create_stat_collection(&mut conn, meta_stats_collection);
+
+    assert!(result.is_ok());
+    assert_eq!(result.unwrap(), true);
+}
+
+#[tokio::test]
+async fn test_create_stat_collection_empty() {
+    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+    assert!(connection.is_ok());
+
+    let mut conn = &mut connection.unwrap();
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+
+    let result = pg_metadb::run_metadb_migration(conn);
+    assert!(result.is_ok());
+
+    let meta_stats_collection = vec![];
+    let result = Stat::create_stat_collection(&mut conn, meta_stats_collection);
+
+    assert!(result.is_err());
+}
+
+#[tokio::test]
+async fn test_count_stat() {
+    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+    assert!(connection.is_ok());
+
+    let conn = &mut connection.unwrap();
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+
+    let result = pg_metadb::run_metadb_migration(conn);
+    assert!(result.is_ok());
+
+    let test_data = get_test_meta_stats();
+    let result = Stat::create(conn, test_data);
+    assert!(result.is_ok());
+
+    let result = Stat::count(conn);
+    assert!(result.is_ok());
+    assert_eq!(result.unwrap(), 1);
+}
+
+//
+// #[tokio::test]
+// async fn test_count_multiple_stat_entries() {
+//     let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+//     assert!(connection.is_ok());
+//
+//     let conn = &mut connection.unwrap();
+//     conn.begin_test_transaction().expect("Failed to begin test transaction");
+//
+//     let result = pg_metadb::run_metadb_migration(conn);
+//     assert!(result.is_ok());
+//
+//     // Insert multiple stat entries
+//     for _ in 0..5 {
+//         let test_data = get_test_meta_stats();
+//         let result = Stat::create(conn, test_data);
+//         assert!(result.is_ok());
+//     }
+//
+//     let result = count(conn);
+//     assert!(result.is_ok());
+//     assert_eq!(result.unwrap(), 5);
+// }
+
+#[tokio::test]
+async fn test_count_no_stat_entries() {
+    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+    assert!(connection.is_ok());
+
+    let conn = &mut connection.unwrap();
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+
+    let result = pg_metadb::run_metadb_migration(conn);
+    assert!(result.is_ok());
+
+    let result = Stat::count(conn);
+    assert!(result.is_ok());
+    assert_eq!(result.unwrap(), 0);
+}
+
+#[tokio::test]
+async fn test_check_if_stat_id_exists_returns_true() {
+    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+    assert!(connection.is_ok());
+
+    let conn = &mut connection.unwrap();
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+
+    let result = pg_metadb::run_metadb_migration(conn);
+    assert!(result.is_ok());
+
+    let test_data = get_test_meta_stats();
+    let result = Stat::create(conn, test_data);
+    assert!(result.is_ok());
+
+    let result = Stat::check_if_stat_id_exists(conn, 0);
+    assert!(result.is_ok());
+    assert!(result.unwrap());
+}
+
+#[tokio::test]
+async fn test_check_if_stat_id_exists_returns_false() {
+    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+    assert!(connection.is_ok());
+
+    let conn = &mut connection.unwrap();
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+
+    let result = pg_metadb::run_metadb_migration(conn);
+    assert!(result.is_ok());
+
+    let result = Stat::check_if_stat_id_exists(conn, 42);
+    assert!(result.is_ok());
+    assert!(!result.unwrap());
+}
+
+#[tokio::test]
+async fn test_read_stat_entry() {
+    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+    assert!(connection.is_ok());
+
+    let conn = &mut connection.unwrap();
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+
+    let result = pg_metadb::run_metadb_migration(conn);
+    assert!(result.is_ok());
+
+    let test_data = get_test_meta_stats();
+    let result = Stat::create(conn, test_data);
+    assert!(result.is_ok());
+
+    let result = Stat::read(conn, 0);
+    assert!(result.is_ok());
+
+    let actual = result.unwrap();
+    assert_eq!(actual.hash(), "abc123");
+    assert_eq!(actual.download_timestamp(), "2023-10-01T12:00:00Z");
+    assert_eq!(actual.number_assets(), 100);
+    assert_eq!(actual.number_exchanges(), 10);
+    assert_eq!(actual.number_instruments(), 50);
+}
+
+#[tokio::test]
+async fn test_read_non_existent_stat_entry() {
+    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+    assert!(connection.is_ok());
+
+    let conn = &mut connection.unwrap();
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+
+    let result = pg_metadb::run_metadb_migration(conn);
+    assert!(result.is_ok());
+
+    let result = Stat::read(conn, 42);
+    assert!(result.is_err());
+}
+
+#[tokio::test]
+async fn test_read_all_stats() {
+    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+    assert!(connection.is_ok());
+
+    let conn = &mut connection.unwrap();
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+
+    let result = pg_metadb::run_metadb_migration(conn);
+    assert!(result.is_ok());
+
+    let test_data = get_test_meta_stats();
+    let result = Stat::create(conn, test_data);
+    assert!(result.is_ok());
+
+    let result = Stat::read_all(conn);
+    assert!(result.is_ok());
+
+    let actual = result.unwrap();
+    assert_eq!(actual.len(), 1);
+}
+
+#[tokio::test]
+async fn test_read_all_stats_empty() {
+    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+    assert!(connection.is_ok());
+
+    let conn = &mut connection.unwrap();
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+
+    let result = pg_metadb::run_metadb_migration(conn);
+    assert!(result.is_ok());
+
+    let result = Stat::read_all(conn);
+    assert!(result.is_ok());
+
+    let actual = result.unwrap();
+    assert_eq!(actual.len(), 0);
+}
+
+#[tokio::test]
+async fn test_update_stat() {
+    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+    assert!(connection.is_ok());
+
+    let conn = &mut connection.unwrap();
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+
+    let result = pg_metadb::run_metadb_migration(conn);
+    assert!(result.is_ok());
+
+    let meta_stats = MetaStats::new("timestamp".to_string(), "hash".to_string(), 10, 5, 15);
+    let create_result = Stat::create(conn, meta_stats.clone());
+    assert!(create_result.is_ok());
+
+    let updated_meta_stats = MetaStats::new(
+        "new_timestamp".to_string(),
+        "new_hash".to_string(),
+        20,
+        10,
+        30,
+    );
+    let update_result = Stat::update(conn, 0, updated_meta_stats);
+
+    assert!(update_result.is_ok());
+    assert_eq!(update_result.unwrap(), 1);
+}
+
+#[tokio::test]
+async fn test_update_stat_non_existent_id() {
+    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+    assert!(connection.is_ok());
+
+    let conn = &mut connection.unwrap();
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+
+    let result = pg_metadb::run_metadb_migration(conn);
+    assert!(result.is_ok());
+
+    let non_existent_id = 9999;
+    let meta_stats = MetaStats::new("timestamp".to_string(), "hash".to_string(), 10, 5, 15);
+    let update_result = Stat::update(conn, non_existent_id, meta_stats);
+
+    assert!(update_result.is_ok());
+    assert_eq!(update_result.unwrap(), 0);
+}
+
+#[tokio::test]
+async fn test_delete_stat() {
+    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+    assert!(connection.is_ok());
+
+    let mut conn = &mut connection.unwrap();
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+
+    let result = pg_metadb::run_metadb_migration(conn);
+    assert!(result.is_ok());
+
+    let test_data = get_test_meta_stats();
+    let result = Stat::create(conn, test_data);
+    assert!(result.is_ok());
+
+    // Call the delete method
+    let stat_id = 0;
+    let result = Stat::delete(&mut conn, stat_id);
+
+    // Assert the result
+    assert!(result.is_ok());
+    assert_eq!(result.unwrap(), 1); // Assuming 1 row is deleted for the provided stat_id
+}
+
+#[tokio::test]
+async fn test_delete_stat_non_existent_id() {
+    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+    assert!(connection.is_ok());
+
+    let mut conn = &mut connection.unwrap();
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+
+    let result = pg_metadb::run_metadb_migration(conn);
+    assert!(result.is_ok());
+
+    // Call the delete method
+    let stat_id = 99;
+    let result = Stat::delete(&mut conn, stat_id);
+
+    // Assert the result
+    assert!(result.is_ok());
+    assert_eq!(result.unwrap(), 0); // Zero row is deleted since the id does not exist
 }

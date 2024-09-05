@@ -1,3 +1,4 @@
+mod stat_impl;
 mod stat_type_conversion;
 
 use diesel::{AsChangeset, Insertable, Queryable, Selectable};

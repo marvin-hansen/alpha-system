@@ -2,8 +2,10 @@ use crate::model::exchange::{CreateExchange, Exchange, UpdateExchange};
 use crate::schema::mddb::exchanges::dsl::exchanges as exchanges_table;
 use crate::schema::mddb::exchanges::exchange_id;
 use crate::Connection;
+use common_database::prelude::DatabaseErrorMessage;
 use common_metadata::prelude::MetaExchange;
 use diesel::result::Error;
+use diesel::result::Error::DatabaseError;
 use diesel::{ExpressionMethods, QueryDsl, RunQueryDsl};
 
 impl Exchange {
@@ -46,6 +48,16 @@ impl Exchange {
         conn: &mut Connection,
         meta_exchanges: Vec<MetaExchange>,
     ) -> Result<bool, Error> {
+        if meta_exchanges.is_empty() {
+            return Err(DatabaseError(
+                diesel::result::DatabaseErrorKind::Unknown,
+                Box::new(DatabaseErrorMessage::new(
+                    "No exchanges provided. Collection is empty.",
+                    "mddb.exchanges",
+                )),
+            ));
+        }
+
         let new_exchanges: Vec<CreateExchange> = meta_exchanges
             .into_iter()
             .map(CreateExchange::from_meta_exchange)
