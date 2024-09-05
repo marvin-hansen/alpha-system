@@ -1,3 +1,5 @@
+mod instruments_exchanges_impl;
+
 use diesel::{Associations, Identifiable, Insertable, Queryable, Selectable};
 
 #[derive(Identifiable, Selectable, Queryable, Associations, Debug)]

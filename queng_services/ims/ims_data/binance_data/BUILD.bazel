@@ -84,7 +84,7 @@ build_multi_arch_image(
     ],
     platforms = [
         "//build/platforms:linux_x86_64_musl",
-        "//build/platforms:linux_arm64_musl",
+        # "//build/platforms:linux_arm64_musl",
     ],
     visibility = ["//visibility:public"],
 )
