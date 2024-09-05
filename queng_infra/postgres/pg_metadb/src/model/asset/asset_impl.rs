@@ -1,6 +1,6 @@
 use crate::model::asset::Asset;
 use crate::prelude::UpdateAsset;
-use crate::schema::mddb::assets::dsl::assets;
+use crate::schema::mddb::assets::dsl::assets as assets_table;
 use crate::Connection;
 use common_metadata::prelude::MetaAsset;
 use diesel::dsl::insert_into;
@@ -20,8 +20,36 @@ impl Asset {
     ///
     pub fn create(db: &mut Connection, meta_asset: MetaAsset) -> QueryResult<MetaAsset> {
         let asset = Asset::from_meta_asset(meta_asset);
-        match insert_into(assets).values(&asset).get_result::<Asset>(db) {
+        match insert_into(assets_table)
+            .values(&asset)
+            .get_result::<Asset>(db)
+        {
             Ok(asset) => Ok(asset.to_meta_asset()),
+            Err(e) => Err(e),
+        }
+    }
+
+    /// Insert a collection of assets into the database.
+    ///
+    /// # Arguments
+    ///
+    /// * `db` - A mutable reference to the database connection.
+    /// * `meta_assets` - A slice of `MetaAsset` to be inserted.
+    ///
+    /// # Returns
+    ///
+    /// Returns a `QueryResult` indicating success or failure of the operation.
+    ///
+    pub fn create_asset_collection(
+        db: &mut Connection,
+        meta_assets: &[MetaAsset],
+    ) -> QueryResult<bool> {
+        let items: Vec<Asset> = meta_assets
+            .iter()
+            .map(|ma| Asset::from_meta_asset(ma.clone()))
+            .collect();
+        match insert_into(assets_table).values(&items).execute(db) {
+            Ok(_) => Ok(true),
             Err(e) => Err(e),
         }
     }
@@ -38,7 +66,7 @@ impl Asset {
     /// Returns a `QueryResult` containing the retrieved `MetaAsset` if successful, or an error.
     ///
     pub fn read(db: &mut Connection, asset_id: String) -> QueryResult<MetaAsset> {
-        match assets.find(asset_id).first::<Asset>(db) {
+        match assets_table.find(asset_id).first::<Asset>(db) {
             Ok(asset) => Ok(asset.to_meta_asset()),
             Err(e) => Err(e),
         }
@@ -55,34 +83,9 @@ impl Asset {
     /// Returns a `QueryResult` containing a vector of `MetaAsset` if successful, or an error.
     ///
     pub fn read_all(db: &mut Connection) -> QueryResult<Vec<MetaAsset>> {
-        assets
+        assets_table
             .load::<Asset>(db)
-            .map(|a| a.into_iter().map(|a| a.to_meta_asset()).collect())
-    }
-
-    /// Insert a collection of assets into the database.
-    ///
-    /// # Arguments
-    ///
-    /// * `db` - A mutable reference to the database connection.
-    /// * `meta_assets` - A slice of `MetaAsset` to be inserted.
-    ///
-    /// # Returns
-    ///
-    /// Returns a `QueryResult` indicating success or failure of the operation.
-    ///
-    pub fn insert_asset_collection(
-        db: &mut Connection,
-        meta_assets: &[MetaAsset],
-    ) -> QueryResult<bool> {
-        let items: Vec<Asset> = meta_assets
-            .iter()
-            .map(|ma| Asset::from_meta_asset(ma.clone()))
-            .collect();
-        match insert_into(assets).values(&items).execute(db) {
-            Ok(_) => Ok(true),
-            Err(e) => Err(e),
-        }
+            .map(|a| a.into_iter().map(|asset| asset.to_meta_asset()).collect())
     }
 
     /// Count the total number of assets in the database.
@@ -96,7 +99,7 @@ impl Asset {
     /// Returns a `QueryResult` containing the count of assets as `u64` if successful, or an error.
     ///
     pub fn count(db: &mut Connection) -> QueryResult<u64> {
-        assets.count().get_result::<i64>(db).map(|c| c as u64)
+        assets_table.count().get_result::<i64>(db).map(|c| c as u64)
     }
 
     /// Check if an asset with the given asset ID exists in the database.
@@ -111,7 +114,7 @@ impl Asset {
     /// Returns a `QueryResult` indicating whether the asset exists or not.
     ///
     pub fn check_if_asset_id_exists(db: &mut Connection, asset_id: String) -> QueryResult<bool> {
-        let exists = assets
+        let exists = assets_table
             .find(asset_id)
             .first::<Asset>(db)
             .optional()?
@@ -132,7 +135,9 @@ impl Asset {
     /// Returns a `QueryResult` containing the number of rows affected by the update operation.
     ///
     pub fn update(db: &mut Connection, asset_id: String, item: UpdateAsset) -> QueryResult<usize> {
-        diesel::update(assets.find(asset_id)).set(&item).execute(db)
+        diesel::update(assets_table.find(asset_id))
+            .set(&item)
+            .execute(db)
     }
 
     /// Delete an asset from the database by asset ID.
@@ -151,6 +156,6 @@ impl Asset {
     /// Note, delete only returns an error when either the database connection or the query fails.
     ///
     pub fn delete(db: &mut Connection, asset_id: String) -> QueryResult<usize> {
-        diesel::delete(assets.find(asset_id)).execute(db)
+        diesel::delete(assets_table.find(asset_id)).execute(db)
     }
 }

@@ -17,6 +17,7 @@ rust_library(
         "//alias:common_database",
         "//alias:common_errors",
         "//alias:common_exchange",
+        "//alias:common_metadata",
         "//alias:container_specs",
         "//alias:docker_utils",
         # Internal database crates
