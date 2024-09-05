@@ -1,7 +1,7 @@
 use diesel_migrations::{EmbeddedMigration, EmbeddedMigrations, EmbeddedName, TomlMetadataWrapper};
 
 pub const EMBEDDED_MIGRATIONS: EmbeddedMigrations =
-    EmbeddedMigrations::new(&[DIESEL_MIGRATION, MDDB_MIGRATION]);
+    EmbeddedMigrations::new(&[DIESEL_MIGRATION, SCHEMA_MIGRATION]);
 
 const DIESEL_MIGRATION: EmbeddedMigration = EmbeddedMigration::new(
     DIESEL_UP,
@@ -21,21 +21,21 @@ const DIESEL_DOWN: &str = include_str!(concat!(
     "/00000000000000_diesel_initial_setup/down.sql"
 ));
 
-const MDDB_MIGRATION: EmbeddedMigration = EmbeddedMigration::new(
-    MDDB_UP,
-    Some(MDDB_DOWN),
-    EmbeddedName::new(MDDB_NAME),
+const SCHEMA_MIGRATION: EmbeddedMigration = EmbeddedMigration::new(
+    SCHEMA_UP,
+    Some(SCHEMA_DOWN),
+    EmbeddedName::new(SCHEMA_NAME),
     TomlMetadataWrapper::new(true),
 );
 
-const MDDB_NAME: &str = "2024-09-04-145651_mddb";
+const SCHEMA_NAME: &str = "2024-09-04-145651_mddb";
 
-const MDDB_UP: &str = include_str!(concat!(
+const SCHEMA_UP: &str = include_str!(concat!(
     env!("MIGRATION_DATA"),
     "/2024-09-04-145651_mddb/up.sql"
 ));
 
-const MDDB_DOWN: &str = include_str!(concat!(
+const SCHEMA_DOWN: &str = include_str!(concat!(
     env!("MIGRATION_DATA"),
     "/2024-09-04-145651_mddb/down.sql"
 ));

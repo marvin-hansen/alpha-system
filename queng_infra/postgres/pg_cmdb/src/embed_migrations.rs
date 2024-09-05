@@ -1,7 +1,7 @@
 use diesel_migrations::{EmbeddedMigration, EmbeddedMigrations, EmbeddedName, TomlMetadataWrapper};
 
 pub const EMBEDDED_MIGRATIONS: EmbeddedMigrations =
-    EmbeddedMigrations::new(&[DIESEL_MIGRATION, CMDB_MIGRATION]);
+    EmbeddedMigrations::new(&[DIESEL_MIGRATION, SCHEMA_MIGRATION]);
 
 pub(crate) const DIESEL_MIGRATION: EmbeddedMigration = EmbeddedMigration::new(
     DIESEL_UP,
@@ -10,10 +10,10 @@ pub(crate) const DIESEL_MIGRATION: EmbeddedMigration = EmbeddedMigration::new(
     TomlMetadataWrapper::new(true),
 );
 
-pub(crate) const CMDB_MIGRATION: EmbeddedMigration = EmbeddedMigration::new(
-    CMDB_UP,
-    Some(CMDB_DOWN),
-    EmbeddedName::new(CMDB_NAME),
+pub(crate) const SCHEMA_MIGRATION: EmbeddedMigration = EmbeddedMigration::new(
+    SCHEMA_UP,
+    Some(SCHEMA_DOWN),
+    EmbeddedName::new(SCHEMA_NAME),
     TomlMetadataWrapper::new(true),
 );
 
@@ -28,14 +28,14 @@ const DIESEL_DOWN: &str = include_str!(concat!(
     "/00000000000000_diesel_initial_setup/down.sql"
 ));
 
-const CMDB_NAME: &str = "2024-08-12-083114_cmdb";
+const SCHEMA_NAME: &str = "2024-08-12-083114_cmdb";
 
-const CMDB_UP: &str = include_str!(concat!(
+const SCHEMA_UP: &str = include_str!(concat!(
     env!("MIGRATION_DATA"),
     "/2024-08-12-083114_cmdb/up.sql"
 ));
 
-const CMDB_DOWN: &str = include_str!(concat!(
+const SCHEMA_DOWN: &str = include_str!(concat!(
     env!("MIGRATION_DATA"),
     "/2024-08-12-083114_cmdb/down.sql"
 ));

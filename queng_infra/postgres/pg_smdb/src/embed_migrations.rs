@@ -2,7 +2,7 @@ use diesel_migrations::{EmbeddedMigration, EmbeddedMigrations, EmbeddedName, Tom
 use std::env;
 
 pub const EMBEDDED_MIGRATIONS: EmbeddedMigrations =
-    EmbeddedMigrations::new(&[DIESEL_MIGRATION, SERVICE_MIGRATION]);
+    EmbeddedMigrations::new(&[DIESEL_MIGRATION, SCHEMA_MIGRATION]);
 
 pub(crate) const DIESEL_MIGRATION: EmbeddedMigration = EmbeddedMigration::new(
     DIESEL_UP,
@@ -11,10 +11,10 @@ pub(crate) const DIESEL_MIGRATION: EmbeddedMigration = EmbeddedMigration::new(
     TomlMetadataWrapper::new(true),
 );
 
-pub const SERVICE_MIGRATION: EmbeddedMigration = EmbeddedMigration::new(
-    SERVICE_UP,
-    Some(SERVICE_DOWN),
-    EmbeddedName::new(SERVICE_NAME),
+pub const SCHEMA_MIGRATION: EmbeddedMigration = EmbeddedMigration::new(
+    SCHEMA_UP,
+    Some(SCHEMA_DOWN),
+    EmbeddedName::new(SCHEMA_NAME),
     TomlMetadataWrapper::new(true),
 );
 
@@ -29,12 +29,12 @@ const DIESEL_DOWN: &str = include_str!(concat!(
     "/00000000000000_diesel_initial_setup/down.sql"
 ));
 
-const SERVICE_NAME: &str = "2024-08-12-093223_smdb";
-const SERVICE_UP: &str = include_str!(concat!(
+const SCHEMA_NAME: &str = "2024-08-12-093223_smdb";
+const SCHEMA_UP: &str = include_str!(concat!(
     env!("MIGRATION_DATA"),
     "/2024-08-12-093223_smdb/up.sql"
 ));
-const SERVICE_DOWN: &str = include_str!(concat!(
+const SCHEMA_DOWN: &str = include_str!(concat!(
     env!("MIGRATION_DATA"),
     "/2024-08-12-093223_smdb/down.sql"
 ));
