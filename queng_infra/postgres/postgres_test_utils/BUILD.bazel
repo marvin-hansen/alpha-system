@@ -22,7 +22,7 @@ rust_library(
         # Internal database crates
         "//alias:pg_cmdb",
         "//alias:pg_smdb",
-        "//alias:pg_mddb",
+        ## "//alias:pg_mddb",
         # External crates
         "//thirdparty/crates:diesel",
         "//thirdparty/crates:tokio",

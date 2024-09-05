@@ -114,11 +114,11 @@ alias(
     visibility = ["//visibility:public"],
 )
 
-alias(
-    name = "pg_mddb",
-    actual = "//queng_infra/postgres/pg_mddb",
-    visibility = ["//visibility:public"],
-)
+#alias(
+#    name = "pg_mddb",
+#    actual = "//queng_infra/postgres/pg_mddb",
+#    visibility = ["//visibility:public"],
+#)
 
 
 alias(
