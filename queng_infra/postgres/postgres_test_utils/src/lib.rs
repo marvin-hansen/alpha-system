@@ -32,9 +32,7 @@ pub async fn get_or_wait_for_postgres_connection(
 }
 
 /// Connects to a Postgres database and waits for it to come online if it's not already.
-/// Unlike the regular connection check, this one retries at a much shorter interval
-/// to ensure a DB migration completes before any regular connection can be established.
-/// Use this for Database migration or any test setup.
+/// By default, the timeout is set to 120 seconds (2 minutes) and the retry interval is set to 1 second.
 ///
 /// # Arguments
 ///
@@ -53,8 +51,7 @@ async fn get_or_wait_for_postgres_database_connection(
     timeout: Option<u64>,
 ) -> Result<PgConnection, PostgresDBError> {
     let start_time = Instant::now();
-    let retry_interval = Duration::from_millis(500);
-
+    let retry_interval = Duration::from_secs(1);
     let timeout = Duration::from_secs(timeout.unwrap_or(120));
 
     loop {

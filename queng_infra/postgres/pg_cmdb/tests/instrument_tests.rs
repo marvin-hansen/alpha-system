@@ -19,6 +19,22 @@ async fn all_setup() {
 }
 
 #[tokio::test]
+async fn test_schema_migration() {
+    // Create a new connection
+    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+    // dbg!(&connection);
+    assert!(connection.is_ok());
+
+    let conn = &mut connection.unwrap();
+    // Start a new test transaction
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+
+    let result = pg_cmdb::run_cmdb_db_migration(conn);
+    assert!(result.is_ok());
+}
+
+#[tokio::test]
 async fn test_check_if_instrument_code_exists() {
     // Create a new connection
     let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
