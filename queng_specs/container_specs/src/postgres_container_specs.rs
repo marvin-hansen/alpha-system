@@ -5,7 +5,7 @@ pub fn postgres_db_container_config() -> ContainerConfig<'static> {
     ContainerConfig::new(
         "postgres",
         "postgres",
-        "16.3-bookworm",
+        "16.4-alpine3.20",
         "0.0.0.0",
         5432,
         None,
