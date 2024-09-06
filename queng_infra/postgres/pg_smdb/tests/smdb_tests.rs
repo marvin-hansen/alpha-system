@@ -8,6 +8,7 @@ use postgres_test_utils::prelude::*;
 // setup is on top of the stack.
 #[tokio::test]
 async fn all_setup() {
+    // Create a new environment for the test
     let env = EnvUtil::with_debug().await.expect("Failed to get EnvUtil");
 
     // Start or reuse a test postgres container
