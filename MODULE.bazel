@@ -197,6 +197,7 @@ oci.pull(
         "linux/arm64/v8",
     ],
 )
+
 # For each oci.pull call, repeat the "name" here to expose them as dependencies.
 use_repo(oci, "distroless")
 

@@ -1,5 +1,5 @@
 use crate::model::stat::Stat;
-use crate::prelude::{CreateStat, UpdateStat};
+use crate::prelude::CreateStat;
 use common_metadata::prelude::MetaStats;
 
 impl Stat {
@@ -50,18 +50,6 @@ impl CreateStat {
     pub fn from_meta_stats(meta_stats: MetaStats) -> Self {
         Self {
             stats_id: 0, // Assuming stats_id is auto-generated
-            stats_hash: meta_stats.hash().to_string(),
-            stats_download_timestamp: meta_stats.download_timestamp().to_string(),
-            stats_number_assets: meta_stats.number_assets() as i32,
-            stats_number_exchanges: meta_stats.number_exchanges() as i32,
-            stats_number_instruments: meta_stats.number_instruments() as i32,
-        }
-    }
-}
-
-impl UpdateStat {
-    pub fn from_meta_stats(meta_stats: MetaStats) -> Self {
-        Self {
             stats_hash: meta_stats.hash().to_string(),
             stats_download_timestamp: meta_stats.download_timestamp().to_string(),
             stats_number_assets: meta_stats.number_assets() as i32,

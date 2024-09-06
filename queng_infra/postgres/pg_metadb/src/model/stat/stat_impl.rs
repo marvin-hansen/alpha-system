@@ -1,5 +1,4 @@
 use crate::model::stat::{CreateStat, Stat};
-use crate::prelude::UpdateStat;
 use crate::schema::mddb::stats::dsl::stats as stats_table;
 use crate::schema::mddb::stats::stats_id;
 use common_database::prelude::DatabaseErrorMessage;
@@ -125,32 +124,6 @@ impl Stat {
         stats_table
             .load::<Self>(conn)
             .map(|stats| stats.into_iter().map(|stat| stat.to_meta_stats()).collect())
-    }
-
-    /// Updates a stat entry in the database with the provided MetaStats information.
-    ///
-    /// # Arguments
-    ///
-    /// - `conn`: A mutable reference to the database connection.
-    /// - `stat_id`: The ID of the stat entry to update.
-    /// - `meta_stats`: The MetaStats struct containing the updated stat information.
-    ///
-    /// # Returns
-    ///
-    /// A Result indicating the number of rows affected by the update operation,
-    /// or a diesel Error if an error occurs.
-    /// If the statistic does not exist, the query will return `Ok(0)`.
-    /// If the statistic exists and was updated, the query will return `Ok(1)`.
-    ///
-    pub fn update(
-        conn: &mut crate::Connection,
-        stat_id: i32,
-        meta_stats: MetaStats,
-    ) -> Result<usize, diesel::result::Error> {
-        let updated_stat = UpdateStat::from_meta_stats(meta_stats);
-        diesel::update(stats_table.filter(stats_id.eq(stat_id)))
-            .set(&updated_stat)
-            .execute(conn)
     }
 
     /// Deletes a statistic from the database by statistic ID.
