@@ -1,3 +1,3 @@
-pub mod clickhouse_db;
-pub mod postgres_db;
+pub mod clickhouse;
+pub mod postgres;
 pub mod prelude;

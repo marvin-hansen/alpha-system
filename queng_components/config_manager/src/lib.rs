@@ -3,7 +3,7 @@ use common_config::prelude::{ServiceConfig, ServiceID, SvcEnvConfig};
 use common_database::prelude::{ClickHouseConfig, PostgresDBConfig};
 use common_env::prelude::EnvironmentType;
 use common_exchange::prelude::ExchangeID;
-use db_specs::{clickhouse_db, postgres_db};
+use db_specs::{clickhouse, postgres};
 use exchange_specs::prelude;
 use exchange_specs::prelude::{
     get_all_exchanges, get_all_exchanges_ids_names, get_exchange_symbol_tables,
@@ -84,8 +84,8 @@ impl CfgManager {
         let env_type = Self::detect_env_type(dbg);
         let svc_env_config = get_svc_env_config(svc, &svc_config);
         // DB Config
-        let db_clickhouse_config = clickhouse_db::get_clickhouse_config(&env_type);
-        let db_postgres_config = postgres_db::get_postgres_config(&env_type);
+        let db_clickhouse_config = clickhouse::get_clickhouse_config(&env_type);
+        let db_postgres_config = postgres::get_postgres_config(&env_type);
 
         let internal_dns_server = Self::build_internal_dns_server(&env_type);
         let internal_dns_resolver = Self::build_internal_dns_resolver(&internal_dns_server);

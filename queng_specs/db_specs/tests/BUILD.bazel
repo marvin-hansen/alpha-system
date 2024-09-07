@@ -44,3 +44,48 @@ rust_test_suite(
         "//alias:db_specs",
     ],
 )
+
+rust_test_suite(
+    name = "db_specs_postgres_ci_tests",
+    srcs = glob([
+        "postgres/ci/*_tests.rs",
+    ]),
+    tags = [
+        "specs",
+        "unit-test",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//alias:db_specs",
+    ],
+)
+
+rust_test_suite(
+    name = "db_specs_postgres_cluster_tests",
+    srcs = glob([
+        "postgres/cluster/*_tests.rs",
+    ]),
+    tags = [
+        "specs",
+        "unit-test",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//alias:db_specs",
+    ],
+)
+
+rust_test_suite(
+    name = "db_specs_postgres_local_tests",
+    srcs = glob([
+        "postgres/local/*_tests.rs",
+    ]),
+    tags = [
+        "specs",
+        "unit-test",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//alias:db_specs",
+    ],
+)
