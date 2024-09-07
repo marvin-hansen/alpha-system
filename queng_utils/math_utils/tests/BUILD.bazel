@@ -1,0 +1,17 @@
+load("@rules_rust//rust:defs.bzl", "rust_test_suite")
+
+rust_test_suite(
+    name = "math_utils_tests",
+    srcs = glob([
+        "*_tests.rs",
+    ]),
+    tags = [
+        "math_utils",
+        "unit-test",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate under test
+        "//alias:math_utils",
+    ],
+)
