@@ -13,6 +13,14 @@ impl DatabaseErrorMessage {
             table_name: String::from(table_name),
         }
     }
+
+    pub fn message(&self) -> &str {
+        &self.message
+    }
+
+    pub fn table_name(&self) -> &str {
+        &self.table_name
+    }
 }
 
 impl DatabaseErrorInformation for DatabaseErrorMessage {

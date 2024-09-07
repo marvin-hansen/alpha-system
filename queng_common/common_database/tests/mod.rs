@@ -1,7 +1,4 @@
-#[cfg(test)]
-mod click_house_config_tests;
-#[cfg(test)]
-mod pg_db_config_tests;
-
-#[cfg(test)]
-mod pg_db_type_tests;
+mod clickhouse_types;
+mod error_types;
+mod pg_types;
+mod utils;

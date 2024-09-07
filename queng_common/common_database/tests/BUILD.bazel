@@ -1,27 +1,9 @@
 load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 
 rust_test_suite(
-    name = "pg_db_config",
-    srcs = glob([
-        "pg_db_config_tests.rs",
-    ]),
-    tags = [
-        "common",
-        "common_database",
-        "unit-test",
-    ],
-    visibility = ["//visibility:public"],
-    deps = [
-        # Crate to test
-        "//alias:common_database",
-        # External crates
-    ],
-)
-
-rust_test_suite(
     name = "click_house_config_tests",
     srcs = glob([
-        "click_house_config_tests.rs",
+        "clickhouse_types/*_tests.rs",
     ]),
     tags = [
         "common",
@@ -37,9 +19,45 @@ rust_test_suite(
 )
 
 rust_test_suite(
-    name = "pg_db_type_tests",
+    name = "error_types_tests",
     srcs = glob([
-        "pg_db_type_tests.rs",
+        "error_types/*_tests.rs",
+    ]),
+    tags = [
+        "common",
+        "common_database",
+        "unit-test",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        "//alias:common_database",
+        # External crates
+    ],
+)
+
+rust_test_suite(
+    name = "pg_types_tests",
+    srcs = glob([
+        "pg_types/*_tests.rs",
+    ]),
+    tags = [
+        "common",
+        "common_database",
+        "unit-test",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        "//alias:common_database",
+        # External crates
+    ],
+)
+
+rust_test_suite(
+    name = "utils_tests",
+    srcs = glob([
+        "utils/*_tests.rs",
     ]),
     tags = [
         "common",
