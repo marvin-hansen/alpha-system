@@ -1,6 +1,6 @@
-pub use crate::trade_types::pattern_config::*;
-pub use crate::trade_types::pattern_type::*;
-pub use crate::trade_types::strategy_config::*;
-pub use crate::trade_types::trade_direction::*;
-pub use crate::trade_types::trade_entry::*;
-pub use crate::trade_types::trade_strategy::*;
+pub use crate::pattern_config::*;
+pub use crate::pattern_type::PatternType;
+pub use crate::strategy_config::*;
+pub use crate::trade_direction::TradeDirection;
+pub use crate::trade_entry::TradeEntryType;
+pub use crate::trade_strategy::*;

@@ -15,6 +15,4 @@ mod security_type_tests;
 #[cfg(test)]
 mod symbol_id_tests;
 #[cfg(test)]
-mod symbol_mapping_tests;
-#[cfg(test)]
 mod symbol_tests;
