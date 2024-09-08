@@ -1,3 +1,4 @@
+use container_specs_postgres::postgres_db_container_config;
 use diesel::Connection;
 use docker_utils::prelude::DockerUtil;
 use postgres_migrations::prelude::{get_or_wait_for_postgres_connection, DB_TEST_URL};
@@ -10,8 +11,9 @@ async fn all_setup() {
     let env = DockerUtil::with_debug().expect("Failed to get DockerUtil");
 
     // Start or reuse a test postgres container
-    let result = env.setup_container_postgres_db().await;
-    // dbg!(&result);
+    let container_config = postgres_db_container_config();
+    let result = env.get_or_start_container_config(&container_config); // dbg!(&result);
+                                                                       // dbg!(&result);
     assert!(result.is_ok());
 }
 

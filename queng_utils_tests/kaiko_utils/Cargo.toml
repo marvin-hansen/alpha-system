@@ -11,7 +11,11 @@ authors.workspace = true
 [dependencies]
 # Internal crates
 common_metadata = {workspace = true}
-docker_utils = {workspace = true}
 kaiko_client = {workspace = true}
 # External crates
 tokio = { workspace = true }
+
+[dev-dependencies]
+# For testing
+container_specs_kaiko = {workspace = true}
+docker_utils = {workspace = true}

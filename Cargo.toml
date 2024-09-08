@@ -53,7 +53,9 @@ members = [
     "queng_services/meta/mddb/mddb_tests",
     "queng_services/templete/grpc_service",
     "queng_specs/portfolio_specs",
-    "queng_specs/container_specs",
+    "queng_specs/container_specs/container_specs_clickhouse",
+    "queng_specs/container_specs/container_specs_postgres",
+    "queng_specs/container_specs/container_specs_kaiko",
     "queng_specs/db_specs",
     "queng_specs/exchange_specs",
     "queng_specs/service_specs/ims/ims_data/ims_data_binance_specs",
@@ -154,10 +156,16 @@ mddb = { path = "queng_services/meta/mddb" }
 grpc_service = { path = "queng_services/templete/grpc_service" }
 
 # Specs
-container_specs = { path = "queng_specs/container_specs" }
-portfolio_specs = { path = "queng_specs/portfolio_specs" }
+# Container specs
+container_specs_clickhouse = { path = "queng_specs/container_specs/container_specs_clickhouse" }
+container_specs_postgres = { path = "queng_specs/container_specs/container_specs_postgres" }
+container_specs_kaiko = { path = "queng_specs/container_specs/container_specs_kaiko" }
+#
 db_specs = { path = "queng_specs/db_specs" }
+#
 exchange_specs = { path = "queng_specs/exchange_specs" }
+#
+portfolio_specs = { path = "queng_specs/portfolio_specs" }
 
 # Service specs
 cmdb_specs = { path = "queng_specs/service_specs/core/cmdb_specs" }

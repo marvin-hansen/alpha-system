@@ -1,7 +1,7 @@
 load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 
 rust_test_suite(
-    name = "container_specs_tests",
+    name = "tests",
     srcs = glob([
         "*_tests.rs",
     ]),
@@ -12,7 +12,7 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Crate to test
-        "//alias:container_specs",
+        "//alias:container_specs_clickhouse",
         # Internal crates
     ],
 )

@@ -1,3 +1,4 @@
+use container_specs_kaiko::api_proxy_container_config;
 use docker_utils::prelude::DockerUtil;
 use kaiko_utils::prelude::{KaikoUtil, KaikoUtilError};
 use std::env;
@@ -9,8 +10,9 @@ async fn setup_ci_env() {
     // Create new DockerUtil
     let env = DockerUtil::with_debug().expect("Failed to get DockerUtil");
 
-    env.setup_container_api_proxy()
-        .await
+    let container_config = api_proxy_container_config();
+
+    env.get_or_start_container_config(&container_config)
         .expect("Failed to setup ci api proxy container");
 }
 

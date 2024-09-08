@@ -15,7 +15,6 @@ rust_library(
         # Internal crates
         "//alias:common_errors",
         "//alias:common_metadata",
-        "//alias:container_specs",
         "//alias:docker_utils",
         # External crates
         "//thirdparty/crates:klickhouse",

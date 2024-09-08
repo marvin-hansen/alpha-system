@@ -19,5 +19,6 @@ diesel_migrations = { workspace = true }
 
 [dev-dependencies]
 # For testing
+container_specs_postgres = {workspace = true}
 docker_utils = {workspace = true}
 tokio = {workspace = true}

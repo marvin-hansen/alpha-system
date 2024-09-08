@@ -1,4 +1,4 @@
-use container_specs::api_proxy_container_specs::api_proxy_container_config;
+use container_specs_kaiko::api_proxy_container_config;
 
 #[test]
 fn test_api_proxy_container_config() {

@@ -1,35 +1,30 @@
-load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library")
+load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library", "rust_test_suite")
 
 rust_library(
-    name = "docker_utils",
+    name = "container_specs_postgres",
     srcs = glob([
         "src/*.rs",
-        "src/*/*.rs",
     ]),
-    crate_root = "src/lib.rs",
     tags = [
-        "docker_utils",
-        "utils-test",
+        "container_specs_postgres",
+        "specs",
     ],
     visibility = ["//visibility:public"],
     deps = [
-        # Internal crates
         "//alias:common_container",
-        # External crates
-        "//thirdparty/crates:tokio",
     ],
 )
 
 rust_doc(
     name = "doc",
-    crate = ":docker_utils",
+    crate = ":container_specs_postgres",
     tags = ["doc"],
     visibility = ["//visibility:public"],
 )
 
 rust_doc_test(
     name = "doc_test",
-    crate = ":docker_utils",
+    crate = ":container_specs_postgres",
     tags = ["doc-test"],
     visibility = ["//visibility:public"],
 )

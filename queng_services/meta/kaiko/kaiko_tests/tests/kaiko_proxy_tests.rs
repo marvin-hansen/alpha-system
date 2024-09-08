@@ -1,7 +1,7 @@
+use container_specs_kaiko::api_proxy_container_config;
 use docker_utils::prelude::DockerUtil;
 use kaiko_client::error::KaikoClientError;
 use kaiko_client::KaikoClient;
-use specs_utils::prelude::api_proxy_container_specs;
 
 // Starts a kaiko api proxy on localhost port 7777
 async fn setup_ci_env() {
@@ -9,7 +9,7 @@ async fn setup_ci_env() {
     let ci_env = DockerUtil::with_debug().expect("Failed to get DockerUtil");
 
     // Initiate CI container
-    let container_config = api_proxy_container_specs();
+    let container_config = api_proxy_container_config();
     ci_env
         .setup_container(&container_config)
         .await

@@ -1,4 +1,4 @@
-use specs_utils::prelude::postgres_db_container_specs;
+use container_specs_postgres::postgres_db_container_config;
 
 use crate::prelude::EnvironmentSetupError;
 use crate::EnvUtil;
@@ -11,7 +11,7 @@ impl EnvUtil {
 
         self.dbg_print("Setup Postgres DB container");
 
-        let container_config = postgres_db_container_specs();
+        let container_config = postgres_db_container_config();
 
         let (container_name, container_port) = docker_util
             .setup_container(&container_config)

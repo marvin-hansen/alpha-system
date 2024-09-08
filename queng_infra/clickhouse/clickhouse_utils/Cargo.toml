@@ -12,10 +12,15 @@ authors.workspace = true
 # Internal crates
 common_errors = {workspace = true}
 common_metadata = {workspace = true}
-container_specs = {workspace = true}
-docker_utils = {workspace = true}
 # External crates
 klickhouse = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
 tokio = { workspace = true }
+
+
+[dev-dependencies]
+# For testing
+container_specs_clickhouse = {workspace = true}
+docker_utils = {workspace = true}
+tokio = {workspace = true}

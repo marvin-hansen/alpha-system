@@ -1,4 +1,5 @@
 use common_config::prelude::{ServiceConfig, ServiceID};
+use container_specs_postgres::postgres_db_container_config;
 use diesel::Connection;
 use docker_utils::prelude::DockerUtil;
 use pg_smdb::model::service;
@@ -29,8 +30,9 @@ async fn all_setup() {
     let env = DockerUtil::with_debug().expect("Failed to get DockerUtil");
 
     // Start or reuse a test postgres container
-    let result = env.setup_container_postgres_db().await;
-    // dbg!(&result);
+    let container_config = postgres_db_container_config();
+    let result = env.get_or_start_container_config(&container_config); // dbg!(&result);
+                                                                       // dbg!(&result);
     assert!(result.is_ok());
 }
 

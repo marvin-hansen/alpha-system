@@ -14,6 +14,7 @@ rust_test_suite(
         "//alias:pg_metadb",
         # Internal crates
         "//alias:common_metadata",
+        "//alias:container_specs_postgres",
         "//alias:postgres_migrations",
         # External crates
         "//thirdparty/crates:bon",
@@ -47,6 +48,7 @@ rust_test_suite(
         "//alias:pg_metadb",
         # Internal crates
         "//alias:common_metadata",
+        "//alias:container_specs_postgres",
         "//alias:postgres_migrations",
         "//alias:docker_utils",
         # External crates
@@ -81,6 +83,7 @@ rust_test_suite(
         "//alias:pg_metadb",
         # Internal crates
         "//alias:common_metadata",
+        "//alias:container_specs_postgres",
         "//alias:postgres_migrations",
         "//alias:docker_utils",
         # External crates
@@ -115,6 +118,7 @@ rust_test_suite(
         "//alias:pg_metadb",
         # Internal crates
         "//alias:common_metadata",
+        "//alias:container_specs_postgres",
         "//alias:postgres_migrations",
         "//alias:docker_utils",
         # External crates
@@ -149,6 +153,7 @@ rust_test_suite(
         "//alias:pg_metadb",
         # Internal crates
         "//alias:common_metadata",
+        "//alias:container_specs_postgres",
         "//alias:postgres_migrations",
         "//alias:docker_utils",
         # External crates
@@ -183,6 +188,7 @@ rust_test_suite(
         "//alias:pg_metadb",
         # Internal crates
         "//alias:common_metadata",
+        "//alias:container_specs_postgres",
         "//alias:postgres_migrations",
         "//alias:docker_utils",
         # External crates

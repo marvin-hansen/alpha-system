@@ -1,12 +1,12 @@
 load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library", "rust_test_suite")
 
 rust_library(
-    name = "container_specs",
+    name = "container_specs_clickhouse",
     srcs = glob([
         "src/*.rs",
     ]),
     tags = [
-        "container_specs",
+        "container_specs_clickhouse",
         "specs",
     ],
     visibility = ["//visibility:public"],
@@ -17,14 +17,14 @@ rust_library(
 
 rust_doc(
     name = "doc",
-    crate = ":container_specs",
+    crate = ":container_specs_clickhouse",
     tags = ["doc"],
     visibility = ["//visibility:public"],
 )
 
 rust_doc_test(
     name = "doc_test",
-    crate = ":container_specs",
+    crate = ":container_specs_clickhouse",
     tags = ["doc-test"],
     visibility = ["//visibility:public"],
 )

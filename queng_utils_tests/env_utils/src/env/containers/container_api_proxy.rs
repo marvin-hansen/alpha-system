@@ -1,4 +1,4 @@
-use specs_utils::prelude::api_proxy_container_specs;
+use container_specs_kaiko::api_proxy_container_config;
 
 use crate::prelude::{EnvironmentError, EnvironmentSetupError};
 use crate::EnvUtil;
@@ -10,7 +10,7 @@ impl EnvUtil {
         let docker_util = self.docker_util();
 
         self.dbg_print("Setup api proxy container");
-        let container_config = api_proxy_container_specs();
+        let container_config = api_proxy_container_config();
 
         let (container_name, container_port) = docker_util
             .setup_container(&container_config)

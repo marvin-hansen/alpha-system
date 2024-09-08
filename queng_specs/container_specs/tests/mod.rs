@@ -1,3 +1,0 @@
-mod api_proxy_container_config_tests;
-mod clickhouse_container_config_tests;
-mod postgres_db_specs_tests;

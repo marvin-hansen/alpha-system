@@ -1,4 +1,4 @@
-use container_specs::clickhouse_container_specs::clickhouse_container_config;
+use container_specs_clickhouse::clickhouse_container_config;
 
 #[test]
 fn test_clickhouse_container_config() {

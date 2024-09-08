@@ -1,9 +1,9 @@
 use clickhouse_utils::error::ClickHouseUtilError;
 use clickhouse_utils::ClickhouseUtil;
+use container_specs_clickhouse::clickhouse_container_config;
 use postgres_utils::prelude::PostgresUtilError;
 use postgres_utils::PostgresUtil;
 use specs_utils::db_specs;
-use specs_utils::prelude::clickhouse_container_specs;
 
 use crate::EnvUtil;
 
@@ -11,7 +11,7 @@ impl EnvUtil {
     pub(crate) async fn get_new_clickhouse_util(
         &self,
     ) -> Result<ClickhouseUtil, ClickHouseUtilError> {
-        let container_config = clickhouse_container_specs();
+        let container_config = clickhouse_container_config();
 
         // DB connection string
         let dsn = &format!(

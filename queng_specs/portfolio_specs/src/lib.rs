@@ -1,2 +1,9 @@
 pub mod prelude;
 pub mod test_portfolio;
+
+use common_exchange::portfolio_config::PortfolioConfig;
+
+pub fn get_all_portfolio_specs() -> Vec<PortfolioConfig> {
+    // Update tests if you add more portfolio specs.
+    Vec::from([test_portfolio::get_test_portfolio_config()])
+}

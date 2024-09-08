@@ -1,14 +1,13 @@
 use std::cell::RefCell;
 
+use crate::prelude::EnvironmentError;
 use common_env::prelude::EnvironmentType;
 use config_manager::CfgManager;
+use container_specs_clickhouse::clickhouse_container_config;
+use container_specs_kaiko::api_proxy_container_config;
+use container_specs_postgres::postgres_db_container_config;
 use docker_utils::prelude::DockerUtil;
 use kaiko_utils::KaikoUtil;
-use specs_utils::prelude::{
-    api_proxy_container_specs, clickhouse_container_specs, postgres_db_container_specs,
-};
-
-use crate::prelude::EnvironmentError;
 
 mod env;
 pub mod errors;
@@ -88,9 +87,9 @@ impl EnvUtil {
         let env = CfgManager::detect_env_type(dbg);
 
         // Get container configs
-        let clickhouse_container_config = clickhouse_container_specs();
-        let api_proxy_container_config = api_proxy_container_specs();
-        let postgres_db_container_config = postgres_db_container_specs();
+        let clickhouse_container_config = clickhouse_container_config();
+        let api_proxy_container_config = api_proxy_container_config();
+        let postgres_db_container_config = postgres_db_container_config();
 
         // Build utils
         let docker_util =

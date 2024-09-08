@@ -13,10 +13,13 @@ authors.workspace = true
 common_container = { workspace = true }
 common_env = { workspace = true }
 config_manager = { workspace = true }
+container_specs_clickhouse = { workspace = true }
+container_specs_postgres = { workspace = true }
+container_specs_kaiko = { workspace = true }
 clickhouse_utils = { workspace = true }
 docker_utils = { workspace = true }
-specs_utils = { workspace = true }
 kaiko_utils = { workspace = true }
+portfolio_specs = { workspace = true }
 postgres_utils = { workspace = true }
 # External crates
 tokio = { workspace = true }

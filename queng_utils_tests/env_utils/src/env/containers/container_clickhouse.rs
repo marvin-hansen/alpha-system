@@ -1,4 +1,4 @@
-use specs_utils::prelude::clickhouse_container_specs;
+use container_specs_clickhouse::clickhouse_container_config;
 
 use crate::prelude::EnvironmentSetupError;
 use crate::EnvUtil;
@@ -10,7 +10,7 @@ impl EnvUtil {
         let docker_util = self.docker_util();
 
         self.dbg_print("Setup api proxy container");
-        let clickhouse_container_config = clickhouse_container_specs();
+        let clickhouse_container_config = clickhouse_container_config();
         let (clickhouse_container_name, clickhouse_container_port) = docker_util
             .setup_container(&clickhouse_container_config)
             .await
