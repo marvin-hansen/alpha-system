@@ -1,8 +1,7 @@
 use crate::prelude::EnvironmentSetupError;
 use crate::EnvUtil;
 use common_container::prelude::ContainerConfig;
-use docker_utils::error::DockerError;
-use docker_utils::DockerUtil;
+use docker_utils::prelude::{DockerError, DockerUtil};
 use kaiko_utils::prelude::{KaikoUtil, KaikoUtilError};
 
 impl EnvUtil {

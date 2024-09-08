@@ -3,4 +3,4 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-command docker run --name postgres-5432 -p 5432:5432 -e POSTGRES_PASSWORD=postgres -d postgres:16.3-bookworm
+command docker run --name postgres-5432 -p 5432:5432 -e POSTGRES_PASSWORD=postgres -d postgres:17rc1-alpine3.20

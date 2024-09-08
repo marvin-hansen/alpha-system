@@ -24,8 +24,8 @@ rust_test_suite(
         # Crate to test
         "//alias:pg_imdb",
         # Internal crates
-        "//alias:env_utils",
-        "//alias:postgres_utils",
+        "//alias:docker_utils",
+        "//alias:postgres_migrations",
         # External crates
         "//thirdparty/crates:tokio",
         "//thirdparty/crates:diesel",

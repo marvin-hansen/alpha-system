@@ -1,5 +1,4 @@
-use crate::error::DockerError;
-use crate::DockerUtil;
+use crate::prelude::{DockerError, DockerUtil};
 use common_container::prelude::{ContainerConfig, WaitStrategy};
 use std::process::Command;
 use std::time::{Duration, Instant};

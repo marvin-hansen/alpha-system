@@ -1,8 +1,8 @@
 use common_metadata::prelude::MetaStats;
 use diesel::Connection;
-use env_utils::EnvUtil;
+use docker_utils::prelude::DockerUtil;
 use pg_metadb::prelude::Stat;
-use postgres_utils::prelude::{get_or_wait_for_postgres_connection, DB_TEST_URL};
+use postgres_migrations::prelude::{get_or_wait_for_postgres_connection, DB_TEST_URL};
 
 fn get_test_meta_stats() -> MetaStats {
     let download_timestamp = "2023-10-01T12:00:00Z".to_string();
@@ -24,7 +24,7 @@ fn get_test_meta_stats() -> MetaStats {
 // setup is on top of the stack.
 #[tokio::test]
 async fn all_setup() {
-    let env = EnvUtil::with_debug().await.expect("Failed to get EnvUtil");
+    let env = DockerUtil::with_debug().expect("Failed to get DockerUtil");
 
     // Start or reuse a test postgres container
     let result = env.setup_container_postgres_db().await;

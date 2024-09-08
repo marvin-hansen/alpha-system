@@ -1,3 +1,6 @@
+mod connection;
+pub mod prelude;
+
 use diesel::r2d2::R2D2Connection;
 use diesel::PgConnection;
 use diesel_migrations::{EmbeddedMigrations, MigrationHarness};
@@ -5,9 +8,9 @@ use std::error::Error;
 
 // Alias for a pooled database connection.
 pub type ConnectionPool =
-    diesel::r2d2::PooledConnection<diesel::r2d2::ConnectionManager<diesel::pg::PgConnection>>;
+    diesel::r2d2::PooledConnection<diesel::r2d2::ConnectionManager<PgConnection>>;
 
-// Alias for a normal, single, database connection.
+/// Alias for a normal, single, database connection.
 pub type Connection = PgConnection;
 
 /// Runs all pending database migrations.

@@ -1,5 +1,5 @@
-use crate::error::DockerError;
-use crate::DockerUtil;
+use crate::prelude::{DockerError, DockerUtil};
+
 use std::process::Command;
 
 impl DockerUtil {

@@ -1,8 +1,8 @@
 use common_metadata::prelude::{InstrumentMetadata, MetaInstrument};
 use diesel::Connection;
-use env_utils::EnvUtil;
+use docker_utils::prelude::DockerUtil;
 use pg_metadb::prelude::Instrument;
-use postgres_utils::prelude::{get_or_wait_for_postgres_connection, DB_TEST_URL};
+use postgres_migrations::prelude::{get_or_wait_for_postgres_connection, DB_TEST_URL};
 
 fn get_test_meta_instrument() -> MetaInstrument {
     let metadata = InstrumentMetadata {
@@ -33,7 +33,7 @@ fn get_test_meta_instrument() -> MetaInstrument {
 // setup is on top of the stack.
 #[tokio::test]
 async fn all_setup() {
-    let env = EnvUtil::with_debug().await.expect("Failed to get EnvUtil");
+    let env = DockerUtil::with_debug().expect("Failed to get DockerUtil");
 
     // Start or reuse a test postgres container
     let result = env.setup_container_postgres_db().await;

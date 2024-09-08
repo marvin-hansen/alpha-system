@@ -1,8 +1,8 @@
 use common_config::prelude::{ServiceConfig, ServiceID};
 use diesel::Connection;
-use env_utils::EnvUtil;
+use docker_utils::prelude::DockerUtil;
 use pg_smdb::model::service;
-use postgres_utils::prelude::{get_or_wait_for_postgres_connection, DB_TEST_URL};
+use postgres_migrations::prelude::{get_or_wait_for_postgres_connection, DB_TEST_URL};
 
 fn get_test_service_config() -> ServiceConfig {
     ServiceConfig::new(
@@ -26,7 +26,7 @@ fn get_test_service_config() -> ServiceConfig {
 #[tokio::test]
 async fn all_setup() {
     // Create a new environment for the test
-    let env = EnvUtil::with_debug().await.expect("Failed to get EnvUtil");
+    let env = DockerUtil::with_debug().expect("Failed to get DockerUtil");
 
     // Start or reuse a test postgres container
     let result = env.setup_container_postgres_db().await;

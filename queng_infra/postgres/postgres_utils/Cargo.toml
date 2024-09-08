@@ -10,8 +10,10 @@ authors.workspace = true
 
 [dependencies]
 # Internal crates
+common_config = {workspace = true}
 common_database = {workspace = true}
 common_errors = {workspace = true}
+common_exchange = {workspace = true}
 container_specs = {workspace = true}
 docker_utils = {workspace = true}
 # Database crates

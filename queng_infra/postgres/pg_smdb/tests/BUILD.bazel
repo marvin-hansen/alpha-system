@@ -31,8 +31,8 @@ rust_test_suite(
         "//alias:container_specs",
         "//alias:common_database",
         "//alias:common_config",
-        "//alias:env_utils",
-        "//alias:postgres_utils",
+        "//alias:docker_utils",
+        "//alias:postgres_migrations",
         # External crates
         "//thirdparty/crates:tokio",
         "//thirdparty/crates:diesel",

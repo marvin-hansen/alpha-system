@@ -1,4 +1,4 @@
-use docker_utils::DockerUtil;
+use docker_utils::prelude::DockerUtil;
 use kaiko_utils::prelude::{KaikoUtil, KaikoUtilError};
 use specs_utils::prelude::api_proxy_container_specs;
 use std::env;

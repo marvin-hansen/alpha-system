@@ -1,5 +1,5 @@
 use common_env::prelude::EnvironmentType;
-use docker_utils::DockerUtil;
+use docker_utils::prelude::DockerUtil;
 use kaiko_utils::KaikoUtil;
 
 use crate::EnvUtil;

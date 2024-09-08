@@ -2,7 +2,7 @@ use std::cell::RefCell;
 
 use common_env::prelude::EnvironmentType;
 use config_manager::CfgManager;
-use docker_utils::DockerUtil;
+use docker_utils::prelude::DockerUtil;
 use kaiko_utils::KaikoUtil;
 use specs_utils::prelude::{
     api_proxy_container_specs, clickhouse_container_specs, postgres_db_container_specs,

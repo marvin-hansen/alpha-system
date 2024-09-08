@@ -13,9 +13,12 @@ rust_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
+        # Internal crates
+        "//alias:common_errors",
         # External crates
         "//thirdparty/crates:diesel",
         "//thirdparty/crates:diesel_migrations",
+        "//thirdparty/crates:tokio",
     ],
 )
 

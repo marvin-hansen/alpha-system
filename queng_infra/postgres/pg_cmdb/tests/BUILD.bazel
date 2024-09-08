@@ -26,8 +26,8 @@ rust_test_suite(
         # Internal crates
         "//alias:common_database",
         "//alias:common_exchange",
-        "//alias:env_utils",
-        "//alias:postgres_utils",
+        "//alias:docker_utils",
+        "//alias:postgres_migrations",
         # External crates
         "//thirdparty/crates:tokio",
         "//thirdparty/crates:diesel",
@@ -60,8 +60,8 @@ rust_test_suite(
         # Internal crates
         "//alias:common_database",
         "//alias:common_exchange",
-        "//alias:env_utils",
-        "//alias:postgres_utils",
+        "//alias:docker_utils",
+        "//alias:postgres_migrations",
         # External crates
         "//thirdparty/crates:tokio",
         "//thirdparty/crates:diesel",
@@ -94,8 +94,8 @@ rust_test_suite(
         # Internal crates
         "//alias:common_database",
         "//alias:common_exchange",
-        "//alias:env_utils",
-        "//alias:postgres_utils",
+        "//alias:docker_utils",
+        "//alias:postgres_migrations",
         # External crates
         "//thirdparty/crates:tokio",
         "//thirdparty/crates:diesel",

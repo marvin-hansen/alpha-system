@@ -1,5 +1,5 @@
 use common_container::prelude::{ContainerConfig, WaitStrategy};
-use docker_utils::DockerUtil;
+use docker_utils::prelude::DockerUtil;
 
 fn get_test_container_config() -> ContainerConfig<'static> {
     ContainerConfig::new(

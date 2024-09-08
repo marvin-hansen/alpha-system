@@ -1,11 +1,7 @@
-pub mod db_connection;
-mod db_count;
-mod db_error;
-mod db_import;
-mod db_setup;
-mod db_teardown;
-mod db_verify;
+mod db;
 pub mod prelude;
+mod schema;
+mod types;
 
 use crate::prelude::PostgresUtilError;
 use diesel::r2d2::{ConnectionManager, Pool};

@@ -4,6 +4,7 @@ rust_library(
     name = "docker_utils",
     srcs = glob([
         "src/*.rs",
+        "src/*/*.rs",
     ]),
     crate_root = "src/lib.rs",
     tags = [
@@ -14,6 +15,7 @@ rust_library(
     deps = [
         # Internal crates
         "//alias:common_container",
+        "//alias:container_specs",
         # External crates
         "//thirdparty/crates:tokio",
     ],

@@ -1,5 +1,5 @@
+use crate::prelude::PostgresUtil;
 use crate::prelude::PostgresUtilError;
-use crate::PostgresUtil;
 
 impl PostgresUtil {
     /// Sets up all databases.

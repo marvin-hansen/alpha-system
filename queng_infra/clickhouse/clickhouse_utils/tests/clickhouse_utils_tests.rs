@@ -1,7 +1,7 @@
 use clickhouse_utils::ClickhouseUtil;
 
 use container_specs::clickhouse_container_specs::clickhouse_container_config;
-use docker_utils::DockerUtil;
+use docker_utils::prelude::DockerUtil;
 use std::{env, time};
 use tokio::time::sleep;
 
