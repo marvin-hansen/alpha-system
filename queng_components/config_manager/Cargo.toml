@@ -21,7 +21,8 @@ common_database = { workspace = true }
 common_env = { workspace = true }
 common_errors = { workspace = true }
 common_exchange = { workspace = true }
-db_specs = { workspace = true }
+db_specs_clickhouse = { workspace = true }
+db_specs_postgres = { workspace = true }
 exchange_specs = { workspace = true }
 # Service specs
 cmdb_specs = { workspace = true }

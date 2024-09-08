@@ -1,4 +1,4 @@
-use db_specs::clickhouse::local_clickhouse_config;
+use db_specs_clickhouse::clickhouse::local_clickhouse_config;
 
 #[test]
 fn test_get_metadata_db_config() {

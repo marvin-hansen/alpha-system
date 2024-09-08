@@ -1,8 +1,9 @@
 load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library")
 
 rust_library(
-    name = "db_specs",
+    name = "db_specs_postgres",
     srcs = glob([
+        "src/*.rs",
         "src/**/*.rs",
     ]),
     tags = [
@@ -18,14 +19,14 @@ rust_library(
 
 rust_doc(
     name = "doc",
-    crate = ":db_specs",
+    crate = ":db_specs_postgres",
     tags = ["doc"],
     visibility = ["//visibility:public"],
 )
 
 rust_doc_test(
     name = "doc_test",
-    crate = ":db_specs",
+    crate = ":db_specs_postgres",
     tags = ["doc-test"],
     visibility = ["//visibility:public"],
 )

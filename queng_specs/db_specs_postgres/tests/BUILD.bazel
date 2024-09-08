@@ -1,0 +1,46 @@
+load("@rules_rust//rust:defs.bzl", "rust_test_suite")
+
+rust_test_suite(
+    name = "db_specs_postgres_ci_tests",
+    srcs = glob([
+        "postgres/ci/*_tests.rs",
+    ]),
+    tags = [
+        "specs",
+        "unit-test",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//alias:db_specs_postgres",
+    ],
+)
+
+rust_test_suite(
+    name = "db_specs_postgres_cluster_tests",
+    srcs = glob([
+        "postgres/cluster/*_tests.rs",
+    ]),
+    tags = [
+        "specs",
+        "unit-test",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//alias:db_specs_postgres",
+    ],
+)
+
+rust_test_suite(
+    name = "db_specs_postgres_local_tests",
+    srcs = glob([
+        "postgres/local/*_tests.rs",
+    ]),
+    tags = [
+        "specs",
+        "unit-test",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//alias:db_specs_postgres",
+    ],
+)

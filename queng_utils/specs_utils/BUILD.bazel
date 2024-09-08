@@ -19,7 +19,6 @@ rust_library(
         "//alias:common_exchange",
         "//alias:common_database",
         "//alias:portfolio_specs",
-        "//alias:db_specs",
         "//alias:cmdb_specs",
         "//alias:dbgw_specs",
         "//alias:mddb_specs",

@@ -1,4 +1,4 @@
-use db_specs::clickhouse::cluster_clickhouse_config;
+use db_specs_clickhouse::clickhouse::cluster_clickhouse_config;
 
 #[test]
 fn test_get_cluster_metadata_db_config() {

@@ -1,11 +1,10 @@
+use crate::EnvUtil;
 use clickhouse_utils::error::ClickHouseUtilError;
 use clickhouse_utils::ClickhouseUtil;
 use container_specs_clickhouse::clickhouse_container_config;
+use db_specs_postgres::prelude::postgres;
 use postgres_utils::prelude::PostgresUtilError;
 use postgres_utils::PostgresUtil;
-use specs_utils::db_specs;
-
-use crate::EnvUtil;
 
 impl EnvUtil {
     pub(crate) async fn get_new_clickhouse_util(
@@ -28,7 +27,7 @@ impl EnvUtil {
     }
 
     pub(crate) async fn get_new_postgres_util(&self) -> Result<PostgresUtil, PostgresUtilError> {
-        let config = db_specs::get_postgres_config(&self.env);
+        let config = postgres::get_postgres_config(&self.env);
 
         let tsn = config.tsn();
 

@@ -20,6 +20,7 @@ rust_library(
         "//alias:container_specs_postgres",
         "//alias:container_specs_kaiko",
         "//alias:clickhouse_utils",
+        "//alias:db_specs_postgres",
         "//alias:docker_utils",
         "//alias:specs_utils",
         "//alias:kaiko_utils",

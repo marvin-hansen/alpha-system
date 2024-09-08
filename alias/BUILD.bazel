@@ -214,7 +214,7 @@ alias(
 )
 
 ###############################################################################
-# Specs
+# Container Specs
 ###############################################################################
 
 alias(
@@ -235,11 +235,21 @@ alias(
     visibility = ["//visibility:public"],
 )
 
+###############################################################################
+# DB Specs
+###############################################################################
 
 # DB Specs
 alias(
-    name = "db_specs",
-    actual = "//queng_specs/db_specs",
+    name = "db_specs_clickhouse",
+    actual = "//queng_specs/db_specs_clickhouse",
+    visibility = ["//visibility:public"],
+)
+
+# DB Specs
+alias(
+    name = "db_specs_postgres",
+    actual = "//queng_specs/db_specs_postgres",
     visibility = ["//visibility:public"],
 )
 

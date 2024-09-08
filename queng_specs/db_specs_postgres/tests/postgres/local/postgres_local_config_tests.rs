@@ -1,4 +1,4 @@
-use db_specs::postgres::get_local_db_config;
+use db_specs_postgres::postgres::get_local_db_config;
 
 #[test]
 fn test_get_local_db_config() {

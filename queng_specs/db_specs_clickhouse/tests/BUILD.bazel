@@ -1,0 +1,46 @@
+load("@rules_rust//rust:defs.bzl", "rust_test_suite")
+
+rust_test_suite(
+    name = "db_specs_clickhouse_ci_tests",
+    srcs = glob([
+        "clickhouse/ci/*_tests.rs",
+    ]),
+    tags = [
+        "specs",
+        "unit-test",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//alias:db_specs_clickhouse",
+    ],
+)
+
+rust_test_suite(
+    name = "db_specs_clickhouse_cluster_tests",
+    srcs = glob([
+        "clickhouse/cluster/*_tests.rs",
+    ]),
+    tags = [
+        "specs",
+        "unit-test",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//alias:db_specs_clickhouse",
+    ],
+)
+
+rust_test_suite(
+    name = "db_specs_clickhouse_local_tests",
+    srcs = glob([
+        "clickhouse/local/*_tests.rs",
+    ]),
+    tags = [
+        "specs",
+        "unit-test",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//alias:db_specs_clickhouse",
+    ],
+)

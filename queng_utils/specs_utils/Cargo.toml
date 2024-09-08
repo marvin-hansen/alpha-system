@@ -16,7 +16,6 @@ common_env = { workspace = true }
 common_exchange = { workspace = true }
 common_database = { workspace = true }
 portfolio_specs = { workspace = true }
-db_specs = { workspace = true }
 cmdb_specs = { workspace = true }
 dbgw_specs = { workspace = true }
 mddb_specs = { workspace = true }

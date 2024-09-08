@@ -3,7 +3,8 @@ use common_config::prelude::{ServiceConfig, ServiceID, SvcEnvConfig};
 use common_database::prelude::{ClickHouseConfig, PostgresDBConfig};
 use common_env::prelude::EnvironmentType;
 use common_exchange::prelude::ExchangeID;
-use db_specs::{clickhouse, postgres};
+use db_specs_clickhouse::clickhouse;
+use db_specs_postgres::postgres;
 use exchange_specs::prelude;
 use exchange_specs::prelude::{
     get_all_exchanges, get_all_exchanges_ids_names, get_exchange_symbol_tables,
