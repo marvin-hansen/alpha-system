@@ -13,6 +13,5 @@ authors.workspace = true
 common_metadata = {workspace = true}
 docker_utils = {workspace = true}
 kaiko_client = {workspace = true}
-specs_utils = {workspace = true}
 # External crates
 tokio = { workspace = true }

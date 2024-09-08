@@ -19,6 +19,7 @@ pub mod prelude;
 
 pub struct EnvUtil {
     env: EnvironmentType,
+    //
     api_proxy_container_name: RefCell<String>,
     api_proxy_container_port: RefCell<u16>,
     clickhouse_container_name: RefCell<String>,
