@@ -1,7 +1,7 @@
 load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 
 rust_test_suite(
-    name = "specs_utils_tests",
+    name = "tests",
     srcs = glob([
         "*_tests.rs",
     ]),
@@ -12,7 +12,7 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Test target
-        "//alias:specs_utils",
+        "//alias:service_specs_all",
         # Internal dependencies
     ],
 )

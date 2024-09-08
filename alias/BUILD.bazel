@@ -242,14 +242,14 @@ alias(
 # DB Specs
 alias(
     name = "db_specs_clickhouse",
-    actual = "//queng_specs/db_specs_clickhouse",
+    actual = "//queng_specs/db_specs/db_specs_clickhouse",
     visibility = ["//visibility:public"],
 )
 
 # DB Specs
 alias(
     name = "db_specs_postgres",
-    actual = "//queng_specs/db_specs_postgres",
+    actual = "//queng_specs/db_specs/db_specs_postgres",
     visibility = ["//visibility:public"],
 )
 
@@ -264,6 +264,16 @@ alias(
 alias(
     name = "portfolio_specs",
     actual = "//queng_specs/portfolio_specs",
+    visibility = ["//visibility:public"],
+)
+
+###############################################################################
+# Service Specs
+###############################################################################
+
+alias(
+    name = "service_specs_all",
+    actual = "//queng_specs/service_specs/service_specs_all",
     visibility = ["//visibility:public"],
 )
 
@@ -331,12 +341,6 @@ alias(
 alias(
     name = "math_utils",
     actual = "//queng_utils/math_utils",
-    visibility = ["//visibility:public"],
-)
-
-alias(
-    name = "specs_utils",
-    actual = "//queng_utils/specs_utils",
     visibility = ["//visibility:public"],
 )
 

@@ -25,7 +25,6 @@ rust_test_suite(
         "//alias/client:dbgw_client",
         # Internal crates
         "//alias:docker_utils",
-        "//alias:specs_utils",
         # External crates
         "//thirdparty/crates:tokio",
     ],

@@ -2,7 +2,7 @@ use crate::prelude::EnvironmentError;
 use crate::EnvUtil;
 use portfolio_specs::prelude::get_all_portfolio_specs;
 use postgres_utils::PostgresUtil;
-use specs_utils::prelude::get_all_service_specs;
+use service_specs_all::prelude::get_all_service_specs;
 
 impl EnvUtil {
     /// Asynchronously imports all data into all Postgres databases.

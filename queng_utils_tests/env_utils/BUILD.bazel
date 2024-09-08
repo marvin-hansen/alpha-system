@@ -22,10 +22,10 @@ rust_library(
         "//alias:clickhouse_utils",
         "//alias:db_specs_postgres",
         "//alias:docker_utils",
-        "//alias:specs_utils",
         "//alias:kaiko_utils",
         "//alias:portfolio_specs",
         "//alias:postgres_utils",
+        "//alias:service_specs_all",
         # External crates
         "//thirdparty/crates:tokio",
         "//thirdparty/crates:serde_json",

@@ -56,9 +56,10 @@ members = [
     "queng_specs/container_specs/container_specs_clickhouse",
     "queng_specs/container_specs/container_specs_postgres",
     "queng_specs/container_specs/container_specs_kaiko",
-    "queng_specs/db_specs_clickhouse",
-    "queng_specs/db_specs_postgres",
+    "queng_specs/db_specs/db_specs_clickhouse",
+    "queng_specs/db_specs/db_specs_postgres",
     "queng_specs/exchange_specs",
+    "queng_specs/service_specs/service_specs_all",
     "queng_specs/service_specs/ims/ims_data/ims_data_binance_specs",
     "queng_specs/service_specs/core/cmdb_specs",
     "queng_specs/service_specs/core/dbgw_specs",
@@ -69,7 +70,6 @@ members = [
     "queng_specs/service_specs/shared_service_specs",
     "queng_infra/clickhouse/clickhouse_utils",
     "queng_utils/math_utils",
-    "queng_utils/specs_utils",
     "queng_utils/crypto_utils",
     "queng_utils_tests/docker_utils",
     "queng_utils_tests/env_utils",
@@ -161,9 +161,9 @@ grpc_service = { path = "queng_services/templete/grpc_service" }
 container_specs_clickhouse = { path = "queng_specs/container_specs/container_specs_clickhouse" }
 container_specs_postgres = { path = "queng_specs/container_specs/container_specs_postgres" }
 container_specs_kaiko = { path = "queng_specs/container_specs/container_specs_kaiko" }
-#
-db_specs_clickhouse = { path = "queng_specs/db_specs_clickhouse" }
-db_specs_postgres = { path = "queng_specs/db_specs_postgres" }
+# DB specs
+db_specs_clickhouse = { path = "queng_specs/db_specs/db_specs_clickhouse" }
+db_specs_postgres = { path = "queng_specs/db_specs/db_specs_postgres" }
 #
 exchange_specs = { path = "queng_specs/exchange_specs" }
 #
@@ -178,11 +178,11 @@ smdb_specs = { path = "queng_specs/service_specs/core/smdb_specs" }
 ims_data_binance_specs = { path = "queng_specs/service_specs/ims/ims_data/ims_data_binance_specs" }
 ims_data_vex_specs = { path = "queng_specs/service_specs/ims/ims_data/ims_data_vex_specs" }
 shared_service_specs = { path = "queng_specs/service_specs/shared_service_specs" }
+service_specs_all = { path = "queng_specs/service_specs/service_specs_all" }
 
 # Utils
 crypto_utils = { path = "queng_utils/crypto_utils" }
 math_utils = { path = "queng_utils/math_utils" }
-specs_utils = { path = "queng_utils/specs_utils" }
 
 # Utils - Tests
 docker_utils = { path = "queng_utils_tests/docker_utils" }

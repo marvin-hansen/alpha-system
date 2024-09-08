@@ -1,7 +1,7 @@
 load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library", "rust_test_suite")
 
 rust_library(
-    name = "specs_utils",
+    name = "service_specs_all",
     srcs = glob([
         "src/*.rs",
     ]),
@@ -24,20 +24,19 @@ rust_library(
         "//alias:mddb_specs",
         "//alias:qdgw_specs",
         "//alias:smdb_specs",
-        # External crates
     ],
 )
 
 rust_doc(
     name = "doc",
-    crate = ":specs_utils",
+    crate = ":service_specs_all",
     tags = ["doc"],
     visibility = ["//visibility:public"],
 )
 
 rust_doc_test(
     name = "doc_test",
-    crate = ":specs_utils",
+    crate = ":service_specs_all",
     tags = ["doc-test"],
     visibility = ["//visibility:public"],
 )
