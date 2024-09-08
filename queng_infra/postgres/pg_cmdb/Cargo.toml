@@ -22,5 +22,5 @@ diesel_migrations = { workspace = true }
 [dev-dependencies]
 # For testing
 env_utils = {workspace = true}
-postgres_test_utils = {workspace = true}
+postgres_utils = {workspace = true}
 tokio = {workspace = true}

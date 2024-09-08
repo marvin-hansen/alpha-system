@@ -32,7 +32,7 @@ rust_test_suite(
         "//alias:common_database",
         "//alias:common_config",
         "//alias:env_utils",
-        "//alias:postgres_test_utils",
+        "//alias:postgres_utils",
         # External crates
         "//thirdparty/crates:tokio",
         "//thirdparty/crates:diesel",

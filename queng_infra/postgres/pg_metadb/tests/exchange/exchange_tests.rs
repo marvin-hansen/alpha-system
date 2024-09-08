@@ -1,8 +1,16 @@
+use common_metadata::prelude::MetaExchange;
 use diesel::Connection;
 use env_utils::EnvUtil;
 use pg_metadb::prelude::Exchange;
-use postgres_test_utils::prelude::get_test_meta_exchange;
-use postgres_test_utils::{get_or_wait_for_postgres_connection, DB_TEST_URL};
+use postgres_utils::prelude::{get_or_wait_for_postgres_connection, DB_TEST_URL};
+
+fn get_test_meta_exchange() -> MetaExchange {
+    MetaExchange {
+        code: "test_exchange_code".to_string(),
+        name: "test_exchange_name".to_string(),
+        kaiko_legacy_slug: "test_kaiko_legacy_slug".to_string(),
+    }
+}
 
 // Somehow tests seem to be executed or sorted in alphabetical order, so make sure that the
 // setup is on top of the stack.

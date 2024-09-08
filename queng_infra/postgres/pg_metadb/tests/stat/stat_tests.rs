@@ -2,8 +2,23 @@ use common_metadata::prelude::MetaStats;
 use diesel::Connection;
 use env_utils::EnvUtil;
 use pg_metadb::prelude::Stat;
-use postgres_test_utils::prelude::get_test_meta_stats;
-use postgres_test_utils::{get_or_wait_for_postgres_connection, DB_TEST_URL};
+use postgres_utils::prelude::{get_or_wait_for_postgres_connection, DB_TEST_URL};
+
+fn get_test_meta_stats() -> MetaStats {
+    let download_timestamp = "2023-10-01T12:00:00Z".to_string();
+    let hash = "abc123".to_string();
+    let number_assets = 100;
+    let number_exchanges = 10;
+    let number_instruments = 50;
+
+    MetaStats::new(
+        download_timestamp.clone(),
+        hash.clone(),
+        number_assets,
+        number_exchanges,
+        number_instruments,
+    )
+}
 
 // Somehow tests seem to be executed or sorted in alphabetical order, so make sure that the
 // setup is on top of the stack.

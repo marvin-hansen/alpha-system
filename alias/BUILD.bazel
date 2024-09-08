@@ -139,12 +139,6 @@ alias(
 )
 
 alias(
-    name = "postgres_test_utils",
-    actual = "//queng_infra/postgres/postgres_test_utils",
-    visibility = ["//visibility:public"],
-)
-
-alias(
     name = "clickhouse_utils",
     actual = "//queng_infra/clickhouse/clickhouse_utils",
     visibility = ["//visibility:public"],

@@ -1,8 +1,41 @@
+use common_metadata::prelude::{InstrumentMetadata, MetaExchange, MetaInstrument};
 use diesel::Connection;
 use env_utils::EnvUtil;
 use pg_metadb::prelude::{Exchange, Instrument, InstrumentsExchanges};
-use postgres_test_utils::prelude::{get_test_meta_exchange, get_test_meta_instrument};
-use postgres_test_utils::{get_or_wait_for_postgres_connection, DB_TEST_URL};
+use postgres_utils::prelude::{get_or_wait_for_postgres_connection, DB_TEST_URL};
+
+fn get_test_meta_instrument() -> MetaInstrument {
+    let metadata = InstrumentMetadata {
+        pair_figi: Some("BBG000BLNNH6".to_string()),
+        instrument_figi: Some("BBG000BLNNH7".to_string()),
+    };
+
+    MetaInstrument {
+        kaiko_legacy_exchange_slug: "kaiko-exchange".to_string(),
+        trade_start_time: Some("2021-01-01T00:00:00Z".to_string()),
+        trade_end_time: Some("2021-12-31T23:59:59Z".to_string()),
+        exchange_code: "XKRX".to_string(),
+        exchange_pair_code: "BTCUSD".to_string(),
+        base_asset: "BTC".to_string(),
+        quote_asset: "USD".to_string(),
+        kaiko_legacy_symbol: "BTCUSD".to_string(),
+        code: "BTC-USD".to_string(),
+        class: "currency".to_string(),
+        metadata: Some(metadata),
+        trade_start_timestamp: Some(1609459200),
+        trade_end_timestamp: Some(1640995199),
+        trade_compressed_size: 1024,
+        trade_count: 10000,
+    }
+}
+
+fn get_test_meta_exchange() -> MetaExchange {
+    MetaExchange {
+        code: "test_exchange_code".to_string(),
+        name: "test_exchange_name".to_string(),
+        kaiko_legacy_slug: "test_kaiko_legacy_slug".to_string(),
+    }
+}
 
 // Somehow tests seem to be executed or sorted in alphabetical order, so make sure that the
 // setup is on top of the stack.

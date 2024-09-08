@@ -2,7 +2,24 @@ use common_config::prelude::{ServiceConfig, ServiceID};
 use diesel::Connection;
 use env_utils::EnvUtil;
 use pg_smdb::model::service;
-use postgres_test_utils::prelude::*;
+use postgres_utils::prelude::{get_or_wait_for_postgres_connection, DB_TEST_URL};
+
+fn get_test_service_config() -> ServiceConfig {
+    ServiceConfig::new(
+        ServiceID::SMDB,
+        "name".to_string(),
+        1,
+        true,
+        "description".to_string(),
+        "health_check_uri".to_string(),
+        "base_uri".to_string(),
+        vec![ServiceID::DBGW],
+        Vec::from([
+            common_config::prelude::Endpoint::default(),
+            common_config::prelude::Endpoint::default(),
+        ]),
+    )
+}
 
 // Somehow tests seem to be executed or sorted in alphabetical order, so make sure that the
 // setup is on top of the stack.

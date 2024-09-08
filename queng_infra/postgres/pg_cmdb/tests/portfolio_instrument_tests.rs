@@ -6,7 +6,7 @@ use env_utils::EnvUtil;
 use pg_cmdb::model::instrument::Instrument;
 use pg_cmdb::model::portfolio::Portfolio;
 use pg_cmdb::model::portfolio_instrument::{CreatePortfolioInstrument, PortfolioInstrument};
-use postgres_test_utils::{get_or_wait_for_postgres_connection, DB_TEST_URL};
+use postgres_utils::prelude::{get_or_wait_for_postgres_connection, DB_TEST_URL};
 
 // Somehow tests seem to be executed or sorted in alphabetical order, so make sure that the
 // setup is on top of the stack.

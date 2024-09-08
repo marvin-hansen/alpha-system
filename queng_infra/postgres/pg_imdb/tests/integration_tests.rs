@@ -1,6 +1,6 @@
 use diesel::Connection;
 use env_utils::EnvUtil;
-use postgres_test_utils::{get_or_wait_for_postgres_connection, DB_TEST_URL};
+use postgres_utils::prelude::{get_or_wait_for_postgres_connection, DB_TEST_URL};
 
 //
 // Somehow tests seem to be executed or sorted in alphabetical order,

@@ -24,17 +24,18 @@ impl PostgresUtil {
 
         let conn = &mut self.pool.get().unwrap();
 
-        self.dbg_print("[setup_all_db]: teardown SMDB DB schema");
-        match pg_smdb::revert_smdb_db_migration(conn) {
-            Ok(_) => (),
-            Err(e) => return Err(PostgresUtilError::new(e.to_string())),
-        }
-
-        self.dbg_print("[setup_all_db]: teardown CMDB DB schema");
-        match pg_cmdb::revert_cmdb_db_migration(conn) {
-            Ok(_) => (),
-            Err(e) => return Err(PostgresUtilError::new(e.to_string())),
-        }
+        let result = pg_cmdb::revert_cmdb_db_migration(conn);
+        //dbg!(&result);
+        assert!(result.is_ok());
+        let result = pg_imdb::revert_imdb_db_migration(conn);
+        //dbg!(&result);
+        assert!(result.is_ok());
+        let result = pg_smdb::revert_smdb_db_migration(conn);
+        //dbg!(&result);
+        assert!(result.is_ok());
+        let result = pg_metadb::revert_metadb_db_migration(conn);
+        //dbg!(&result);
+        assert!(result.is_ok());
 
         Ok(())
     }

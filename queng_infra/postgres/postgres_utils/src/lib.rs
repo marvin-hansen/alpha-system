@@ -1,3 +1,4 @@
+pub mod db_connection;
 mod db_count;
 mod db_error;
 mod db_import;

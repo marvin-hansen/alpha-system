@@ -3,8 +3,27 @@ use common_exchange::prelude::PortfolioConfig as CommonPortfolioConfig;
 use diesel::Connection;
 use env_utils::EnvUtil;
 use pg_cmdb::model::portfolio::Portfolio;
-use postgres_test_utils::prelude::get_test_portfolio;
-use postgres_test_utils::{get_or_wait_for_postgres_connection, DB_TEST_URL};
+use postgres_utils::prelude::{get_or_wait_for_postgres_connection, DB_TEST_URL};
+
+fn get_test_portfolio() -> CommonPortfolioConfig {
+    CommonPortfolioConfig::new(
+        1,
+        "Test Portfolio".to_string(),
+        AccountType::Spot,
+        "12345".to_string(),
+        "USD".to_string(),
+        1000.0,
+        500.0,
+        20.0,
+        Vec::new(),
+        30.0,
+        10.0,
+        500.0,
+        1000.0,
+        50.0,
+        100.0,
+    )
+}
 
 // Somehow tests seem to be executed or sorted in alphabetical order, so make sure that the
 // setup is on top of the stack.

@@ -21,17 +21,18 @@ impl PostgresUtil {
     pub async fn setup_all_db(&self) -> Result<(), PostgresUtilError> {
         let conn = &mut self.pool.get().unwrap();
 
-        self.dbg_print("[setup_all_db]: setup SMDB DB schema");
-        match pg_smdb::run_smdb_db_migration(conn) {
-            Ok(_) => (),
-            Err(e) => return Err(PostgresUtilError::new(e.to_string())),
-        }
-
-        self.dbg_print("[setup_all_db]: setup CMDB DB schema");
-        match pg_cmdb::run_cmdb_db_migration(conn) {
-            Ok(_) => (),
-            Err(e) => return Err(PostgresUtilError::new(e.to_string())),
-        }
+        let result = pg_cmdb::run_cmdb_db_migration(conn);
+        //dbg!(&result);
+        assert!(result.is_ok());
+        let result = pg_imdb::run_imdb_db_migration(conn);
+        //dbg!(&result);
+        assert!(result.is_ok());
+        let result = pg_smdb::run_smdb_db_migration(conn);
+        //dbg!(&result);
+        assert!(result.is_ok());
+        let result = pg_metadb::run_metadb_migration(conn);
+        //dbg!(&result);
+        assert!(result.is_ok());
 
         Ok(())
     }

@@ -1,8 +1,28 @@
+use common_metadata::prelude::MetaAsset;
 use diesel::Connection;
 use env_utils::EnvUtil;
 use pg_metadb::prelude::Asset;
-use postgres_test_utils::prelude::get_test_asset;
-use postgres_test_utils::{get_or_wait_for_postgres_connection, DB_TEST_URL};
+use postgres_utils::prelude::{get_or_wait_for_postgres_connection, DB_TEST_URL};
+
+fn get_test_asset() -> Asset {
+    Asset {
+        asset_code: "test_asset_code".to_string(),
+        asset_name: "test_asset_name".to_string(),
+        asset_classes: vec![],
+        asset_figi: None,
+    }
+}
+
+pub fn get_test_meta_asset() -> MetaAsset {
+    MetaAsset {
+        code: "test_asset_code".to_string(),
+        name: "test_asset_name".to_string(),
+        asset_classes: vec![],
+        asset_class: "test_asset_class".to_string(),
+        metadata: None,
+        addresses: None,
+    }
+}
 
 // Somehow tests seem to be executed or sorted in alphabetical order, so make sure that the
 // setup is on top of the stack.

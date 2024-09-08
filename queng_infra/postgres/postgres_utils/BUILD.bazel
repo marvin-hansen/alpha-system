@@ -15,10 +15,17 @@ rust_library(
         # Internal crates
         "//alias:common_config",
         "//alias:common_exchange",
+        "//alias:common_database",
+        "//alias:common_errors",
+        "//alias:container_specs",
+        # Internal database crates
         "//alias:pg_cmdb",
+        "//alias:pg_imdb",
         "//alias:pg_smdb",
+        "//alias:pg_metadb",
         # External crates
         "//thirdparty/crates:diesel",
+        "//thirdparty/crates:tokio",
     ],
 )
 

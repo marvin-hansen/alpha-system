@@ -2,8 +2,19 @@ use common_exchange::prelude::Instrument as CommonInstrument;
 use diesel::Connection;
 use env_utils::EnvUtil;
 use pg_cmdb::model::instrument::Instrument;
-use postgres_test_utils::prelude::get_test_instrument;
-use postgres_test_utils::{get_or_wait_for_postgres_connection, DB_TEST_URL};
+use postgres_utils::prelude::{get_or_wait_for_postgres_connection, DB_TEST_URL};
+
+fn get_test_instrument() -> CommonInstrument {
+    CommonInstrument::new(
+        "test_code".to_string(),
+        "test_class".to_string(),
+        "test_exchange_code".to_string(),
+        "test_exchange_pair_code".to_string(),
+        "test_base_asset".to_string(),
+        "test_quote_asset".to_string(),
+        Some("test".to_string()),
+    )
+}
 
 //
 // Somehow tests seem to be executed or sorted in alphabetical order,
