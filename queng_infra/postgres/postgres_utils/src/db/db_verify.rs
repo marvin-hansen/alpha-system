@@ -17,8 +17,8 @@ impl PostgresUtil {
     pub async fn verify_all_db(&self) -> Result<bool, PostgresUtilError> {
         let conn = &mut self.pool.get().unwrap();
 
-        self.dbg_print("[verify_all_db]: verify SMDB DB schema");
-        match pg_smdb::check_smdb_db_migration(conn) {
+        self.dbg_print("[verify_all_db]: verify CMDB DB schema");
+        match pg_cmdb::check_cmdb_db_migration(conn) {
             Ok(res) => {
                 if !res {
                     return Ok(false);
@@ -27,8 +27,28 @@ impl PostgresUtil {
             Err(e) => return Err(PostgresUtilError::new(e.to_string())),
         }
 
-        self.dbg_print("[verify_all_db]: verify CMDB DB schema");
-        match pg_cmdb::check_cmdb_db_migration(conn) {
+        self.dbg_print("[verify_all_db]: verify IMDB DB schema");
+        match pg_imdb::check_imdb_db_migration(conn) {
+            Ok(res) => {
+                if !res {
+                    return Ok(false);
+                }
+            }
+            Err(e) => return Err(PostgresUtilError::new(e.to_string())),
+        }
+
+        self.dbg_print("[verify_all_db]: verify MDDB DB schema");
+        match pg_mddb::check_mddb_db_migration(conn) {
+            Ok(res) => {
+                if !res {
+                    return Ok(false);
+                }
+            }
+            Err(e) => return Err(PostgresUtilError::new(e.to_string())),
+        }
+
+        self.dbg_print("[verify_all_db]: verify SMDB DB schema");
+        match pg_smdb::check_smdb_db_migration(conn) {
             Ok(res) => {
                 if !res {
                     return Ok(false);

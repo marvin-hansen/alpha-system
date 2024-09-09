@@ -19,8 +19,8 @@ docker_utils = {workspace = true}
 pg_cmdb = {workspace = true}
 pg_cmdb_manager = {workspace = true}
 pg_imdb = {workspace = true}
+pg_mddb = {workspace = true}
 pg_smdb = {workspace = true}
-pg_metadb = {workspace = true}
 
 # External crates
 diesel = { workspace = true }

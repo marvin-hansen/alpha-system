@@ -115,12 +115,6 @@ alias(
 )
 
 alias(
-    name = "pg_metadb",
-    actual = "//queng_infra/postgres/pg_metadb",
-    visibility = ["//visibility:public"],
-)
-
-alias(
     name = "pg_smdb",
     actual = "//queng_infra/postgres/pg_smdb",
     visibility = ["//visibility:public"],

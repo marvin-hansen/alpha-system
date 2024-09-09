@@ -30,7 +30,7 @@ impl PostgresUtil {
         let result = pg_smdb::run_smdb_db_migration(conn);
         //dbg!(&result);
         assert!(result.is_ok());
-        let result = pg_metadb::run_metadb_migration(conn);
+        let result = pg_mddb::run_mddb_migration(conn);
         //dbg!(&result);
         assert!(result.is_ok());
 

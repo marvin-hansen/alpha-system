@@ -52,7 +52,7 @@ async fn test_migration() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
-    let result = pg_mddb::run_metadb_migration(conn);
+    let result = pg_mddb::run_mddb_migration(conn);
     assert!(result.is_ok());
 }
 
@@ -64,7 +64,7 @@ async fn test_create_instrument() {
 
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
-    let result = pg_mddb::run_metadb_migration(conn);
+    let result = pg_mddb::run_mddb_migration(conn);
     assert!(result.is_ok());
 
     let instrument = get_test_meta_instrument();
@@ -80,7 +80,7 @@ async fn test_create_instrument_collection_success() {
 
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
-    let result = pg_mddb::run_metadb_migration(conn);
+    let result = pg_mddb::run_mddb_migration(conn);
     assert!(result.is_ok());
 
     let meta_instruments = vec![get_test_meta_instrument()];
@@ -97,7 +97,7 @@ async fn test_create_instrument_collection_empty() {
 
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
-    let result = pg_mddb::run_metadb_migration(conn);
+    let result = pg_mddb::run_mddb_migration(conn);
     assert!(result.is_ok());
 
     let meta_instruments: Vec<MetaInstrument> = vec![];
@@ -113,7 +113,7 @@ async fn test_create_instrument_collection_error() {
 
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
-    let result = pg_mddb::run_metadb_migration(conn);
+    let result = pg_mddb::run_mddb_migration(conn);
     assert!(result.is_ok());
 
     // All test data have the same instrument code (primary key)
@@ -136,7 +136,7 @@ async fn test_count_instruments_with_entries() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
-    let result = pg_mddb::run_metadb_migration(conn);
+    let result = pg_mddb::run_mddb_migration(conn);
     assert!(result.is_ok());
 
     let test_data = get_test_meta_instrument();
@@ -157,7 +157,7 @@ async fn test_count_instruments_no_entries() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
-    let result = pg_mddb::run_metadb_migration(conn);
+    let result = pg_mddb::run_mddb_migration(conn);
     assert!(result.is_ok());
 
     let result = Instrument::count(conn);
@@ -173,7 +173,7 @@ async fn test_check_if_instrument_id_exists_returns_true() {
 
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
-    let result = pg_mddb::run_metadb_migration(conn);
+    let result = pg_mddb::run_mddb_migration(conn);
     assert!(result.is_ok());
 
     let instrument = get_test_meta_instrument();
@@ -194,7 +194,7 @@ async fn test_check_if_instrument_id_exists_returns_false() {
 
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
-    let result = pg_mddb::run_metadb_migration(conn);
+    let result = pg_mddb::run_mddb_migration(conn);
     assert!(result.is_ok());
 
     let instrument_id = "non_existent_id";
@@ -211,7 +211,7 @@ async fn test_read_instrument() {
 
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
-    let result = pg_mddb::run_metadb_migration(conn);
+    let result = pg_mddb::run_mddb_migration(conn);
     assert!(result.is_ok());
 
     let instrument = get_test_meta_instrument();
@@ -231,7 +231,7 @@ async fn test_read_instrument_error() {
 
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
-    let result = pg_mddb::run_metadb_migration(conn);
+    let result = pg_mddb::run_mddb_migration(conn);
     assert!(result.is_ok());
 
     let instrument_id = "Non-Existent".to_string();
@@ -248,7 +248,7 @@ async fn test_read_all_instrument() {
 
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
-    let result = pg_mddb::run_metadb_migration(conn);
+    let result = pg_mddb::run_mddb_migration(conn);
     assert!(result.is_ok());
 
     let instrument = get_test_meta_instrument();
@@ -268,7 +268,7 @@ async fn test_read_all_instrument_no_entries() {
 
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
-    let result = pg_mddb::run_metadb_migration(conn);
+    let result = pg_mddb::run_mddb_migration(conn);
     assert!(result.is_ok());
 
     let result = Instrument::read_all(conn);
@@ -284,7 +284,7 @@ async fn test_update_instrument() {
 
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
-    let result = pg_mddb::run_metadb_migration(conn);
+    let result = pg_mddb::run_mddb_migration(conn);
     assert!(result.is_ok());
 
     let instrument = get_test_meta_instrument();
@@ -306,7 +306,7 @@ async fn test_update_instrument_non_existent() {
 
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
-    let result = pg_mddb::run_metadb_migration(conn);
+    let result = pg_mddb::run_mddb_migration(conn);
     assert!(result.is_ok());
 
     let instrument_id = String::from("Non-Existent");
@@ -324,7 +324,7 @@ async fn test_delete_instrument() {
 
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
-    let result = pg_mddb::run_metadb_migration(conn);
+    let result = pg_mddb::run_mddb_migration(conn);
     assert!(result.is_ok());
 
     let instrument = get_test_meta_instrument();
@@ -344,7 +344,7 @@ async fn test_delete_instrument_non_existent() {
 
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
-    let result = pg_mddb::run_metadb_migration(conn);
+    let result = pg_mddb::run_mddb_migration(conn);
     assert!(result.is_ok());
 
     let instrument_id = String::from("Non-Existent");

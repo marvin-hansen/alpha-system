@@ -1,9 +1,0 @@
--- This file should undo anything in `up.sql`
-DROP TABLE IF EXISTS mddb.instruments_exchanges;
-
-DROP TABLE IF EXISTS mddb.assets;
-DROP TABLE IF EXISTS mddb.exchanges;
-DROP TABLE IF EXISTS mddb.instruments;
-DROP TABLE IF EXISTS mddb.stats;
-
-DROP schema IF EXISTS mddb;

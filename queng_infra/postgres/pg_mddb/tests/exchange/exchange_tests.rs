@@ -35,7 +35,7 @@ async fn test_migration() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
-    let result = pg_mddb::run_metadb_migration(conn);
+    let result = pg_mddb::run_mddb_migration(conn);
     assert!(result.is_ok());
 }
 
@@ -48,7 +48,7 @@ async fn test_create_exchange() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
-    let result = pg_mddb::run_metadb_migration(conn);
+    let result = pg_mddb::run_mddb_migration(conn);
     assert!(result.is_ok());
 
     let test_data = get_test_meta_exchange();
@@ -65,7 +65,7 @@ async fn test_create_exchange_error() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
-    let result = pg_mddb::run_metadb_migration(conn);
+    let result = pg_mddb::run_mddb_migration(conn);
     assert!(result.is_ok());
 
     let test_data = get_test_meta_exchange();
@@ -87,7 +87,7 @@ async fn test_create_exchange_collection() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
-    let result = pg_mddb::run_metadb_migration(conn);
+    let result = pg_mddb::run_mddb_migration(conn);
     assert!(result.is_ok());
 
     let test_data = Vec::from([get_test_meta_exchange()]);
@@ -105,7 +105,7 @@ async fn test_count_exchanges_with_entries() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
-    let result = pg_mddb::run_metadb_migration(conn);
+    let result = pg_mddb::run_mddb_migration(conn);
     assert!(result.is_ok());
 
     let test_data = get_test_meta_exchange();
@@ -126,7 +126,7 @@ async fn test_count_exchanges_no_entries() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
-    let result = pg_mddb::run_metadb_migration(conn);
+    let result = pg_mddb::run_mddb_migration(conn);
     assert!(result.is_ok());
 
     let result = Exchange::count(conn);
@@ -143,7 +143,7 @@ async fn test_check_if_exchange_id_exists_true() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
-    let result = pg_mddb::run_metadb_migration(conn);
+    let result = pg_mddb::run_mddb_migration(conn);
     assert!(result.is_ok());
 
     let test_data = get_test_meta_exchange();
@@ -166,7 +166,7 @@ async fn test_check_if_exchange_id_exists_false() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
-    let result = pg_mddb::run_metadb_migration(conn);
+    let result = pg_mddb::run_mddb_migration(conn);
     assert!(result.is_ok());
 
     let invalid_exchange_id = "non_existent_exchange_id";
@@ -184,7 +184,7 @@ async fn test_update() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
-    let result = pg_mddb::run_metadb_migration(conn);
+    let result = pg_mddb::run_mddb_migration(conn);
     assert!(result.is_ok());
 
     let test_data = get_test_meta_exchange();
@@ -206,7 +206,7 @@ async fn test_read_valid_exchange_id() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
-    let result = pg_mddb::run_metadb_migration(conn);
+    let result = pg_mddb::run_mddb_migration(conn);
     assert!(result.is_ok());
 
     let test_data = get_test_meta_exchange();
@@ -229,7 +229,7 @@ async fn test_read_all_with_entries() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
-    let result = pg_mddb::run_metadb_migration(conn);
+    let result = pg_mddb::run_mddb_migration(conn);
     assert!(result.is_ok());
 
     let test_data1 = get_test_meta_exchange();
@@ -250,7 +250,7 @@ async fn test_read_all_empty_table() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
-    let result = pg_mddb::run_metadb_migration(conn);
+    let result = pg_mddb::run_mddb_migration(conn);
     assert!(result.is_ok());
 
     let result = Exchange::read_all(conn);
@@ -268,7 +268,7 @@ async fn test_read_non_existent_exchange_id() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
-    let result = pg_mddb::run_metadb_migration(conn);
+    let result = pg_mddb::run_mddb_migration(conn);
     assert!(result.is_ok());
 
     let invalid_exchange_id = "non_existent_exchange_id";
@@ -285,7 +285,7 @@ async fn test_update_error() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
-    let result = pg_mddb::run_metadb_migration(conn);
+    let result = pg_mddb::run_mddb_migration(conn);
     assert!(result.is_ok());
 
     let invalid_exchange_id = "invalid_exchange_id";
