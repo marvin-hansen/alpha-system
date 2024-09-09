@@ -34,14 +34,7 @@ bazel_dep(name = "toolchains_protoc", version = "0.3.3")
 bazel_dep(name = "protobuf", version = "27.3")
 
 # https://github.com/bazelbuild/platforms/releases
-bazel_dep(name = "platforms", version = "0.0.10")
-
-# https://github.com/bazelbuild/bazel/blob/master/tools/build_defs/repo/http.bzl
-http_archive = use_repo_rule("@bazel_tools//:http.bzl", "http_archive")
-
-###############################################################################
-# T O O L C H A I N S
-###############################################################################
+# bazel_dep(name = "platforms", version = "0.0.10")
 
 ##################
 # Rust toolchain #
@@ -54,10 +47,6 @@ RUST_VERSION = "1.81.0"
 rust = use_extension("@rules_rust//rust:extensions.bzl", "rust")
 rust.toolchain(
     edition = RUST_EDITION,
-    extra_target_triples = [
-        "x86_64-unknown-linux-musl",
-        "aarch64-unknown-linux-musl",
-    ],
     versions = [RUST_VERSION],
 )
 use_repo(rust, "rust_toolchains")
@@ -101,19 +90,6 @@ oci.pull(
 
 # For each oci.pull call, repeat the "name" here to expose them as dependencies.
 use_repo(oci, "distroless")
-
-# scratch
-# https://hub.docker.com/r/hansenmarvin/rust-scratch/tags
-oci.pull(
-    name = "scratch",
-    digest = "sha256:c6d1c2b62a454d6c5606645b5adfa026516e3aa9213a6f7648b8e9b3cc520f76",
-    image = "index.docker.io/hansenmarvin/rust-scratch",
-    platforms = [
-        "linux/amd64",
-        "linux/arm64",
-    ],
-)
-use_repo(oci, "scratch")
 
 ###############################################################################
 # BuildBuddy Toolchain: https://github.com/buildbuddy-io/buildbuddy-toolchain/
