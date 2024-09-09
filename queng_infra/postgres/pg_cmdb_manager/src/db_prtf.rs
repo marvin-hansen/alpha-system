@@ -99,6 +99,14 @@ impl PostgresCMDBManager {
         }
     }
 
+    pub async fn insert_portfolio_config_collection(
+        &self,
+        _data: &[PortfolioConfig],
+    ) -> Result<(), PostgresDBError> {
+        // TODO: implement
+        Ok(())
+    }
+
     /// Returns the number of portfolio configurations in the database.
     ///
     /// # Returns

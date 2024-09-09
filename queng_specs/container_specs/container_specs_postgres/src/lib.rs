@@ -1,3 +1,5 @@
+extern crate common_container;
+
 use common_container::prelude::{ContainerConfig, WaitStrategy};
 
 pub fn postgres_db_container_config() -> ContainerConfig<'static> {

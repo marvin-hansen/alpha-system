@@ -236,22 +236,26 @@ alias(
 )
 
 ###############################################################################
-# DB Specs
+# Database Specs
 ###############################################################################
 
 # DB Specs
 alias(
     name = "db_specs_clickhouse",
-    actual = "//queng_specs/db_specs/db_specs_clickhouse",
+    actual = "//queng_specs/database_specs/db_specs_clickhouse",
     visibility = ["//visibility:public"],
 )
 
 # DB Specs
 alias(
     name = "db_specs_postgres",
-    actual = "//queng_specs/db_specs/db_specs_postgres",
+    actual = "//queng_specs/database_specs/db_specs_postgres",
     visibility = ["//visibility:public"],
 )
+
+###############################################################################
+# Misc. Specs
+###############################################################################
 
 # Exchange specs
 alias(

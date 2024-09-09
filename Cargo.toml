@@ -53,11 +53,11 @@ members = [
     "queng_services/meta/mddb/mddb_tests",
     "queng_services/templete/grpc_service",
     "queng_specs/portfolio_specs",
-    "queng_specs/container_specs/container_specs_clickhouse",
-    "queng_specs/container_specs/container_specs_postgres",
     "queng_specs/container_specs/container_specs_kaiko",
-    "queng_specs/db_specs/db_specs_clickhouse",
-    "queng_specs/db_specs/db_specs_postgres",
+    "queng_specs/container_specs/container_specs_postgres",
+    "queng_specs/container_specs/container_specs_clickhouse",
+    "queng_specs/database_specs/db_specs_clickhouse",
+    "queng_specs/database_specs/db_specs_postgres",
     "queng_specs/exchange_specs",
     "queng_specs/service_specs/service_specs_all",
     "queng_specs/service_specs/ims/ims_data/ims_data_binance_specs",
@@ -162,8 +162,8 @@ container_specs_clickhouse = { path = "queng_specs/container_specs/container_spe
 container_specs_postgres = { path = "queng_specs/container_specs/container_specs_postgres" }
 container_specs_kaiko = { path = "queng_specs/container_specs/container_specs_kaiko" }
 # DB specs
-db_specs_clickhouse = { path = "queng_specs/db_specs/db_specs_clickhouse" }
-db_specs_postgres = { path = "queng_specs/db_specs/db_specs_postgres" }
+db_specs_clickhouse = { path = "queng_specs/database_specs/db_specs_clickhouse" }
+db_specs_postgres = { path = "queng_specs/database_specs/db_specs_postgres" }
 #
 exchange_specs = { path = "queng_specs/exchange_specs" }
 #

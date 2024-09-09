@@ -1,3 +1,5 @@
+extern crate common_container;
+
 use common_container::prelude::{ContainerConfig, WaitStrategy};
 
 /// Constructs the configuration for an API proxy container.
