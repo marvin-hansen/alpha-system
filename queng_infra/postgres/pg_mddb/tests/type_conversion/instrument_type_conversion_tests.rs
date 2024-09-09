@@ -1,5 +1,5 @@
 use common_metadata::prelude::MetaInstrument;
-use pg_metadb::prelude::Instrument;
+use pg_mddb::prelude::Instrument;
 
 #[test]
 fn test_from_meta_instrument() {

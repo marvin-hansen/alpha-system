@@ -1,5 +1,5 @@
 use common_metadata::prelude::MetaStats;
-use pg_metadb::prelude::Stat;
+use pg_mddb::prelude::Stat;
 
 #[test]
 fn test_from_meta_stats() {

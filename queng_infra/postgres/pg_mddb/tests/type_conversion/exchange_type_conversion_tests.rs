@@ -1,5 +1,5 @@
 use common_metadata::prelude::MetaExchange;
-use pg_metadb::prelude::*;
+use pg_mddb::prelude::*;
 
 #[test]
 fn test_from_meta_exchange() {

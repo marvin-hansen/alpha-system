@@ -2,7 +2,7 @@ use common_metadata::prelude::MetaAsset;
 use container_specs_postgres::postgres_db_container_config;
 use diesel::Connection;
 use docker_utils::prelude::DockerUtil;
-use pg_metadb::prelude::Asset;
+use pg_mddb::prelude::Asset;
 use postgres_migrations::prelude::{get_or_wait_for_postgres_connection, DB_TEST_URL};
 
 fn get_test_asset() -> Asset {
@@ -47,7 +47,7 @@ async fn test_migration() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
-    let result = pg_metadb::run_metadb_migration(conn);
+    let result = pg_mddb::run_metadb_migration(conn);
     assert!(result.is_ok());
 }
 
@@ -60,7 +60,7 @@ async fn test_count() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
-    let result = pg_metadb::run_metadb_migration(conn);
+    let result = pg_mddb::run_metadb_migration(conn);
     assert!(result.is_ok());
 
     let count = Asset::count(conn);
@@ -84,7 +84,7 @@ async fn test_create() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
-    let result = pg_metadb::run_metadb_migration(conn);
+    let result = pg_mddb::run_metadb_migration(conn);
     assert!(result.is_ok());
 
     let asset = get_test_asset().to_meta_asset();
@@ -101,7 +101,7 @@ async fn test_create_error() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
-    let result = pg_metadb::run_metadb_migration(conn);
+    let result = pg_mddb::run_metadb_migration(conn);
     assert!(result.is_ok());
 
     let asset = get_test_asset().to_meta_asset();
@@ -122,7 +122,7 @@ async fn test_read() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
-    let result = pg_metadb::run_metadb_migration(conn);
+    let result = pg_mddb::run_metadb_migration(conn);
     assert!(result.is_ok());
 
     let asset = get_test_asset().to_meta_asset();
@@ -145,7 +145,7 @@ async fn test_read_error() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
-    let result = pg_metadb::run_metadb_migration(conn);
+    let result = pg_mddb::run_metadb_migration(conn);
     assert!(result.is_ok());
 
     // Simulate an error scenario
@@ -161,7 +161,7 @@ async fn test_delete() {
     let conn = &mut connection.unwrap();
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
-    let result = pg_metadb::run_metadb_migration(conn);
+    let result = pg_mddb::run_metadb_migration(conn);
     // dbg!(&result);
     assert!(result.is_ok());
 
@@ -182,7 +182,7 @@ async fn test_delete_error() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
-    let result = pg_metadb::run_metadb_migration(conn);
+    let result = pg_mddb::run_metadb_migration(conn);
     // dbg!(&result);
     assert!(result.is_ok());
 

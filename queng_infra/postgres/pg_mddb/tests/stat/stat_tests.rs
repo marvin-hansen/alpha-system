@@ -2,7 +2,7 @@ use common_metadata::prelude::MetaStats;
 use container_specs_postgres::postgres_db_container_config;
 use diesel::Connection;
 use docker_utils::prelude::DockerUtil;
-use pg_metadb::prelude::Stat;
+use pg_mddb::prelude::Stat;
 use postgres_migrations::prelude::{get_or_wait_for_postgres_connection, DB_TEST_URL};
 
 fn get_test_meta_stats() -> MetaStats {
@@ -43,7 +43,7 @@ async fn test_migration() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
-    let result = pg_metadb::run_metadb_migration(conn);
+    let result = pg_mddb::run_metadb_migration(conn);
     assert!(result.is_ok());
 }
 
@@ -56,7 +56,7 @@ async fn test_create_stat() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
-    let result = pg_metadb::run_metadb_migration(conn);
+    let result = pg_mddb::run_metadb_migration(conn);
     assert!(result.is_ok());
 
     let meta_stats = MetaStats::new("timestamp".to_string(), "hash".to_string(), 10, 5, 15);
@@ -80,7 +80,7 @@ async fn test_create_stat_err() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
-    let result = pg_metadb::run_metadb_migration(conn);
+    let result = pg_mddb::run_metadb_migration(conn);
     assert!(result.is_ok());
 
     let meta_stats = MetaStats::new("timestamp".to_string(), "hash".to_string(), 10, 5, 15);
@@ -102,7 +102,7 @@ async fn test_create_stat_collection_success() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
-    let result = pg_metadb::run_metadb_migration(conn);
+    let result = pg_mddb::run_metadb_migration(conn);
     assert!(result.is_ok());
 
     let meta_stats_collection = vec![MetaStats::new(
@@ -127,7 +127,7 @@ async fn test_create_stat_collection_empty() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
-    let result = pg_metadb::run_metadb_migration(conn);
+    let result = pg_mddb::run_metadb_migration(conn);
     assert!(result.is_ok());
 
     let meta_stats_collection = vec![];
@@ -145,7 +145,7 @@ async fn test_count_stat() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
-    let result = pg_metadb::run_metadb_migration(conn);
+    let result = pg_mddb::run_metadb_migration(conn);
     assert!(result.is_ok());
 
     let test_data = get_test_meta_stats();
@@ -166,7 +166,7 @@ async fn test_count_stat() {
 //     let conn = &mut connection.unwrap();
 //     conn.begin_test_transaction().expect("Failed to begin test transaction");
 //
-//     let result = pg_metadb::run_metadb_migration(conn);
+//     let result = pg_mddb::run_metadb_migration(conn);
 //     assert!(result.is_ok());
 //
 //     // Insert multiple stat entries
@@ -190,7 +190,7 @@ async fn test_count_no_stat_entries() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
-    let result = pg_metadb::run_metadb_migration(conn);
+    let result = pg_mddb::run_metadb_migration(conn);
     assert!(result.is_ok());
 
     let result = Stat::count(conn);
@@ -207,7 +207,7 @@ async fn test_check_if_stat_id_exists_returns_true() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
-    let result = pg_metadb::run_metadb_migration(conn);
+    let result = pg_mddb::run_metadb_migration(conn);
     assert!(result.is_ok());
 
     let test_data = get_test_meta_stats();
@@ -228,7 +228,7 @@ async fn test_check_if_stat_id_exists_returns_false() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
-    let result = pg_metadb::run_metadb_migration(conn);
+    let result = pg_mddb::run_metadb_migration(conn);
     assert!(result.is_ok());
 
     let result = Stat::check_if_stat_id_exists(conn, 42);
@@ -245,7 +245,7 @@ async fn test_read_stat_entry() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
-    let result = pg_metadb::run_metadb_migration(conn);
+    let result = pg_mddb::run_metadb_migration(conn);
     assert!(result.is_ok());
 
     let test_data = get_test_meta_stats();
@@ -272,7 +272,7 @@ async fn test_read_non_existent_stat_entry() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
-    let result = pg_metadb::run_metadb_migration(conn);
+    let result = pg_mddb::run_metadb_migration(conn);
     assert!(result.is_ok());
 
     let result = Stat::read(conn, 42);
@@ -288,7 +288,7 @@ async fn test_read_all_stats() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
-    let result = pg_metadb::run_metadb_migration(conn);
+    let result = pg_mddb::run_metadb_migration(conn);
     assert!(result.is_ok());
 
     let test_data = get_test_meta_stats();
@@ -311,7 +311,7 @@ async fn test_read_all_stats_empty() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
-    let result = pg_metadb::run_metadb_migration(conn);
+    let result = pg_mddb::run_metadb_migration(conn);
     assert!(result.is_ok());
 
     let result = Stat::read_all(conn);
@@ -330,7 +330,7 @@ async fn test_delete_stat() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
-    let result = pg_metadb::run_metadb_migration(conn);
+    let result = pg_mddb::run_metadb_migration(conn);
     assert!(result.is_ok());
 
     let test_data = get_test_meta_stats();
@@ -355,7 +355,7 @@ async fn test_delete_stat_non_existent_id() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
-    let result = pg_metadb::run_metadb_migration(conn);
+    let result = pg_mddb::run_metadb_migration(conn);
     assert!(result.is_ok());
 
     // Call the delete method

@@ -2,7 +2,7 @@ use common_metadata::prelude::{InstrumentMetadata, MetaExchange, MetaInstrument}
 use container_specs_postgres::postgres_db_container_config;
 use diesel::Connection;
 use docker_utils::prelude::DockerUtil;
-use pg_metadb::prelude::{Exchange, Instrument, InstrumentsExchanges};
+use pg_mddb::prelude::{Exchange, Instrument, InstrumentsExchanges};
 use postgres_migrations::prelude::{get_or_wait_for_postgres_connection, DB_TEST_URL};
 
 fn get_test_meta_instrument() -> MetaInstrument {
@@ -60,7 +60,7 @@ async fn test_migration() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
-    let result = pg_metadb::run_metadb_migration(conn);
+    let result = pg_mddb::run_metadb_migration(conn);
     assert!(result.is_ok());
 }
 
@@ -72,7 +72,7 @@ async fn test_create_instruments_exchanges() {
 
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
-    let result = pg_metadb::run_metadb_migration(conn);
+    let result = pg_mddb::run_metadb_migration(conn);
     // dbg!(&result);
     assert!(result.is_ok());
 
@@ -102,7 +102,7 @@ async fn test_create_instruments_exchanges_err() {
 
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
-    let result = pg_metadb::run_metadb_migration(conn);
+    let result = pg_mddb::run_metadb_migration(conn);
     // dbg!(&result);
     assert!(result.is_ok());
 
@@ -122,7 +122,7 @@ async fn test_check_if_instruments_exchanges_exists() {
 
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
-    let result = pg_metadb::run_metadb_migration(conn);
+    let result = pg_mddb::run_metadb_migration(conn);
     assert!(result.is_ok());
 
     // Insert exchange
@@ -156,7 +156,7 @@ async fn test_delete_instruments_exchanges() {
 
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
-    let result = pg_metadb::run_metadb_migration(conn);
+    let result = pg_mddb::run_metadb_migration(conn);
     assert!(result.is_ok());
 
     // Insert exchange

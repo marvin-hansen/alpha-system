@@ -1,5 +1,5 @@
 use common_metadata::prelude::MetaAsset;
-use pg_metadb::prelude::Asset;
+use pg_mddb::prelude::Asset;
 
 #[test]
 fn test_asset_conversion() {

@@ -11,7 +11,7 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Crate to test
-        "//alias:pg_metadb",
+        "//alias:pg_mddb",
         # Internal crates
         "//alias:common_metadata",
         "//alias:container_specs_postgres",
@@ -45,7 +45,7 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Crate to test
-        "//alias:pg_metadb",
+        "//alias:pg_mddb",
         # Internal crates
         "//alias:common_metadata",
         "//alias:container_specs_postgres",
@@ -80,7 +80,7 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Crate to test
-        "//alias:pg_metadb",
+        "//alias:pg_mddb",
         # Internal crates
         "//alias:common_metadata",
         "//alias:container_specs_postgres",
@@ -115,7 +115,7 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Crate to test
-        "//alias:pg_metadb",
+        "//alias:pg_mddb",
         # Internal crates
         "//alias:common_metadata",
         "//alias:container_specs_postgres",
@@ -150,7 +150,7 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Crate to test
-        "//alias:pg_metadb",
+        "//alias:pg_mddb",
         # Internal crates
         "//alias:common_metadata",
         "//alias:container_specs_postgres",
@@ -185,7 +185,7 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Crate to test
-        "//alias:pg_metadb",
+        "//alias:pg_mddb",
         # Internal crates
         "//alias:common_metadata",
         "//alias:container_specs_postgres",
