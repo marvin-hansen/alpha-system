@@ -34,7 +34,7 @@ bazel_dep(name = "toolchains_protoc", version = "0.3.3")
 bazel_dep(name = "protobuf", version = "27.3")
 
 # https://github.com/bazelbuild/platforms/releases
-# bazel_dep(name = "platforms", version = "0.0.10")
+bazel_dep(name = "platforms", version = "0.0.10")
 
 ##################
 # Rust toolchain #
