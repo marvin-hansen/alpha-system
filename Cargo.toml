@@ -74,7 +74,7 @@ members = [
     "queng_utils_tests/docker_utils",
     "queng_utils_tests/env_utils",
     "queng_utils_tests/kaiko_utils",
-    "queng_utils_tests/service_utils",
+    "queng_utils_tests/service_utils", "queng_infra/postgres/pg_mddb",
 ]
 
 
@@ -127,9 +127,10 @@ db_clickhouse_manager = { path = "queng_infra/clickhouse/db_clickhouse_manager" 
 pg_cmdb = { path = "queng_infra/postgres/pg_cmdb" }
 pg_cmdb_manager = { path = "queng_infra/postgres/pg_cmdb_manager" }
 pg_imdb = { path = "queng_infra/postgres/pg_imdb" }
+pg_mddb = { path = "queng_infra/postgres/pg_mddb" }
+pg_metadb = { path = "queng_infra/postgres/pg_metadb" }
 pg_smdb = { path = "queng_infra/postgres/pg_smdb" }
 pg_smdb_manager = { path = "queng_infra/postgres/pg_smdb_manager" }
-pg_metadb = { path = "queng_infra/postgres/pg_metadb" }
 postgres_migrations = { path = "queng_infra/postgres/postgres_migrations" }
 postgres_utils = { path = "queng_infra/postgres/postgres_utils" }
 

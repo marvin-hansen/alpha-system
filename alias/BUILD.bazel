@@ -109,6 +109,12 @@ alias(
 )
 
 alias(
+    name = "pg_mddb",
+    actual = "//queng_infra/postgres/pg_mddb",
+    visibility = ["//visibility:public"],
+)
+
+alias(
     name = "pg_metadb",
     actual = "//queng_infra/postgres/pg_metadb",
     visibility = ["//visibility:public"],
