@@ -1,3 +1,6 @@
+// Unsafe code must be explicitly enabled to use it.
+#[deny(unsafe_code)]
+//
 use crate::utils::get_svc_env_config;
 use common_config::prelude::{ServiceConfig, ServiceID, SvcEnvConfig};
 use common_database::prelude::{ClickHouseConfig, PostgresDBConfig};

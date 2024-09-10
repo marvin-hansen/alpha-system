@@ -1,3 +1,6 @@
+// Unsafe code must be explicitly enabled to use it.
+#[deny(unsafe_code)]
+//
 use common_config::prelude::HostEndpoint;
 use proto_imdb::proto::ims_data_service_client::ImsDataServiceClient;
 use std::fmt::Error;

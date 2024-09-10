@@ -1,3 +1,6 @@
+// Unsafe code must be explicitly enabled to use it.
+#[deny(unsafe_code)]
+//
 use crate::embed_migrations::EMBEDDED_MIGRATIONS;
 use diesel_migrations::EmbeddedMigrations;
 use postgres_migrations::Connection;

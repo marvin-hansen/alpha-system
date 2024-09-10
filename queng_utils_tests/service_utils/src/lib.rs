@@ -1,3 +1,6 @@
+// Unsafe code must be explicitly enabled to use it.
+#[deny(unsafe_code)]
+//
 use crate::error::service_util_error::ServiceUtilError;
 use config_manager::CfgManager;
 use std::fmt::{Display, Formatter};

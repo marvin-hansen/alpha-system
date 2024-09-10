@@ -1,3 +1,6 @@
+// Unsafe code must be explicitly enabled to use it.
+#[deny(unsafe_code)]
+//
 mod handlers;
 mod service;
 mod stream_manager;

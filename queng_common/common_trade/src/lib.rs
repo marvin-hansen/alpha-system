@@ -1,3 +1,6 @@
+// Unsafe code must be explicitly enabled to use it.
+#[deny(unsafe_code)]
+//
 pub(crate) mod pattern_config;
 pub(crate) mod pattern_type;
 pub mod prelude;

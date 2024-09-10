@@ -1,3 +1,6 @@
+// Unsafe code must be explicitly enabled to use it.
+#[deny(unsafe_code)]
+//
 use std::cell::RefCell;
 
 use crate::prelude::EnvironmentError;

@@ -1,3 +1,6 @@
+// Unsafe code must be explicitly enabled to use it.
+#[deny(unsafe_code)]
+//
 mod abstract_trait;
 mod base_pattern;
 mod extra_pattern;

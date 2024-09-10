@@ -1,7 +1,9 @@
-use tonic::transport::{Channel, Uri};
-
 use common_config::prelude::HostEndpoint;
 use proto_smdb::proto::db_gateway_service_client::DbGatewayServiceClient as DBGWClient;
+// Unsafe code must be explicitly enabled to use it.
+#[deny(unsafe_code)]
+//
+use tonic::transport::{Channel, Uri};
 
 mod error;
 mod svc_gw;

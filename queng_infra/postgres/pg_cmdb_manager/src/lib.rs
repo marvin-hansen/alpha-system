@@ -1,3 +1,6 @@
+// Unsafe code must be explicitly enabled to use it.
+#[deny(unsafe_code)]
+//
 use common_errors::prelude::PostgresDBError;
 use diesel::r2d2::{ConnectionManager, Pool};
 use diesel::PgConnection;

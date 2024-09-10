@@ -11,6 +11,16 @@ use diesel::{
 };
 
 impl Portfolio {
+    ///
+    /// Reads and retrieves portfolio configuration data for a given portfolio ID from the database.
+    ///
+    /// # Arguments
+    /// - `db`: Mutable reference to the PGConnection for the database operations.
+    /// - `param_portfolio_id`: The ID of the portfolio to retrieve configuration data for.
+    ///
+    /// # Returns
+    /// Result containing the CommonPortfolioConfig if successful, or a QueryResult error.
+    ///
     pub fn read(
         db: &mut PGConnection,
         param_portfolio_id: i32,
