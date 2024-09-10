@@ -2,7 +2,7 @@ load("@rules_rust//crate_universe:defs.bzl", "crate", "crates_vendor")
 
 crates_vendor(
     name = "crates_vendor",
-    #cargo_lockfile = "Cargo.Bazel.lock",
+    # cargo_lockfile = "Cargo.Bazel.lock",
     annotations = {
         "protoc-gen-prost": [
             crate.annotation(
@@ -22,7 +22,7 @@ crates_vendor(
             ),
         ],
     },
-    mode = "remote",
+    mode = "local",
     packages = {
         # Custom Memory Allocator
         # https://www.tweag.io/blog/2023-08-10-rust-static-link-with-mimalloc/
