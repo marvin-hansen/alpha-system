@@ -22,7 +22,7 @@ crates_vendor(
             ),
         ],
     },
-    mode = "local",
+    mode = "remote",
     packages = {
         # Custom Memory Allocator
         # https://www.tweag.io/blog/2023-08-10-rust-static-link-with-mimalloc/
