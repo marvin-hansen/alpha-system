@@ -29,6 +29,5 @@ rust_test_suite(
         "//alias:postgres_migrations",
         # External crates
         "//thirdparty/crates:tokio",
-        "//thirdparty/crates:diesel",
     ],
 )
