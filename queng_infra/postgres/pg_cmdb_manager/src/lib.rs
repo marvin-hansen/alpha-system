@@ -19,6 +19,8 @@ pub struct PostgresCMDBManager {
 impl PostgresCMDBManager {
     ///
     /// Asynchronously creates a new instance by building with the provided URL.
+    /// Tests for database migration and performs it automatically if required.
+    /// Use this constructor by default.
     ///
     /// # Arguments
     ///
@@ -30,6 +32,23 @@ impl PostgresCMDBManager {
     ///
     pub async fn new(url: &str) -> Result<Self, PostgresDBError> {
         Self::build(false, false, true, url).await
+    }
+
+    ///
+    /// Asynchronously creates a new instance by building with the provided URL.
+    /// Does not test or perform database migration. Use this constructor
+    /// when you are 100% certain that the DB already has been migrated.
+    ///
+    /// # Arguments
+    ///
+    /// * `url` - A string slice representing the URL for the database connection.
+    ///
+    /// # Returns
+    ///
+    /// A Result containing the newly created instance or a PostgresDBError.
+    ///
+    pub async fn new_no_migration(url: &str) -> Result<Self, PostgresDBError> {
+        Self::build(false, false, false, url).await
     }
 
     ///
@@ -49,7 +68,12 @@ impl PostgresCMDBManager {
     }
 
     ///
-    /// Asynchronously initializes a connection to the Postgres database with test and debug options.
+    /// Asynchronously initializes a connection to the Postgres database
+    /// with test and debug options enabled.
+    ///
+    /// Note, in test mode, each DB method is performed in a test transaction that aborts
+    /// at the end of the method call so that no changes are committed to the DB.
+    /// Use this for testing only.
     ///
     /// # Arguments
     ///
@@ -130,12 +154,12 @@ impl PostgresCMDBManager {
     ///
     /// If in test mode, begins a test transaction and runs CMDB database migration;
     /// Note, a test transaction abort at the end of the function call so that no changes
-    /// are committed to the DB. Use for testing only. 
+    /// are committed to the DB. Use for testing only.
     ///
     /// # Returns
     ///
     /// A pooled connection from the pool.
-    pub fn get_connection(&self) -> PooledConnection<ConnectionManager<PgConnection>> {
+    pub(crate) fn get_connection(&self) -> PooledConnection<ConnectionManager<PgConnection>> {
         let mut conn = self.pool.get().expect("Failed to get connection from pool");
 
         if self.test {
