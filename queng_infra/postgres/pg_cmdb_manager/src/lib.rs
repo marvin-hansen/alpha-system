@@ -2,7 +2,7 @@
 #[deny(unsafe_code)]
 //
 use common_errors::prelude::PostgresDBError;
-use diesel::r2d2::{ConnectionManager, Pool};
+use diesel::r2d2::{ConnectionManager, Pool, PooledConnection};
 use diesel::PgConnection;
 use pg_cmdb::run_cmdb_db_migration;
 use std::fmt::Display;
@@ -53,6 +53,11 @@ impl PostgresCMDBManager {
     }
 }
 
+impl PostgresCMDBManager {
+    pub fn get_connection(&self) -> PooledConnection<ConnectionManager<PgConnection>> {
+        self.pool.get().expect("Failed to get connection from pool")
+    }
+}
 impl PostgresCMDBManager {
     pub fn dbg_print(&self, msg: &str) {
         if self.dbg {

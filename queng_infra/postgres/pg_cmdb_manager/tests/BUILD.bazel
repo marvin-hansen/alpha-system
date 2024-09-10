@@ -1,0 +1,34 @@
+load("@rules_rust//rust:defs.bzl", "rust_test_suite")
+
+rust_test_suite(
+    name = "tests",
+    srcs = glob([
+        "*_tests.rs",
+    ]),
+    exec_properties = {
+        # Tell BuildBuddy to run this test using a Firecracker microVM.
+        "test.workload-isolation-type": "firecracker",
+        # Tell BuildBuddy to ensure that the Docker daemon is started
+        "test.init-dockerd": "true",
+        # Tell BuildBuddy to preserve the microVM state across test runs.
+        "test.recycle-runner": "true",
+        # We don't want different different db tests to be assigned to the same recycled runner,
+        # because we can't fit all db docker images with the default disk limit.
+        "test.runner-recycling-key": "pg_cmdb_manager_tests",
+    },
+    tags = [
+        "integration_test",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        "//alias:pg_cmdb_manager",
+        # Internal crates
+        "//alias:container_specs_postgres",
+        "//alias:docker_utils",
+        "//alias:postgres_migrations",
+        # External crates
+        "//thirdparty/crates:tokio",
+        "//thirdparty/crates:diesel",
+    ],
+)

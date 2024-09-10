@@ -22,7 +22,7 @@ impl PostgresCMDBManager {
         data: &PortfolioConfig,
     ) -> Result<PortfolioConfig, PostgresDBError> {
         self.dbg_print("insert_portfolio_config");
-        let conn = &mut self.pool.get().unwrap();
+        let conn = &mut self.get_connection();
 
         match Portfolio::create(conn, data) {
             Ok(res) => Ok(res),
@@ -45,7 +45,7 @@ impl PostgresCMDBManager {
         data: &[PortfolioConfig],
     ) -> Result<(), PostgresDBError> {
         self.dbg_print("insert_portfolio_config_collection");
-        let conn = &mut self.pool.get().unwrap();
+        let conn = &mut self.get_connection();
 
         match Portfolio::create_portfolio_collection(conn, data) {
             Ok(_) => Ok(()),
@@ -62,7 +62,7 @@ impl PostgresCMDBManager {
     ///
     pub async fn count_portfolio_configs(&mut self) -> Result<u64, PostgresDBError> {
         self.dbg_print("count_portfolio_configs");
-        let conn = &mut self.pool.get().unwrap();
+        let conn = &mut self.get_connection();
 
         match Portfolio::count(conn) {
             Ok(count) => Ok(count),
@@ -90,7 +90,7 @@ impl PostgresCMDBManager {
         portfolio_id: u16,
     ) -> Result<bool, PostgresDBError> {
         self.dbg_print("check_if_portfolio_id_exists");
-        let conn = &mut self.pool.get().unwrap();
+        let conn = &mut self.get_connection();
 
         match Portfolio::check_if_portfolio_id_exists(conn, portfolio_id as i32) {
             Ok(exists) => Ok(exists),
@@ -118,7 +118,7 @@ impl PostgresCMDBManager {
         instrument_id: &str,
     ) -> Result<bool, PostgresDBError> {
         self.dbg_print("check_if_instrument_id_exists");
-        let conn = &mut self.pool.get().unwrap();
+        let conn = &mut self.get_connection();
 
         match Instrument::check_if_instrument_code_exists(conn, instrument_id.to_string()) {
             Ok(exists) => Ok(exists),
@@ -143,7 +143,7 @@ impl PostgresCMDBManager {
         portfolio_id: u16,
     ) -> Result<PortfolioConfig, PostgresDBError> {
         self.dbg_print("read_portfolio_config_by_id");
-        let conn = &mut self.pool.get().unwrap();
+        let conn = &mut self.get_connection();
 
         self.dbg_print("check_if_portfolio_id_exists");
         match Portfolio::read(conn, portfolio_id as i32) {
@@ -165,7 +165,7 @@ impl PostgresCMDBManager {
         &self,
     ) -> Result<Vec<PortfolioConfig>, PostgresDBError> {
         self.dbg_print("read_all_portfolio_configs");
-        let conn = &mut self.pool.get().unwrap();
+        let conn = &mut self.get_connection();
 
         match Portfolio::read_all(conn) {
             Ok(res) => Ok(res),
@@ -190,7 +190,7 @@ impl PostgresCMDBManager {
         data: PortfolioConfig,
     ) -> Result<(), PostgresDBError> {
         self.dbg_print("update_portfolio_config");
-        let conn = &mut self.pool.get().unwrap();
+        let conn = &mut self.get_connection();
 
         let portfolio_id = data.portfolio_id() as i32;
         match Portfolio::update(conn, portfolio_id, &data) {
@@ -213,7 +213,7 @@ impl PostgresCMDBManager {
     ///
     pub async fn delete_portfolio_config(&self, id: u16) -> Result<bool, PostgresDBError> {
         self.dbg_print("delete_portfolio_config");
-        let conn = &mut self.pool.get().unwrap();
+        let conn = &mut self.get_connection();
 
         match Portfolio::delete(conn, id as i32) {
             Ok(_) => Ok(true),
