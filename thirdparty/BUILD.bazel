@@ -4,6 +4,14 @@ crates_vendor(
     name = "crates_vendor",
     # cargo_lockfile = "Cargo.Bazel.lock",
     annotations = {
+        # Fixes an issue that autometrics actually uses CARGO_PKG_REPOSITORY, which is not set by Bazel.
+        "autometrics": [
+            crate.annotation(
+                rustc_env = {
+                    "CARGO_PKG_REPOSITORY": "https://github.com/autometrics-dev/autometrics-rs",
+                },
+            ),
+        ],
         "protoc-gen-prost": [
             crate.annotation(
                 gen_binaries = ["protoc-gen-prost"],
@@ -12,13 +20,6 @@ crates_vendor(
         "protoc-gen-tonic": [
             crate.annotation(
                 gen_binaries = ["protoc-gen-tonic"],
-            ),
-        ],
-        "autometrics": [
-            crate.annotation(
-                rustc_env = {
-                    "CARGO_PKG_REPOSITORY": "https://github.com/autometrics-dev/autometrics-rs",
-                },
             ),
         ],
     },
