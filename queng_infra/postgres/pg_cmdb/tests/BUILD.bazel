@@ -3,7 +3,7 @@ load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 rust_test_suite(
     name = "instrument_tests",
     srcs = glob([
-        "instrument_tests.rs",
+        "model/instrument/*_tests.rs",
     ]),
     exec_properties = {
         # Tell BuildBuddy to run this test using a Firecracker microVM.
@@ -38,7 +38,7 @@ rust_test_suite(
 rust_test_suite(
     name = "portfolio_instrument_tests",
     srcs = glob([
-        "portfolio_instrument_tests.rs",
+        "model/portfolio_instrument/*_tests.rs",
     ]),
     exec_properties = {
         # Tell BuildBuddy to run this test using a Firecracker microVM.
@@ -73,7 +73,7 @@ rust_test_suite(
 rust_test_suite(
     name = "portfolio_tests",
     srcs = glob([
-        "portfolio_tests.rs",
+        "model/portfolio/*_tests.rs",
     ]),
     exec_properties = {
         # Tell BuildBuddy to run this test using a Firecracker microVM.

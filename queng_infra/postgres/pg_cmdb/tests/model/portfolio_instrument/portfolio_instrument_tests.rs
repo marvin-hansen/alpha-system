@@ -89,6 +89,12 @@ async fn test_portfolio_instrument() {
     assert_eq!(portfolio_instrument.portfolio_id, 42);
     assert_eq!(portfolio_instrument.instrument_id, "test42");
 
+    let result =
+        PortfolioInstrument::check_if_exists(conn, portfolio_id as i32, instrument_id.to_string());
+    //dbg!(&result);
+    assert!(result.is_ok());
+    assert!(result.unwrap());
+
     let result = PortfolioInstrument::read_instruments_for_portfolio(conn, portfolio_id as i32);
     //dbg!(&result);
     assert!(result.is_ok());
@@ -100,15 +106,9 @@ async fn test_portfolio_instrument() {
     //dbg!(&result);
     assert!(result.is_ok());
 
-    let result = PortfolioInstrument::read_instruments_for_portfolio(conn, 1);
-    //dbg!(&result);
-    assert!(result.is_err());
-
-    let result = Instrument::delete(conn, instrument_id.to_string());
+    let result =
+        PortfolioInstrument::check_if_exists(conn, portfolio_id as i32, instrument_id.to_string());
     //dbg!(&result);
     assert!(result.is_ok());
-
-    let result = Portfolio::delete(conn, portfolio_id as i32);
-    //dbg!(&result);
-    assert!(result.is_ok());
+    assert!(!result.unwrap());
 }

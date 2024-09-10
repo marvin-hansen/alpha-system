@@ -17,7 +17,6 @@ fn get_test_instrument() -> CommonInstrument {
     )
 }
 
-//
 // Somehow tests seem to be executed or sorted in alphabetical order,
 // so make sure that the setup is on top of the stack.
 #[tokio::test]

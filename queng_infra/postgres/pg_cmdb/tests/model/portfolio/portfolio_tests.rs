@@ -26,8 +26,8 @@ fn get_test_portfolio() -> CommonPortfolioConfig {
     )
 }
 
-// Somehow tests seem to be executed or sorted in alphabetical order, so make sure that the
-// setup is on top of the stack.
+// Somehow tests seem to be executed or sorted in alphabetical order,
+// so make sure that the setup is on top of the stack.
 #[tokio::test]
 async fn all_setup() {
     let env = DockerUtil::with_debug().expect("Failed to get EnvUtil");
@@ -289,11 +289,27 @@ async fn test_delete_portfolio() {
     let result = pg_cmdb::run_cmdb_db_migration(conn);
     assert!(result.is_ok());
 
-    let result = Portfolio::delete(conn, 1);
-    dbg!(&result);
+    let portfolio = get_test_portfolio();
+    let param_portfolio_id = portfolio.portfolio_id() as i32;
+
+    let result = Portfolio::create(conn, &portfolio);
+    // dbg!(&result);
     assert!(result.is_ok());
 
-    let result = Portfolio::check_if_portfolio_id_exists(conn, 1);
+    let result = Portfolio::check_if_portfolio_id_exists(conn, param_portfolio_id);
+    assert!(result.is_ok());
+    assert!(result.unwrap());
+
+    let result = Portfolio::read(conn, param_portfolio_id);
+    // dbg!(&result);
+    assert!(result.is_ok());
+
+    let result = Portfolio::delete(conn, param_portfolio_id);
+    dbg!(&result);
+    assert!(result.is_ok());
+    assert_eq!(result.unwrap(), 1);
+
+    let result = Portfolio::check_if_portfolio_id_exists(conn, param_portfolio_id);
     assert!(result.is_ok());
     assert!(!result.unwrap());
 }
