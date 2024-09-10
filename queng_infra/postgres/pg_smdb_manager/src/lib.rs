@@ -5,7 +5,7 @@ mod db_svc;
 
 use common_errors::prelude::PostgresDBError;
 use diesel::r2d2::{ConnectionManager, Pool};
-use diesel::PgConnection;
+use diesel::{Connection, PgConnection};
 use pg_smdb::run_smdb_db_migration;
 use std::fmt::Display;
 
@@ -67,6 +67,18 @@ impl PostgresSMDBManager {
         Ok(Self { dbg, pool })
     }
 }
+
+// impl PostgresSMDBManager {
+//     pub fn get_connection(&self) -> PooledConnection<ConnectionManager<PgConnection>> {
+//         let mut conn = self.pool.get().expect("Failed to get connection from pool");
+//         if self.test {
+//             conn.begin_test_transaction()
+//                 .expect("[PostgresSMDBManager]: Failed to begin test transaction");
+//         };
+//
+//         conn
+//     }
+// }
 
 impl PostgresSMDBManager {
     pub fn dbg_print(&self, msg: &str) {
