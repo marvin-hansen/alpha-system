@@ -62,13 +62,15 @@ common --experimental_platform_in_output_dir
 # https://www.buildbuddy.io/blog/how-bazel-7-0-makes-your-builds-faster/
 common --nolegacy_important_outputs
 common --verbose_failures
-common --reuse_sandbox_directories
 common --noexperimental_merged_skyframe_analysis_execution
 
 # Enable a more detailed performance profile
 common --noslim_profile
 common --experimental_profile_include_target_label
 common --experimental_profile_include_primary_output
+
+# Suspected cause for CI build failure when using local vendoring.
+# common --reuse_sandbox_directories
 
 ###############################################################################
 ## Remote configuration
