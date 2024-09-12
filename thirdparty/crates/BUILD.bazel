@@ -11,7 +11,6 @@ package(default_visibility = ["//visibility:public"])
 exports_files(
     [
         "cargo-bazel.json",
-        "crates.bzl",
         "defs.bzl",
     ] + glob(
         include = ["*.bazel"],
@@ -33,265 +32,265 @@ filegroup(
 # Workspace Member Dependencies
 alias(
     name = "anyhow",
-    actual = "@queng_vendored__anyhow-1.0.87//:anyhow",
+    actual = "//thirdparty/crates/anyhow-1.0.88:anyhow",
     tags = ["manual"],
 )
 
 alias(
     name = "arc-swap",
-    actual = "@queng_vendored__arc-swap-1.7.1//:arc_swap",
+    actual = "//thirdparty/crates/arc-swap-1.7.1:arc_swap",
     tags = ["manual"],
 )
 
 alias(
     name = "autometrics",
-    actual = "@queng_vendored__autometrics-2.0.0//:autometrics",
+    actual = "//thirdparty/crates/autometrics-2.0.0:autometrics",
     tags = ["manual"],
 )
 
 alias(
     name = "base16ct",
-    actual = "@queng_vendored__base16ct-0.2.0//:base16ct",
+    actual = "//thirdparty/crates/base16ct-0.2.0:base16ct",
     tags = ["manual"],
 )
 
 alias(
     name = "base64ct",
-    actual = "@queng_vendored__base64ct-1.6.0//:base64ct",
+    actual = "//thirdparty/crates/base64ct-1.6.0:base64ct",
     tags = ["manual"],
 )
 
 alias(
     name = "binance_rs_async",
-    actual = "@queng_vendored__binance-rs-async-1.3.3//:binance",
+    actual = "//thirdparty/crates/binance-rs-async-1.3.3:binance",
     tags = ["manual"],
 )
 
 alias(
     name = "bon",
-    actual = "@queng_vendored__bon-2.2.1//:bon",
+    actual = "//thirdparty/crates/bon-2.2.1:bon",
     tags = ["manual"],
 )
 
 alias(
     name = "chrono",
-    actual = "@queng_vendored__chrono-0.4.38//:chrono",
+    actual = "//thirdparty/crates/chrono-0.4.38:chrono",
     tags = ["manual"],
 )
 
 alias(
     name = "clickhouse-rs",
-    actual = "@queng_vendored__clickhouse-rs-1.1.0-alpha.1//:clickhouse_rs",
+    actual = "//thirdparty/crates/clickhouse-rs-1.1.0-alpha.1:clickhouse_rs",
     tags = ["manual"],
 )
 
 alias(
     name = "config-file",
-    actual = "@queng_vendored__config-file-0.2.3//:config_file",
+    actual = "//thirdparty/crates/config-file-0.2.3:config_file",
     tags = ["manual"],
 )
 
 alias(
     name = "csv",
-    actual = "@queng_vendored__csv-1.3.0//:csv",
+    actual = "//thirdparty/crates/csv-1.3.0:csv",
     tags = ["manual"],
 )
 
 alias(
     name = "ctrlc",
-    actual = "@queng_vendored__ctrlc-3.4.5//:ctrlc",
+    actual = "//thirdparty/crates/ctrlc-3.4.5:ctrlc",
     tags = ["manual"],
 )
 
 alias(
     name = "diesel",
-    actual = "@queng_vendored__diesel-2.2.4//:diesel",
+    actual = "//thirdparty/crates/diesel-2.2.4:diesel",
     tags = ["manual"],
 )
 
 alias(
     name = "diesel_migrations",
-    actual = "@queng_vendored__diesel_migrations-2.2.0//:diesel_migrations",
+    actual = "//thirdparty/crates/diesel_migrations-2.2.0:diesel_migrations",
     tags = ["manual"],
 )
 
 alias(
     name = "dotenv",
-    actual = "@queng_vendored__dotenv-0.15.0//:dotenv",
+    actual = "//thirdparty/crates/dotenv-0.15.0:dotenv",
     tags = ["manual"],
 )
 
 alias(
     name = "encoding_rs",
-    actual = "@queng_vendored__encoding_rs-0.8.34//:encoding_rs",
+    actual = "//thirdparty/crates/encoding_rs-0.8.34:encoding_rs",
     tags = ["manual"],
 )
 
 alias(
     name = "futures",
-    actual = "@queng_vendored__futures-0.3.30//:futures",
+    actual = "//thirdparty/crates/futures-0.3.30:futures",
     tags = ["manual"],
 )
 
 alias(
     name = "hickory-resolver",
-    actual = "@queng_vendored__hickory-resolver-0.24.1//:hickory_resolver",
+    actual = "//thirdparty/crates/hickory-resolver-0.24.1:hickory_resolver",
     tags = ["manual"],
 )
 
 alias(
     name = "klickhouse",
-    actual = "@queng_vendored__klickhouse-0.13.0//:klickhouse",
+    actual = "//thirdparty/crates/klickhouse-0.13.0:klickhouse",
     tags = ["manual"],
 )
 
 alias(
     name = "lru",
-    actual = "@queng_vendored__lru-0.12.4//:lru",
+    actual = "//thirdparty/crates/lru-0.12.4:lru",
     tags = ["manual"],
 )
 
 alias(
     name = "mimalloc",
-    actual = "@queng_vendored__mimalloc-0.1.43//:mimalloc",
+    actual = "//thirdparty/crates/mimalloc-0.1.43:mimalloc",
     tags = ["manual"],
 )
 
 alias(
     name = "mini-moka",
-    actual = "@queng_vendored__mini-moka-0.10.3//:mini_moka",
+    actual = "//thirdparty/crates/mini-moka-0.10.3:mini_moka",
     tags = ["manual"],
 )
 
 alias(
     name = "parquet",
-    actual = "@queng_vendored__parquet-53.0.0//:parquet",
+    actual = "//thirdparty/crates/parquet-53.0.0:parquet",
     tags = ["manual"],
 )
 
 alias(
     name = "prost",
-    actual = "@queng_vendored__prost-0.13.2//:prost",
+    actual = "//thirdparty/crates/prost-0.13.2:prost",
     tags = ["manual"],
 )
 
 alias(
     name = "prost-types",
-    actual = "@queng_vendored__prost-types-0.13.2//:prost_types",
+    actual = "//thirdparty/crates/prost-types-0.13.2:prost_types",
     tags = ["manual"],
 )
 
 alias(
     name = "protoc-gen-prost",
-    actual = "@queng_vendored__protoc-gen-prost-0.3.1//:protoc_gen_prost",
+    actual = "//thirdparty/crates/protoc-gen-prost-0.3.1:protoc_gen_prost",
     tags = ["manual"],
 )
 
 alias(
     name = "protoc-gen-tonic",
-    actual = "@queng_vendored__protoc-gen-tonic-0.4.1//:protoc_gen_tonic",
+    actual = "//thirdparty/crates/protoc-gen-tonic-0.4.1:protoc_gen_tonic",
     tags = ["manual"],
 )
 
 alias(
     name = "reqwest",
-    actual = "@queng_vendored__reqwest-0.12.7//:reqwest",
+    actual = "//thirdparty/crates/reqwest-0.12.7:reqwest",
     tags = ["manual"],
 )
 
 alias(
     name = "rust_decimal",
-    actual = "@queng_vendored__rust_decimal-1.36.0//:rust_decimal",
+    actual = "//thirdparty/crates/rust_decimal-1.36.0:rust_decimal",
     tags = ["manual"],
 )
 
 alias(
     name = "rust_decimal_macros",
-    actual = "@queng_vendored__rust_decimal_macros-1.36.0//:rust_decimal_macros",
+    actual = "//thirdparty/crates/rust_decimal_macros-1.36.0:rust_decimal_macros",
     tags = ["manual"],
 )
 
 alias(
     name = "serde",
-    actual = "@queng_vendored__serde-1.0.210//:serde",
+    actual = "//thirdparty/crates/serde-1.0.210:serde",
     tags = ["manual"],
 )
 
 alias(
     name = "serde_json",
-    actual = "@queng_vendored__serde_json-1.0.128//:serde_json",
+    actual = "//thirdparty/crates/serde_json-1.0.128:serde_json",
     tags = ["manual"],
 )
 
 alias(
     name = "sha3",
-    actual = "@queng_vendored__sha3-0.11.0-pre.4//:sha3",
+    actual = "//thirdparty/crates/sha3-0.11.0-pre.4:sha3",
     tags = ["manual"],
 )
 
 alias(
     name = "tokio",
-    actual = "@queng_vendored__tokio-1.40.0//:tokio",
+    actual = "//thirdparty/crates/tokio-1.40.0:tokio",
     tags = ["manual"],
 )
 
 alias(
     name = "tokio-cron-scheduler",
-    actual = "@queng_vendored__tokio-cron-scheduler-0.11.0//:tokio_cron_scheduler",
+    actual = "//thirdparty/crates/tokio-cron-scheduler-0.11.0:tokio_cron_scheduler",
     tags = ["manual"],
 )
 
 alias(
     name = "tokio-timer",
-    actual = "@queng_vendored__tokio-timer-0.2.13//:tokio_timer",
+    actual = "//thirdparty/crates/tokio-timer-0.2.13:tokio_timer",
     tags = ["manual"],
 )
 
 alias(
     name = "tokio-tungstenite",
-    actual = "@queng_vendored__tokio-tungstenite-0.23.1//:tokio_tungstenite",
+    actual = "//thirdparty/crates/tokio-tungstenite-0.23.1:tokio_tungstenite",
     tags = ["manual"],
 )
 
 alias(
     name = "tonic",
-    actual = "@queng_vendored__tonic-0.12.2//:tonic",
+    actual = "//thirdparty/crates/tonic-0.12.2:tonic",
     tags = ["manual"],
 )
 
 alias(
     name = "tonic-build",
-    actual = "@queng_vendored__tonic-build-0.12.2//:tonic_build",
+    actual = "//thirdparty/crates/tonic-build-0.12.2:tonic_build",
     tags = ["manual"],
 )
 
 alias(
     name = "tonic-health",
-    actual = "@queng_vendored__tonic-health-0.12.2//:tonic_health",
+    actual = "//thirdparty/crates/tonic-health-0.12.2:tonic_health",
     tags = ["manual"],
 )
 
 alias(
     name = "warp",
-    actual = "@queng_vendored__warp-0.3.7//:warp",
+    actual = "//thirdparty/crates/warp-0.3.7:warp",
     tags = ["manual"],
 )
 
 # Binaries
 alias(
     name = "protoc-gen-prost-0.3.1__protoc-gen-prost",
-    actual = "@queng_vendored__protoc-gen-prost-0.3.1//:protoc-gen-prost__bin",
+    actual = "//thirdparty/crates/protoc-gen-prost-0.3.1:protoc-gen-prost__bin",
     tags = ["manual"],
 )
 
 alias(
     name = "protoc-gen-prost-0.4.0__protoc-gen-prost",
-    actual = "@queng_vendored__protoc-gen-prost-0.4.0//:protoc-gen-prost__bin",
+    actual = "//thirdparty/crates/protoc-gen-prost-0.4.0:protoc-gen-prost__bin",
     tags = ["manual"],
 )
 
 alias(
     name = "protoc-gen-tonic__protoc-gen-tonic",
-    actual = "@queng_vendored__protoc-gen-tonic-0.4.1//:protoc-gen-tonic__bin",
+    actual = "//thirdparty/crates/protoc-gen-tonic-0.4.1:protoc-gen-tonic__bin",
     tags = ["manual"],
 )
