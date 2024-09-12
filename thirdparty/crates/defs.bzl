@@ -16,6 +16,8 @@
 """
 
 load("@bazel_skylib//lib:selects.bzl", "selects")
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+load("@bazel_tools//tools/build_defs/repo:utils.bzl", "maybe")
 
 ###############################################################################
 # MACROS API
@@ -293,46 +295,46 @@ def aliases(
 _NORMAL_DEPENDENCIES = {
     "": {
         _COMMON_CONDITION: {
-            "anyhow": Label("//thirdparty/crates/anyhow-1.0.88:anyhow"),
-            "arc-swap": Label("//thirdparty/crates/arc-swap-1.7.1:arc_swap"),
-            "autometrics": Label("//thirdparty/crates/autometrics-2.0.0:autometrics"),
-            "base16ct": Label("//thirdparty/crates/base16ct-0.2.0:base16ct"),
-            "base64ct": Label("//thirdparty/crates/base64ct-1.6.0:base64ct"),
-            "binance_rs_async": Label("//thirdparty/crates/binance-rs-async-1.3.3:binance"),
-            "bon": Label("//thirdparty/crates/bon-2.2.1:bon"),
-            "chrono": Label("//thirdparty/crates/chrono-0.4.38:chrono"),
-            "clickhouse-rs": Label("//thirdparty/crates/clickhouse-rs-1.1.0-alpha.1:clickhouse_rs"),
-            "config-file": Label("//thirdparty/crates/config-file-0.2.3:config_file"),
-            "csv": Label("//thirdparty/crates/csv-1.3.0:csv"),
-            "ctrlc": Label("//thirdparty/crates/ctrlc-3.4.5:ctrlc"),
-            "diesel": Label("//thirdparty/crates/diesel-2.2.4:diesel"),
-            "diesel_migrations": Label("//thirdparty/crates/diesel_migrations-2.2.0:diesel_migrations"),
-            "dotenv": Label("//thirdparty/crates/dotenv-0.15.0:dotenv"),
-            "encoding_rs": Label("//thirdparty/crates/encoding_rs-0.8.34:encoding_rs"),
-            "futures": Label("//thirdparty/crates/futures-0.3.30:futures"),
-            "hickory-resolver": Label("//thirdparty/crates/hickory-resolver-0.24.1:hickory_resolver"),
-            "klickhouse": Label("//thirdparty/crates/klickhouse-0.13.0:klickhouse"),
-            "lru": Label("//thirdparty/crates/lru-0.12.4:lru"),
-            "mimalloc": Label("//thirdparty/crates/mimalloc-0.1.43:mimalloc"),
-            "mini-moka": Label("//thirdparty/crates/mini-moka-0.10.3:mini_moka"),
-            "parquet": Label("//thirdparty/crates/parquet-53.0.0:parquet"),
-            "prost": Label("//thirdparty/crates/prost-0.13.2:prost"),
-            "prost-types": Label("//thirdparty/crates/prost-types-0.13.2:prost_types"),
-            "protoc-gen-prost": Label("//thirdparty/crates/protoc-gen-prost-0.3.1:protoc_gen_prost"),
-            "protoc-gen-tonic": Label("//thirdparty/crates/protoc-gen-tonic-0.4.1:protoc_gen_tonic"),
-            "reqwest": Label("//thirdparty/crates/reqwest-0.12.7:reqwest"),
-            "rust_decimal": Label("//thirdparty/crates/rust_decimal-1.36.0:rust_decimal"),
-            "serde": Label("//thirdparty/crates/serde-1.0.210:serde"),
-            "serde_json": Label("//thirdparty/crates/serde_json-1.0.128:serde_json"),
-            "sha3": Label("//thirdparty/crates/sha3-0.11.0-pre.4:sha3"),
-            "tokio": Label("//thirdparty/crates/tokio-1.40.0:tokio"),
-            "tokio-cron-scheduler": Label("//thirdparty/crates/tokio-cron-scheduler-0.11.0:tokio_cron_scheduler"),
-            "tokio-timer": Label("//thirdparty/crates/tokio-timer-0.2.13:tokio_timer"),
-            "tokio-tungstenite": Label("//thirdparty/crates/tokio-tungstenite-0.23.1:tokio_tungstenite"),
-            "tonic": Label("//thirdparty/crates/tonic-0.12.2:tonic"),
-            "tonic-build": Label("//thirdparty/crates/tonic-build-0.12.2:tonic_build"),
-            "tonic-health": Label("//thirdparty/crates/tonic-health-0.12.2:tonic_health"),
-            "warp": Label("//thirdparty/crates/warp-0.3.7:warp"),
+            "anyhow": Label("@queng_vendored__anyhow-1.0.88//:anyhow"),
+            "arc-swap": Label("@queng_vendored__arc-swap-1.7.1//:arc_swap"),
+            "autometrics": Label("@queng_vendored__autometrics-2.0.0//:autometrics"),
+            "base16ct": Label("@queng_vendored__base16ct-0.2.0//:base16ct"),
+            "base64ct": Label("@queng_vendored__base64ct-1.6.0//:base64ct"),
+            "binance_rs_async": Label("@queng_vendored__binance-rs-async-1.3.3//:binance"),
+            "bon": Label("@queng_vendored__bon-2.2.1//:bon"),
+            "chrono": Label("@queng_vendored__chrono-0.4.38//:chrono"),
+            "clickhouse-rs": Label("@queng_vendored__clickhouse-rs-1.1.0-alpha.1//:clickhouse_rs"),
+            "config-file": Label("@queng_vendored__config-file-0.2.3//:config_file"),
+            "csv": Label("@queng_vendored__csv-1.3.0//:csv"),
+            "ctrlc": Label("@queng_vendored__ctrlc-3.4.5//:ctrlc"),
+            "diesel": Label("@queng_vendored__diesel-2.2.4//:diesel"),
+            "diesel_migrations": Label("@queng_vendored__diesel_migrations-2.2.0//:diesel_migrations"),
+            "dotenv": Label("@queng_vendored__dotenv-0.15.0//:dotenv"),
+            "encoding_rs": Label("@queng_vendored__encoding_rs-0.8.34//:encoding_rs"),
+            "futures": Label("@queng_vendored__futures-0.3.30//:futures"),
+            "hickory-resolver": Label("@queng_vendored__hickory-resolver-0.24.1//:hickory_resolver"),
+            "klickhouse": Label("@queng_vendored__klickhouse-0.13.0//:klickhouse"),
+            "lru": Label("@queng_vendored__lru-0.12.4//:lru"),
+            "mimalloc": Label("@queng_vendored__mimalloc-0.1.43//:mimalloc"),
+            "mini-moka": Label("@queng_vendored__mini-moka-0.10.3//:mini_moka"),
+            "parquet": Label("@queng_vendored__parquet-53.0.0//:parquet"),
+            "prost": Label("@queng_vendored__prost-0.13.2//:prost"),
+            "prost-types": Label("@queng_vendored__prost-types-0.13.2//:prost_types"),
+            "protoc-gen-prost": Label("@queng_vendored__protoc-gen-prost-0.3.1//:protoc_gen_prost"),
+            "protoc-gen-tonic": Label("@queng_vendored__protoc-gen-tonic-0.4.1//:protoc_gen_tonic"),
+            "reqwest": Label("@queng_vendored__reqwest-0.12.7//:reqwest"),
+            "rust_decimal": Label("@queng_vendored__rust_decimal-1.36.0//:rust_decimal"),
+            "serde": Label("@queng_vendored__serde-1.0.210//:serde"),
+            "serde_json": Label("@queng_vendored__serde_json-1.0.128//:serde_json"),
+            "sha3": Label("@queng_vendored__sha3-0.11.0-pre.4//:sha3"),
+            "tokio": Label("@queng_vendored__tokio-1.40.0//:tokio"),
+            "tokio-cron-scheduler": Label("@queng_vendored__tokio-cron-scheduler-0.11.0//:tokio_cron_scheduler"),
+            "tokio-timer": Label("@queng_vendored__tokio-timer-0.2.13//:tokio_timer"),
+            "tokio-tungstenite": Label("@queng_vendored__tokio-tungstenite-0.23.1//:tokio_tungstenite"),
+            "tonic": Label("@queng_vendored__tonic-0.12.2//:tonic"),
+            "tonic-build": Label("@queng_vendored__tonic-build-0.12.2//:tonic_build"),
+            "tonic-health": Label("@queng_vendored__tonic-health-0.12.2//:tonic_health"),
+            "warp": Label("@queng_vendored__warp-0.3.7//:warp"),
         },
     },
 }
@@ -340,7 +342,7 @@ _NORMAL_DEPENDENCIES = {
 _NORMAL_ALIASES = {
     "": {
         _COMMON_CONDITION: {
-            "//thirdparty/crates/binance-rs-async-1.3.3:binance-rs-async": "binance_rs_async",
+            "@queng_vendored__binance-rs-async-1.3.3//:binance-rs-async": "binance_rs_async",
         },
     },
 }
@@ -358,7 +360,7 @@ _NORMAL_DEV_ALIASES = {
 _PROC_MACRO_DEPENDENCIES = {
     "": {
         _COMMON_CONDITION: {
-            "rust_decimal_macros": Label("//thirdparty/crates/rust_decimal_macros-1.36.0:rust_decimal_macros"),
+            "rust_decimal_macros": Label("@queng_vendored__rust_decimal_macros-1.36.0//:rust_decimal_macros"),
         },
     },
 }
@@ -488,3 +490,4615 @@ _CONDITIONS = {
     "x86_64-unknown-nixos-gnu": ["@rules_rust//rust/platform:x86_64-unknown-nixos-gnu"],
     "x86_64-unknown-none": ["@rules_rust//rust/platform:x86_64-unknown-none"],
 }
+
+###############################################################################
+
+def crate_repositories():
+    """A macro for defining repositories for all generated crates.
+
+    Returns:
+      A list of repos visible to the module through the module extension.
+    """
+    maybe(
+        http_archive,
+        name = "queng_vendored__addr2line-0.24.1",
+        sha256 = "f5fb1d8e4442bd405fdfd1dacb42792696b0cf9cb15882e5d097b742a676d375",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/addr2line/0.24.1/download"],
+        strip_prefix = "addr2line-0.24.1",
+        build_file = Label("//thirdparty/crates:BUILD.addr2line-0.24.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__adler2-2.0.0",
+        sha256 = "512761e0bb2578dd7380c6baaa0f4ce03e84f95e960231d1dec8bf4d7d6e2627",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/adler2/2.0.0/download"],
+        strip_prefix = "adler2-2.0.0",
+        build_file = Label("//thirdparty/crates:BUILD.adler2-2.0.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__ahash-0.7.8",
+        sha256 = "891477e0c6a8957309ee5c45a6368af3ae14bb510732d2684ffa19af310920f9",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/ahash/0.7.8/download"],
+        strip_prefix = "ahash-0.7.8",
+        build_file = Label("//thirdparty/crates:BUILD.ahash-0.7.8.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__ahash-0.8.11",
+        sha256 = "e89da841a80418a9b391ebaea17f5c112ffaaa96f621d2c285b5174da76b9011",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/ahash/0.8.11/download"],
+        strip_prefix = "ahash-0.8.11",
+        build_file = Label("//thirdparty/crates:BUILD.ahash-0.8.11.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__aho-corasick-1.1.3",
+        sha256 = "8e60d3430d3a69478ad0993f19238d2df97c507009a52b3c10addcd7f6bcb916",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/aho-corasick/1.1.3/download"],
+        strip_prefix = "aho-corasick-1.1.3",
+        build_file = Label("//thirdparty/crates:BUILD.aho-corasick-1.1.3.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__alloc-no-stdlib-2.0.4",
+        sha256 = "cc7bb162ec39d46ab1ca8c77bf72e890535becd1751bb45f64c597edb4c8c6b3",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/alloc-no-stdlib/2.0.4/download"],
+        strip_prefix = "alloc-no-stdlib-2.0.4",
+        build_file = Label("//thirdparty/crates:BUILD.alloc-no-stdlib-2.0.4.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__alloc-stdlib-0.2.2",
+        sha256 = "94fb8275041c72129eb51b7d0322c29b8387a0386127718b096429201a5d6ece",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/alloc-stdlib/0.2.2/download"],
+        strip_prefix = "alloc-stdlib-0.2.2",
+        build_file = Label("//thirdparty/crates:BUILD.alloc-stdlib-0.2.2.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__allocator-api2-0.2.18",
+        sha256 = "5c6cb57a04249c6480766f7f7cef5467412af1490f8d1e243141daddada3264f",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/allocator-api2/0.2.18/download"],
+        strip_prefix = "allocator-api2-0.2.18",
+        build_file = Label("//thirdparty/crates:BUILD.allocator-api2-0.2.18.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__android-tzdata-0.1.1",
+        sha256 = "e999941b234f3131b00bc13c22d06e8c5ff726d1b6318ac7eb276997bbb4fef0",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/android-tzdata/0.1.1/download"],
+        strip_prefix = "android-tzdata-0.1.1",
+        build_file = Label("//thirdparty/crates:BUILD.android-tzdata-0.1.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__android_system_properties-0.1.5",
+        sha256 = "819e7219dbd41043ac279b19830f2efc897156490d7fd6ea916720117ee66311",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/android_system_properties/0.1.5/download"],
+        strip_prefix = "android_system_properties-0.1.5",
+        build_file = Label("//thirdparty/crates:BUILD.android_system_properties-0.1.5.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__anyhow-1.0.88",
+        sha256 = "4e1496f8fb1fbf272686b8d37f523dab3e4a7443300055e74cdaa449f3114356",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/anyhow/1.0.88/download"],
+        strip_prefix = "anyhow-1.0.88",
+        build_file = Label("//thirdparty/crates:BUILD.anyhow-1.0.88.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__arc-swap-1.7.1",
+        sha256 = "69f7f8c3906b62b754cd5326047894316021dcfe5a194c8ea52bdd94934a3457",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/arc-swap/1.7.1/download"],
+        strip_prefix = "arc-swap-1.7.1",
+        build_file = Label("//thirdparty/crates:BUILD.arc-swap-1.7.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__arrayvec-0.7.6",
+        sha256 = "7c02d123df017efcdfbd739ef81735b36c5ba83ec3c59c80a9d7ecc718f92e50",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/arrayvec/0.7.6/download"],
+        strip_prefix = "arrayvec-0.7.6",
+        build_file = Label("//thirdparty/crates:BUILD.arrayvec-0.7.6.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__arrow-array-53.0.0",
+        sha256 = "cd2bf348cf9f02a5975c5962c7fa6dee107a2009a7b41ac5fb1a027e12dc033f",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/arrow-array/53.0.0/download"],
+        strip_prefix = "arrow-array-53.0.0",
+        build_file = Label("//thirdparty/crates:BUILD.arrow-array-53.0.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__arrow-buffer-53.0.0",
+        sha256 = "3092e37715f168976012ce52273c3989b5793b0db5f06cbaa246be25e5f0924d",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/arrow-buffer/53.0.0/download"],
+        strip_prefix = "arrow-buffer-53.0.0",
+        build_file = Label("//thirdparty/crates:BUILD.arrow-buffer-53.0.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__arrow-cast-53.0.0",
+        sha256 = "7ce1018bb710d502f9db06af026ed3561552e493e989a79d0d0f5d9cf267a785",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/arrow-cast/53.0.0/download"],
+        strip_prefix = "arrow-cast-53.0.0",
+        build_file = Label("//thirdparty/crates:BUILD.arrow-cast-53.0.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__arrow-data-53.0.0",
+        sha256 = "4e4ac0c4ee79150afe067dc4857154b3ee9c1cd52b5f40d59a77306d0ed18d65",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/arrow-data/53.0.0/download"],
+        strip_prefix = "arrow-data-53.0.0",
+        build_file = Label("//thirdparty/crates:BUILD.arrow-data-53.0.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__arrow-ipc-53.0.0",
+        sha256 = "bb307482348a1267f91b0912e962cd53440e5de0f7fb24c5f7b10da70b38c94a",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/arrow-ipc/53.0.0/download"],
+        strip_prefix = "arrow-ipc-53.0.0",
+        build_file = Label("//thirdparty/crates:BUILD.arrow-ipc-53.0.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__arrow-schema-53.0.0",
+        sha256 = "c85320a3a2facf2b2822b57aa9d6d9d55edb8aee0b6b5d3b8df158e503d10858",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/arrow-schema/53.0.0/download"],
+        strip_prefix = "arrow-schema-53.0.0",
+        build_file = Label("//thirdparty/crates:BUILD.arrow-schema-53.0.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__arrow-select-53.0.0",
+        sha256 = "9cc7e6b582e23855fd1625ce46e51647aa440c20ea2e71b1d748e0839dd73cba",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/arrow-select/53.0.0/download"],
+        strip_prefix = "arrow-select-53.0.0",
+        build_file = Label("//thirdparty/crates:BUILD.arrow-select-53.0.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__async-compression-0.4.12",
+        sha256 = "fec134f64e2bc57411226dfc4e52dec859ddfc7e711fc5e07b612584f000e4aa",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/async-compression/0.4.12/download"],
+        strip_prefix = "async-compression-0.4.12",
+        build_file = Label("//thirdparty/crates:BUILD.async-compression-0.4.12.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__async-stream-0.3.5",
+        sha256 = "cd56dd203fef61ac097dd65721a419ddccb106b2d2b70ba60a6b529f03961a51",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/async-stream/0.3.5/download"],
+        strip_prefix = "async-stream-0.3.5",
+        build_file = Label("//thirdparty/crates:BUILD.async-stream-0.3.5.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__async-stream-impl-0.3.5",
+        sha256 = "16e62a023e7c117e27523144c5d2459f4397fcc3cab0085af8e2224f643a0193",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/async-stream-impl/0.3.5/download"],
+        strip_prefix = "async-stream-impl-0.3.5",
+        build_file = Label("//thirdparty/crates:BUILD.async-stream-impl-0.3.5.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__async-trait-0.1.82",
+        sha256 = "a27b8a3a6e1a44fa4c8baf1f653e4172e81486d4941f2237e20dc2d0cf4ddff1",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/async-trait/0.1.82/download"],
+        strip_prefix = "async-trait-0.1.82",
+        build_file = Label("//thirdparty/crates:BUILD.async-trait-0.1.82.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__atoi-2.0.0",
+        sha256 = "f28d99ec8bfea296261ca1af174f24225171fea9664ba9003cbebee704810528",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/atoi/2.0.0/download"],
+        strip_prefix = "atoi-2.0.0",
+        build_file = Label("//thirdparty/crates:BUILD.atoi-2.0.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__atomic-waker-1.1.2",
+        sha256 = "1505bd5d3d116872e7271a6d4e16d81d0c8570876c8de68093a09ac269d8aac0",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/atomic-waker/1.1.2/download"],
+        strip_prefix = "atomic-waker-1.1.2",
+        build_file = Label("//thirdparty/crates:BUILD.atomic-waker-1.1.2.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__autocfg-1.3.0",
+        sha256 = "0c4b4d0bd25bd0b74681c0ad21497610ce1b7c91b1022cd21c80c6fbdd9476b0",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/autocfg/1.3.0/download"],
+        strip_prefix = "autocfg-1.3.0",
+        build_file = Label("//thirdparty/crates:BUILD.autocfg-1.3.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__autometrics-2.0.0",
+        sha256 = "5e23d87191207a9f451a6214e861a184cd6db30e910371e464839ecf385f09ce",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/autometrics/2.0.0/download"],
+        strip_prefix = "autometrics-2.0.0",
+        build_file = Label("//thirdparty/crates:BUILD.autometrics-2.0.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__autometrics-macros-2.0.0",
+        sha256 = "dc9eeb66696a988c64d8bbb73a6c83d5df20fe2bf7222aaf12ba8cd51a9ebf45",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/autometrics-macros/2.0.0/download"],
+        strip_prefix = "autometrics-macros-2.0.0",
+        build_file = Label("//thirdparty/crates:BUILD.autometrics-macros-2.0.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__axum-0.7.5",
+        sha256 = "3a6c9af12842a67734c9a2e355436e5d03b22383ed60cf13cd0c18fbfe3dcbcf",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/axum/0.7.5/download"],
+        strip_prefix = "axum-0.7.5",
+        build_file = Label("//thirdparty/crates:BUILD.axum-0.7.5.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__axum-core-0.4.3",
+        sha256 = "a15c63fd72d41492dc4f497196f5da1fb04fb7529e631d73630d1b491e47a2e3",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/axum-core/0.4.3/download"],
+        strip_prefix = "axum-core-0.4.3",
+        build_file = Label("//thirdparty/crates:BUILD.axum-core-0.4.3.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__backtrace-0.3.74",
+        sha256 = "8d82cb332cdfaed17ae235a638438ac4d4839913cc2af585c3c6746e8f8bee1a",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/backtrace/0.3.74/download"],
+        strip_prefix = "backtrace-0.3.74",
+        build_file = Label("//thirdparty/crates:BUILD.backtrace-0.3.74.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__base16ct-0.2.0",
+        sha256 = "4c7f02d4ea65f2c1853089ffd8d2787bdbc63de2f0d29dedbcf8ccdfa0ccd4cf",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/base16ct/0.2.0/download"],
+        strip_prefix = "base16ct-0.2.0",
+        build_file = Label("//thirdparty/crates:BUILD.base16ct-0.2.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__base64-0.21.7",
+        sha256 = "9d297deb1925b89f2ccc13d7635fa0714f12c87adce1c75356b39ca9b7178567",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/base64/0.21.7/download"],
+        strip_prefix = "base64-0.21.7",
+        build_file = Label("//thirdparty/crates:BUILD.base64-0.21.7.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__base64-0.22.1",
+        sha256 = "72b3254f16251a8381aa12e40e3c4d2f0199f8c6508fbecb9d91f575e0fbb8c6",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/base64/0.22.1/download"],
+        strip_prefix = "base64-0.22.1",
+        build_file = Label("//thirdparty/crates:BUILD.base64-0.22.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__base64ct-1.6.0",
+        sha256 = "8c3c1a368f70d6cf7302d78f8f7093da241fb8e8807c05cc9e51a125895a6d5b",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/base64ct/1.6.0/download"],
+        strip_prefix = "base64ct-1.6.0",
+        build_file = Label("//thirdparty/crates:BUILD.base64ct-1.6.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__binance-rs-async-1.3.3",
+        sha256 = "2347d34c9a4dd742ad5dbcd1b31d1783b488048a338e5c961845edd872bea6e7",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/binance-rs-async/1.3.3/download"],
+        strip_prefix = "binance-rs-async-1.3.3",
+        build_file = Label("//thirdparty/crates:BUILD.binance-rs-async-1.3.3.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__bitflags-1.3.2",
+        sha256 = "bef38d45163c2f1dde094a7dfd33ccf595c92905c8f8f4fdc18d06fb1037718a",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/bitflags/1.3.2/download"],
+        strip_prefix = "bitflags-1.3.2",
+        build_file = Label("//thirdparty/crates:BUILD.bitflags-1.3.2.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__bitflags-2.6.0",
+        sha256 = "b048fb63fd8b5923fc5aa7b340d8e156aec7ec02f0c78fa8a6ddc2613f6f71de",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/bitflags/2.6.0/download"],
+        strip_prefix = "bitflags-2.6.0",
+        build_file = Label("//thirdparty/crates:BUILD.bitflags-2.6.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__bitvec-1.0.1",
+        sha256 = "1bc2832c24239b0141d5674bb9174f9d68a8b5b3f2753311927c172ca46f7e9c",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/bitvec/1.0.1/download"],
+        strip_prefix = "bitvec-1.0.1",
+        build_file = Label("//thirdparty/crates:BUILD.bitvec-1.0.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__block-buffer-0.10.4",
+        sha256 = "3078c7629b62d3f0439517fa394996acacc5cbc91c5a20d8c658e77abd503a71",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/block-buffer/0.10.4/download"],
+        strip_prefix = "block-buffer-0.10.4",
+        build_file = Label("//thirdparty/crates:BUILD.block-buffer-0.10.4.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__block-buffer-0.11.0-rc.1",
+        sha256 = "8969801e57d15e15bc4d7cdc5600dc15ca06a9a62b622bd4871c2d21d8aeb42d",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/block-buffer/0.11.0-rc.1/download"],
+        strip_prefix = "block-buffer-0.11.0-rc.1",
+        build_file = Label("//thirdparty/crates:BUILD.block-buffer-0.11.0-rc.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__bon-2.2.1",
+        sha256 = "ee4f37d875011af3196e4828024742a84dcff6b0d027d272f2944f9a99f2c8af",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/bon/2.2.1/download"],
+        strip_prefix = "bon-2.2.1",
+        build_file = Label("//thirdparty/crates:BUILD.bon-2.2.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__bon-macros-2.2.1",
+        sha256 = "99b4b686e7ebf76cfa591052482d8c3c8242722518560798631974bf899d5565",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/bon-macros/2.2.1/download"],
+        strip_prefix = "bon-macros-2.2.1",
+        build_file = Label("//thirdparty/crates:BUILD.bon-macros-2.2.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__boolinator-2.4.0",
+        sha256 = "cfa8873f51c92e232f9bac4065cddef41b714152812bfc5f7672ba16d6ef8cd9",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/boolinator/2.4.0/download"],
+        strip_prefix = "boolinator-2.4.0",
+        build_file = Label("//thirdparty/crates:BUILD.boolinator-2.4.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__borsh-1.5.1",
+        sha256 = "a6362ed55def622cddc70a4746a68554d7b687713770de539e59a739b249f8ed",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/borsh/1.5.1/download"],
+        strip_prefix = "borsh-1.5.1",
+        build_file = Label("//thirdparty/crates:BUILD.borsh-1.5.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__borsh-derive-1.5.1",
+        sha256 = "c3ef8005764f53cd4dca619f5bf64cafd4664dada50ece25e4d81de54c80cc0b",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/borsh-derive/1.5.1/download"],
+        strip_prefix = "borsh-derive-1.5.1",
+        build_file = Label("//thirdparty/crates:BUILD.borsh-derive-1.5.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__brotli-6.0.0",
+        sha256 = "74f7971dbd9326d58187408ab83117d8ac1bb9c17b085fdacd1cf2f598719b6b",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/brotli/6.0.0/download"],
+        strip_prefix = "brotli-6.0.0",
+        build_file = Label("//thirdparty/crates:BUILD.brotli-6.0.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__brotli-decompressor-4.0.1",
+        sha256 = "9a45bd2e4095a8b518033b128020dd4a55aab1c0a381ba4404a472630f4bc362",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/brotli-decompressor/4.0.1/download"],
+        strip_prefix = "brotli-decompressor-4.0.1",
+        build_file = Label("//thirdparty/crates:BUILD.brotli-decompressor-4.0.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__bumpalo-3.16.0",
+        sha256 = "79296716171880943b8470b5f8d03aa55eb2e645a4874bdbb28adb49162e012c",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/bumpalo/3.16.0/download"],
+        strip_prefix = "bumpalo-3.16.0",
+        build_file = Label("//thirdparty/crates:BUILD.bumpalo-3.16.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__bytecheck-0.6.12",
+        sha256 = "23cdc57ce23ac53c931e88a43d06d070a6fd142f2617be5855eb75efc9beb1c2",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/bytecheck/0.6.12/download"],
+        strip_prefix = "bytecheck-0.6.12",
+        build_file = Label("//thirdparty/crates:BUILD.bytecheck-0.6.12.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__bytecheck_derive-0.6.12",
+        sha256 = "3db406d29fbcd95542e92559bed4d8ad92636d1ca8b3b72ede10b4bcc010e659",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/bytecheck_derive/0.6.12/download"],
+        strip_prefix = "bytecheck_derive-0.6.12",
+        build_file = Label("//thirdparty/crates:BUILD.bytecheck_derive-0.6.12.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__bytecount-0.6.8",
+        sha256 = "5ce89b21cab1437276d2650d57e971f9d548a2d9037cc231abdc0562b97498ce",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/bytecount/0.6.8/download"],
+        strip_prefix = "bytecount-0.6.8",
+        build_file = Label("//thirdparty/crates:BUILD.bytecount-0.6.8.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__byteorder-1.5.0",
+        sha256 = "1fd0f2584146f6f2ef48085050886acf353beff7305ebd1ae69500e27c67f64b",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/byteorder/1.5.0/download"],
+        strip_prefix = "byteorder-1.5.0",
+        build_file = Label("//thirdparty/crates:BUILD.byteorder-1.5.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__bytes-1.7.1",
+        sha256 = "8318a53db07bb3f8dca91a600466bdb3f2eaadeedfdbcf02e1accbad9271ba50",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/bytes/1.7.1/download"],
+        strip_prefix = "bytes-1.7.1",
+        build_file = Label("//thirdparty/crates:BUILD.bytes-1.7.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__camino-1.1.9",
+        sha256 = "8b96ec4966b5813e2c0507c1f86115c8c5abaadc3980879c3424042a02fd1ad3",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/camino/1.1.9/download"],
+        strip_prefix = "camino-1.1.9",
+        build_file = Label("//thirdparty/crates:BUILD.camino-1.1.9.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__cargo-platform-0.1.8",
+        sha256 = "24b1f0365a6c6bb4020cd05806fd0d33c44d38046b8bd7f0e40814b9763cabfc",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/cargo-platform/0.1.8/download"],
+        strip_prefix = "cargo-platform-0.1.8",
+        build_file = Label("//thirdparty/crates:BUILD.cargo-platform-0.1.8.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__cargo_metadata-0.14.2",
+        sha256 = "4acbb09d9ee8e23699b9634375c72795d095bf268439da88562cf9b501f181fa",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/cargo_metadata/0.14.2/download"],
+        strip_prefix = "cargo_metadata-0.14.2",
+        build_file = Label("//thirdparty/crates:BUILD.cargo_metadata-0.14.2.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__cc-1.1.18",
+        sha256 = "b62ac837cdb5cb22e10a256099b4fc502b1dfe560cb282963a974d7abd80e476",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/cc/1.1.18/download"],
+        strip_prefix = "cc-1.1.18",
+        build_file = Label("//thirdparty/crates:BUILD.cc-1.1.18.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__cfg-if-0.1.10",
+        sha256 = "4785bdd1c96b2a846b2bd7cc02e86b6b3dbf14e7e53446c4f54c92a361040822",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/cfg-if/0.1.10/download"],
+        strip_prefix = "cfg-if-0.1.10",
+        build_file = Label("//thirdparty/crates:BUILD.cfg-if-0.1.10.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__cfg-if-1.0.0",
+        sha256 = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/cfg-if/1.0.0/download"],
+        strip_prefix = "cfg-if-1.0.0",
+        build_file = Label("//thirdparty/crates:BUILD.cfg-if-1.0.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__cfg_aliases-0.1.1",
+        sha256 = "fd16c4719339c4530435d38e511904438d07cce7950afa3718a84ac36c10e89e",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/cfg_aliases/0.1.1/download"],
+        strip_prefix = "cfg_aliases-0.1.1",
+        build_file = Label("//thirdparty/crates:BUILD.cfg_aliases-0.1.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__cfg_aliases-0.2.1",
+        sha256 = "613afe47fcd5fac7ccf1db93babcb082c5994d996f20b8b159f2ad1658eb5724",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/cfg_aliases/0.2.1/download"],
+        strip_prefix = "cfg_aliases-0.2.1",
+        build_file = Label("//thirdparty/crates:BUILD.cfg_aliases-0.2.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__chrono-0.4.38",
+        sha256 = "a21f936df1771bf62b77f047b726c4625ff2e8aa607c01ec06e5a05bd8463401",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/chrono/0.4.38/download"],
+        strip_prefix = "chrono-0.4.38",
+        build_file = Label("//thirdparty/crates:BUILD.chrono-0.4.38.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__chrono-tz-0.8.6",
+        sha256 = "d59ae0466b83e838b81a54256c39d5d7c20b9d7daa10510a242d9b75abd5936e",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/chrono-tz/0.8.6/download"],
+        strip_prefix = "chrono-tz-0.8.6",
+        build_file = Label("//thirdparty/crates:BUILD.chrono-tz-0.8.6.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__chrono-tz-0.9.0",
+        sha256 = "93698b29de5e97ad0ae26447b344c482a7284c737d9ddc5f9e52b74a336671bb",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/chrono-tz/0.9.0/download"],
+        strip_prefix = "chrono-tz-0.9.0",
+        build_file = Label("//thirdparty/crates:BUILD.chrono-tz-0.9.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__chrono-tz-build-0.2.1",
+        sha256 = "433e39f13c9a060046954e0592a8d0a4bcb1040125cbf91cb8ee58964cfb350f",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/chrono-tz-build/0.2.1/download"],
+        strip_prefix = "chrono-tz-build-0.2.1",
+        build_file = Label("//thirdparty/crates:BUILD.chrono-tz-build-0.2.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__chrono-tz-build-0.3.0",
+        sha256 = "0c088aee841df9c3041febbb73934cfc39708749bf96dc827e3359cd39ef11b1",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/chrono-tz-build/0.3.0/download"],
+        strip_prefix = "chrono-tz-build-0.3.0",
+        build_file = Label("//thirdparty/crates:BUILD.chrono-tz-build-0.3.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__cityhash-rs-1.0.1",
+        sha256 = "93a719913643003b84bd13022b4b7e703c09342cd03b679c4641c7d2e50dc34d",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/cityhash-rs/1.0.1/download"],
+        strip_prefix = "cityhash-rs-1.0.1",
+        build_file = Label("//thirdparty/crates:BUILD.cityhash-rs-1.0.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__clickhouse-rs-1.1.0-alpha.1",
+        sha256 = "802fe62a5480415bcdbb5217b3ea029d748c9a3ce3b884767cf58888e33e7f65",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/clickhouse-rs/1.1.0-alpha.1/download"],
+        strip_prefix = "clickhouse-rs-1.1.0-alpha.1",
+        build_file = Label("//thirdparty/crates:BUILD.clickhouse-rs-1.1.0-alpha.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__clickhouse-rs-cityhash-sys-0.1.2",
+        sha256 = "4baf9d4700a28d6cb600e17ed6ae2b43298a5245f1f76b4eab63027ebfd592b9",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/clickhouse-rs-cityhash-sys/0.1.2/download"],
+        strip_prefix = "clickhouse-rs-cityhash-sys-0.1.2",
+        build_file = Label("//thirdparty/crates:BUILD.clickhouse-rs-cityhash-sys-0.1.2.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__combine-4.6.7",
+        sha256 = "ba5a308b75df32fe02788e748662718f03fde005016435c444eea572398219fd",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/combine/4.6.7/download"],
+        strip_prefix = "combine-4.6.7",
+        build_file = Label("//thirdparty/crates:BUILD.combine-4.6.7.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__compiler-tools-0.2.0",
+        sha256 = "cc80bd305611ea6275a49dfa4b7525f5dbf628274e4ad92382e89231c2074e91",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/compiler-tools/0.2.0/download"],
+        strip_prefix = "compiler-tools-0.2.0",
+        build_file = Label("//thirdparty/crates:BUILD.compiler-tools-0.2.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__compiler-tools-derive-0.2.0",
+        sha256 = "0748adeee3cbac61b70d26e701515182d22d227baabe596d190f2b4154895842",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/compiler-tools-derive/0.2.0/download"],
+        strip_prefix = "compiler-tools-derive-0.2.0",
+        build_file = Label("//thirdparty/crates:BUILD.compiler-tools-derive-0.2.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__config-file-0.2.3",
+        sha256 = "df51e72c150781d2c7d4cbcb0b803277caaa80476786994a62961a8f1010dafb",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/config-file/0.2.3/download"],
+        strip_prefix = "config-file-0.2.3",
+        build_file = Label("//thirdparty/crates:BUILD.config-file-0.2.3.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__const-random-0.1.18",
+        sha256 = "87e00182fe74b066627d63b85fd550ac2998d4b0bd86bfed477a0ae4c7c71359",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/const-random/0.1.18/download"],
+        strip_prefix = "const-random-0.1.18",
+        build_file = Label("//thirdparty/crates:BUILD.const-random-0.1.18.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__const-random-macro-0.1.16",
+        sha256 = "f9d839f2a20b0aee515dc581a6172f2321f96cab76c1a38a4c584a194955390e",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/const-random-macro/0.1.16/download"],
+        strip_prefix = "const-random-macro-0.1.16",
+        build_file = Label("//thirdparty/crates:BUILD.const-random-macro-0.1.16.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__core-foundation-0.9.4",
+        sha256 = "91e195e091a93c46f7102ec7818a2aa394e1e1771c3ab4825963fa03e45afb8f",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/core-foundation/0.9.4/download"],
+        strip_prefix = "core-foundation-0.9.4",
+        build_file = Label("//thirdparty/crates:BUILD.core-foundation-0.9.4.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__core-foundation-sys-0.8.7",
+        sha256 = "773648b94d0e5d620f64f280777445740e61fe701025087ec8b57f45c791888b",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/core-foundation-sys/0.8.7/download"],
+        strip_prefix = "core-foundation-sys-0.8.7",
+        build_file = Label("//thirdparty/crates:BUILD.core-foundation-sys-0.8.7.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__cpufeatures-0.2.14",
+        sha256 = "608697df725056feaccfa42cffdaeeec3fccc4ffc38358ecd19b243e716a78e0",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/cpufeatures/0.2.14/download"],
+        strip_prefix = "cpufeatures-0.2.14",
+        build_file = Label("//thirdparty/crates:BUILD.cpufeatures-0.2.14.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__crc32fast-1.4.2",
+        sha256 = "a97769d94ddab943e4510d138150169a2758b5ef3eb191a9ee688de3e23ef7b3",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/crc32fast/1.4.2/download"],
+        strip_prefix = "crc32fast-1.4.2",
+        build_file = Label("//thirdparty/crates:BUILD.crc32fast-1.4.2.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__cron-0.12.1",
+        sha256 = "6f8c3e73077b4b4a6ab1ea5047c37c57aee77657bc8ecd6f29b0af082d0b0c07",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/cron/0.12.1/download"],
+        strip_prefix = "cron-0.12.1",
+        build_file = Label("//thirdparty/crates:BUILD.cron-0.12.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__crossbeam-0.8.4",
+        sha256 = "1137cd7e7fc0fb5d3c5a8678be38ec56e819125d8d7907411fe24ccb943faca8",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/crossbeam/0.8.4/download"],
+        strip_prefix = "crossbeam-0.8.4",
+        build_file = Label("//thirdparty/crates:BUILD.crossbeam-0.8.4.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__crossbeam-channel-0.5.13",
+        sha256 = "33480d6946193aa8033910124896ca395333cae7e2d1113d1fef6c3272217df2",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/crossbeam-channel/0.5.13/download"],
+        strip_prefix = "crossbeam-channel-0.5.13",
+        build_file = Label("//thirdparty/crates:BUILD.crossbeam-channel-0.5.13.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__crossbeam-deque-0.8.5",
+        sha256 = "613f8cc01fe9cf1a3eb3d7f488fd2fa8388403e97039e2f73692932e291a770d",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/crossbeam-deque/0.8.5/download"],
+        strip_prefix = "crossbeam-deque-0.8.5",
+        build_file = Label("//thirdparty/crates:BUILD.crossbeam-deque-0.8.5.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__crossbeam-epoch-0.9.18",
+        sha256 = "5b82ac4a3c2ca9c3460964f020e1402edd5753411d7737aa39c3714ad1b5420e",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/crossbeam-epoch/0.9.18/download"],
+        strip_prefix = "crossbeam-epoch-0.9.18",
+        build_file = Label("//thirdparty/crates:BUILD.crossbeam-epoch-0.9.18.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__crossbeam-queue-0.3.11",
+        sha256 = "df0346b5d5e76ac2fe4e327c5fd1118d6be7c51dfb18f9b7922923f287471e35",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/crossbeam-queue/0.3.11/download"],
+        strip_prefix = "crossbeam-queue-0.3.11",
+        build_file = Label("//thirdparty/crates:BUILD.crossbeam-queue-0.3.11.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__crossbeam-utils-0.7.2",
+        sha256 = "c3c7c73a2d1e9fc0886a08b93e98eb643461230d5f1925e4036204d5f2e261a8",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/crossbeam-utils/0.7.2/download"],
+        strip_prefix = "crossbeam-utils-0.7.2",
+        build_file = Label("//thirdparty/crates:BUILD.crossbeam-utils-0.7.2.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__crossbeam-utils-0.8.20",
+        sha256 = "22ec99545bb0ed0ea7bb9b8e1e9122ea386ff8a48c0922e43f36d45ab09e0e80",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/crossbeam-utils/0.8.20/download"],
+        strip_prefix = "crossbeam-utils-0.8.20",
+        build_file = Label("//thirdparty/crates:BUILD.crossbeam-utils-0.8.20.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__crunchy-0.2.2",
+        sha256 = "7a81dae078cea95a014a339291cec439d2f232ebe854a9d672b796c6afafa9b7",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/crunchy/0.2.2/download"],
+        strip_prefix = "crunchy-0.2.2",
+        build_file = Label("//thirdparty/crates:BUILD.crunchy-0.2.2.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__crypto-common-0.1.6",
+        sha256 = "1bfb12502f3fc46cca1bb51ac28df9d618d813cdc3d2f25b9fe775a34af26bb3",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/crypto-common/0.1.6/download"],
+        strip_prefix = "crypto-common-0.1.6",
+        build_file = Label("//thirdparty/crates:BUILD.crypto-common-0.1.6.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__crypto-common-0.2.0-rc.1",
+        sha256 = "b0b8ce8218c97789f16356e7896b3714f26c2ee1079b79c0b7ae7064bb9089fa",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/crypto-common/0.2.0-rc.1/download"],
+        strip_prefix = "crypto-common-0.2.0-rc.1",
+        build_file = Label("//thirdparty/crates:BUILD.crypto-common-0.2.0-rc.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__csv-1.3.0",
+        sha256 = "ac574ff4d437a7b5ad237ef331c17ccca63c46479e5b5453eb8e10bb99a759fe",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/csv/1.3.0/download"],
+        strip_prefix = "csv-1.3.0",
+        build_file = Label("//thirdparty/crates:BUILD.csv-1.3.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__csv-core-0.1.11",
+        sha256 = "5efa2b3d7902f4b634a20cae3c9c4e6209dc4779feb6863329607560143efa70",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/csv-core/0.1.11/download"],
+        strip_prefix = "csv-core-0.1.11",
+        build_file = Label("//thirdparty/crates:BUILD.csv-core-0.1.11.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__ctrlc-3.4.5",
+        sha256 = "90eeab0aa92f3f9b4e87f258c72b139c207d251f9cbc1080a0086b86a8870dd3",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/ctrlc/3.4.5/download"],
+        strip_prefix = "ctrlc-3.4.5",
+        build_file = Label("//thirdparty/crates:BUILD.ctrlc-3.4.5.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__darling-0.20.10",
+        sha256 = "6f63b86c8a8826a49b8c21f08a2d07338eec8d900540f8630dc76284be802989",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/darling/0.20.10/download"],
+        strip_prefix = "darling-0.20.10",
+        build_file = Label("//thirdparty/crates:BUILD.darling-0.20.10.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__darling_core-0.20.10",
+        sha256 = "95133861a8032aaea082871032f5815eb9e98cef03fa916ab4500513994df9e5",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/darling_core/0.20.10/download"],
+        strip_prefix = "darling_core-0.20.10",
+        build_file = Label("//thirdparty/crates:BUILD.darling_core-0.20.10.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__darling_macro-0.20.10",
+        sha256 = "d336a2a514f6ccccaa3e09b02d41d35330c07ddf03a62165fcec10bb561c7806",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/darling_macro/0.20.10/download"],
+        strip_prefix = "darling_macro-0.20.10",
+        build_file = Label("//thirdparty/crates:BUILD.darling_macro-0.20.10.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__dashmap-5.5.3",
+        sha256 = "978747c1d849a7d2ee5e8adc0159961c48fb7e5db2f06af6723b80123bb53856",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/dashmap/5.5.3/download"],
+        strip_prefix = "dashmap-5.5.3",
+        build_file = Label("//thirdparty/crates:BUILD.dashmap-5.5.3.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__data-encoding-2.6.0",
+        sha256 = "e8566979429cf69b49a5c740c60791108e86440e8be149bbea4fe54d2c32d6e2",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/data-encoding/2.6.0/download"],
+        strip_prefix = "data-encoding-2.6.0",
+        build_file = Label("//thirdparty/crates:BUILD.data-encoding-2.6.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__diesel-2.2.4",
+        sha256 = "158fe8e2e68695bd615d7e4f3227c0727b151330d3e253b525086c348d055d5e",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/diesel/2.2.4/download"],
+        strip_prefix = "diesel-2.2.4",
+        build_file = Label("//thirdparty/crates:BUILD.diesel-2.2.4.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__diesel_derives-2.2.3",
+        sha256 = "e7f2c3de51e2ba6bf2a648285696137aaf0f5f487bcbea93972fe8a364e131a4",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/diesel_derives/2.2.3/download"],
+        strip_prefix = "diesel_derives-2.2.3",
+        build_file = Label("//thirdparty/crates:BUILD.diesel_derives-2.2.3.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__diesel_migrations-2.2.0",
+        sha256 = "8a73ce704bad4231f001bff3314d91dce4aba0770cee8b233991859abc15c1f6",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/diesel_migrations/2.2.0/download"],
+        strip_prefix = "diesel_migrations-2.2.0",
+        build_file = Label("//thirdparty/crates:BUILD.diesel_migrations-2.2.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__diesel_table_macro_syntax-0.2.0",
+        sha256 = "209c735641a413bc68c4923a9d6ad4bcb3ca306b794edaa7eb0b3228a99ffb25",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/diesel_table_macro_syntax/0.2.0/download"],
+        strip_prefix = "diesel_table_macro_syntax-0.2.0",
+        build_file = Label("//thirdparty/crates:BUILD.diesel_table_macro_syntax-0.2.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__digest-0.10.7",
+        sha256 = "9ed9a281f7bc9b7576e61468ba615a66a5c8cfdff42420a70aa82701a3b1e292",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/digest/0.10.7/download"],
+        strip_prefix = "digest-0.10.7",
+        build_file = Label("//thirdparty/crates:BUILD.digest-0.10.7.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__digest-0.11.0-pre.9",
+        sha256 = "cf2e3d6615d99707295a9673e889bf363a04b2a466bd320c65a72536f7577379",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/digest/0.11.0-pre.9/download"],
+        strip_prefix = "digest-0.11.0-pre.9",
+        build_file = Label("//thirdparty/crates:BUILD.digest-0.11.0-pre.9.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__dotenv-0.15.0",
+        sha256 = "77c90badedccf4105eca100756a0b1289e191f6fcbdadd3cee1d2f614f97da8f",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/dotenv/0.15.0/download"],
+        strip_prefix = "dotenv-0.15.0",
+        build_file = Label("//thirdparty/crates:BUILD.dotenv-0.15.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__dsl_auto_type-0.1.2",
+        sha256 = "c5d9abe6314103864cc2d8901b7ae224e0ab1a103a0a416661b4097b0779b607",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/dsl_auto_type/0.1.2/download"],
+        strip_prefix = "dsl_auto_type-0.1.2",
+        build_file = Label("//thirdparty/crates:BUILD.dsl_auto_type-0.1.2.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__dtoa-1.0.9",
+        sha256 = "dcbb2bf8e87535c23f7a8a321e364ce21462d0ff10cb6407820e8e96dfff6653",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/dtoa/1.0.9/download"],
+        strip_prefix = "dtoa-1.0.9",
+        build_file = Label("//thirdparty/crates:BUILD.dtoa-1.0.9.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__either-1.13.0",
+        sha256 = "60b1af1c220855b6ceac025d3f6ecdd2b7c4894bfe9cd9bda4fbb4bc7c0d4cf0",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/either/1.13.0/download"],
+        strip_prefix = "either-1.13.0",
+        build_file = Label("//thirdparty/crates:BUILD.either-1.13.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__encoding_rs-0.8.34",
+        sha256 = "b45de904aa0b010bce2ab45264d0631681847fa7b6f2eaa7dab7619943bc4f59",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/encoding_rs/0.8.34/download"],
+        strip_prefix = "encoding_rs-0.8.34",
+        build_file = Label("//thirdparty/crates:BUILD.encoding_rs-0.8.34.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__enum-as-inner-0.6.1",
+        sha256 = "a1e6a265c649f3f5979b601d26f1d05ada116434c87741c9493cb56218f76cbc",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/enum-as-inner/0.6.1/download"],
+        strip_prefix = "enum-as-inner-0.6.1",
+        build_file = Label("//thirdparty/crates:BUILD.enum-as-inner-0.6.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__equivalent-1.0.1",
+        sha256 = "5443807d6dff69373d433ab9ef5378ad8df50ca6298caf15de6e52e24aaf54d5",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/equivalent/1.0.1/download"],
+        strip_prefix = "equivalent-1.0.1",
+        build_file = Label("//thirdparty/crates:BUILD.equivalent-1.0.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__errno-0.3.9",
+        sha256 = "534c5cf6194dfab3db3242765c03bbe257cf92f22b38f6bc0c58d59108a820ba",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/errno/0.3.9/download"],
+        strip_prefix = "errno-0.3.9",
+        build_file = Label("//thirdparty/crates:BUILD.errno-0.3.9.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__error-chain-0.12.4",
+        sha256 = "2d2f06b9cac1506ece98fe3231e3cc9c4410ec3d5b1f24ae1c8946f0742cdefc",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/error-chain/0.12.4/download"],
+        strip_prefix = "error-chain-0.12.4",
+        build_file = Label("//thirdparty/crates:BUILD.error-chain-0.12.4.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__fastrand-2.1.1",
+        sha256 = "e8c02a5121d4ea3eb16a80748c74f5549a5665e4c21333c6098f283870fbdea6",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/fastrand/2.1.1/download"],
+        strip_prefix = "fastrand-2.1.1",
+        build_file = Label("//thirdparty/crates:BUILD.fastrand-2.1.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__fixedbitset-0.4.2",
+        sha256 = "0ce7134b9999ecaf8bcd65542e436736ef32ddca1b3e06094cb6ec5755203b80",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/fixedbitset/0.4.2/download"],
+        strip_prefix = "fixedbitset-0.4.2",
+        build_file = Label("//thirdparty/crates:BUILD.fixedbitset-0.4.2.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__flatbuffers-24.3.25",
+        sha256 = "8add37afff2d4ffa83bc748a70b4b1370984f6980768554182424ef71447c35f",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/flatbuffers/24.3.25/download"],
+        strip_prefix = "flatbuffers-24.3.25",
+        build_file = Label("//thirdparty/crates:BUILD.flatbuffers-24.3.25.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__flate2-1.0.33",
+        sha256 = "324a1be68054ef05ad64b861cc9eaf1d623d2d8cb25b4bf2cb9cdd902b4bf253",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/flate2/1.0.33/download"],
+        strip_prefix = "flate2-1.0.33",
+        build_file = Label("//thirdparty/crates:BUILD.flate2-1.0.33.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__fnv-1.0.7",
+        sha256 = "3f9eec918d3f24069decb9af1554cad7c880e2da24a9afd88aca000531ab82c1",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/fnv/1.0.7/download"],
+        strip_prefix = "fnv-1.0.7",
+        build_file = Label("//thirdparty/crates:BUILD.fnv-1.0.7.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__form_urlencoded-1.2.1",
+        sha256 = "e13624c2627564efccf4934284bdd98cbaa14e79b0b5a141218e507b3a823456",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/form_urlencoded/1.2.1/download"],
+        strip_prefix = "form_urlencoded-1.2.1",
+        build_file = Label("//thirdparty/crates:BUILD.form_urlencoded-1.2.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__funty-2.0.0",
+        sha256 = "e6d5a32815ae3f33302d95fdcb2ce17862f8c65363dcfd29360480ba1001fc9c",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/funty/2.0.0/download"],
+        strip_prefix = "funty-2.0.0",
+        build_file = Label("//thirdparty/crates:BUILD.funty-2.0.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__futures-0.1.31",
+        sha256 = "3a471a38ef8ed83cd6e40aa59c1ffe17db6855c18e3604d9c4ed8c08ebc28678",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/futures/0.1.31/download"],
+        strip_prefix = "futures-0.1.31",
+        build_file = Label("//thirdparty/crates:BUILD.futures-0.1.31.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__futures-0.3.30",
+        sha256 = "645c6916888f6cb6350d2550b80fb63e734897a8498abe35cfb732b6487804b0",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/futures/0.3.30/download"],
+        strip_prefix = "futures-0.3.30",
+        build_file = Label("//thirdparty/crates:BUILD.futures-0.3.30.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__futures-channel-0.3.30",
+        sha256 = "eac8f7d7865dcb88bd4373ab671c8cf4508703796caa2b1985a9ca867b3fcb78",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/futures-channel/0.3.30/download"],
+        strip_prefix = "futures-channel-0.3.30",
+        build_file = Label("//thirdparty/crates:BUILD.futures-channel-0.3.30.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__futures-core-0.3.30",
+        sha256 = "dfc6580bb841c5a68e9ef15c77ccc837b40a7504914d52e47b8b0e9bbda25a1d",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/futures-core/0.3.30/download"],
+        strip_prefix = "futures-core-0.3.30",
+        build_file = Label("//thirdparty/crates:BUILD.futures-core-0.3.30.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__futures-executor-0.3.30",
+        sha256 = "a576fc72ae164fca6b9db127eaa9a9dda0d61316034f33a0a0d4eda41f02b01d",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/futures-executor/0.3.30/download"],
+        strip_prefix = "futures-executor-0.3.30",
+        build_file = Label("//thirdparty/crates:BUILD.futures-executor-0.3.30.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__futures-io-0.3.30",
+        sha256 = "a44623e20b9681a318efdd71c299b6b222ed6f231972bfe2f224ebad6311f0c1",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/futures-io/0.3.30/download"],
+        strip_prefix = "futures-io-0.3.30",
+        build_file = Label("//thirdparty/crates:BUILD.futures-io-0.3.30.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__futures-macro-0.3.30",
+        sha256 = "87750cf4b7a4c0625b1529e4c543c2182106e4dedc60a2a6455e00d212c489ac",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/futures-macro/0.3.30/download"],
+        strip_prefix = "futures-macro-0.3.30",
+        build_file = Label("//thirdparty/crates:BUILD.futures-macro-0.3.30.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__futures-sink-0.3.30",
+        sha256 = "9fb8e00e87438d937621c1c6269e53f536c14d3fbd6a042bb24879e57d474fb5",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/futures-sink/0.3.30/download"],
+        strip_prefix = "futures-sink-0.3.30",
+        build_file = Label("//thirdparty/crates:BUILD.futures-sink-0.3.30.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__futures-task-0.3.30",
+        sha256 = "38d84fa142264698cdce1a9f9172cf383a0c82de1bddcf3092901442c4097004",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/futures-task/0.3.30/download"],
+        strip_prefix = "futures-task-0.3.30",
+        build_file = Label("//thirdparty/crates:BUILD.futures-task-0.3.30.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__futures-util-0.3.30",
+        sha256 = "3d6401deb83407ab3da39eba7e33987a73c3df0c82b4bb5813ee871c19c41d48",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/futures-util/0.3.30/download"],
+        strip_prefix = "futures-util-0.3.30",
+        build_file = Label("//thirdparty/crates:BUILD.futures-util-0.3.30.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__generic-array-0.14.7",
+        sha256 = "85649ca51fd72272d7821adaf274ad91c288277713d9c18820d8499a7ff69e9a",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/generic-array/0.14.7/download"],
+        strip_prefix = "generic-array-0.14.7",
+        build_file = Label("//thirdparty/crates:BUILD.generic-array-0.14.7.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__getrandom-0.2.15",
+        sha256 = "c4567c8db10ae91089c99af84c68c38da3ec2f087c3f82960bcdbf3656b6f4d7",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/getrandom/0.2.15/download"],
+        strip_prefix = "getrandom-0.2.15",
+        build_file = Label("//thirdparty/crates:BUILD.getrandom-0.2.15.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__gimli-0.31.0",
+        sha256 = "32085ea23f3234fc7846555e85283ba4de91e21016dc0455a16286d87a292d64",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/gimli/0.31.0/download"],
+        strip_prefix = "gimli-0.31.0",
+        build_file = Label("//thirdparty/crates:BUILD.gimli-0.31.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__glob-0.3.1",
+        sha256 = "d2fabcfbdc87f4758337ca535fb41a6d701b65693ce38287d856d1674551ec9b",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/glob/0.3.1/download"],
+        strip_prefix = "glob-0.3.1",
+        build_file = Label("//thirdparty/crates:BUILD.glob-0.3.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__h2-0.3.26",
+        sha256 = "81fe527a889e1532da5c525686d96d4c2e74cdd345badf8dfef9f6b39dd5f5e8",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/h2/0.3.26/download"],
+        strip_prefix = "h2-0.3.26",
+        build_file = Label("//thirdparty/crates:BUILD.h2-0.3.26.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__h2-0.4.6",
+        sha256 = "524e8ac6999421f49a846c2d4411f337e53497d8ec55d67753beffa43c5d9205",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/h2/0.4.6/download"],
+        strip_prefix = "h2-0.4.6",
+        build_file = Label("//thirdparty/crates:BUILD.h2-0.4.6.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__half-2.4.1",
+        sha256 = "6dd08c532ae367adf81c312a4580bc67f1d0fe8bc9c460520283f4c0ff277888",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/half/2.4.1/download"],
+        strip_prefix = "half-2.4.1",
+        build_file = Label("//thirdparty/crates:BUILD.half-2.4.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__hashbrown-0.12.3",
+        sha256 = "8a9ee70c43aaf417c914396645a0fa852624801b24ebb7ae78fe8272889ac888",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/hashbrown/0.12.3/download"],
+        strip_prefix = "hashbrown-0.12.3",
+        build_file = Label("//thirdparty/crates:BUILD.hashbrown-0.12.3.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__hashbrown-0.13.1",
+        sha256 = "33ff8ae62cd3a9102e5637afc8452c55acf3844001bd5374e0b0bd7b6616c038",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/hashbrown/0.13.1/download"],
+        strip_prefix = "hashbrown-0.13.1",
+        build_file = Label("//thirdparty/crates:BUILD.hashbrown-0.13.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__hashbrown-0.14.5",
+        sha256 = "e5274423e17b7c9fc20b6e7e208532f9b19825d82dfd615708b70edd83df41f1",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/hashbrown/0.14.5/download"],
+        strip_prefix = "hashbrown-0.14.5",
+        build_file = Label("//thirdparty/crates:BUILD.hashbrown-0.14.5.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__headers-0.3.9",
+        sha256 = "06683b93020a07e3dbcf5f8c0f6d40080d725bea7936fc01ad345c01b97dc270",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/headers/0.3.9/download"],
+        strip_prefix = "headers-0.3.9",
+        build_file = Label("//thirdparty/crates:BUILD.headers-0.3.9.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__headers-core-0.2.0",
+        sha256 = "e7f66481bfee273957b1f20485a4ff3362987f85b2c236580d81b4eb7a326429",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/headers-core/0.2.0/download"],
+        strip_prefix = "headers-core-0.2.0",
+        build_file = Label("//thirdparty/crates:BUILD.headers-core-0.2.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__heck-0.5.0",
+        sha256 = "2304e00983f87ffb38b55b444b5e3b60a884b5d30c0fca7d82fe33449bbe55ea",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/heck/0.5.0/download"],
+        strip_prefix = "heck-0.5.0",
+        build_file = Label("//thirdparty/crates:BUILD.heck-0.5.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__hermit-abi-0.3.9",
+        sha256 = "d231dfb89cfffdbc30e7fc41579ed6066ad03abda9e567ccafae602b97ec5024",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/hermit-abi/0.3.9/download"],
+        strip_prefix = "hermit-abi-0.3.9",
+        build_file = Label("//thirdparty/crates:BUILD.hermit-abi-0.3.9.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__hex-0.4.3",
+        sha256 = "7f24254aa9a54b5c858eaee2f5bccdb46aaf0e486a595ed5fd8f86ba55232a70",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/hex/0.4.3/download"],
+        strip_prefix = "hex-0.4.3",
+        build_file = Label("//thirdparty/crates:BUILD.hex-0.4.3.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__hickory-proto-0.24.1",
+        sha256 = "07698b8420e2f0d6447a436ba999ec85d8fbf2a398bbd737b82cac4a2e96e512",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/hickory-proto/0.24.1/download"],
+        strip_prefix = "hickory-proto-0.24.1",
+        build_file = Label("//thirdparty/crates:BUILD.hickory-proto-0.24.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__hickory-resolver-0.24.1",
+        sha256 = "28757f23aa75c98f254cf0405e6d8c25b831b32921b050a66692427679b1f243",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/hickory-resolver/0.24.1/download"],
+        strip_prefix = "hickory-resolver-0.24.1",
+        build_file = Label("//thirdparty/crates:BUILD.hickory-resolver-0.24.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__hostname-0.3.1",
+        sha256 = "3c731c3e10504cc8ed35cfe2f1db4c9274c3d35fa486e3b31df46f068ef3e867",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/hostname/0.3.1/download"],
+        strip_prefix = "hostname-0.3.1",
+        build_file = Label("//thirdparty/crates:BUILD.hostname-0.3.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__http-0.2.12",
+        sha256 = "601cbb57e577e2f5ef5be8e7b83f0f63994f25aa94d673e54a92d5c516d101f1",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/http/0.2.12/download"],
+        strip_prefix = "http-0.2.12",
+        build_file = Label("//thirdparty/crates:BUILD.http-0.2.12.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__http-1.1.0",
+        sha256 = "21b9ddb458710bc376481b842f5da65cdf31522de232c1ca8146abce2a358258",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/http/1.1.0/download"],
+        strip_prefix = "http-1.1.0",
+        build_file = Label("//thirdparty/crates:BUILD.http-1.1.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__http-body-0.4.6",
+        sha256 = "7ceab25649e9960c0311ea418d17bee82c0dcec1bd053b5f9a66e265a693bed2",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/http-body/0.4.6/download"],
+        strip_prefix = "http-body-0.4.6",
+        build_file = Label("//thirdparty/crates:BUILD.http-body-0.4.6.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__http-body-1.0.1",
+        sha256 = "1efedce1fb8e6913f23e0c92de8e62cd5b772a67e7b3946df930a62566c93184",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/http-body/1.0.1/download"],
+        strip_prefix = "http-body-1.0.1",
+        build_file = Label("//thirdparty/crates:BUILD.http-body-1.0.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__http-body-util-0.1.2",
+        sha256 = "793429d76616a256bcb62c2a2ec2bed781c8307e797e2598c50010f2bee2544f",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/http-body-util/0.1.2/download"],
+        strip_prefix = "http-body-util-0.1.2",
+        build_file = Label("//thirdparty/crates:BUILD.http-body-util-0.1.2.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__httparse-1.9.4",
+        sha256 = "0fcc0b4a115bf80b728eb8ea024ad5bd707b615bfed49e0665b6e0f86fd082d9",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/httparse/1.9.4/download"],
+        strip_prefix = "httparse-1.9.4",
+        build_file = Label("//thirdparty/crates:BUILD.httparse-1.9.4.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__httpdate-1.0.3",
+        sha256 = "df3b46402a9d5adb4c86a0cf463f42e19994e3ee891101b1841f30a545cb49a9",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/httpdate/1.0.3/download"],
+        strip_prefix = "httpdate-1.0.3",
+        build_file = Label("//thirdparty/crates:BUILD.httpdate-1.0.3.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__hybrid-array-0.2.0-rc.9",
+        sha256 = "4d306b679262030ad8813a82d4915fc04efff97776e4db7f8eb5137039d56400",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/hybrid-array/0.2.0-rc.9/download"],
+        strip_prefix = "hybrid-array-0.2.0-rc.9",
+        build_file = Label("//thirdparty/crates:BUILD.hybrid-array-0.2.0-rc.9.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__hyper-0.14.30",
+        sha256 = "a152ddd61dfaec7273fe8419ab357f33aee0d914c5f4efbf0d96fa749eea5ec9",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/hyper/0.14.30/download"],
+        strip_prefix = "hyper-0.14.30",
+        build_file = Label("//thirdparty/crates:BUILD.hyper-0.14.30.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__hyper-1.4.1",
+        sha256 = "50dfd22e0e76d0f662d429a5f80fcaf3855009297eab6a0a9f8543834744ba05",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/hyper/1.4.1/download"],
+        strip_prefix = "hyper-1.4.1",
+        build_file = Label("//thirdparty/crates:BUILD.hyper-1.4.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__hyper-rustls-0.24.2",
+        sha256 = "ec3efd23720e2049821a693cbc7e65ea87c72f1c58ff2f9522ff332b1491e590",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/hyper-rustls/0.24.2/download"],
+        strip_prefix = "hyper-rustls-0.24.2",
+        build_file = Label("//thirdparty/crates:BUILD.hyper-rustls-0.24.2.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__hyper-rustls-0.27.3",
+        sha256 = "08afdbb5c31130e3034af566421053ab03787c640246a446327f550d11bcb333",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/hyper-rustls/0.27.3/download"],
+        strip_prefix = "hyper-rustls-0.27.3",
+        build_file = Label("//thirdparty/crates:BUILD.hyper-rustls-0.27.3.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__hyper-timeout-0.5.1",
+        sha256 = "3203a961e5c83b6f5498933e78b6b263e208c197b63e9c6c53cc82ffd3f63793",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/hyper-timeout/0.5.1/download"],
+        strip_prefix = "hyper-timeout-0.5.1",
+        build_file = Label("//thirdparty/crates:BUILD.hyper-timeout-0.5.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__hyper-util-0.1.8",
+        sha256 = "da62f120a8a37763efb0cf8fdf264b884c7b8b9ac8660b900c8661030c00e6ba",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/hyper-util/0.1.8/download"],
+        strip_prefix = "hyper-util-0.1.8",
+        build_file = Label("//thirdparty/crates:BUILD.hyper-util-0.1.8.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__iana-time-zone-0.1.60",
+        sha256 = "e7ffbb5a1b541ea2561f8c41c087286cc091e21e556a4f09a8f6cbf17b69b141",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/iana-time-zone/0.1.60/download"],
+        strip_prefix = "iana-time-zone-0.1.60",
+        build_file = Label("//thirdparty/crates:BUILD.iana-time-zone-0.1.60.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__iana-time-zone-haiku-0.1.2",
+        sha256 = "f31827a206f56af32e590ba56d5d2d085f558508192593743f16b2306495269f",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/iana-time-zone-haiku/0.1.2/download"],
+        strip_prefix = "iana-time-zone-haiku-0.1.2",
+        build_file = Label("//thirdparty/crates:BUILD.iana-time-zone-haiku-0.1.2.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__ident_case-1.0.1",
+        sha256 = "b9e0384b61958566e926dc50660321d12159025e767c18e043daf26b70104c39",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/ident_case/1.0.1/download"],
+        strip_prefix = "ident_case-1.0.1",
+        build_file = Label("//thirdparty/crates:BUILD.ident_case-1.0.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__idna-0.4.0",
+        sha256 = "7d20d6b07bfbc108882d88ed8e37d39636dcc260e15e30c45e6ba089610b917c",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/idna/0.4.0/download"],
+        strip_prefix = "idna-0.4.0",
+        build_file = Label("//thirdparty/crates:BUILD.idna-0.4.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__idna-0.5.0",
+        sha256 = "634d9b1461af396cad843f47fdba5597a4f9e6ddd4bfb6ff5d85028c25cb12f6",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/idna/0.5.0/download"],
+        strip_prefix = "idna-0.5.0",
+        build_file = Label("//thirdparty/crates:BUILD.idna-0.5.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__indexmap-1.9.3",
+        sha256 = "bd070e393353796e801d209ad339e89596eb4c8d430d18ede6a1cced8fafbd99",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/indexmap/1.9.3/download"],
+        strip_prefix = "indexmap-1.9.3",
+        build_file = Label("//thirdparty/crates:BUILD.indexmap-1.9.3.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__indexmap-2.5.0",
+        sha256 = "68b900aa2f7301e21c36462b170ee99994de34dff39a4a6a528e80e7376d07e5",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/indexmap/2.5.0/download"],
+        strip_prefix = "indexmap-2.5.0",
+        build_file = Label("//thirdparty/crates:BUILD.indexmap-2.5.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__integer-encoding-3.0.4",
+        sha256 = "8bb03732005da905c88227371639bf1ad885cc712789c011c31c5fb3ab3ccf02",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/integer-encoding/3.0.4/download"],
+        strip_prefix = "integer-encoding-3.0.4",
+        build_file = Label("//thirdparty/crates:BUILD.integer-encoding-3.0.4.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__ipnet-2.10.0",
+        sha256 = "187674a687eed5fe42285b40c6291f9a01517d415fad1c3cbc6a9f778af7fcd4",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/ipnet/2.10.0/download"],
+        strip_prefix = "ipnet-2.10.0",
+        build_file = Label("//thirdparty/crates:BUILD.ipnet-2.10.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__itertools-0.12.1",
+        sha256 = "ba291022dbbd398a455acf126c1e341954079855bc60dfdda641363bd6922569",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/itertools/0.12.1/download"],
+        strip_prefix = "itertools-0.12.1",
+        build_file = Label("//thirdparty/crates:BUILD.itertools-0.12.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__itertools-0.13.0",
+        sha256 = "413ee7dfc52ee1a4949ceeb7dbc8a33f2d6c088194d9f922fb8318faf1f01186",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/itertools/0.13.0/download"],
+        strip_prefix = "itertools-0.13.0",
+        build_file = Label("//thirdparty/crates:BUILD.itertools-0.13.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__itoa-1.0.11",
+        sha256 = "49f1f14873335454500d59611f1cf4a4b0f786f9ac11f4312a78e4cf2566695b",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/itoa/1.0.11/download"],
+        strip_prefix = "itoa-1.0.11",
+        build_file = Label("//thirdparty/crates:BUILD.itoa-1.0.11.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__jobserver-0.1.32",
+        sha256 = "48d1dbcbbeb6a7fec7e059840aa538bd62aaccf972c7346c4d9d2059312853d0",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/jobserver/0.1.32/download"],
+        strip_prefix = "jobserver-0.1.32",
+        build_file = Label("//thirdparty/crates:BUILD.jobserver-0.1.32.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__js-sys-0.3.70",
+        sha256 = "1868808506b929d7b0cfa8f75951347aa71bb21144b7791bae35d9bccfcfe37a",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/js-sys/0.3.70/download"],
+        strip_prefix = "js-sys-0.3.70",
+        build_file = Label("//thirdparty/crates:BUILD.js-sys-0.3.70.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__keccak-0.2.0-pre.0",
+        sha256 = "a7cdd4f0dc5807b9a2b25dd48a3f58e862606fe7bd47f41ecde36e97422d7e90",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/keccak/0.2.0-pre.0/download"],
+        strip_prefix = "keccak-0.2.0-pre.0",
+        build_file = Label("//thirdparty/crates:BUILD.keccak-0.2.0-pre.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__klickhouse-0.13.0",
+        sha256 = "58b682b30ec24c0adc06c7b1ae2e63698d71fa8d41738446e1a2999628aa988e",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/klickhouse/0.13.0/download"],
+        strip_prefix = "klickhouse-0.13.0",
+        build_file = Label("//thirdparty/crates:BUILD.klickhouse-0.13.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__klickhouse_derive-0.13.0",
+        sha256 = "12cd36350e8478be1c63ee0c86f10db751f11eed836e6963dd3faae8e55e93d1",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/klickhouse_derive/0.13.0/download"],
+        strip_prefix = "klickhouse_derive-0.13.0",
+        build_file = Label("//thirdparty/crates:BUILD.klickhouse_derive-0.13.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__lazy_static-1.5.0",
+        sha256 = "bbd2bcb4c963f2ddae06a2efc7e9f3591312473c50c6685e1f298068316e66fe",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/lazy_static/1.5.0/download"],
+        strip_prefix = "lazy_static-1.5.0",
+        build_file = Label("//thirdparty/crates:BUILD.lazy_static-1.5.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__lexical-core-0.8.5",
+        sha256 = "2cde5de06e8d4c2faabc400238f9ae1c74d5412d03a7bd067645ccbc47070e46",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/lexical-core/0.8.5/download"],
+        strip_prefix = "lexical-core-0.8.5",
+        build_file = Label("//thirdparty/crates:BUILD.lexical-core-0.8.5.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__lexical-parse-float-0.8.5",
+        sha256 = "683b3a5ebd0130b8fb52ba0bdc718cc56815b6a097e28ae5a6997d0ad17dc05f",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/lexical-parse-float/0.8.5/download"],
+        strip_prefix = "lexical-parse-float-0.8.5",
+        build_file = Label("//thirdparty/crates:BUILD.lexical-parse-float-0.8.5.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__lexical-parse-integer-0.8.6",
+        sha256 = "6d0994485ed0c312f6d965766754ea177d07f9c00c9b82a5ee62ed5b47945ee9",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/lexical-parse-integer/0.8.6/download"],
+        strip_prefix = "lexical-parse-integer-0.8.6",
+        build_file = Label("//thirdparty/crates:BUILD.lexical-parse-integer-0.8.6.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__lexical-util-0.8.5",
+        sha256 = "5255b9ff16ff898710eb9eb63cb39248ea8a5bb036bea8085b1a767ff6c4e3fc",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/lexical-util/0.8.5/download"],
+        strip_prefix = "lexical-util-0.8.5",
+        build_file = Label("//thirdparty/crates:BUILD.lexical-util-0.8.5.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__lexical-write-float-0.8.5",
+        sha256 = "accabaa1c4581f05a3923d1b4cfd124c329352288b7b9da09e766b0668116862",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/lexical-write-float/0.8.5/download"],
+        strip_prefix = "lexical-write-float-0.8.5",
+        build_file = Label("//thirdparty/crates:BUILD.lexical-write-float-0.8.5.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__lexical-write-integer-0.8.5",
+        sha256 = "e1b6f3d1f4422866b68192d62f77bc5c700bee84f3069f2469d7bc8c77852446",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/lexical-write-integer/0.8.5/download"],
+        strip_prefix = "lexical-write-integer-0.8.5",
+        build_file = Label("//thirdparty/crates:BUILD.lexical-write-integer-0.8.5.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__libc-0.2.158",
+        sha256 = "d8adc4bb1803a324070e64a98ae98f38934d91957a99cfb3a43dcbc01bc56439",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/libc/0.2.158/download"],
+        strip_prefix = "libc-0.2.158",
+        build_file = Label("//thirdparty/crates:BUILD.libc-0.2.158.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__libm-0.2.8",
+        sha256 = "4ec2a862134d2a7d32d7983ddcdd1c4923530833c9f2ea1a44fc5fa473989058",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/libm/0.2.8/download"],
+        strip_prefix = "libm-0.2.8",
+        build_file = Label("//thirdparty/crates:BUILD.libm-0.2.8.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__libmimalloc-sys-0.1.39",
+        sha256 = "23aa6811d3bd4deb8a84dde645f943476d13b248d818edcf8ce0b2f37f036b44",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/libmimalloc-sys/0.1.39/download"],
+        strip_prefix = "libmimalloc-sys-0.1.39",
+        build_file = Label("//thirdparty/crates:BUILD.libmimalloc-sys-0.1.39.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__linked-hash-map-0.5.6",
+        sha256 = "0717cef1bc8b636c6e1c1bbdefc09e6322da8a9321966e8928ef80d20f7f770f",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/linked-hash-map/0.5.6/download"],
+        strip_prefix = "linked-hash-map-0.5.6",
+        build_file = Label("//thirdparty/crates:BUILD.linked-hash-map-0.5.6.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__linkme-0.3.28",
+        sha256 = "3c943daedff228392b791b33bba32e75737756e80a613e32e246c6ce9cbab20a",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/linkme/0.3.28/download"],
+        strip_prefix = "linkme-0.3.28",
+        build_file = Label("//thirdparty/crates:BUILD.linkme-0.3.28.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__linkme-impl-0.3.28",
+        sha256 = "cb26336e6dc7cc76e7927d2c9e7e3bb376d7af65a6f56a0b16c47d18a9b1abc5",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/linkme-impl/0.3.28/download"],
+        strip_prefix = "linkme-impl-0.3.28",
+        build_file = Label("//thirdparty/crates:BUILD.linkme-impl-0.3.28.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__linux-raw-sys-0.4.14",
+        sha256 = "78b3ae25bc7c8c38cec158d1f2757ee79e9b3740fbc7ccf0e59e4b08d793fa89",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/linux-raw-sys/0.4.14/download"],
+        strip_prefix = "linux-raw-sys-0.4.14",
+        build_file = Label("//thirdparty/crates:BUILD.linux-raw-sys-0.4.14.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__lock_api-0.4.12",
+        sha256 = "07af8b9cdd281b7915f413fa73f29ebd5d55d0d3f0155584dade1ff18cea1b17",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/lock_api/0.4.12/download"],
+        strip_prefix = "lock_api-0.4.12",
+        build_file = Label("//thirdparty/crates:BUILD.lock_api-0.4.12.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__log-0.4.22",
+        sha256 = "a7a70ba024b9dc04c27ea2f0c0548feb474ec5c54bba33a7f72f873a39d07b24",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/log/0.4.22/download"],
+        strip_prefix = "log-0.4.22",
+        build_file = Label("//thirdparty/crates:BUILD.log-0.4.22.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__lru-0.12.4",
+        sha256 = "37ee39891760e7d94734f6f63fedc29a2e4a152f836120753a72503f09fcf904",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/lru/0.12.4/download"],
+        strip_prefix = "lru-0.12.4",
+        build_file = Label("//thirdparty/crates:BUILD.lru-0.12.4.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__lru-cache-0.1.2",
+        sha256 = "31e24f1ad8321ca0e8a1e0ac13f23cb668e6f5466c2c57319f6a5cf1cc8e3b1c",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/lru-cache/0.1.2/download"],
+        strip_prefix = "lru-cache-0.1.2",
+        build_file = Label("//thirdparty/crates:BUILD.lru-cache-0.1.2.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__lz4-1.26.0",
+        sha256 = "958b4caa893816eea05507c20cfe47574a43d9a697138a7872990bba8a0ece68",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/lz4/1.26.0/download"],
+        strip_prefix = "lz4-1.26.0",
+        build_file = Label("//thirdparty/crates:BUILD.lz4-1.26.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__lz4-sys-1.10.0",
+        sha256 = "109de74d5d2353660401699a4174a4ff23fcc649caf553df71933c7fb45ad868",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/lz4-sys/1.10.0/download"],
+        strip_prefix = "lz4-sys-1.10.0",
+        build_file = Label("//thirdparty/crates:BUILD.lz4-sys-1.10.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__lz4_flex-0.11.3",
+        sha256 = "75761162ae2b0e580d7e7c390558127e5f01b4194debd6221fd8c207fc80e3f5",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/lz4_flex/0.11.3/download"],
+        strip_prefix = "lz4_flex-0.11.3",
+        build_file = Label("//thirdparty/crates:BUILD.lz4_flex-0.11.3.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__mach2-0.4.2",
+        sha256 = "19b955cdeb2a02b9117f121ce63aa52d08ade45de53e48fe6a38b39c10f6f709",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/mach2/0.4.2/download"],
+        strip_prefix = "mach2-0.4.2",
+        build_file = Label("//thirdparty/crates:BUILD.mach2-0.4.2.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__match_cfg-0.1.0",
+        sha256 = "ffbee8634e0d45d258acb448e7eaab3fce7a0a467395d4d9f228e3c1f01fb2e4",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/match_cfg/0.1.0/download"],
+        strip_prefix = "match_cfg-0.1.0",
+        build_file = Label("//thirdparty/crates:BUILD.match_cfg-0.1.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__matchit-0.7.3",
+        sha256 = "0e7465ac9959cc2b1404e8e2367b43684a6d13790fe23056cc8c6c5a6b7bcb94",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/matchit/0.7.3/download"],
+        strip_prefix = "matchit-0.7.3",
+        build_file = Label("//thirdparty/crates:BUILD.matchit-0.7.3.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__memchr-2.7.4",
+        sha256 = "78ca9ab1a0babb1e7d5695e3530886289c18cf2f87ec19a575a0abdce112e3a3",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/memchr/2.7.4/download"],
+        strip_prefix = "memchr-2.7.4",
+        build_file = Label("//thirdparty/crates:BUILD.memchr-2.7.4.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__metrics-0.21.1",
+        sha256 = "fde3af1a009ed76a778cb84fdef9e7dbbdf5775ae3e4cc1f434a6a307f6f76c5",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/metrics/0.21.1/download"],
+        strip_prefix = "metrics-0.21.1",
+        build_file = Label("//thirdparty/crates:BUILD.metrics-0.21.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__metrics-exporter-prometheus-0.12.2",
+        sha256 = "1d4fa7ce7c4862db464a37b0b31d89bca874562f034bd7993895572783d02950",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/metrics-exporter-prometheus/0.12.2/download"],
+        strip_prefix = "metrics-exporter-prometheus-0.12.2",
+        build_file = Label("//thirdparty/crates:BUILD.metrics-exporter-prometheus-0.12.2.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__metrics-macros-0.7.1",
+        sha256 = "38b4faf00617defe497754acde3024865bc143d44a86799b24e191ecff91354f",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/metrics-macros/0.7.1/download"],
+        strip_prefix = "metrics-macros-0.7.1",
+        build_file = Label("//thirdparty/crates:BUILD.metrics-macros-0.7.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__metrics-util-0.15.1",
+        sha256 = "4de2ed6e491ed114b40b732e4d1659a9d53992ebd87490c44a6ffe23739d973e",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/metrics-util/0.15.1/download"],
+        strip_prefix = "metrics-util-0.15.1",
+        build_file = Label("//thirdparty/crates:BUILD.metrics-util-0.15.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__migrations_internals-2.2.0",
+        sha256 = "fd01039851e82f8799046eabbb354056283fb265c8ec0996af940f4e85a380ff",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/migrations_internals/2.2.0/download"],
+        strip_prefix = "migrations_internals-2.2.0",
+        build_file = Label("//thirdparty/crates:BUILD.migrations_internals-2.2.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__migrations_macros-2.2.0",
+        sha256 = "ffb161cc72176cb37aa47f1fc520d3ef02263d67d661f44f05d05a079e1237fd",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/migrations_macros/2.2.0/download"],
+        strip_prefix = "migrations_macros-2.2.0",
+        build_file = Label("//thirdparty/crates:BUILD.migrations_macros-2.2.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__mimalloc-0.1.43",
+        sha256 = "68914350ae34959d83f732418d51e2427a794055d0b9529f48259ac07af65633",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/mimalloc/0.1.43/download"],
+        strip_prefix = "mimalloc-0.1.43",
+        build_file = Label("//thirdparty/crates:BUILD.mimalloc-0.1.43.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__mime-0.3.17",
+        sha256 = "6877bb514081ee2a7ff5ef9de3281f14a4dd4bceac4c09388074a6b5df8a139a",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/mime/0.3.17/download"],
+        strip_prefix = "mime-0.3.17",
+        build_file = Label("//thirdparty/crates:BUILD.mime-0.3.17.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__mime_guess-2.0.5",
+        sha256 = "f7c44f8e672c00fe5308fa235f821cb4198414e1c77935c1ab6948d3fd78550e",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/mime_guess/2.0.5/download"],
+        strip_prefix = "mime_guess-2.0.5",
+        build_file = Label("//thirdparty/crates:BUILD.mime_guess-2.0.5.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__mini-moka-0.10.3",
+        sha256 = "c325dfab65f261f386debee8b0969da215b3fa0037e74c8a1234db7ba986d803",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/mini-moka/0.10.3/download"],
+        strip_prefix = "mini-moka-0.10.3",
+        build_file = Label("//thirdparty/crates:BUILD.mini-moka-0.10.3.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__minimal-lexical-0.2.1",
+        sha256 = "68354c5c6bd36d73ff3feceb05efa59b6acb7626617f4962be322a825e61f79a",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/minimal-lexical/0.2.1/download"],
+        strip_prefix = "minimal-lexical-0.2.1",
+        build_file = Label("//thirdparty/crates:BUILD.minimal-lexical-0.2.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__miniz_oxide-0.8.0",
+        sha256 = "e2d80299ef12ff69b16a84bb182e3b9df68b5a91574d3d4fa6e41b65deec4df1",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/miniz_oxide/0.8.0/download"],
+        strip_prefix = "miniz_oxide-0.8.0",
+        build_file = Label("//thirdparty/crates:BUILD.miniz_oxide-0.8.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__mio-1.0.2",
+        sha256 = "80e04d1dcff3aae0704555fe5fee3bcfaf3d1fdf8a7e521d5b9d2b42acb52cec",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/mio/1.0.2/download"],
+        strip_prefix = "mio-1.0.2",
+        build_file = Label("//thirdparty/crates:BUILD.mio-1.0.2.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__multer-2.1.0",
+        sha256 = "01acbdc23469fd8fe07ab135923371d5f5a422fbf9c522158677c8eb15bc51c2",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/multer/2.1.0/download"],
+        strip_prefix = "multer-2.1.0",
+        build_file = Label("//thirdparty/crates:BUILD.multer-2.1.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__multimap-0.10.0",
+        sha256 = "defc4c55412d89136f966bbb339008b474350e5e6e78d2714439c386b3137a03",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/multimap/0.10.0/download"],
+        strip_prefix = "multimap-0.10.0",
+        build_file = Label("//thirdparty/crates:BUILD.multimap-0.10.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__nix-0.29.0",
+        sha256 = "71e2746dc3a24dd78b3cfcb7be93368c6de9963d30f43a6a73998a9cf4b17b46",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/nix/0.29.0/download"],
+        strip_prefix = "nix-0.29.0",
+        build_file = Label("//thirdparty/crates:BUILD.nix-0.29.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__nom-7.1.3",
+        sha256 = "d273983c5a657a70a3e8f2a01329822f3b8c8172b73826411a55751e404a0a4a",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/nom/7.1.3/download"],
+        strip_prefix = "nom-7.1.3",
+        build_file = Label("//thirdparty/crates:BUILD.nom-7.1.3.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__num-0.4.3",
+        sha256 = "35bd024e8b2ff75562e5f34e7f4905839deb4b22955ef5e73d2fea1b9813cb23",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/num/0.4.3/download"],
+        strip_prefix = "num-0.4.3",
+        build_file = Label("//thirdparty/crates:BUILD.num-0.4.3.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__num-bigint-0.4.6",
+        sha256 = "a5e44f723f1133c9deac646763579fdb3ac745e418f2a7af9cd0c431da1f20b9",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/num-bigint/0.4.6/download"],
+        strip_prefix = "num-bigint-0.4.6",
+        build_file = Label("//thirdparty/crates:BUILD.num-bigint-0.4.6.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__num-complex-0.4.6",
+        sha256 = "73f88a1307638156682bada9d7604135552957b7818057dcef22705b4d509495",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/num-complex/0.4.6/download"],
+        strip_prefix = "num-complex-0.4.6",
+        build_file = Label("//thirdparty/crates:BUILD.num-complex-0.4.6.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__num-derive-0.4.2",
+        sha256 = "ed3955f1a9c7c0c15e092f9c887db08b1fc683305fdf6eb6684f22555355e202",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/num-derive/0.4.2/download"],
+        strip_prefix = "num-derive-0.4.2",
+        build_file = Label("//thirdparty/crates:BUILD.num-derive-0.4.2.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__num-integer-0.1.46",
+        sha256 = "7969661fd2958a5cb096e56c8e1ad0444ac2bbcd0061bd28660485a44879858f",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/num-integer/0.1.46/download"],
+        strip_prefix = "num-integer-0.1.46",
+        build_file = Label("//thirdparty/crates:BUILD.num-integer-0.1.46.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__num-iter-0.1.45",
+        sha256 = "1429034a0490724d0075ebb2bc9e875d6503c3cf69e235a8941aa757d83ef5bf",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/num-iter/0.1.45/download"],
+        strip_prefix = "num-iter-0.1.45",
+        build_file = Label("//thirdparty/crates:BUILD.num-iter-0.1.45.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__num-rational-0.4.2",
+        sha256 = "f83d14da390562dca69fc84082e73e548e1ad308d24accdedd2720017cb37824",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/num-rational/0.4.2/download"],
+        strip_prefix = "num-rational-0.4.2",
+        build_file = Label("//thirdparty/crates:BUILD.num-rational-0.4.2.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__num-traits-0.2.19",
+        sha256 = "071dfc062690e90b734c0b2273ce72ad0ffa95f0c74596bc250dcfd960262841",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/num-traits/0.2.19/download"],
+        strip_prefix = "num-traits-0.2.19",
+        build_file = Label("//thirdparty/crates:BUILD.num-traits-0.2.19.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__num_cpus-1.16.0",
+        sha256 = "4161fcb6d602d4d2081af7c3a45852d875a03dd337a6bfdd6e06407b61342a43",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/num_cpus/1.16.0/download"],
+        strip_prefix = "num_cpus-1.16.0",
+        build_file = Label("//thirdparty/crates:BUILD.num_cpus-1.16.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__object-0.36.4",
+        sha256 = "084f1a5821ac4c651660a94a7153d27ac9d8a53736203f58b31945ded098070a",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/object/0.36.4/download"],
+        strip_prefix = "object-0.36.4",
+        build_file = Label("//thirdparty/crates:BUILD.object-0.36.4.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__once_cell-1.19.0",
+        sha256 = "3fdb12b2476b595f9358c5161aa467c2438859caa136dec86c26fdd2efe17b92",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/once_cell/1.19.0/download"],
+        strip_prefix = "once_cell-1.19.0",
+        build_file = Label("//thirdparty/crates:BUILD.once_cell-1.19.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__opentelemetry-0.24.0",
+        sha256 = "4c365a63eec4f55b7efeceb724f1336f26a9cf3427b70e59e2cd2a5b947fba96",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/opentelemetry/0.24.0/download"],
+        strip_prefix = "opentelemetry-0.24.0",
+        build_file = Label("//thirdparty/crates:BUILD.opentelemetry-0.24.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__opentelemetry-prometheus-0.17.0",
+        sha256 = "cc4191ce34aa274621861a7a9d68dbcf618d5b6c66b10081631b61fd81fbc015",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/opentelemetry-prometheus/0.17.0/download"],
+        strip_prefix = "opentelemetry-prometheus-0.17.0",
+        build_file = Label("//thirdparty/crates:BUILD.opentelemetry-prometheus-0.17.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__opentelemetry_sdk-0.24.1",
+        sha256 = "692eac490ec80f24a17828d49b40b60f5aeaccdfe6a503f939713afd22bc28df",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/opentelemetry_sdk/0.24.1/download"],
+        strip_prefix = "opentelemetry_sdk-0.24.1",
+        build_file = Label("//thirdparty/crates:BUILD.opentelemetry_sdk-0.24.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__ordered-float-2.10.1",
+        sha256 = "68f19d67e5a2795c94e73e0bb1cc1a7edeb2e28efd39e2e1c9b7a40c1108b11c",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/ordered-float/2.10.1/download"],
+        strip_prefix = "ordered-float-2.10.1",
+        build_file = Label("//thirdparty/crates:BUILD.ordered-float-2.10.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__parking_lot-0.12.3",
+        sha256 = "f1bf18183cf54e8d6059647fc3063646a1801cf30896933ec2311622cc4b9a27",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/parking_lot/0.12.3/download"],
+        strip_prefix = "parking_lot-0.12.3",
+        build_file = Label("//thirdparty/crates:BUILD.parking_lot-0.12.3.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__parking_lot_core-0.9.10",
+        sha256 = "1e401f977ab385c9e4e3ab30627d6f26d00e2c73eef317493c4ec6d468726cf8",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/parking_lot_core/0.9.10/download"],
+        strip_prefix = "parking_lot_core-0.9.10",
+        build_file = Label("//thirdparty/crates:BUILD.parking_lot_core-0.9.10.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__parquet-53.0.0",
+        sha256 = "f0fbf928021131daaa57d334ca8e3904fe9ae22f73c56244fc7db9b04eedc3d8",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/parquet/53.0.0/download"],
+        strip_prefix = "parquet-53.0.0",
+        build_file = Label("//thirdparty/crates:BUILD.parquet-53.0.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__parse-zoneinfo-0.3.1",
+        sha256 = "1f2a05b18d44e2957b88f96ba460715e295bc1d7510468a2f3d3b44535d26c24",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/parse-zoneinfo/0.3.1/download"],
+        strip_prefix = "parse-zoneinfo-0.3.1",
+        build_file = Label("//thirdparty/crates:BUILD.parse-zoneinfo-0.3.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__paste-1.0.15",
+        sha256 = "57c0d7b74b563b49d38dae00a0c37d4d6de9b432382b2892f0574ddcae73fd0a",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/paste/1.0.15/download"],
+        strip_prefix = "paste-1.0.15",
+        build_file = Label("//thirdparty/crates:BUILD.paste-1.0.15.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__percent-encoding-2.3.1",
+        sha256 = "e3148f5046208a5d56bcfc03053e3ca6334e51da8dfb19b6cdc8b306fae3283e",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/percent-encoding/2.3.1/download"],
+        strip_prefix = "percent-encoding-2.3.1",
+        build_file = Label("//thirdparty/crates:BUILD.percent-encoding-2.3.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__petgraph-0.6.5",
+        sha256 = "b4c5cc86750666a3ed20bdaf5ca2a0344f9c67674cae0515bec2da16fbaa47db",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/petgraph/0.6.5/download"],
+        strip_prefix = "petgraph-0.6.5",
+        build_file = Label("//thirdparty/crates:BUILD.petgraph-0.6.5.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__phf-0.11.2",
+        sha256 = "ade2d8b8f33c7333b51bcf0428d37e217e9f32192ae4772156f65063b8ce03dc",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/phf/0.11.2/download"],
+        strip_prefix = "phf-0.11.2",
+        build_file = Label("//thirdparty/crates:BUILD.phf-0.11.2.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__phf_codegen-0.11.2",
+        sha256 = "e8d39688d359e6b34654d328e262234662d16cc0f60ec8dcbe5e718709342a5a",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/phf_codegen/0.11.2/download"],
+        strip_prefix = "phf_codegen-0.11.2",
+        build_file = Label("//thirdparty/crates:BUILD.phf_codegen-0.11.2.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__phf_generator-0.11.2",
+        sha256 = "48e4cc64c2ad9ebe670cb8fd69dd50ae301650392e81c05f9bfcb2d5bdbc24b0",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/phf_generator/0.11.2/download"],
+        strip_prefix = "phf_generator-0.11.2",
+        build_file = Label("//thirdparty/crates:BUILD.phf_generator-0.11.2.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__phf_shared-0.11.2",
+        sha256 = "90fcb95eef784c2ac79119d1dd819e162b5da872ce6f3c3abe1e8ca1c082f72b",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/phf_shared/0.11.2/download"],
+        strip_prefix = "phf_shared-0.11.2",
+        build_file = Label("//thirdparty/crates:BUILD.phf_shared-0.11.2.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__pin-project-1.1.5",
+        sha256 = "b6bf43b791c5b9e34c3d182969b4abb522f9343702850a2e57f460d00d09b4b3",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/pin-project/1.1.5/download"],
+        strip_prefix = "pin-project-1.1.5",
+        build_file = Label("//thirdparty/crates:BUILD.pin-project-1.1.5.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__pin-project-internal-1.1.5",
+        sha256 = "2f38a4412a78282e09a2cf38d195ea5420d15ba0602cb375210efbc877243965",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/pin-project-internal/1.1.5/download"],
+        strip_prefix = "pin-project-internal-1.1.5",
+        build_file = Label("//thirdparty/crates:BUILD.pin-project-internal-1.1.5.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__pin-project-lite-0.2.14",
+        sha256 = "bda66fc9667c18cb2758a2ac84d1167245054bcf85d5d1aaa6923f45801bdd02",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/pin-project-lite/0.2.14/download"],
+        strip_prefix = "pin-project-lite-0.2.14",
+        build_file = Label("//thirdparty/crates:BUILD.pin-project-lite-0.2.14.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__pin-utils-0.1.0",
+        sha256 = "8b870d8c151b6f2fb93e84a13146138f05d02ed11c7e7c54f8826aaaf7c9f184",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/pin-utils/0.1.0/download"],
+        strip_prefix = "pin-utils-0.1.0",
+        build_file = Label("//thirdparty/crates:BUILD.pin-utils-0.1.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__pkg-config-0.3.30",
+        sha256 = "d231b230927b5e4ad203db57bbcbee2802f6bce620b1e4a9024a07d94e2907ec",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/pkg-config/0.3.30/download"],
+        strip_prefix = "pkg-config-0.3.30",
+        build_file = Label("//thirdparty/crates:BUILD.pkg-config-0.3.30.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__portable-atomic-1.7.0",
+        sha256 = "da544ee218f0d287a911e9c99a39a8c9bc8fcad3cb8db5959940044ecfc67265",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/portable-atomic/1.7.0/download"],
+        strip_prefix = "portable-atomic-1.7.0",
+        build_file = Label("//thirdparty/crates:BUILD.portable-atomic-1.7.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__ppv-lite86-0.2.20",
+        sha256 = "77957b295656769bb8ad2b6a6b09d897d94f05c41b069aede1fcdaa675eaea04",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/ppv-lite86/0.2.20/download"],
+        strip_prefix = "ppv-lite86-0.2.20",
+        build_file = Label("//thirdparty/crates:BUILD.ppv-lite86-0.2.20.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__pq-sys-0.6.2",
+        sha256 = "a92c30dd81695321846d4dfe348da67b1752ebb61cd1549d203a7b57e323c435",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/pq-sys/0.6.2/download"],
+        strip_prefix = "pq-sys-0.6.2",
+        build_file = Label("//thirdparty/crates:BUILD.pq-sys-0.6.2.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__prettyplease-0.2.22",
+        sha256 = "479cf940fbbb3426c32c5d5176f62ad57549a0bb84773423ba8be9d089f5faba",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/prettyplease/0.2.22/download"],
+        strip_prefix = "prettyplease-0.2.22",
+        build_file = Label("//thirdparty/crates:BUILD.prettyplease-0.2.22.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__proc-macro-crate-3.2.0",
+        sha256 = "8ecf48c7ca261d60b74ab1a7b20da18bede46776b2e55535cb958eb595c5fa7b",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/proc-macro-crate/3.2.0/download"],
+        strip_prefix = "proc-macro-crate-3.2.0",
+        build_file = Label("//thirdparty/crates:BUILD.proc-macro-crate-3.2.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__proc-macro-error-1.0.4",
+        sha256 = "da25490ff9892aab3fcf7c36f08cfb902dd3e71ca0f9f9517bea02a73a5ce38c",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/proc-macro-error/1.0.4/download"],
+        strip_prefix = "proc-macro-error-1.0.4",
+        build_file = Label("//thirdparty/crates:BUILD.proc-macro-error-1.0.4.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__proc-macro-error-attr-1.0.4",
+        sha256 = "a1be40180e52ecc98ad80b184934baf3d0d29f979574e439af5a55274b35f869",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/proc-macro-error-attr/1.0.4/download"],
+        strip_prefix = "proc-macro-error-attr-1.0.4",
+        build_file = Label("//thirdparty/crates:BUILD.proc-macro-error-attr-1.0.4.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__proc-macro2-1.0.86",
+        sha256 = "5e719e8df665df0d1c8fbfd238015744736151d4445ec0836b8e628aae103b77",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/proc-macro2/1.0.86/download"],
+        strip_prefix = "proc-macro2-1.0.86",
+        build_file = Label("//thirdparty/crates:BUILD.proc-macro2-1.0.86.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__prometheus-0.13.4",
+        sha256 = "3d33c28a30771f7f96db69893f78b857f7450d7e0237e9c8fc6427a81bae7ed1",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/prometheus/0.13.4/download"],
+        strip_prefix = "prometheus-0.13.4",
+        build_file = Label("//thirdparty/crates:BUILD.prometheus-0.13.4.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__prometheus-client-0.22.3",
+        sha256 = "504ee9ff529add891127c4827eb481bd69dc0ebc72e9a682e187db4caa60c3ca",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/prometheus-client/0.22.3/download"],
+        strip_prefix = "prometheus-client-0.22.3",
+        build_file = Label("//thirdparty/crates:BUILD.prometheus-client-0.22.3.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__prometheus-client-derive-encode-0.4.2",
+        sha256 = "440f724eba9f6996b75d63681b0a92b06947f1457076d503a4d2e2c8f56442b8",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/prometheus-client-derive-encode/0.4.2/download"],
+        strip_prefix = "prometheus-client-derive-encode-0.4.2",
+        build_file = Label("//thirdparty/crates:BUILD.prometheus-client-derive-encode-0.4.2.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__prost-0.12.6",
+        sha256 = "deb1435c188b76130da55f17a466d252ff7b1418b2ad3e037d127b94e3411f29",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/prost/0.12.6/download"],
+        strip_prefix = "prost-0.12.6",
+        build_file = Label("//thirdparty/crates:BUILD.prost-0.12.6.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__prost-0.13.2",
+        sha256 = "3b2ecbe40f08db5c006b5764a2645f7f3f141ce756412ac9e1dd6087e6d32995",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/prost/0.13.2/download"],
+        strip_prefix = "prost-0.13.2",
+        build_file = Label("//thirdparty/crates:BUILD.prost-0.13.2.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__prost-build-0.12.6",
+        sha256 = "22505a5c94da8e3b7c2996394d1c933236c4d743e81a410bcca4e6989fc066a4",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/prost-build/0.12.6/download"],
+        strip_prefix = "prost-build-0.12.6",
+        build_file = Label("//thirdparty/crates:BUILD.prost-build-0.12.6.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__prost-build-0.13.2",
+        sha256 = "f8650aabb6c35b860610e9cff5dc1af886c9e25073b7b1712a68972af4281302",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/prost-build/0.13.2/download"],
+        strip_prefix = "prost-build-0.13.2",
+        build_file = Label("//thirdparty/crates:BUILD.prost-build-0.13.2.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__prost-derive-0.12.6",
+        sha256 = "81bddcdb20abf9501610992b6759a4c888aef7d1a7247ef75e2404275ac24af1",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/prost-derive/0.12.6/download"],
+        strip_prefix = "prost-derive-0.12.6",
+        build_file = Label("//thirdparty/crates:BUILD.prost-derive-0.12.6.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__prost-derive-0.13.2",
+        sha256 = "acf0c195eebb4af52c752bec4f52f645da98b6e92077a04110c7f349477ae5ac",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/prost-derive/0.13.2/download"],
+        strip_prefix = "prost-derive-0.13.2",
+        build_file = Label("//thirdparty/crates:BUILD.prost-derive-0.13.2.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__prost-types-0.12.6",
+        sha256 = "9091c90b0a32608e984ff2fa4091273cbdd755d54935c51d520887f4a1dbd5b0",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/prost-types/0.12.6/download"],
+        strip_prefix = "prost-types-0.12.6",
+        build_file = Label("//thirdparty/crates:BUILD.prost-types-0.12.6.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__prost-types-0.13.2",
+        sha256 = "60caa6738c7369b940c3d49246a8d1749323674c65cb13010134f5c9bad5b519",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/prost-types/0.13.2/download"],
+        strip_prefix = "prost-types-0.13.2",
+        build_file = Label("//thirdparty/crates:BUILD.prost-types-0.13.2.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__protobuf-2.28.0",
+        sha256 = "106dd99e98437432fed6519dedecfade6a06a73bb7b2a1e019fdd2bee5778d94",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/protobuf/2.28.0/download"],
+        strip_prefix = "protobuf-2.28.0",
+        build_file = Label("//thirdparty/crates:BUILD.protobuf-2.28.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__protoc-gen-prost-0.3.1",
+        sha256 = "e810847124cb9a1d4ccefb1aabc80ccaba67f4af047e60dc1c0f2e145494bb85",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/protoc-gen-prost/0.3.1/download"],
+        strip_prefix = "protoc-gen-prost-0.3.1",
+        build_file = Label("//thirdparty/crates:BUILD.protoc-gen-prost-0.3.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__protoc-gen-prost-0.4.0",
+        sha256 = "77eb17a7657a703f30cb9b7ba4d981e4037b8af2d819ab0077514b0bef537406",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/protoc-gen-prost/0.4.0/download"],
+        strip_prefix = "protoc-gen-prost-0.4.0",
+        build_file = Label("//thirdparty/crates:BUILD.protoc-gen-prost-0.4.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__protoc-gen-tonic-0.4.1",
+        sha256 = "6ab6a0d73a0914752ed8fd7cc51afe169e28da87be3efef292de5676cc527634",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/protoc-gen-tonic/0.4.1/download"],
+        strip_prefix = "protoc-gen-tonic-0.4.1",
+        build_file = Label("//thirdparty/crates:BUILD.protoc-gen-tonic-0.4.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__ptr_meta-0.1.4",
+        sha256 = "0738ccf7ea06b608c10564b31debd4f5bc5e197fc8bfe088f68ae5ce81e7a4f1",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/ptr_meta/0.1.4/download"],
+        strip_prefix = "ptr_meta-0.1.4",
+        build_file = Label("//thirdparty/crates:BUILD.ptr_meta-0.1.4.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__ptr_meta_derive-0.1.4",
+        sha256 = "16b845dbfca988fa33db069c0e230574d15a3088f147a87b64c7589eb662c9ac",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/ptr_meta_derive/0.1.4/download"],
+        strip_prefix = "ptr_meta_derive-0.1.4",
+        build_file = Label("//thirdparty/crates:BUILD.ptr_meta_derive-0.1.4.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__pulldown-cmark-0.9.6",
+        sha256 = "57206b407293d2bcd3af849ce869d52068623f19e1b5ff8e8778e3309439682b",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/pulldown-cmark/0.9.6/download"],
+        strip_prefix = "pulldown-cmark-0.9.6",
+        build_file = Label("//thirdparty/crates:BUILD.pulldown-cmark-0.9.6.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__quanta-0.11.1",
+        sha256 = "a17e662a7a8291a865152364c20c7abc5e60486ab2001e8ec10b24862de0b9ab",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/quanta/0.11.1/download"],
+        strip_prefix = "quanta-0.11.1",
+        build_file = Label("//thirdparty/crates:BUILD.quanta-0.11.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__quinn-0.11.5",
+        sha256 = "8c7c5fdde3cdae7203427dc4f0a68fe0ed09833edc525a03456b153b79828684",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/quinn/0.11.5/download"],
+        strip_prefix = "quinn-0.11.5",
+        build_file = Label("//thirdparty/crates:BUILD.quinn-0.11.5.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__quinn-proto-0.11.8",
+        sha256 = "fadfaed2cd7f389d0161bb73eeb07b7b78f8691047a6f3e73caaeae55310a4a6",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/quinn-proto/0.11.8/download"],
+        strip_prefix = "quinn-proto-0.11.8",
+        build_file = Label("//thirdparty/crates:BUILD.quinn-proto-0.11.8.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__quinn-udp-0.5.5",
+        sha256 = "4fe68c2e9e1a1234e218683dbdf9f9dfcb094113c5ac2b938dfcb9bab4c4140b",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/quinn-udp/0.5.5/download"],
+        strip_prefix = "quinn-udp-0.5.5",
+        build_file = Label("//thirdparty/crates:BUILD.quinn-udp-0.5.5.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__quote-1.0.37",
+        sha256 = "b5b9d34b8991d19d98081b46eacdd8eb58c6f2b201139f7c5f643cc155a633af",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/quote/1.0.37/download"],
+        strip_prefix = "quote-1.0.37",
+        build_file = Label("//thirdparty/crates:BUILD.quote-1.0.37.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__r2d2-0.8.10",
+        sha256 = "51de85fb3fb6524929c8a2eb85e6b6d363de4e8c48f9e2c2eac4944abc181c93",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/r2d2/0.8.10/download"],
+        strip_prefix = "r2d2-0.8.10",
+        build_file = Label("//thirdparty/crates:BUILD.r2d2-0.8.10.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__radium-0.7.0",
+        sha256 = "dc33ff2d4973d518d823d61aa239014831e521c75da58e3df4840d3f47749d09",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/radium/0.7.0/download"],
+        strip_prefix = "radium-0.7.0",
+        build_file = Label("//thirdparty/crates:BUILD.radium-0.7.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__rand-0.8.5",
+        sha256 = "34af8d1a0e25924bc5b7c43c079c942339d8f0a8b57c39049bef581b46327404",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/rand/0.8.5/download"],
+        strip_prefix = "rand-0.8.5",
+        build_file = Label("//thirdparty/crates:BUILD.rand-0.8.5.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__rand_chacha-0.3.1",
+        sha256 = "e6c10a63a0fa32252be49d21e7709d4d4baf8d231c2dbce1eaa8141b9b127d88",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/rand_chacha/0.3.1/download"],
+        strip_prefix = "rand_chacha-0.3.1",
+        build_file = Label("//thirdparty/crates:BUILD.rand_chacha-0.3.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__rand_core-0.6.4",
+        sha256 = "ec0be4795e2f6a28069bec0b5ff3e2ac9bafc99e6a9a7dc3547996c5c816922c",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/rand_core/0.6.4/download"],
+        strip_prefix = "rand_core-0.6.4",
+        build_file = Label("//thirdparty/crates:BUILD.rand_core-0.6.4.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__raw-cpuid-10.7.0",
+        sha256 = "6c297679cb867470fa8c9f67dbba74a78d78e3e98d7cf2b08d6d71540f797332",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/raw-cpuid/10.7.0/download"],
+        strip_prefix = "raw-cpuid-10.7.0",
+        build_file = Label("//thirdparty/crates:BUILD.raw-cpuid-10.7.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__redox_syscall-0.5.4",
+        sha256 = "0884ad60e090bf1345b93da0a5de8923c93884cd03f40dfcfddd3b4bee661853",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/redox_syscall/0.5.4/download"],
+        strip_prefix = "redox_syscall-0.5.4",
+        build_file = Label("//thirdparty/crates:BUILD.redox_syscall-0.5.4.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__regex-1.10.6",
+        sha256 = "4219d74c6b67a3654a9fbebc4b419e22126d13d2f3c4a07ee0cb61ff79a79619",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/regex/1.10.6/download"],
+        strip_prefix = "regex-1.10.6",
+        build_file = Label("//thirdparty/crates:BUILD.regex-1.10.6.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__regex-automata-0.4.7",
+        sha256 = "38caf58cc5ef2fed281f89292ef23f6365465ed9a41b7a7754eb4e26496c92df",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/regex-automata/0.4.7/download"],
+        strip_prefix = "regex-automata-0.4.7",
+        build_file = Label("//thirdparty/crates:BUILD.regex-automata-0.4.7.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__regex-syntax-0.8.4",
+        sha256 = "7a66a03ae7c801facd77a29370b4faec201768915ac14a721ba36f20bc9c209b",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/regex-syntax/0.8.4/download"],
+        strip_prefix = "regex-syntax-0.8.4",
+        build_file = Label("//thirdparty/crates:BUILD.regex-syntax-0.8.4.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__rend-0.4.2",
+        sha256 = "71fe3824f5629716b1589be05dacd749f6aa084c87e00e016714a8cdfccc997c",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/rend/0.4.2/download"],
+        strip_prefix = "rend-0.4.2",
+        build_file = Label("//thirdparty/crates:BUILD.rend-0.4.2.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__reqwest-0.11.27",
+        sha256 = "dd67538700a17451e7cba03ac727fb961abb7607553461627b97de0b89cf4a62",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/reqwest/0.11.27/download"],
+        strip_prefix = "reqwest-0.11.27",
+        build_file = Label("//thirdparty/crates:BUILD.reqwest-0.11.27.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__reqwest-0.12.7",
+        sha256 = "f8f4955649ef5c38cc7f9e8aa41761d48fb9677197daea9984dc54f56aad5e63",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/reqwest/0.12.7/download"],
+        strip_prefix = "reqwest-0.12.7",
+        build_file = Label("//thirdparty/crates:BUILD.reqwest-0.12.7.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__ring-0.17.8",
+        sha256 = "c17fa4cb658e3583423e915b9f3acc01cceaee1860e33d59ebae66adc3a2dc0d",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/ring/0.17.8/download"],
+        strip_prefix = "ring-0.17.8",
+        build_file = Label("//thirdparty/crates:BUILD.ring-0.17.8.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__rkyv-0.7.45",
+        sha256 = "9008cd6385b9e161d8229e1f6549dd23c3d022f132a2ea37ac3a10ac4935779b",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/rkyv/0.7.45/download"],
+        strip_prefix = "rkyv-0.7.45",
+        build_file = Label("//thirdparty/crates:BUILD.rkyv-0.7.45.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__rkyv_derive-0.7.45",
+        sha256 = "503d1d27590a2b0a3a4ca4c94755aa2875657196ecbf401a42eff41d7de532c0",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/rkyv_derive/0.7.45/download"],
+        strip_prefix = "rkyv_derive-0.7.45",
+        build_file = Label("//thirdparty/crates:BUILD.rkyv_derive-0.7.45.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__rust_decimal-1.36.0",
+        sha256 = "b082d80e3e3cc52b2ed634388d436fe1f4de6af5786cc2de9ba9737527bdf555",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/rust_decimal/1.36.0/download"],
+        strip_prefix = "rust_decimal-1.36.0",
+        build_file = Label("//thirdparty/crates:BUILD.rust_decimal-1.36.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__rust_decimal_macros-1.36.0",
+        sha256 = "da991f231869f34268415a49724c6578e740ad697ba0999199d6f22b3949332c",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/rust_decimal_macros/1.36.0/download"],
+        strip_prefix = "rust_decimal_macros-1.36.0",
+        build_file = Label("//thirdparty/crates:BUILD.rust_decimal_macros-1.36.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__rustc-demangle-0.1.24",
+        sha256 = "719b953e2095829ee67db738b3bfa9fa368c94900df327b3f07fe6e794d2fe1f",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/rustc-demangle/0.1.24/download"],
+        strip_prefix = "rustc-demangle-0.1.24",
+        build_file = Label("//thirdparty/crates:BUILD.rustc-demangle-0.1.24.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__rustc-hash-2.0.0",
+        sha256 = "583034fd73374156e66797ed8e5b0d5690409c9226b22d87cb7f19821c05d152",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/rustc-hash/2.0.0/download"],
+        strip_prefix = "rustc-hash-2.0.0",
+        build_file = Label("//thirdparty/crates:BUILD.rustc-hash-2.0.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__rustc_version-0.4.1",
+        sha256 = "cfcb3a22ef46e85b45de6ee7e79d063319ebb6594faafcf1c225ea92ab6e9b92",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/rustc_version/0.4.1/download"],
+        strip_prefix = "rustc_version-0.4.1",
+        build_file = Label("//thirdparty/crates:BUILD.rustc_version-0.4.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__rustix-0.38.37",
+        sha256 = "8acb788b847c24f28525660c4d7758620a7210875711f79e7f663cc152726811",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/rustix/0.38.37/download"],
+        strip_prefix = "rustix-0.38.37",
+        build_file = Label("//thirdparty/crates:BUILD.rustix-0.38.37.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__rustls-0.21.12",
+        sha256 = "3f56a14d1f48b391359b22f731fd4bd7e43c97f3c50eee276f3aa09c94784d3e",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/rustls/0.21.12/download"],
+        strip_prefix = "rustls-0.21.12",
+        build_file = Label("//thirdparty/crates:BUILD.rustls-0.21.12.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__rustls-0.22.4",
+        sha256 = "bf4ef73721ac7bcd79b2b315da7779d8fc09718c6b3d2d1b2d94850eb8c18432",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/rustls/0.22.4/download"],
+        strip_prefix = "rustls-0.22.4",
+        build_file = Label("//thirdparty/crates:BUILD.rustls-0.22.4.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__rustls-0.23.13",
+        sha256 = "f2dabaac7466917e566adb06783a81ca48944c6898a1b08b9374106dd671f4c8",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/rustls/0.23.13/download"],
+        strip_prefix = "rustls-0.23.13",
+        build_file = Label("//thirdparty/crates:BUILD.rustls-0.23.13.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__rustls-pemfile-1.0.4",
+        sha256 = "1c74cae0a4cf6ccbbf5f359f08efdf8ee7e1dc532573bf0db71968cb56b1448c",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/rustls-pemfile/1.0.4/download"],
+        strip_prefix = "rustls-pemfile-1.0.4",
+        build_file = Label("//thirdparty/crates:BUILD.rustls-pemfile-1.0.4.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__rustls-pemfile-2.1.3",
+        sha256 = "196fe16b00e106300d3e45ecfcb764fa292a535d7326a29a5875c579c7417425",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/rustls-pemfile/2.1.3/download"],
+        strip_prefix = "rustls-pemfile-2.1.3",
+        build_file = Label("//thirdparty/crates:BUILD.rustls-pemfile-2.1.3.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__rustls-pki-types-1.8.0",
+        sha256 = "fc0a2ce646f8655401bb81e7927b812614bd5d91dbc968696be50603510fcaf0",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/rustls-pki-types/1.8.0/download"],
+        strip_prefix = "rustls-pki-types-1.8.0",
+        build_file = Label("//thirdparty/crates:BUILD.rustls-pki-types-1.8.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__rustls-webpki-0.101.7",
+        sha256 = "8b6275d1ee7a1cd780b64aca7726599a1dbc893b1e64144529e55c3c2f745765",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/rustls-webpki/0.101.7/download"],
+        strip_prefix = "rustls-webpki-0.101.7",
+        build_file = Label("//thirdparty/crates:BUILD.rustls-webpki-0.101.7.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__rustls-webpki-0.102.8",
+        sha256 = "64ca1bc8749bd4cf37b5ce386cc146580777b4e8572c7b97baf22c83f444bee9",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/rustls-webpki/0.102.8/download"],
+        strip_prefix = "rustls-webpki-0.102.8",
+        build_file = Label("//thirdparty/crates:BUILD.rustls-webpki-0.102.8.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__rustversion-1.0.17",
+        sha256 = "955d28af4278de8121b7ebeb796b6a45735dc01436d898801014aced2773a3d6",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/rustversion/1.0.17/download"],
+        strip_prefix = "rustversion-1.0.17",
+        build_file = Label("//thirdparty/crates:BUILD.rustversion-1.0.17.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__ryu-1.0.18",
+        sha256 = "f3cb5ba0dc43242ce17de99c180e96db90b235b8a9fdc9543c96d2209116bd9f",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/ryu/1.0.18/download"],
+        strip_prefix = "ryu-1.0.18",
+        build_file = Label("//thirdparty/crates:BUILD.ryu-1.0.18.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__same-file-1.0.6",
+        sha256 = "93fc1dc3aaa9bfed95e02e6eadabb4baf7e3078b0bd1b4d7b6b0b68378900502",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/same-file/1.0.6/download"],
+        strip_prefix = "same-file-1.0.6",
+        build_file = Label("//thirdparty/crates:BUILD.same-file-1.0.6.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__scheduled-thread-pool-0.2.7",
+        sha256 = "3cbc66816425a074528352f5789333ecff06ca41b36b0b0efdfbb29edc391a19",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/scheduled-thread-pool/0.2.7/download"],
+        strip_prefix = "scheduled-thread-pool-0.2.7",
+        build_file = Label("//thirdparty/crates:BUILD.scheduled-thread-pool-0.2.7.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__scoped-tls-1.0.1",
+        sha256 = "e1cf6437eb19a8f4a6cc0f7dca544973b0b78843adbfeb3683d1a94a0024a294",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/scoped-tls/1.0.1/download"],
+        strip_prefix = "scoped-tls-1.0.1",
+        build_file = Label("//thirdparty/crates:BUILD.scoped-tls-1.0.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__scopeguard-1.2.0",
+        sha256 = "94143f37725109f92c262ed2cf5e59bce7498c01bcc1502d7b9afe439a4e9f49",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/scopeguard/1.2.0/download"],
+        strip_prefix = "scopeguard-1.2.0",
+        build_file = Label("//thirdparty/crates:BUILD.scopeguard-1.2.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__sct-0.7.1",
+        sha256 = "da046153aa2352493d6cb7da4b6e5c0c057d8a1d0a9aa8560baffdd945acd414",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/sct/0.7.1/download"],
+        strip_prefix = "sct-0.7.1",
+        build_file = Label("//thirdparty/crates:BUILD.sct-0.7.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__seahash-4.1.0",
+        sha256 = "1c107b6f4780854c8b126e228ea8869f4d7b71260f962fefb57b996b8959ba6b",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/seahash/4.1.0/download"],
+        strip_prefix = "seahash-4.1.0",
+        build_file = Label("//thirdparty/crates:BUILD.seahash-4.1.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__semver-1.0.23",
+        sha256 = "61697e0a1c7e512e84a621326239844a24d8207b4669b41bc18b32ea5cbf988b",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/semver/1.0.23/download"],
+        strip_prefix = "semver-1.0.23",
+        build_file = Label("//thirdparty/crates:BUILD.semver-1.0.23.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__seq-macro-0.3.5",
+        sha256 = "a3f0bf26fd526d2a95683cd0f87bf103b8539e2ca1ef48ce002d67aad59aa0b4",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/seq-macro/0.3.5/download"],
+        strip_prefix = "seq-macro-0.3.5",
+        build_file = Label("//thirdparty/crates:BUILD.seq-macro-0.3.5.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__serde-1.0.210",
+        sha256 = "c8e3592472072e6e22e0a54d5904d9febf8508f65fb8552499a1abc7d1078c3a",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/serde/1.0.210/download"],
+        strip_prefix = "serde-1.0.210",
+        build_file = Label("//thirdparty/crates:BUILD.serde-1.0.210.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__serde_derive-1.0.210",
+        sha256 = "243902eda00fad750862fc144cea25caca5e20d615af0a81bee94ca738f1df1f",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/serde_derive/1.0.210/download"],
+        strip_prefix = "serde_derive-1.0.210",
+        build_file = Label("//thirdparty/crates:BUILD.serde_derive-1.0.210.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__serde_json-1.0.128",
+        sha256 = "6ff5456707a1de34e7e37f2a6fd3d3f808c318259cbd01ab6377795054b483d8",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/serde_json/1.0.128/download"],
+        strip_prefix = "serde_json-1.0.128",
+        build_file = Label("//thirdparty/crates:BUILD.serde_json-1.0.128.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__serde_qs-0.12.0",
+        sha256 = "0431a35568651e363364210c91983c1da5eb29404d9f0928b67d4ebcfa7d330c",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/serde_qs/0.12.0/download"],
+        strip_prefix = "serde_qs-0.12.0",
+        build_file = Label("//thirdparty/crates:BUILD.serde_qs-0.12.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__serde_repr-0.1.19",
+        sha256 = "6c64451ba24fc7a6a2d60fc75dd9c83c90903b19028d4eff35e88fc1e86564e9",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/serde_repr/0.1.19/download"],
+        strip_prefix = "serde_repr-0.1.19",
+        build_file = Label("//thirdparty/crates:BUILD.serde_repr-0.1.19.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__serde_spanned-0.6.7",
+        sha256 = "eb5b1b31579f3811bf615c144393417496f152e12ac8b7663bf664f4a815306d",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/serde_spanned/0.6.7/download"],
+        strip_prefix = "serde_spanned-0.6.7",
+        build_file = Label("//thirdparty/crates:BUILD.serde_spanned-0.6.7.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__serde_urlencoded-0.7.1",
+        sha256 = "d3491c14715ca2294c4d6a88f15e84739788c1d030eed8c110436aafdaa2f3fd",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/serde_urlencoded/0.7.1/download"],
+        strip_prefix = "serde_urlencoded-0.7.1",
+        build_file = Label("//thirdparty/crates:BUILD.serde_urlencoded-0.7.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__sha1-0.10.6",
+        sha256 = "e3bf829a2d51ab4a5ddf1352d8470c140cadc8301b2ae1789db023f01cedd6ba",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/sha1/0.10.6/download"],
+        strip_prefix = "sha1-0.10.6",
+        build_file = Label("//thirdparty/crates:BUILD.sha1-0.10.6.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__sha3-0.11.0-pre.4",
+        sha256 = "e485881f388c2818d709796dc883c1ffcadde9d1f0e054f3a5c14974185261a6",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/sha3/0.11.0-pre.4/download"],
+        strip_prefix = "sha3-0.11.0-pre.4",
+        build_file = Label("//thirdparty/crates:BUILD.sha3-0.11.0-pre.4.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__shlex-1.3.0",
+        sha256 = "0fda2ff0d084019ba4d7c6f371c95d8fd75ce3524c3cb8fb653a3023f6323e64",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/shlex/1.3.0/download"],
+        strip_prefix = "shlex-1.3.0",
+        build_file = Label("//thirdparty/crates:BUILD.shlex-1.3.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__signal-hook-registry-1.4.2",
+        sha256 = "a9e9e0b4211b72e7b8b6e85c807d36c212bdb33ea8587f7569562a84df5465b1",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/signal-hook-registry/1.4.2/download"],
+        strip_prefix = "signal-hook-registry-1.4.2",
+        build_file = Label("//thirdparty/crates:BUILD.signal-hook-registry-1.4.2.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__simdutf8-0.1.4",
+        sha256 = "f27f6278552951f1f2b8cf9da965d10969b2efdea95a6ec47987ab46edfe263a",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/simdutf8/0.1.4/download"],
+        strip_prefix = "simdutf8-0.1.4",
+        build_file = Label("//thirdparty/crates:BUILD.simdutf8-0.1.4.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__siphasher-0.3.11",
+        sha256 = "38b58827f4464d87d377d175e90bf58eb00fd8716ff0a62f80356b5e61555d0d",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/siphasher/0.3.11/download"],
+        strip_prefix = "siphasher-0.3.11",
+        build_file = Label("//thirdparty/crates:BUILD.siphasher-0.3.11.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__skeptic-0.13.7",
+        sha256 = "16d23b015676c90a0f01c197bfdc786c20342c73a0afdda9025adb0bc42940a8",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/skeptic/0.13.7/download"],
+        strip_prefix = "skeptic-0.13.7",
+        build_file = Label("//thirdparty/crates:BUILD.skeptic-0.13.7.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__sketches-ddsketch-0.2.2",
+        sha256 = "85636c14b73d81f541e525f585c0a2109e6744e1565b5c1668e31c70c10ed65c",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/sketches-ddsketch/0.2.2/download"],
+        strip_prefix = "sketches-ddsketch-0.2.2",
+        build_file = Label("//thirdparty/crates:BUILD.sketches-ddsketch-0.2.2.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__slab-0.4.9",
+        sha256 = "8f92a496fb766b417c996b9c5e57daf2f7ad3b0bebe1ccfca4856390e3d3bb67",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/slab/0.4.9/download"],
+        strip_prefix = "slab-0.4.9",
+        build_file = Label("//thirdparty/crates:BUILD.slab-0.4.9.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__smallvec-1.13.2",
+        sha256 = "3c5e1a9a646d36c3599cd173a41282daf47c44583ad367b8e6837255952e5c67",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/smallvec/1.13.2/download"],
+        strip_prefix = "smallvec-1.13.2",
+        build_file = Label("//thirdparty/crates:BUILD.smallvec-1.13.2.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__snap-1.1.1",
+        sha256 = "1b6b67fb9a61334225b5b790716f609cd58395f895b3fe8b328786812a40bc3b",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/snap/1.1.1/download"],
+        strip_prefix = "snap-1.1.1",
+        build_file = Label("//thirdparty/crates:BUILD.snap-1.1.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__socket2-0.5.7",
+        sha256 = "ce305eb0b4296696835b71df73eb912e0f1ffd2556a501fcede6e0c50349191c",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/socket2/0.5.7/download"],
+        strip_prefix = "socket2-0.5.7",
+        build_file = Label("//thirdparty/crates:BUILD.socket2-0.5.7.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__spez-0.1.2",
+        sha256 = "c87e960f4dca2788eeb86bbdde8dd246be8948790b7618d656e68f9b720a86e8",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/spez/0.1.2/download"],
+        strip_prefix = "spez-0.1.2",
+        build_file = Label("//thirdparty/crates:BUILD.spez-0.1.2.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__spin-0.9.8",
+        sha256 = "6980e8d7511241f8acf4aebddbb1ff938df5eebe98691418c4468d0b72a96a67",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/spin/0.9.8/download"],
+        strip_prefix = "spin-0.9.8",
+        build_file = Label("//thirdparty/crates:BUILD.spin-0.9.8.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__static_assertions-1.1.0",
+        sha256 = "a2eb9349b6444b326872e140eb1cf5e7c522154d69e7a0ffb0fb81c06b37543f",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/static_assertions/1.1.0/download"],
+        strip_prefix = "static_assertions-1.1.0",
+        build_file = Label("//thirdparty/crates:BUILD.static_assertions-1.1.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__strsim-0.11.1",
+        sha256 = "7da8b5736845d9f2fcb837ea5d9e2628564b3b043a70948a3f0b778838c5fb4f",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/strsim/0.11.1/download"],
+        strip_prefix = "strsim-0.11.1",
+        build_file = Label("//thirdparty/crates:BUILD.strsim-0.11.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__subtle-2.6.1",
+        sha256 = "13c2bddecc57b384dee18652358fb23172facb8a2c51ccc10d74c157bdea3292",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/subtle/2.6.1/download"],
+        strip_prefix = "subtle-2.6.1",
+        build_file = Label("//thirdparty/crates:BUILD.subtle-2.6.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__syn-1.0.109",
+        sha256 = "72b64191b275b66ffe2469e8af2c1cfe3bafa67b529ead792a6d0160888b4237",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/syn/1.0.109/download"],
+        strip_prefix = "syn-1.0.109",
+        build_file = Label("//thirdparty/crates:BUILD.syn-1.0.109.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__syn-2.0.77",
+        sha256 = "9f35bcdf61fd8e7be6caf75f429fdca8beb3ed76584befb503b1569faee373ed",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/syn/2.0.77/download"],
+        strip_prefix = "syn-2.0.77",
+        build_file = Label("//thirdparty/crates:BUILD.syn-2.0.77.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__syn_derive-0.1.8",
+        sha256 = "1329189c02ff984e9736652b1631330da25eaa6bc639089ed4915d25446cbe7b",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/syn_derive/0.1.8/download"],
+        strip_prefix = "syn_derive-0.1.8",
+        build_file = Label("//thirdparty/crates:BUILD.syn_derive-0.1.8.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__sync_wrapper-0.1.2",
+        sha256 = "2047c6ded9c721764247e62cd3b03c09ffc529b2ba5b10ec482ae507a4a70160",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/sync_wrapper/0.1.2/download"],
+        strip_prefix = "sync_wrapper-0.1.2",
+        build_file = Label("//thirdparty/crates:BUILD.sync_wrapper-0.1.2.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__sync_wrapper-1.0.1",
+        sha256 = "a7065abeca94b6a8a577f9bd45aa0867a2238b74e8eb67cf10d492bc39351394",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/sync_wrapper/1.0.1/download"],
+        strip_prefix = "sync_wrapper-1.0.1",
+        build_file = Label("//thirdparty/crates:BUILD.sync_wrapper-1.0.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__system-configuration-0.5.1",
+        sha256 = "ba3a3adc5c275d719af8cb4272ea1c4a6d668a777f37e115f6d11ddbc1c8e0e7",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/system-configuration/0.5.1/download"],
+        strip_prefix = "system-configuration-0.5.1",
+        build_file = Label("//thirdparty/crates:BUILD.system-configuration-0.5.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__system-configuration-sys-0.5.0",
+        sha256 = "a75fb188eb626b924683e3b95e3a48e63551fcfb51949de2f06a9d91dbee93c9",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/system-configuration-sys/0.5.0/download"],
+        strip_prefix = "system-configuration-sys-0.5.0",
+        build_file = Label("//thirdparty/crates:BUILD.system-configuration-sys-0.5.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__tagptr-0.2.0",
+        sha256 = "7b2093cf4c8eb1e67749a6762251bc9cd836b6fc171623bd0a9d324d37af2417",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/tagptr/0.2.0/download"],
+        strip_prefix = "tagptr-0.2.0",
+        build_file = Label("//thirdparty/crates:BUILD.tagptr-0.2.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__tap-1.0.1",
+        sha256 = "55937e1799185b12863d447f42597ed69d9928686b8d88a1df17376a097d8369",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/tap/1.0.1/download"],
+        strip_prefix = "tap-1.0.1",
+        build_file = Label("//thirdparty/crates:BUILD.tap-1.0.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__tempfile-3.12.0",
+        sha256 = "04cbcdd0c794ebb0d4cf35e88edd2f7d2c4c3e9a5a6dab322839b321c6a87a64",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/tempfile/3.12.0/download"],
+        strip_prefix = "tempfile-3.12.0",
+        build_file = Label("//thirdparty/crates:BUILD.tempfile-3.12.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__thiserror-1.0.63",
+        sha256 = "c0342370b38b6a11b6cc11d6a805569958d54cfa061a29969c3b5ce2ea405724",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/thiserror/1.0.63/download"],
+        strip_prefix = "thiserror-1.0.63",
+        build_file = Label("//thirdparty/crates:BUILD.thiserror-1.0.63.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__thiserror-impl-1.0.63",
+        sha256 = "a4558b58466b9ad7ca0f102865eccc95938dca1a74a856f2b57b6629050da261",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/thiserror-impl/1.0.63/download"],
+        strip_prefix = "thiserror-impl-1.0.63",
+        build_file = Label("//thirdparty/crates:BUILD.thiserror-impl-1.0.63.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__thrift-0.17.0",
+        sha256 = "7e54bc85fc7faa8bc175c4bab5b92ba8d9a3ce893d0e9f42cc455c8ab16a9e09",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/thrift/0.17.0/download"],
+        strip_prefix = "thrift-0.17.0",
+        build_file = Label("//thirdparty/crates:BUILD.thrift-0.17.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__tiny-keccak-2.0.2",
+        sha256 = "2c9d3793400a45f954c52e73d068316d76b6f4e36977e3fcebb13a2721e80237",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/tiny-keccak/2.0.2/download"],
+        strip_prefix = "tiny-keccak-2.0.2",
+        build_file = Label("//thirdparty/crates:BUILD.tiny-keccak-2.0.2.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__tinyvec-1.8.0",
+        sha256 = "445e881f4f6d382d5f27c034e25eb92edd7c784ceab92a0937db7f2e9471b938",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/tinyvec/1.8.0/download"],
+        strip_prefix = "tinyvec-1.8.0",
+        build_file = Label("//thirdparty/crates:BUILD.tinyvec-1.8.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__tinyvec_macros-0.1.1",
+        sha256 = "1f3ccbac311fea05f86f61904b462b55fb3df8837a366dfc601a0161d0532f20",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/tinyvec_macros/0.1.1/download"],
+        strip_prefix = "tinyvec_macros-0.1.1",
+        build_file = Label("//thirdparty/crates:BUILD.tinyvec_macros-0.1.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__tokio-1.40.0",
+        sha256 = "e2b070231665d27ad9ec9b8df639893f46727666c6767db40317fbe920a5d998",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/tokio/1.40.0/download"],
+        strip_prefix = "tokio-1.40.0",
+        build_file = Label("//thirdparty/crates:BUILD.tokio-1.40.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__tokio-cron-scheduler-0.11.0",
+        sha256 = "a7b9480125554f0ace1c3c3797a24b5cc56c6a7cd82c739db35fb54c4dc046f3",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/tokio-cron-scheduler/0.11.0/download"],
+        strip_prefix = "tokio-cron-scheduler-0.11.0",
+        build_file = Label("//thirdparty/crates:BUILD.tokio-cron-scheduler-0.11.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__tokio-executor-0.1.10",
+        sha256 = "fb2d1b8f4548dbf5e1f7818512e9c406860678f29c300cdf0ebac72d1a3a1671",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/tokio-executor/0.1.10/download"],
+        strip_prefix = "tokio-executor-0.1.10",
+        build_file = Label("//thirdparty/crates:BUILD.tokio-executor-0.1.10.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__tokio-macros-2.4.0",
+        sha256 = "693d596312e88961bc67d7f1f97af8a70227d9f90c31bba5806eec004978d752",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/tokio-macros/2.4.0/download"],
+        strip_prefix = "tokio-macros-2.4.0",
+        build_file = Label("//thirdparty/crates:BUILD.tokio-macros-2.4.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__tokio-rustls-0.24.1",
+        sha256 = "c28327cf380ac148141087fbfb9de9d7bd4e84ab5d2c28fbc911d753de8a7081",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/tokio-rustls/0.24.1/download"],
+        strip_prefix = "tokio-rustls-0.24.1",
+        build_file = Label("//thirdparty/crates:BUILD.tokio-rustls-0.24.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__tokio-rustls-0.25.0",
+        sha256 = "775e0c0f0adb3a2f22a00c4745d728b479985fc15ee7ca6a2608388c5569860f",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/tokio-rustls/0.25.0/download"],
+        strip_prefix = "tokio-rustls-0.25.0",
+        build_file = Label("//thirdparty/crates:BUILD.tokio-rustls-0.25.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__tokio-rustls-0.26.0",
+        sha256 = "0c7bc40d0e5a97695bb96e27995cd3a08538541b0a846f65bba7a359f36700d4",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/tokio-rustls/0.26.0/download"],
+        strip_prefix = "tokio-rustls-0.26.0",
+        build_file = Label("//thirdparty/crates:BUILD.tokio-rustls-0.26.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__tokio-stream-0.1.16",
+        sha256 = "4f4e6ce100d0eb49a2734f8c0812bcd324cf357d21810932c5df6b96ef2b86f1",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/tokio-stream/0.1.16/download"],
+        strip_prefix = "tokio-stream-0.1.16",
+        build_file = Label("//thirdparty/crates:BUILD.tokio-stream-0.1.16.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__tokio-timer-0.2.13",
+        sha256 = "93044f2d313c95ff1cb7809ce9a7a05735b012288a888b62d4434fd58c94f296",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/tokio-timer/0.2.13/download"],
+        strip_prefix = "tokio-timer-0.2.13",
+        build_file = Label("//thirdparty/crates:BUILD.tokio-timer-0.2.13.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__tokio-tungstenite-0.21.0",
+        sha256 = "c83b561d025642014097b66e6c1bb422783339e0909e4429cde4749d1990bc38",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/tokio-tungstenite/0.21.0/download"],
+        strip_prefix = "tokio-tungstenite-0.21.0",
+        build_file = Label("//thirdparty/crates:BUILD.tokio-tungstenite-0.21.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__tokio-tungstenite-0.23.1",
+        sha256 = "c6989540ced10490aaf14e6bad2e3d33728a2813310a0c71d1574304c49631cd",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/tokio-tungstenite/0.23.1/download"],
+        strip_prefix = "tokio-tungstenite-0.23.1",
+        build_file = Label("//thirdparty/crates:BUILD.tokio-tungstenite-0.23.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__tokio-util-0.7.12",
+        sha256 = "61e7c3654c13bcd040d4a03abee2c75b1d14a37b423cf5a813ceae1cc903ec6a",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/tokio-util/0.7.12/download"],
+        strip_prefix = "tokio-util-0.7.12",
+        build_file = Label("//thirdparty/crates:BUILD.tokio-util-0.7.12.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__toml-0.5.11",
+        sha256 = "f4f7f0dd8d50a853a531c426359045b1998f04219d88799810762cd4ad314234",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/toml/0.5.11/download"],
+        strip_prefix = "toml-0.5.11",
+        build_file = Label("//thirdparty/crates:BUILD.toml-0.5.11.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__toml-0.8.19",
+        sha256 = "a1ed1f98e3fdc28d6d910e6737ae6ab1a93bf1985935a1193e68f93eeb68d24e",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/toml/0.8.19/download"],
+        strip_prefix = "toml-0.8.19",
+        build_file = Label("//thirdparty/crates:BUILD.toml-0.8.19.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__toml_datetime-0.6.8",
+        sha256 = "0dd7358ecb8fc2f8d014bf86f6f638ce72ba252a2c3a2572f2a795f1d23efb41",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/toml_datetime/0.6.8/download"],
+        strip_prefix = "toml_datetime-0.6.8",
+        build_file = Label("//thirdparty/crates:BUILD.toml_datetime-0.6.8.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__toml_edit-0.22.20",
+        sha256 = "583c44c02ad26b0c3f3066fe629275e50627026c51ac2e595cca4c230ce1ce1d",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/toml_edit/0.22.20/download"],
+        strip_prefix = "toml_edit-0.22.20",
+        build_file = Label("//thirdparty/crates:BUILD.toml_edit-0.22.20.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__tonic-0.12.2",
+        sha256 = "c6f6ba989e4b2c58ae83d862d3a3e27690b6e3ae630d0deb59f3697f32aa88ad",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/tonic/0.12.2/download"],
+        strip_prefix = "tonic-0.12.2",
+        build_file = Label("//thirdparty/crates:BUILD.tonic-0.12.2.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__tonic-build-0.12.2",
+        sha256 = "fe4ee8877250136bd7e3d2331632810a4df4ea5e004656990d8d66d2f5ee8a67",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/tonic-build/0.12.2/download"],
+        strip_prefix = "tonic-build-0.12.2",
+        build_file = Label("//thirdparty/crates:BUILD.tonic-build-0.12.2.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__tonic-health-0.12.2",
+        sha256 = "ec0a34e6f706bae26b2b490e1da5c3f6a6ff87cae442bcbc7c881bab9631b5a7",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/tonic-health/0.12.2/download"],
+        strip_prefix = "tonic-health-0.12.2",
+        build_file = Label("//thirdparty/crates:BUILD.tonic-health-0.12.2.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__tower-0.4.13",
+        sha256 = "b8fa9be0de6cf49e536ce1851f987bd21a43b771b09473c3549a6c853db37c1c",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/tower/0.4.13/download"],
+        strip_prefix = "tower-0.4.13",
+        build_file = Label("//thirdparty/crates:BUILD.tower-0.4.13.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__tower-layer-0.3.3",
+        sha256 = "121c2a6cda46980bb0fcd1647ffaf6cd3fc79a013de288782836f6df9c48780e",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/tower-layer/0.3.3/download"],
+        strip_prefix = "tower-layer-0.3.3",
+        build_file = Label("//thirdparty/crates:BUILD.tower-layer-0.3.3.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__tower-service-0.3.3",
+        sha256 = "8df9b6e13f2d32c91b9bd719c00d1958837bc7dec474d94952798cc8e69eeec3",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/tower-service/0.3.3/download"],
+        strip_prefix = "tower-service-0.3.3",
+        build_file = Label("//thirdparty/crates:BUILD.tower-service-0.3.3.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__tracing-0.1.40",
+        sha256 = "c3523ab5a71916ccf420eebdf5521fcef02141234bbc0b8a49f2fdc4544364ef",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/tracing/0.1.40/download"],
+        strip_prefix = "tracing-0.1.40",
+        build_file = Label("//thirdparty/crates:BUILD.tracing-0.1.40.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__tracing-attributes-0.1.27",
+        sha256 = "34704c8d6ebcbc939824180af020566b01a7c01f80641264eba0999f6c2b6be7",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/tracing-attributes/0.1.27/download"],
+        strip_prefix = "tracing-attributes-0.1.27",
+        build_file = Label("//thirdparty/crates:BUILD.tracing-attributes-0.1.27.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__tracing-core-0.1.32",
+        sha256 = "c06d3da6113f116aaee68e4d601191614c9053067f9ab7f6edbcb161237daa54",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/tracing-core/0.1.32/download"],
+        strip_prefix = "tracing-core-0.1.32",
+        build_file = Label("//thirdparty/crates:BUILD.tracing-core-0.1.32.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__triomphe-0.1.13",
+        sha256 = "e6631e42e10b40c0690bf92f404ebcfe6e1fdb480391d15f17cc8e96eeed5369",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/triomphe/0.1.13/download"],
+        strip_prefix = "triomphe-0.1.13",
+        build_file = Label("//thirdparty/crates:BUILD.triomphe-0.1.13.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__try-lock-0.2.5",
+        sha256 = "e421abadd41a4225275504ea4d6566923418b7f05506fbc9c0fe86ba7396114b",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/try-lock/0.2.5/download"],
+        strip_prefix = "try-lock-0.2.5",
+        build_file = Label("//thirdparty/crates:BUILD.try-lock-0.2.5.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__tungstenite-0.21.0",
+        sha256 = "9ef1a641ea34f399a848dea702823bbecfb4c486f911735368f1f137cb8257e1",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/tungstenite/0.21.0/download"],
+        strip_prefix = "tungstenite-0.21.0",
+        build_file = Label("//thirdparty/crates:BUILD.tungstenite-0.21.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__tungstenite-0.23.0",
+        sha256 = "6e2e2ce1e47ed2994fd43b04c8f618008d4cabdd5ee34027cf14f9d918edd9c8",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/tungstenite/0.23.0/download"],
+        strip_prefix = "tungstenite-0.23.0",
+        build_file = Label("//thirdparty/crates:BUILD.tungstenite-0.23.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__twox-hash-1.6.3",
+        sha256 = "97fee6b57c6a41524a810daee9286c02d7752c4253064d0b05472833a438f675",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/twox-hash/1.6.3/download"],
+        strip_prefix = "twox-hash-1.6.3",
+        build_file = Label("//thirdparty/crates:BUILD.twox-hash-1.6.3.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__typenum-1.17.0",
+        sha256 = "42ff0bf0c66b8238c6f3b578df37d0b7848e55df8577b3f74f92a69acceeb825",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/typenum/1.17.0/download"],
+        strip_prefix = "typenum-1.17.0",
+        build_file = Label("//thirdparty/crates:BUILD.typenum-1.17.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__unicase-2.7.0",
+        sha256 = "f7d2d4dafb69621809a81864c9c1b864479e1235c0dd4e199924b9742439ed89",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/unicase/2.7.0/download"],
+        strip_prefix = "unicase-2.7.0",
+        build_file = Label("//thirdparty/crates:BUILD.unicase-2.7.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__unicode-bidi-0.3.15",
+        sha256 = "08f95100a766bf4f8f28f90d77e0a5461bbdb219042e7679bebe79004fed8d75",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/unicode-bidi/0.3.15/download"],
+        strip_prefix = "unicode-bidi-0.3.15",
+        build_file = Label("//thirdparty/crates:BUILD.unicode-bidi-0.3.15.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__unicode-ident-1.0.13",
+        sha256 = "e91b56cd4cadaeb79bbf1a5645f6b4f8dc5bde8834ad5894a8db35fda9efa1fe",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/unicode-ident/1.0.13/download"],
+        strip_prefix = "unicode-ident-1.0.13",
+        build_file = Label("//thirdparty/crates:BUILD.unicode-ident-1.0.13.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__unicode-normalization-0.1.23",
+        sha256 = "a56d1686db2308d901306f92a263857ef59ea39678a5458e7cb17f01415101f5",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/unicode-normalization/0.1.23/download"],
+        strip_prefix = "unicode-normalization-0.1.23",
+        build_file = Label("//thirdparty/crates:BUILD.unicode-normalization-0.1.23.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__untrusted-0.9.0",
+        sha256 = "8ecb6da28b8a351d773b68d5825ac39017e680750f980f3a1a85cd8dd28a47c1",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/untrusted/0.9.0/download"],
+        strip_prefix = "untrusted-0.9.0",
+        build_file = Label("//thirdparty/crates:BUILD.untrusted-0.9.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__url-2.5.2",
+        sha256 = "22784dbdf76fdde8af1aeda5622b546b422b6fc585325248a2bf9f5e41e94d6c",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/url/2.5.2/download"],
+        strip_prefix = "url-2.5.2",
+        build_file = Label("//thirdparty/crates:BUILD.url-2.5.2.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__utf-8-0.7.6",
+        sha256 = "09cc8ee72d2a9becf2f2febe0205bbed8fc6615b7cb429ad062dc7b7ddd036a9",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/utf-8/0.7.6/download"],
+        strip_prefix = "utf-8-0.7.6",
+        build_file = Label("//thirdparty/crates:BUILD.utf-8-0.7.6.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__uuid-1.10.0",
+        sha256 = "81dfa00651efa65069b0b6b651f4aaa31ba9e3c3ce0137aaad053604ee7e0314",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/uuid/1.10.0/download"],
+        strip_prefix = "uuid-1.10.0",
+        build_file = Label("//thirdparty/crates:BUILD.uuid-1.10.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__vcpkg-0.2.15",
+        sha256 = "accd4ea62f7bb7a82fe23066fb0957d48ef677f6eeb8215f372f52e48bb32426",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/vcpkg/0.2.15/download"],
+        strip_prefix = "vcpkg-0.2.15",
+        build_file = Label("//thirdparty/crates:BUILD.vcpkg-0.2.15.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__version_check-0.9.5",
+        sha256 = "0b928f33d975fc6ad9f86c8f283853ad26bdd5b10b7f1542aa2fa15e2289105a",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/version_check/0.9.5/download"],
+        strip_prefix = "version_check-0.9.5",
+        build_file = Label("//thirdparty/crates:BUILD.version_check-0.9.5.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__walkdir-2.5.0",
+        sha256 = "29790946404f91d9c5d06f9874efddea1dc06c5efe94541a7d6863108e3a5e4b",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/walkdir/2.5.0/download"],
+        strip_prefix = "walkdir-2.5.0",
+        build_file = Label("//thirdparty/crates:BUILD.walkdir-2.5.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__want-0.3.1",
+        sha256 = "bfa7760aed19e106de2c7c0b581b509f2f25d3dacaf737cb82ac61bc6d760b0e",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/want/0.3.1/download"],
+        strip_prefix = "want-0.3.1",
+        build_file = Label("//thirdparty/crates:BUILD.want-0.3.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__warp-0.3.7",
+        sha256 = "4378d202ff965b011c64817db11d5829506d3404edeadb61f190d111da3f231c",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/warp/0.3.7/download"],
+        strip_prefix = "warp-0.3.7",
+        build_file = Label("//thirdparty/crates:BUILD.warp-0.3.7.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__wasi-0.11.0-wasi-snapshot-preview1",
+        sha256 = "9c8d87e72b64a3b4db28d11ce29237c246188f4f51057d65a7eab63b7987e423",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/wasi/0.11.0+wasi-snapshot-preview1/download"],
+        strip_prefix = "wasi-0.11.0+wasi-snapshot-preview1",
+        build_file = Label("//thirdparty/crates:BUILD.wasi-0.11.0+wasi-snapshot-preview1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__wasm-bindgen-0.2.93",
+        sha256 = "a82edfc16a6c469f5f44dc7b571814045d60404b55a0ee849f9bcfa2e63dd9b5",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/wasm-bindgen/0.2.93/download"],
+        strip_prefix = "wasm-bindgen-0.2.93",
+        build_file = Label("//thirdparty/crates:BUILD.wasm-bindgen-0.2.93.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__wasm-bindgen-backend-0.2.93",
+        sha256 = "9de396da306523044d3302746f1208fa71d7532227f15e347e2d93e4145dd77b",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/wasm-bindgen-backend/0.2.93/download"],
+        strip_prefix = "wasm-bindgen-backend-0.2.93",
+        build_file = Label("//thirdparty/crates:BUILD.wasm-bindgen-backend-0.2.93.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__wasm-bindgen-futures-0.4.43",
+        sha256 = "61e9300f63a621e96ed275155c108eb6f843b6a26d053f122ab69724559dc8ed",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/wasm-bindgen-futures/0.4.43/download"],
+        strip_prefix = "wasm-bindgen-futures-0.4.43",
+        build_file = Label("//thirdparty/crates:BUILD.wasm-bindgen-futures-0.4.43.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__wasm-bindgen-macro-0.2.93",
+        sha256 = "585c4c91a46b072c92e908d99cb1dcdf95c5218eeb6f3bf1efa991ee7a68cccf",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/wasm-bindgen-macro/0.2.93/download"],
+        strip_prefix = "wasm-bindgen-macro-0.2.93",
+        build_file = Label("//thirdparty/crates:BUILD.wasm-bindgen-macro-0.2.93.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__wasm-bindgen-macro-support-0.2.93",
+        sha256 = "afc340c74d9005395cf9dd098506f7f44e38f2b4a21c6aaacf9a105ea5e1e836",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/wasm-bindgen-macro-support/0.2.93/download"],
+        strip_prefix = "wasm-bindgen-macro-support-0.2.93",
+        build_file = Label("//thirdparty/crates:BUILD.wasm-bindgen-macro-support-0.2.93.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__wasm-bindgen-shared-0.2.93",
+        sha256 = "c62a0a307cb4a311d3a07867860911ca130c3494e8c2719593806c08bc5d0484",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/wasm-bindgen-shared/0.2.93/download"],
+        strip_prefix = "wasm-bindgen-shared-0.2.93",
+        build_file = Label("//thirdparty/crates:BUILD.wasm-bindgen-shared-0.2.93.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__web-sys-0.3.70",
+        sha256 = "26fdeaafd9bd129f65e7c031593c24d62186301e0c72c8978fa1678be7d532c0",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/web-sys/0.3.70/download"],
+        strip_prefix = "web-sys-0.3.70",
+        build_file = Label("//thirdparty/crates:BUILD.web-sys-0.3.70.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__webpki-roots-0.25.4",
+        sha256 = "5f20c57d8d7db6d3b86154206ae5d8fba62dd39573114de97c2cb0578251f8e1",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/webpki-roots/0.25.4/download"],
+        strip_prefix = "webpki-roots-0.25.4",
+        build_file = Label("//thirdparty/crates:BUILD.webpki-roots-0.25.4.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__webpki-roots-0.26.5",
+        sha256 = "0bd24728e5af82c6c4ec1b66ac4844bdf8156257fccda846ec58b42cd0cdbe6a",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/webpki-roots/0.26.5/download"],
+        strip_prefix = "webpki-roots-0.26.5",
+        build_file = Label("//thirdparty/crates:BUILD.webpki-roots-0.26.5.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__winapi-0.3.9",
+        sha256 = "5c839a674fcd7a98952e593242ea400abe93992746761e38641405d28b00f419",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/winapi/0.3.9/download"],
+        strip_prefix = "winapi-0.3.9",
+        build_file = Label("//thirdparty/crates:BUILD.winapi-0.3.9.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__winapi-i686-pc-windows-gnu-0.4.0",
+        sha256 = "ac3b87c63620426dd9b991e5ce0329eff545bccbbb34f3be09ff6fb6ab51b7b6",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/winapi-i686-pc-windows-gnu/0.4.0/download"],
+        strip_prefix = "winapi-i686-pc-windows-gnu-0.4.0",
+        build_file = Label("//thirdparty/crates:BUILD.winapi-i686-pc-windows-gnu-0.4.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__winapi-util-0.1.9",
+        sha256 = "cf221c93e13a30d793f7645a0e7762c55d169dbb0a49671918a2319d289b10bb",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/winapi-util/0.1.9/download"],
+        strip_prefix = "winapi-util-0.1.9",
+        build_file = Label("//thirdparty/crates:BUILD.winapi-util-0.1.9.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__winapi-x86_64-pc-windows-gnu-0.4.0",
+        sha256 = "712e227841d057c1ee1cd2fb22fa7e5a5461ae8e48fa2ca79ec42cfc1931183f",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/winapi-x86_64-pc-windows-gnu/0.4.0/download"],
+        strip_prefix = "winapi-x86_64-pc-windows-gnu-0.4.0",
+        build_file = Label("//thirdparty/crates:BUILD.winapi-x86_64-pc-windows-gnu-0.4.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__windows-core-0.52.0",
+        sha256 = "33ab640c8d7e35bf8ba19b884ba838ceb4fba93a4e8c65a9059d08afcfc683d9",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/windows-core/0.52.0/download"],
+        strip_prefix = "windows-core-0.52.0",
+        build_file = Label("//thirdparty/crates:BUILD.windows-core-0.52.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__windows-registry-0.2.0",
+        sha256 = "e400001bb720a623c1c69032f8e3e4cf09984deec740f007dd2b03ec864804b0",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/windows-registry/0.2.0/download"],
+        strip_prefix = "windows-registry-0.2.0",
+        build_file = Label("//thirdparty/crates:BUILD.windows-registry-0.2.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__windows-result-0.2.0",
+        sha256 = "1d1043d8214f791817bab27572aaa8af63732e11bf84aa21a45a78d6c317ae0e",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/windows-result/0.2.0/download"],
+        strip_prefix = "windows-result-0.2.0",
+        build_file = Label("//thirdparty/crates:BUILD.windows-result-0.2.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__windows-strings-0.1.0",
+        sha256 = "4cd9b125c486025df0eabcb585e62173c6c9eddcec5d117d3b6e8c30e2ee4d10",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/windows-strings/0.1.0/download"],
+        strip_prefix = "windows-strings-0.1.0",
+        build_file = Label("//thirdparty/crates:BUILD.windows-strings-0.1.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__windows-sys-0.48.0",
+        sha256 = "677d2418bec65e3338edb076e806bc1ec15693c5d0104683f2efe857f61056a9",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/windows-sys/0.48.0/download"],
+        strip_prefix = "windows-sys-0.48.0",
+        build_file = Label("//thirdparty/crates:BUILD.windows-sys-0.48.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__windows-sys-0.52.0",
+        sha256 = "282be5f36a8ce781fad8c8ae18fa3f9beff57ec1b52cb3de0789201425d9a33d",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/windows-sys/0.52.0/download"],
+        strip_prefix = "windows-sys-0.52.0",
+        build_file = Label("//thirdparty/crates:BUILD.windows-sys-0.52.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__windows-sys-0.59.0",
+        sha256 = "1e38bc4d79ed67fd075bcc251a1c39b32a1776bbe92e5bef1f0bf1f8c531853b",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/windows-sys/0.59.0/download"],
+        strip_prefix = "windows-sys-0.59.0",
+        build_file = Label("//thirdparty/crates:BUILD.windows-sys-0.59.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__windows-targets-0.48.5",
+        sha256 = "9a2fa6e2155d7247be68c096456083145c183cbbbc2764150dda45a87197940c",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/windows-targets/0.48.5/download"],
+        strip_prefix = "windows-targets-0.48.5",
+        build_file = Label("//thirdparty/crates:BUILD.windows-targets-0.48.5.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__windows-targets-0.52.6",
+        sha256 = "9b724f72796e036ab90c1021d4780d4d3d648aca59e491e6b98e725b84e99973",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/windows-targets/0.52.6/download"],
+        strip_prefix = "windows-targets-0.52.6",
+        build_file = Label("//thirdparty/crates:BUILD.windows-targets-0.52.6.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__windows_aarch64_gnullvm-0.48.5",
+        sha256 = "2b38e32f0abccf9987a4e3079dfb67dcd799fb61361e53e2882c3cbaf0d905d8",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/windows_aarch64_gnullvm/0.48.5/download"],
+        strip_prefix = "windows_aarch64_gnullvm-0.48.5",
+        build_file = Label("//thirdparty/crates:BUILD.windows_aarch64_gnullvm-0.48.5.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__windows_aarch64_gnullvm-0.52.6",
+        sha256 = "32a4622180e7a0ec044bb555404c800bc9fd9ec262ec147edd5989ccd0c02cd3",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/windows_aarch64_gnullvm/0.52.6/download"],
+        strip_prefix = "windows_aarch64_gnullvm-0.52.6",
+        build_file = Label("//thirdparty/crates:BUILD.windows_aarch64_gnullvm-0.52.6.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__windows_aarch64_msvc-0.48.5",
+        sha256 = "dc35310971f3b2dbbf3f0690a219f40e2d9afcf64f9ab7cc1be722937c26b4bc",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/windows_aarch64_msvc/0.48.5/download"],
+        strip_prefix = "windows_aarch64_msvc-0.48.5",
+        build_file = Label("//thirdparty/crates:BUILD.windows_aarch64_msvc-0.48.5.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__windows_aarch64_msvc-0.52.6",
+        sha256 = "09ec2a7bb152e2252b53fa7803150007879548bc709c039df7627cabbd05d469",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/windows_aarch64_msvc/0.52.6/download"],
+        strip_prefix = "windows_aarch64_msvc-0.52.6",
+        build_file = Label("//thirdparty/crates:BUILD.windows_aarch64_msvc-0.52.6.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__windows_i686_gnu-0.48.5",
+        sha256 = "a75915e7def60c94dcef72200b9a8e58e5091744960da64ec734a6c6e9b3743e",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/windows_i686_gnu/0.48.5/download"],
+        strip_prefix = "windows_i686_gnu-0.48.5",
+        build_file = Label("//thirdparty/crates:BUILD.windows_i686_gnu-0.48.5.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__windows_i686_gnu-0.52.6",
+        sha256 = "8e9b5ad5ab802e97eb8e295ac6720e509ee4c243f69d781394014ebfe8bbfa0b",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/windows_i686_gnu/0.52.6/download"],
+        strip_prefix = "windows_i686_gnu-0.52.6",
+        build_file = Label("//thirdparty/crates:BUILD.windows_i686_gnu-0.52.6.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__windows_i686_gnullvm-0.52.6",
+        sha256 = "0eee52d38c090b3caa76c563b86c3a4bd71ef1a819287c19d586d7334ae8ed66",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/windows_i686_gnullvm/0.52.6/download"],
+        strip_prefix = "windows_i686_gnullvm-0.52.6",
+        build_file = Label("//thirdparty/crates:BUILD.windows_i686_gnullvm-0.52.6.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__windows_i686_msvc-0.48.5",
+        sha256 = "8f55c233f70c4b27f66c523580f78f1004e8b5a8b659e05a4eb49d4166cca406",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/windows_i686_msvc/0.48.5/download"],
+        strip_prefix = "windows_i686_msvc-0.48.5",
+        build_file = Label("//thirdparty/crates:BUILD.windows_i686_msvc-0.48.5.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__windows_i686_msvc-0.52.6",
+        sha256 = "240948bc05c5e7c6dabba28bf89d89ffce3e303022809e73deaefe4f6ec56c66",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/windows_i686_msvc/0.52.6/download"],
+        strip_prefix = "windows_i686_msvc-0.52.6",
+        build_file = Label("//thirdparty/crates:BUILD.windows_i686_msvc-0.52.6.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__windows_x86_64_gnu-0.48.5",
+        sha256 = "53d40abd2583d23e4718fddf1ebec84dbff8381c07cae67ff7768bbf19c6718e",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/windows_x86_64_gnu/0.48.5/download"],
+        strip_prefix = "windows_x86_64_gnu-0.48.5",
+        build_file = Label("//thirdparty/crates:BUILD.windows_x86_64_gnu-0.48.5.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__windows_x86_64_gnu-0.52.6",
+        sha256 = "147a5c80aabfbf0c7d901cb5895d1de30ef2907eb21fbbab29ca94c5b08b1a78",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/windows_x86_64_gnu/0.52.6/download"],
+        strip_prefix = "windows_x86_64_gnu-0.52.6",
+        build_file = Label("//thirdparty/crates:BUILD.windows_x86_64_gnu-0.52.6.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__windows_x86_64_gnullvm-0.48.5",
+        sha256 = "0b7b52767868a23d5bab768e390dc5f5c55825b6d30b86c844ff2dc7414044cc",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/windows_x86_64_gnullvm/0.48.5/download"],
+        strip_prefix = "windows_x86_64_gnullvm-0.48.5",
+        build_file = Label("//thirdparty/crates:BUILD.windows_x86_64_gnullvm-0.48.5.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__windows_x86_64_gnullvm-0.52.6",
+        sha256 = "24d5b23dc417412679681396f2b49f3de8c1473deb516bd34410872eff51ed0d",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/windows_x86_64_gnullvm/0.52.6/download"],
+        strip_prefix = "windows_x86_64_gnullvm-0.52.6",
+        build_file = Label("//thirdparty/crates:BUILD.windows_x86_64_gnullvm-0.52.6.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__windows_x86_64_msvc-0.48.5",
+        sha256 = "ed94fce61571a4006852b7389a063ab983c02eb1bb37b47f8272ce92d06d9538",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/windows_x86_64_msvc/0.48.5/download"],
+        strip_prefix = "windows_x86_64_msvc-0.48.5",
+        build_file = Label("//thirdparty/crates:BUILD.windows_x86_64_msvc-0.48.5.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__windows_x86_64_msvc-0.52.6",
+        sha256 = "589f6da84c646204747d1270a2a5661ea66ed1cced2631d546fdfb155959f9ec",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/windows_x86_64_msvc/0.52.6/download"],
+        strip_prefix = "windows_x86_64_msvc-0.52.6",
+        build_file = Label("//thirdparty/crates:BUILD.windows_x86_64_msvc-0.52.6.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__winnow-0.6.18",
+        sha256 = "68a9bda4691f099d435ad181000724da8e5899daa10713c2d432552b9ccd3a6f",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/winnow/0.6.18/download"],
+        strip_prefix = "winnow-0.6.18",
+        build_file = Label("//thirdparty/crates:BUILD.winnow-0.6.18.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__winreg-0.50.0",
+        sha256 = "524e57b2c537c0f9b1e69f1965311ec12182b4122e45035b1508cd24d2adadb1",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/winreg/0.50.0/download"],
+        strip_prefix = "winreg-0.50.0",
+        build_file = Label("//thirdparty/crates:BUILD.winreg-0.50.0.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__wyz-0.5.1",
+        sha256 = "05f360fc0b24296329c78fda852a1e9ae82de9cf7b27dae4b7f62f118f77b9ed",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/wyz/0.5.1/download"],
+        strip_prefix = "wyz-0.5.1",
+        build_file = Label("//thirdparty/crates:BUILD.wyz-0.5.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__zerocopy-0.7.35",
+        sha256 = "1b9b4fd18abc82b8136838da5d50bae7bdea537c574d8dc1a34ed098d6c166f0",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/zerocopy/0.7.35/download"],
+        strip_prefix = "zerocopy-0.7.35",
+        build_file = Label("//thirdparty/crates:BUILD.zerocopy-0.7.35.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__zerocopy-derive-0.7.35",
+        sha256 = "fa4f8080344d4671fb4e831a13ad1e68092748387dfc4f55e356242fae12ce3e",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/zerocopy-derive/0.7.35/download"],
+        strip_prefix = "zerocopy-derive-0.7.35",
+        build_file = Label("//thirdparty/crates:BUILD.zerocopy-derive-0.7.35.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__zeroize-1.8.1",
+        sha256 = "ced3678a2879b30306d323f4542626697a464a97c0a07c9aebf7ebca65cd4dde",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/zeroize/1.8.1/download"],
+        strip_prefix = "zeroize-1.8.1",
+        build_file = Label("//thirdparty/crates:BUILD.zeroize-1.8.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__zstd-0.13.2",
+        sha256 = "fcf2b778a664581e31e389454a7072dab1647606d44f7feea22cd5abb9c9f3f9",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/zstd/0.13.2/download"],
+        strip_prefix = "zstd-0.13.2",
+        build_file = Label("//thirdparty/crates:BUILD.zstd-0.13.2.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__zstd-safe-7.2.1",
+        sha256 = "54a3ab4db68cea366acc5c897c7b4d4d1b8994a9cd6e6f841f8964566a419059",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/zstd-safe/7.2.1/download"],
+        strip_prefix = "zstd-safe-7.2.1",
+        build_file = Label("//thirdparty/crates:BUILD.zstd-safe-7.2.1.bazel"),
+    )
+
+    maybe(
+        http_archive,
+        name = "queng_vendored__zstd-sys-2.0.13-zstd.1.5.6",
+        sha256 = "38ff0f21cfee8f97d94cef41359e0c89aa6113028ab0291aa8ca0038995a95aa",
+        type = "tar.gz",
+        urls = ["https://static.crates.io/crates/zstd-sys/2.0.13+zstd.1.5.6/download"],
+        strip_prefix = "zstd-sys-2.0.13+zstd.1.5.6",
+        build_file = Label("//thirdparty/crates:BUILD.zstd-sys-2.0.13+zstd.1.5.6.bazel"),
+    )
+
+    return [
+        struct(repo = "queng_vendored__anyhow-1.0.88", is_dev_dep = False),
+        struct(repo = "queng_vendored__arc-swap-1.7.1", is_dev_dep = False),
+        struct(repo = "queng_vendored__autometrics-2.0.0", is_dev_dep = False),
+        struct(repo = "queng_vendored__base16ct-0.2.0", is_dev_dep = False),
+        struct(repo = "queng_vendored__base64ct-1.6.0", is_dev_dep = False),
+        struct(repo = "queng_vendored__binance-rs-async-1.3.3", is_dev_dep = False),
+        struct(repo = "queng_vendored__bon-2.2.1", is_dev_dep = False),
+        struct(repo = "queng_vendored__chrono-0.4.38", is_dev_dep = False),
+        struct(repo = "queng_vendored__clickhouse-rs-1.1.0-alpha.1", is_dev_dep = False),
+        struct(repo = "queng_vendored__config-file-0.2.3", is_dev_dep = False),
+        struct(repo = "queng_vendored__csv-1.3.0", is_dev_dep = False),
+        struct(repo = "queng_vendored__ctrlc-3.4.5", is_dev_dep = False),
+        struct(repo = "queng_vendored__diesel-2.2.4", is_dev_dep = False),
+        struct(repo = "queng_vendored__diesel_migrations-2.2.0", is_dev_dep = False),
+        struct(repo = "queng_vendored__dotenv-0.15.0", is_dev_dep = False),
+        struct(repo = "queng_vendored__encoding_rs-0.8.34", is_dev_dep = False),
+        struct(repo = "queng_vendored__futures-0.3.30", is_dev_dep = False),
+        struct(repo = "queng_vendored__hickory-resolver-0.24.1", is_dev_dep = False),
+        struct(repo = "queng_vendored__klickhouse-0.13.0", is_dev_dep = False),
+        struct(repo = "queng_vendored__lru-0.12.4", is_dev_dep = False),
+        struct(repo = "queng_vendored__mimalloc-0.1.43", is_dev_dep = False),
+        struct(repo = "queng_vendored__mini-moka-0.10.3", is_dev_dep = False),
+        struct(repo = "queng_vendored__parquet-53.0.0", is_dev_dep = False),
+        struct(repo = "queng_vendored__prost-0.13.2", is_dev_dep = False),
+        struct(repo = "queng_vendored__prost-types-0.13.2", is_dev_dep = False),
+        struct(repo = "queng_vendored__protoc-gen-prost-0.3.1", is_dev_dep = False),
+        struct(repo = "queng_vendored__protoc-gen-tonic-0.4.1", is_dev_dep = False),
+        struct(repo = "queng_vendored__reqwest-0.12.7", is_dev_dep = False),
+        struct(repo = "queng_vendored__rust_decimal-1.36.0", is_dev_dep = False),
+        struct(repo = "queng_vendored__rust_decimal_macros-1.36.0", is_dev_dep = False),
+        struct(repo = "queng_vendored__serde-1.0.210", is_dev_dep = False),
+        struct(repo = "queng_vendored__serde_json-1.0.128", is_dev_dep = False),
+        struct(repo = "queng_vendored__sha3-0.11.0-pre.4", is_dev_dep = False),
+        struct(repo = "queng_vendored__tokio-1.40.0", is_dev_dep = False),
+        struct(repo = "queng_vendored__tokio-cron-scheduler-0.11.0", is_dev_dep = False),
+        struct(repo = "queng_vendored__tokio-timer-0.2.13", is_dev_dep = False),
+        struct(repo = "queng_vendored__tokio-tungstenite-0.23.1", is_dev_dep = False),
+        struct(repo = "queng_vendored__tonic-0.12.2", is_dev_dep = False),
+        struct(repo = "queng_vendored__tonic-build-0.12.2", is_dev_dep = False),
+        struct(repo = "queng_vendored__tonic-health-0.12.2", is_dev_dep = False),
+        struct(repo = "queng_vendored__warp-0.3.7", is_dev_dep = False),
+    ]
