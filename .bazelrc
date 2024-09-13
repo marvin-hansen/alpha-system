@@ -69,9 +69,6 @@ common --noslim_profile
 common --experimental_profile_include_target_label
 common --experimental_profile_include_primary_output
 
-# Suspected cause for CI build failure when using local vendoring.
-common --reuse_sandbox_directories
-
 ###############################################################################
 ## Remote configuration
 ###############################################################################
