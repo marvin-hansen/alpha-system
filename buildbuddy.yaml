@@ -3,8 +3,8 @@ actions:
     triggers:
       push:
         branches:
-          - "main"
-          #- "no_run"
+          #- "main"
+          - "no_run"
   # Renovate Bot triggers too many builds. Disabled PR builds.
   #      pull_request:
   #        branches:
