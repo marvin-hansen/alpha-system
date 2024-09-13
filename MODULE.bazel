@@ -185,8 +185,12 @@ oci.pull(
     ],
 )
 
-# For each oci.pull call, repeat the "name" here to expose them as dependencies.
-use_repo(oci, "distroless", "distroless_linux_amd64", "distroless_linux_arm64_v8")
+use_repo(
+    oci,
+    "distroless",
+    "distroless_linux_amd64",
+    "distroless_linux_arm64_v8",
+)
 
 ###############################################################################
 # BuildBuddy Toolchain: https://github.com/buildbuddy-io/buildbuddy-toolchain/
