@@ -43,7 +43,6 @@ rust_binary(
         # Custom Memory Allocator
         "//thirdparty/crates:mimalloc",
         # External crates
-        # "//thirdparty/crates:autometrics",
         "//thirdparty/crates:arc-swap",
         "//thirdparty/crates:chrono",
         "//thirdparty/crates:reqwest",

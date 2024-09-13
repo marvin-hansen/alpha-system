@@ -26,7 +26,6 @@ config_manager = {workspace = true}
 proto_smdb = {workspace = true}
 common_service =  {workspace = true}
 # External crates
-autometrics = { workspace = true }
 tokio = { workspace = true }
 tonic = { workspace = true }
 warp = { workspace = true }

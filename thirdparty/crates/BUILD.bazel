@@ -44,12 +44,6 @@ alias(
 )
 
 alias(
-    name = "autometrics",
-    actual = "@queng_vendored__autometrics-2.0.0//:autometrics",
-    tags = ["manual"],
-)
-
-alias(
     name = "base16ct",
     actual = "@queng_vendored__base16ct-0.2.0//:base16ct",
     tags = ["manual"],

@@ -30,7 +30,6 @@ rust_library(
         ],
     ),
     crate_features = [
-        "profileapi",
         "sysinfoapi",
     ],
     crate_root = "src/lib.rs",
@@ -94,20 +93,7 @@ cargo_build_script(
         include = ["**/*.rs"],
         allow_empty = True,
     ),
-    compile_data = glob(
-        include = ["**"],
-        allow_empty = True,
-        exclude = [
-            "**/* *",
-            ".tmp_git_root/**/*",
-            "BUILD",
-            "BUILD.bazel",
-            "WORKSPACE",
-            "WORKSPACE.bazel",
-        ],
-    ),
     crate_features = [
-        "profileapi",
         "sysinfoapi",
     ],
     crate_name = "build_script_build",

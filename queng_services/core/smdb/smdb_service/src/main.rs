@@ -1,7 +1,6 @@
 // Unsafe code must be explicitly enabled to use it.
 #[deny(unsafe_code)]
 //
-use autometrics::{autometrics, prometheus_exporter};
 use mimalloc::MiMalloc;
 use std::error::Error;
 use std::net::SocketAddr;
@@ -75,12 +74,6 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .get_metrics_socket_addr_uri()
         .expect("[SMDB]: Failed to get metric host, uri, and port");
 
-    // Build http metrics endpoint
-    let get_metrics = warp::get()
-        .and(warp::path(metrics_uri.clone()))
-        .and(warp::path::end())
-        .and_then(metrics_handler);
-
     // dbg_print("Configuring health endpoint");
     let health_uri = "health";
     let get_health_check = warp::get()
@@ -89,7 +82,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .and_then(health_handler);
 
     // dbg_print("Configure http service routes");
-    let routes = get_health_check.or(get_metrics);
+    let routes = get_health_check;
 
     // Build http metrics server
     let web_addr: SocketAddr = metrics_addr.parse().expect("Failed to parse web address");
@@ -136,16 +129,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 
-#[autometrics]
 async fn health_handler() -> Result<impl warp::Reply, warp::Rejection> {
     let result = { String::from("OK") };
     Ok(warp::reply::json(&result))
-}
-
-#[autometrics]
-async fn metrics_handler() -> Result<impl warp::Reply, warp::Rejection> {
-    match prometheus_exporter::encode_to_string() {
-        Ok(metrics) => Ok(metrics),
-        Err(_) => Err(warp::reject::not_found()),
-    }
 }

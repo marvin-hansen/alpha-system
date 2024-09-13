@@ -1,7 +1,6 @@
 // Unsafe code must be explicitly enabled to use it.
 #[deny(unsafe_code)]
 //
-use autometrics::{autometrics, prometheus_exporter};
 use mimalloc::MiMalloc;
 use std::error::Error;
 use std::net::SocketAddr;
@@ -30,9 +29,6 @@ static GLOBAL: MiMalloc = MiMalloc;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
-    dbg_print("Setup autometrics");
-    prometheus_exporter::init();
-
     dbg_print("Setup autoconfiguration");
     let svc_config = dbgw_specs::dbgw_service_config();
     let cfg_manager = CfgManager::new(SVC_ID, svc_config).await;
@@ -87,14 +83,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .and(warp::path::end())
         .and_then(health_handler);
 
-    dbg_print("Build metrics endpoint");
-    let get_metrics = warp::get()
-        .and(warp::path(metrics_uri.clone()))
-        .and(warp::path::end())
-        .and_then(metrics_handler);
-
     dbg_print("Configure http service routes");
-    let routes = get_health_check.or(get_metrics);
+    let routes = get_health_check;
 
     dbg_print("Configuring socket address for http service");
     let http_addr: SocketAddr = metrics_addr
@@ -146,18 +136,9 @@ async fn main() -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 
-#[autometrics]
 pub(crate) async fn health_handler() -> Result<impl warp::Reply, warp::Rejection> {
     let result = { String::from("OK") };
     Ok(warp::reply::json(&result))
-}
-
-#[autometrics]
-async fn metrics_handler() -> Result<impl warp::Reply, warp::Rejection> {
-    match prometheus_exporter::encode_to_string() {
-        Ok(metrics) => Ok(metrics),
-        Err(_) => Err(warp::reject::not_found()),
-    }
 }
 
 fn dbg_print(msg: &str) {

@@ -28,6 +28,9 @@ rust_proc_macro(
             "WORKSPACE.bazel",
         ],
     ),
+    crate_features = [
+        "default",
+    ],
     crate_root = "src/lib.rs",
     edition = "2018",
     proc_macro_deps = [

@@ -1,7 +1,6 @@
 // Unsafe code must be explicitly enabled to use it.
 #[deny(unsafe_code)]
 //
-use autometrics::{autometrics, prometheus_exporter};
 use common_config::prelude::ServiceID;
 use common_service::{print_utils, shutdown_utils};
 use config_manager::CfgManager;
@@ -36,9 +35,6 @@ where
             println!("[{}]: {}", svc_id.to_string(), msg)
         }
     };
-
-    dbg_print("Setup autometrics");
-    prometheus_exporter::init();
 
     dbg_print("get SMDB endpoint from auto config");
     let (smdb_host, smdb_port) = cfg_manager
@@ -96,14 +92,8 @@ where
         .and(warp::path::end())
         .and_then(health_handler);
 
-    dbg_print("Build metrics endpoint");
-    let get_metrics = warp::get()
-        .and(warp::path(metrics_uri.clone()))
-        .and(warp::path::end())
-        .and_then(metrics_handler);
-
     dbg_print("Configure http service routes");
-    let routes = get_health_check.or(get_metrics);
+    let routes = get_health_check;
 
     dbg_print("Configuring http server with health service and signal handler");
     let signal = shutdown_utils::signal_handler("http server");
@@ -161,16 +151,7 @@ where
     Ok(())
 }
 
-#[autometrics]
 async fn health_handler() -> Result<impl warp::Reply, warp::Rejection> {
     let result = { String::from("OK") };
     Ok(warp::reply::json(&result))
-}
-
-#[autometrics]
-async fn metrics_handler() -> Result<impl warp::Reply, warp::Rejection> {
-    match prometheus_exporter::encode_to_string() {
-        Ok(metrics) => Ok(metrics),
-        Err(_) => Err(warp::reject::not_found()),
-    }
 }

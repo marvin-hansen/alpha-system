@@ -200,8 +200,6 @@ sha3 = { version = "0.11.0-pre.3", default-features = false }
 base64ct = { version = "1.6.0", default-features = false, features = ["alloc"] }
 base16ct = { version = "0.2.0", default-features = false, features = ["alloc"] }
 # Other external crates
-#cargo add autometrics --features=prometheus-exporter
-autometrics = { version = "2.0.0", features = ["prometheus-exporter"] }
 anyhow = { version = "1.0" }
 arc-swap = { version = "1.7" }
 binance-rs-async = { version = "1.3.3", default-features = false, features = ["rustls-tls"] }
