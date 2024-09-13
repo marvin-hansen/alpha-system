@@ -6,7 +6,11 @@ package(default_visibility = ["//visibility:public"])
 # Sys dependencies
 ###############################################################################
 
-
+alias(
+    name = "libpq",
+    actual = "@libpq",
+    visibility = ["//visibility:public"],
+)
 
 ###############################################################################
 # Common
