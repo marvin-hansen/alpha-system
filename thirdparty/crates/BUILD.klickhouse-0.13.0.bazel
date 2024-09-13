@@ -103,7 +103,7 @@ rust_library(
         "@queng_vendored__indexmap-2.5.0//:indexmap",
         "@queng_vendored__klickhouse-0.13.0//:build_script_build",
         "@queng_vendored__log-0.4.22//:log",
-        "@queng_vendored__lz4-1.26.0//:lz4",
+        "@queng_vendored__lz4-1.27.0//:lz4",
         "@queng_vendored__serde-1.0.210//:serde",
         "@queng_vendored__serde_json-1.0.128//:serde_json",
         "@queng_vendored__thiserror-1.0.63//:thiserror",

@@ -2411,22 +2411,22 @@ def crate_repositories():
 
     maybe(
         http_archive,
-        name = "queng_vendored__lz4-1.26.0",
-        sha256 = "958b4caa893816eea05507c20cfe47574a43d9a697138a7872990bba8a0ece68",
+        name = "queng_vendored__lz4-1.27.0",
+        sha256 = "a231296ca742e418c43660cb68e082486ff2538e8db432bc818580f3965025ed",
         type = "tar.gz",
-        urls = ["https://static.crates.io/crates/lz4/1.26.0/download"],
-        strip_prefix = "lz4-1.26.0",
-        build_file = Label("//thirdparty/crates:BUILD.lz4-1.26.0.bazel"),
+        urls = ["https://static.crates.io/crates/lz4/1.27.0/download"],
+        strip_prefix = "lz4-1.27.0",
+        build_file = Label("//thirdparty/crates:BUILD.lz4-1.27.0.bazel"),
     )
 
     maybe(
         http_archive,
-        name = "queng_vendored__lz4-sys-1.10.0",
-        sha256 = "109de74d5d2353660401699a4174a4ff23fcc649caf553df71933c7fb45ad868",
+        name = "queng_vendored__lz4-sys-1.11.0",
+        sha256 = "fcb44a01837a858d47e5a630d2ccf304c8efcc4b83b8f9f75b7a9ee4fcc6e57d",
         type = "tar.gz",
-        urls = ["https://static.crates.io/crates/lz4-sys/1.10.0/download"],
-        strip_prefix = "lz4-sys-1.10.0",
-        build_file = Label("//thirdparty/crates:BUILD.lz4-sys-1.10.0.bazel"),
+        urls = ["https://static.crates.io/crates/lz4-sys/1.11.0/download"],
+        strip_prefix = "lz4-sys-1.11.0",
+        build_file = Label("//thirdparty/crates:BUILD.lz4-sys-1.11.0.bazel"),
     )
 
     maybe(
