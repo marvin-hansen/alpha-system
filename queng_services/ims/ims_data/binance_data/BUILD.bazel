@@ -1,15 +1,14 @@
 ###############################################################################
 # Imports
 ###############################################################################
-
-# OCI Container Rules
-load("@rules_oci//oci:defs.bzl", "oci_push")
-
-# Rules rust
+# rules rust
 load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_doc", "rust_doc_test")
 
 # Custom container macro
-load("//:build/container.bzl", "build_image", "build_sha265_tag")
+load("//:build/container.bzl", "build_multi_arch_image", "build_sha265_tag")
+
+# OCI Container Rules
+load("@rules_oci//oci:defs.bzl", "oci_push")
 
 ###############################################################################
 # Rust Binary
@@ -83,13 +82,17 @@ rust_doc_test(
 ###############################################################################
 
 # Build container image
-build_image(
-    name = "image",
+build_multi_arch_image(
+    name = "image_index",
     srcs = ["binance_data"],
     base = "@distroless",
     exposed_ports = [
         "7070",
         "8080",
+    ],
+    platforms = [
+        "//build/platforms:linux_x86_64_musl",
+        "//build/platforms:linux_arm64_musl",
     ],
     visibility = ["//visibility:public"],
 )
@@ -97,7 +100,7 @@ build_image(
 # Build an unique and immutable image tag based on the image SHA265 digest.
 build_sha265_tag(
     name = "remote_tag",
-    image = ":image",
+    image = ":image_index",
     input = "image.json.sha256",
     output = "_tag.txt",
 )
@@ -105,7 +108,7 @@ build_sha265_tag(
 # Publish image to registry
 oci_push(
     name = "push",
-    image = ":image",
+    image = ":image_index",
     remote_tags = ":remote_tag",
     repository = "asia-northeast1-docker.pkg.dev/future-309012/image-repo/cmdb",
     visibility = ["//visibility:public"],

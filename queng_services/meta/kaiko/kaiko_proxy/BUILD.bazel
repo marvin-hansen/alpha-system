@@ -1,15 +1,19 @@
-# Aspect rules for testing
-load("@aspect_bazel_lib//lib:transitions.bzl", "platform_transition_binary")
 
-# OCI Container Rules
-load("@rules_oci//oci:defs.bzl", "oci_push")
-load("@rules_pkg//pkg:tar.bzl", "pkg_tar")
+###############################################################################
+# Imports
+###############################################################################
+# rules rust
 load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_doc", "rust_doc_test")
 
 # Custom container macro
 load("//:build/container.bzl", "build_multi_arch_image", "build_sha265_tag")
 
-# Build binary
+# OCI Container Rules
+load("@rules_oci//oci:defs.bzl", "oci_push")
+
+###############################################################################
+# Rust Binary
+###############################################################################
 rust_binary(
     name = "kaiko_proxy",
     srcs = glob([
@@ -54,6 +58,10 @@ rust_binary(
     ],
 )
 
+###############################################################################
+# Documentation
+###############################################################################
+
 # Build documentation
 rust_doc(
     name = "doc",
@@ -69,6 +77,10 @@ rust_doc_test(
     tags = ["doc-test"],
     visibility = ["//visibility:public"],
 )
+
+###############################################################################
+# OCI Container Image
+###############################################################################
 
 build_multi_arch_image(
     name = "image_index",
