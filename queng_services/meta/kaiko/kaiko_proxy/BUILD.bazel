@@ -77,8 +77,8 @@ build_multi_arch_image(
     base = "@distroless",
     exposed_ports = ["7777"],
     platforms = [
-        "//build/platforms:linux_arm64_musl",
         "//build/platforms:linux_x86_64_musl",
+        "//build/platforms:linux_arm64_musl",
     ],
     visibility = ["//visibility:public"],
 )
