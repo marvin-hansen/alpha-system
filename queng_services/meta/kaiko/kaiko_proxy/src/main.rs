@@ -7,7 +7,6 @@ use std::sync::Arc;
 use std::time::Duration;
 
 use arc_swap::ArcSwap;
-use autometrics::prometheus_exporter;
 // https://github.com/purpleprotocol/mimalloc_rust
 use mimalloc::MiMalloc;
 use tokio::time::Instant;
@@ -45,9 +44,6 @@ const SVC_ID: ServiceID = ServiceID::KaikoProxy;
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
     let start = Instant::now();
-
-    dbg_print("Set up prometheus metrics exporter");
-    prometheus_exporter::init();
 
     dbg_print("Load meta-data");
     let meta_data = run_init()
@@ -175,24 +171,11 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .bind_with_graceful_shutdown(([127, 0, 0, 1], PORT_HEALTH), health_signal);
     let health_handle = tokio::spawn(health_server);
 
-    dbg_print("Configure metrics service");
-    // Build http /metrics endpoint
-    let routes = warp::get()
-        .and(warp::path("metrics"))
-        .and(warp::path::end())
-        .and_then(handler::get_metrics_handler);
-
-    let (_, metrics_server) = warp::serve(routes).bind_with_graceful_shutdown(
-        ([127, 0, 0, 1], PORT_HEALTH),
-        shutdown_utils::signal_handler("metrics server"),
-    );
-    let metrics_handle = tokio::spawn(metrics_server);
-
     print_update_status(UPDATE);
     print_duration("[main]: Starting server took", &start.elapsed());
     print_utils::print_start_header_simple("Metadata Integration Service", "0.0.0.0:7777/");
 
-    match tokio::try_join!(http_handle, health_handle, metrics_handle) {
+    match tokio::try_join!(http_handle, health_handle) {
         Ok(_) => {}
         Err(e) => {
             println!("Kaiko Proxy: Failed to start HTTP server: {:?}", e);

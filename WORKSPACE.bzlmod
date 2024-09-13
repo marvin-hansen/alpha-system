@@ -29,4 +29,5 @@ buildbuddy(
 )
 
 load("//thirdparty:all_deps.bzl", "all_deps")
+
 all_deps()

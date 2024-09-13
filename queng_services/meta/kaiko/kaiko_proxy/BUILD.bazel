@@ -1,15 +1,13 @@
-###############################################################################
-# Imports
-###############################################################################
+# Aspect rules for testing
+load("@aspect_bazel_lib//lib:transitions.bzl", "platform_transition_binary")
 
 # OCI Container Rules
 load("@rules_oci//oci:defs.bzl", "oci_push")
-
-# Rules rust
+load("@rules_pkg//pkg:tar.bzl", "pkg_tar")
 load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_doc", "rust_doc_test")
 
 # Custom container macro
-load("//:build/container.bzl", "build_image", "build_sha265_tag")
+load("//:build/container.bzl", "build_multi_arch_image", "build_sha265_tag")
 
 # Build binary
 rust_binary(
@@ -45,7 +43,7 @@ rust_binary(
         # Custom Memory Allocator
         "//thirdparty/crates:mimalloc",
         # External crates
-        "//thirdparty/crates:autometrics",
+        # "//thirdparty/crates:autometrics",
         "//thirdparty/crates:arc-swap",
         "//thirdparty/crates:chrono",
         "//thirdparty/crates:reqwest",
@@ -73,18 +71,14 @@ rust_doc_test(
     visibility = ["//visibility:public"],
 )
 
-###############################################################################
-# OCI Container Image
-###############################################################################
-
-# Build container image
-build_image(
-    name = "image",
-    srcs = ["kaiko_proxy"],
+build_multi_arch_image(
+    name = "image_index",
+    srcs = [":kaiko_proxy"],
     base = "@distroless",
-    exposed_ports = [
-        "7070",
-        "8080",
+    exposed_ports = ["7777"],
+    platforms = [
+        "//build/platforms:linux_arm64_musl",
+        "//build/platforms:linux_x86_64_musl",
     ],
     visibility = ["//visibility:public"],
 )
@@ -92,7 +86,7 @@ build_image(
 # Build an unique and immutable image tag based on the image SHA265 digest.
 build_sha265_tag(
     name = "remote_tag",
-    image = ":image",
+    image = ":image_index",
     input = "image.json.sha256",
     output = "_tag.txt",
 )
@@ -100,7 +94,7 @@ build_sha265_tag(
 # Publish image to registry
 oci_push(
     name = "push",
-    image = ":image",
+    image = ":image_index",
     remote_tags = ":remote_tag",
     repository = "asia-northeast1-docker.pkg.dev/future-309012/image-repo/cmdb",
     visibility = ["//visibility:public"],

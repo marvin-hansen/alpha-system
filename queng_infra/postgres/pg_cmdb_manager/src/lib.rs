@@ -134,7 +134,7 @@ impl PostgresCMDBManager {
 
         if migration {
             if dbg {
-                println!("[PostgresCMDBManager]: Run DB Migration", );
+                println!("[PostgresCMDBManager]: Run DB Migration",);
             }
             match run_cmdb_db_migration(&mut pool.get().unwrap()) {
                 Ok(_) => {}

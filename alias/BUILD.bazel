@@ -1,4 +1,13 @@
 
+# Make all aliases public by default
+package(default_visibility = ["//visibility:public"])
+
+###############################################################################
+# Sys dependencies
+###############################################################################
+
+
+
 ###############################################################################
 # Common
 ###############################################################################
@@ -6,61 +15,61 @@
 alias(
     name = "common_config",
     actual = "//queng_common/common_config",
-    visibility = ["//visibility:public"],
+    
 )
 
 alias(
     name = "common_container",
     actual = "//queng_common/common_container",
-    visibility = ["//visibility:public"],
+    
 )
 
 alias(
     name = "common_data_bar",
     actual = "//queng_common/common_data_bar",
-    visibility = ["//visibility:public"],
+    
 )
 
 alias(
     name = "common_database",
     actual = "//queng_common/common_database",
-    visibility = ["//visibility:public"],
+    
 )
 
 alias(
     name = "common_env",
     actual = "//queng_common/common_env",
-    visibility = ["//visibility:public"],
+    
 )
 
 alias(
     name = "common_errors",
     actual = "//queng_common/common_errors",
-    visibility = ["//visibility:public"],
+    
 )
 
 alias(
     name = "common_exchange",
     actual = "//queng_common/common_exchange",
-    visibility = ["//visibility:public"],
+    
 )
 
 alias(
     name = "common_metadata",
     actual = "//queng_common/common_metadata",
-    visibility = ["//visibility:public"],
+    
 )
 
 alias(
     name = "common_service",
     actual = "//queng_common/common_service",
-    visibility = ["//visibility:public"],
+    
 )
 
 alias(
     name = "common_trade",
     actual = "//queng_common/common_trade",
-    visibility = ["//visibility:public"],
+    
 )
 
 ###############################################################################
@@ -70,20 +79,20 @@ alias(
 alias(
     name = "config_manager",
     actual = "//queng_components/config_manager",
-    visibility = ["//visibility:public"],
+    
 )
 
 
 alias(
     name = "pattern_manager",
     actual = "//queng_components/pattern_manager",
-    visibility = ["//visibility:public"],
+    
 )
 
 alias(
     name = "symbol_manager",
     actual = "//queng_components/symbol_manager",
-    visibility = ["//visibility:public"],
+    
 )
 
 ###############################################################################
@@ -93,61 +102,61 @@ alias(
 alias(
     name = "pg_cmdb",
     actual = "//queng_infra/postgres/pg_cmdb",
-    visibility = ["//visibility:public"],
+    
 )
 
 alias(
     name = "pg_cmdb_manager",
     actual = "//queng_infra/postgres/pg_cmdb_manager",
-    visibility = ["//visibility:public"],
+    
 )
 
 alias(
     name = "pg_imdb",
     actual = "//queng_infra/postgres/pg_imdb",
-    visibility = ["//visibility:public"],
+    
 )
 
 alias(
     name = "pg_mddb",
     actual = "//queng_infra/postgres/pg_mddb",
-    visibility = ["//visibility:public"],
+    
 )
 
 alias(
     name = "pg_smdb",
     actual = "//queng_infra/postgres/pg_smdb",
-    visibility = ["//visibility:public"],
+    
 )
 
 alias(
     name = "pg_smdb_manager",
     actual = "//queng_infra/postgres/pg_smdb_manager",
-    visibility = ["//visibility:public"],
+    
 )
 
 alias(
     name = "postgres_utils",
     actual = "//queng_infra/postgres/postgres_utils",
-    visibility = ["//visibility:public"],
+    
 )
 
 alias(
     name = "postgres_migrations",
     actual = "//queng_infra/postgres/postgres_migrations",
-    visibility = ["//visibility:public"],
+    
 )
 
 alias(
     name = "clickhouse_utils",
     actual = "//queng_infra/clickhouse/clickhouse_utils",
-    visibility = ["//visibility:public"],
+    
 )
 
 alias(
     name = "db_clickhouse_manager",
     actual = "//queng_infra/clickhouse/db_clickhouse_manager",
-    visibility = ["//visibility:public"],
+    
 )
 
 ###############################################################################
@@ -157,44 +166,44 @@ alias(
 alias(
     name = "proto_cmdb",
     actual = "//queng_proto/proto_cmdb:proto_cmdb_bindings",
-    visibility = ["//visibility:public"],
+    
 )
 
 alias(
     name = "proto_cmdb_utils",
     actual = "//queng_proto/proto_cmdb_utils",
-    visibility = ["//visibility:public"],
+    
 )
 
 alias(
     name = "proto_imdb",
     actual = "//queng_proto/proto_imdb:proto_imdb_bindings",
-    visibility = ["//visibility:public"],
+    
 )
 
 alias(
     name = "proto_mddb",
     actual = "//queng_proto/proto_mddb:proto_mddb_bindings",
-    visibility = ["//visibility:public"],
+    
 )
 
 alias(
     name = "proto_mddb_utils",
     actual = "//queng_proto/proto_mddb_utils",
-    visibility = ["//visibility:public"],
+    
 )
 
 
 alias(
     name = "proto_smdb",
     actual = "//queng_proto/proto_smdb:proto_smdb_bindings",
-    visibility = ["//visibility:public"],
+    
 )
 
 alias(
     name = "proto_smdb_utils",
     actual = "//queng_proto/proto_smdb_utils",
-    visibility = ["//visibility:public"],
+    
 )
 
 ###############################################################################
@@ -204,13 +213,13 @@ alias(
 alias(
     name = "sbe_bindings",
     actual = "//queng_sbe/bindings:sbe_bindings",
-    visibility = ["//visibility:public"],
+    
 )
 
 alias(
     name = "sbe_messages",
     actual = "//queng_sbe/sbe_messages:sbe_messages",
-    visibility = ["//visibility:public"],
+    
 )
 
 ###############################################################################
@@ -220,19 +229,19 @@ alias(
 alias(
     name = "container_specs_clickhouse",
     actual = "//queng_specs/container_specs/container_specs_clickhouse",
-    visibility = ["//visibility:public"],
+    
 )
 
 alias(
     name = "container_specs_kaiko",
     actual = "//queng_specs/container_specs/container_specs_kaiko",
-    visibility = ["//visibility:public"],
+    
 )
 
 alias(
     name = "container_specs_postgres",
     actual = "//queng_specs/container_specs/container_specs_postgres",
-    visibility = ["//visibility:public"],
+    
 )
 
 ###############################################################################
@@ -243,14 +252,14 @@ alias(
 alias(
     name = "db_specs_clickhouse",
     actual = "//queng_specs/database_specs/db_specs_clickhouse",
-    visibility = ["//visibility:public"],
+    
 )
 
 # DB Specs
 alias(
     name = "db_specs_postgres",
     actual = "//queng_specs/database_specs/db_specs_postgres",
-    visibility = ["//visibility:public"],
+    
 )
 
 ###############################################################################
@@ -261,14 +270,14 @@ alias(
 alias(
     name = "exchange_specs",
     actual = "//queng_specs/exchange_specs",
-    visibility = ["//visibility:public"],
+    
 )
 
 # portfolio specs
 alias(
     name = "portfolio_specs",
     actual = "//queng_specs/portfolio_specs",
-    visibility = ["//visibility:public"],
+    
 )
 
 ###############################################################################
@@ -278,58 +287,58 @@ alias(
 alias(
     name = "service_specs_all",
     actual = "//queng_specs/service_specs/service_specs_all",
-    visibility = ["//visibility:public"],
+    
 )
 
 # Core service specs
 alias(
     name = "cmdb_specs",
     actual = "//queng_specs/service_specs/core/cmdb_specs",
-    visibility = ["//visibility:public"],
+    
 )
 
 alias(
     name = "dbgw_specs",
     actual = "//queng_specs/service_specs/core/dbgw_specs",
-    visibility = ["//visibility:public"],
+    
 )
 
 alias(
     name = "qdgw_specs",
     actual = "//queng_specs/service_specs/core/qdgw_specs",
-    visibility = ["//visibility:public"],
+    
 )
 
 alias(
     name = "smdb_specs",
     actual = "//queng_specs/service_specs/core/smdb_specs",
-    visibility = ["//visibility:public"],
+    
 )
 
 # Meta service specs
 alias(
     name = "mddb_specs",
     actual = "//queng_specs/service_specs/meta/mddb_specs",
-    visibility = ["//visibility:public"],
+    
 )
 
 # IMS service specs
 alias(
     name = "ims_data_binance_specs",
     actual = "//queng_specs/service_specs/ims/ims_data/ims_data_binance_specs",
-    visibility = ["//visibility:public"],
+    
 )
 
 alias(
     name = "ims_data_vex_specs",
     actual = "//queng_specs/service_specs/ims/ims_data/ims_data_vex_specs",
-    visibility = ["//visibility:public"],
+    
 )
 
 alias(
     name = "shared_service_specs",
     actual = "//queng_specs/service_specs/shared_service_specs",
-    visibility = ["//visibility:public"],
+    
 )
 
 ###############################################################################
@@ -339,13 +348,13 @@ alias(
 alias(
     name = "crypto_utils",
     actual = "//queng_utils/crypto_utils",
-    visibility = ["//visibility:public"],
+    
 )
 
 alias(
     name = "math_utils",
     actual = "//queng_utils/math_utils",
-    visibility = ["//visibility:public"],
+    
 )
 
 ###############################################################################
@@ -355,24 +364,24 @@ alias(
 alias(
     name = "docker_utils",
     actual = "//queng_utils_tests/docker_utils",
-    visibility = ["//visibility:public"],
+    
 )
 
 alias(
     name = "env_utils",
     actual = "//queng_utils_tests/env_utils",
-    visibility = ["//visibility:public"],
+    
 )
 
 alias(
     name = "kaiko_utils",
     actual = "//queng_utils_tests/kaiko_utils",
-    visibility = ["//visibility:public"],
+    
 )
 
 alias(
     name = "service_utils",
     actual = "//queng_utils_tests/service_utils",
-    visibility = ["//visibility:public"],
+    
 )
 

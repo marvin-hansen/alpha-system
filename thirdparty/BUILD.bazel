@@ -2,7 +2,6 @@ load("@rules_rust//crate_universe:defs.bzl", "crate", "crates_vendor")
 
 crates_vendor(
     name = "crates_vendor",
-    # cargo_lockfile = "Cargo.Bazel.lock",
     annotations = {
         # Fixes an issue that autometrics actually uses CARGO_PKG_REPOSITORY, which is not set by Bazel.
         "autometrics": [
