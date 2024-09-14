@@ -2,7 +2,6 @@ use crate::model::instrument::Instrument;
 use crate::model::portfolio::Portfolio;
 use crate::model::portfolio_instrument::PortfolioInstrument;
 use crate::Connection as PGConnection;
-use common_database::prelude::DatabaseErrorMessage;
 use common_exchange::prelude::PortfolioConfig as CommonPortfolioConfig;
 use diesel::result::DatabaseErrorKind;
 use diesel::{
@@ -30,9 +29,8 @@ impl Portfolio {
                 if !exists {
                     return Err(Error::DatabaseError(
                         DatabaseErrorKind::NotNullViolation,
-                        Box::new(DatabaseErrorMessage::new(
-                            "Portfolio ID does not exist and thus cannot be read",
-                            "portfolio",
+                        Box::new(String::from(
+                            "[Portfolio:read]: Portfolio ID does not exist and thus cannot be read",
                         )),
                     ));
                 }

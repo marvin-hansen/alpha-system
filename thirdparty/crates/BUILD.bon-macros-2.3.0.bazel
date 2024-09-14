@@ -77,7 +77,7 @@ rust_proc_macro(
         "@rules_rust//rust/platform:x86_64-unknown-none": [],
         "//conditions:default": ["@platforms//:incompatible"],
     }),
-    version = "2.2.1",
+    version = "2.3.0",
     deps = [
         "@queng_vendored__darling-0.20.10//:darling",
         "@queng_vendored__ident_case-1.0.1//:ident_case",

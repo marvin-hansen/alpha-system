@@ -192,7 +192,6 @@ oci.pull(
         "linux/arm64/v8",
     ],
 )
-
 use_repo(
     oci,
     "distroless",
@@ -210,3 +209,41 @@ use_repo(
 # RUST DEPENDENCIES
 ###############################################################################
 # See thirdparty/BUILD.bazel
+
+###############################################################################
+# RUST SYSTEM DEPENDENCIES
+###############################################################################
+crate = use_extension("@rules_rust//crate_universe:extension.bzl", "crate", isolate=True)
+# External crates
+crate.spec(
+    default_features = False,
+    features = [
+        "postgres",
+        "r2d2",
+    ],
+    package = "diesel",
+    version = "2.2.2",
+)
+crate.spec(
+    default_features = False,
+    features = ["postgres"],
+    package = "diesel_migrations",
+    version = "2.2.0",
+)
+
+crate.from_specs()
+use_repo(crate, "crates")
+
+# https://github.com/brainhivenl/libpq
+crate.annotation(
+    crate = "pq-sys",
+    build_script_env = {
+        "PQ_LIB_STATIC": "1",
+    },
+    gen_build_script = "off",
+    rustc_flags = [
+        "-L",
+        "$(BINDIR)/@@//alias:libpq",
+    ],
+    deps = ["@@//alias:libpq"],
+)

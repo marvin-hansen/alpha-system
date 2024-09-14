@@ -300,7 +300,7 @@ _NORMAL_DEPENDENCIES = {
             "base16ct": Label("@queng_vendored__base16ct-0.2.0//:base16ct"),
             "base64ct": Label("@queng_vendored__base64ct-1.6.0//:base64ct"),
             "binance_rs_async": Label("@queng_vendored__binance-rs-async-1.3.3//:binance"),
-            "bon": Label("@queng_vendored__bon-2.2.1//:bon"),
+            "bon": Label("@queng_vendored__bon-2.3.0//:bon"),
             "chrono": Label("@queng_vendored__chrono-0.4.38//:chrono"),
             "clickhouse-rs": Label("@queng_vendored__clickhouse-rs-1.1.0-alpha.1//:clickhouse_rs"),
             "config-file": Label("@queng_vendored__config-file-0.2.3//:config_file"),
@@ -891,22 +891,22 @@ def crate_repositories():
 
     maybe(
         http_archive,
-        name = "queng_vendored__bon-2.2.1",
-        sha256 = "ee4f37d875011af3196e4828024742a84dcff6b0d027d272f2944f9a99f2c8af",
+        name = "queng_vendored__bon-2.3.0",
+        sha256 = "97493a391b4b18ee918675fb8663e53646fd09321c58b46afa04e8ce2499c869",
         type = "tar.gz",
-        urls = ["https://static.crates.io/crates/bon/2.2.1/download"],
-        strip_prefix = "bon-2.2.1",
-        build_file = Label("//thirdparty/crates:BUILD.bon-2.2.1.bazel"),
+        urls = ["https://static.crates.io/crates/bon/2.3.0/download"],
+        strip_prefix = "bon-2.3.0",
+        build_file = Label("//thirdparty/crates:BUILD.bon-2.3.0.bazel"),
     )
 
     maybe(
         http_archive,
-        name = "queng_vendored__bon-macros-2.2.1",
-        sha256 = "99b4b686e7ebf76cfa591052482d8c3c8242722518560798631974bf899d5565",
+        name = "queng_vendored__bon-macros-2.3.0",
+        sha256 = "2a2af3eac944c12cdf4423eab70d310da0a8e5851a18ffb192c0a5e3f7ae1663",
         type = "tar.gz",
-        urls = ["https://static.crates.io/crates/bon-macros/2.2.1/download"],
-        strip_prefix = "bon-macros-2.2.1",
-        build_file = Label("//thirdparty/crates:BUILD.bon-macros-2.2.1.bazel"),
+        urls = ["https://static.crates.io/crates/bon-macros/2.3.0/download"],
+        strip_prefix = "bon-macros-2.3.0",
+        build_file = Label("//thirdparty/crates:BUILD.bon-macros-2.3.0.bazel"),
     )
 
     maybe(
@@ -2691,12 +2691,12 @@ def crate_repositories():
 
     maybe(
         http_archive,
-        name = "queng_vendored__once_cell-1.19.0",
-        sha256 = "3fdb12b2476b595f9358c5161aa467c2438859caa136dec86c26fdd2efe17b92",
+        name = "queng_vendored__once_cell-1.20.0",
+        sha256 = "33ea5043e58958ee56f3e15a90aee535795cd7dfd319846288d93c5b57d85cbe",
         type = "tar.gz",
-        urls = ["https://static.crates.io/crates/once_cell/1.19.0/download"],
-        strip_prefix = "once_cell-1.19.0",
-        build_file = Label("//thirdparty/crates:BUILD.once_cell-1.19.0.bazel"),
+        urls = ["https://static.crates.io/crates/once_cell/1.20.0/download"],
+        strip_prefix = "once_cell-1.20.0",
+        build_file = Label("//thirdparty/crates:BUILD.once_cell-1.20.0.bazel"),
     )
 
     maybe(
@@ -4805,7 +4805,7 @@ def crate_repositories():
         struct(repo = "queng_vendored__base16ct-0.2.0", is_dev_dep = False),
         struct(repo = "queng_vendored__base64ct-1.6.0", is_dev_dep = False),
         struct(repo = "queng_vendored__binance-rs-async-1.3.3", is_dev_dep = False),
-        struct(repo = "queng_vendored__bon-2.2.1", is_dev_dep = False),
+        struct(repo = "queng_vendored__bon-2.3.0", is_dev_dep = False),
         struct(repo = "queng_vendored__chrono-0.4.38", is_dev_dep = False),
         struct(repo = "queng_vendored__clickhouse-rs-1.1.0-alpha.1", is_dev_dep = False),
         struct(repo = "queng_vendored__config-file-0.2.3", is_dev_dep = False),

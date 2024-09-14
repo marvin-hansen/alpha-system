@@ -11,7 +11,7 @@ load("@rules_rust//rust:defs.bzl", "rust_library")
 package(default_visibility = ["//visibility:public"])
 
 rust_library(
-    name = "bon",
+    name = "once_cell",
     srcs = glob(
         include = ["**/*.rs"],
         allow_empty = True,
@@ -31,20 +31,17 @@ rust_library(
     crate_features = [
         "alloc",
         "default",
+        "race",
         "std",
     ],
     crate_root = "src/lib.rs",
     edition = "2021",
-    proc_macro_deps = [
-        "@queng_vendored__bon-macros-2.2.1//:bon_macros",
-        "@queng_vendored__rustversion-1.0.17//:rustversion",
-    ],
     rustc_flags = [
         "--cap-lints=allow",
     ],
     tags = [
         "cargo-bazel",
-        "crate-name=bon",
+        "crate-name=once_cell",
         "manual",
         "noclippy",
         "norustfmt",
@@ -86,5 +83,5 @@ rust_library(
         "@rules_rust//rust/platform:x86_64-unknown-none": [],
         "//conditions:default": ["@platforms//:incompatible"],
     }),
-    version = "2.2.1",
+    version = "1.20.0",
 )

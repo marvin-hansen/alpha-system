@@ -18,8 +18,8 @@ rust_test_suite(
         "//alias:postgres_migrations",
         # External crates
         "//thirdparty/crates:bon",
-        "//thirdparty/crates:diesel",
-        "//thirdparty/crates:diesel_migrations",
+        "@crates//:diesel",
+        "@crates//:diesel_migrations",
     ],
 )
 
@@ -52,8 +52,8 @@ rust_test_suite(
         "//alias:postgres_migrations",
         "//alias:docker_utils",
         # External crates
-        "//thirdparty/crates:diesel",
-        "//thirdparty/crates:diesel_migrations",
+        "@crates//:diesel",
+        "@crates//:diesel_migrations",
         "//thirdparty/crates:tokio",
     ],
 )
@@ -87,8 +87,8 @@ rust_test_suite(
         "//alias:postgres_migrations",
         "//alias:docker_utils",
         # External crates
-        "//thirdparty/crates:diesel",
-        "//thirdparty/crates:diesel_migrations",
+        "@crates//:diesel",
+        "@crates//:diesel_migrations",
         "//thirdparty/crates:tokio",
     ],
 )
@@ -122,8 +122,8 @@ rust_test_suite(
         "//alias:postgres_migrations",
         "//alias:docker_utils",
         # External crates
-        "//thirdparty/crates:diesel",
-        "//thirdparty/crates:diesel_migrations",
+        "@crates//:diesel",
+        "@crates//:diesel_migrations",
         "//thirdparty/crates:tokio",
     ],
 )
@@ -157,8 +157,8 @@ rust_test_suite(
         "//alias:postgres_migrations",
         "//alias:docker_utils",
         # External crates
-        "//thirdparty/crates:diesel",
-        "//thirdparty/crates:diesel_migrations",
+        "@crates//:diesel",
+        "@crates//:diesel_migrations",
         "//thirdparty/crates:tokio",
     ],
 )
@@ -192,8 +192,8 @@ rust_test_suite(
         "//alias:postgres_migrations",
         "//alias:docker_utils",
         # External crates
-        "//thirdparty/crates:diesel",
-        "//thirdparty/crates:diesel_migrations",
+        "@crates//:diesel",
+        "@crates//:diesel_migrations",
         "//thirdparty/crates:tokio",
     ],
 )

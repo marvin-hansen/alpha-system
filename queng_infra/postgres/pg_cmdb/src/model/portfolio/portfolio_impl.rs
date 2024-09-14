@@ -6,7 +6,6 @@ use crate::schema::cmdb::portfolio::dsl::*;
 use crate::schema::cmdb::portfolio::table as portfolio_table;
 use crate::schema::cmdb::portfolio_instrument::dsl::portfolio_instrument;
 use crate::Connection as PGConnection;
-use common_database::prelude::DatabaseErrorMessage;
 use common_exchange::prelude::PortfolioConfig as CommonPortfolioConfig;
 use diesel::result::{DatabaseErrorKind, Error};
 use diesel::{Connection, ExpressionMethods, QueryDsl, QueryResult, RunQueryDsl};
@@ -55,9 +54,8 @@ impl Portfolio {
             // If the portfolio ID does not exist, return a DatabaseError.
             return Err(Error::DatabaseError(
                 DatabaseErrorKind::NotNullViolation,
-                Box::new(DatabaseErrorMessage::new(
-                    "Portfolio ID already exist and thus cannot be created again",
-                    "portfolio",
+                Box::new(String::from(
+                    "[Portfolio:create]: Portfolio ID already exist and thus cannot be created again",
                 )),
             ));
         }
@@ -242,9 +240,8 @@ impl Portfolio {
                 if !exists {
                     return Err(Error::DatabaseError(
                         DatabaseErrorKind::NotNullViolation,
-                        Box::new(DatabaseErrorMessage::new(
-                            "Portfolio ID does not exist and thus cannot be updated",
-                            "portfolio",
+                        Box::new(String::from(
+                            "[Portfolio:update]: Portfolio ID does not exist and thus cannot be updated",
                         )),
                     ));
                 }

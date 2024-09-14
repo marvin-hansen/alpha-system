@@ -2,7 +2,6 @@ use crate::model::exchange::{CreateExchange, Exchange, UpdateExchange};
 use crate::schema::mddb::exchanges::dsl::exchanges as exchanges_table;
 use crate::schema::mddb::exchanges::exchange_id;
 use crate::Connection;
-use common_database::prelude::DatabaseErrorMessage;
 use common_metadata::prelude::MetaExchange;
 use diesel::result::Error;
 use diesel::result::Error::DatabaseError;
@@ -51,9 +50,8 @@ impl Exchange {
         if meta_exchanges.is_empty() {
             return Err(DatabaseError(
                 diesel::result::DatabaseErrorKind::Unknown,
-                Box::new(DatabaseErrorMessage::new(
-                    "No exchanges provided. Collection is empty.",
-                    "mddb.exchanges",
+                Box::new(String::from(
+                    "[create_exchange_collection] No exchanges provided. Collection is empty.",
                 )),
             ));
         }
@@ -107,7 +105,7 @@ impl Exchange {
         let exists = diesel::select(diesel::dsl::exists(
             exchanges_table.filter(exchange_id.eq(exchange_id_str)),
         ))
-        .get_result(conn)?;
+            .get_result(conn)?;
         Ok(exists)
     }
 

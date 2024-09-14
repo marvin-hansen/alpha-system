@@ -1,3 +1,5 @@
+# OCI Container Rules
+load("@rules_oci//oci:defs.bzl", "oci_push")
 
 ###############################################################################
 # Imports
@@ -7,9 +9,6 @@ load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_doc", "rust_doc_test")
 
 # Custom container macro
 load("//:build/container.bzl", "build_multi_arch_image", "build_sha265_tag")
-
-# OCI Container Rules
-load("@rules_oci//oci:defs.bzl", "oci_push")
 
 ###############################################################################
 # Rust Binary

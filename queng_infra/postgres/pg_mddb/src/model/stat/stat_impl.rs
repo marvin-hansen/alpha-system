@@ -1,7 +1,6 @@
 use crate::model::stat::{CreateStat, Stat};
 use crate::schema::mddb::stats::dsl::stats as stats_table;
 use crate::schema::mddb::stats::stats_id;
-use common_database::prelude::DatabaseErrorMessage;
 use common_metadata::prelude::MetaStats;
 use diesel::prelude::*;
 use diesel::result::Error::DatabaseError;
@@ -48,9 +47,8 @@ impl Stat {
         if meta_stats_collection.is_empty() {
             return Err(DatabaseError(
                 diesel::result::DatabaseErrorKind::Unknown,
-                Box::new(DatabaseErrorMessage::new(
-                    "No stats provided. Collection is empty.",
-                    "mddb.stats",
+                Box::new(String::from(
+                    "[create_stat_collection]: No stats provided. Collection is empty. ",
                 )),
             ));
         }
@@ -89,7 +87,7 @@ impl Stat {
         diesel::select(diesel::dsl::exists(
             stats_table.filter(stats_id.eq(param_stat_id)),
         ))
-        .get_result(conn)
+            .get_result(conn)
     }
 
     /// Reads a stat entry from the database based on the provided stat_id.

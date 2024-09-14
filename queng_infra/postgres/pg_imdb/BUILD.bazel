@@ -30,9 +30,9 @@ rust_library(
         # Internal crates
         "//alias:common_metadata",
         "//alias:postgres_migrations",
-        # External crates
-        "//thirdparty/crates:diesel",
-        "//thirdparty/crates:diesel_migrations",
+        #
+        "@crates//:diesel",
+        "@crates//:diesel_migrations",
     ],
 )
 

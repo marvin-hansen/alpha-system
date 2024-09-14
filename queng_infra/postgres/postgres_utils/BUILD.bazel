@@ -23,7 +23,7 @@ rust_library(
         "//alias:pg_smdb",
         "//alias:pg_mddb",
         # External crates
-        "//thirdparty/crates:diesel",
+        "@crates//:diesel",
         "//thirdparty/crates:tokio",
     ],
 )

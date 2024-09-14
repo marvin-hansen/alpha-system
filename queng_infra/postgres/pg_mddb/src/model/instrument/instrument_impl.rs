@@ -1,7 +1,6 @@
 use crate::model::instrument::{Instrument, UpdateInstrument};
 use crate::schema::mddb::instruments::table as instruments_table;
 use crate::Connection;
-use common_database::prelude::DatabaseErrorMessage;
 use common_metadata::prelude::MetaInstrument;
 use diesel::result::Error::DatabaseError;
 use diesel::{ExpressionMethods, OptionalExtension, QueryDsl, QueryResult, RunQueryDsl};
@@ -50,9 +49,8 @@ impl Instrument {
         if meta_instruments.is_empty() {
             return Err(DatabaseError(
                 diesel::result::DatabaseErrorKind::Unknown,
-                Box::new(DatabaseErrorMessage::new(
-                    "No instruments provided. Collection is empty.",
-                    "mddb.instruments",
+                Box::new(String::from(
+                    "[create_instrument_collection]: No instruments provided. Collection is empty.",
                 )),
             ));
         }
@@ -169,8 +167,8 @@ impl Instrument {
             instruments_table
                 .filter(crate::schema::mddb::instruments::instrument_id.eq(instrument_id)),
         )
-        .set(&update_instrument)
-        .execute(conn)
+            .set(&update_instrument)
+            .execute(conn)
     }
 
     /// Deletes an instrument from the database by instrument ID.
@@ -195,6 +193,6 @@ impl Instrument {
             instruments_table
                 .filter(crate::schema::mddb::instruments::instrument_id.eq(instrument_id)),
         )
-        .execute(conn)
+            .execute(conn)
     }
 }

@@ -112,7 +112,7 @@ rust_library(
             "@queng_vendored__ipnet-2.10.0//:ipnet",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__log-0.4.22//:log",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__mime-0.3.17//:mime",  # cfg(not(target_arch = "wasm32"))
-            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__percent-encoding-2.3.1//:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.23.13//:rustls",  # aarch64-apple-darwin
@@ -134,7 +134,7 @@ rust_library(
             "@queng_vendored__ipnet-2.10.0//:ipnet",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__log-0.4.22//:log",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__mime-0.3.17//:mime",  # cfg(not(target_arch = "wasm32"))
-            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__percent-encoding-2.3.1//:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.23.13//:rustls",  # aarch64-apple-ios
@@ -156,7 +156,7 @@ rust_library(
             "@queng_vendored__ipnet-2.10.0//:ipnet",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__log-0.4.22//:log",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__mime-0.3.17//:mime",  # cfg(not(target_arch = "wasm32"))
-            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__percent-encoding-2.3.1//:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.23.13//:rustls",  # aarch64-apple-ios-sim
@@ -178,7 +178,7 @@ rust_library(
             "@queng_vendored__ipnet-2.10.0//:ipnet",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__log-0.4.22//:log",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__mime-0.3.17//:mime",  # cfg(not(target_arch = "wasm32"))
-            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__percent-encoding-2.3.1//:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.23.13//:rustls",  # aarch64-fuchsia
@@ -200,7 +200,7 @@ rust_library(
             "@queng_vendored__ipnet-2.10.0//:ipnet",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__log-0.4.22//:log",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__mime-0.3.17//:mime",  # cfg(not(target_arch = "wasm32"))
-            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__percent-encoding-2.3.1//:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.23.13//:rustls",  # aarch64-linux-android
@@ -222,7 +222,7 @@ rust_library(
             "@queng_vendored__ipnet-2.10.0//:ipnet",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__log-0.4.22//:log",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__mime-0.3.17//:mime",  # cfg(not(target_arch = "wasm32"))
-            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__percent-encoding-2.3.1//:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.23.13//:rustls",  # aarch64-pc-windows-msvc
@@ -245,7 +245,7 @@ rust_library(
             "@queng_vendored__ipnet-2.10.0//:ipnet",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__log-0.4.22//:log",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__mime-0.3.17//:mime",  # cfg(not(target_arch = "wasm32"))
-            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__percent-encoding-2.3.1//:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.23.13//:rustls",  # aarch64-unknown-linux-gnu
@@ -267,7 +267,7 @@ rust_library(
             "@queng_vendored__ipnet-2.10.0//:ipnet",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__log-0.4.22//:log",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__mime-0.3.17//:mime",  # cfg(not(target_arch = "wasm32"))
-            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__percent-encoding-2.3.1//:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.23.13//:rustls",  # aarch64-unknown-linux-gnu, aarch64-unknown-nixos-gnu
@@ -289,7 +289,7 @@ rust_library(
             "@queng_vendored__ipnet-2.10.0//:ipnet",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__log-0.4.22//:log",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__mime-0.3.17//:mime",  # cfg(not(target_arch = "wasm32"))
-            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__percent-encoding-2.3.1//:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.23.13//:rustls",  # aarch64-unknown-nto-qnx710
@@ -311,7 +311,7 @@ rust_library(
             "@queng_vendored__ipnet-2.10.0//:ipnet",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__log-0.4.22//:log",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__mime-0.3.17//:mime",  # cfg(not(target_arch = "wasm32"))
-            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__percent-encoding-2.3.1//:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.23.13//:rustls",  # arm-unknown-linux-gnueabi
@@ -333,7 +333,7 @@ rust_library(
             "@queng_vendored__ipnet-2.10.0//:ipnet",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__log-0.4.22//:log",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__mime-0.3.17//:mime",  # cfg(not(target_arch = "wasm32"))
-            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__percent-encoding-2.3.1//:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.23.13//:rustls",  # armv7-linux-androideabi
@@ -355,7 +355,7 @@ rust_library(
             "@queng_vendored__ipnet-2.10.0//:ipnet",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__log-0.4.22//:log",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__mime-0.3.17//:mime",  # cfg(not(target_arch = "wasm32"))
-            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__percent-encoding-2.3.1//:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.23.13//:rustls",  # armv7-unknown-linux-gnueabi
@@ -377,7 +377,7 @@ rust_library(
             "@queng_vendored__ipnet-2.10.0//:ipnet",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__log-0.4.22//:log",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__mime-0.3.17//:mime",  # cfg(not(target_arch = "wasm32"))
-            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__percent-encoding-2.3.1//:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.23.13//:rustls",  # i686-apple-darwin
@@ -399,7 +399,7 @@ rust_library(
             "@queng_vendored__ipnet-2.10.0//:ipnet",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__log-0.4.22//:log",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__mime-0.3.17//:mime",  # cfg(not(target_arch = "wasm32"))
-            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__percent-encoding-2.3.1//:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.23.13//:rustls",  # i686-linux-android
@@ -421,7 +421,7 @@ rust_library(
             "@queng_vendored__ipnet-2.10.0//:ipnet",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__log-0.4.22//:log",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__mime-0.3.17//:mime",  # cfg(not(target_arch = "wasm32"))
-            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__percent-encoding-2.3.1//:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.23.13//:rustls",  # i686-pc-windows-msvc
@@ -444,7 +444,7 @@ rust_library(
             "@queng_vendored__ipnet-2.10.0//:ipnet",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__log-0.4.22//:log",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__mime-0.3.17//:mime",  # cfg(not(target_arch = "wasm32"))
-            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__percent-encoding-2.3.1//:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.23.13//:rustls",  # i686-unknown-freebsd
@@ -466,7 +466,7 @@ rust_library(
             "@queng_vendored__ipnet-2.10.0//:ipnet",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__log-0.4.22//:log",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__mime-0.3.17//:mime",  # cfg(not(target_arch = "wasm32"))
-            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__percent-encoding-2.3.1//:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.23.13//:rustls",  # i686-unknown-linux-gnu
@@ -488,7 +488,7 @@ rust_library(
             "@queng_vendored__ipnet-2.10.0//:ipnet",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__log-0.4.22//:log",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__mime-0.3.17//:mime",  # cfg(not(target_arch = "wasm32"))
-            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__percent-encoding-2.3.1//:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.23.13//:rustls",  # powerpc-unknown-linux-gnu
@@ -510,7 +510,7 @@ rust_library(
             "@queng_vendored__ipnet-2.10.0//:ipnet",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__log-0.4.22//:log",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__mime-0.3.17//:mime",  # cfg(not(target_arch = "wasm32"))
-            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__percent-encoding-2.3.1//:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.23.13//:rustls",  # riscv32imc-unknown-none-elf
@@ -532,7 +532,7 @@ rust_library(
             "@queng_vendored__ipnet-2.10.0//:ipnet",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__log-0.4.22//:log",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__mime-0.3.17//:mime",  # cfg(not(target_arch = "wasm32"))
-            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__percent-encoding-2.3.1//:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.23.13//:rustls",  # riscv64gc-unknown-none-elf
@@ -554,7 +554,7 @@ rust_library(
             "@queng_vendored__ipnet-2.10.0//:ipnet",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__log-0.4.22//:log",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__mime-0.3.17//:mime",  # cfg(not(target_arch = "wasm32"))
-            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__percent-encoding-2.3.1//:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.23.13//:rustls",  # s390x-unknown-linux-gnu
@@ -576,7 +576,7 @@ rust_library(
             "@queng_vendored__ipnet-2.10.0//:ipnet",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__log-0.4.22//:log",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__mime-0.3.17//:mime",  # cfg(not(target_arch = "wasm32"))
-            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__percent-encoding-2.3.1//:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.23.13//:rustls",  # thumbv7em-none-eabi
@@ -598,7 +598,7 @@ rust_library(
             "@queng_vendored__ipnet-2.10.0//:ipnet",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__log-0.4.22//:log",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__mime-0.3.17//:mime",  # cfg(not(target_arch = "wasm32"))
-            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__percent-encoding-2.3.1//:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.23.13//:rustls",  # thumbv8m.main-none-eabi
@@ -632,7 +632,7 @@ rust_library(
             "@queng_vendored__ipnet-2.10.0//:ipnet",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__log-0.4.22//:log",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__mime-0.3.17//:mime",  # cfg(not(target_arch = "wasm32"))
-            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__percent-encoding-2.3.1//:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.23.13//:rustls",  # x86_64-apple-darwin
@@ -654,7 +654,7 @@ rust_library(
             "@queng_vendored__ipnet-2.10.0//:ipnet",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__log-0.4.22//:log",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__mime-0.3.17//:mime",  # cfg(not(target_arch = "wasm32"))
-            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__percent-encoding-2.3.1//:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.23.13//:rustls",  # x86_64-apple-ios
@@ -676,7 +676,7 @@ rust_library(
             "@queng_vendored__ipnet-2.10.0//:ipnet",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__log-0.4.22//:log",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__mime-0.3.17//:mime",  # cfg(not(target_arch = "wasm32"))
-            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__percent-encoding-2.3.1//:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.23.13//:rustls",  # x86_64-fuchsia
@@ -698,7 +698,7 @@ rust_library(
             "@queng_vendored__ipnet-2.10.0//:ipnet",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__log-0.4.22//:log",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__mime-0.3.17//:mime",  # cfg(not(target_arch = "wasm32"))
-            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__percent-encoding-2.3.1//:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.23.13//:rustls",  # x86_64-linux-android
@@ -720,7 +720,7 @@ rust_library(
             "@queng_vendored__ipnet-2.10.0//:ipnet",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__log-0.4.22//:log",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__mime-0.3.17//:mime",  # cfg(not(target_arch = "wasm32"))
-            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__percent-encoding-2.3.1//:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.23.13//:rustls",  # x86_64-pc-windows-msvc
@@ -743,7 +743,7 @@ rust_library(
             "@queng_vendored__ipnet-2.10.0//:ipnet",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__log-0.4.22//:log",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__mime-0.3.17//:mime",  # cfg(not(target_arch = "wasm32"))
-            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__percent-encoding-2.3.1//:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.23.13//:rustls",  # x86_64-unknown-freebsd
@@ -765,7 +765,7 @@ rust_library(
             "@queng_vendored__ipnet-2.10.0//:ipnet",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__log-0.4.22//:log",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__mime-0.3.17//:mime",  # cfg(not(target_arch = "wasm32"))
-            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__percent-encoding-2.3.1//:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.23.13//:rustls",  # x86_64-unknown-linux-gnu
@@ -787,7 +787,7 @@ rust_library(
             "@queng_vendored__ipnet-2.10.0//:ipnet",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__log-0.4.22//:log",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__mime-0.3.17//:mime",  # cfg(not(target_arch = "wasm32"))
-            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__percent-encoding-2.3.1//:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.23.13//:rustls",  # x86_64-unknown-linux-gnu, x86_64-unknown-nixos-gnu
@@ -809,7 +809,7 @@ rust_library(
             "@queng_vendored__ipnet-2.10.0//:ipnet",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__log-0.4.22//:log",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__mime-0.3.17//:mime",  # cfg(not(target_arch = "wasm32"))
-            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
+            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__percent-encoding-2.3.1//:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__pin-project-lite-0.2.14//:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "@queng_vendored__rustls-0.23.13//:rustls",  # x86_64-unknown-none

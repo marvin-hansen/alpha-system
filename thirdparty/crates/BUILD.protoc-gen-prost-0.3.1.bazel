@@ -83,7 +83,7 @@ rust_library(
     }),
     version = "0.3.1",
     deps = [
-        "@queng_vendored__once_cell-1.19.0//:once_cell",
+        "@queng_vendored__once_cell-1.20.0//:once_cell",
         "@queng_vendored__prost-0.12.6//:prost",
         "@queng_vendored__prost-build-0.12.6//:prost_build",
         "@queng_vendored__prost-types-0.12.6//:prost_types",
@@ -161,7 +161,7 @@ rust_binary(
     version = "0.3.1",
     deps = [
         ":protoc_gen_prost",
-        "@queng_vendored__once_cell-1.19.0//:once_cell",
+        "@queng_vendored__once_cell-1.20.0//:once_cell",
         "@queng_vendored__prost-0.12.6//:prost",
         "@queng_vendored__prost-build-0.12.6//:prost_build",
         "@queng_vendored__prost-types-0.12.6//:prost_types",

@@ -63,7 +63,7 @@ alias(
 
 alias(
     name = "bon",
-    actual = "@queng_vendored__bon-2.2.1//:bon",
+    actual = "@queng_vendored__bon-2.3.0//:bon",
     tags = ["manual"],
 )
 
