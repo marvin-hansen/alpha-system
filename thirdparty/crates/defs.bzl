@@ -329,7 +329,7 @@ _NORMAL_DEPENDENCIES = {
             "tokio": Label("@queng_vendored__tokio-1.40.0//:tokio"),
             "tokio-cron-scheduler": Label("@queng_vendored__tokio-cron-scheduler-0.11.0//:tokio_cron_scheduler"),
             "tokio-timer": Label("@queng_vendored__tokio-timer-0.2.13//:tokio_timer"),
-            "tokio-tungstenite": Label("@queng_vendored__tokio-tungstenite-0.23.1//:tokio_tungstenite"),
+            "tokio-tungstenite": Label("@queng_vendored__tokio-tungstenite-0.24.0//:tokio_tungstenite"),
             "tonic": Label("@queng_vendored__tonic-0.12.2//:tonic"),
             "tonic-build": Label("@queng_vendored__tonic-build-0.12.2//:tonic_build"),
             "tonic-health": Label("@queng_vendored__tonic-health-0.12.2//:tonic_health"),
@@ -3991,12 +3991,12 @@ def crate_repositories():
 
     maybe(
         http_archive,
-        name = "queng_vendored__tokio-tungstenite-0.23.1",
-        sha256 = "c6989540ced10490aaf14e6bad2e3d33728a2813310a0c71d1574304c49631cd",
+        name = "queng_vendored__tokio-tungstenite-0.24.0",
+        sha256 = "edc5f74e248dc973e0dbb7b74c7e0d6fcc301c694ff50049504004ef4d0cdcd9",
         type = "tar.gz",
-        urls = ["https://static.crates.io/crates/tokio-tungstenite/0.23.1/download"],
-        strip_prefix = "tokio-tungstenite-0.23.1",
-        build_file = Label("//thirdparty/crates:BUILD.tokio-tungstenite-0.23.1.bazel"),
+        urls = ["https://static.crates.io/crates/tokio-tungstenite/0.24.0/download"],
+        strip_prefix = "tokio-tungstenite-0.24.0",
+        build_file = Label("//thirdparty/crates:BUILD.tokio-tungstenite-0.24.0.bazel"),
     )
 
     maybe(
@@ -4171,12 +4171,12 @@ def crate_repositories():
 
     maybe(
         http_archive,
-        name = "queng_vendored__tungstenite-0.23.0",
-        sha256 = "6e2e2ce1e47ed2994fd43b04c8f618008d4cabdd5ee34027cf14f9d918edd9c8",
+        name = "queng_vendored__tungstenite-0.24.0",
+        sha256 = "18e5b8366ee7a95b16d32197d0b2604b43a0be89dc5fac9f8e96ccafbaedda8a",
         type = "tar.gz",
-        urls = ["https://static.crates.io/crates/tungstenite/0.23.0/download"],
-        strip_prefix = "tungstenite-0.23.0",
-        build_file = Label("//thirdparty/crates:BUILD.tungstenite-0.23.0.bazel"),
+        urls = ["https://static.crates.io/crates/tungstenite/0.24.0/download"],
+        strip_prefix = "tungstenite-0.24.0",
+        build_file = Label("//thirdparty/crates:BUILD.tungstenite-0.24.0.bazel"),
     )
 
     maybe(
@@ -4835,7 +4835,7 @@ def crate_repositories():
         struct(repo = "queng_vendored__tokio-1.40.0", is_dev_dep = False),
         struct(repo = "queng_vendored__tokio-cron-scheduler-0.11.0", is_dev_dep = False),
         struct(repo = "queng_vendored__tokio-timer-0.2.13", is_dev_dep = False),
-        struct(repo = "queng_vendored__tokio-tungstenite-0.23.1", is_dev_dep = False),
+        struct(repo = "queng_vendored__tokio-tungstenite-0.24.0", is_dev_dep = False),
         struct(repo = "queng_vendored__tonic-0.12.2", is_dev_dep = False),
         struct(repo = "queng_vendored__tonic-build-0.12.2", is_dev_dep = False),
         struct(repo = "queng_vendored__tonic-health-0.12.2", is_dev_dep = False),

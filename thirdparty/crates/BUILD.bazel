@@ -243,7 +243,7 @@ alias(
 
 alias(
     name = "tokio-tungstenite",
-    actual = "@queng_vendored__tokio-tungstenite-0.23.1//:tokio_tungstenite",
+    actual = "@queng_vendored__tokio-tungstenite-0.24.0//:tokio_tungstenite",
     tags = ["manual"],
 )
 
