@@ -105,7 +105,7 @@ impl Exchange {
         let exists = diesel::select(diesel::dsl::exists(
             exchanges_table.filter(exchange_id.eq(exchange_id_str)),
         ))
-            .get_result(conn)?;
+        .get_result(conn)?;
         Ok(exists)
     }
 

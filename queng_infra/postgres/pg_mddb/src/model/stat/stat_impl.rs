@@ -87,7 +87,7 @@ impl Stat {
         diesel::select(diesel::dsl::exists(
             stats_table.filter(stats_id.eq(param_stat_id)),
         ))
-            .get_result(conn)
+        .get_result(conn)
     }
 
     /// Reads a stat entry from the database based on the provided stat_id.

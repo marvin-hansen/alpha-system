@@ -11,9 +11,7 @@ rust_library(
         "common_database",
     ],
     visibility = ["//visibility:public"],
-    deps = [
-        "//thirdparty/crates:diesel",
-    ],
+    deps = [    ],
 )
 
 rust_doc(

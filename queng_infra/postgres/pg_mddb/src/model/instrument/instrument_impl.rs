@@ -167,8 +167,8 @@ impl Instrument {
             instruments_table
                 .filter(crate::schema::mddb::instruments::instrument_id.eq(instrument_id)),
         )
-            .set(&update_instrument)
-            .execute(conn)
+        .set(&update_instrument)
+        .execute(conn)
     }
 
     /// Deletes an instrument from the database by instrument ID.
@@ -193,6 +193,6 @@ impl Instrument {
             instruments_table
                 .filter(crate::schema::mddb::instruments::instrument_id.eq(instrument_id)),
         )
-            .execute(conn)
+        .execute(conn)
     }
 }
