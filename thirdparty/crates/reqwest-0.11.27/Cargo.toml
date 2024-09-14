@@ -257,7 +257,7 @@ version = "0.0.3"
 optional = true
 
 [target."cfg(not(target_arch = \"wasm32\"))".dependencies.h3-quinn]
-version = "0.0.4"
+version = "0.0.7"
 optional = true
 
 [target."cfg(not(target_arch = \"wasm32\"))".dependencies.hickory-resolver]
