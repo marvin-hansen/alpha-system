@@ -92,7 +92,7 @@ optional = true
 version = "1.0"
 
 [dependencies.refinery-core]
-version = "=0.8.13"
+version = "=0.8.14"
 optional = true
 
 [dependencies.rust_decimal]
