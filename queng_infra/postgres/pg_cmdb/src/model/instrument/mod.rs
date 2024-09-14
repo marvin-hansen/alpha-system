@@ -5,10 +5,17 @@ mod instrument_type_conversion;
 mod instrument_type_create_conversion;
 mod instrument_type_update_conversion;
 
-use bon::builder;
-
-#[builder]
-#[derive(Debug, Clone, PartialEq, Queryable, Selectable, Identifiable, Insertable, AsChangeset)]
+#[derive(
+    bon::Builder,
+    Debug,
+    Clone,
+    PartialEq,
+    Queryable,
+    Selectable,
+    Identifiable,
+    Insertable,
+    AsChangeset,
+)]
 #[diesel(table_name=crate::schema::cmdb::instrument, primary_key(code))]
 #[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct Instrument {
@@ -21,8 +28,7 @@ pub struct Instrument {
     pub instrument_figi: Option<String>,
 }
 
-#[builder]
-#[derive(Debug, Clone, Queryable, Insertable, AsChangeset)]
+#[derive(bon::Builder, Debug, Clone, Queryable, Insertable, AsChangeset)]
 #[diesel(table_name=crate::schema::cmdb::instrument, primary_key(code))]
 #[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct CreateInstrument {
@@ -57,8 +63,7 @@ impl CreateInstrument {
     }
 }
 
-#[builder]
-#[derive(Debug, Clone, Queryable, Insertable, AsChangeset)]
+#[derive(bon::Builder, Debug, Clone, Queryable, Insertable, AsChangeset)]
 #[diesel(table_name=crate::schema::cmdb::instrument)]
 #[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct UpdateInstrument {

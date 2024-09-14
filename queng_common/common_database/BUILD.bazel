@@ -11,7 +11,7 @@ rust_library(
         "common_database",
     ],
     visibility = ["//visibility:public"],
-    deps = [    ],
+    deps = [],
 )
 
 rust_doc(

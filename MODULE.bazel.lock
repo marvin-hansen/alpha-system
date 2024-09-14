@@ -5390,7 +5390,7 @@
     "@@rules_rust~//crate_universe:extension.bzl%crate%<root>~crate": {
       "general": {
         "bzlTransitiveDigest": "Ag6Z3VHOHMjfrinqzCBEsYpE4lXLKXhdWgOeXZKB77Q=",
-        "usagesDigest": "fqhMGPd7CBOn9z2uSppxw7OKT+JLpnLS7SMkOn/Y5EY=",
+        "usagesDigest": "i23UT2ZGYPGE99/rHQMvM96G5x1m8JAGOTikzm7oYqg=",
         "recordedFileInputs": {
           "@@rules_rust~~rust_host_tools~rust_host_tools//bin/rustc": "e36b0ed5d21634c3f5bf7225f1138e194fca12ba56d0e850fe9c7d493afc5c9a",
           "@@rules_rust~~rust_host_tools~rust_host_tools//bin/cargo": "a73bec6f705c450bb1c13b62d4fe54241100c33540be6cfb3cee9ccdba33b018"

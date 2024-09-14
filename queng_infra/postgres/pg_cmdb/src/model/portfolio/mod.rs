@@ -6,10 +6,17 @@ mod portfolio_type_conversion;
 mod portfolio_type_create_conversion;
 mod portfolio_type_update_conversion;
 
-use bon::builder;
-
-#[builder]
-#[derive(Debug, Clone, PartialEq, Queryable, Selectable, Identifiable, Insertable, AsChangeset)]
+#[derive(
+    bon::Builder,
+    Debug,
+    Clone,
+    PartialEq,
+    Queryable,
+    Selectable,
+    Identifiable,
+    Insertable,
+    AsChangeset,
+)]
 #[diesel(table_name=crate::schema::cmdb::portfolio, primary_key(portfolio_id))]
 #[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct Portfolio {
@@ -29,8 +36,7 @@ pub struct Portfolio {
     pub portfolio_free_cash_percent: f64,
 }
 
-#[builder]
-#[derive(Debug, Clone, Queryable, Insertable, AsChangeset)]
+#[derive(bon::Builder, Debug, Clone, Queryable, Insertable, AsChangeset)]
 #[diesel(table_name=crate::schema::cmdb::portfolio)]
 #[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct CreatePortfolio {
@@ -86,8 +92,7 @@ impl CreatePortfolio {
     }
 }
 
-#[builder]
-#[derive(Debug, Clone, Queryable, Insertable, AsChangeset)]
+#[derive(bon::Builder, Debug, Clone, Queryable, Insertable, AsChangeset)]
 #[diesel(table_name=crate::schema::cmdb::portfolio)]
 #[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct UpdatePortfolio {
