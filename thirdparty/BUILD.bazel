@@ -23,6 +23,8 @@ crates_vendor(
             version = "0.1.42",
         ),
         "rustls": crate.spec(
+            default_features = False,
+            features = ["tls12"],
             package = "rustls",
             version = "0.23.13",
         ),
@@ -215,6 +217,9 @@ crates_vendor(
         ),
         "tokio-tungstenite": crate.spec(
             default_features = False,
+            features = [
+                "rustls",
+            ],
             package = "tokio-tungstenite",
             version = "0.24",
         ),

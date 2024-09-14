@@ -28,6 +28,9 @@ rust_library(
             "WORKSPACE.bazel",
         ],
     ),
+    crate_features = [
+        "rustls",
+    ],
     crate_root = "src/lib.rs",
     edition = "2018",
     rustc_flags = [
@@ -81,6 +84,7 @@ rust_library(
     deps = [
         "//thirdparty/crates/futures-util-0.3.30:futures_util",
         "//thirdparty/crates/log-0.4.22:log",
+        "//thirdparty/crates/rustls-0.23.13:rustls",
         "//thirdparty/crates/tokio-1.40.0:tokio",
         "//thirdparty/crates/tungstenite-0.24.0:tungstenite",
     ],
