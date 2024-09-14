@@ -5,7 +5,7 @@ mod db_svc;
 
 use common_errors::prelude::PostgresDBError;
 use diesel::r2d2::{ConnectionManager, Pool};
-use diesel::{Connection, PgConnection};
+use diesel::PgConnection;
 use pg_smdb::run_smdb_db_migration;
 use std::fmt::Display;
 
@@ -55,7 +55,7 @@ impl PostgresSMDBManager {
         };
 
         if dbg {
-            println!("[PostgresSMDBManager]: Run DB Migration",);
+            println!("[PostgresSMDBManager]: Run DB Migration", );
         }
         match run_smdb_db_migration(&mut pool.get().unwrap()) {
             Ok(_) => {}

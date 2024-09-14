@@ -66,8 +66,8 @@
     "https://bcr.bazel.build/modules/protobuf/21.7/MODULE.bazel": "a5a29bb89544f9b97edce05642fac225a808b5b7be74038ea3640fae2f8e66a7",
     "https://bcr.bazel.build/modules/protobuf/23.1/MODULE.bazel": "88b393b3eb4101d18129e5db51847cd40a5517a53e81216144a8c32dfeeca52a",
     "https://bcr.bazel.build/modules/protobuf/24.4/MODULE.bazel": "7bc7ce5f2abf36b3b7b7c8218d3acdebb9426aeb35c2257c96445756f970eb12",
-    "https://bcr.bazel.build/modules/protobuf/28.0/MODULE.bazel": "dfdee9661bd0ee196d966805cc9a7fd4041948805fc36f47ab84842f80ef394f",
-    "https://bcr.bazel.build/modules/protobuf/28.0/source.json": "02e0166da09fcb0037ec224ec9fa8c355bfa76a4e04f551063eb676dd01dbf98",
+    "https://bcr.bazel.build/modules/protobuf/28.1/MODULE.bazel": "db307a688cc9f034606c9f3c3271e2e6a1a7202aeda65117c0aa3ac5bcde2125",
+    "https://bcr.bazel.build/modules/protobuf/28.1/source.json": "9af1ff22a0a4a5ac14af9ee26b25481bcee0ffb5ea3dcdde7ebd44a4a79516b9",
     "https://bcr.bazel.build/modules/protobuf/3.19.0/MODULE.bazel": "6b5fbb433f760a99a22b18b6850ed5784ef0e9928a72668b66e4d7ccd47db9b0",
     "https://bcr.bazel.build/modules/protobuf/3.19.2/MODULE.bazel": "532ffe5f2186b69fdde039efe6df13ba726ff338c6bc82275ad433013fa10573",
     "https://bcr.bazel.build/modules/protobuf/3.19.6/MODULE.bazel": "9233edc5e1f2ee276a60de3eaa47ac4132302ef9643238f23128fea53ea12858",
@@ -6618,7 +6618,7 @@
     "@@rules_rust~//rust:extensions.bzl%rust": {
       "general": {
         "bzlTransitiveDigest": "fE9bZ/cfsYIn0o7UR1UmfGGIdqyvlWzGGcRqhA4P3X4=",
-        "usagesDigest": "tC5t5E6bQ1vhugR0nwzdistnIogDsgn81TqitPgElqQ=",
+        "usagesDigest": "LpOx4lvORIlDBkeQ9YMb1HjjySCpYZs5w2oJYl4RamM=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
