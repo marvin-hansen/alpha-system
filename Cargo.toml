@@ -203,6 +203,7 @@ base16ct = { version = "0.2.0", default-features = false, features = ["alloc"] }
 anyhow = { version = "1.0" }
 arc-swap = { version = "1.7" }
 binance-rs-async = { version = "1.3.3", default-features = false, features = ["rustls-tls"] }
+ring = { version = "0.17.8", default-features = false }
 blake3 = { version = "1.5" }
 bon = { version = "2.3.0" }
 chrono = { version = "0.4", features = ["serde"] }
@@ -230,7 +231,7 @@ serde_json = { version = "1" }
 tonic = { version = "0.12.0", features = ["transport"] }
 tonic-build = { version = "0.12.0" }
 tonic-health = { version = "0.12.0", default-features = false, features = ["transport"] }
-tokio = { version = "1.38", default-features = false, features = ["macros", "net", "rt-multi-thread", "signal"] }
+tokio = { version = "1.40.0", default-features = false, features = ["macros", "net", "rt-multi-thread", "signal"] }
 tokio-cron-scheduler = { version = "0.11.0", features = ["signal"] }
 tokio-timer = { version = "0.2" }
 tokio-tungstenite = { version = "0.24.0", default-features = false }
