@@ -22,6 +22,11 @@ crates_vendor(
             package = "mimalloc",
             version = "0.1.42",
         ),
+        "rustls": crate.spec(
+            package = "rustls",
+            version = "0.23.13",
+        ),
+        #
         # protobufs/gRPC in Rust
         #
         "prost": crate.spec(
@@ -86,11 +91,6 @@ crates_vendor(
             # features = ["rustls-tls"],
             package = "binance-rs-async",
             version = "1.3",
-        ),
-        "ring": crate.spec(
-            default_features = False,
-            package = "ring",
-            version = "0.17.8",
         ),
         "chrono": crate.spec(
             features = ["serde"],

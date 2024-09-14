@@ -193,12 +193,6 @@ alias(
 )
 
 alias(
-    name = "ring",
-    actual = "//thirdparty/crates/ring-0.17.8:ring",
-    tags = ["manual"],
-)
-
-alias(
     name = "rust_decimal",
     actual = "//thirdparty/crates/rust_decimal-1.36.0:rust_decimal",
     tags = ["manual"],
@@ -207,6 +201,12 @@ alias(
 alias(
     name = "rust_decimal_macros",
     actual = "//thirdparty/crates/rust_decimal_macros-1.36.0:rust_decimal_macros",
+    tags = ["manual"],
+)
+
+alias(
+    name = "rustls",
+    actual = "//thirdparty/crates/rustls-0.23.13:rustls",
     tags = ["manual"],
 )
 
