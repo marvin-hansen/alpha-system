@@ -28,9 +28,6 @@ rust_library(
             "WORKSPACE.bazel",
         ],
     ),
-    crate_features = [
-        "rustls-tls",
-    ],
     crate_root = "src/lib.rs",
     edition = "2021",
     proc_macro_deps = [

@@ -55,7 +55,7 @@ impl PostgresSMDBManager {
         };
 
         if dbg {
-            println!("[PostgresSMDBManager]: Run DB Migration", );
+            println!("[PostgresSMDBManager]: Run DB Migration",);
         }
         match run_smdb_db_migration(&mut pool.get().unwrap()) {
             Ok(_) => {}
