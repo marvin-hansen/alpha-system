@@ -152,7 +152,7 @@ version = "0.25"
 optional = true
 
 [dependencies.tokio-tungstenite]
-version = "0.21"
+version = "0.24"
 optional = true
 
 [dependencies.tokio-util]

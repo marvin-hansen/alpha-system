@@ -162,7 +162,7 @@ optional = true
 package = "tokio"
 
 [dependencies.tokio-tungstenite]
-version = "0.21"
+version = "0.24"
 optional = true
 
 [dependencies.tower]
@@ -265,7 +265,7 @@ package = "tokio"
 version = "0.1"
 
 [dev-dependencies.tokio-tungstenite]
-version = "0.21"
+version = "0.24"
 
 [dev-dependencies.tower]
 version = "0.4.10"
