@@ -106,6 +106,6 @@ oci_push(
     name = "push",
     image = ":image_index",
     remote_tags = ":remote_tag",
-    repository = "asia-northeast1-docker.pkg.dev/future-309012/image-repo/cmdb",
+    repository = "asia-northeast1-docker.pkg.dev/future-309012/image-repo/kaiko_proxy",
     visibility = ["//visibility:public"],
 )
