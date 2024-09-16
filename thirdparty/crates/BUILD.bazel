@@ -33,7 +33,7 @@ filegroup(
 # Workspace Member Dependencies
 alias(
     name = "anyhow",
-    actual = "@queng_vendored__anyhow-1.0.88//:anyhow",
+    actual = "@queng_vendored__anyhow-1.0.89//:anyhow",
     tags = ["manual"],
 )
 

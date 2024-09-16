@@ -295,7 +295,7 @@ def aliases(
 _NORMAL_DEPENDENCIES = {
     "": {
         _COMMON_CONDITION: {
-            "anyhow": Label("@queng_vendored__anyhow-1.0.88//:anyhow"),
+            "anyhow": Label("@queng_vendored__anyhow-1.0.89//:anyhow"),
             "arc-swap": Label("@queng_vendored__arc-swap-1.7.1//:arc_swap"),
             "base16ct": Label("@queng_vendored__base16ct-0.2.0//:base16ct"),
             "base64ct": Label("@queng_vendored__base64ct-1.6.0//:base64ct"),
@@ -592,12 +592,12 @@ def crate_repositories():
 
     maybe(
         http_archive,
-        name = "queng_vendored__anyhow-1.0.88",
-        sha256 = "4e1496f8fb1fbf272686b8d37f523dab3e4a7443300055e74cdaa449f3114356",
+        name = "queng_vendored__anyhow-1.0.89",
+        sha256 = "86fdf8605db99b54d3cd748a44c6d04df638eb5dafb219b135d0149bd0db01f6",
         type = "tar.gz",
-        urls = ["https://static.crates.io/crates/anyhow/1.0.88/download"],
-        strip_prefix = "anyhow-1.0.88",
-        build_file = Label("//thirdparty/crates:BUILD.anyhow-1.0.88.bazel"),
+        urls = ["https://static.crates.io/crates/anyhow/1.0.89/download"],
+        strip_prefix = "anyhow-1.0.89",
+        build_file = Label("//thirdparty/crates:BUILD.anyhow-1.0.89.bazel"),
     )
 
     maybe(
@@ -4711,7 +4711,7 @@ def crate_repositories():
     )
 
     return [
-        struct(repo = "queng_vendored__anyhow-1.0.88", is_dev_dep = False),
+        struct(repo = "queng_vendored__anyhow-1.0.89", is_dev_dep = False),
         struct(repo = "queng_vendored__arc-swap-1.7.1", is_dev_dep = False),
         struct(repo = "queng_vendored__base16ct-0.2.0", is_dev_dep = False),
         struct(repo = "queng_vendored__base64ct-1.6.0", is_dev_dep = False),

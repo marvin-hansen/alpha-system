@@ -236,14 +236,13 @@ use_repo(crate, "crates")
 
 # https://github.com/brainhivenl/libpq
 crate.annotation(
+    crate = "pq-sys",
     build_script_env = {
         "PQ_LIB_STATIC": "1",
     },
-    crate = "pq-sys",
-    gen_build_script = "off",
     rustc_flags = [
         "-L",
-        "$(BINDIR)/@@//alias:libpq",
+        "$(BINDIR)/external/libpq~~_repo_rules~postgres",
     ],
-    deps = ["@@//alias:libpq"],
+    data = ["@@libpq~~_repo_rules~postgres//:libpq"],
 )
