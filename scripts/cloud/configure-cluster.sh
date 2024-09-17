@@ -26,6 +26,7 @@ command gcloud container clusters create $CLUSTER_NAME \
   --enable-autoprovisioning --min-cpu 4 --max-cpu 12 --min-memory 12 --max-memory 24 --zone $CLUSTER_ZONE \
   --max-unavailable-upgrade=2 \
   --max-nodes-per-pool=100 \
+  --max-pods-per-node=100 \
   --enable-vertical-pod-autoscaling \
   --enable-autoupgrade \
   --enable-autorepair \
@@ -33,10 +34,18 @@ command gcloud container clusters create $CLUSTER_NAME \
   --shielded-secure-boot \
   --shielded-integrity-monitoring \
   --release-channel=regular \
-  --no-enable-ip-alias \
   --image-type=COS_CONTAINERD \
   --disk-size=50GB \
-  --addons NodeLocalDNS
+  --addons NodeLocalDNS \
+  --no-enable-ip-alias \
+  --no-autoprovisioning-enable-insecure-kubelet-readonly-port
+
+# Configure maximum Pods per node
+# https://cloud.google.com/kubernetes-engine/docs/how-to/flexible-pod-cidr
+
+# Disable the kubelet read-only port
+# https://cloud.google.com/kubernetes-engine/docs/how-to/disable-kubelet-readonly-port
+
 
 PROJECT=$(gcloud config get-value core/project)
 REGION=$(gcloud config get-value compute/region)
