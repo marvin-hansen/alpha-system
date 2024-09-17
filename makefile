@@ -11,6 +11,12 @@ help:
 	@echo '    make smdb   	Runs the smdb service. Requires DBGW'
 	@echo '    make mddb   	Runs the mddb service. Requires DBGW'
 	@echo ''
+	@echo ' Cloud Setup:'
+	@echo '    make gcp            Configures Google Cloud. Requires gcloud cli.'
+	@echo '    make artifactory    Configure Artifactory. Requires gcloud cli.'
+	@echo '    make cluster        Creates a new GCP Cluster. Requires gcloud cli.'
+	@echo '    make cluster-dns    Configures GCP Cluster DNS Server. Requires gcloud cli.'
+	@echo ''
 	@echo ' Development:'
 	@echo '    make build   	Builds the code base incrementally (fast) for dev.'
 	@echo '    make current   	Builds the current target incrementally (fast) for dev.'
@@ -30,7 +36,7 @@ help:
 	@echo '    make vendor         Vendors all Rust dependencies.'
 
 # "---------------------------------------------------------"
-# Run targets
+# Run Services
 # "---------------------------------------------------------"
 
 
@@ -64,8 +70,33 @@ mddb:
 
 
 # "---------------------------------------------------------"
-# Development make targets
+# Cloud Setup
 # "---------------------------------------------------------"
+
+
+.PHONY: gcp
+gcp:
+	@source scripts/cloud/configure-gcloud.sh
+
+
+.PHONY: artifactory
+artifactory:
+	@source scripts/cloud/configure-artifactory.sh
+
+.PHONY: cluster
+cluster:
+	@source scripts/cloud/configure-cluster.sh
+
+
+.PHONY: cluster-dns
+cluster-dns:
+	@source scripts/configure-cluster-dns.sh
+
+
+# "---------------------------------------------------------"
+# Development
+# "---------------------------------------------------------"
+
 
 .PHONY: build
 build:
