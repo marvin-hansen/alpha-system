@@ -14,7 +14,7 @@ command -v gcloud >/dev/null 2>&1 || {
 
 echo ""
 echo "==============================="
-echo " Configure gcloud & Kubectl: "
+echo " Configure gcloud & Helm: "
 echo "==============================="
 echo ""
 
@@ -88,6 +88,6 @@ echo ""
 echo "To deploy a new cluster, "
 echo "please run the following command: "
 echo "==============================="
-echo "* make create-cluster          "
+echo "* make cluster          "
 echo "==============================="
 echo ""
