@@ -43,6 +43,17 @@ kubectl get pods -l cnpg.io/cluster=postgres-cluster
 ./create_user_secrets.sh
 ```
 
+Test DB connection:
+
+```shell
+kubectl port-forward svc/postgres-cluster-rw 5432:5432
+```
+Connect to postgres cluster:
+
+```shell
+psql -h 127.0.0.1 -p 5432 -U postgres -d postgres
+```
+
 SRC:
 https://github.com/cloudnative-pg/cloudnative-pg/blob/main/docs/src/quickstart.md
 

@@ -17,8 +17,8 @@ spec:
       labels:
         version: v1
         app: dbgw
-      annotations:
-        kubesphere.io/imagepullsecrets: '{"container-lgcl11":"artifact-registry"}'
+#      annotations:
+#        kubesphere.io/imagepullsecrets: '{"container-lgcl11":"artifact-registry"}'
     spec:
       containers:
         - name: dbgw
@@ -44,18 +44,33 @@ spec:
               servicePort: 8080
           env:
             - name: ENV
-              value: CLUSTER
+              value: "CLUSTER"
+
             - name: DNS_SERVER
               valueFrom:
                 secretKeyRef:
                   name: dns-access
                   key: DNS_SERVER
+
+            - name: CMDB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: cmdb-creds
+                  key: CMDB_USER
+
+            - name: CMDB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: cmdb-creds
+                  key: CMDB_PASSWORD
+
+
       serviceAccount: default
       terminationGracePeriodSeconds: 30
       initContainers: []
       volumes: []
-      imagePullSecrets:
-        - name: artifact-registry
+#      imagePullSecrets:
+#        - name: artifact-registry
   strategy:
     type: RollingUpdate
     rollingUpdate:

@@ -43,20 +43,22 @@ SQL_USERS="
 
 command kubectl exec -it "$DB_HOST" -- psql -c "$SQL_USERS"
 
-SQL_SCHEMATAS="
+SQL_SCHEMAS="
     CREATE SCHEMA IF NOT EXISTS cmdb AUTHORIZATION $CMDB_USER;
     CREATE SCHEMA IF NOT EXISTS imdb AUTHORIZATION $IMDB_USER;
     CREATE SCHEMA IF NOT EXISTS mddb AUTHORIZATION $MDDB_USER;
     CREATE SCHEMA IF NOT EXISTS smdb AUTHORIZATION $SMDB_USER;
 "
 
-command kubectl exec -it "$DB_HOST" -- psql -c "$SQL_SCHEMATAS"
+command kubectl exec -it "$DB_HOST" -- psql -c "$SQL_SCHEMAS"
 
 # For access to the secrets from a client authenticated to the cluster:
 # command kubectl get secret --namespace default cmdb-creds -o jsonpath='{.data.CMDB_USER}' | base64 --decode -
 # command kubectl get secret --namespace default cmdb-creds -o jsonpath='{.data.CMDB_PASSWORD}' | base64 --decode -
 
 # Clear all generated credentials
+SQL_USERS=""
+SQL_SCHEMAS=""
 CMDB_USER=''
 CMDB_PASSWORD=''
 IMDB_USER=''
