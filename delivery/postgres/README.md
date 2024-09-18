@@ -4,11 +4,7 @@
 
 ```shell
 kubectl apply --server-side -f cnpg-1.24.0.yaml
-```
 
-2) Verify oprerator
-
-```shell
 kubectl get deployment -n cnpg-system cnpg-controller-manager
 ```
 
@@ -20,36 +16,23 @@ to be one of the allowed ones, or open the webhooks' port (9443) on the firewall
 https://github.com/cloudnative-pg/cloudnative-pg/blob/main/docs/src/installation_upgrade.md
 
 
-3) Install postgres cluster
+2) Install postgres cluster
 
 ```shell
 kubectl apply -f cluster.yaml
-```
 
-4) Verify postgres cluster
-
-```shell
 kubectl get pods 
 ```
 
-or
-```shell
-kubectl get pods -l cnpg.io/cluster=postgres-cluster
-```
-
-5) Configure users and schemas
-
-```shell
-./create_user_secrets.sh
-```
-
-Test DB connection:
+3) Test DB connection:
 
 ```shell
 kubectl port-forward svc/postgres-cluster-rw 5432:5432
 ```
 Connect to postgres cluster:
 
+When enableSuperuserAccess is set to true;
+Otherwise, a custom user and password is required.
 ```shell
 psql -h 127.0.0.1 -p 5432 -U postgres -d postgres
 ```
@@ -58,3 +41,5 @@ SRC:
 https://github.com/cloudnative-pg/cloudnative-pg/blob/main/docs/src/quickstart.md
 
 https://github.com/cloudnative-pg/cloudnative-pg/blob/main/docs/src/samples/cluster-example-secret.yaml
+
+https://medium.com/@MetricFire/kubernetes-secrets-management-70e0d269e813

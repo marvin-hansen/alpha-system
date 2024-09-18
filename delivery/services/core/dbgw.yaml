@@ -28,11 +28,9 @@ spec:
             requests:
               cpu: 100m
               memory: 32Mi
-              nvidia.com/gpu: '0'
             limits:
               cpu: 250m
               memory: 128Mi
-              nvidia.com/gpu: '0'
           ports:
             - name: tcp-service
               protocol: TCP
@@ -45,25 +43,22 @@ spec:
           env:
             - name: ENV
               value: "CLUSTER"
-
             - name: DNS_SERVER
               valueFrom:
                 secretKeyRef:
                   name: dns-access
                   key: DNS_SERVER
-
-            - name: CMDB_USER
+            # kubectl describe secret cluster-pg-user
+            - name: PG_USER
               valueFrom:
                 secretKeyRef:
-                  name: cmdb-creds
-                  key: CMDB_USER
-
-            - name: CMDB_PASSWORD
+                  name: cluster-pg-user
+                  key: username
+            - name: PG_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: cmdb-creds
-                  key: CMDB_PASSWORD
-
+                  name: cluster-pg-user
+                  key: password
 
       serviceAccount: default
       terminationGracePeriodSeconds: 30

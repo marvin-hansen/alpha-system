@@ -10,19 +10,18 @@ spec:
   imagePullPolicy: IfNotPresent
   primaryUpdateStrategy: unsupervised
   instances: 3
-  startDelay: 300
-  stopDelay: 300
-  postgresql:
-    parameters:
-      shared_buffers: 128MB
-      pg_stat_statements.max: '10000'
-      pg_stat_statements.track: all
-      auto_explain.log_min_duration: '10s'
+  bootstrap:
+    initdb:
+      database: quantum
+      owner: dbgwuser
+      secret:
+        name: cluster-pg-user
+
   storage:
     size: 1Gi
   enableSuperuserAccess: true
   superuserSecret:
-    name: cluster-pg-superuser
+    name: cluster-pg-admin
 
   # enable monitoring with Prometheus
   monitoring:
@@ -30,9 +29,19 @@ spec:
 ---
 apiVersion: v1
 data:
-  username: cG9zdGdyZXM=
-  password: cG9zdGdyZXM=
+  username: ZGJnd3VzZXI= # printf dbgwuser | base64
+  password: WHZb0sFAU61W4xRyYE931oAEzc1MMgZy6gNUwyTwjJc= # openssl rand -base64 32
 kind: Secret
 metadata:
-  name: cluster-pg-superuser
+  name: cluster-pg-user
 type: kubernetes.io/basic-auth
+---
+apiVersion: v1
+data:
+  username: cG9zdGdyZXM= # printf postgres | base64
+  password: cG9zdGdyZXM= # printf postgres | base64
+kind: Secret
+metadata:
+  name: cluster-pg-admin
+type: kubernetes.io/basic-auth
+---
