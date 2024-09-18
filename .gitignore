@@ -32,6 +32,9 @@ Cargo.lock
 .idea/
 .idea/*.*
 
+# Visual Studio Code stuff
+.vscode
+
 # Apple stuff
 .DS_Store
 */.DS_Store

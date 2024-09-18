@@ -1,0 +1,38 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+
+metadata:
+  name: postgres-cluster
+
+spec:
+  description: "Postgres cluster"
+  imageName: ghcr.io/cloudnative-pg/postgresql:16.4
+  imagePullPolicy: IfNotPresent
+  primaryUpdateStrategy: unsupervised
+  instances: 3
+  startDelay: 300
+  stopDelay: 300
+  postgresql:
+    parameters:
+      shared_buffers: 128MB
+      pg_stat_statements.max: '10000'
+      pg_stat_statements.track: all
+      auto_explain.log_min_duration: '10s'
+  storage:
+    size: 1Gi
+  enableSuperuserAccess: true
+  superuserSecret:
+    name: cluster-pg-superuser
+
+  # enable monitoring with Prometheus
+  monitoring:
+    enablePodMonitor: true
+---
+apiVersion: v1
+data:
+  username: cG9zdGdyZXM=
+  password: cGFzc3dvcmQ=
+kind: Secret
+metadata:
+  name: cluster-pg-superuser
+type: kubernetes.io/basic-auth
