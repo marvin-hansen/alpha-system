@@ -65,6 +65,14 @@ command helm repo add stable https://charts.helm.sh/stable
 command helm repo update
 echo "* Helm configured: Check"
 
+helm repo add prometheus-community  https://prometheus-community.github.io/helm-charts
+helm upgrade --install \
+  -f https://raw.githubusercontent.com/cloudnative-pg/cloudnative-pg/main/docs/src/samples/monitoring/kube-stack-config.yaml \
+  prometheus-community \
+  prometheus-community/kube-prometheus-stack
+echo "* Prometheus and Grafana configured: Check"
+
+
 echo ""
 echo "==============================="
 echo "All configuration completed."

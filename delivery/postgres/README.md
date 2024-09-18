@@ -37,6 +37,11 @@ Otherwise, a custom user and password is required.
 psql -h 127.0.0.1 -p 5432 -U postgres -d postgres
 ```
 
+Optional:
+
+Monitor clusters with Prometheus and Grafana:
+https://github.com/cloudnative-pg/cloudnative-pg/blob/main/docs/src/quickstart.md#part-4-monitor-clusters-with-prometheus-and-grafana
+
 SRC:
 https://github.com/cloudnative-pg/cloudnative-pg/blob/main/docs/src/quickstart.md
 
