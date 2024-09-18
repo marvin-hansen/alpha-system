@@ -8,7 +8,6 @@ set -o nounset
 set -o pipefail
 
  echo "* Delete previously generated credentials"
- command kubectl delete secret post-init-sql-secret
  command kubectl delete secret cmdb-creds
  command kubectl delete secret imdb-creds
  command kubectl delete secret mddb-creds
@@ -33,34 +32,31 @@ command kubectl create secret generic imdb-creds --from-literal=IMDB_USER="$IMDB
 command kubectl create secret generic mddb-creds --from-literal=MDDDB_USER="$MDDB_USER" --from-literal=MDDDB_PASSWORD="$MDDB_PASSWORD"
 command kubectl create secret generic smdb-creds --from-literal=SMDB_USER="$SMDB_USER" --from-literal=SMDB_PASSWORD="$SMDB_PASSWORD"
 
-SQL_SECRET="---
-apiVersion: v1
-kind: Secret
-metadata:
-  name: post-init-sql-secret
-  namespace: cnpg-system
-stringData:
-  secret.sql: |
+DB_HOST="svc/postgres-cluster-rw"
+
+SQL_USERS="
     CREATE USER $CMDB_USER with encrypted password '$CMDB_PASSWORD';
     CREATE USER $IMDB_USER with encrypted password '$IMDB_PASSWORD';
     CREATE USER $MDDB_USER with encrypted password '$MDDB_PASSWORD';
     CREATE USER $SMDB_USER with encrypted password '$SMDB_PASSWORD';
+"
 
+command kubectl exec -it "$DB_HOST" -- psql -c "$SQL_USERS"
+
+SQL_SCHEMATAS="
     CREATE SCHEMA IF NOT EXISTS cmdb AUTHORIZATION $CMDB_USER;
     CREATE SCHEMA IF NOT EXISTS imdb AUTHORIZATION $IMDB_USER;
     CREATE SCHEMA IF NOT EXISTS mddb AUTHORIZATION $MDDB_USER;
     CREATE SCHEMA IF NOT EXISTS smdb AUTHORIZATION $SMDB_USER;
----"
+"
 
-# https://stackoverflow.com/questions/68535929/run-kubectl-apply-using-yaml-stored-in-a-variable
-echo "$SQL_SECRET" | kubectl apply -f -
+command kubectl exec -it "$DB_HOST" -- psql -c "$SQL_SCHEMATAS"
 
 # For access to the secrets from a client authenticated to the cluster:
 # command kubectl get secret --namespace default cmdb-creds -o jsonpath='{.data.CMDB_USER}' | base64 --decode -
 # command kubectl get secret --namespace default cmdb-creds -o jsonpath='{.data.CMDB_PASSWORD}' | base64 --decode -
 
 # Clear all generated credentials
-SQL_SECRET=''
 CMDB_USER=''
 CMDB_PASSWORD=''
 IMDB_USER=''
