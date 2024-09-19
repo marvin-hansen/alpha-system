@@ -78,11 +78,18 @@ impl CfgManager {
         Self::build(true, ServiceID::Default, smdb_service_config())
     }
 
-    pub fn build(dbg: bool, svc: ServiceID, svc_config: ServiceConfig) -> Self {
+    ///
+    /// Builds a new instance by constructing various configurations
+    /// including environment type, DNS servers, and database configurations.
+    ///
+    /// Returns the constructed instance.
+    ///
+    fn build(dbg: bool, svc: ServiceID, svc_config: ServiceConfig) -> Self {
         //
         let env_type = Self::detect_env_type(dbg);
         let svc_env_config = build_utils::get_svc_env_config(dbg, svc, &svc_config);
 
+        // Build the cluster internal DNS server
         let internal_dns_server = build_utils::build_internal_dns_server(dbg, &env_type);
         let internal_dns_resolver =
             build_utils::build_internal_dns_resolver(dbg, &internal_dns_server);
@@ -113,6 +120,7 @@ impl CfgManager {
             svc_env_config,
             db_clickhouse_config,
             db_postgres_config,
+            // Remove this after adding MDDB service
             default_exchange,
             exchanges,
             exchanges_id_names,
@@ -120,6 +128,20 @@ impl CfgManager {
         }
     }
 
+    ///
+    /// Detects the environment type based on the value of the "ENV" environment variable.
+    ///
+    /// * If the variable is set to "CI", returns EnvironmentType::CI.
+    /// * If set to "CLUSTER", returns EnvironmentType::CLUSTER.
+    /// * If set to "LOCAL", returns EnvironmentType::LOCAL.
+    /// * If set to "UNKNOWN" or any other value, returns EnvironmentType::UNKNOWN.
+    ///
+    /// Prints debug messages if the 'dbg' parameter is true.
+    ///
+    /// Panics if unable to read the "ENV" environment variable.
+    ///
+    /// Returns the detected EnvironmentType.
+    ///
     pub fn detect_env_type(dbg: bool) -> EnvironmentType {
         if dbg {
             println!("[CfgManager]: Debug mode enabled");

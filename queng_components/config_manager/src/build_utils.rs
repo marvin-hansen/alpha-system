@@ -8,6 +8,17 @@ use hickory_resolver::config::{NameServerConfig, Protocol, ResolverConfig, Resol
 use hickory_resolver::TokioAsyncResolver;
 use std::net::SocketAddr;
 
+///
+/// Builds an external DNS resolver using the Tokio async resolver.
+///
+/// # Arguments
+///
+/// * `dbg` - A boolean flag indicating whether to enable debug mode.
+///
+/// # Returns
+///
+/// A TokioAsyncResolver configured with Cloudflare resolver settings.
+///
 pub(super) fn build_external_dns_resolver(dbg: bool) -> TokioAsyncResolver {
     if dbg {
         println!("[CfgManager]: build_external_dns_resolver");
@@ -17,6 +28,18 @@ pub(super) fn build_external_dns_resolver(dbg: bool) -> TokioAsyncResolver {
     TokioAsyncResolver::tokio(external_resolver_config, ResolverOpts::default())
 }
 
+///
+/// Builds an internal DNS resolver using the provided address.
+///
+/// # Arguments
+///
+/// * `dbg` - A boolean indicating whether to print debug information.
+/// * `address` - A string slice representing the address of the DNS server.
+///
+/// # Returns
+///
+/// A `TokioAsyncResolver` configured with the specified address and default resolver options.
+///
 pub(super) fn build_internal_dns_resolver(dbg: bool, address: &str) -> TokioAsyncResolver {
     if dbg {
         println!("[CfgManager]: build_internal_dns_resolver");
@@ -34,6 +57,20 @@ pub(super) fn build_internal_dns_resolver(dbg: bool, address: &str) -> TokioAsyn
     TokioAsyncResolver::tokio(config.clone(), ResolverOpts::default())
 }
 
+///
+/// Builds the internal DNS server address based on the environment type.
+///
+/// If `dbg` is true, prints a debug message.
+///
+/// # Arguments
+///
+/// - `dbg`: A boolean indicating whether to print debug messages.
+/// - `env_type`: A reference to the environment type.
+///
+/// # Returns
+///
+/// A string representing the internal DNS server address.
+///
 pub(super) fn build_internal_dns_server(dbg: bool, env_type: &EnvironmentType) -> String {
     if dbg {
         println!("[CfgManager]: build_internal_dns_resolver");
@@ -51,6 +88,9 @@ pub(super) fn build_internal_dns_server(dbg: bool, env_type: &EnvironmentType) -
     format!("{}{}", internal_dns_host, ":53")
 }
 
+///
+/// Returns the Postgres database configuration based on the environment type.
+///
 pub(super) fn get_clickhouse_config(dbg: bool, env_type: &EnvironmentType) -> ClickHouseConfig {
     if dbg {
         println!("[CfgManager]: get_clickhouse_config");
