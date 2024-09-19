@@ -4,9 +4,12 @@ use std::fmt::{Display, Formatter};
 ///
 /// # Variants
 ///
-/// * `UnknownEnv`: The unknown environment type.
+/// * `UNKNOWN`: The unknown environment type.
 /// * `LOCAL`: The local environment type.
 /// * `CLUSTER`: The cluster environment type.
+///
+/// Default is set to `UNKNOWN`.
+///
 #[derive(Debug, Copy, Clone, Default, Eq, PartialEq)]
 pub enum EnvironmentType {
     /// The unknown environment type.

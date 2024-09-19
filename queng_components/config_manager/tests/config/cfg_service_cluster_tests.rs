@@ -19,6 +19,10 @@ use std::env;
 async fn test_init_smdb_env() {
     env::set_var("ENV", "CLUSTER");
     env::set_var("DNS_SERVER", "9.9.9.9");
+    // On a K8s cluster, PG_USER, PG_PASSWORD and PG_DATABASE usually are set as cluster secrets
+    env::set_var("PG_USER", "postgres");
+    env::set_var("PG_PASSWORD", "password");
+    env::set_var("PG_DATABASE", "database");
 
     let service_id = ServiceID::SMDB;
     let cfg_manager = CfgManager::with_debug(service_id, smdb_service_config()).await;

@@ -16,5 +16,5 @@ fn test_get_cluster_db_config() {
     assert_eq!(config.pg_password(), "password");
     assert_eq!(config.pg_database(), "prod_db");
     assert_eq!(config.pg_port(), 5432);
-    assert_eq!(config.pg_max_connections(), 5);
+    assert_eq!(config.pg_max_connections(), 10);
 }

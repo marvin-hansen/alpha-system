@@ -63,3 +63,8 @@ Address:	10.96.0.10#53
 Name:	postgres-cluster-rw.default.svc.cluster.local
 Address: 10.107.253.173
 ```
+
+References:
+
+Debugging DNS Resolution
+https://kubernetes.io/docs/tasks/administer-cluster/dns-debugging-resolution/

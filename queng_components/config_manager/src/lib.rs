@@ -66,14 +66,120 @@ impl Default for CfgManager {
 }
 
 impl CfgManager {
+    ///
+    /// Creates a new instance of `CfgManager`.
+    ///
+    /// `CfgManager` automatically adapts configurations for the detected context.
+    ///
+    /// `CfgManager` supports the following contexts:
+    ///  * LOCAL
+    ///  * CI
+    ///  * CLUSTER
+    ///
+    /// For local environment, the `CfgManager` the following environment variables must be set:
+    ///  * ENV: LOCAL
+    ///
+    /// For a CI environment, the `CfgManager` the following environment variables must be set:
+    ///  * ENV: CI
+    ///
+    /// For a cluster environment, the following environment variables must be set:
+    ///  * ENV: CLUSTER
+    ///  * DNS_SERVER: The Cluster's DNS server
+    ///  * PG_USER: The Postgres user for the cluster postgres database
+    ///  * PG_PASSWORD: The Postgres password for the cluster postgres database
+    ///  * PG_DATABASE: The Postgres database for the cluster postgres database
+    ///
+    /// If any of these variables is missing, the constructor will panic with an error
+    /// indicating the missing environment variable.
+    ///
+    /// It is recommended to set PG_USER, PG_PASSWORD and PG_DATABASE as cluster secrets.
+    ///
+    /// In case `CfgManager` cannot detect a context, it sets the default context to UNKNOWN and
+    /// configures all configurations with default values. If you observe unexpected behavior, please
+    /// call the with_debug constructor to enable debug mode to diagnose the issue.
+    ///
+    /// # Arguments
+    ///
+    /// * `svc`: The ID of the service.
+    /// * `svc_config`: The configuration of the service.
+    ///
+    /// # Returns
+    ///
+    /// The constructed instance of `CfgManager`.
+    ///
     pub async fn new(svc: ServiceID, svc_config: ServiceConfig) -> Self {
         Self::build(false, svc, svc_config)
     }
 
+    ///
+    /// Creates a new instance of `CfgManager` with debug mode enabled.
+    /// The `with_debug` method is identical to the `new` method, except that it enables debug mode.
+    ///
+    /// `CfgManager` supports the following contexts:
+    ///  * LOCAL
+    ///  * CI
+    ///  * CLUSTER
+    ///
+    /// For local environment, the `CfgManager` the following environment variables must be set:
+    ///  * ENV: LOCAL
+    ///
+    /// For a CI environment, the `CfgManager` the following environment variables must be set:
+    ///  * ENV: CI
+    ///
+    /// For a cluster environment, the following environment variables must be set:
+    ///  * ENV: CLUSTER
+    ///  * DNS_SERVER: The Cluster's DNS server
+    ///  * PG_USER: The Postgres user for the cluster postgres database
+    ///  * PG_PASSWORD: The Postgres password for the cluster postgres database
+    ///  * PG_DATABASE: The Postgres database for the cluster postgres database
+    ///
+    /// If any of these variables is missing, the constructor will panic with an error
+    /// indicating the missing environment variable.
+    ///
+    /// It is recommended to set PG_USER, PG_PASSWORD and PG_DATABASE as cluster secrets.
+    ///
+    /// # Arguments
+    ///
+    /// * `svc`: The ID of the service.
+    /// * `svc_config`: The configuration of the service.
+    ///
+    /// # Returns
+    ///
+    /// The constructed instance of `CfgManager`.
+    ///
     pub async fn with_debug(svc: ServiceID, svc_config: ServiceConfig) -> Self {
         Self::build(true, svc, svc_config)
     }
 
+    /// Returns a default instance with debug mode enabled.
+    ///
+    /// The default service ID is `ServiceID::Default`.
+    ///
+    /// The default service configuration is `smdb_service_config()`.
+    ///
+    /// `CfgManager` supports the following contexts:
+    ///  * LOCAL
+    ///  * CI
+    ///  * CLUSTER
+    ///
+    /// For local environment, the `CfgManager` the following environment variables must be set:
+    ///  * ENV: LOCAL
+    ///
+    /// For a CI environment, the `CfgManager` the following environment variables must be set:
+    ///  * ENV: CI
+    ///
+    /// For a cluster environment, the following environment variables must be set:
+    ///  * ENV: CLUSTER
+    ///  * DNS_SERVER: The Cluster's DNS server
+    ///  * PG_USER: The Postgres user for the cluster postgres database
+    ///  * PG_PASSWORD: The Postgres password for the cluster postgres database
+    ///  * PG_DATABASE: The Postgres database for the cluster postgres database
+    ///
+    /// If any of these variables is missing, the constructor will panic with an error
+    /// indicating the missing environment variable.
+    ///
+    /// It is recommended to set PG_USER, PG_PASSWORD and PG_DATABASE as cluster secrets.
+    ///
     pub fn default_with_debug() -> Self {
         Self::build(true, ServiceID::Default, smdb_service_config())
     }
