@@ -1,5 +1,10 @@
 # Install
 
+## Requirements:
+
+* Ensure a cluster is available, kubectl, and Helm are both configured and working.
+
+
 1) Install operator
 
 ```shell
