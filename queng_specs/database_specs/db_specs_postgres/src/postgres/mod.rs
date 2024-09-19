@@ -5,33 +5,30 @@ pub use crate::postgres;
 
 pub fn get_postgres_config(env_type: &EnvironmentType) -> PostgresDBConfig {
     match env_type {
-        EnvironmentType::LOCAL => get_local_db_config(),
-        EnvironmentType::CLUSTER => get_cluster_db_config(),
-        EnvironmentType::CI => get_ci_db_config(),
-        _ => PostgresDBConfig::default(),
+        EnvironmentType::LOCAL => get_base_postgres_db_config(),
+        EnvironmentType::CI => get_base_postgres_db_config(),
+        _ => panic!("Environment not supported"),
     }
 }
 
-pub fn get_local_db_config() -> PostgresDBConfig {
-    get_base_postgres_db_config()
-}
-
-pub fn get_ci_db_config() -> PostgresDBConfig {
-    get_base_postgres_db_config()
-}
-
-pub fn get_cluster_db_config() -> PostgresDBConfig {
+pub fn get_cluster_db_config(
+    pg_user: String,
+    pg_password: String,
+    pg_database: String,
+) -> PostgresDBConfig {
     PostgresDBConfig::new(
-        "http://postgres.default.svc.cluster.local".to_string(),
-        "username".to_string(),
-        "password".to_string(),
-        "prod_db".to_string(),
+        // Note, there are three services: postgres-cluster-rw,postgres-cluster-r, and postgres-cluster-ro
+        // Select the postgres-cluster-rw service if you want to write to the database. The others are read and read-only.
+        "postgres-cluster-rw.default.svc.cluster.local".to_string(),
+        pg_user,
+        pg_password,
+        pg_database,
         5432,
-        5,
+        10,
     )
 }
 
-pub(crate) fn get_base_postgres_db_config() -> PostgresDBConfig {
+fn get_base_postgres_db_config() -> PostgresDBConfig {
     PostgresDBConfig::new(
         "localhost".to_string(),
         "postgres".to_string(),

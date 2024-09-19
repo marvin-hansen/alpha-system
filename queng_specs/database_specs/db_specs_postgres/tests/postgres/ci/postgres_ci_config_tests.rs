@@ -1,8 +1,9 @@
-use db_specs_postgres::postgres::get_ci_db_config;
+use common_env::prelude::EnvironmentType;
+use db_specs_postgres::postgres::get_postgres_config;
 
 #[test]
 fn test_get_ci_db_config() {
-    let config = get_ci_db_config();
+    let config = get_postgres_config(&EnvironmentType::CI);
     assert_eq!(config.pg_host(), "localhost");
     assert_eq!(config.pg_user(), "postgres");
     assert_eq!(config.pg_password(), "postgres");

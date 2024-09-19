@@ -27,30 +27,29 @@ sh_binary(
 multirun(
     name = "push",
     commands = [
-        "push_kaiko_proxy",
+        # Core services
         "cmdb_push",
-        "mddb_push",
+        "dbgw_push",
         "smdb_push",
         # IMS Services
         "push_binance_data",
+        # Metadata services
+        "push_kaiko_proxy",
+        "mddb_push",
     ],
     jobs = 0,  # Set to 0 to run in parallel
     visibility = ["//visibility:public"],
 )
 
-command(
-    name = "push_kaiko_proxy",
-    command = "//alias/service:kaiko_proxy_push",
-)
-
+# Core services
 command(
     name = "cmdb_push",
     command = "//alias/service:cmdb_push",
 )
 
 command(
-    name = "mddb_push",
-    command = "//alias/service:mddb_push",
+    name = "dbgw_push",
+    command = "//alias/service:dbgw_push",
 )
 
 command(
@@ -58,7 +57,19 @@ command(
     command = "//alias/service:smdb_push",
 )
 
+# IMS Services
 command(
     name = "push_binance_data",
     command = "//alias/service:binance_data_push",
+)
+
+# Metadata services
+command(
+    name = "mddb_push",
+    command = "//alias/service:mddb_push",
+)
+
+command(
+    name = "push_kaiko_proxy",
+    command = "//alias/service:kaiko_proxy_push",
 )

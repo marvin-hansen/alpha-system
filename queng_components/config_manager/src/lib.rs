@@ -1,23 +1,19 @@
 // Unsafe code must be explicitly enabled to use it.
 #[deny(unsafe_code)]
 //
-use crate::utils::get_svc_env_config;
 use common_config::prelude::{ServiceConfig, ServiceID, SvcEnvConfig};
 use common_database::prelude::{ClickHouseConfig, PostgresDBConfig};
 use common_env::prelude::EnvironmentType;
 use common_exchange::prelude::ExchangeID;
-use db_specs_clickhouse::clickhouse;
-use db_specs_postgres::postgres;
 use exchange_specs::prelude;
 use exchange_specs::prelude::{
     get_all_exchanges, get_all_exchanges_ids_names, get_exchange_symbol_tables,
 };
-use hickory_resolver::config::*;
 use hickory_resolver::TokioAsyncResolver;
 use smdb_specs::smdb_service_config;
 use std::collections::HashMap;
-use std::net::SocketAddr;
 
+mod build_utils;
 mod cfg_getters;
 mod cfg_svc;
 mod cfg_svc_health_check;
@@ -25,13 +21,12 @@ mod cfg_svc_metrics;
 mod dns;
 mod dns_resolve;
 mod env;
-mod utils;
 
 // https://stackoverflow.com/questions/20778771/what-is-the-difference-between-0-0-0-0-127-0-0-1-and-localhost
 const DEFAULT_HOST: &str = "0.0.0.0";
 
 // https://www.dnsperf.com/#!dns-resolvers
-const DEFAULT_DNS: &str = "1.1.1.1";
+pub(crate) const DEFAULT_DNS: &str = "1.1.1.1";
 
 /// Struct that holds the configuration for a specific service.
 pub struct CfgManager {
@@ -86,19 +81,21 @@ impl CfgManager {
     pub fn build(dbg: bool, svc: ServiceID, svc_config: ServiceConfig) -> Self {
         //
         let env_type = Self::detect_env_type(dbg);
-        let svc_env_config = get_svc_env_config(svc, &svc_config);
-        // DB Config
-        let db_clickhouse_config = clickhouse::get_clickhouse_config(&env_type);
-        let db_postgres_config = postgres::get_postgres_config(&env_type);
+        let svc_env_config = build_utils::get_svc_env_config(dbg, svc, &svc_config);
 
-        let internal_dns_server = Self::build_internal_dns_server(&env_type);
-        let internal_dns_resolver = Self::build_internal_dns_resolver(&internal_dns_server);
+        let internal_dns_server = build_utils::build_internal_dns_server(dbg, &env_type);
+        let internal_dns_resolver =
+            build_utils::build_internal_dns_resolver(dbg, &internal_dns_server);
 
         // Build the external (Cloudflare) DNS address resolver to resolve hosts on the open internet
         let external_dns_server = format!("{}{}", DEFAULT_DNS, ":53");
-        let external_dns_resolver = Self::build_external_dns_resolver();
+        let external_dns_resolver = build_utils::build_external_dns_resolver(dbg);
 
-        // Move this into symbol_manager
+        // DB Config
+        let db_clickhouse_config = build_utils::get_clickhouse_config(dbg, &env_type);
+        let db_postgres_config = build_utils::get_postgres_config(dbg, &env_type);
+
+        // Remove this after adding MDDB service
         let default_exchange = prelude::get_default_exchange();
         let exchanges = get_all_exchanges();
         let exchanges_id_names = get_all_exchanges_ids_names();
@@ -152,57 +149,12 @@ impl CfgManager {
 
         env_type
     }
-
-    fn build_external_dns_resolver() -> TokioAsyncResolver {
-        let external_resolver_config = ResolverConfig::cloudflare();
-        TokioAsyncResolver::tokio(external_resolver_config, ResolverOpts::default())
-    }
-
-    fn build_internal_dns_resolver(address: &str) -> TokioAsyncResolver {
-        let socket_addr: SocketAddr = match address.parse() {
-            Ok(addr) => addr,
-            Err(e) => panic!("Failed to parse DNS SERVER address: {}", e),
-        };
-
-        let name_server = NameServerConfig::new(socket_addr, Protocol::Udp);
-
-        let mut config = ResolverConfig::new();
-
-        config.add_name_server(name_server);
-
-        TokioAsyncResolver::tokio(config.clone(), ResolverOpts::default())
-    }
-
-    fn build_internal_dns_server(env_type: &EnvironmentType) -> String {
-        // Find the internal DNS server based on the env context
-        let internal_dns_host = match env_type {
-            EnvironmentType::LOCAL => DEFAULT_DNS.to_owned(),
-            EnvironmentType::CI => DEFAULT_DNS.to_owned(),
-            EnvironmentType::CLUSTER => Self::get_cluster_dns(),
-            EnvironmentType::UNKNOWN => DEFAULT_DNS.to_owned(),
-        };
-
-        // Build the internal DNS resolver to resolve hosts within the system network
-        format!("{}{}", internal_dns_host, ":53")
-    }
-
-    fn get_cluster_dns() -> String {
-        match std::env::var("DNS_SERVER") {
-            Ok(cluster_dns_server) => cluster_dns_server,
-            Err(e) => {
-                panic!(
-                    "Failed to read DNS_SERVER environment variable. Ensure DNS_SERVER is set in deployment.yaml:{}",
-                    e
-                );
-            }
-        }
-    }
 }
 
 impl CfgManager {
     pub fn dbg_print(&self, msg: &str) {
         if self.dbg {
-            println!("[CtxManager]: {}", msg);
+            println!("[CfgManager]: {}", msg);
         }
     }
 }

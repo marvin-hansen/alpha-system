@@ -27,6 +27,9 @@ spec:
   monitoring:
     enablePodMonitor: true
 ---
+# All environment variables defined below are read in
+# queng_components/config_manager/src/lib.rs
+---
 apiVersion: v1
 data:
   username: ZGJnd3VzZXI= # printf dbgwuser | base64
@@ -45,3 +48,10 @@ metadata:
   name: cluster-pg-admin
 type: kubernetes.io/basic-auth
 ---
+apiVersion: v1
+data:
+  database: quantum
+kind: Secret
+metadata:
+  name: cluster-pg-database
+type: opaque

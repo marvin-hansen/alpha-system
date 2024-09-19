@@ -6,7 +6,7 @@ use common_errors::prelude::InitError;
 use dbgw_specs::dbgw_service_config;
 use smdb_specs::smdb_service_config;
 
-use crate::utils::get_svc_env_config;
+use crate::build_utils as utils;
 use crate::{CfgManager, DEFAULT_HOST};
 
 impl CfgManager {
@@ -21,7 +21,7 @@ impl CfgManager {
         let svc_config = smdb_service_config();
 
         // Construct contextual service environment configuration
-        let svc_env_config = get_svc_env_config(SMDB, &svc_config);
+        let svc_env_config = utils::get_svc_env_config(self.dbg, SMDB, &svc_config);
 
         // Get the host and port of the service
         self.get_host(&svc_env_config).await
@@ -39,7 +39,7 @@ impl CfgManager {
         let svc_config = cmdb_service_config();
 
         // Construct contextual service environment configuration
-        let svc_env_config = get_svc_env_config(CMDB, &svc_config);
+        let svc_env_config = utils::get_svc_env_config(self.dbg, CMDB, &svc_config);
 
         // Get the host and port of the service
         self.get_host(&svc_env_config).await
@@ -56,7 +56,7 @@ impl CfgManager {
         let svc_config = dbgw_service_config();
 
         // Construct contextual service environment configuration
-        let svc_env_config = get_svc_env_config(DBGW, &svc_config);
+        let svc_env_config = utils::get_svc_env_config(self.dbg, DBGW, &svc_config);
 
         // Get the host and port of the service
         self.get_host(&svc_env_config).await
