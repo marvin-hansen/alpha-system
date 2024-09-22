@@ -20,7 +20,7 @@ crates_vendor(
         # https://www.tweag.io/blog/2023-08-10-rust-static-link-with-mimalloc/
         "mimalloc": crate.spec(
             package = "mimalloc",
-            version = "0.1.42",
+            version = "0.1.43",
         ),
         "rustls": crate.spec(
             default_features = False,
@@ -33,27 +33,27 @@ crates_vendor(
         #
         "prost": crate.spec(
             package = "prost",
-            version = "0.13.0",
+            version = "0.13.3",
         ),
         "prost-types": crate.spec(
             default_features = False,
             package = "prost-types",
-            version = "0.13.0",
+            version = "0.13.3",
         ),
         "tonic": crate.spec(
             features = ["transport"],
             package = "tonic",
-            version = "0.12.0",
+            version = "0.12.2",
         ),
         "tonic-build": crate.spec(
             package = "tonic-build",
-            version = "0.12.0",
+            version = "0.12.2",
         ),
         "tonic-health": crate.spec(
             default_features = False,
             features = ["transport"],
             package = "tonic-health",
-            version = "0.12.0",
+            version = "0.12.2",
         ),
         "protoc-gen-prost": crate.spec(
             package = "protoc-gen-prost",
@@ -66,7 +66,7 @@ crates_vendor(
         # Other External Crates
         "anyhow": crate.spec(
             package = "anyhow",
-            version = "1.0",
+            version = "1.0.89",
         ),
         "arc-swap": crate.spec(
             package = "arc-swap",
@@ -156,7 +156,7 @@ crates_vendor(
         ),
         "lru": crate.spec(
             package = "lru",
-            version = "0.12",
+            version = "0.12.4",
         ),
         "mini-moka": crate.spec(
             package = "mini-moka",
@@ -188,11 +188,11 @@ crates_vendor(
         "serde": crate.spec(
             features = ["derive"],
             package = "serde",
-            version = "1.0",
+            version = "1.0.210",
         ),
         "serde_json": crate.spec(
             package = "serde_json",
-            version = "1.0",
+            version = "1.0.128",
         ),
         "sha3": crate.spec(
             default_features = False,
@@ -213,7 +213,7 @@ crates_vendor(
         "tokio-cron-scheduler": crate.spec(
             features = ["signal"],
             package = "tokio-cron-scheduler",
-            version = "0.12.0",
+            version = "0.13.0",
         ),
         "tokio-tungstenite": crate.spec(
             default_features = False,

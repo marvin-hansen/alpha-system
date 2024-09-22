@@ -11,7 +11,7 @@ load("@rules_rust//rust:defs.bzl", "rust_library")
 package(default_visibility = ["//visibility:public"])
 
 rust_library(
-    name = "prost_types",
+    name = "hybrid_array",
     srcs = glob(
         include = ["**/*.rs"],
         allow_empty = True,
@@ -35,7 +35,7 @@ rust_library(
     ],
     tags = [
         "cargo-bazel",
-        "crate-name=prost-types",
+        "crate-name=hybrid-array",
         "manual",
         "noclippy",
         "norustfmt",
@@ -77,8 +77,8 @@ rust_library(
         "@rules_rust//rust/platform:x86_64-unknown-none": [],
         "//conditions:default": ["@platforms//:incompatible"],
     }),
-    version = "0.13.2",
+    version = "0.2.0-rc.10",
     deps = [
-        "@queng_vendored__prost-0.13.2//:prost",
+        "@queng_vendored__typenum-1.17.0//:typenum",
     ],
 )

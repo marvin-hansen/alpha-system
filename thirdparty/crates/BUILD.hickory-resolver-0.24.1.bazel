@@ -87,7 +87,7 @@ rust_library(
         "@queng_vendored__futures-util-0.3.30//:futures_util",
         "@queng_vendored__hickory-proto-0.24.1//:hickory_proto",
         "@queng_vendored__lru-cache-0.1.2//:lru_cache",
-        "@queng_vendored__once_cell-1.20.0//:once_cell",
+        "@queng_vendored__once_cell-1.19.0//:once_cell",
         "@queng_vendored__parking_lot-0.12.3//:parking_lot",
         "@queng_vendored__rand-0.8.5//:rand",
         "@queng_vendored__smallvec-1.13.2//:smallvec",

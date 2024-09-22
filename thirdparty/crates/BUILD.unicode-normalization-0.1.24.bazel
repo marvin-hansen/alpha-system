@@ -11,7 +11,7 @@ load("@rules_rust//rust:defs.bzl", "rust_library")
 package(default_visibility = ["//visibility:public"])
 
 rust_library(
-    name = "bytes",
+    name = "unicode_normalization",
     srcs = glob(
         include = ["**/*.rs"],
         allow_empty = True,
@@ -29,7 +29,6 @@ rust_library(
         ],
     ),
     crate_features = [
-        "default",
         "std",
     ],
     crate_root = "src/lib.rs",
@@ -39,7 +38,7 @@ rust_library(
     ],
     tags = [
         "cargo-bazel",
-        "crate-name=bytes",
+        "crate-name=unicode-normalization",
         "manual",
         "noclippy",
         "norustfmt",
@@ -81,5 +80,8 @@ rust_library(
         "@rules_rust//rust/platform:x86_64-unknown-none": [],
         "//conditions:default": ["@platforms//:incompatible"],
     }),
-    version = "1.7.1",
+    version = "0.1.24",
+    deps = [
+        "@queng_vendored__tinyvec-1.8.0//:tinyvec",
+    ],
 )

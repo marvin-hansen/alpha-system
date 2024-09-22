@@ -90,7 +90,7 @@ rust_library(
         "@queng_vendored__bitflags-2.6.0//:bitflags",
         "@queng_vendored__byteorder-1.5.0//:byteorder",
         "@queng_vendored__itoa-1.0.11//:itoa",
-        "@queng_vendored__pq-sys-0.6.2//:pq_sys",
+        "@queng_vendored__pq-sys-0.6.3//:pq_sys",
         "@queng_vendored__r2d2-0.8.10//:r2d2",
     ],
 )

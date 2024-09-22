@@ -85,6 +85,6 @@ rust_library(
     version = "0.5.0",
     deps = [
         "@queng_vendored__unicode-bidi-0.3.15//:unicode_bidi",
-        "@queng_vendored__unicode-normalization-0.1.23//:unicode_normalization",
+        "@queng_vendored__unicode-normalization-0.1.24//:unicode_normalization",
     ],
 )

@@ -93,7 +93,7 @@ rust_library(
         "@rules_rust//rust/platform:x86_64-unknown-none": [],
         "//conditions:default": ["@platforms//:incompatible"],
     }),
-    version = "0.13.0",
+    version = "0.13.1",
     deps = [
         "@queng_vendored__chrono-0.4.38//:chrono",
         "@queng_vendored__chrono-tz-0.9.0//:chrono_tz",
@@ -101,7 +101,7 @@ rust_library(
         "@queng_vendored__compiler-tools-0.2.0//:compiler_tools",
         "@queng_vendored__futures-util-0.3.30//:futures_util",
         "@queng_vendored__indexmap-2.5.0//:indexmap",
-        "@queng_vendored__klickhouse-0.13.0//:build_script_build",
+        "@queng_vendored__klickhouse-0.13.1//:build_script_build",
         "@queng_vendored__log-0.4.22//:log",
         "@queng_vendored__lz4-1.27.0//:lz4",
         "@queng_vendored__serde-1.0.210//:serde",
@@ -124,6 +124,7 @@ cargo_build_script(
         allow_empty = True,
         exclude = [
             "**/* *",
+            "**/*.rs",
             ".tmp_git_root/**/*",
             "BUILD",
             "BUILD.bazel",
@@ -166,7 +167,7 @@ cargo_build_script(
         "noclippy",
         "norustfmt",
     ],
-    version = "0.13.0",
+    version = "0.13.1",
     visibility = ["//visibility:private"],
     deps = [
         "@queng_vendored__rustc_version-0.4.1//:rustc_version",

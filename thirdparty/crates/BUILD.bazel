@@ -135,7 +135,7 @@ alias(
 
 alias(
     name = "klickhouse",
-    actual = "@queng_vendored__klickhouse-0.13.0//:klickhouse",
+    actual = "@queng_vendored__klickhouse-0.13.1//:klickhouse",
     tags = ["manual"],
 )
 
@@ -165,13 +165,13 @@ alias(
 
 alias(
     name = "prost",
-    actual = "@queng_vendored__prost-0.13.2//:prost",
+    actual = "@queng_vendored__prost-0.13.3//:prost",
     tags = ["manual"],
 )
 
 alias(
     name = "prost-types",
-    actual = "@queng_vendored__prost-types-0.13.2//:prost_types",
+    actual = "@queng_vendored__prost-types-0.13.3//:prost_types",
     tags = ["manual"],
 )
 
@@ -237,7 +237,7 @@ alias(
 
 alias(
     name = "tokio-cron-scheduler",
-    actual = "@queng_vendored__tokio-cron-scheduler-0.11.0//:tokio_cron_scheduler",
+    actual = "@queng_vendored__tokio-cron-scheduler-0.13.0//:tokio_cron_scheduler",
     tags = ["manual"],
 )
 

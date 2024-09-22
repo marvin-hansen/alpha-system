@@ -83,7 +83,7 @@ rust_library(
     version = "0.12.2",
     deps = [
         "@queng_vendored__async-stream-0.3.5//:async_stream",
-        "@queng_vendored__prost-0.13.2//:prost",
+        "@queng_vendored__prost-0.13.3//:prost",
         "@queng_vendored__tokio-1.40.0//:tokio",
         "@queng_vendored__tokio-stream-0.1.16//:tokio_stream",
         "@queng_vendored__tonic-0.12.2//:tonic",

@@ -6,12 +6,13 @@
 #     bazel run @@//thirdparty:crates_vendor
 ###############################################################################
 
+load("@rules_rust//cargo:defs.bzl", "cargo_build_script")
 load("@rules_rust//rust:defs.bzl", "rust_library")
 
 package(default_visibility = ["//visibility:public"])
 
 rust_library(
-    name = "cc",
+    name = "tokio_cron_scheduler",
     srcs = glob(
         include = ["**/*.rs"],
         allow_empty = True,
@@ -29,16 +30,20 @@ rust_library(
         ],
     ),
     crate_features = [
-        "parallel",
+        "default",
+        "signal",
     ],
     crate_root = "src/lib.rs",
     edition = "2018",
+    proc_macro_deps = [
+        "@queng_vendored__num-derive-0.4.2//:num_derive",
+    ],
     rustc_flags = [
         "--cap-lints=allow",
     ],
     tags = [
         "cargo-bazel",
-        "crate-name=cc",
+        "crate-name=tokio-cron-scheduler",
         "manual",
         "noclippy",
         "norustfmt",
@@ -80,10 +85,73 @@ rust_library(
         "@rules_rust//rust/platform:x86_64-unknown-none": [],
         "//conditions:default": ["@platforms//:incompatible"],
     }),
-    version = "1.1.18",
+    version = "0.13.0",
     deps = [
-        "@queng_vendored__jobserver-0.1.32//:jobserver",
-        "@queng_vendored__libc-0.2.158//:libc",
-        "@queng_vendored__shlex-1.3.0//:shlex",
+        "@queng_vendored__chrono-0.4.38//:chrono",
+        "@queng_vendored__croner-2.0.5//:croner",
+        "@queng_vendored__num-traits-0.2.19//:num_traits",
+        "@queng_vendored__tokio-1.40.0//:tokio",
+        "@queng_vendored__tokio-cron-scheduler-0.13.0//:build_script_build",
+        "@queng_vendored__tracing-0.1.40//:tracing",
+        "@queng_vendored__uuid-1.10.0//:uuid",
     ],
+)
+
+cargo_build_script(
+    name = "_bs",
+    srcs = glob(
+        include = ["**/*.rs"],
+        allow_empty = True,
+    ),
+    compile_data = glob(
+        include = ["**"],
+        allow_empty = True,
+        exclude = [
+            "**/* *",
+            "**/*.rs",
+            ".tmp_git_root/**/*",
+            "BUILD",
+            "BUILD.bazel",
+            "WORKSPACE",
+            "WORKSPACE.bazel",
+        ],
+    ),
+    crate_features = [
+        "default",
+        "signal",
+    ],
+    crate_name = "build_script_build",
+    crate_root = "build.rs",
+    data = glob(
+        include = ["**"],
+        allow_empty = True,
+        exclude = [
+            "**/* *",
+            ".tmp_git_root/**/*",
+            "BUILD",
+            "BUILD.bazel",
+            "WORKSPACE",
+            "WORKSPACE.bazel",
+        ],
+    ),
+    edition = "2018",
+    pkg_name = "tokio-cron-scheduler",
+    rustc_flags = [
+        "--cap-lints=allow",
+    ],
+    tags = [
+        "cargo-bazel",
+        "crate-name=tokio-cron-scheduler",
+        "manual",
+        "noclippy",
+        "norustfmt",
+    ],
+    version = "0.13.0",
+    visibility = ["//visibility:private"],
+)
+
+alias(
+    name = "build_script_build",
+    actual = ":_bs",
+    tags = ["manual"],
 )

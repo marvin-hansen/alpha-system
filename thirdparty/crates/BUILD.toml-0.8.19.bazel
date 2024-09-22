@@ -87,6 +87,6 @@ rust_library(
         "@queng_vendored__serde-1.0.210//:serde",
         "@queng_vendored__serde_spanned-0.6.7//:serde_spanned",
         "@queng_vendored__toml_datetime-0.6.8//:toml_datetime",
-        "@queng_vendored__toml_edit-0.22.20//:toml_edit",
+        "@queng_vendored__toml_edit-0.22.21//:toml_edit",
     ],
 )

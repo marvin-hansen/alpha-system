@@ -79,7 +79,7 @@ rust_library(
     }),
     version = "0.2.12",
     deps = [
-        "@queng_vendored__bytes-1.7.1//:bytes",
+        "@queng_vendored__bytes-1.7.2//:bytes",
         "@queng_vendored__fnv-1.0.7//:fnv",
         "@queng_vendored__itoa-1.0.11//:itoa",
     ],

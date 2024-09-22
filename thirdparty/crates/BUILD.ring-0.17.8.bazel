@@ -196,6 +196,7 @@ cargo_build_script(
         allow_empty = True,
         exclude = [
             "**/* *",
+            "**/*.rs",
             ".tmp_git_root/**/*",
             "BUILD",
             "BUILD.bazel",
@@ -238,7 +239,7 @@ cargo_build_script(
     version = "0.17.8",
     visibility = ["//visibility:private"],
     deps = [
-        "@queng_vendored__cc-1.1.18//:cc",
+        "@queng_vendored__cc-1.1.21//:cc",
     ],
 )
 

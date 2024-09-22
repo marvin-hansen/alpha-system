@@ -98,6 +98,6 @@ rust_library(
         "@queng_vendored__tokio-1.40.0//:tokio",
         "@queng_vendored__tokio-rustls-0.26.0//:tokio_rustls",
         "@queng_vendored__tower-service-0.3.3//:tower_service",
-        "@queng_vendored__webpki-roots-0.26.5//:webpki_roots",
+        "@queng_vendored__webpki-roots-0.26.6//:webpki_roots",
     ],
 )

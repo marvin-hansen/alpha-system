@@ -11,7 +11,7 @@ load("@rules_rust//rust:defs.bzl", "rust_library")
 package(default_visibility = ["//visibility:public"])
 
 rust_library(
-    name = "iana_time_zone",
+    name = "prost",
     srcs = glob(
         include = ["**/*.rs"],
         allow_empty = True,
@@ -29,16 +29,22 @@ rust_library(
         ],
     ),
     crate_features = [
-        "fallback",
+        "default",
+        "derive",
+        "prost-derive",
+        "std",
     ],
     crate_root = "src/lib.rs",
-    edition = "2018",
+    edition = "2021",
+    proc_macro_deps = [
+        "@queng_vendored__prost-derive-0.13.3//:prost_derive",
+    ],
     rustc_flags = [
         "--cap-lints=allow",
     ],
     tags = [
         "cargo-bazel",
-        "crate-name=iana-time-zone",
+        "crate-name=prost",
         "manual",
         "noclippy",
         "norustfmt",
@@ -80,55 +86,8 @@ rust_library(
         "@rules_rust//rust/platform:x86_64-unknown-none": [],
         "//conditions:default": ["@platforms//:incompatible"],
     }),
-    version = "0.1.60",
-    deps = select({
-        "@rules_rust//rust/platform:aarch64-apple-darwin": [
-            "@queng_vendored__core-foundation-sys-0.8.7//:core_foundation_sys",  # cfg(any(target_os = "macos", target_os = "ios"))
-        ],
-        "@rules_rust//rust/platform:aarch64-apple-ios": [
-            "@queng_vendored__core-foundation-sys-0.8.7//:core_foundation_sys",  # cfg(any(target_os = "macos", target_os = "ios"))
-        ],
-        "@rules_rust//rust/platform:aarch64-apple-ios-sim": [
-            "@queng_vendored__core-foundation-sys-0.8.7//:core_foundation_sys",  # cfg(any(target_os = "macos", target_os = "ios"))
-        ],
-        "@rules_rust//rust/platform:aarch64-linux-android": [
-            "@queng_vendored__android_system_properties-0.1.5//:android_system_properties",  # cfg(target_os = "android")
-        ],
-        "@rules_rust//rust/platform:aarch64-pc-windows-msvc": [
-            "@queng_vendored__windows-core-0.52.0//:windows_core",  # cfg(target_os = "windows")
-        ],
-        "@rules_rust//rust/platform:armv7-linux-androideabi": [
-            "@queng_vendored__android_system_properties-0.1.5//:android_system_properties",  # cfg(target_os = "android")
-        ],
-        "@rules_rust//rust/platform:i686-apple-darwin": [
-            "@queng_vendored__core-foundation-sys-0.8.7//:core_foundation_sys",  # cfg(any(target_os = "macos", target_os = "ios"))
-        ],
-        "@rules_rust//rust/platform:i686-linux-android": [
-            "@queng_vendored__android_system_properties-0.1.5//:android_system_properties",  # cfg(target_os = "android")
-        ],
-        "@rules_rust//rust/platform:i686-pc-windows-msvc": [
-            "@queng_vendored__windows-core-0.52.0//:windows_core",  # cfg(target_os = "windows")
-        ],
-        "@rules_rust//rust/platform:wasm32-unknown-unknown": [
-            "@queng_vendored__js-sys-0.3.70//:js_sys",  # cfg(target_arch = "wasm32")
-            "@queng_vendored__wasm-bindgen-0.2.93//:wasm_bindgen",  # cfg(target_arch = "wasm32")
-        ],
-        "@rules_rust//rust/platform:wasm32-wasi": [
-            "@queng_vendored__js-sys-0.3.70//:js_sys",  # cfg(target_arch = "wasm32")
-            "@queng_vendored__wasm-bindgen-0.2.93//:wasm_bindgen",  # cfg(target_arch = "wasm32")
-        ],
-        "@rules_rust//rust/platform:x86_64-apple-darwin": [
-            "@queng_vendored__core-foundation-sys-0.8.7//:core_foundation_sys",  # cfg(any(target_os = "macos", target_os = "ios"))
-        ],
-        "@rules_rust//rust/platform:x86_64-apple-ios": [
-            "@queng_vendored__core-foundation-sys-0.8.7//:core_foundation_sys",  # cfg(any(target_os = "macos", target_os = "ios"))
-        ],
-        "@rules_rust//rust/platform:x86_64-linux-android": [
-            "@queng_vendored__android_system_properties-0.1.5//:android_system_properties",  # cfg(target_os = "android")
-        ],
-        "@rules_rust//rust/platform:x86_64-pc-windows-msvc": [
-            "@queng_vendored__windows-core-0.52.0//:windows_core",  # cfg(target_os = "windows")
-        ],
-        "//conditions:default": [],
-    }),
+    version = "0.13.3",
+    deps = [
+        "@queng_vendored__bytes-1.7.2//:bytes",
+    ],
 )

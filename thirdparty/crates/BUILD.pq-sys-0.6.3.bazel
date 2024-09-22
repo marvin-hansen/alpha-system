@@ -6,19 +6,17 @@
 #     bazel run @@//thirdparty:crates_vendor
 ###############################################################################
 
+load("@rules_rust//cargo:defs.bzl", "cargo_build_script")
 load("@rules_rust//rust:defs.bzl", "rust_library")
 
 package(default_visibility = ["//visibility:public"])
 
 rust_library(
-    name = "webpki_roots",
+    name = "pq_sys",
     srcs = glob(
         include = ["**/*.rs"],
         allow_empty = True,
     ),
-    aliases = {
-        "@queng_vendored__rustls-pki-types-1.8.0//:rustls_pki_types": "pki_types",
-    },
     compile_data = glob(
         include = ["**"],
         allow_empty = True,
@@ -31,14 +29,17 @@ rust_library(
             "WORKSPACE.bazel",
         ],
     ),
+    crate_features = [
+        "default",
+    ],
     crate_root = "src/lib.rs",
-    edition = "2018",
+    edition = "2015",
     rustc_flags = [
         "--cap-lints=allow",
     ],
     tags = [
         "cargo-bazel",
-        "crate-name=webpki-roots",
+        "crate-name=pq-sys",
         "manual",
         "noclippy",
         "norustfmt",
@@ -80,8 +81,79 @@ rust_library(
         "@rules_rust//rust/platform:x86_64-unknown-none": [],
         "//conditions:default": ["@platforms//:incompatible"],
     }),
-    version = "0.26.5",
+    version = "0.6.3",
     deps = [
-        "@queng_vendored__rustls-pki-types-1.8.0//:rustls_pki_types",
+        "@queng_vendored__pq-sys-0.6.3//:build_script_build",
     ],
+)
+
+cargo_build_script(
+    name = "_bs",
+    srcs = glob(
+        include = ["**/*.rs"],
+        allow_empty = True,
+    ),
+    compile_data = glob(
+        include = ["**"],
+        allow_empty = True,
+        exclude = [
+            "**/* *",
+            "**/*.rs",
+            ".tmp_git_root/**/*",
+            "BUILD",
+            "BUILD.bazel",
+            "WORKSPACE",
+            "WORKSPACE.bazel",
+        ],
+    ),
+    crate_features = [
+        "default",
+    ],
+    crate_name = "build_script_build",
+    crate_root = "build.rs",
+    data = glob(
+        include = ["**"],
+        allow_empty = True,
+        exclude = [
+            "**/* *",
+            ".tmp_git_root/**/*",
+            "BUILD",
+            "BUILD.bazel",
+            "WORKSPACE",
+            "WORKSPACE.bazel",
+        ],
+    ),
+    edition = "2015",
+    links = "pq",
+    pkg_name = "pq-sys",
+    rustc_flags = [
+        "--cap-lints=allow",
+    ],
+    tags = [
+        "cargo-bazel",
+        "crate-name=pq-sys",
+        "manual",
+        "noclippy",
+        "norustfmt",
+    ],
+    version = "0.6.3",
+    visibility = ["//visibility:private"],
+    deps = select({
+        "@rules_rust//rust/platform:aarch64-pc-windows-msvc": [
+            "@queng_vendored__vcpkg-0.2.15//:vcpkg",  # cfg(target_env = "msvc")
+        ],
+        "@rules_rust//rust/platform:i686-pc-windows-msvc": [
+            "@queng_vendored__vcpkg-0.2.15//:vcpkg",  # cfg(target_env = "msvc")
+        ],
+        "@rules_rust//rust/platform:x86_64-pc-windows-msvc": [
+            "@queng_vendored__vcpkg-0.2.15//:vcpkg",  # cfg(target_env = "msvc")
+        ],
+        "//conditions:default": [],
+    }),
+)
+
+alias(
+    name = "build_script_build",
+    actual = ":_bs",
+    tags = ["manual"],
 )

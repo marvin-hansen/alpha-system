@@ -225,87 +225,87 @@ rust_library(
     ] + select({
         "@rules_rust//rust/platform:aarch64-apple-darwin": [
             "@queng_vendored__getrandom-0.2.15//:getrandom",  # aarch64-apple-darwin
-            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
+            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
         ],
         "@rules_rust//rust/platform:aarch64-apple-ios": [
             "@queng_vendored__getrandom-0.2.15//:getrandom",  # aarch64-apple-ios
-            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
+            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
         ],
         "@rules_rust//rust/platform:aarch64-apple-ios-sim": [
             "@queng_vendored__getrandom-0.2.15//:getrandom",  # aarch64-apple-ios-sim
-            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
+            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
         ],
         "@rules_rust//rust/platform:aarch64-fuchsia": [
             "@queng_vendored__getrandom-0.2.15//:getrandom",  # aarch64-fuchsia
-            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
+            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
         ],
         "@rules_rust//rust/platform:aarch64-linux-android": [
             "@queng_vendored__getrandom-0.2.15//:getrandom",  # aarch64-linux-android
-            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
+            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
         ],
         "@rules_rust//rust/platform:aarch64-pc-windows-msvc": [
             "@queng_vendored__getrandom-0.2.15//:getrandom",  # aarch64-pc-windows-msvc
-            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
+            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
         ],
         "@rules_rust//rust/platform:aarch64-unknown-linux-gnu": [
             "@queng_vendored__getrandom-0.2.15//:getrandom",  # aarch64-unknown-linux-gnu
-            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
+            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
         ],
         "@rules_rust//rust/platform:aarch64-unknown-nixos-gnu": [
             "@queng_vendored__getrandom-0.2.15//:getrandom",  # aarch64-unknown-linux-gnu, aarch64-unknown-nixos-gnu
-            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
+            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
         ],
         "@rules_rust//rust/platform:aarch64-unknown-nto-qnx710": [
             "@queng_vendored__getrandom-0.2.15//:getrandom",  # aarch64-unknown-nto-qnx710
-            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
+            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
         ],
         "@rules_rust//rust/platform:arm-unknown-linux-gnueabi": [
             "@queng_vendored__getrandom-0.2.15//:getrandom",  # arm-unknown-linux-gnueabi
-            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
+            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
         ],
         "@rules_rust//rust/platform:armv7-linux-androideabi": [
             "@queng_vendored__getrandom-0.2.15//:getrandom",  # armv7-linux-androideabi
-            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
+            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
         ],
         "@rules_rust//rust/platform:armv7-unknown-linux-gnueabi": [
             "@queng_vendored__getrandom-0.2.15//:getrandom",  # armv7-unknown-linux-gnueabi
-            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
+            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
         ],
         "@rules_rust//rust/platform:i686-apple-darwin": [
             "@queng_vendored__getrandom-0.2.15//:getrandom",  # i686-apple-darwin
-            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
+            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
         ],
         "@rules_rust//rust/platform:i686-linux-android": [
             "@queng_vendored__getrandom-0.2.15//:getrandom",  # i686-linux-android
-            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
+            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
         ],
         "@rules_rust//rust/platform:i686-pc-windows-msvc": [
             "@queng_vendored__getrandom-0.2.15//:getrandom",  # i686-pc-windows-msvc
-            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
+            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
         ],
         "@rules_rust//rust/platform:i686-unknown-freebsd": [
             "@queng_vendored__getrandom-0.2.15//:getrandom",  # i686-unknown-freebsd
-            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
+            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
         ],
         "@rules_rust//rust/platform:i686-unknown-linux-gnu": [
             "@queng_vendored__getrandom-0.2.15//:getrandom",  # i686-unknown-linux-gnu
-            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
+            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
         ],
         "@rules_rust//rust/platform:powerpc-unknown-linux-gnu": [
             "@queng_vendored__getrandom-0.2.15//:getrandom",  # powerpc-unknown-linux-gnu
-            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
+            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
         ],
         "@rules_rust//rust/platform:riscv32imc-unknown-none-elf": [
             "@queng_vendored__getrandom-0.2.15//:getrandom",  # riscv32imc-unknown-none-elf
-            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
+            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
         ],
         "@rules_rust//rust/platform:riscv64gc-unknown-none-elf": [
             "@queng_vendored__getrandom-0.2.15//:getrandom",  # riscv64gc-unknown-none-elf
-            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
+            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
         ],
         "@rules_rust//rust/platform:s390x-unknown-linux-gnu": [
             "@queng_vendored__getrandom-0.2.15//:getrandom",  # s390x-unknown-linux-gnu
-            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
+            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
         ],
         "@rules_rust//rust/platform:thumbv7em-none-eabi": [
             "@queng_vendored__getrandom-0.2.15//:getrandom",  # thumbv7em-none-eabi
@@ -315,47 +315,47 @@ rust_library(
         ],
         "@rules_rust//rust/platform:wasm32-unknown-unknown": [
             "@queng_vendored__const-random-0.1.18//:const_random",  # wasm32-unknown-unknown
-            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
+            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
         ],
         "@rules_rust//rust/platform:wasm32-wasi": [
             "@queng_vendored__const-random-0.1.18//:const_random",  # wasm32-wasi
-            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
+            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
         ],
         "@rules_rust//rust/platform:x86_64-apple-darwin": [
             "@queng_vendored__getrandom-0.2.15//:getrandom",  # x86_64-apple-darwin
-            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
+            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
         ],
         "@rules_rust//rust/platform:x86_64-apple-ios": [
             "@queng_vendored__getrandom-0.2.15//:getrandom",  # x86_64-apple-ios
-            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
+            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
         ],
         "@rules_rust//rust/platform:x86_64-fuchsia": [
             "@queng_vendored__getrandom-0.2.15//:getrandom",  # x86_64-fuchsia
-            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
+            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
         ],
         "@rules_rust//rust/platform:x86_64-linux-android": [
             "@queng_vendored__getrandom-0.2.15//:getrandom",  # x86_64-linux-android
-            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
+            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
         ],
         "@rules_rust//rust/platform:x86_64-pc-windows-msvc": [
             "@queng_vendored__getrandom-0.2.15//:getrandom",  # x86_64-pc-windows-msvc
-            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
+            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
         ],
         "@rules_rust//rust/platform:x86_64-unknown-freebsd": [
             "@queng_vendored__getrandom-0.2.15//:getrandom",  # x86_64-unknown-freebsd
-            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
+            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
         ],
         "@rules_rust//rust/platform:x86_64-unknown-linux-gnu": [
             "@queng_vendored__getrandom-0.2.15//:getrandom",  # x86_64-unknown-linux-gnu
-            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
+            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
         ],
         "@rules_rust//rust/platform:x86_64-unknown-nixos-gnu": [
             "@queng_vendored__getrandom-0.2.15//:getrandom",  # x86_64-unknown-linux-gnu, x86_64-unknown-nixos-gnu
-            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
+            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
         ],
         "@rules_rust//rust/platform:x86_64-unknown-none": [
             "@queng_vendored__getrandom-0.2.15//:getrandom",  # x86_64-unknown-none
-            "@queng_vendored__once_cell-1.20.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
+            "@queng_vendored__once_cell-1.19.0//:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
         ],
         "//conditions:default": [],
     }),
@@ -372,6 +372,7 @@ cargo_build_script(
         allow_empty = True,
         exclude = [
             "**/* *",
+            "**/*.rs",
             ".tmp_git_root/**/*",
             "BUILD",
             "BUILD.bazel",

@@ -28,15 +28,9 @@ rust_proc_macro(
             "WORKSPACE.bazel",
         ],
     ),
-    crate_features = select({
-        "@rules_rust//rust/platform:wasm32-unknown-unknown": [
-            "spans",  # wasm32-unknown-unknown
-        ],
-        "@rules_rust//rust/platform:wasm32-wasi": [
-            "spans",  # wasm32-wasi
-        ],
-        "//conditions:default": [],
-    }),
+    crate_features = [
+        "spans",
+    ],
     crate_root = "src/lib.rs",
     edition = "2021",
     rustc_flags = [

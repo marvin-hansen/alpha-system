@@ -82,7 +82,7 @@ rust_library(
         "@queng_vendored__cfg-if-1.0.0//:cfg_if",
         "@queng_vendored__hashbrown-0.14.5//:hashbrown",
         "@queng_vendored__lock_api-0.4.12//:lock_api",
-        "@queng_vendored__once_cell-1.20.0//:once_cell",
+        "@queng_vendored__once_cell-1.19.0//:once_cell",
         "@queng_vendored__parking_lot_core-0.9.10//:parking_lot_core",
     ],
 )

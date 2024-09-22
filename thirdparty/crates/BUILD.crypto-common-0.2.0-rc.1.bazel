@@ -79,6 +79,6 @@ rust_library(
     }),
     version = "0.2.0-rc.1",
     deps = [
-        "@queng_vendored__hybrid-array-0.2.0-rc.9//:hybrid_array",
+        "@queng_vendored__hybrid-array-0.2.0-rc.10//:hybrid_array",
     ],
 )
