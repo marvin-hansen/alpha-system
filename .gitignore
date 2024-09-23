@@ -3,7 +3,6 @@
 .autometrics
 
 # Too big data files
-data/
 data/kaiko
 data/Kraken_Trading_History
 

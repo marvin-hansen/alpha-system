@@ -27,3 +27,7 @@ buildbuddy(
     name = "buildbuddy_toolchain",
     container_image = "ghcr.io/marvin-hansen/rbe-custom/rbe:latest",
 )
+
+load("//thirdparty:all_deps.bzl", "all_deps")
+
+all_deps()
