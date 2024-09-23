@@ -5390,7 +5390,7 @@
     "@@rules_rust~//crate_universe:extension.bzl%crate%<root>~crate": {
       "general": {
         "bzlTransitiveDigest": "CzumMJ+LM7HJExXOZwQkljicxSIiaYln/0E5sdn2EYc=",
-        "usagesDigest": "vbGr1Q8279je2VCKpE5tjq/VRUGPc0zsAca8M+zLY0k=",
+        "usagesDigest": "jlzZBcHs+mNy1GvN7lJBfYLoBXtC2eZj9Kjqy5rI2BQ=",
         "recordedFileInputs": {
           "@@rules_rust~~rust_host_tools~rust_host_tools//bin/rustc": "e36b0ed5d21634c3f5bf7225f1138e194fca12ba56d0e850fe9c7d493afc5c9a",
           "@@rules_rust~~rust_host_tools~rust_host_tools//bin/cargo": "a73bec6f705c450bb1c13b62d4fe54241100c33540be6cfb3cee9ccdba33b018"
@@ -19311,7 +19311,7 @@
     "@@toolchains_llvm~//toolchain/extensions:llvm.bzl%llvm": {
       "general": {
         "bzlTransitiveDigest": "y9h5L2NtWbogyWSOJgqnUaU50MTPWAW+waelXSirMVg=",
-        "usagesDigest": "EK1I2GuE+dBcuk8ry+sF2DWoR43+hbNhS7GRahqRPJs=",
+        "usagesDigest": "z5XHY5CT7+fGrbrut4D3SYlH+C/ejiGMoOlDfn8Awp8=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -19334,7 +19334,7 @@
               "link_flags": {},
               "link_libs": {},
               "llvm_versions": {
-                "": "18.1.8",
+                "": "17.0.6",
                 "darwin-aarch64": "17.0.6"
               },
               "opt_compile_flags": {},
@@ -19366,7 +19366,7 @@
               "link_flags": {},
               "link_libs": {},
               "llvm_versions": {
-                "": "18.1.8",
+                "": "17.0.6",
                 "darwin-aarch64": "17.0.6"
               },
               "opt_compile_flags": {},
@@ -19390,7 +19390,7 @@
               "llvm_mirror": "",
               "llvm_version": "",
               "llvm_versions": {
-                "": "18.1.8",
+                "": "17.0.6",
                 "darwin-aarch64": "17.0.6"
               },
               "netrc": "",
@@ -19417,7 +19417,7 @@
               "link_flags": {},
               "link_libs": {},
               "llvm_versions": {
-                "": "18.1.8",
+                "": "17.0.6",
                 "darwin-aarch64": "17.0.6"
               },
               "opt_compile_flags": {},
@@ -19443,7 +19443,7 @@
               "llvm_mirror": "",
               "llvm_version": "",
               "llvm_versions": {
-                "": "18.1.8",
+                "": "17.0.6",
                 "darwin-aarch64": "17.0.6"
               },
               "netrc": "",
@@ -19464,7 +19464,7 @@
               "llvm_mirror": "",
               "llvm_version": "",
               "llvm_versions": {
-                "": "18.1.8",
+                "": "17.0.6",
                 "darwin-aarch64": "17.0.6"
               },
               "netrc": "",

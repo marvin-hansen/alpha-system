@@ -116,21 +116,7 @@ crates_vendor(
             package = "csv",
             version = "1.3.0",
         ),
-        "diesel": crate.spec(
-            default_features = False,
-            features = [
-                "postgres",
-                "r2d2",
-            ],
-            package = "diesel",
-            version = "2.2.4",
-        ),
-        "diesel_migrations": crate.spec(
-            default_features = False,
-            features = ["postgres"],
-            package = "diesel_migrations",
-            version = "2.2.0",
-        ),
+        # Diesel and Diesel Migration are defined in MODULE.bazel
         "dotenv": crate.spec(
             default_features = False,
             package = "dotenv",

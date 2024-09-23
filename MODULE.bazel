@@ -222,7 +222,7 @@ crate.spec(
         "r2d2",
     ],
     package = "diesel",
-    version = "2.2.2",
+    version = "2.2.4",
 )
 crate.spec(
     default_features = False,
