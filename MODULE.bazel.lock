@@ -5392,8 +5392,8 @@
         "bzlTransitiveDigest": "CzumMJ+LM7HJExXOZwQkljicxSIiaYln/0E5sdn2EYc=",
         "usagesDigest": "jlzZBcHs+mNy1GvN7lJBfYLoBXtC2eZj9Kjqy5rI2BQ=",
         "recordedFileInputs": {
-          "@@rules_rust~~rust_host_tools~rust_host_tools//bin/rustc": "e36b0ed5d21634c3f5bf7225f1138e194fca12ba56d0e850fe9c7d493afc5c9a",
-          "@@rules_rust~~rust_host_tools~rust_host_tools//bin/cargo": "a73bec6f705c450bb1c13b62d4fe54241100c33540be6cfb3cee9ccdba33b018"
+          "@@rules_rust~~rust_host_tools~rust_host_tools//bin/rustc": "91f9ba0819d622cbb0f4f3298580d939173eb3258d95f7755b301a394eeb2ae0",
+          "@@rules_rust~~rust_host_tools~rust_host_tools//bin/cargo": "0e654dccd3501e5feb68aa570e5f780d5f7921c820e558ac5d3ef60016b5c0a7"
         },
         "recordedDirentsInputs": {},
         "envVariables": {},
