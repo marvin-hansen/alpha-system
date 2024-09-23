@@ -66,7 +66,7 @@ common --reuse_sandbox_directories
 # Input files will be hardlinked to the sandbox instead of symlinked to from the sandbox.
 # If action input files are located on a filesystem different from the sandbox, then the input files will be copied instead.
 # https://bazel.build/reference/command-line-reference#flag--experimental_use_hermetic_linux_sandbox
-common --experimental_use_hermetic_linux_sandbox
+# common --experimental_use_hermetic_linux_sandbox
 
 # Enable a more detailed performance profile
 common --noslim_profile
