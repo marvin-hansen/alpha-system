@@ -163,6 +163,10 @@ crates_vendor(
             package = "reqwest",
             version = "0.12.7",
         ),
+        "ring": crate.spec(
+            package = "ring",
+            version = "0.17.8",
+        ),
         "rust_decimal": crate.spec(
             package = "rust_decimal",
             version = "1.36.0",

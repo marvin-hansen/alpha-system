@@ -318,6 +318,7 @@ _NORMAL_DEPENDENCIES = {
             "protoc-gen-prost": Label("//thirdparty/crates/protoc-gen-prost-0.3.1:protoc_gen_prost"),
             "protoc-gen-tonic": Label("//thirdparty/crates/protoc-gen-tonic-0.4.1:protoc_gen_tonic"),
             "reqwest": Label("//thirdparty/crates/reqwest-0.12.7:reqwest"),
+            "ring": Label("//thirdparty/crates/ring-0.17.8:ring"),
             "rust_decimal": Label("//thirdparty/crates/rust_decimal-1.36.0:rust_decimal"),
             "rustls": Label("//thirdparty/crates/rustls-0.23.13:rustls"),
             "serde": Label("//thirdparty/crates/serde-1.0.210:serde"),
