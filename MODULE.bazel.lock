@@ -19311,7 +19311,7 @@
     "@@toolchains_llvm~//toolchain/extensions:llvm.bzl%llvm": {
       "general": {
         "bzlTransitiveDigest": "y9h5L2NtWbogyWSOJgqnUaU50MTPWAW+waelXSirMVg=",
-        "usagesDigest": "vhyV7yMRcRoFq0NYnP4ygmpmwUN/vFYbY7HOETlb0G4=",
+        "usagesDigest": "EK1I2GuE+dBcuk8ry+sF2DWoR43+hbNhS7GRahqRPJs=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -19335,7 +19335,7 @@
               "link_libs": {},
               "llvm_versions": {
                 "": "18.1.8",
-                "darwin-aarch64": "18.1.8"
+                "darwin-aarch64": "17.0.6"
               },
               "opt_compile_flags": {},
               "opt_link_flags": {},
@@ -19367,7 +19367,7 @@
               "link_libs": {},
               "llvm_versions": {
                 "": "18.1.8",
-                "darwin-aarch64": "18.1.8"
+                "darwin-aarch64": "17.0.6"
               },
               "opt_compile_flags": {},
               "opt_link_flags": {},
@@ -19391,7 +19391,7 @@
               "llvm_version": "",
               "llvm_versions": {
                 "": "18.1.8",
-                "darwin-aarch64": "18.1.8"
+                "darwin-aarch64": "17.0.6"
               },
               "netrc": "",
               "sha256": {},
@@ -19418,7 +19418,7 @@
               "link_libs": {},
               "llvm_versions": {
                 "": "18.1.8",
-                "darwin-aarch64": "18.1.8"
+                "darwin-aarch64": "17.0.6"
               },
               "opt_compile_flags": {},
               "opt_link_flags": {},
@@ -19444,7 +19444,7 @@
               "llvm_version": "",
               "llvm_versions": {
                 "": "18.1.8",
-                "darwin-aarch64": "18.1.8"
+                "darwin-aarch64": "17.0.6"
               },
               "netrc": "",
               "sha256": {},
@@ -19465,7 +19465,7 @@
               "llvm_version": "",
               "llvm_versions": {
                 "": "18.1.8",
-                "darwin-aarch64": "18.1.8"
+                "darwin-aarch64": "17.0.6"
               },
               "netrc": "",
               "sha256": {},
