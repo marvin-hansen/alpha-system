@@ -6,8 +6,8 @@ rust_test_suite(
         "*_tests.rs",
     ]),
     tags = [
-        "db_clickhouse_manager",
-        "integration",
+        # "db_clickhouse_manager",
+        # "integration_test",
     ],
     visibility = ["//visibility:public"],
     deps = [
