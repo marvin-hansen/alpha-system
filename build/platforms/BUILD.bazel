@@ -34,7 +34,7 @@ platform(
     constraint_values = [
         "@platforms//cpu:aarch64",
         "@platforms//os:linux",
-        "@//build/linker:musl",
+        # "@//build/linker:musl",
     ],
     exec_properties = {"container-image": "docker://ghcr.io/marvin-hansen/rbe-custom/rbe:latest"},
 )
