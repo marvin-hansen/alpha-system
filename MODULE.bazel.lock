@@ -19817,7 +19817,7 @@
     "@@toolchains_llvm~//toolchain/extensions:llvm.bzl%llvm": {
       "general": {
         "bzlTransitiveDigest": "y9h5L2NtWbogyWSOJgqnUaU50MTPWAW+waelXSirMVg=",
-        "usagesDigest": "z5XHY5CT7+fGrbrut4D3SYlH+C/ejiGMoOlDfn8Awp8=",
+        "usagesDigest": "/Au3vTVHSgjkXJnyJfWyn0IbjwVRYuQzH35KUS8exY8=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -19840,7 +19840,7 @@
               "link_flags": {},
               "link_libs": {},
               "llvm_versions": {
-                "": "17.0.6",
+                "": "16.0.0",
                 "darwin-aarch64": "17.0.6"
               },
               "opt_compile_flags": {},
@@ -19872,7 +19872,7 @@
               "link_flags": {},
               "link_libs": {},
               "llvm_versions": {
-                "": "17.0.6",
+                "": "16.0.0",
                 "darwin-aarch64": "17.0.6"
               },
               "opt_compile_flags": {},
@@ -19896,7 +19896,7 @@
               "llvm_mirror": "",
               "llvm_version": "",
               "llvm_versions": {
-                "": "17.0.6",
+                "": "16.0.0",
                 "darwin-aarch64": "17.0.6"
               },
               "netrc": "",
@@ -19923,7 +19923,7 @@
               "link_flags": {},
               "link_libs": {},
               "llvm_versions": {
-                "": "17.0.6",
+                "": "16.0.0",
                 "darwin-aarch64": "17.0.6"
               },
               "opt_compile_flags": {},
@@ -19949,7 +19949,7 @@
               "llvm_mirror": "",
               "llvm_version": "",
               "llvm_versions": {
-                "": "17.0.6",
+                "": "16.0.0",
                 "darwin-aarch64": "17.0.6"
               },
               "netrc": "",
@@ -19970,7 +19970,7 @@
               "llvm_mirror": "",
               "llvm_version": "",
               "llvm_versions": {
-                "": "17.0.6",
+                "": "16.0.0",
                 "darwin-aarch64": "17.0.6"
               },
               "netrc": "",
