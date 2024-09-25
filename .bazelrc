@@ -62,6 +62,12 @@ common --verbose_failures
 common --noexperimental_merged_skyframe_analysis_execution
 common --reuse_sandbox_directories
 
+# If set to true, do not mount root, only mount whats provided with sandbox_add_mount_pair.
+# Input files will be hardlinked to the sandbox instead of symlinked to from the sandbox.
+# If action input files are located on a filesystem different from the sandbox, then the input files will be copied instead.
+# https://bazel.build/reference/command-line-reference#flag--experimental_use_hermetic_linux_sandbox
+common --experimental_use_hermetic_linux_sandbox
+
 # Enable a more detailed performance profile
 common --noslim_profile
 common --experimental_profile_include_target_label
