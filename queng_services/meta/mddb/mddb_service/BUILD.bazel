@@ -8,32 +8,22 @@ load("@rules_oci//oci:defs.bzl", "oci_push")
 # Rules rust
 load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_doc", "rust_doc_test")
 
+# Custom optimized Rust binary macro
+load("//:build/binary.bzl", "build_binary_opt")
+
 # Custom container macro
 load("//:build/container.bzl", "build_multi_arch_image", "build_sha265_tag")
 
-rust_binary(
+###############################################################################
+# Rust Binary
+###############################################################################
+
+# Build optimized binary
+build_binary_opt(
     name = "mddb",
     srcs = glob([
         "src/**/*.rs",
     ]),
-    crate_root = "src/main.rs",
-    rustc_flags = select({
-        "//:release": [
-            "-Clto=true",
-            "-Ccodegen-units=1",
-            "-Cpanic=abort",
-            "-Copt-level=3",
-            "-Cstrip=symbols",
-        ],
-        "//conditions:default": [
-            "-Copt-level=0",
-        ],
-    }),
-    tags = [
-        "service",
-        "smdb",
-    ],
-    visibility = ["//visibility:public"],
     deps = [
         # Specs
         "//alias:mddb_specs",
