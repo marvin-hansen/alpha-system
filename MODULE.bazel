@@ -199,12 +199,7 @@ use_repo(
 )
 
 ###############################################################################
-# BuildBuddy Toolchain: https://github.com/buildbuddy-io/buildbuddy-toolchain/
-###############################################################################
-# See WORKSPACE.bzlmod
+# BuildBuddy Toolchain see WORKSPACE.bzlmod
 # https://github.com/buildbuddy-io/buildbuddy-toolchain/issues/18
-
+# Rust dependencies. See thirdparty/BUILD.bazel
 ###############################################################################
-# RUST DEPENDENCIES
-###############################################################################
-# See thirdparty/BUILD.bazel
