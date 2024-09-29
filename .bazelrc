@@ -69,7 +69,7 @@ common --experimental_profile_include_primary_output
 ###############################################################################
 
 # Debug toolchain resolution
-build --toolchain_resolution_debug='@bazel_tools//tools/cpp:toolchain_type
+# build --toolchain_resolution_debug='@bazel_tools//tools/cpp:toolchain_type
 
 # Required to resolve MUSL toolchain.
 # https://github.com/bazel-contrib/musl-toolchain?tab=readme-ov-file#setup
@@ -82,7 +82,7 @@ build --incompatible_merge_fixed_and_default_shell_env
 # Input files will be hardlinked to the sandbox instead of symlinked to from the sandbox.
 # If action input files are located on a filesystem different from the sandbox, then the input files will be copied instead.
 # https://bazel.build/reference/command-line-reference#flag--experimental_use_hermetic_linux_sandbox
-common --experimental_use_hermetic_linux_sandbox
+# common --experimental_use_hermetic_linux_sandbox
 
 ###############################################################################
 ## Remote configuration
@@ -120,5 +120,4 @@ common:remote --remote_header=x-buildbuddy-api-key=4Ml6AhYICvGtZ3XhqafP
 ## consistent behavior when setting flags in that file as `.bazelrc` files are
 ## evaluated top to bottom.
 ###############################################################################
-
 try-import %workspace%/user.bazelrc

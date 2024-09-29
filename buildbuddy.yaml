@@ -3,7 +3,7 @@ actions:
     triggers:
       push:
         branches:
-          - "main"
+         - "main"
          # - "no_run" # Disables CI i.e. when testing the custom RBE image.
   # Renovate Bot triggers too many builds. Disabled PR builds.
   #      pull_request:
