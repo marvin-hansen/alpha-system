@@ -230,7 +230,7 @@ serde_json = { version = "1.0.128" }
 tonic = { version = "0.12.2", features = ["transport"] }
 tonic-build = { version = "0.12.2" }
 tonic-health = { version = "0.12.2", default-features = false, features = ["transport"] }
-tokio = { version = "1.40.0", default-features = false, features = ["macros", "net", "rt-multi-thread", "signal"] }
+tokio = { version = "1.40.0", default-features = false, features = ["macros", "net", "rt-multi-thread", "signal", "time"] }
 tokio-cron-scheduler = { version = "0.13.0", features = ["signal"] }
 tokio-timer = { version = "0.2.13" }
 tokio-tungstenite = { version = "0.24.0", default-features = false }

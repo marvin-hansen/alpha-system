@@ -28,6 +28,9 @@ rust_library(
             "WORKSPACE.bazel",
         ],
     ),
+    crate_features = [
+        "serde",
+    ],
     crate_root = "src/lib.rs",
     edition = "2021",
     rustc_flags = [
@@ -78,4 +81,7 @@ rust_library(
         "//conditions:default": ["@platforms//:incompatible"],
     }),
     version = "0.6.8",
+    deps = [
+        "//thirdparty/crates/serde-1.0.210:serde",
+    ],
 )

@@ -97,7 +97,7 @@ rust_library(
         "//thirdparty/crates/hostname-0.3.1:hostname",
         "//thirdparty/crates/lazy_static-1.5.0:lazy_static",
         "//thirdparty/crates/log-0.4.22:log",
-        "//thirdparty/crates/lz4-1.27.0:lz4",
+        "//thirdparty/crates/lz4-1.28.0:lz4",
         "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",
         "//thirdparty/crates/pin-project-1.1.5:pin_project",
         "//thirdparty/crates/thiserror-1.0.64:thiserror",

@@ -35,7 +35,7 @@ rust_test_suite(
         "//alias:postgres_migrations",
         # External crates
         "//thirdparty/crates:tokio",
-        "@crates//:diesel",
+        "//thirdparty/crates:diesel",
         "//thirdparty/crates:dotenv",
         "//thirdparty/crates:serde",
     ],

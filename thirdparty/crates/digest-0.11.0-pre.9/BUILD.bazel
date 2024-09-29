@@ -84,7 +84,7 @@ rust_library(
     }),
     version = "0.11.0-pre.9",
     deps = [
-        "//thirdparty/crates/block-buffer-0.11.0-rc.1:block_buffer",
+        "//thirdparty/crates/block-buffer-0.11.0-rc.2:block_buffer",
         "//thirdparty/crates/crypto-common-0.2.0-rc.1:crypto_common",
     ],
 )

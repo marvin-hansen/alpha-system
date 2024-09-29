@@ -16,9 +16,7 @@ rust_library(
         ":copy_migrations",
     ],
     crate_root = "src/lib.rs",
-    rustc_env = {
-        "MIGRATION_DATA": "$(location :copy_migrations)",
-    },
+    rustc_env = {"MIGRATION_DATA": "$(location :copy_migrations)"},
     tags = [
         "infra",
         "pg_cmdb",
@@ -32,8 +30,8 @@ rust_library(
         "//alias:postgres_migrations",
         # External crates
         "//thirdparty/crates:bon",
-        "@crates//:diesel",
-        "@crates//:diesel_migrations",
+        "//thirdparty/crates:diesel",
+        "//thirdparty/crates:diesel_migrations",
     ],
 )
 

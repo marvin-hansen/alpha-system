@@ -17,7 +17,7 @@ rust_library(
         allow_empty = False,
     ),
     aliases = {
-        "//thirdparty/crates/rustls-pki-types-1.8.0:rustls_pki_types": "pki_types",
+        "//thirdparty/crates/rustls-pki-types-1.9.0:rustls_pki_types": "pki_types",
     },
     compile_data = glob(
         include = ["**"],
@@ -215,7 +215,7 @@ rust_library(
     }),
     version = "0.102.8",
     deps = [
-        "//thirdparty/crates/rustls-pki-types-1.8.0:rustls_pki_types",
+        "//thirdparty/crates/rustls-pki-types-1.9.0:rustls_pki_types",
         "//thirdparty/crates/untrusted-0.9.0:untrusted",
     ] + select({
         "@rules_rust//rust/platform:aarch64-apple-darwin": [

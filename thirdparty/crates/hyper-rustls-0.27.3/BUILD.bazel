@@ -17,7 +17,7 @@ rust_library(
         allow_empty = False,
     ),
     aliases = {
-        "//thirdparty/crates/rustls-pki-types-1.8.0:rustls_pki_types": "pki_types",
+        "//thirdparty/crates/rustls-pki-types-1.9.0:rustls_pki_types": "pki_types",
     },
     compile_data = glob(
         include = ["**"],
@@ -94,7 +94,7 @@ rust_library(
         "//thirdparty/crates/hyper-1.4.1:hyper",
         "//thirdparty/crates/hyper-util-0.1.9:hyper_util",
         "//thirdparty/crates/rustls-0.23.13:rustls",
-        "//thirdparty/crates/rustls-pki-types-1.8.0:rustls_pki_types",
+        "//thirdparty/crates/rustls-pki-types-1.9.0:rustls_pki_types",
         "//thirdparty/crates/tokio-1.40.0:tokio",
         "//thirdparty/crates/tokio-rustls-0.26.0:tokio_rustls",
         "//thirdparty/crates/tower-service-0.3.3:tower_service",

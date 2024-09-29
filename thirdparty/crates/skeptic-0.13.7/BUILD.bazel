@@ -84,7 +84,7 @@ rust_library(
         "//thirdparty/crates/error-chain-0.12.4:error_chain",
         "//thirdparty/crates/glob-0.3.1:glob",
         "//thirdparty/crates/pulldown-cmark-0.9.6:pulldown_cmark",
-        "//thirdparty/crates/tempfile-3.12.0:tempfile",
+        "//thirdparty/crates/tempfile-3.13.0:tempfile",
         "//thirdparty/crates/walkdir-2.5.0:walkdir",
     ],
 )

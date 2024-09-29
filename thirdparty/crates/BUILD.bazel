@@ -97,6 +97,18 @@ alias(
 )
 
 alias(
+    name = "diesel",
+    actual = "//thirdparty/crates/diesel-2.2.4:diesel",
+    tags = ["manual"],
+)
+
+alias(
+    name = "diesel_migrations",
+    actual = "//thirdparty/crates/diesel_migrations-2.2.0:diesel_migrations",
+    tags = ["manual"],
+)
+
+alias(
     name = "dotenv",
     actual = "//thirdparty/crates/dotenv-0.15.0:dotenv",
     tags = ["manual"],
@@ -248,19 +260,19 @@ alias(
 
 alias(
     name = "tonic",
-    actual = "//thirdparty/crates/tonic-0.12.2:tonic",
+    actual = "//thirdparty/crates/tonic-0.12.3:tonic",
     tags = ["manual"],
 )
 
 alias(
     name = "tonic-build",
-    actual = "//thirdparty/crates/tonic-build-0.12.2:tonic_build",
+    actual = "//thirdparty/crates/tonic-build-0.12.3:tonic_build",
     tags = ["manual"],
 )
 
 alias(
     name = "tonic-health",
-    actual = "//thirdparty/crates/tonic-health-0.12.2:tonic_health",
+    actual = "//thirdparty/crates/tonic-health-0.12.3:tonic_health",
     tags = ["manual"],
 )
 

@@ -84,7 +84,7 @@ rust_library(
     }),
     version = "0.4.12",
     deps = [
-        "//thirdparty/crates/flate2-1.0.33:flate2",
+        "//thirdparty/crates/flate2-1.0.34:flate2",
         "//thirdparty/crates/futures-core-0.3.30:futures_core",
         "//thirdparty/crates/memchr-2.7.4:memchr",
         "//thirdparty/crates/pin-project-lite-0.2.14:pin_project_lite",
