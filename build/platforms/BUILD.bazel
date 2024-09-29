@@ -26,6 +26,7 @@ platform(
         # MUSL static linking on Linux for Linux is broken.
         # "@//build/linker:musl",
     ],
+    exec_properties = {"container-image": "docker://ghcr.io/marvin-hansen/rbe-custom/rbe:latest"},
 )
 
 platform(
@@ -35,6 +36,7 @@ platform(
         "@platforms//os:linux",
         # "@//build/linker:musl",
     ],
+    exec_properties = {"container-image": "docker://ghcr.io/marvin-hansen/rbe-custom/rbe:latest"},
 )
 
 # Platform for BB Remote Host
@@ -52,7 +54,6 @@ platform(
     ],
     exec_properties = {
         "OSFamily": "Linux",
-        "container-image": "docker://ghcr.io/marvin-hansen/rbe-custom/rbe:latest"
     },
 )
 
