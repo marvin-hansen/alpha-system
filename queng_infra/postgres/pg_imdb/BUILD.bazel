@@ -2,24 +2,12 @@ load("@bazel_skylib//rules:copy_directory.bzl", "copy_directory")
 load("@bazel_skylib//rules:copy_file.bzl", "copy_file")
 load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library")
 
-copy_directory(
-    name = "copy_migrations",
-    src = "src/migrations",
-    out = "src/migrations",
-)
-
 rust_library(
     name = "pg_imdb",
     srcs = glob(
         ["src/**"],
     ),
-    compile_data = [
-        ":copy_migrations",
-    ],
     crate_root = "src/lib.rs",
-    rustc_env = {
-        "MIGRATION_DATA": "$(location :copy_migrations)",
-    },
     tags = [
         "infra",
         "pg_mddb",
@@ -30,7 +18,7 @@ rust_library(
         # Internal crates
         "//alias:common_metadata",
         "//alias:postgres_migrations",
-        #
+        # External crates
         "//thirdparty/crates:diesel",
         "//thirdparty/crates:diesel_migrations",
     ],
@@ -43,4 +31,9 @@ rust_doc(
     visibility = ["//visibility:public"],
 )
 
-# can't run tests on docs because of the env variable that is unavailable in the test
+rust_doc_test(
+    name = "doc_test",
+    crate = ":pg_imdb",
+    tags = ["doc-test"],
+    visibility = ["//visibility:public"],
+)

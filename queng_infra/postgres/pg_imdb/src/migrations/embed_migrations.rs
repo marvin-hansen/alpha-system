@@ -4,18 +4,14 @@ use diesel_migrations::{EmbeddedMigration, EmbeddedMigrations, EmbeddedName, Tom
 pub const EMBEDDED_MIGRATIONS: EmbeddedMigrations =
     EmbeddedMigrations::new(&[DIESEL_MIGRATION, SCHEMA_MIGRATION]);
 
-/// An embedded version of the DIESEL database migrations metadata tables.
-/// This can be used to inspect the DB Schema without having to run it, or to
-/// create a new database with Diesel auto-migration support.
-pub(crate) const DIESEL_MIGRATION: EmbeddedMigration = EmbeddedMigration::new(
+const DIESEL_MIGRATION: EmbeddedMigration = EmbeddedMigration::new(
     DIESEL_UP,
     Some(DIESEL_DOWN),
     EmbeddedName::new(DIESEL_NAME),
     TomlMetadataWrapper::new(true),
 );
 
-/// A migration that creates the database schema.
-pub(crate) const SCHEMA_MIGRATION: EmbeddedMigration = EmbeddedMigration::new(
+const SCHEMA_MIGRATION: EmbeddedMigration = EmbeddedMigration::new(
     SCHEMA_UP,
     Some(SCHEMA_DOWN),
     EmbeddedName::new(SCHEMA_NAME),

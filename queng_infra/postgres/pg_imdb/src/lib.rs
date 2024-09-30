@@ -1,13 +1,12 @@
+use crate::migrations::embed_migrations::EMBEDDED_MIGRATIONS;
 // Unsafe code must be explicitly enabled to use it.
 #[deny(unsafe_code)]
 //
-use crate::embed_migrations::EMBEDDED_MIGRATIONS;
 use diesel_migrations::EmbeddedMigrations;
 use postgres_migrations::Connection;
 use std::error::Error;
 
-mod embed_migrations;
-
+mod migrations;
 mod schema;
 
 pub const MIGRATIONS: EmbeddedMigrations = EMBEDDED_MIGRATIONS;
@@ -16,7 +15,6 @@ pub fn run_imdb_db_migration(
     conn: &mut Connection,
 ) -> Result<(), Box<dyn Error + Send + Sync + 'static>> {
     println!("[PostgresIMDB]: Run DB Migration()");
-
     // Run migrations if there are pending
     postgres_migrations::run_db_migration(conn, MIGRATIONS)
 }
