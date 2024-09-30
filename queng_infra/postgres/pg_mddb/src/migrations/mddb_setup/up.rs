@@ -1,3 +1,4 @@
+pub const SCHEMA_UP: &'static str = r#"
 -- Your SQL goes here
 CREATE SCHEMA IF NOT EXISTS mddb;
 
@@ -48,3 +49,4 @@ CREATE TABLE mddb.stats(
     "stats_number_exchanges" INTEGER NOT NULL,
     "stats_number_instruments" INTEGER NOT NULL
 );
+"#;

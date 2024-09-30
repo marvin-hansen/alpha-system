@@ -1,4 +1,4 @@
-use crate::migrations::embed_migrations::EMBEDDED_MIGRATIONS;
+use crate::migrations::EMBEDDED_MIGRATIONS;
 // Unsafe code must be explicitly enabled to use it.
 #[deny(unsafe_code)]
 //

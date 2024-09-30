@@ -1,9 +1,7 @@
+pub const DIESEL_UP: &'static str = r#"
 -- This file was automatically created by Diesel to setup helper functions
 -- and other internal bookkeeping. This file is safe to edit, any future
 -- changes will be added to existing projects as new migrations.
-
-
-
 
 -- Sets up a trigger for the given table to automatically set a column called
 -- `updated_at` whenever the row is modified (unless `updated_at` was included
@@ -34,3 +32,4 @@ BEGIN
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
+"#;
