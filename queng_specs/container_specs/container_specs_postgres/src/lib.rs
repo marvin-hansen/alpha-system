@@ -10,8 +10,9 @@ pub fn postgres_db_container_config() -> ContainerConfig<'static> {
     ContainerConfig::new(
         "postgres",
         "postgres",
-        //  When you update the Dockertag, also update the postgres.sh script in scripts/ folder
-        "17rc1-alpine3.20",
+        //  When you update the Dockertag,
+        // also update the postgres.sh script in scripts/ folder
+        "17-alpine3.20",
         "0.0.0.0",
         5432,
         None,
