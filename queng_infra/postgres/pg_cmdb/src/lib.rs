@@ -1,12 +1,12 @@
+use crate::migrations::embed_migrations::EMBEDDED_MIGRATIONS;
 // Unsafe code must be explicitly enabled to use it.
 #[deny(unsafe_code)]
 //
-use crate::embed_migrations::EMBEDDED_MIGRATIONS;
 use diesel_migrations::EmbeddedMigrations;
 use postgres_migrations::Connection;
 use std::error::Error;
 
-pub(crate) mod embed_migrations;
+pub(crate) mod migrations;
 pub mod model;
 pub mod prelude;
 pub(crate) mod schema;

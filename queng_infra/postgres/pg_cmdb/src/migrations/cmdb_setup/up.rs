@@ -1,3 +1,4 @@
+pub const SCHEMA_UP: &'static str = r#"
 -- Your SQL goes here
 CREATE SCHEMA IF NOT EXISTS cmdb;
 
@@ -33,3 +34,4 @@ CREATE TABLE cmdb.portfolio_instrument (
 	instrument_id VARCHAR REFERENCES cmdb.instrument(code),
 	PRIMARY KEY(portfolio_id, instrument_id)
 );
+"#;
