@@ -1,3 +1,4 @@
+pub const SCHEMA_UP: &'static str = r#"
 -- Your SQL goes here
 CREATE SCHEMA IF NOT EXISTS smdb;
 
@@ -27,3 +28,4 @@ CREATE TABLE  smdb.service(
 	"dependencies" INTEGER[] NOT NULL,
 	"endpoints" smdb.service_endpoint[] NOT NULL
 );
+"#;
