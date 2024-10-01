@@ -14,7 +14,7 @@ actions:
       # Setup & Authenticate
       - "run -c opt //:buildbuddy_setup_docker_auth --verbose_failures"
       # Update lockfile of base image. When the lockfile changes, the base image will be rebuild in the next step.
-      - "run @rules_apko//apko lock images/base_image/apko.yaml"
+      - "run c opt @rules_apko//apko lock images/base_image/apko.yaml"
       # Build all targets with remote. Do NOT disable remote, otherwise the missing lib .. makes the workflow build fail.
       - "build -c opt //...  --config=remote"
       # Run Unit & Doc tests tests
