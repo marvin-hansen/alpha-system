@@ -1,0 +1,10 @@
+load("@rules_apko//apko:defs.bzl", "apko_image")
+
+
+apko_image(
+    name = "base_image",
+    config = "apko.yaml",
+    # See MODULE.bazel for how apko.lock.json is translated to @base_image//:contents
+    contents = "@base_image//:contents",
+    tag = "base_image:latest",
+)

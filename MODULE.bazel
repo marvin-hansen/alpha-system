@@ -18,6 +18,9 @@ bazel_dep(name = "rules_multirun", version = "0.9.0")
 # https://github.com/bazel-contrib/rules_oci/releases
 bazel_dep(name = "rules_oci", version = "2.0.0")
 
+# https://github.com/chainguard-dev/rules_apko/releases
+bazel_dep(name = "rules_apko", version = "1.4.0")
+
 # https://github.com/bazelbuild/rules_pkg/releases
 bazel_dep(name = "rules_pkg", version = "1.0.1")
 
@@ -61,7 +64,7 @@ git_override(
 # https://github.com/bazel-contrib/toolchains_llvm/blob/master/toolchain/internal/llvm_distributions.bzl
 LLVM_VERSIONS = {
     "": "16.0.0",  # Linux X86
-    "darwin-aarch64": "17.0.6",  # Apple Silicon Macs
+    "darwin-aarch64": "19.1.0",  # Apple Silicon Macs
 }
 
 # Sysroot for LLVM
@@ -174,6 +177,27 @@ python.toolchain(
     ignore_root_user_error = True,
     python_version = "3.11",
 )
+
+####################
+# rules_apko
+###################
+toolchain = use_extension("//apko:extensions.bzl", "apko")
+toolchain.toolchain(apko_version = "v0.19.2")
+use_repo(toolchain, "apko_toolchains")
+register_toolchains("@apko_toolchains//:all")
+
+# locks
+apk = use_extension(
+    "//apko:extensions.bzl",
+    "apko",
+    dev_dependency = True,
+)
+apk.translate_lock(
+    name = "base_image",
+    lock = "//images/base_image/lock:apko.lock.json",
+)
+use_repo(apk, "base_image")
+
 
 ###############################################################################
 #  O C I  I M A G E: https://github.com/bazel-contrib/rules_oci/releases

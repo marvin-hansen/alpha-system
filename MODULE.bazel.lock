@@ -75,6 +75,8 @@
     "https://bcr.bazel.build/modules/pybind11_bazel/2.11.1/source.json": "be4789e951dd5301282729fe3d4938995dc4c1a81c2ff150afc9f1b0504c6022",
     "https://bcr.bazel.build/modules/re2/2023-09-01/MODULE.bazel": "cb3d511531b16cfc78a225a9e2136007a48cf8a677e4264baeab57fe78a80206",
     "https://bcr.bazel.build/modules/re2/2023-09-01/source.json": "e044ce89c2883cd957a2969a43e79f7752f9656f6b20050b62f90ede21ec6eb4",
+    "https://bcr.bazel.build/modules/rules_apko/1.4.0/MODULE.bazel": "ce1a76703d237cbaaa3069a4b9f02e01a383f12338718167ecd365af4a3e711b",
+    "https://bcr.bazel.build/modules/rules_apko/1.4.0/source.json": "0c06333e1d985c2da7cc918cce9cbfd44fc77b002d63ec6138534d94600995e9",
     "https://bcr.bazel.build/modules/rules_buf/0.1.1/MODULE.bazel": "6189aec18a4f7caff599ad41b851ab7645d4f1e114aa6431acf9b0666eb92162",
     "https://bcr.bazel.build/modules/rules_buf/0.1.1/source.json": "021363d254f7438f3f10725355969c974bb2c67e0c28667782ade31a9cdb747f",
     "https://bcr.bazel.build/modules/rules_cc/0.0.1/MODULE.bazel": "cb2aa0747f84c6c3a78dad4e2049c154f08ab9d166b1273835a8174940365647",
@@ -138,8 +140,8 @@
     "https://bcr.bazel.build/modules/stardoc/0.5.4/MODULE.bazel": "6569966df04610b8520957cb8e97cf2e9faac2c0309657c537ab51c16c18a2a4",
     "https://bcr.bazel.build/modules/stardoc/0.6.2/MODULE.bazel": "7060193196395f5dd668eda046ccbeacebfd98efc77fed418dbe2b82ffaa39fd",
     "https://bcr.bazel.build/modules/stardoc/0.6.2/source.json": "d2ff8063b63b4a85e65fe595c4290f99717434fa9f95b4748a79a7d04dfed349",
-    "https://bcr.bazel.build/modules/toolchains_llvm/1.1.2/MODULE.bazel": "402101d6f73115ec49a3a765a3361c1dd90ba3959fa688ccdcd465c36dbbbc52",
-    "https://bcr.bazel.build/modules/toolchains_llvm/1.1.2/source.json": "27f3cf531bc654c719b50411cac94613b7676d63e60962243d485af63e13b9ff",
+    "https://bcr.bazel.build/modules/toolchains_llvm/1.2.0/MODULE.bazel": "7b271b71e50de47fa47159a7f58165e80fcebe1196c014a14af0a08a867d1635",
+    "https://bcr.bazel.build/modules/toolchains_llvm/1.2.0/source.json": "0328cfc67075d6a016980be4011bbc1dcfba933e357568002542dff22abdd3a1",
     "https://bcr.bazel.build/modules/toolchains_musl/0.1.20/MODULE.bazel": "cd23ead91352fde0751fb923fcf6fbf03a5d91842ba8af699535810db9ec198c",
     "https://bcr.bazel.build/modules/toolchains_musl/0.1.20/source.json": "3773f78152ec161e3b769ebb09e29fadd63143f3fba99298e5f8051c122e8435",
     "https://bcr.bazel.build/modules/toolchains_protoc/0.3.3/MODULE.bazel": "88dcce64b6d21454710d3f69006e57d29317e1637ccd04b75c7618c37cf1fc08",
@@ -1080,6 +1082,98 @@
         "recordedRepoMappingEntries": [
           [
             "pybind11_bazel~",
+            "bazel_tools",
+            "bazel_tools"
+          ]
+        ]
+      }
+    },
+    "@@rules_apko~//apko:extensions.bzl%apko": {
+      "general": {
+        "bzlTransitiveDigest": "FxYovtygS36jNw9oKzfchirzUhgOIDsGgSz18eLTWsc=",
+        "usagesDigest": "zoivVUpsL0P6VgH87sLKlJ92sdUSrs5Rf2y0lDwaPG8=",
+        "recordedFileInputs": {},
+        "recordedDirentsInputs": {},
+        "envVariables": {},
+        "generatedRepoSpecs": {
+          "apko_linux_arm64": {
+            "bzlFile": "@@rules_apko~//apko:repositories.bzl",
+            "ruleClassName": "apko_repositories",
+            "attributes": {
+              "platform": "linux_arm64",
+              "sha256": "sha256-2v2EySFUNJtovpkASfvxEXwteq4rwD3ItJ5LZWP0Tjc=",
+              "url": "https://github.com/chainguard-dev/apko/releases/download/v0.19.2/apko_0.19.2_linux_arm64.tar.gz",
+              "apko_version": "0.19.2",
+              "strip_prefix": "apko_0.19.2_linux_arm64"
+            }
+          },
+          "apko_darwin_arm64": {
+            "bzlFile": "@@rules_apko~//apko:repositories.bzl",
+            "ruleClassName": "apko_repositories",
+            "attributes": {
+              "platform": "darwin_arm64",
+              "sha256": "sha256-5hLBKfVaqBMrGzTiHsF/Er4p5AZwB++xKDRgFjD/Pho=",
+              "url": "https://github.com/chainguard-dev/apko/releases/download/v0.19.2/apko_0.19.2_darwin_arm64.tar.gz",
+              "apko_version": "0.19.2",
+              "strip_prefix": "apko_0.19.2_darwin_arm64"
+            }
+          },
+          "apko_toolchains": {
+            "bzlFile": "@@rules_apko~//apko/private:toolchains_repo.bzl",
+            "ruleClassName": "toolchains_repo",
+            "attributes": {
+              "user_repository_name": "apko",
+              "platforms": [
+                "darwin_amd64",
+                "darwin_arm64",
+                "linux_386",
+                "linux_amd64",
+                "linux_arm64"
+              ]
+            }
+          },
+          "apko_darwin_amd64": {
+            "bzlFile": "@@rules_apko~//apko:repositories.bzl",
+            "ruleClassName": "apko_repositories",
+            "attributes": {
+              "platform": "darwin_amd64",
+              "sha256": "sha256-2CNAV7DkXZYp0GzedQNXcIPxeJVQRy30xbOBvDdlhsg=",
+              "url": "https://github.com/chainguard-dev/apko/releases/download/v0.19.2/apko_0.19.2_darwin_amd64.tar.gz",
+              "apko_version": "0.19.2",
+              "strip_prefix": "apko_0.19.2_darwin_amd64"
+            }
+          },
+          "apko_linux_386": {
+            "bzlFile": "@@rules_apko~//apko:repositories.bzl",
+            "ruleClassName": "apko_repositories",
+            "attributes": {
+              "platform": "linux_386",
+              "sha256": "sha256-D1EmpWMT+DwRrWkVdI+6vxw54o7aiPfUfDSWPaXllBs=",
+              "url": "https://github.com/chainguard-dev/apko/releases/download/v0.19.2/apko_0.19.2_linux_386.tar.gz",
+              "apko_version": "0.19.2",
+              "strip_prefix": "apko_0.19.2_linux_386"
+            }
+          },
+          "apko_linux_amd64": {
+            "bzlFile": "@@rules_apko~//apko:repositories.bzl",
+            "ruleClassName": "apko_repositories",
+            "attributes": {
+              "platform": "linux_amd64",
+              "sha256": "sha256-IdXHZC4/CBRCRouCyWYt2ETy8AhIT/JAGLTStEl1t9M=",
+              "url": "https://github.com/chainguard-dev/apko/releases/download/v0.19.2/apko_0.19.2_linux_amd64.tar.gz",
+              "apko_version": "0.19.2",
+              "strip_prefix": "apko_0.19.2_linux_amd64"
+            }
+          }
+        },
+        "recordedRepoMappingEntries": [
+          [
+            "rules_apko~",
+            "bazel_skylib",
+            "bazel_skylib~"
+          ],
+          [
+            "rules_apko~",
             "bazel_tools",
             "bazel_tools"
           ]
@@ -18682,8 +18776,8 @@
     },
     "@@toolchains_llvm~//toolchain/extensions:llvm.bzl%llvm": {
       "general": {
-        "bzlTransitiveDigest": "y9h5L2NtWbogyWSOJgqnUaU50MTPWAW+waelXSirMVg=",
-        "usagesDigest": "/Au3vTVHSgjkXJnyJfWyn0IbjwVRYuQzH35KUS8exY8=",
+        "bzlTransitiveDigest": "dZkcElkfice3BvKPXtFwrvPABm8ac+SwfynSinwK4dQ=",
+        "usagesDigest": "9F0Q18T+cGhAanPmFG3AgwKX3D7vReblAXfCl2NHbpg=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -18703,11 +18797,13 @@
               "dbg_compile_flags": {},
               "exec_arch": "",
               "exec_os": "",
+              "extra_exec_compatible_with": {},
+              "extra_target_compatible_with": {},
               "link_flags": {},
               "link_libs": {},
               "llvm_versions": {
                 "": "16.0.0",
-                "darwin-aarch64": "17.0.6"
+                "darwin-aarch64": "19.1.0"
               },
               "opt_compile_flags": {},
               "opt_link_flags": {},
@@ -18735,11 +18831,13 @@
               "dbg_compile_flags": {},
               "exec_arch": "",
               "exec_os": "",
+              "extra_exec_compatible_with": {},
+              "extra_target_compatible_with": {},
               "link_flags": {},
               "link_libs": {},
               "llvm_versions": {
                 "": "16.0.0",
-                "darwin-aarch64": "17.0.6"
+                "darwin-aarch64": "19.1.0"
               },
               "opt_compile_flags": {},
               "opt_link_flags": {},
@@ -18763,7 +18861,7 @@
               "llvm_version": "",
               "llvm_versions": {
                 "": "16.0.0",
-                "darwin-aarch64": "17.0.6"
+                "darwin-aarch64": "19.1.0"
               },
               "netrc": "",
               "sha256": {},
@@ -18786,11 +18884,13 @@
               "dbg_compile_flags": {},
               "exec_arch": "",
               "exec_os": "",
+              "extra_exec_compatible_with": {},
+              "extra_target_compatible_with": {},
               "link_flags": {},
               "link_libs": {},
               "llvm_versions": {
                 "": "16.0.0",
-                "darwin-aarch64": "17.0.6"
+                "darwin-aarch64": "19.1.0"
               },
               "opt_compile_flags": {},
               "opt_link_flags": {},
@@ -18816,7 +18916,7 @@
               "llvm_version": "",
               "llvm_versions": {
                 "": "16.0.0",
-                "darwin-aarch64": "17.0.6"
+                "darwin-aarch64": "19.1.0"
               },
               "netrc": "",
               "sha256": {},
@@ -18837,7 +18937,7 @@
               "llvm_version": "",
               "llvm_versions": {
                 "": "16.0.0",
-                "darwin-aarch64": "17.0.6"
+                "darwin-aarch64": "19.1.0"
               },
               "netrc": "",
               "sha256": {},
