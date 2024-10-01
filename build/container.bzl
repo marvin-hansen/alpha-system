@@ -4,16 +4,16 @@ load("//:build/transition.bzl", "multi_arch")
 
 # Build a Bazel Macro
 # https://belov.nz/posts/bazel-rules-macros/
+# https://codilime.com/blog/bazel-build-system-build-containerized-applications/
 
 def build_multi_arch_image(
         name,
+        entry_point,
         base,
         srcs,
         exposed_ports = [],
         platforms = [],
         visibility = None):
-    # https://codilime.com/blog/bazel-build-system-build-containerized-applications/
-    entry_point = "bin"
     layer_name = "tar_layer"
 
     # Compress binary to a layer using pkg_tar

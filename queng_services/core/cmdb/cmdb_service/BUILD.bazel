@@ -72,8 +72,9 @@ rust_doc_test(
 # Build container image
 build_multi_arch_image(
     name = "image_index",
+    entry_point = "cmdb",
     srcs = ["cmdb"],
-    base = "@distroless",
+    base = "//images/base_image",
     exposed_ports = [
         "7070",
         "8080",

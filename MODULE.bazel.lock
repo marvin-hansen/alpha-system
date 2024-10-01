@@ -1091,22 +1091,13 @@
     "@@rules_apko~//apko:extensions.bzl%apko": {
       "general": {
         "bzlTransitiveDigest": "FxYovtygS36jNw9oKzfchirzUhgOIDsGgSz18eLTWsc=",
-        "usagesDigest": "zoivVUpsL0P6VgH87sLKlJ92sdUSrs5Rf2y0lDwaPG8=",
-        "recordedFileInputs": {},
+        "usagesDigest": "MG3oaaGnFSME0uypHij1yGainOajxvJwXJPiHujt42Y=",
+        "recordedFileInputs": {
+          "@@//images/base_image/apko.lock.json": "156b6359d95b2c99e6182c44183e5d2ff2166629adacc4565ed21f619eb0356c"
+        },
         "recordedDirentsInputs": {},
         "envVariables": {},
         "generatedRepoSpecs": {
-          "apko_linux_arm64": {
-            "bzlFile": "@@rules_apko~//apko:repositories.bzl",
-            "ruleClassName": "apko_repositories",
-            "attributes": {
-              "platform": "linux_arm64",
-              "sha256": "sha256-2v2EySFUNJtovpkASfvxEXwteq4rwD3ItJ5LZWP0Tjc=",
-              "url": "https://github.com/chainguard-dev/apko/releases/download/v0.19.2/apko_0.19.2_linux_arm64.tar.gz",
-              "apko_version": "0.19.2",
-              "strip_prefix": "apko_0.19.2_linux_arm64"
-            }
-          },
           "apko_darwin_arm64": {
             "bzlFile": "@@rules_apko~//apko:repositories.bzl",
             "ruleClassName": "apko_repositories",
@@ -1118,18 +1109,409 @@
               "strip_prefix": "apko_0.19.2_darwin_arm64"
             }
           },
-          "apko_toolchains": {
-            "bzlFile": "@@rules_apko~//apko/private:toolchains_repo.bzl",
-            "ruleClassName": "toolchains_repo",
+          "base_image_packages.wolfi.dev_os_aarch64_aarch64": {
+            "bzlFile": "@@rules_apko~//apko/private:apk.bzl",
+            "ruleClassName": "apk_repository",
             "attributes": {
-              "user_repository_name": "apko",
-              "platforms": [
-                "darwin_amd64",
-                "darwin_arm64",
-                "linux_386",
-                "linux_amd64",
-                "linux_arm64"
-              ]
+              "url": "https://packages.wolfi.dev/os/aarch64/APKINDEX.tar.gz",
+              "architecture": "aarch64"
+            }
+          },
+          "base_image_busybox_x86_64_1.37.0-r0": {
+            "bzlFile": "@@rules_apko~//apko/private:apk.bzl",
+            "ruleClassName": "apk_import",
+            "attributes": {
+              "package_name": "busybox",
+              "version": "1.37.0-r0",
+              "architecture": "x86_64",
+              "url": "https://packages.wolfi.dev/os/x86_64/busybox-1.37.0-r0.apk",
+              "signature_range": "",
+              "signature_checksum": "",
+              "control_range": "bytes=0-494",
+              "control_checksum": "sha1-QvnHw1EiaN8Dl/XTzKoL1eZCYjE=",
+              "data_range": "bytes=495-420879",
+              "data_checksum": "sha256-0xAfVTKP/vl5Si1PqBmt/ffonATq8itZSHGZxBwgG6M="
+            }
+          },
+          "base_image_wolfi-base_aarch64_1-r6": {
+            "bzlFile": "@@rules_apko~//apko/private:apk.bzl",
+            "ruleClassName": "apk_import",
+            "attributes": {
+              "package_name": "wolfi-base",
+              "version": "1-r6",
+              "architecture": "aarch64",
+              "url": "https://packages.wolfi.dev/os/aarch64/wolfi-base-1-r6.apk",
+              "signature_range": "bytes=0-695",
+              "signature_checksum": "sha1-E81k7Bi4vBC27K/95hyXso9mbQE=",
+              "control_range": "bytes=696-1056",
+              "control_checksum": "sha1-uR9YHhW84LuBjpxtLoDWO1fIo1k=",
+              "data_range": "bytes=1057-1978",
+              "data_checksum": "sha256-Jgv6F0BBma9uDppDvvqRL0T4UsXQZtiVnMq8CwtpWMQ="
+            }
+          },
+          "base_image_wolfi-baselayout_x86_64_20230201-r15": {
+            "bzlFile": "@@rules_apko~//apko/private:apk.bzl",
+            "ruleClassName": "apk_import",
+            "attributes": {
+              "package_name": "wolfi-baselayout",
+              "version": "20230201-r15",
+              "architecture": "x86_64",
+              "url": "https://packages.wolfi.dev/os/x86_64/wolfi-baselayout-20230201-r15.apk",
+              "signature_range": "bytes=0-705",
+              "signature_checksum": "sha1-+hsODEbmCcG6wK+X96cIxwO0Bbc=",
+              "control_range": "bytes=706-1053",
+              "control_checksum": "sha1-zmkTyK0dOGvhVXVa63sB0Rv/atY=",
+              "data_range": "bytes=1054-12163",
+              "data_checksum": "sha256-xXPt586efA0TcVdlBeBb/ZMRhMaTVySkyYTie5J6E94="
+            }
+          },
+          "base_image_glibc_x86_64_2.40-r2": {
+            "bzlFile": "@@rules_apko~//apko/private:apk.bzl",
+            "ruleClassName": "apk_import",
+            "attributes": {
+              "package_name": "glibc",
+              "version": "2.40-r2",
+              "architecture": "x86_64",
+              "url": "https://packages.wolfi.dev/os/x86_64/glibc-2.40-r2.apk",
+              "signature_range": "bytes=0-699",
+              "signature_checksum": "sha1-8qWo9na+zDGRdsCkspqrRmh/rp0=",
+              "control_range": "bytes=700-1308",
+              "control_checksum": "sha1-svwEotg0cosWmMSmj/Df0tgRzxo=",
+              "data_range": "bytes=1309-2822200",
+              "data_checksum": "sha256-l98ENO3Z/YnVV8gpj4aEmbUIBQl0tH0S103FlOwbyE0="
+            }
+          },
+          "base_image_libssl3_aarch64_3.3.2-r0": {
+            "bzlFile": "@@rules_apko~//apko/private:apk.bzl",
+            "ruleClassName": "apk_import",
+            "attributes": {
+              "package_name": "libssl3",
+              "version": "3.3.2-r0",
+              "architecture": "aarch64",
+              "url": "https://packages.wolfi.dev/os/aarch64/libssl3-3.3.2-r0.apk",
+              "signature_range": "bytes=0-697",
+              "signature_checksum": "sha1-CXUou1POKKkTY/in7aWzq77ZuxM=",
+              "control_range": "bytes=698-1080",
+              "control_checksum": "sha1-bW1IvyE7GZB5+0tUzNjwQCgiV18=",
+              "data_range": "bytes=1081-501860",
+              "data_checksum": "sha256-Ex+lWNjk8Rphu/xEzFcgQPPXqD9IgamEcX91Xeq/0CA="
+            }
+          },
+          "apko_linux_amd64": {
+            "bzlFile": "@@rules_apko~//apko:repositories.bzl",
+            "ruleClassName": "apko_repositories",
+            "attributes": {
+              "platform": "linux_amd64",
+              "sha256": "sha256-IdXHZC4/CBRCRouCyWYt2ETy8AhIT/JAGLTStEl1t9M=",
+              "url": "https://github.com/chainguard-dev/apko/releases/download/v0.19.2/apko_0.19.2_linux_amd64.tar.gz",
+              "apko_version": "0.19.2",
+              "strip_prefix": "apko_0.19.2_linux_amd64"
+            }
+          },
+          "base_image_apk-tools_aarch64_2.14.4-r0": {
+            "bzlFile": "@@rules_apko~//apko/private:apk.bzl",
+            "ruleClassName": "apk_import",
+            "attributes": {
+              "package_name": "apk-tools",
+              "version": "2.14.4-r0",
+              "architecture": "aarch64",
+              "url": "https://packages.wolfi.dev/os/aarch64/apk-tools-2.14.4-r0.apk",
+              "signature_range": "bytes=0-705",
+              "signature_checksum": "sha1-xWFMViILpCq540FqJgcKMubwvgw=",
+              "control_range": "bytes=706-1135",
+              "control_checksum": "sha1-fuLaiCRAC8ZEv0uNlOdUL/49Z9A=",
+              "data_range": "bytes=1136-183938",
+              "data_checksum": "sha256-tO7czZHVKPNo5SgB+zIQ5nt+GKW7Q6+FBOWzkJ+5l2M="
+            }
+          },
+          "base_image_wolfi-keys_aarch64_1-r8": {
+            "bzlFile": "@@rules_apko~//apko/private:apk.bzl",
+            "ruleClassName": "apk_import",
+            "attributes": {
+              "package_name": "wolfi-keys",
+              "version": "1-r8",
+              "architecture": "aarch64",
+              "url": "https://packages.wolfi.dev/os/aarch64/wolfi-keys-1-r8.apk",
+              "signature_range": "bytes=0-694",
+              "signature_checksum": "sha1-Dw2hdMuVD4tLGGiFVQV/+yCDDFs=",
+              "control_range": "bytes=695-1028",
+              "control_checksum": "sha1-HnzYmuMLrQWaA5Ie+DCRV38GOzY=",
+              "data_range": "bytes=1029-2983",
+              "data_checksum": "sha256-aw2O8Q5wDTwd9uikJQmfLxYBraCssy6jAhjx242Wi94="
+            }
+          },
+          "apko_linux_arm64": {
+            "bzlFile": "@@rules_apko~//apko:repositories.bzl",
+            "ruleClassName": "apko_repositories",
+            "attributes": {
+              "platform": "linux_arm64",
+              "sha256": "sha256-2v2EySFUNJtovpkASfvxEXwteq4rwD3ItJ5LZWP0Tjc=",
+              "url": "https://github.com/chainguard-dev/apko/releases/download/v0.19.2/apko_0.19.2_linux_arm64.tar.gz",
+              "apko_version": "0.19.2",
+              "strip_prefix": "apko_0.19.2_linux_arm64"
+            }
+          },
+          "base_image_libcrypt1_x86_64_2.40-r2": {
+            "bzlFile": "@@rules_apko~//apko/private:apk.bzl",
+            "ruleClassName": "apk_import",
+            "attributes": {
+              "package_name": "libcrypt1",
+              "version": "2.40-r2",
+              "architecture": "x86_64",
+              "url": "https://packages.wolfi.dev/os/x86_64/libcrypt1-2.40-r2.apk",
+              "signature_range": "bytes=0-705",
+              "signature_checksum": "sha1-oQnqDUDD5/AV/J1ErnojADpsAao=",
+              "control_range": "bytes=706-1098",
+              "control_checksum": "sha1-FhQh9fRIa6oEmeHK7DcBanfViEU=",
+              "data_range": "bytes=1099-2147",
+              "data_checksum": "sha256-R8hnnJmRGOkhn8PbWNTi8sYQXRKrr/fApyzFsp0+j3Y="
+            }
+          },
+          "base_image_ca-certificates-bundle_aarch64_20240705-r0": {
+            "bzlFile": "@@rules_apko~//apko/private:apk.bzl",
+            "ruleClassName": "apk_import",
+            "attributes": {
+              "package_name": "ca-certificates-bundle",
+              "version": "20240705-r0",
+              "architecture": "aarch64",
+              "url": "https://packages.wolfi.dev/os/aarch64/ca-certificates-bundle-20240705-r0.apk",
+              "signature_range": "bytes=0-697",
+              "signature_checksum": "sha1-SJWimHRuvKtcRxlTKEDjY37TJ4o=",
+              "control_range": "bytes=698-1025",
+              "control_checksum": "sha1-GL1kaSxDtLquOYyNLB/uAT/o/+g=",
+              "data_range": "bytes=1026-130530",
+              "data_checksum": "sha256-gXyNoCqO2y+3OwJ0kYK4+uTTGwO0gR5hrDgi+vquRoE="
+            }
+          },
+          "base_image_zlib_x86_64_1.3.1-r4": {
+            "bzlFile": "@@rules_apko~//apko/private:apk.bzl",
+            "ruleClassName": "apk_import",
+            "attributes": {
+              "package_name": "zlib",
+              "version": "1.3.1-r4",
+              "architecture": "x86_64",
+              "url": "https://packages.wolfi.dev/os/x86_64/zlib-1.3.1-r4.apk",
+              "signature_range": "bytes=0-693",
+              "signature_checksum": "sha1-veZ+Gmg2Se5AoXIkNaVbG9xVPNI=",
+              "control_range": "bytes=694-1077",
+              "control_checksum": "sha1-BERCewGJVIkPpMoG7t13ter7+Go=",
+              "data_range": "bytes=1078-61438",
+              "data_checksum": "sha256-+JOPvMTzIWTLR+5cccK4AXWXO2kvBp1mH9/AGlFSD5c="
+            }
+          },
+          "base_image_wolfi-keys_x86_64_1-r8": {
+            "bzlFile": "@@rules_apko~//apko/private:apk.bzl",
+            "ruleClassName": "apk_import",
+            "attributes": {
+              "package_name": "wolfi-keys",
+              "version": "1-r8",
+              "architecture": "x86_64",
+              "url": "https://packages.wolfi.dev/os/x86_64/wolfi-keys-1-r8.apk",
+              "signature_range": "bytes=0-695",
+              "signature_checksum": "sha1-yuEfqJ7YiQNLkDOojPkXamh6bcs=",
+              "control_range": "bytes=696-1034",
+              "control_checksum": "sha1-YLOq6c+iCrZS7vrBuNCCQqVXu/0=",
+              "data_range": "bytes=1035-2989",
+              "data_checksum": "sha256-BU5bWPVBD6l68QnI5pOnx7zTm1jpj+jPMoO4nOSiv2Q="
+            }
+          },
+          "base_image_zlib_aarch64_1.3.1-r4": {
+            "bzlFile": "@@rules_apko~//apko/private:apk.bzl",
+            "ruleClassName": "apk_import",
+            "attributes": {
+              "package_name": "zlib",
+              "version": "1.3.1-r4",
+              "architecture": "aarch64",
+              "url": "https://packages.wolfi.dev/os/aarch64/zlib-1.3.1-r4.apk",
+              "signature_range": "bytes=0-700",
+              "signature_checksum": "sha1-7lOxbU3c4AEUT5kG6cy8aFhJxVE=",
+              "control_range": "bytes=701-1098",
+              "control_checksum": "sha1-PIFHBnTWjxCrgpIq/qepeOH3zBU=",
+              "data_range": "bytes=1099-51455",
+              "data_checksum": "sha256-6ipnvWDbexn8TGPbyqrEgHygLnnQSvAosJu2jFJT8uY="
+            }
+          },
+          "base_image_libcrypt1_aarch64_2.40-r2": {
+            "bzlFile": "@@rules_apko~//apko/private:apk.bzl",
+            "ruleClassName": "apk_import",
+            "attributes": {
+              "package_name": "libcrypt1",
+              "version": "2.40-r2",
+              "architecture": "aarch64",
+              "url": "https://packages.wolfi.dev/os/aarch64/libcrypt1-2.40-r2.apk",
+              "signature_range": "bytes=0-702",
+              "signature_checksum": "sha1-kcsLP67j1HMXy/z7CBN/j5M3rL8=",
+              "control_range": "bytes=703-1092",
+              "control_checksum": "sha1-Vt+c97kjgKSolC+KwusQwRDfujc=",
+              "data_range": "bytes=1093-2141",
+              "data_checksum": "sha256-QV0sqYDdpzE5jWlvm8aIhp5yClreMUBwLiQxI7Dohz4="
+            }
+          },
+          "base_image_apk-tools_x86_64_2.14.4-r0": {
+            "bzlFile": "@@rules_apko~//apko/private:apk.bzl",
+            "ruleClassName": "apk_import",
+            "attributes": {
+              "package_name": "apk-tools",
+              "version": "2.14.4-r0",
+              "architecture": "x86_64",
+              "url": "https://packages.wolfi.dev/os/x86_64/apk-tools-2.14.4-r0.apk",
+              "signature_range": "bytes=0-699",
+              "signature_checksum": "sha1-Nl2iLupTvBTyTCbDrH5VNbBvqsY=",
+              "control_range": "bytes=700-1135",
+              "control_checksum": "sha1-d6KWlsyysrLbDnqZNOxD3yXQArs=",
+              "data_range": "bytes=1136-182567",
+              "data_checksum": "sha256-PxwHUjByuYsDLfP2+E4x8ywCE2Lkk9mzYgRm2w4ayNk="
+            }
+          },
+          "base_image_glibc-locale-posix_aarch64_2.40-r2": {
+            "bzlFile": "@@rules_apko~//apko/private:apk.bzl",
+            "ruleClassName": "apk_import",
+            "attributes": {
+              "package_name": "glibc-locale-posix",
+              "version": "2.40-r2",
+              "architecture": "aarch64",
+              "url": "https://packages.wolfi.dev/os/aarch64/glibc-locale-posix-2.40-r2.apk",
+              "signature_range": "bytes=0-700",
+              "signature_checksum": "sha1-K8SU4VD1en8nU0htAAR+VRzJQc4=",
+              "control_range": "bytes=701-1043",
+              "control_checksum": "sha1-KdYqBqqBFyzrDLBOXY8VfcUKUL8=",
+              "data_range": "bytes=1044-75721",
+              "data_checksum": "sha256-DYhPNuZs5MwUEhjVs+jIhawpt29MOvLOlkjxbcSqfrc="
+            }
+          },
+          "base_image_ld-linux_x86_64_2.40-r2": {
+            "bzlFile": "@@rules_apko~//apko/private:apk.bzl",
+            "ruleClassName": "apk_import",
+            "attributes": {
+              "package_name": "ld-linux",
+              "version": "2.40-r2",
+              "architecture": "x86_64",
+              "url": "https://packages.wolfi.dev/os/x86_64/ld-linux-2.40-r2.apk",
+              "signature_range": "bytes=0-692",
+              "signature_checksum": "sha1-GABLsLv8FgBgfhg1I5NauE0raDs=",
+              "control_range": "bytes=693-1089",
+              "control_checksum": "sha1-qMcGwmanPGYt0N34jBQPHfyPTNQ=",
+              "data_range": "bytes=1090-127604",
+              "data_checksum": "sha256-e64nrftAWw3tA32vSLdRzoE51S4ZBHHzhCPjaLUfZiM="
+            }
+          },
+          "base_image_wolfi-baselayout_aarch64_20230201-r15": {
+            "bzlFile": "@@rules_apko~//apko/private:apk.bzl",
+            "ruleClassName": "apk_import",
+            "attributes": {
+              "package_name": "wolfi-baselayout",
+              "version": "20230201-r15",
+              "architecture": "aarch64",
+              "url": "https://packages.wolfi.dev/os/aarch64/wolfi-baselayout-20230201-r15.apk",
+              "signature_range": "bytes=0-700",
+              "signature_checksum": "sha1-WpBU366luzjLQ6VS3brT42ti0lk=",
+              "control_range": "bytes=701-1046",
+              "control_checksum": "sha1-xRkIGUU69f7/jQY052mWfgWpYrA=",
+              "data_range": "bytes=1047-12154",
+              "data_checksum": "sha256-XbprEl9LYlD0CtA/fPP/gAsavxZ8jm+DT6+dItHFOw8="
+            }
+          },
+          "base_image_ca-certificates-bundle_x86_64_20240705-r0": {
+            "bzlFile": "@@rules_apko~//apko/private:apk.bzl",
+            "ruleClassName": "apk_import",
+            "attributes": {
+              "package_name": "ca-certificates-bundle",
+              "version": "20240705-r0",
+              "architecture": "x86_64",
+              "url": "https://packages.wolfi.dev/os/x86_64/ca-certificates-bundle-20240705-r0.apk",
+              "signature_range": "bytes=0-704",
+              "signature_checksum": "sha1-WL9vKv1nPIeaUQI4O0DiY9RdSHE=",
+              "control_range": "bytes=705-1034",
+              "control_checksum": "sha1-WR9MGKU+cJh6dJFEXnr3zU1qsMM=",
+              "data_range": "bytes=1035-130539",
+              "data_checksum": "sha256-EkOhtSivoLErXsK2J9ri39thkwb2kJGYHVou4n6dMKA="
+            }
+          },
+          "base_image_libcrypto3_x86_64_3.3.2-r0": {
+            "bzlFile": "@@rules_apko~//apko/private:apk.bzl",
+            "ruleClassName": "apk_import",
+            "attributes": {
+              "package_name": "libcrypto3",
+              "version": "3.3.2-r0",
+              "architecture": "x86_64",
+              "url": "https://packages.wolfi.dev/os/x86_64/libcrypto3-3.3.2-r0.apk",
+              "signature_range": "bytes=0-701",
+              "signature_checksum": "sha1-8BNbShLbqZtPQ4qlqV4AUUUTPmE=",
+              "control_range": "bytes=702-1065",
+              "control_checksum": "sha1-PMBsIOKNPxp97HYM1j6l38H+dUI=",
+              "data_range": "bytes=1066-2305029",
+              "data_checksum": "sha256-YHLY6ISR63RD/hpfXcEQmM8OpkBCkqZAIxhzFgZLoWo="
+            }
+          },
+          "base_image_libssl3_x86_64_3.3.2-r0": {
+            "bzlFile": "@@rules_apko~//apko/private:apk.bzl",
+            "ruleClassName": "apk_import",
+            "attributes": {
+              "package_name": "libssl3",
+              "version": "3.3.2-r0",
+              "architecture": "x86_64",
+              "url": "https://packages.wolfi.dev/os/x86_64/libssl3-3.3.2-r0.apk",
+              "signature_range": "bytes=0-696",
+              "signature_checksum": "sha1-USub8fNNgogWW+t5DHTWnrvAwt4=",
+              "control_range": "bytes=697-1066",
+              "control_checksum": "sha1-GTeRSLBxTc14VkyumqRbJAQ4Ou8=",
+              "data_range": "bytes=1067-509818",
+              "data_checksum": "sha256-BOxmhcGlG3RaGIku6tOdC1i0/LNzUsIcvIxUAI1hybM="
+            }
+          },
+          "base_image_ld-linux_aarch64_2.40-r2": {
+            "bzlFile": "@@rules_apko~//apko/private:apk.bzl",
+            "ruleClassName": "apk_import",
+            "attributes": {
+              "package_name": "ld-linux",
+              "version": "2.40-r2",
+              "architecture": "aarch64",
+              "url": "https://packages.wolfi.dev/os/aarch64/ld-linux-2.40-r2.apk",
+              "signature_range": "bytes=0-703",
+              "signature_checksum": "sha1-3BQKSMTQYaQvJwTo0LCHOWyUJPc=",
+              "control_range": "bytes=704-1098",
+              "control_checksum": "sha1-ybIZiETo71rXu0K54Hqb1YfDY4E=",
+              "data_range": "bytes=1099-107421",
+              "data_checksum": "sha256-G8Mm+BTHS4hoNf8VPMgjlnZZUZldBvc7xpUVxVBeOcs="
+            }
+          },
+          "base_image_libcrypto3_aarch64_3.3.2-r0": {
+            "bzlFile": "@@rules_apko~//apko/private:apk.bzl",
+            "ruleClassName": "apk_import",
+            "attributes": {
+              "package_name": "libcrypto3",
+              "version": "3.3.2-r0",
+              "architecture": "aarch64",
+              "url": "https://packages.wolfi.dev/os/aarch64/libcrypto3-3.3.2-r0.apk",
+              "signature_range": "bytes=0-700",
+              "signature_checksum": "sha1-3+MWNLl3aJOFRkIyfgqDYWavnD4=",
+              "control_range": "bytes=701-1078",
+              "control_checksum": "sha1-YH3gSxK/PTDShjd4hRVDEkZqZvY=",
+              "data_range": "bytes=1079-2157321",
+              "data_checksum": "sha256-56ET5dWFFL2f1sbF26gD3Z2r0ujbRyhywGWj/6R5zOA="
+            }
+          },
+          "base_image_packages.wolfi.dev_os_wolfi-signing.rsa.pub": {
+            "bzlFile": "@@rules_apko~//apko/private:apk.bzl",
+            "ruleClassName": "apk_keyring",
+            "attributes": {
+              "url": "https://packages.wolfi.dev/os/wolfi-signing.rsa.pub"
+            }
+          },
+          "base_image_libxcrypt_aarch64_4.4.36-r7": {
+            "bzlFile": "@@rules_apko~//apko/private:apk.bzl",
+            "ruleClassName": "apk_import",
+            "attributes": {
+              "package_name": "libxcrypt",
+              "version": "4.4.36-r7",
+              "architecture": "aarch64",
+              "url": "https://packages.wolfi.dev/os/aarch64/libxcrypt-4.4.36-r7.apk",
+              "signature_range": "bytes=0-706",
+              "signature_checksum": "sha1-veJQf32YQqPlXD087wDruNR+4rQ=",
+              "control_range": "bytes=707-1099",
+              "control_checksum": "sha1-WnkcoQvww/RbnbJKzN/j1mTmKxc=",
+              "data_range": "bytes=1100-91602",
+              "data_checksum": "sha256-TUzmZwe+uRVhiVHMNEVWGZiuZZboc6NZG4uBrMquBNw="
             }
           },
           "apko_darwin_amd64": {
@@ -1154,15 +1536,114 @@
               "strip_prefix": "apko_0.19.2_linux_386"
             }
           },
-          "apko_linux_amd64": {
-            "bzlFile": "@@rules_apko~//apko:repositories.bzl",
-            "ruleClassName": "apko_repositories",
+          "base_image_wolfi-base_x86_64_1-r6": {
+            "bzlFile": "@@rules_apko~//apko/private:apk.bzl",
+            "ruleClassName": "apk_import",
             "attributes": {
-              "platform": "linux_amd64",
-              "sha256": "sha256-IdXHZC4/CBRCRouCyWYt2ETy8AhIT/JAGLTStEl1t9M=",
-              "url": "https://github.com/chainguard-dev/apko/releases/download/v0.19.2/apko_0.19.2_linux_amd64.tar.gz",
-              "apko_version": "0.19.2",
-              "strip_prefix": "apko_0.19.2_linux_amd64"
+              "package_name": "wolfi-base",
+              "version": "1-r6",
+              "architecture": "x86_64",
+              "url": "https://packages.wolfi.dev/os/x86_64/wolfi-base-1-r6.apk",
+              "signature_range": "bytes=0-704",
+              "signature_checksum": "sha1-jK+Qoiq0RvAGVURkgEz4O+GW7n4=",
+              "control_range": "bytes=705-1068",
+              "control_checksum": "sha1-lrNusYOBmqA3J4Yfe63FzIt6Ezs=",
+              "data_range": "bytes=1069-1993",
+              "data_checksum": "sha256-cS8VKmEnrdhVCd7QuHhNqpkGSTsq/BJWlxYr9AJ1KP0="
+            }
+          },
+          "base_image_glibc_aarch64_2.40-r2": {
+            "bzlFile": "@@rules_apko~//apko/private:apk.bzl",
+            "ruleClassName": "apk_import",
+            "attributes": {
+              "package_name": "glibc",
+              "version": "2.40-r2",
+              "architecture": "aarch64",
+              "url": "https://packages.wolfi.dev/os/aarch64/glibc-2.40-r2.apk",
+              "signature_range": "bytes=0-699",
+              "signature_checksum": "sha1-ngAA/QXpjmseu6LczP+3f0839Sk=",
+              "control_range": "bytes=700-1304",
+              "control_checksum": "sha1-UBBH+olJI92cbCVFS7wGx63NeCk=",
+              "data_range": "bytes=1305-2058862",
+              "data_checksum": "sha256-XRXa79po2UML40QEmno36WWp2AI+OQc5ypnTXBWC2XE="
+            }
+          },
+          "base_image_packages.wolfi.dev_os_x86_64_x86_64": {
+            "bzlFile": "@@rules_apko~//apko/private:apk.bzl",
+            "ruleClassName": "apk_repository",
+            "attributes": {
+              "url": "https://packages.wolfi.dev/os/x86_64/APKINDEX.tar.gz",
+              "architecture": "x86_64"
+            }
+          },
+          "base_image_busybox_aarch64_1.37.0-r0": {
+            "bzlFile": "@@rules_apko~//apko/private:apk.bzl",
+            "ruleClassName": "apk_import",
+            "attributes": {
+              "package_name": "busybox",
+              "version": "1.37.0-r0",
+              "architecture": "aarch64",
+              "url": "https://packages.wolfi.dev/os/aarch64/busybox-1.37.0-r0.apk",
+              "signature_range": "",
+              "signature_checksum": "",
+              "control_range": "bytes=0-489",
+              "control_checksum": "sha1-3+6MfiuOBmevCCZvDgl6/DGVCy4=",
+              "data_range": "bytes=490-430557",
+              "data_checksum": "sha256-tr45HOO9wpjZQwwRdfqkBpZyNETHGYE+1kEwgaEmmZw="
+            }
+          },
+          "base_image_glibc-locale-posix_x86_64_2.40-r2": {
+            "bzlFile": "@@rules_apko~//apko/private:apk.bzl",
+            "ruleClassName": "apk_import",
+            "attributes": {
+              "package_name": "glibc-locale-posix",
+              "version": "2.40-r2",
+              "architecture": "x86_64",
+              "url": "https://packages.wolfi.dev/os/x86_64/glibc-locale-posix-2.40-r2.apk",
+              "signature_range": "bytes=0-705",
+              "signature_checksum": "sha1-KSV7M+qCTDez4jabtUn9bi0mhPc=",
+              "control_range": "bytes=706-1051",
+              "control_checksum": "sha1-3EHESqHJii62e3OussPLCd1P6uM=",
+              "data_range": "bytes=1052-75729",
+              "data_checksum": "sha256-j/Y1x9xJ1gg5aKerSLHWKwrpOEGARyqNOQRU+9w6ulA="
+            }
+          },
+          "base_image": {
+            "bzlFile": "@@rules_apko~//apko:translate_lock.bzl",
+            "ruleClassName": "translate_apko_lock",
+            "attributes": {
+              "target_name": "base_image",
+              "lock": "@@//images/base_image:apko.lock.json"
+            }
+          },
+          "apko_toolchains": {
+            "bzlFile": "@@rules_apko~//apko/private:toolchains_repo.bzl",
+            "ruleClassName": "toolchains_repo",
+            "attributes": {
+              "user_repository_name": "apko",
+              "platforms": [
+                "darwin_amd64",
+                "darwin_arm64",
+                "linux_386",
+                "linux_amd64",
+                "linux_arm64"
+              ]
+            }
+          },
+          "base_image_libxcrypt_x86_64_4.4.36-r7": {
+            "bzlFile": "@@rules_apko~//apko/private:apk.bzl",
+            "ruleClassName": "apk_import",
+            "attributes": {
+              "package_name": "libxcrypt",
+              "version": "4.4.36-r7",
+              "architecture": "x86_64",
+              "url": "https://packages.wolfi.dev/os/x86_64/libxcrypt-4.4.36-r7.apk",
+              "signature_range": "bytes=0-696",
+              "signature_checksum": "sha1-TzqIvPLJxnJXjp9f6Zz6TDjc3vI=",
+              "control_range": "bytes=697-1092",
+              "control_checksum": "sha1-IbvTzcXUyY3M4HSurKCl4pqkI2o=",
+              "data_range": "bytes=1093-84765",
+              "data_checksum": "sha256-/rIlvPr9j1TCCfCup07Nn1XGUs3HVoAbLFHd12zyzII="
             }
           }
         },
