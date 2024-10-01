@@ -57,7 +57,6 @@ git_override(
 )
 
 ###############################################################################
-
 # LLVM toolchain #
 ###############################################################################
 
@@ -144,6 +143,7 @@ register_toolchains("@llvm_toolchain//:all")
 # Rust toolchain #
 ###############################################################################
 RUST_EDITION = "2021"  # NOTE: 2024 will be released with Rust 1.86.0
+
 RUST_VERSION = "1.81.0"
 
 # https://github.com/bazelbuild/rules_rust/releases
