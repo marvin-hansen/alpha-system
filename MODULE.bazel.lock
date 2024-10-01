@@ -1093,7 +1093,7 @@
         "bzlTransitiveDigest": "FxYovtygS36jNw9oKzfchirzUhgOIDsGgSz18eLTWsc=",
         "usagesDigest": "MG3oaaGnFSME0uypHij1yGainOajxvJwXJPiHujt42Y=",
         "recordedFileInputs": {
-          "@@//images/base_image/apko.lock.json": "156b6359d95b2c99e6182c44183e5d2ff2166629adacc4565ed21f619eb0356c"
+          "@@//images/base_image/apko.lock.json": "3275823d24cef6d837aff77cbfb19bd2ca1ad515266f41e4d1793f1704823c2c"
         },
         "recordedDirentsInputs": {},
         "envVariables": {},
