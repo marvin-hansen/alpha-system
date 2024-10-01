@@ -56,9 +56,10 @@ git_override(
     remote = "https://github.com/brainhivenl/libpq",
 )
 
-##################
+###############################################################################
+
 # LLVM toolchain #
-##################
+###############################################################################
 
 # LLVM Versions and platforms
 # https://github.com/bazel-contrib/toolchains_llvm/blob/master/toolchain/internal/llvm_distributions.bzl
@@ -139,11 +140,10 @@ use_repo(llvm, "llvm_toolchain_aarch64_with_sysroot")
 # Register all LLVM toolchains
 register_toolchains("@llvm_toolchain//:all")
 
-##################
+###############################################################################
 # Rust toolchain #
-##################
-RUST_EDITION = "2021"  # NOTE: 2024 is released with Rust 1.86.0
-
+###############################################################################
+RUST_EDITION = "2021"  # NOTE: 2024 will be released with Rust 1.86.0
 RUST_VERSION = "1.81.0"
 
 # https://github.com/bazelbuild/rules_rust/releases
@@ -160,17 +160,17 @@ use_repo(rust, "rust_toolchains")
 
 register_toolchains("@rust_toolchains//:all")
 
-###################
+###############################################################################
 # Proto Toolchain #
-###################
+###############################################################################
 register_toolchains("@rules_rust//proto/protobuf:default-proto-toolchain")
 
 # Custom Prost Toolchain #
 register_toolchains("@//build/prost_toolchain")
 
-####################
+###############################################################################
 # Python toolchain #
-###################
+###############################################################################
 python = use_extension("@rules_python//python/extensions:python.bzl", "python")
 python.toolchain(
     configure_coverage_tool = False,
@@ -178,9 +178,9 @@ python.toolchain(
     python_version = "3.11",
 )
 
-####################
-# rules_apko
-###################
+###############################################################################
+# rules_apko # https://github.com/chainguard-dev/rules_apko
+###############################################################################
 # translate apko.lock.json to @base_image//:contents
 # https://edu.chainguard.dev/open-source/build-tools/apko/bazel-rules/
 apk = use_extension("@rules_apko//apko:extensions.bzl", "apko")
@@ -191,30 +191,6 @@ apk.translate_lock(
 use_repo(apk, "base_image")
 
 ###############################################################################
-#  O C I  I M A G E: https://github.com/bazel-contrib/rules_oci/releases
-###############################################################################
-oci = use_extension("@rules_oci//oci:extensions.bzl", "oci")
-
-# distroless
-# https://github.com/GoogleContainerTools/distroless
-oci.pull(
-    name = "distroless",
-    digest = "sha256:e1065a1d58800a7294f74e67c32ec4146d09d6cbe471c1fa7ed456b2d2bf06e0",
-    image = "gcr.io/distroless/cc-debian12",
-    platforms = [
-        "linux/amd64",
-        "linux/arm64/v8",
-    ],
-)
-use_repo(
-    oci,
-    "distroless",
-    "distroless_linux_amd64",
-    "distroless_linux_arm64_v8",
-)
-
-###############################################################################
 # BuildBuddy Toolchain see WORKSPACE.bzlmod
 # https://github.com/buildbuddy-io/buildbuddy-toolchain/issues/18
 # Rust dependencies. See thirdparty/BUILD.bazel
-###############################################################################
