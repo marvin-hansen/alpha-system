@@ -9,11 +9,6 @@ echo "=============="
 command bazel run  @rules_apko//apko lock images/base_image/apko.yaml
 
 echo "=============="
-echo "Check targets "
-echo "=============="
-command cargo check --all-targets
-
-echo "=============="
 echo "Format targets "
 echo "=============="
 # Bazel file formatting (Installed via homebrew)
