@@ -131,8 +131,7 @@ where
                 .expect("Failed to set service offline!");
             println!(
                 "Failed to start gRPC and HTTP server: {} due to error {:?}",
-                svc_id,
-                e
+                svc_id, e
             );
         }
     }
