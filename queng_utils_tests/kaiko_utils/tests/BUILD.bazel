@@ -17,8 +17,7 @@ rust_test_suite(
         "test.runner-recycling-key": "kaiko_utils_integration_test",
     },
     tags = [
-        "integration_test",
-        "kaiko_utils_integration_test",
+        # "integration_test",
     ],
     visibility = ["//visibility:public"],
     deps = [
