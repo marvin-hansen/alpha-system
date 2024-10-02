@@ -8,7 +8,7 @@ repository.workspace = true
 authors.workspace = true
 
 [lib]
-path = "/dev/null"
+path = "src/fake_lib.rs"
 
 [dev-dependencies]
 # Crate under test
