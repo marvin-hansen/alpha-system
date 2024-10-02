@@ -52,12 +52,17 @@ command bazel build //:push
 
 if [[ $(git status --porcelain | wc -l) -gt 0 ]];
 then
+  echo "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
   echo "Uncommited changes found; commit first, then run script again"
+  echo "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+
   exit 1
 else
   # echo NOT CHANGED locally
   # Push all new and remaining commits to remote to trigger CI
+  echo "====================="
   echo "Push to git remote"
+  echo "====================="
   command git push
 fi
 
