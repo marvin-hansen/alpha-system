@@ -1,6 +1,3 @@
-// Unsafe code must be explicitly enabled to use it.
-#[deny(unsafe_code)]
-//
 use common_container::prelude::ContainerConfig;
 use common_container::prelude::WaitStrategy::WaitForDuration;
 

@@ -1,6 +1,3 @@
-// Unsafe code must be explicitly enabled to use it.
-#[deny(unsafe_code)]
-//
 pub(crate) mod init_error;
 pub(crate) mod lookup_error;
 pub(crate) mod message_client_config_error;

@@ -20,6 +20,19 @@ command buildifier -r build images queng_*
 # https://github.com/rust-lang/rustfmt
 command cargo fmt --all
 
+# Check for uncommited changes before building and testing.
+# It is possible that either image update or fie format changed some files,
+# so it is important to check for uncommited changes before continuing.
+if [[ $(git status --porcelain | wc -l) -gt 0 ]];
+then
+  #
+  echo "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+  echo "Uncommited changes found; commit first, then run script again"
+  echo "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+  # Full stop
+  exit 1
+fi
+
 echo "=============="
 echo "Build targets "
 echo "=============="
@@ -50,6 +63,7 @@ echo "Build container images"
 echo "====================="
 command bazel build //:push
 
+# Double check again for uncommited changes before pushing to git remote
 if [[ $(git status --porcelain | wc -l) -gt 0 ]];
 then
   echo "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
@@ -67,3 +81,4 @@ else
 fi
 
 echo "Completed"
+exit 0

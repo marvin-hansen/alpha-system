@@ -1,6 +1,3 @@
-// Unsafe code must be explicitly enabled to use it.
-#[deny(unsafe_code)]
-//
 use std::error::Error;
 use std::ops::Deref;
 use std::sync::Arc;

@@ -1,4 +1,4 @@
-pub const SCHEMA_DOWN: &'static str = r#"
+pub const SCHEMA_DOWN: &str = r#"
 -- This file should undo anything in `up.sql`
 DROP TABLE IF EXISTS mddb.instruments_exchanges;
 

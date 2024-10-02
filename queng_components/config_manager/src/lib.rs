@@ -1,6 +1,3 @@
-// Unsafe code must be explicitly enabled to use it.
-#[deny(unsafe_code)]
-//
 use common_config::prelude::{ServiceConfig, ServiceID, SvcEnvConfig};
 use common_database::prelude::{ClickHouseConfig, PostgresDBConfig};
 use common_env::prelude::EnvironmentType;

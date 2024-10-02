@@ -1,6 +1,3 @@
-// Unsafe code must be explicitly enabled to use it.
-#[deny(unsafe_code)]
-//
 use anyhow::{bail, Result};
 use reqwest::{Response, StatusCode};
 use serde::de::DeserializeOwned;

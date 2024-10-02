@@ -1,6 +1,3 @@
-// Unsafe code must be explicitly enabled to use it.
-#[deny(unsafe_code)]
-//
 pub mod account_type;
 pub mod exchange_id;
 pub mod fiat_iso_code;

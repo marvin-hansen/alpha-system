@@ -1,6 +1,3 @@
-// Unsafe code must be explicitly enabled to use it.
-#[deny(unsafe_code)]
-//
 mod db_svc;
 
 use common_errors::prelude::PostgresDBError;

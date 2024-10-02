@@ -1,4 +1,4 @@
-pub const SCHEMA_UP: &'static str = r#"
+pub const SCHEMA_UP: &str = r#"
 -- Your SQL goes here
 CREATE SCHEMA IF NOT EXISTS cmdb;
 

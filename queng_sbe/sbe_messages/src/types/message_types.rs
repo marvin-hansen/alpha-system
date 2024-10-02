@@ -6,10 +6,10 @@ use std::fmt::Display;
 /// Can take following values:
 ///
 /// - UnknownMessageType = 0_u16
-/// 1xx = ClientTypes
+///   1xx = ClientTypes
 /// - ClientLogin = 101_u16
 /// - ClientLogout = 102_u16
-/// 2xx = DataTypes
+///   2xx = DataTypes
 /// - StartData = 201_u16
 /// - StopData = 202_u16
 /// - StopAllData = 203_u16
@@ -19,7 +19,7 @@ use std::fmt::Display;
 /// - TradeBar = 207_u16
 /// - FirstTradeBar = 208_u16
 /// - LastTradeBar = 209_u16
-/// 8xx = ErrorTypes
+///    8xx = ErrorTypes
 /// - ClientError = 801_u16
 /// - DataError = 802_u16
 ///

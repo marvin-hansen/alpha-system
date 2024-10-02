@@ -1,6 +1,3 @@
-// Unsafe code must be explicitly enabled to use it.
-#[deny(unsafe_code)]
-//
 use common_config::prelude::HostEndpoint;
 use std::fmt::Error;
 use tonic::transport::Uri;

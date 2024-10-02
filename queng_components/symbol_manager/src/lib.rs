@@ -1,6 +1,3 @@
-// Unsafe code must be explicitly enabled to use it.
-#[deny(unsafe_code)]
-//
 mod getters;
 mod lookup_exchange_name;
 mod lookup_symbol;

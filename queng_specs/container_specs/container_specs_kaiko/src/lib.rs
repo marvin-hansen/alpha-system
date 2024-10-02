@@ -1,8 +1,3 @@
-// Unsafe code must be explicitly enabled to use it.
-#[deny(unsafe_code)]
-//
-use common_container;
-
 use common_container::prelude::{ContainerConfig, WaitStrategy};
 
 /// Constructs the configuration for an API proxy container.

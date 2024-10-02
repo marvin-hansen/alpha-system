@@ -1,6 +1,3 @@
-// Unsafe code must be explicitly enabled to use it.
-#[deny(unsafe_code)]
-//
 use common_config::prelude::ServiceID;
 use common_service::{print_utils, shutdown_utils};
 use config_manager::CfgManager;
