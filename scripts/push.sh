@@ -3,13 +3,62 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-# Format all source code.
-command command cargo fmt --all
+echo "=============="
+echo "Update images "
+echo "=============="
+command bazel run  @rules_apko//apko lock images/base_image/apko.yaml
 
-# Kick off remote build and test with bazel to ensure hot cache for CI
-command bazel build -c opt //... --config=remote
+echo "=============="
+echo "Format targets "
+echo "=============="
+# Bazel file formatting (Installed via homebrew)
+# https://github.com/bazelbuild/buildtools
+command buildifier -r MODULE.bazel BUILD.bazel WORKSPACE.bzlmod thirdparty/BUILD.bazel
+command buildifier -r build images queng_*
 
-command bazel test  -c opt //... --test_tag_filters=unit --config=remote
+# Rust code formatting
+# https://github.com/rust-lang/rustfmt
+command cargo fmt --all
 
-# Push all new and remaining commits to remote to trigger CI
-command git push
+echo "=============="
+echo "Build targets "
+echo "=============="
+command bazel build //...
+command bazel build //... --build_tag_filters=doc-test
+
+echo ""
+echo "=============="
+echo "Run doc tests"
+echo "=============="
+command bazel test //... --test_tag_filters=doc-test --test_env=ENV=LOCAL
+
+echo ""
+echo "=============="
+echo "Run unit tests"
+echo "=============="
+command bazel test //... --test_tag_filters=unit-test --test_env=ENV=LOCAL
+
+echo ""
+echo "====================="
+echo "Run integration tests"
+echo "====================="
+command bazel test //... --test_tag_filters=integration_test --test_env=ENV=LOCAL
+
+echo ""
+echo "====================="
+echo "Build container images"
+echo "====================="
+command bazel build //:push
+
+if [[ $(git status --porcelain | wc -l) -gt 0 ]];
+then
+  echo "Uncommited changes found; commit first, then run script again"
+  exit 1
+else
+  # echo NOT CHANGED locally
+  # Push all new and remaining commits to remote to trigger CI
+  echo "Push to git remote"
+  command git push
+fi
+
+echo "Completed"
