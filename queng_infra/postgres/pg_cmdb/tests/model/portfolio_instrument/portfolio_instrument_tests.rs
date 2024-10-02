@@ -100,7 +100,7 @@ async fn test_portfolio_instrument() {
     assert!(result.is_ok());
 
     let portfolio_instruments = result.unwrap();
-    assert!(portfolio_instruments.len() > 0);
+    assert!(!portfolio_instruments.is_empty());
 
     let result = PortfolioInstrument::delete(conn, portfolio_id as i32, instrument_id.to_string());
     //dbg!(&result);

@@ -359,7 +359,7 @@ impl Portfolio {
                 };
 
             // Only delete if portfolio_instrument that exists
-            if portfolio_instruments.len() > 0 {
+            if !portfolio_instruments.is_empty() {
                 // Delete all portfolio_instrument for portfolio
                 for i in portfolio_instruments {
                     match PortfolioInstrument::delete(db, i.portfolio_id, i.instrument_id) {

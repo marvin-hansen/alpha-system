@@ -110,7 +110,7 @@ impl ServiceConfig {
     }
     /// Returns only the service endpoint.
     pub fn service_endpoint(&self) -> Endpoint {
-        self.endpoints.get(0).unwrap().to_owned()
+        self.endpoints.first().unwrap().to_owned()
     }
     /// Returns only the metrics endpoint.
     pub fn metrics_endpoint(&self) -> MetricConfig {

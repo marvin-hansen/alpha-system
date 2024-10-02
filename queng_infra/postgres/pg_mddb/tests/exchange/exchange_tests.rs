@@ -93,7 +93,7 @@ async fn test_create_exchange_collection() {
     let test_data = Vec::from([get_test_meta_exchange()]);
     let result = Exchange::create_exchange_collection(conn, test_data);
     assert!(result.is_ok());
-    assert_eq!(result.unwrap(), true);
+    assert!(result.unwrap());
 }
 
 #[tokio::test]
@@ -154,7 +154,7 @@ async fn test_check_if_exchange_id_exists_true() {
 
     let result = Exchange::check_if_exchange_id_exists(conn, valid_exchange_id);
     assert!(result.is_ok());
-    assert_eq!(result.unwrap(), true);
+    assert!(result.unwrap());
 }
 
 #[tokio::test]
@@ -172,7 +172,7 @@ async fn test_check_if_exchange_id_exists_false() {
     let invalid_exchange_id = "non_existent_exchange_id";
     let result = Exchange::check_if_exchange_id_exists(conn, invalid_exchange_id.to_string());
     assert!(result.is_ok());
-    assert_eq!(result.unwrap(), false);
+    assert!(!result.unwrap());
 }
 
 #[tokio::test]

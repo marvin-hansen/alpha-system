@@ -83,26 +83,20 @@ impl ServiceUtil {
             let mut cmd = Command::new("curl");
             cmd.arg(health_url);
 
-            match cmd.output() {
-                Ok(out) => {
-                    self.dbg_print(&format!(
-                        "[wait_until_health_check]: \n
-                        success: {} \n
-                        Output: {}",
-                        out.status.success(),
-                        String::from_utf8_lossy(out.stdout.as_slice()),
-                    ));
+            if let Ok(out) = cmd.output() {
+                self.dbg_print(&format!(
+                    "[wait_until_health_check]: \n
+                    success: {} \n
+                    Output: {}",
+                    out.status.success(),
+                    String::from_utf8_lossy(out.stdout.as_slice()),
+                ));
 
-                    if out.status.success() {
-                        if String::from_utf8_lossy(&out.stdout).contains("OK") {
-                            self.dbg_print("Service online");
+                if out.status.success() && String::from_utf8_lossy(&out.stdout).contains("OK") {
+                    self.dbg_print("Service online");
 
-                            break Ok(());
-                        }
-                    }
+                    break Ok(());
                 }
-                Err(_) => {} // ignore as curl returns an error in case connection failure
-                             // Instead, try again until curl either receives an OK response or times out
             }
         }
     }

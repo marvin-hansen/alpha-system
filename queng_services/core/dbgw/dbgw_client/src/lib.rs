@@ -38,7 +38,7 @@ impl DBGatewayClient {
             Err(e) => {
                 panic!(
                     "DBGatewayClient: Failed to connect to server: {} due to error: {}",
-                    uri.to_string(),
+                    uri,
                     e
                 );
             }

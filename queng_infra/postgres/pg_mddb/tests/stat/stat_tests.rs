@@ -60,7 +60,7 @@ async fn test_create_stat() {
     assert!(result.is_ok());
 
     let meta_stats = MetaStats::new("timestamp".to_string(), "hash".to_string(), 10, 5, 15);
-    let result = Stat::create(&mut conn, meta_stats);
+    let result = Stat::create(conn, meta_stats);
 
     assert!(result.is_ok());
     let created_stat = result.unwrap();
@@ -84,12 +84,12 @@ async fn test_create_stat_err() {
     assert!(result.is_ok());
 
     let meta_stats = MetaStats::new("timestamp".to_string(), "hash".to_string(), 10, 5, 15);
-    let result = Stat::create(&mut conn, meta_stats);
+    let result = Stat::create(conn, meta_stats);
 
     assert!(result.is_ok());
 
     let meta_stats = MetaStats::new("timestamp".to_string(), "hash".to_string(), 10, 5, 15);
-    let result = Stat::create(&mut conn, meta_stats);
+    let result = Stat::create(conn, meta_stats);
     assert!(result.is_err());
 }
 
@@ -112,10 +112,10 @@ async fn test_create_stat_collection_success() {
         5,
         15,
     )];
-    let result = Stat::create_stat_collection(&mut conn, meta_stats_collection);
+    let result = Stat::create_stat_collection(conn, meta_stats_collection);
 
     assert!(result.is_ok());
-    assert_eq!(result.unwrap(), true);
+    assert!(result.unwrap());
 }
 
 #[tokio::test]
@@ -131,7 +131,7 @@ async fn test_create_stat_collection_empty() {
     assert!(result.is_ok());
 
     let meta_stats_collection = vec![];
-    let result = Stat::create_stat_collection(&mut conn, meta_stats_collection);
+    let result = Stat::create_stat_collection(conn, meta_stats_collection);
 
     assert!(result.is_err());
 }
@@ -339,7 +339,7 @@ async fn test_delete_stat() {
 
     // Call the delete method
     let stat_id = 0;
-    let result = Stat::delete(&mut conn, stat_id);
+    let result = Stat::delete(conn, stat_id);
 
     // Assert the result
     assert!(result.is_ok());
@@ -360,7 +360,7 @@ async fn test_delete_stat_non_existent_id() {
 
     // Call the delete method
     let stat_id = 99;
-    let result = Stat::delete(&mut conn, stat_id);
+    let result = Stat::delete(conn, stat_id);
 
     // Assert the result
     assert!(result.is_ok());

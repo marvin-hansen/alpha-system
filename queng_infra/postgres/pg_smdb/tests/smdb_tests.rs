@@ -220,7 +220,7 @@ async fn test_service_read() {
     assert_eq!(service.svc_id(), &service_id);
     assert_eq!(service.name(), "name");
     assert_eq!(service.version(), 1);
-    assert_eq!(service.online(), true);
+    assert!(service.online());
     assert_eq!(service.description(), "description");
     assert_eq!(service.health_check_uri(), "health_check_uri");
     assert_eq!(service.base_uri(), "base_uri");
@@ -415,10 +415,10 @@ async fn test_service_update() {
     ]);
 
     let update = ServiceConfig::new(
-        id.clone(),
+        id,
         name.clone(),
-        version.clone(),
-        online.clone(),
+        version,
+        online,
         description.clone(),
         health_check_uri.clone(),
         base_uri.clone(),
@@ -432,7 +432,7 @@ async fn test_service_update() {
     let service = result.unwrap();
     assert_eq!(service.name(), "new_name");
     assert_eq!(service.version(), 2);
-    assert_eq!(service.online(), true);
+    assert!(service.online());
     assert_eq!(service.description(), "description");
     assert_eq!(service.health_check_uri(), "health_check_uri");
     assert_eq!(service.base_uri(), "base_uri");
@@ -479,10 +479,10 @@ async fn test_service_update_error() {
     ]);
 
     let update = ServiceConfig::new(
-        id.clone(),
+        id,
         name.clone(),
-        version.clone(),
-        online.clone(),
+        version,
+        online,
         description.clone(),
         health_check_uri.clone(),
         base_uri.clone(),

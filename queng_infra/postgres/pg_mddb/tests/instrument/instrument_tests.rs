@@ -86,7 +86,7 @@ async fn test_create_instrument_collection_success() {
     let meta_instruments = vec![get_test_meta_instrument()];
     let result = Instrument::create_instrument_collection(conn, meta_instruments);
     assert!(result.is_ok());
-    assert_eq!(result.unwrap(), true);
+    assert!(result.unwrap());
 }
 
 #[tokio::test]

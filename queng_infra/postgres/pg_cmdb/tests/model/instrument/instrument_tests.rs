@@ -187,7 +187,7 @@ async fn test_read_all_instruments() {
     assert!(result.is_ok());
 
     let all_instruments = result.unwrap();
-    assert!(all_instruments.len() > 0);
+    assert!(!all_instruments.is_empty());
 }
 
 #[tokio::test]

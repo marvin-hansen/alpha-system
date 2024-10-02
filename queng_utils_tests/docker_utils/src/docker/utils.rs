@@ -160,7 +160,7 @@ impl DockerUtil {
 
         let mut cmd = Command::new("docker");
         cmd.arg("ps");
-        cmd.arg("--filter=status=running".to_string());
+        cmd.arg("--filter=status=running");
         cmd.arg(format!("--filter=name={container_id}"));
         cmd.arg("--format={{.Names}}");
 

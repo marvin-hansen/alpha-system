@@ -95,7 +95,7 @@ pub(super) fn get_clickhouse_config(dbg: bool, env_type: &EnvironmentType) -> Cl
     if dbg {
         println!("[CfgManager]: get_clickhouse_config");
     }
-    clickhouse::get_clickhouse_config(&env_type)
+    clickhouse::get_clickhouse_config(env_type)
 }
 
 ///

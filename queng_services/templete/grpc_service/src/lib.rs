@@ -29,7 +29,7 @@ where
 {
     let dbg_print = |msg: &str| {
         if dbg {
-            println!("[{}]: {}", svc_id.to_string(), msg)
+            println!("[{}]: {}", svc_id, msg)
         }
     };
 
@@ -131,7 +131,7 @@ where
                 .expect("Failed to set service offline!");
             println!(
                 "Failed to start gRPC and HTTP server: {} due to error {:?}",
-                svc_id.to_string(),
+                svc_id,
                 e
             );
         }
