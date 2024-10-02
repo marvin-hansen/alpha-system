@@ -1,5 +1,5 @@
 use crate::error::ImsDataClientError;
-use crate::{utils_proto, ImsDataClient};
+use crate::ImsDataClient;
 use common_data_bar::prelude::DataType;
 use common_exchange::prelude::ExchangeID;
 
@@ -22,18 +22,11 @@ impl ImsDataClient {
     ///
     pub async fn start_data(
         &mut self,
-        exchange_id: ExchangeID,
-        symbols: Vec<String>,
-        data_type: DataType,
+        _exchange_id: ExchangeID,
+        _symbols: Vec<String>,
+        _data_type: DataType,
     ) -> Result<u32, ImsDataClientError> {
-        let request = utils_proto::get_start_data_request(exchange_id, symbols, data_type);
-
-        let res = self.client.start_data(request).await;
-
-        match res {
-            Ok(response) => Ok(response.into_inner().stream_id),
-            Err(e) => Err(ImsDataClientError(format!("{:?}", e))),
-        }
+        Err(ImsDataClientError(format!("{:?}", "Not implemented")))
     }
 
     /// Sends a request to the IMS data client to stop streaming data
@@ -54,17 +47,11 @@ impl ImsDataClient {
     ///
     pub async fn stop_data(
         &mut self,
-        exchange_id: ExchangeID,
-        stream_id: u32,
-        data_type: DataType,
+        _exchange_id: ExchangeID,
+        _stream_id: u32,
+        _data_type: DataType,
     ) -> Result<(), ImsDataClientError> {
-        let request = utils_proto::get_stop_data_request(exchange_id, stream_id, data_type);
-
-        let res = self.client.stop_data(request).await;
-        match res {
-            Ok(_) => Ok(()),
-            Err(e) => Err(ImsDataClientError(format!("{:?}", e))),
-        }
+        Err(ImsDataClientError(format!("{:?}", "Not implemented")))
     }
 
     /// Sends a request to the IMS data client to stop all streaming data
@@ -83,14 +70,8 @@ impl ImsDataClient {
     ///
     pub async fn stop_all_data(
         &mut self,
-        exchange_id: ExchangeID,
+        _exchange_id: ExchangeID,
     ) -> Result<(), ImsDataClientError> {
-        let request = utils_proto::get_stop_all_data_request(exchange_id);
-
-        let res = self.client.stop_all_data(request).await;
-        match res {
-            Ok(_) => Ok(()),
-            Err(e) => Err(ImsDataClientError(format!("{:?}", e))),
-        }
+        Err(ImsDataClientError(format!("{:?}", "Not implemented")))
     }
 }

@@ -34,7 +34,6 @@ build_binary_opt(
         "//alias:common_data_bar",
         "//alias:common_config",
         "//alias:config_manager",
-        "//alias:proto_imdb",
         "//alias:common_service",
         # Custom Memory Allocator
         "//thirdparty/crates:mimalloc",

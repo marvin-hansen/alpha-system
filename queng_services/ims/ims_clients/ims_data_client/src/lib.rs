@@ -2,19 +2,17 @@
 #[deny(unsafe_code)]
 //
 use common_config::prelude::HostEndpoint;
-use proto_imdb::proto::ims_data_service_client::ImsDataServiceClient;
 use std::fmt::Error;
-use tonic::transport::{Channel, Uri};
+use tonic::transport::Uri;
 
 pub mod error;
-mod utils_proto;
 mod workflow;
 
 pub use error::ImsDataClientError;
 
 #[derive(Debug, Clone)]
 pub struct ImsDataClient {
-    client: ImsDataServiceClient<Channel>,
+    uri: Uri,
 }
 
 impl ImsDataClient {
@@ -39,14 +37,10 @@ impl ImsDataClient {
             panic!("\r\n ❌ [ImsDataClient]: Failed to parse server URI: {}", s)
         });
 
-        // creating a channel that connects to server
-        let channel = Channel::builder(uri)
-            .connect()
-            .await
-            .unwrap_or_else(|_| panic!("\r\n ❌[ImsDataClient]: Failed to connect to Ims Data Service service on: {} \r\n  \r\n Detail: \r\n", s));
+        Ok(Self { uri })
+    }
 
-        let client = ImsDataServiceClient::new(channel);
-
-        Ok(Self { client })
+    pub fn uri(&self) -> &Uri {
+        &self.uri
     }
 }

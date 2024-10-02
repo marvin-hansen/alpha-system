@@ -170,12 +170,6 @@ alias(
 )
 
 alias(
-    name = "proto_imdb",
-    actual = "//queng_proto/proto_imdb:proto_imdb_bindings",
-    
-)
-
-alias(
     name = "proto_mddb",
     actual = "//queng_proto/proto_mddb:proto_mddb_bindings",
     

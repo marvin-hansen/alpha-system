@@ -18,7 +18,6 @@ path = "src/lib.rs"
 common_data_bar = {workspace = true}
 common_config = {workspace = true}
 common_exchange = {workspace = true}
-proto_imdb = {workspace = true}
 
 # Exteral crates
 tokio = { workspace = true }

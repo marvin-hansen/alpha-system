@@ -22,7 +22,6 @@ config_manager = {workspace = true}
 
 
 ims_common = {workspace = true}
-proto_imdb = {workspace = true}
 common_service =  {workspace = true}
 # External crates
 binance-rs-async = { workspace = true }
