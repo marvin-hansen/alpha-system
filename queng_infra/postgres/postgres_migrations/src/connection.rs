@@ -14,9 +14,9 @@ pub const DB_TEST_URL: &str = "postgres://postgres:postgres@localhost/postgres";
 ///
 /// # Returns
 ///
-/// * `Result<PgConnection, PostgresDBError>` - A result indicating success or failure.
-/// If successful, returns a `PgConnection` instance.
-/// If the connection fails, returns a `PostgresDBError` indicating the failure.
+/// `Result<PgConnection, PostgresDBError>` - A result indicating success or failure.
+/// * If successful, returns a `PgConnection` instance.
+/// * If the connection fails, returns a `PostgresDBError` indicating the failure.
 ///
 pub async fn get_or_wait_for_postgres_connection(
     database_url: &str,

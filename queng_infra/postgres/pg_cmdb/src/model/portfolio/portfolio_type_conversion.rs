@@ -25,7 +25,7 @@ impl Portfolio {
         }
     }
 
-    pub fn to_common_portfolio(&self, instruments: &Vec<Instrument>) -> CommonPortfolioConfig {
+    pub fn to_common_portfolio(&self, instruments: &[Instrument]) -> CommonPortfolioConfig {
         CommonPortfolioConfig::new(
             self.portfolio_id as u32,
             self.portfolio_description.to_string(),

@@ -57,6 +57,7 @@ pub struct CreatePortfolio {
 }
 
 impl CreatePortfolio {
+    #[allow(clippy::too_many_arguments)]
     pub fn new(
         portfolio_id: i32,
         portfolio_description: String,
@@ -112,6 +113,7 @@ pub struct UpdatePortfolio {
 }
 
 impl UpdatePortfolio {
+    #[allow(clippy::too_many_arguments)]
     pub fn new(
         portfolio_description: Option<String>,
         portfolio_account_type: Option<i32>,

@@ -26,7 +26,7 @@ impl UpdatePortfolio {
     pub fn to_common_portfolio(
         &self,
         portfolio_id: u32,
-        instrument: &Vec<Instrument>,
+        instrument: &[Instrument],
     ) -> CommonPortfolioConfig {
         CommonPortfolioConfig::new(
             portfolio_id,

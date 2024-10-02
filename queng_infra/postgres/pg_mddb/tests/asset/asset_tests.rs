@@ -1,4 +1,3 @@
-use common_metadata::prelude::MetaAsset;
 use container_specs_postgres::postgres_db_container_config;
 use diesel::Connection;
 use docker_utils::prelude::DockerUtil;
@@ -11,17 +10,6 @@ fn get_test_asset() -> Asset {
         asset_name: "test_asset_name".to_string(),
         asset_classes: vec![],
         asset_figi: None,
-    }
-}
-
-pub fn get_test_meta_asset() -> MetaAsset {
-    MetaAsset {
-        code: "test_asset_code".to_string(),
-        name: "test_asset_name".to_string(),
-        asset_classes: vec![],
-        asset_class: "test_asset_class".to_string(),
-        metadata: None,
-        addresses: None,
     }
 }
 

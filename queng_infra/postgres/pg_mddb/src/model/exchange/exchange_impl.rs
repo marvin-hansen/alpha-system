@@ -36,8 +36,7 @@ impl Exchange {
     /// # Arguments
     ///
     /// * `conn` - A mutable reference to the database connection.
-    /// * `meta_exchanges` - A vector of MetaExchange structs containing the metadata
-    /// for the exchanges to be created.
+    /// * `meta_exchanges` - A vector of MetaExchange structs containing metadata for the exchanges to be created.
     ///
     /// # Returns
     ///

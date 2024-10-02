@@ -58,6 +58,7 @@ impl PostgresCMDBManager {
     /// # Returns
     ///
     /// * `Result<u64, PostgresDBError>` - A result indicating success or failure.
+    ///
     /// The number of portfolio configurations is returned as a `u64` if successful.
     ///
     pub async fn count_portfolio_configs(&mut self) -> Result<u64, PostgresDBError> {
@@ -79,6 +80,7 @@ impl PostgresCMDBManager {
     /// # Returns
     ///
     /// * `Result<bool, PostgresDBError>` - A result indicating success or failure.
+    ///
     /// If the portfolio configuration exists, returns `Ok(true)`, otherwise `Ok(false)`.
     ///
     /// # Errors
@@ -107,6 +109,7 @@ impl PostgresCMDBManager {
     /// # Returns
     ///
     /// * `Result<bool, PostgresDBError>` - A result indicating success or failure.
+    ///
     /// If the instrument exists, returns `Ok(true)`, otherwise `Ok(false)`.
     ///
     /// # Errors
@@ -135,8 +138,8 @@ impl PostgresCMDBManager {
     ///
     /// # Returns
     ///
-    /// A `Result` containing a `PortfolioConfig` if the portfolio configuration was successfully read,
-    /// or an `Err` containing a `PostgresDBError` if there was an error reading the portfolio configuration.
+    /// * `Result` containing a `PortfolioConfig` if the portfolio configuration was successfully read,
+    /// * `Err` containing a `PostgresDBError` if there was an error reading the portfolio configuration.
     ///
     pub async fn read_portfolio_config_by_id(
         &self,
@@ -156,8 +159,8 @@ impl PostgresCMDBManager {
     ///
     /// # Returns
     ///
-    /// A `Result` containing a `Vec` of `PortfolioConfig` if the portfolio configurations were successfully read,
-    /// or an `Err` containing a `PostgresDBError` if there was an error reading the portfolio configurations.
+    /// * `Result` containing a `Vec` of `PortfolioConfig` if the portfolio configurations were successfully read,
+    /// * `Err` containing a `PostgresDBError` if there was an error reading the portfolio configurations.
     ///
     /// Notice, if there are no data to read, the vector will be of length 0.
     ///
@@ -182,8 +185,8 @@ impl PostgresCMDBManager {
     ///
     /// # Returns
     ///
-    /// A `Result` containing a `()` if the portfolio configuration was successfully updated,
-    /// or an `Err` containing a `PostgresDBError` if there was an error updating the portfolio configuration.
+    /// * `Result` containing a `()` if the portfolio configuration was successfully updated,
+    /// * `Err` containing a `PostgresDBError` if there was an error updating the portfolio configuration.
     ///
     pub async fn update_portfolio_config(
         &self,
@@ -208,8 +211,8 @@ impl PostgresCMDBManager {
     /// # Returns
     ///
     /// * `Result<bool, PostgresDBError>` - A result indicating success or failure.
-    /// If the portfolio was deleted, returns `Ok(true)`.
-    /// If the portfolio does not exist, returns `Ok(false)`.
+    /// * If the portfolio was deleted, returns `Ok(true)`.
+    /// * If the portfolio does not exist, returns `Ok(false)`.
     ///
     pub async fn delete_portfolio_config(&self, id: u16) -> Result<bool, PostgresDBError> {
         self.dbg_print("delete_portfolio_config");

@@ -57,8 +57,9 @@ impl Instrument {
     ///
     /// # Returns
     ///
-    /// * `Result<bool, diesel::result::Error>` - A result indicating success or failure.
-    /// If the instrument exists, returns `Ok(true)`, otherwise `Ok(false)`.
+    /// `Result<bool, diesel::result::Error>` - A result indicating success or failure.
+    /// * If the instrument exists, returns `Ok(true)`,
+    /// * otherwise `Ok(false)`.
     ///
     pub fn check_if_instrument_code_exists(
         db: &mut Connection,

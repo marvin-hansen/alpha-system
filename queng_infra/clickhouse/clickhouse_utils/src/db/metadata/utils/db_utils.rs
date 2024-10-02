@@ -47,6 +47,7 @@ impl Metadata {
     /// Returns a `Result` with a boolean value indicating whether the table exists.
     /// - `Ok(true)` if the table exists.
     /// - `Ok(false)` if the table does not exist.
+    ///
     /// If an error occurs during the verification process, it returns an `Err(ClickHouseQueryError)`.
     ///
     /// # Errors
@@ -77,6 +78,7 @@ impl Metadata {
     /// Returns a `Result` with a boolean value indicating whether the database exists.
     /// - `Ok(true)` if the database exists.
     /// - `Ok(false)` if the database does not exist.
+    ///
     /// If an error occurs during the verification process, it returns an `Err(ClickHouseQueryError)`.
     ///
     /// # Errors
@@ -106,6 +108,7 @@ impl Metadata {
     /// # Returns
     ///
     /// Returns a `Result` with the count of rows as a `u64` if the query is successful.
+    ///
     /// If an error occurs during the count operation, it returns an `Err(ClickHouseQueryError)`.
     ///
     /// # Errors
