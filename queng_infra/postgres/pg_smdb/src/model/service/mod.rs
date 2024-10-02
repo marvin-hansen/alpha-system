@@ -37,6 +37,7 @@ pub struct CreateService {
 }
 
 impl CreateService {
+    #[allow(clippy::too_many_arguments)]
     pub fn new(
         service_id: i32,
         name: String,
@@ -77,6 +78,7 @@ pub struct UpdateService {
 }
 
 impl UpdateService {
+    #[allow(clippy::too_many_arguments)]
     pub fn new(
         name: Option<String>,
         version: Option<i32>,

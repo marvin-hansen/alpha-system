@@ -52,7 +52,7 @@ async fn test_create_stat() {
     let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
     assert!(connection.is_ok());
 
-    let mut conn = &mut connection.unwrap();
+    let conn = &mut connection.unwrap();
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
@@ -76,7 +76,7 @@ async fn test_create_stat_err() {
     let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
     assert!(connection.is_ok());
 
-    let mut conn = &mut connection.unwrap();
+    let conn = &mut connection.unwrap();
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
@@ -98,7 +98,7 @@ async fn test_create_stat_collection_success() {
     let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
     assert!(connection.is_ok());
 
-    let mut conn = &mut connection.unwrap();
+    let conn = &mut connection.unwrap();
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
@@ -123,7 +123,7 @@ async fn test_create_stat_collection_empty() {
     let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
     assert!(connection.is_ok());
 
-    let mut conn = &mut connection.unwrap();
+    let conn = &mut connection.unwrap();
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
@@ -326,7 +326,7 @@ async fn test_delete_stat() {
     let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
     assert!(connection.is_ok());
 
-    let mut conn = &mut connection.unwrap();
+    let conn = &mut connection.unwrap();
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 
@@ -351,7 +351,7 @@ async fn test_delete_stat_non_existent_id() {
     let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
     assert!(connection.is_ok());
 
-    let mut conn = &mut connection.unwrap();
+    let conn = &mut connection.unwrap();
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
 

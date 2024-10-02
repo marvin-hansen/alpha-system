@@ -38,6 +38,7 @@ impl ServiceConfig {
     /// * `base_uri` - Base URI.
     /// * `dependencies` - Service dependencies.
     /// * `endpoints` - Service endpoint.
+    #[allow(clippy::too_many_arguments)]
     pub fn new(
         svc_id: ServiceID,
         name: String,

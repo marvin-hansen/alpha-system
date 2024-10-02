@@ -10,8 +10,7 @@ pub const DB_TEST_URL: &str = "postgres://postgres:postgres@localhost/postgres";
 /// # Arguments
 ///
 /// * `database_url` - The Postgres database connection URL.
-/// * `timeout` - The timeout in seconds to wait for the connection. If not provided,
-/// defaults to 120 seconds (2 minutes).
+/// * `timeout` - The timeout in seconds to wait for the connection. If not provided, defaults to 120 seconds (2 minutes).
 ///
 /// # Returns
 ///
