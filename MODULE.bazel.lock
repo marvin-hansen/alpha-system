@@ -1093,7 +1093,7 @@
         "bzlTransitiveDigest": "FxYovtygS36jNw9oKzfchirzUhgOIDsGgSz18eLTWsc=",
         "usagesDigest": "MG3oaaGnFSME0uypHij1yGainOajxvJwXJPiHujt42Y=",
         "recordedFileInputs": {
-          "@@//images/base_image/apko.lock.json": "3275823d24cef6d837aff77cbfb19bd2ca1ad515266f41e4d1793f1704823c2c"
+          "@@//images/base_image/apko.lock.json": "04ab2d7c2a44216a68d79c24a8fce047e5ced57f64ba5564f271353607f9c359"
         },
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -1267,22 +1267,6 @@
               "data_checksum": "sha256-R8hnnJmRGOkhn8PbWNTi8sYQXRKrr/fApyzFsp0+j3Y="
             }
           },
-          "base_image_ca-certificates-bundle_aarch64_20240705-r0": {
-            "bzlFile": "@@rules_apko~//apko/private:apk.bzl",
-            "ruleClassName": "apk_import",
-            "attributes": {
-              "package_name": "ca-certificates-bundle",
-              "version": "20240705-r0",
-              "architecture": "aarch64",
-              "url": "https://packages.wolfi.dev/os/aarch64/ca-certificates-bundle-20240705-r0.apk",
-              "signature_range": "bytes=0-697",
-              "signature_checksum": "sha1-SJWimHRuvKtcRxlTKEDjY37TJ4o=",
-              "control_range": "bytes=698-1025",
-              "control_checksum": "sha1-GL1kaSxDtLquOYyNLB/uAT/o/+g=",
-              "data_range": "bytes=1026-130530",
-              "data_checksum": "sha256-gXyNoCqO2y+3OwJ0kYK4+uTTGwO0gR5hrDgi+vquRoE="
-            }
-          },
           "base_image_zlib_x86_64_1.3.1-r4": {
             "bzlFile": "@@rules_apko~//apko/private:apk.bzl",
             "ruleClassName": "apk_import",
@@ -1297,6 +1281,22 @@
               "control_checksum": "sha1-BERCewGJVIkPpMoG7t13ter7+Go=",
               "data_range": "bytes=1078-61438",
               "data_checksum": "sha256-+JOPvMTzIWTLR+5cccK4AXWXO2kvBp1mH9/AGlFSD5c="
+            }
+          },
+          "base_image_ca-certificates-bundle_aarch64_20240705-r1": {
+            "bzlFile": "@@rules_apko~//apko/private:apk.bzl",
+            "ruleClassName": "apk_import",
+            "attributes": {
+              "package_name": "ca-certificates-bundle",
+              "version": "20240705-r1",
+              "architecture": "aarch64",
+              "url": "https://packages.wolfi.dev/os/aarch64/ca-certificates-bundle-20240705-r1.apk",
+              "signature_range": "",
+              "signature_checksum": "",
+              "control_range": "bytes=0-329",
+              "control_checksum": "sha1-Od476o92rEcn8TJQbQKsVQEfup8=",
+              "data_range": "bytes=330-129925",
+              "data_checksum": "sha256-zTW+cP5LA+5UnVxhSjcZRGdNcktk6gHKDZmxEzykpP0="
             }
           },
           "base_image_wolfi-keys_x86_64_1-r8": {
@@ -1411,20 +1411,20 @@
               "data_checksum": "sha256-XbprEl9LYlD0CtA/fPP/gAsavxZ8jm+DT6+dItHFOw8="
             }
           },
-          "base_image_ca-certificates-bundle_x86_64_20240705-r0": {
+          "base_image_ca-certificates-bundle_x86_64_20240705-r1": {
             "bzlFile": "@@rules_apko~//apko/private:apk.bzl",
             "ruleClassName": "apk_import",
             "attributes": {
               "package_name": "ca-certificates-bundle",
-              "version": "20240705-r0",
+              "version": "20240705-r1",
               "architecture": "x86_64",
-              "url": "https://packages.wolfi.dev/os/x86_64/ca-certificates-bundle-20240705-r0.apk",
-              "signature_range": "bytes=0-704",
-              "signature_checksum": "sha1-WL9vKv1nPIeaUQI4O0DiY9RdSHE=",
-              "control_range": "bytes=705-1034",
-              "control_checksum": "sha1-WR9MGKU+cJh6dJFEXnr3zU1qsMM=",
-              "data_range": "bytes=1035-130539",
-              "data_checksum": "sha256-EkOhtSivoLErXsK2J9ri39thkwb2kJGYHVou4n6dMKA="
+              "url": "https://packages.wolfi.dev/os/x86_64/ca-certificates-bundle-20240705-r1.apk",
+              "signature_range": "",
+              "signature_checksum": "",
+              "control_range": "bytes=0-332",
+              "control_checksum": "sha1-IRCEAB2IAnEmJucqRMp7WXC83DY=",
+              "data_range": "bytes=333-129926",
+              "data_checksum": "sha256-FRixxMyyTqyBh0juBSWmNhLsQBg4Ez6oh86tMdtBRAY="
             }
           },
           "base_image_libcrypto3_x86_64_3.3.2-r0": {

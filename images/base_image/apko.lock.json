@@ -46,22 +46,22 @@
       },
       {
         "name": "ca-certificates-bundle",
-        "url": "https://packages.wolfi.dev/os/x86_64/ca-certificates-bundle-20240705-r0.apk",
-        "version": "20240705-r0",
+        "url": "https://packages.wolfi.dev/os/x86_64/ca-certificates-bundle-20240705-r1.apk",
+        "version": "20240705-r1",
         "architecture": "x86_64",
         "signature": {
-          "range": "bytes=0-704",
-          "checksum": "sha1-WL9vKv1nPIeaUQI4O0DiY9RdSHE="
+          "range": "",
+          "checksum": ""
         },
         "control": {
-          "range": "bytes=705-1034",
-          "checksum": "sha1-WR9MGKU+cJh6dJFEXnr3zU1qsMM="
+          "range": "bytes=0-332",
+          "checksum": "sha1-IRCEAB2IAnEmJucqRMp7WXC83DY="
         },
         "data": {
-          "range": "bytes=1035-130539",
-          "checksum": "sha256-EkOhtSivoLErXsK2J9ri39thkwb2kJGYHVou4n6dMKA="
+          "range": "bytes=333-129926",
+          "checksum": "sha256-FRixxMyyTqyBh0juBSWmNhLsQBg4Ez6oh86tMdtBRAY="
         },
-        "checksum": "Q1WR9MGKU+cJh6dJFEXnr3zU1qsMM="
+        "checksum": "Q1IRCEAB2IAnEmJucqRMp7WXC83DY="
       },
       {
         "name": "wolfi-baselayout",
@@ -312,22 +312,22 @@
       },
       {
         "name": "ca-certificates-bundle",
-        "url": "https://packages.wolfi.dev/os/aarch64/ca-certificates-bundle-20240705-r0.apk",
-        "version": "20240705-r0",
+        "url": "https://packages.wolfi.dev/os/aarch64/ca-certificates-bundle-20240705-r1.apk",
+        "version": "20240705-r1",
         "architecture": "aarch64",
         "signature": {
-          "range": "bytes=0-697",
-          "checksum": "sha1-SJWimHRuvKtcRxlTKEDjY37TJ4o="
+          "range": "",
+          "checksum": ""
         },
         "control": {
-          "range": "bytes=698-1025",
-          "checksum": "sha1-GL1kaSxDtLquOYyNLB/uAT/o/+g="
+          "range": "bytes=0-329",
+          "checksum": "sha1-Od476o92rEcn8TJQbQKsVQEfup8="
         },
         "data": {
-          "range": "bytes=1026-130530",
-          "checksum": "sha256-gXyNoCqO2y+3OwJ0kYK4+uTTGwO0gR5hrDgi+vquRoE="
+          "range": "bytes=330-129925",
+          "checksum": "sha256-zTW+cP5LA+5UnVxhSjcZRGdNcktk6gHKDZmxEzykpP0="
         },
-        "checksum": "Q1GL1kaSxDtLquOYyNLB/uAT/o/+g="
+        "checksum": "Q1Od476o92rEcn8TJQbQKsVQEfup8="
       },
       {
         "name": "wolfi-baselayout",
