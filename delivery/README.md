@@ -41,5 +41,16 @@ The bootstrap command creates a repository if one doesn’t exist, and commits t
 to the default branch at the specified path. It then configures the target cluster to synchronize 
 with the specified path inside the repository.
 
+## Update K8s Operators
+
+A) Add customization to git
+B) Commit and push to origin
+C) Reconcile k8s cluster with git
+
+```shell
+flux reconcile source git flux-system
+```
+
+
 Resources:
 * https://www.youtube.com/watch?v=vp-oFksFoZs
