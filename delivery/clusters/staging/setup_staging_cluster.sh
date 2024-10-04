@@ -24,33 +24,6 @@ echo "► Configuring cluster DNS completed"
 
 echo ""
 echo "==============================="
-echo " Configure cluster secrets:  "
-echo "==============================="
-echo ""
-
-echo "► Generating DB user name and password"
-USER='dbgwuser'
-PASSWORD=$(openssl rand -base64 32)
-
-# store DB user & password in kubernetes secret accessed only by the SMX container.
-# See manifests/deployment.yml for ENV variables that are accessible from within the container.
-echo "► Create secret to store PG user and password"
-command kubectl create secret generic postgres-user \
-  --from-literal=username="$USER" \
-  --from-literal=password="$PASSWORD"
-
-echo "► Generating DB admin and password"
-USER='postgres'
-PASSWORD="cG9zdGdyZXM="
-
-command kubectl create secret generic postgres-admin \
-  --from-literal=username="$USER" \
-  --from-literal=password="$PASSWORD"
-
-echo "► Secrets configuration completed"
-
-echo ""
-echo "==============================="
 echo " Configure Flux cont. Delivery:"
 echo "==============================="
 echo ""

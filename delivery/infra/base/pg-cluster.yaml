@@ -18,7 +18,7 @@ spec:
       database: quantum
       owner: dbgwuser
       secret:
-        name: postgres-user
+        name: postgres-app
 
   storage:
     size: 1Gi
