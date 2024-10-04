@@ -10,11 +10,18 @@ For a quick local test, you can use Kubernetes kind. Any other Kubernetes setup 
 
 You’ll need a GitHub account and a personal access token that can create repositories (check all permissions under repo).
 
-Export your GitHub personal access token and username:
+Scope:
+* Only affected repository
+
+Permissions:
+* Metadata: read (Default)
+* Administration: read, write (Required)
+* Content: read, write (Required)
+
+Export your GitHub personal access token:
 
 ```shell
 export GITHUB_TOKEN=<your-token>
-export GITHUB_USER=<your-username>
 ```
 
 ## Install Flux
@@ -24,7 +31,7 @@ Install Flux with the image automation components:
 ```shell
 flux bootstrap github \
   --components-extra=image-reflector-controller,image-automation-controller \
-  --owner=$GITHUB_USER \
+  --owner=marvin-hansen \
   --repository=quant-engine \
   --branch=main \
   --path=delivery/clusters \
@@ -34,3 +41,5 @@ The bootstrap command creates a repository if one doesn’t exist, and commits t
 to the default branch at the specified path. It then configures the target cluster to synchronize 
 with the specified path inside the repository.
 
+Resources:
+* https://www.youtube.com/watch?v=vp-oFksFoZs
