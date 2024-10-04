@@ -50,6 +50,16 @@ C) Reconcile k8s cluster with git
 ```shell
 flux reconcile source git flux-system
 ```
+Double check pods were created in k8s:
+
+```shell
+kubectl get pods --all-namespaces
+```
+
+# Pre-installed operators:
+
+* [CNPG Postgres cluster operator](https://cloudnative-pg.io/)
+* [Sealed secrets operator ](https://github.com/bitnami-labs/sealed-secrets)
 
 
 Resources:
