@@ -26,20 +26,19 @@ export GITHUB_TOKEN=<your-token>
 
 ## Install Flux
 
-Install Flux with the image automation components:
+Install Flux with the image automation components via the setup script:
 
 ```shell
-flux bootstrap github \
-  --components-extra=image-reflector-controller,image-automation-controller \
-  --owner=marvin-hansen \
-  --repository=quant-engine \
-  --branch=main \
-  --path=delivery/clusters \
-  --personal
+chmod +x ./setup_staging_cluster.sh && ./setup_staging_cluster.sh
 ```
-The bootstrap command creates a repository if one doesn’t exist, and commits the manifests for the Flux components 
-to the default branch at the specified path. It then configures the target cluster to synchronize 
-with the specified path inside the repository.
+
+Check installation:
+
+```shell
+flux check 
+
+kubectl get pods --all-namespaces
+```
 
 ## Update K8s Operators
 

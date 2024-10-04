@@ -16,3 +16,6 @@ Otherwise, a custom user and password is required.
 ```shell
 psql -h 127.0.0.1 -p 5432 -U postgres -d postgres
 ```
+
+Resources:
+* https://cloudnative-pg.io/documentation/1.20/applications/#secrets
