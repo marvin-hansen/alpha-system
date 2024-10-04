@@ -66,10 +66,6 @@ command flux bootstrap github \
 
 echo "► Flux configuration completed"
 
-command flux check
-
-echo "► Flux check completed"
-
 command git pull
 
 echo "► Git pull completed"
