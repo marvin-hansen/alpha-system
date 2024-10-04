@@ -4,11 +4,6 @@ set -o nounset
 set -o pipefail
 
 echo "=============="
-echo "Update images "
-echo "=============="
-command bazel run  @rules_apko//apko lock images/base_image/apko.yaml
-
-echo "=============="
 echo "Lint targets "
 echo "=============="
 command cargo clippy --all-targets
