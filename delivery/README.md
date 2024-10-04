@@ -62,5 +62,5 @@ kubectl get pods --all-namespaces
 * [Sealed secrets operator ](https://github.com/bitnami-labs/sealed-secrets)
 
 
-Resources:
+## Resources:
 * https://www.youtube.com/watch?v=vp-oFksFoZs
