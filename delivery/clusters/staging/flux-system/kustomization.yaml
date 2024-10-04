@@ -3,5 +3,3 @@ kind: Kustomization
 resources:
 - gotk-components.yaml
 - gotk-sync.yaml
-- pg-cnpg-1.24.0.yaml
-- sealed-secrets.yaml
