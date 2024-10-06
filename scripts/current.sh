@@ -7,4 +7,4 @@ set -o pipefail
 current=$(cat current.txt)
 
 #echo "$current"
-command bazel build "$current"
+command bazel build "$current" --test_env=ENV=LOCAL

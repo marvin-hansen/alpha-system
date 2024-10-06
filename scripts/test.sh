@@ -9,8 +9,8 @@ echo "=============="
 echo "Build targets "
 echo "=============="
 
-command bazel build //...
-command bazel build //... --build_tag_filters=doc-test
+command bazel build //... --test_env=ENV=LOCAL
+command bazel build //... --build_tag_filters=doc-test --test_env=ENV=LOCAL
 
 echo ""
 echo "=============="
@@ -39,4 +39,4 @@ echo "====================="
 echo "Build container images"
 echo "====================="
 
-command bazel build //:push
+command bazel build //:push --test_env=ENV=LOCAL
