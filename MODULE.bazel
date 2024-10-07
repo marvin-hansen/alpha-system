@@ -88,7 +88,7 @@ llvm.toolchain(
     stdlib = {
         "linux-x86_64": "stdc++",
         "linux-aarch64": "stdc++",
-    }
+    },
 )
 llvm.sysroot(
     name = "llvm_toolchain",
@@ -102,7 +102,10 @@ llvm.sysroot(
 )
 use_repo(llvm, "llvm_toolchain")
 
-register_toolchains("@llvm_toolchain//:all", dev_dependency = True)
+register_toolchains(
+    "@llvm_toolchain//:all",
+    dev_dependency = True,
+)
 
 ###############################################################################
 # Rust toolchain #
