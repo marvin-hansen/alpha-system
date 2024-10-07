@@ -69,7 +69,3 @@ command(
     command = "//alias/service:mddb_push",
 )
 
-command(
-    name = "push_kaiko_proxy",
-    command = "//alias/service:kaiko_proxy_push",
-)
