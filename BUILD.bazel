@@ -34,7 +34,7 @@ multirun(
         # IMS Services
         "push_binance_data",
         # Metadata services
-        "push_kaiko_proxy",
+        # "push_kaiko_proxy",
         "mddb_push",
     ],
     jobs = 0,  # Set to 0 to run in parallel
