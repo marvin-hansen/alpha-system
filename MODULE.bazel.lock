@@ -19211,7 +19211,7 @@
     "@@toolchains_llvm~//toolchain/extensions:llvm.bzl%llvm": {
       "general": {
         "bzlTransitiveDigest": "dZkcElkfice3BvKPXtFwrvPABm8ac+SwfynSinwK4dQ=",
-        "usagesDigest": "xropTPwMCn3HaPzjWrZY8DA0Hjx/OvDNGpIKZlbap7U=",
+        "usagesDigest": "ezKWxoyfobbSTau4pjegrZhKHtFAD7tArUiaCQyuaGM=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -19236,8 +19236,7 @@
               "link_flags": {},
               "link_libs": {},
               "llvm_versions": {
-                "": "19.1.0",
-                "darwin-aarch64": "19.1.0"
+                "": "16.0.0"
               },
               "opt_compile_flags": {},
               "opt_link_flags": {},
@@ -19270,8 +19269,7 @@
               "link_flags": {},
               "link_libs": {},
               "llvm_versions": {
-                "": "19.1.0",
-                "darwin-aarch64": "19.1.0"
+                "": "16.0.0"
               },
               "opt_compile_flags": {},
               "opt_link_flags": {},
@@ -19294,8 +19292,7 @@
               "llvm_mirror": "",
               "llvm_version": "",
               "llvm_versions": {
-                "": "19.1.0",
-                "darwin-aarch64": "19.1.0"
+                "": "16.0.0"
               },
               "netrc": "",
               "sha256": {},
@@ -19323,8 +19320,7 @@
               "link_flags": {},
               "link_libs": {},
               "llvm_versions": {
-                "": "19.1.0",
-                "darwin-aarch64": "19.1.0"
+                "": "16.0.0"
               },
               "opt_compile_flags": {},
               "opt_link_flags": {},
@@ -19349,8 +19345,7 @@
               "llvm_mirror": "",
               "llvm_version": "",
               "llvm_versions": {
-                "": "19.1.0",
-                "darwin-aarch64": "19.1.0"
+                "": "16.0.0"
               },
               "netrc": "",
               "sha256": {},
@@ -19370,8 +19365,7 @@
               "llvm_mirror": "",
               "llvm_version": "",
               "llvm_versions": {
-                "": "19.1.0",
-                "darwin-aarch64": "19.1.0"
+                "": "16.0.0"
               },
               "netrc": "",
               "sha256": {},
