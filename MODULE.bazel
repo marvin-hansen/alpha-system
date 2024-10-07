@@ -127,7 +127,6 @@ llvm.sysroot(
 )
 use_repo(llvm, "llvm_toolchain_aarch64_with_sysroot")
 
-# Register all LLVM toolchains
 register_toolchains("@llvm_toolchain//:all")
 
 ###############################################################################
