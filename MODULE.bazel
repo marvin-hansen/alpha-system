@@ -7,7 +7,12 @@ module(name = "quant-engine")
 bazel_dep(name = "bazel_skylib", version = "1.7.1")
 
 # https://github.com/bazelbuild/rules_rust/releases
-bazel_dep(name = "rules_rust", version = "0.51.0")
+bazel_dep(name = "rules_rust", version = "0.52.1")
+git_override(
+    module_name = "rules_rust",
+    commit = "bfcbeda14ac1137684dc14c2c4dc39dfc8295401",
+    remote = "https://github.com/marvin-hansen/fork_rules_rust",
+)
 
 # https://github.com/aspect-build/bazel-lib/releases
 bazel_dep(name = "aspect_bazel_lib", version = "2.9.1")
