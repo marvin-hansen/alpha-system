@@ -25,7 +25,7 @@ bazel_dep(name = "rules_apko", version = "1.4.0")
 bazel_dep(name = "rules_pkg", version = "1.0.1")
 
 # https://github.com/bazelbuild/rules_python/releases
-bazel_dep(name = "rules_python", version = "0.36.0")
+# bazel_dep(name = "rules_python", version = "0.36.0")
 
 # https://github.com/bazelbuild/rules_proto/releases
 bazel_dep(name = "rules_proto", version = "6.0.2")
@@ -60,7 +60,8 @@ git_override(
 # LLVM Versions and platforms
 # https://github.com/bazel-contrib/toolchains_llvm/blob/master/toolchain/internal/llvm_distributions.bzl
 LLVM_VERSIONS = {
-    "": "16.0.0",  # Default for all platforms
+    "": "16.0.0",  # Linux X86
+    "darwin-aarch64": "19.1.0",  # Apple Silicon Macs
 }
 
 # INTEL/AMD64 Sysroot
@@ -149,19 +150,8 @@ register_toolchains("@rust_toolchains//:all")
 # Proto Toolchain #
 ###############################################################################
 register_toolchains("@rules_rust//proto/protobuf:default-proto-toolchain")
-
 # Custom Prost Toolchain #
 register_toolchains("@//build/prost_toolchain")
-
-###############################################################################
-# Python toolchain #
-###############################################################################
-python = use_extension("@rules_python//python/extensions:python.bzl", "python")
-python.toolchain(
-    configure_coverage_tool = False,
-    ignore_root_user_error = True,
-    python_version = "3.11",
-)
 
 ###############################################################################
 # rules_apko # https://github.com/chainguard-dev/rules_apko
