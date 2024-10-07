@@ -24,4 +24,4 @@ actions:
     resource_requests:
       cpu: 4  # Default plus one
       memory: "8GB" # Default
-      disk: "20GB"  # Default
+      disk: "40GB"  # 2xDefault
