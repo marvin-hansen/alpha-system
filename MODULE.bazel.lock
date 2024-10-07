@@ -19211,7 +19211,7 @@
     "@@toolchains_llvm~//toolchain/extensions:llvm.bzl%llvm": {
       "general": {
         "bzlTransitiveDigest": "dZkcElkfice3BvKPXtFwrvPABm8ac+SwfynSinwK4dQ=",
-        "usagesDigest": "9F0Q18T+cGhAanPmFG3AgwKX3D7vReblAXfCl2NHbpg=",
+        "usagesDigest": "xropTPwMCn3HaPzjWrZY8DA0Hjx/OvDNGpIKZlbap7U=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -19236,7 +19236,7 @@
               "link_flags": {},
               "link_libs": {},
               "llvm_versions": {
-                "": "16.0.0",
+                "": "19.1.0",
                 "darwin-aarch64": "19.1.0"
               },
               "opt_compile_flags": {},
@@ -19270,7 +19270,7 @@
               "link_flags": {},
               "link_libs": {},
               "llvm_versions": {
-                "": "16.0.0",
+                "": "19.1.0",
                 "darwin-aarch64": "19.1.0"
               },
               "opt_compile_flags": {},
@@ -19294,7 +19294,7 @@
               "llvm_mirror": "",
               "llvm_version": "",
               "llvm_versions": {
-                "": "16.0.0",
+                "": "19.1.0",
                 "darwin-aarch64": "19.1.0"
               },
               "netrc": "",
@@ -19323,7 +19323,7 @@
               "link_flags": {},
               "link_libs": {},
               "llvm_versions": {
-                "": "16.0.0",
+                "": "19.1.0",
                 "darwin-aarch64": "19.1.0"
               },
               "opt_compile_flags": {},
@@ -19349,7 +19349,7 @@
               "llvm_mirror": "",
               "llvm_version": "",
               "llvm_versions": {
-                "": "16.0.0",
+                "": "19.1.0",
                 "darwin-aarch64": "19.1.0"
               },
               "netrc": "",
@@ -19370,7 +19370,7 @@
               "llvm_mirror": "",
               "llvm_version": "",
               "llvm_versions": {
-                "": "16.0.0",
+                "": "19.1.0",
                 "darwin-aarch64": "19.1.0"
               },
               "netrc": "",
