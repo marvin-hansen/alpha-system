@@ -79,8 +79,8 @@ build_multi_arch_image(
         "8080",
     ],
     platforms = [
-        "//build/platforms:linux_x86_64_musl",
-        "//build/platforms:linux_arm64_musl",
+        "//build/platforms:linux-x86_64",
+        "//build/platforms:linux-aarch64",
     ],
     visibility = ["//visibility:public"],
 )

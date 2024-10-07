@@ -40,13 +40,10 @@ bazel_dep(name = "protobuf", version = "28.2")
 bazel_dep(name = "platforms", version = "0.0.10")
 
 # https://github.com/bazel-contrib/toolchains_llvm
-bazel_dep(name = "toolchains_llvm", version = "1.2.0", dev_dependency = True)
-
-# https://github.com/bazel-contrib/musl-toolchain/releases
-bazel_dep(name = "toolchains_musl", version = "0.1.20", dev_dependency = True)
+bazel_dep(name = "toolchains_llvm", version = "1.2.0")
 
 # https://github.com/bazelbuild/bazel/blob/master/tools/build_defs/repo/http.bzl
-http_archive = use_repo_rule("@bazel_tools//:http.bzl", "http_archive")
+http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 # https://github.com/brainhivenl/libpq
 bazel_dep(name = "libpq", version = "0.0.1")
@@ -62,7 +59,9 @@ git_override(
 
 # LLVM Versions and platforms
 # https://github.com/bazel-contrib/toolchains_llvm/blob/master/toolchain/internal/llvm_distributions.bzl
-LLVM_VERSIONS = { "": "16.0.0" }
+LLVM_VERSIONS = {
+    "": "16.0.0",  # Default for all platforms
+}
 
 # INTEL/AMD64 Sysroot
 # LastModified: 2024-04-26T19:15
@@ -103,7 +102,7 @@ llvm.sysroot(
     name = "llvm_toolchain_x86_with_sysroot",
     label = "@org_chromium_sysroot_linux_x64//:sysroot",
     targets = [
-        "linux_x86_64_musl",
+        "linux-x86_64",
     ],
 )
 use_repo(llvm, "llvm_toolchain_x86_with_sysroot")
@@ -117,7 +116,7 @@ llvm.sysroot(
     name = "llvm_toolchain_aarch64_with_sysroot",
     label = "@org_chromium_sysroot_linux_aarch64//:sysroot",
     targets = [
-        "linux_arm64_musl",
+        "linux-aarch64",
     ],
 )
 use_repo(llvm, "llvm_toolchain_aarch64_with_sysroot")
@@ -177,6 +176,5 @@ apk.translate_lock(
 use_repo(apk, "base_image")
 
 ###############################################################################
-# BuildBuddy Toolchain see WORKSPACE.bzlmod
-# https://github.com/buildbuddy-io/buildbuddy-toolchain/issues/18
-# Rust dependencies. See thirdparty/BUILD.bazel
+# BuildBuddy Toolchain, see WORKSPACE.bzlmod
+# Rust dependencies, see thirdparty/BUILD.bazel
