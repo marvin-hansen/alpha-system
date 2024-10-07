@@ -67,33 +67,3 @@ rust_doc_test(
 ###############################################################################
 # OCI Container Image
 ###############################################################################
-
-build_multi_arch_image(
-    name = "image_index",
-    srcs = [":kaiko_proxy"],
-    base = "//images/base_image",
-    entry_point = "kaiko_proxy",
-    exposed_ports = ["7777"],
-    platforms = [
-        "//build/platforms:linux-x86_64",
-        "//build/platforms:linux-aarch64",
-    ],
-    visibility = ["//visibility:public"],
-)
-
-# Build an unique and immutable image tag based on the image SHA265 digest.
-build_sha265_tag(
-    name = "remote_tag",
-    image = ":image_index",
-    input = "image.json.sha256",
-    output = "_tag.txt",
-)
-
-# Publish image to registry
-oci_push(
-    name = "push",
-    image = ":image_index",
-    remote_tags = ":remote_tag",
-    repository = "asia-northeast1-docker.pkg.dev/future-309012/image-repo/kaiko_proxy",
-    visibility = ["//visibility:public"],
-)
