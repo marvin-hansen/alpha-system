@@ -67,7 +67,13 @@ copy_file(
     is_executable = True,
 )
 
-
+# Copy all meta services
+copy_file(
+    name = "copy_meta_kaiko_proxy",
+    src = "//alias/service:kaiko_proxy",
+    out = "kaiko_proxy",
+    is_executable = True,
+)
 
 copy_file(
     name = "copy_meta_mddb",
