@@ -11,7 +11,7 @@ rust_library(
         ":copy_core_cmdb",
         ":copy_core_dbgw",
         ":copy_core_smdb",
-        #":copy_meta_kaiko_proxy",
+        ":copy_meta_kaiko_proxy",
         ":copy_meta_mddb",
     ],
     tags = [
