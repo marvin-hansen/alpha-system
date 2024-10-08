@@ -1,7 +1,8 @@
 module(name = "quant-engine")
 
 ###############################################################################
-# B A Z E L   D E P E N D E N C I E S # https://registry.bazel.build/
+# Bazel Dependencies
+# https://registry.bazel.build/
 ###############################################################################
 bazel_dep(name = "aspect_bazel_lib", version = "2.9.1")
 bazel_dep(name = "bazel_skylib", version = "1.7.1")
