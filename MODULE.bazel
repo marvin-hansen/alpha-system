@@ -29,7 +29,7 @@ git_override(
 )
 
 ###############################################################################
-# Apko Rules #
+# Apko Rules
 # https://github.com/chainguard-dev/rules_apko
 ###############################################################################
 # Translate apko.lock.json to @base_image//:contents
@@ -55,7 +55,8 @@ use_repo(llvm, "llvm_toolchain", "llvm_toolchain_llvm")
 register_toolchains("@llvm_toolchain//:all")
 
 ###############################################################################
-# Rust toolchain #
+# Rust toolchain
+# https://github.com/bazelbuild/rules_rust
 ###############################################################################
 RUST_EDITION = "2021"  # NOTE: 2024 will be released with Rust 1.86.0
 
@@ -76,7 +77,8 @@ use_repo(rust, "rust_toolchains")
 register_toolchains("@rust_toolchains//:all")
 
 ###############################################################################
-# Proto Toolchain #
+# Proto Toolchain
+# https://github.com/bazelbuild/rules_rust/tree/main/examples/bzlmod/proto_with_toolchain
 ###############################################################################
 register_toolchains("@rules_rust//proto/protobuf:default-proto-toolchain")
 
@@ -84,7 +86,8 @@ register_toolchains("@rules_rust//proto/protobuf:default-proto-toolchain")
 register_toolchains("@//build/prost_toolchain")
 
 ###############################################################################
-# Python toolchain #
+# Python toolchain
+# https://github.com/bazelbuild/rules_python
 ###############################################################################
 python = use_extension("@rules_python//python/extensions:python.bzl", "python")
 python.toolchain(
@@ -94,5 +97,5 @@ python.toolchain(
 )
 
 ###############################################################################
-# BuildBuddy Toolchain see WORKSPACE.bzlmod
-# Rust dependencies. See thirdparty/BUILD.bazel
+# BuildBuddy toolchain; see WORKSPACE.bzlmod
+# Rust dependencies; see thirdparty/BUILD.bazel
