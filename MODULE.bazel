@@ -10,7 +10,7 @@ bazel_dep(name = "bazel_skylib", version = "1.7.1")
 bazel_dep(name = "rules_rust", version = "0.52.1")
 git_override(
     module_name = "rules_rust",
-    commit = "bfcbeda14ac1137684dc14c2c4dc39dfc8295401",
+    commit = "39e369556771dfd7ddad4f942895f424225e2530",
     remote = "https://github.com/marvin-hansen/fork_rules_rust",
 )
 
