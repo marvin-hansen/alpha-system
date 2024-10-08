@@ -14,6 +14,7 @@ pub(crate) const DIESEL_UP: &str = r#"
 --
 -- SELECT diesel_manage_updated_at('users');
 -- ```
+
 CREATE OR REPLACE FUNCTION diesel_manage_updated_at(_tbl regclass) RETURNS VOID AS $$
 BEGIN
     EXECUTE format('CREATE TRIGGER set_updated_at BEFORE UPDATE ON %s
