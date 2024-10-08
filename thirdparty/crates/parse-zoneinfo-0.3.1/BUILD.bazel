@@ -79,6 +79,6 @@ rust_library(
     }),
     version = "0.3.1",
     deps = [
-        "//thirdparty/crates/regex-1.10.6:regex",
+        "//thirdparty/crates/regex-1.11.0:regex",
     ],
 )

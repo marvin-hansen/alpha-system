@@ -87,8 +87,8 @@ rust_library(
     }),
     version = "0.5.1",
     deps = [
-        "//thirdparty/crates/futures-core-0.3.30:futures_core",
-        "//thirdparty/crates/futures-util-0.3.30:futures_util",
+        "//thirdparty/crates/futures-core-0.3.31:futures_core",
+        "//thirdparty/crates/futures-util-0.3.31:futures_util",
         "//thirdparty/crates/pin-project-lite-0.2.14:pin_project_lite",
         "//thirdparty/crates/sync_wrapper-0.1.2:sync_wrapper",
         "//thirdparty/crates/tower-layer-0.3.3:tower_layer",

@@ -28,13 +28,6 @@ rust_library(
             "WORKSPACE.bazel",
         ],
     ),
-    crate_features = [
-        "ahash",
-        "allocator-api2",
-        "default",
-        "inline-more",
-        "raw",
-    ],
     crate_root = "src/lib.rs",
     edition = "2021",
     rustc_flags = [
@@ -85,8 +78,4 @@ rust_library(
         "//conditions:default": ["@platforms//:incompatible"],
     }),
     version = "0.14.5",
-    deps = [
-        "//thirdparty/crates/ahash-0.8.11:ahash",
-        "//thirdparty/crates/allocator-api2-0.2.18:allocator_api2",
-    ],
 )

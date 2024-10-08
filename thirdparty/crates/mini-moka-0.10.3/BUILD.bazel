@@ -91,7 +91,7 @@ rust_library(
         "//thirdparty/crates/mini-moka-0.10.3:build_script_build",
         "//thirdparty/crates/smallvec-1.13.2:smallvec",
         "//thirdparty/crates/tagptr-0.2.0:tagptr",
-        "//thirdparty/crates/triomphe-0.1.13:triomphe",
+        "//thirdparty/crates/triomphe-0.1.14:triomphe",
     ],
 )
 
