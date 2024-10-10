@@ -17,7 +17,6 @@ DNS=$(kubectl get svc kube-dns -n kube-system -o jsonpath={.spec.clusterIP})
 
 # Stores DNS SERVER IP address in cluster wide ENV variable
 # See manifests/deployment.yml for ENV variables that are accessible from within the container.
-echo "►  Store DNS configuration"
 command kubectl create secret generic dns-access --from-literal=DNS_SERVER="$DNS"
 
 echo "► Configuring cluster DNS completed"
@@ -28,9 +27,11 @@ echo " Configure Docker Registry:  "
 echo "==============================="
 echo ""
 
-kubectl create secret docker-registry artifact-registry --docker-server=asia-northeast1-docker.pkg.dev/future-309012/image-repo --docker-username=_json_key --docker-password="$(cat future.json)" --dry-run=client -o yaml > artifact-registry.yaml
+echo "► Configuring docker registry"
 
-kubectl apply -f artifact-registry.yaml
+command kubectl create secret docker-registry artifact-registry --docker-server=asia-northeast1-docker.pkg.dev/future-309012/image-repo --docker-username=_json_key --docker-password="$(cat future.json)" --dry-run=client -o yaml > artifact-registry.yaml
+
+command kubectl apply -f artifact-registry.yaml
 
 command rm artifact-registry.yaml
 
@@ -51,6 +52,9 @@ command flux bootstrap github \
           --path=delivery/clusters/staging \
           --personal \
           --token-auth # https://github.com/fluxcd/flux2/issues/2509
+
+
+command flux check
 
 echo "► Flux configuration completed"
 
