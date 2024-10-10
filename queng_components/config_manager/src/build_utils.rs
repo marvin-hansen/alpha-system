@@ -120,12 +120,14 @@ pub(super) fn get_postgres_config(dbg: bool, env_type: &EnvironmentType) -> Post
 
     if env_type == &EnvironmentType::CLUSTER {
         // Env variables for the cluster are defined in:
-        // delivery/postgres/cluster.yaml
+        // delivery/infra/base
         let pg_user = get_value_from_env("PG_USER");
         let pg_password = get_value_from_env("PG_PASSWORD");
         let pg_database = get_value_from_env("PG_DATABASE");
-        //
-        postgres::get_cluster_db_config(pg_user, pg_password, pg_database)
+
+        // Get the cluster host
+        let pg_host = postgres::get_cluster_db_host();
+        postgres::get_cluster_db_config(pg_user, pg_password, pg_database, pg_host)
     } else {
         postgres::get_postgres_config(env_type)
     }

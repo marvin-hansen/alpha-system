@@ -34,9 +34,9 @@ echo "► Configuring cluster secrets"
 command cp secret-template.yaml secret.yaml
 
 # User name only consists of letters, no numbers and special characters to avoid any problems.
-USER='dbgwuser'
+USER="dbgwuser"
 # Generate random password
-PASSWORD=$(openssl rand -base64 32)
+PASSWORD=$(openssl rand -hex 16)
 
 SECRETNAME="postgres-app"
 YAML_FILE="secret.yaml"

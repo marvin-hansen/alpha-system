@@ -11,21 +11,20 @@ pub fn get_postgres_config(env_type: &EnvironmentType) -> PostgresDBConfig {
     }
 }
 
+pub fn get_cluster_db_host() -> String {
+    // Note, there are three services: postgres-cluster-rw,postgres-cluster-r, and postgres-cluster-ro
+    // Select the postgres-cluster-rw service if you want to write to the database. The others are read and read-only.
+
+    "postgres-rw.default.svc.cluster.local".to_string()
+}
+
 pub fn get_cluster_db_config(
     pg_user: String,
     pg_password: String,
     pg_database: String,
+    pg_host: String,
 ) -> PostgresDBConfig {
-    PostgresDBConfig::new(
-        // Note, there are three services: postgres-cluster-rw,postgres-cluster-r, and postgres-cluster-ro
-        // Select the postgres-cluster-rw service if you want to write to the database. The others are read and read-only.
-        "postgres-rw.default.svc.cluster.local".to_string(),
-        pg_user,
-        pg_password,
-        pg_database,
-        5432,
-        10,
-    )
+    PostgresDBConfig::new(pg_host, pg_user, pg_password, pg_database, 5432, 10)
 }
 
 fn get_base_postgres_db_config() -> PostgresDBConfig {

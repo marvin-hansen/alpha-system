@@ -40,7 +40,7 @@ spec:
       containers:
         - name: dbgw
           # https://console.cloud.google.com/artifacts/docker/future-309012/asia-northeast1/image-repo/dbgw
-          image: asia-northeast1-docker.pkg.dev/future-309012/image-repo/dbgw:7359718
+          image: asia-northeast1-docker.pkg.dev/future-309012/image-repo/dbgw:fab2cb2
           imagePullPolicy: IfNotPresent
           resources:
             requests:

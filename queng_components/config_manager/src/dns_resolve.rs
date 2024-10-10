@@ -19,7 +19,7 @@ impl CfgManager {
 /**
  * Resolves a hostname using the specified DNS resolver.
  */
-async fn resolve_address(
+pub(crate) async fn resolve_address(
     resolver: &TokioAsyncResolver,
     host: &str,
 ) -> Result<IpAddr, ResolveError> {
