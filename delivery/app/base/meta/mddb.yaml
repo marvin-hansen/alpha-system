@@ -37,6 +37,8 @@ spec:
       labels:
         app: mddb
     spec:
+      imagePullSecrets:
+        - name: artifact-registry
       containers:
         - name: mddb
           image: asia-northeast1-docker.pkg.dev/future-309012/image-repo/mddb:latest

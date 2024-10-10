@@ -37,7 +37,7 @@ spec:
         app: smdb
     spec:
       imagePullSecrets:
-        - name: artifactory-auth
+        - name: artifact-registry
       containers:
         - name: smdb
           image: asia-northeast1-docker.pkg.dev/future-309012/image-repo/smdb:latest

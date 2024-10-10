@@ -38,6 +38,8 @@ spec:
       labels:
         app: cmdb
     spec:
+      imagePullSecrets:
+        - name: artifact-registry
       containers:
         - name: cmdb
           image: asia-northeast1-docker.pkg.dev/future-309012/image-repo/cmdb:latest

@@ -37,6 +37,8 @@ spec:
       labels:
         app: vex
     spec:
+      imagePullSecrets:
+        - name: artifact-registry
       containers:
         - name: vex
           image: asia-northeast1-docker.pkg.dev/future-309012/image-repo/vex:latest
