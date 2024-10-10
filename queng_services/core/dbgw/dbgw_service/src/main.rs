@@ -15,7 +15,7 @@ use proto_smdb::proto::db_gateway_service_server::DbGatewayServiceServer;
 use service::DBGWServer;
 
 mod service;
-const DBG: bool = false;
+const DBG: bool = true;
 const SVC_ID: ServiceID = ServiceID::DBGW;
 
 // Overwrites the default memory allocator.
@@ -28,7 +28,7 @@ static GLOBAL: MiMalloc = MiMalloc;
 async fn main() -> Result<(), Box<dyn Error>> {
     dbg_print("Setup autoconfiguration");
     let svc_config = dbgw_specs::dbgw_service_config();
-    let cfg_manager = CfgManager::build(DBG, SVC_ID, svc_config).await;
+    let cfg_manager = CfgManager::build(DBG, SVC_ID, svc_config);
 
     dbg_print(&format!("Detected context: {}", cfg_manager.env_type()));
 
