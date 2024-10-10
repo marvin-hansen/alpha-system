@@ -89,14 +89,18 @@ impl CfgManager {
         // Get the configuration of the service
         let svc_config = self.svc_env_config.to_owned();
         // Get the host and port of the service
-        let (_, port) = self
-            .get_host(&svc_config)
-            .await
-            .expect("Failed to get host and port");
+        let svc_port: u16 = svc_config
+            .service_port()
+            .parse()
+            .expect("[EnvManager]: Failed to parse port from config");
+
+        let port = self
+            .get_port(svc_port, &svc_config.service_id())
+            .expect("[EnvManager]: Failed to get port from config");
+
         // Set host to default (0.0.0.0) to listen on all interfaces
-        let host = DEFAULT_HOST;
         // Merge the host and port into a socket address i.e. 0.0.0.0:7070
-        let socket_addr = format!("{}:{}", host, port);
+        let socket_addr = format!("{}:{}", DEFAULT_HOST, port);
 
         Ok(socket_addr)
     }
