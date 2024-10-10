@@ -65,8 +65,6 @@ command kubectl create secret generic postgres-auth \
 # database must match DB name in delivery/infra/base/pg-cluster.yaml
 command kubectl create secret generic postgres-db --from-literal=database="quantum"
 
-echo "► Configuring Image registry secret"
-
 kubectl create secret docker-registry artifact-registry --docker-server=asia-northeast1-docker.pkg.dev/future-309012/image-repo --docker-username=_json_key --docker-password="$(cat future.json)" --dry-run=client -o yaml > artifact-registry.yaml
 
 kubectl apply -f artifact-registry.yaml
@@ -81,7 +79,7 @@ echo "► Configuring cluster secrets completed"
 
 echo ""
 echo "==============================="
-echo " Configure Flux cont. Delivery:"
+echo " Configure Flux Cont. Delivery:"
 echo "==============================="
 echo ""
 
