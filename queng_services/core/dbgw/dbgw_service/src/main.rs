@@ -28,7 +28,7 @@ static GLOBAL: MiMalloc = MiMalloc;
 async fn main() -> Result<(), Box<dyn Error>> {
     dbg_print("Setup autoconfiguration");
     let svc_config = dbgw_specs::dbgw_service_config();
-    let cfg_manager = CfgManager::new(SVC_ID, svc_config).await;
+    let cfg_manager = CfgManager::build(DBG, SVC_ID, svc_config).await;
 
     dbg_print(&format!("Detected context: {}", cfg_manager.env_type()));
 

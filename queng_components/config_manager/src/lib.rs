@@ -187,7 +187,7 @@ impl CfgManager {
     ///
     /// Returns the constructed instance.
     ///
-    fn build(dbg: bool, svc: ServiceID, svc_config: ServiceConfig) -> Self {
+    pub fn build(dbg: bool, svc: ServiceID, svc_config: ServiceConfig) -> Self {
         //
         let env_type = Self::detect_env_type(dbg);
         let svc_env_config = build_utils::get_svc_env_config(dbg, svc, &svc_config);
