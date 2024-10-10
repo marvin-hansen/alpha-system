@@ -19,7 +19,7 @@ pub fn get_cluster_db_config(
     PostgresDBConfig::new(
         // Note, there are three services: postgres-cluster-rw,postgres-cluster-r, and postgres-cluster-ro
         // Select the postgres-cluster-rw service if you want to write to the database. The others are read and read-only.
-        "postgres-cluster-rw.default.svc.cluster.local".to_string(),
+        "postgres-rw.default.svc.cluster.local".to_string(),
         pg_user,
         pg_password,
         pg_database,

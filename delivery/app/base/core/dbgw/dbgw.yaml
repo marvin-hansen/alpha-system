@@ -26,7 +26,7 @@ metadata:
   name: dbgw
   namespace: default
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: dbgw
@@ -40,7 +40,7 @@ spec:
       containers:
         - name: dbgw
           # https://console.cloud.google.com/artifacts/docker/future-309012/asia-northeast1/image-repo/dbgw
-          image: asia-northeast1-docker.pkg.dev/future-309012/image-repo/dbgw:d6c97cc
+          image: asia-northeast1-docker.pkg.dev/future-309012/image-repo/dbgw:7359718
           imagePullPolicy: IfNotPresent
           resources:
             requests:
