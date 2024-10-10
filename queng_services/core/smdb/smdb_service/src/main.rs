@@ -15,27 +15,31 @@ mod service;
 
 #[global_allocator]
 static GLOBAL: MiMalloc = MiMalloc;
-
+const DBG: bool = true;
 const SVC_ID: ServiceID = ServiceID::SMDB;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
-    // Setup autoconfiguration.
+    dbg_print("Setup autoconfiguration");
     let svc_config = smdb_specs::smdb_service_config();
 
+    dbg_print("Setup ConfigManager");
     let cfg_manager = CfgManager::new(SVC_ID, svc_config).await;
 
-    // pull DBGW endpoint from auto config
+    dbg_print(&format!("Detected context: {}", cfg_manager.env_type()));
+
+    dbg_print("Pull DBGW endpoint from auto config");
     let (dbgw_host, dbgw_port) = cfg_manager
         .get_dbgw_host_port()
         .await
         .expect("[SMDB]: Failed to get host and port for DBGW");
 
-    // Configure DBGW URI
+    dbg_print("Configure DBGW URI");
     let s = format!("http://{}:{}", dbgw_host, dbgw_port);
     let uri = s.parse::<Uri>().unwrap();
+    dbg_print(&uri.to_string());
 
-    // Configure a channel connection to DBGW service
+    dbg_print("Configure a channel connection to DBGW service");
     let channel = Channel::builder(uri).connect().await.unwrap_or_else(|_| {
         panic!(
             "\r\n [SMDB]: Failed to connect to DBGW service on: {} \r\n  \r\n Detail: \r\n",
@@ -43,16 +47,16 @@ async fn main() -> Result<(), Box<dyn Error>> {
         )
     });
 
-    // Configure DBGW client
+    dbg_print("Configure DBGW client");
     let mut dbgw_client = DbGatewayServiceClient::new(channel);
 
-    // Configure service ip and port automatically relative to the detected context.
+    dbg_print("Configure service ip and port for the detected context");
     let service_addr = cfg_manager
         .get_svc_socket_addr()
         .await
         .expect("[SMDB]: Failed to get host and port");
 
-    // Set up socket address for gRPC service
+    dbg_print("Set up socket address for gRPC");
     let grpc_addr = service_addr
         .parse()
         .expect("[SMDB]: Failed to parse address");
@@ -129,4 +133,9 @@ async fn main() -> Result<(), Box<dyn Error>> {
 async fn health_handler() -> Result<impl warp::Reply, warp::Rejection> {
     let result = { String::from("OK") };
     Ok(warp::reply::json(&result))
+}
+fn dbg_print(msg: &str) {
+    if DBG {
+        println!("[SMDB/main]: {}", msg)
+    }
 }
