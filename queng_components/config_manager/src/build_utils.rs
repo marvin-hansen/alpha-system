@@ -71,9 +71,9 @@ pub(super) fn build_internal_dns_resolver(dbg: bool, address: &str) -> TokioAsyn
 ///
 /// A string representing the internal DNS server address.
 ///
-pub(super) fn build_internal_dns_server(dbg: bool, env_type: &EnvironmentType) -> String {
+pub(super) fn get_internal_dns_server(dbg: bool, env_type: &EnvironmentType) -> String {
     if dbg {
-        println!("[CfgManager]: build_internal_dns_resolver");
+        println!("[CfgManager]: get_internal_dns_server");
     }
 
     // Find the internal DNS server based on the env context
@@ -180,7 +180,7 @@ pub(crate) fn get_svc_env_config(
     service_config: &ServiceConfig,
 ) -> SvcEnvConfig {
     if dbg {
-        println!("[CfgManager]: build_internal_dns_resolver");
+        println!("[CfgManager]: get_svc_env_config");
     }
 
     let binding = service_config.service_endpoint();

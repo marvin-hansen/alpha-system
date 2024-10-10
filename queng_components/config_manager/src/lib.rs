@@ -193,7 +193,7 @@ impl CfgManager {
         let svc_env_config = build_utils::get_svc_env_config(dbg, svc, &svc_config);
 
         // Build the cluster internal DNS server
-        let internal_dns_server = build_utils::build_internal_dns_server(dbg, &env_type);
+        let internal_dns_server = build_utils::get_internal_dns_server(dbg, &env_type);
         let internal_dns_resolver =
             build_utils::build_internal_dns_resolver(dbg, &internal_dns_server);
 

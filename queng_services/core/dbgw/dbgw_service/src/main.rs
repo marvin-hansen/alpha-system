@@ -45,8 +45,6 @@ async fn main() -> Result<(), Box<dyn Error>> {
     dbg_print("Configure postgres database manager");
     let pg_config = cfg_manager.postgres_db_config();
 
-    dbg_print("DB URL");
-    dbg_print(&pg_config.pg_connection_url());
     let dbm = PostgresSMDBManager::new(&pg_config.pg_connection_url())
         .await
         .expect("Failed to create DB Manager");
