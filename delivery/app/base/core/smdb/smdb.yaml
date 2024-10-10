@@ -1,10 +1,10 @@
+# Copyright (c) 2024. Marvin Friedrich Lars Hansen. All Rights Reserved. Contact: marvin.hansen@gmail.com
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: smdb-service
   namespace: default
-
 spec:
   selector:
     app: smdb
@@ -19,7 +19,6 @@ spec:
       port: 8080
       protocol: TCP
       targetPort: 8080
-
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -37,23 +36,32 @@ spec:
       labels:
         app: smdb
     spec:
+      imagePullSecrets:
+        - name: artifactory-auth
       containers:
         - name: smdb
           image: asia-northeast1-docker.pkg.dev/future-309012/image-repo/smdb:latest
           imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              cpu: 100m
+              memory: 32Mi
+            limits:
+              cpu: 250m
+              memory: 128Mi
+
+          ports:
+            - containerPort: 7070
+            - containerPort: 8080
+
           env:
             - name: ENV
               value: "CLUSTER"
-
             - name: DNS_SERVER
               valueFrom:
                 secretKeyRef:
                   name: dns-access
                   key: DNS_SERVER
-
-          ports:
-            - containerPort: 7070
-            - containerPort: 8080
 
           livenessProbe:
             grpc:
@@ -68,4 +76,3 @@ spec:
             initialDelaySeconds: 1
             failureThreshold: 10
             periodSeconds: 3
-

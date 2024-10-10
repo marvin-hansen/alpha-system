@@ -33,10 +33,11 @@ echo "► Configuring cluster secrets"
 # Create temporary file
 command cp secret-template.yaml secret.yaml
 
+# User name only consists of letters, no numbers and special characters to avoid any problems.
+USER='dbgwuser'
 # Generate random password
-# printf dbgwuser | base64
-USER="ZGJnd3VzZXI="
 PASSWORD=$(openssl rand -base64 32)
+
 SECRETNAME="postgres-app"
 YAML_FILE="secret.yaml"
 
@@ -55,12 +56,28 @@ command kubectl apply -f secret.yaml
 # Remove temporary file
 command rm secret.yaml
 
+# store DB user & password in kubernetes secret accessed only by the dbgw container.
+# See manifests/deployment.yml for ENV variables that are accessible from within the container.
+command kubectl create secret generic postgres-auth \
+  --from-literal=username="$USER" \
+  --from-literal=password="$PASSWORD"
+
+# database must match DB name in delivery/infra/base/pg-cluster.yaml
+command kubectl create secret generic postgres-db --from-literal=database="quantum"
+
+echo "► Configuring Image registry secret"
+
+kubectl create secret docker-registry artifact-registry --docker-server=asia-northeast1-docker.pkg.dev/future-309012/image-repo --docker-username=_json_key --docker-password="$(cat future.json)" --dry-run=client -o yaml > artifact-registry.yaml
+
+kubectl apply -f artifact-registry.yaml
+
+command rm artifact-registry.yaml
+
 # Null variable
 USER=""
 PASSWORD=""
 
 echo "► Configuring cluster secrets completed"
-
 
 echo ""
 echo "==============================="

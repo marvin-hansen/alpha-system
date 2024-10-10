@@ -17,7 +17,7 @@ brew install kubeseal
 
 kubectl create secret docker-registry artifactory-auth --docker-server=asia-northeast1-docker.pkg.dev/future-309012/image-repo --docker-username=_json_key --docker-password="$(cat future.json)" --dry-run=client -o yaml > artifactory-auth.yaml
 
-kubeseal --format=yaml --cert=pub-sealed-secrets.pem < artifactory-auth.yaml > artifactory-auth-sealed.yaml
+kubectl apply -f basic-auth-sealed.yaml
 
 ## Obtain public key to encrypt secrets
 
@@ -58,10 +58,6 @@ Verify that the sealed-secrets controller has created the basic-auth Kubernetes 
 ```shell
 kubectl -n default get secrets basic-auth
 ```
-
-## GitOps
-
-Add later
 
 
 ## Resources:
