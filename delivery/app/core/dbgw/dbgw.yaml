@@ -1,4 +1,3 @@
-# Copyright (c) 2024. Marvin Friedrich Lars Hansen. All Rights Reserved. Contact: marvin.hansen@gmail.com
 ---
 apiVersion: v1
 kind: Service
@@ -40,7 +39,6 @@ spec:
         - name: artifact-registry
       containers:
         - name: dbgw
-          # https://console.cloud.google.com/artifacts/docker/future-309012/asia-northeast1/image-repo/dbgw
           image: asia-northeast1-docker.pkg.dev/future-309012/image-repo/dbgw:0b952fc
           imagePullPolicy: IfNotPresent
           resources:
@@ -76,7 +74,6 @@ spec:
                 secretKeyRef:
                   name: postgres-db
                   key: database
-
   strategy:
     type: RollingUpdate
     rollingUpdate:
