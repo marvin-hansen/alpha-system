@@ -5,8 +5,12 @@
 You will need a Kubernetes cluster version 1.16 or newer and kubectl version 1.18. 
 For a quick local test, you can use Kubernetes kind. Any other Kubernetes setup will work as well.
 
-## GitHub PAT
+### Artifactory service account JSON 
 
+Create, download and put a JSON file into the delivery/clusters/staging directory.
+That way, the install script finds the require access token to the artifactory service account.
+
+### GitHub PAT
 
 You’ll need a GitHub account and a personal access token that can create repositories (check all permissions under repo).
 
