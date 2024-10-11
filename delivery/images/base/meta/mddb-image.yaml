@@ -1,0 +1,11 @@
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: mddb-image
+  namespace: default
+spec:
+  image: asia-northeast1-docker.pkg.dev/future-309012/image-repo/mddb
+  interval: 1m0s
+  secretRef:
+    name: artifact-registry

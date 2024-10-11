@@ -1,0 +1,12 @@
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: dbgw-image
+  namespace: default
+spec:
+  secretRef:
+    name: artifact-registry
+  image: asia-northeast1-docker.pkg.dev/future-309012/image-repo/dbgw
+  interval: 1m0s
+
