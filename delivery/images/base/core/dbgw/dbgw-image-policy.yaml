@@ -1,0 +1,13 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: dbgw-image-policy
+  namespace: default
+spec:
+  filterTags:
+    # ${SHA:0:7}-$(date +%s) (numerical):
+    pattern: '[a-fA-F0-9]+-(?P<timestamp>.*)'
+    extract: '$timestamp'
+  policy:
+    alphabetical:
+      order: asc
