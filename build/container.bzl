@@ -73,17 +73,16 @@ def _build_sha265_tag_impl(ctx):
     out_file = ctx.outputs.output
 
     # No need to return anything telling Bazel to build `out_file` when
-    # building this target -- It's implied because the output is declared
-    # as an attribute rather than with `declare_file()`.
+    # building this target -- It's implied because the output is declared as an attribute.
     ctx.actions.run_shell(
         inputs = [in_file],
         outputs = [out_file],
+        command = "cat $1 | sed 's/^sha256://' | cut -c1-7 | xargs -I {} echo \"{}-$(date +%s)\" > $2",
         arguments = [in_file.path, out_file.path],
-        command = "sed -n 's/.*sha256:\\([[:alnum:]]\\{7\\}\\).*/\\1/p' < \"$1\" > \"$2\"",
     )
 
 build_sha265_tag = rule(
-    doc = "Extracts a 7 characters long short hash from the image digest.",
+    doc = "Extracts a 7 characters long short hash followed by a timestamp: 4ac9149-1728629576.",
     implementation = _build_sha265_tag_impl,
     attrs = {
         "image": attr.label(
