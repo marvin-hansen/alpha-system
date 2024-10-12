@@ -18,7 +18,6 @@ bazel_dep(name = "rules_proto", version = "6.0.2")
 bazel_dep(name = "rules_rust", version = "0.52.2")
 
 bazel_dep(name = "toolchains_protoc", version = "0.3.3", dev_dependency = True)
-bazel_dep(name = "toolchains_llvm", version = "1.2.0", dev_dependency = True)
 bazel_dep(name = "toolchains_musl", version = "0.1.20", dev_dependency = True)
 
 # https://github.com/brainhivenl/libpq
@@ -43,27 +42,13 @@ apk.translate_lock(
 use_repo(apk, "base_image")
 
 ###############################################################################
-# LLVM toolchain #
-# https://github.com/bazel-contrib/toolchains_llvm/blob/master/toolchain/internal/llvm_distributions.bzl
-###############################################################################
-llvm = use_extension("@toolchains_llvm//toolchain/extensions:llvm.bzl", "llvm")
-llvm.toolchain(
-    name = "llvm_toolchain",
-    llvm_versions = {"": "16.0.0"},
-)
-use_repo(llvm, "llvm_toolchain", "llvm_toolchain_llvm")
-
-register_toolchains("@llvm_toolchain//:all")
-
-###############################################################################
 # Rust toolchain
-# https://github.com/bazelbuild/rules_rust
+# https://github.com/bazelbuild/rules_rust/releases
 ###############################################################################
 RUST_EDITION = "2021"  # NOTE: 2024 will be released with Rust 1.86.0
 
 RUST_VERSION = "1.81.0"
 
-# https://github.com/bazelbuild/rules_rust/releases
 rust = use_extension("@rules_rust//rust:extensions.bzl", "rust")
 rust.toolchain(
     edition = RUST_EDITION,
@@ -83,7 +68,6 @@ register_toolchains("@rust_toolchains//:all")
 ###############################################################################
 register_toolchains("@rules_rust//proto/protobuf:default-proto-toolchain")
 
-# Custom Prost Toolchain #
 register_toolchains("@//build/prost_toolchain")
 
 ###############################################################################

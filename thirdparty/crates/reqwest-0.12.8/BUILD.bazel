@@ -102,7 +102,7 @@ rust_library(
         "//thirdparty/crates/url-2.5.2:url",
     ] + select({
         "@rules_rust//rust/platform:aarch64-apple-darwin": [
-            "//thirdparty/crates/async-compression-0.4.13:async_compression",  # aarch64-apple-darwin
+            "//thirdparty/crates/async-compression-0.4.14:async_compression",  # aarch64-apple-darwin
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # aarch64-apple-darwin
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
@@ -124,7 +124,7 @@ rust_library(
             "//thirdparty/crates/webpki-roots-0.26.6:webpki_roots",  # aarch64-apple-darwin
         ],
         "@rules_rust//rust/platform:aarch64-apple-ios": [
-            "//thirdparty/crates/async-compression-0.4.13:async_compression",  # aarch64-apple-ios
+            "//thirdparty/crates/async-compression-0.4.14:async_compression",  # aarch64-apple-ios
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # aarch64-apple-ios
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
@@ -146,7 +146,7 @@ rust_library(
             "//thirdparty/crates/webpki-roots-0.26.6:webpki_roots",  # aarch64-apple-ios
         ],
         "@rules_rust//rust/platform:aarch64-apple-ios-sim": [
-            "//thirdparty/crates/async-compression-0.4.13:async_compression",  # aarch64-apple-ios-sim
+            "//thirdparty/crates/async-compression-0.4.14:async_compression",  # aarch64-apple-ios-sim
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # aarch64-apple-ios-sim
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
@@ -168,7 +168,7 @@ rust_library(
             "//thirdparty/crates/webpki-roots-0.26.6:webpki_roots",  # aarch64-apple-ios-sim
         ],
         "@rules_rust//rust/platform:aarch64-fuchsia": [
-            "//thirdparty/crates/async-compression-0.4.13:async_compression",  # aarch64-fuchsia
+            "//thirdparty/crates/async-compression-0.4.14:async_compression",  # aarch64-fuchsia
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # aarch64-fuchsia
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
@@ -190,7 +190,7 @@ rust_library(
             "//thirdparty/crates/webpki-roots-0.26.6:webpki_roots",  # aarch64-fuchsia
         ],
         "@rules_rust//rust/platform:aarch64-linux-android": [
-            "//thirdparty/crates/async-compression-0.4.13:async_compression",  # aarch64-linux-android
+            "//thirdparty/crates/async-compression-0.4.14:async_compression",  # aarch64-linux-android
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # aarch64-linux-android
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
@@ -212,7 +212,7 @@ rust_library(
             "//thirdparty/crates/webpki-roots-0.26.6:webpki_roots",  # aarch64-linux-android
         ],
         "@rules_rust//rust/platform:aarch64-pc-windows-msvc": [
-            "//thirdparty/crates/async-compression-0.4.13:async_compression",  # aarch64-pc-windows-msvc
+            "//thirdparty/crates/async-compression-0.4.14:async_compression",  # aarch64-pc-windows-msvc
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # aarch64-pc-windows-msvc
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
@@ -235,7 +235,7 @@ rust_library(
             "//thirdparty/crates/windows-registry-0.2.0:windows_registry",  # cfg(windows)
         ],
         "@rules_rust//rust/platform:aarch64-unknown-linux-gnu": [
-            "//thirdparty/crates/async-compression-0.4.13:async_compression",  # aarch64-unknown-linux-gnu
+            "//thirdparty/crates/async-compression-0.4.14:async_compression",  # aarch64-unknown-linux-gnu
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # aarch64-unknown-linux-gnu
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
@@ -257,7 +257,7 @@ rust_library(
             "//thirdparty/crates/webpki-roots-0.26.6:webpki_roots",  # aarch64-unknown-linux-gnu
         ],
         "@rules_rust//rust/platform:aarch64-unknown-nixos-gnu": [
-            "//thirdparty/crates/async-compression-0.4.13:async_compression",  # aarch64-unknown-linux-gnu, aarch64-unknown-nixos-gnu
+            "//thirdparty/crates/async-compression-0.4.14:async_compression",  # aarch64-unknown-linux-gnu, aarch64-unknown-nixos-gnu
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # aarch64-unknown-linux-gnu, aarch64-unknown-nixos-gnu
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
@@ -279,7 +279,7 @@ rust_library(
             "//thirdparty/crates/webpki-roots-0.26.6:webpki_roots",  # aarch64-unknown-linux-gnu, aarch64-unknown-nixos-gnu
         ],
         "@rules_rust//rust/platform:aarch64-unknown-nto-qnx710": [
-            "//thirdparty/crates/async-compression-0.4.13:async_compression",  # aarch64-unknown-nto-qnx710
+            "//thirdparty/crates/async-compression-0.4.14:async_compression",  # aarch64-unknown-nto-qnx710
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # aarch64-unknown-nto-qnx710
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
@@ -301,7 +301,7 @@ rust_library(
             "//thirdparty/crates/webpki-roots-0.26.6:webpki_roots",  # aarch64-unknown-nto-qnx710
         ],
         "@rules_rust//rust/platform:arm-unknown-linux-gnueabi": [
-            "//thirdparty/crates/async-compression-0.4.13:async_compression",  # arm-unknown-linux-gnueabi
+            "//thirdparty/crates/async-compression-0.4.14:async_compression",  # arm-unknown-linux-gnueabi
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # arm-unknown-linux-gnueabi
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
@@ -323,7 +323,7 @@ rust_library(
             "//thirdparty/crates/webpki-roots-0.26.6:webpki_roots",  # arm-unknown-linux-gnueabi
         ],
         "@rules_rust//rust/platform:armv7-linux-androideabi": [
-            "//thirdparty/crates/async-compression-0.4.13:async_compression",  # armv7-linux-androideabi
+            "//thirdparty/crates/async-compression-0.4.14:async_compression",  # armv7-linux-androideabi
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # armv7-linux-androideabi
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
@@ -345,7 +345,7 @@ rust_library(
             "//thirdparty/crates/webpki-roots-0.26.6:webpki_roots",  # armv7-linux-androideabi
         ],
         "@rules_rust//rust/platform:armv7-unknown-linux-gnueabi": [
-            "//thirdparty/crates/async-compression-0.4.13:async_compression",  # armv7-unknown-linux-gnueabi
+            "//thirdparty/crates/async-compression-0.4.14:async_compression",  # armv7-unknown-linux-gnueabi
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # armv7-unknown-linux-gnueabi
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
@@ -367,7 +367,7 @@ rust_library(
             "//thirdparty/crates/webpki-roots-0.26.6:webpki_roots",  # armv7-unknown-linux-gnueabi
         ],
         "@rules_rust//rust/platform:i686-apple-darwin": [
-            "//thirdparty/crates/async-compression-0.4.13:async_compression",  # i686-apple-darwin
+            "//thirdparty/crates/async-compression-0.4.14:async_compression",  # i686-apple-darwin
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # i686-apple-darwin
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
@@ -389,7 +389,7 @@ rust_library(
             "//thirdparty/crates/webpki-roots-0.26.6:webpki_roots",  # i686-apple-darwin
         ],
         "@rules_rust//rust/platform:i686-linux-android": [
-            "//thirdparty/crates/async-compression-0.4.13:async_compression",  # i686-linux-android
+            "//thirdparty/crates/async-compression-0.4.14:async_compression",  # i686-linux-android
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # i686-linux-android
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
@@ -411,7 +411,7 @@ rust_library(
             "//thirdparty/crates/webpki-roots-0.26.6:webpki_roots",  # i686-linux-android
         ],
         "@rules_rust//rust/platform:i686-pc-windows-msvc": [
-            "//thirdparty/crates/async-compression-0.4.13:async_compression",  # i686-pc-windows-msvc
+            "//thirdparty/crates/async-compression-0.4.14:async_compression",  # i686-pc-windows-msvc
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # i686-pc-windows-msvc
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
@@ -434,7 +434,7 @@ rust_library(
             "//thirdparty/crates/windows-registry-0.2.0:windows_registry",  # cfg(windows)
         ],
         "@rules_rust//rust/platform:i686-unknown-freebsd": [
-            "//thirdparty/crates/async-compression-0.4.13:async_compression",  # i686-unknown-freebsd
+            "//thirdparty/crates/async-compression-0.4.14:async_compression",  # i686-unknown-freebsd
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # i686-unknown-freebsd
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
@@ -456,7 +456,7 @@ rust_library(
             "//thirdparty/crates/webpki-roots-0.26.6:webpki_roots",  # i686-unknown-freebsd
         ],
         "@rules_rust//rust/platform:i686-unknown-linux-gnu": [
-            "//thirdparty/crates/async-compression-0.4.13:async_compression",  # i686-unknown-linux-gnu
+            "//thirdparty/crates/async-compression-0.4.14:async_compression",  # i686-unknown-linux-gnu
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # i686-unknown-linux-gnu
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
@@ -478,7 +478,7 @@ rust_library(
             "//thirdparty/crates/webpki-roots-0.26.6:webpki_roots",  # i686-unknown-linux-gnu
         ],
         "@rules_rust//rust/platform:powerpc-unknown-linux-gnu": [
-            "//thirdparty/crates/async-compression-0.4.13:async_compression",  # powerpc-unknown-linux-gnu
+            "//thirdparty/crates/async-compression-0.4.14:async_compression",  # powerpc-unknown-linux-gnu
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # powerpc-unknown-linux-gnu
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
@@ -500,7 +500,7 @@ rust_library(
             "//thirdparty/crates/webpki-roots-0.26.6:webpki_roots",  # powerpc-unknown-linux-gnu
         ],
         "@rules_rust//rust/platform:riscv32imc-unknown-none-elf": [
-            "//thirdparty/crates/async-compression-0.4.13:async_compression",  # riscv32imc-unknown-none-elf
+            "//thirdparty/crates/async-compression-0.4.14:async_compression",  # riscv32imc-unknown-none-elf
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # riscv32imc-unknown-none-elf
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
@@ -522,7 +522,7 @@ rust_library(
             "//thirdparty/crates/webpki-roots-0.26.6:webpki_roots",  # riscv32imc-unknown-none-elf
         ],
         "@rules_rust//rust/platform:riscv64gc-unknown-none-elf": [
-            "//thirdparty/crates/async-compression-0.4.13:async_compression",  # riscv64gc-unknown-none-elf
+            "//thirdparty/crates/async-compression-0.4.14:async_compression",  # riscv64gc-unknown-none-elf
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # riscv64gc-unknown-none-elf
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
@@ -544,7 +544,7 @@ rust_library(
             "//thirdparty/crates/webpki-roots-0.26.6:webpki_roots",  # riscv64gc-unknown-none-elf
         ],
         "@rules_rust//rust/platform:s390x-unknown-linux-gnu": [
-            "//thirdparty/crates/async-compression-0.4.13:async_compression",  # s390x-unknown-linux-gnu
+            "//thirdparty/crates/async-compression-0.4.14:async_compression",  # s390x-unknown-linux-gnu
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # s390x-unknown-linux-gnu
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
@@ -566,7 +566,7 @@ rust_library(
             "//thirdparty/crates/webpki-roots-0.26.6:webpki_roots",  # s390x-unknown-linux-gnu
         ],
         "@rules_rust//rust/platform:thumbv7em-none-eabi": [
-            "//thirdparty/crates/async-compression-0.4.13:async_compression",  # thumbv7em-none-eabi
+            "//thirdparty/crates/async-compression-0.4.14:async_compression",  # thumbv7em-none-eabi
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # thumbv7em-none-eabi
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
@@ -588,7 +588,7 @@ rust_library(
             "//thirdparty/crates/webpki-roots-0.26.6:webpki_roots",  # thumbv7em-none-eabi
         ],
         "@rules_rust//rust/platform:thumbv8m.main-none-eabi": [
-            "//thirdparty/crates/async-compression-0.4.13:async_compression",  # thumbv8m.main-none-eabi
+            "//thirdparty/crates/async-compression-0.4.14:async_compression",  # thumbv8m.main-none-eabi
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # thumbv8m.main-none-eabi
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
@@ -610,19 +610,19 @@ rust_library(
             "//thirdparty/crates/webpki-roots-0.26.6:webpki_roots",  # thumbv8m.main-none-eabi
         ],
         "@rules_rust//rust/platform:wasm32-unknown-unknown": [
-            "//thirdparty/crates/js-sys-0.3.70:js_sys",  # cfg(target_arch = "wasm32")
-            "//thirdparty/crates/wasm-bindgen-0.2.93:wasm_bindgen",  # cfg(target_arch = "wasm32")
-            "//thirdparty/crates/wasm-bindgen-futures-0.4.43:wasm_bindgen_futures",  # cfg(target_arch = "wasm32")
-            "//thirdparty/crates/web-sys-0.3.70:web_sys",  # cfg(target_arch = "wasm32")
+            "//thirdparty/crates/js-sys-0.3.72:js_sys",  # cfg(target_arch = "wasm32")
+            "//thirdparty/crates/wasm-bindgen-0.2.95:wasm_bindgen",  # cfg(target_arch = "wasm32")
+            "//thirdparty/crates/wasm-bindgen-futures-0.4.45:wasm_bindgen_futures",  # cfg(target_arch = "wasm32")
+            "//thirdparty/crates/web-sys-0.3.72:web_sys",  # cfg(target_arch = "wasm32")
         ],
         "@rules_rust//rust/platform:wasm32-wasi": [
-            "//thirdparty/crates/js-sys-0.3.70:js_sys",  # cfg(target_arch = "wasm32")
-            "//thirdparty/crates/wasm-bindgen-0.2.93:wasm_bindgen",  # cfg(target_arch = "wasm32")
-            "//thirdparty/crates/wasm-bindgen-futures-0.4.43:wasm_bindgen_futures",  # cfg(target_arch = "wasm32")
-            "//thirdparty/crates/web-sys-0.3.70:web_sys",  # cfg(target_arch = "wasm32")
+            "//thirdparty/crates/js-sys-0.3.72:js_sys",  # cfg(target_arch = "wasm32")
+            "//thirdparty/crates/wasm-bindgen-0.2.95:wasm_bindgen",  # cfg(target_arch = "wasm32")
+            "//thirdparty/crates/wasm-bindgen-futures-0.4.45:wasm_bindgen_futures",  # cfg(target_arch = "wasm32")
+            "//thirdparty/crates/web-sys-0.3.72:web_sys",  # cfg(target_arch = "wasm32")
         ],
         "@rules_rust//rust/platform:x86_64-apple-darwin": [
-            "//thirdparty/crates/async-compression-0.4.13:async_compression",  # x86_64-apple-darwin
+            "//thirdparty/crates/async-compression-0.4.14:async_compression",  # x86_64-apple-darwin
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # x86_64-apple-darwin
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
@@ -644,7 +644,7 @@ rust_library(
             "//thirdparty/crates/webpki-roots-0.26.6:webpki_roots",  # x86_64-apple-darwin
         ],
         "@rules_rust//rust/platform:x86_64-apple-ios": [
-            "//thirdparty/crates/async-compression-0.4.13:async_compression",  # x86_64-apple-ios
+            "//thirdparty/crates/async-compression-0.4.14:async_compression",  # x86_64-apple-ios
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # x86_64-apple-ios
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
@@ -666,7 +666,7 @@ rust_library(
             "//thirdparty/crates/webpki-roots-0.26.6:webpki_roots",  # x86_64-apple-ios
         ],
         "@rules_rust//rust/platform:x86_64-fuchsia": [
-            "//thirdparty/crates/async-compression-0.4.13:async_compression",  # x86_64-fuchsia
+            "//thirdparty/crates/async-compression-0.4.14:async_compression",  # x86_64-fuchsia
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # x86_64-fuchsia
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
@@ -688,7 +688,7 @@ rust_library(
             "//thirdparty/crates/webpki-roots-0.26.6:webpki_roots",  # x86_64-fuchsia
         ],
         "@rules_rust//rust/platform:x86_64-linux-android": [
-            "//thirdparty/crates/async-compression-0.4.13:async_compression",  # x86_64-linux-android
+            "//thirdparty/crates/async-compression-0.4.14:async_compression",  # x86_64-linux-android
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # x86_64-linux-android
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
@@ -710,7 +710,7 @@ rust_library(
             "//thirdparty/crates/webpki-roots-0.26.6:webpki_roots",  # x86_64-linux-android
         ],
         "@rules_rust//rust/platform:x86_64-pc-windows-msvc": [
-            "//thirdparty/crates/async-compression-0.4.13:async_compression",  # x86_64-pc-windows-msvc
+            "//thirdparty/crates/async-compression-0.4.14:async_compression",  # x86_64-pc-windows-msvc
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # x86_64-pc-windows-msvc
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
@@ -733,7 +733,7 @@ rust_library(
             "//thirdparty/crates/windows-registry-0.2.0:windows_registry",  # cfg(windows)
         ],
         "@rules_rust//rust/platform:x86_64-unknown-freebsd": [
-            "//thirdparty/crates/async-compression-0.4.13:async_compression",  # x86_64-unknown-freebsd
+            "//thirdparty/crates/async-compression-0.4.14:async_compression",  # x86_64-unknown-freebsd
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # x86_64-unknown-freebsd
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
@@ -755,7 +755,7 @@ rust_library(
             "//thirdparty/crates/webpki-roots-0.26.6:webpki_roots",  # x86_64-unknown-freebsd
         ],
         "@rules_rust//rust/platform:x86_64-unknown-linux-gnu": [
-            "//thirdparty/crates/async-compression-0.4.13:async_compression",  # x86_64-unknown-linux-gnu
+            "//thirdparty/crates/async-compression-0.4.14:async_compression",  # x86_64-unknown-linux-gnu
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # x86_64-unknown-linux-gnu
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
@@ -777,7 +777,7 @@ rust_library(
             "//thirdparty/crates/webpki-roots-0.26.6:webpki_roots",  # x86_64-unknown-linux-gnu
         ],
         "@rules_rust//rust/platform:x86_64-unknown-nixos-gnu": [
-            "//thirdparty/crates/async-compression-0.4.13:async_compression",  # x86_64-unknown-linux-gnu, x86_64-unknown-nixos-gnu
+            "//thirdparty/crates/async-compression-0.4.14:async_compression",  # x86_64-unknown-linux-gnu, x86_64-unknown-nixos-gnu
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # x86_64-unknown-linux-gnu, x86_64-unknown-nixos-gnu
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
@@ -799,7 +799,7 @@ rust_library(
             "//thirdparty/crates/webpki-roots-0.26.6:webpki_roots",  # x86_64-unknown-linux-gnu, x86_64-unknown-nixos-gnu
         ],
         "@rules_rust//rust/platform:x86_64-unknown-none": [
-            "//thirdparty/crates/async-compression-0.4.13:async_compression",  # x86_64-unknown-none
+            "//thirdparty/crates/async-compression-0.4.14:async_compression",  # x86_64-unknown-none
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # x86_64-unknown-none
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
