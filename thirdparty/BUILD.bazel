@@ -128,7 +128,6 @@ crates_vendor(
             package = "csv",
             version = "1.3.0",
         ),
-        # Diesel and Diesel Migration are defined in MODULE.bazel
         "diesel": crate.spec(
             default_features = False,
             features = [

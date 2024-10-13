@@ -12,6 +12,20 @@ config_setting(
 )
 
 ###############################################################################
+# STABLE BUILD STATUS
+###############################################################################
+# This rule is used to generate image tags with the rule git_tag_with_timestamp
+# defined in build/container.bzl.
+genrule(
+    name = "stable_status",
+    srcs = [],
+    outs = ["stable_status.txt"],
+    cmd = """cat bazel-out/stable-status.txt > $@""",
+    stamp = True,
+    visibility = ["//visibility:public"],
+)
+
+###############################################################################
 # CI DOCKER AUTHENTICATION
 ###############################################################################
 

@@ -12,7 +12,7 @@ load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_doc", "rust_doc_test")
 load("//:build/binary.bzl", "build_binary_opt")
 
 # Custom container macro
-load("//:build/container.bzl", "build_multi_arch_image", "build_sha265_tag")
+load("//:build/container.bzl", "build_multi_arch_image", "git_tag_with_timestamp")
 
 ###############################################################################
 # Rust Binary
@@ -85,12 +85,10 @@ build_multi_arch_image(
     visibility = ["//visibility:public"],
 )
 
-# Build an unique and immutable image tag based on the image SHA265 digest.
-build_sha265_tag(
+# Build unique and immutable image tag.
+git_tag_with_timestamp(
     name = "remote_tag",
-    image = ":image_index",
-    input = "image.json.sha256",
-    output = "_tag.txt",
+    target = ":image_index",
 )
 
 # Publish image to registry
