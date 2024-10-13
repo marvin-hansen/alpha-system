@@ -22,6 +22,7 @@ build_binary_opt(
         "//alias:pg_smdb_manager",
         "//alias:proto_smdb",
         "//alias:proto_smdb_utils",
+        "//alias:postgres_config_manager",
         "//alias:common_service",
         # Custom Memory Allocator
         "//thirdparty/crates:mimalloc",

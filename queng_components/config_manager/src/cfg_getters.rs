@@ -1,5 +1,4 @@
 use common_config::prelude::{ServiceConfig, ServiceID};
-use common_database::prelude::{ClickHouseConfig, PostgresDBConfig};
 use common_errors::prelude::InitError;
 use common_exchange::prelude::ExchangeID;
 
@@ -19,14 +18,6 @@ impl CfgManager {
         let svc_config = &self.svc_env_config;
         // Get the host and port of the service
         self.get_host(svc_config).await
-    }
-
-    pub fn clickhouse_db_config(&self) -> &ClickHouseConfig {
-        &self.db_clickhouse_config
-    }
-
-    pub fn postgres_db_config(&self) -> &PostgresDBConfig {
-        &self.db_postgres_config
     }
 
     /// Get the default ExchangeID configured for this service.

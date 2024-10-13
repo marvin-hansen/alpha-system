@@ -1,9 +1,6 @@
 use crate::DEFAULT_DNS;
 use common_config::prelude::{ServiceConfig, ServiceID, SvcEnvConfig};
-use common_database::prelude::{ClickHouseConfig, PostgresDBConfig};
 use common_env::prelude::EnvironmentType;
-use db_specs_clickhouse::clickhouse;
-use db_specs_postgres::postgres;
 use hickory_resolver::config::{NameServerConfig, Protocol, ResolverConfig, ResolverOpts};
 use hickory_resolver::TokioAsyncResolver;
 use std::net::SocketAddr;
@@ -86,51 +83,6 @@ pub(super) fn get_internal_dns_server(dbg: bool, env_type: &EnvironmentType) -> 
 
     // Build the internal DNS resolver to resolve hosts within the system network
     format!("{}{}", internal_dns_host, ":53")
-}
-
-///
-/// Returns the Postgres database configuration based on the environment type.
-///
-pub(super) fn get_clickhouse_config(dbg: bool, env_type: &EnvironmentType) -> ClickHouseConfig {
-    if dbg {
-        println!("[CfgManager]: get_clickhouse_config");
-    }
-    clickhouse::get_clickhouse_config(env_type)
-}
-
-///
-/// Returns the Postgres database configuration based on the debug mode and environment type.
-///
-/// If `dbg` is true, prints a debug message.
-/// If the `env_type` is `EnvironmentType::CLUSTER`, retrieves the cluster database configuration
-/// using environment variables defined in 'delivery/postgres/cluster.yaml'.
-/// Otherwise, retrieves the default Postgres database configuration based on the environment type.
-///
-/// # Arguments
-/// * `dbg` - A boolean indicating whether debug mode is enabled.
-/// * `env_type` - An `EnvironmentType` enum reference representing the environment type.
-///
-/// # Returns
-/// A `PostgresDBConfig` struct containing the Postgres database configuration.
-///
-pub(super) fn get_postgres_config(dbg: bool, env_type: &EnvironmentType) -> PostgresDBConfig {
-    if dbg {
-        println!("[CfgManager]: get_postgres_config");
-    }
-
-    if env_type == &EnvironmentType::CLUSTER {
-        // Env variables for the cluster are defined in:
-        // delivery/infra/base
-        let pg_user = get_value_from_env("PG_USER");
-        let pg_password = get_value_from_env("PG_PASSWORD");
-        let pg_database = get_value_from_env("PG_DATABASE");
-
-        // Get the cluster host
-        let pg_host = postgres::get_cluster_db_host();
-        postgres::get_cluster_db_config(pg_user, pg_password, pg_database, pg_host)
-    } else {
-        postgres::get_postgres_config(env_type)
-    }
 }
 
 ///

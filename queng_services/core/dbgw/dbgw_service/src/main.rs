@@ -11,6 +11,7 @@ use common_service::{print_utils, shutdown_utils};
 use config_manager::CfgManager;
 
 use pg_smdb_manager::PostgresSMDBManager;
+use postgres_config_manager::PostgresConfigManager;
 use proto_smdb::proto::db_gateway_service_server::DbGatewayServiceServer;
 use service::DBGWServer;
 
@@ -29,6 +30,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     dbg_print("Setup autoconfiguration");
     let svc_config = dbgw_specs::dbgw_service_config();
     let cfg_manager = CfgManager::build(DBG, SVC_ID, svc_config);
+    let pg_cfg_manager = PostgresConfigManager::new(&cfg_manager.env_type());
 
     dbg_print(&format!("Detected context: {}", cfg_manager.env_type()));
 
@@ -43,7 +45,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let grpc_addr = service_addr.parse().expect("DBGW: Failed to parse address");
 
     dbg_print("Configure postgres database manager");
-    let pg_config = cfg_manager.postgres_db_config();
+    let pg_config = pg_cfg_manager.postgres_db_config();
 
     let dbm = PostgresSMDBManager::new(&pg_config.pg_connection_url())
         .await

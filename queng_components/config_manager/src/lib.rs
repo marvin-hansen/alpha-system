@@ -1,5 +1,4 @@
 use common_config::prelude::{ServiceConfig, ServiceID, SvcEnvConfig};
-use common_database::prelude::{ClickHouseConfig, PostgresDBConfig};
 use common_env::prelude::EnvironmentType;
 use common_exchange::prelude::ExchangeID;
 use exchange_specs::prelude;
@@ -42,10 +41,6 @@ pub struct CfgManager {
     svc_config: ServiceConfig,
     /// Service environment configuration for each service
     svc_env_config: SvcEnvConfig,
-    /// ClickHouse configuration.
-    db_clickhouse_config: ClickHouseConfig,
-    /// Postgres configuration.
-    db_postgres_config: PostgresDBConfig,
     /// Default exchange
     default_exchange: ExchangeID,
     /// Vector of all supported exchanges.
@@ -201,10 +196,6 @@ impl CfgManager {
         let external_dns_server = format!("{}{}", DEFAULT_DNS, ":53");
         let external_dns_resolver = build_utils::build_external_dns_resolver(dbg);
 
-        // DB Config
-        let db_clickhouse_config = build_utils::get_clickhouse_config(dbg, &env_type);
-        let db_postgres_config = build_utils::get_postgres_config(dbg, &env_type);
-
         // Remove this after adding MDDB service
         let default_exchange = prelude::get_default_exchange();
         let exchanges = get_all_exchanges();
@@ -221,8 +212,6 @@ impl CfgManager {
             svc,
             svc_config,
             svc_env_config,
-            db_clickhouse_config,
-            db_postgres_config,
             // Remove this after adding MDDB service
             default_exchange,
             exchanges,

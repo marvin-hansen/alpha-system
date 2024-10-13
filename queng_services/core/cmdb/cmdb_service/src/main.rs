@@ -1,4 +1,5 @@
 use mimalloc::MiMalloc;
+use postgres_config_manager::PostgresConfigManager;
 use std::error::Error;
 use std::sync::Arc;
 use tokio::sync::RwLock;
@@ -24,9 +25,10 @@ async fn main() -> Result<(), Box<dyn Error>> {
     // Setup autoconfiguration.
     let svc_config = cmdb_specs::cmdb_service_config();
     let cfg_manager = CfgManager::new(SVC_ID, svc_config).await;
+    let pg_cfg_manager = PostgresConfigManager::new(&cfg_manager.env_type());
 
     // Configure DB Manager
-    let pg_config = cfg_manager.postgres_db_config();
+    let pg_config = pg_cfg_manager.postgres_db_config();
     let dbm = PostgresCMDBManager::new(&pg_config.pg_connection_url())
         .await
         .expect("Failed to create DB Manager");
