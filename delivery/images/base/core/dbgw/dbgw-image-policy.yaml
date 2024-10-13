@@ -4,6 +4,8 @@ metadata:
   name: dbgw-image-policy
   namespace: default
 spec:
+  imageRepositoryRef:
+    name: dbgw-image
   filterTags:
     # ${SHA:0:7}-$(date +%s) (numerical):
     pattern: '[a-fA-F0-9]+-(?P<timestamp>.*)'
