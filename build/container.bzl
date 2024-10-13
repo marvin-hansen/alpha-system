@@ -67,44 +67,26 @@ def build_image(name, srcs, base, exposed_ports = [], visibility = None):
         visibility = visibility,
     )
 
-def _build_sha265_tag_impl(ctx):
-    # Both the input and output files are specified by the BUILD file.
-    in_file = ctx.file.input
-    out_file = ctx.outputs.output
-
-    # No need to return anything telling Bazel to build `out_file` when
-    # building this target -- It's implied because the output is declared as an attribute.
-    ctx.actions.run_shell(
-        inputs = [in_file],
-        outputs = [out_file],
-        command = "cat $1 | sed 's/^sha256://' | cut -c1-7 | xargs -I {} echo \"{}-$(date +%s)\" > $2",
-        arguments = [in_file.path, out_file.path],
-    )
-
-build_sha265_tag = rule(
-    doc = "Extracts a 7 characters long short hash followed by a timestamp: 4ac9149-1728629576.",
-    implementation = _build_sha265_tag_impl,
-    attrs = {
-        "image": attr.label(
-            allow_single_file = True,
-            mandatory = True,
-        ),
-        "input": attr.label(
-            allow_single_file = True,
-            mandatory = True,
-            doc = "The image digest file. Usually called image.json.sha256",
-        ),
-        "output": attr.output(
-            doc = "The generated tag file. Usually named _tag.txt",
-        ),
-    },
-)
+# Produces an image tag based on the existing image sha286 and and UTC timestamp.
+# Timestamp format is YYYY MM DD HH MM SS i.e. 2024 10 13 08 38 54, UTC
+def build_sha265_tag(name, target, src):
+   native.genrule(
+       name = name,
+       srcs = [src],
+       outs = ["_tag.txt"],
+       stamp = True,
+       cmd = """
+           IMAGE_HASH=$$(cat $(location """ + src + """) | sed 's/^sha256://' | cut -c1-8 || :)
+           TIMESTAMP=$$(date -u +"%Y%m%d%H%M%S")
+           echo $${IMAGE_HASH}-$${TIMESTAMP} > $(OUTS);
+           """,
+   )
 
 # Produces an image tag based on the current git commit and UTC timestamp.
 # For example: 458b6779-20241013083854
 # Git hash is the short form obtained via git rev-parse --short HEAD
 # Timestamp format is YYYY MM DD HH MM SS i.e. 2024 10 13 08 38 54, UTC
-def git_tag_with_timestamp(name, target, **kwargs):
+def git_tag_with_timestamp(name, target):
     stable_status = "//:stable_status"
     native.genrule(
         name = name,
