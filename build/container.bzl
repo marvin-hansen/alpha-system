@@ -70,17 +70,17 @@ def build_image(name, srcs, base, exposed_ports = [], visibility = None):
 # Produces an image tag based on the existing image sha286 and and UTC timestamp.
 # Timestamp format is YYYY MM DD HH MM SS i.e. 2024 10 13 08 38 54, UTC
 def build_sha265_tag(name, target, src):
-   native.genrule(
-       name = name,
-       srcs = [src],
-       outs = ["_tag.txt"],
-       stamp = True,
-       cmd = """
+    native.genrule(
+        name = name,
+        srcs = [src],
+        outs = ["_tag.txt"],
+        stamp = True,
+        cmd = """
            IMAGE_HASH=$$(cat $(location """ + src + """) | sed 's/^sha256://' | cut -c1-8 || :)
            TIMESTAMP=$$(date -u +"%Y%m%d%H%M%S")
            echo $${IMAGE_HASH}-$${TIMESTAMP} > $(OUTS);
            """,
-   )
+    )
 
 # Produces an image tag based on the current git commit and UTC timestamp.
 # For example: 458b6779-20241013083854

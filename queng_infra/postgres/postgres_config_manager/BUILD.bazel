@@ -1,0 +1,36 @@
+load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library")
+
+rust_library(
+    name = "postgres_config_manager",
+    srcs = glob([
+        "src/**",
+    ]),
+    crate_root = "src/lib.rs",
+    tags = [
+        "infra",
+        "postgres",
+        "postgres_config_manager",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Internal crates
+        "//alias:common_config",
+        "//alias:common_database",
+        "//alias:common_env",
+        "//alias:db_specs_postgres",
+    ],
+)
+
+rust_doc(
+    name = "doc",
+    crate = ":postgres_config_manager",
+    tags = ["doc"],
+    visibility = ["//visibility:public"],
+)
+
+rust_doc_test(
+    name = "doc_test",
+    crate = ":postgres_config_manager",
+    tags = ["doc-test"],
+    visibility = ["//visibility:public"],
+)
