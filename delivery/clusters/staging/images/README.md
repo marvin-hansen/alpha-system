@@ -68,6 +68,47 @@ kubectl describe imagerepositories dbgw-image -n default
 flux get image policy -n default
 ```
 
+## image updates
+
+Edit the manifest.yaml and add a marker to tell Flux which policy to use when updating the container image:
+
+```yaml
+containers:
+- name: dbgw
+  image: asia-northeast1-docker.pkg.dev/future-309012/image-repo/dbgw:9e9da5d1-20241013095625 # {"$imagepolicy": "default:dbgw-image-policy"}
+  imagePullPolicy: IfNotPresent
+```
+
+Create an ImageUpdateAutomation to tell Flux which Git repository to write image updates to:
+
+
+```shell
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageUpdateAutomation
+metadata:
+  name: flux-system
+  namespace: default
+spec:
+  interval: 10m
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  git:
+    checkout:
+      ref:
+        branch: main
+    commit:
+      author:
+        email: fluxcdbot@users.noreply.github.com
+        name: fluxcdbot
+      messageTemplate: '{{range .Changed.Changes}}{{print .OldValue}} -> {{println .NewValue}}{{end}}'
+    push:
+      branch: main
+  update:
+    path: ./delivery/clusters/staging
+    strategy: Setters
+```
+
 ## Resources
 
 * https://fluxcd.io/flux/components/image/imageupdateautomations/

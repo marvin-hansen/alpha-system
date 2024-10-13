@@ -42,7 +42,7 @@ spec:
         - name: artifact-registry
       containers:
         - name: cmdb
-          image: asia-northeast1-docker.pkg.dev/future-309012/image-repo/cmdb:latest
+          image: asia-northeast1-docker.pkg.dev/future-309012/image-repo/cmdb:9e9da5d1-20241013095625 # {"$imagepolicy": "default:cmdb-image-policy"}
           imagePullPolicy: IfNotPresent
           env:
             - name: ENV
