@@ -93,6 +93,27 @@ alias(
 # Infra
 ###############################################################################
 
+#
+# Clickhouse
+#
+alias(
+    name = "clickhouse_config_manager",
+    actual = "//queng_infra/clickhouse/clickhouse_config_manager",
+)
+
+alias(
+    name = "clickhouse_utils",
+    actual = "//queng_infra/clickhouse/clickhouse_utils",
+)
+
+alias(
+    name = "db_clickhouse_manager",
+    actual = "//queng_infra/clickhouse/db_clickhouse_manager",
+)
+
+#
+# Postgres
+#
 alias(
     name = "pg_cmdb",
     actual = "//queng_infra/postgres/pg_cmdb",
@@ -145,17 +166,6 @@ alias(
     actual = "//queng_infra/postgres/postgres_migrations",
 )
 
-alias(
-    name = "clickhouse_utils",
-    actual = "//queng_infra/clickhouse/clickhouse_utils",
-    
-)
-
-alias(
-    name = "db_clickhouse_manager",
-    actual = "//queng_infra/clickhouse/db_clickhouse_manager",
-    
-)
 
 ###############################################################################
 # Proto
