@@ -11,12 +11,16 @@ Ensure the  secret artifact-registry exists and contains
 the authentication to the image registry.
 
 ```bash
-flux create image repository binance-data \
- --image=asia-northeast1-docker.pkg.dev/future-309012/image-repo/binance_data \
- --interval=1m \
- --secret-ref artifact-registry \
- --namespace default \
- --export > ./delivery/images/ims/binance_data.yaml
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: dbgw-image
+  namespace: default
+spec:
+  secretRef:
+    name: artifact-registry
+  image: asia-northeast1-docker.pkg.dev/future-309012/image-repo/dbgw
+  interval: 1m0s
 ```
 
 ## Create an Image Policy
@@ -27,9 +31,11 @@ Next, you'll create an image policy. An image policy is the rules Flux follows t
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImagePolicy
 metadata:
-  name: cmdb-image-policy
+  name: dbgw-image-policy
   namespace: default
 spec:
+  imageRepositoryRef:
+    name: dbgw-image
   filterTags:
     # ${SHA:0:7}-$(date +%s) (numerical):
     pattern: '[a-fA-F0-9]+-(?P<timestamp>.*)'
@@ -38,6 +44,10 @@ spec:
     alphabetical:
       order: asc
 ```
+
+## Git commit
+
+Commit and push to origin.
 
 ## Verify 
 
