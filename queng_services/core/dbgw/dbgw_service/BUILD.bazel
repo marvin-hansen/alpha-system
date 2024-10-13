@@ -1,17 +1,6 @@
-###############################################################################
-# Imports
-###############################################################################
-
-# OCI Container Rules
 load("@rules_oci//oci:defs.bzl", "oci_push")
-
-# Rules rust
 load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_doc", "rust_doc_test")
-
-# Custom optimized Rust binary macro
 load("//:build/binary.bzl", "build_binary_opt")
-
-# Custom container macro
 load("//:build/container.bzl", "build_multi_arch_image", "git_tag_with_timestamp")
 
 ###############################################################################

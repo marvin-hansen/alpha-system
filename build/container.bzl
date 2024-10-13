@@ -100,6 +100,10 @@ build_sha265_tag = rule(
     },
 )
 
+# Produces an image tag based on the current git commit and UTC timestamp.
+# For example: 458b6779-20241013083854
+# Git hash is the short form obtained via git rev-parse --short HEAD
+# Timestamp format is YYYY MM DD HH MM SS i.e. 2024 10 13 08 38 54, UTC
 def git_tag_with_timestamp(name, target, **kwargs):
     stable_status = "//:stable_status"
     native.genrule(

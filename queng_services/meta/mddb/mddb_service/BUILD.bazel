@@ -1,24 +1,11 @@
-###############################################################################
-# Imports
-###############################################################################
-
-# OCI Container Rules
 load("@rules_oci//oci:defs.bzl", "oci_push")
-
-# Rules rust
 load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_doc", "rust_doc_test")
-
-# Custom optimized Rust binary macro
 load("//:build/binary.bzl", "build_binary_opt")
-
-# Custom container macro
-load("//:build/container.bzl", "build_multi_arch_image", "build_sha265_tag")
+load("//:build/container.bzl", "build_multi_arch_image", "git_tag_with_timestamp")
 
 ###############################################################################
 # Rust Binary
 ###############################################################################
-
-# Build optimized binary
 build_binary_opt(
     name = "mddb",
     srcs = glob([
@@ -49,8 +36,6 @@ build_binary_opt(
 ###############################################################################
 # Documentation
 ###############################################################################
-
-# Build documentation
 rust_doc(
     name = "doc",
     crate = ":mddb",
@@ -58,7 +43,6 @@ rust_doc(
     visibility = ["//visibility:public"],
 )
 
-# Test documentation
 rust_doc_test(
     name = "doc_test",
     crate = ":mddb",
@@ -69,8 +53,6 @@ rust_doc_test(
 ###############################################################################
 # OCI Container Image
 ###############################################################################
-
-# Build container image
 build_multi_arch_image(
     name = "image_index",
     srcs = ["mddb"],
@@ -88,15 +70,11 @@ build_multi_arch_image(
     visibility = ["//visibility:public"],
 )
 
-# Build an unique and immutable image tag based on the image SHA265 digest.
-build_sha265_tag(
+git_tag_with_timestamp(
     name = "remote_tag",
-    image = ":image_index",
-    input = "image.json.sha256",
-    output = "_tag.txt",
+    target = ":image_index",
 )
 
-# Publish image to registry
 oci_push(
     name = "push",
     image = ":image_index",
