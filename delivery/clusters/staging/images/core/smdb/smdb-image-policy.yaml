@@ -1,7 +1,7 @@
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImagePolicy
 metadata:
-  name: smdb-image-policy.
+  name: smdb-image-policy
   namespace: default
 spec:
   imageRepositoryRef:
