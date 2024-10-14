@@ -139,7 +139,7 @@ pub(crate) fn get_svc_env_config(
     let endpoint = binding.host_endpoint();
     let metrics_config = service_config.metrics_endpoint();
     let local_host = "0.0.0.0".to_string();
-    let cluster_host = endpoint.host_uri().to_string();
+    let cluster_host = service_config.base_uri().to_string();
     let ci_host = "127.0.0.1".to_string();
     let docker_host = "0.0.0.0".to_string();
     let service_port = endpoint.port().to_string();
