@@ -17,7 +17,7 @@ DNS=$(kubectl get svc kube-dns -n kube-system -o jsonpath={.spec.clusterIP})
 
 # Stores DNS SERVER IP address in cluster wide ENV variable
 # See manifests/deployment.yml for ENV variables that are accessible from within the container.
-command kubectl create secret generic dns-access --from-literal=DNS_SERVER="$DNS" --dry-run=client -o yaml > dns-access.yaml
+command kubectl create secret generic dns-access --from-literal=DNS_SERVER="$DNS"
 
 echo "► Configuring cluster DNS completed"
 
