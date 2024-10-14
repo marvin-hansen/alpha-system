@@ -22,7 +22,6 @@ rust_library(
         "//alias:cmdb_specs",
         "//alias:dbgw_specs",
         "//alias:mddb_specs",
-        "//alias:qdgw_specs",
         "//alias:smdb_specs",
     ],
 )

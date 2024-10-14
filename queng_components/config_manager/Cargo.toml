@@ -25,7 +25,6 @@ exchange_specs = { workspace = true }
 cmdb_specs = { workspace = true }
 dbgw_specs = { workspace = true }
 smdb_specs = { workspace = true }
-qdgw_specs = { workspace = true }
 # External crates
 hickory-resolver = { workspace = true }
 tokio = { workspace = true }

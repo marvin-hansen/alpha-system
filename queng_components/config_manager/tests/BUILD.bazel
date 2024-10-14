@@ -20,7 +20,6 @@ rust_test_suite(
         "//alias:exchange_specs",
         "//alias:cmdb_specs",
         "//alias:dbgw_specs",
-        "//alias:qdgw_specs",
         "//alias:smdb_specs",
         # External crates
         "//thirdparty/crates:tokio",
@@ -47,7 +46,6 @@ rust_test_suite(
         "//alias:exchange_specs",
         "//alias:cmdb_specs",
         "//alias:dbgw_specs",
-        "//alias:qdgw_specs",
         "//alias:smdb_specs",
         # External crates
         "//thirdparty/crates:tokio",

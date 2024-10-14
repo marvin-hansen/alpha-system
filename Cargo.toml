@@ -66,7 +66,6 @@ members = [
     "queng_specs/service_specs/core/cmdb_specs",
     "queng_specs/service_specs/core/dbgw_specs",
     "queng_specs/service_specs/meta/mddb_specs",
-    "queng_specs/service_specs/core/qdgw_specs",
     "queng_specs/service_specs/core/smdb_specs",
     "queng_specs/service_specs/ims/ims_data/ims_data_vex_specs",
     "queng_specs/service_specs/shared_service_specs",
@@ -175,7 +174,6 @@ portfolio_specs = { path = "queng_specs/portfolio_specs" }
 cmdb_specs = { path = "queng_specs/service_specs/core/cmdb_specs" }
 dbgw_specs = { path = "queng_specs/service_specs/core/dbgw_specs" }
 mddb_specs = { path = "queng_specs/service_specs/meta/mddb_specs" }
-qdgw_specs = { path = "queng_specs/service_specs/core/qdgw_specs" }
 smdb_specs = { path = "queng_specs/service_specs/core/smdb_specs" }
 ims_data_binance_specs = { path = "queng_specs/service_specs/ims/ims_data/ims_data_binance_specs" }
 ims_data_vex_specs = { path = "queng_specs/service_specs/ims/ims_data/ims_data_vex_specs" }

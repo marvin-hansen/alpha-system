@@ -306,12 +306,6 @@ alias(
 )
 
 alias(
-    name = "qdgw_specs",
-    actual = "//queng_specs/service_specs/core/qdgw_specs",
-    
-)
-
-alias(
     name = "smdb_specs",
     actual = "//queng_specs/service_specs/core/smdb_specs",
     
