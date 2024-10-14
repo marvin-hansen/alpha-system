@@ -12,7 +12,7 @@ impl Service {
             online: common_svc_config.online(),
             description: common_svc_config.description().to_string(),
             health_check_uri: common_svc_config.health_check_uri().to_string(),
-            base_uri: common_svc_config.base_uri().to_string(),
+            base_uri: common_svc_config.cluster_uri().to_string(),
             dependencies: common_svc_config
                 .dependencies()
                 .iter()

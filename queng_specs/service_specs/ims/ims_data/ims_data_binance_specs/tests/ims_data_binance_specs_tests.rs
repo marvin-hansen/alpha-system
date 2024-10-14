@@ -19,7 +19,7 @@ fn test_ims_data_binance_config() {
         "ims-data-service-Binance.default.svc.cluster.local:7070/health",
     );
     assert_eq!(
-        service_config.base_uri(),
+        service_config.cluster_uri(),
         "ims-data-service-Binance.default.svc.cluster.local"
     );
     assert_eq!(service_config.dependencies(), &vec![ServiceID::SMDB]);

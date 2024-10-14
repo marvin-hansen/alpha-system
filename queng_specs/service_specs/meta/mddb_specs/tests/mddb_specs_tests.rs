@@ -19,7 +19,7 @@ fn test_mddb_service_config_accessors() {
         "dbgwv1-service.default.svc.cluster.local:7070/health".to_string()
     );
     assert_eq!(
-        service_config.base_uri(),
+        service_config.cluster_uri(),
         "mddbv1-service.default.svc.cluster.local".to_string()
     );
     assert_eq!(service_config.dependencies(), &vec![]);

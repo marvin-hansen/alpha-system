@@ -18,7 +18,7 @@ fn test_smdb_service_config() {
         "smdb-service.default.svc.cluster.local:7070/health"
     );
     assert_eq!(
-        service_config.base_uri(),
+        service_config.cluster_uri(),
         "smdb-service.default.svc.cluster.local"
     );
     assert_eq!(

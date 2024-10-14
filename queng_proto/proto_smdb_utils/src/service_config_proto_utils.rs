@@ -66,7 +66,7 @@ pub fn service_config_to_proto(service_config: ServiceConfig) -> Result<ProtoSer
         online: service_config.online(),
         description: service_config.description().to_string(),
         health_check_uri: service_config.health_check_uri().to_string(),
-        base_uri: service_config.base_uri().to_string(),
+        base_uri: service_config.cluster_uri().to_string(),
         endpoint: proto_endpoints,
         dependencies: proto_dependencies,
     })

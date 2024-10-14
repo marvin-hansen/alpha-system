@@ -1,4 +1,4 @@
-use crate::DEFAULT_DNS;
+use crate::{DEFAULT_DNS, DEFAULT_HOST};
 use common_config::prelude::{ServiceConfig, ServiceID, SvcEnvConfig};
 use common_env::prelude::EnvironmentType;
 use hickory_resolver::config::{NameServerConfig, Protocol, ResolverConfig, ResolverOpts};
@@ -138,10 +138,10 @@ pub(crate) fn get_svc_env_config(
     let binding = service_config.service_endpoint();
     let endpoint = binding.host_endpoint();
     let metrics_config = service_config.metrics_endpoint();
-    let local_host = "0.0.0.0".to_string();
-    let cluster_host = service_config.base_uri().to_string();
+    let local_host = DEFAULT_HOST.to_string();
+    let cluster_host = service_config.cluster_uri().to_string();
     let ci_host = "127.0.0.1".to_string();
-    let docker_host = "0.0.0.0".to_string();
+    let docker_host = DEFAULT_HOST.to_string();
     let service_port = endpoint.port().to_string();
     let metrics_host = metrics_config.host().to_string();
     let metrics_uri = metrics_config.uri().to_string();

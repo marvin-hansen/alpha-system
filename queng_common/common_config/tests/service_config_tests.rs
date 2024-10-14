@@ -33,7 +33,7 @@ fn test_new() {
         service_config.health_check_uri(),
         String::from("health_check_uri")
     );
-    assert_eq!(service_config.base_uri(), String::from("base_uri"));
+    assert_eq!(service_config.cluster_uri(), String::from("base_uri"));
     assert_eq!(
         service_config.dependencies().len(),
         vec![ServiceID::DBGW].len()
@@ -51,6 +51,6 @@ fn test_default() {
     assert!(!service_config.online());
     assert_eq!(service_config.description(), &String::from(""));
     assert_eq!(service_config.health_check_uri(), &String::from(""));
-    assert_eq!(service_config.base_uri(), &String::from(""));
+    assert_eq!(service_config.cluster_uri(), &String::from(""));
     assert_eq!(service_config.dependencies(), &Vec::new());
 }

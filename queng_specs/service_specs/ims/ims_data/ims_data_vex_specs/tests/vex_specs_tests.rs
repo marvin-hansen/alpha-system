@@ -16,7 +16,7 @@ fn test_vex_service_config_accessors() {
         "vex-service.default.svc.cluster.local:9999/health"
     );
     assert_eq!(
-        service_config.base_uri(),
+        service_config.cluster_uri(),
         "vex-service.default.svc.cluster.local"
     );
     assert_eq!(service_config.dependencies(), &vec![ServiceID::SMDB]);

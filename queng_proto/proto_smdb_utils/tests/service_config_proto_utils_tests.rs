@@ -30,7 +30,7 @@ fn test_service_config_from_proto() {
     assert!(config.online());
     assert_eq!(config.description(), "Test description");
     assert_eq!(config.health_check_uri(), "/health");
-    assert_eq!(config.base_uri(), "http://localhost:8080");
+    assert_eq!(config.cluster_uri(), "http://localhost:8080");
     assert_eq!(
         config.dependencies(),
         &vec![ServiceID::CMDB, ServiceID::DBGW]

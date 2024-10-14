@@ -15,7 +15,7 @@ fn test_dbgw_service_config() {
         "dbgw-service.default.svc.cluster.local:7070/health"
     );
     assert_eq!(
-        service_config.base_uri(),
+        service_config.cluster_uri(),
         "dbgw-service.default.svc.cluster.local"
     );
     assert_eq!(service_config.dependencies().len(), 0);

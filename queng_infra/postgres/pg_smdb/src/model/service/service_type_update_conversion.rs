@@ -10,7 +10,7 @@ impl UpdateService {
             online: Some(common_svc_config.online()),
             description: Some(common_svc_config.description().to_string()),
             health_check_uri: Some(common_svc_config.health_check_uri().to_string()),
-            base_uri: Some(common_svc_config.base_uri().to_string()),
+            base_uri: Some(common_svc_config.cluster_uri().to_string()),
             dependencies: Some(
                 common_svc_config
                     .dependencies()

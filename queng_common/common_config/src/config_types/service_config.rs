@@ -17,7 +17,7 @@ pub struct ServiceConfig {
     /// Health check URI.
     health_check_uri: String,
     /// Base URI.
-    base_uri: String,
+    cluster_uri: String,
     /// Service dependencies.
     dependencies: Vec<ServiceID>,
     /// Service endpoint.
@@ -35,7 +35,7 @@ impl ServiceConfig {
     /// * `online` - Whether the service is online.
     /// * `description` - Service description.
     /// * `health_check_uri` - Health check URI.
-    /// * `base_uri` - Base URI.
+    /// * `cluster_uri` - CLuster URI.
     /// * `dependencies` - Service dependencies.
     /// * `endpoints` - Service endpoint.
     #[allow(clippy::too_many_arguments)]
@@ -46,7 +46,7 @@ impl ServiceConfig {
         online: bool,
         description: String,
         health_check_uri: String,
-        base_uri: String,
+        cluster_uri: String,
         dependencies: Vec<ServiceID>,
         endpoints: Vec<Endpoint>,
     ) -> Self {
@@ -65,7 +65,7 @@ impl ServiceConfig {
             online,
             description,
             health_check_uri,
-            base_uri,
+            cluster_uri,
             dependencies,
             endpoints,
         }
@@ -98,8 +98,8 @@ impl ServiceConfig {
         &self.health_check_uri
     }
     /// Returns the base URI.
-    pub fn base_uri(&self) -> &str {
-        &self.base_uri
+    pub fn cluster_uri(&self) -> &str {
+        &self.cluster_uri
     }
     /// Returns the service dependencies.
     pub fn dependencies(&self) -> &Vec<ServiceID> {
@@ -127,8 +127,8 @@ impl ServiceConfig {
 impl Display for ServiceConfig {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         write!(f,
-               "ServiceConfig {{ svc_id: {}, name: {}, version: {}, online: {}, description: {}, health_check_uri: {}, base_uri: {}, dependencies: {:?}, endpoint: {} metrics: {} health: {:?} }}",
-               self.svc_id, self.name, self.version, self.online, self.description, self.health_check_uri, self.base_uri, self.dependencies, self.service_endpoint(), self.metrics_endpoint(), self.health_endpoint(),
+               "ServiceConfig {{ svc_id: {}, name: {}, version: {}, online: {}, description: {}, health_check_uri: {}, cluster_uri: {}, dependencies: {:?}, endpoint: {} metrics: {} health: {:?} }}",
+               self.svc_id, self.name, self.version, self.online, self.description, self.health_check_uri, self.cluster_uri, self.dependencies, self.service_endpoint(), self.metrics_endpoint(), self.health_endpoint(),
         )
     }
 }

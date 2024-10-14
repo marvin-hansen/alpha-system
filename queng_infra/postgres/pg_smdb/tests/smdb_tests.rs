@@ -74,7 +74,7 @@ async fn test_create_service() {
     assert_eq!(service.online(), online);
     assert_eq!(service.description(), &description);
     assert_eq!(service.health_check_uri(), &health_check_uri);
-    assert_eq!(service.base_uri(), &base_uri);
+    assert_eq!(service.cluster_uri(), &base_uri);
     assert_eq!(service.dependencies(), &dependencies);
     assert_eq!(service.endpoints(), &endpoints);
 }
@@ -223,7 +223,7 @@ async fn test_service_read() {
     assert!(service.online());
     assert_eq!(service.description(), "description");
     assert_eq!(service.health_check_uri(), "health_check_uri");
-    assert_eq!(service.base_uri(), "base_uri");
+    assert_eq!(service.cluster_uri(), "base_uri");
     assert_eq!(service.dependencies(), &vec![ServiceID::DBGW]);
     assert_eq!(
         service.endpoints(),
@@ -435,7 +435,7 @@ async fn test_service_update() {
     assert!(service.online());
     assert_eq!(service.description(), "description");
     assert_eq!(service.health_check_uri(), "health_check_uri");
-    assert_eq!(service.base_uri(), "base_uri");
+    assert_eq!(service.cluster_uri(), "base_uri");
     assert_eq!(service.dependencies(), &vec![ServiceID::DBGW]);
     assert_eq!(
         service.endpoints(),

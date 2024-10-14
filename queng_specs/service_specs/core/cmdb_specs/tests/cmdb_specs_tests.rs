@@ -18,7 +18,7 @@ fn test_cmdb_service_config() {
         "cmdbv1-service.default.svc.cluster.local:8080/health"
     );
     assert_eq!(
-        service_config.base_uri(),
+        service_config.cluster_uri(),
         "cmdbv1-service.default.svc.cluster.local"
     );
     assert_eq!(
