@@ -1,0 +1,22 @@
+# Copyright (c) 2024. Marvin Friedrich Lars Hansen. All Rights Reserved. Contact: marvin.hansen@gmail.com
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: smdb-service
+  namespace: default
+spec:
+  selector:
+    app: smdb
+  sessionAffinity: None
+  type: ClusterIP
+  ports:
+    - name: main-port
+      port: 7070
+      protocol: TCP
+      targetPort: 7070
+    - name: metrics-port
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+---
