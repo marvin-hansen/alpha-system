@@ -20,12 +20,12 @@ use shared_service_specs::{default_grpc_service_endpoint, health_endpoint, metri
 /// A `ServiceConfig` instance with all the necessary settings for the CMDB service.
 pub fn smdb_service_config() -> ServiceConfig {
     let svc_id = ServiceID::SMDB;
-    let name = "smdbv1".to_string();
+    let name = "smdb".to_string();
     let version = 1;
     let online = false;
     let description = "SMDB Service Management Database".to_string();
-    let health_check_uri = "smdbv1-service.default.svc.cluster.local:7070/health".to_string();
-    let base_uri = "smdbv1-service.default.svc.cluster.local".to_string();
+    let health_check_uri = "smdb-service.default.svc.cluster.local:7070/health".to_string();
+    let base_uri = "smdb-service.default.svc.cluster.local".to_string();
     let dependencies = vec![ServiceID::DBGW];
     let endpoints = vec![
         default_grpc_service_endpoint("SMDB Endpoint", 7070),
