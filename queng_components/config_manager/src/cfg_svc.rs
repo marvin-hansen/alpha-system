@@ -148,19 +148,22 @@ impl CfgManager {
         Ok((host, port))
     }
 
-    pub(crate) async fn get_service_host(&self) -> Result<String, InitError> {
+    pub(crate) async fn get_service_host(
+        &self,
+        svc_env_config: &SvcEnvConfig,
+    ) -> Result<String, InitError> {
         self.dbg_print("get_service_host");
         self.dbg_print("EnvironmentType");
         self.dbg_print(self.env_type.to_string().as_str());
 
         match self.env_type {
-            EnvironmentType::LOCAL => Ok(self.svc_env_config.local_host().to_string()),
+            EnvironmentType::LOCAL => Ok(svc_env_config.local_host().to_string()),
 
-            EnvironmentType::CI => Ok(self.svc_env_config.ci_host().to_string()),
+            EnvironmentType::CI => Ok(svc_env_config.ci_host().to_string()),
 
             EnvironmentType::CLUSTER => {
                 let cluster_host = self
-                    .resolve_dns(self.svc_env_config.cluster_host(), true)
+                    .resolve_dns(svc_env_config.cluster_host(), true)
                     .await
                     .expect("[EnvManager]: Failed to resolve DNS");
 
