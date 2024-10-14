@@ -4,7 +4,6 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
 - artifact-registry.yaml
-- dns-access.yaml
 - gotk-components.yaml
 - gotk-sync.yaml
 - pg-cnpg-1.24.0.yaml
