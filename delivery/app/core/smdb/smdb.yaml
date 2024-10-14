@@ -40,7 +40,7 @@ spec:
         - name: artifact-registry
       containers:
         - name: smdb
-          image: asia-northeast1-docker.pkg.dev/future-309012/image-repo/smdb:06733c49-20241014031816 # {"$imagepolicy": "default:smdb-image-policy"}
+          image: asia-northeast1-docker.pkg.dev/future-309012/image-repo/smdb:3d27d9d7-20241014032355 # {"$imagepolicy": "default:smdb-image-policy"}
           imagePullPolicy: IfNotPresent
           resources:
             requests:
@@ -62,6 +62,13 @@ spec:
                 secretKeyRef:
                   name: dns-access
                   key: DNS_SERVER
+
+          readinessProbe:
+            grpc:
+              port: 7070
+            initialDelaySeconds: 1
+            failureThreshold: 3
+            periodSeconds: 3
 
           livenessProbe:
             grpc:

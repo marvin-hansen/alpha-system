@@ -12,7 +12,7 @@ fn test_dbgw_service_config() {
     assert_eq!(service_config.description(), "DBGW gives access to the DB");
     assert_eq!(
         service_config.health_check_uri(),
-        "dbgw-service.default.svc.cluster.local:7070/health"
+        "dbgw-service.default.svc.cluster.local:9090/health"
     );
     assert_eq!(
         service_config.cluster_uri(),

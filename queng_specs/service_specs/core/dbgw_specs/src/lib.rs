@@ -24,8 +24,8 @@ pub fn dbgw_service_config() -> ServiceConfig {
     let version = 1;
     let online = false;
     let description = "DBGW gives access to the DB".to_string();
-    let health_check_uri = "dbgw-service.default.svc.cluster.local:7070/health".to_string();
-    let base_uri = "dbgw-service.default.svc.cluster.local".to_string();
+    let health_check_uri = "dbgw-service.default.svc.cluster.local:9090/health".to_string();
+    let cluster_uri = "dbgw-service.default.svc.cluster.local".to_string();
     let dependencies = vec![];
     let endpoints = vec![
         default_grpc_service_endpoint("dbgw Endpoint", 9090),
@@ -40,7 +40,7 @@ pub fn dbgw_service_config() -> ServiceConfig {
         online,
         description,
         health_check_uri,
-        base_uri,
+        cluster_uri,
         dependencies,
         endpoints,
     )

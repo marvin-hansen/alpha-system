@@ -25,7 +25,7 @@ pub fn smdb_service_config() -> ServiceConfig {
     let online = false;
     let description = "SMDB Service Management Database".to_string();
     let health_check_uri = "smdb-service.default.svc.cluster.local:7070/health".to_string();
-    let base_uri = "smdb-service.default.svc.cluster.local".to_string();
+    let cluster_uri = "smdb-service.default.svc.cluster.local".to_string();
     let dependencies = vec![ServiceID::DBGW];
     let endpoints = vec![
         default_grpc_service_endpoint("SMDB Endpoint", 7070),
@@ -40,7 +40,7 @@ pub fn smdb_service_config() -> ServiceConfig {
         online,
         description,
         health_check_uri,
-        base_uri,
+        cluster_uri,
         dependencies,
         endpoints,
     )

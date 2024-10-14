@@ -39,7 +39,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let uri = s.parse::<Uri>().unwrap();
     dbg_print(&uri.to_string());
 
-    dbg_print("Configure a channel connection to DBGW service");
+    dbg_print("Connect to DBGW service");
     let channel = Channel::builder(uri).connect().await.unwrap_or_else(|_| {
         panic!(
             "\r\n [SMDB]: Failed to connect to DBGW service on: {} \r\n  \r\n Detail: \r\n",

@@ -11,9 +11,9 @@ spec:
   type: ClusterIP
   ports:
     - name: main-port
-      port: 7070
+      port: 9090
       protocol: TCP
-      targetPort: 7070
+      targetPort: 9090
     - name: metrics-port
       port: 8080
       protocol: TCP
@@ -49,7 +49,7 @@ spec:
               cpu: 250m
               memory: 128Mi
           ports:
-            - containerPort: 7070
+            - containerPort: 9090
             - containerPort: 8080
           env:
             - name: ENV
@@ -75,16 +75,23 @@ spec:
                   name: postgres-db
                   key: database
 
+          readinessProbe:
+            grpc:
+              port: 9090
+            initialDelaySeconds: 1
+            failureThreshold: 3
+            periodSeconds: 3
+
           livenessProbe:
             grpc:
-              port: 7070
+              port: 9090
             initialDelaySeconds: 1
             failureThreshold: 3
             periodSeconds: 3
 
           startupProbe:
             grpc:
-              port: 7070
+              port: 9090
             initialDelaySeconds: 1
             failureThreshold: 5
             periodSeconds: 3
