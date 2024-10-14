@@ -10,9 +10,10 @@ impl CfgManager {
         let health_endpoint = svc.health_endpoint();
 
         let health_host = self
-            .get_service_host()
+            .get_service_host(&self.svc_env_config)
             .await
             .expect("[CfgManager]: Failed to get service host");
+
         let health_uri = health_endpoint.uri().to_string();
         let port = health_endpoint.port() as u16;
         let health_port = self
