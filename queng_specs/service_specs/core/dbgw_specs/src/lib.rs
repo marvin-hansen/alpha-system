@@ -20,12 +20,12 @@ use shared_service_specs::{default_grpc_service_endpoint, health_endpoint, metri
 /// A `ServiceConfig` instance with all the necessary settings for the CMDB service.
 pub fn dbgw_service_config() -> ServiceConfig {
     let id = ServiceID::DBGW;
-    let name = "dbgwv1".to_string();
+    let name = "dbgw".to_string();
     let version = 1;
     let online = false;
     let description = "DBGW gives access to the DB".to_string();
-    let health_check_uri = "dbgwv1-service.default.svc.cluster.local:7070/health".to_string();
-    let base_uri = "dbgwv1-service.default.svc.cluster.local".to_string();
+    let health_check_uri = "dbgw-service.default.svc.cluster.local:7070/health".to_string();
+    let base_uri = "dbgw-service.default.svc.cluster.local".to_string();
     let dependencies = vec![];
     let endpoints = vec![
         default_grpc_service_endpoint("dbgw Endpoint", 9090),

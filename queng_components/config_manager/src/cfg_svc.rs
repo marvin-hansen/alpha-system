@@ -17,13 +17,15 @@ impl CfgManager {
     /// A tuple containing the host and port of the service as a string and u16, respectively. Returns an error if the
     /// host and port cannot be obtained.
     pub async fn get_smdb_host_port(&self) -> Result<(String, u16), InitError> {
-        // Get the configuration of the service
+        self.dbg_print("get_smdb_host_port");
+
+        self.dbg_print("Get SMDB service configuration!");
         let svc_config = smdb_service_config();
 
-        // Construct contextual service environment configuration
+        self.dbg_print("Construct contextual service environment configuration");
         let svc_env_config = utils::get_svc_env_config(self.dbg, SMDB, &svc_config);
 
-        // Get the host and port of the service
+        self.dbg_print("Get the host and port of the service");
         self.get_host(&svc_env_config).await
     }
 
@@ -35,13 +37,15 @@ impl CfgManager {
     /// host and port cannot be obtained.
     ///
     pub async fn get_cmdb_host_port(&self) -> Result<(String, u16), InitError> {
-        // Get the configuration of the service
+        self.dbg_print("get_cmdb_host_port");
+
+        self.dbg_print("Get CMDB service configuration!");
         let svc_config = cmdb_service_config();
 
-        // Construct contextual service environment configuration
+        self.dbg_print("Construct contextual service environment configuration");
         let svc_env_config = utils::get_svc_env_config(self.dbg, CMDB, &svc_config);
 
-        // Get the host and port of the service
+        self.dbg_print("Get the host and port of the service");
         self.get_host(&svc_env_config).await
     }
 
@@ -52,13 +56,15 @@ impl CfgManager {
     /// A tuple containing the host and port of the DBGW service as a string and u16, respectively. Returns an error if the
     /// host and port cannot be obtained.
     pub async fn get_dbgw_host_port(&self) -> Result<(String, u16), InitError> {
-        // Get the configuration of the service
+        self.dbg_print("get_dbgw_host_port");
+
+        self.dbg_print("Get DBGW service configuration!");
         let svc_config = dbgw_service_config();
 
-        // Construct contextual service environment configuration
+        self.dbg_print("Construct contextual service environment configuration");
         let svc_env_config = utils::get_svc_env_config(self.dbg, DBGW, &svc_config);
 
-        // Get the host and port of the service
+        self.dbg_print("Get the host and port of the service");
         self.get_host(&svc_env_config).await
     }
 
@@ -69,6 +75,8 @@ impl CfgManager {
     /// A tuple containing the host and port of the service as a string and u16, respectively. Returns an error if the
     /// host and port cannot be obtained.
     pub async fn get_service_host_port(&self) -> Result<(String, u16), InitError> {
+        self.dbg_print("get_service_host_port");
+
         // Get the configuration of the service
         let svc_config = &self.svc_env_config;
         // Get the host and port of the service
@@ -81,11 +89,15 @@ impl CfgManager {
     ///
     /// A vector of `ServiceID`s representing the dependencies of the service.
     pub fn get_service_dependencies(&self) -> Vec<ServiceID> {
+        self.dbg_print("get_service_dependencies");
+
         self.get_svc_config().dependencies().clone()
     }
 
     /// returns the socket address to run the service in any context.
     pub async fn get_svc_socket_addr(&self) -> Result<String, InitError> {
+        self.dbg_print("get_svc_socket_addr");
+
         // Get the configuration of the service
         let svc_config = self.svc_env_config.to_owned();
         // Get the host and port of the service
@@ -113,6 +125,8 @@ impl CfgManager {
         &self,
         svc_env_config: &SvcEnvConfig,
     ) -> Result<(String, u16), InitError> {
+        self.dbg_print("get_host");
+
         //
         let svc_port: u16 = svc_env_config
             .service_port()
@@ -135,6 +149,10 @@ impl CfgManager {
     }
 
     pub(crate) async fn get_service_host(&self) -> Result<String, InitError> {
+        self.dbg_print("get_service_host");
+        self.dbg_print("EnvironmentType");
+        self.dbg_print(self.env_type.to_string().as_str());
+
         match self.env_type {
             EnvironmentType::LOCAL => Ok(self.svc_env_config.local_host().to_string()),
 

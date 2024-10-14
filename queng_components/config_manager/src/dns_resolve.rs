@@ -8,6 +8,12 @@ impl CfgManager {
      * Resolves a hostname using the appropriate DNS resolver (internal or external).
      */
     pub async fn resolve_dns(&self, host: &str, internal: bool) -> Result<IpAddr, ResolveError> {
+        self.dbg_print("resolve_dns");
+        self.dbg_print("internal");
+        self.dbg_print(internal.to_string().as_str());
+        self.dbg_print("host");
+        self.dbg_print(host);
+
         if internal {
             resolve_address(&self.internal_dns_resolver, host).await
         } else {

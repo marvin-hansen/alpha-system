@@ -4,6 +4,8 @@ use common_errors::prelude::InitError;
 
 impl CfgManager {
     pub async fn get_health_check_url(&self, service_id: &ServiceID) -> Result<String, InitError> {
+        self.dbg_print("get_health_check_url");
+
         let svc = self.svc_config.to_owned();
         let health_endpoint = svc.health_endpoint();
 
