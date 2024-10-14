@@ -214,14 +214,12 @@ alias(
 
 alias(
     name = "sbe_bindings",
-    actual = "//queng_sbe/bindings:sbe_bindings",
-    
+    actual = "//queng_sbe/bindings:sbe_bindings"
 )
 
 alias(
     name = "sbe_messages",
-    actual = "//queng_sbe/sbe_messages:sbe_messages",
-    
+    actual = "//queng_sbe/sbe_messages:sbe_messages"
 )
 
 ###############################################################################
@@ -295,40 +293,34 @@ alias(
 # Core service specs
 alias(
     name = "cmdb_specs",
-    actual = "//queng_specs/service_specs/core/cmdb_specs",
-    
+    actual = "//queng_services/core/cmdb/cmdb_specs",
 )
 
 alias(
     name = "dbgw_specs",
-    actual = "//queng_specs/service_specs/core/dbgw_specs",
-    
+    actual = "//queng_services/core/dbgw/dbgw_specs",
 )
 
 alias(
     name = "smdb_specs",
-    actual = "//queng_specs/service_specs/core/smdb_specs",
-    
+    actual = "//queng_services/core/smdb/smdb_specs",
 )
 
 # Meta service specs
 alias(
     name = "mddb_specs",
-    actual = "//queng_specs/service_specs/meta/mddb_specs",
-    
+    actual = "//queng_services/meta/mddb/mddb_specs",
 )
 
 # IMS service specs
 alias(
     name = "ims_data_binance_specs",
-    actual = "//queng_specs/service_specs/ims/ims_data/ims_data_binance_specs",
-    
+    actual = "//queng_services/ims/ims_data/ims_data_binance_specs",
 )
 
 alias(
     name = "ims_data_vex_specs",
-    actual = "//queng_specs/service_specs/ims/ims_data/ims_data_vex_specs",
-    
+    actual = "//queng_services/ims/ims_data/ims_data_vex_specs",
 )
 
 alias(

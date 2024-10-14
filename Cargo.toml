@@ -39,11 +39,15 @@ members = [
     "queng_services/meta/kaiko/kaiko_client",
     "queng_services/core/cmdb/cmdb_service",
     "queng_services/core/cmdb/cmdb_client",
+    "queng_services/core/cmdb/cmdb_specs",
     "queng_services/core/dbgw/dbgw_client",
     "queng_services/core/dbgw/dbgw_service",
+    "queng_services/core/dbgw/dbgw_specs",
     "queng_services/core/dbgw/dbgw_tests",
     "queng_services/meta/mddb/mddb_service",
+    "queng_services/meta/mddb/mddb_specs",
     "queng_services/meta/mddb/mddb_client",
+    "queng_services/core/smdb/smdb_specs",
     "queng_services/core/smdb/smdb_service",
     "queng_services/core/smdb/smdb_client",
     "queng_services/ims/ims_clients/binance_client",
@@ -51,6 +55,8 @@ members = [
     "queng_services/ims/ims_clients/rest_client",
     "queng_services/ims/ims_common",
     "queng_services/ims/ims_data/binance_data",
+    "queng_services/ims/ims_data/ims_data_binance_specs",
+    "queng_services/ims/ims_data/ims_data_vex_specs",
     "queng_services/meta/kaiko/kaiko_tests",
     "queng_services/meta/mddb/mddb_tests",
     "queng_services/templete/grpc_service",
@@ -62,12 +68,6 @@ members = [
     "queng_specs/database_specs/db_specs_postgres",
     "queng_specs/exchange_specs",
     "queng_specs/service_specs/service_specs_all",
-    "queng_specs/service_specs/ims/ims_data/ims_data_binance_specs",
-    "queng_specs/service_specs/core/cmdb_specs",
-    "queng_specs/service_specs/core/dbgw_specs",
-    "queng_specs/service_specs/meta/mddb_specs",
-    "queng_specs/service_specs/core/smdb_specs",
-    "queng_specs/service_specs/ims/ims_data/ims_data_vex_specs",
     "queng_specs/service_specs/shared_service_specs",
     "queng_utils/math_utils",
     "queng_utils/crypto_utils",
@@ -171,12 +171,12 @@ exchange_specs = { path = "queng_specs/exchange_specs" }
 portfolio_specs = { path = "queng_specs/portfolio_specs" }
 
 # Service specs
-cmdb_specs = { path = "queng_specs/service_specs/core/cmdb_specs" }
-dbgw_specs = { path = "queng_specs/service_specs/core/dbgw_specs" }
-mddb_specs = { path = "queng_specs/service_specs/meta/mddb_specs" }
-smdb_specs = { path = "queng_specs/service_specs/core/smdb_specs" }
-ims_data_binance_specs = { path = "queng_specs/service_specs/ims/ims_data/ims_data_binance_specs" }
-ims_data_vex_specs = { path = "queng_specs/service_specs/ims/ims_data/ims_data_vex_specs" }
+cmdb_specs = { path = "queng_services/core/cmdb/cmdb_specs" }
+dbgw_specs = { path = "queng_services/core/dbgw/dbgw_specs" }
+mddb_specs = { path = "queng_services/meta/mddb/mddb_specs" }
+smdb_specs = { path = "queng_services/core/smdb/smdb_specs" }
+ims_data_binance_specs = { path = "queng_services/ims/ims_data/ims_data_binance_specs" }
+ims_data_vex_specs = { path = "queng_services/ims/ims_data/ims_data_vex_specs" }
 shared_service_specs = { path = "queng_specs/service_specs/shared_service_specs" }
 service_specs_all = { path = "queng_specs/service_specs/service_specs_all" }
 
