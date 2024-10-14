@@ -1,6 +1,5 @@
 use mimalloc::MiMalloc;
 use std::error::Error;
-use std::net::SocketAddr;
 use tonic::transport::{Channel, Server, Uri};
 
 use common_config::prelude::ServiceID;
@@ -10,7 +9,6 @@ use config_manager::CfgManager;
 use proto_smdb::proto::db_gateway_service_client::DbGatewayServiceClient;
 use proto_smdb::proto::smdb_service_server::SmdbServiceServer;
 use service::SMDBServer;
-use warp::Filter;
 mod service;
 
 #[global_allocator]
@@ -61,13 +59,24 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .parse()
         .expect("[SMDB]: Failed to parse address");
 
-    // Construct gRPC server
-    let grpc_svc = SmdbServiceServer::new(SMDBServer::new(dbgw_client.clone()));
+    dbg_print("Set up health check url");
+    let health_uri = cfg_manager
+        .get_health_check_url(&SVC_ID)
+        .await
+        .expect("[SMDB]: Failed to get health check url");
 
-    // Build gRPC server with health service and signal sigint handler
+    dbg_print("Construct gRPC health_service");
+    let (mut health_reporter, health_service) = tonic_health::server::health_reporter();
+    health_reporter
+        .set_serving::<SmdbServiceServer<SMDBServer>>()
+        .await;
+
+    dbg_print("Construct gRPC server");
+    let grpc_svc = SmdbServiceServer::new(SMDBServer::new(dbgw_client.clone()));
     let signal = shutdown_utils::signal_handler("gRPC server");
     let grpc_server = Server::builder()
         .add_service(grpc_svc)
+        .add_service(health_service)
         .serve_with_shutdown(grpc_addr, signal);
 
     // Configure http metrics endpoint ip and port automatically relative to the detected context.
@@ -75,25 +84,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .get_metrics_socket_addr_uri()
         .expect("[SMDB]: Failed to get metric host, uri, and port");
 
-    // dbg_print("Configuring health endpoint");
-    let health_uri = "health";
-    let get_health_check = warp::get()
-        .and(warp::path(health_uri))
-        .and(warp::path::end())
-        .and_then(health_handler);
-
-    // dbg_print("Configure http service routes");
-    let routes = get_health_check;
-
-    // Build http metrics server
-    let web_addr: SocketAddr = metrics_addr.parse().expect("Failed to parse web address");
-
-    let signal = shutdown_utils::signal_handler("metric server");
-    let (_, web_server) = warp::serve(routes).bind_with_graceful_shutdown(web_addr, signal);
-
     // Create a handler for each server https://github.com/hyperium/tonic/discussions/740
     let grpc_handle = tokio::spawn(grpc_server);
-    let http_handle = tokio::spawn(web_server);
 
     // Set SMDB service to online
     dbgw_client
@@ -107,16 +99,16 @@ async fn main() -> Result<(), Box<dyn Error>> {
         &service_addr,
         &metrics_addr,
         &metrics_uri,
-        health_uri,
+        &health_uri,
     );
-    match tokio::try_join!(grpc_handle, http_handle) {
+    match tokio::try_join!(grpc_handle) {
         Ok(_) => {}
         Err(e) => {
             dbgw_client
                 .set_service_offline(service::get_svc_request())
                 .await
                 .expect("[SMDB]: Failed to set service offline!");
-            println!("[SMDB]: Failed to start gRPC and HTTP server: {:?}", e);
+            println!("[SMDB]: Failed to start gRPC server: {:?}", e);
         }
     }
 
@@ -130,10 +122,6 @@ async fn main() -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 
-async fn health_handler() -> Result<impl warp::Reply, warp::Rejection> {
-    let result = { String::from("OK") };
-    Ok(warp::reply::json(&result))
-}
 fn dbg_print(msg: &str) {
     if DBG {
         println!("[SMDB/main]: {}", msg)

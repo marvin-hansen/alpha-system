@@ -28,4 +28,5 @@ common_service =  {workspace = true}
 # External crates
 tokio = { workspace = true }
 tonic = { workspace = true }
+tonic-health = { workspace = true }
 warp = { workspace = true }
