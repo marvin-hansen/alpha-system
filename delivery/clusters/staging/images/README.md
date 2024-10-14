@@ -15,7 +15,7 @@ apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImageRepository
 metadata:
   name: dbgw-image
-  namespace: default
+  namespace: flux-system
 spec:
   secretRef:
     name: artifact-registry
@@ -32,7 +32,7 @@ apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImagePolicy
 metadata:
   name: dbgw-image-policy
-  namespace: default
+  namespace: flux-system
 spec:
   imageRepositoryRef:
     name: dbgw-image
@@ -87,7 +87,7 @@ apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImageUpdateAutomation
 metadata:
   name: flux-system
-  namespace: default
+  namespace: flux-system
 spec:
   interval: 10m
   sourceRef:
