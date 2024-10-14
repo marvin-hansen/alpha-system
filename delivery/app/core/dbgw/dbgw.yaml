@@ -74,6 +74,21 @@ spec:
                 secretKeyRef:
                   name: postgres-db
                   key: database
+
+          livenessProbe:
+            grpc:
+              port: 7070
+            initialDelaySeconds: 1
+            failureThreshold: 3
+            periodSeconds: 3
+
+          startupProbe:
+            grpc:
+              port: 7070
+            initialDelaySeconds: 1
+            failureThreshold: 5
+            periodSeconds: 3
+
   strategy:
     type: RollingUpdate
     rollingUpdate:
