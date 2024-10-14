@@ -27,7 +27,7 @@ metadata:
   namespace: default
 
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: smdb
@@ -40,7 +40,7 @@ spec:
         - name: artifact-registry
       containers:
         - name: smdb
-          image: asia-northeast1-docker.pkg.dev/future-309012/image-repo/smdb:6a8ce0f9-20241014035955 # {"$imagepolicy": "default:smdb-image-policy"}
+          image: asia-northeast1-docker.pkg.dev/future-309012/image-repo/smdb:d02489aa-20241014042614 # {"$imagepolicy": "default:smdb-image-policy"}
           imagePullPolicy: IfNotPresent
           resources:
             requests:
