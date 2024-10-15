@@ -12,7 +12,7 @@ use config_manager::CfgManager;
 
 use pg_smdb_manager::PostgresSMDBManager;
 use postgres_config_manager::PostgresConfigManager;
-use proto_dbgw::proto::db_gateway_service_server::DbGatewayServiceServer;
+use proto_dbgw::proto::db_gateway_smdb_service_server::DbGatewaySmdbServiceServer;
 use service::DBGWServer;
 
 mod service;
@@ -56,11 +56,11 @@ async fn main() -> Result<(), Box<dyn Error>> {
     dbg_print("Construct gRPC health_service");
     let (mut health_reporter, health_service) = tonic_health::server::health_reporter();
     health_reporter
-        .set_serving::<DbGatewayServiceServer<DBGWServer>>()
+        .set_serving::<DbGatewaySmdbServiceServer<DBGWServer>>()
         .await;
 
     dbg_print("Construct gRPC server");
-    let grpc_svc = DbGatewayServiceServer::new(DBGWServer::new(arc_dbm.clone()));
+    let grpc_svc = DbGatewaySmdbServiceServer::new(DBGWServer::new(arc_dbm.clone()));
     let signal = shutdown_utils::signal_handler("gRPC server");
     let grpc_server = Server::builder()
         .add_service(grpc_svc)

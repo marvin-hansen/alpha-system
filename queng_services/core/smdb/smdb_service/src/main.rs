@@ -5,8 +5,8 @@ use tonic::transport::{Channel, Server, Uri};
 use common_config::prelude::ServiceID;
 use common_service::{print_utils, shutdown_utils};
 use config_manager::CfgManager;
+use proto_dbgw::proto::db_gateway_smdb_service_client::DbGatewaySmdbServiceClient;
 
-use proto_dbgw::proto::db_gateway_service_client::DbGatewayServiceClient;
 use proto_smdb::proto::smdb_service_server::SmdbServiceServer;
 use service::SMDBServer;
 mod service;
@@ -46,7 +46,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     });
 
     dbg_print("Configure DBGW client");
-    let mut dbgw_client = DbGatewayServiceClient::new(channel);
+    let mut dbgw_client = DbGatewaySmdbServiceClient::new(channel);
 
     dbg_print("Configure service ip and port for the detected context");
     let service_addr = cfg_manager
