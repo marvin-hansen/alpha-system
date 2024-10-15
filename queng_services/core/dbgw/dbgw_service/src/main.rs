@@ -10,12 +10,15 @@ use common_config::prelude::ServiceID;
 use common_service::{print_utils, shutdown_utils};
 use config_manager::CfgManager;
 
+use crate::service::DBGWServer;
 use pg_smdb_manager::PostgresSMDBManager;
 use postgres_config_manager::PostgresConfigManager;
 use proto_dbgw::proto::db_gateway_smdb_service_server::DbGatewaySmdbServiceServer;
-use service::DBGWServer;
 
 mod service;
+mod service_cmdb;
+mod service_smdb;
+
 const DBG: bool = false;
 const SVC_ID: ServiceID = ServiceID::DBGW;
 
