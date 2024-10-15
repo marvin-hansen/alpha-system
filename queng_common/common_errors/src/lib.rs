@@ -1,3 +1,4 @@
+mod dbgw_error;
 pub(crate) mod init_error;
 pub(crate) mod lookup_error;
 pub(crate) mod message_client_config_error;

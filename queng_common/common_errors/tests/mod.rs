@@ -1,4 +1,6 @@
 #[cfg(test)]
+mod dbgw_error_tests;
+#[cfg(test)]
 mod init_error_tests;
 #[cfg(test)]
 mod lookup_error_tests;

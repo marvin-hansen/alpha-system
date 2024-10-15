@@ -8,8 +8,8 @@ use proto_smdb_utils::service_config_proto_utils::{
     service_config_from_proto, service_config_to_proto,
 };
 
-use crate::error::DBGatewayError;
 use crate::DBGatewayClient;
+use common_errors::prelude::DBGatewayError;
 
 impl DBGatewayClient {
     pub async fn create_service(&self, data: ServiceConfig) -> Result<bool, DBGatewayError> {

@@ -1,22 +1,20 @@
 use common_config::prelude::HostEndpoint;
-use proto_dbgw::proto::db_gateway_smdb_service_client::DbGatewaySmdbServiceClient as DBGWClient;
+use proto_dbgw::proto::db_gateway_cmdb_service_client::DbGatewayCmdbServiceClient as DBGWClient;
 use tonic::transport::{Channel, Uri};
 
 mod client;
+
 #[derive(Debug, Clone)]
-pub struct DBGatewayClient {
+pub struct DBGWCmdbClient {
     client: DBGWClient<Channel>,
 }
 
-impl DBGatewayClient {
+impl DBGWCmdbClient {
     pub async fn new(config: HostEndpoint<'_>) -> Self {
-        let port = config.port();
-        let host = config.host_uri();
-
-        let s = format!("http://{}:{}", host, port);
+        let s = format!("http://{}:{}", config.host_uri(), config.port());
         let uri = s
             .parse::<Uri>()
-            .unwrap_or_else(|_| panic!("DBGatewayClient: Failed to parse server URI: {}", s));
+            .unwrap_or_else(|_| panic!("DBGWCmdbClient: Failed to parse server URI: {}", s));
 
         Self::build(uri).await
     }
@@ -24,25 +22,24 @@ impl DBGatewayClient {
     pub async fn from_url(url: &str) -> Self {
         let uri = url
             .parse::<Uri>()
-            .unwrap_or_else(|_| panic!("DBGatewayClient: Failed to parse server URI: {}", url));
+            .unwrap_or_else(|_| panic!("DBGWCmdbClient: Failed to parse server URI: {}", url));
 
         Self::build(uri).await
     }
 
     async fn build(uri: Uri) -> Self {
-        // creating a channel that connects to server
         let channel = match Channel::builder(uri.clone()).connect().await {
             Ok(res) => res,
             Err(e) => {
                 panic!(
-                    "DBGatewayClient: Failed to connect to server: {} due to error: {}",
+                    "DBGWCmdbClient: Failed to connect to DBGW server: {} due to error: {}",
                     uri, e
                 );
             }
         };
 
-        let client = DBGWClient::new(channel);
-
-        Self { client }
+        Self {
+            client: DBGWClient::new(channel),
+        }
     }
 }

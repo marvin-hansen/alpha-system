@@ -15,6 +15,12 @@ alias(
 )
 
 alias(
+    name = "dbgw_cmdb_client",
+    actual = "//queng_services/core/dbgw/dbgw_cmdb_client",
+    visibility = ["//visibility:public"],
+)
+
+alias(
     name = "smdb_client",
     actual = "//queng_services/core/smdb/smdb_client",
     visibility = ["//visibility:public"],

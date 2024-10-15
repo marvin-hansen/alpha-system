@@ -1,3 +1,4 @@
+pub use crate::dbgw_error::DBGatewayError;
 pub use crate::init_error::InitError;
 pub use crate::lookup_error::LookupError;
 pub use crate::message_client_config_error::MessageClientConfigError;
