@@ -6,7 +6,7 @@ use common_config::prelude::ServiceID;
 use common_service::{print_utils, shutdown_utils};
 use config_manager::CfgManager;
 
-use proto_smdb::proto::db_gateway_service_client::DbGatewayServiceClient;
+use proto_dbgw::proto::db_gateway_service_client::DbGatewayServiceClient;
 use proto_smdb::proto::smdb_service_server::SmdbServiceServer;
 use service::SMDBServer;
 mod service;

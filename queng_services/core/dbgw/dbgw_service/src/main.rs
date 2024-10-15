@@ -12,7 +12,7 @@ use config_manager::CfgManager;
 
 use pg_smdb_manager::PostgresSMDBManager;
 use postgres_config_manager::PostgresConfigManager;
-use proto_smdb::proto::db_gateway_service_server::DbGatewayServiceServer;
+use proto_dbgw::proto::db_gateway_service_server::DbGatewayServiceServer;
 use service::DBGWServer;
 
 mod service;

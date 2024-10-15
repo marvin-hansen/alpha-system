@@ -5,13 +5,13 @@ load("@rules_rust//proto/prost:defs.bzl", "rust_prost_library")
 proto_library(
     name = "proto_smdb",
     srcs = [
-        "proto/dbgw.proto",
         "proto/service_messages.proto",
         "proto/smdb.proto",
     ],
     # strip_import_prefix ensures compatibility with Cargo / Prost proto imports
     # https://bazel.build/reference/be/protocol-buffer
     strip_import_prefix = "proto",
+    visibility = ["//visibility:public"],
 )
 
 rust_prost_library(

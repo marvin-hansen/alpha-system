@@ -17,6 +17,7 @@ build_binary_opt(
         # Internal crates
         "//alias:common_config",
         "//alias:config_manager",
+        "//alias:proto_dbgw",
         "//alias:proto_smdb",
         "//alias:common_service",
         # Custom Memory Allocator

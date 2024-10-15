@@ -11,7 +11,10 @@ authors.workspace = true
 [dependencies]
 # Internal crates
 common_config = {workspace = true}
+proto_dbgw = {workspace = true}
 proto_smdb = {workspace = true}
+proto_cmdb = {workspace = true}
+proto_cmdb_utils = {workspace = true}
 proto_smdb_utils = {workspace = true}
 
 # Exteral crates

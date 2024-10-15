@@ -1,9 +1,6 @@
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     tonic_build::configure()
-        .compile(
-            &["proto/service_messages.proto", "proto/smdb.proto"],
-            &["proto"],
-        )
+        .compile(&["proto/dbgw.proto"], &["proto"])
         .expect("Failed to compile proto specification");
 
     Ok(())

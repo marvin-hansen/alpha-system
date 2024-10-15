@@ -11,6 +11,9 @@ rust_library(
     deps = [
         # Internal crates
         "//alias:common_config",
+        "//alias:proto_dbgw",
+        "//alias:proto_cmdb",
+        "//alias:proto_cmdb_utils",
         "//alias:proto_smdb",
         "//alias:proto_smdb_utils",
         # External crates

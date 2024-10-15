@@ -174,38 +174,37 @@ alias(
 alias(
     name = "proto_cmdb",
     actual = "//queng_proto/proto_cmdb:proto_cmdb_bindings",
-    
 )
 
 alias(
     name = "proto_cmdb_utils",
     actual = "//queng_proto/proto_cmdb_utils",
-    
 )
 
 alias(
     name = "proto_mddb",
     actual = "//queng_proto/proto_mddb:proto_mddb_bindings",
-    
+)
+
+alias(
+    name = "proto_dbgw",
+    actual = "//queng_proto/proto_dbgw:proto_dbgw_bindings",
 )
 
 alias(
     name = "proto_mddb_utils",
     actual = "//queng_proto/proto_mddb_utils",
-    
 )
 
 
 alias(
     name = "proto_smdb",
     actual = "//queng_proto/proto_smdb:proto_smdb_bindings",
-    
 )
 
 alias(
     name = "proto_smdb_utils",
     actual = "//queng_proto/proto_smdb_utils",
-    
 )
 
 ###############################################################################
@@ -229,19 +228,16 @@ alias(
 alias(
     name = "container_specs_clickhouse",
     actual = "//queng_specs/container_specs/container_specs_clickhouse",
-    
 )
 
 alias(
     name = "container_specs_kaiko",
     actual = "//queng_specs/container_specs/container_specs_kaiko",
-    
 )
 
 alias(
     name = "container_specs_postgres",
     actual = "//queng_specs/container_specs/container_specs_postgres",
-    
 )
 
 ###############################################################################
@@ -252,14 +248,12 @@ alias(
 alias(
     name = "db_specs_clickhouse",
     actual = "//queng_specs/database_specs/db_specs_clickhouse",
-    
 )
 
 # DB Specs
 alias(
     name = "db_specs_postgres",
     actual = "//queng_specs/database_specs/db_specs_postgres",
-    
 )
 
 ###############################################################################
@@ -270,14 +264,12 @@ alias(
 alias(
     name = "exchange_specs",
     actual = "//queng_specs/exchange_specs",
-    
 )
 
 # portfolio specs
 alias(
     name = "portfolio_specs",
     actual = "//queng_specs/portfolio_specs",
-    
 )
 
 ###############################################################################
@@ -287,7 +279,6 @@ alias(
 alias(
     name = "service_specs_all",
     actual = "//queng_specs/service_specs/service_specs_all",
-    
 )
 
 # Core service specs
@@ -326,7 +317,6 @@ alias(
 alias(
     name = "shared_service_specs",
     actual = "//queng_specs/service_specs/shared_service_specs",
-    
 )
 
 ###############################################################################
@@ -336,13 +326,11 @@ alias(
 alias(
     name = "crypto_utils",
     actual = "//queng_utils/crypto_utils",
-    
 )
 
 alias(
     name = "math_utils",
     actual = "//queng_utils/math_utils",
-    
 )
 
 ###############################################################################
@@ -352,24 +340,20 @@ alias(
 alias(
     name = "docker_utils",
     actual = "//queng_utils_tests/docker_utils",
-    
 )
 
 alias(
     name = "env_utils",
     actual = "//queng_utils_tests/env_utils",
-    
 )
 
 alias(
     name = "kaiko_utils",
     actual = "//queng_utils_tests/kaiko_utils",
-    
 )
 
 alias(
     name = "service_utils",
     actual = "//queng_utils_tests/service_utils",
-    
 )
 
