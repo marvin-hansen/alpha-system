@@ -15,11 +15,6 @@ impl EnvUtil {
             .await
             .expect("[TestEnv/CI:setup_containers]: Failed to setup API proxy container");
 
-        self.dbg_print("Setup clickhouse container config");
-        self.setup_container_clickhouse()
-            .await
-            .expect("[TestEnv/CI:setup_containers]: Failed to setup clickhouse container");
-
         self.dbg_print("Setup postgres container");
         self.setup_container_postgres_db()
             .await

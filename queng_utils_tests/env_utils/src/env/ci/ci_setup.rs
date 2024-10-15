@@ -1,5 +1,3 @@
-use container_specs_clickhouse::clickhouse_container_config;
-
 use crate::prelude::{EnvUtil, EnvironmentError};
 
 impl EnvUtil {
@@ -9,11 +7,8 @@ impl EnvUtil {
     ///
     /// 1. Sets the data sample size to 10% of the available data.
     /// 2. Gets or reuses all containers required for testing.
-    /// 3. Gets the configuration for the ClickHouse container.
-    /// 4. Configures the ClickHouse database.
-    /// 5. Verifies the ClickHouse database.
-    /// 6. Configures the PostgreSQL database.
-    /// 7. Verifies the PostgreSQL database.
+    /// 3. Configures the PostgreSQL database.
+    /// 4. Verifies the PostgreSQL database.
     ///
     /// # Errors
     ///
@@ -58,32 +53,10 @@ impl EnvUtil {
             return Ok(());
         }
 
-        self.dbg_print("[setup_ci]: Set data sample size to 10%");
-        let sample_size = None; // Some(0);
-
         self.dbg_print("[setup_ci]: Get or reuse all containers");
         self.setup_all_containers()
             .await
             .expect("[setup_ci]: Failed to setup containers");
-
-        self.dbg_print("[setup_ci]: Get clickhouse container config");
-        let clickhouse_container_config = clickhouse_container_config();
-
-        self.dbg_print("[setup_ci]: Configure clickhouse DB");
-        self.setup_clickhouse(&clickhouse_container_config, sample_size)
-            .await
-            .expect("[setup_ci]: Failed to configure clickhouse DB");
-
-        let ch_configured = self
-            .verify_clickhouse_db()
-            .await
-            .expect("[setup_ci]: Failed to verify clickhouse DB");
-
-        if !ch_configured {
-            return Err(EnvironmentError::from(
-                "clickhouse not correctly configured",
-            ));
-        }
 
         self.dbg_print("[setup_ci]: Configure Postgres DB");
         self.setup_postgres()

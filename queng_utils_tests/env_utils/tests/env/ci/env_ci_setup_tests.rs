@@ -20,15 +20,12 @@ async fn test_env_util_setup_ci() {
     );
     println!();
 
-    let clickhouse_container_name = ci_env.clickhouse_container_name();
+    let postgres_container_name = ci_env.postgres_db_container_name();
     let exists = docker_util
-        .check_if_container_is_running(&clickhouse_container_name)
-        .expect("Failed to check if clickhouse container exists");
+        .check_if_container_is_running(&postgres_container_name)
+        .expect("Failed to check if postgres_ container exists");
     assert!(exists);
 
-    println!(
-        "✅ OK: Container name: {} created",
-        clickhouse_container_name
-    );
+    println!("✅ OK: Container: {} created", postgres_container_name);
     println!();
 }
