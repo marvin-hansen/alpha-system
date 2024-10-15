@@ -6,13 +6,15 @@ use tokio::sync::RwLock;
 use tonic::transport::Server;
 use warp::Filter;
 
+use crate::service::DBGWServer;
+use crate::service_cmdb::CMDBServer;
 use common_config::prelude::ServiceID;
 use common_service::{print_utils, shutdown_utils};
 use config_manager::CfgManager;
-
-use crate::service::DBGWServer;
+use pg_cmdb_manager::PostgresCMDBManager;
 use pg_smdb_manager::PostgresSMDBManager;
 use postgres_config_manager::PostgresConfigManager;
+use proto_dbgw::proto::db_gateway_cmdb_service_server::DbGatewayCmdbServiceServer;
 use proto_dbgw::proto::db_gateway_smdb_service_server::DbGatewaySmdbServiceServer;
 
 mod service;
@@ -50,11 +52,16 @@ async fn main() -> Result<(), Box<dyn Error>> {
     dbg_print("Configure postgres database manager");
     let pg_config = pg_cfg_manager.postgres_db_config();
 
-    let dbm = PostgresSMDBManager::new(&pg_config.pg_connection_url())
+    let dbm_smdb = PostgresSMDBManager::new(&pg_config.pg_connection_url())
         .await
         .expect("Failed to create DB Manager");
 
-    let arc_dbm = Arc::new(RwLock::new(dbm));
+    let dbm_cmdb = PostgresCMDBManager::new(&pg_config.pg_connection_url())
+        .await
+        .expect("Failed to create DB Manager");
+
+    let arc_smdb_dbm = Arc::new(RwLock::new(dbm_smdb));
+    let arc_dbm_cmdb = Arc::new(RwLock::new(dbm_cmdb));
 
     dbg_print("Construct gRPC health_service");
     let (mut health_reporter, health_service) = tonic_health::server::health_reporter();
@@ -63,10 +70,13 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .await;
 
     dbg_print("Construct gRPC server");
-    let grpc_svc = DbGatewaySmdbServiceServer::new(DBGWServer::new(arc_dbm.clone()));
+    let grpc_cmdb = DbGatewayCmdbServiceServer::new(CMDBServer::new(arc_dbm_cmdb));
+    let grpc_smdb = DbGatewaySmdbServiceServer::new(DBGWServer::new(arc_smdb_dbm.clone()));
+
     let signal = shutdown_utils::signal_handler("gRPC server");
     let grpc_server = Server::builder()
-        .add_service(grpc_svc)
+        .add_service(grpc_cmdb)
+        .add_service(grpc_smdb)
         .add_service(health_service)
         .serve_with_shutdown(grpc_addr, signal);
 
@@ -102,7 +112,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     {
         dbg_print("Set DBGW service to online");
-        let dbm = arc_dbm.write().await;
+        let dbm = arc_smdb_dbm.write().await;
         dbm.set_service_online(&SVC_ID)
             .await
             .expect("DBGW: Failed to set service online");
@@ -119,7 +129,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         Ok(_) => {}
         Err(e) => {
             // Set DBGW service to offline in case of an error during gRPC start up
-            let dbm = arc_dbm.write().await;
+            let dbm = arc_smdb_dbm.write().await;
             dbm.set_service_offline(&SVC_ID)
                 .await
                 .expect("DBGW: Failed to set service online");
@@ -129,7 +139,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     {
         dbg_print("Set DBGW service to OFFLINE");
-        let dbm = arc_dbm.write().await;
+        let dbm = arc_smdb_dbm.write().await;
         dbm.set_service_offline(&SVC_ID)
             .await
             .expect("DBGW: Failed to set service online");

@@ -19,6 +19,7 @@ build_binary_opt(
         # Internal crates
         "//alias:common_config",
         "//alias:config_manager",
+        "//alias:pg_cmdb_manager",
         "//alias:pg_smdb_manager",
         "//alias:proto_dbgw",
         "//alias:proto_cmdb",
