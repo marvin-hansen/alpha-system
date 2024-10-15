@@ -1,23 +1,18 @@
-use pg_cmdb_manager::PostgresCMDBManager;
 use proto_cmdb::proto::cmdb_service_server::CmdbService;
 use proto_cmdb::proto::*;
-use proto_cmdb_utils::portfolio_proto_utils::{
-    portfolio_config_from_proto, portfolio_config_to_proto,
-};
-use std::sync::Arc;
-use tokio::sync::RwLock;
-use tonic::{Request, Response, Status};
 
-pub(crate) type SafePostgresDBManager = Arc<RwLock<PostgresCMDBManager>>;
+use proto_dbgw::proto::db_gateway_cmdb_service_client::DbGatewayCmdbServiceClient;
+use tonic::transport::Channel;
+use tonic::{Request, Response, Status};
 
 #[derive(Clone)]
 pub struct CMDBServer {
-    dbm: SafePostgresDBManager,
+    dbgw: DbGatewayCmdbServiceClient<Channel>,
 }
 
 impl CMDBServer {
-    pub fn new(dbm: SafePostgresDBManager) -> Self {
-        Self { dbm }
+    pub fn new(dbgw: DbGatewayCmdbServiceClient<Channel>) -> Self {
+        Self { dbgw }
     }
 }
 
@@ -27,15 +22,11 @@ impl CmdbService for CMDBServer {
         &self,
         request: Request<ProtoPortfolioConfig>,
     ) -> Result<Response<CreatePortfolioResponse>, Status> {
-        let data =
-            portfolio_config_from_proto(request.into_inner()).expect("Failed to parse request");
+        let mut client = self.dbgw.clone();
 
-        let dbm = self.dbm.write().await;
-        let res = dbm.insert_portfolio_config(&data).await;
-
-        match res {
-            Ok(_) => Ok(Response::new(CreatePortfolioResponse {
-                portfolio_created: true,
+        match client.create_portfolio_config(request).await {
+            Ok(res) => Ok(Response::new(CreatePortfolioResponse {
+                portfolio_created: res.into_inner().portfolio_created,
             })),
             Err(e) => Err(Status::internal(e.to_string())),
         }
@@ -45,52 +36,28 @@ impl CmdbService for CMDBServer {
         &self,
         request: Request<SinglePortfolioRequest>,
     ) -> Result<Response<ReadPortfolioResponse>, Status> {
-        let id = request.into_inner().portfolio_id as u16;
+        let mut client = self.dbgw.clone();
 
-        let dbm = self.dbm.read().await;
-        let record = dbm.read_portfolio_config_by_id(id).await;
+        match client.read_portfolio_config(request).await {
+            Ok(res) => Ok(Response::new(ReadPortfolioResponse {
+                portfolio_config: res.into_inner().portfolio_config,
+            })),
 
-        match record {
-            Ok(res) => {
-                let proto_portfolio_config =
-                    portfolio_config_to_proto(res).expect("Failed to convert record to proto");
-
-                Ok(Response::new(ReadPortfolioResponse {
-                    portfolio_config: Some(proto_portfolio_config),
-                }))
-            }
             Err(e) => Err(Status::internal(e.to_string())),
         }
     }
 
     async fn read_all_portfolio_configs(
         &self,
-        _request: Request<MultiPortfolioRequest>,
+        request: Request<MultiPortfolioRequest>,
     ) -> Result<Response<ReadAllPortfoliosResponse>, Status> {
-        let dbm = self.dbm.read().await;
-        let records = dbm.read_all_portfolio_configs().await;
+        let mut client = self.dbgw.clone();
 
-        match records {
-            Ok(res) => {
-                let mut portfolio_configs: Vec<ProtoPortfolioConfig> = Vec::new();
+        match client.read_all_portfolio_configs(request).await {
+            Ok(res) => Ok(Response::new(ReadAllPortfoliosResponse {
+                portfolio_configs: res.into_inner().portfolio_configs,
+            })),
 
-                if res.is_empty() {
-                    Ok(Response::new(ReadAllPortfoliosResponse {
-                        portfolio_configs,
-                    }))
-                } else {
-                    for record in res {
-                        let proto_portfolio_config = portfolio_config_to_proto(record)
-                            .expect("Failed to convert record to proto");
-
-                        portfolio_configs.push(proto_portfolio_config);
-                    }
-
-                    Ok(Response::new(ReadAllPortfoliosResponse {
-                        portfolio_configs,
-                    }))
-                }
-            }
             Err(e) => Err(Status::internal(e.to_string())),
         }
     }
@@ -99,15 +66,11 @@ impl CmdbService for CMDBServer {
         &self,
         request: Request<ProtoPortfolioConfig>,
     ) -> Result<Response<UpdatePortfolioResponse>, Status> {
-        let data =
-            portfolio_config_from_proto(request.into_inner()).expect("Failed to parse request");
+        let mut client = self.dbgw.clone();
 
-        let dbm = self.dbm.write().await;
-        let res = dbm.update_portfolio_config(data).await;
-
-        match res {
-            Ok(_) => Ok(Response::new(UpdatePortfolioResponse {
-                portfolio_updated: true,
+        match client.update_portfolio_config(request).await {
+            Ok(res) => Ok(Response::new(UpdatePortfolioResponse {
+                portfolio_updated: res.into_inner().portfolio_updated,
             })),
             Err(e) => Err(Status::internal(e.to_string())),
         }
@@ -117,15 +80,12 @@ impl CmdbService for CMDBServer {
         &self,
         request: Request<SinglePortfolioRequest>,
     ) -> Result<Response<DeletePortfolioResponse>, Status> {
-        let id = request.into_inner().portfolio_id as u16;
+        let mut client = self.dbgw.clone();
 
-        let dbm = self.dbm.write().await;
-        let res = dbm.delete_portfolio_config(id).await;
-
-        match res {
-            Ok(portfolio_deleted) => {
-                Ok(Response::new(DeletePortfolioResponse { portfolio_deleted }))
-            }
+        match client.delete_portfolio_config(request).await {
+            Ok(res) => Ok(Response::new(DeletePortfolioResponse {
+                portfolio_deleted: res.into_inner().portfolio_deleted,
+            })),
             Err(e) => Err(Status::internal(e.to_string())),
         }
     }

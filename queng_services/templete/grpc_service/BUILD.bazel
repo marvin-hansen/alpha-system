@@ -16,6 +16,7 @@ rust_library(
         # External crates
         "//thirdparty/crates:tokio",
         "//thirdparty/crates:tonic",
+        "//thirdparty/crates:tonic-health",
         "//thirdparty/crates:prost",
         "//thirdparty/crates:warp",
     ],

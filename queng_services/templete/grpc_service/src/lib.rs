@@ -1,23 +1,22 @@
 use common_config::prelude::ServiceID;
 use common_service::{print_utils, shutdown_utils};
 use config_manager::CfgManager;
+use smdb_client::SMDBClient;
 use std::convert::Infallible;
 use std::error::Error;
-use std::net::SocketAddr;
 use tonic::body::BoxBody;
 use tonic::codegen::http::{Request, Response};
 use tonic::codegen::Service;
 use tonic::server::NamedService;
 use tonic::transport::Server;
-use warp::Filter;
-
-use smdb_client::SMDBClient;
+use tonic_health::pb::health_server::{Health, HealthServer};
 
 pub async fn start<S>(
     dbg: bool,
     svc_id: ServiceID,
     cfg_manager: CfgManager,
     grpc_svc: S,
+    health_service: HealthServer<impl Health>,
 ) -> Result<(), Box<dyn Error>>
 where
     S: Service<Request<BoxBody>, Response = Response<BoxBody>, Error = Infallible>
@@ -70,36 +69,12 @@ where
     let signal = shutdown_utils::signal_handler("gRPC server");
     let grpc_server = Server::builder()
         .add_service(grpc_svc)
+        .add_service(health_service)
         .serve_with_shutdown(grpc_addr, signal);
-
-    dbg_print("Configuring metrics endpoint");
-    let (metrics_addr, metrics_uri) = cfg_manager
-        .get_metrics_socket_addr_uri()
-        .expect("[ImsDataBinance]: Failed to get metric host, uri, and port");
-
-    dbg_print("Configuring socket address for http service");
-    let http_addr: SocketAddr = metrics_uri
-        .parse()
-        .expect("[ImsDataBinance]: Failed to parse address");
-
-    dbg_print("Configuring health endpoint");
-    let health_uri = "health";
-    let get_health_check = warp::get()
-        .and(warp::path(health_uri))
-        .and(warp::path::end())
-        .and_then(health_handler);
-
-    dbg_print("Configure http service routes");
-    let routes = get_health_check;
-
-    dbg_print("Configuring http server with health service and signal handler");
-    let signal = shutdown_utils::signal_handler("http server");
-    let (_, http_server) = warp::serve(routes).bind_with_graceful_shutdown(http_addr, signal);
 
     dbg_print("Configuring a new Tokio task for gRPC and HTTP server");
     // https://github.com/hyperium/tonic/discussions/740
     let grpc_handle = tokio::spawn(grpc_server);
-    let http_handle = tokio::spawn(http_server);
 
     dbg_print("Set service online");
     smdb_manager
@@ -108,21 +83,14 @@ where
         .expect("Failed to set service online");
 
     // Print service start header
-    print_utils::print_start_header(
-        &svc_id,
-        &service_addr,
-        &metrics_addr,
-        &metrics_uri,
-        health_uri,
-    );
+    print_utils::print_start_header_simple(&svc_id.name(), &service_addr);
+
     // Free up some memory before starting the service,
     drop(cfg_manager);
-    drop(metrics_uri);
-    drop(metrics_addr);
     drop(service_addr);
 
     // Start all servers jointly
-    match tokio::try_join!(grpc_handle, http_handle) {
+    match tokio::try_join!(grpc_handle) {
         Ok(_) => {}
         Err(e) => {
             smdb_manager
@@ -145,9 +113,4 @@ where
     print_utils::print_stop_header(&svc_id);
 
     Ok(())
-}
-
-async fn health_handler() -> Result<impl warp::Reply, warp::Rejection> {
-    let result = { String::from("OK") };
-    Ok(warp::reply::json(&result))
 }

@@ -19,8 +19,10 @@ build_binary_opt(
         # Internal crates
         "//alias:common_config",
         "//alias:config_manager",
+        "//alias/client:dbgw_cmdb_client",
         "//alias:pg_cmdb_manager",
         "//alias:postgres_config_manager",
+        "//alias:proto_dbgw",
         "//alias:proto_cmdb",
         "//alias:proto_cmdb_utils",
         "//alias:common_service",
@@ -30,6 +32,7 @@ build_binary_opt(
         # External crates
         "//thirdparty/crates:tokio",
         "//thirdparty/crates:tonic",
+        "//thirdparty/crates:tonic-health",
     ],
 )
 
