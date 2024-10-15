@@ -1,7 +1,9 @@
+use std::sync::Arc;
+use tokio::sync::RwLock;
 use tonic::{Request, Response, Status};
 
-use crate::service::DBGWServer;
 use common_config::prelude::ServiceID;
+use pg_smdb_manager::PostgresSMDBManager;
 use proto_dbgw::proto::db_gateway_smdb_service_server::DbGatewaySmdbService;
 use proto_smdb::proto::*;
 use proto_smdb_utils::endpoint_proto_utils::endpoint_to_proto;
@@ -9,8 +11,29 @@ use proto_smdb_utils::service_config_proto_utils::{
     service_config_collection_to_proto, service_config_from_proto, service_config_to_proto,
 };
 
+use crate::DBG;
+
+pub(crate) type SafePgSMDBManager = Arc<RwLock<PostgresSMDBManager>>;
+
+#[derive(Clone)]
+pub struct SMDBServer {
+    dbg: bool,
+    dbm: SafePgSMDBManager,
+}
+
+impl SMDBServer {
+    pub fn new(dbm: SafePgSMDBManager) -> Self {
+        Self { dbg: DBG, dbm }
+    }
+    fn dbg_print(&self, msg: &str) {
+        if self.dbg {
+            println!("[DBGW/service_smdb]: {}", msg)
+        }
+    }
+}
+
 #[tonic::async_trait]
-impl DbGatewaySmdbService for DBGWServer {
+impl DbGatewaySmdbService for SMDBServer {
     async fn create_service(
         &self,
         rqt: Request<ProtoServiceConfig>,
@@ -20,7 +43,7 @@ impl DbGatewaySmdbService for DBGWServer {
         let data = service_config_from_proto(rqt.into_inner())
             .expect("Failed to create ServiceConfig from proto");
 
-        let dbm = self.dbm().write().await;
+        let dbm = self.dbm.write().await;
         let res = dbm.insert_service(&data).await;
 
         match res {
@@ -37,7 +60,7 @@ impl DbGatewaySmdbService for DBGWServer {
     ) -> Result<Response<CountServiceResponse>, Status> {
         self.dbg_print("count_all_services");
 
-        let mut dbm = self.dbm().write().await;
+        let mut dbm = self.dbm.write().await;
         let res = dbm.count_services().await;
 
         match res {
@@ -54,7 +77,7 @@ impl DbGatewaySmdbService for DBGWServer {
 
         let id = ServiceID::from(request.into_inner().service_id);
 
-        let dbm = self.dbm().read().await;
+        let dbm = self.dbm.read().await;
         let res = dbm.check_if_service_id_exists(&id).await;
 
         match res {
@@ -74,7 +97,7 @@ impl DbGatewaySmdbService for DBGWServer {
         let proto_services = request.into_inner().services_id;
 
         let services: Vec<ServiceID> = proto_services.into_iter().map(|x| x.into()).collect();
-        let dbm = self.dbm().read().await;
+        let dbm = self.dbm.read().await;
 
         match dbm.check_if_services_exists(&services).await {
             Ok(services_exist) => Ok(Response::new(CheckServicesExistsResponse {
@@ -92,7 +115,7 @@ impl DbGatewaySmdbService for DBGWServer {
 
         let id = ServiceID::from(request.into_inner().service_id);
 
-        let dbm = self.dbm().read().await;
+        let dbm = self.dbm.read().await;
 
         match dbm.check_if_service_id_online(&id).await {
             Ok(service_online) => Ok(Response::new(CheckServiceIdOnlineResponse {
@@ -110,7 +133,7 @@ impl DbGatewaySmdbService for DBGWServer {
 
         let proto_services = request.into_inner().services_id;
         let services = proto_services.into_iter().map(|x| x.into()).collect();
-        let dbm = self.dbm().read().await;
+        let dbm = self.dbm.read().await;
 
         match dbm.check_if_services_online(&services).await {
             Ok(services_online) => Ok(Response::new(CheckServicesOnlineResponse {
@@ -124,7 +147,7 @@ impl DbGatewaySmdbService for DBGWServer {
         &self,
         request: Request<ServiceDependenciesRequest>,
     ) -> Result<Response<ServiceDependenciesResponse>, Status> {
-        let dbm = self.dbm().read().await;
+        let dbm = self.dbm.read().await;
 
         let id = ServiceID::from(request.into_inner().service_id);
 
@@ -154,7 +177,7 @@ impl DbGatewaySmdbService for DBGWServer {
         &self,
         request: Request<ServiceEndpointsRequest>,
     ) -> Result<Response<ServiceEndpointsResponse>, Status> {
-        let dbm = self.dbm().read().await;
+        let dbm = self.dbm.read().await;
 
         let id = ServiceID::from(request.into_inner().service_id);
 
@@ -185,7 +208,7 @@ impl DbGatewaySmdbService for DBGWServer {
         &self,
         _request: Request<ServicesOnlineRequest>,
     ) -> Result<Response<ServicesOnlineResponse>, Status> {
-        let dbm = self.dbm().read().await;
+        let dbm = self.dbm.read().await;
 
         match dbm.get_all_online_services().await {
             Ok(res) => {
@@ -211,7 +234,7 @@ impl DbGatewaySmdbService for DBGWServer {
         &self,
         _request: Request<ServicesOfflineRequest>,
     ) -> Result<Response<ServicesOfflineResponse>, Status> {
-        let dbm = self.dbm().read().await;
+        let dbm = self.dbm.read().await;
 
         match dbm.get_all_offline_services().await {
             Ok(res) => {
@@ -240,7 +263,7 @@ impl DbGatewaySmdbService for DBGWServer {
         self.dbg_print("read_service");
 
         let id = ServiceID::from(request.into_inner().service_id);
-        let dbm = self.dbm().read().await;
+        let dbm = self.dbm.read().await;
         match dbm.read_service_by_id(&id).await {
             Ok(res) => match res {
                 None => Ok(Response::new(ReadServiceResponse {
@@ -266,7 +289,7 @@ impl DbGatewaySmdbService for DBGWServer {
     ) -> Result<Response<ReadAllServicesResponse>, Status> {
         self.dbg_print("read_all_services");
 
-        let dbm = self.dbm().read().await;
+        let dbm = self.dbm.read().await;
 
         match dbm.read_all_services().await {
             Ok(res) => {
@@ -295,7 +318,7 @@ impl DbGatewaySmdbService for DBGWServer {
         self.dbg_print("set_service_online");
 
         let id = ServiceID::from(request.into_inner().service_id);
-        let dbm = self.dbm().write().await;
+        let dbm = self.dbm.write().await;
 
         match dbm.set_service_online(&id).await {
             Ok(_) => Ok(Response::new(SetServiceOnlineResponse {
@@ -313,7 +336,7 @@ impl DbGatewaySmdbService for DBGWServer {
         self.dbg_print("set_service_offline");
 
         let id = ServiceID::from(request.into_inner().service_id);
-        let dbm = self.dbm().write().await;
+        let dbm = self.dbm.write().await;
 
         match dbm.set_service_offline(&id).await {
             Ok(_) => Ok(Response::new(SetServiceOfflineResponse {
@@ -332,7 +355,7 @@ impl DbGatewaySmdbService for DBGWServer {
         let data = service_config_from_proto(request.into_inner())
             .expect("Failed to create ServiceConfig from proto");
 
-        let dbm = self.dbm().write().await;
+        let dbm = self.dbm.write().await;
         match dbm.update_service(data).await {
             Ok(res) => match res {
                 None => Ok(Response::new(UpdateServiceResponse {
@@ -354,7 +377,7 @@ impl DbGatewaySmdbService for DBGWServer {
         self.dbg_print("delete_service");
 
         let id = ServiceID::from(request.into_inner().service_id);
-        let dbm = self.dbm().write().await;
+        let dbm = self.dbm.write().await;
 
         match dbm.delete_service(&id).await {
             Ok(service_deleted) => Ok(Response::new(DeleteServiceResponse { service_deleted })),

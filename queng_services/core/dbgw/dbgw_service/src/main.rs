@@ -6,8 +6,8 @@ use tokio::sync::RwLock;
 use tonic::transport::Server;
 use warp::Filter;
 
-use crate::service::DBGWServer;
 use crate::service_cmdb::CMDBServer;
+use crate::service_smdb::SMDBServer;
 use common_config::prelude::ServiceID;
 use common_service::{print_utils, shutdown_utils};
 use config_manager::CfgManager;
@@ -17,7 +17,6 @@ use postgres_config_manager::PostgresConfigManager;
 use proto_dbgw::proto::db_gateway_cmdb_service_server::DbGatewayCmdbServiceServer;
 use proto_dbgw::proto::db_gateway_smdb_service_server::DbGatewaySmdbServiceServer;
 
-mod service;
 mod service_cmdb;
 mod service_smdb;
 
@@ -66,12 +65,12 @@ async fn main() -> Result<(), Box<dyn Error>> {
     dbg_print("Construct gRPC health_service");
     let (mut health_reporter, health_service) = tonic_health::server::health_reporter();
     health_reporter
-        .set_serving::<DbGatewaySmdbServiceServer<DBGWServer>>()
+        .set_serving::<DbGatewaySmdbServiceServer<SMDBServer>>()
         .await;
 
     dbg_print("Construct gRPC server");
     let grpc_cmdb = DbGatewayCmdbServiceServer::new(CMDBServer::new(arc_dbm_cmdb));
-    let grpc_smdb = DbGatewaySmdbServiceServer::new(DBGWServer::new(arc_smdb_dbm.clone()));
+    let grpc_smdb = DbGatewaySmdbServiceServer::new(SMDBServer::new(arc_smdb_dbm.clone()));
 
     let signal = shutdown_utils::signal_handler("gRPC server");
     let grpc_server = Server::builder()

@@ -1,6 +1,7 @@
 use pg_cmdb_manager::PostgresCMDBManager;
 use proto_dbgw::proto::db_gateway_cmdb_service_server::DbGatewayCmdbService;
 
+use crate::DBG;
 use proto_cmdb::proto::{
     CreatePortfolioResponse, DeletePortfolioResponse, MultiPortfolioRequest, ProtoPortfolioConfig,
     ReadAllPortfoliosResponse, ReadPortfolioResponse, SinglePortfolioRequest,
@@ -17,12 +18,19 @@ pub(crate) type SafePgCMDBManager = Arc<RwLock<PostgresCMDBManager>>;
 
 #[derive(Clone)]
 pub struct CMDBServer {
+    dbg: bool,
     dbm: SafePgCMDBManager,
 }
 
 impl CMDBServer {
     pub fn new(dbm: SafePgCMDBManager) -> Self {
-        Self { dbm }
+        Self { dbg: DBG, dbm }
+    }
+
+    fn dbg_print(&self, msg: &str) {
+        if self.dbg {
+            println!("[DBGW/service_cmdb]: {}", msg)
+        }
     }
 }
 
@@ -32,13 +40,13 @@ impl DbGatewayCmdbService for CMDBServer {
         &self,
         request: Request<ProtoPortfolioConfig>,
     ) -> Result<Response<CreatePortfolioResponse>, Status> {
+        self.dbg_print("create_portfolio_config");
+
         let data =
             portfolio_config_from_proto(request.into_inner()).expect("Failed to parse request");
 
         let dbm = self.dbm.write().await;
-        let res = dbm.insert_portfolio_config(&data).await;
-
-        match res {
+        match dbm.insert_portfolio_config(&data).await {
             Ok(_) => Ok(Response::new(CreatePortfolioResponse {
                 portfolio_created: true,
             })),
@@ -50,12 +58,12 @@ impl DbGatewayCmdbService for CMDBServer {
         &self,
         request: Request<SinglePortfolioRequest>,
     ) -> Result<Response<ReadPortfolioResponse>, Status> {
+        self.dbg_print("read_portfolio_config");
+
         let id = request.into_inner().portfolio_id as u16;
 
         let dbm = self.dbm.read().await;
-        let record = dbm.read_portfolio_config_by_id(id).await;
-
-        match record {
+        match dbm.read_portfolio_config_by_id(id).await {
             Ok(res) => {
                 let proto_portfolio_config =
                     portfolio_config_to_proto(res).expect("Failed to convert record to proto");
@@ -72,10 +80,11 @@ impl DbGatewayCmdbService for CMDBServer {
         &self,
         _request: Request<MultiPortfolioRequest>,
     ) -> Result<Response<ReadAllPortfoliosResponse>, Status> {
-        let dbm = self.dbm.read().await;
-        let records = dbm.read_all_portfolio_configs().await;
+        self.dbg_print("read_all_portfolio_configs");
 
-        match records {
+        let dbm = self.dbm.read().await;
+
+        match dbm.read_all_portfolio_configs().await {
             Ok(res) => {
                 let mut portfolio_configs: Vec<ProtoPortfolioConfig> = Vec::new();
 
@@ -104,13 +113,13 @@ impl DbGatewayCmdbService for CMDBServer {
         &self,
         request: Request<ProtoPortfolioConfig>,
     ) -> Result<Response<UpdatePortfolioResponse>, Status> {
+        self.dbg_print("update_portfolio_config");
+
         let data =
             portfolio_config_from_proto(request.into_inner()).expect("Failed to parse request");
 
         let dbm = self.dbm.write().await;
-        let res = dbm.update_portfolio_config(data).await;
-
-        match res {
+        match dbm.update_portfolio_config(data).await {
             Ok(_) => Ok(Response::new(UpdatePortfolioResponse {
                 portfolio_updated: true,
             })),
@@ -122,12 +131,12 @@ impl DbGatewayCmdbService for CMDBServer {
         &self,
         request: Request<SinglePortfolioRequest>,
     ) -> Result<Response<DeletePortfolioResponse>, Status> {
+        self.dbg_print("delete_portfolio_config");
+
         let id = request.into_inner().portfolio_id as u16;
 
         let dbm = self.dbm.write().await;
-        let res = dbm.delete_portfolio_config(id).await;
-
-        match res {
+        match dbm.delete_portfolio_config(id).await {
             Ok(portfolio_deleted) => {
                 Ok(Response::new(DeletePortfolioResponse { portfolio_deleted }))
             }
