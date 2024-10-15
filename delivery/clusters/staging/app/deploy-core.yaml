@@ -6,11 +6,13 @@ metadata:
   name: dbgw
   namespace: flux-system
 spec:
-  interval: 10m0s
-  path: ./delivery/app/core/dbgw
-  prune: true
+#  dependsOn:
+#    - name: pre-deploy
+  path: ./delivery/app/deploy/core/dbgw/
   targetNamespace: default
-  timeout: 5m0s
+  interval: 60m
+  timeout: 5m
+  prune: true
   wait: true
   sourceRef:
     kind: GitRepository
@@ -24,11 +26,11 @@ metadata:
 spec:
   dependsOn:
     - name: dbgw
-  interval: 10m0s
-  path: ./delivery/app/core/smdb
-  prune: true
+  path: ./delivery/app/deploy/core/smdb/
   targetNamespace: default
-  timeout: 5m0s
+  interval: 60m
+  timeout: 5m
+  prune: true
   wait: true
   sourceRef:
     kind: GitRepository

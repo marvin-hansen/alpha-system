@@ -1,0 +1,56 @@
+# Copyright (c) 2024. Marvin Friedrich Lars Hansen. All Rights Reserved. Contact: marvin.hansen@gmail.com
+# Running pre and post-deployment jobs with Flux
+# https://fluxcd.io/flux/use-cases/running-jobs/
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: db-migration
+  namespace: default
+spec:
+  template:
+    spec:
+      imagePullSecrets:
+        - name: artifact-registry
+      restartPolicy: Never
+      containers:
+        - name: db-migration
+          image: asia-northeast1-docker.pkg.dev/future-309012/image-repo/db-migration:16.4
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              cpu: 100m
+              memory: 32Mi
+            limits:
+              cpu: 250m
+              memory: 64Mi
+
+          command:
+            - sh
+            - -c
+            - echo "starting db migration"
+
+          env:
+            - name: ENV
+              value: "CLUSTER"
+            - name: DNS_SERVER
+              valueFrom:
+                secretKeyRef:
+                  name: dns-access
+                  key: DNS_SERVER
+            - name: PG_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-app
+                  key: username
+            - name: PG_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-app
+                  key: password
+            - name: PG_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-db
+                  key: database
+---
