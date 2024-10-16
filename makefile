@@ -26,6 +26,7 @@ help:
 	@echo '    make doc   		Builds documentation for the project.'
 	@echo '    make fix   		Fixes linting issues as reported by clippy.'
 	@echo '    make format   	Formats call code according to cargo fmt style.'
+	@echo '    make import   	Imports data into the database.'
 	@echo '    make install   	Tests and installs all make script dependencies.'
 	@echo '    make update   	Update rust, pulls from git remote.'
 	@echo '    make postgres   	Starts a Postgres Docker container.'
@@ -136,6 +137,11 @@ fix:
 .PHONY: format
 format:
 	@source scripts/format.sh
+
+
+.PHONY: import
+import:
+	@source scripts/import.sh
 
 
 .PHONY: install
