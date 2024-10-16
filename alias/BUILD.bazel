@@ -313,31 +313,22 @@ alias(
 )
 
 alias(
-    name = "math_utils",
-    actual = "//queng_utils/math_utils",
-)
-
-###############################################################################
-# Utils - Test
-###############################################################################
-
-alias(
     name = "docker_utils",
-    actual = "//queng_utils_tests/docker_utils",
-)
-
-alias(
-    name = "env_utils",
-    actual = "//queng_utils_tests/env_utils",
+    actual = "//queng_utils/docker_utils",
 )
 
 alias(
     name = "kaiko_utils",
-    actual = "//queng_utils_tests/kaiko_utils",
+    actual = "//queng_utils/kaiko_utils",
+)
+
+alias(
+    name = "math_utils",
+    actual = "//queng_utils/math_utils",
 )
 
 alias(
     name = "service_utils",
-    actual = "//queng_utils_tests/service_utils",
+    actual = "//queng_utils/service_utils",
 )
 
