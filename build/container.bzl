@@ -84,8 +84,8 @@ def build_sha265_tag(name, target, src):
 # Produces an image tag based on the current git commit and Unix timestamp of the current build.
 # For example: 458b6779-1729045897
 def git_tag_with_timestamp(name, target):
-    stable_status = "//:stable_status"
-    volatile_status = "//:volatile_status"
+    stable_status = "//build/status:stable_status"
+    volatile_status = "//build/status:volatile_status"
     native.genrule(
         name = name,
         srcs = [target, stable_status, volatile_status],
