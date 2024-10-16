@@ -318,11 +318,6 @@ alias(
 )
 
 alias(
-    name = "kaiko_utils",
-    actual = "//queng_utils/kaiko_utils",
-)
-
-alias(
     name = "math_utils",
     actual = "//queng_utils/math_utils",
 )

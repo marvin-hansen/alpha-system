@@ -76,7 +76,6 @@ members = [
     "queng_utils/math_utils",
     "queng_utils/crypto_utils",
     "queng_utils/docker_utils",
-    "queng_utils/kaiko_utils",
     "queng_utils/service_utils",
 ]
 
@@ -194,7 +193,6 @@ service_specs_all = { path = "queng_specs/service_specs/service_specs_all" }
 crypto_utils = { path = "queng_utils/crypto_utils" }
 math_utils = { path = "queng_utils/math_utils" }
 docker_utils = { path = "queng_utils/docker_utils" }
-kaiko_utils = { path = "queng_utils/kaiko_utils" }
 service_utils = { path = "queng_utils/service_utils" }
 #
 # ==============
