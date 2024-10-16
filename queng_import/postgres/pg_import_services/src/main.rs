@@ -34,6 +34,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     let all_services = service_specs::get_all_service_specs();
     let expected_count = all_services.len();
+    // Count if there is any service already in the database
     let actual_count = pg_util
         .count_services()
         .await
@@ -59,10 +60,17 @@ async fn main() -> Result<(), Box<dyn Error>> {
             .await
             .expect("Failed to import services");
 
+        // Count all imported services
         let post_import_count = pg_util
             .count_services()
             .await
             .expect("Failed to count services") as usize;
+
+        // Check if all services have been imported
+        if post_import_count != expected_count {
+            dbg_print("Failed to import all services. Check database records manually to determine missing services");
+            exit(42);
+        }
 
         print_utils::print_stop_header(post_import_count, true);
     }

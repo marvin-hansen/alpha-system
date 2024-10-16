@@ -17,7 +17,6 @@ build_binary_opt(
         # Custom Memory Allocator
         "//thirdparty/crates:mimalloc",
         # Internal crates
-        "//alias:common_config",
         "//alias:environment_manager",
         "//alias:pg_smdb_manager",
         "//alias:postgres_config_manager",
