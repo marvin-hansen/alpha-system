@@ -39,8 +39,4 @@ impl PostgresUtil {
 
         Ok(())
     }
-
-    pub async fn drop_all_db(&self) -> Result<(), PostgresUtilError> {
-        Ok(())
-    }
 }

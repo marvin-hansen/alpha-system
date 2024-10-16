@@ -5,7 +5,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: db-migration
+  name: pg-migration
   namespace: default
 spec:
   template:
@@ -15,7 +15,7 @@ spec:
       restartPolicy: Never
       containers:
         - name: db-migration
-          image: asia-northeast1-docker.pkg.dev/future-309012/image-repo/db-migration:16.4
+          image: asia-northeast1-docker.pkg.dev/future-309012/image-repo/pg-migration:16.4
           imagePullPolicy: IfNotPresent
           resources:
             requests:
