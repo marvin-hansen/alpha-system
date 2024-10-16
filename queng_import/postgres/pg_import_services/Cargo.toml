@@ -11,6 +11,7 @@ authors.workspace = true
 # Custom Memory Allocator
 mimalloc = { workspace = true }
 # Internal crates
+environment_manager = { workspace = true }
 pg_smdb_manager = { workspace = true }
 postgres_config_manager = {workspace = true}
 postgres_utils = { workspace = true }

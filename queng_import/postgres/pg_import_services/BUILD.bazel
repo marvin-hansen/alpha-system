@@ -18,6 +18,7 @@ build_binary_opt(
         "//thirdparty/crates:mimalloc",
         # Internal crates
         "//alias:common_config",
+        "//alias:environment_manager",
         "//alias:pg_smdb_manager",
         "//alias:postgres_config_manager",
         "//alias:postgres_utils",
