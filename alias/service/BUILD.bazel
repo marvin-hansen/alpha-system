@@ -1,3 +1,20 @@
+# Make all aliases public by default
+package(default_visibility = ["//visibility:public"])
+
+###############################################################################
+# Import Tools
+###############################################################################
+
+## Postgres - SMDB services import
+alias(
+    name = "pg_import_services",
+    actual = "//queng_import/postgres/pg_import_services",
+)
+
+alias(
+    name = "pg_import_services_push",
+    actual = "//queng_import/postgres/pg_import_services:push",
+)
 
 ###############################################################################
 # Core Services
@@ -7,33 +24,28 @@
 alias(
     name = "cmdb",
     actual = "//queng_services/core/cmdb/cmdb_service:cmdb",
-    visibility = ["//visibility:public"],
 )
 
 # The push aliases are used in the root folder BUILD file to build & push containers
 alias(
     name = "cmdb_push",
     actual = "//queng_services/core/cmdb/cmdb_service:push",
-    visibility = ["//visibility:public"],
 )
 
 alias(
     name = "dbgw",
     actual = "//queng_services/core/dbgw/dbgw_service:dbgw",
-    visibility = ["//visibility:public"],
 )
 
 alias(
     name = "dbgw_push",
     actual = "//queng_services/core/dbgw/dbgw_service:push",
-    visibility = ["//visibility:public"],
 )
 
 
 alias(
     name = "smdb",
     actual = "//queng_services/core/smdb/smdb_service:smdb",
-    visibility = ["//visibility:public"],
 )
 
 alias(
@@ -67,7 +79,6 @@ alias(
 alias(
     name = "mddb_push",
     actual = "//queng_services/meta/mddb/mddb_service:push",
-    visibility = ["//visibility:public"],
 )
 
 ###############################################################################
@@ -77,19 +88,16 @@ alias(
 alias(
     name = "binance_data",
     actual = "//queng_services/ims/ims_data/binance_data:binance_data",
-    visibility = ["//visibility:public"],
 )
 
 alias(
     name = "binance_data_push",
     actual = "//queng_services/ims/ims_data/binance_data:push",
-    visibility = ["//visibility:public"],
 )
 
 alias(
     name = "ims_common",
     actual = "//queng_services/ims/ims_common",
-    visibility = ["//visibility:public"],
 )
 
 
@@ -100,5 +108,4 @@ alias(
 alias(
     name = "grpc_service",
     actual = "//queng_services/templete/grpc_service",
-    visibility = ["//visibility:public"],
 )
