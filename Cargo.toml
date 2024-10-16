@@ -13,8 +13,10 @@ members = [
     "queng_common/common_service",
     "queng_common/common_trade",
     "queng_components/config_manager",
+    "queng_components/environment_manager",
     "queng_components/pattern_manager",
     "queng_components/symbol_manager",
+    "queng_import/postgres/pg_import_services",
     "queng_infra/clickhouse/clickhouse_config_manager",
     "queng_infra/clickhouse/clickhouse_utils",
     "queng_infra/clickhouse/db_clickhouse_manager",
@@ -76,7 +78,7 @@ members = [
     "queng_utils_tests/docker_utils",
     "queng_utils_tests/env_utils",
     "queng_utils_tests/kaiko_utils",
-    "queng_utils_tests/service_utils", "queng_import/postgres/pg_import_services",
+    "queng_utils_tests/service_utils",
 ]
 
 
@@ -119,8 +121,13 @@ common_trade = { path = "queng_common/common_trade" }
 
 # Components
 config_manager = { path = "queng_components/config_manager" }
+environment_manager = { path = "queng_components/environment_manager" }
 pattern_manager = { path = "queng_components/pattern_manager" }
 symbol_manager = { path = "queng_components/symbol_manager" }
+
+# Import
+# Postgres DB
+postgres_pg_import_services = { path = "queng_import/postgres/pg_import_services" }
 
 # Infra
 # Clickhouse DB

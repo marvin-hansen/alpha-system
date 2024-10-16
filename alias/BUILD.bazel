@@ -64,6 +64,10 @@ alias(
     actual = "//queng_components/config_manager",
 )
 
+alias(
+    name = "environment_manager",
+    actual = "//queng_components/environment_manager",
+)
 
 alias(
     name = "pattern_manager",

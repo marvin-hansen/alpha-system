@@ -242,7 +242,7 @@ impl CfgManager {
         // Check if the environment variable is set.
         // If so, return local environment as the file only exists locally.
         // If not, return UnknownEnv.
-        // On Mac OS, each shell environment variables is sanitized (erased) by default for security reasonsm
+        // On Mac OS, each shell environment variables is sanitized (erased) by default for security reasons
         let env_type = match std::env::var("ENV") {
             Ok(val) => match val.as_str() {
                 "CI" => EnvironmentType::CI,
