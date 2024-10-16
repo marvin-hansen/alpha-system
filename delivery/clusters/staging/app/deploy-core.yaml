@@ -6,8 +6,8 @@ metadata:
   name: dbgw
   namespace: flux-system
 spec:
-#  dependsOn:
-#    - name: pre-deploy
+  dependsOn:
+    - name: pre-deploy
   path: ./delivery/app/deploy/core/dbgw/
   targetNamespace: default
   interval: 60m
@@ -36,4 +36,21 @@ spec:
     kind: GitRepository
     name: flux-system
 ---
-
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cmdb
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: smdb
+  path: ./delivery/app/deploy/core/cmdb/
+  targetNamespace: default
+  interval: 60m
+  timeout: 5m
+  prune: true
+  wait: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+---

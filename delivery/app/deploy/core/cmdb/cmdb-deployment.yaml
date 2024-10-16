@@ -1,27 +1,5 @@
 # Copyright (c) 2024. Marvin Friedrich Lars Hansen. All Rights Reserved. Contact: marvin.hansen@gmail.com
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: cmdb-service
-  namespace: default
-
-spec:
-  selector:
-    app: cmdb
-  sessionAffinity: None
-  type: ClusterIP
-  ports:
-    - name: main-port
-      port: 7070
-      protocol: TCP
-      targetPort: 7070
-    - name: metrics-port
-      port: 8080
-      protocol: TCP
-      targetPort: 8080
-
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -29,7 +7,7 @@ metadata:
   namespace: default
 
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: cmdb
@@ -38,12 +16,23 @@ spec:
       labels:
         app: cmdb
     spec:
+      terminationGracePeriodSeconds: 30
       imagePullSecrets:
         - name: artifact-registry
       containers:
         - name: cmdb
-          image: asia-northeast1-docker.pkg.dev/future-309012/image-repo/cmdb:9e9da5d1-20241013095625 # {"$imagepolicy": "default:cmdb-image-policy"}
+          image: asia-northeast1-docker.pkg.dev/future-309012/image-repo/cmdb:0eea2944-1729054086 # {"$imagepolicy": "default:cmdb-image-policy"}
           imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              cpu: 100m
+              memory: 16Mi
+            limits:
+              cpu: 250m
+              memory: 32Mi
+          ports:
+            - containerPort: 7070
+            - containerPort: 8080
           env:
             - name: ENV
               value: "CLUSTER"
@@ -54,9 +43,12 @@ spec:
                   name: dns-access
                   key: DNS_SERVER
 
-          ports:
-            - containerPort: 7070
-            - containerPort: 8080
+          readinessProbe:
+            grpc:
+              port: 7070
+            initialDelaySeconds: 1
+            failureThreshold: 3
+            periodSeconds: 3
 
           livenessProbe:
             grpc:

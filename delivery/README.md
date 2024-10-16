@@ -67,3 +67,4 @@ kubectl get pods --all-namespaces
 
 ## Resources:
 * https://www.youtube.com/watch?v=vp-oFksFoZs
+* https://fluxcd.io/flux/use-cases/running-jobs/

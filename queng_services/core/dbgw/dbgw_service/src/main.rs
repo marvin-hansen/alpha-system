@@ -20,7 +20,7 @@ use proto_dbgw::proto::db_gateway_smdb_service_server::DbGatewaySmdbServiceServe
 mod service_cmdb;
 mod service_smdb;
 
-const DBG: bool = false;
+const DBG: bool = true;
 const SVC_ID: ServiceID = ServiceID::DBGW;
 
 // Overwrites the default memory allocator.

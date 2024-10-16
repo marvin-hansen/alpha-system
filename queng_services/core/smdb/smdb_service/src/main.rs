@@ -13,7 +13,7 @@ mod service;
 
 #[global_allocator]
 static GLOBAL: MiMalloc = MiMalloc;
-const DBG: bool = false;
+const DBG: bool = true;
 const SVC_ID: ServiceID = ServiceID::SMDB;
 
 #[tokio::main]
