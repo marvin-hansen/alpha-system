@@ -46,7 +46,6 @@ def build_multi_arch_image(
     )
 
 def build_image(name, srcs, base, exposed_ports = [], visibility = None):
-    # https://codilime.com/blog/bazel-build-system-build-containerized-applications/
     entry_point = "bin"
     layer_name = "tar_layer"
 
@@ -84,7 +83,6 @@ def build_sha265_tag(name, target, src):
 
 # Produces an image tag based on the current git commit and Unix timestamp of the current build.
 # For example: 458b6779-1729045897
-# Git hash is the short form obtained via git rev-parse --short HEAD
 def git_tag_with_timestamp(name, target):
     stable_status = "//:stable_status"
     volatile_status = "//:volatile_status"

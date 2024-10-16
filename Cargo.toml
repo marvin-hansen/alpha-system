@@ -76,7 +76,7 @@ members = [
     "queng_utils_tests/docker_utils",
     "queng_utils_tests/env_utils",
     "queng_utils_tests/kaiko_utils",
-    "queng_utils_tests/service_utils",
+    "queng_utils_tests/service_utils", "queng_import/postgres/pg_import_services",
 ]
 
 

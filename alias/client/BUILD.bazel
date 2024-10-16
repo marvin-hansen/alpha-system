@@ -1,3 +1,6 @@
+# Make all aliases public by default
+package(default_visibility = ["//visibility:public"])
+
 ###############################################################################
 # Core Clients
 ###############################################################################
@@ -5,25 +8,21 @@
 alias(
     name = "cmdb_client",
     actual = "//queng_services/core/cmdb/cmdb_client",
-    visibility = ["//visibility:public"],
 )
 
 alias(
     name = "dbgw_client",
     actual = "//queng_services/core/dbgw/dbgw_client",
-    visibility = ["//visibility:public"],
 )
 
 alias(
     name = "dbgw_cmdb_client",
     actual = "//queng_services/core/dbgw/dbgw_cmdb_client",
-    visibility = ["//visibility:public"],
 )
 
 alias(
     name = "smdb_client",
     actual = "//queng_services/core/smdb/smdb_client",
-    visibility = ["//visibility:public"],
 )
 
 ###############################################################################
@@ -33,13 +32,11 @@ alias(
 alias(
     name = "kaiko_client",
     actual = "//queng_services/meta/kaiko/kaiko_client",
-    visibility = ["//visibility:public"],
 )
 
 alias(
     name = "mddb_client",
     actual = "//queng_services/meta/mddb/mddb_client",
-    visibility = ["//visibility:public"],
 )
 
 ###############################################################################
@@ -49,17 +46,14 @@ alias(
 alias(
     name = "ims_data_client",
     actual = "//queng_services/ims/ims_clients/ims_data_client",
-    visibility = ["//visibility:public"],
 )
 
 alias(
     name = "binance_client",
     actual = "//queng_services/ims/ims_clients/binance_client",
-    visibility = ["//visibility:public"],
 )
 
 alias(
     name = "rest_client",
     actual = "//queng_services/ims/ims_clients/rest_client",
-    visibility = ["//visibility:public"],
 )

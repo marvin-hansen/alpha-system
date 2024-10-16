@@ -1,4 +1,3 @@
-
 # Make all aliases public by default
 package(default_visibility = ["//visibility:public"])
 
@@ -9,61 +8,51 @@ package(default_visibility = ["//visibility:public"])
 alias(
     name = "common_config",
     actual = "//queng_common/common_config",
-    
 )
 
 alias(
     name = "common_container",
     actual = "//queng_common/common_container",
-    
 )
 
 alias(
     name = "common_data_bar",
     actual = "//queng_common/common_data_bar",
-    
 )
 
 alias(
     name = "common_database",
     actual = "//queng_common/common_database",
-    
 )
 
 alias(
     name = "common_env",
     actual = "//queng_common/common_env",
-    
 )
 
 alias(
     name = "common_errors",
     actual = "//queng_common/common_errors",
-    
 )
 
 alias(
     name = "common_exchange",
     actual = "//queng_common/common_exchange",
-    
 )
 
 alias(
     name = "common_metadata",
     actual = "//queng_common/common_metadata",
-    
 )
 
 alias(
     name = "common_service",
     actual = "//queng_common/common_service",
-    
 )
 
 alias(
     name = "common_trade",
     actual = "//queng_common/common_trade",
-    
 )
 
 ###############################################################################
@@ -73,20 +62,29 @@ alias(
 alias(
     name = "config_manager",
     actual = "//queng_components/config_manager",
-    
 )
 
 
 alias(
     name = "pattern_manager",
     actual = "//queng_components/pattern_manager",
-    
 )
 
 alias(
     name = "symbol_manager",
     actual = "//queng_components/symbol_manager",
-    
+)
+
+###############################################################################
+# Import
+###############################################################################
+
+#
+# Postgres
+#
+alias(
+    name = "pg_import_services",
+    actual = "//queng_import/postgres/pg_import_services",
 )
 
 ###############################################################################
@@ -117,43 +115,37 @@ alias(
 alias(
     name = "pg_cmdb",
     actual = "//queng_infra/postgres/pg_cmdb",
-    
+
 )
 
 alias(
     name = "pg_cmdb_manager",
     actual = "//queng_infra/postgres/pg_cmdb_manager",
-    
 )
 
 alias(
     name = "pg_imdb",
     actual = "//queng_infra/postgres/pg_imdb",
-    
 )
 
 alias(
     name = "pg_mddb",
     actual = "//queng_infra/postgres/pg_mddb",
-    
 )
 
 alias(
     name = "pg_smdb",
     actual = "//queng_infra/postgres/pg_smdb",
-    
 )
 
 alias(
     name = "pg_smdb_manager",
     actual = "//queng_infra/postgres/pg_smdb_manager",
-    
 )
 
 alias(
     name = "postgres_utils",
     actual = "//queng_infra/postgres/postgres_utils",
-    
 )
 
 alias(
