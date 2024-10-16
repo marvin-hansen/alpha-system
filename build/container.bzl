@@ -82,20 +82,20 @@ def build_sha265_tag(name, target, src):
            """,
     )
 
-# Produces an image tag based on the current git commit and UTC timestamp.
-# For example: 458b6779-20241013083854
+# Produces an image tag based on the current git commit and Unix timestamp of the current build.
+# For example: 458b6779-1729045897
 # Git hash is the short form obtained via git rev-parse --short HEAD
-# Timestamp format is YYYY MM DD HH MM SS i.e. 2024 10 13 08 38 54, UTC
 def git_tag_with_timestamp(name, target):
     stable_status = "//:stable_status"
+    volatile_status = "//:volatile_status"
     native.genrule(
         name = name,
-        srcs = [target, stable_status],
+        srcs = [target, stable_status, volatile_status],
         outs = ["_tag.txt"],
         stamp = True,
         cmd = """
             STABLE_RELEASE_VERSION=$$(cat $(location """ + stable_status + """) | grep 'STABLE_GIT_COMMIT' | awk '{print $$2}' || :)
-            TIMESTAMP=$$(date -u +"%Y%m%d%H%M%S")
-            echo $${STABLE_RELEASE_VERSION}-$${TIMESTAMP} > $(OUTS);
+            STABLE_TIMESTAMP=$$(cat $(location """ + volatile_status + """) | grep 'BUILD_TIMESTAMP' | awk '{print $$2}' || :)
+            echo $${STABLE_RELEASE_VERSION}-$${STABLE_TIMESTAMP} > $(OUTS);
             """,
     )
