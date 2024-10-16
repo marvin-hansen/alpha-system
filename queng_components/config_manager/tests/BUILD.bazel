@@ -63,8 +63,6 @@ rust_test_suite(
         "env/env_ci_tests.rs",
     ],
     tags = [
-        #"components",
-        #"ctx_manager",
         "unit-test",
     ],
     visibility = ["//visibility:public"],
@@ -86,7 +84,7 @@ rust_test_suite(
         "env/env_cluster_tests.rs",
     ],
     tags = [
-        # "unit-test",
+        "unit-test",
     ],
     visibility = ["//visibility:public"],
     deps = [
@@ -107,9 +105,7 @@ rust_test_suite(
         "env/env_local_tests.rs",
     ],
     tags = [
-        #"components",
-        #"ctx_manager",
-        #"unit-test",
+        "unit-test",
     ],
     visibility = ["//visibility:public"],
     deps = [
@@ -130,9 +126,7 @@ rust_test_suite(
         "env/env_unknown_tests.rs",
     ],
     tags = [
-        #"components",
-        #"ctx_manager",
-        #"unit-test",
+        "unit-test",
     ],
     visibility = ["//visibility:public"],
     deps = [

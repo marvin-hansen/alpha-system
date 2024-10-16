@@ -13,6 +13,7 @@ rust_library(
         "//alias:common_env",
         "//alias:common_errors",
         "//alias:common_exchange",
+        "//alias:environment_manager",
         "//alias:exchange_specs",
         "//alias:cmdb_specs",
         "//alias:dbgw_specs",

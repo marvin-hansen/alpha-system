@@ -19,7 +19,7 @@ impl EnvironmentManager {
     ///
     pub fn new() -> Self {
         let env_type = util::detect_env_type(false);
-        Self::build(false, &env_type)
+        Self::build(false, env_type)
     }
 
     /// Creates a new instance of `EnvironmentManager` with debug mode enabled.
@@ -30,14 +30,11 @@ impl EnvironmentManager {
     ///
     pub fn with_debug() -> Self {
         let env_type = util::detect_env_type(true);
-        Self::build(true, &env_type)
+        Self::build(true, env_type)
     }
 
-    fn build(dbg: bool, env_type: &EnvironmentType) -> EnvironmentManager {
-        EnvironmentManager {
-            dbg,
-            env_type: env_type.clone(),
-        }
+    fn build(dbg: bool, env_type: EnvironmentType) -> EnvironmentManager {
+        EnvironmentManager { dbg, env_type }
     }
 }
 

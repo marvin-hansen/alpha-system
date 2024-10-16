@@ -1,6 +1,7 @@
 use common_config::prelude::{ServiceConfig, ServiceID, SvcEnvConfig};
 use common_env::prelude::EnvironmentType;
 use common_exchange::prelude::ExchangeID;
+use environment_manager::EnvironmentManager;
 use exchange_specs::prelude;
 use exchange_specs::prelude::{
     get_all_exchanges, get_all_exchanges_ids_names, get_exchange_symbol_tables,
@@ -235,33 +236,14 @@ impl CfgManager {
     /// Returns the detected EnvironmentType.
     ///
     pub fn detect_env_type(dbg: bool) -> EnvironmentType {
-        if dbg {
+        let config_manager = if dbg {
             println!("[CfgManager]: Debug mode enabled");
-        }
-
-        // Check if the environment variable is set.
-        // If so, return local environment as the file only exists locally.
-        // If not, return UnknownEnv.
-        // On Mac OS, each shell environment variables is sanitized (erased) by default for security reasons
-        let env_type = match std::env::var("ENV") {
-            Ok(val) => match val.as_str() {
-                "CI" => EnvironmentType::CI,
-                "CLUSTER" => EnvironmentType::CLUSTER,
-                "LOCAL" => EnvironmentType::LOCAL,
-                "UNKNOWN" => EnvironmentType::UNKNOWN,
-                _ => EnvironmentType::UNKNOWN,
-            },
-            Err(e) => {
-                eprintln!("Error: {}", e);
-                panic!("[CfgManager]: Failed to read ENV environment variable. Ensure ENV is set");
-            }
+            EnvironmentManager::new()
+        } else {
+            EnvironmentManager::with_debug()
         };
 
-        if dbg {
-            println!("[CfgManager]: Detected environment type: {:?}", &env_type);
-        }
-
-        env_type
+        config_manager.env_type()
     }
 }
 
