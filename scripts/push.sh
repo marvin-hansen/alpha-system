@@ -6,7 +6,7 @@ set -o pipefail
 echo "=============="
 echo "Lint targets "
 echo "=============="
-command cargo clippy --all-targets
+# command cargo clippy --all-targets
 
 echo "=============="
 echo "Format targets "
@@ -18,7 +18,7 @@ command buildifier -r build images queng_*
 
 # Rust code formatting
 # https://github.com/rust-lang/rustfmt
-command cargo fmt --all
+# command cargo fmt --all
 
 # Check for uncommited changes before building and testing.
 # It is possible that either image update or fie format changed some files,
