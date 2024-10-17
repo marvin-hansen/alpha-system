@@ -26,6 +26,7 @@ multirun(
     commands = [
         # Import tools
         "pg_import_services_push",
+        "pg_import_metadata_push",
         # Core services
         "cmdb_push",
         "dbgw_push",
@@ -43,7 +44,12 @@ multirun(
 # Import tools
 command(
     name = "pg_import_services_push",
-    command = "//alias/service:pg_import_services_push",
+    command = "//alias:pg_import_services_push",
+)
+
+command(
+    name = "pg_import_metadata_push",
+    command = "//alias:pg_import_metadata_push",
 )
 
 # Core services

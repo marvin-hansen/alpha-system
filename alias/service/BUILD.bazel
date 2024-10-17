@@ -2,21 +2,6 @@
 package(default_visibility = ["//visibility:public"])
 
 ###############################################################################
-# Import Tools
-###############################################################################
-
-## Postgres - SMDB services import
-alias(
-    name = "pg_import_services",
-    actual = "//queng_import/postgres/pg_import_services",
-)
-
-alias(
-    name = "pg_import_services_push",
-    actual = "//queng_import/postgres/pg_import_services:push",
-)
-
-###############################################################################
 # Core Services
 ###############################################################################
 
