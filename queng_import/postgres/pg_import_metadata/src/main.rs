@@ -64,7 +64,6 @@ async fn main() -> Result<(), Box<dyn Error>> {
         print_utils::print_stop_header(asset_count, exchange_count, instrument_count);
     }
 
-
     Ok(())
 }
 
