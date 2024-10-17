@@ -19190,7 +19190,7 @@
     "@@toolchains_llvm~//toolchain/extensions:llvm.bzl%llvm": {
       "general": {
         "bzlTransitiveDigest": "dZkcElkfice3BvKPXtFwrvPABm8ac+SwfynSinwK4dQ=",
-        "usagesDigest": "iq0iWCRzP1gzpyE2tNdAp5AwaczW2b9QLctc9/dinSs=",
+        "usagesDigest": "jup+d62ckftozneSDK2mRszLiWk2B4BVcJXn3i72bRA=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -19215,11 +19215,15 @@
               "link_flags": {},
               "link_libs": {},
               "llvm_versions": {
-                "": "16.0.0"
+                "": "16.0.0",
+                "darwin-aarch64": "18.1.8"
               },
               "opt_compile_flags": {},
               "opt_link_flags": {},
-              "stdlib": {},
+              "stdlib": {
+                "linux-aarch64": "stdc++",
+                "linux-x86_64": "stdc++"
+              },
               "target_settings": {},
               "unfiltered_compile_flags": {},
               "toolchain_roots": {},
@@ -19238,12 +19242,19 @@
               "llvm_mirror": "",
               "llvm_version": "",
               "llvm_versions": {
-                "": "16.0.0"
+                "": "16.0.0",
+                "darwin-aarch64": "18.1.8"
               },
               "netrc": "",
-              "sha256": {},
+              "sha256": {
+                "darwin-aarch64": "41d8dea52d18c4e8b90c4fcd31965f9f297df9f40a38a33d60748dbe7f8330b8"
+              },
               "strip_prefix": {},
-              "urls": {}
+              "urls": {
+                "darwin-aarch64": [
+                  "https://github.com/MaterializeInc/toolchains/releases/download/clang-18.1.8-4/darwin_aarch64.tar.zst"
+                ]
+              }
             }
           }
         },
