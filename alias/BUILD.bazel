@@ -281,13 +281,12 @@ alias(
     actual = "//queng_services/core/smdb/smdb_specs",
 )
 
-# Meta service specs
+# IMS service specs
 alias(
     name = "mddb_specs",
-    actual = "//queng_services/meta/mddb/mddb_specs",
+    actual = "//queng_services/ims/mddb/mddb_specs",
 )
 
-# IMS service specs
 alias(
     name = "ims_data_binance_specs",
     actual = "//queng_services/ims/ims_data/ims_data_binance_specs",

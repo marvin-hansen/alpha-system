@@ -70,20 +70,20 @@ alias(
     visibility = ["//visibility:public"],
 )
 
+###############################################################################
+# IMS Data Services
+###############################################################################
+
 alias(
     name = "mddb",
-    actual = "//queng_services/meta/mddb/mddb_service:mddb",
+    actual = "//queng_services/ims/mddb/mddb_service:mddb",
     visibility = ["//visibility:public"],
 )
 
 alias(
     name = "mddb_push",
-    actual = "//queng_services/meta/mddb/mddb_service:push",
+    actual = "//queng_services/ims/mddb/mddb_service:push",
 )
-
-###############################################################################
-# IMS Data Services
-###############################################################################
 
 alias(
     name = "binance_data",

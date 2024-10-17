@@ -34,14 +34,15 @@ alias(
     actual = "//queng_services/meta/kaiko/kaiko_client",
 )
 
-alias(
-    name = "mddb_client",
-    actual = "//queng_services/meta/mddb/mddb_client",
-)
 
 ###############################################################################
 # IMS Clients
 ###############################################################################
+
+alias(
+    name = "mddb_client",
+    actual = "//queng_services/ims/mddb/mddb_client",
+)
 
 alias(
     name = "ims_data_client",
