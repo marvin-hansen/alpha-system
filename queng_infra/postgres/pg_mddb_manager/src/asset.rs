@@ -3,7 +3,7 @@ use common_errors::prelude::PostgresDBError;
 use pg_mddb::prelude::Asset;
 
 impl PostgresMDDBManager {
-    pub async fn count_assets(&mut self) -> Result<u64, PostgresDBError> {
+    pub async fn count_assets(&self) -> Result<u64, PostgresDBError> {
         self.dbg_print("count_assets");
         let conn = &mut self.get_connection();
 

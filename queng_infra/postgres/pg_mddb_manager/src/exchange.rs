@@ -3,7 +3,7 @@ use common_errors::prelude::PostgresDBError;
 use pg_mddb::prelude::Exchange;
 
 impl PostgresMDDBManager {
-    pub async fn count_exchanges(&mut self) -> Result<u64, PostgresDBError> {
+    pub async fn count_exchanges(&self) -> Result<u64, PostgresDBError> {
         self.dbg_print("count_exchanges");
         let conn = &mut self.get_connection();
 

@@ -3,7 +3,7 @@ use common_errors::prelude::PostgresDBError;
 use pg_mddb::prelude::Instrument;
 
 impl PostgresMDDBManager {
-    pub async fn count_instruments(&mut self) -> Result<u64, PostgresDBError> {
+    pub async fn count_instruments(&self) -> Result<u64, PostgresDBError> {
         self.dbg_print("count_instruments");
         let conn = &mut self.get_connection();
 

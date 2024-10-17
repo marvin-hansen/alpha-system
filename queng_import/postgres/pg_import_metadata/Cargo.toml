@@ -12,6 +12,7 @@ authors.workspace = true
 mimalloc = { workspace = true }
 # Internal crates
 environment_manager = { workspace = true }
+pg_mddb_manager = { workspace = true }
 postgres_config_manager = {workspace = true}
 postgres_utils = { workspace = true }
 # External crates
