@@ -140,6 +140,11 @@ alias(
 )
 
 alias(
+    name = "pg_mddb_manager",
+    actual = "//queng_infra/postgres/pg_mddb_manager",
+)
+
+alias(
     name = "pg_smdb",
     actual = "//queng_infra/postgres/pg_smdb",
 )
@@ -338,4 +343,3 @@ alias(
     name = "service_utils",
     actual = "//queng_utils/service_utils",
 )
-

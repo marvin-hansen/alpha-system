@@ -9,7 +9,7 @@ pub fn print_start_header() {
 pub fn print_already_header() {
     println!();
     println!("==========================================");
-    println!("|| Database Already Migrated ||",);
+    println!("|| Database Already Migrated ||");
     println!("==========================================");
     println!();
 }

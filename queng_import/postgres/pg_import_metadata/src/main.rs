@@ -31,6 +31,9 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .await
         .expect("Failed to setup all databases");
 
+    // Check if metadata already imported
+    // and if not, import them.
+
     Ok(())
 }
 

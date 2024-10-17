@@ -27,6 +27,7 @@ members = [
     "queng_infra/postgres/pg_smdb",
     "queng_infra/postgres/pg_smdb_manager",
     "queng_infra/postgres/pg_mddb",
+    "queng_infra/postgres/pg_mddb_manager",
     "queng_infra/postgres/postgres_config_manager",
     "queng_infra/postgres/postgres_migrations",
     "queng_infra/postgres/postgres_utils",
@@ -135,12 +136,13 @@ clickhouse_utils = { path = "queng_infra/clickhouse/clickhouse_utils" }
 db_clickhouse_manager = { path = "queng_infra/clickhouse/db_clickhouse_manager" }
 # Postgres DB
 pg_cmdb = { path = "queng_infra/postgres/pg_cmdb" }
-pg_cmdb_manager = { path = "queng_infra/postgres/pg_cmdb_manager" }
 pg_imdb = { path = "queng_infra/postgres/pg_imdb" }
 pg_mddb = { path = "queng_infra/postgres/pg_mddb" }
 pg_smdb = { path = "queng_infra/postgres/pg_smdb" }
-postgres_config_manager = { path = "queng_infra/postgres/postgres_config_manager" }
+pg_cmdb_manager = { path = "queng_infra/postgres/pg_cmdb_manager" }
+pg_mddb_manager = { path = "queng_infra/postgres/pg_mddb_manager" }
 pg_smdb_manager = { path = "queng_infra/postgres/pg_smdb_manager" }
+postgres_config_manager = { path = "queng_infra/postgres/postgres_config_manager" }
 postgres_migrations = { path = "queng_infra/postgres/postgres_migrations" }
 postgres_utils = { path = "queng_infra/postgres/postgres_utils" }
 
