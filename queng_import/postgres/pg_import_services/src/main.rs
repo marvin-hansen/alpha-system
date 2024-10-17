@@ -1,12 +1,16 @@
 mod print_utils;
 
 use environment_manager::EnvironmentManager;
+use mimalloc::MiMalloc;
 use pg_smdb_manager::PostgresSMDBManager;
 use postgres_config_manager::PostgresConfigManager;
 use postgres_utils::PostgresUtil;
 use service_specs_all::prelude as service_specs;
 use std::error::Error;
 use std::process::exit;
+
+#[global_allocator]
+static GLOBAL: MiMalloc = MiMalloc;
 
 const DBG: bool = true;
 
@@ -31,6 +35,12 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let pg_util = PostgresUtil::new(&dsn)
         .await
         .expect("Failed to create PostgresUtil Util");
+
+    dbg_print("Setup postgres database");
+    pg_util
+        .setup_all_db()
+        .await
+        .expect("Failed to setup all databases");
 
     let all_services = service_specs::get_all_service_specs();
     let expected_count = all_services.len();

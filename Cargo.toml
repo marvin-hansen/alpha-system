@@ -17,6 +17,7 @@ members = [
     "queng_components/pattern_manager",
     "queng_components/symbol_manager",
     "queng_import/postgres/pg_import_services",
+    "queng_import/postgres/pg_import_metadata",
     "queng_infra/clickhouse/clickhouse_config_manager",
     "queng_infra/clickhouse/clickhouse_utils",
     "queng_infra/clickhouse/db_clickhouse_manager",
@@ -40,6 +41,7 @@ members = [
     "queng_sbe/sbe_messages",
     "queng_services/meta/kaiko/kaiko_proxy",
     "queng_services/meta/kaiko/kaiko_client",
+    "queng_services/meta/kaiko/kaiko_tests",
     "queng_services/core/cmdb/cmdb_service",
     "queng_services/core/cmdb/cmdb_client",
     "queng_services/core/cmdb/cmdb_specs",
@@ -62,7 +64,6 @@ members = [
     "queng_services/ims/ims_data/binance_data",
     "queng_services/ims/ims_data/ims_data_binance_specs",
     "queng_services/ims/ims_data/ims_data_vex_specs",
-    "queng_services/meta/kaiko/kaiko_tests",
     "queng_services/templete/grpc_service",
     "queng_specs/portfolio_specs",
     "queng_specs/container_specs/container_specs_kaiko",
@@ -102,7 +103,7 @@ dbgw_cmdb_client = {path = "queng_services/core/dbgw/dbgw_cmdb_client"}
 ims_data_client = { path = "queng_services/ims/ims_clients/ims_data_client" }
 kaiko_client = { path = "queng_services/meta/kaiko/kaiko_client" }
 rest_client = { path = "queng_services/ims/ims_clients/rest_client" }
-mddb_client = { path = "queng_services/meta/mddb/mddb_client" }
+mddb_client = { path = "queng_services/ims/mddb/mddb_client" }
 smdb_client = { path = "queng_services/core/smdb/smdb_client" }
 
 # Common
@@ -162,7 +163,7 @@ dbgw = { path = "queng_services/core/dbgw" }
 smdb = { path = "queng_services/core/smdb" }
 ims_common = { path = "queng_services/ims/ims_common" }
 binance_data = { path = "queng_services/ims/ims_data/binance_data" }
-mddb = { path = "queng_services/meta/mddb" }
+mddb = { path = "queng_services/ims/mddb" }
 # Service template
 grpc_service = { path = "queng_services/templete/grpc_service" }
 
@@ -182,8 +183,8 @@ portfolio_specs = { path = "queng_specs/portfolio_specs" }
 # Service specs
 cmdb_specs = { path = "queng_services/core/cmdb/cmdb_specs" }
 dbgw_specs = { path = "queng_services/core/dbgw/dbgw_specs" }
-mddb_specs = { path = "queng_services/meta/mddb/mddb_specs" }
 smdb_specs = { path = "queng_services/core/smdb/smdb_specs" }
+mddb_specs = { path = "queng_services/ims/mddb/mddb_specs" }
 ims_data_binance_specs = { path = "queng_services/ims/ims_data/ims_data_binance_specs" }
 ims_data_vex_specs = { path = "queng_services/ims/ims_data/ims_data_vex_specs" }
 shared_service_specs = { path = "queng_specs/service_specs/shared_service_specs" }

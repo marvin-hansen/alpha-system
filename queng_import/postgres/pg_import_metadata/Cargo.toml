@@ -1,0 +1,18 @@
+[package]
+name = "pg_import_metadata"
+version = "0.1.0"
+edition.workspace = true
+rust-version.workspace = true
+readme.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+[dependencies]
+# Custom Memory Allocator
+mimalloc = { workspace = true }
+# Internal crates
+environment_manager = { workspace = true }
+postgres_config_manager = {workspace = true}
+postgres_utils = { workspace = true }
+# External crates
+tokio = { workspace = true }

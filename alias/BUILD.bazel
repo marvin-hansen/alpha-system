@@ -80,6 +80,20 @@ alias(
 )
 
 ###############################################################################
+# Import
+###############################################################################
+
+alias(
+    name = "pg_import_services",
+    actual = "//queng_import/postgres/pg_import_services",
+)
+
+alias(
+    name = "pg_import_metadata",
+    actual = "//queng_import/postgres/pg_import_metadata",
+)
+
+###############################################################################
 # Infra
 ###############################################################################
 
@@ -149,7 +163,6 @@ alias(
     name = "postgres_migrations",
     actual = "//queng_infra/postgres/postgres_migrations",
 )
-
 
 ###############################################################################
 # Proto
