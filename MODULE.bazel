@@ -42,28 +42,25 @@ apk.translate_lock(
 use_repo(apk, "base_image")
 
 ###############################################################################
-#LLVM toolchain #
-# https://github.com/MaterializeInc/toolchains/releases
+# LLVM toolchain #
+# https://github.com/bazel-contrib/toolchains_llvm/blob/master/toolchain/internal/llvm_distributions.bzl
 ###############################################################################
-# Here we set only a host toolchain for Apple Silicon and Linux on X86/64.
 llvm = use_extension("@toolchains_llvm//toolchain/extensions:llvm.bzl", "llvm")
 llvm.toolchain(
+    name = "llvm_toolchain",
     llvm_versions = {
-        "": "16.0.0", # Normal LLVM for CI/ Linux
-        "darwin-aarch64": "18.1.8", # Small LLVM for Apple Silicon
-    },
-    sha256 = {
-        "darwin-aarch64": "41d8dea52d18c4e8b90c4fcd31965f9f297df9f40a38a33d60748dbe7f8330b8",
+        "": "16.0.0",
+       "darwin-aarch64": "18.1.8",
     },
     stdlib = {
-        "linux-aarch64": "stdc++",
         "linux-x86_64": "stdc++",
+        "linux-aarch64": "stdc++",
     },
     urls = {
         "darwin-aarch64": ["https://github.com/MaterializeInc/toolchains/releases/download/clang-18.1.8-4/darwin_aarch64.tar.zst"],
     },
 )
-use_repo(llvm, "llvm_toolchain")
+use_repo(llvm, "llvm_toolchain", "llvm_toolchain_llvm")
 
 register_toolchains("@llvm_toolchain//:all")
 

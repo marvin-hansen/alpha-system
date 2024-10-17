@@ -19190,7 +19190,7 @@
     "@@toolchains_llvm~//toolchain/extensions:llvm.bzl%llvm": {
       "general": {
         "bzlTransitiveDigest": "dZkcElkfice3BvKPXtFwrvPABm8ac+SwfynSinwK4dQ=",
-        "usagesDigest": "jup+d62ckftozneSDK2mRszLiWk2B4BVcJXn3i72bRA=",
+        "usagesDigest": "tfa5fkZxzdFoJcJvsm+ClDDAXIgSeMq3Bicba+nKWXk=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -19221,8 +19221,8 @@
               "opt_compile_flags": {},
               "opt_link_flags": {},
               "stdlib": {
-                "linux-aarch64": "stdc++",
-                "linux-x86_64": "stdc++"
+                "linux-x86_64": "stdc++",
+                "linux-aarch64": "stdc++"
               },
               "target_settings": {},
               "unfiltered_compile_flags": {},
@@ -19246,9 +19246,7 @@
                 "darwin-aarch64": "18.1.8"
               },
               "netrc": "",
-              "sha256": {
-                "darwin-aarch64": "41d8dea52d18c4e8b90c4fcd31965f9f297df9f40a38a33d60748dbe7f8330b8"
-              },
+              "sha256": {},
               "strip_prefix": {},
               "urls": {
                 "darwin-aarch64": [
