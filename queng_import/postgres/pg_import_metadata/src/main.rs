@@ -21,7 +21,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let env_type = config_manager.env_type();
     println!("[main]: Environment type: {:?}", env_type);
 
-    dbg_print("Configure postgres database manager");
+    dbg_print("Configure postgres database");
     let pg_cfg_manager = PostgresConfigManager::new(&env_type);
     let dsn = pg_cfg_manager.pg_connection_url();
 
@@ -29,12 +29,18 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .await
         .expect("Failed to create PostgresSMDBManager");
 
-    dbg_print("Configure postgres util");
+    dbg_print("Download metadata");
+    let meta_data = kaiko_download::download_meta_data(DBG)
+        .await
+        .expect("Failed to download metadata");
 
-    // Check if metadata already imported and if not, import them.
+    dbg_print("Downloaded metadata");
+    let stats = meta_data.stats();
+    let expected_asset_count = stats.number_assets() as usize;
+    let expected_exchange_count = stats.number_exchanges() as usize;
+    let expected_instrument_count = stats.number_instruments() as usize;
 
-    // Check if the stats exists, then read it, and extract the expected number of values.
-    // Then compare the actual number to the expected number.
+    dbg_print(&stats.to_string());
 
     dbg_print("Check if metadata already imported");
     let db_asset_count = dbm_mddb
@@ -52,12 +58,15 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .await
         .expect("Failed to count instruments") as usize;
 
-    if db_asset_count > 0 || db_exchange_count > 0 || db_instrument_count > 0 {
-        print_utils::print_already_header();
+    if db_asset_count == expected_asset_count
+        && db_exchange_count == expected_exchange_count
+        && db_instrument_count == expected_instrument_count
+    {
+        print_utils::print_already_imported_header();
         exit(0);
     }
 
-    if db_asset_count == 0 || db_exchange_count == 0 || db_instrument_count == 0 {
+    if db_asset_count == 0 && db_exchange_count == 0 && db_instrument_count == 0 {
         let asset_count = 0;
         let exchange_count = 0;
         let instrument_count = 0;

@@ -6,7 +6,7 @@ pub fn print_start_header() {
     println!();
 }
 
-pub fn print_already_header() {
+pub fn print_already_imported_header() {
     println!();
     println!("==========================================");
     println!("|| Metadata Already Migrated ||");
