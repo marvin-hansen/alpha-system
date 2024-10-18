@@ -66,13 +66,8 @@ pub(crate) fn detect_env_type(dbg: bool) -> EnvironmentType {
 /// `true` if the environment variable is set and non-empty, `false` otherwise.
 fn env_is_set(key: &str) -> bool {
     match env::var(key) {
-        Ok(s) => {
-            if s.is_empty() {
-                false
-            } else {
-                true
-            }
-        }
+        Ok(s) => !s.is_empty(),
+
         _ => false,
     }
 }

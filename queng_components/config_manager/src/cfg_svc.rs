@@ -137,7 +137,7 @@ impl CfgManager {
             .get_port(svc_port, &svc_env_config.service_id())
             .expect("[EnvManager]: Failed to get port from config");
 
-        let host = match self.get_service_host(&svc_env_config).await {
+        let host = match self.get_service_host(svc_env_config).await {
             Ok(host) => host,
 
             Err(err) => {
