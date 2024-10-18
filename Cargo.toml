@@ -16,6 +16,9 @@ members = [
     "queng_components/environment_manager",
     "queng_components/pattern_manager",
     "queng_components/symbol_manager",
+    "queng_import/kaiko/kaiko_client",
+    "queng_import/kaiko/kaiko_proxy",
+    "queng_import/kaiko/kaiko_tests",
     "queng_import/postgres/pg_import_services",
     "queng_import/postgres/pg_import_metadata",
     "queng_infra/clickhouse/clickhouse_config_manager",
@@ -40,9 +43,6 @@ members = [
     "queng_proto/proto_smdb_utils",
     "queng_sbe/bindings",
     "queng_sbe/sbe_messages",
-    "queng_services/meta/kaiko/kaiko_proxy",
-    "queng_services/meta/kaiko/kaiko_client",
-    "queng_services/meta/kaiko/kaiko_tests",
     "queng_services/core/cmdb/cmdb_service",
     "queng_services/core/cmdb/cmdb_client",
     "queng_services/core/cmdb/cmdb_specs",
@@ -102,7 +102,7 @@ cmdb_client = { path = "queng_services/core/cmdb/cmdb_client" }
 dbgw_client = { path = "queng_services/core/dbgw/dbgw_client" }
 dbgw_cmdb_client = {path = "queng_services/core/dbgw/dbgw_cmdb_client"}
 ims_data_client = { path = "queng_services/ims/ims_clients/ims_data_client" }
-kaiko_client = { path = "queng_services/meta/kaiko/kaiko_client" }
+kaiko_client = { path = "queng_import/kaiko/kaiko_client" }
 rest_client = { path = "queng_services/ims/ims_clients/rest_client" }
 mddb_client = { path = "queng_services/ims/mddb/mddb_client" }
 smdb_client = { path = "queng_services/core/smdb/smdb_client" }
