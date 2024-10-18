@@ -2,7 +2,6 @@ use std::error::Error;
 use std::sync::Arc;
 use std::time::Duration;
 
-use kaiko_download;
 // https://github.com/purpleprotocol/mimalloc_rust
 use mimalloc::MiMalloc;
 use tokio::sync::RwLock;

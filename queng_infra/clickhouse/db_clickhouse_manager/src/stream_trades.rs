@@ -22,9 +22,9 @@ impl ClickhouseDBManager {
     ///
     /// # Example
     ///
-    pub async fn stream_trades<'a>(
-        &'a self,
-        trade_table: &'a str,
+    pub async fn stream_trades(
+        &self,
+        trade_table: &str,
     ) -> BoxStream<Result<TradeRow, KlickhouseError>> {
         let sanitized_name =
             sanitize_utils::sanitize_table_name(trade_table).expect("Invalid table name");

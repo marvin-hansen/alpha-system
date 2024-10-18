@@ -7,8 +7,8 @@ use futures::StreamExt;
 use klickhouse::KlickhouseError;
 
 impl ClickhouseDBManager {
-    pub async fn stream_ohlcv<'a>(
-        &'a self,
+    pub async fn stream_ohlcv(
+        &self,
         symbol_table: &str,
         time_resolution: &TimeResolution,
     ) -> BoxStream<Result<OHLCVRow, KlickhouseError>> {
