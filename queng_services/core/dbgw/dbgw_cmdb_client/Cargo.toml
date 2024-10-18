@@ -12,7 +12,6 @@ authors.workspace = true
 common_config = {workspace = true}
 common_errors = {workspace = true}
 common_exchange = {workspace = true}
-proto_dbgw = {workspace = true}
 proto_cmdb = {workspace = true}
 proto_cmdb_utils = {workspace = true}
 

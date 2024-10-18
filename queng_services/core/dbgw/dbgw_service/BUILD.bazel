@@ -21,7 +21,6 @@ build_binary_opt(
         "//alias:config_manager",
         "//alias:pg_cmdb_manager",
         "//alias:pg_smdb_manager",
-        "//alias:proto_dbgw",
         "//alias:proto_cmdb",
         "//alias:proto_cmdb_utils",
         "//alias:proto_smdb",

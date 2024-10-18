@@ -1,7 +1,7 @@
 use proto_cmdb::proto::cmdb_service_server::CmdbService;
 use proto_cmdb::proto::*;
 
-use proto_dbgw::proto::db_gateway_cmdb_service_client::DbGatewayCmdbServiceClient;
+use proto_cmdb::proto::db_gateway_cmdb_service_client::DbGatewayCmdbServiceClient;
 use tonic::transport::Channel;
 use tonic::{Request, Response, Status};
 

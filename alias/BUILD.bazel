@@ -218,15 +218,9 @@ alias(
 )
 
 alias(
-    name = "proto_dbgw",
-    actual = "//queng_proto/proto_dbgw:proto_dbgw_bindings",
-)
-
-alias(
     name = "proto_mddb_utils",
     actual = "//queng_proto/proto_mddb_utils",
 )
-
 
 alias(
     name = "proto_smdb",

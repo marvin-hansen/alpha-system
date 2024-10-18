@@ -12,7 +12,6 @@ rust_library(
         # Internal crates
         "//alias:common_config",
         "//alias:common_errors",
-        "//alias:proto_dbgw",
         "//alias:proto_cmdb",
         "//alias:proto_cmdb_utils",
         "//alias:proto_smdb",

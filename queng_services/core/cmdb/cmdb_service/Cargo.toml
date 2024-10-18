@@ -23,7 +23,6 @@ dbgw_cmdb_client = {workspace = true}
 pg_cmdb_manager = {workspace = true}
 postgres_config_manager = {workspace = true}
 proto_cmdb = {workspace = true}
-proto_dbgw = {workspace = true}
 proto_cmdb_utils = {workspace = true}
 common_service =  {workspace = true}
 smdb_client = {workspace = true}

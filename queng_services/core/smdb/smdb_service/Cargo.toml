@@ -21,7 +21,6 @@ mimalloc = {workspace = true}
 # Internal crates
 common_config = {workspace = true}
 config_manager = {workspace = true}
-proto_dbgw = {workspace = true}
 proto_smdb = {workspace = true}
 common_service =  {workspace = true}
 # External crates

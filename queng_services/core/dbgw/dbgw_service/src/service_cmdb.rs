@@ -1,5 +1,5 @@
 use pg_cmdb_manager::PostgresCMDBManager;
-use proto_dbgw::proto::db_gateway_cmdb_service_server::DbGatewayCmdbService;
+use proto_cmdb::proto::db_gateway_cmdb_service_server::DbGatewayCmdbService;
 
 use crate::DBG;
 use proto_cmdb::proto::{

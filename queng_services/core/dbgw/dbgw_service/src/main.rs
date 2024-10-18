@@ -14,8 +14,8 @@ use config_manager::CfgManager;
 use pg_cmdb_manager::PostgresCMDBManager;
 use pg_smdb_manager::PostgresSMDBManager;
 use postgres_config_manager::PostgresConfigManager;
-use proto_dbgw::proto::db_gateway_cmdb_service_server::DbGatewayCmdbServiceServer;
-use proto_dbgw::proto::db_gateway_smdb_service_server::DbGatewaySmdbServiceServer;
+use proto_cmdb::proto::db_gateway_cmdb_service_server::DbGatewayCmdbServiceServer;
+use proto_smdb::proto::db_gateway_smdb_service_server::DbGatewaySmdbServiceServer;
 
 mod service_cmdb;
 mod service_smdb;

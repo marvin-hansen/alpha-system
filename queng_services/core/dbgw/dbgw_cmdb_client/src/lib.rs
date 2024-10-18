@@ -1,5 +1,5 @@
 use common_config::prelude::HostEndpoint;
-use proto_dbgw::proto::db_gateway_cmdb_service_client::DbGatewayCmdbServiceClient as DBGWClient;
+use proto_cmdb::proto::db_gateway_cmdb_service_client::DbGatewayCmdbServiceClient as DBGWClient;
 use tonic::transport::{Channel, Uri};
 
 mod client;

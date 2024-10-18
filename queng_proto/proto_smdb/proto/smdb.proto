@@ -11,3 +11,23 @@ service SMDBService {
   rpc SetServiceOnline (SingleServiceRequest) returns (SetServiceOnlineResponse) {}
   rpc SetServiceOffline (SingleServiceRequest) returns (SetServiceOfflineResponse) {}
 }
+
+// Service definitions: https://developers.google.com/protocol-buffers/docs/proto3#services
+service DBGatewaySMDBService {
+  rpc CreateService (ProtoServiceConfig) returns (CreateServiceResponse) {}
+  rpc CountAllServices (CountServiceRequest) returns (CountServiceResponse) {}
+  rpc CheckServiceIdExists (SingleServiceRequest) returns (CheckServiceIdExistsResponse) {}
+  rpc CheckServicesExists (MultiServicesRequest) returns (CheckServicesExistsResponse) {}
+  rpc CheckServiceIdOnline (SingleServiceRequest) returns (CheckServiceIdOnlineResponse) {}
+  rpc CheckServicesOnline (MultiServicesRequest) returns (CheckServicesOnlineResponse) {}
+  rpc GetAllServiceDependencies (ServiceDependenciesRequest) returns (ServiceDependenciesResponse) {}
+  rpc GetAllServiceEndpoints (ServiceEndpointsRequest) returns (ServiceEndpointsResponse) {}
+  rpc GetAllOnlineServices (ServicesOnlineRequest) returns (ServicesOnlineResponse) {}
+  rpc GetAllOfflineServices (ServicesOfflineRequest) returns (ServicesOfflineResponse) {}
+  rpc ReadService (SingleServiceRequest) returns (ReadServiceResponse) {}
+  rpc ReadAllServices (MultiServicesRequest) returns (ReadAllServicesResponse) {}
+  rpc SetServiceOnline (SingleServiceRequest) returns (SetServiceOnlineResponse) {}
+  rpc SetServiceOffline (SingleServiceRequest) returns (SetServiceOfflineResponse) {}
+  rpc UpdateService (ProtoServiceConfig) returns (UpdateServiceResponse) {}
+  rpc DeleteService (SingleServiceRequest) returns (DeleteServiceResponse) {}
+}

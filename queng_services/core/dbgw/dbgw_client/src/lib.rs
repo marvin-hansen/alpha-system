@@ -1,5 +1,5 @@
 use common_config::prelude::HostEndpoint;
-use proto_dbgw::proto::db_gateway_smdb_service_client::DbGatewaySmdbServiceClient as DBGWClient;
+use proto_smdb::proto::db_gateway_smdb_service_client::DbGatewaySmdbServiceClient as DBGWClient;
 use tonic::transport::{Channel, Uri};
 
 mod client;

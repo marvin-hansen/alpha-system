@@ -13,7 +13,6 @@ rust_library(
         "//alias:common_config",
         "//alias:common_errors",
         "//alias:common_exchange",
-        "//alias:proto_dbgw",
         "//alias:proto_cmdb",
         "//alias:proto_cmdb_utils",
         # External crates

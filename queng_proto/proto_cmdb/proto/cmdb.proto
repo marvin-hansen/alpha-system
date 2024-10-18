@@ -10,3 +10,12 @@ service CMDBService {
   rpc UpdatePortfolioConfig(ProtoPortfolioConfig) returns (UpdatePortfolioResponse) {}
   rpc DeletePortfolioConfig(SinglePortfolioRequest) returns (DeletePortfolioResponse) {}
 }
+
+service DBGatewayCMDBService {
+  //  CMDBService
+  rpc CreatePortfolioConfig(ProtoPortfolioConfig) returns (CreatePortfolioResponse){}
+  rpc ReadPortfolioConfig(SinglePortfolioRequest) returns (ReadPortfolioResponse) {}
+  rpc ReadAllPortfolioConfigs(MultiPortfolioRequest) returns (ReadAllPortfoliosResponse){}
+  rpc UpdatePortfolioConfig(ProtoPortfolioConfig) returns (UpdatePortfolioResponse) {}
+  rpc DeletePortfolioConfig(SinglePortfolioRequest) returns (DeletePortfolioResponse) {}
+}

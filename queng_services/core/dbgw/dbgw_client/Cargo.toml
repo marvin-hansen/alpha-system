@@ -12,7 +12,6 @@ authors.workspace = true
 # Internal crates
 common_config = {workspace = true}
 common_errors = {workspace = true}
-proto_dbgw = {workspace = true}
 proto_smdb = {workspace = true}
 proto_cmdb = {workspace = true}
 proto_cmdb_utils = {workspace = true}

@@ -5,7 +5,7 @@ use tonic::transport::{Channel, Server, Uri};
 use common_config::prelude::ServiceID;
 use common_service::{print_utils, shutdown_utils};
 use config_manager::CfgManager;
-use proto_dbgw::proto::db_gateway_smdb_service_client::DbGatewaySmdbServiceClient;
+use proto_smdb::proto::db_gateway_smdb_service_client::DbGatewaySmdbServiceClient;
 
 use proto_smdb::proto::smdb_service_server::SmdbServiceServer;
 use service::SMDBServer;

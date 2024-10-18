@@ -6,7 +6,7 @@ use tonic::transport::{Channel, Uri};
 
 use crate::service::CMDBServer;
 use proto_cmdb::proto::cmdb_service_server::CmdbServiceServer;
-use proto_dbgw::proto::db_gateway_cmdb_service_client::DbGatewayCmdbServiceClient;
+use proto_cmdb::proto::db_gateway_cmdb_service_client::DbGatewayCmdbServiceClient;
 
 mod service;
 

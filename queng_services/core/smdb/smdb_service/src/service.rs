@@ -1,7 +1,7 @@
 use tonic::transport::Channel;
 use tonic::{Request, Response, Status};
 
-use proto_dbgw::proto::db_gateway_smdb_service_client::DbGatewaySmdbServiceClient as DBGWClient;
+use proto_smdb::proto::db_gateway_smdb_service_client::DbGatewaySmdbServiceClient as DBGWClient;
 use proto_smdb::proto::smdb_service_server::SmdbService;
 use proto_smdb::proto::*;
 

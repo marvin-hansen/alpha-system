@@ -4,7 +4,7 @@ use tonic::{Request, Response, Status};
 
 use common_config::prelude::ServiceID;
 use pg_smdb_manager::PostgresSMDBManager;
-use proto_dbgw::proto::db_gateway_smdb_service_server::DbGatewaySmdbService;
+use proto_smdb::proto::db_gateway_smdb_service_server::DbGatewaySmdbService;
 use proto_smdb::proto::*;
 use proto_smdb_utils::endpoint_proto_utils::endpoint_to_proto;
 use proto_smdb_utils::service_config_proto_utils::{
