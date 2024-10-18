@@ -1,7 +1,7 @@
 load("@rules_oci//oci:defs.bzl", "oci_push")
 load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_doc", "rust_doc_test")
 load("//:build/binary.bzl", "build_binary_opt")
-load("//:build/container.bzl", "build_multi_arch_image", "git_tag_with_timestamp")
+load("//:build/container.bzl", "build_multi_arch_image", "git_with_timestamp_tag")
 
 ###############################################################################
 # Rust Binary
@@ -72,7 +72,7 @@ build_multi_arch_image(
     visibility = ["//visibility:public"],
 )
 
-git_tag_with_timestamp(
+git_with_timestamp_tag(
     name = "remote_tag",
     target = ":image_index",
 )

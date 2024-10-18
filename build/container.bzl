@@ -31,6 +31,7 @@ def build_multi_arch_image(
         exposed_ports = exposed_ports,
     )
 
+    # Build multi-arch image using platform transition defined in //build/transition.bzl
     multi_arch(
         name = "multi_arch_images",
         image = ":image",
@@ -66,9 +67,18 @@ def build_image(name, srcs, base, exposed_ports = [], visibility = None):
         visibility = visibility,
     )
 
-# Produces an image tag based on the existing image sha286 and and UTC timestamp.
-# Timestamp format is YYYY MM DD HH MM SS i.e. 2024 10 13 08 38 54, UTC
-def build_sha265_tag(name, target, src):
+# Produces an image tag based on the existing image sha286.
+# For example: 458b6779
+# Usage:
+# load("//:build/container.bzl", "build_multi_arch_image", "sha265_tag")
+#
+# sha265_tag(
+#      name = "remote_tag",
+#      src = ["image.json.sha256"],
+#      target = ":image_index",
+#  )
+#
+def sha265_tag(name, target, src):
     native.genrule(
         name = name,
         srcs = [src],
@@ -82,8 +92,16 @@ def build_sha265_tag(name, target, src):
     )
 
 # Produces an image tag based on the current git commit and Unix timestamp of the current build.
-# For example: 458b6779-1729045897
-def git_tag_with_timestamp(name, target):
+# For example: 44b024cf-1729230173
+# Usage:
+# load("//:build/container.bzl", "build_multi_arch_image", "git_with_timestamp_tag")
+#
+# git_with_timestamp_tag(
+#      name = "remote_tag",
+#      target = ":image_index",
+#  )
+#
+def git_with_timestamp_tag(name, target):
     stable_status = "//build/status:stable_status"
     volatile_status = "//build/status:volatile_status"
     native.genrule(

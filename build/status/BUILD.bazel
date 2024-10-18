@@ -1,7 +1,7 @@
 ###############################################################################
 # BUILD STATUS
 ###############################################################################
-# These rule are used to generate image tags with the rule git_tag_with_timestamp
+# These rule are used to generate image tags with the rule git_with_timestamp_tag
 # defined in build/container.bzl.
 
 # Generate stable status
