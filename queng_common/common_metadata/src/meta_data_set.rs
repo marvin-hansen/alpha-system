@@ -1,8 +1,8 @@
-use chrono::Utc;
-use common_metadata::prelude::{
+use crate::prelude::{
     MetaAsset, MetaAssetRoot, MetaExchange, MetaExchangesRoot, MetaInstrument, MetaInstrumentsRoot,
     MetaStats,
 };
+use chrono::Utc;
 use crypto_utils::prelude::hash_utils;
 
 use serde::{Deserialize, Serialize};

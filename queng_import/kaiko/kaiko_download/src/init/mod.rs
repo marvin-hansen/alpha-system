@@ -16,7 +16,7 @@ pub struct InitManager {
 }
 
 impl InitManager {
-    pub fn new(dbg: bool) -> Self {
+    pub(crate) fn new(dbg: bool) -> Self {
         Self {
             dbg,
             dl_utils: DownloadUtils::new(),

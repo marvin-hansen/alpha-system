@@ -17,6 +17,7 @@ members = [
     "queng_components/pattern_manager",
     "queng_components/symbol_manager",
     "queng_import/kaiko/kaiko_client",
+    "queng_import/kaiko/kaiko_download",
     "queng_import/kaiko/kaiko_proxy",
     "queng_import/kaiko/kaiko_tests",
     "queng_import/postgres/pg_import_services",
@@ -105,7 +106,6 @@ dbgw_cmdb_client = {path = "queng_services/core/dbgw/dbgw_client/dbgw_cmdb_clien
 dbgw_mddb_client = {path = "queng_services/core/dbgw/dbgw_client/dbgw_mddb_client"}
 dbgw_smdb_client = {path = "queng_services/core/dbgw/dbgw_client/dbgw_smdb_client"}
 ims_data_client = { path = "queng_services/ims/ims_clients/ims_data_client" }
-kaiko_client = { path = "queng_import/kaiko/kaiko_client" }
 rest_client = { path = "queng_services/ims/ims_clients/rest_client" }
 mddb_client = { path = "queng_services/ims/mddb/mddb_client" }
 smdb_client = { path = "queng_services/core/smdb/smdb_client" }
@@ -129,7 +129,12 @@ pattern_manager = { path = "queng_components/pattern_manager" }
 symbol_manager = { path = "queng_components/symbol_manager" }
 
 # Import
+# Kaiko
+kaiko_client = { path = "queng_import/kaiko/kaiko_client" }
+kaiko_download = { path = "queng_import/kaiko/kaiko_download" }
+kaiko_proxy = { path = "queng_import/kaiko/kaiko_proxy" }
 # Postgres DB
+pg_import_metadata = { path = "queng_import/postgres/pg_import_metadata" }
 postgres_pg_import_services = { path = "queng_import/postgres/pg_import_services" }
 
 # Infra

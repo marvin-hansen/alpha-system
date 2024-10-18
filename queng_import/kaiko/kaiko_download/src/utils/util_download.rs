@@ -1,5 +1,5 @@
-use crate::errors::DownloadError;
 use crate::fields::BASE_URL;
+use common_errors::prelude::DownloadError;
 use common_metadata::prelude::{
     MetaAsset, MetaAssetRoot, MetaExchange, MetaExchangesRoot, MetaInstrument, MetaInstrumentsRoot,
 };

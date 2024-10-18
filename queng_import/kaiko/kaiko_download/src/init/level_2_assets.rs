@@ -1,5 +1,5 @@
-use crate::errors::InitError;
 use crate::init::InitManager;
+use common_errors::prelude::InitError;
 use common_metadata::prelude::MetaAsset;
 
 impl InitManager {

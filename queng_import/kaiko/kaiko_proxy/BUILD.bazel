@@ -15,13 +15,14 @@ build_binary_opt(
     deps = [
         # Internal crates
         "//alias:common_config",
+        "//alias:common_errors",
         "//alias:common_metadata",
         "//alias:crypto_utils",
         "//alias:common_service",
+        "//alias:kaiko_download",
         # Custom Memory Allocator
         "//thirdparty/crates:mimalloc",
         # External crates
-        "//thirdparty/crates:arc-swap",
         "//thirdparty/crates:chrono",
         "//thirdparty/crates:reqwest",
         "//thirdparty/crates:serde",

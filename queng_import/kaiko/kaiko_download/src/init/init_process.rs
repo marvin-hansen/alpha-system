@@ -1,6 +1,6 @@
-use crate::errors::InitError;
 use crate::init::InitManager;
-use crate::types::meta_data_set::MetaDataSet;
+use common_errors::prelude::InitError;
+use common_metadata::prelude::MetaDataSet;
 use tokio::time::Instant;
 
 impl InitManager {

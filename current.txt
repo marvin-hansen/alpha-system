@@ -1,1 +1,1 @@
-//queng_components/config_manager
+//alias:kaiko_download

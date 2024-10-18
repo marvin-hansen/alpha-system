@@ -1,5 +1,5 @@
-use crate::types::health::Health;
-use crate::types::MetaDataStore;
+use crate::health::Health;
+use crate::MetaDataStore;
 
 pub(crate) async fn get_health_handler() -> Result<impl warp::Reply, warp::Rejection> {
     let result = Health::ok();
@@ -9,7 +9,7 @@ pub(crate) async fn get_health_handler() -> Result<impl warp::Reply, warp::Rejec
 pub(crate) async fn get_assets_handler(
     store: MetaDataStore,
 ) -> Result<impl warp::Reply, warp::Rejection> {
-    let guard = store.load();
+    let guard = store.read().await;
     let result = guard.assets();
     Ok(warp::reply::json(result))
 }
@@ -17,7 +17,7 @@ pub(crate) async fn get_assets_handler(
 pub(crate) async fn get_exchanges_handler(
     store: MetaDataStore,
 ) -> Result<impl warp::Reply, warp::Rejection> {
-    let guard = store.load();
+    let guard = store.read().await;
     let result = guard.exchanges();
     Ok(warp::reply::json(result))
 }
@@ -25,7 +25,7 @@ pub(crate) async fn get_exchanges_handler(
 pub(crate) async fn get_instruments_handler(
     store: MetaDataStore,
 ) -> Result<impl warp::Reply, warp::Rejection> {
-    let guard = store.load();
+    let guard = store.read().await;
     let result = guard.instruments();
     Ok(warp::reply::json(result))
 }
@@ -33,7 +33,7 @@ pub(crate) async fn get_instruments_handler(
 pub(crate) async fn get_stats_handler(
     store: MetaDataStore,
 ) -> Result<impl warp::Reply, warp::Rejection> {
-    let guard = store.load();
+    let guard = store.read().await;
     let result = guard.stats();
     Ok(warp::reply::json(result))
 }

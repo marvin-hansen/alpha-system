@@ -1,6 +1,6 @@
-use crate::errors::InitError;
 use crate::fields::DEX;
 use crate::init::InitManager;
+use common_errors::prelude::InitError;
 use common_metadata::prelude::MetaInstrument;
 
 impl InitManager {
