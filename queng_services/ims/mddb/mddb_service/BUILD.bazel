@@ -20,10 +20,8 @@ build_binary_opt(
         "//alias:common_config",
         "//alias:common_errors",
         "//alias:config_manager",
-        "//alias:db_clickhouse_manager",
         "//alias:proto_mddb",
         "//alias:common_service",
-        "//alias:symbol_manager",
         "//alias/client:smdb_client",
         # Custom Memory Allocator
         "//thirdparty/crates:mimalloc",

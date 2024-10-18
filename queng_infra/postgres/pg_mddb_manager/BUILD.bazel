@@ -15,7 +15,6 @@ rust_library(
     deps = [
         # Internal crates
         "//alias:common_errors",
-        "//alias:common_exchange",
         "//alias:pg_mddb",
         # External crates
         "//thirdparty/crates:diesel",

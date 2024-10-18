@@ -35,8 +35,7 @@ impl Portfolio {
     ///
     /// # Returns
     ///
-    /// * `QueryResult<CommonPortfolioConfig>` - The result of the query,
-    /// containing the created portfolio configuration.
+    /// * `QueryResult<CommonPortfolioConfig>` - The query result
     ///
     /// # Errors
     ///
@@ -225,8 +224,7 @@ impl Portfolio {
     /// * `QueryResult<()>` - Result indicating the success of the update operation.
     ///
     /// # Errors
-    /// * Returns a `DatabaseError` if the portfolio does not exist
-    /// or any encountered error during the update process.
+    /// * Returns a `DatabaseError` if the portfolio does not exist or an update error occurs.
     ///
     pub fn update(
         db: &mut PGConnection,
@@ -338,7 +336,8 @@ impl Portfolio {
     /// # Returns
     ///
     /// * `QueryResult<usize>` - The number of rows affected by the deletion operation.
-    /// If none are affected, the result will be `Ok(0)`.
+    ///
+    /// If no rows have been deleted, the result will be `Ok(0)`.
     ///
     /// # Errors
     ///

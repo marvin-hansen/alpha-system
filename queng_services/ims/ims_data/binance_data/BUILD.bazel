@@ -14,8 +14,6 @@ build_binary_opt(
     deps = [
         # Service specs
         "//alias:ims_data_binance_specs",
-        # Service template
-        "//alias/service:grpc_service",
         "//alias/service:ims_common",
         # Internal crates
         "//alias:common_data_bar",

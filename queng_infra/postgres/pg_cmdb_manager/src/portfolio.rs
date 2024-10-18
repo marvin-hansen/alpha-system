@@ -37,8 +37,7 @@ impl PostgresCMDBManager {
     /// - `data`: A slice of `PortfolioConfig` containing the portfolio configurations to be inserted.
     ///
     /// # Returns
-    /// - `Result<(), PostgresDBError>`: Result indicating the success of inserting
-    /// all portfolio configurations or an error.
+    /// - `Result<(), PostgresDBError>`
     ///
     pub async fn insert_portfolio_config_collection(
         &self,

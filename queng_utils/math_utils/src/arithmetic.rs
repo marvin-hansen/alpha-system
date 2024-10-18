@@ -6,6 +6,7 @@ pub fn abs(x: f64) -> f64 {
     }
 }
 
+#[allow(clippy::needless_range_loop)]
 pub fn min(numbers: &[f64]) -> f64 {
     let mut number = numbers[0];
     for i in 0..numbers.len() {
@@ -16,6 +17,7 @@ pub fn min(numbers: &[f64]) -> f64 {
     number
 }
 
+#[allow(clippy::needless_range_loop)]
 pub fn max(numbers: &[f64]) -> f64 {
     let mut number = numbers[0];
     for i in 0..numbers.len() {

@@ -10,7 +10,6 @@ authors.workspace = true
 [dependencies]
 # Internal crates
 common_errors = {workspace = true}
-common_exchange = {workspace = true}
 pg_mddb = {workspace = true}
 
 # External crates
@@ -18,6 +17,6 @@ diesel = { workspace = true }
 
 [dev-dependencies]
 # For testing
-container_specs_postgres = {workspace = true}
-docker_utils = {workspace = true}
-tokio = {workspace = true}
+# container_specs_postgres = {workspace = true}
+# docker_utils = {workspace = true}
+# tokio = {workspace = true}

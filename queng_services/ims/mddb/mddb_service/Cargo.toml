@@ -23,14 +23,9 @@ mimalloc = {workspace = true}
 common_config = {workspace = true}
 common_errors = {workspace = true}
 config_manager = {workspace = true}
-
-
-db_clickhouse_manager = {workspace = true}
 proto_mddb = {workspace = true}
 common_service =  {workspace = true}
 smdb_client = {workspace = true}
-symbol_manager = {workspace = true}
 # External crates
 tokio = { workspace = true }
 tonic = { workspace = true }
-serde = {workspace = true}
