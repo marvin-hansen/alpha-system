@@ -14,7 +14,6 @@ rust_library(
     visibility = ["//visibility:public"],
     deps = [
         # Internal crates
-        "//alias:common_metadata",
         "//alias:postgres_migrations",
         # External crates
         "//thirdparty/crates:diesel",

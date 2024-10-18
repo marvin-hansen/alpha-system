@@ -27,4 +27,3 @@ common_service =  {workspace = true}
 tokio = { workspace = true }
 tonic = { workspace = true }
 tonic-health = { workspace = true }
-warp = { workspace = true }

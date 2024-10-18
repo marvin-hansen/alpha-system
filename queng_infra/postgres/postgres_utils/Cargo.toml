@@ -11,13 +11,10 @@ authors.workspace = true
 [dependencies]
 # Internal crates
 common_config = {workspace = true}
-common_database = {workspace = true}
 common_errors = {workspace = true}
 common_exchange = {workspace = true}
-docker_utils = {workspace = true}
 # Database crates
 pg_cmdb = {workspace = true}
-pg_cmdb_manager = {workspace = true}
 pg_imdb = {workspace = true}
 pg_mddb = {workspace = true}
 pg_smdb = {workspace = true}

@@ -25,7 +25,6 @@ build_binary_opt(
         "//thirdparty/crates:tokio",
         "//thirdparty/crates:tonic",
         "//thirdparty/crates:tonic-health",
-        "//thirdparty/crates:warp",
     ],
 )
 

@@ -9,7 +9,6 @@ authors.workspace = true
 
 [dependencies]
 # Internal crates
-common_config = {workspace = true}
 common_database = {workspace = true}
 common_env = {workspace = true}
 db_specs_postgres = {workspace = true}

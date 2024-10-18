@@ -10,5 +10,4 @@ authors.workspace = true
 
 [dependencies]
 # External crates
-chrono = { workspace = true }
 serde = { workspace = true }

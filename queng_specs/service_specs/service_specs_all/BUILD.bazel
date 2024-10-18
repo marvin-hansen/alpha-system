@@ -14,11 +14,6 @@ rust_library(
     deps = [
         # Internal crates
         "//alias:common_config",
-        "//alias:common_container",
-        "//alias:common_env",
-        "//alias:common_exchange",
-        "//alias:common_database",
-        "//alias:portfolio_specs",
         "//alias:cmdb_specs",
         "//alias:dbgw_specs",
         "//alias:mddb_specs",

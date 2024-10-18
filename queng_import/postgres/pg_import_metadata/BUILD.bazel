@@ -18,7 +18,6 @@ build_binary_opt(
         "//alias:environment_manager",
         "//alias:pg_mddb_manager",
         "//alias:postgres_config_manager",
-        "//alias:postgres_utils",
         "//alias:service_specs_all",
         # External crates
         "//thirdparty/crates:tokio",

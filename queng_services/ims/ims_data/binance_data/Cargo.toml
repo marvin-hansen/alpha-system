@@ -19,10 +19,7 @@ mimalloc = {workspace = true}
 common_data_bar = {workspace = true}
 common_config = {workspace = true}
 config_manager = {workspace = true}
-
-
 ims_common = {workspace = true}
-common_service =  {workspace = true}
 # External crates
 binance-rs-async = { workspace = true }
 chrono = { workspace = true }

@@ -13,8 +13,6 @@ authors.workspace = true
 common_config = {workspace = true}
 common_errors = {workspace = true}
 proto_smdb = {workspace = true}
-proto_cmdb = {workspace = true}
-proto_cmdb_utils = {workspace = true}
 proto_smdb_utils = {workspace = true}
 
 # Exteral crates
