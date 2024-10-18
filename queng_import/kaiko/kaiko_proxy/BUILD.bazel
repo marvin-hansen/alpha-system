@@ -28,7 +28,6 @@ build_binary_opt(
         "//thirdparty/crates:serde",
         "//thirdparty/crates:serde_json",
         "//thirdparty/crates:tokio",
-        "//thirdparty/crates:tokio-cron-scheduler",
         "//thirdparty/crates:warp",
     ],
 )

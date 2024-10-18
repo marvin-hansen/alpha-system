@@ -24,5 +24,4 @@ reqwest = { workspace = true }
 serde = {workspace = true}
 serde_json = {workspace = true}
 tokio = { workspace = true }
-tokio-cron-scheduler  = { workspace = true }
 warp = {workspace = true}
