@@ -8,10 +8,10 @@ use proto_smdb_utils::service_config_proto_utils::{
     service_config_from_proto, service_config_to_proto,
 };
 
-use crate::DBGatewayClient;
+use crate::DBGWSmdbClient;
 use common_errors::prelude::DBGatewayError;
 
-impl DBGatewayClient {
+impl DBGWSmdbClient {
     pub async fn create_service(&self, data: ServiceConfig) -> Result<bool, DBGatewayError> {
         let proto_service_config =
             service_config_to_proto(data).expect("Failed to convert Rust PortfolioConfig to proto");

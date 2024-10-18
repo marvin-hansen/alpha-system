@@ -4,11 +4,11 @@ use tonic::transport::{Channel, Uri};
 
 mod client;
 #[derive(Debug, Clone)]
-pub struct DBGatewayClient {
+pub struct DBGWSmdbClient {
     client: DBGWClient<Channel>,
 }
 
-impl DBGatewayClient {
+impl DBGWSmdbClient {
     pub async fn new(config: HostEndpoint<'_>) -> Self {
         let port = config.port();
         let host = config.host_uri();

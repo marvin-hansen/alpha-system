@@ -1,7 +1,7 @@
 load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library")
 
 rust_library(
-    name = "dbgw_client",
+    name = "dbgw_smdb_client",
     srcs = glob([
         "src/**",
     ]),
@@ -12,6 +12,7 @@ rust_library(
         # Internal crates
         "//alias:common_config",
         "//alias:common_errors",
+        "//alias:common_exchange",
         "//alias:proto_smdb",
         "//alias:proto_smdb_utils",
         # External crates
@@ -23,14 +24,14 @@ rust_library(
 
 rust_doc(
     name = "doc",
-    crate = ":dbgw_client",
+    crate = ":dbgw_smdb_client",
     tags = ["doc"],
     visibility = ["//visibility:public"],
 )
 
 rust_doc_test(
     name = "doc_test",
-    crate = ":dbgw_client",
+    crate = ":dbgw_smdb_client",
     tags = ["doc-test"],
     visibility = ["//visibility:public"],
 )

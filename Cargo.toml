@@ -45,14 +45,17 @@ members = [
     "queng_services/core/cmdb/cmdb_service",
     "queng_services/core/cmdb/cmdb_client",
     "queng_services/core/cmdb/cmdb_specs",
-    "queng_services/core/dbgw/dbgw_client",
-    "queng_services/core/dbgw/dbgw_cmdb_client",
+    "queng_services/core/cmdb/cmdb_tests",
+    "queng_services/core/dbgw/dbgw_client/dbgw_cmdb_client",
+    "queng_services/core/dbgw/dbgw_client/dbgw_mddb_client",
+    "queng_services/core/dbgw/dbgw_client/dbgw_smdb_client",
     "queng_services/core/dbgw/dbgw_service",
     "queng_services/core/dbgw/dbgw_specs",
     "queng_services/core/dbgw/dbgw_tests",
-    "queng_services/core/smdb/smdb_specs",
-    "queng_services/core/smdb/smdb_service",
     "queng_services/core/smdb/smdb_client",
+    "queng_services/core/smdb/smdb_service",
+    "queng_services/core/smdb/smdb_specs",
+    "queng_services/core/smdb/smdb_tests",
     "queng_services/ims/mddb/mddb_service",
     "queng_services/ims/mddb/mddb_specs",
     "queng_services/ims/mddb/mddb_client",
@@ -98,8 +101,9 @@ authors = ["Marvin Hansen <marvin.hansen@gmail.com>"]
 # Clients
 binance_client = { path = "queng_services/ims/ims_clients/binance_client" }
 cmdb_client = { path = "queng_services/core/cmdb/cmdb_client" }
-dbgw_client = { path = "queng_services/core/dbgw/dbgw_client" }
-dbgw_cmdb_client = {path = "queng_services/core/dbgw/dbgw_cmdb_client"}
+dbgw_cmdb_client = {path = "queng_services/core/dbgw/dbgw_client/dbgw_cmdb_client"}
+dbgw_mddb_client = {path = "queng_services/core/dbgw/dbgw_client/dbgw_mddb_client"}
+dbgw_smdb_client = {path = "queng_services/core/dbgw/dbgw_client/dbgw_smdb_client"}
 ims_data_client = { path = "queng_services/ims/ims_clients/ims_data_client" }
 kaiko_client = { path = "queng_import/kaiko/kaiko_client" }
 rest_client = { path = "queng_services/ims/ims_clients/rest_client" }

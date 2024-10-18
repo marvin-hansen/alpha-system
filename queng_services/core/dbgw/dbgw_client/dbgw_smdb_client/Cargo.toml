@@ -1,12 +1,11 @@
 [package]
-name = "dbgw_client"
+name = "dbgw_smdb_client"
 version = "0.1.0"
 edition.workspace = true
 rust-version.workspace = true
 readme.workspace = true
 repository.workspace = true
 authors.workspace = true
-
 
 [dependencies]
 # Internal crates
@@ -19,3 +18,4 @@ proto_smdb_utils = {workspace = true}
 tokio = { workspace = true }
 tonic = { workspace = true }
 prost = { workspace = true }
+
