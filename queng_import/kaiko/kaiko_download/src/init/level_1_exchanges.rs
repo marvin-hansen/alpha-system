@@ -13,12 +13,15 @@ impl InitManager {
             .await
             .expect("Failed to download exchange data");
 
-        if self.dbg {
-            let msg = format!(
-                "Level 1: Returning {} downloaded exchanges",
-                downloaded_exchanges.len()
-            );
-            self.dbg_print(&msg)
+        if self.use_proxy {
+            if self.dbg {
+                let msg = format!(
+                    "Level 1: Returning {} downloaded exchanges",
+                    downloaded_exchanges.len()
+                );
+                self.dbg_print(&msg)
+            }
+            return Ok(downloaded_exchanges);
         }
 
         self.dbg_print("Level 1: Process downloaded exchanges");

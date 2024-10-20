@@ -1,1 +1,1 @@
-//alias:kaiko_download
+//alias:pg_import_metadata

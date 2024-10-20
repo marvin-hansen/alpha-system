@@ -36,7 +36,7 @@ impl InitManager {
             MetaDataSet::new(asset_meta_data, exchanges_meta_data, instrument_meta_data);
 
         self.dbg_print("=============");
-        self.dbg_print("INIT  COMPLETE");
+        self.dbg_print("INIT COMPLETE");
         self.dbg_print("=============");
 
         Ok(meta_data)

@@ -12,6 +12,17 @@ impl InitManager {
             .await
             .expect("Failed to download instrument data");
 
+        if self.use_proxy {
+            if self.dbg {
+                let msg = format!(
+                    "Level 3: Returning {} downloaded Instruments",
+                    downloaded_instruments.len()
+                );
+                self.dbg_print(&msg)
+            }
+            return Ok(downloaded_instruments);
+        }
+
         self.dbg_print("Level 3: Process the downloaded instrument data");
         let processed_instruments = process_instruments(&downloaded_instruments)
             .await

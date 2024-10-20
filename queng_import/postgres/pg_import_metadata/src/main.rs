@@ -6,11 +6,20 @@ use pg_mddb_manager::PostgresMDDBManager;
 use postgres_config_manager::PostgresConfigManager;
 use std::error::Error;
 use std::process::exit;
+use std::time::Duration;
+use tokio::time::Instant;
 
 #[global_allocator]
 static GLOBAL: MiMalloc = MiMalloc;
 
 const DBG: bool = true;
+const USE_PROXY: bool = true;
+
+const PROXY_URL: Option<&str> = if USE_PROXY {
+    Some("http://127.0.0.1:7777/")
+} else {
+    None
+};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
@@ -30,17 +39,17 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .expect("Failed to create PostgresSMDBManager");
 
     dbg_print("Download metadata");
-    let meta_data = kaiko_download::download_meta_data(DBG)
+    let start = Instant::now();
+    let meta_data = kaiko_download::download_meta_data(DBG, PROXY_URL)
         .await
         .expect("Failed to download metadata");
 
-    dbg_print("Downloaded metadata");
+    print_duration("Downloading metadata took", &start.elapsed());
+
     let stats = meta_data.stats();
     let expected_asset_count = stats.number_assets() as usize;
     let expected_exchange_count = stats.number_exchanges() as usize;
     let expected_instrument_count = stats.number_instruments() as usize;
-
-    dbg_print(&stats.to_string());
 
     dbg_print("Check if metadata already imported");
     let db_asset_count = dbm_mddb
@@ -79,5 +88,13 @@ async fn main() -> Result<(), Box<dyn Error>> {
 fn dbg_print(msg: &str) {
     if DBG {
         println!("[main]: {}", msg)
+    }
+}
+
+fn print_duration(msg: &str, elapsed: &Duration) {
+    if DBG {
+        let msg = format!("[main]: {}", msg);
+        print_utils::print_duration(msg.as_str(), elapsed);
+        println!("[main]:");
     }
 }

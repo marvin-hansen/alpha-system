@@ -2,7 +2,7 @@ use std::time::Duration;
 
 use common_service::print_utils;
 
-use crate::utils::util_download::DownloadUtils;
+use crate::utils::DownloadUtils;
 
 mod init_process;
 mod level_1_exchanges;
@@ -12,6 +12,7 @@ mod level_3_instruments;
 #[derive(Debug, Clone)]
 pub struct InitManager {
     dbg: bool,
+    use_proxy: bool,
     dl_utils: DownloadUtils,
 }
 
@@ -19,7 +20,16 @@ impl InitManager {
     pub(crate) fn new(dbg: bool) -> Self {
         Self {
             dbg,
+            use_proxy: false,
             dl_utils: DownloadUtils::new(),
+        }
+    }
+
+    pub(crate) fn with_proxy_url(dbg: bool, url: &str) -> Self {
+        Self {
+            dbg,
+            use_proxy: true,
+            dl_utils: DownloadUtils::with_proxy_url(url),
         }
     }
 }
