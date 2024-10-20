@@ -52,7 +52,7 @@ async fn test_create_exchange() {
     assert!(result.is_ok());
 
     let test_data = get_test_meta_exchange();
-    let result = Exchange::create(conn, test_data);
+    let result = Exchange::create_exchange(conn, test_data);
     assert!(result.is_ok());
 }
 
@@ -69,12 +69,12 @@ async fn test_create_exchange_error() {
     assert!(result.is_ok());
 
     let test_data = get_test_meta_exchange();
-    let result = Exchange::create(conn, test_data);
+    let result = Exchange::create_exchange(conn, test_data);
     assert!(result.is_ok());
 
     // Simulate an error scenario by trying to create the same exchange again with the same code (primary key)
     let test_data = get_test_meta_exchange();
-    let result = Exchange::create(conn, test_data);
+    let result = Exchange::create_exchange(conn, test_data);
     assert!(result.is_err());
 }
 
@@ -109,7 +109,7 @@ async fn test_count_exchanges_with_entries() {
     assert!(result.is_ok());
 
     let test_data = get_test_meta_exchange();
-    let result = Exchange::create(conn, test_data);
+    let result = Exchange::create_exchange(conn, test_data);
     assert!(result.is_ok());
 
     let result = Exchange::count(conn);
@@ -149,7 +149,7 @@ async fn test_check_if_exchange_id_exists_true() {
     let test_data = get_test_meta_exchange();
     let valid_exchange_id = test_data.code.clone();
 
-    let result = Exchange::create(conn, test_data);
+    let result = Exchange::create_exchange(conn, test_data);
     assert!(result.is_ok());
 
     let result = Exchange::check_if_exchange_id_exists(conn, valid_exchange_id);
@@ -188,7 +188,7 @@ async fn test_update() {
     assert!(result.is_ok());
 
     let test_data = get_test_meta_exchange();
-    Exchange::create(conn, test_data).expect("Failed to create exchange collection");
+    Exchange::create_exchange(conn, test_data).expect("Failed to create exchange collection");
 
     let exchange_id = "test_exchange_code"; // Replace with actual valid ID
     let updated_data = get_test_meta_exchange(); // Replace with actual updated data
@@ -211,7 +211,7 @@ async fn test_read_valid_exchange_id() {
 
     let test_data = get_test_meta_exchange();
     let valid_exchange_id = test_data.code.clone();
-    Exchange::create(conn, test_data.clone()).expect("Failed to create exchange");
+    Exchange::create_exchange(conn, test_data.clone()).expect("Failed to create exchange");
 
     let result = Exchange::read(conn, valid_exchange_id);
     assert!(result.is_ok());
@@ -233,7 +233,7 @@ async fn test_read_all_with_entries() {
     assert!(result.is_ok());
 
     let test_data1 = get_test_meta_exchange();
-    Exchange::create(conn, test_data1.clone()).expect("Failed to create exchange");
+    Exchange::create_exchange(conn, test_data1.clone()).expect("Failed to create exchange");
 
     let result = Exchange::read_all(conn);
     assert!(result.is_ok());

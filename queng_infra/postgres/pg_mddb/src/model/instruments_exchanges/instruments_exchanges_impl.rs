@@ -2,6 +2,7 @@ use crate::model::instruments_exchanges::{CreateInstrumentsExchanges, Instrument
 use crate::schema::mddb::instruments_exchanges::dsl::instruments_exchanges;
 use crate::schema::mddb::instruments_exchanges::{exchange_id, instrument_id};
 use crate::Connection;
+use common_metadata::prelude::MetaInstrument;
 use diesel::dsl::insert_into;
 use diesel::{ExpressionMethods, QueryDsl, QueryResult, RunQueryDsl, SelectableHelper};
 
@@ -16,7 +17,7 @@ impl InstrumentsExchanges {
     /// # Returns
     /// A `QueryResult` containing the newly created InstrumentsExchanges entry if successful.
     ///
-    pub fn create(
+    pub fn create_instruments_exchange(
         conn: &mut Connection,
         param_instrument_id: String,
         param_exchange_id: String,
@@ -30,6 +31,31 @@ impl InstrumentsExchanges {
             .values(&new_entry)
             .returning(InstrumentsExchanges::as_returning())
             .get_result::<Self>(conn)
+    }
+
+    pub fn create_instruments_exchange_collection(
+        conn: &mut Connection,
+        meta_instruments: &[MetaInstrument],
+    ) -> Result<usize, diesel::result::Error> {
+        let instruments: Vec<CreateInstrumentsExchanges> = meta_instruments
+            .iter()
+            .map(|meta_instrument| {
+                CreateInstrumentsExchanges::from_meta_instrument(meta_instrument.clone())
+            })
+            .collect();
+
+        // Insert the instruments one by one to prevent exceeding the number of parameters.
+        // https://github.com/diesel-rs/diesel/issues/2414
+        for i in instruments.iter() {
+            if let Err(e) = diesel::insert_into(instruments_exchanges)
+                .values(i)
+                .execute(conn)
+            {
+                return Err(e);
+            }
+        }
+
+        Ok(instruments.len())
     }
 
     /// Checks if an entry with the provided instrument ID and exchange ID exists in the database.

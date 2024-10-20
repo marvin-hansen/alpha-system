@@ -17,7 +17,7 @@ impl Instrument {
     ///
     /// A `Result` containing the inserted `MetaInstrument` if successful, else an `Error`.
     ///
-    pub fn create(
+    pub fn create_instrument(
         conn: &mut Connection,
         meta_instrument: MetaInstrument,
     ) -> Result<MetaInstrument, diesel::result::Error> {
@@ -60,13 +60,18 @@ impl Instrument {
             .map(|meta_instrument| Instrument::from_meta_instrument(meta_instrument.clone()))
             .collect();
 
-        match diesel::insert_into(instruments_table)
-            .values(&instruments)
-            .execute(conn)
-        {
-            Ok(res) => Ok(res),
-            Err(e) => Err(e),
+        // Insert the instruments one by one to prevent exceeding the number of parameters.
+        // https://github.com/diesel-rs/diesel/issues/2414
+        for instrument in &instruments {
+            if let Err(e) = diesel::insert_into(instruments_table)
+                .values(instrument)
+                .execute(conn)
+            {
+                return Err(e);
+            }
         }
+
+        Ok(instruments.len())
     }
 
     /// Counts the number of instruments in the database.

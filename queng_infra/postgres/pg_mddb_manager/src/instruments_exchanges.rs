@@ -1,5 +1,6 @@
 use crate::PostgresMDDBManager;
 use common_errors::prelude::PostgresDBError;
+use common_metadata::prelude::MetaInstrument;
 use pg_mddb::prelude::InstrumentsExchanges;
 
 impl PostgresMDDBManager {
@@ -10,10 +11,26 @@ impl PostgresMDDBManager {
         self.dbg_print("insert_instruments_exchanges");
         let conn = &mut self.get_connection();
 
-        match InstrumentsExchanges::create(
+        match InstrumentsExchanges::create_instruments_exchange(
             conn,
             instruments_exchanges.instrument_id,
             instruments_exchanges.exchange_id,
+        ) {
+            Ok(res) => Ok(res),
+            Err(e) => Err(PostgresDBError::InsertFailed(e.to_string())),
+        }
+    }
+
+    pub async fn insert_instruments_exchanges_collection(
+        &self,
+        instruments_exchanges: &[MetaInstrument],
+    ) -> Result<usize, PostgresDBError> {
+        self.dbg_print("insert_instruments_exchanges_collection");
+        let conn = &mut self.get_connection();
+
+        match InstrumentsExchanges::create_instruments_exchange_collection(
+            conn,
+            instruments_exchanges,
         ) {
             Ok(res) => Ok(res),
             Err(e) => Err(PostgresDBError::InsertFailed(e.to_string())),

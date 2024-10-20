@@ -17,7 +17,7 @@ impl Exchange {
     /// # Returns
     /// A Result containing the inserted MetaExchange if successful, or a diesel Error if an error occurs.
     ///
-    pub fn create(
+    pub fn create_exchange(
         conn: &mut Connection,
         meta_exchange: MetaExchange,
     ) -> Result<MetaExchange, Error> {

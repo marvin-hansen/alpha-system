@@ -68,7 +68,7 @@ async fn test_create_instrument() {
     assert!(result.is_ok());
 
     let instrument = get_test_meta_instrument();
-    let result = Instrument::create(conn, instrument);
+    let result = Instrument::create_instrument(conn, instrument);
     assert!(result.is_ok());
 }
 
@@ -140,7 +140,7 @@ async fn test_count_instruments_with_entries() {
     assert!(result.is_ok());
 
     let test_data = get_test_meta_instrument();
-    let result = Instrument::create(conn, test_data);
+    let result = Instrument::create_instrument(conn, test_data);
     assert!(result.is_ok());
 
     let result = Instrument::count(conn);
@@ -178,7 +178,7 @@ async fn test_check_if_instrument_id_exists_returns_true() {
 
     let instrument = get_test_meta_instrument();
     let instrument_id = instrument.code.to_string();
-    let result = Instrument::create(conn, instrument);
+    let result = Instrument::create_instrument(conn, instrument);
     assert!(result.is_ok());
 
     let exists = Instrument::check_if_instrument_id_exists(conn, &instrument_id)
@@ -216,7 +216,7 @@ async fn test_read_instrument() {
 
     let instrument = get_test_meta_instrument();
     let instrument_id = instrument.code.to_string();
-    let result = Instrument::create(conn, instrument);
+    let result = Instrument::create_instrument(conn, instrument);
     assert!(result.is_ok());
 
     let result = Instrument::read(conn, &instrument_id);
@@ -252,7 +252,7 @@ async fn test_read_all_instrument() {
     assert!(result.is_ok());
 
     let instrument = get_test_meta_instrument();
-    let result = Instrument::create(conn, instrument);
+    let result = Instrument::create_instrument(conn, instrument);
     assert!(result.is_ok());
 
     let result = Instrument::read_all(conn);
@@ -289,7 +289,7 @@ async fn test_update_instrument() {
 
     let instrument = get_test_meta_instrument();
     let instrument_id = instrument.code.to_string();
-    let result = Instrument::create(conn, instrument);
+    let result = Instrument::create_instrument(conn, instrument);
     assert!(result.is_ok());
 
     let update_data = get_test_meta_instrument();
@@ -329,7 +329,7 @@ async fn test_delete_instrument() {
 
     let instrument = get_test_meta_instrument();
     let instrument_id = instrument.code.to_string();
-    Instrument::create(conn, instrument).expect("Failed to create instrument");
+    Instrument::create_instrument(conn, instrument).expect("Failed to create instrument");
 
     let result = Instrument::delete(conn, &instrument_id);
     assert!(result.is_ok());

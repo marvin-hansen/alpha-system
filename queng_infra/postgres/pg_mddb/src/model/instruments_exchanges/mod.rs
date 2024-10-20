@@ -1,4 +1,5 @@
 mod instruments_exchanges_impl;
+mod instruments_exchanges_type_conversion;
 
 use diesel::{Associations, Identifiable, Insertable, Queryable, Selectable};
 

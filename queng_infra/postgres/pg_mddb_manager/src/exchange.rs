@@ -11,7 +11,7 @@ impl PostgresMDDBManager {
         self.dbg_print("insert_exchange");
         let conn = &mut self.get_connection();
 
-        match Exchange::create(conn, exchange) {
+        match Exchange::create_exchange(conn, exchange) {
             Ok(res) => Ok(res),
             Err(e) => Err(PostgresDBError::InsertFailed(e.to_string())),
         }

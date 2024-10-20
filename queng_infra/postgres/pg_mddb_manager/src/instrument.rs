@@ -11,7 +11,7 @@ impl PostgresMDDBManager {
         self.dbg_print("insert_instruments");
         let conn = &mut self.get_connection();
 
-        match Instrument::create(conn, instrument) {
+        match Instrument::create_instrument(conn, instrument) {
             Ok(instrument) => Ok(instrument),
             Err(e) => Err(PostgresDBError::InsertFailed(e.to_string())),
         }

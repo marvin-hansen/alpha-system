@@ -18,7 +18,7 @@ impl Asset {
     ///
     /// Returns a `QueryResult` containing the created `MetaAsset` if successful, or an error.
     ///
-    pub fn create(db: &mut Connection, meta_asset: MetaAsset) -> QueryResult<MetaAsset> {
+    pub fn create_asset(db: &mut Connection, meta_asset: MetaAsset) -> QueryResult<MetaAsset> {
         let asset = Asset::from_meta_asset(meta_asset);
         match insert_into(assets_table)
             .values(&asset)

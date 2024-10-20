@@ -56,7 +56,7 @@ async fn test_count() {
     assert_eq!(count.unwrap(), 0);
 
     let asset = get_test_asset().to_meta_asset();
-    let result = Asset::create(conn, asset);
+    let result = Asset::create_asset(conn, asset);
     assert!(result.is_ok());
     let count = Asset::count(conn);
     assert!(count.is_ok());
@@ -76,7 +76,7 @@ async fn test_create() {
     assert!(result.is_ok());
 
     let asset = get_test_asset().to_meta_asset();
-    let result = Asset::create(conn, asset);
+    let result = Asset::create_asset(conn, asset);
     assert!(result.is_ok());
 }
 
@@ -93,11 +93,11 @@ async fn test_create_error() {
     assert!(result.is_ok());
 
     let asset = get_test_asset().to_meta_asset();
-    let result = Asset::create(conn, asset.clone());
+    let result = Asset::create_asset(conn, asset.clone());
     assert!(result.is_ok());
 
     // Simulate an error scenario by trying to create the same asset again with the same code (primary key)
-    let result = Asset::create(conn, asset.clone());
+    let result = Asset::create_asset(conn, asset.clone());
     assert!(result.is_err());
 }
 
@@ -114,7 +114,7 @@ async fn test_read() {
     assert!(result.is_ok());
 
     let asset = get_test_asset().to_meta_asset();
-    let result = Asset::create(conn, asset);
+    let result = Asset::create_asset(conn, asset);
     assert!(result.is_ok());
 
     let result = Asset::read(conn, "test_asset_code".to_string());
@@ -154,7 +154,7 @@ async fn test_delete() {
     assert!(result.is_ok());
 
     let asset = get_test_asset().to_meta_asset();
-    let result = Asset::create(conn, asset);
+    let result = Asset::create_asset(conn, asset);
     assert!(result.is_ok());
 
     let result = Asset::delete(conn, "test_asset_code".to_string());

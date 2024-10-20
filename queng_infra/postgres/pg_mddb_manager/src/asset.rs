@@ -8,7 +8,7 @@ impl PostgresMDDBManager {
         self.dbg_print("insert_assets");
         let conn = &mut self.get_connection();
 
-        match Asset::create(conn, asset) {
+        match Asset::create_asset(conn, asset) {
             Ok(res) => Ok(res),
             Err(e) => Err(PostgresDBError::InsertFailed(e.to_string())),
         }
