@@ -63,11 +63,12 @@ impl Instrument {
         // Insert the instruments one by one to prevent exceeding the number of parameters.
         // https://github.com/diesel-rs/diesel/issues/2414
         for instrument in &instruments {
-            if let Err(e) = diesel::insert_into(instruments_table)
+            match diesel::insert_into(instruments_table)
                 .values(instrument)
                 .execute(conn)
             {
-                return Err(e);
+                Ok(_) => {}
+                Err(e) => return Err(e),
             }
         }
 

@@ -55,12 +55,12 @@ impl PostgresMDDBManager {
 
     pub async fn read_instrument(
         &self,
-        instrument_id: String,
+        instrument_id: &str,
     ) -> Result<MetaInstrument, PostgresDBError> {
         self.dbg_print("read_instrument");
         let conn = &mut self.get_connection();
 
-        match Instrument::read(conn, &instrument_id) {
+        match Instrument::read(conn, instrument_id) {
             Ok(instrument) => Ok(instrument),
             Err(e) => Err(PostgresDBError::QueryFailed(e.to_string())),
         }
@@ -84,7 +84,7 @@ impl PostgresMDDBManager {
         self.dbg_print("update_instrument");
         let conn = &mut self.get_connection();
 
-        match Instrument::update(conn, &instrument_id, instrument) {
+        match Instrument::update(conn, instrument_id, instrument) {
             Ok(res) => Ok(res),
             Err(e) => Err(PostgresDBError::UpdateFailed(e.to_string())),
         }
