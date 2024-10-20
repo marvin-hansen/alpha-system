@@ -7,14 +7,18 @@ pub(crate) mod util_download;
 #[derive(Debug, Clone)]
 pub struct DownloadUtils {
     client: Client,
-    url: String,
+    url_assets: String,
+    url_exchanges: String,
+    url_instruments: String,
 }
 
 impl DownloadUtils {
     pub fn new(url: &str) -> Self {
         Self {
             client: util_client::get_client(),
-            url: url.to_string(),
+            url_assets: DownloadUtils::format_url(url, "assets"),
+            url_exchanges: DownloadUtils::format_url(url, "exchanges"),
+            url_instruments: DownloadUtils::format_url(url, "instruments"),
         }
     }
 }
@@ -30,8 +34,7 @@ impl DownloadUtils {
     ///
     /// Returns `Result<Vec<u8>, DownloadError>` indicating the success or failure of the download operation.
     ///
-    async fn download(&self, endpoint: &str) -> Result<Vec<u8>, DownloadError> {
-        let url = self.format_url(endpoint);
+    async fn download(&self, url: &str) -> Result<Vec<u8>, DownloadError> {
         let resp = self
             .client
             .get(url)
@@ -51,7 +54,7 @@ impl DownloadUtils {
     ///
     /// * `uri` - A string slice that holds the endpoint URI to be formatted
     ///
-    fn format_url(&self, endpoint: &str) -> String {
-        format!("{}{}", self.url, endpoint)
+    fn format_url(url: &str, endpoint: &str) -> String {
+        format!("{}{}", url, endpoint)
     }
 }

@@ -19,11 +19,9 @@ mod health;
 #[global_allocator]
 static GLOBAL: MiMalloc = MiMalloc;
 
-const DBG: bool = false;
+const DBG: bool = true;
 
-//  Replace with auto-config.
 const PORT_HTTP: u16 = 7777;
-const PORT_HEALTH: u16 = 8080;
 
 const SVC_ID: ServiceID = ServiceID::KaikoProxy;
 
@@ -33,14 +31,12 @@ pub(crate) type MetaDataStore = Arc<RwLock<MetaDataSet>>;
 async fn main() -> Result<(), Box<dyn Error>> {
     let start = Instant::now();
 
-    dbg_print("Load meta-data");
+    dbg_print("Download meta-data");
     let meta_data = run_init()
         .await
         .expect("Failed to run init and failed to download metadata");
 
-    dbg_print("Build meta-data store");
-    // ArcSwap hot-swaps data in a multi-threaded runtime.
-    // https://docs.rs/arc-swap/1.7.1/arc_swap/index.html
+    dbg_print("Build in-memory meta-data store");
     let store: MetaDataStore = Arc::new(RwLock::new(meta_data));
 
     let with_state = warp::any().map(move || store.clone());
@@ -73,8 +69,15 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .and(with_state.clone())
         .and_then(handler::get_stats_handler);
 
+    dbg_print("Configure health check route");
+    let health_check = warp::get()
+        .and(warp::path("health"))
+        .and(warp::path::end())
+        .and_then(handler::get_health_handler);
+
     dbg_print("Configure service routes");
-    let routes = get_assets
+    let routes = health_check
+        .or(get_assets)
         .or(get_exchanges)
         .or(get_instruments)
         .or(get_stats);
@@ -83,25 +86,12 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let http_signal = shutdown_utils::signal_handler("http server");
     let (_, http_server) =
         warp::serve(routes).bind_with_graceful_shutdown(([127, 0, 0, 1], PORT_HTTP), http_signal);
-
     let http_handle = tokio::spawn(http_server);
-
-    dbg_print("Configure health check route");
-    let health_check = warp::get()
-        .and(warp::path("health"))
-        .and(warp::path::end())
-        .and_then(handler::get_health_handler);
-
-    dbg_print("Configure health check service");
-    let health_signal = shutdown_utils::signal_handler("http server");
-    let (_, health_server) = warp::serve(health_check)
-        .bind_with_graceful_shutdown(([127, 0, 0, 1], PORT_HEALTH), health_signal);
-    let health_handle = tokio::spawn(health_server);
 
     print_duration("[main]: Starting server took", &start.elapsed());
     print_utils::print_start_header_simple("Metadata Integration Service", "0.0.0.0:7777/");
 
-    match tokio::try_join!(http_handle, health_handle) {
+    match tokio::try_join!(http_handle) {
         Ok(_) => {}
         Err(e) => {
             println!("Kaiko Proxy: Failed to start HTTP server: {:?}", e);
@@ -120,7 +110,6 @@ pub(crate) fn dbg_print(s: &str) {
 
 pub(crate) async fn run_init() -> Result<MetaDataSet, InitError> {
     let result = kaiko_download::download_meta_data(DBG, false).await;
-
     match result {
         Ok(meta_data_set) => Ok(meta_data_set),
         Err(e) => Err(e),
