@@ -111,12 +111,6 @@ async fn main() -> Result<(), Box<dyn Error>> {
             .insert_instrument_collection(instruments)
             .await
             .expect("Failed to import instruments");
-
-        // Inserts m to n relation that links exchanges with instruments
-        // dbm_mddb
-        //     .insert_instruments_exchanges_collection(instruments)
-        //     .await
-        //     .expect("Failed to import instruments_exchanges");
     }
 
     print_duration("Importing metadata took", &start.elapsed());

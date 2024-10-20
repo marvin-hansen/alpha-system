@@ -14,12 +14,11 @@ use common_metadata::prelude::MetaDataSet;
 use common_service::{print_utils, shutdown_utils};
 
 mod handler;
-mod health;
 
 #[global_allocator]
 static GLOBAL: MiMalloc = MiMalloc;
 
-const DBG: bool = true;
+const DBG: bool = false;
 
 const PORT_HTTP: u16 = 7777;
 

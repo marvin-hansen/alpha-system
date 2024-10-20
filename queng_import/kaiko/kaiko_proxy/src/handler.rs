@@ -1,10 +1,4 @@
-use crate::health::Health;
 use crate::MetaDataStore;
-
-pub(crate) async fn get_health_handler() -> Result<impl warp::Reply, warp::Rejection> {
-    let result = Health::ok();
-    Ok(warp::reply::json(&result))
-}
 
 pub(crate) async fn get_assets_handler(
     store: MetaDataStore,
@@ -36,4 +30,25 @@ pub(crate) async fn get_stats_handler(
     let guard = store.read().await;
     let result = guard.stats();
     Ok(warp::reply::json(result))
+}
+
+// ###############################################################################
+// Health handler
+// ###############################################################################
+pub(crate) async fn get_health_handler() -> Result<impl warp::Reply, warp::Rejection> {
+    let result = Health::ok();
+    Ok(warp::reply::json(&result))
+}
+
+use serde::{Deserialize, Serialize};
+
+#[derive(Debug, Copy, Clone, PartialEq, Serialize, Deserialize)]
+pub struct Health<'s> {
+    status: &'s str,
+}
+
+impl Health<'_> {
+    pub fn ok() -> Self {
+        Self { status: "OK" }
+    }
 }
