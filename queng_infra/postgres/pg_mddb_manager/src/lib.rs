@@ -1,7 +1,6 @@
 mod asset;
 mod exchange;
 mod instrument;
-mod instruments_exchanges;
 mod stat;
 
 use common_errors::prelude::PostgresDBError;

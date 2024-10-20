@@ -1,5 +1,8 @@
 use crate::model::instrument::{Instrument, UpdateInstrument};
+use crate::prelude::CreateInstrumentsExchanges;
 use crate::schema::mddb::instruments::table as instruments_table;
+use crate::schema::mddb::instruments_exchanges::dsl::instruments_exchanges;
+use crate::schema::mddb::instruments_exchanges::exchange_id;
 use crate::Connection;
 use common_metadata::prelude::MetaInstrument;
 use diesel::result::Error::DatabaseError;
@@ -22,13 +25,25 @@ impl Instrument {
         meta_instrument: MetaInstrument,
     ) -> Result<MetaInstrument, diesel::result::Error> {
         let instrument = Instrument::from_meta_instrument(meta_instrument.clone());
-        match diesel::insert_into(instruments_table)
+        let res = match diesel::insert_into(instruments_table)
             .values(&instrument)
             .get_result::<Instrument>(conn)
         {
             Ok(res) => Ok(res.to_meta_instrument()),
             Err(e) => Err(e),
-        }
+        };
+
+        let instrument_exchange = CreateInstrumentsExchanges::from_instrument(instrument.clone());
+        match diesel::insert_into(instruments_exchanges)
+            .values(instrument_exchange)
+            .execute(conn)
+        {
+            Ok(_) => {}
+            Err(e) => return Err(e),
+        };
+
+        // return the inserted instrument
+        res
     }
 
     /// Inserts a collection of instruments into the database.
@@ -65,6 +80,18 @@ impl Instrument {
         for instrument in &instruments {
             match diesel::insert_into(instruments_table)
                 .values(instrument)
+                .execute(conn)
+            {
+                Ok(_) => {}
+                Err(e) => return Err(e),
+            }
+
+            // Insert the instrument exchanges relationship
+            let instrument_exchange =
+                CreateInstrumentsExchanges::from_instrument(instrument.clone());
+
+            match diesel::insert_into(instruments_exchanges)
+                .values(instrument_exchange)
                 .execute(conn)
             {
                 Ok(_) => {}
@@ -198,10 +225,36 @@ impl Instrument {
         conn: &mut Connection,
         instrument_id: &str,
     ) -> Result<usize, diesel::result::Error> {
-        diesel::delete(
+        // Check if the instrument exists
+        let exists = Instrument::check_if_instrument_id_exists(conn, instrument_id)
+            .expect("Failed to check if instrument ID exists");
+
+        // Return Ok(0) if the instrument does not exist
+        if !exists {
+            return Ok(0);
+        }
+
+        // Read the instrument before deleting it so we can get the exchange_id
+        let instrument = Instrument::read(conn, instrument_id).expect("Failed to read instrument");
+        let param_exchange_id = instrument.exchange_code;
+
+        // Delete the instrument
+        let res = diesel::delete(
             instruments_table
                 .filter(crate::schema::mddb::instruments::instrument_id.eq(instrument_id)),
         )
+        .execute(conn);
+
+        // Delete the instrument exchange relation
+        diesel::delete(
+            instruments_exchanges
+                .filter(crate::schema::mddb::instruments_exchanges::instrument_id.eq(instrument_id))
+                .filter(exchange_id.eq(param_exchange_id)),
+        )
         .execute(conn)
+        .expect("Failed to delete instrument exchange relation");
+
+        // Return the QueryResult containing the number of deleted rows
+        res
     }
 }
