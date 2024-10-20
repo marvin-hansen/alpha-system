@@ -44,8 +44,8 @@ impl Exchange {
     /// and an Error represents a failure.
     pub fn create_exchange_collection(
         conn: &mut Connection,
-        meta_exchanges: Vec<MetaExchange>,
-    ) -> Result<bool, Error> {
+        meta_exchanges: &[MetaExchange],
+    ) -> Result<usize, Error> {
         if meta_exchanges.is_empty() {
             return Err(DatabaseError(
                 diesel::result::DatabaseErrorKind::Unknown,
@@ -56,15 +56,15 @@ impl Exchange {
         }
 
         let new_exchanges: Vec<CreateExchange> = meta_exchanges
-            .into_iter()
-            .map(CreateExchange::from_meta_exchange)
+            .iter()
+            .map(|me| CreateExchange::from_meta_exchange(me.clone()))
             .collect();
 
         match diesel::insert_into(exchanges_table)
             .values(&new_exchanges)
             .execute(conn)
         {
-            Ok(_) => Ok(true),
+            Ok(res) => Ok(res),
             Err(e) => Err(e),
         }
     }

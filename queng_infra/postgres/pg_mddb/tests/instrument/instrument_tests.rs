@@ -84,9 +84,9 @@ async fn test_create_instrument_collection_success() {
     assert!(result.is_ok());
 
     let meta_instruments = vec![get_test_meta_instrument()];
-    let result = Instrument::create_instrument_collection(conn, meta_instruments);
+    let result = Instrument::create_instrument_collection(conn, &meta_instruments);
     assert!(result.is_ok());
-    assert!(result.unwrap());
+    assert_eq!(result.unwrap(), 1);
 }
 
 #[tokio::test]
@@ -101,7 +101,7 @@ async fn test_create_instrument_collection_empty() {
     assert!(result.is_ok());
 
     let meta_instruments: Vec<MetaInstrument> = vec![];
-    let result = Instrument::create_instrument_collection(conn, meta_instruments);
+    let result = Instrument::create_instrument_collection(conn, &meta_instruments);
     assert!(result.is_err());
 }
 
@@ -123,7 +123,7 @@ async fn test_create_instrument_collection_error() {
         get_test_meta_instrument(),
         get_test_meta_instrument(),
     ];
-    let result = Instrument::create_instrument_collection(conn, meta_instruments);
+    let result = Instrument::create_instrument_collection(conn, &meta_instruments);
     assert!(result.is_err());
 }
 

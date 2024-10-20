@@ -1,4 +1,4 @@
-mod db_svc;
+mod service;
 
 use common_errors::prelude::PostgresDBError;
 use diesel::r2d2::{ConnectionManager, Pool};

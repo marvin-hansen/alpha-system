@@ -10,6 +10,7 @@ authors.workspace = true
 [dependencies]
 # Internal crates
 common_errors = {workspace = true}
+common_metadata = {workspace = true}
 pg_mddb = {workspace = true}
 
 # External crates

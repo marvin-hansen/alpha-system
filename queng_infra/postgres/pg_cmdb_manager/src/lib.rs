@@ -4,7 +4,7 @@ use diesel::{Connection, PgConnection};
 use pg_cmdb::run_cmdb_db_migration;
 use std::fmt::Display;
 
-mod portfolio;
+mod portfolio_config;
 
 #[derive(Clone, Debug)]
 pub struct PostgresCMDBManager {

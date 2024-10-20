@@ -44,8 +44,8 @@ impl Instrument {
     ///
     pub fn create_instrument_collection(
         conn: &mut Connection,
-        meta_instruments: Vec<MetaInstrument>,
-    ) -> Result<bool, diesel::result::Error> {
+        meta_instruments: &[MetaInstrument],
+    ) -> Result<usize, diesel::result::Error> {
         if meta_instruments.is_empty() {
             return Err(DatabaseError(
                 diesel::result::DatabaseErrorKind::Unknown,
@@ -60,10 +60,13 @@ impl Instrument {
             .map(|meta_instrument| Instrument::from_meta_instrument(meta_instrument.clone()))
             .collect();
 
-        diesel::insert_into(instruments_table)
+        match diesel::insert_into(instruments_table)
             .values(&instruments)
             .execute(conn)
-            .map(|_| true)
+        {
+            Ok(res) => Ok(res),
+            Err(e) => Err(e),
+        }
     }
 
     /// Counts the number of instruments in the database.

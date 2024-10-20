@@ -41,15 +41,15 @@ impl Asset {
     /// Returns a `QueryResult` indicating success or failure of the operation.
     ///
     pub fn create_asset_collection(
-        db: &mut Connection,
+        conn: &mut Connection,
         meta_assets: &[MetaAsset],
-    ) -> QueryResult<bool> {
+    ) -> QueryResult<usize> {
         let items: Vec<Asset> = meta_assets
             .iter()
             .map(|ma| Asset::from_meta_asset(ma.clone()))
             .collect();
-        match insert_into(assets_table).values(&items).execute(db) {
-            Ok(_) => Ok(true),
+        match insert_into(assets_table).values(&items).execute(conn) {
+            Ok(res) => Ok(res),
             Err(e) => Err(e),
         }
     }
@@ -134,7 +134,12 @@ impl Asset {
     ///
     /// Returns a `QueryResult` containing the number of rows affected by the update operation.
     ///
-    pub fn update(db: &mut Connection, asset_id: String, item: UpdateAsset) -> QueryResult<usize> {
+    pub fn update(
+        db: &mut Connection,
+        asset_id: String,
+        meta_asset: MetaAsset,
+    ) -> QueryResult<usize> {
+        let item = UpdateAsset::from_meta_asset(meta_asset);
         diesel::update(assets_table.find(asset_id))
             .set(&item)
             .execute(db)

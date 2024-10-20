@@ -91,9 +91,9 @@ async fn test_create_exchange_collection() {
     assert!(result.is_ok());
 
     let test_data = Vec::from([get_test_meta_exchange()]);
-    let result = Exchange::create_exchange_collection(conn, test_data);
+    let result = Exchange::create_exchange_collection(conn, &test_data);
     assert!(result.is_ok());
-    assert!(result.unwrap());
+    assert_eq!(result.unwrap(), 1);
 }
 
 #[tokio::test]
