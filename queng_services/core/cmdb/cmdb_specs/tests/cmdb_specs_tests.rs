@@ -6,7 +6,7 @@ fn test_cmdb_service_config() {
     let service_config = cmdb_service_config();
 
     assert_eq!(service_config.svc_id(), &ServiceID::CMDB);
-    assert_eq!(service_config.name(), "cmdbv1");
+    assert_eq!(service_config.name(), "cmdb");
     assert_eq!(service_config.version(), 1);
     assert!(!service_config.online());
     assert_eq!(
@@ -15,11 +15,11 @@ fn test_cmdb_service_config() {
     );
     assert_eq!(
         service_config.health_check_uri(),
-        "cmdbv1-service.default.svc.cluster.local:8080/health"
+        "cmdb-service.default.svc.cluster.local:8080/health"
     );
     assert_eq!(
         service_config.cluster_uri(),
-        "cmdbv1-service.default.svc.cluster.local"
+        "cmdb-service.default.svc.cluster.local"
     );
     assert_eq!(
         service_config.dependencies().len(),

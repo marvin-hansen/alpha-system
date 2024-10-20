@@ -1,4 +1,3 @@
-use crate::fields::BASE_URL;
 use common_errors::prelude::DownloadError;
 use reqwest::Client;
 
@@ -12,17 +11,10 @@ pub struct DownloadUtils {
 }
 
 impl DownloadUtils {
-    pub fn new() -> Self {
+    pub fn new(url: &str) -> Self {
         Self {
             client: util_client::get_client(),
-            url: BASE_URL.to_string(),
-        }
-    }
-
-    pub fn with_proxy_url(proxy_url: &str) -> Self {
-        Self {
-            client: util_client::get_client(),
-            url: proxy_url.to_string(),
+            url: url.to_string(),
         }
     }
 }

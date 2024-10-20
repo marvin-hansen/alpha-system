@@ -1,4 +1,9 @@
 pub(crate) const BASE_URL: &str = "https://reference-data-api.kaiko.io/v1/";
+pub(crate) const LOCAL_PROXY_URL: &str = "http://127.0.0.1:7777/";
+pub(crate) const CLUSTER_PROXY_URL: &str =
+    "http://apiproxy-service.default.svc.cluster.local:7777/";
+
+pub(crate) const CI_PROXY_URL: &str = "http://127.0.0.1:7777/";
 
 // https://docs.kaiko.com/#dex-coverage
 pub(crate) const DEX: [&str; 12] = [

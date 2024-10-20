@@ -10,9 +10,11 @@ authors.workspace = true
 [dependencies]
 common_config = {workspace = true}
 common_errors = {workspace = true}
+common_env = { workspace = true }
 common_metadata = {workspace = true}
 common_service =  {workspace = true}
 crypto_utils = {workspace = true}
+environment_manager = {workspace = true}
 # External crates
 chrono = { workspace = true }
 reqwest = { workspace = true }

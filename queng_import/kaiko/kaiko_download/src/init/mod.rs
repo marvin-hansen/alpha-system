@@ -1,8 +1,8 @@
 use std::time::Duration;
 
-use common_service::print_utils;
-
+use crate::fields::BASE_URL;
 use crate::utils::DownloadUtils;
+use common_service::print_utils;
 
 mod init_process;
 mod level_1_exchanges;
@@ -21,15 +21,15 @@ impl InitManager {
         Self {
             dbg,
             use_proxy: false,
-            dl_utils: DownloadUtils::new(),
+            dl_utils: DownloadUtils::new(BASE_URL),
         }
     }
 
-    pub(crate) fn with_proxy_url(dbg: bool, url: &str) -> Self {
+    pub(crate) fn with_proxy_url(dbg: bool, proxy_url: &str) -> Self {
         Self {
             dbg,
             use_proxy: true,
-            dl_utils: DownloadUtils::with_proxy_url(url),
+            dl_utils: DownloadUtils::new(proxy_url),
         }
     }
 }

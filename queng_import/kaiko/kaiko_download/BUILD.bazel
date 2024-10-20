@@ -12,9 +12,11 @@ rust_library(
         # Internal crates
         "//alias:common_config",
         "//alias:common_errors",
+        "//alias:common_env",
         "//alias:common_metadata",
         "//alias:crypto_utils",
         "//alias:common_service",
+        "//alias:environment_manager",
         # External crates
         "//thirdparty/crates:chrono",
         "//thirdparty/crates:reqwest",

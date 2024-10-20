@@ -13,13 +13,7 @@ use tokio::time::Instant;
 static GLOBAL: MiMalloc = MiMalloc;
 
 const DBG: bool = true;
-const USE_PROXY: bool = true;
-
-const PROXY_URL: Option<&str> = if USE_PROXY {
-    Some("http://127.0.0.1:7777/")
-} else {
-    None
-};
+const AUTO_DETECT_PROXY: bool = true;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
@@ -40,7 +34,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     dbg_print("Download metadata");
     let start = Instant::now();
-    let meta_data = kaiko_download::download_meta_data(DBG, PROXY_URL)
+    let meta_data = kaiko_download::download_meta_data(DBG, AUTO_DETECT_PROXY)
         .await
         .expect("Failed to download metadata");
 
