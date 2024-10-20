@@ -3,4 +3,5 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-ENV=LOCAL bazel run //alias:kaiko_proxy
+# Find image tag and URL in queng_specs/container_specs/container_specs_kaiko/src/lib.rs
+command docker run --name apiproxy-7777 -p 7777:7777 -e ENV=LOCAL -d index.docker.io/hansenmarvin/api_proxy:280562f
