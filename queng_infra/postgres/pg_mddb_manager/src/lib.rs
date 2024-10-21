@@ -17,18 +17,59 @@ pub struct PostgresMDDBManager {
 }
 
 impl PostgresMDDBManager {
+    /// Asynchronously creates a new instance by building with the provided URL.
+    ///
+    /// # Arguments
+    ///
+    /// * `url` - A string slice representing the URL for the new instance.
+    ///
+    /// # Returns
+    ///
+    /// A Result containing the new instance or a PostgresDBError.
+    ///
     pub async fn new(url: &str) -> Result<Self, PostgresDBError> {
         Self::build(false, false, true, url).await
     }
 
+    /// Asynchronously creates a new instance without running any DB migrations.
+    ///
+    /// # Arguments
+    ///
+    /// * `url` - A string slice representing the URL for the database connection.
+    ///
+    /// # Returns
+    ///
+    /// A Result containing the newly created instance or a PostgresDBError.
     pub async fn new_no_migration(url: &str) -> Result<Self, PostgresDBError> {
         Self::build(false, false, false, url).await
     }
 
+    /// Asynchronously initializes a connection with debug mode enabled.
+    ///
+    /// # Arguments
+    ///
+    /// * `url` - A string slice representing the URL for the connection.
+    /// * `migration` - A boolean indicating whether migration is enabled.
+    ///
+    /// # Returns
+    ///
+    /// A Result containing the initialized connection or a PostgresDBError.
+    ///
     pub async fn with_debug(url: &str, migration: bool) -> Result<Self, PostgresDBError> {
         Self::build(true, false, migration, url).await
     }
 
+    /// Asynchronously initializes a connection with test and debug options enabled.
+    ///
+    /// # Arguments
+    ///
+    /// * `url` - A string slice representing the URL for the connection.
+    /// * `migration` - A boolean indicating whether migration is enabled.
+    ///
+    /// # Returns
+    ///
+    /// A Result containing the initialized connection or a PostgresDBError.
+    ///
     pub async fn with_test_and_debug(url: &str, migration: bool) -> Result<Self, PostgresDBError> {
         Self::build(true, true, migration, url).await
     }
