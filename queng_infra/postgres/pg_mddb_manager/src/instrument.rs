@@ -4,6 +4,16 @@ use common_metadata::prelude::MetaInstrument;
 use pg_mddb::prelude::Instrument;
 
 impl PostgresMDDBManager {
+    /// Inserts a new instrument into the database.
+    ///
+    /// Args:
+    ///     instrument (MetaInstrument): The instrument to be inserted.
+    ///
+    /// Returns:
+    ///     Result<MetaInstrument, PostgresDBError>: The inserted instrument on success, or a `PostgresDBError` on failure.
+    ///
+    /// Failures:
+    ///     - `PostgresDBError::InsertFailed`: If the insertion operation fails due to database errors.
     pub async fn insert_instrument(
         &self,
         instrument: MetaInstrument,
@@ -17,6 +27,16 @@ impl PostgresMDDBManager {
         }
     }
 
+    /// Inserts a collection of instruments into the database.
+    ///
+    /// Args:
+    ///     instruments (&[MetaInstrument]): A slice of instruments to be inserted.
+    ///
+    /// Returns:
+    ///     Result<usize, PostgresDBError>: The number of instruments successfully inserted, or a `PostgresDBError` on failure.
+    ///
+    /// Failures:
+    ///     - `PostgresDBError::InsertFailed`: If the insertion operation fails due to database errors.
     pub async fn insert_instrument_collection(
         &self,
         instruments: &[MetaInstrument],
@@ -30,6 +50,13 @@ impl PostgresMDDBManager {
         }
     }
 
+    /// Counts the total number of instruments in the database.
+    ///
+    /// Returns:
+    ///     `Result<u64, PostgresDBError>`: The count of instruments on success, or a `PostgresDBError` on failure.
+    ///
+    /// Failures:
+    ///     - `PostgresDBError::CountFailed`: If the count operation fails due to database errors.
     pub async fn count_instruments(&self) -> Result<u64, PostgresDBError> {
         self.dbg_print("count_instruments");
         let conn = &mut self.get_connection();
@@ -40,6 +67,16 @@ impl PostgresMDDBManager {
         }
     }
 
+    /// Checks if an instrument with the specified ID exists in the database.
+    ///
+    /// Args:
+    ///     instrument_id (&str): The ID of the instrument to check.
+    ///
+    /// Returns:
+    ///     `Result<bool, PostgresDBError>`: `true` if the instrument exists, `false` otherwise, or a `PostgresDBError` on failure.
+    ///
+    /// Failures:
+    ///     - `PostgresDBError::CheckIfExistsFailed`: If the check operation fails due to database errors.
     pub async fn check_if_instrument_id_exists(
         &self,
         instrument_id: &str,
@@ -53,6 +90,16 @@ impl PostgresMDDBManager {
         }
     }
 
+    /// Reads an instrument from the database by its ID.
+    ///
+    /// Args:
+    ///     instrument_id (&str): The ID of the instrument to read.
+    ///
+    /// Returns:
+    ///     `Result<MetaInstrument, PostgresDBError>`: The instrument on success, or a `PostgresDBError` on failure.
+    ///
+    /// Failures:
+    ///     - `PostgresDBError::QueryFailed`: If the read operation fails due to database errors.
     pub async fn read_instrument(
         &self,
         instrument_id: &str,
@@ -66,6 +113,13 @@ impl PostgresMDDBManager {
         }
     }
 
+    /// Reads all instruments from the database.
+    ///
+    /// Returns:
+    ///     `Result<Vec<MetaInstrument>, PostgresDBError>`: A vector of all instruments on success, or a `PostgresDBError` on failure.
+    ///
+    /// Failures:
+    ///     - `PostgresDBError::QueryFailed`: If the read operation fails due to database errors.
     pub async fn read_all_instruments(&self) -> Result<Vec<MetaInstrument>, PostgresDBError> {
         self.dbg_print("read_all_instruments");
         let conn = &mut self.get_connection();
@@ -76,6 +130,17 @@ impl PostgresMDDBManager {
         }
     }
 
+    /// Updates an existing instrument in the database.
+    ///
+    /// Args:
+    ///     instrument_id (&str): The ID of the instrument to update.
+    ///     instrument (MetaInstrument): The new instrument data.
+    ///
+    /// Returns:
+    ///     `Result<usize, PostgresDBError>`: The number of rows affected on success, or a `PostgresDBError` on failure.
+    ///
+    /// Failures:
+    ///     - `PostgresDBError::UpdateFailed`: If the update operation fails due to database errors.
     pub async fn update_instrument(
         &self,
         instrument_id: &str,
@@ -90,6 +155,16 @@ impl PostgresMDDBManager {
         }
     }
 
+    /// Deletes an instrument from the database by its ID.
+    ///
+    /// Args:
+    ///     instrument_id (String): The ID of the instrument to delete.
+    ///
+    /// Returns:
+    ///     `Result<usize, PostgresDBError>`: The number of rows affected on success, or a `PostgresDBError` on failure.
+    ///
+    /// Failures:
+    ///     - `PostgresDBError::DeleteFailed`: If the delete operation fails due to database errors.
     pub async fn delete_instrument(&self, instrument_id: String) -> Result<usize, PostgresDBError> {
         self.dbg_print("delete_instrument");
         let conn = &mut self.get_connection();
