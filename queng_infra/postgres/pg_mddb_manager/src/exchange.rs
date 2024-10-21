@@ -15,7 +15,6 @@ impl PostgresMDDBManager {
     /// Raises:
     ///     PostgresDBError: If the insertion fails due to database errors.
     ///
-    /// This method is asynchronous.
     pub async fn insert_exchange(
         &self,
         exchange: MetaExchange,
@@ -40,7 +39,6 @@ impl PostgresMDDBManager {
     /// Raises:
     ///     PostgresDBError: If the insertion fails due to database errors.
     ///
-    /// This method is asynchronous.
     pub async fn insert_exchange_collection(
         &self,
         exchanges: &[MetaExchange],
@@ -62,7 +60,6 @@ impl PostgresMDDBManager {
     /// Raises:
     ///     PostgresDBError: If the count operation fails due to database errors.
     ///
-    /// This method is asynchronous.
     pub async fn count_exchanges(&self) -> Result<u64, PostgresDBError> {
         self.dbg_print("count_exchanges");
         let conn = &mut self.get_connection();
@@ -84,7 +81,6 @@ impl PostgresMDDBManager {
     /// Raises:
     ///     PostgresDBError: If the check operation fails due to database errors.
     ///
-    /// This method is asynchronous.
     pub async fn check_if_exchange_id_exists(
         &self,
         exchange_id_str: String,
@@ -109,7 +105,6 @@ impl PostgresMDDBManager {
     /// Raises:
     ///     PostgresDBError: If the read operation fails due to database errors.
     ///
-    /// This method is asynchronous.
     pub async fn read_exchange(
         &self,
         exchange_id_str: String,
@@ -133,7 +128,6 @@ impl PostgresMDDBManager {
     /// Raises:
     ///     PostgresDBError: If the read operation fails due to database errors.
     ///
-    /// This method is asynchronous.
     pub async fn read_all_exchanges(&self) -> Result<Vec<MetaExchange>, PostgresDBError> {
         self.dbg_print("read_all_exchanges");
         let conn = &mut self.get_connection();
@@ -156,7 +150,6 @@ impl PostgresMDDBManager {
     /// Raises:
     ///     PostgresDBError: If the update operation fails due to database errors.
     ///
-    /// This method is asynchronous.
     pub async fn update_exchange(
         &self,
         exchange_id_str: String,
@@ -182,7 +175,6 @@ impl PostgresMDDBManager {
     /// Raises:
     ///     PostgresDBError: If the delete operation fails due to database errors.
     ///
-    /// This method is asynchronous.
     pub async fn delete_exchange(&self, exchange_id_str: String) -> Result<usize, PostgresDBError> {
         self.dbg_print("delete_exchange");
         let conn = &mut self.get_connection();
