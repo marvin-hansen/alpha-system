@@ -259,14 +259,11 @@ impl Instrument {
         .execute(conn)
         .expect("Failed to delete instrument exchange relation");
 
-        // Delete the instrument
-        let res = diesel::delete(
+        // Return the QueryResult containing the number of deleted rows
+        diesel::delete(
             instruments_table
                 .filter(crate::schema::mddb::instruments::instrument_id.eq(&param_instrument_id)),
         )
-        .execute(conn);
-
-        // Return the QueryResult containing the number of deleted rows
-        res
+        .execute(conn)
     }
 }
