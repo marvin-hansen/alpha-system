@@ -83,7 +83,7 @@ rust_library(
         "//thirdparty/crates/bitflags-2.6.0:bitflags",
         "//thirdparty/crates/memchr-2.7.4:memchr",
         "//thirdparty/crates/pulldown-cmark-0.9.6:build_script_build",
-        "//thirdparty/crates/unicase-2.7.0:unicase",
+        "//thirdparty/crates/unicase-2.8.0:unicase",
     ],
 )
 

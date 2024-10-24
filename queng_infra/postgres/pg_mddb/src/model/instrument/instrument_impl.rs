@@ -2,7 +2,6 @@ use crate::model::instrument::{Instrument, UpdateInstrument};
 use crate::prelude::CreateInstrumentsExchanges;
 use crate::schema::mddb::instruments::table as instruments_table;
 use crate::schema::mddb::instruments_exchanges::dsl::instruments_exchanges;
-use crate::schema::mddb::instruments_exchanges::exchange_id;
 use crate::Connection;
 use common_metadata::prelude::MetaInstrument;
 use diesel::result::Error::DatabaseError;
@@ -223,10 +222,13 @@ impl Instrument {
     /// Note, delete only returns an error when either the database connection or the query fails.
     pub fn delete(
         conn: &mut Connection,
-        instrument_id: &str,
+        param_instrument_id: String,
     ) -> Result<usize, diesel::result::Error> {
+        use crate::schema::mddb::instruments_exchanges::dsl::instruments_exchanges;
+        use crate::schema::mddb::instruments_exchanges::{exchange_id, instrument_id};
+
         // Check if the instrument exists
-        let exists = Instrument::check_if_instrument_id_exists(conn, instrument_id)
+        let exists = Instrument::check_if_instrument_id_exists(conn, &param_instrument_id)
             .expect("Failed to check if instrument ID exists");
 
         // Return Ok(0) if the instrument does not exist
@@ -235,24 +237,25 @@ impl Instrument {
         }
 
         // Read the instrument before deleting it so we can get the exchange_id
-        let instrument = Instrument::read(conn, instrument_id).expect("Failed to read instrument");
+        let instrument =
+            Instrument::read(conn, &param_instrument_id).expect("Failed to read instrument");
         let param_exchange_id = instrument.exchange_code;
-
-        // Delete the instrument
-        let res = diesel::delete(
-            instruments_table
-                .filter(crate::schema::mddb::instruments::instrument_id.eq(instrument_id)),
-        )
-        .execute(conn);
 
         // Delete the instrument exchange relation
         diesel::delete(
             instruments_exchanges
-                .filter(crate::schema::mddb::instruments_exchanges::instrument_id.eq(instrument_id))
+                .filter(instrument_id.eq(param_instrument_id.clone()))
                 .filter(exchange_id.eq(param_exchange_id)),
         )
         .execute(conn)
         .expect("Failed to delete instrument exchange relation");
+
+        // Delete the instrument
+        let res = diesel::delete(
+            instruments_table
+                .filter(crate::schema::mddb::instruments::instrument_id.eq(&param_instrument_id)),
+        )
+        .execute(conn);
 
         // Return the QueryResult containing the number of deleted rows
         res

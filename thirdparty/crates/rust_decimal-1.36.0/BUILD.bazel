@@ -88,7 +88,7 @@ rust_library(
         "//thirdparty/crates/arrayvec-0.7.6:arrayvec",
         "//thirdparty/crates/num-traits-0.2.19:num_traits",
         "//thirdparty/crates/rust_decimal-1.36.0:build_script_build",
-        "//thirdparty/crates/serde-1.0.210:serde",
+        "//thirdparty/crates/serde-1.0.213:serde",
     ],
 )
 

@@ -79,7 +79,7 @@ rust_library(
     }),
     version = "0.5.5",
     deps = [
-        "//thirdparty/crates/libc-0.2.159:libc",
+        "//thirdparty/crates/libc-0.2.161:libc",
         "//thirdparty/crates/socket2-0.5.7:socket2",
     ] + select({
         "@rules_rust//rust/platform:aarch64-pc-windows-msvc": [

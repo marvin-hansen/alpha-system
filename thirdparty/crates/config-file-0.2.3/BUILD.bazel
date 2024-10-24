@@ -87,8 +87,8 @@ rust_library(
     }),
     version = "0.2.3",
     deps = [
-        "//thirdparty/crates/serde-1.0.210:serde",
-        "//thirdparty/crates/thiserror-1.0.64:thiserror",
+        "//thirdparty/crates/serde-1.0.213:serde",
+        "//thirdparty/crates/thiserror-1.0.65:thiserror",
         "//thirdparty/crates/toml-0.5.11:toml",
     ],
 )

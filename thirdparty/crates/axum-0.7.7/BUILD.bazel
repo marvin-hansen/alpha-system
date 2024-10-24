@@ -32,7 +32,7 @@ rust_library(
     edition = "2021",
     proc_macro_deps = [
         "//thirdparty/crates/async-trait-0.1.83:async_trait",
-        "//thirdparty/crates/rustversion-1.0.17:rustversion",
+        "//thirdparty/crates/rustversion-1.0.18:rustversion",
     ],
     rustc_flags = [
         "--cap-lints=allow",
@@ -84,7 +84,7 @@ rust_library(
     version = "0.7.7",
     deps = [
         "//thirdparty/crates/axum-core-0.4.5:axum_core",
-        "//thirdparty/crates/bytes-1.7.2:bytes",
+        "//thirdparty/crates/bytes-1.8.0:bytes",
         "//thirdparty/crates/futures-util-0.3.31:futures_util",
         "//thirdparty/crates/http-1.1.0:http",
         "//thirdparty/crates/http-body-1.0.1:http_body",
@@ -95,7 +95,7 @@ rust_library(
         "//thirdparty/crates/mime-0.3.17:mime",
         "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",
         "//thirdparty/crates/pin-project-lite-0.2.14:pin_project_lite",
-        "//thirdparty/crates/serde-1.0.210:serde",
+        "//thirdparty/crates/serde-1.0.213:serde",
         "//thirdparty/crates/sync_wrapper-1.0.1:sync_wrapper",
         "//thirdparty/crates/tower-0.5.1:tower",
         "//thirdparty/crates/tower-layer-0.3.3:tower_layer",

@@ -15,6 +15,7 @@ rust_library(
         # Internal crates
         "//alias:crypto_utils",
         # External crates
+        "//thirdparty/crates:blake3",
         "//thirdparty/crates:chrono",
         "//thirdparty/crates:serde",
     ],

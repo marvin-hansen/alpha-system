@@ -90,10 +90,10 @@ rust_library(
         "//thirdparty/crates/chrono-0.4.38:chrono",
         "//thirdparty/crates/croner-2.0.6:croner",
         "//thirdparty/crates/num-traits-0.2.19:num_traits",
-        "//thirdparty/crates/tokio-1.40.0:tokio",
+        "//thirdparty/crates/tokio-1.41.0:tokio",
         "//thirdparty/crates/tokio-cron-scheduler-0.13.0:build_script_build",
         "//thirdparty/crates/tracing-0.1.40:tracing",
-        "//thirdparty/crates/uuid-1.10.0:uuid",
+        "//thirdparty/crates/uuid-1.11.0:uuid",
     ],
 )
 

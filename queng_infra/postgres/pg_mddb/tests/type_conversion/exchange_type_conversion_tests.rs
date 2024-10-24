@@ -19,12 +19,15 @@ fn test_from_meta_exchange() {
 fn test_to_meta_exchange() {
     let postgres_exchange = Exchange {
         exchange_id: "TEST".to_string(),
+        exchange_hash: "a86571d95a87689c4f8a7702de2e5bd692fb78eebda437192f99154dd7940dfa"
+            .to_string(),
         exchange_name: "Test Exchange".to_string(),
     };
 
     let meta_exchange = postgres_exchange.to_meta_exchange();
 
-    assert_eq!(meta_exchange.code, "TEST");
-    assert_eq!(meta_exchange.name, "Test Exchange");
+    assert_eq!(meta_exchange.code, postgres_exchange.exchange_id);
+    assert_eq!(meta_exchange.hash(), postgres_exchange.exchange_hash);
+    assert_eq!(meta_exchange.name, postgres_exchange.exchange_name);
     assert_eq!(meta_exchange.kaiko_legacy_slug, "");
 }

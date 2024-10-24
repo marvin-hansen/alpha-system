@@ -79,10 +79,10 @@ rust_proc_macro(
     }),
     version = "0.13.3",
     deps = [
-        "//thirdparty/crates/anyhow-1.0.89:anyhow",
+        "//thirdparty/crates/anyhow-1.0.91:anyhow",
         "//thirdparty/crates/itertools-0.13.0:itertools",
-        "//thirdparty/crates/proc-macro2-1.0.87:proc_macro2",
+        "//thirdparty/crates/proc-macro2-1.0.89:proc_macro2",
         "//thirdparty/crates/quote-1.0.37:quote",
-        "//thirdparty/crates/syn-2.0.79:syn",
+        "//thirdparty/crates/syn-2.0.85:syn",
     ],
 )

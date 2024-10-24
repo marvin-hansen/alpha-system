@@ -1,4 +1,5 @@
 use serde::{Deserialize, Serialize};
+use std::fmt::Display;
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -21,6 +22,21 @@ pub struct MetaAsset {
     pub addresses: Option<Vec<Address>>,
 }
 
+impl Display for MetaAsset {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "MetaAsset: {:?}", self)
+    }
+}
+
+impl MetaAsset {
+    pub fn hash(&self) -> String {
+        let binding = self.to_string();
+        let input = binding.as_bytes();
+        let hash = blake3::hash(input);
+        hash.to_string()
+    }
+}
+
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct AssetMetadata {
@@ -40,9 +56,21 @@ pub struct AssetMetadata {
     pub asset_figi: Option<String>,
 }
 
+impl Display for AssetMetadata {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "AssetMetadata: {:?}", self)
+    }
+}
+
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Address {
     pub address: String,
     pub blockchain: String,
+}
+
+impl Display for Address {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "Address: {:?}", self)
+    }
 }

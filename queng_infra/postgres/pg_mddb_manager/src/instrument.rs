@@ -169,7 +169,7 @@ impl PostgresMDDBManager {
         self.dbg_print("delete_instrument");
         let conn = &mut self.get_connection();
 
-        match Instrument::delete(conn, &instrument_id) {
+        match Instrument::delete(conn, instrument_id) {
             Ok(res) => Ok(res),
             Err(e) => Err(PostgresDBError::DeleteFailed(e.to_string())),
         }

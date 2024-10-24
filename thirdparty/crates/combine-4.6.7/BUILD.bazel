@@ -85,7 +85,7 @@ rust_library(
     }),
     version = "4.6.7",
     deps = [
-        "//thirdparty/crates/bytes-1.7.2:bytes",
+        "//thirdparty/crates/bytes-1.8.0:bytes",
         "//thirdparty/crates/memchr-2.7.4:memchr",
     ],
 )

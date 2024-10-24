@@ -13,4 +13,5 @@ authors.workspace = true
 crypto_utils = {workspace = true}
 # External crates
 chrono = { workspace = true }
+blake3 = { workspace = true }
 serde = { workspace = true }

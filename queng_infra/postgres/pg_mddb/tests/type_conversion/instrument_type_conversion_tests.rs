@@ -55,6 +55,8 @@ fn test_from_meta_instrument() {
 fn test_to_meta_instrument() {
     let postgres_instrument = Instrument {
         instrument_id: "instrument_code".to_string(),
+        instrument_hash: "f9ed5c9d6f86c5f08b5c128b8f7053e99714690db14ee379cafc675530f13fb3"
+            .to_string(),
         instrument_class: "instrument_class".to_string(),
         instrument_base_asset: "base_asset".to_string(),
         instrument_quote_asset: "quote_asset".to_string(),
@@ -69,6 +71,7 @@ fn test_to_meta_instrument() {
     let meta_instrument = postgres_instrument.to_meta_instrument();
 
     assert_eq!(meta_instrument.code, postgres_instrument.instrument_id);
+    assert_eq!(meta_instrument.hash(), postgres_instrument.instrument_hash);
     assert_eq!(meta_instrument.class, postgres_instrument.instrument_class);
     assert_eq!(
         meta_instrument.base_asset,

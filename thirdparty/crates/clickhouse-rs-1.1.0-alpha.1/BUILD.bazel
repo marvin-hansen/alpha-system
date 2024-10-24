@@ -100,9 +100,9 @@ rust_library(
         "//thirdparty/crates/lz4-1.28.0:lz4",
         "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",
         "//thirdparty/crates/pin-project-1.1.6:pin_project",
-        "//thirdparty/crates/thiserror-1.0.64:thiserror",
-        "//thirdparty/crates/tokio-1.40.0:tokio",
+        "//thirdparty/crates/thiserror-1.0.65:thiserror",
+        "//thirdparty/crates/tokio-1.41.0:tokio",
         "//thirdparty/crates/url-2.5.2:url",
-        "//thirdparty/crates/uuid-1.10.0:uuid",
+        "//thirdparty/crates/uuid-1.11.0:uuid",
     ],
 )

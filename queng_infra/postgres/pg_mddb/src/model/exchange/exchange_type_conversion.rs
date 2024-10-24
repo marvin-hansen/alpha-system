@@ -5,7 +5,8 @@ use common_metadata::prelude::MetaExchange;
 impl Exchange {
     pub fn from_meta_exchange(meta_exchange: MetaExchange) -> Self {
         Exchange {
-            exchange_id: meta_exchange.code,
+            exchange_id: meta_exchange.code.clone(),
+            exchange_hash: meta_exchange.hash(),
             exchange_name: meta_exchange.name,
         }
     }
@@ -22,7 +23,8 @@ impl Exchange {
 impl CreateExchange {
     pub fn from_meta_exchange(meta_exchange: MetaExchange) -> Self {
         CreateExchange {
-            exchange_id: meta_exchange.code,
+            exchange_id: meta_exchange.code.clone(),
+            exchange_hash: meta_exchange.hash(),
             exchange_name: meta_exchange.name,
         }
     }
@@ -30,7 +32,8 @@ impl CreateExchange {
 impl UpdateExchange {
     pub fn from_meta_exchange(meta_exchange: MetaExchange) -> Self {
         UpdateExchange {
-            exchange_name: meta_exchange.name,
+            exchange_name: meta_exchange.name.clone(),
+            exchange_hash: meta_exchange.hash(),
         }
     }
 }

@@ -84,7 +84,7 @@ rust_library(
     }),
     version = "0.8.19",
     deps = [
-        "//thirdparty/crates/serde-1.0.210:serde",
+        "//thirdparty/crates/serde-1.0.213:serde",
         "//thirdparty/crates/serde_spanned-0.6.8:serde_spanned",
         "//thirdparty/crates/toml_datetime-0.6.8:toml_datetime",
         "//thirdparty/crates/toml_edit-0.22.22:toml_edit",

@@ -96,7 +96,7 @@ rust_library(
     version = "0.4.38",
     deps = [
         "//thirdparty/crates/num-traits-0.2.19:num_traits",
-        "//thirdparty/crates/serde-1.0.210:serde",
+        "//thirdparty/crates/serde-1.0.213:serde",
     ] + select({
         "@rules_rust//rust/platform:aarch64-apple-darwin": [
             "//thirdparty/crates/iana-time-zone-0.1.61:iana_time_zone",  # aarch64-apple-darwin

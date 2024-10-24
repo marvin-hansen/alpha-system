@@ -5,7 +5,8 @@ use common_metadata::prelude::MetaAsset;
 impl Asset {
     pub fn from_meta_asset(meta_asset: MetaAsset) -> Self {
         Asset {
-            asset_code: meta_asset.code,
+            asset_code: meta_asset.code.clone(),
+            asset_hash: meta_asset.hash(),
             asset_name: meta_asset.name,
             asset_classes: meta_asset.asset_classes.into_iter().map(Some).collect(),
             asset_figi: meta_asset.metadata.and_then(|m| m.asset_figi),
@@ -31,7 +32,8 @@ impl Asset {
 impl UpdateAsset {
     pub fn from_meta_asset(meta_asset: MetaAsset) -> Self {
         UpdateAsset {
-            asset_name: meta_asset.name,
+            asset_name: meta_asset.name.clone(),
+            asset_hash: meta_asset.hash(),
             asset_classes: meta_asset.asset_classes.into_iter().map(Some).collect(),
             asset_figi: meta_asset.metadata.and_then(|m| m.asset_figi),
         }

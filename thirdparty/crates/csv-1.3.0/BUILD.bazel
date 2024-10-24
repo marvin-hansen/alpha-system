@@ -82,6 +82,6 @@ rust_library(
         "//thirdparty/crates/csv-core-0.1.11:csv_core",
         "//thirdparty/crates/itoa-1.0.11:itoa",
         "//thirdparty/crates/ryu-1.0.18:ryu",
-        "//thirdparty/crates/serde-1.0.210:serde",
+        "//thirdparty/crates/serde-1.0.213:serde",
     ],
 )

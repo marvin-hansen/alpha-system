@@ -1,4 +1,5 @@
 use serde::{Deserialize, Serialize};
+use std::fmt::Display;
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -39,9 +40,24 @@ pub struct MetaInstrument {
     pub trade_count: u64,
 }
 
+impl Display for MetaInstrument {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "MetaInstrument: {:?}", self)
+    }
+}
+
 impl MetaInstrument {
     pub fn exchange_code(&self) -> &str {
         &self.exchange_code
+    }
+}
+
+impl MetaInstrument {
+    pub fn hash(&self) -> String {
+        let binding = self.to_string();
+        let input = binding.as_bytes();
+        let hash = blake3::hash(input);
+        hash.to_string()
     }
 }
 
@@ -52,4 +68,10 @@ pub struct InstrumentMetadata {
     pub pair_figi: Option<String>,
     #[serde(rename = "instrument_figi")]
     pub instrument_figi: Option<String>,
+}
+
+impl Display for InstrumentMetadata {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "InstrumentMetadata: {:?}", self)
+    }
 }

@@ -111,7 +111,7 @@ rust_library(
         "//thirdparty/crates/arrow-select-53.1.0:arrow_select",
         "//thirdparty/crates/base64-0.22.1:base64",
         "//thirdparty/crates/brotli-6.0.0:brotli",
-        "//thirdparty/crates/bytes-1.7.2:bytes",
+        "//thirdparty/crates/bytes-1.8.0:bytes",
         "//thirdparty/crates/chrono-0.4.38:chrono",
         "//thirdparty/crates/flate2-1.0.34:flate2",
         "//thirdparty/crates/half-2.4.1:half",

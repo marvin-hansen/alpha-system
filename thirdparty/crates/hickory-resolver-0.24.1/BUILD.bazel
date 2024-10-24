@@ -91,8 +91,8 @@ rust_library(
         "//thirdparty/crates/parking_lot-0.12.3:parking_lot",
         "//thirdparty/crates/rand-0.8.5:rand",
         "//thirdparty/crates/smallvec-1.13.2:smallvec",
-        "//thirdparty/crates/thiserror-1.0.64:thiserror",
-        "//thirdparty/crates/tokio-1.40.0:tokio",
+        "//thirdparty/crates/thiserror-1.0.65:thiserror",
+        "//thirdparty/crates/tokio-1.41.0:tokio",
         "//thirdparty/crates/tracing-0.1.40:tracing",
     ],
 )

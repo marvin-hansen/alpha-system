@@ -36,6 +36,7 @@ async fn test_migration() {
         .expect("Failed to begin test transaction");
 
     let result = pg_mddb::run_mddb_migration(conn);
+    dbg!(&result);
     assert!(result.is_ok());
 }
 

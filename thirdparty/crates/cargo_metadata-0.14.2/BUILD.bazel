@@ -82,7 +82,7 @@ rust_library(
         "//thirdparty/crates/camino-1.1.9:camino",
         "//thirdparty/crates/cargo-platform-0.1.8:cargo_platform",
         "//thirdparty/crates/semver-1.0.23:semver",
-        "//thirdparty/crates/serde-1.0.210:serde",
-        "//thirdparty/crates/serde_json-1.0.128:serde_json",
+        "//thirdparty/crates/serde-1.0.213:serde",
+        "//thirdparty/crates/serde_json-1.0.132:serde_json",
     ],
 )

@@ -80,10 +80,10 @@ rust_library(
     version = "0.24.0",
     deps = [
         "//thirdparty/crates/byteorder-1.5.0:byteorder",
-        "//thirdparty/crates/bytes-1.7.2:bytes",
+        "//thirdparty/crates/bytes-1.8.0:bytes",
         "//thirdparty/crates/log-0.4.22:log",
         "//thirdparty/crates/rand-0.8.5:rand",
-        "//thirdparty/crates/thiserror-1.0.64:thiserror",
+        "//thirdparty/crates/thiserror-1.0.65:thiserror",
         "//thirdparty/crates/utf-8-0.7.6:utf8",
     ],
 )

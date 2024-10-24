@@ -4,6 +4,7 @@ CREATE SCHEMA IF NOT EXISTS mddb;
 
 CREATE TABLE mddb.assets(
 	"asset_code" VARCHAR NOT NULL PRIMARY KEY,
+	"asset_hash" VARCHAR NOT NULL,
 	"asset_name" VARCHAR NOT NULL,
 	"asset_classes" text[] NOT NULL,
 	"asset_figi" VARCHAR
@@ -11,11 +12,13 @@ CREATE TABLE mddb.assets(
 
 CREATE TABLE mddb.exchanges(
 	"exchange_id" VARCHAR NOT NULL PRIMARY KEY,
+	"exchange_hash" VARCHAR NOT NULL,
 	"exchange_name" VARCHAR NOT NULL
 );
 
 CREATE TABLE mddb.instruments(
 	"instrument_id" VARCHAR NOT NULL PRIMARY KEY,
+	"instrument_hash" VARCHAR NOT NULL,
 	"instrument_class" VARCHAR NOT NULL,
 	"instrument_base_asset" VARCHAR NOT NULL,
 	"instrument_quote_asset" VARCHAR NOT NULL,

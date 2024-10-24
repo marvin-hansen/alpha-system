@@ -9,6 +9,7 @@ use diesel::{AsChangeset, Identifiable, Insertable, Queryable, Selectable};
 #[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct Exchange {
     pub exchange_id: String,
+    pub exchange_hash: String,
     pub exchange_name: String,
 }
 
@@ -18,6 +19,7 @@ pub struct Exchange {
 #[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct CreateExchange {
     pub exchange_id: String,
+    pub exchange_hash: String,
     pub exchange_name: String,
 }
 
@@ -25,5 +27,6 @@ pub struct CreateExchange {
 #[diesel(table_name=crate::schema::mddb::exchanges)]
 #[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct UpdateExchange {
+    pub exchange_hash: String,
     pub exchange_name: String,
 }

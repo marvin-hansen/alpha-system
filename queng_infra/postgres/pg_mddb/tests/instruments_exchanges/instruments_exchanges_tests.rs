@@ -15,7 +15,7 @@ fn get_test_meta_instrument() -> MetaInstrument {
         kaiko_legacy_exchange_slug: "kaiko-exchange".to_string(),
         trade_start_time: Some("2021-01-01T00:00:00Z".to_string()),
         trade_end_time: Some("2021-12-31T23:59:59Z".to_string()),
-        exchange_code: "XKRX".to_string(),
+        exchange_code: "test_exchange_code".to_string(),
         exchange_pair_code: "BTCUSD".to_string(),
         base_asset: "BTC".to_string(),
         quote_asset: "USD".to_string(),
@@ -61,6 +61,7 @@ async fn test_migration() {
         .expect("Failed to begin test transaction");
 
     let result = pg_mddb::run_mddb_migration(conn);
+    dbg!(&result);
     assert!(result.is_ok());
 }
 
@@ -77,22 +78,24 @@ async fn test_create_instruments_exchanges() {
     assert!(result.is_ok());
 
     // Insert exchange
-    let test_data = get_test_meta_exchange();
-    let result = Exchange::create_exchange(conn, test_data);
+    let test_exchange = get_test_meta_exchange();
+    let exchange_id = test_exchange.code.clone();
+    let result = Exchange::create_exchange(conn, test_exchange);
+    // dbg!(&result);
     assert!(result.is_ok());
 
     // Insert instrument
-    let instrument = get_test_meta_instrument();
-    let result = Instrument::create_instrument(conn, instrument);
-    assert!(result.is_ok());
+    let test_instrument = get_test_meta_instrument();
+    let instrument_id = test_instrument.code.clone();
 
-    // Insert the relation between exchange and instrument
-    let instrument_id = String::from("BTC-USD");
-    let exchange_id = String::from("test_exchange_code");
-    let result =
-        InstrumentsExchanges::create_instruments_exchange(conn, instrument_id, exchange_id);
+    let result = Instrument::create_instrument(conn, test_instrument);
     // dbg!(&result);
     assert!(result.is_ok());
+
+    // Check if InstrumentsExchanges exists
+    let exists = InstrumentsExchanges::check_if_exists(conn, instrument_id, exchange_id)
+        .expect("Failed to check if InstrumentsExchanges exists");
+    assert!(exists);
 }
 
 #[tokio::test]
@@ -128,24 +131,17 @@ async fn test_check_if_instruments_exchanges_exists() {
     assert!(result.is_ok());
 
     // Insert exchange
-    let test_data = get_test_meta_exchange();
-    let result = Exchange::create_exchange(conn, test_data);
+    let test_exchange = get_test_meta_exchange();
+    let exchange_id = test_exchange.code.clone();
+
+    let result = Exchange::create_exchange(conn, test_exchange);
     assert!(result.is_ok());
 
     // Insert instrument
-    let instrument = get_test_meta_instrument();
-    let result = Instrument::create_instrument(conn, instrument);
-    assert!(result.is_ok());
+    let test_instrument = get_test_meta_instrument();
+    let instrument_id = test_instrument.code.clone();
 
-    // Insert the relation between exchange and instrument
-    let instrument_id = String::from("BTC-USD");
-    let exchange_id = String::from("test_exchange_code");
-    let result = InstrumentsExchanges::create_instruments_exchange(
-        conn,
-        instrument_id.clone(),
-        exchange_id.clone(),
-    );
-    // dbg!(&result);
+    let result = Instrument::create_instrument(conn, test_instrument);
     assert!(result.is_ok());
 
     // Check if InstrumentsExchanges exists
@@ -173,18 +169,12 @@ async fn test_delete_instruments_exchanges() {
     // Insert instrument
     let instrument = get_test_meta_instrument();
     let result = Instrument::create_instrument(conn, instrument);
+    // dbg!(&result);
     assert!(result.is_ok());
 
     // Insert the relation between exchange and instrument
     let instrument_id = String::from("BTC-USD");
     let exchange_id = String::from("test_exchange_code");
-    let result = InstrumentsExchanges::create_instruments_exchange(
-        conn,
-        instrument_id.clone(),
-        exchange_id.clone(),
-    );
-    // dbg!(&result);
-    assert!(result.is_ok());
 
     // Check if InstrumentsExchanges exists
     let exists =
@@ -193,7 +183,13 @@ async fn test_delete_instruments_exchanges() {
     assert!(exists);
 
     // Delete InstrumentsExchanges
-    let result = InstrumentsExchanges::delete(conn, instrument_id, exchange_id);
+    let result = InstrumentsExchanges::delete(conn, instrument_id.clone(), exchange_id.clone());
     assert!(result.is_ok());
     assert_eq!(result.unwrap(), 1);
+
+    // Check if InstrumentsExchanges has been deleted
+    let exists =
+        InstrumentsExchanges::check_if_exists(conn, instrument_id.clone(), exchange_id.clone())
+            .expect("Failed to check if InstrumentsExchanges exists");
+    assert!(!exists);
 }

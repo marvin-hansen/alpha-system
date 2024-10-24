@@ -37,7 +37,7 @@ rust_library(
     edition = "2021",
     proc_macro_deps = [
         "//thirdparty/crates/bon-macros-2.3.0:bon_macros",
-        "//thirdparty/crates/rustversion-1.0.17:rustversion",
+        "//thirdparty/crates/rustversion-1.0.18:rustversion",
     ],
     rustc_flags = [
         "--cap-lints=allow",

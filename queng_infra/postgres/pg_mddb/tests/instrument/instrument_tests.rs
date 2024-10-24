@@ -1,9 +1,17 @@
-use common_metadata::prelude::{InstrumentMetadata, MetaInstrument};
+use common_metadata::prelude::{InstrumentMetadata, MetaExchange, MetaInstrument};
 use container_specs_postgres::postgres_db_container_config;
 use diesel::Connection;
 use docker_utils::prelude::DockerUtil;
-use pg_mddb::prelude::Instrument;
+use pg_mddb::prelude::{Exchange, Instrument, InstrumentsExchanges};
 use postgres_migrations::prelude::{get_or_wait_for_postgres_connection, DB_TEST_URL};
+
+fn get_test_meta_exchange() -> MetaExchange {
+    MetaExchange {
+        code: "test_exchange_code".to_string(),
+        name: "test_exchange_name".to_string(),
+        kaiko_legacy_slug: "test_kaiko_legacy_slug".to_string(),
+    }
+}
 
 fn get_test_meta_instrument() -> MetaInstrument {
     let metadata = InstrumentMetadata {
@@ -15,7 +23,7 @@ fn get_test_meta_instrument() -> MetaInstrument {
         kaiko_legacy_exchange_slug: "kaiko-exchange".to_string(),
         trade_start_time: Some("2021-01-01T00:00:00Z".to_string()),
         trade_end_time: Some("2021-12-31T23:59:59Z".to_string()),
-        exchange_code: "XKRX".to_string(),
+        exchange_code: "test_exchange_code".to_string(),
         exchange_pair_code: "BTCUSD".to_string(),
         base_asset: "BTC".to_string(),
         quote_asset: "USD".to_string(),
@@ -53,6 +61,7 @@ async fn test_migration() {
         .expect("Failed to begin test transaction");
 
     let result = pg_mddb::run_mddb_migration(conn);
+    dbg!(&result);
     assert!(result.is_ok());
 }
 
@@ -65,6 +74,11 @@ async fn test_create_instrument() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
     let result = pg_mddb::run_mddb_migration(conn);
+    assert!(result.is_ok());
+
+    // Insert exchange
+    let test_exchange = get_test_meta_exchange();
+    let result = Exchange::create_exchange(conn, test_exchange);
     assert!(result.is_ok());
 
     let instrument = get_test_meta_instrument();
@@ -81,6 +95,11 @@ async fn test_create_instrument_collection_success() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
     let result = pg_mddb::run_mddb_migration(conn);
+    assert!(result.is_ok());
+
+    // Insert exchange
+    let test_exchange = get_test_meta_exchange();
+    let result = Exchange::create_exchange(conn, test_exchange);
     assert!(result.is_ok());
 
     let meta_instruments = vec![get_test_meta_instrument()];
@@ -100,6 +119,11 @@ async fn test_create_instrument_collection_empty() {
     let result = pg_mddb::run_mddb_migration(conn);
     assert!(result.is_ok());
 
+    // Insert exchange
+    let test_exchange = get_test_meta_exchange();
+    let result = Exchange::create_exchange(conn, test_exchange);
+    assert!(result.is_ok());
+
     let meta_instruments: Vec<MetaInstrument> = vec![];
     let result = Instrument::create_instrument_collection(conn, &meta_instruments);
     assert!(result.is_err());
@@ -114,6 +138,11 @@ async fn test_create_instrument_collection_error() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
     let result = pg_mddb::run_mddb_migration(conn);
+    assert!(result.is_ok());
+
+    // Insert exchange
+    let test_exchange = get_test_meta_exchange();
+    let result = Exchange::create_exchange(conn, test_exchange);
     assert!(result.is_ok());
 
     // All test data have the same instrument code (primary key)
@@ -137,6 +166,11 @@ async fn test_count_instruments_with_entries() {
         .expect("Failed to begin test transaction");
 
     let result = pg_mddb::run_mddb_migration(conn);
+    assert!(result.is_ok());
+
+    // Insert exchange
+    let test_exchange = get_test_meta_exchange();
+    let result = Exchange::create_exchange(conn, test_exchange);
     assert!(result.is_ok());
 
     let test_data = get_test_meta_instrument();
@@ -174,6 +208,11 @@ async fn test_check_if_instrument_id_exists_returns_true() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
     let result = pg_mddb::run_mddb_migration(conn);
+    assert!(result.is_ok());
+
+    // Insert exchange
+    let test_exchange = get_test_meta_exchange();
+    let result = Exchange::create_exchange(conn, test_exchange);
     assert!(result.is_ok());
 
     let instrument = get_test_meta_instrument();
@@ -214,6 +253,11 @@ async fn test_read_instrument() {
     let result = pg_mddb::run_mddb_migration(conn);
     assert!(result.is_ok());
 
+    // Insert exchange
+    let test_exchange = get_test_meta_exchange();
+    let result = Exchange::create_exchange(conn, test_exchange);
+    assert!(result.is_ok());
+
     let instrument = get_test_meta_instrument();
     let instrument_id = instrument.code.to_string();
     let result = Instrument::create_instrument(conn, instrument);
@@ -251,6 +295,11 @@ async fn test_read_all_instrument() {
     let result = pg_mddb::run_mddb_migration(conn);
     assert!(result.is_ok());
 
+    // Insert exchange
+    let test_exchange = get_test_meta_exchange();
+    let result = Exchange::create_exchange(conn, test_exchange);
+    assert!(result.is_ok());
+
     let instrument = get_test_meta_instrument();
     let result = Instrument::create_instrument(conn, instrument);
     assert!(result.is_ok());
@@ -285,6 +334,11 @@ async fn test_update_instrument() {
     conn.begin_test_transaction()
         .expect("Failed to begin test transaction");
     let result = pg_mddb::run_mddb_migration(conn);
+    assert!(result.is_ok());
+
+    // Insert exchange
+    let test_exchange = get_test_meta_exchange();
+    let result = Exchange::create_exchange(conn, test_exchange);
     assert!(result.is_ok());
 
     let instrument = get_test_meta_instrument();
@@ -327,11 +381,27 @@ async fn test_delete_instrument() {
     let result = pg_mddb::run_mddb_migration(conn);
     assert!(result.is_ok());
 
+    // Insert exchange
+    let test_exchange = get_test_meta_exchange();
+    let exchange_id = test_exchange.code.to_string();
+    let result = Exchange::create_exchange(conn, test_exchange);
+    assert!(result.is_ok());
+
+    // Insert instrument
     let instrument = get_test_meta_instrument();
     let instrument_id = instrument.code.to_string();
     Instrument::create_instrument(conn, instrument).expect("Failed to create instrument");
 
-    let result = Instrument::delete(conn, &instrument_id);
+    // Check if InstrumentsExchanges exists
+    let exists =
+        InstrumentsExchanges::check_if_exists(conn, instrument_id.clone(), exchange_id.clone())
+            .expect("Failed to check if InstrumentsExchanges exists");
+    assert!(exists);
+
+    println!("Exchange ID: {}", &exchange_id);
+    println!("Instrument ID: {}", &instrument_id);
+
+    let result = Instrument::delete(conn, instrument_id);
     assert!(result.is_ok());
     assert_eq!(result.unwrap(), 1)
 }
@@ -348,7 +418,7 @@ async fn test_delete_instrument_non_existent() {
     assert!(result.is_ok());
 
     let instrument_id = String::from("Non-Existent");
-    let result = Instrument::delete(conn, &instrument_id);
+    let result = Instrument::delete(conn, instrument_id);
     assert!(result.is_ok());
     assert_eq!(result.unwrap(), 0)
 }

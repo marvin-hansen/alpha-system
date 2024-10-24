@@ -81,7 +81,7 @@ rust_proc_macro(
     version = "1.0.4",
     deps = [
         "//thirdparty/crates/proc-macro-error-attr-1.0.4:build_script_build",
-        "//thirdparty/crates/proc-macro2-1.0.87:proc_macro2",
+        "//thirdparty/crates/proc-macro2-1.0.89:proc_macro2",
         "//thirdparty/crates/quote-1.0.37:quote",
     ],
 )

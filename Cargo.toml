@@ -212,6 +212,7 @@ service_utils = { path = "queng_utils/service_utils" }
 # Custom Memory Allocator
 mimalloc = { version = "0.1.43" }
 # Pure Rust cryptographic or hash crates
+blake3 = { version = "1.5.4", default-features = false }
 sha3 = { version = "0.11.0-pre.3", default-features = false }
 base64ct = { version = "1.6.0", default-features = false, features = ["alloc"] }
 base16ct = { version = "0.2.0", default-features = false, features = ["alloc"] }

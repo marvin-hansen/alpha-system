@@ -6,6 +6,7 @@ impl Instrument {
     pub fn from_meta_instrument(meta_instrument: MetaInstrument) -> Self {
         Instrument {
             instrument_id: meta_instrument.code.to_string(),
+            instrument_hash: meta_instrument.hash(),
             instrument_class: meta_instrument.class.to_string(),
             instrument_base_asset: meta_instrument.base_asset.to_string(),
             instrument_quote_asset: meta_instrument.quote_asset.to_string(),
@@ -76,6 +77,7 @@ impl CreateInstrument {
     pub fn from_meta_instrument(meta_instrument: MetaInstrument) -> Self {
         CreateInstrument {
             instrument_id: meta_instrument.code.to_string(),
+            instrument_hash: meta_instrument.hash(),
             instrument_class: meta_instrument.class.to_string(),
             instrument_base_asset: meta_instrument.base_asset.to_string(),
             instrument_quote_asset: meta_instrument.quote_asset.to_string(),
@@ -117,6 +119,7 @@ impl UpdateInstrument {
     pub fn from_meta_instrument(meta_instrument: MetaInstrument) -> Self {
         UpdateInstrument {
             instrument_class: meta_instrument.class.to_string(),
+            instrument_hash: meta_instrument.hash(),
             instrument_base_asset: meta_instrument.base_asset.to_string(),
             instrument_quote_asset: meta_instrument.quote_asset.to_string(),
             instrument_exchanges_code: meta_instrument.exchange_code.to_string(),

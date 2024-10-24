@@ -82,9 +82,9 @@ rust_library(
     }),
     version = "0.2.95",
     deps = [
-        "//thirdparty/crates/proc-macro2-1.0.87:proc_macro2",
+        "//thirdparty/crates/proc-macro2-1.0.89:proc_macro2",
         "//thirdparty/crates/quote-1.0.37:quote",
-        "//thirdparty/crates/syn-2.0.79:syn",
+        "//thirdparty/crates/syn-2.0.85:syn",
         "//thirdparty/crates/wasm-bindgen-backend-0.2.95:wasm_bindgen_backend",
         "//thirdparty/crates/wasm-bindgen-shared-0.2.95:wasm_bindgen_shared",
     ],
