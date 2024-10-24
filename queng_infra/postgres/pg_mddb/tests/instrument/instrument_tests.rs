@@ -216,7 +216,7 @@ async fn test_check_if_instrument_id_exists_returns_true() {
     assert!(result.is_ok());
 
     let instrument = get_test_meta_instrument();
-    let instrument_id = instrument.code.to_string();
+    let instrument_id = instrument.primary_key();
     let result = Instrument::create_instrument(conn, instrument);
     assert!(result.is_ok());
 
@@ -259,7 +259,7 @@ async fn test_read_instrument() {
     assert!(result.is_ok());
 
     let instrument = get_test_meta_instrument();
-    let instrument_id = instrument.code.to_string();
+    let instrument_id = instrument.primary_key();
     let result = Instrument::create_instrument(conn, instrument);
     assert!(result.is_ok());
 
@@ -342,7 +342,7 @@ async fn test_update_instrument() {
     assert!(result.is_ok());
 
     let instrument = get_test_meta_instrument();
-    let instrument_id = instrument.code.to_string();
+    let instrument_id = instrument.primary_key();
     let result = Instrument::create_instrument(conn, instrument);
     assert!(result.is_ok());
 
@@ -389,7 +389,7 @@ async fn test_delete_instrument() {
 
     // Insert instrument
     let instrument = get_test_meta_instrument();
-    let instrument_id = instrument.code.to_string();
+    let instrument_id = instrument.primary_key();
     Instrument::create_instrument(conn, instrument).expect("Failed to create instrument");
 
     // Check if InstrumentsExchanges exists

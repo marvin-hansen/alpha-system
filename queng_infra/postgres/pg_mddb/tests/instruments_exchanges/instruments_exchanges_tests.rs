@@ -86,11 +86,13 @@ async fn test_create_instruments_exchanges() {
 
     // Insert instrument
     let test_instrument = get_test_meta_instrument();
-    let instrument_id = test_instrument.code.clone();
+    let instrument_id = test_instrument.primary_key().clone();
 
     let result = Instrument::create_instrument(conn, test_instrument);
     // dbg!(&result);
     assert!(result.is_ok());
+
+    // The exchange to instrument relation is created automatically when calling create_instrument.
 
     // Check if InstrumentsExchanges exists
     let exists = InstrumentsExchanges::check_if_exists(conn, instrument_id, exchange_id)
@@ -110,7 +112,6 @@ async fn test_create_instruments_exchanges_err() {
     // dbg!(&result);
     assert!(result.is_ok());
 
-    // The
     let instrument_id = String::from("InvalidTestInstrument");
     let exchange_id = String::from("InvalidTestExchange");
     let result =
@@ -139,10 +140,12 @@ async fn test_check_if_instruments_exchanges_exists() {
 
     // Insert instrument
     let test_instrument = get_test_meta_instrument();
-    let instrument_id = test_instrument.code.clone();
+    let instrument_id = test_instrument.primary_key().clone();
 
     let result = Instrument::create_instrument(conn, test_instrument);
     assert!(result.is_ok());
+
+    // The exchange to instrument relation is created automatically when calling create_instrument.
 
     // Check if InstrumentsExchanges exists
     let exists = InstrumentsExchanges::check_if_exists(conn, instrument_id, exchange_id)
@@ -162,19 +165,19 @@ async fn test_delete_instruments_exchanges() {
     assert!(result.is_ok());
 
     // Insert exchange
-    let test_data = get_test_meta_exchange();
-    let result = Exchange::create_exchange(conn, test_data);
+    let test_exchange = get_test_meta_exchange();
+    let exchange_id = test_exchange.code.clone();
+
+    let result = Exchange::create_exchange(conn, test_exchange);
     assert!(result.is_ok());
 
     // Insert instrument
-    let instrument = get_test_meta_instrument();
-    let result = Instrument::create_instrument(conn, instrument);
+    let test_instrument = get_test_meta_instrument();
+    let instrument_id = test_instrument.primary_key().clone();
+
+    let result = Instrument::create_instrument(conn, test_instrument);
     // dbg!(&result);
     assert!(result.is_ok());
-
-    // Insert the relation between exchange and instrument
-    let instrument_id = String::from("BTC-USD");
-    let exchange_id = String::from("test_exchange_code");
 
     // Check if InstrumentsExchanges exists
     let exists =

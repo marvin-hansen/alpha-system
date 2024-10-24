@@ -23,7 +23,10 @@ fn test_from_meta_instrument() {
 
     let postgres_instrument = Instrument::from_meta_instrument(meta_instrument.clone());
 
-    assert_eq!(postgres_instrument.instrument_id, meta_instrument.code);
+    assert_eq!(
+        postgres_instrument.instrument_id,
+        "exchange_code_instrument_code"
+    );
     assert_eq!(postgres_instrument.instrument_class, meta_instrument.class);
     assert_eq!(
         postgres_instrument.instrument_base_asset,
@@ -54,7 +57,8 @@ fn test_from_meta_instrument() {
 #[test]
 fn test_to_meta_instrument() {
     let postgres_instrument = Instrument {
-        instrument_id: "instrument_code".to_string(),
+        instrument_id: "instrument_id".to_string(),
+        instrument_code: "instrument_code".to_string(),
         instrument_hash: "f9ed5c9d6f86c5f08b5c128b8f7053e99714690db14ee379cafc675530f13fb3"
             .to_string(),
         instrument_class: "instrument_class".to_string(),
@@ -70,7 +74,7 @@ fn test_to_meta_instrument() {
 
     let meta_instrument = postgres_instrument.to_meta_instrument();
 
-    assert_eq!(meta_instrument.code, postgres_instrument.instrument_id);
+    assert_eq!(meta_instrument.code, postgres_instrument.instrument_code);
     assert_eq!(meta_instrument.hash(), postgres_instrument.instrument_hash);
     assert_eq!(meta_instrument.class, postgres_instrument.instrument_class);
     assert_eq!(

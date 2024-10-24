@@ -5,7 +5,8 @@ use common_metadata::prelude::{InstrumentMetadata, MetaInstrument};
 impl Instrument {
     pub fn from_meta_instrument(meta_instrument: MetaInstrument) -> Self {
         Instrument {
-            instrument_id: meta_instrument.code.to_string(),
+            instrument_id: meta_instrument.primary_key(),
+            instrument_code: meta_instrument.code.to_string(),
             instrument_hash: meta_instrument.hash(),
             instrument_class: meta_instrument.class.to_string(),
             instrument_base_asset: meta_instrument.base_asset.to_string(),
@@ -62,7 +63,7 @@ impl Instrument {
             base_asset: self.instrument_base_asset.clone(),
             quote_asset: self.instrument_quote_asset.clone(),
             kaiko_legacy_symbol: String::new(), //  kaiko_legacy_symbol is not used
-            code: self.instrument_id.clone(),
+            code: self.instrument_code.clone(),
             class: self.instrument_class.clone(),
             metadata,
             trade_start_timestamp: self.instrument_trade_start_timestamp.map(|ts| ts as u64),
@@ -76,7 +77,8 @@ impl Instrument {
 impl CreateInstrument {
     pub fn from_meta_instrument(meta_instrument: MetaInstrument) -> Self {
         CreateInstrument {
-            instrument_id: meta_instrument.code.to_string(),
+            instrument_id: meta_instrument.primary_key(),
+            instrument_code: meta_instrument.code.to_string(),
             instrument_hash: meta_instrument.hash(),
             instrument_class: meta_instrument.class.to_string(),
             instrument_base_asset: meta_instrument.base_asset.to_string(),
@@ -119,6 +121,7 @@ impl UpdateInstrument {
     pub fn from_meta_instrument(meta_instrument: MetaInstrument) -> Self {
         UpdateInstrument {
             instrument_class: meta_instrument.class.to_string(),
+            instrument_code: meta_instrument.code.to_string(),
             instrument_hash: meta_instrument.hash(),
             instrument_base_asset: meta_instrument.base_asset.to_string(),
             instrument_quote_asset: meta_instrument.quote_asset.to_string(),

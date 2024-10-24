@@ -53,6 +53,10 @@ impl MetaInstrument {
 }
 
 impl MetaInstrument {
+    pub fn primary_key(&self) -> String {
+        format!("{}_{}", self.exchange_code, self.code)
+    }
+
     pub fn hash(&self) -> String {
         let binding = self.to_string();
         let input = binding.as_bytes();

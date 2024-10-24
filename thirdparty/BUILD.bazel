@@ -175,8 +175,11 @@ crates_vendor(
             version = "0.10.3",
         ),
         "udigest": crate.spec(
+            features = [
+                "derive",
+                "digest",
+            ],
             package = "udigest",
-            features = ["derive", "digest"],
             version = "0.2.2",
         ),
         "parquet": crate.spec(

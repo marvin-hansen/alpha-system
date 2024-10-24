@@ -18,6 +18,7 @@ CREATE TABLE mddb.exchanges(
 
 CREATE TABLE mddb.instruments(
 	"instrument_id" VARCHAR NOT NULL PRIMARY KEY,
+	"instrument_code" VARCHAR NOT NULL,
 	"instrument_hash" VARCHAR NOT NULL,
 	"instrument_class" VARCHAR NOT NULL,
 	"instrument_base_asset" VARCHAR NOT NULL,

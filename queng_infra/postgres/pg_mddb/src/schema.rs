@@ -22,6 +22,7 @@ pub mod mddb {
     diesel::table! {
         mddb.instruments (instrument_id) {
             instrument_id -> Varchar,
+            instrument_code -> Varchar,
             instrument_hash -> Varchar,
             instrument_class -> Varchar,
             instrument_base_asset -> Varchar,
