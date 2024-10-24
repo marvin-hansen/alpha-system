@@ -49,7 +49,7 @@ async fn process_exchanges(
     let mut processed_exchanges: Vec<MetaExchange> = Vec::with_capacity(50);
 
     for e in downloaded_exchanges.iter() {
-        if ACTIVE_EXCHANGES.contains(&e.name.as_str()) {
+        if ACTIVE_EXCHANGES.contains(&e.name.to_lowercase().as_str()) {
             processed_exchanges.push(e.to_owned());
         }
     }

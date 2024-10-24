@@ -77,6 +77,9 @@ impl Instrument {
         // Insert the instruments one by one to prevent exceeding the number of parameters.
         // https://github.com/diesel-rs/diesel/issues/2414
         for instrument in &instruments {
+            // println!();
+            // println!("Inserting instrument: {:?}", &instrument.instrument_id);
+
             match diesel::insert_into(instruments_table)
                 .values(instrument)
                 .execute(conn)
@@ -88,6 +91,12 @@ impl Instrument {
             // Insert the instrument exchanges relationship
             let instrument_exchange =
                 CreateInstrumentsExchanges::from_instrument(instrument.clone());
+
+            // println!();
+            // println!(
+            //     "Inserting instrument exchanges relationship: {:?} ",
+            //     &instrument_exchange
+            // );
 
             match diesel::insert_into(instruments_exchanges)
                 .values(instrument_exchange)

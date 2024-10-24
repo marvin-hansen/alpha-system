@@ -14,6 +14,12 @@ impl InitManager {
 
         self.print_duration("Level 1: took", &start.elapsed());
 
+        // valid_exchanges stores all exchanges codes as lowercase in a &str array
+        let valid_exchanges = exchanges_meta_data
+            .iter()
+            .map(|x| x.code.to_lowercase())
+            .collect::<Vec<String>>();
+
         let start = Instant::now();
         self.dbg_print("Level 2: Retrieving reference asset data!");
         let asset_meta_data = self
@@ -26,7 +32,7 @@ impl InitManager {
         let start = Instant::now();
         self.dbg_print("Level 3: Retrieving reference instrument data!");
         let instrument_meta_data = self
-            .init_level_3_instruments()
+            .init_level_3_instruments(&valid_exchanges)
             .await
             .expect("Failed init level 3: Reference instrument data");
 

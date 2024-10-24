@@ -53,8 +53,14 @@ impl MetaInstrument {
 }
 
 impl MetaInstrument {
+    // This is necessary because names are not unique across asset classes even on the same exchange.
     pub fn primary_key(&self) -> String {
-        format!("{}_{}", self.exchange_code, self.code)
+        format!(
+            "{}_{}_{}",
+            self.exchange_code,
+            self.class,
+            self.exchange_pair_code.to_lowercase()
+        )
     }
 
     pub fn hash(&self) -> String {
