@@ -1,4 +1,6 @@
-use crate::fields::DEX;
+use crate::fields::{
+    DEX, ERRATA_INSTRUMENT_ID, NON_TRADE_INSTRUMENT_ID, NON_UNIQUE_EXCHANGE_INSTRUMENT_ID,
+};
 use crate::init::InitManager;
 use common_errors::prelude::InitError;
 use common_metadata::prelude::MetaInstrument;
@@ -27,7 +29,8 @@ impl InitManager {
         }
 
         self.dbg_print("Level 3: Process the downloaded instrument data");
-        let processed_instruments = process_instruments(&downloaded_instruments, valid_exchanges)
+        let processed_instruments = self
+            .process_instruments(&downloaded_instruments, valid_exchanges)
             .await
             .expect("Failed to process reference Instrument data");
 
@@ -44,23 +47,49 @@ impl InitManager {
 
         Ok(processed_instruments)
     }
+
+    async fn process_instruments(
+        &self,
+        downloaded_instruments: &[MetaInstrument],
+        valid_exchanges: &[String],
+    ) -> Result<Vec<MetaInstrument>, InitError> {
+        // By experience, at least 90% of the reference data are junk (inactive) thus small alloc.
+        let capacity = downloaded_instruments.len() * 0.10 as usize;
+        let mut processed_instruments = Vec::with_capacity(capacity);
+
+        for i in downloaded_instruments.iter() {
+            if is_valid_instrument(i, valid_exchanges) {
+                //  if not, add it to the list
+                if !requires_patching(i) {
+                    processed_instruments.push(i.to_owned())
+                } else {
+                    // if so, swap out the original instrument with the corrected one
+                    let patched_instrument = self.patch_instruments(i.to_owned());
+                    // and then add the corrected instrument to the list
+                    processed_instruments.push(patched_instrument);
+                }
+            }
+        }
+
+        // Remove duplicates
+        processed_instruments.dedup();
+
+        // Sort instruments by exchange code
+        processed_instruments.sort_by(|a, b| a.exchange_code.cmp(&b.exchange_code));
+
+        Ok(processed_instruments)
+    }
 }
 
-async fn process_instruments(
-    downloaded_instruments: &[MetaInstrument],
-    valid_exchanges: &[String],
-) -> Result<Vec<MetaInstrument>, InitError> {
-    // By experience, at least 90% of the reference data are junk (inactive) thus small alloc.
-    let capacity = downloaded_instruments.len() * 0.10 as usize;
-    let mut processed_instruments = Vec::with_capacity(capacity);
-
-    for i in downloaded_instruments.iter() {
-        if is_valid_instrument(i, valid_exchanges) {
-            processed_instruments.push(i.to_owned())
+fn requires_patching(instrument: &MetaInstrument) -> bool {
+    for (exchange, instrument_id) in ERRATA_INSTRUMENT_ID.iter() {
+        if instrument.exchange_code.eq(exchange) && instrument.exchange_pair_code.eq(instrument_id)
+        {
+            return true;
         }
     }
 
-    Ok(processed_instruments)
+    false
 }
 
 // Double check if instrument is inactive i.e. from an inactive exchange
@@ -81,22 +110,7 @@ fn is_valid_instrument(instrument: &MetaInstrument, valid_exchanges: &[String]) 
     }
 
     // Instrument of no interest
-    if instrument.class.eq("option") {
-        return false;
-    }
-
-    // Instrument of no interest
-    if instrument.class.eq("option_combo") {
-        return false;
-    }
-
-    // Instrument of no interest
-    if instrument.class.eq("future_combo") {
-        return false;
-    }
-
-    // Non-perpetual future contracts.
-    if instrument.class.eq("future") {
+    if NON_TRADE_INSTRUMENT_ID.contains(&instrument.class.as_str()) {
         return false;
     }
 
@@ -105,8 +119,12 @@ fn is_valid_instrument(instrument: &MetaInstrument, valid_exchanges: &[String]) 
         return false;
     }
 
-    // Instruments listed
+    // Instruments listed on a non-trading exchange
     if !valid_exchanges.contains(&instrument.exchange_code.to_lowercase()) {
+        return false;
+    }
+
+    if NON_UNIQUE_EXCHANGE_INSTRUMENT_ID.contains(&instrument.exchange_pair_code.as_str()) {
         return false;
     }
 

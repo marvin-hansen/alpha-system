@@ -3,6 +3,12 @@ use common_errors::prelude::InitError;
 use common_metadata::prelude::MetaAsset;
 
 impl InitManager {
+    /// Initializes level 2 assets by downloading reference asset data asynchronously.
+    ///
+    /// # Returns
+    ///
+    /// A `Result` containing a vector of `MetaAsset` if successful, otherwise an `InitError`.
+    ///
     pub(super) async fn init_level_2_assets(&self) -> Result<Vec<MetaAsset>, InitError> {
         //
         self.dbg_print("Level 2: Download reference asset data!");

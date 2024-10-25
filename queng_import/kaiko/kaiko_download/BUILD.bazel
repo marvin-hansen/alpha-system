@@ -20,6 +20,7 @@ rust_library(
         # External crates
         "//thirdparty/crates:chrono",
         "//thirdparty/crates:reqwest",
+        "//thirdparty/crates:lazy_static",
         "//thirdparty/crates:serde",
         "//thirdparty/crates:serde_json",
         "//thirdparty/crates:tokio",

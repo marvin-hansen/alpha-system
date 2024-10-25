@@ -4,6 +4,9 @@ use common_metadata::prelude::MetaDataSet;
 use tokio::time::Instant;
 
 impl InitManager {
+    /// Asynchronously initializes the InitManager by retrieving reference exchange,
+    /// asset, and instrument data in three levels.
+    /// Returns a Result containing MetaDataSet on success, or InitError on failure.
     pub async fn init(&self) -> Result<MetaDataSet, InitError> {
         let start = Instant::now();
         self.dbg_print("Level 1: Retrieving reference exchange data!");

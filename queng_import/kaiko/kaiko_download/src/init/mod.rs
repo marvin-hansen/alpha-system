@@ -8,6 +8,8 @@ mod init_process;
 mod level_1_exchanges;
 mod level_2_assets;
 mod level_3_instruments;
+mod patch_instruments;
+mod patches;
 
 #[derive(Debug, Clone)]
 pub struct InitManager {

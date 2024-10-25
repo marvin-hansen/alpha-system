@@ -4,6 +4,9 @@ use common_errors::prelude::InitError;
 use common_metadata::prelude::MetaExchange;
 
 impl InitManager {
+    /// Asynchronously initializes level 1 exchanges by downloading and processing exchange data.
+    /// Returns a vector of MetaExchange structs on success, or an InitError on failure.
+    /// This method prints debug messages based on the use of a proxy and debug mode.
     pub(super) async fn init_level_1_exchanges(&self) -> Result<Vec<MetaExchange>, InitError> {
         //
         self.dbg_print("Level 1: Download reference exchange data!");
@@ -43,6 +46,18 @@ impl InitManager {
     }
 }
 
+/// Asynchronously processes a list of downloaded exchanges,
+/// filters out inactive exchanges, removes duplicates, and sorts alphabetically.
+///
+/// # Arguments
+///
+/// * `downloaded_exchanges` - A slice of MetaExchange structs representing the downloaded exchanges.
+///
+/// # Returns
+///
+/// A Result containing a vector of MetaExchange structs with duplicates removed and sorted alphabetically,
+/// or an InitError if processing fails.
+///
 async fn process_exchanges(
     downloaded_exchanges: &[MetaExchange],
 ) -> Result<Vec<MetaExchange>, InitError> {
@@ -53,8 +68,6 @@ async fn process_exchanges(
             processed_exchanges.push(e.to_owned());
         }
     }
-
-    // drop(downloaded_exchanges);
 
     // Remove duplicates
     processed_exchanges.dedup();
