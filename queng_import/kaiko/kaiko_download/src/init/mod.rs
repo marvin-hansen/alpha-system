@@ -9,6 +9,7 @@ mod level_1_exchanges;
 mod level_2_assets;
 mod level_3_instruments;
 mod patch_instruments;
+mod patch_op;
 mod patches;
 
 #[derive(Debug, Clone)]

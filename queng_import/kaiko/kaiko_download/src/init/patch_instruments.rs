@@ -1,4 +1,4 @@
-use crate::init::patches::PatchOp::*;
+use crate::init::patch_op::PatchOp::*;
 use crate::init::patches::INSTRUMENT_PATCHES;
 use crate::init::InitManager;
 use common_metadata::prelude::MetaInstrument;

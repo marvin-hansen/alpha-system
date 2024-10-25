@@ -1,12 +1,5 @@
-use crate::init::patches::PatchOp::*;
-
-#[derive(Debug, Copy, Clone, PartialEq)]
-#[repr(u8)]
-pub(crate) enum PatchOp {
-    PatchClass,
-    PatchQuoteAsset,
-    PatchBaseAsset,
-}
+use crate::init::patch_op::PatchOp;
+use crate::init::patch_op::PatchOp::*;
 
 const SPOT: &str = "spot";
 const USDC: &str = "usdc";
