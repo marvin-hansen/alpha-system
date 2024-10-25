@@ -25,7 +25,7 @@ fn test_from_meta_instrument() {
 
     assert_eq!(
         postgres_instrument.instrument_id,
-        "exchange_code_instrument_class_exchange_pair_code"
+        "exchange_code_instrument_class_base_asset_quote_asset"
     );
     assert_eq!(postgres_instrument.instrument_class, meta_instrument.class);
     assert_eq!(

@@ -1,11 +1,18 @@
-use crate::fields::{
-    DEX, ERRATA_INSTRUMENT_ID, NON_TRADE_INSTRUMENT_ID, NON_UNIQUE_EXCHANGE_INSTRUMENT_ID,
-};
+use crate::fields::{DEX, NON_TRADE_INSTRUMENT_ID, NON_UNIQUE_EXCHANGE_INSTRUMENT_ID};
+use crate::init::patches::INSTRUMENT_PATCHES;
 use crate::init::InitManager;
 use common_errors::prelude::InitError;
 use common_metadata::prelude::MetaInstrument;
 
 impl InitManager {
+    ///
+    /// Asynchronously initializes level 3 instruments by downloading and processing instrument data.
+    ///
+    /// # Returns
+    /// Returns a vector of MetaInstrument structs on success, or an InitError on failure.
+    ///
+    /// This method prints debug messages based on the use of a proxy and debug mode.
+    ///
     pub(super) async fn init_level_3_instruments(
         &self,
         valid_exchanges: &[String],
@@ -59,13 +66,13 @@ impl InitManager {
 
         for i in downloaded_instruments.iter() {
             if is_valid_instrument(i, valid_exchanges) {
-                //  if not, add it to the list
+                //  if not, add instrument to the list
                 if !requires_patching(i) {
                     processed_instruments.push(i.to_owned())
                 } else {
-                    // if so, swap out the original instrument with the corrected one
+                    // if it does need patching, swap out the original instrument with the patched one
                     let patched_instrument = self.patch_instruments(i.to_owned());
-                    // and then add the corrected instrument to the list
+                    // and then add the patched instrument to the list
                     processed_instruments.push(patched_instrument);
                 }
             }
@@ -82,7 +89,7 @@ impl InitManager {
 }
 
 fn requires_patching(instrument: &MetaInstrument) -> bool {
-    for (exchange, instrument_id) in ERRATA_INSTRUMENT_ID.iter() {
+    for (exchange, instrument_id, _, _) in INSTRUMENT_PATCHES {
         if instrument.exchange_code.eq(exchange) && instrument.exchange_pair_code.eq(instrument_id)
         {
             return true;

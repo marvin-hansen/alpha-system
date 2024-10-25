@@ -56,7 +56,7 @@ impl MetaInstrument {
     // This is necessary because names are not unique across asset classes even on the same exchange.
     pub fn primary_key(&self) -> String {
         format!(
-            "{}-{}-{}-{}",
+            "{}_{}_{}_{}",
             self.exchange_code.to_lowercase(),
             self.class.to_lowercase(),
             self.base_asset.to_lowercase(),

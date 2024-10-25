@@ -12,19 +12,6 @@ pub(crate) const DEX: [&str; 12] = [
 
 pub(crate) const NON_UNIQUE_EXCHANGE_INSTRUMENT_ID: [&str; 1] = ["1000NEIROCTOUSDT"];
 
-pub(crate) const ERRATA_INSTRUMENT_ID: [(&str, &str); 7] = [
-    ("bbit", "POLUSDT"), // bbit: Instrument_class should be SPOT https://www.bybit.com/en/trade/spot/POL/USDT
-    ("bbit", "POLPERP"), // bbit: quote_asset should be  USDC https://www.bybit.com/trade/futures/usdc/POL-PERP
-    // bgdm
-    ("bgdm", "LUNCUSDT"), // bgdm: base_asset should be LUNAC https://www.bitget.com/futures/usdt/LUNCUSDT
-    ("bgdm", "BTCPERP"), // bgdm: quote_asset should be  USDC https://www.bitget.com/futures/usdc/BTCPERP
-    ("bgdm", "ETHPERP"), // bgdm: quote_asset should be  USDC https://www.bitget.com/futures/usdc/ETHPERP
-    // hbdm / HTX https://www.htx.com
-    ("hbdm", "peopleusdt"), // hbdm: Instrument_class should be SPOT https://www.htx.com/trade/people_usdt/
-    // Okex https://www.okx.com/
-    ("okex", "NEIROETH-USDT-SWAP"), //okex: base_asset should be NEIROETH  https://www.okx.com/trade-swap-strategy/neiroeth-usdt-swap
-];
-
 pub(crate) const NON_TRADE_INSTRUMENT_ID: [&str; 5] =
     ["etf", "option", "option_combo", "future_combo", "future"];
 
