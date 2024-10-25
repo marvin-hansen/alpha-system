@@ -103,7 +103,7 @@ rust_library(
         "//thirdparty/crates/hyper-timeout-0.5.1:hyper_timeout",
         "//thirdparty/crates/hyper-util-0.1.9:hyper_util",
         "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",
-        "//thirdparty/crates/pin-project-1.1.6:pin_project",
+        "//thirdparty/crates/pin-project-1.1.7:pin_project",
         "//thirdparty/crates/prost-0.13.3:prost",
         "//thirdparty/crates/socket2-0.5.7:socket2",
         "//thirdparty/crates/tokio-1.41.0:tokio",

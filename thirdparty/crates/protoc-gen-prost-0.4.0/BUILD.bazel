@@ -87,7 +87,7 @@ rust_library(
         "//thirdparty/crates/prost-0.13.3:prost",
         "//thirdparty/crates/prost-build-0.13.3:prost_build",
         "//thirdparty/crates/prost-types-0.13.3:prost_types",
-        "//thirdparty/crates/regex-1.11.0:regex",
+        "//thirdparty/crates/regex-1.11.1:regex",
     ],
 )
 
@@ -165,6 +165,6 @@ rust_binary(
         "//thirdparty/crates/prost-0.13.3:prost",
         "//thirdparty/crates/prost-build-0.13.3:prost_build",
         "//thirdparty/crates/prost-types-0.13.3:prost_types",
-        "//thirdparty/crates/regex-1.11.0:regex",
+        "//thirdparty/crates/regex-1.11.1:regex",
     ],
 )

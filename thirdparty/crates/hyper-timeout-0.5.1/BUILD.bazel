@@ -81,7 +81,7 @@ rust_library(
     deps = [
         "//thirdparty/crates/hyper-1.5.0:hyper",
         "//thirdparty/crates/hyper-util-0.1.9:hyper_util",
-        "//thirdparty/crates/pin-project-lite-0.2.14:pin_project_lite",
+        "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",
         "//thirdparty/crates/tokio-1.41.0:tokio",
         "//thirdparty/crates/tower-service-0.3.3:tower_service",
     ],

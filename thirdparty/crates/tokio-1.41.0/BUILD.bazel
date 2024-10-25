@@ -118,7 +118,7 @@ rust_library(
         "//thirdparty/crates/bytes-1.8.0:bytes",
         "//thirdparty/crates/mio-1.0.2:mio",
         "//thirdparty/crates/parking_lot-0.12.3:parking_lot",
-        "//thirdparty/crates/pin-project-lite-0.2.14:pin_project_lite",
+        "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",
     ] + select({
         "@rules_rust//rust/platform:aarch64-apple-darwin": [
             "//thirdparty/crates/libc-0.2.161:libc",  # aarch64-apple-darwin

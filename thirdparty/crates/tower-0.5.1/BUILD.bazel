@@ -89,7 +89,7 @@ rust_library(
     deps = [
         "//thirdparty/crates/futures-core-0.3.31:futures_core",
         "//thirdparty/crates/futures-util-0.3.31:futures_util",
-        "//thirdparty/crates/pin-project-lite-0.2.14:pin_project_lite",
+        "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",
         "//thirdparty/crates/sync_wrapper-0.1.2:sync_wrapper",
         "//thirdparty/crates/tower-layer-0.3.3:tower_layer",
         "//thirdparty/crates/tower-service-0.3.3:tower_service",

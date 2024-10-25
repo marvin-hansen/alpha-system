@@ -90,7 +90,7 @@ rust_library(
     version = "0.1.40",
     deps = [
         "//thirdparty/crates/log-0.4.22:log",
-        "//thirdparty/crates/pin-project-lite-0.2.14:pin_project_lite",
+        "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",
         "//thirdparty/crates/tracing-core-0.1.32:tracing_core",
     ],
 )

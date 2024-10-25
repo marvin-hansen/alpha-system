@@ -88,7 +88,7 @@ rust_library(
         "//thirdparty/crates/petgraph-0.6.5:petgraph",
         "//thirdparty/crates/prost-0.12.6:prost",
         "//thirdparty/crates/prost-types-0.12.6:prost_types",
-        "//thirdparty/crates/regex-1.11.0:regex",
+        "//thirdparty/crates/regex-1.11.1:regex",
         "//thirdparty/crates/tempfile-3.13.0:tempfile",
     ],
 )

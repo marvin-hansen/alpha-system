@@ -93,7 +93,7 @@ rust_library(
         "//thirdparty/crates/prettyplease-0.2.25:prettyplease",
         "//thirdparty/crates/prost-0.13.3:prost",
         "//thirdparty/crates/prost-types-0.13.3:prost_types",
-        "//thirdparty/crates/regex-1.11.0:regex",
+        "//thirdparty/crates/regex-1.11.1:regex",
         "//thirdparty/crates/syn-2.0.85:syn",
         "//thirdparty/crates/tempfile-3.13.0:tempfile",
     ],

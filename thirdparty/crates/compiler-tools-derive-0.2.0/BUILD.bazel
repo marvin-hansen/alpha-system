@@ -82,7 +82,7 @@ rust_proc_macro(
         "//thirdparty/crates/indexmap-2.6.0:indexmap",
         "//thirdparty/crates/proc-macro2-1.0.89:proc_macro2",
         "//thirdparty/crates/quote-1.0.37:quote",
-        "//thirdparty/crates/regex-1.11.0:regex",
+        "//thirdparty/crates/regex-1.11.1:regex",
         "//thirdparty/crates/syn-2.0.85:syn",
     ],
 )
