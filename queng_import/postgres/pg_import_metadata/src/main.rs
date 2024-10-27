@@ -1,8 +1,5 @@
 mod print_utils;
-mod workflow_dispatch;
-mod workflow_full_import;
-mod workflow_no_op;
-mod workflow_update;
+mod workflow;
 
 use environment_manager::EnvironmentManager;
 use mimalloc::MiMalloc;
@@ -42,6 +39,9 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .expect("Failed to download metadata");
 
     print_utils::print_duration("Downloading metadata took", &start.elapsed());
+
+    print_utils::dbg_print("Loading metadata from Database");
+    let start = Instant::now();
 
     let stats = meta_data.stats();
     let expected_asset_count = stats.number_assets() as usize;
