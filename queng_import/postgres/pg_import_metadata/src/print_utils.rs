@@ -35,7 +35,6 @@ pub(crate) fn print_stop_header(
 
 pub(crate) fn print_duration(msg: &str, elapsed: &Duration) {
     if DBG {
-        let msg = &format!("[main]: {}", msg);
         if elapsed.as_millis() > 1000 {
             println!("{} {} sec.", msg, elapsed.as_secs());
         } else {
@@ -46,6 +45,6 @@ pub(crate) fn print_duration(msg: &str, elapsed: &Duration) {
 
 pub(crate) fn dbg_print(msg: &str) {
     if DBG {
-        println!("[main]: {}", msg)
+        println!("[pg_import_metadata]: {}", msg)
     }
 }

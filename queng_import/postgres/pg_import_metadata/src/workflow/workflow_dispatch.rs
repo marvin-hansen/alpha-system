@@ -1,42 +1,46 @@
-use crate::print_utils;
+use crate::workflow::worflow_op::{MetaDataDBWOp, WorkflowOpAll};
+use crate::{print_utils, workflow};
 use common_metadata::prelude::MetaDataSet;
 use pg_mddb_manager::PostgresMDDBManager;
+use std::process::exit;
 
-pub(crate) async fn workflow_dispatch(meta_data: &MetaDataSet, dbm_mddb: &PostgresMDDBManager) {
-    println!("workflow_dispatch");
+pub(crate) async fn dispatch_workflow(
+    dbm_mddb: &PostgresMDDBManager,
+    meta_data: &MetaDataSet,
+    meta_data_ops: MetaDataDBWOp,
+) -> () {
+    print_utils::dbg_print("dispatch_workflow");
 
-    let stats = meta_data.stats();
-    let expected_asset_count = stats.number_assets() as usize;
-    let expected_exchange_count = stats.number_exchanges() as usize;
-    let expected_instrument_count = stats.number_instruments() as usize;
+    match meta_data_ops.all_op() {
+        WorkflowOpAll::NoOPAll => {
+            print_utils::dbg_print("NoOP");
 
-    print_utils::dbg_print("Count assets in database");
-    let db_asset_count = dbm_mddb
-        .count_assets()
-        .await
-        .expect("Failed to count assets") as usize;
+            print_utils::print_already_imported_header();
+            exit(0);
+        }
+        WorkflowOpAll::ImportAll => {
+            print_utils::dbg_print("Importing All Metadata");
+            workflow::import_all_metadata(dbm_mddb, meta_data).await;
+        }
 
-    print_utils::dbg_print("Count exchanges in database");
-    let db_exchange_count = dbm_mddb
-        .count_exchanges()
-        .await
-        .expect("Failed to count exchanges") as usize;
+        WorkflowOpAll::ImportPartial => {
+            print_utils::dbg_print("PartialUpdate");
 
-    print_utils::dbg_print("Count instruments in database");
-    let db_instrument_count = dbm_mddb
-        .count_instruments()
-        .await
-        .expect("Failed to count instruments") as usize;
+            // let assets_op: WorkflowOp = meta_data_ops.assets_op();
+            // let exchanges_op: WorkflowOp = meta_data_ops.exchanges_op();
+            // let instruments_op: WorkflowOp = meta_data_ops.instruments_op();
+        }
 
-    if db_asset_count == expected_asset_count {
-        print_utils::dbg_print("Assets already imported");
-    }
+        WorkflowOpAll::UpdateAll => {
+            print_utils::dbg_print("UpdateAll");
+        }
 
-    if db_exchange_count == expected_exchange_count {
-        print_utils::dbg_print("Exchanges already imported");
-    }
+        WorkflowOpAll::UpdatePartial => {
+            // let assets_op: WorkflowOp = meta_data_ops.assets_op();
+            // let exchanges_op: WorkflowOp = meta_data_ops.exchanges_op();
+            // let instruments_op: WorkflowOp = meta_data_ops.instruments_op();
 
-    if db_instrument_count == expected_instrument_count {
-        print_utils::dbg_print("Instruments already imported");
+            print_utils::dbg_print("UpdateAssets");
+        }
     }
 }
