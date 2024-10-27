@@ -1,6 +1,7 @@
+use crate::DBG;
 use std::time::Duration;
 
-pub fn print_start_header() {
+pub(crate) fn print_start_header() {
     println!();
     println!("==========================================");
     println!("||  Importing Metadata into PostgreSQL ||",);
@@ -8,7 +9,7 @@ pub fn print_start_header() {
     println!();
 }
 
-pub fn print_already_imported_header() {
+pub(crate) fn print_already_imported_header() {
     println!();
     println!("==========================================");
     println!("|| Metadata Already Migrated ||");
@@ -16,7 +17,11 @@ pub fn print_already_imported_header() {
     println!();
 }
 
-pub fn print_stop_header(asset_count: usize, exchange_count: usize, instrument_count: usize) {
+pub(crate) fn print_stop_header(
+    asset_count: usize,
+    exchange_count: usize,
+    instrument_count: usize,
+) {
     println!();
     println!("||  Importing Metadata into PostgreSQL ||",);
     println!("==========================================");
@@ -28,10 +33,19 @@ pub fn print_stop_header(asset_count: usize, exchange_count: usize, instrument_c
     println!();
 }
 
-pub fn print_duration(msg: &str, elapsed: &Duration) {
-    if elapsed.as_millis() > 1000 {
-        println!("{} {} sec.", msg, elapsed.as_secs());
-    } else {
-        println!("{} {} ms.", msg, elapsed.as_millis());
+pub(crate) fn print_duration(msg: &str, elapsed: &Duration) {
+    if DBG {
+        let msg = &format!("[main]: {}", msg);
+        if elapsed.as_millis() > 1000 {
+            println!("{} {} sec.", msg, elapsed.as_secs());
+        } else {
+            println!("{} {} ms.", msg, elapsed.as_millis());
+        }
+    }
+}
+
+pub(crate) fn dbg_print(msg: &str) {
+    if DBG {
+        println!("[main]: {}", msg)
     }
 }
