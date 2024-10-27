@@ -1,16 +1,16 @@
 //! libm in pure Rust
-#![deny(warnings)]
 #![no_std]
-#![cfg_attr(all(feature = "unstable"), feature(core_intrinsics))]
-#![allow(clippy::unreadable_literal)]
-#![allow(clippy::many_single_char_names)]
-#![allow(clippy::needless_return)]
-#![allow(clippy::int_plus_one)]
-#![allow(clippy::deprecated_cfg_attr)]
-#![allow(clippy::mixed_case_hex_literals)]
-#![allow(clippy::float_cmp)]
-#![allow(clippy::eq_op)]
+#![cfg_attr(feature = "unstable", allow(internal_features))]
+#![cfg_attr(feature = "unstable", feature(core_intrinsics))]
 #![allow(clippy::assign_op_pattern)]
+#![allow(clippy::deprecated_cfg_attr)]
+#![allow(clippy::eq_op)]
+#![allow(clippy::float_cmp)]
+#![allow(clippy::int_plus_one)]
+#![allow(clippy::many_single_char_names)]
+#![allow(clippy::mixed_case_hex_literals)]
+#![allow(clippy::needless_return)]
+#![allow(clippy::unreadable_literal)]
 
 mod libm_helper;
 mod math;
@@ -52,8 +52,3 @@ pub fn _eq(a: f64, b: f64) -> Result<(), u64> {
         }
     }
 }
-
-// PowerPC tests are failing on LLVM 13: https://github.com/rust-lang/rust/issues/88520
-#[cfg(not(target_arch = "powerpc64"))]
-#[cfg(all(test, feature = "musl-reference-tests"))]
-include!(concat!(env!("OUT_DIR"), "/musl-tests.rs"));
