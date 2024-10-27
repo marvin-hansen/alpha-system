@@ -43,7 +43,7 @@ impl Exchange {
          "#;
 
         // Res returns the number of rows inserted
-        let number_inserted = diesel::sql_query(insert_query)
+        let _number_inserted = diesel::sql_query(insert_query)
             .execute(conn)
             .expect("Failed to drop temporary exchange table");
 
