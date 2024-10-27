@@ -26,7 +26,6 @@ async fn main() -> Result<(), Box<dyn Error>> {
     print_utils::dbg_print("Configure postgres database");
     let pg_cfg_manager = PostgresConfigManager::new(&env_type);
     let dsn = pg_cfg_manager.pg_connection_url();
-
     let dbm_mddb = PostgresMDDBManager::new(&dsn)
         .await
         .expect("Failed to create PostgresSMDBManager");
@@ -54,7 +53,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     print_utils::dbg_print("Dispatch and execute metadata workflow");
     let start = Instant::now();
-    workflow::dispatch_workflow(&dbm_mddb, &meta_data, workflow).await;
+    workflow::dispatch_workflow(&dbm_mddb, &meta_data, &workflow).await;
 
     print_utils::print_duration("Executing workflow took", &start.elapsed());
 

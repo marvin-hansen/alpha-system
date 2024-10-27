@@ -7,14 +7,13 @@ use std::process::exit;
 pub(crate) async fn dispatch_workflow(
     dbm_mddb: &PostgresMDDBManager,
     meta_data: &MetaDataSet,
-    meta_data_ops: MetaDataDBWOp,
+    meta_data_ops: &MetaDataDBWOp,
 ) -> () {
     print_utils::dbg_print("dispatch_workflow");
 
     match meta_data_ops.all_op() {
         WorkflowOpAll::NoOPAll => {
             print_utils::dbg_print("NoOP");
-
             print_utils::print_already_imported_header();
             exit(0);
         }
@@ -25,10 +24,7 @@ pub(crate) async fn dispatch_workflow(
 
         WorkflowOpAll::ImportPartial => {
             print_utils::dbg_print("PartialUpdate");
-
-            // let assets_op: WorkflowOp = meta_data_ops.assets_op();
-            // let exchanges_op: WorkflowOp = meta_data_ops.exchanges_op();
-            // let instruments_op: WorkflowOp = meta_data_ops.instruments_op();
+            workflow::import_partial_metadata(meta_data_ops, dbm_mddb, meta_data).await;
         }
 
         WorkflowOpAll::UpdateAll => {
@@ -36,10 +32,6 @@ pub(crate) async fn dispatch_workflow(
         }
 
         WorkflowOpAll::UpdatePartial => {
-            // let assets_op: WorkflowOp = meta_data_ops.assets_op();
-            // let exchanges_op: WorkflowOp = meta_data_ops.exchanges_op();
-            // let instruments_op: WorkflowOp = meta_data_ops.instruments_op();
-
             print_utils::dbg_print("UpdateAssets");
         }
     }
