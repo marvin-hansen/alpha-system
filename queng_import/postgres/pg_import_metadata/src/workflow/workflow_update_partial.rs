@@ -21,7 +21,7 @@ pub(crate) async fn update_partial_metadata(
     meta_data_ops: &MetaDataDBWOp,
     dbm_mddb: &PostgresMDDBManager,
     meta_data: &MetaDataSet,
-) -> () {
+) {
     print_utils::dbg_print("update_partial_metadata");
 
     let stats = meta_data.stats();

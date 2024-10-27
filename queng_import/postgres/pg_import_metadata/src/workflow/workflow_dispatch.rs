@@ -27,7 +27,7 @@ pub(crate) async fn dispatch_workflow(
     dbm_mddb: &PostgresMDDBManager,
     meta_data: &MetaDataSet,
     meta_data_ops: &MetaDataDBWOp,
-) -> () {
+) {
     print_utils::dbg_print("dispatch_workflow");
 
     match meta_data_ops.all_op() {

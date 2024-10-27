@@ -12,7 +12,7 @@ pub(crate) async fn import_partial_metadata(
     meta_data_ops: &MetaDataDBWOp,
     dbm_mddb: &PostgresMDDBManager,
     meta_data: &MetaDataSet,
-) -> () {
+) {
     let stats = meta_data.stats();
 
     if meta_data_ops.assets_op() == WorkflowOp::ImportAssets {

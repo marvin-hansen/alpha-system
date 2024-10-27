@@ -7,10 +7,7 @@ use pg_mddb_manager::PostgresMDDBManager;
 /// This function will import all assets, exchanges and instruments from the
 /// given `MetaDataSet` into the database using the given `PostgresMDDBManager`.
 ///
-pub(crate) async fn import_all_metadata(
-    dbm_mddb: &PostgresMDDBManager,
-    meta_data: &MetaDataSet,
-) -> () {
+pub(crate) async fn import_all_metadata(dbm_mddb: &PostgresMDDBManager, meta_data: &MetaDataSet) {
     let stats = meta_data.stats();
     let expected_asset_count = stats.number_assets() as usize;
     let expected_exchange_count = stats.number_exchanges() as usize;
