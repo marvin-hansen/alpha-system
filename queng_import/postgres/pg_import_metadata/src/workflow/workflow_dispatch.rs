@@ -2,8 +2,27 @@ use crate::workflow::worflow_op::{MetaDataDBWOp, WorkflowOpAll};
 use crate::{print_utils, workflow};
 use common_metadata::prelude::MetaDataSet;
 use pg_mddb_manager::PostgresMDDBManager;
-use std::process::exit;
 
+///
+/// Dispatches the appropriate workflow based on the provided metadata operations.
+///
+/// This function determines which workflow operation to execute (e.g., no operation,
+/// import all, import partial, update all, update partial) by matching against the
+/// `meta_data_ops` parameter. It uses the provided `PostgresMDDBManager` to perform
+/// database operations and the `MetaDataSet` to access the metadata.
+///
+/// # Parameters
+///
+/// - `dbm_mddb`: The `PostgresMDDBManager` to use for database operations.
+/// - `meta_data`: The `MetaDataSet` containing the metadata to be processed.
+/// - `meta_data_ops`: Specifies the workflow operations to be performed.
+///
+/// # Remarks
+///
+/// - This function logs the workflow operation being dispatched using `print_utils`.
+/// - It delegates the actual workflow execution to specific functions from the
+///   `workflow` module based on the operation type.
+///
 pub(crate) async fn dispatch_workflow(
     dbm_mddb: &PostgresMDDBManager,
     meta_data: &MetaDataSet,
@@ -15,24 +34,25 @@ pub(crate) async fn dispatch_workflow(
         WorkflowOpAll::NoOPAll => {
             print_utils::dbg_print("NoOP");
             print_utils::print_already_imported_header();
-            exit(0);
         }
         WorkflowOpAll::ImportAll => {
-            print_utils::dbg_print("Importing All Metadata");
+            print_utils::dbg_print("Import All Metadata");
             workflow::import_all_metadata(dbm_mddb, meta_data).await;
         }
 
         WorkflowOpAll::ImportPartial => {
-            print_utils::dbg_print("PartialUpdate");
+            print_utils::dbg_print("Update Partial Metadata");
             workflow::import_partial_metadata(meta_data_ops, dbm_mddb, meta_data).await;
         }
 
         WorkflowOpAll::UpdateAll => {
-            print_utils::dbg_print("UpdateAll");
+            print_utils::dbg_print("Update All Metadata");
+            workflow::update_all_metadata(dbm_mddb, meta_data).await;
         }
 
         WorkflowOpAll::UpdatePartial => {
-            print_utils::dbg_print("UpdateAssets");
+            print_utils::dbg_print("Update Partial Metadata");
+            workflow::update_partial_metadata(meta_data_ops, dbm_mddb, meta_data).await;
         }
     }
 }

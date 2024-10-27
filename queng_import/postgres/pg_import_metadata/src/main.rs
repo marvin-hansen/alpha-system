@@ -16,6 +16,7 @@ const AUTO_DETECT_PROXY: bool = true;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
+    let start_main = Instant::now();
     print_utils::print_start_header();
 
     print_utils::dbg_print("Setup autoconfiguration");
@@ -35,7 +36,6 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let meta_data = kaiko_download::download_meta_data(DBG, AUTO_DETECT_PROXY)
         .await
         .expect("Failed to download metadata");
-
     print_utils::print_duration("Downloading metadata took", &start.elapsed());
 
     print_utils::dbg_print("Loading metadata from Database");
@@ -44,8 +44,6 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .count_metadata_records()
         .await
         .expect("Failed to load metadata from DB");
-
-    print_utils::dbg_print("Determining metadata workflow");
     print_utils::print_duration("Loading metadata from DB took", &start.elapsed());
 
     print_utils::dbg_print("Determine metadata workflow");
@@ -54,8 +52,9 @@ async fn main() -> Result<(), Box<dyn Error>> {
     print_utils::dbg_print("Dispatch and execute metadata workflow");
     let start = Instant::now();
     workflow::dispatch_workflow(&dbm_mddb, &meta_data, &workflow).await;
-
     print_utils::print_duration("Executing workflow took", &start.elapsed());
+
+    print_utils::print_duration("Main took", &start_main.elapsed());
 
     Ok(())
 }
