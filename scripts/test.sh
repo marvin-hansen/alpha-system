@@ -10,7 +10,7 @@ echo "Build targets "
 echo "=============="
 
 command bazel build //... --test_env=ENV=LOCAL
-command bazel build //... --build_tag_filters=doc-test --test_env=ENV=LOCAL
+command bazel build //... --build_tag_filters=doc-test,unit-test,integration_test --test_env=ENV=LOCAL
 
 echo ""
 echo "=============="
