@@ -11,6 +11,7 @@ authors.workspace = true
 # Custom Memory Allocator
 mimalloc = { workspace = true }
 # Internal crates
+common_env = {workspace = true}
 common_metadata = {workspace = true}
 environment_manager = { workspace = true }
 pg_mddb_manager = { workspace = true }

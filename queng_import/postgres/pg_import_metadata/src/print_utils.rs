@@ -1,4 +1,5 @@
 use crate::DBG;
+use common_env::prelude::EnvironmentType;
 use std::time::Duration;
 
 pub(crate) fn print_start_header() {
@@ -36,11 +37,15 @@ pub(crate) fn print_stop_header(
 pub(crate) fn print_duration(msg: &str, elapsed: &Duration) {
     if DBG {
         if elapsed.as_millis() > 1000 {
-            println!("{} {} sec.", msg, elapsed.as_secs());
+            println!("[pg_import_metadata]: {} {} sec.", msg, elapsed.as_secs());
         } else {
-            println!("{} {} ms.", msg, elapsed.as_millis());
+            println!("[pg_import_metadata]: {} {} ms.", msg, elapsed.as_millis());
         }
     }
+}
+
+pub(crate) fn print_env(env_type: &EnvironmentType) {
+    println!("[pg_import_metadata]: Detected environment: {}", env_type)
 }
 
 pub(crate) fn dbg_print(msg: &str) {

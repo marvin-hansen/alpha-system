@@ -22,7 +22,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     print_utils::dbg_print("Setup autoconfiguration");
     let config_manager = EnvironmentManager::new();
     let env_type = config_manager.env_type();
-    println!("[main]: Environment type: {:?}", env_type);
+    print_utils::print_env(&env_type);
 
     print_utils::dbg_print("Configure postgres database");
     let pg_cfg_manager = PostgresConfigManager::new(&env_type);
@@ -38,7 +38,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .expect("Failed to download metadata");
     print_utils::print_duration("Downloading metadata took", &start.elapsed());
 
-    print_utils::dbg_print("Loading metadata from Database");
+    print_utils::dbg_print("Loading metadata records from Database");
     let start = Instant::now();
     let meta_data_db = dbm_mddb
         .count_metadata_records()

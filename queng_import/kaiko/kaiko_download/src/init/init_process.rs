@@ -8,6 +8,11 @@ impl InitManager {
     /// asset, and instrument data in three levels.
     /// Returns a Result containing MetaDataSet on success, or InitError on failure.
     pub async fn init(&self) -> Result<MetaDataSet, InitError> {
+        self.dbg_print("=================");
+        self.dbg_print(" START DOWNLOAD ");
+        self.dbg_print("=================");
+        self.dbg_print("");
+
         let start = Instant::now();
         self.dbg_print("Level 1: Retrieving reference exchange data!");
         let exchanges_meta_data = self
@@ -44,9 +49,10 @@ impl InitManager {
         let meta_data =
             MetaDataSet::new(asset_meta_data, exchanges_meta_data, instrument_meta_data);
 
-        self.dbg_print("=============");
-        self.dbg_print("INIT COMPLETE");
-        self.dbg_print("=============");
+        self.dbg_print("=================");
+        self.dbg_print("DOWNLOAD COMPLETE");
+        self.dbg_print("=================");
+        self.dbg_print("");
 
         Ok(meta_data)
     }

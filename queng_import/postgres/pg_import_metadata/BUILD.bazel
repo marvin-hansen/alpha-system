@@ -15,6 +15,7 @@ build_binary_opt(
         # Custom Memory Allocator
         "//thirdparty/crates:mimalloc",
         # Internal crates
+        "//alias:common_env",
         "//alias:common_metadata",
         "//alias:environment_manager",
         "//alias:kaiko_download",
