@@ -78,7 +78,7 @@ async fn test_create_instrument() {
 
     // Insert exchange
     let test_exchange = get_test_meta_exchange();
-    let result = Exchange::create_exchange(conn, test_exchange);
+    let result = Exchange::create(conn, test_exchange);
     assert!(result.is_ok());
 
     let instrument = get_test_meta_instrument();
@@ -99,7 +99,7 @@ async fn test_create_instrument_collection_success() {
 
     // Insert exchange
     let test_exchange = get_test_meta_exchange();
-    let result = Exchange::create_exchange(conn, test_exchange);
+    let result = Exchange::create(conn, test_exchange);
     assert!(result.is_ok());
 
     let meta_instruments = vec![get_test_meta_instrument()];
@@ -121,7 +121,7 @@ async fn test_create_instrument_collection_empty() {
 
     // Insert exchange
     let test_exchange = get_test_meta_exchange();
-    let result = Exchange::create_exchange(conn, test_exchange);
+    let result = Exchange::create(conn, test_exchange);
     assert!(result.is_ok());
 
     let meta_instruments: Vec<MetaInstrument> = vec![];
@@ -142,7 +142,7 @@ async fn test_create_instrument_collection_error() {
 
     // Insert exchange
     let test_exchange = get_test_meta_exchange();
-    let result = Exchange::create_exchange(conn, test_exchange);
+    let result = Exchange::create(conn, test_exchange);
     assert!(result.is_ok());
 
     // All test data have the same instrument code (primary key)
@@ -170,7 +170,7 @@ async fn test_count_instruments_with_entries() {
 
     // Insert exchange
     let test_exchange = get_test_meta_exchange();
-    let result = Exchange::create_exchange(conn, test_exchange);
+    let result = Exchange::create(conn, test_exchange);
     assert!(result.is_ok());
 
     let test_data = get_test_meta_instrument();
@@ -212,7 +212,7 @@ async fn test_check_if_instrument_id_exists_returns_true() {
 
     // Insert exchange
     let test_exchange = get_test_meta_exchange();
-    let result = Exchange::create_exchange(conn, test_exchange);
+    let result = Exchange::create(conn, test_exchange);
     assert!(result.is_ok());
 
     let instrument = get_test_meta_instrument();
@@ -255,7 +255,7 @@ async fn test_read_instrument() {
 
     // Insert exchange
     let test_exchange = get_test_meta_exchange();
-    let result = Exchange::create_exchange(conn, test_exchange);
+    let result = Exchange::create(conn, test_exchange);
     assert!(result.is_ok());
 
     let instrument = get_test_meta_instrument();
@@ -297,7 +297,7 @@ async fn test_read_all_instrument() {
 
     // Insert exchange
     let test_exchange = get_test_meta_exchange();
-    let result = Exchange::create_exchange(conn, test_exchange);
+    let result = Exchange::create(conn, test_exchange);
     assert!(result.is_ok());
 
     let instrument = get_test_meta_instrument();
@@ -338,7 +338,7 @@ async fn test_update_instrument() {
 
     // Insert exchange
     let test_exchange = get_test_meta_exchange();
-    let result = Exchange::create_exchange(conn, test_exchange);
+    let result = Exchange::create(conn, test_exchange);
     assert!(result.is_ok());
 
     let instrument = get_test_meta_instrument();
@@ -384,7 +384,7 @@ async fn test_delete_instrument() {
     // Insert exchange
     let test_exchange = get_test_meta_exchange();
     let exchange_id = test_exchange.code.to_string();
-    let result = Exchange::create_exchange(conn, test_exchange);
+    let result = Exchange::create(conn, test_exchange);
     assert!(result.is_ok());
 
     // Insert instrument

@@ -22,7 +22,7 @@ impl PostgresMDDBManager {
         self.dbg_print("insert_exchange");
         let conn = &mut self.get_connection();
 
-        match Exchange::create_exchange(conn, exchange) {
+        match Exchange::create(conn, exchange) {
             Ok(res) => Ok(res),
             Err(e) => Err(PostgresDBError::InsertFailed(e.to_string())),
         }
@@ -46,7 +46,7 @@ impl PostgresMDDBManager {
         self.dbg_print("insert_exchange_collection");
         let conn = &mut self.get_connection();
 
-        match Exchange::create_exchange_collection(conn, exchanges) {
+        match Exchange::create_collection(conn, exchanges) {
             Ok(res) => Ok(res),
             Err(e) => Err(PostgresDBError::InsertFailed(e.to_string())),
         }

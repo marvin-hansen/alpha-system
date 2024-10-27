@@ -80,7 +80,7 @@ async fn test_create_instruments_exchanges() {
     // Insert exchange
     let test_exchange = get_test_meta_exchange();
     let exchange_id = test_exchange.code.clone();
-    let result = Exchange::create_exchange(conn, test_exchange);
+    let result = Exchange::create(conn, test_exchange);
     // dbg!(&result);
     assert!(result.is_ok());
 
@@ -135,7 +135,7 @@ async fn test_check_if_instruments_exchanges_exists() {
     let test_exchange = get_test_meta_exchange();
     let exchange_id = test_exchange.code.clone();
 
-    let result = Exchange::create_exchange(conn, test_exchange);
+    let result = Exchange::create(conn, test_exchange);
     assert!(result.is_ok());
 
     // Insert instrument
@@ -168,7 +168,7 @@ async fn test_delete_instruments_exchanges() {
     let test_exchange = get_test_meta_exchange();
     let exchange_id = test_exchange.code.clone();
 
-    let result = Exchange::create_exchange(conn, test_exchange);
+    let result = Exchange::create(conn, test_exchange);
     assert!(result.is_ok());
 
     // Insert instrument

@@ -1,5 +1,6 @@
 mod asset_impl;
 pub mod asset_type_conversion;
+mod asset_upsert;
 
 use diesel::{AsChangeset, Identifiable, Insertable, Queryable, QueryableByName, Selectable};
 

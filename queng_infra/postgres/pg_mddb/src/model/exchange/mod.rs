@@ -1,5 +1,6 @@
 mod exchange_impl;
 pub mod exchange_type_conversion;
+mod exchange_upsert;
 
 use diesel::{AsChangeset, Identifiable, Insertable, Queryable, Selectable};
 

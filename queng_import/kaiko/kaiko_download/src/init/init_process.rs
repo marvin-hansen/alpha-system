@@ -8,6 +8,7 @@ impl InitManager {
     /// asset, and instrument data in three levels.
     /// Returns a Result containing MetaDataSet on success, or InitError on failure.
     pub async fn init(&self) -> Result<MetaDataSet, InitError> {
+        self.dbg_print("");
         self.dbg_print("=================");
         self.dbg_print(" START DOWNLOAD ");
         self.dbg_print("=================");
