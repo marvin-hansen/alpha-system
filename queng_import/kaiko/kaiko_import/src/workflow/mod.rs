@@ -1,24 +1,24 @@
-mod workflow_determine;
-pub(crate) mod workflow_dispatch;
+mod determine;
+pub(crate) mod execute;
 
-mod workflow_import_all;
-mod workflow_import_partial;
-mod workflow_import_shared;
-mod workflow_update_all;
-mod workflow_update_partial;
-mod workflow_update_shared;
+mod import_all;
+mod import_partial;
+mod import_shared;
+mod update_all;
+mod update_partial;
+mod update_shared;
 
 //  re-export
-pub use workflow_determine::determine_workflow;
-pub use workflow_dispatch::execute_workflow;
+pub use determine::determine_workflow;
+pub use execute::execute_workflow;
 //
-pub(crate) use workflow_import_all::import_all_metadata;
-pub(crate) use workflow_import_partial::import_partial_metadata;
-pub(crate) use workflow_import_shared::import_assets_metadata;
-pub(crate) use workflow_import_shared::import_exchanges_metadata;
-pub(crate) use workflow_import_shared::import_instruments_metadata;
-pub(crate) use workflow_update_all::update_all_metadata;
-pub(crate) use workflow_update_partial::update_partial_metadata;
-pub(crate) use workflow_update_shared::update_assets_metadata;
-pub(crate) use workflow_update_shared::update_exchanges_metadata;
-pub(crate) use workflow_update_shared::update_instruments_metadata;
+pub(crate) use import_all::import_all_metadata;
+pub(crate) use import_partial::import_partial_metadata;
+pub(crate) use import_shared::import_assets_metadata;
+pub(crate) use import_shared::import_exchanges_metadata;
+pub(crate) use import_shared::import_instruments_metadata;
+pub(crate) use update_all::update_all_metadata;
+pub(crate) use update_partial::update_partial_metadata;
+pub(crate) use update_shared::update_assets_metadata;
+pub(crate) use update_shared::update_exchanges_metadata;
+pub(crate) use update_shared::update_instruments_metadata;
