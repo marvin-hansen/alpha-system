@@ -18,6 +18,7 @@ members = [
     "queng_components/symbol_manager",
     "queng_import/kaiko/kaiko_client",
     "queng_import/kaiko/kaiko_download",
+    "queng_import/kaiko/kaiko_import",
     "queng_import/kaiko/kaiko_proxy",
     "queng_import/kaiko/kaiko_tests",
     "queng_import/postgres/pg_import_services",
@@ -102,9 +103,9 @@ authors = ["Marvin Hansen <marvin.hansen@gmail.com>"]
 # Clients
 binance_client = { path = "queng_services/ims/ims_clients/binance_client" }
 cmdb_client = { path = "queng_services/core/cmdb/cmdb_client" }
-dbgw_cmdb_client = {path = "queng_services/core/dbgw/dbgw_client/dbgw_cmdb_client"}
-dbgw_mddb_client = {path = "queng_services/core/dbgw/dbgw_client/dbgw_mddb_client"}
-dbgw_smdb_client = {path = "queng_services/core/dbgw/dbgw_client/dbgw_smdb_client"}
+dbgw_cmdb_client = { path = "queng_services/core/dbgw/dbgw_client/dbgw_cmdb_client" }
+dbgw_mddb_client = { path = "queng_services/core/dbgw/dbgw_client/dbgw_mddb_client" }
+dbgw_smdb_client = { path = "queng_services/core/dbgw/dbgw_client/dbgw_smdb_client" }
 ims_data_client = { path = "queng_services/ims/ims_clients/ims_data_client" }
 rest_client = { path = "queng_services/ims/ims_clients/rest_client" }
 mddb_client = { path = "queng_services/ims/mddb/mddb_client" }
@@ -132,6 +133,7 @@ symbol_manager = { path = "queng_components/symbol_manager" }
 # Kaiko
 kaiko_client = { path = "queng_import/kaiko/kaiko_client" }
 kaiko_download = { path = "queng_import/kaiko/kaiko_download" }
+kaiko_import = { path = "queng_import/kaiko/kaiko_import" }
 kaiko_proxy = { path = "queng_import/kaiko/kaiko_proxy" }
 # Postgres DB
 pg_import_metadata = { path = "queng_import/postgres/pg_import_metadata" }
@@ -240,7 +242,7 @@ parquet = { version = "53.0.0" }
 prost = { version = "0.13.3" }
 prost-types = { version = "0.13.3", default-features = false }
 reqwest = { version = "0.12.7", default-features = false, features = ["rustls-tls", "json", "blocking", "gzip"] }
-rustls = {version = "0.23.13"}
+rustls = { version = "0.23.13" }
 rust_decimal = { version = "1.36.0" }
 rust_decimal_macros = { version = "1.36.0" }
 serde = { version = "1.0.210", features = ["derive"] }

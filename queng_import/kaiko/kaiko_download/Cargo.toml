@@ -18,7 +18,6 @@ environment_manager = {workspace = true}
 # External crates
 chrono = { workspace = true }
 reqwest = { workspace = true }
-lazy_static  = { workspace = true }
 serde = {workspace = true}
 serde_json = {workspace = true}
 tokio = { workspace = true }

@@ -95,6 +95,11 @@ alias(
 )
 
 alias(
+    name = "kaiko_import",
+    actual = "//queng_import/kaiko/kaiko_import",
+)
+
+alias(
     name = "kaiko_proxy",
     actual = "//queng_import/kaiko/kaiko_proxy:kaiko_proxy",
     visibility = ["//visibility:public"],
