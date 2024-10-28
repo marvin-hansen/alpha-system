@@ -34,6 +34,15 @@ pub(crate) fn print_stop_header(
     println!();
 }
 
+pub(crate) fn print_import_header(msg: &str, count: usize) {
+    println!();
+    println!("||  Importing Metadata into PostgreSQL ||",);
+    println!("==========================================");
+    println!("{}: {}", msg, count);
+    println!("==========================================");
+    println!();
+}
+
 pub(crate) fn print_duration(msg: &str, elapsed: &Duration) {
     if DBG {
         if elapsed.as_millis() > 1000 {

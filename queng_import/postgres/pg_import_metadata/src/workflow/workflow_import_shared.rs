@@ -24,7 +24,7 @@ use pg_mddb_manager::PostgresMDDBManager;
 pub(crate) async fn import_assets_metadata(
     dbm_mddb: &PostgresMDDBManager,
     meta_data: &MetaDataSet,
-) {
+) -> usize {
     print_utils::dbg_print("import_assets_metadata");
     let stats = meta_data.stats();
 
@@ -45,6 +45,8 @@ pub(crate) async fn import_assets_metadata(
     assert_eq!(db_asset_count, expected_asset_count);
 
     print_utils::dbg_print("Completed importing assets");
+
+    db_asset_count
 }
 
 /// Asynchronously imports exchange metadata into the PostgresMDDBManager.
@@ -69,7 +71,7 @@ pub(crate) async fn import_assets_metadata(
 pub(crate) async fn import_exchanges_metadata(
     dbm_mddb: &PostgresMDDBManager,
     meta_data: &MetaDataSet,
-) {
+) -> usize {
     print_utils::dbg_print("import_exchange_metadata");
     let stats = meta_data.stats();
 
@@ -90,6 +92,8 @@ pub(crate) async fn import_exchanges_metadata(
     assert_eq!(db_exchange_count, expected_exchange_count);
 
     print_utils::dbg_print("Completed importing exchanges");
+
+    db_exchange_count
 }
 
 /// Asynchronously imports instruments metadata into the Postgres metadata database.
@@ -115,7 +119,7 @@ pub(crate) async fn import_exchanges_metadata(
 pub(crate) async fn import_instruments_metadata(
     dbm_mddb: &PostgresMDDBManager,
     meta_data: &MetaDataSet,
-) {
+) -> usize {
     print_utils::dbg_print("import_instruments_metadata");
     let stats = meta_data.stats();
 
@@ -136,4 +140,6 @@ pub(crate) async fn import_instruments_metadata(
     assert_eq!(db_instrument_count, expected_instrument_count);
 
     print_utils::dbg_print("Completed importing instruments");
+
+    db_instrument_count
 }

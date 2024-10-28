@@ -10,9 +10,16 @@ use pg_mddb_manager::PostgresMDDBManager;
 pub(crate) async fn import_all_metadata(dbm_mddb: &PostgresMDDBManager, meta_data: &MetaDataSet) {
     print_utils::dbg_print("import_all_metadata");
 
-    workflow::import_assets_metadata(dbm_mddb, meta_data).await;
+    let imported_asset_count = workflow::import_assets_metadata(dbm_mddb, meta_data).await;
 
-    workflow::import_exchanges_metadata(dbm_mddb, meta_data).await;
+    let imported_exchange_count = workflow::import_exchanges_metadata(dbm_mddb, meta_data).await;
 
-    workflow::import_instruments_metadata(dbm_mddb, meta_data).await;
+    let imported_instrument_count =
+        workflow::import_instruments_metadata(dbm_mddb, meta_data).await;
+
+    print_utils::print_stop_header(
+        imported_asset_count,
+        imported_exchange_count,
+        imported_instrument_count,
+    )
 }

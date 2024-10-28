@@ -16,14 +16,19 @@ pub(crate) async fn import_partial_metadata(
     print_utils::dbg_print("import_partial_metadata");
 
     if meta_data_ops.assets_op() == WorkflowOp::ImportAssets {
-        workflow::import_assets_metadata(dbm_mddb, meta_data).await;
+        let imported_asset_count = workflow::import_assets_metadata(dbm_mddb, meta_data).await;
+        print_utils::print_import_header("Imported Assets", imported_asset_count);
     }
 
     if meta_data_ops.exchanges_op() == WorkflowOp::ImportExchanges {
-        workflow::import_exchanges_metadata(dbm_mddb, meta_data).await;
+        let imported_exchange_count =
+            workflow::import_exchanges_metadata(dbm_mddb, meta_data).await;
+        print_utils::print_import_header("Imported Exchanges", imported_exchange_count);
     }
 
     if meta_data_ops.instruments_op() == WorkflowOp::ImportInstruments {
-        workflow::import_instruments_metadata(dbm_mddb, meta_data).await;
+        let imported_instrument_count =
+            workflow::import_instruments_metadata(dbm_mddb, meta_data).await;
+        print_utils::print_import_header("Imported Instruments", imported_instrument_count);
     }
 }
