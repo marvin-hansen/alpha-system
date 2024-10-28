@@ -129,41 +129,6 @@ rust_test_suite(
 )
 
 rust_test_suite(
-    name = "instruments_exchanges",
-    srcs = glob([
-        "instruments_exchanges/*_tests.rs",
-    ]),
-    exec_properties = {
-        # Tell BuildBuddy to run this test using a Firecracker microVM.
-        "test.workload-isolation-type": "firecracker",
-        # Tell BuildBuddy to ensure that the Docker daemon is started
-        "test.init-dockerd": "true",
-        # Tell BuildBuddy to preserve the microVM state across test runs.
-        "test.recycle-runner": "true",
-        # We don't want different different db tests to be assigned to the same recycled runner,
-        # because we can't fit all db docker images with the default disk limit.
-        "test.runner-recycling-key": "pg_metadb_instruments_exchanges_tests",
-    },
-    tags = [
-        "integration_test",
-    ],
-    visibility = ["//visibility:public"],
-    deps = [
-        # Crate to test
-        "//alias:pg_mddb",
-        # Internal crates
-        "//alias:common_metadata",
-        "//alias:container_specs_postgres",
-        "//alias:postgres_migrations",
-        "//alias:docker_utils",
-        # External crates
-        "//thirdparty/crates:diesel",
-        "//thirdparty/crates:diesel_migrations",
-        "//thirdparty/crates:tokio",
-    ],
-)
-
-rust_test_suite(
     name = "stat",
     srcs = glob([
         "stat/*_tests.rs",

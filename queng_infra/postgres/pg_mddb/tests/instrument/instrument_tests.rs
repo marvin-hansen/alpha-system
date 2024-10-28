@@ -2,7 +2,7 @@ use common_metadata::prelude::{InstrumentMetadata, MetaExchange, MetaInstrument}
 use container_specs_postgres::postgres_db_container_config;
 use diesel::Connection;
 use docker_utils::prelude::DockerUtil;
-use pg_mddb::prelude::{Exchange, Instrument, InstrumentsExchanges};
+use pg_mddb::prelude::{Exchange, Instrument};
 use postgres_migrations::prelude::{get_or_wait_for_postgres_connection, DB_TEST_URL};
 
 fn get_test_meta_exchange() -> MetaExchange {
@@ -391,12 +391,6 @@ async fn test_delete_instrument() {
     let instrument = get_test_meta_instrument();
     let instrument_id = instrument.primary_key();
     Instrument::create_instrument(conn, instrument).expect("Failed to create instrument");
-
-    // Check if InstrumentsExchanges exists
-    let exists =
-        InstrumentsExchanges::check_if_exists(conn, instrument_id.clone(), exchange_id.clone())
-            .expect("Failed to check if InstrumentsExchanges exists");
-    assert!(exists);
 
     println!("Exchange ID: {}", &exchange_id);
     println!("Instrument ID: {}", &instrument_id);

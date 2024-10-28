@@ -33,16 +33,6 @@ CREATE TABLE mddb.instruments(
 
 -- FIGI (Financial Instrument Global Identifier) is a unique identifier for an instrument similar to ISIN
 
--- Instrument relations
--- instruments has exchanges (via exchange code)
--- instruments has assets (base and quote) via asset code
-
-CREATE TABLE mddb.instruments_exchanges (
-    instrument_id VARCHAR REFERENCES mddb.instruments(instrument_id),
-    exchange_id   VARCHAR REFERENCES mddb.exchanges(exchange_id),
-    PRIMARY KEY (instrument_id, exchange_id)
-);
-
 -- Download statistics i.e. when was the last download and how many assets, instruments etc.
 -- Hash helps to compare if the data has changed.
 CREATE TABLE mddb.stats(
