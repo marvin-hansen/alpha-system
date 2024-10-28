@@ -140,11 +140,6 @@ async fn test_create_instrument_collection_error() {
     let result = pg_mddb::run_mddb_migration(conn);
     assert!(result.is_ok());
 
-    // Insert exchange
-    let test_exchange = get_test_meta_exchange();
-    let result = Exchange::create(conn, test_exchange);
-    assert!(result.is_ok());
-
     // All test data have the same instrument code (primary key)
     // hence triggering a unique constraint violation error
     let meta_instruments = vec![

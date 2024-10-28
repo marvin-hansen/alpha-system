@@ -33,7 +33,7 @@ impl Instrument {
         }
     }
 
-    /// Inserts a collection of instruments into the database.
+    /// Batch inserts a collection of instruments into the database.
     ///
     /// # Arguments
     ///
@@ -63,15 +63,28 @@ impl Instrument {
             .map(|meta_instrument| Instrument::from_meta_instrument(meta_instrument.clone()))
             .collect();
 
-        // Insert the instruments in chunks to prevent exceeding the number of parameters.
-        // https://github.com/diesel-rs/diesel/issues/2414
         let number_instruments = instruments.len();
-        let chunk_size = MAX_PARAMETERS.div_ceil(number_instruments) + 1; // Division without remainder plus one
-        for chunk in instruments.chunks(chunk_size) {
-            diesel::insert_into(instruments_table)
-                .values(chunk)
+        if number_instruments > MAX_PARAMETERS {
+            // Insert the instruments in chunks to prevent exceeding the number of parameters.
+            // https://github.com/diesel-rs/diesel/issues/2414
+            let chunk_size = MAX_PARAMETERS.div_ceil(number_instruments) + 1; // Division without remainder plus one
+            for chunk in instruments.chunks(chunk_size) {
+                match diesel::insert_into(instruments_table)
+                    .values(chunk)
+                    .execute(conn)
+                {
+                    Ok(_) => {} // Do nothing in case of successful chunk insert
+                    Err(e) => return Err(e),
+                };
+            }
+        } else {
+            match diesel::insert_into(instruments_table)
+                .values(&instruments)
                 .execute(conn)
-                .expect("Failed to insert instruments");
+            {
+                Ok(_) => {} // Do nothing in case of successful insert
+                Err(e) => return Err(e),
+            };
         }
 
         Ok(number_instruments)
