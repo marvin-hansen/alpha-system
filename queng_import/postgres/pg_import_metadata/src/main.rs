@@ -1,7 +1,7 @@
 mod print_utils;
-mod workflow;
 
 use environment_manager::EnvironmentManager;
+use kaiko_import::prelude::{determine_workflow, execute_workflow};
 use mimalloc::MiMalloc;
 use pg_mddb_manager::PostgresMDDBManager;
 use postgres_config_manager::PostgresConfigManager;
@@ -46,12 +46,10 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .expect("Failed to load metadata from DB");
     print_utils::print_duration("Loading metadata from DB took", &start.elapsed());
 
-    print_utils::dbg_print("Determine metadata workflow");
-    let workflow = workflow::determine_workflow(&meta_data, &meta_data_db).await;
-
-    print_utils::dbg_print("Dispatch and execute metadata workflow");
+    print_utils::dbg_print("Import metadata into Database");
+    let workflow = determine_workflow(&meta_data, &meta_data_db).await;
     let start = Instant::now();
-    workflow::dispatch_workflow(&dbm_mddb, &meta_data, &workflow).await;
+    execute_workflow(&dbm_mddb, &meta_data, &workflow).await;
     print_utils::print_duration("Executing workflow took", &start.elapsed());
 
     print_utils::print_duration("Main took", &start_main.elapsed());

@@ -1,5 +1,5 @@
 use crate::print_utils;
-use crate::workflow::worflow_op::{MetaDataDBWOp, WorkflowOp, WorkflowOpAll};
+use crate::types::worflow_op::{MetaDataDBWOp, WorkflowOp, WorkflowOpAll};
 use common_metadata::prelude::{MetaDataDBRecords, MetaDataSet};
 
 /// This function determines the workflow operations needed to synchronize
@@ -19,7 +19,7 @@ use common_metadata::prelude::{MetaDataDBRecords, MetaDataSet};
 /// Returns a `MetaDataDBWOp` struct containing the workflow operations
 /// for all, assets, exchanges, and instruments.
 ///
-pub(crate) async fn determine_workflow(
+pub async fn determine_workflow(
     meta_data_kaiko: &MetaDataSet,
     meta_data_db: &MetaDataDBRecords,
 ) -> MetaDataDBWOp {

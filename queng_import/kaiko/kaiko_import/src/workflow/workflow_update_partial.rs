@@ -1,6 +1,6 @@
 use crate::print_utils;
+use crate::types::worflow_op::{MetaDataDBWOp, WorkflowOp};
 use crate::workflow;
-use crate::workflow::worflow_op::{MetaDataDBWOp, WorkflowOp};
 use common_metadata::prelude::MetaDataSet;
 use pg_mddb_manager::PostgresMDDBManager;
 

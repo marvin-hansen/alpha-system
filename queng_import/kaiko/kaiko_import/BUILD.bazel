@@ -3,20 +3,15 @@ load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library")
 rust_library(
     name = "kaiko_import",
     srcs = glob([
-        "src/**",
+        "src/**/*.rs",
     ]),
     crate_root = "src/lib.rs",
     tags = ["client"],
     visibility = ["//visibility:public"],
     deps = [
         # Internal crates
-        "//alias:common_env",
         "//alias:common_metadata",
-        "//alias:environment_manager",
-        "//alias:kaiko_download",
         "//alias:pg_mddb_manager",
-        "//alias:postgres_config_manager",
-        "//alias:service_specs_all",
         # External crates
         "//thirdparty/crates:tokio",
     ],

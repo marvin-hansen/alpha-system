@@ -50,7 +50,7 @@ impl Display for MetaDataDBWOp {
 
 #[derive(Debug, Copy, Clone, PartialEq)]
 #[repr(u8)]
-pub(crate) enum WorkflowOpAll {
+pub enum WorkflowOpAll {
     NoOPAll, // Nothing to do.
     ImportAll,
     UpdateAll,
@@ -66,7 +66,7 @@ impl Display for WorkflowOpAll {
 
 #[derive(Debug, Copy, Clone, PartialEq)]
 #[repr(u8)]
-pub(crate) enum WorkflowOp {
+pub enum WorkflowOp {
     NoOP, // Nothing to do.
     ImportAssets,
     ImportExchanges,

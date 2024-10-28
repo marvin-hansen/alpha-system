@@ -1,4 +1,4 @@
-use crate::workflow::worflow_op::{MetaDataDBWOp, WorkflowOpAll};
+use crate::types::worflow_op::{MetaDataDBWOp, WorkflowOpAll};
 use crate::{print_utils, workflow};
 use common_metadata::prelude::MetaDataSet;
 use pg_mddb_manager::PostgresMDDBManager;
@@ -23,7 +23,7 @@ use pg_mddb_manager::PostgresMDDBManager;
 /// - It delegates the actual workflow execution to specific functions from the
 ///   `workflow` module based on the operation type.
 ///
-pub(crate) async fn dispatch_workflow(
+pub async fn execute_workflow(
     dbm_mddb: &PostgresMDDBManager,
     meta_data: &MetaDataSet,
     meta_data_ops: &MetaDataDBWOp,
