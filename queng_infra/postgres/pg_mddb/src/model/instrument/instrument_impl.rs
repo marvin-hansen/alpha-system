@@ -5,6 +5,8 @@ use common_metadata::prelude::MetaInstrument;
 use diesel::result::Error::DatabaseError;
 use diesel::{ExpressionMethods, OptionalExtension, QueryDsl, QueryResult, RunQueryDsl};
 
+const MAX_PARAMETERS: usize = 65000;
+
 impl Instrument {
     /// Creates a new instrument entry in the database.
     ///
@@ -55,27 +57,24 @@ impl Instrument {
             ));
         }
 
+        // Convert the meta_instruments to instruments
         let instruments: Vec<Instrument> = meta_instruments
             .iter()
             .map(|meta_instrument| Instrument::from_meta_instrument(meta_instrument.clone()))
             .collect();
 
-        // Insert the instruments one by one to prevent exceeding the number of parameters.
+        // Insert the instruments in chunks to prevent exceeding the number of parameters.
         // https://github.com/diesel-rs/diesel/issues/2414
-        for instrument in &instruments {
-            // println!();
-            // println!("Inserting instrument: {:?}", &instrument.instrument_id);
-
-            match diesel::insert_into(instruments_table)
-                .values(instrument)
+        let number_instruments = instruments.len();
+        let chunk_size = MAX_PARAMETERS.div_ceil(number_instruments) + 1; // Division without remainder plus one
+        for chunk in instruments.chunks(chunk_size) {
+            diesel::insert_into(instruments_table)
+                .values(chunk)
                 .execute(conn)
-            {
-                Ok(_) => {}
-                Err(e) => return Err(e),
-            }
+                .expect("Failed to insert instruments");
         }
 
-        Ok(instruments.len())
+        Ok(number_instruments)
     }
 
     /// Counts the number of instruments in the database.
