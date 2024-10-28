@@ -44,6 +44,7 @@ impl Instrument {
     /// # Returns
     ///
     /// * `Result<Option<MetaInstrument>, diesel::result::Error>`
+    ///
     /// An optional `MetaInstrument` if found, else `None`.
     ///
     pub fn query_instruments_by_figi(
