@@ -1,4 +1,5 @@
 mod instrument_impl;
+mod instrument_queries;
 mod instrument_type_conversion;
 
 use diesel::{AsChangeset, Identifiable, Insertable, Queryable, QueryableByName, Selectable};
