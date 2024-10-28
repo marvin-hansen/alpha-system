@@ -8,7 +8,7 @@ pub(crate) async fn update_all_metadata(dbm_mddb: &PostgresMDDBManager, meta_dat
 
     workflow::update_assets_metadata(dbm_mddb, meta_data).await;
 
-    workflow::update_exchange_metadata(dbm_mddb, meta_data).await;
+    workflow::update_exchanges_metadata(dbm_mddb, meta_data).await;
 
-    workflow::update_instrument_metadata(dbm_mddb, meta_data).await;
+    workflow::update_instruments_metadata(dbm_mddb, meta_data).await;
 }
