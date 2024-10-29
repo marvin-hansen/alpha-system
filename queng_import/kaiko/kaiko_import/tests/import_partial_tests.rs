@@ -2,6 +2,7 @@ use container_specs_postgres::postgres_db_container_config;
 use docker_utils::prelude::DockerUtil;
 use environment_manager::EnvironmentManager;
 use kaiko_import::prelude::{execute_workflow, MetaDataDBWOp, WorkflowOp, WorkflowOpAll};
+use kaiko_test_utils::utils_import;
 use pg_mddb_manager::PostgresMDDBManager;
 use postgres_config_manager::PostgresConfigManager;
 
@@ -30,7 +31,7 @@ async fn test_partial_import() {
         .await
         .expect("Failed to create PostgresSMDBManager");
 
-    let meta_data = kaiko_test_utils::get_partial_test_data_set();
+    let meta_data = utils_import::get_partial_import_test_data_set();
     let workflow = get_assets_import_op();
 
     execute_workflow(&dbm_mddb, &meta_data, &workflow).await;
@@ -63,9 +64,9 @@ async fn test_partial_import() {
     assert_eq!(count, 1);
 
     // Here we have to do some cleanup due to the single session polluting the DB otherwise
-    let asset_id = kaiko_test_utils::get_partial_test_asset_id();
-    let exchange_id = kaiko_test_utils::get_partial_test_exchange_id();
-    let instrument_id = kaiko_test_utils::get_partial_test_instrument_id();
+    let asset_id = utils_import::get_partial_import_test_asset_id();
+    let exchange_id = utils_import::get_partial_import_test_exchange_id();
+    let instrument_id = utils_import::get_partial_import_test_instrument_id();
 
     let result = dbm_mddb.delete_asset(asset_id).await;
     assert!(result.is_ok());
