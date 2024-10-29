@@ -2,6 +2,7 @@ use crate::utils::DownloadUtils;
 use common_errors::prelude::DownloadError;
 use common_metadata::prelude::{
     MetaAsset, MetaAssetRoot, MetaExchange, MetaExchangesRoot, MetaInstrument, MetaInstrumentsRoot,
+    MetaStats,
 };
 
 impl DownloadUtils {
@@ -47,6 +48,21 @@ impl DownloadUtils {
             }
             Err(e) => Err(DownloadError::from(format!(
                 "Error downloading instruments {}",
+                e
+            ))),
+        }
+    }
+
+    pub(crate) async fn download_stats(&self) -> Result<MetaStats, DownloadError> {
+        // curl --compressed -H 'Accept: application/json' 'http://localhost:7777/stats'
+        match self.download(&self.url_stats).await {
+            Ok(bytes) => {
+                let stats: MetaStats =
+                    serde_json::from_slice(bytes.as_slice()).expect("Failed to parse exchanges");
+                Ok(stats)
+            }
+            Err(e) => Err(DownloadError::from(format!(
+                "Error downloading stats {}",
                 e
             ))),
         }

@@ -1,6 +1,6 @@
 use crate::print_utils;
 use crate::types::worflow_op::{MetaDataDBWOp, WorkflowOp, WorkflowOpAll};
-use common_metadata::prelude::{MetaDataDBRecords, MetaDataSet};
+use common_metadata::prelude::{MetaDataDBRecords, MetaStats};
 
 /// This function determines the workflow operations needed to synchronize
 /// metadata between the Kaiko data source and the Postgres database.
@@ -20,7 +20,7 @@ use common_metadata::prelude::{MetaDataDBRecords, MetaDataSet};
 /// for all, assets, exchanges, and instruments.
 ///
 pub async fn determine_workflow(
-    meta_data_kaiko: &MetaDataSet,
+    stats: &MetaStats,
     meta_data_db: &MetaDataDBRecords,
 ) -> MetaDataDBWOp {
     print_utils::dbg_print("workflow_dispatch");
@@ -33,7 +33,6 @@ pub async fn determine_workflow(
     let mut exchanges_op: WorkflowOp = WorkflowOp::NoOP;
     let mut instruments_op: WorkflowOp = WorkflowOp::NoOP;
 
-    let stats = meta_data_kaiko.stats();
     // Extract the number of assets, exchanges and instruments downloaded from Kaiko
     let kaiko_asset_count = stats.number_assets();
     let kaiko_exchange_count = stats.number_exchanges();

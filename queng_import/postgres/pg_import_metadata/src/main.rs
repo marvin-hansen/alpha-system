@@ -1,7 +1,7 @@
 mod print_utils;
 
 use environment_manager::EnvironmentManager;
-use kaiko_import::prelude::{determine_workflow, execute_workflow};
+use kaiko_import::prelude::{determine_workflow, execute_workflow, WorkflowOpAll};
 use mimalloc::MiMalloc;
 use pg_mddb_manager::PostgresMDDBManager;
 use postgres_config_manager::PostgresConfigManager;
@@ -31,13 +31,6 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .await
         .expect("Failed to create PostgresSMDBManager");
 
-    print_utils::dbg_print("Download metadata");
-    let start = Instant::now();
-    let meta_data = kaiko_download::download_meta_data(DBG, AUTO_DETECT_PROXY)
-        .await
-        .expect("Failed to download metadata");
-    print_utils::print_duration("Downloading metadata took", &start.elapsed());
-
     print_utils::dbg_print("Loading metadata records from Database");
     let start = Instant::now();
     let meta_data_db = dbm_mddb
@@ -46,8 +39,28 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .expect("Failed to load metadata from DB");
     print_utils::print_duration("Loading metadata from DB took", &start.elapsed());
 
+    print_utils::dbg_print("Download metadata stats");
+    let meta_data_stats = kaiko_download::download_meta_data_stats(DBG, AUTO_DETECT_PROXY)
+        .await
+        .expect("Failed to download metadata stats");
+
+    print_utils::dbg_print("Determine workflow");
+    let workflow = determine_workflow(&meta_data_stats, &meta_data_db).await;
+
+    if workflow.all_op() == WorkflowOpAll::NoOPAll {
+        print_utils::print_already_imported_header();
+        print_utils::print_duration("Main took", &start_main.elapsed());
+        return Ok(());
+    }
+
+    print_utils::dbg_print("Download metadata");
+    let start = Instant::now();
+    let meta_data = kaiko_download::download_meta_data(DBG, AUTO_DETECT_PROXY)
+        .await
+        .expect("Failed to download metadata");
+    print_utils::print_duration("Downloading metadata took", &start.elapsed());
+
     print_utils::dbg_print("Import metadata into Database");
-    let workflow = determine_workflow(&meta_data, &meta_data_db).await;
     let start = Instant::now();
     execute_workflow(&dbm_mddb, &meta_data, &workflow).await;
     print_utils::print_duration("Executing workflow took", &start.elapsed());

@@ -10,6 +10,14 @@ pub(crate) fn print_start_header() {
     println!();
 }
 
+pub(crate) fn print_already_imported_header() {
+    println!();
+    println!("==========================================");
+    println!("|| Metadata Already Imported ||");
+    println!("==========================================");
+    println!();
+}
+
 pub(crate) fn print_duration(msg: &str, elapsed: &Duration) {
     if DBG {
         if elapsed.as_millis() > 1000 {

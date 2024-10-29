@@ -10,6 +10,7 @@ pub struct DownloadUtils {
     url_assets: String,
     url_exchanges: String,
     url_instruments: String,
+    url_stats: String,
 }
 
 impl DownloadUtils {
@@ -19,6 +20,7 @@ impl DownloadUtils {
             url_assets: DownloadUtils::format_url(url, "assets"),
             url_exchanges: DownloadUtils::format_url(url, "exchanges"),
             url_instruments: DownloadUtils::format_url(url, "instruments"),
+            url_stats: DownloadUtils::format_url(url, "stats"),
         }
     }
 }

@@ -3,13 +3,32 @@ use crate::init::InitManager;
 use crate::utils::util_client;
 use common_env::prelude::EnvironmentType;
 use common_errors::prelude::InitError;
-use common_metadata::prelude::MetaDataSet;
+use common_metadata::prelude::{MetaDataSet, MetaStats};
 use environment_manager::EnvironmentManager;
 use reqwest::Client;
 
 mod fields;
 mod init;
 mod utils;
+
+pub async fn download_meta_data_stats(
+    dbg: bool,
+    auto_detect_proxy: bool,
+) -> Result<MetaStats, InitError> {
+    let im = if auto_detect_proxy {
+        // When auto_detect_proxy is true,
+        // detect the proxy and return the proxy init manager
+        init_manager_with_proxy(dbg).await
+    } else {
+        // // When auto_detect_proxy is false, panic because stats can only be downloaded with proxy enabled
+        panic!("Stats can only be downloaded with proxy enabled.")
+    };
+
+    match im.get_meta_data_stats().await {
+        Ok(meta_stats) => Ok(meta_stats),
+        Err(e) => Err(e),
+    }
+}
 
 pub async fn download_meta_data(
     dbg: bool,
