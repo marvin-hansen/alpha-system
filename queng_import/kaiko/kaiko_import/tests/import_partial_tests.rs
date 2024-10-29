@@ -14,8 +14,8 @@ async fn all_setup() {
 
     // Start or reuse a test postgres container
     let container_config = postgres_db_container_config();
-    let result = env.get_or_start_container_config(&container_config); // dbg!(&result);
-                                                                       // dbg!(&result);
+    let result = env.get_or_start_container_config(&container_config);
+    // dbg!(&result);
     assert!(result.is_ok());
 }
 
@@ -31,7 +31,7 @@ async fn test_partial_import() {
         .await
         .expect("Failed to create PostgresSMDBManager");
 
-    let meta_data = kaiko_test_utils::get_test_meta_data_set();
+    let meta_data = kaiko_test_utils::get_partial_test_data_set();
     let workflow = get_assets_import_op();
 
     execute_workflow(&dbm_mddb, &meta_data, &workflow).await;
@@ -64,17 +64,24 @@ async fn test_partial_import() {
     assert_eq!(count, 1);
 
     // Here we have to do some cleanup due to the single session polluting the DB otherwise
-
-    let asset_id = kaiko_test_utils::get_test_asset_id();
-    let exchange_id = kaiko_test_utils::get_test_exchange_id();
-    let instrument_id = kaiko_test_utils::get_test_instrument_id();
+    let asset_id = kaiko_test_utils::get_partial_test_asset_id();
+    let exchange_id = kaiko_test_utils::get_partial_test_exchange_id();
+    let instrument_id = kaiko_test_utils::get_partial_test_instrument_id();
 
     let result = dbm_mddb.delete_asset(asset_id).await;
     assert!(result.is_ok());
+    let deleted_count = result.unwrap();
+    assert_eq!(deleted_count, 1);
+
     let result = dbm_mddb.delete_exchange(exchange_id).await;
     assert!(result.is_ok());
+    let deleted_count = result.unwrap();
+    assert_eq!(deleted_count, 1);
+
     let result = dbm_mddb.delete_instrument(instrument_id).await;
     assert!(result.is_ok());
+    let deleted_count = result.unwrap();
+    assert_eq!(deleted_count, 1);
 }
 
 fn get_assets_import_op() -> MetaDataDBWOp {
