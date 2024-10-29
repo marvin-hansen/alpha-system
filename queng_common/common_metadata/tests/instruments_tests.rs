@@ -2,12 +2,6 @@ use common_metadata::prelude::{InstrumentMetadata, MetaInstrument, MetaInstrumen
 
 #[test]
 fn test_instruments_root_and_instrument_properties() {
-    // Construct an InstrumentMetadata
-    let metadata = InstrumentMetadata {
-        pair_figi: Some("BBG000BLNNH6".to_string()),
-        instrument_figi: Some("BBG000BLNNH7".to_string()),
-    };
-
     // Construct an Instrument
     let instrument = MetaInstrument {
         kaiko_legacy_exchange_slug: "kaiko-exchange".to_string(),
@@ -20,7 +14,10 @@ fn test_instruments_root_and_instrument_properties() {
         kaiko_legacy_symbol: "BTCUSD".to_string(),
         code: "BTC-USD".to_string(),
         class: "currency".to_string(),
-        metadata: Some(metadata),
+        metadata: Some(InstrumentMetadata {
+            pair_figi: Some("BBG000BLNNH6".to_string()),
+            instrument_figi: Some("BBG000BLNNH7".to_string()),
+        }),
         trade_start_timestamp: Some(1609459200),
         trade_end_timestamp: Some(1640995199),
         trade_compressed_size: 1024,

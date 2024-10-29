@@ -2,28 +2,24 @@ use common_metadata::prelude::{Address, AssetMetadata, MetaAsset, MetaAssetRoot}
 
 #[test]
 fn asset_structs_properties_test() {
-    let metadata = AssetMetadata {
-        eth_address: Some("0xETH".to_string()),
-        bsc_address: Some("0xBSC".to_string()),
-        polygon_address: Some("0xPOLY".to_string()),
-        avalanche_address: Some("0xAVAX".to_string()),
-        arbitrum_address: Some("0xARB".to_string()),
-        ethereum_address: Some("0xETH_MAIN".to_string()),
-        asset_figi: Some("FIGI123".to_string()),
-    };
-
-    let address = Address {
-        address: "0xADDR123".to_string(),
-        blockchain: "Ethereum".to_string(),
-    };
-
     let asset = MetaAsset {
         code: "ASSET1".to_string(),
         name: "Test Asset".to_string(),
         asset_classes: vec!["Class1".to_string(), "Class2".to_string()],
         asset_class: "MainClass".to_string(),
-        metadata: Some(metadata.clone()),
-        addresses: Some(vec![address.clone()]),
+        metadata: Some(AssetMetadata {
+            eth_address: Some("0xETH".to_string()),
+            bsc_address: Some("0xBSC".to_string()),
+            polygon_address: Some("0xPOLY".to_string()),
+            avalanche_address: Some("0xAVAX".to_string()),
+            arbitrum_address: Some("0xARB".to_string()),
+            ethereum_address: Some("0xETH_MAIN".to_string()),
+            asset_figi: Some("FIGI123".to_string()),
+        }),
+        addresses: Some(vec![Address {
+            address: "0xADDR123".to_string(),
+            blockchain: "Ethereum".to_string(),
+        }]),
     };
 
     let asset_root = MetaAssetRoot {

@@ -6,7 +6,10 @@ rust_library(
         "src/**/*.rs",
     ]),
     crate_root = "src/lib.rs",
-    tags = ["client"],
+    tags = [
+        "kaiko",
+        "kaiko_import",
+    ],
     visibility = ["//visibility:public"],
     deps = [
         # Internal crates

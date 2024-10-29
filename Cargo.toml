@@ -20,6 +20,7 @@ members = [
     "queng_import/kaiko/kaiko_download",
     "queng_import/kaiko/kaiko_import",
     "queng_import/kaiko/kaiko_proxy",
+    "queng_import/kaiko/kaiko_test_utils",
     "queng_import/kaiko/kaiko_tests",
     "queng_import/postgres/pg_import_services",
     "queng_import/postgres/pg_import_metadata",
@@ -88,7 +89,7 @@ members = [
 
 [workspace.package]
 edition = "2021"
-rust-version = "1.81.0"
+rust-version = "1.82.0"
 readme = "README.md"
 repository = "https://github.com/marvin-hansen/quant-engine"
 authors = ["Marvin Hansen <marvin.hansen@gmail.com>"]
@@ -135,6 +136,7 @@ kaiko_client = { path = "queng_import/kaiko/kaiko_client" }
 kaiko_download = { path = "queng_import/kaiko/kaiko_download" }
 kaiko_import = { path = "queng_import/kaiko/kaiko_import" }
 kaiko_proxy = { path = "queng_import/kaiko/kaiko_proxy" }
+kaiko_test_utils = { path =  "queng_import/kaiko/kaiko_test_utils" }
 # Postgres DB
 pg_import_metadata = { path = "queng_import/postgres/pg_import_metadata" }
 postgres_pg_import_services = { path = "queng_import/postgres/pg_import_services" }

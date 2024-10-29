@@ -30,7 +30,6 @@ pub(crate) async fn import_assets_metadata(
 
     print_utils::dbg_print("Importing assets");
     let expected_asset_count = stats.number_assets() as usize;
-
     let assets = meta_data.assets().data.as_slice();
     dbm_mddb
         .insert_asset_collection(assets)
@@ -42,6 +41,8 @@ pub(crate) async fn import_assets_metadata(
         .await
         .expect("Failed to count assets") as usize;
 
+    print_utils::dbg_print(&format!("db_asset_count: {}", db_asset_count));
+    print_utils::dbg_print("Checking asset count ini DB matches expected count");
     assert_eq!(db_asset_count, expected_asset_count);
 
     print_utils::dbg_print("Completed importing assets");
@@ -84,15 +85,17 @@ pub(crate) async fn import_exchanges_metadata(
         .await
         .expect("Failed to import exchanges");
 
+    print_utils::dbg_print("Counting imported exchanges");
     let db_exchange_count = dbm_mddb
         .count_exchanges()
         .await
         .expect("Failed to count exchanges") as usize;
 
+    print_utils::dbg_print(&format!("db_exchange_count: {}", db_exchange_count));
+    print_utils::dbg_print("Checking exchange count ini DB matches expected count");
     assert_eq!(db_exchange_count, expected_exchange_count);
 
     print_utils::dbg_print("Completed importing exchanges");
-
     db_exchange_count
 }
 

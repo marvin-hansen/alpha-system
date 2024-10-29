@@ -1,0 +1,11 @@
+[package]
+name = "kaiko_test_utils"
+version = "0.1.0"
+edition.workspace = true
+rust-version.workspace = true
+readme.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+[dependencies]
+common_metadata = {workspace = true}

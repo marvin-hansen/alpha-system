@@ -123,8 +123,8 @@ impl PostgresMDDBManager {
                 .expect("[PostgresMDDBManager]: Failed to begin test transaction");
 
             // We cannot assume the DB was migrated prior to a test, so we check here.
-            run_mddb_migration(&mut conn)
-                .expect("[PostgresMDDBManager]: Failed to run migration for test");
+            // run_mddb_migration(&mut conn)
+            //     .expect("[PostgresMDDBManager]: Failed to run migration for test");
         };
 
         conn

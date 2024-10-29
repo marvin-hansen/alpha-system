@@ -1,0 +1,102 @@
+use container_specs_postgres::postgres_db_container_config;
+use docker_utils::prelude::DockerUtil;
+use environment_manager::EnvironmentManager;
+use kaiko_import::prelude::{execute_workflow, MetaDataDBWOp, WorkflowOp, WorkflowOpAll};
+use kaiko_test_utils;
+use pg_mddb_manager::PostgresMDDBManager;
+use postgres_config_manager::PostgresConfigManager;
+
+// Somehow tests seem to be executed or sorted in alphabetical order, so make sure that the
+// setup is on top of the stack.
+#[tokio::test]
+async fn all_setup() {
+    let env = DockerUtil::with_debug().expect("Failed to get DockerUtil");
+
+    // Start or reuse a test postgres container
+    let container_config = postgres_db_container_config();
+    let result = env.get_or_start_container_config(&container_config); // dbg!(&result);
+                                                                       // dbg!(&result);
+    assert!(result.is_ok());
+}
+
+#[tokio::test]
+async fn test_partial_import() {
+    let config_manager = EnvironmentManager::new();
+    let env_type = config_manager.env_type();
+
+    let pg_cfg_manager = PostgresConfigManager::new(&env_type);
+    let dsn = pg_cfg_manager.pg_connection_url();
+
+    let dbm_mddb = PostgresMDDBManager::with_debug(&dsn, true)
+        .await
+        .expect("Failed to create PostgresSMDBManager");
+
+    let meta_data = kaiko_test_utils::get_test_meta_data_set();
+    let workflow = get_assets_import_op();
+
+    execute_workflow(&dbm_mddb, &meta_data, &workflow).await;
+
+    let result = dbm_mddb.count_assets().await;
+    dbg!(&result);
+    assert!(result.is_ok());
+
+    let count = result.unwrap();
+    assert_eq!(count, 1);
+
+    let workflow = get_exchanges_import_op();
+    execute_workflow(&dbm_mddb, &meta_data, &workflow).await;
+
+    let result = dbm_mddb.count_exchanges().await;
+    dbg!(&result);
+    assert!(result.is_ok());
+
+    let count = result.unwrap();
+    assert_eq!(count, 1);
+
+    let workflow = get_instruments_import_op();
+    execute_workflow(&dbm_mddb, &meta_data, &workflow).await;
+
+    let result = dbm_mddb.count_instruments().await;
+    dbg!(&result);
+    assert!(result.is_ok());
+
+    let count = result.unwrap();
+    assert_eq!(count, 1);
+
+    // Here we have to do some cleanup due to the single session polluting the DB otherwise
+
+    let asset_id = kaiko_test_utils::get_test_asset_id();
+    let exchange_id = kaiko_test_utils::get_test_exchange_id();
+    let instrument_id = kaiko_test_utils::get_test_instrument_id();
+
+    let result = dbm_mddb.delete_asset(asset_id).await;
+    assert!(result.is_ok());
+    let result = dbm_mddb.delete_exchange(exchange_id).await;
+    assert!(result.is_ok());
+    let result = dbm_mddb.delete_instrument(instrument_id).await;
+    assert!(result.is_ok());
+}
+
+fn get_assets_import_op() -> MetaDataDBWOp {
+    let all_op: WorkflowOpAll = WorkflowOpAll::ImportPartial;
+    let assets_op: WorkflowOp = WorkflowOp::ImportAssets;
+    let exchanges_op: WorkflowOp = WorkflowOp::NoOP;
+    let instruments_op: WorkflowOp = WorkflowOp::NoOP;
+    MetaDataDBWOp::new(all_op, assets_op, exchanges_op, instruments_op)
+}
+
+fn get_exchanges_import_op() -> MetaDataDBWOp {
+    let all_op: WorkflowOpAll = WorkflowOpAll::ImportPartial;
+    let assets_op: WorkflowOp = WorkflowOp::NoOP;
+    let exchanges_op: WorkflowOp = WorkflowOp::ImportExchanges;
+    let instruments_op: WorkflowOp = WorkflowOp::NoOP;
+    MetaDataDBWOp::new(all_op, assets_op, exchanges_op, instruments_op)
+}
+
+fn get_instruments_import_op() -> MetaDataDBWOp {
+    let all_op: WorkflowOpAll = WorkflowOpAll::ImportPartial;
+    let assets_op: WorkflowOp = WorkflowOp::NoOP;
+    let exchanges_op: WorkflowOp = WorkflowOp::NoOP;
+    let instruments_op: WorkflowOp = WorkflowOp::ImportInstruments;
+    MetaDataDBWOp::new(all_op, assets_op, exchanges_op, instruments_op)
+}

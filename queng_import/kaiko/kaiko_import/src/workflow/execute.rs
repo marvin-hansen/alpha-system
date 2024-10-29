@@ -41,7 +41,7 @@ pub async fn execute_workflow(
         }
 
         WorkflowOpAll::ImportPartial => {
-            print_utils::dbg_print("Update Partial Metadata");
+            print_utils::dbg_print("Import Partial Metadata");
             workflow::import_partial_metadata(meta_data_ops, dbm_mddb, meta_data).await;
         }
 

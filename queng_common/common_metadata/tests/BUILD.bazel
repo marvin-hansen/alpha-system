@@ -1,7 +1,7 @@
 load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 
 rust_test_suite(
-    name = "assets_tests",
+    name = "assets",
     srcs = glob([
         "assets_tests.rs",
     ]),
@@ -22,7 +22,7 @@ rust_test_suite(
 )
 
 rust_test_suite(
-    name = "exchanges_tests",
+    name = "exchanges",
     srcs = glob([
         "exchanges_tests.rs",
     ]),
@@ -43,9 +43,30 @@ rust_test_suite(
 )
 
 rust_test_suite(
-    name = "instruments_tests",
+    name = "instruments",
     srcs = glob([
         "instruments_tests.rs",
+    ]),
+    tags = [
+        "common",
+        "common_meta_data",
+        "unit-test",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        "//alias:common_metadata",
+        # External crates
+        "//thirdparty/crates:chrono",
+        "//thirdparty/crates:serde",
+        "//thirdparty/crates:serde_json",
+    ],
+)
+
+rust_test_suite(
+    name = "stats",
+    srcs = glob([
+        "stats_tests.rs",
     ]),
     tags = [
         "common",

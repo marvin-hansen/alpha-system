@@ -111,6 +111,12 @@ alias(
     visibility = ["//visibility:public"],
 )
 
+alias(
+    name = "kaiko_test_utils",
+    actual = "//queng_import/kaiko/kaiko_test_utils",
+    visibility = ["//visibility:public"],
+)
+
 ## Postgres - services import
 alias(
     name = "pg_import_services",
