@@ -13,6 +13,7 @@ def build_binary_opt(name, srcs, deps = [], visibility = ["//visibility:public"]
                 "-Cpanic=abort",
                 "-Copt-level=3",
                 "-Cstrip=symbols",
+                # "-Ctarget-cpu=native", # Only use this when the build CPU is the same as the target CPU
             ],
             "//conditions:default": [
                 "-Copt-level=0",

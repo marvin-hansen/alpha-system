@@ -6,7 +6,7 @@ use diesel::result::Error::DatabaseError;
 use diesel::{ExpressionMethods, OptionalExtension, QueryDsl, QueryResult, RunQueryDsl};
 
 const MAX_PARAMETERS: usize = 65000;
-const MAX_BATCH: usize = 1500;
+const MAX_BATCH: usize = 5000;
 
 impl Instrument {
     /// Creates a new instrument entry in the database.
@@ -68,7 +68,7 @@ impl Instrument {
         if number_instruments > MAX_BATCH {
             // Insert the instruments in chunks to prevent exceeding the number of parameters.
             // https://github.com/diesel-rs/diesel/issues/2414
-            let chunk_size = MAX_PARAMETERS.div_ceil(number_instruments) + 1; // Division without remainder plus one
+            let chunk_size = MAX_PARAMETERS.div_ceil(number_instruments) + 10; // Division without remainder plus one
             for chunk in instruments.chunks(chunk_size) {
                 match diesel::insert_into(instruments_table)
                     .values(chunk)
