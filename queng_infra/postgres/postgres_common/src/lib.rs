@@ -9,8 +9,8 @@ use diesel::{Connection, PgConnection};
 /// is re-used throughout the test.
 ///
 /// See:
-/// * https://github.com/diesel-rs/diesel/discussions/4323#discussioncomment-11087060
-/// * https://docs.diesel.rs/master/diesel/r2d2/struct.TestCustomizer.html
+/// https://github.com/diesel-rs/diesel/discussions/4323#discussioncomment-11087060
+/// https://docs.diesel.rs/master/diesel/r2d2/struct.TestCustomizer.html
 #[derive(Debug)]
 pub struct TestConnectionCustomizer;
 
