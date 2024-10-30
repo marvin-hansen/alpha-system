@@ -27,7 +27,7 @@ async fn test_full_import() {
     let pg_cfg_manager = PostgresConfigManager::new(&env_type);
     let dsn = pg_cfg_manager.pg_connection_url();
 
-    let dbm_mddb = PostgresMDDBManager::with_debug(&dsn, true)
+    let dbm_mddb = PostgresMDDBManager::test_with_debug(&dsn, true)
         .await
         .expect("Failed to create PostgresSMDBManager");
 
@@ -56,26 +56,6 @@ async fn test_full_import() {
 
     let count = result.unwrap();
     assert_eq!(count, 1);
-
-    // Here we have to do some cleanup due to the single session polluting the DB otherwise
-    let asset_id = utils_import::get_full_import_test_asset_id();
-    let exchange_id = utils_import::get_full_import_test_exchange_id();
-    let instrument_id = utils_import::get_full_import_test_instrument_id();
-
-    let result = dbm_mddb.delete_asset(asset_id).await;
-    assert!(result.is_ok());
-    let deleted_count = result.unwrap();
-    assert_eq!(deleted_count, 1);
-
-    let result = dbm_mddb.delete_exchange(exchange_id).await;
-    assert!(result.is_ok());
-    let deleted_count = result.unwrap();
-    assert_eq!(deleted_count, 1);
-
-    let result = dbm_mddb.delete_instrument(instrument_id).await;
-    assert!(result.is_ok());
-    let deleted_count = result.unwrap();
-    assert_eq!(deleted_count, 1);
 }
 
 fn get_full_import_op() -> MetaDataDBWOp {

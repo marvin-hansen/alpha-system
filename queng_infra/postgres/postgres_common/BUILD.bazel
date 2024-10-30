@@ -1,38 +1,35 @@
-load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library")
+load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library", "rust_test_suite")
 
 rust_library(
-    name = "pg_mddb_manager",
+    name = "postgres_common",
     srcs = glob([
         "src/**",
     ]),
     crate_root = "src/lib.rs",
     tags = [
-        "infra",
-        "pg_mddb_manager",
         "postgres",
+        "postgres_common",
     ],
     visibility = ["//visibility:public"],
     deps = [
         # Internal crates
-        "//alias:common_errors",
-        "//alias:common_metadata",
-        "//alias:pg_mddb",
-        "//alias:postgres_common",
+
         # External crates
         "//thirdparty/crates:diesel",
+        "//thirdparty/crates:tokio",
     ],
 )
 
 rust_doc(
     name = "doc",
-    crate = ":pg_mddb_manager",
+    crate = ":postgres_common",
     tags = ["doc"],
     visibility = ["//visibility:public"],
 )
 
 rust_doc_test(
     name = "doc_test",
-    crate = ":pg_mddb_manager",
+    crate = ":postgres_common",
     tags = ["doc-test"],
     visibility = ["//visibility:public"],
 )

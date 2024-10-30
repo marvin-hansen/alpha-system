@@ -5,14 +5,12 @@ mod stat;
 
 use common_errors::prelude::PostgresDBError;
 use diesel::r2d2::{ConnectionManager, Pool, PooledConnection};
-use diesel::{Connection, PgConnection};
+use diesel::PgConnection;
 use pg_mddb::run_mddb_migration;
-use std::fmt::Display;
+use postgres_common::TestConnectionCustomizer;
 
-#[derive(Clone, Debug)]
 pub struct PostgresMDDBManager {
     dbg: bool,
-    test: bool,
     pool: Pool<ConnectionManager<PgConnection>>,
 }
 
@@ -28,7 +26,7 @@ impl PostgresMDDBManager {
     /// A Result containing the new instance or a PostgresDBError.
     ///
     pub async fn new(url: &str) -> Result<Self, PostgresDBError> {
-        Self::build(false, false, true, url).await
+        Self::build(false, true, false, url).await
     }
 
     /// Asynchronously creates a new instance without running any DB migrations.
@@ -56,28 +54,17 @@ impl PostgresMDDBManager {
     /// A Result containing the initialized connection or a PostgresDBError.
     ///
     pub async fn with_debug(url: &str, migration: bool) -> Result<Self, PostgresDBError> {
-        Self::build(true, false, migration, url).await
+        Self::build(true, migration, false, url).await
     }
 
-    /// Asynchronously initializes a connection with test and debug options enabled.
-    ///
-    /// # Arguments
-    ///
-    /// * `url` - A string slice representing the URL for the connection.
-    /// * `migration` - A boolean indicating whether migration is enabled.
-    ///
-    /// # Returns
-    ///
-    /// A Result containing the initialized connection or a PostgresDBError.
-    ///
-    pub async fn with_test_and_debug(url: &str, migration: bool) -> Result<Self, PostgresDBError> {
-        Self::build(true, true, migration, url).await
+    pub async fn test_with_debug(url: &str, migration: bool) -> Result<Self, PostgresDBError> {
+        Self::build(true, migration, true, url).await
     }
 
     async fn build(
         dbg: bool,
-        test: bool,
         migration: bool,
+        test: bool,
         url: &str,
     ) -> Result<Self, PostgresDBError> {
         if dbg {
@@ -88,16 +75,22 @@ impl PostgresMDDBManager {
             );
         }
 
-        let pool = match Pool::builder()
-            .test_on_check_out(true)
-            .build(ConnectionManager::<PgConnection>::new(url))
-        {
-            Ok(pool) => pool,
-            Err(e) => {
-                return Err(PostgresDBError::ConnectionFailed(e.to_string()));
-            }
+        let pool = if test {
+            Pool::builder()
+                .test_on_check_out(true)
+                .max_size(1)
+                .connection_customizer(Box::new(TestConnectionCustomizer))
+                .build(ConnectionManager::<PgConnection>::new(url))
+                .expect("Failed to create pool with test transaction")
+        } else {
+            Pool::builder()
+                .test_on_check_out(true)
+                .max_size(10)
+                .build(ConnectionManager::<PgConnection>::new(url))
+                .expect("Failed to create pool")
         };
 
+        // if migration is enabled, run the migration;
         if migration {
             if dbg {
                 println!("[PostgresMDDBManager]: Run DB Migration",);
@@ -110,24 +103,13 @@ impl PostgresMDDBManager {
             }
         }
 
-        Ok(Self { dbg, test, pool })
+        Ok(Self { dbg, pool })
     }
 }
 
 impl PostgresMDDBManager {
     pub(crate) fn get_connection(&self) -> PooledConnection<ConnectionManager<PgConnection>> {
-        let mut conn = self.pool.get().expect("Failed to get connection from pool");
-
-        if self.test {
-            conn.begin_test_transaction()
-                .expect("[PostgresMDDBManager]: Failed to begin test transaction");
-
-            // We cannot assume the DB was migrated prior to a test, so we check here.
-            // run_mddb_migration(&mut conn)
-            //     .expect("[PostgresMDDBManager]: Failed to run migration for test");
-        };
-
-        conn
+        self.pool.get().expect("Failed to get connection from pool")
     }
 }
 
@@ -136,11 +118,5 @@ impl PostgresMDDBManager {
         if self.dbg {
             println!("[PostgresMDDBManager]: {}", msg);
         }
-    }
-}
-
-impl Display for PostgresMDDBManager {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "PostgresMDDBManager")
     }
 }

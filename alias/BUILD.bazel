@@ -205,6 +205,11 @@ alias(
 )
 
 alias(
+    name = "postgres_common",
+    actual = "//queng_infra/postgres/postgres_common",
+)
+
+alias(
     name = "postgres_config_manager",
     actual = "//queng_infra/postgres/postgres_config_manager",
 )

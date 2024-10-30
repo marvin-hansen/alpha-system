@@ -11,6 +11,7 @@ authors.workspace = true
 # Internal crates
 common_metadata = {workspace = true}
 pg_mddb_manager = { workspace = true }
+pg_mddb = { workspace = true }
 # External crates
 tokio = { workspace = true }
 

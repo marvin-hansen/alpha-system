@@ -25,6 +25,7 @@ pub fn get_partial_import_test_data_set() -> MetaDataSet {
     let instruments = vec![utils_shared::get_test_meta_instrument(
         "BTC".to_string(),
         "USD".to_string(),
+        get_partial_import_test_asset_id(),
     )];
 
     MetaDataSet::new(assets, exchanges, instruments)
@@ -50,6 +51,7 @@ pub fn get_full_import_test_data_set() -> MetaDataSet {
     let instruments = vec![utils_shared::get_test_meta_instrument(
         "ETH".to_string(),
         "EUR".to_string(),
+        get_full_import_test_asset_id(),
     )];
 
     MetaDataSet::new(assets, exchanges, instruments)

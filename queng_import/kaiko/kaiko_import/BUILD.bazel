@@ -15,6 +15,7 @@ rust_library(
         # Internal crates
         "//alias:common_metadata",
         "//alias:pg_mddb_manager",
+        "//alias:pg_mddb",
         # External crates
         "//thirdparty/crates:tokio",
     ],
