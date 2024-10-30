@@ -27,7 +27,7 @@ async fn test_partial_update() {
     let pg_cfg_manager = PostgresConfigManager::new(&env_type);
     let dsn = pg_cfg_manager.pg_connection_url();
 
-    let dbm_mddb = PostgresMDDBManager::test_with_debug(&dsn, true)
+    let dbm_mddb = PostgresMDDBManager::test_with_debug(&dsn)
         .await
         .expect("Failed to create PostgresSMDBManager");
 

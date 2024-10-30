@@ -26,20 +26,7 @@ impl PostgresMDDBManager {
     /// A Result containing the new instance or a PostgresDBError.
     ///
     pub async fn new(url: &str) -> Result<Self, PostgresDBError> {
-        Self::build(false, true, false, url).await
-    }
-
-    /// Asynchronously creates a new instance without running any DB migrations.
-    ///
-    /// # Arguments
-    ///
-    /// * `url` - A string slice representing the URL for the database connection.
-    ///
-    /// # Returns
-    ///
-    /// A Result containing the newly created instance or a PostgresDBError.
-    pub async fn new_no_migration(url: &str) -> Result<Self, PostgresDBError> {
-        Self::build(false, false, false, url).await
+        Self::build(false, false, url).await
     }
 
     /// Asynchronously initializes a connection with debug mode enabled.
@@ -47,26 +34,47 @@ impl PostgresMDDBManager {
     /// # Arguments
     ///
     /// * `url` - A string slice representing the URL for the connection.
-    /// * `migration` - A boolean indicating whether migration is enabled.
     ///
     /// # Returns
     ///
     /// A Result containing the initialized connection or a PostgresDBError.
     ///
-    pub async fn with_debug(url: &str, migration: bool) -> Result<Self, PostgresDBError> {
-        Self::build(true, migration, false, url).await
+    pub async fn with_debug(url: &str) -> Result<Self, PostgresDBError> {
+        Self::build(true, false, url).await
     }
 
-    pub async fn test_with_debug(url: &str, migration: bool) -> Result<Self, PostgresDBError> {
-        Self::build(true, migration, true, url).await
+    /// Asynchronously initializes a connection with debug mode and test mode enabled.
+    /// Test mode means, all database transactions will be rolled back and
+    /// the DB connection closed automatically when the test instance of PostgresMDDBManager is dropped.
+    ///
+    /// A full DB schema migration happens during initialization.
+    ///
+    /// # Arguments
+    ///
+    /// * `url` - A string slice representing the URL for the new instance.
+    ///
+    /// # Returns
+    ///
+    /// A Result containing the new instance with a test transaction
+    /// or a PostgresDBError.
+    ///
+    pub async fn test_with_debug(url: &str) -> Result<Self, PostgresDBError> {
+        Self::build(true, true, url).await
     }
 
-    async fn build(
-        dbg: bool,
-        migration: bool,
-        test: bool,
-        url: &str,
-    ) -> Result<Self, PostgresDBError> {
+    // Builds a new instance of PostgresMDDBManager
+    //
+    // # Arguments
+    //
+    // * `dbg` - A boolean flag indicating whether debug mode is enabled.
+    // * `test` - A boolean flag indicating whether test mode is enabled.
+    // * `url` - A string slice representing the URL for the new instance.
+    //
+    // # Returns
+    //
+    // A Result containing the new instance or a PostgresDBError.
+    //
+    async fn build(dbg: bool, test: bool, url: &str) -> Result<Self, PostgresDBError> {
         if dbg {
             println!("[PostgresMDDBManager]: Debug mode enabled");
             println!(
@@ -90,8 +98,9 @@ impl PostgresMDDBManager {
                 .expect("Failed to create pool")
         };
 
-        // if migration is enabled, run the migration;
-        if migration {
+        // For tests, we most likely have a blank DB,
+        // thus run migration to create the schema first.
+        if test {
             if dbg {
                 println!("[PostgresMDDBManager]: Run DB Migration",);
             }
