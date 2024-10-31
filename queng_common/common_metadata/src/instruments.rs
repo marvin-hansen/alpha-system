@@ -88,22 +88,13 @@ impl MetaInstrument {
     }
 }
 
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct InstrumentMetadata {
     #[serde(rename = "pair_figi")]
     pub pair_figi: Option<String>,
     #[serde(rename = "instrument_figi")]
     pub instrument_figi: Option<String>,
-}
-
-impl Default for InstrumentMetadata {
-    fn default() -> Self {
-        Self {
-            pair_figi: None,
-            instrument_figi: None,
-        }
-    }
 }
 
 impl Display for InstrumentMetadata {
