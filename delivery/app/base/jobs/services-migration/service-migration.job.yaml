@@ -16,7 +16,7 @@ spec:
       restartPolicy: Never
       containers:
         - name: db-services-migration
-          image: asia-northeast1-docker.pkg.dev/future-309012/image-repo/pg_import_services:0eea2944-1729054086
+          image: asia-northeast1-docker.pkg.dev/future-309012/image-repo/pg_import_services:0eea2944-1729054086 # {"$imagepolicy": "default:service-migration-image-policy"}
           imagePullPolicy: IfNotPresent
 
           command:

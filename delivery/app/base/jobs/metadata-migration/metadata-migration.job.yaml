@@ -16,7 +16,7 @@ spec:
       restartPolicy: Never
       containers:
         - name: db-metadata-migration
-          image: asia-northeast1-docker.pkg.dev/future-309012/image-repo/pg_import_metadata:00000000-1111111111
+          image: asia-northeast1-docker.pkg.dev/future-309012/image-repo/pg_import_metadata:00000000-1111111111 # {"$imagepolicy": "default:metadata-migration-image-policy"}
           imagePullPolicy: IfNotPresent
 
           command:
