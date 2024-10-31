@@ -6,7 +6,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: pg-_services-migration
+  name: pg-import-metadata
   namespace: default
 spec:
   template:
@@ -15,20 +15,20 @@ spec:
         - name: artifact-registry
       restartPolicy: Never
       containers:
-        - name: db-services-migration
-          image: asia-northeast1-docker.pkg.dev/future-309012/image-repo/pg_import_services:0eea2944-1729054086
+        - name: db-metadata-migration
+          image: asia-northeast1-docker.pkg.dev/future-309012/image-repo/pg_import_metadata:00000000-1111111111
           imagePullPolicy: IfNotPresent
 
           command:
-            - ./pg_import_services
+            - ./pg_import_metadata
 
           resources:
             requests:
               cpu: 100m
-              memory: 32Mi
-            limits:
-              cpu: 250m
               memory: 64Mi
+            limits:
+              cpu: 500m
+              memory: 128Mi
 
           env:
             - name: ENV
