@@ -24,11 +24,11 @@ spec:
           imagePullPolicy: IfNotPresent
           resources:
             requests:
-              cpu: 100m
-              memory: 16Mi
-            limits:
               cpu: 250m
-              memory: 32Mi
+              memory: 512Mi
+            limits:
+              cpu: 500m
+              memory: 768Mi
           ports:
             - containerPort: 7777
           env:
@@ -39,6 +39,7 @@ spec:
                 secretKeyRef:
                   name: dns-access
                   key: DNS_SERVER
+          # https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
           readinessProbe:
             httpGet:
               path: /health
