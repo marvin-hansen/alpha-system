@@ -30,7 +30,14 @@ impl Display for MetaAsset {
 
 impl MetaAsset {
     pub fn hash(&self) -> String {
-        let binding = format!("{}{}{}", self.code, self.name, self.asset_class);
+        // Metadata and addresses are not stored in the DB, thus not included in the hash.
+        let binding = format!(
+            "{}{}{}{}",
+            self.code,
+            self.name,
+            self.asset_class,
+            self.asset_classes.join(",")
+        );
         let input = binding.as_bytes();
         let hash = blake3::hash(input);
         hash.to_string()

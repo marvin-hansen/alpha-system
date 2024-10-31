@@ -32,65 +32,95 @@ async fn test_partial_update() {
         .expect("Failed to create PostgresSMDBManager");
 
     //
-    // Pre update data import
+    // Import data
     //
     let meta_data = utils_update::get_partial_pre_update_test_data_set();
     let workflow = get_full_import_op();
 
     execute_workflow(&dbm_mddb, &meta_data, &workflow).await;
 
+    //
+    // Verify data import
+    //
+    // Count if assets, exchanges, and instruments are in the DB.
     let result = dbm_mddb.count_assets().await;
-    dbg!(&result);
     assert!(result.is_ok());
-
-    // Load the inserted asset from the DB
-    let asset_id = meta_data.assets().data.first().unwrap().code.clone();
-    let res = dbm_mddb.read_asset(asset_id).await;
-    dbg!(&res);
-    assert!(res.is_ok());
-
     let count = result.unwrap();
     assert_eq!(count, 1);
 
     let result = dbm_mddb.count_exchanges().await;
-    dbg!(&result);
     assert!(result.is_ok());
-
-    let exchange_id = meta_data.exchanges().data.first().unwrap().code.clone();
-    let res = dbm_mddb.read_exchange(exchange_id).await;
-    dbg!(&res);
-    assert!(res.is_ok());
-
     let count = result.unwrap();
     assert_eq!(count, 1);
 
     let result = dbm_mddb.count_instruments().await;
-    dbg!(&result);
     assert!(result.is_ok());
-
     let count = result.unwrap();
     assert_eq!(count, 1);
+
+    // Load the inserted asset from the DB
+    let asset_id = meta_data.assets().data.first().unwrap().code.clone();
+    let res = dbm_mddb.read_asset(asset_id).await;
+    // dbg!(&res);
+    assert!(res.is_ok());
+    let db_original_asset = res.unwrap();
 
     //
     // Update metadata
     //
     let meta_data = utils_update::get_partial_update_test_data_set();
 
-    // Update asset metadata
+    //
+    // Update assets metadata
+    //
     let asset_id = utils_update::get_partial_update_test_asset_id();
     let workflow = get_assets_update_op();
     execute_workflow(&dbm_mddb, &meta_data, &workflow).await;
 
     // Load the updated asset from the DB
     let res = dbm_mddb.read_asset(asset_id.clone()).await;
-    dbg!(&res);
+    // dbg!(&res);
     assert!(res.is_ok());
 
-    let db_asset = res.unwrap();
+    // Verify the asset has been updated
+    let db_updated_asset = res.unwrap();
     // Extract the reference asset from the test data set
     let db_update_asset = meta_data.assets().data.first().unwrap();
-    // Compare the hashes as these must match after the update
-    assert_eq!(db_asset.hash(), db_update_asset.hash());
+    // Compare the hash of the reference asset in the test data set to the updated asset, which must be equal.
+    assert_eq!(db_updated_asset.hash(), db_update_asset.hash());
+    // Compare the hash of the original asset in the database to the updated asset, which must be different (ne= not equal)
+    assert_ne!(db_original_asset.hash(), db_update_asset.hash());
+
+    // Load the exchange metadata from the DB
+    let exchange_id = meta_data.exchanges().data.first().unwrap().code.clone();
+    let res = dbm_mddb.read_exchange(exchange_id).await;
+    dbg!(&res);
+    assert!(res.is_ok());
+    let db_original_exchange = res.unwrap();
+
+    //
+    // Update exchanges metadata
+    //
+    let exchange_id = utils_update::get_partial_update_test_exchange_id();
+    let workflow = get_exchanges_update_op();
+    execute_workflow(&dbm_mddb, &meta_data, &workflow).await;
+
+    // Load the updated exchange from the DB
+    let res = dbm_mddb.read_exchange(exchange_id.clone()).await;
+    dbg!(&res);
+    assert!(res.is_ok());
+    let db_updated_exchange = res.unwrap();
+
+    // Extract the reference exchange from the test data set
+    let db_update_exchange = meta_data.exchanges().data.first().unwrap();
+    // Compare the hash of the reference exchange in the test data set to the updated exchange, which must be equal.
+    assert_eq!(db_updated_exchange.hash(), db_update_exchange.hash());
+    // Compare the hash of the original exchange in the database to the updated exchange, which must be different (ne= not equal)
+    assert_ne!(db_original_exchange.hash(), db_update_exchange.hash());
+
+    //
+    // Update instruments metadata
+    //
 }
 
 fn get_full_import_op() -> MetaDataDBWOp {

@@ -6,8 +6,8 @@ impl Exchange {
     pub fn from_meta_exchange(meta_exchange: MetaExchange) -> Self {
         Exchange {
             exchange_id: meta_exchange.code.clone(),
+            exchange_name: meta_exchange.name.clone(),
             exchange_hash: meta_exchange.hash(),
-            exchange_name: meta_exchange.name,
         }
     }
 
@@ -24,8 +24,8 @@ impl CreateExchange {
     pub fn from_meta_exchange(meta_exchange: MetaExchange) -> Self {
         CreateExchange {
             exchange_id: meta_exchange.code.clone(),
+            exchange_name: meta_exchange.name.clone(),
             exchange_hash: meta_exchange.hash(),
-            exchange_name: meta_exchange.name,
         }
     }
 }
