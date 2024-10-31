@@ -2,6 +2,7 @@ use common_errors::prelude::PostgresDBError;
 use diesel::r2d2::{ConnectionManager, CustomizeConnection, Pool};
 use diesel::{Connection, PgConnection};
 use std::error::Error;
+use std::time::Duration;
 
 /// A connection customizer designed for use in tests.
 /// Implements CustomizeConnection in a way
@@ -54,7 +55,7 @@ pub fn build_pg_connection_pool(
 ) -> Result<Pool<ConnectionManager<PgConnection>>, PostgresDBError> {
     if test {
         if dbg {
-            println!(" Build test connection pool",);
+            println!("Build test connection pool",);
         }
         let pool = Pool::builder()
             .test_on_check_out(true)
@@ -67,7 +68,8 @@ pub fn build_pg_connection_pool(
         if dbg {
             println!("Run DB Migration",);
         }
-        match migration_fun(&mut pool.get().unwrap()) {
+
+        match migration_fun(&mut pool.get().expect("Failed to get connection from pool")) {
             Ok(_) => {}
             Err(e) => {
                 return Err(PostgresDBError::MigrationFailed(e.to_string()));
@@ -83,7 +85,9 @@ pub fn build_pg_connection_pool(
         Ok(Pool::builder()
             .test_on_check_out(true)
             .max_size(10)
+            .idle_timeout(Some(Duration::from_secs(10 * 60)))
+            .connection_timeout(Duration::from_secs(30))
             .build(ConnectionManager::<PgConnection>::new(url))
-            .expect("[PostgresSMDBManager]: Failed to create PG connection pool"))
+            .expect("Failed to create PG connection pool"))
     }
 }
