@@ -94,7 +94,7 @@ async fn test_partial_update() {
     // Load the exchange metadata from the DB
     let exchange_id = meta_data.exchanges().data.first().unwrap().code.clone();
     let res = dbm_mddb.read_exchange(exchange_id).await;
-    dbg!(&res);
+    // dbg!(&res);
     assert!(res.is_ok());
     let db_original_exchange = res.unwrap();
 
@@ -107,7 +107,7 @@ async fn test_partial_update() {
 
     // Load the updated exchange from the DB
     let res = dbm_mddb.read_exchange(exchange_id.clone()).await;
-    dbg!(&res);
+    // dbg!(&res);
     assert!(res.is_ok());
     let db_updated_exchange = res.unwrap();
 
@@ -118,9 +118,32 @@ async fn test_partial_update() {
     // Compare the hash of the original exchange in the database to the updated exchange, which must be different (ne= not equal)
     assert_ne!(db_original_exchange.hash(), db_update_exchange.hash());
 
+    // Load the instrument metadata from the DB
+    let instrument_id = meta_data.instruments().data.first().unwrap().primary_key();
+    let res = dbm_mddb.read_instrument(&instrument_id).await;
+    dbg!(&res);
+    assert!(res.is_ok());
+    let db_original_instrument = res.unwrap();
+
     //
     // Update instruments metadata
     //
+    let instrument_id = utils_update::get_partial_update_test_instrument_id();
+    let workflow = get_instruments_update_op();
+    execute_workflow(&dbm_mddb, &meta_data, &workflow).await;
+
+    // Load the updated instrument from the DB
+    let res = dbm_mddb.read_instrument(&instrument_id.clone()).await;
+    dbg!(&res);
+    assert!(res.is_ok());
+    let db_updated_instrument = res.unwrap();
+
+    // Extract the reference instrument from the test data set
+    let update_instrument = meta_data.instruments().data.first().unwrap();
+    // Compare the hash of the reference instrument in the test data set to the updated instrument, which must be equal.
+    assert_eq!(db_updated_instrument.hash(), update_instrument.hash());
+    // Compare the hash of the original instrument in the database to the updated instrument, which must be different (ne= not equal)
+    assert_ne!(db_original_instrument.hash(), update_instrument.hash());
 }
 
 fn get_full_import_op() -> MetaDataDBWOp {

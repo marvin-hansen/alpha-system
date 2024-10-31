@@ -59,8 +59,7 @@ fn test_to_meta_instrument() {
     let postgres_instrument = Instrument {
         instrument_id: "instrument_id".to_string(),
         instrument_code: "instrument_code".to_string(),
-        instrument_hash: "f9ed5c9d6f86c5f08b5c128b8f7053e99714690db14ee379cafc675530f13fb3"
-            .to_string(),
+        instrument_hash: "7ebfc9319d0347b24b2e86c39898909091491826f2f288466a2e10b7fcaa6a81".into(),
         instrument_class: "instrument_class".to_string(),
         instrument_base_asset: "base_asset".to_string(),
         instrument_quote_asset: "quote_asset".to_string(),

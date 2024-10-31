@@ -20,8 +20,8 @@ use diesel::{AsChangeset, Identifiable, Insertable, Queryable, QueryableByName, 
 #[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct Instrument {
     pub instrument_id: String,
-    pub instrument_hash: String,
     pub instrument_code: String,
+    pub instrument_hash: String,
     pub instrument_class: String,
     pub instrument_base_asset: String,
     pub instrument_quote_asset: String,
@@ -56,9 +56,9 @@ pub struct CreateInstrument {
 #[diesel(table_name=crate::schema::mddb::instruments)]
 #[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct UpdateInstrument {
-    pub instrument_class: String,
     pub instrument_code: String,
     pub instrument_hash: String,
+    pub instrument_class: String,
     pub instrument_base_asset: String,
     pub instrument_quote_asset: String,
     pub instrument_exchanges_code: String,

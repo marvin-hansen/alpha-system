@@ -65,20 +65,45 @@ impl MetaInstrument {
     }
 
     pub fn hash(&self) -> String {
-        let binding = self.to_string();
+        let binding = format!(
+            "{}{}{}{}{}{}{:?}{:?}",
+            self.code,
+            self.class,
+            self.base_asset,
+            self.quote_asset,
+            self.exchange_code,
+            self.exchange_pair_code,
+            self.metadata
+                .as_ref()
+                .unwrap_or(&Default::default())
+                .instrument_figi,
+            self.metadata
+                .as_ref()
+                .unwrap_or(&Default::default())
+                .pair_figi,
+        );
         let input = binding.as_bytes();
         let hash = blake3::hash(input);
         hash.to_string()
     }
 }
 
-#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct InstrumentMetadata {
     #[serde(rename = "pair_figi")]
     pub pair_figi: Option<String>,
     #[serde(rename = "instrument_figi")]
     pub instrument_figi: Option<String>,
+}
+
+impl Default for InstrumentMetadata {
+    fn default() -> Self {
+        Self {
+            pair_figi: None,
+            instrument_figi: None,
+        }
+    }
 }
 
 impl Display for InstrumentMetadata {

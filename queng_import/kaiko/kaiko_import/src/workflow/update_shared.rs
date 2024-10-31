@@ -255,7 +255,7 @@ pub(crate) async fn update_instruments_metadata(
             .any(|mi| mi.code == db_instrument.code)
         {
             let exists = dbm_mddb
-                .check_if_instrument_id_exists(&db_instrument.code.clone())
+                .check_if_instrument_id_exists(&db_instrument.primary_key())
                 .await
                 .expect("Failed to check if instrument exists");
 
@@ -275,7 +275,7 @@ pub(crate) async fn update_instruments_metadata(
             .any(|di| di.code == meta_instrument.code)
         {
             let exists = dbm_mddb
-                .check_if_instrument_id_exists(&meta_instrument.code.clone())
+                .check_if_instrument_id_exists(&meta_instrument.primary_key())
                 .await
                 .expect("Failed to check if instrument exists");
 
@@ -308,7 +308,7 @@ pub(crate) async fn update_instruments_metadata(
         {
             if db_instrument.hash() != meta_instrument.hash() {
                 dbm_mddb
-                    .update_instrument(&db_instrument.code.clone(), meta_instrument.clone())
+                    .update_instrument(&db_instrument.primary_key(), meta_instrument.clone())
                     .await
                     .expect("Failed to update instrument");
             }
