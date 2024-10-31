@@ -19,7 +19,7 @@ fn test_from_meta_exchange() {
 fn test_to_meta_exchange() {
     let postgres_exchange = Exchange {
         exchange_id: "TEST".to_string(),
-        exchange_hash: "a86571d95a87689c4f8a7702de2e5bd692fb78eebda437192f99154dd7940dfa"
+        exchange_hash: "c4916c57aa7cb867b58fffddbc8ea043a72a3ed1e11cf2faa8fcfde8b1e1cc1e"
             .to_string(),
         exchange_name: "Test Exchange".to_string(),
     };

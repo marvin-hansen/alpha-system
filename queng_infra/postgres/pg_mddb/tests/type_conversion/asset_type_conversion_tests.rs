@@ -30,7 +30,7 @@ fn test_from_meta_asset() {
 fn test_to_meta_asset() {
     let postgres_asset = Asset {
         asset_code: "test_code".to_string(),
-        asset_hash: "1f95ae4ea88f8c7a7e227782fb42e47279197587f2b741af75a893c6f4483ea0".to_string(),
+        asset_hash: "25eb1ec88a9d31e7c5e61202ef0ab00d5873de90ff70dd80011a59bd0a5fbef6".to_string(),
         asset_name: "test_name".to_string(),
         asset_class: "class1".to_string(),
         asset_classes: vec![Some("class1".to_string()), Some("class2".to_string())],
