@@ -13,7 +13,7 @@ pub fn get_partial_update_test_instrument_id() -> String {
     "test_partial_update_exchange_code_currency_btc_usd".to_string()
 }
 
-pub fn get_partial_pre_update_test_data_set() -> MetaDataSet {
+pub fn get_pre_update_test_data_set() -> MetaDataSet {
     let assets = vec![utils_shared::get_test_asset(
         get_partial_update_test_asset_id(),
     )];
@@ -29,7 +29,7 @@ pub fn get_partial_pre_update_test_data_set() -> MetaDataSet {
     MetaDataSet::new(assets, exchanges, instruments)
 }
 
-pub fn get_partial_update_test_data_set() -> MetaDataSet {
+pub fn get_update_test_data_set() -> MetaDataSet {
     let assets = vec![utils_shared::get_test_update_asset(
         get_partial_update_test_asset_id(),
     )];

@@ -34,7 +34,7 @@ async fn test_partial_update() {
     //
     // Import data
     //
-    let meta_data = utils_update::get_partial_pre_update_test_data_set();
+    let meta_data = utils_update::get_pre_update_test_data_set();
     let workflow = get_full_import_op();
 
     execute_workflow(&dbm_mddb, &meta_data, &workflow).await;
@@ -68,7 +68,7 @@ async fn test_partial_update() {
     //
     // Update metadata
     //
-    let meta_data = utils_update::get_partial_update_test_data_set();
+    let meta_data = utils_update::get_update_test_data_set();
 
     //
     // Update assets metadata
