@@ -12,7 +12,7 @@ authors.workspace = true
 common_errors = {workspace = true}
 common_exchange = {workspace = true}
 pg_cmdb = {workspace = true}
-
+postgres_common = { workspace = true }
 # External crates
 diesel = { workspace = true }
 

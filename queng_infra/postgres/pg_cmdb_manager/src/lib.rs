@@ -1,7 +1,8 @@
 use common_errors::prelude::PostgresDBError;
 use diesel::r2d2::{ConnectionManager, Pool, PooledConnection};
-use diesel::{Connection, PgConnection};
+use diesel::PgConnection;
 use pg_cmdb::run_cmdb_db_migration;
+use postgres_common::TestConnectionCustomizer;
 use std::fmt::Display;
 
 mod portfolio_config;
@@ -9,7 +10,6 @@ mod portfolio_config;
 #[derive(Clone, Debug)]
 pub struct PostgresCMDBManager {
     dbg: bool,
-    test: bool,
     pool: Pool<ConnectionManager<PgConnection>>,
 }
 
@@ -28,24 +28,7 @@ impl PostgresCMDBManager {
     /// A Result containing the newly created instance or a PostgresDBError.
     ///
     pub async fn new(url: &str) -> Result<Self, PostgresDBError> {
-        Self::build(false, false, true, url).await
-    }
-
-    ///
-    /// Asynchronously creates a new instance by building with the provided URL.
-    /// Does not test or perform database migration. Use this constructor
-    /// when you are 100% certain that the DB already has been migrated.
-    ///
-    /// # Arguments
-    ///
-    /// * `url` - A string slice representing the URL for the database connection.
-    ///
-    /// # Returns
-    ///
-    /// A Result containing the newly created instance or a PostgresDBError.
-    ///
-    pub async fn new_no_migration(url: &str) -> Result<Self, PostgresDBError> {
-        Self::build(false, false, false, url).await
+        Self::build(false, false, url).await
     }
 
     ///
@@ -54,14 +37,13 @@ impl PostgresCMDBManager {
     /// # Arguments
     ///
     /// * `url` - A string slice representing the URL for the connection.
-    /// * `migration` - A boolean indicating whether to run migrations.
     ///
     /// # Returns
     ///
     /// A Result containing the initialized connection or a PostgresDBError.
     ///
-    pub async fn with_debug(url: &str, migration: bool) -> Result<Self, PostgresDBError> {
-        Self::build(true, false, migration, url).await
+    pub async fn with_debug(url: &str) -> Result<Self, PostgresDBError> {
+        Self::build(true, false, url).await
     }
 
     ///
@@ -75,14 +57,13 @@ impl PostgresCMDBManager {
     /// # Arguments
     ///
     /// * `url` - A string slice representing the URL of the Postgres database.
-    /// * `migration` - A boolean indicating whether to run database migration.
     ///
     /// # Returns
     ///
     /// A Result containing the initialized connection or a PostgresDBError if an error occurs.
     ///
-    pub async fn with_test_and_debug(url: &str, migration: bool) -> Result<Self, PostgresDBError> {
-        Self::build(true, true, migration, url).await
+    pub async fn with_test_and_debug(url: &str) -> Result<Self, PostgresDBError> {
+        Self::build(true, true, url).await
     }
 
     ///
@@ -97,7 +78,6 @@ impl PostgresCMDBManager {
     ///
     /// * `dbg` - A boolean indicating whether debug mode is enabled.
     /// * `test` - A boolean indicating whether testing mode is enabled.
-    /// * `migration` - A boolean indicating whether to run database migration.
     /// * `url` - A reference to a string representing the URL of the Postgres database.
     ///
     /// # Returns
@@ -105,12 +85,7 @@ impl PostgresCMDBManager {
     /// A Result containing the constructed PostgresCMDBManager instance
     /// or a PostgresDBError if an error occurs during the process.
     ///
-    async fn build(
-        dbg: bool,
-        test: bool,
-        migration: bool,
-        url: &str,
-    ) -> Result<Self, PostgresDBError> {
+    async fn build(dbg: bool, test: bool, url: &str) -> Result<Self, PostgresDBError> {
         if dbg {
             println!("[PostgresCMDBManager]: Debug mode enabled");
             println!(
@@ -119,17 +94,24 @@ impl PostgresCMDBManager {
             );
         }
 
-        let pool = match Pool::builder()
-            .test_on_check_out(true)
-            .build(ConnectionManager::<PgConnection>::new(url))
-        {
-            Ok(pool) => pool,
-            Err(e) => {
-                return Err(PostgresDBError::ConnectionFailed(e.to_string()));
-            }
+        let pool = if test {
+            Pool::builder()
+                .test_on_check_out(true)
+                .max_size(1)
+                .connection_customizer(Box::new(TestConnectionCustomizer))
+                .build(ConnectionManager::<PgConnection>::new(url))
+                .expect("[PostgresCMDBManager]: Failed to create PG pool with test transaction")
+        } else {
+            Pool::builder()
+                .test_on_check_out(true)
+                .max_size(10)
+                .build(ConnectionManager::<PgConnection>::new(url))
+                .expect("[PostgresCMDBManager]: Failed to create PG connection pool")
         };
 
-        if migration {
+        // For tests, we most likely have a blank DB,
+        // thus run migration to create the DB schema first.
+        if test {
             if dbg {
                 println!("[PostgresCMDBManager]: Run DB Migration",);
             }
@@ -141,7 +123,7 @@ impl PostgresCMDBManager {
             }
         }
 
-        Ok(Self { dbg, test, pool })
+        Ok(Self { dbg, pool })
     }
 }
 
@@ -157,18 +139,7 @@ impl PostgresCMDBManager {
     ///
     /// A pooled connection from the pool.
     pub(crate) fn get_connection(&self) -> PooledConnection<ConnectionManager<PgConnection>> {
-        let mut conn = self.pool.get().expect("Failed to get connection from pool");
-
-        if self.test {
-            conn.begin_test_transaction()
-                .expect("[PostgresCMDBManager]: Failed to begin test transaction");
-
-            // We cannot assume the DB was migrated prior to a test, so we check here.
-            run_cmdb_db_migration(&mut conn)
-                .expect("[PostgresCMDBManager]: Failed to run migration for test");
-        };
-
-        conn
+        self.pool.get().expect("Failed to get connection from pool")
     }
 }
 impl PostgresCMDBManager {

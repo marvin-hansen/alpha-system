@@ -27,7 +27,7 @@ async fn test_full_import() {
     let pg_cfg_manager = PostgresConfigManager::new(&env_type);
     let dsn = pg_cfg_manager.pg_connection_url();
 
-    let dbm_mddb = PostgresMDDBManager::test_with_debug(&dsn)
+    let dbm_mddb = PostgresMDDBManager::with_test_and_debug(&dsn)
         .await
         .expect("Failed to create PostgresSMDBManager");
 

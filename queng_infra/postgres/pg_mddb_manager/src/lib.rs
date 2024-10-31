@@ -58,7 +58,7 @@ impl PostgresMDDBManager {
     /// A Result containing the new instance with a test transaction
     /// or a PostgresDBError.
     ///
-    pub async fn test_with_debug(url: &str) -> Result<Self, PostgresDBError> {
+    pub async fn with_test_and_debug(url: &str) -> Result<Self, PostgresDBError> {
         Self::build(true, true, url).await
     }
 
@@ -89,13 +89,13 @@ impl PostgresMDDBManager {
                 .max_size(1)
                 .connection_customizer(Box::new(TestConnectionCustomizer))
                 .build(ConnectionManager::<PgConnection>::new(url))
-                .expect("Failed to create pool with test transaction")
+                .expect("[PostgresMDDBManager]: Failed to create PG pool with test transaction")
         } else {
             Pool::builder()
                 .test_on_check_out(true)
                 .max_size(10)
                 .build(ConnectionManager::<PgConnection>::new(url))
-                .expect("Failed to create pool")
+                .expect("[PostgresMDDBManager]: Failed to create PG connection pool")
         };
 
         // For tests, we most likely have a blank DB,
