@@ -1,0 +1,21 @@
+# Copyright (c) 2024. Marvin Friedrich Lars Hansen. All Rights Reserved. Contact: marvin.hansen@gmail.com
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: post-deploy
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: cmdb
+  path: "./delivery/app/staging/post-deploy/kaiko-proxy"
+  targetNamespace: default
+  interval: 60m
+  timeout: 5m
+  prune: true
+  wait: true
+  force: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+---

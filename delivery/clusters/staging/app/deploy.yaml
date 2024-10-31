@@ -7,8 +7,9 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-    - name: pre-deploy
-  path: ./delivery/app/deploy/core/dbgw/
+    - name: pre-deploy-metadata-migration
+    - name: pre-deploy-services-migration
+  path: .delivery/app/staging/deploy/core/dbgw/
   targetNamespace: default
   interval: 60m
   timeout: 5m
@@ -26,7 +27,7 @@ metadata:
 spec:
   dependsOn:
     - name: dbgw
-  path: ./delivery/app/deploy/core/smdb/
+  path: .delivery/app/staging/deploy/core/smdb/
   targetNamespace: default
   interval: 60m
   timeout: 5m
@@ -44,7 +45,7 @@ metadata:
 spec:
   dependsOn:
     - name: smdb
-  path: ./delivery/app/deploy/core/cmdb/
+  path: .delivery/app/staging/deploy/core/cmdb/
   targetNamespace: default
   interval: 60m
   timeout: 5m
