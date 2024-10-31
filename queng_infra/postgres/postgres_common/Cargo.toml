@@ -8,6 +8,7 @@ repository.workspace = true
 authors.workspace = true
 
 [dependencies]
+# Internal crates
+common_errors = {workspace = true}
 # External crates
 diesel = { workspace = true }
-tokio = {workspace = true}

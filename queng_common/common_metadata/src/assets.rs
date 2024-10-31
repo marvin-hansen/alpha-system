@@ -30,7 +30,7 @@ impl Display for MetaAsset {
 
 impl MetaAsset {
     pub fn hash(&self) -> String {
-        let binding = self.to_string();
+        let binding = format!("{}{}{}", self.code, self.name, self.asset_class);
         let input = binding.as_bytes();
         let hash = blake3::hash(input);
         hash.to_string()

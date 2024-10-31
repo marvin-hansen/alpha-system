@@ -1,7 +1,7 @@
 mod service;
 
 use common_errors::prelude::PostgresDBError;
-use diesel::r2d2::{ConnectionManager, Pool};
+use diesel::r2d2::{ConnectionManager, Pool, PooledConnection};
 use diesel::PgConnection;
 use pg_smdb::run_smdb_db_migration;
 use std::fmt::Display;
@@ -13,12 +13,51 @@ pub struct PostgresSMDBManager {
 }
 
 impl PostgresSMDBManager {
+    /// Asynchronously creates a new instance by building with the provided URL.
+    ///
+    /// # Arguments
+    ///
+    /// * `url` - A string slice representing the URL for the new instance.
+    ///
+    /// # Returns
+    ///
+    /// A Result containing the new instance or a PostgresDBError.
+    ///
     pub async fn new(url: &str) -> Result<Self, PostgresDBError> {
-        Self::build(false, url).await
+        Self::build(false, false, url).await
     }
 
+    /// Asynchronously initializes a connection with debug mode enabled.
+    ///
+    /// # Arguments
+    ///
+    /// * `url` - A string slice representing the URL for the connection.
+    ///
+    /// # Returns
+    ///
+    /// A Result containing the initialized connection or a PostgresDBError.
+    ///
     pub async fn with_debug(url: &str) -> Result<Self, PostgresDBError> {
-        Self::build(true, url).await
+        Self::build(true, false, url).await
+    }
+
+    /// Asynchronously initializes a connection with debug mode and test mode enabled.
+    /// Test mode means, all database transactions will be rolled back and
+    /// the DB connection closed automatically when the test instance of PostgresMDDBManager is dropped.
+    ///
+    /// A full DB schema migration happens during initialization.
+    ///
+    /// # Arguments
+    ///
+    /// * `url` - A string slice representing the URL for the new instance.
+    ///
+    /// # Returns
+    ///
+    /// A Result containing the new instance with a test transaction
+    /// or a PostgresDBError.
+    ///
+    pub async fn with_test_and_debug(url: &str) -> Result<Self, PostgresDBError> {
+        Self::build(true, true, url).await
     }
 
     /// Creates a new PostgresSMDBManager instance.
@@ -34,7 +73,7 @@ impl PostgresSMDBManager {
     ///    If successful, returns a PostgresSMDBManager instance.
     ///    If the connection fails, returns a PostgresDBError indicating the failure.
     ///
-    async fn build(dbg: bool, url: &str) -> Result<Self, PostgresDBError> {
+    async fn build(dbg: bool, test: bool, url: &str) -> Result<Self, PostgresDBError> {
         if dbg {
             println!("[PostgresSMDBManager]: Debug mode enabled");
             println!(
@@ -43,39 +82,17 @@ impl PostgresSMDBManager {
             );
         }
 
-        let manager = ConnectionManager::<PgConnection>::new(url);
-        let pool = match Pool::builder().test_on_check_out(true).build(manager) {
-            Ok(pool) => pool,
-            Err(e) => {
-                return Err(PostgresDBError::ConnectionFailed(e.to_string()));
-            }
-        };
-
-        if dbg {
-            println!("[PostgresSMDBManager]: Run DB Migration",);
-        }
-        match run_smdb_db_migration(&mut pool.get().unwrap()) {
-            Ok(_) => {}
-            Err(e) => {
-                return Err(PostgresDBError::MigrationFailed(e.to_string()));
-            }
-        }
+        let pool = postgres_common::build_pg_connection_pool(test, dbg, url, run_smdb_db_migration)
+            .expect("[PostgresSMDBManager]: Failed to create Postgres connection pool");
 
         Ok(Self { dbg, pool })
     }
-}
 
-// impl PostgresSMDBManager {
-//     pub fn get_connection(&self) -> PooledConnection<ConnectionManager<PgConnection>> {
-//         let mut conn = self.pool.get().expect("Failed to get connection from pool");
-//         if self.test {
-//             conn.begin_test_transaction()
-//                 .expect("[PostgresSMDBManager]: Failed to begin test transaction");
-//         };
-//
-//         conn
-//     }
-// }
+    /// Returns a connection from the connection pool.
+    pub fn get_connection(&self) -> PooledConnection<ConnectionManager<PgConnection>> {
+        self.pool.get().expect("Failed to get connection from pool")
+    }
+}
 
 impl PostgresSMDBManager {
     pub fn dbg_print(&self, msg: &str) {

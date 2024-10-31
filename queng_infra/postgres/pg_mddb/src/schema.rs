@@ -4,18 +4,20 @@ pub mod mddb {
     diesel::table! {
         mddb.assets (asset_code) {
             asset_code -> Varchar,
-            asset_hash -> Varchar,
             asset_name -> Varchar,
+            asset_class -> Varchar,
             asset_classes -> Array<Nullable<Text>>,
             asset_figi -> Nullable<Varchar>,
+            asset_hash -> Varchar,
+
         }
     }
 
     diesel::table! {
         mddb.exchanges (exchange_id) {
             exchange_id -> Varchar,
-            exchange_hash -> Varchar,
             exchange_name -> Varchar,
+            exchange_hash -> Varchar,
         }
     }
 

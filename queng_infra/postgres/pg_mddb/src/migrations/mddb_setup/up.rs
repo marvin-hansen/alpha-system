@@ -4,22 +4,22 @@ CREATE SCHEMA IF NOT EXISTS mddb;
 
 CREATE TABLE mddb.assets(
 	"asset_code" VARCHAR NOT NULL PRIMARY KEY,
-	"asset_hash" VARCHAR NOT NULL,
 	"asset_name" VARCHAR NOT NULL,
+	"asset_class" VARCHAR NOT NULL,
 	"asset_classes" text[] NOT NULL,
-	"asset_figi" VARCHAR
+	"asset_figi" VARCHAR,
+    "asset_hash" VARCHAR NOT NULL
 );
 
 CREATE TABLE mddb.exchanges(
 	"exchange_id" VARCHAR NOT NULL PRIMARY KEY,
-	"exchange_hash" VARCHAR NOT NULL,
-	"exchange_name" VARCHAR NOT NULL
+	"exchange_name" VARCHAR NOT NULL,
+    "exchange_hash" VARCHAR NOT NULL
 );
 
 CREATE TABLE mddb.instruments(
 	"instrument_id" VARCHAR NOT NULL PRIMARY KEY,
 	"instrument_code" VARCHAR NOT NULL,
-	"instrument_hash" VARCHAR NOT NULL,
 	"instrument_class" VARCHAR NOT NULL,
 	"instrument_base_asset" VARCHAR NOT NULL,
 	"instrument_quote_asset" VARCHAR NOT NULL,
@@ -28,7 +28,8 @@ CREATE TABLE mddb.instruments(
 	"instrument_pair_figi" VARCHAR,
 	"instrument_figi" VARCHAR,
 	"instrument_trade_start_timestamp" BIGINT,
-	"instrument_trade_end_timestamp" BIGINT
+	"instrument_trade_end_timestamp" BIGINT,
+    "instrument_hash" VARCHAR NOT NULL
 );
 
 -- FIGI (Financial Instrument Global Identifier) is a unique identifier for an instrument similar to ISIN

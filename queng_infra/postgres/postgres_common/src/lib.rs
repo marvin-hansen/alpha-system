@@ -1,5 +1,7 @@
-use diesel::r2d2::CustomizeConnection;
+use common_errors::prelude::PostgresDBError;
+use diesel::r2d2::{ConnectionManager, CustomizeConnection, Pool};
 use diesel::{Connection, PgConnection};
+use std::error::Error;
 
 /// A connection customizer designed for use in tests.
 /// Implements CustomizeConnection in a way
@@ -21,5 +23,67 @@ impl<E> CustomizeConnection<PgConnection, E> for TestConnectionCustomizer {
             .expect("Failed to start test transaction");
 
         Ok(())
+    }
+}
+
+/// Builds a Postgres Connection Pool based on the provided configuration parameters.
+///
+/// This function handles the following workflow:
+/// 1. Establishes a connection pool to the Postgres database using the provided URL.
+/// 2. Optionally enables debug mode to print debug messages.
+/// 3. Performs database migration if the test parameter is set to true.
+///
+/// # Arguments
+///
+/// * `dbg` - A boolean indicating whether debug mode is enabled.
+/// * `test` - A boolean indicating whether testing mode is enabled.
+/// * `url` - A reference to a string representing the URL of the Postgres database.
+///
+/// # Returns
+///
+/// A Result containing the constructed Postgres Connection Pool
+/// or a PostgresDBError if an error occurs during the process.
+///
+pub fn build_pg_connection_pool(
+    test: bool,
+    dbg: bool,
+    url: &str,
+    migration_fun: fn(
+        conn: &mut PgConnection,
+    ) -> Result<(), Box<dyn Error + Send + Sync + 'static>>,
+) -> Result<Pool<ConnectionManager<PgConnection>>, PostgresDBError> {
+    if test {
+        if dbg {
+            println!(" Build test connection pool",);
+        }
+        let pool = Pool::builder()
+            .test_on_check_out(true)
+            .max_size(1)
+            .connection_customizer(Box::new(TestConnectionCustomizer))
+            .build(ConnectionManager::<PgConnection>::new(url))
+            .expect("Failed to create PG pool with test transaction");
+
+        // For tests, we most likely have a blank DB thus run migration first.
+        if dbg {
+            println!("Run DB Migration",);
+        }
+        match migration_fun(&mut pool.get().unwrap()) {
+            Ok(_) => {}
+            Err(e) => {
+                return Err(PostgresDBError::MigrationFailed(e.to_string()));
+            }
+        }
+
+        Ok(pool)
+    } else {
+        if dbg {
+            println!("Build connection pool",);
+        }
+
+        Ok(Pool::builder()
+            .test_on_check_out(true)
+            .max_size(10)
+            .build(ConnectionManager::<PgConnection>::new(url))
+            .expect("[PostgresSMDBManager]: Failed to create PG connection pool"))
     }
 }

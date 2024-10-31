@@ -2,7 +2,6 @@ use common_errors::prelude::PostgresDBError;
 use diesel::r2d2::{ConnectionManager, Pool, PooledConnection};
 use diesel::PgConnection;
 use pg_cmdb::run_cmdb_db_migration;
-use postgres_common::TestConnectionCustomizer;
 use std::fmt::Display;
 
 mod portfolio_config;
@@ -66,25 +65,6 @@ impl PostgresCMDBManager {
         Self::build(true, true, url).await
     }
 
-    ///
-    /// Asynchronously builds a PostgresCMDBManager instance based on the provided configuration parameters.
-    ///
-    /// This function handles the following workflow:
-    /// 1. Establishes a connection pool to the Postgres database using the provided URL.
-    /// 2. Optionally enables debug mode to print debug messages.
-    /// 3. Performs database migration if the migration parameter is set to true.
-    ///
-    /// # Arguments
-    ///
-    /// * `dbg` - A boolean indicating whether debug mode is enabled.
-    /// * `test` - A boolean indicating whether testing mode is enabled.
-    /// * `url` - A reference to a string representing the URL of the Postgres database.
-    ///
-    /// # Returns
-    ///
-    /// A Result containing the constructed PostgresCMDBManager instance
-    /// or a PostgresDBError if an error occurs during the process.
-    ///
     async fn build(dbg: bool, test: bool, url: &str) -> Result<Self, PostgresDBError> {
         if dbg {
             println!("[PostgresCMDBManager]: Debug mode enabled");
@@ -94,50 +74,13 @@ impl PostgresCMDBManager {
             );
         }
 
-        let pool = if test {
-            Pool::builder()
-                .test_on_check_out(true)
-                .max_size(1)
-                .connection_customizer(Box::new(TestConnectionCustomizer))
-                .build(ConnectionManager::<PgConnection>::new(url))
-                .expect("[PostgresCMDBManager]: Failed to create PG pool with test transaction")
-        } else {
-            Pool::builder()
-                .test_on_check_out(true)
-                .max_size(10)
-                .build(ConnectionManager::<PgConnection>::new(url))
-                .expect("[PostgresCMDBManager]: Failed to create PG connection pool")
-        };
-
-        // For tests, we most likely have a blank DB,
-        // thus run migration to create the DB schema first.
-        if test {
-            if dbg {
-                println!("[PostgresCMDBManager]: Run DB Migration",);
-            }
-            match run_cmdb_db_migration(&mut pool.get().unwrap()) {
-                Ok(_) => {}
-                Err(e) => {
-                    return Err(PostgresDBError::MigrationFailed(e.to_string()));
-                }
-            }
-        }
+        let pool = postgres_common::build_pg_connection_pool(test, dbg, url, run_cmdb_db_migration)
+            .expect("[PostgresCMDBManager]: Failed to create Postgres connection pool");
 
         Ok(Self { dbg, pool })
     }
-}
 
-impl PostgresCMDBManager {
-    ///
-    /// Retrieves a database connection from the pool.
-    ///
-    /// If in test mode, begins a test transaction and runs CMDB database migration;
-    /// Note, a test transaction abort at the end of the function call so that no changes
-    /// are committed to the DB. Use for testing only.
-    ///
-    /// # Returns
-    ///
-    /// A pooled connection from the pool.
+    /// Returns a connection from the connection pool.
     pub(crate) fn get_connection(&self) -> PooledConnection<ConnectionManager<PgConnection>> {
         self.pool.get().expect("Failed to get connection from pool")
     }

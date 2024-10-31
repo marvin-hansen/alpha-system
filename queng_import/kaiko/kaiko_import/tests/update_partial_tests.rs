@@ -43,12 +43,23 @@ async fn test_partial_update() {
     dbg!(&result);
     assert!(result.is_ok());
 
+    // Load the inserted asset from the DB
+    let asset_id = meta_data.assets().data.first().unwrap().code.clone();
+    let res = dbm_mddb.read_asset(asset_id).await;
+    dbg!(&res);
+    assert!(res.is_ok());
+
     let count = result.unwrap();
     assert_eq!(count, 1);
 
     let result = dbm_mddb.count_exchanges().await;
     dbg!(&result);
     assert!(result.is_ok());
+
+    let exchange_id = meta_data.exchanges().data.first().unwrap().code.clone();
+    let res = dbm_mddb.read_exchange(exchange_id).await;
+    dbg!(&res);
+    assert!(res.is_ok());
 
     let count = result.unwrap();
     assert_eq!(count, 1);
@@ -61,26 +72,25 @@ async fn test_partial_update() {
     assert_eq!(count, 1);
 
     //
-    // Update data
+    // Update metadata
     //
-    // let asset_id = utils_update::get_partial_update_test_asset_id();
-    // let exchange_id = utils_update::get_partial_update_test_exchange_id();
-    // let instrument_id = utils_update::get_partial_update_test_instrument_id();
-    //
-    // // Update asset
-    // let workflow = get_assets_update_op();
-    // execute_workflow(&dbm_mddb, &meta_data, &workflow).await;
-    //
-    // // Load the updated asset from the DB
-    // let res = dbm_mddb.read_asset(asset_id.clone()).await;
-    // dbg!(&res);
-    // assert!(res.is_ok());
-    //
-    // let db_asset = res.unwrap();
-    // // Extract the reference asset from the test data set
-    // let db_update_asset = meta_data.assets().data.first().unwrap();
-    // // Compare the hashes as these must match after the update
-    // assert_eq!(db_asset.hash(), db_update_asset.hash());
+    let meta_data = utils_update::get_partial_update_test_data_set();
+
+    // Update asset metadata
+    let asset_id = utils_update::get_partial_update_test_asset_id();
+    let workflow = get_assets_update_op();
+    execute_workflow(&dbm_mddb, &meta_data, &workflow).await;
+
+    // Load the updated asset from the DB
+    let res = dbm_mddb.read_asset(asset_id.clone()).await;
+    dbg!(&res);
+    assert!(res.is_ok());
+
+    let db_asset = res.unwrap();
+    // Extract the reference asset from the test data set
+    let db_update_asset = meta_data.assets().data.first().unwrap();
+    // Compare the hashes as these must match after the update
+    assert_eq!(db_asset.hash(), db_update_asset.hash());
 }
 
 fn get_full_import_op() -> MetaDataDBWOp {

@@ -18,10 +18,11 @@ use diesel::{AsChangeset, Identifiable, Insertable, Queryable, QueryableByName, 
 #[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct Asset {
     pub asset_code: String,
-    pub asset_hash: String,
     pub asset_name: String,
+    pub asset_class: String,
     pub asset_classes: Vec<Option<String>>,
     pub asset_figi: Option<String>,
+    pub asset_hash: String,
 }
 
 #[derive(Debug, Clone, Queryable, Insertable, AsChangeset)]
@@ -29,10 +30,11 @@ pub struct Asset {
 #[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct CreateAsset {
     pub asset_code: String,
-    pub asset_hash: String,
     pub asset_name: String,
+    pub asset_class: String,
     pub asset_classes: Vec<Option<String>>,
     pub asset_figi: Option<String>,
+    pub asset_hash: String,
 }
 
 #[derive(Debug, Clone, Queryable, Insertable, AsChangeset)]
@@ -40,7 +42,8 @@ pub struct CreateAsset {
 #[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct UpdateAsset {
     pub asset_name: String,
-    pub asset_hash: String,
+    pub asset_class: String,
     pub asset_classes: Vec<Option<String>>,
     pub asset_figi: Option<String>,
+    pub asset_hash: String,
 }

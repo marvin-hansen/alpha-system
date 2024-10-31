@@ -7,10 +7,11 @@ use postgres_migrations::prelude::{get_or_wait_for_postgres_connection, DB_TEST_
 fn get_test_asset() -> Asset {
     Asset {
         asset_code: "test_asset_code".to_string(),
-        asset_hash: "test_asset_hash".to_string(),
         asset_name: "test_asset_name".to_string(),
+        asset_class: "test_asset_class".to_string(),
         asset_classes: vec![],
         asset_figi: None,
+        asset_hash: "test_asset_hash".to_string(),
     }
 }
 

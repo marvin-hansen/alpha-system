@@ -17,6 +17,7 @@ rust_library(
         "//alias:common_config",
         "//alias:common_errors",
         "//alias:pg_smdb",
+        "//alias:postgres_common",
         # External crates
         "//thirdparty/crates:diesel",
     ],

@@ -7,8 +7,9 @@ use common_errors::prelude::PostgresDBError;
 use diesel::r2d2::{ConnectionManager, Pool, PooledConnection};
 use diesel::PgConnection;
 use pg_mddb::run_mddb_migration;
-use postgres_common::TestConnectionCustomizer;
+use std::fmt::Display;
 
+#[derive(Clone, Debug)]
 pub struct PostgresMDDBManager {
     dbg: bool,
     pool: Pool<ConnectionManager<PgConnection>>,
@@ -62,18 +63,6 @@ impl PostgresMDDBManager {
         Self::build(true, true, url).await
     }
 
-    // Builds a new instance of PostgresMDDBManager
-    //
-    // # Arguments
-    //
-    // * `dbg` - A boolean flag indicating whether debug mode is enabled.
-    // * `test` - A boolean flag indicating whether test mode is enabled.
-    // * `url` - A string slice representing the URL for the new instance.
-    //
-    // # Returns
-    //
-    // A Result containing the new instance or a PostgresDBError.
-    //
     async fn build(dbg: bool, test: bool, url: &str) -> Result<Self, PostgresDBError> {
         if dbg {
             println!("[PostgresMDDBManager]: Debug mode enabled");
@@ -83,40 +72,13 @@ impl PostgresMDDBManager {
             );
         }
 
-        let pool = if test {
-            Pool::builder()
-                .test_on_check_out(true)
-                .max_size(1)
-                .connection_customizer(Box::new(TestConnectionCustomizer))
-                .build(ConnectionManager::<PgConnection>::new(url))
-                .expect("[PostgresMDDBManager]: Failed to create PG pool with test transaction")
-        } else {
-            Pool::builder()
-                .test_on_check_out(true)
-                .max_size(10)
-                .build(ConnectionManager::<PgConnection>::new(url))
-                .expect("[PostgresMDDBManager]: Failed to create PG connection pool")
-        };
-
-        // For tests, we most likely have a blank DB,
-        // thus run migration to create the schema first.
-        if test {
-            if dbg {
-                println!("[PostgresMDDBManager]: Run DB Migration",);
-            }
-            match run_mddb_migration(&mut pool.get().unwrap()) {
-                Ok(_) => {}
-                Err(e) => {
-                    return Err(PostgresDBError::MigrationFailed(e.to_string()));
-                }
-            }
-        }
+        let pool = postgres_common::build_pg_connection_pool(test, dbg, url, run_mddb_migration)
+            .expect("[PostgresMDDBManager]: Failed to create Postgres connection pool");
 
         Ok(Self { dbg, pool })
     }
-}
 
-impl PostgresMDDBManager {
+    /// Returns a connection from the connection pool.
     pub(crate) fn get_connection(&self) -> PooledConnection<ConnectionManager<PgConnection>> {
         self.pool.get().expect("Failed to get connection from pool")
     }
@@ -127,5 +89,11 @@ impl PostgresMDDBManager {
         if self.dbg {
             println!("[PostgresMDDBManager]: {}", msg);
         }
+    }
+}
+
+impl Display for PostgresMDDBManager {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "PostgresMDDBManager")
     }
 }

@@ -16,7 +16,7 @@ pub struct MetaExchange {
 
 impl MetaExchange {
     pub fn hash(&self) -> String {
-        let binding = self.to_string();
+        let binding = format!("{}{}", self.code, self.name);
         let input = binding.as_bytes();
         let hash = blake3::hash(input);
         hash.to_string()

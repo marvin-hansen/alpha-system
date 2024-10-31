@@ -23,7 +23,7 @@ impl PostgresSMDBManager {
         service_config: &ServiceConfig,
     ) -> Result<(), PostgresDBError> {
         self.dbg_print("insert_service");
-        let conn = &mut self.pool.get().unwrap();
+        let conn = &mut self.get_connection();
 
         match service::Service::create(conn, service_config) {
             Ok(_) => Ok(()),
@@ -40,7 +40,7 @@ impl PostgresSMDBManager {
     ///
     pub async fn count_services(&mut self) -> Result<u64, PostgresDBError> {
         self.dbg_print("count_services");
-        let conn = &mut self.pool.get().unwrap();
+        let conn = &mut self.get_connection();
 
         match service::Service::count(conn) {
             Ok(count) => Ok(count),
@@ -64,7 +64,8 @@ impl PostgresSMDBManager {
         id: &ServiceID,
     ) -> Result<bool, PostgresDBError> {
         self.dbg_print("check_if_service_id_exists");
-        let conn = &mut self.pool.get().unwrap();
+        let conn = &mut self.get_connection();
+
         match service::Service::check_if_service_id_exists(conn, *id) {
             Ok(exists) => Ok(exists),
             Err(e) => Err(PostgresDBError::CheckIfExistsFailed(e.to_string())),
@@ -120,7 +121,7 @@ impl PostgresSMDBManager {
         id: &ServiceID,
     ) -> Result<bool, PostgresDBError> {
         self.dbg_print("check_if_service_id_online");
-        let conn = &mut self.pool.get().unwrap();
+        let conn = &mut self.get_connection();
 
         match service::Service::check_if_service_id_online(conn, *id) {
             Ok(online) => Ok(online),
@@ -171,8 +172,8 @@ impl PostgresSMDBManager {
     ///
     pub async fn get_all_online_services(&self) -> Result<Vec<ServiceConfig>, PostgresDBError> {
         self.dbg_print("get_all_online_services");
+        let conn = &mut self.get_connection();
 
-        let conn = &mut self.pool.get().unwrap();
         match service::Service::get_all_online_services(conn) {
             Ok(services) => Ok(services),
             Err(e) => Err(PostgresDBError::QueryFailed(e.to_string())),
@@ -193,8 +194,8 @@ impl PostgresSMDBManager {
     ///
     pub async fn get_all_offline_services(&self) -> Result<Vec<ServiceConfig>, PostgresDBError> {
         self.dbg_print("get_all_offline_services");
+        let conn = &mut self.get_connection();
 
-        let conn = &mut self.pool.get().unwrap();
         match service::Service::get_all_offline_services(conn) {
             Ok(services) => Ok(services),
             Err(e) => Err(PostgresDBError::QueryFailed(e.to_string())),
@@ -218,8 +219,8 @@ impl PostgresSMDBManager {
         id: &ServiceID,
     ) -> Result<Vec<ServiceID>, PostgresDBError> {
         self.dbg_print("get_all_service_dependencies");
+        let conn = &mut self.get_connection();
 
-        let conn = &mut self.pool.get().unwrap();
         match service::Service::get_all_service_dependencies(conn, *id) {
             Ok(services) => Ok(services),
             Err(e) => Err(PostgresDBError::QueryFailed(e.to_string())),
@@ -243,8 +244,8 @@ impl PostgresSMDBManager {
         id: &ServiceID,
     ) -> Result<Vec<Endpoint>, PostgresDBError> {
         self.dbg_print("get_all_service_endpoints");
+        let conn = &mut self.get_connection();
 
-        let conn = &mut self.pool.get().unwrap();
         match service::Service::get_all_service_endpoints(conn, *id) {
             Ok(services) => Ok(services),
             Err(e) => Err(PostgresDBError::QueryFailed(e.to_string())),
@@ -264,7 +265,8 @@ impl PostgresSMDBManager {
     ///
     pub async fn set_service_online(&self, id: &ServiceID) -> Result<(), PostgresDBError> {
         self.dbg_print("set_service_online");
-        let conn = &mut self.pool.get().unwrap();
+        let conn = &mut self.get_connection();
+
         match service::Service::set_service_online(conn, *id) {
             Ok(_) => Ok(()),
             Err(e) => Err(PostgresDBError::SetFieldFailed(e.to_string())),
@@ -284,7 +286,7 @@ impl PostgresSMDBManager {
     ///
     pub async fn set_service_offline(&self, id: &ServiceID) -> Result<(), PostgresDBError> {
         self.dbg_print("set_service_offline");
-        let conn = &mut self.pool.get().unwrap();
+        let conn = &mut self.get_connection();
 
         match service::Service::set_service_online(conn, *id) {
             Ok(_) => Ok(()),
@@ -309,7 +311,7 @@ impl PostgresSMDBManager {
         id: &ServiceID,
     ) -> Result<Option<ServiceConfig>, PostgresDBError> {
         self.dbg_print("read_service_by_id");
-        let conn = &mut self.pool.get().unwrap();
+        let conn = &mut self.get_connection();
 
         match service::Service::check_if_service_id_exists(conn, *id) {
             Ok(exists) => {
@@ -339,8 +341,8 @@ impl PostgresSMDBManager {
     ///
     pub async fn read_all_services(&self) -> Result<Vec<ServiceConfig>, PostgresDBError> {
         self.dbg_print("read_all_services");
+        let conn = &mut self.get_connection();
 
-        let conn = &mut self.pool.get().unwrap();
         match service::Service::read_all(conn) {
             Ok(services) => Ok(services),
             Err(e) => Err(PostgresDBError::QueryFailed(e.to_string())),
@@ -368,8 +370,7 @@ impl PostgresSMDBManager {
         data: ServiceConfig,
     ) -> Result<Option<ServiceConfig>, PostgresDBError> {
         self.dbg_print("update_service");
-
-        let conn = &mut self.pool.get().unwrap();
+        let conn = &mut self.get_connection();
 
         let id = data.svc_id().to_owned();
         match service::Service::check_if_service_id_exists(conn, id) {
@@ -401,7 +402,7 @@ impl PostgresSMDBManager {
     ///
     pub async fn delete_service(&self, id: &ServiceID) -> Result<bool, PostgresDBError> {
         self.dbg_print("delete_service");
-        let conn = &mut self.pool.get().unwrap();
+        let conn = &mut self.get_connection();
 
         match service::Service::check_if_service_id_exists(conn, *id) {
             Ok(exists) => {
