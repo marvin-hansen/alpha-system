@@ -1,0 +1,63 @@
+# Copyright (c) 2024. Marvin Friedrich Lars Hansen. All Rights Reserved. Contact: marvin.hansen@gmail.com
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kaiko-proxy
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kaiko-proxy
+  template:
+    metadata:
+      labels:
+        app: kaiko-proxy
+    spec:
+      terminationGracePeriodSeconds: 30
+      imagePullSecrets:
+        - name: artifact-registry
+      containers:
+        - name: kaiko-proxy
+          image: asia-northeast1-docker.pkg.dev/future-309012/image-repo/kaiko_proxy:0eea2944-1729054086 # {"$imagepolicy": "default:kaiko-proxy-image-policy"}
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              cpu: 100m
+              memory: 16Mi
+            limits:
+              cpu: 250m
+              memory: 32Mi
+          ports:
+            - containerPort: 7777
+          env:
+            - name: ENV
+              value: "CLUSTER"
+            - name: DNS_SERVER
+              valueFrom:
+                secretKeyRef:
+                  name: dns-access
+                  key: DNS_SERVER
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 7777
+            initialDelaySeconds: 1
+            failureThreshold: 3
+            periodSeconds: 3
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 7777
+            initialDelaySeconds: 3
+            failureThreshold: 1
+            periodSeconds: 3
+          startupProbe:
+            httpGet:
+              path: /health
+              port: 7777
+            initialDelaySeconds: 1
+            failureThreshold: 10
+            periodSeconds: 3
+---

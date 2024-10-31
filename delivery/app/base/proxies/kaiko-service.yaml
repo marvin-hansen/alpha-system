@@ -1,0 +1,18 @@
+# Copyright (c) 2024. Marvin Friedrich Lars Hansen. All Rights Reserved. Contact: marvin.hansen@gmail.com
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kaiko-proxy-service
+  namespace: default
+spec:
+  selector:
+    app: kaiko-proxy
+  sessionAffinity: None
+  type: ClusterIP
+  ports:
+    - name: main-port
+      port: 7777
+      protocol: TCP
+      targetPort: 7777
+---
