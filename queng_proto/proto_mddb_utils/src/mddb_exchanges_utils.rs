@@ -1,11 +1,15 @@
 use common_metadata::prelude::MetaExchange;
 
 use proto_mddb::proto::{
-    CheckIfExchangeIdExistsRequest, CheckIfExchangeIdExistsResponse, CountExchangesResponse,
-    GetAllExchangesRequest, GetExchangeRequest, LookupExchangeNameRequest,
+    CheckIfExchangeIdExistsRequest, CheckIfExchangeIdExistsResponse, CountExchangesRequest,
+    CountExchangesResponse, GetAllExchangesRequest, GetExchangeRequest, LookupExchangeNameRequest,
 };
 
 // Request
+pub fn get_count_exchanges_request() -> CountExchangesRequest {
+    CountExchangesRequest {}
+}
+
 pub fn get_check_if_exchange_exists_request(exchange_code: &str) -> CheckIfExchangeIdExistsRequest {
     CheckIfExchangeIdExistsRequest {
         exchange_code: exchange_code.to_string(),

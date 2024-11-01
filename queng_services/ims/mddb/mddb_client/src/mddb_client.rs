@@ -1,25 +1,9 @@
 use crate::error::MDDBClientError;
 use crate::MDDBClient;
-use common_metadata::prelude::MetaAsset;
-use proto_mddb::proto::{
-    CheckIfExchangeIdExistsRequest, CheckIfExchangeIdExistsResponse,
-    CheckIfInstrumentIdExistsRequest, CheckIfInstrumentIdExistsResponse, CountExchangesRequest,
-    CountExchangesResponse, CountInstrumentsRequest, CountInstrumentsResponse,
-    GetAllExchangesRequest, GetAllExchangesResponse,
-    GetAllInstrumentsForBaseAssetAndExchangeRequest,
-    GetAllInstrumentsForBaseAssetAndExchangeResponse, GetAllInstrumentsForBaseAssetRequest,
-    GetAllInstrumentsForBaseAssetResponse, GetAllInstrumentsForBaseQuoteAssetAndExchangeRequest,
-    GetAllInstrumentsForBaseQuoteAssetAndExchangeResponse, GetAllInstrumentsForExchangeRequest,
-    GetAllInstrumentsForExchangeResponse, GetAllInstrumentsForQuoteAssetAndExchangeRequest,
-    GetAllInstrumentsForQuoteAssetAndExchangeResponse, GetAllInstrumentsForQuoteAssetRequest,
-    GetAllInstrumentsForQuoteAssetResponse, GetAllInstrumentsRequest, GetAllInstrumentsResponse,
-    GetExchangeRequest, GetExchangeResponse, GetInstrumentByFigiRequest, GetInstrumentByIdRequest,
-    GetInstrumentByIdResponse, LookupExchangeNameRequest, LookupExchangeNameResponse,
-    LookupInstrumentExchangePairCodeRequest, LookupInstrumentFigiRequest,
-    LookupInstrumentFigiResponse, ProtoMetaAsset,
-};
+use common_metadata::prelude::{MetaAsset, MetaExchange, MetaInstrument};
+use proto_mddb::proto::*;
 use proto_mddb_utils::mddb_assets_utils as assets_utils;
-use tonic::{Request, Response, Status};
+use proto_mddb_utils::mddb_exchanges_utils as exchanges_utils;
 
 impl MDDBClient {
     async fn count_assets(&self) -> Result<u64, MDDBClientError> {
@@ -76,129 +60,162 @@ impl MDDBClient {
         }
     }
 
-    async fn count_exchanges(
-        &self,
-        request: Request<CountExchangesRequest>,
-    ) -> Result<Response<CountExchangesResponse>, Status> {
-        todo!()
+    async fn count_exchanges(&self) -> Result<u64, MDDBClientError> {
+        let mut client = self.client.clone();
+        let request = exchanges_utils::get_count_exchanges_request();
+
+        match client.count_exchanges(request).await {
+            Ok(res) => Ok(res.into_inner().count),
+            Err(e) => Err(MDDBClientError(e.to_string())),
+        }
     }
 
     async fn check_if_exchange_id_exists(
         &self,
-        request: Request<CheckIfExchangeIdExistsRequest>,
-    ) -> Result<Response<CheckIfExchangeIdExistsResponse>, Status> {
-        todo!()
+        exchange_code: &str,
+    ) -> Result<bool, MDDBClientError> {
+        let mut client = self.client.clone();
+        let request = exchanges_utils::get_check_if_exchange_exists_request(exchange_code);
+
+        match client.check_if_exchange_id_exists(request).await {
+            Ok(res) => Ok(res.get_ref().exists),
+            Err(e) => Err(MDDBClientError(e.to_string())),
+        }
     }
 
-    async fn get_exchange(
-        &self,
-        request: Request<GetExchangeRequest>,
-    ) -> Result<Response<GetExchangeResponse>, Status> {
-        todo!()
+    async fn get_exchange(&self, exchange_code: &str) -> Result<MetaExchange, MDDBClientError> {
+        let mut client = self.client.clone();
+        let request = exchanges_utils::get_exchange_request(exchange_code);
+
+        match client.get_exchange(request).await {
+            Ok(res) => {
+                let exchange = res
+                    .into_inner()
+                    .exchange
+                    .map(|exchange| exchanges_utils::proto_exchange_to_meta_exchange(&exchange))
+                    .ok_or_else(|| MDDBClientError("Exchange not found".to_string()))?;
+                Ok(exchange)
+            }
+            Err(e) => Err(MDDBClientError(e.to_string())),
+        }
     }
 
-    async fn get_all_exchanges(
-        &self,
-        request: Request<GetAllExchangesRequest>,
-    ) -> Result<Response<GetAllExchangesResponse>, Status> {
-        todo!()
+    async fn get_all_exchanges(&self) -> Result<Vec<MetaExchange>, MDDBClientError> {
+        let mut client = self.client.clone();
+        let request = exchanges_utils::get_all_exchanges_request();
+
+        match client.get_all_exchanges(request).await {
+            Ok(res) => {
+                let exchanges = res
+                    .into_inner()
+                    .exchanges
+                    .into_iter()
+                    .map(|proto_exchange| {
+                        exchanges_utils::proto_exchange_to_meta_exchange(&proto_exchange)
+                    })
+                    .collect();
+                Ok(exchanges)
+            }
+            Err(e) => Err(MDDBClientError(e.to_string())),
+        }
     }
 
-    async fn lookup_exchange_name(
-        &self,
-        request: Request<LookupExchangeNameRequest>,
-    ) -> Result<Response<LookupExchangeNameResponse>, Status> {
-        todo!()
+    async fn lookup_exchange_name(&self, exchange_code: &str) -> Result<String, MDDBClientError> {
+        let mut client = self.client.clone();
+        let request = exchanges_utils::get_lookup_exchange_name_request(exchange_code);
+
+        match client.lookup_exchange_name(request).await {
+            Ok(res) => Ok(res.into_inner().exchange_name),
+            Err(e) => Err(MDDBClientError(e.to_string())),
+        }
     }
 
-    async fn count_instruments(
-        &self,
-        request: Request<CountInstrumentsRequest>,
-    ) -> Result<Response<CountInstrumentsResponse>, Status> {
+    async fn count_instruments(&self) -> Result<u64, MDDBClientError> {
         todo!()
     }
 
     async fn check_if_instrument_id_exists(
         &self,
-        request: Request<CheckIfInstrumentIdExistsRequest>,
-    ) -> Result<Response<CheckIfInstrumentIdExistsResponse>, Status> {
+        instrument_id: &str,
+    ) -> Result<bool, MDDBClientError> {
         todo!()
     }
 
-    async fn get_instrument(
-        &self,
-        request: Request<GetInstrumentByIdRequest>,
-    ) -> Result<Response<GetInstrumentByIdResponse>, Status> {
+    async fn get_instrument(&self, instrument_id: &str) -> Result<MetaInstrument, MDDBClientError> {
         todo!()
     }
 
     async fn get_instrument_by_figi(
         &self,
-        request: Request<GetInstrumentByFigiRequest>,
-    ) -> Result<Response<GetInstrumentByIdResponse>, Status> {
+        instrument_figi: &str,
+    ) -> Result<Option<MetaInstrument>, MDDBClientError> {
         todo!()
     }
 
     async fn get_all_instruments(
         &self,
-        request: Request<GetAllInstrumentsRequest>,
-    ) -> Result<Response<GetAllInstrumentsResponse>, Status> {
+        instrument_figi: &str,
+    ) -> Result<Vec<MetaInstrument>, MDDBClientError> {
         todo!()
     }
 
     async fn get_all_instruments_for_base_asset(
         &self,
-        request: Request<GetAllInstrumentsForBaseAssetRequest>,
-    ) -> Result<Response<GetAllInstrumentsForBaseAssetResponse>, Status> {
+        base_asset: &str,
+    ) -> Result<Vec<MetaInstrument>, MDDBClientError> {
         todo!()
     }
 
     async fn get_all_instruments_for_quote_asset(
         &self,
-        request: Request<GetAllInstrumentsForQuoteAssetRequest>,
-    ) -> Result<Response<GetAllInstrumentsForQuoteAssetResponse>, Status> {
+        quote_asset: &str,
+    ) -> Result<Vec<MetaInstrument>, MDDBClientError> {
         todo!()
     }
 
     async fn get_all_instruments_for_exchange(
         &self,
-        request: Request<GetAllInstrumentsForExchangeRequest>,
-    ) -> Result<Response<GetAllInstrumentsForExchangeResponse>, Status> {
+        exchange_code: &str,
+    ) -> Result<Vec<MetaInstrument>, MDDBClientError> {
         todo!()
     }
 
     async fn get_all_instruments_for_base_asset_and_exchange(
         &self,
-        request: Request<GetAllInstrumentsForBaseAssetAndExchangeRequest>,
-    ) -> Result<Response<GetAllInstrumentsForBaseAssetAndExchangeResponse>, Status> {
+        exchange_code: &str,
+        base_asset: &str,
+    ) -> Result<Vec<MetaInstrument>, MDDBClientError> {
         todo!()
     }
 
     async fn get_all_instruments_for_quote_asset_and_exchange(
         &self,
-        request: Request<GetAllInstrumentsForQuoteAssetAndExchangeRequest>,
-    ) -> Result<Response<GetAllInstrumentsForQuoteAssetAndExchangeResponse>, Status> {
+        exchange_code: &str,
+        quote_asset: &str,
+    ) -> Result<Vec<MetaInstrument>, MDDBClientError> {
         todo!()
     }
 
     async fn get_all_instruments_for_base_quote_asset_and_exchange(
         &self,
-        request: Request<GetAllInstrumentsForBaseQuoteAssetAndExchangeRequest>,
-    ) -> Result<Response<GetAllInstrumentsForBaseQuoteAssetAndExchangeResponse>, Status> {
+        exchange_code: &str,
+        base_asset: &str,
+        quote_asset: &str,
+    ) -> Result<Vec<MetaInstrument>, MDDBClientError> {
         todo!()
     }
 
     async fn lookup_instrument_exchange_pair_code_name(
         &self,
-        request: Request<LookupInstrumentExchangePairCodeRequest>,
-    ) -> Result<Response<LookupInstrumentExchangePairCodeRequest>, Status> {
+        instrument_id: &str,
+    ) -> Result<String, MDDBClientError> {
         todo!()
     }
 
     async fn lookup_instrument_figi(
         &self,
-        request: Request<LookupInstrumentFigiRequest>,
-    ) -> Result<Response<LookupInstrumentFigiResponse>, Status> {
+        instrument_id: &str,
+    ) -> Result<Option<String>, MDDBClientError> {
         todo!()
     }
 }
