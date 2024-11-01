@@ -1,1 +1,1 @@
-//alias:pg_import_metadata
+//alias/service:dbgw

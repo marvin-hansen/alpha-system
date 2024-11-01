@@ -1,9 +1,4 @@
-use proto_mddb_utils::mddb_exchanges_utils::{
-    get_all_exchanges_request, get_all_exchanges_response, get_check_if_exchange_exists_request,
-    get_check_if_exchange_exists_response, get_count_exchanges_response, get_exchange_request,
-    get_exchange_response, get_lookup_exchange_name_request, meta_exchange_to_proto_exchange,
-    proto_exchange_to_meta_exchange,
-};
+use proto_mddb_utils::mddb_exchanges_utils::*;
 
 use common_metadata::prelude::MetaExchange;
 use proto_mddb::proto::ProtoMetaExchange;

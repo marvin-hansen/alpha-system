@@ -62,6 +62,14 @@ pub fn get_all_exchanges_response(
     }
 }
 
+pub fn get_lookup_exchange_name_response(
+    exchange_name: &str,
+) -> proto_mddb::proto::LookupExchangeNameResponse {
+    proto_mddb::proto::LookupExchangeNameResponse {
+        exchange_name: exchange_name.to_string(),
+    }
+}
+
 pub fn meta_exchange_to_proto_exchange(
     meta_exchange: &MetaExchange,
 ) -> proto_mddb::proto::ProtoMetaExchange {

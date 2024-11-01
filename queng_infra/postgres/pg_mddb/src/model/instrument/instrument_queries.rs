@@ -21,7 +21,7 @@ impl Instrument {
     ///
     /// A Result containing either Some(MetaInstrument) if the instrument is found, or None if not found.
 
-    pub fn query_instruments_by_code(
+    pub fn read_instruments_by_code(
         conn: &mut Connection,
         param_instrument_code: &str,
     ) -> Result<Option<MetaInstrument>, diesel::result::Error> {
@@ -47,7 +47,7 @@ impl Instrument {
     ///
     /// An optional `MetaInstrument` if found, else `None`.
     ///
-    pub fn query_instruments_by_figi(
+    pub fn read_instrument_by_figi(
         conn: &mut Connection,
         param_instrument_pair_figi: &str,
     ) -> Result<Option<MetaInstrument>, diesel::result::Error> {
@@ -73,7 +73,7 @@ impl Instrument {
     /// A `Result` containing a vector of `MetaInstrument` objects if successful,
     /// or a `diesel::result::Error` if an error occurs during the query.
     ///
-    pub fn query_all_instruments_for_exchange(
+    pub fn read_all_instruments_for_exchange(
         conn: &mut Connection,
         param_exchange_code: &str,
     ) -> Result<Vec<MetaInstrument>, diesel::result::Error> {
@@ -97,7 +97,7 @@ impl Instrument {
     ///
     /// # Returns
     /// A Result containing a vector of MetaInstrument if the query is successful, otherwise a diesel::result::Error.
-    pub fn query_all_instruments_for_base_asset(
+    pub fn read_all_instruments_for_base_asset(
         conn: &mut Connection,
         param_base_asset: &str,
     ) -> Result<Vec<MetaInstrument>, diesel::result::Error> {
@@ -121,7 +121,7 @@ impl Instrument {
     ///
     /// # Returns
     /// A Result containing a vector of MetaInstrument if the query is successful, otherwise a diesel::result::Error.
-    pub fn query_all_instruments_for_quote_asset(
+    pub fn read_all_instruments_for_quote_asset(
         conn: &mut Connection,
         param_quote_asset: &str,
     ) -> Result<Vec<MetaInstrument>, diesel::result::Error> {
@@ -146,7 +146,7 @@ impl Instrument {
     ///
     /// # Returns
     /// A Result containing a vector of MetaInstrument if the query is successful, otherwise a diesel::result::Error.
-    pub fn query_all_instruments_for_base_asset_on_exchange(
+    pub fn read_all_instruments_for_base_asset_on_exchange(
         conn: &mut Connection,
         param_base_asset: &str,
         param_exchange_code: &str,
@@ -175,7 +175,7 @@ impl Instrument {
     ///
     /// A Result containing a vector of MetaInstrument if the query is successful,
     /// otherwise a diesel::result::Error.
-    pub fn query_all_instruments_for_quote_asset_on_exchange(
+    pub fn read_all_instruments_for_quote_asset_on_exchange(
         conn: &mut Connection,
         param_quote_asset: &str,
         param_exchange_code: &str,
@@ -203,7 +203,7 @@ impl Instrument {
     ///
     /// # Returns
     /// A Result containing a vector of MetaInstrument if successful, or a diesel::result::Error if an error occurs.
-    pub fn query_all_instruments_for_base_quote_asset_on_exchange(
+    pub fn read_all_instruments_for_base_quote_asset_on_exchange(
         conn: &mut Connection,
         param_base_asset: &str,
         param_quote_asset: &str,

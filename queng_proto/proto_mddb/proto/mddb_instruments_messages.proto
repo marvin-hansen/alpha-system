@@ -117,7 +117,7 @@ message GetAllInstrumentsForBaseQuoteAssetAndExchangeResponse {
   repeated ProtoMetaInstrument instruments = 1;
 }
 
-message LookupInstrumentExchangePairCodeNameResponse {
+message LookupInstrumentExchangePairCodeResponse {
   string instrument_exchange_pair_code = 1;
 }
 

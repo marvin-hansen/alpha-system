@@ -1,7 +1,7 @@
 use common_metadata::prelude::{AssetMetadata, MetaAsset};
 use proto_mddb::proto::{
     CheckIfAssetIdExistsRequest, CheckIfAssetIdExistsResponse, CountAssetsRequest,
-    GetAllAssetsRequest, GetAssetRequest, ProtoMetaAsset,
+    CountAssetsResponse, GetAllAssetsRequest, GetAssetRequest, ProtoMetaAsset,
 };
 use proto_mddb_utils::mddb_assets_utils::*;
 
@@ -45,7 +45,7 @@ fn test_get_all_assets_request() {
 fn test_get_count_assets_response() {
     let count = 42;
     let response = get_count_assets_response(count);
-    assert_eq!(response, "Count: 42");
+    assert_eq!(response, CountAssetsResponse { count });
 }
 
 #[test]

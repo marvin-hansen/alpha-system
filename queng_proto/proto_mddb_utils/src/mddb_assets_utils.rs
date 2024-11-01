@@ -1,7 +1,8 @@
 use common_metadata::prelude::{AssetMetadata, MetaAsset};
 use proto_mddb::proto::{
     CheckIfAssetIdExistsRequest, CheckIfAssetIdExistsResponse, CountAssetsRequest,
-    GetAllAssetsRequest, GetAllAssetsResponse, GetAssetRequest, GetAssetResponse,
+    CountAssetsResponse, GetAllAssetsRequest, GetAllAssetsResponse, GetAssetRequest,
+    GetAssetResponse,
 };
 
 // Asset Request
@@ -26,8 +27,8 @@ pub fn get_all_assets_request() -> GetAllAssetsRequest {
 }
 
 // Asset Response
-pub fn get_count_assets_response(count: u64) -> String {
-    format!("Count: {}", count)
+pub fn get_count_assets_response(count: u64) -> CountAssetsResponse {
+    CountAssetsResponse { count }
 }
 
 pub fn get_check_if_asset_exists_response(

@@ -229,17 +229,40 @@ pub fn get_all_instruments_for_base_quote_asset_and_exchange_response(
 }
 
 pub fn get_lookup_instrument_exchange_pair_code_response(
-    instrument_exchange_pair_code: &str,
-) -> proto_mddb::proto::LookupInstrumentExchangePairCodeNameResponse {
-    proto_mddb::proto::LookupInstrumentExchangePairCodeNameResponse {
-        instrument_exchange_pair_code: instrument_exchange_pair_code.to_string(),
+    instrument_exchange_pair_code: String,
+) -> proto_mddb::proto::LookupInstrumentExchangePairCodeResponse {
+    proto_mddb::proto::LookupInstrumentExchangePairCodeResponse {
+        instrument_exchange_pair_code,
     }
 }
 
 pub fn get_lookup_instrument_figi_response(
-    instrument_figi: Option<String>,
-    instrument_pair_figi: Option<String>,
+    instrument_metadata: Option<InstrumentMetadata>,
 ) -> proto_mddb::proto::LookupInstrumentFigiResponse {
+    let instrument_pair_figi = if instrument_metadata.is_some() {
+        Some(
+            instrument_metadata
+                .clone()
+                .unwrap()
+                .pair_figi
+                .unwrap_or_default(),
+        )
+    } else {
+        None
+    };
+
+    let instrument_figi = if instrument_metadata.is_some() {
+        Some(
+            instrument_metadata
+                .clone()
+                .unwrap()
+                .instrument_figi
+                .unwrap_or_default(),
+        )
+    } else {
+        None
+    };
+
     proto_mddb::proto::LookupInstrumentFigiResponse {
         instrument_pair_figi,
         instrument_figi,
