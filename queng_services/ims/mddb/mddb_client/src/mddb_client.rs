@@ -47,15 +47,10 @@ impl MDDBClient {
         let request = assets_utils::get_asset_request(asset_id);
 
         match client.get_asset(request).await {
-            Ok(res) => {
-                let asset = if let Some(asset) = res.into_inner().asset {
-                    Some(assets_utils::proto_asset_to_meta_asset(&asset))
-                } else {
-                    None
-                };
-
-                Ok(asset)
-            }
+            Ok(res) => Ok(res
+                .into_inner()
+                .asset
+                .map(|asset| assets_utils::proto_asset_to_meta_asset(&asset))),
             Err(e) => Err(MDDBClientError(e.to_string())),
         }
     }
