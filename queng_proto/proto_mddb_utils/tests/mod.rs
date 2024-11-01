@@ -1,1 +1,5 @@
-mod request_utils_proto_tests;
+mod mddb_assets_utils_tests;
+
+mod mddb_exchanges_utils_tests;
+
+mod mddb_instruments_utils_tests;

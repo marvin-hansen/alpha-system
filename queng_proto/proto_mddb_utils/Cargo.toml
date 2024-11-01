@@ -9,6 +9,6 @@ authors.workspace = true
 
 [dependencies]
 # Internal dependencies
-common_exchange = { workspace = true }
+common_metadata = { workspace = true }
 proto_mddb = { workspace = true }
 # External dependencies
