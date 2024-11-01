@@ -7,7 +7,7 @@ message ProtoMetaAsset {
   string asset_class = 3;
   repeated string asset_classes = 4;
   optional string asset_figi = 5;
-  int32 protocol = 6;
+  string asset_hash = 6;
 }
 
 // Asset Request

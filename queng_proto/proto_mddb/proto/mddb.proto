@@ -64,5 +64,4 @@ service DBGatewayMDDBService {
   rpc GetAllInstrumentsForBaseQuoteAssetAndExchange(GetAllInstrumentsForBaseQuoteAssetAndExchangeRequest) returns (GetAllInstrumentsForBaseQuoteAssetAndExchangeResponse){}
   rpc LookupInstrumentExchangePairCodeName(LookupInstrumentExchangePairCodeNameRequest) returns (LookupInstrumentExchangePairCodeNameResponse){}
   rpc LookupInstrumentFigi(LookupInstrumentFigiRequest) returns (LookupInstrumentFigiResponse){}
-
 }

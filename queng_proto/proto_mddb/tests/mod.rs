@@ -1,1 +1,3 @@
-mod proto_mddb_tests;
+mod proto_mddb_assets_tests;
+mod proto_mddb_exchanges_tests;
+mod proto_mddb_instruments_tests;
