@@ -26,7 +26,7 @@ fn test_get_check_if_asset_exists_request() {
 #[test]
 fn test_get_assets_request() {
     let asset_id = "test_asset_id";
-    let request = get_assets_request(asset_id);
+    let request = get_asset_request(asset_id);
     assert_eq!(
         request,
         GetAssetRequest {

@@ -1,5 +1,5 @@
 mod error;
-mod workflow;
+mod mddb_client;
 
 use common_config::prelude::HostEndpoint;
 use proto_mddb::proto::mddb_service_client::MddbServiceClient;
@@ -12,11 +12,11 @@ use tonic::transport::{Channel, Uri};
 /// lookup symbols, symbol IDs, and exchange names.
 ///
 #[derive(Debug, Clone)]
-pub struct MDMClient {
+pub struct MDDBClient {
     client: MddbServiceClient<Channel>,
 }
 
-impl MDMClient {
+impl MDDBClient {
     /// Creates a new SymdbClient instance.
     ///
     /// # Arguments

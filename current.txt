@@ -1,1 +1,1 @@
-//alias/service:mddb
+//alias/client:mddb_client

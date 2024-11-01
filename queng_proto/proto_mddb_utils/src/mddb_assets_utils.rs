@@ -16,7 +16,7 @@ pub fn get_check_if_asset_exists_request(asset_id: &str) -> CheckIfAssetIdExists
     }
 }
 
-pub fn get_assets_request(asset_id: &str) -> GetAssetRequest {
+pub fn get_asset_request(asset_id: &str) -> GetAssetRequest {
     GetAssetRequest {
         asset_id: asset_id.to_string(),
     }

@@ -3,12 +3,12 @@ use std::fmt;
 use std::fmt::Display;
 
 #[derive(Debug)]
-pub struct SymdbClientError(pub String);
+pub struct MDDBClientError(pub String);
 
-impl Error for SymdbClientError {}
+impl Error for MDDBClientError {}
 
-impl Display for SymdbClientError {
+impl Display for MDDBClientError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "SymdbClientError: {}", self.0)
+        write!(f, "MDDBClientError: {}", self.0)
     }
 }
