@@ -406,20 +406,21 @@ impl DbGatewayMddbService for MDDBServer {
         }
     }
 
-    async fn lookup_instrument_exchange_pair_code_name(
+    async fn lookup_instrument_exchange_pair_code(
         &self,
         request: Request<LookupInstrumentExchangePairCodeRequest>,
     ) -> Result<Response<LookupInstrumentExchangePairCodeResponse>, Status> {
-        self.dbg_print("lookup_instrument_exchange_pair_code_name");
+        self.dbg_print("lookup_instrument_exchange_pair_code");
 
-        let instrument_id = request.into_inner().instrument_id;
+        let req = request.into_inner();
         let dbm = self.dbm.read().await;
-        let res = dbm.read_instrument(&instrument_id).await;
+
+        let res = dbm.read_instrument(&req.instrument_id).await;
 
         match res {
-            Ok(instrument) => Ok(Response::new(
+            Ok(instruments) => Ok(Response::new(
                 instrument_utils::get_lookup_instrument_exchange_pair_code_response(
-                    instrument.exchange_pair_code,
+                    instruments.exchange_code,
                 ),
             )),
             Err(e) => Err(Status::internal(e.to_string())),

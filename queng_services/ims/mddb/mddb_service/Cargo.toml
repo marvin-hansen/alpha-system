@@ -29,3 +29,4 @@ smdb_client = {workspace = true}
 # External crates
 tokio = { workspace = true }
 tonic = { workspace = true }
+tonic-health  = { workspace = true }

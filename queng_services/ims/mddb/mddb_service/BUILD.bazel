@@ -28,6 +28,7 @@ build_binary_opt(
         # External crates
         "//thirdparty/crates:tokio",
         "//thirdparty/crates:tonic",
+        "//thirdparty/crates:tonic-health",
     ],
 )
 
