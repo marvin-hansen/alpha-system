@@ -1,0 +1,46 @@
+syntax = "proto3";
+package proto;
+
+message ProtoMetaAsset {
+  string asset_code = 1;
+  string asset_name = 2;
+  string asset_class = 3;
+  repeated string asset_classes = 4;
+  optional string asset_figi = 5;
+  int32 protocol = 6;
+}
+
+// Asset Request
+
+message CountAssetsRequest {}
+
+message CheckIfAssetIdExistsRequest {
+  string asset_id = 1;
+}
+
+message GetAssetRequest {
+  string asset_id = 1;
+}
+
+message GetAllAssetsRequest {}
+
+// Asset Response
+
+message CountAssetsResponse {
+  uint64 count = 1;
+}
+
+message CheckIfAssetIdExistsResponse {
+  string asset_id = 1;
+  bool exists = 2;
+}
+
+message GetAssetResponse {
+  string asset_id = 1;
+  ProtoMetaAsset asset = 2;
+}
+
+message GetAllAssetsResponse {
+  repeated ProtoMetaAsset assets = 1;
+}
+

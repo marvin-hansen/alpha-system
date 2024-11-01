@@ -1,16 +1,68 @@
 syntax = "proto3";
 package proto;
 
-import "mddb_messages.proto";
+import "mddb_assets_messages.proto";
+import "mddb_exchanges_messages.proto";
+import "mddb_instruments_messages.proto";
 
-service MDMService {
+service MDDBService {
+  //  MetaAsset service endpoints
+  rpc CountAssets(CountAssetsRequest) returns (CountAssetsResponse){}
+  rpc CheckIfAssetIdExists(CheckIfAssetIdExistsRequest) returns (CheckIfAssetIdExistsResponse){}
+  rpc GetAsset(GetAssetRequest) returns (GetAssetResponse){}
+  rpc GetAllAssets(GetAllAssetsRequest) returns (GetAllAssetsResponse){}
+
+  // MetaExchange service endpoints
+  rpc CountExchanges(CountExchangesRequest) returns (CountExchangesResponse){}
+  rpc CheckIfExchangeIdExists(CheckIfExchangeIdExistsRequest) returns (CheckIfExchangeIdExistsResponse){}
+  rpc GetExchange(GetExchangeRequest) returns (GetExchangeResponse){}
+  rpc GetAllExchanges(GetAllExchangesRequest) returns (GetAllExchangesResponse){}
   rpc LookupExchangeName(LookupExchangeNameRequest) returns (LookupExchangeNameResponse){}
-  rpc LookupSymbol(LookupSymbolRequest) returns (LookupSymbolResponse){}
-  rpc LookupSymbolID(LookupSymbolIDRequest) returns (LookupSymbolIDResponse){}
+
+  // MetaInstrument service endpoints
+  rpc CountInstruments(CountInstrumentsRequest) returns (CountInstrumentsResponse){}
+  rpc CheckIfInstrumentIdExists(CheckIfInstrumentIdExistsRequest) returns (CheckIfInstrumentIdExistsResponse){}
+  rpc GetInstrument(GetInstrumentRequest) returns (GetInstrumentResponse){}
+  rpc GetInstrumentByFigi(GetInstrumentByFigiRequest) returns (GetInstrumentResponse){}
+  rpc GetAllInstruments(GetAllInstrumentsRequest) returns (GetAllInstrumentsResponse){}
+  rpc GetAllInstrumentsForBaseAsset(GetAllInstrumentsForBaseAssetRequest) returns (GetAllInstrumentsForBaseAssetResponse){}
+  rpc GetAllInstrumentsForQuoteAsset(GetAllInstrumentsForQuoteAssetRequest) returns (GetAllInstrumentsForQuoteAssetResponse){}
+  rpc GetAllInstrumentsForExchange(GetAllInstrumentsForExchangeRequest) returns (GetAllInstrumentsForExchangeResponse){}
+  rpc GetAllInstrumentsForBaseAssetAndExchange(GetAllInstrumentsForBaseAssetAndExchangeRequest) returns (GetAllInstrumentsForBaseAssetAndExchangeResponse){}
+  rpc GetAllInstrumentsForQuoteAssetAndExchange(GetAllInstrumentsForQuoteAssetAndExchangeRequest) returns (GetAllInstrumentsForQuoteAssetAndExchangeResponse){}
+  rpc GetAllInstrumentsForBaseQuoteAssetAndExchange(GetAllInstrumentsForBaseQuoteAssetAndExchangeRequest) returns (GetAllInstrumentsForBaseQuoteAssetAndExchangeResponse){}
+  rpc LookupInstrumentExchangePairCodeName(LookupInstrumentExchangePairCodeNameRequest) returns (LookupInstrumentExchangePairCodeNameResponse){}
+  rpc LookupInstrumentFigi(LookupInstrumentFigiRequest) returns (LookupInstrumentFigiResponse){}
 }
 
-service DBGatewayMDMService {
+service DBGatewayMDDBService {
+
+  //  MetaAsset service endpoints
+  rpc CountAssets(CountAssetsRequest) returns (CountAssetsResponse){}
+  rpc CheckIfAssetIdExists(CheckIfAssetIdExistsRequest) returns (CheckIfAssetIdExistsResponse){}
+  rpc GetAsset(GetAssetRequest) returns (GetAssetResponse){}
+  rpc GetAllAssets(GetAllAssetsRequest) returns (GetAllAssetsResponse){}
+
+  // MetaExchange service endpoints
+  rpc CountExchanges(CountExchangesRequest) returns (CountExchangesResponse){}
+  rpc CheckIfExchangeIdExists(CheckIfExchangeIdExistsRequest) returns (CheckIfExchangeIdExistsResponse){}
+  rpc GetExchange(GetExchangeRequest) returns (GetExchangeResponse){}
+  rpc GetAllExchanges(GetAllExchangesRequest) returns (GetAllExchangesResponse){}
   rpc LookupExchangeName(LookupExchangeNameRequest) returns (LookupExchangeNameResponse){}
-  rpc LookupSymbol(LookupSymbolRequest) returns (LookupSymbolResponse){}
-  rpc LookupSymbolID(LookupSymbolIDRequest) returns (LookupSymbolIDResponse){}
+
+  // MetaInstrument service endpoints
+  rpc CountInstruments(CountInstrumentsRequest) returns (CountInstrumentsResponse){}
+  rpc CheckIfInstrumentIdExists(CheckIfInstrumentIdExistsRequest) returns (CheckIfInstrumentIdExistsResponse){}
+  rpc GetInstrument(GetInstrumentRequest) returns (GetInstrumentResponse){}
+  rpc GetInstrumentByFigi(GetInstrumentByFigiRequest) returns (GetInstrumentResponse){}
+  rpc GetAllInstruments(GetAllInstrumentsRequest) returns (GetAllInstrumentsResponse){}
+  rpc GetAllInstrumentsForBaseAsset(GetAllInstrumentsForBaseAssetRequest) returns (GetAllInstrumentsForBaseAssetResponse){}
+  rpc GetAllInstrumentsForQuoteAsset(GetAllInstrumentsForQuoteAssetRequest) returns (GetAllInstrumentsForQuoteAssetResponse){}
+  rpc GetAllInstrumentsForExchange(GetAllInstrumentsForExchangeRequest) returns (GetAllInstrumentsForExchangeResponse){}
+  rpc GetAllInstrumentsForBaseAssetAndExchange(GetAllInstrumentsForBaseAssetAndExchangeRequest) returns (GetAllInstrumentsForBaseAssetAndExchangeResponse){}
+  rpc GetAllInstrumentsForQuoteAssetAndExchange(GetAllInstrumentsForQuoteAssetAndExchangeRequest) returns (GetAllInstrumentsForQuoteAssetAndExchangeResponse){}
+  rpc GetAllInstrumentsForBaseQuoteAssetAndExchange(GetAllInstrumentsForBaseQuoteAssetAndExchangeRequest) returns (GetAllInstrumentsForBaseQuoteAssetAndExchangeResponse){}
+  rpc LookupInstrumentExchangePairCodeName(LookupInstrumentExchangePairCodeNameRequest) returns (LookupInstrumentExchangePairCodeNameResponse){}
+  rpc LookupInstrumentFigi(LookupInstrumentFigiRequest) returns (LookupInstrumentFigiResponse){}
+
 }

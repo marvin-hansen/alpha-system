@@ -2,7 +2,7 @@ mod error;
 mod workflow;
 
 use common_config::prelude::HostEndpoint;
-use proto_mddb::proto::mdm_service_client::MdmServiceClient;
+use proto_mddb::proto::mddb_service_client::MddbServiceClient;
 use std::fmt::Error;
 use tonic::transport::{Channel, Uri};
 
@@ -13,7 +13,7 @@ use tonic::transport::{Channel, Uri};
 ///
 #[derive(Debug, Clone)]
 pub struct MDMClient {
-    client: MdmServiceClient<Channel>,
+    client: MddbServiceClient<Channel>,
 }
 
 impl MDMClient {
@@ -45,7 +45,7 @@ impl MDMClient {
             .await
             .unwrap_or_else(|_| panic!("\r\n ❌[SymdbClient]: Failed to connect to SYMDB service on: {} \r\n  \r\n Detail: \r\n", s));
 
-        let client = MdmServiceClient::new(channel);
+        let client = MddbServiceClient::new(channel);
 
         Ok(Self { client })
     }

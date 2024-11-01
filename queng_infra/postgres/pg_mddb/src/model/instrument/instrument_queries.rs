@@ -164,6 +164,35 @@ impl Instrument {
         }
     }
 
+    /// Queries all instruments for a specific quote asset on a particular exchange.
+    ///
+    /// # Arguments
+    /// - `conn`: A mutable reference to the database connection.
+    /// - `param_quote_asset`: The quote asset to filter the instruments by.
+    /// - `param_exchange_code`: The exchange code to filter the instruments by.
+    ///
+    /// # Returns
+    ///
+    /// A Result containing a vector of MetaInstrument if the query is successful,
+    /// otherwise a diesel::result::Error.
+    pub fn query_all_instruments_for_quote_asset_on_exchange(
+        conn: &mut Connection,
+        param_quote_asset: &str,
+        param_exchange_code: &str,
+    ) -> Result<Vec<MetaInstrument>, diesel::result::Error> {
+        match instruments_table::table()
+            .filter(instrument_quote_asset.eq(param_quote_asset))
+            .filter(instrument_exchanges_code.eq(param_exchange_code))
+            .load::<Instrument>(conn)
+        {
+            Ok(res) => {
+                // Convert the Vec<Instrument> into Vec<MetaInstrument>
+                Ok(res.iter().map(|i| i.to_meta_instrument()).collect())
+            }
+            Err(e) => Err(e),
+        }
+    }
+
     /// Queries all instruments for a specific base asset, quote asset, and exchange code.
     ///
     /// # Arguments

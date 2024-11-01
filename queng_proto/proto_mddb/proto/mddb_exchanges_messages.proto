@@ -1,0 +1,51 @@
+syntax = "proto3";
+package proto;
+
+message ProtoMetaExchange {
+  string exchange_code = 1;
+  string exchange_name = 2;
+  string exchange_hash = 3;
+}
+
+// Request
+//
+message CountExchangesRequest {}
+
+message CheckIfExchangeIdExistsRequest{
+  string exchange_code = 1;
+}
+
+message GetExchangeRequest {
+  string exchange_code = 1;
+}
+
+message GetAllExchangesRequest {}
+
+message LookupExchangeNameRequest {
+  string exchange_code = 1;
+}
+
+
+// Response
+//
+message CountExchangesResponse {
+  uint64 count = 1;
+}
+
+message CheckIfExchangeIdExistsResponse {
+  string exchange_code = 1;
+  bool exists = 2;
+}
+
+message GetExchangeResponse {
+  ProtoMetaExchange exchange = 1;
+}
+
+
+message GetAllExchangesResponse {
+  repeated ProtoMetaExchange exchanges = 1;
+}
+
+message LookupExchangeNameResponse {
+  string exchange_name = 1;
+}

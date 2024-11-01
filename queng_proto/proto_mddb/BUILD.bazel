@@ -6,7 +6,9 @@ proto_library(
     name = "proto_mddb",
     srcs = [
         "proto/mddb.proto",
-        "proto/mddb_messages.proto",
+        "proto/mddb_assets_messages.proto",
+        "proto/mddb_exchanges_messages.proto",
+        "proto/mddb_instruments_messages.proto",
     ],
     # strip_import_prefix ensures compatibility with Cargo / Prost proto imports
     # https://bazel.build/reference/be/protocol-buffer

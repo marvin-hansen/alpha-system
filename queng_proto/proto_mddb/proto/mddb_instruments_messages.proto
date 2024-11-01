@@ -1,0 +1,127 @@
+syntax = "proto3";
+package proto;
+
+message ProtoMetaInstrument {
+  string instrument_id = 1;
+  string instrument_code = 2;
+  string instrument_hash = 3;
+  string instrument_class = 4;
+  string instrument_base_asset = 5;
+  string instrument_quote_asset = 6;
+  string instrument_exchanges_code = 7;
+  string instrument_exchange_pair_code = 8;
+  optional string instrument_pair_figi = 9;
+  optional string instrument_figi = 10;
+  optional int64 instrument_trade_start_timestamp = 11;
+  optional int64 instrument_trade_end_timestamp = 12;
+}
+
+
+// Request
+message CountInstrumentsRequest {}
+
+message CheckIfInstrumentIdExistsRequest {
+  string instrument_id = 1;
+}
+
+message GetInstrumentRequest {
+  string instrument_id = 1;
+}
+
+message GetInstrumentByFigiRequest {
+  string instrument_figi = 1;
+}
+
+message GetAllInstrumentsRequest {}
+
+message GetAllInstrumentsForBaseAssetRequest {
+  string base_asset = 1;
+}
+
+message GetAllInstrumentsForQuoteAssetRequest {
+  string quote_asset = 1;
+}
+
+message GetAllInstrumentsForExchangeRequest {
+  string exchange_code = 1;
+}
+
+message GetAllInstrumentsForBaseAssetAndExchangeRequest {
+  string exchange_code = 1;
+  string base_asset = 2;
+}
+
+message GetAllInstrumentsForQuoteAssetAndExchangeRequest {
+  string exchange_code = 1;
+  string quote_asset = 2;
+}
+
+message GetAllInstrumentsForBaseQuoteAssetAndExchangeRequest {
+  string exchange_code = 1;
+  string base_asset = 2;
+  string quote_asset = 3;
+}
+
+message LookupInstrumentExchangePairCodeNameRequest {
+  string instrument_id = 1;
+}
+
+message LookupInstrumentFigiRequest {
+  string instrument_id = 1;
+}
+
+// Response
+
+message CountInstrumentsResponse {
+  uint64 count = 1;
+}
+
+message CheckIfInstrumentIdExistsResponse {
+  string instrument_id = 1;
+  bool exists = 2;
+}
+
+message GetInstrumentResponse {
+  ProtoMetaInstrument instrument = 1;
+}
+
+message GetInstrumentByFigiResponse {
+  ProtoMetaInstrument instrument = 1;
+}
+
+message GetAllInstrumentsResponse {
+  repeated ProtoMetaInstrument instruments = 1;
+}
+
+message GetAllInstrumentsForBaseAssetResponse {
+  repeated ProtoMetaInstrument instruments = 1;
+}
+
+message GetAllInstrumentsForQuoteAssetResponse {
+  repeated ProtoMetaInstrument instruments = 1;
+}
+
+message GetAllInstrumentsForExchangeResponse {
+  repeated ProtoMetaInstrument instruments = 1;
+}
+
+message GetAllInstrumentsForBaseAssetAndExchangeResponse {
+  repeated ProtoMetaInstrument instruments = 1;
+}
+
+message GetAllInstrumentsForQuoteAssetAndExchangeResponse {
+  repeated ProtoMetaInstrument instruments = 1;
+}
+
+message GetAllInstrumentsForBaseQuoteAssetAndExchangeResponse {
+  repeated ProtoMetaInstrument instruments = 1;
+}
+
+message LookupInstrumentExchangePairCodeNameResponse {
+  string exchange_pair_code = 1;
+}
+
+message LookupInstrumentFigiResponse {
+  optional string instrument_pair_figi = 1;
+  optional string  instrument_figi = 2;
+}
