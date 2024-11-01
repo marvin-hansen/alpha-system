@@ -24,7 +24,7 @@ message CheckIfInstrumentIdExistsRequest {
   string instrument_id = 1;
 }
 
-message GetInstrumentRequest {
+message GetInstrumentByIdRequest {
   string instrument_id = 1;
 }
 
@@ -62,7 +62,7 @@ message GetAllInstrumentsForBaseQuoteAssetAndExchangeRequest {
   string quote_asset = 3;
 }
 
-message LookupInstrumentExchangePairCodeNameRequest {
+message LookupInstrumentExchangePairCodeRequest {
   string instrument_id = 1;
 }
 
@@ -81,7 +81,7 @@ message CheckIfInstrumentIdExistsResponse {
   bool exists = 2;
 }
 
-message GetInstrumentResponse {
+message GetInstrumentByIdResponse {
   ProtoMetaInstrument instrument = 1;
 }
 
@@ -118,7 +118,7 @@ message GetAllInstrumentsForBaseQuoteAssetAndExchangeResponse {
 }
 
 message LookupInstrumentExchangePairCodeNameResponse {
-  string exchange_pair_code = 1;
+  string instrument_exchange_pair_code = 1;
 }
 
 message LookupInstrumentFigiResponse {

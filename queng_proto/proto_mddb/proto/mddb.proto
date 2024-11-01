@@ -22,8 +22,8 @@ service MDDBService {
   // MetaInstrument service endpoints
   rpc CountInstruments(CountInstrumentsRequest) returns (CountInstrumentsResponse){}
   rpc CheckIfInstrumentIdExists(CheckIfInstrumentIdExistsRequest) returns (CheckIfInstrumentIdExistsResponse){}
-  rpc GetInstrument(GetInstrumentRequest) returns (GetInstrumentResponse){}
-  rpc GetInstrumentByFigi(GetInstrumentByFigiRequest) returns (GetInstrumentResponse){}
+  rpc GetInstrument(GetInstrumentByIdRequest) returns (GetInstrumentByIdResponse){}
+  rpc GetInstrumentByFigi(GetInstrumentByFigiRequest) returns (GetInstrumentByIdResponse){}
   rpc GetAllInstruments(GetAllInstrumentsRequest) returns (GetAllInstrumentsResponse){}
   rpc GetAllInstrumentsForBaseAsset(GetAllInstrumentsForBaseAssetRequest) returns (GetAllInstrumentsForBaseAssetResponse){}
   rpc GetAllInstrumentsForQuoteAsset(GetAllInstrumentsForQuoteAssetRequest) returns (GetAllInstrumentsForQuoteAssetResponse){}
@@ -31,7 +31,7 @@ service MDDBService {
   rpc GetAllInstrumentsForBaseAssetAndExchange(GetAllInstrumentsForBaseAssetAndExchangeRequest) returns (GetAllInstrumentsForBaseAssetAndExchangeResponse){}
   rpc GetAllInstrumentsForQuoteAssetAndExchange(GetAllInstrumentsForQuoteAssetAndExchangeRequest) returns (GetAllInstrumentsForQuoteAssetAndExchangeResponse){}
   rpc GetAllInstrumentsForBaseQuoteAssetAndExchange(GetAllInstrumentsForBaseQuoteAssetAndExchangeRequest) returns (GetAllInstrumentsForBaseQuoteAssetAndExchangeResponse){}
-  rpc LookupInstrumentExchangePairCodeName(LookupInstrumentExchangePairCodeNameRequest) returns (LookupInstrumentExchangePairCodeNameResponse){}
+  rpc LookupInstrumentExchangePairCodeName(LookupInstrumentExchangePairCodeRequest) returns (LookupInstrumentExchangePairCodeRequest){}
   rpc LookupInstrumentFigi(LookupInstrumentFigiRequest) returns (LookupInstrumentFigiResponse){}
 }
 
@@ -53,8 +53,8 @@ service DBGatewayMDDBService {
   // MetaInstrument service endpoints
   rpc CountInstruments(CountInstrumentsRequest) returns (CountInstrumentsResponse){}
   rpc CheckIfInstrumentIdExists(CheckIfInstrumentIdExistsRequest) returns (CheckIfInstrumentIdExistsResponse){}
-  rpc GetInstrument(GetInstrumentRequest) returns (GetInstrumentResponse){}
-  rpc GetInstrumentByFigi(GetInstrumentByFigiRequest) returns (GetInstrumentResponse){}
+  rpc GetInstrument(GetInstrumentByIdRequest) returns (GetInstrumentByIdResponse){}
+  rpc GetInstrumentByFigi(GetInstrumentByFigiRequest) returns (GetInstrumentByIdResponse){}
   rpc GetAllInstruments(GetAllInstrumentsRequest) returns (GetAllInstrumentsResponse){}
   rpc GetAllInstrumentsForBaseAsset(GetAllInstrumentsForBaseAssetRequest) returns (GetAllInstrumentsForBaseAssetResponse){}
   rpc GetAllInstrumentsForQuoteAsset(GetAllInstrumentsForQuoteAssetRequest) returns (GetAllInstrumentsForQuoteAssetResponse){}
@@ -62,6 +62,6 @@ service DBGatewayMDDBService {
   rpc GetAllInstrumentsForBaseAssetAndExchange(GetAllInstrumentsForBaseAssetAndExchangeRequest) returns (GetAllInstrumentsForBaseAssetAndExchangeResponse){}
   rpc GetAllInstrumentsForQuoteAssetAndExchange(GetAllInstrumentsForQuoteAssetAndExchangeRequest) returns (GetAllInstrumentsForQuoteAssetAndExchangeResponse){}
   rpc GetAllInstrumentsForBaseQuoteAssetAndExchange(GetAllInstrumentsForBaseQuoteAssetAndExchangeRequest) returns (GetAllInstrumentsForBaseQuoteAssetAndExchangeResponse){}
-  rpc LookupInstrumentExchangePairCodeName(LookupInstrumentExchangePairCodeNameRequest) returns (LookupInstrumentExchangePairCodeNameResponse){}
+  rpc LookupInstrumentExchangePairCodeName(LookupInstrumentExchangePairCodeRequest) returns (LookupInstrumentExchangePairCodeRequest){}
   rpc LookupInstrumentFigi(LookupInstrumentFigiRequest) returns (LookupInstrumentFigiResponse){}
 }

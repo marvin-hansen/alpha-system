@@ -1,9 +1,45 @@
 load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 
 rust_test_suite(
-    name = "tests",
+    name = "mddb_assets_utils",
     srcs = glob([
-        "*_tests.rs",
+        "mddb_assets_utils_tests.rs",
+    ]),
+    tags = [
+        "unit-test",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate under test
+        "//alias:proto_mddb_utils",
+        # Internal crates
+        "//alias:common_metadata",
+        "//alias:proto_mddb",
+    ],
+)
+
+rust_test_suite(
+    name = "mddb_exchanges_utils",
+    srcs = glob([
+        "mddb_exchanges_utils_tests.rs",
+    ]),
+    tags = [
+        "unit-test",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate under test
+        "//alias:proto_mddb_utils",
+        # Internal crates
+        "//alias:common_metadata",
+        "//alias:proto_mddb",
+    ],
+)
+
+rust_test_suite(
+    name = "mddb_instruments_utils",
+    srcs = glob([
+        "mddb_instruments_utils_tests.rs",
     ]),
     tags = [
         "unit-test",
