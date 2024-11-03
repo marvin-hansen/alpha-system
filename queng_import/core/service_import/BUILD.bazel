@@ -1,0 +1,39 @@
+load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library")
+
+rust_library(
+    name = "service_import",
+    srcs = glob([
+        "src/**",
+    ]),
+    crate_root = "src/lib.rs",
+    tags = [
+        "kaiko",
+        "kaiko_download",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Internal crates
+        "//alias:common_config",
+        "//alias:environment_manager",
+        "//alias:pg_smdb_manager",
+        "//alias:postgres_config_manager",
+        "//alias:postgres_utils",
+        "//alias:service_specs_all",
+        # External crates
+        "//thirdparty/crates:tokio",
+    ],
+)
+
+rust_doc(
+    name = "doc",
+    crate = ":service_import",
+    tags = ["doc"],
+    visibility = ["//visibility:public"],
+)
+
+rust_doc_test(
+    name = "doc_test",
+    crate = ":service_import",
+    tags = ["doc-test"],
+    visibility = ["//visibility:public"],
+)

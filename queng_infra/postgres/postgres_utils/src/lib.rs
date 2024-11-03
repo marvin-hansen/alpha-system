@@ -15,14 +15,18 @@ pub struct PostgresUtil {
 
 impl PostgresUtil {
     pub async fn new(dsn: &str) -> Result<Self, PostgresUtilError> {
-        Self::build(false, dsn).await
+        Self::build(false, false, dsn).await
     }
 
     pub async fn with_debug(dsn: &str) -> Result<Self, PostgresUtilError> {
-        Self::build(true, dsn).await
+        Self::build(true, false, dsn).await
     }
 
-    async fn build(dbg: bool, dsn: &str) -> Result<Self, PostgresUtilError> {
+    pub async fn with_test_and_debug(dsn: &str) -> Result<Self, PostgresUtilError> {
+        Self::build(true, true, dsn).await
+    }
+
+    async fn build(dbg: bool, test: bool, dsn: &str) -> Result<Self, PostgresUtilError> {
         if dbg {
             println!("[PostgresUtil]: Debug mode enabled");
             println!("[PostgresUtil]: Connecting to Postgres database: {}", dsn);

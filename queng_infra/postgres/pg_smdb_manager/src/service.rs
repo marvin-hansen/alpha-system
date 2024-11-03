@@ -31,6 +31,29 @@ impl PostgresSMDBManager {
         }
     }
 
+    /// Imports a collection of service configurations into the database.
+    ///
+    /// # Arguments
+    ///
+    /// * `services` - A slice of `ServiceConfig` objects.
+    ///
+    /// # Errors
+    ///
+    /// Returns an `Err` variant of `PostgresUtilError` if the insertion operation fails.
+    ///
+    pub async fn insert_service_collection(
+        &self,
+        services: &[ServiceConfig],
+    ) -> Result<(), PostgresDBError> {
+        self.dbg_print("insert_service_collection");
+        let conn = &mut self.get_connection();
+
+        match service::Service::insert_service_collection(conn, services) {
+            Ok(_) => Ok(()),
+            Err(e) => Err(PostgresDBError::InsertFailed(e.to_string())),
+        }
+    }
+
     /// Returns the number of services in the database.
     ///
     /// # Returns
@@ -38,7 +61,7 @@ impl PostgresSMDBManager {
     /// * `Result<u64, PostgresDBError>` - A result indicating success or failure.
     ///    The number of services is returned as a `u64` if successful.
     ///
-    pub async fn count_services(&mut self) -> Result<u64, PostgresDBError> {
+    pub async fn count_services(&self) -> Result<u64, PostgresDBError> {
         self.dbg_print("count_services");
         let conn = &mut self.get_connection();
 

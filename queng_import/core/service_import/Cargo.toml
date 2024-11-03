@@ -1,5 +1,5 @@
 [package]
-name = "smdb_tests"
+name = "service_import"
 version = "0.1.0"
 edition.workspace = true
 rust-version.workspace = true
@@ -7,14 +7,13 @@ readme.workspace = true
 repository.workspace = true
 authors.workspace = true
 
-[lib]
-path = "src/fake_lib.rs"
-
-[dev-dependencies]
-# For testing
-container_specs_postgres = {workspace = true}
-docker_utils = {workspace = true}
+[dependencies]
+# Internal crates
+common_config  = { workspace = true }
+environment_manager = { workspace = true }
+pg_smdb_manager = { workspace = true }
 postgres_config_manager = {workspace = true}
 postgres_utils = { workspace = true }
 service_specs_all = { workspace = true }
-tokio = {workspace = true}
+# External crates
+tokio = { workspace = true }

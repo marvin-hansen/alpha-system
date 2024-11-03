@@ -83,6 +83,17 @@ alias(
 # Import
 ###############################################################################
 
+## Core import
+alias(
+    name = "config_import",
+    actual = "//queng_import/core/config_import",
+)
+
+alias(
+    name = "service_import",
+    actual = "//queng_import/core/service_import",
+)
+
 ## Kaiko import
 alias(
     name = "kaiko_client",
@@ -117,7 +128,7 @@ alias(
     visibility = ["//visibility:public"],
 )
 
-## Postgres - services import
+## Postgres import
 alias(
     name = "pg_import_services",
     actual = "//queng_import/postgres/pg_import_services",
@@ -142,9 +153,7 @@ alias(
 # Infra
 ###############################################################################
 
-#
 # Clickhouse
-#
 alias(
     name = "clickhouse_config_manager",
     actual = "//queng_infra/clickhouse/clickhouse_config_manager",
@@ -160,9 +169,7 @@ alias(
     actual = "//queng_infra/clickhouse/db_clickhouse_manager",
 )
 
-#
 # Postgres
-#
 alias(
     name = "pg_cmdb",
     actual = "//queng_infra/postgres/pg_cmdb",

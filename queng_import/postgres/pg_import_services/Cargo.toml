@@ -16,5 +16,6 @@ pg_smdb_manager = { workspace = true }
 postgres_config_manager = {workspace = true}
 postgres_utils = { workspace = true }
 service_specs_all = { workspace = true }
+service_import = { workspace = true }
 # External crates
 tokio = { workspace = true }

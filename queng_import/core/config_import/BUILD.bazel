@@ -1,0 +1,34 @@
+load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library")
+
+rust_library(
+    name = "config_import",
+    srcs = glob([
+        "src/**",
+    ]),
+    crate_root = "src/lib.rs",
+    tags = [
+        "kaiko",
+        "kaiko_download",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Internal crates
+        "//alias:environment_manager",
+        # External crates
+        "//thirdparty/crates:tokio",
+    ],
+)
+
+rust_doc(
+    name = "doc",
+    crate = ":config_import",
+    tags = ["doc"],
+    visibility = ["//visibility:public"],
+)
+
+rust_doc_test(
+    name = "doc_test",
+    crate = ":config_import",
+    tags = ["doc-test"],
+    visibility = ["//visibility:public"],
+)

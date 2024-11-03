@@ -1,4 +1,6 @@
-pub fn print_start_header() {
+use crate::DBG;
+
+pub(crate) fn print_start_header() {
     println!();
     println!("==========================================");
     println!("||  Migrating PostgresSQL Database ||",);
@@ -6,7 +8,7 @@ pub fn print_start_header() {
     println!();
 }
 
-pub fn print_already_header() {
+pub(crate) fn print_already_header() {
     println!();
     println!("==========================================");
     println!("|| Database Already Migrated ||");
@@ -14,7 +16,7 @@ pub fn print_already_header() {
     println!();
 }
 
-pub fn print_stop_header(nr_of_services: usize, schema_ok: bool) {
+pub(crate) fn print_stop_header(nr_of_services: usize, schema_ok: bool) {
     println!();
     println!("||  Migrating PostgresSQL Database  ||");
     println!("==========================================");
@@ -23,4 +25,10 @@ pub fn print_stop_header(nr_of_services: usize, schema_ok: bool) {
     println!("Migration and Data Import Complete");
     println!("==========================================");
     println!();
+}
+
+pub(crate) fn dbg_print(msg: &str) {
+    if DBG {
+        println!("[main]: {}", msg)
+    }
 }

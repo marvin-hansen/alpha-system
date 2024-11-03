@@ -53,41 +53,39 @@ pub fn build_pg_connection_pool(
         conn: &mut PgConnection,
     ) -> Result<(), Box<dyn Error + Send + Sync + 'static>>,
 ) -> Result<Pool<ConnectionManager<PgConnection>>, PostgresDBError> {
-    if test {
+    let pool = if test {
         if dbg {
             println!("Build test connection pool",);
         }
-        let pool = Pool::builder()
+        Pool::builder()
             .test_on_check_out(true)
             .max_size(1)
             .connection_customizer(Box::new(TestConnectionCustomizer))
             .build(ConnectionManager::<PgConnection>::new(url))
-            .expect("Failed to create PG pool with test transaction");
-
-        // For tests, we most likely have a blank DB thus run migration first.
-        if dbg {
-            println!("Run DB Migration",);
-        }
-
-        match migration_fun(&mut pool.get().expect("Failed to get connection from pool")) {
-            Ok(_) => {}
-            Err(e) => {
-                return Err(PostgresDBError::MigrationFailed(e.to_string()));
-            }
-        }
-
-        Ok(pool)
+            .expect("Failed to create PG pool with test transaction")
     } else {
         if dbg {
             println!("Build connection pool",);
         }
 
-        Ok(Pool::builder()
+        Pool::builder()
             .test_on_check_out(true)
             .max_size(10)
             .idle_timeout(Some(Duration::from_secs(10 * 60)))
             .connection_timeout(Duration::from_secs(30))
             .build(ConnectionManager::<PgConnection>::new(url))
-            .expect("Failed to create PG connection pool"))
+            .expect("Failed to create PG connection pool")
+    };
+
+    if dbg {
+        println!("Run DB Migration",);
     }
+    match migration_fun(&mut pool.get().expect("Failed to get connection from pool")) {
+        Ok(_) => {}
+        Err(e) => {
+            return Err(PostgresDBError::MigrationFailed(e.to_string()));
+        }
+    }
+
+    Ok(pool)
 }
