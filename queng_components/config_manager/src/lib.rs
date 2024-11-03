@@ -26,6 +26,7 @@ const DEFAULT_HOST: &str = "0.0.0.0";
 pub(crate) const DEFAULT_DNS: &str = "1.1.1.1";
 
 /// Struct that holds the configuration for a specific service.
+#[derive(Debug)]
 pub struct CfgManager {
     dbg: bool,
     /// Type of the environment (e.g., development, testing, production).

@@ -1,40 +1,45 @@
+use common_config::prelude::ServiceID;
+use container_specs_postgres::postgres_db_container_config;
+use docker_utils::prelude::DockerUtil;
+use service_utils::prelude::ServiceUtil;
 use std::time::Duration;
-
 use tokio::time::sleep;
 
-use common_config::prelude::ServiceID;
-use service_utils::prelude::ServiceUtil;
+// Somehow tests seem to be executed or sorted in alphabetical order,
+// so make sure that the setup is on top of the stack.
+#[tokio::test]
+async fn all_setup() {
+    let env = DockerUtil::with_debug().expect("Failed to get DockerUtil");
+
+    // Start or reuse a test postgres container
+    let container_config = postgres_db_container_config();
+    let result = env.get_or_start_container_config(&container_config);
+    // dbg!(&result);
+    assert!(result.is_ok());
+}
 
 #[tokio::test]
 async fn test_start_service_util() {
-    // Start the PG Docker container
-
-    // Run Service data migration to ensure SMDB fully working.
-
-    // Start the service
-    let service_id = ServiceID::DBGW;
-
     let res = ServiceUtil::with_debug().await;
+    dbg!(&res);
     assert!(res.is_ok());
     let svc_util = res.unwrap();
 
-    let result = svc_util.start_service(&service_id).await;
+    // Start DBGW service
+    let service_id = ServiceID::DBGW;
+    let result = svc_util.start_service(&service_id, 1).await;
+    dbg!(&result);
     assert!(result.is_ok());
 
-    // Start the service
+    // Start SMDB service - depends on DBGW
     let service_id = ServiceID::SMDB;
-    let result = svc_util.start_service(&service_id).await;
+    let result = svc_util.start_service(&service_id, 1).await;
     assert!(result.is_ok());
 
-    // thread 'main' panicked at queng_services/templete/grpc_service/src/lib.rs:58:13:
-    // Service dependency DBGW is unavailable; please start it
-    // note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
-    // test test_start_service_util ... FAILED
+    // Start CMDB service - depends on SMDB
+    let service_id = ServiceID::CMDB;
+    let result = svc_util.start_service(&service_id, 1).await;
+    assert!(result.is_ok());
 
-    // // Start the service
-    // let service_id = ServiceID::CMDB;
-    // let result = svc_util.start_service(&service_id).await;
-    // assert!(result.is_ok());
-
-    sleep(Duration::from_secs(1)).await;
+    sleep(Duration::from_secs(5)).await;
 }

@@ -381,6 +381,12 @@ alias(
 )
 
 alias(
+    name = "grpc_utils",
+    actual = "//queng_utils/grpc_utils",
+)
+
+
+alias(
     name = "math_utils",
     actual = "//queng_utils/math_utils",
 )

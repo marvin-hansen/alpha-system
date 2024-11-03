@@ -13,9 +13,8 @@ authors.workspace = true
 common_config = {workspace = true}
 common_env = { workspace = true }
 config_manager = { workspace = true }
-
-# External crates
+tokio = { workspace = true }
 
 [dev-dependencies]
-# External crates
-tokio = { workspace = true }
+docker_utils = {workspace = true}
+container_specs_postgres = {workspace = true}

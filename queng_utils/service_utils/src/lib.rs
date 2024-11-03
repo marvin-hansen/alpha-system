@@ -9,6 +9,7 @@ mod service;
 mod types;
 mod verify;
 
+#[derive(Debug)]
 pub struct ServiceUtil {
     dbg: bool,
     config_manager: CfgManager,

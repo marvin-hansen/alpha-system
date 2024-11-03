@@ -8,8 +8,7 @@ rust_test_suite(
     # The Kaiko API Proxy used for testing doesn't need Docker,
     # hence no VM config needed for this integration test.
     tags = [
-        # "integration_test",
-        #"service_utils_test",
+        "integration_test",
     ],
     visibility = ["//visibility:public"],
     deps = [
@@ -17,6 +16,8 @@ rust_test_suite(
         "//alias:service_utils",
         # Internal crates
         "//alias:common_config",
+        "//alias:docker_utils",
+        "//alias:container_specs_postgres",
         # External crates
         "//thirdparty/crates:tokio",
     ],

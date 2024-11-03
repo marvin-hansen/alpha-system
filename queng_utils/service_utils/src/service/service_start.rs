@@ -1,7 +1,7 @@
-use std::process::Command;
-use std::time::{Duration, Instant};
-
 use common_config::prelude::ServiceID;
+use std::process::Command;
+use std::time::Duration;
+use tokio::time::sleep;
 
 use crate::error::service_util_error::ServiceUtilError;
 use crate::fields::PATH;
@@ -17,21 +17,16 @@ impl ServiceUtil {
     /// # Returns
     ///
     /// Returns a `ServiceUtilError` if the service could not be started.
-    pub async fn start_service(&self, svc: &ServiceID) -> Result<(), ServiceUtilError> {
+    pub async fn start_service(&self, svc: &ServiceID, secs: u64) -> Result<(), ServiceUtilError> {
         self.dbg_print("start_service");
         self.dbg_print(&format!(
             "Starting service: {}",
             svc.to_string().to_lowercase()
         ));
 
-        let program = format!("{}/{}", PATH, svc.to_string().to_lowercase());
-        let health_url = match self.config_manager.get_health_check_url(svc).await {
-            Ok(uri) => uri,
-            Err(e) => return Err(ServiceUtilError::UnknownError(e.to_string())),
-        };
-        self.dbg_print(&health_url);
-
         self.dbg_print("Setting program to executable");
+        let program = format!("{}/{}", PATH, svc.to_string().to_lowercase());
+
         let mut cmd = Command::new("chmod");
         cmd.arg("+x").arg(program.clone());
         cmd.output().expect("Failed to set program to executable");
@@ -48,56 +43,10 @@ impl ServiceUtil {
         cmd.spawn().expect("Failed to run command");
 
         self.dbg_print("Waiting for service to start");
-        self.wait_until_health_check(&health_url)
-            .expect("Failed to wait for service to start");
+        sleep(Duration::from_secs(secs)).await;
 
         self.dbg_print("Service started");
 
         Ok(())
-    }
-
-    /// Waits until the health check URL responds successfully.
-    ///
-    /// # Arguments
-    ///
-    /// * `health_url` - The URL to ping for health check.
-    ///
-    /// # Returns
-    ///
-    /// Returns a `ServiceUtilError` if the healthcheck times out.
-    ///
-    pub fn wait_until_health_check(&self, health_url: &str) -> Result<(), ServiceUtilError> {
-        let start_time = Instant::now();
-        let timeout = Duration::from_secs(12);
-
-        loop {
-            std::thread::sleep(Duration::from_millis(100));
-
-            if start_time.elapsed().as_secs() > timeout.as_secs() {
-                return Err(ServiceUtilError::ServiceHealthcheckFailed(format!(
-                    "[start_service]: !!Timeout!! Waited {} seconds for service to respond to health check",
-                    timeout.as_secs(),
-                )));
-            }
-
-            let mut cmd = Command::new("curl");
-            cmd.arg(health_url);
-
-            if let Ok(out) = cmd.output() {
-                self.dbg_print(&format!(
-                    "[wait_until_health_check]: \n
-                    success: {} \n
-                    Output: {}",
-                    out.status.success(),
-                    String::from_utf8_lossy(out.stdout.as_slice()),
-                ));
-
-                if out.status.success() && String::from_utf8_lossy(&out.stdout).contains("OK") {
-                    self.dbg_print("Service online");
-
-                    break Ok(());
-                }
-            }
-        }
     }
 }

@@ -18,6 +18,10 @@ impl ServiceImportManager {
         Self::build(false, false).await
     }
 
+    pub async fn with_debug() -> Self {
+        Self::build(true, false).await
+    }
+
     pub async fn with_test_and_debug() -> Self {
         Self::build(true, true).await
     }
