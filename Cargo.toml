@@ -24,6 +24,7 @@ members = [
     "queng_import/kaiko/kaiko_proxy",
     "queng_import/kaiko/kaiko_test_utils",
     "queng_import/kaiko/kaiko_tests",
+    "queng_import/postgres/pg_import_config",
     "queng_import/postgres/pg_import_services",
     "queng_import/postgres/pg_import_metadata",
     "queng_infra/clickhouse/clickhouse_config_manager",
@@ -144,8 +145,9 @@ kaiko_import = { path = "queng_import/kaiko/kaiko_import" }
 kaiko_proxy = { path = "queng_import/kaiko/kaiko_proxy" }
 kaiko_test_utils = { path =  "queng_import/kaiko/kaiko_test_utils" }
 # Postgres DB
+pg_import_config = { path = "queng_import/postgres/pg_import_config" }
 pg_import_metadata = { path = "queng_import/postgres/pg_import_metadata" }
-postgres_pg_import_services = { path = "queng_import/postgres/pg_import_services" }
+pg_import_services = { path = "queng_import/postgres/pg_import_services" }
 
 # Infra
 # Clickhouse DB

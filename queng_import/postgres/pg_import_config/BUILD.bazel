@@ -1,0 +1,78 @@
+load("@rules_oci//oci:defs.bzl", "oci_push")
+load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_doc", "rust_doc_test")
+load("//:build/binary.bzl", "build_binary_opt")
+load("//:build/container.bzl", "build_multi_arch_image", "git_with_timestamp_tag")
+
+###############################################################################
+# Rust Binary
+###############################################################################
+
+# Build optimized binary
+build_binary_opt(
+    name = "pg_import_config",
+    srcs = glob([
+        "src/**/*.rs",
+    ]),
+    deps = [
+        # Custom Memory Allocator
+        "//thirdparty/crates:mimalloc",
+        # Internal crates
+        "//alias:environment_manager",
+        "//alias:config_import",
+        # External crates
+        "//thirdparty/crates:tokio",
+    ],
+)
+
+###############################################################################
+# Documentation
+###############################################################################
+
+# Build documentation
+rust_doc(
+    name = "doc",
+    crate = ":pg_import_config",
+    tags = ["doc"],
+    visibility = ["//visibility:public"],
+)
+
+# Test documentation
+rust_doc_test(
+    name = "doc_test",
+    crate = ":pg_import_config",
+    tags = ["doc-test"],
+    visibility = ["//visibility:public"],
+)
+
+###############################################################################
+# OCI Container Image
+###############################################################################
+
+# Build container image
+build_multi_arch_image(
+    name = "image_index",
+    srcs = ["pg_import_config"],
+    base = "//images/base_image",
+    entry_point = "pg_import_config",
+    exposed_ports = [],
+    platforms = [
+        "//build/platforms:linux-x86_64",
+        "//build/platforms:linux-aarch64",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+# Build unique and immutable image tag.
+git_with_timestamp_tag(
+    name = "remote_tag",
+    target = ":image_index",
+)
+
+# Publish image to registry
+oci_push(
+    name = "push",
+    image = ":image_index",
+    remote_tags = ":remote_tag",
+    repository = "asia-northeast1-docker.pkg.dev/future-309012/image-repo/pg_import_services",
+    visibility = ["//visibility:public"],
+)
