@@ -17,5 +17,5 @@ container_specs_postgres = {workspace = true}
 docker_utils = {workspace = true}
 service_import  = {workspace = true}
 service_utils = {workspace = true}
-smdb_client = {workspace = true}
+cmdb_client = {workspace = true}
 tokio = {workspace = true}
