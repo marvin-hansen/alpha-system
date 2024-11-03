@@ -1,7 +1,7 @@
 load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 
 rust_test_suite(
-    name = "smdb_tests",
+    name = "cmdb_tests",
     srcs = glob([
         "*_tests.rs",
     ]),
@@ -13,18 +13,18 @@ rust_test_suite(
         # Tell BuildBuddy to preserve the microVM state across test runs.
         "test.recycle-runner": "true",
         # We want different different tests to be assigned to the same recycled runner,
-        "test.runner-recycling-key": "smdb_test_runner",
+        "test.runner-recycling-key": "cmdb_test_runner",
     },
     tags = [
         # The first tag is for local testing, which must be in sequential order b/c there is just one DB
-        "smdb_acceptance_test",
+        "cmdb_acceptance_test",
         # The second tag is for acceptance testing on the CI, which runs in parallel.
         "acceptance_test",
     ],
     visibility = ["//visibility:public"],
     deps = [
         # Crate under test
-        "//alias/client:smdb_client",
+        "//alias/client:cmdb_client",
         # Internal crates
         "//alias:common_config",
         "//alias:container_specs_postgres",

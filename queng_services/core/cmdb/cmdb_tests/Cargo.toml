@@ -10,4 +10,12 @@ authors.workspace = true
 [lib]
 path = "src/fake_lib.rs"
 
-[dependencies]
+# For testing
+[dev-dependencies]
+common_config = {workspace = true}
+container_specs_postgres = {workspace = true}
+docker_utils = {workspace = true}
+service_import  = {workspace = true}
+service_utils = {workspace = true}
+smdb_client = {workspace = true}
+tokio = {workspace = true}
