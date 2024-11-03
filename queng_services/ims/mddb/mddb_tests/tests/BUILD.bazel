@@ -3,7 +3,7 @@ load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 rust_test_suite(
     name = "mddb_tests",
     srcs = glob([
-        "tests/*_tests.rs",
+        "*_tests.rs",
     ]),
     exec_properties = {
         # Tell BuildBuddy to run this test using a Firecracker microVM.
@@ -13,18 +13,24 @@ rust_test_suite(
         # Tell BuildBuddy to preserve the microVM state across test runs.
         "test.recycle-runner": "true",
         # We want different different tests to be assigned to the same recycled runner,
-        "test.runner-recycling-key": "mddb_client",
+        "test.runner-recycling-key": "mddb_test_runner",
     },
     tags = [
-        "integration_test",
-        "mddb_integration_test",
+        # The first tag is for local testing, which must be in sequential order b/c there is just one DB
+        "mddb_acceptance_test",
+        # The second tag is for acceptance testing on the CI, which runs in parallel.
+        "acceptance_test",
     ],
     visibility = ["//visibility:public"],
     deps = [
         # Crate under test
         "//alias/client:mddb_client",
         # Internal crates
+        "//alias:common_config",
+        "//alias:container_specs_postgres",
         "//alias:docker_utils",
+        "//alias:service_import",
+        "//alias:service_utils",
         # External crates
         "//thirdparty/crates:tokio",
     ],
