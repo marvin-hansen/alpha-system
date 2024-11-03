@@ -15,11 +15,7 @@ impl ServiceImportManager {
 
         // If all services have already been imported, return true
         // Note, the simple count works because each service is unique with an unique primary key.
-        if actual_count == expected_count {
-            true
-        } else {
-            false
-        }
+        actual_count == expected_count
     }
 
     /// Asynchronously imports services into the database, ensuring all services are present.
