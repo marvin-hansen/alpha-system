@@ -15,6 +15,5 @@ path = "src/fake_lib.rs"
 container_specs_postgres = {workspace = true}
 docker_utils = {workspace = true}
 postgres_config_manager = {workspace = true}
-postgres_utils = { workspace = true }
 service_specs_all = { workspace = true }
 tokio = {workspace = true}

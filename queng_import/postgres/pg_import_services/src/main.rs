@@ -31,7 +31,6 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .expect("Failed to import services");
 
     let nr_of_services = service_import_manager.count_db_services().await;
-
     print_utils::print_stop_header(nr_of_services, true);
 
     Ok(())

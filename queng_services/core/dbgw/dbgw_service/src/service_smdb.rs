@@ -60,7 +60,7 @@ impl DbGatewaySmdbService for SMDBServer {
     ) -> Result<Response<CountServiceResponse>, Status> {
         self.dbg_print("count_all_services");
 
-        let mut dbm = self.dbm.write().await;
+        let dbm = self.dbm.write().await;
         let res = dbm.count_services().await;
 
         match res {

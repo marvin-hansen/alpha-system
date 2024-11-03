@@ -13,7 +13,6 @@ common_config  = { workspace = true }
 environment_manager = { workspace = true }
 pg_smdb_manager = { workspace = true }
 postgres_config_manager = {workspace = true}
-postgres_utils = { workspace = true }
 service_specs_all = { workspace = true }
 # External crates
 tokio = { workspace = true }

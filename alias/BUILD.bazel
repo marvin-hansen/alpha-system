@@ -207,11 +207,6 @@ alias(
 )
 
 alias(
-    name = "postgres_utils",
-    actual = "//queng_infra/postgres/postgres_utils",
-)
-
-alias(
     name = "postgres_common",
     actual = "//queng_infra/postgres/postgres_common",
 )
