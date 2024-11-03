@@ -15,6 +15,7 @@ async fn all_setup() {
     assert!(result.is_ok());
 }
 
+#[tokio::test]
 pub async fn test_check_if_portfolios_already_imported() {
     let config_import_manager = ConfigImportManager::with_test_and_debug().await;
 
