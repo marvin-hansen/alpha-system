@@ -10,7 +10,7 @@ echo "Build targets "
 echo "=============="
 
 command bazel build //... --test_env=ENV=LOCAL
-command bazel build //... --build_tag_filters=doc-test,unit-test,integration_test --test_env=ENV=LOCAL
+command bazel build //... --build_tag_filters=doc-test,unit-test,integration_test,acceptance_test --test_env=ENV=LOCAL
 
 echo ""
 echo "=============="
@@ -31,8 +31,14 @@ echo "====================="
 echo "Run integration tests"
 echo "====================="
 
-#command bazel test //... --test_tag_filters=postgres_setup, --test_env=ENV=LOCAL
 command bazel test //... --test_tag_filters=integration_test --test_env=ENV=LOCAL
+
+echo ""
+echo "====================="
+echo "Run acceptance tests"
+echo "====================="
+
+command bazel test //... --test_tag_filters=acceptance_test --test_env=ENV=LOCAL
 
 echo ""
 echo "====================="

@@ -41,5 +41,5 @@ async fn test_start_service_util() {
     let result = svc_util.start_service(&service_id, 1).await;
     assert!(result.is_ok());
 
-    sleep(Duration::from_secs(5)).await;
+    sleep(Duration::from_secs(1)).await;
 }

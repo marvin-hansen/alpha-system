@@ -311,7 +311,7 @@ impl PostgresSMDBManager {
         self.dbg_print("set_service_offline");
         let conn = &mut self.get_connection();
 
-        match service::Service::set_service_online(conn, *id) {
+        match service::Service::set_service_offline(conn, *id) {
             Ok(_) => Ok(()),
             Err(e) => Err(PostgresDBError::SetFieldFailed(e.to_string())),
         }

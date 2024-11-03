@@ -1,19 +1,30 @@
+use common_config::prelude::ServiceID;
 use container_specs_postgres::postgres_db_container_config;
 use docker_utils::prelude::DockerUtil;
 use service_import::ServiceImportManager;
+use service_utils::ServiceUtil;
+use smdb_client::SMDBClient;
 
-// Somehow tests seem to be executed or sorted in alphabetical order,
-// so make sure that the setup is on top of the stack.
 #[tokio::test]
-async fn all_setup() {
+async fn test_smdb() {
     let env = DockerUtil::with_debug().expect("Failed to get DockerUtil");
 
-    // Start or reuse a test postgres container
+    // Start or reuse a test postgres database container
     let container_config = postgres_db_container_config();
     let result = env.get_or_start_container_config(&container_config);
-    // dbg!(&result);
+    dbg!(&result);
     assert!(result.is_ok());
 
+    // Start service util
+    let res = ServiceUtil::with_debug().await;
+    dbg!(&res);
+    assert!(res.is_ok());
+    let svc_util = res.unwrap();
+
+    // Get config manger for automatic configuration
+    let config_manager = svc_util.config_manager();
+
+    // Test if service data is already imported in the DB; if not, do so.
     let service_import_manager = ServiceImportManager::with_debug().await;
     let imported = service_import_manager.check_if_already_imported().await;
 
@@ -25,6 +36,268 @@ async fn all_setup() {
     }
 
     let imported = service_import_manager.check_if_already_imported().await;
-
     assert!(imported);
+
+    // Start DBGW service - depends on Database
+    let service_id = ServiceID::DBGW;
+    let result = svc_util.start_service(&service_id, 1).await;
+    dbg!(&result);
+    assert!(result.is_ok());
+
+    // Start SMDB service - depends on DBGW
+    let service_id = ServiceID::SMDB;
+    let result = svc_util.start_service(&service_id, 1).await;
+    assert!(result.is_ok());
+
+    // Configure SMDB client
+    let (smdb_host, smdb_port) = config_manager
+        .get_smdb_host_port()
+        .await
+        .expect("Failed to get SMDB host");
+    dbg!(&smdb_host);
+    dbg!(&smdb_port);
+    let smdb_client = SMDBClient::new(smdb_host, smdb_port).await;
+
+    // Test: check_if_service_id_exists - Service exists
+    let res = smdb_client
+        .check_if_service_id_exists(ServiceID::DBGW)
+        .await;
+    dbg!(&res);
+    assert!(res.is_ok());
+    let exists = res.unwrap();
+    assert!(exists);
+
+    let res = smdb_client
+        .check_if_service_id_exists(ServiceID::SMDB)
+        .await;
+    dbg!(&res);
+    assert!(res.is_ok());
+    let exists = res.unwrap();
+    assert!(exists);
+
+    let res = smdb_client
+        .check_if_service_id_exists(ServiceID::CMDB)
+        .await;
+    dbg!(&res);
+    assert!(res.is_ok());
+    let exists = res.unwrap();
+    assert!(exists);
+
+    let res = smdb_client
+        .check_if_service_id_exists(ServiceID::MDDB)
+        .await;
+    dbg!(&res);
+    assert!(res.is_ok());
+    let exists = res.unwrap();
+    assert!(exists);
+
+    // Test: check_if_service_id_exists - Service NOT exists
+    let res = smdb_client
+        .check_if_service_id_exists(ServiceID::Default)
+        .await;
+    dbg!(&res);
+    assert!(res.is_ok());
+    let exists = res.unwrap();
+    assert!(!exists);
+
+    // Test: check_if_services_exists - All Services exists
+    let services = vec![
+        ServiceID::DBGW,
+        ServiceID::SMDB,
+        ServiceID::CMDB,
+        ServiceID::MDDB,
+    ];
+    let res = smdb_client.check_if_services_exists(services).await;
+    dbg!(&res);
+    assert!(res.is_ok());
+    let exists = res.unwrap();
+    assert!(exists);
+
+    // Test: check_if_services_exists - All Services NOT exists
+    let services = vec![
+        ServiceID::DBGW,
+        ServiceID::SMDB,
+        ServiceID::CMDB,
+        ServiceID::Default,
+    ];
+    let res = smdb_client.check_if_services_exists(services).await;
+    dbg!(&res);
+    assert!(res.is_ok());
+    let exists = res.unwrap();
+    assert!(!exists);
+
+    // Test: check_if_service_id_online - Service is online
+    let res = smdb_client
+        .check_if_service_id_online(ServiceID::DBGW)
+        .await;
+    dbg!(&res);
+    assert!(res.is_ok());
+    let online = res.unwrap();
+    assert!(online);
+
+    let res = smdb_client
+        .check_if_service_id_online(ServiceID::SMDB)
+        .await;
+    dbg!(&res);
+    assert!(res.is_ok());
+    let online = res.unwrap();
+    assert!(online);
+
+    // Test: check_if_service_id_online - Service NOT online
+    let res = smdb_client
+        .check_if_service_id_online(ServiceID::CMDB)
+        .await;
+    dbg!(&res);
+    assert!(res.is_ok());
+    let online = res.unwrap();
+    assert!(!online);
+
+    let res = smdb_client
+        .check_if_service_id_online(ServiceID::MDDB)
+        .await;
+    dbg!(&res);
+    assert!(res.is_ok());
+    let online = res.unwrap();
+    assert!(!online);
+
+    // Test: check_if_service_id_online - Service DOES NOT EXIST
+    let res = smdb_client
+        .check_if_service_id_online(ServiceID::Default)
+        .await;
+    dbg!(&res);
+    assert!(res.is_err());
+
+    // Test: check_if_services_online - All Services online
+    let services = vec![ServiceID::DBGW, ServiceID::SMDB];
+    let res = smdb_client.check_if_services_online(services).await;
+    dbg!(&res);
+    assert!(res.is_ok());
+    let online = res.unwrap();
+    assert!(online);
+
+    // Test: check_if_services_online - All Services NOT online
+    let services = vec![ServiceID::CMDB, ServiceID::MDDB];
+    let res = smdb_client.check_if_services_online(services).await;
+    dbg!(&res);
+    assert!(res.is_ok());
+    let online = res.unwrap();
+    assert!(!online);
+
+    // Test: check_if_services_online -  Service DOES NOT EXIST
+    let services = vec![ServiceID::Default];
+    let res = smdb_client.check_if_services_online(services).await;
+    dbg!(&res);
+    assert!(res.is_err());
+
+    // Test: set_service_online - Service exists and is OFFLINE. Set it ONLINE.
+    // Not online
+    let res = smdb_client
+        .check_if_service_id_online(ServiceID::MDDB)
+        .await;
+    dbg!(&res);
+    assert!(res.is_ok());
+    let online = res.unwrap();
+    assert!(!online);
+
+    // Set online
+    let res = smdb_client.set_service_online(ServiceID::MDDB).await;
+    dbg!(&res);
+    assert!(res.is_ok());
+    let online = res.unwrap();
+    assert!(online);
+
+    // Service is online
+    let res = smdb_client
+        .check_if_service_id_online(ServiceID::MDDB)
+        .await;
+    dbg!(&res);
+    assert!(res.is_ok());
+    let online = res.unwrap();
+    assert!(online);
+
+    // Test: set_service_online - Service exists and is already ONLINE.
+    // Service is online
+    let res = smdb_client
+        .check_if_service_id_online(ServiceID::DBGW)
+        .await;
+    dbg!(&res);
+    assert!(res.is_ok());
+    let online = res.unwrap();
+    assert!(online);
+
+    // Set online
+    let res = smdb_client.set_service_online(ServiceID::DBGW).await;
+    dbg!(&res);
+    assert!(res.is_ok());
+    let online = res.unwrap();
+    assert!(online);
+
+    // Test: set_service_online - Service DOES NOT EXIST
+    let res = smdb_client.set_service_online(ServiceID::Default).await;
+    dbg!(&res);
+    assert!(res.is_err());
+
+    // Test: set_service_offline - Service exists and is ONLINE. Set it OFFLINE.
+
+    // Service is online
+    let res = smdb_client
+        .check_if_service_id_online(ServiceID::MDDB)
+        .await;
+    dbg!(&res);
+    assert!(res.is_ok());
+    let online = res.unwrap();
+    assert!(online);
+
+    // Set offline
+    let res = smdb_client.set_service_offline(ServiceID::MDDB).await;
+    dbg!(&res);
+    assert!(res.is_ok());
+    let offline = res.unwrap();
+    assert!(offline);
+
+    // Service is offline
+    let res = smdb_client
+        .check_if_service_id_online(ServiceID::MDDB)
+        .await;
+    dbg!(&res);
+    assert!(res.is_ok());
+    let online = res.unwrap();
+    assert!(!online);
+
+    // Test: set_service_offline - Service exists and is already OFFLINE.
+    // Service is offline
+    let res = smdb_client
+        .check_if_service_id_online(ServiceID::CMDB)
+        .await;
+    dbg!(&res);
+    assert!(res.is_ok());
+    let online = res.unwrap();
+    assert!(!online);
+
+    // Set offline
+    let res = smdb_client.set_service_offline(ServiceID::CMDB).await;
+    dbg!(&res);
+    assert!(res.is_ok());
+    let offline = res.unwrap();
+    assert!(offline);
+
+    // Service is offline
+    let res = smdb_client
+        .check_if_service_id_online(ServiceID::CMDB)
+        .await;
+    dbg!(&res);
+    assert!(res.is_ok());
+    let online = res.unwrap();
+    assert!(!online);
+
+    // Test: set_service_offline - Service DOES NOT EXIST
+    let res = smdb_client.set_service_offline(ServiceID::Default).await;
+    dbg!(&res);
+    assert!(res.is_err());
+
+    // Set offline
+    let res = smdb_client
+        .check_if_service_id_exists(ServiceID::Default)
+        .await;
+    dbg!(&res);
 }

@@ -320,6 +320,22 @@ impl DbGatewaySmdbService for SMDBServer {
         let id = ServiceID::from(request.into_inner().service_id);
         let dbm = self.dbm.write().await;
 
+        // Return an error if the service does not exist in the DB
+        match dbm.check_if_service_id_exists(&id).await {
+            Ok(exists) => {
+                if !exists {
+                    return Err(Status::not_found(format!(
+                        "Service with ID {} does not exist in the DB",
+                        id
+                    )));
+                }
+            }
+            Err(e) => {
+                return Err(Status::internal(e.to_string()));
+            }
+        };
+
+        // Here, we know the service exists in the DB is not online. Set it online now.
         match dbm.set_service_online(&id).await {
             Ok(_) => Ok(Response::new(SetServiceOnlineResponse {
                 service_online: true,
@@ -337,6 +353,21 @@ impl DbGatewaySmdbService for SMDBServer {
 
         let id = ServiceID::from(request.into_inner().service_id);
         let dbm = self.dbm.write().await;
+
+        // Return an error if the service does not exist in the DB
+        match dbm.check_if_service_id_exists(&id).await {
+            Ok(exists) => {
+                if !exists {
+                    return Err(Status::not_found(format!(
+                        "Service with ID {} does not exist in the DB",
+                        id
+                    )));
+                }
+            }
+            Err(e) => {
+                return Err(Status::internal(e.to_string()));
+            }
+        };
 
         match dbm.set_service_offline(&id).await {
             Ok(_) => Ok(Response::new(SetServiceOfflineResponse {

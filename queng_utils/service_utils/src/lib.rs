@@ -43,13 +43,13 @@ impl ServiceUtil {
             println!("[ServiceUtil]: Debug mode enabled");
         }
 
-        let ctx_manager = if dbg {
+        let config_manager = if dbg {
             CfgManager::default_with_debug()
         } else {
             CfgManager::default()
         };
 
-        let env = ctx_manager.env_type();
+        let env = config_manager.env_type();
 
         if dbg {
             println!(
@@ -66,8 +66,12 @@ impl ServiceUtil {
 
         Ok(Self {
             dbg,
-            config_manager: ctx_manager,
+            config_manager,
         })
+    }
+
+    pub fn config_manager(&self) -> &CfgManager {
+        &self.config_manager
     }
 }
 

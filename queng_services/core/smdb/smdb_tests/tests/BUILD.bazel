@@ -13,7 +13,7 @@ rust_test_suite(
         # Tell BuildBuddy to preserve the microVM state across test runs.
         "test.recycle-runner": "true",
         # We want different different tests to be assigned to the same recycled runner,
-        "test.runner-recycling-key": "smdb_tests",
+        "test.runner-recycling-key": "smdb_test_runner",
     },
     tags = [
         "acceptance_test",
@@ -23,9 +23,11 @@ rust_test_suite(
         # Crate under test
         "//alias/client:smdb_client",
         # Internal crates
-        "//alias:docker_utils",
+        "//alias:common_config",
         "//alias:container_specs_postgres",
+        "//alias:docker_utils",
         "//alias:service_import",
+        "//alias:service_utils",
         # External crates
         "//thirdparty/crates:tokio",
     ],
