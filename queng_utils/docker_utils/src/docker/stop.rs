@@ -38,9 +38,12 @@ impl DockerUtil {
 
         if exists {
             self.dbg_print("[stop_container]: Container exists. Stopping it.");
-            // Example: docker kill test-80
+            // Example: docker rm -f nginx-80
+            // https://stackoverflow.com/questions/35122773/single-command-to-stop-and-remove-docker-container
             return match Command::new("docker")
-                .arg("kill")
+                .arg("rm")
+                .arg("rf")
+                .arg("-f")
                 .arg(container_id)
                 .status()
             {

@@ -7,13 +7,14 @@ use smdb_client::SMDBClient;
 
 #[tokio::test]
 async fn test_smdb() {
-    let env = DockerUtil::with_debug().expect("Failed to get DockerUtil");
+    let docker_util = DockerUtil::with_debug().expect("Failed to get DockerUtil");
 
     // Start or reuse a test postgres database container
-    let container_config = postgres_db_container_config();
-    let result = env.get_or_start_container_config(&container_config);
+    let pg_container_config = postgres_db_container_config();
+    let result = docker_util.get_or_start_container_config(&pg_container_config);
     dbg!(&result);
     assert!(result.is_ok());
+    let (pg_container_id, _) = result.unwrap();
 
     // Start service util
     let res = ServiceUtil::with_debug().await;
@@ -300,4 +301,9 @@ async fn test_smdb() {
         .check_if_service_id_exists(ServiceID::Default)
         .await;
     dbg!(&res);
+
+    // Stop and remove container
+    let result = docker_util.stop_container(&pg_container_id);
+    dbg!(&result);
+    assert!(result.is_ok());
 }
