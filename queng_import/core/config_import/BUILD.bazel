@@ -7,13 +7,16 @@ rust_library(
     ]),
     crate_root = "src/lib.rs",
     tags = [
-        "kaiko",
-        "kaiko_download",
+        "config_import",
     ],
     visibility = ["//visibility:public"],
     deps = [
         # Internal crates
+        "//alias:common_exchange",
         "//alias:environment_manager",
+        "//alias:pg_cmdb_manager",
+        "//alias:postgres_config_manager",
+        "//alias:portfolio_specs",
         # External crates
         "//thirdparty/crates:tokio",
     ],

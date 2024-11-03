@@ -60,7 +60,7 @@ impl PostgresCMDBManager {
     ///
     /// The number of portfolio configurations is returned as a `u64` if successful.
     ///
-    pub async fn count_portfolio_configs(&mut self) -> Result<u64, PostgresDBError> {
+    pub async fn count_portfolio_configs(&self) -> Result<u64, PostgresDBError> {
         self.dbg_print("count_portfolio_configs");
         let conn = &mut self.get_connection();
 

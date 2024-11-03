@@ -30,7 +30,7 @@ impl ServiceImportManager {
         // Count if there is any service already in the database
         let actual_count = self.count_db_services().await;
 
-        // If all services have already been imported, exit the program
+        // If all services have already been imported, return Ok
         if actual_count == expected_count {
             return Ok(());
         }
@@ -38,7 +38,7 @@ impl ServiceImportManager {
         // If nothing has been imported yet, import all services
         if actual_count == 0 {
             self.dbg_print("Import all services");
-            self.dbm_smdb
+            self.dbm
                 .insert_service_collection(&self.services)
                 .await
                 .expect("Failed to import services");
@@ -61,14 +61,14 @@ impl ServiceImportManager {
             for s in &self.services {
                 let id = s.svc_id();
                 let exists = self
-                    .dbm_smdb
+                    .dbm
                     .check_if_service_id_exists(id)
                     .await
                     .expect("Failed to check if service exists");
 
                 if !exists {
                     self.dbg_print(&format!("Importing service: {}", id));
-                    self.dbm_smdb
+                    self.dbm
                         .insert_service(s)
                         .await
                         .expect("Failed to import service");
@@ -90,7 +90,7 @@ impl ServiceImportManager {
     pub async fn count_db_services(&self) -> usize {
         self.dbg_print("count_db_services");
 
-        self.dbm_smdb
+        self.dbm
             .count_services()
             .await
             .expect("Failed to count services") as usize

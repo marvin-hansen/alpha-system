@@ -9,7 +9,7 @@ mod import_services;
 #[derive(Debug, Clone)]
 pub struct ServiceImportManager {
     dbg: bool,
-    dbm_smdb: PostgresSMDBManager,
+    dbm: PostgresSMDBManager,
     services: Vec<ServiceConfig>,
 }
 
@@ -36,7 +36,7 @@ impl ServiceImportManager {
         let pg_cfg_manager = PostgresConfigManager::new(&env_type);
         let dsn = pg_cfg_manager.pg_connection_url();
 
-        let dbm_smdb = if test {
+        let dbm = if test {
             PostgresSMDBManager::with_test_and_debug(&dsn)
                 .await
                 .expect("Failed to create PostgresSMDBManager")
@@ -48,11 +48,7 @@ impl ServiceImportManager {
 
         let services = service_specs::get_all_service_specs();
 
-        Self {
-            dbg,
-            dbm_smdb,
-            services,
-        }
+        Self { dbg, dbm, services }
     }
 
     fn dbg_print(&self, s: &str) {

@@ -7,8 +7,7 @@ rust_library(
     ]),
     crate_root = "src/lib.rs",
     tags = [
-        "kaiko",
-        "kaiko_download",
+        "service_import",
     ],
     visibility = ["//visibility:public"],
     deps = [
