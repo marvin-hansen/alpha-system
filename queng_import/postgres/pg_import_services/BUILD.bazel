@@ -20,7 +20,6 @@ build_binary_opt(
         "//alias:environment_manager",
         "//alias:pg_smdb_manager",
         "//alias:postgres_config_manager",
-
         "//alias:service_specs_all",
         "//alias:service_import",
         # External crates
