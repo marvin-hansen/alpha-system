@@ -16,7 +16,7 @@ pub(crate) async fn import_assets_metadata_sample(
     dbm_mddb: &PostgresMDDBManager,
     meta_data: &MetaDataSet,
     sample_size: usize,
-) -> usize {
+) -> Result<usize, &'static str> {
     print_utils::dbg_print("import_assets_metadata_sample");
 
     assert!(sample_size < meta_data.assets().data.len());
@@ -45,7 +45,7 @@ pub(crate) async fn import_assets_metadata_sample(
 
     print_utils::dbg_print("Completed importing assets");
 
-    db_asset_count
+    Ok(db_asset_count)
 }
 
 /// Imports a sample of exchange metadata into the database.
@@ -64,7 +64,7 @@ pub(crate) async fn import_exchanges_metadata_sample(
     dbm_mddb: &PostgresMDDBManager,
     meta_data: &MetaDataSet,
     sample_size: usize,
-) -> usize {
+) -> Result<usize, &'static str> {
     print_utils::dbg_print("import_exchange_metadata_sample");
 
     assert!(sample_size < meta_data.exchanges().data.len());
@@ -96,7 +96,7 @@ pub(crate) async fn import_exchanges_metadata_sample(
 
     print_utils::dbg_print("Completed importing exchanges");
 
-    db_exchange_count
+    Ok(db_exchange_count)
 }
 
 /// Imports a sample of instruments metadata into the database.
@@ -113,7 +113,7 @@ pub(crate) async fn import_instruments_metadata_sample(
     dbm_mddb: &PostgresMDDBManager,
     meta_data: &MetaDataSet,
     sample_size: usize,
-) -> usize {
+) -> Result<usize, &'static str> {
     print_utils::dbg_print("import_instruments_metadata_sample");
 
     assert!(sample_size < meta_data.instruments().data.len());
@@ -145,5 +145,5 @@ pub(crate) async fn import_instruments_metadata_sample(
 
     print_utils::dbg_print("Completed importing instruments");
 
-    db_instrument_count
+    Ok(db_instrument_count)
 }

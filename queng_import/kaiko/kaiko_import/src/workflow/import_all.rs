@@ -10,12 +10,14 @@ use pg_mddb_manager::PostgresMDDBManager;
 pub(crate) async fn import_all_metadata(dbm_mddb: &PostgresMDDBManager, meta_data: &MetaDataSet) {
     print_utils::dbg_print("import_all_metadata");
 
-    let imported_asset_count = workflow::import_assets_metadata(dbm_mddb, meta_data).await;
-
-    let imported_exchange_count = workflow::import_exchanges_metadata(dbm_mddb, meta_data).await;
-
-    let imported_instrument_count =
-        workflow::import_instruments_metadata(dbm_mddb, meta_data).await;
+    // Import all metadata in parallel
+    let (imported_asset_count, imported_exchange_count, imported_instrument_count) =
+        tokio::try_join!(
+            workflow::import_assets_metadata(dbm_mddb, meta_data),
+            workflow::import_exchanges_metadata(dbm_mddb, meta_data),
+            workflow::import_instruments_metadata(dbm_mddb, meta_data)
+        )
+        .expect("Failed to import metadata sample");
 
     print_utils::print_stop_header(
         imported_asset_count,
@@ -41,14 +43,14 @@ pub(crate) async fn import_metadata_sample(
 ) {
     print_utils::dbg_print("import_metadata_sample");
 
-    let imported_asset_count =
-        workflow::import_assets_metadata_sample(dbm_mddb, meta_data, sample_size).await;
-
-    let imported_exchange_count =
-        workflow::import_exchanges_metadata_sample(dbm_mddb, meta_data, sample_size).await;
-
-    let imported_instrument_count =
-        workflow::import_instruments_metadata_sample(dbm_mddb, meta_data, sample_size).await;
+    // Import all metadata in parallel
+    let (imported_asset_count, imported_exchange_count, imported_instrument_count) =
+        tokio::try_join!(
+            workflow::import_assets_metadata_sample(dbm_mddb, meta_data, sample_size),
+            workflow::import_exchanges_metadata_sample(dbm_mddb, meta_data, sample_size),
+            workflow::import_instruments_metadata_sample(dbm_mddb, meta_data, sample_size)
+        )
+        .expect("Failed to import metadata sample");
 
     print_utils::print_stop_header(
         imported_asset_count,
