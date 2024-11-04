@@ -40,6 +40,11 @@ pub async fn execute_workflow(
             workflow::import_all_metadata(dbm_mddb, meta_data).await;
         }
 
+        WorkflowOpAll::ImportSample(sample_size) => {
+            print_utils::dbg_print("Import Sample Metadata");
+            workflow::import_metadata_sample(dbm_mddb, meta_data, sample_size).await;
+        }
+
         WorkflowOpAll::ImportPartial => {
             print_utils::dbg_print("Import Partial Metadata");
             workflow::import_partial_metadata(meta_data_ops, dbm_mddb, meta_data).await;

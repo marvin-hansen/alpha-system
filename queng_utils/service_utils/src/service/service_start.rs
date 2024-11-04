@@ -30,12 +30,11 @@ impl ServiceUtil {
 
         self.dbg_print("Setting program to executable");
         let program = format!("{}/{}", PATH, svc.to_string().to_lowercase());
-
         let mut cmd = Command::new("chmod");
         cmd.arg("+x").arg(program.clone());
         cmd.output().expect("Failed to set program to executable");
 
-        self.dbg_print("Constructing initial command");
+        self.dbg_print("Constructing start command");
         let mut cmd = Command::new(program);
         cmd.arg("&");
 
@@ -43,7 +42,7 @@ impl ServiceUtil {
         let (env, val) = self.config_manager.env_var();
         cmd.env(env, val);
 
-        self.dbg_print(&format!("Run command: {:?}", &cmd));
+        self.dbg_print(&format!("Run start command: {:?}", &cmd));
         cmd.spawn().expect("Failed to run command");
 
         self.dbg_print("Waiting for service to start");

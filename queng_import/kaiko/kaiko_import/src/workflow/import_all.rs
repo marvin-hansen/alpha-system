@@ -23,3 +23,26 @@ pub(crate) async fn import_all_metadata(dbm_mddb: &PostgresMDDBManager, meta_dat
         imported_instrument_count,
     )
 }
+
+pub(crate) async fn import_metadata_sample(
+    dbm_mddb: &PostgresMDDBManager,
+    meta_data: &MetaDataSet,
+    sample_size: usize,
+) {
+    print_utils::dbg_print("import_metadata_sample");
+
+    let imported_asset_count =
+        workflow::import_assets_metadata_sample(dbm_mddb, meta_data, sample_size).await;
+
+    let imported_exchange_count =
+        workflow::import_exchanges_metadata_sample(dbm_mddb, meta_data, sample_size).await;
+
+    let imported_instrument_count =
+        workflow::import_instruments_metadata_sample(dbm_mddb, meta_data, sample_size).await;
+
+    print_utils::print_stop_header(
+        imported_asset_count,
+        imported_exchange_count,
+        imported_instrument_count,
+    );
+}

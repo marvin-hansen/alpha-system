@@ -53,6 +53,7 @@ impl Display for MetaDataDBWOp {
 pub enum WorkflowOpAll {
     NoOPAll, // Nothing to do.
     ImportAll,
+    ImportSample(usize),
     UpdateAll,
     UpdatePartial,
     ImportPartial,

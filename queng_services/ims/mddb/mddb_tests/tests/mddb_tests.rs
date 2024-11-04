@@ -40,6 +40,8 @@ async fn test_mddb() {
     let imported = service_import_manager.check_if_already_imported().await;
     assert!(imported);
 
+    // Test if metadata is already imported in the DB;
+
     // Start DBGW service - depends on Database
     let service_id = ServiceID::DBGW;
     let result = svc_util

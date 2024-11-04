@@ -1,0 +1,117 @@
+use crate::print_utils;
+use common_metadata::prelude::MetaDataSet;
+use pg_mddb_manager::PostgresMDDBManager;
+
+pub(crate) async fn import_assets_metadata_sample(
+    dbm_mddb: &PostgresMDDBManager,
+    meta_data: &MetaDataSet,
+    sample_size: usize,
+) -> usize {
+    print_utils::dbg_print("import_assets_metadata_sample");
+
+    assert!(sample_size < meta_data.assets().data.len());
+
+    print_utils::dbg_print("Importing assets");
+    let expected_asset_count = sample_size;
+
+    let mut counter = 0;
+    for asset in &meta_data.assets().data {
+        if counter < sample_size {
+            dbm_mddb
+                .insert_asset(asset.clone())
+                .await
+                .expect("Failed to import assets");
+            counter += 1;
+        }
+    }
+
+    let db_asset_count = dbm_mddb
+        .count_assets()
+        .await
+        .expect("Failed to count assets") as usize;
+
+    print_utils::dbg_print(&format!("db_asset_count: {}", db_asset_count));
+    print_utils::dbg_print(&format!("expected_asset_count: {}", expected_asset_count));
+
+    print_utils::dbg_print("Completed importing assets");
+
+    db_asset_count
+}
+
+pub(crate) async fn import_exchanges_metadata_sample(
+    dbm_mddb: &PostgresMDDBManager,
+    meta_data: &MetaDataSet,
+    sample_size: usize,
+) -> usize {
+    print_utils::dbg_print("import_exchange_metadata_sample");
+
+    assert!(sample_size < meta_data.exchanges().data.len());
+
+    print_utils::dbg_print("Importing exchanges");
+    let expected_exchange_count = sample_size;
+
+    let mut counter = 0;
+    for exchange in &meta_data.exchanges().data {
+        if counter < sample_size {
+            dbm_mddb
+                .insert_exchange(exchange.clone())
+                .await
+                .expect("Failed to import exchanges");
+            counter += 1;
+        }
+    }
+
+    let db_exchange_count = dbm_mddb
+        .count_exchanges()
+        .await
+        .expect("Failed to count exchanges") as usize;
+
+    print_utils::dbg_print(&format!("db_exchange_count: {}", db_exchange_count));
+    print_utils::dbg_print(&format!(
+        "expected_exchange_count: {}",
+        expected_exchange_count
+    ));
+
+    print_utils::dbg_print("Completed importing exchanges");
+
+    db_exchange_count
+}
+
+pub(crate) async fn import_instruments_metadata_sample(
+    dbm_mddb: &PostgresMDDBManager,
+    meta_data: &MetaDataSet,
+    sample_size: usize,
+) -> usize {
+    print_utils::dbg_print("import_instruments_metadata_sample");
+
+    assert!(sample_size < meta_data.instruments().data.len());
+
+    print_utils::dbg_print("Importing instruments");
+    let expected_instrument_count = sample_size;
+
+    let mut counter = 0;
+    for instrument in &meta_data.instruments().data {
+        if counter < sample_size {
+            dbm_mddb
+                .insert_instrument(instrument.clone())
+                .await
+                .expect("Failed to import instruments");
+            counter += 1;
+        }
+    }
+
+    let db_instrument_count = dbm_mddb
+        .count_instruments()
+        .await
+        .expect("Failed to count instruments") as usize;
+
+    print_utils::dbg_print(&format!("db_instrument_count: {}", db_instrument_count));
+    print_utils::dbg_print(&format!(
+        "expected_instrument_count: {}",
+        expected_instrument_count
+    ));
+
+    print_utils::dbg_print("Completed importing instruments");
+
+    db_instrument_count
+}
