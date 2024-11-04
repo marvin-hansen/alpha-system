@@ -24,6 +24,7 @@ help:
 	@echo '    make check   	Checks the code base for security vulnerabilities.'
 	@echo '    make container      Builds the container images.'
 	@echo '    make doc   		Builds documentation for the project.'
+	@echo '    make lint   		Lints and formats the code of the project.'
 	@echo '    make fix   		Fixes linting issues as reported by clippy.'
 	@echo '    make format   	Formats call code according to cargo fmt style.'
 	@echo '    make import   	Imports data into the database.'
@@ -127,6 +128,11 @@ container:
 .PHONY: doc
 doc:
 	@source scripts/doc.sh
+
+
+.PHONY: lint
+lint:
+	@source scripts/lint.sh
 
 
 .PHONY: fix
