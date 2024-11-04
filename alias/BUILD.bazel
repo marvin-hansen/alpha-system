@@ -84,9 +84,15 @@ alias(
 ###############################################################################
 
 ## Core import
+##############
 alias(
     name = "config_import",
     actual = "//queng_import/core/config_import",
+)
+
+alias(
+    name = "metadata_import",
+    actual = "//queng_import/core/metadata_import",
 )
 
 alias(
@@ -95,6 +101,7 @@ alias(
 )
 
 ## Kaiko import
+##############
 alias(
     name = "kaiko_client",
     actual = "//queng_import/kaiko/kaiko_client",
@@ -129,6 +136,7 @@ alias(
 )
 
 ## Postgres import
+##############
 alias(
     name = "pg_import_services",
     actual = "//queng_import/postgres/pg_import_services",
@@ -154,6 +162,7 @@ alias(
 ###############################################################################
 
 # Clickhouse
+##############
 alias(
     name = "clickhouse_config_manager",
     actual = "//queng_infra/clickhouse/clickhouse_config_manager",
@@ -170,6 +179,7 @@ alias(
 )
 
 # Postgres
+##############
 alias(
     name = "pg_cmdb",
     actual = "//queng_infra/postgres/pg_cmdb",
@@ -379,12 +389,6 @@ alias(
     name = "docker_utils",
     actual = "//queng_utils/docker_utils",
 )
-
-alias(
-    name = "grpc_utils",
-    actual = "//queng_utils/grpc_utils",
-)
-
 
 alias(
     name = "math_utils",

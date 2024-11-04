@@ -17,6 +17,7 @@ members = [
     "queng_components/pattern_manager",
     "queng_components/symbol_manager",
     "queng_import/core/config_import",
+    "queng_import/core/metadata_import",
     "queng_import/core/service_import",
     "queng_import/kaiko/kaiko_client",
     "queng_import/kaiko/kaiko_download",
@@ -137,6 +138,7 @@ symbol_manager = { path = "queng_components/symbol_manager" }
 # Import
 # Core
 config_import = { path = "queng_import/core/config_import" }
+metadata_import = { path = "queng_import/core/metadata_import" }
 service_import = { path = "queng_import/core/service_import" }
 # Kaiko
 kaiko_client = { path = "queng_import/kaiko/kaiko_client" }

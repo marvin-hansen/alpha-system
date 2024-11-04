@@ -16,6 +16,8 @@ path = "src/fake_lib.rs"
 common_config = {workspace = true}
 container_specs_postgres = {workspace = true}
 docker_utils = {workspace = true}
+kaiko_download = {workspace = true}
+kaiko_import = {workspace = true}
 service_import  = {workspace = true}
 service_utils = {workspace = true}
 mddb_client = {workspace = true}
