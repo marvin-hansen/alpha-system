@@ -221,7 +221,7 @@ impl PostgresCMDBManager {
         match self.check_if_portfolio_id_exists(id).await {
             Ok(exists) => {
                 if !exists {
-                    return Ok(false);
+                    Ok(false)
                 } else {
                     match Portfolio::delete(conn, id as i32) {
                         Ok(_) => Ok(true),
@@ -229,7 +229,7 @@ impl PostgresCMDBManager {
                     }
                 }
             }
-            Err(e) => return Err(PostgresDBError::CheckIfExistsFailed(e.to_string())),
+            Err(e) => Err(PostgresDBError::CheckIfExistsFailed(e.to_string())),
         }
     }
 }

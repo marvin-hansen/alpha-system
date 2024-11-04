@@ -2,7 +2,6 @@ use cmdb_client::CmdbClient;
 use common_config::prelude::ServiceID;
 use container_specs_postgres::postgres_db_container_config;
 use docker_utils::prelude::DockerUtil;
-use portfolio_specs;
 use service_import::ServiceImportManager;
 use service_utils::ServiceUtil;
 use std::time::Duration;
@@ -106,7 +105,7 @@ async fn test_smdb() {
     dbg!(&result);
     assert!(result.is_ok());
     let configs = result.unwrap();
-    assert!(configs.len() > 0);
+    assert!(!configs.is_empty());
 
     // Test update_portfolio_config - Success!
     let updated_portfolio_config = portfolio_specs::get_test_update_portfolio_config();
