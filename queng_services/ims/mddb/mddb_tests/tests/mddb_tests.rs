@@ -72,6 +72,8 @@ async fn test_mddb() {
     // Construct MDDB client
     let _mddb_client = MDDBClient::new(mddb_host, mddb_port).await;
 
+    // Test MDDB Assets metadata methods.
+
     // Stop and remove container
     let result = docker_util.stop_container(&pg_container_id);
     dbg!(&result);

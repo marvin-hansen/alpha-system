@@ -1,5 +1,7 @@
 mod error;
-mod mddb_client;
+mod mddb_assets;
+mod mddb_exchanges;
+mod mddb_instruments;
 
 use proto_mddb::proto::mddb_service_client::MddbServiceClient;
 use std::fmt::Error;
