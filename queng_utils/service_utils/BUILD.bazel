@@ -11,8 +11,8 @@ rust_library(
         ":copy_core_cmdb",
         ":copy_core_dbgw",
         ":copy_core_smdb",
-        ":copy_meta_kaiko_proxy",
-        ":copy_meta_mddb",
+        ":copy_kaiko_proxy",
+        ":copy_mddb",
     ],
     tags = [
         "service_utils",
@@ -69,14 +69,14 @@ copy_file(
 
 # Copy all meta services
 copy_file(
-    name = "copy_meta_kaiko_proxy",
+    name = "copy_kaiko_proxy",
     src = "//alias:kaiko_proxy",
     out = "kaiko_proxy",
     is_executable = True,
 )
 
 copy_file(
-    name = "copy_meta_mddb",
+    name = "copy_mddb",
     src = "//alias/service:mddb",
     out = "mddb",
     is_executable = True,
