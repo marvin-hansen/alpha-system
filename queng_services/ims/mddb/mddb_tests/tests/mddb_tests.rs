@@ -50,6 +50,8 @@ async fn test_mddb() {
         .await
         .expect("Failed to determine workflow");
 
+    dbg!(&workflow);
+
     // Execute workflow
     meta_data_import_manager
         .execute_workflow(&workflow)
@@ -86,12 +88,36 @@ async fn test_mddb() {
     dbg!(&mddb_port);
 
     // Construct MDDB client
-    let _mddb_client = MDDBClient::new(mddb_host, mddb_port).await;
+    let mddb_client = MDDBClient::new(mddb_host, mddb_port)
+        .await
+        .expect("Failed to create MDDB client");
 
     // Test MDDB Assets metadata methods.
 
-    // Stop and remove container
-    let result = docker_util.stop_container(&pg_container_id);
-    dbg!(&result);
+    // Test count_assets
+    let result = mddb_client.count_assets().await;
     assert!(result.is_ok());
+    let count = result.unwrap();
+    assert_eq!(count, 50);
+
+    // Test check_if_asset_id_exists - success case i,e, exists
+    let exists_id = "42";
+    let result = mddb_client.check_if_asset_id_exists(exists_id).await;
+    assert!(result.is_ok());
+    let exists = result.unwrap();
+    assert!(exists);
+
+    // Test check_if_asset_id_exists - Fail case i,e, does not exists.
+    let does_not_exists_id = "zztopxyz_non_exist";
+    let result = mddb_client
+        .check_if_asset_id_exists(does_not_exists_id)
+        .await;
+    assert!(result.is_ok());
+    let exists = result.unwrap();
+    assert!(!exists);
+
+    // Stop and remove container
+    // let result = docker_util.stop_container(&pg_container_id);
+    // dbg!(&result);
+    // assert!(result.is_ok());
 }

@@ -49,9 +49,14 @@ pub async fn determine_workflow(
             print_utils::dbg_print("Nothing imported; sample requested return ImportSample");
             let sample_size = sample_size.unwrap();
             all_op = WorkflowOpAll::ImportSample(sample_size);
+
+            //
+            return MetaDataDBWOp::new(all_op, assets_op, exchanges_op, instruments_op);
         } else {
             print_utils::dbg_print("Nothing imported; return ImportAll");
             all_op = WorkflowOpAll::ImportAll;
+
+            return MetaDataDBWOp::new(all_op, assets_op, exchanges_op, instruments_op);
         }
     }
 
