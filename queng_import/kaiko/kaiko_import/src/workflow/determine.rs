@@ -55,12 +55,30 @@ pub async fn determine_workflow(
         }
     }
 
+    // Check of sample size import
+    if sample_size.is_some() {
+        let sample_size = sample_size.unwrap() as u32;
+
+        if db_asset_count == sample_size
+            && db_exchange_count == sample_size
+            && db_instrument_count == sample_size
+        {
+            print_utils::dbg_print("Nothing imported; sample requested return ImportSample");
+            all_op = WorkflowOpAll::NoOPAll;
+
+            return MetaDataDBWOp::new(all_op, assets_op, exchanges_op, instruments_op);
+        }
+    }
+
+    // Check for full import i.e. everything already imported
     if db_asset_count == kaiko_asset_count
         && db_exchange_count == kaiko_exchange_count
         && db_instrument_count == kaiko_instrument_count
     {
         print_utils::dbg_print("Everything imported already; return NoOPAll");
         all_op = WorkflowOpAll::NoOPAll;
+
+        return MetaDataDBWOp::new(all_op, assets_op, exchanges_op, instruments_op);
     }
 
     // Check for partial import

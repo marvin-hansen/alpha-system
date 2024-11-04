@@ -2,6 +2,7 @@ use common_config::prelude::ServiceID;
 use container_specs_postgres::postgres_db_container_config;
 use docker_utils::prelude::DockerUtil;
 use mddb_client::MDDBClient;
+use metadata_import::MetadataImportManager;
 use service_import::ServiceImportManager;
 use service_utils::ServiceUtil;
 use std::time::Duration;
@@ -40,7 +41,20 @@ async fn test_mddb() {
     let imported = service_import_manager.check_if_already_imported().await;
     assert!(imported);
 
-    // Test if metadata is already imported in the DB;
+    //Determine workflow for metadata import
+    let meta_data_import_manager = MetadataImportManager::with_debug().await;
+
+    // Import a sample of 50 metadata records for each type
+    let workflow = meta_data_import_manager
+        .determine_workflow(Some(50))
+        .await
+        .expect("Failed to determine workflow");
+
+    // Execute workflow
+    meta_data_import_manager
+        .execute_workflow(&workflow)
+        .await
+        .expect("Failed to execute workflow");
 
     // Start DBGW service - depends on Database
     let service_id = ServiceID::DBGW;

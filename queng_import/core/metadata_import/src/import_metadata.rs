@@ -38,7 +38,7 @@ impl MetadataImportManager {
             .expect("Failed to download metadata");
 
         self.dbg_print("Import metadata into Database");
-        execute_workflow(&self.dbm, &meta_data, &workflow).await;
+        execute_workflow(&self.dbm, &meta_data, workflow).await;
 
         Ok(())
     }

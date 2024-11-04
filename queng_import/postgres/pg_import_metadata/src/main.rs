@@ -40,7 +40,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     meta_data_import_manager
         .execute_workflow(&workflow)
         .await
-        .expect("TODO: panic message");
+        .expect("Failed to execute workflow");
     print_utils::print_duration("Executing workflow took", &start.elapsed());
 
     print_utils::print_duration("Main took", &start_main.elapsed());

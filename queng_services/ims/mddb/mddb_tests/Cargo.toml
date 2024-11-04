@@ -19,4 +19,5 @@ docker_utils = {workspace = true}
 service_import  = {workspace = true}
 service_utils = {workspace = true}
 mddb_client = {workspace = true}
+metadata_import = {workspace = true}
 tokio = {workspace = true}
