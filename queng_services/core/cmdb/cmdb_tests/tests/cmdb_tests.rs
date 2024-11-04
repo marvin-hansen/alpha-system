@@ -2,6 +2,7 @@ use cmdb_client::CmdbClient;
 use common_config::prelude::ServiceID;
 use container_specs_postgres::postgres_db_container_config;
 use docker_utils::prelude::DockerUtil;
+use portfolio_specs;
 use service_import::ServiceImportManager;
 use service_utils::ServiceUtil;
 use std::time::Duration;
@@ -43,7 +44,7 @@ async fn test_smdb() {
     // Start DBGW service - depends on Database
     let service_id = ServiceID::DBGW;
     let result = svc_util
-        .start_service(&service_id, Duration::from_millis(250))
+        .start_service(&service_id, Duration::from_millis(500))
         .await;
     dbg!(&result);
     assert!(result.is_ok());
@@ -51,14 +52,14 @@ async fn test_smdb() {
     // Start SMDB service - depends on DBGW
     let service_id = ServiceID::SMDB;
     let result = svc_util
-        .start_service(&service_id, Duration::from_millis(100))
+        .start_service(&service_id, Duration::from_millis(500))
         .await;
     assert!(result.is_ok());
 
     // Start CMDDB service - depends on SMDB and DBGW
     let service_id = ServiceID::CMDB;
     let result = svc_util
-        .start_service(&service_id, Duration::from_millis(100))
+        .start_service(&service_id, Duration::from_millis(500))
         .await;
     assert!(result.is_ok());
 
@@ -72,6 +73,81 @@ async fn test_smdb() {
 
     // Construct CMDB client
     let cmdb_client = CmdbClient::new(cmdb_host, cmdb_port).await;
+
+    // Test create_portfolio_config  - Success!
+    let portfolio_config = portfolio_specs::get_test_portfolio_config();
+    let result = cmdb_client
+        .create_portfolio_config(portfolio_config.clone())
+        .await;
+    dbg!(&result);
+    assert!(result.is_ok());
+
+    // Test create_portfolio_config - Error: portfolio config already exists
+    let result = cmdb_client
+        .create_portfolio_config(portfolio_config.clone())
+        .await;
+    dbg!(&result);
+    assert!(result.is_err());
+
+    // Test read_portfolio_config_by_id - Success!
+    let result = cmdb_client
+        .read_portfolio_config_by_id(portfolio_config.portfolio_id() as u16)
+        .await;
+    dbg!(&result);
+    assert!(result.is_ok());
+
+    // Test read_portfolio_config_by_id - Error: portfolio config does not exist
+    let result = cmdb_client.read_portfolio_config_by_id(47).await;
+    dbg!(&result);
+    assert!(result.is_err());
+
+    // Test read_all_portfolio_configs - Success!
+    let result = cmdb_client.read_all_portfolio_configs().await;
+    dbg!(&result);
+    assert!(result.is_ok());
+    let configs = result.unwrap();
+    assert!(configs.len() > 0);
+
+    // Test update_portfolio_config - Success!
+    let updated_portfolio_config = portfolio_specs::get_test_update_portfolio_config();
+    let result = cmdb_client
+        .update_portfolio_config(updated_portfolio_config.clone())
+        .await;
+    dbg!(&result);
+    assert!(result.is_ok());
+
+    let result = cmdb_client
+        .read_portfolio_config_by_id(portfolio_config.portfolio_id() as u16)
+        .await;
+    dbg!(&result);
+    assert!(result.is_ok());
+
+    let db_updated_portfolio_config = result.unwrap().unwrap();
+    assert_eq!(db_updated_portfolio_config, updated_portfolio_config);
+
+    // Test update_portfolio_config - Error: portfolio config does not exist
+    let error_portfolio_config = portfolio_specs::get_test_update_error_portfolio_config();
+    let result = cmdb_client
+        .update_portfolio_config(error_portfolio_config)
+        .await;
+    dbg!(&result);
+    assert!(result.is_err());
+
+    // Test delete_portfolio_config - Success!
+    let result = cmdb_client
+        .delete_portfolio_config(portfolio_config.portfolio_id() as u16)
+        .await;
+    dbg!(&result);
+    assert!(result.is_ok());
+    let is_deleted = result.unwrap();
+    assert!(is_deleted);
+
+    // Test delete_portfolio_config - Error: portfolio config does not exist
+    let result = cmdb_client.delete_portfolio_config(787).await;
+    dbg!(&result);
+    assert!(result.is_ok());
+    let is_deleted = result.unwrap();
+    assert!(!is_deleted);
 
     // Stop and remove container
     let result = docker_util.stop_container(&pg_container_id);

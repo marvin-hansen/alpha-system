@@ -27,11 +27,11 @@ rust_test_suite(
         "//alias/client:cmdb_client",
         # Internal crates
         "//alias:common_config",
-        "//alias:config_import",
         "//alias:container_specs_postgres",
         "//alias:docker_utils",
         "//alias:service_import",
         "//alias:service_utils",
+        "//alias:portfolio_specs",
         # External crates
         "//thirdparty/crates:tokio",
     ],

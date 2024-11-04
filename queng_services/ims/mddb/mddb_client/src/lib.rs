@@ -1,7 +1,6 @@
 mod error;
 mod mddb_client;
 
-use common_config::prelude::HostEndpoint;
 use proto_mddb::proto::mddb_service_client::MddbServiceClient;
 use std::fmt::Error;
 use tonic::transport::{Channel, Uri};
@@ -27,23 +26,19 @@ impl MDDBClient {
     ///
     /// Returns a SymdbClient connected to the given address.
     ///
-    pub async fn new(config: HostEndpoint<'_>) -> Result<Self, Error> {
-        // Extract host and port from config
-        let port = config.port();
-        let host = config.host_uri();
-
+    pub async fn new(host: String, port: u16) -> Result<Self, Error> {
         // "http://[::1]:7070"
         let s = format!("http://{}:{}", host, port);
 
         let uri = s
             .parse::<Uri>()
-            .unwrap_or_else(|_| panic!("\r\n ❌ [SymdbClient]: Failed to parse server URI: {}", s));
+            .unwrap_or_else(|_| panic!("\r\n ❌ [MDDBClient]: Failed to parse server URI: {}", s));
 
         // creating a channel that connects to server
         let channel = Channel::builder(uri)
             .connect()
             .await
-            .unwrap_or_else(|_| panic!("\r\n ❌[SymdbClient]: Failed to connect to SYMDB service on: {} \r\n  \r\n Detail: \r\n", s));
+            .unwrap_or_else(|_| panic!("\r\n ❌[MDDBClient]: Failed to connect to MDDB service on: {} \r\n  \r\n Detail: \r\n", s));
 
         let client = MddbServiceClient::new(channel);
 

@@ -18,7 +18,7 @@ impl CmdbClient {
     /// A `Result` that is either `Ok(true)` if the portfolio configuration was successfully created,
     /// or an `Err` containing a `CMDBError` if there was an error creating the portfolio configuration.
     ///
-    pub async fn create_portfolio_config(self, data: PortfolioConfig) -> Result<bool, CMDBError> {
+    pub async fn create_portfolio_config(&self, data: PortfolioConfig) -> Result<bool, CMDBError> {
         let proto_portfolio_config = portfolio_config_to_proto(data)
             .expect("Failed to convert Rust PortfolioConfig to proto");
 
@@ -45,7 +45,7 @@ impl CmdbClient {
     /// or `Ok(None)` if the portfolio configuration does not exist, or an `Err` containing a `CMDBError` if there was an
     /// error reading the portfolio configuration.
     pub async fn read_portfolio_config_by_id(
-        self,
+        &self,
         id: u16,
     ) -> Result<Option<PortfolioConfig>, CMDBError> {
         let request = tonic::Request::new(SinglePortfolioRequest {
@@ -75,7 +75,7 @@ impl CmdbClient {
     ///
     /// A `Result` containing a `Vec` of `PortfolioConfig` if the portfolio configurations were successfully read,
     /// or an `Err` containing a `CMDBError` if there was an error reading the portfolio configurations.
-    pub async fn read_all_portfolio_configs(self) -> Result<Vec<PortfolioConfig>, CMDBError> {
+    pub async fn read_all_portfolio_configs(&self) -> Result<Vec<PortfolioConfig>, CMDBError> {
         let request = tonic::Request::new(MultiPortfolioRequest {
             portfolios_all: true,
         });
@@ -113,7 +113,7 @@ impl CmdbClient {
     /// A `Result` that is either `Ok(true)` if the portfolio configuration was successfully updated,
     /// or an `Err` containing a `CMDBError` if there was an error updating the portfolio configuration.
     ///
-    pub async fn update_portfolio_config(self, data: PortfolioConfig) -> Result<bool, CMDBError> {
+    pub async fn update_portfolio_config(&self, data: PortfolioConfig) -> Result<bool, CMDBError> {
         let proto_portfolio_config = portfolio_config_to_proto(data)
             .expect("Failed to convert Rust PortfolioConfig to proto");
 
@@ -138,7 +138,7 @@ impl CmdbClient {
     ///
     /// A `Result` that is either `Ok(true)` if the portfolio configuration was successfully deleted,
     /// or an `Err` containing a `CMDBError` if there was an error deleting the portfolio configuration.
-    pub async fn delete_portfolio_config(self, id: u16) -> Result<bool, CMDBError> {
+    pub async fn delete_portfolio_config(&self, id: u16) -> Result<bool, CMDBError> {
         let request = tonic::Request::new(SinglePortfolioRequest {
             portfolio_id: id as u32,
         });

@@ -1,9 +1,10 @@
 use cmdb_specs::cmdb_service_config;
-use common_config::prelude::ServiceID::{CMDB, DBGW, SMDB};
+use common_config::prelude::ServiceID::{CMDB, DBGW, MDDB, SMDB};
 use common_config::prelude::{ServiceID, SvcEnvConfig};
 use common_env::prelude::EnvironmentType;
 use common_errors::prelude::InitError;
 use dbgw_specs::dbgw_service_config;
+use mddb_specs::mddb_service_config;
 use smdb_specs::smdb_service_config;
 
 use crate::build_utils as utils;
@@ -33,8 +34,8 @@ impl CfgManager {
     ///
     /// # Returns
     ///
-    /// A tuple containing the host and port of the CMDB service as a string and u16, respectively. Returns an error if the
-    /// host and port cannot be obtained.
+    /// A tuple containing the host and port of the CMDB service as a string and u16, respectively.
+    /// Returns an error if the host and port cannot be obtained.
     ///
     pub async fn get_cmdb_host_port(&self) -> Result<(String, u16), InitError> {
         self.dbg_print("get_cmdb_host_port");
@@ -44,6 +45,26 @@ impl CfgManager {
 
         self.dbg_print("Construct contextual service environment configuration");
         let svc_env_config = utils::get_svc_env_config(self.dbg, CMDB, &svc_config);
+
+        self.dbg_print("Get the host and port of the service");
+        self.get_host(&svc_env_config).await
+    }
+
+    /// Returns the host and port of the MDDB service.
+    ///
+    /// # Returns
+    ///
+    /// A tuple containing the host and port of the MDDB service as a string and u16, respectively.
+    /// Returns an error if the host and port cannot be obtained.
+    ///
+    pub async fn get_mddb_host_port(&self) -> Result<(String, u16), InitError> {
+        self.dbg_print("get_mddb_host_port");
+
+        self.dbg_print("Get MDDB service configuration!");
+        let svc_config = mddb_service_config();
+
+        self.dbg_print("Construct contextual service environment configuration");
+        let svc_env_config = utils::get_svc_env_config(self.dbg, MDDB, &svc_config);
 
         self.dbg_print("Get the host and port of the service");
         self.get_host(&svc_env_config).await

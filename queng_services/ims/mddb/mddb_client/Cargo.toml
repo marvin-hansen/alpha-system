@@ -9,7 +9,6 @@ authors.workspace = true
 
 [dependencies]
 # Internal crates
-common_config = {workspace = true}
 common_metadata = {workspace = true}
 proto_mddb = {workspace = true}
 proto_mddb_utils = {workspace = true}

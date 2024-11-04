@@ -14,7 +14,7 @@ use tonic::transport::{Channel, Uri};
 static GLOBAL: MiMalloc = MiMalloc;
 
 const SVC_ID: ServiceID = ServiceID::MDDB;
-const DBG: bool = true;
+const DBG: bool = false;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {

@@ -51,7 +51,7 @@ async fn test_smdb() {
     // Start SMDB service - depends on DBGW
     let service_id = ServiceID::SMDB;
     let result = svc_util
-        .start_service(&service_id, Duration::from_millis(100))
+        .start_service(&service_id, Duration::from_millis(500))
         .await;
     assert!(result.is_ok());
 

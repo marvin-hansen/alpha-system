@@ -212,14 +212,24 @@ impl PostgresCMDBManager {
     /// * `Result<bool, PostgresDBError>` - A result indicating success or failure.
     /// * If the portfolio was deleted, returns `Ok(true)`.
     /// * If the portfolio does not exist, returns `Ok(false)`.
+    /// * If the deletion fails, returns an `Err` containing a `PostgresDBError`.
     ///
     pub async fn delete_portfolio_config(&self, id: u16) -> Result<bool, PostgresDBError> {
         self.dbg_print("delete_portfolio_config");
         let conn = &mut self.get_connection();
 
-        match Portfolio::delete(conn, id as i32) {
-            Ok(_) => Ok(true),
-            Err(e) => Err(PostgresDBError::DeleteFailed(e.to_string())),
+        match self.check_if_portfolio_id_exists(id).await {
+            Ok(exists) => {
+                if !exists {
+                    return Ok(false);
+                } else {
+                    match Portfolio::delete(conn, id as i32) {
+                        Ok(_) => Ok(true),
+                        Err(e) => Err(PostgresDBError::DeleteFailed(e.to_string())),
+                    }
+                }
+            }
+            Err(e) => return Err(PostgresDBError::CheckIfExistsFailed(e.to_string())),
         }
     }
 }

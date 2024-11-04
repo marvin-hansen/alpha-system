@@ -3,4 +3,4 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-ENV=LOCAL bazel run //alias/mddb:dbgw
+ENV=LOCAL bazel run //alias/service:mddb
