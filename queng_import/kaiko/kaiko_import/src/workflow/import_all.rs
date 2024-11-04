@@ -24,6 +24,16 @@ pub(crate) async fn import_all_metadata(dbm_mddb: &PostgresMDDBManager, meta_dat
     )
 }
 
+/// Imports a sample of metadata into the database, including assets, exchanges, and instruments.
+///
+/// # Arguments
+/// * `dbm_mddb` - PostgreSQL metadata database manager
+/// * `meta_data` - Source metadata set to import from
+/// * `sample_size` - Number of records to import for each category
+///
+/// # Returns
+/// Nothing. Prints debug information about the import process and final counts.
+///
 pub(crate) async fn import_metadata_sample(
     dbm_mddb: &PostgresMDDBManager,
     meta_data: &MetaDataSet,

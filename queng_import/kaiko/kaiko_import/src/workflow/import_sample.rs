@@ -2,6 +2,16 @@ use crate::print_utils;
 use common_metadata::prelude::MetaDataSet;
 use pg_mddb_manager::PostgresMDDBManager;
 
+/// Imports a sample of asset metadata into the database.
+///
+/// # Arguments
+/// * `dbm_mddb` - PostgreSQL metadata database manager
+/// * `meta_data` - Source metadata set containing assets
+/// * `sample_size` - Number of assets to import (must be less than total assets)
+///
+/// # Returns
+/// The number of assets in the database after import
+///
 pub(crate) async fn import_assets_metadata_sample(
     dbm_mddb: &PostgresMDDBManager,
     meta_data: &MetaDataSet,
@@ -38,6 +48,18 @@ pub(crate) async fn import_assets_metadata_sample(
     db_asset_count
 }
 
+/// Imports a sample of exchange metadata into the database.
+///
+/// # Arguments
+///
+/// * `dbm_mddb` - The metadata database manager.
+/// * `meta_data` - The metadata set containing exchange data.
+/// * `sample_size` - The number of exchanges to import.
+///
+/// # Returns
+///
+/// The total number of exchanges in the database after import.
+///
 pub(crate) async fn import_exchanges_metadata_sample(
     dbm_mddb: &PostgresMDDBManager,
     meta_data: &MetaDataSet,
@@ -77,6 +99,16 @@ pub(crate) async fn import_exchanges_metadata_sample(
     db_exchange_count
 }
 
+/// Imports a sample of instruments metadata into the database.
+///
+/// # Arguments
+/// * `dbm_mddb` - PostgreSQL metadata database manager
+/// * `meta_data` - Source metadata set containing instruments
+/// * `sample_size` - Number of instruments to import (must be less than total instruments)
+///
+/// # Returns
+/// Number of instruments in database after import
+///
 pub(crate) async fn import_instruments_metadata_sample(
     dbm_mddb: &PostgresMDDBManager,
     meta_data: &MetaDataSet,
