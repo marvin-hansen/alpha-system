@@ -19,7 +19,7 @@ pub(crate) async fn import_assets_metadata_sample(
 ) -> Result<usize, &'static str> {
     print_utils::dbg_print("import_assets_metadata_sample");
 
-    assert!(sample_size < meta_data.assets().data.len());
+    assert!(sample_size <= meta_data.assets().data.len());
 
     print_utils::dbg_print("Importing assets");
     let expected_asset_count = sample_size;
@@ -67,7 +67,7 @@ pub(crate) async fn import_exchanges_metadata_sample(
 ) -> Result<usize, &'static str> {
     print_utils::dbg_print("import_exchange_metadata_sample");
 
-    assert!(sample_size < meta_data.exchanges().data.len());
+    assert!(sample_size <= meta_data.exchanges().data.len());
 
     print_utils::dbg_print("Importing exchanges");
     let expected_exchange_count = sample_size;
@@ -116,7 +116,7 @@ pub(crate) async fn import_instruments_metadata_sample(
 ) -> Result<usize, &'static str> {
     print_utils::dbg_print("import_instruments_metadata_sample");
 
-    assert!(sample_size < meta_data.instruments().data.len());
+    assert!(sample_size <= meta_data.instruments().data.len());
 
     print_utils::dbg_print("Importing instruments");
     let expected_instrument_count = sample_size;

@@ -5,6 +5,7 @@ rust_test_suite(
     srcs = glob([
         "import_full_tests.rs",
         "import_partial_tests.rs",
+        "import_sample_tests.rs",
     ]),
     exec_properties = {
         # Tell BuildBuddy to run this test using a Firecracker microVM.
