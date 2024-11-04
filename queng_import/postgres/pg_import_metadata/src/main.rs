@@ -45,7 +45,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .expect("Failed to download metadata stats");
 
     print_utils::dbg_print("Determine workflow");
-    let workflow = determine_workflow(&meta_data_stats, &meta_data_db).await;
+    let workflow = determine_workflow(&meta_data_stats, &meta_data_db, None).await;
 
     if workflow.all_op() == WorkflowOpAll::NoOPAll {
         print_utils::print_already_imported_header();

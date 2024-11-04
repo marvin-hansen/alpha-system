@@ -22,8 +22,9 @@ use common_metadata::prelude::{MetaDataDBRecords, MetaStats};
 pub async fn determine_workflow(
     stats: &MetaStats,
     meta_data_db: &MetaDataDBRecords,
+    sample_size: Option<usize>,
 ) -> MetaDataDBWOp {
-    print_utils::dbg_print("workflow_dispatch");
+    print_utils::dbg_print("determine_workflow");
 
     // Set all fields initially to no-op in case nothing else can be determined
     // For partial import or partial update, only the affected field will be marked
@@ -44,8 +45,14 @@ pub async fn determine_workflow(
     let db_instrument_count = meta_data_db.number_db_instruments();
 
     if db_asset_count == 0 && db_exchange_count == 0 && db_instrument_count == 0 {
-        print_utils::dbg_print("Nothing imported; return ImportAll");
-        all_op = WorkflowOpAll::ImportAll;
+        if sample_size.is_some() {
+            print_utils::dbg_print("Nothing imported; sample requested return ImportSample");
+            let sample_size = sample_size.unwrap();
+            all_op = WorkflowOpAll::ImportSample(sample_size);
+        } else {
+            print_utils::dbg_print("Nothing imported; return ImportAll");
+            all_op = WorkflowOpAll::ImportAll;
+        }
     }
 
     if db_asset_count == kaiko_asset_count

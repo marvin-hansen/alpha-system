@@ -4,6 +4,8 @@ use postgres_config_manager::PostgresConfigManager;
 
 mod import_metadata;
 
+const AUTO_DETECT_PROXY: bool = true;
+
 #[derive(Debug, Clone)]
 pub struct MetadataImportManager {
     dbg: bool,
