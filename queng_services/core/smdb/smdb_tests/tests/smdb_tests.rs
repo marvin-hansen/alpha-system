@@ -4,6 +4,7 @@ use docker_utils::prelude::DockerUtil;
 use service_import::ServiceImportManager;
 use service_utils::ServiceUtil;
 use smdb_client::SMDBClient;
+use std::time::Duration;
 
 #[tokio::test]
 async fn test_smdb() {
@@ -41,13 +42,17 @@ async fn test_smdb() {
 
     // Start DBGW service - depends on Database
     let service_id = ServiceID::DBGW;
-    let result = svc_util.start_service(&service_id, 1).await;
+    let result = svc_util
+        .start_service(&service_id, Duration::from_millis(500))
+        .await;
     dbg!(&result);
     assert!(result.is_ok());
 
     // Start SMDB service - depends on DBGW
     let service_id = ServiceID::SMDB;
-    let result = svc_util.start_service(&service_id, 1).await;
+    let result = svc_util
+        .start_service(&service_id, Duration::from_millis(100))
+        .await;
     assert!(result.is_ok());
 
     // Configure SMDB client

@@ -16,9 +16,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     let config_import_manager = ConfigImportManager::with_test_and_debug().await;
 
-    let already_imported = config_import_manager
-        .check_if_portfolios_already_imported()
-        .await;
+    let already_imported = config_import_manager.check_if_portfolios_imported().await;
 
     // If all services have already been imported, exit the program
     if already_imported {

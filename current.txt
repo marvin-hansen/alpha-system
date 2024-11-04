@@ -1,1 +1,1 @@
-//alias/client:mddb_client
+//queng_services/core/cmdb/cmdb_tests/tests

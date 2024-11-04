@@ -2,7 +2,7 @@ use crate::ConfigImportManager;
 use std::io::{Error, ErrorKind};
 
 impl ConfigImportManager {
-    pub async fn check_if_portfolios_already_imported(&self) -> bool {
+    pub async fn check_if_portfolios_imported(&self) -> bool {
         self.dbg_print("check_if_portfolios_already_imported");
 
         let expected_count = self.portfolio_configs.len();

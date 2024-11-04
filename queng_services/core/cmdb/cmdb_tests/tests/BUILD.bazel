@@ -1,7 +1,7 @@
 load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 
 rust_test_suite(
-    name = "cmdb_tests",
+    name = "tests",
     srcs = glob([
         "*_tests.rs",
     ]),
@@ -27,6 +27,7 @@ rust_test_suite(
         "//alias/client:cmdb_client",
         # Internal crates
         "//alias:common_config",
+        "//alias:config_import",
         "//alias:container_specs_postgres",
         "//alias:docker_utils",
         "//alias:service_import",

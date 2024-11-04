@@ -1,5 +1,6 @@
 use mimalloc::MiMalloc;
 use std::error::Error;
+use tokio::time::Instant;
 use tonic::transport::{Channel, Server, Uri};
 
 use common_config::prelude::ServiceID;
@@ -13,11 +14,13 @@ mod service;
 
 #[global_allocator]
 static GLOBAL: MiMalloc = MiMalloc;
-const DBG: bool = true;
+const DBG: bool = false;
 const SVC_ID: ServiceID = ServiceID::SMDB;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
+    let start = Instant::now();
+
     dbg_print("Setup autoconfiguration");
     let svc_config = smdb_specs::smdb_service_config();
 
@@ -94,6 +97,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .expect("[SMDB]: Failed to set service online");
 
     // Start all servers jointly
+    print_utils::print_duration("Starting SMDB took:", &start.elapsed());
     print_utils::print_start_header(
         &SVC_ID,
         &service_addr,

@@ -70,7 +70,7 @@ pub fn build_pg_connection_pool(
 
         Pool::builder()
             .test_on_check_out(true)
-            .max_size(10)
+            .max_size(5)
             .idle_timeout(Some(Duration::from_secs(10 * 60)))
             .connection_timeout(Duration::from_secs(30))
             .build(ConnectionManager::<PgConnection>::new(url))

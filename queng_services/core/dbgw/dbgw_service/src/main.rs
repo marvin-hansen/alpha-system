@@ -3,6 +3,7 @@ use std::error::Error;
 use std::net::SocketAddr;
 use std::sync::Arc;
 use tokio::sync::RwLock;
+use tokio::time::Instant;
 use tonic::transport::Server;
 use warp::Filter;
 
@@ -24,7 +25,7 @@ mod service_cmdb;
 mod service_mddb;
 mod service_smdb;
 
-const DBG: bool = true;
+const DBG: bool = false;
 const SVC_ID: ServiceID = ServiceID::DBGW;
 
 // Overwrites the default memory allocator.
@@ -35,6 +36,8 @@ static GLOBAL: MiMalloc = MiMalloc;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
+    let start = Instant::now();
+
     dbg_print("Setup autoconfiguration");
     let svc_config = dbgw_specs::dbgw_service_config();
     let cfg_manager = CfgManager::build(DBG, SVC_ID, svc_config);
@@ -128,6 +131,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
             .expect("DBGW: Failed to set service online");
     }
 
+    print_utils::print_duration("Starting DBGW took:", &start.elapsed());
     print_utils::print_start_header(
         &SVC_ID,
         &service_addr,

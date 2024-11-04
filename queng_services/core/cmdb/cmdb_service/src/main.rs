@@ -14,7 +14,7 @@ mod service;
 static GLOBAL: MiMalloc = MiMalloc;
 
 const SVC_ID: ServiceID = ServiceID::CMDB;
-const DBG: bool = true;
+const DBG: bool = false;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {

@@ -19,9 +19,7 @@ async fn all_setup() {
 pub async fn test_check_if_portfolios_already_imported() {
     let config_import_manager = ConfigImportManager::with_test_and_debug().await;
 
-    let not_imported = config_import_manager
-        .check_if_portfolios_already_imported()
-        .await;
+    let not_imported = config_import_manager.check_if_portfolios_imported().await;
     assert!(!not_imported);
 
     config_import_manager
@@ -29,9 +27,7 @@ pub async fn test_check_if_portfolios_already_imported() {
         .await
         .expect("Failed to import portfolios");
 
-    let imported = config_import_manager
-        .check_if_portfolios_already_imported()
-        .await;
+    let imported = config_import_manager.check_if_portfolios_imported().await;
     assert!(imported);
 }
 
@@ -39,9 +35,7 @@ pub async fn test_check_if_portfolios_already_imported() {
 async fn test_import_portfolios() {
     let config_import_manager = ConfigImportManager::with_test_and_debug().await;
 
-    let not_imported = config_import_manager
-        .check_if_portfolios_already_imported()
-        .await;
+    let not_imported = config_import_manager.check_if_portfolios_imported().await;
     assert!(!not_imported);
 
     let zero_count = config_import_manager.count_db_portfolios().await;
@@ -52,9 +46,7 @@ async fn test_import_portfolios() {
         .await
         .expect("Failed to import portfolios");
 
-    let imported = config_import_manager
-        .check_if_portfolios_already_imported()
-        .await;
+    let imported = config_import_manager.check_if_portfolios_imported().await;
     assert!(imported);
 
     let not_zero_count = config_import_manager.count_db_portfolios().await;

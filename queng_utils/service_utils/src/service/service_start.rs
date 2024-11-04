@@ -17,7 +17,11 @@ impl ServiceUtil {
     /// # Returns
     ///
     /// Returns a `ServiceUtilError` if the service could not be started.
-    pub async fn start_service(&self, svc: &ServiceID, secs: u64) -> Result<(), ServiceUtilError> {
+    pub async fn start_service(
+        &self,
+        svc: &ServiceID,
+        wait_duration: Duration,
+    ) -> Result<(), ServiceUtilError> {
         self.dbg_print("start_service");
         self.dbg_print(&format!(
             "Starting service: {}",
@@ -43,7 +47,7 @@ impl ServiceUtil {
         cmd.spawn().expect("Failed to run command");
 
         self.dbg_print("Waiting for service to start");
-        sleep(Duration::from_secs(secs)).await;
+        sleep(wait_duration).await;
 
         self.dbg_print("Service started");
 

@@ -4,6 +4,7 @@ use config_manager::CfgManager;
 use smdb_client::SMDBClient;
 use std::convert::Infallible;
 use std::error::Error;
+use tokio::time::Instant;
 use tonic::body::BoxBody;
 use tonic::codegen::http::{Request, Response};
 use tonic::codegen::Service;
@@ -31,6 +32,7 @@ where
             println!("[{}]: {}", svc_id, msg)
         }
     };
+    let start = Instant::now();
 
     dbg_print("get SMDB endpoint from auto config");
     let (smdb_host, smdb_port) = cfg_manager
@@ -82,12 +84,12 @@ where
         .await
         .expect("Failed to set service online");
 
-    // Print service start header
-    print_utils::print_start_header_simple(&svc_id.name(), &service_addr);
-
     // Free up some memory before starting the service,
     drop(cfg_manager);
-    drop(service_addr);
+
+    // Print service start header
+    print_utils::print_duration("Starting service took:", &start.elapsed());
+    print_utils::print_start_header_simple(&svc_id.name(), &service_addr);
 
     // Start all servers jointly
     match tokio::try_join!(grpc_handle) {
