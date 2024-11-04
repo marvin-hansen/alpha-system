@@ -14,6 +14,7 @@ path = "src/fake_lib.rs"
 # For testing
 [dev-dependencies]
 common_config = {workspace = true}
+common_env = {workspace = true}
 container_specs_postgres = {workspace = true}
 docker_utils = {workspace = true}
 service_import  = {workspace = true}

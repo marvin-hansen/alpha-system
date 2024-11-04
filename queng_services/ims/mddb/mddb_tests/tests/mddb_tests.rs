@@ -1,4 +1,5 @@
 use common_config::prelude::ServiceID;
+use common_env::prelude::EnvironmentType;
 use container_specs_postgres::postgres_db_container_config;
 use docker_utils::prelude::DockerUtil;
 use mddb_client::MDDBClient;
@@ -27,6 +28,8 @@ async fn test_mddb() {
     // Get config manger for automatic configuration
     let config_manager = svc_util.config_manager();
 
+    let env_type = config_manager.env_type();
+
     // Test if service data is already imported in the DB; if not, do so.
     let service_import_manager = ServiceImportManager::with_debug().await;
     let imported = service_import_manager.check_if_already_imported().await;
@@ -40,6 +43,21 @@ async fn test_mddb() {
 
     let imported = service_import_manager.check_if_already_imported().await;
     assert!(imported);
+
+    // Here we assume you have a KaikoProxy service running locally;
+    // In any other environment i.e. CI, we start one except for cluster, which refers to prod.
+    if env_type != EnvironmentType::LOCAL && env_type != EnvironmentType::CLUSTER {
+        // Start KaikoProxy proxy service, which is required for metadata import.
+        let service_id = ServiceID::KaikoProxy;
+        let result = svc_util
+            //
+            // Set wait to a more appropriate strategy i.e. wait for health check
+            //
+            .start_service(&service_id, Duration::from_secs(20))
+            .await;
+        dbg!(&result);
+        assert!(result.is_ok());
+    }
 
     //Determine workflow for metadata import
     let meta_data_import_manager = MetadataImportManager::with_debug().await;
@@ -116,8 +134,26 @@ async fn test_mddb() {
     let exists = result.unwrap();
     assert!(!exists);
 
+    // Test get_asset - success case
+    let result = mddb_client.get_asset("42").await;
+    assert!(result.is_ok());
+    let asset = result.unwrap();
+    assert!(asset.is_some());
+
+    // Test get_asset - fail case
+    let result = mddb_client.get_asset("zztopxyz_non_exist").await;
+    assert!(result.is_err());
+
+    // Test get_all_assets - success case
+    let result = mddb_client.get_all_assets().await;
+    assert!(result.is_ok());
+    let assets = result.unwrap();
+    assert!(!assets.is_empty());
+    let len = assets.len();
+    assert_eq!(len, 50);
+
     // Stop and remove container
-    // let result = docker_util.stop_container(&pg_container_id);
-    // dbg!(&result);
-    // assert!(result.is_ok());
+    let result = docker_util.stop_container(&pg_container_id);
+    dbg!(&result);
+    assert!(result.is_ok());
 }
