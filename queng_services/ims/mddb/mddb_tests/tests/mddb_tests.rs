@@ -56,7 +56,7 @@ async fn test_mddb() {
         let kaiko_service_id = ServiceID::KaikoProxy;
         let kaiko_wait_strategy = ServiceWaitStrategy::HttpHealthCheck(
             "http://localhost:7777/health".to_string(),
-            Duration::from_secs(60),
+            Duration::from_secs(120),
         );
         let result = svc_util
             .start_service(&kaiko_service_id, &kaiko_wait_strategy)
