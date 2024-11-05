@@ -59,7 +59,6 @@ platform(
     ],
     exec_properties = {
         "OSFamily": "Linux",
-        "dockerNetwork": "on",
     },
 )
 
