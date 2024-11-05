@@ -17,14 +17,6 @@ const INSTRUMENTS_SAMPLE_SIZE: usize = 500;
 #[tokio::test]
 async fn test_mddb() {
     let docker_util = DockerUtil::with_debug().expect("Failed to get DockerUtil");
-
-    // Start or reuse a test postgres database container
-    let pg_container_config = postgres_db_container_config();
-    let result = docker_util.get_or_start_container_config(&pg_container_config);
-    dbg!(&result);
-    assert!(result.is_ok());
-    let (pg_container_id, _) = result.unwrap();
-
     // Start service util
     let res = ServiceUtil::with_debug().await;
     dbg!(&res);
@@ -35,6 +27,23 @@ async fn test_mddb() {
     let config_manager = svc_util.config_manager();
 
     let env_type = config_manager.env_type();
+
+    // Start or reuse a test postgres database container
+    let pg_container_config = postgres_db_container_config();
+    let result = docker_util.get_or_start_container_config(&pg_container_config);
+    dbg!(&result);
+    assert!(result.is_ok());
+    let (pg_container_id, _) = result.unwrap();
+
+    // Here we assume you have a KaikoProxy service running locally;
+    // On CI, we have to start the proxy service.
+    if env_type == EnvironmentType::CI {
+        // Start KaikoProxy proxy service, which is required for metadata import.
+        let kaiko_proxy_container_config = api_proxy_container_config();
+        let result = docker_util.get_or_start_container_config(&kaiko_proxy_container_config);
+        dbg!(&result);
+        assert!(result.is_ok());
+    }
 
     // Test if service data is already imported in the DB; if not, do so.
     let service_import_manager = ServiceImportManager::with_debug().await;
@@ -49,16 +58,6 @@ async fn test_mddb() {
 
     let imported = service_import_manager.check_if_already_imported().await;
     assert!(imported);
-
-    // Here we assume you have a KaikoProxy service running locally;
-    // On CI, we have to start the proxy service.
-    if env_type == EnvironmentType::CI {
-        // Start KaikoProxy proxy service, which is required for metadata import.
-        let kaiko_proxy_container_config = api_proxy_container_config();
-        let result = docker_util.get_or_start_container_config(&kaiko_proxy_container_config);
-        dbg!(&result);
-        assert!(result.is_ok());
-    }
 
     //Determine workflow for metadata import
     let meta_data_import_manager = MetadataImportManager::with_debug().await;
