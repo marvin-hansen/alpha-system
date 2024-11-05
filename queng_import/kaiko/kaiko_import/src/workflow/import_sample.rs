@@ -121,16 +121,17 @@ pub(crate) async fn import_instruments_metadata_sample(
     print_utils::dbg_print("Importing instruments");
     let expected_instrument_count = sample_size;
 
-    let mut counter = 0;
-    for instrument in &meta_data.instruments().data {
-        if counter < sample_size {
-            dbm_mddb
-                .insert_instrument(instrument.clone())
-                .await
-                .expect("Failed to import instruments");
-            counter += 1;
-        }
-    }
+    let instruments = meta_data.instruments().data.as_slice();
+    let mut data = Vec::from(instruments);
+    data.truncate(sample_size);
+    data.shrink_to_fit();
+    assert_eq!(data.len(), sample_size);
+
+    // Batch insert is usually a lot faster. i.e. 10x faster than insert one by one.
+    dbm_mddb
+        .insert_instrument_collection(&data)
+        .await
+        .expect("Failed to import instruments");
 
     let db_instrument_count = dbm_mddb
         .count_instruments()

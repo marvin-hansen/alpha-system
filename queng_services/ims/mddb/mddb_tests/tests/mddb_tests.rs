@@ -8,6 +8,11 @@ use service_import::ServiceImportManager;
 use service_utils::{ServiceUtil, ServiceWaitStrategy};
 use std::time::Duration;
 
+const ASSETS_SAMPLE_SIZE: usize = 50;
+const EXCHANGES_SAMPLE_SIZE: usize = 50;
+//  We need to import more instruments b/c the first 50 do not have FIGI ID's assigned.
+const INSTRUMENTS_SAMPLE_SIZE: usize = 500;
+
 #[tokio::test]
 async fn test_mddb() {
     let docker_util = DockerUtil::with_debug().expect("Failed to get DockerUtil");
@@ -65,7 +70,11 @@ async fn test_mddb() {
 
     // Import a sample of 50 metadata records for each type
     let workflow = meta_data_import_manager
-        .determine_workflow(Some(50))
+        .determine_workflow(Some((
+            ASSETS_SAMPLE_SIZE,
+            EXCHANGES_SAMPLE_SIZE,
+            INSTRUMENTS_SAMPLE_SIZE,
+        )))
         .await
         .expect("Failed to determine workflow");
 
@@ -90,6 +99,13 @@ async fn test_mddb() {
     dbg!(&result);
     assert!(result.is_ok());
 
+    // Services other than DBGW usually start a lot faster.
+    let wait_strategy = if env_type == EnvironmentType::LOCAL {
+        ServiceWaitStrategy::Duration(Duration::from_millis(100))
+    } else {
+        ServiceWaitStrategy::Duration(Duration::from_millis(500))
+    };
+
     // Start SMDB service - depends on DBGW
     let service_id = ServiceID::SMDB;
     let result = svc_util.start_service(&service_id, &wait_strategy).await;
@@ -112,13 +128,29 @@ async fn test_mddb() {
         .await
         .expect("Failed to create MDDB client");
 
-    // Test MDDB Assets metadata methods.
+    // Test MDDB Assets methods.
+    test_metadata_assets_api(&mddb_client).await;
 
+    // Test MDDB Exchanges methods.
+    test_metadata_exchanges_api(&mddb_client).await;
+
+    // Test MDDB Instruments methods.
+    test_metadata_instruments_api(&mddb_client).await;
+
+    if env_type != EnvironmentType::LOCAL {
+        // Stop and remove container
+        let result = docker_util.stop_container(&pg_container_id);
+        dbg!(&result);
+        assert!(result.is_ok());
+    }
+}
+
+async fn test_metadata_assets_api(mddb_client: &MDDBClient) {
     // Test count_assets
     let result = mddb_client.count_assets().await;
     assert!(result.is_ok());
     let count = result.unwrap();
-    assert_eq!(count, 50);
+    assert_eq!(count, ASSETS_SAMPLE_SIZE as u64);
 
     // Test check_if_asset_id_exists - success case i,e, exists
     let exists_id = "42";
@@ -153,9 +185,100 @@ async fn test_mddb() {
     assert!(!assets.is_empty());
     let len = assets.len();
     assert_eq!(len, 50);
+}
 
-    // Stop and remove container
-    let result = docker_util.stop_container(&pg_container_id);
-    dbg!(&result);
+async fn test_metadata_exchanges_api(mddb_client: &MDDBClient) {
+    // Test count_exchanges
+    let result = mddb_client.count_exchanges().await;
     assert!(result.is_ok());
+    let count = result.unwrap();
+    assert_eq!(count, EXCHANGES_SAMPLE_SIZE as u64);
+
+    // Test check_if_exchange_id_exists - success case i,e, exists
+    let exists_id = "bbit";
+    let result = mddb_client.check_if_exchange_id_exists(exists_id).await;
+    assert!(result.is_ok());
+    let exists = result.unwrap();
+    assert!(exists);
+
+    // Test check_if_exchange_id_exists - Fail case i,e, does not exists.
+    let does_not_exists_id = "zztopxyz_non_exist";
+    let result = mddb_client
+        .check_if_exchange_id_exists(does_not_exists_id)
+        .await;
+    assert!(result.is_ok());
+    let exists = result.unwrap();
+    assert!(!exists);
+
+    // Test get_exchange - success case
+    let result = mddb_client.get_exchange("bbit").await;
+    assert!(result.is_ok());
+    // let exchange = result.unwrap();
+    // assert!(exchange.is_some());
+
+    // Test get_exchange - fail case
+    let result = mddb_client.get_exchange("zztopxyz_non_exist").await;
+    assert!(result.is_err());
+
+    // Test get_all_exchanges - success case
+    let result = mddb_client.get_all_exchanges().await;
+    assert!(result.is_ok());
+    let exchanges = result.unwrap();
+    assert!(!exchanges.is_empty());
+    let len = exchanges.len();
+    assert_eq!(len, 50);
+}
+
+async fn test_metadata_instruments_api(mddb_client: &MDDBClient) {
+    // Test count_instruments
+    let result = mddb_client.count_instruments().await;
+    assert!(result.is_ok());
+    let count = result.unwrap();
+    assert_eq!(count, INSTRUMENTS_SAMPLE_SIZE as u64);
+
+    // Test check_if_instrument_id_exists - success case i,e, exists
+    let exists_id = "bbit_perpetual-future_btc_usd";
+    let result = mddb_client.check_if_instrument_id_exists(exists_id).await;
+    assert!(result.is_ok());
+    let exists = result.unwrap();
+    assert!(exists);
+
+    // Test check_if_instrument_id_exists - Fail case i,e, does not exists.
+    let does_not_exists_id = "zztopxyz_non_exist";
+    let result = mddb_client
+        .check_if_instrument_id_exists(does_not_exists_id)
+        .await;
+    assert!(result.is_ok());
+    let exists = result.unwrap();
+    assert!(!exists);
+
+    // Test get_instrument - success case
+    let exists_id = "bbit_perpetual-future_btc_usd";
+    let result = mddb_client.get_instrument(exists_id).await;
+    assert!(result.is_ok());
+    let instrument = result.unwrap();
+    assert!(instrument.is_some());
+
+    // Test get_instrument - fail case
+    let does_not_exists_id = "zztopxyz_non_exist";
+    let result = mddb_client.get_instrument(does_not_exists_id).await;
+    assert!(result.is_ok());
+    let instrument = result.unwrap();
+    assert!(instrument.is_none());
+
+    // Test get_instrument_by_figi - success case
+    let exists_figi = "KKG00000V307";
+    let result = mddb_client.get_instrument_by_figi(exists_figi).await;
+    assert!(result.is_ok());
+    let instrument = result.unwrap();
+    assert!(instrument.is_some());
+
+    // Test get_instrument_by_figi - fail case
+    let does_not_exists_figi = "zztopxyz_non_exist";
+    let result = mddb_client
+        .get_instrument_by_figi(does_not_exists_figi)
+        .await;
+    assert!(result.is_ok());
+    let instrument = result.unwrap();
+    assert!(instrument.is_none());
 }

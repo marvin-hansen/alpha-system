@@ -1,7 +1,7 @@
 use crate::prelude::Instrument;
 use crate::schema::mddb::instruments::{
-    instrument_base_asset, instrument_code, instrument_exchanges_code, instrument_quote_asset,
-    table as instruments_table,
+    instrument_base_asset, instrument_exchange_pair_code, instrument_exchanges_code,
+    instrument_figi, instrument_pair_figi, instrument_quote_asset, table as instruments_table,
 };
 use crate::Connection;
 use common_metadata::prelude::MetaInstrument;
@@ -21,12 +21,12 @@ impl Instrument {
     ///
     /// A Result containing either Some(MetaInstrument) if the instrument is found, or None if not found.
 
-    pub fn read_instruments_by_code(
+    pub fn read_instruments_by_exchange_pair_code(
         conn: &mut Connection,
-        param_instrument_code: &str,
+        param_instrument_exchange_pair_code: &str,
     ) -> Result<Option<MetaInstrument>, diesel::result::Error> {
         match instruments_table::table()
-            .filter(instrument_code.eq(param_instrument_code))
+            .filter(instrument_exchange_pair_code.eq(param_instrument_exchange_pair_code))
             .first::<Instrument>(conn)
         {
             Ok(res) => Ok(Some(res.to_meta_instrument())),
@@ -49,10 +49,23 @@ impl Instrument {
     ///
     pub fn read_instrument_by_figi(
         conn: &mut Connection,
+        param_instrument_figi: &str,
+    ) -> Result<Option<MetaInstrument>, diesel::result::Error> {
+        match instruments_table::table()
+            .filter(instrument_figi.eq(param_instrument_figi))
+            .first::<Instrument>(conn)
+        {
+            Ok(res) => Ok(Some(res.to_meta_instrument())),
+            Err(_) => Ok(None),
+        }
+    }
+
+    pub fn read_instrument_by_pair_figi(
+        conn: &mut Connection,
         param_instrument_pair_figi: &str,
     ) -> Result<Option<MetaInstrument>, diesel::result::Error> {
         match instruments_table::table()
-            .filter(instrument_base_asset.eq(param_instrument_pair_figi))
+            .filter(instrument_pair_figi.eq(param_instrument_pair_figi))
             .first::<Instrument>(conn)
         {
             Ok(res) => Ok(Some(res.to_meta_instrument())),

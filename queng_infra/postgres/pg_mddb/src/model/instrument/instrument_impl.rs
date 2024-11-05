@@ -144,11 +144,16 @@ impl Instrument {
     pub fn read(
         conn: &mut Connection,
         instrument_id: &str,
-    ) -> Result<MetaInstrument, diesel::result::Error> {
-        instruments_table
-            .filter(crate::schema::mddb::instruments::instrument_id.eq(instrument_id))
-            .first::<Instrument>(conn)
-            .map(|instrument| instrument.to_meta_instrument())
+    ) -> Result<Option<MetaInstrument>, diesel::result::Error> {
+        let exists = Instrument::check_if_instrument_id_exists(conn, instrument_id)?;
+        if !exists {
+            Ok(None)
+        } else {
+            instruments_table
+                .filter(crate::schema::mddb::instruments::instrument_id.eq(instrument_id))
+                .first::<Instrument>(conn)
+                .map(|instrument| Some(instrument.to_meta_instrument()))
+        }
     }
 
     /// Reads all instruments from the database and converts them to `MetaInstrument` objects.

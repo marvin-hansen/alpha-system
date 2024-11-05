@@ -39,18 +39,26 @@ pub(crate) async fn import_all_metadata(dbm_mddb: &PostgresMDDBManager, meta_dat
 pub(crate) async fn import_metadata_sample(
     dbm_mddb: &PostgresMDDBManager,
     meta_data: &MetaDataSet,
-    sample_size: usize,
+    assets_sample_size: usize,
+    exchanges_sample_size: usize,
+    instruments_sample_size: usize,
 ) {
     print_utils::dbg_print("import_metadata_sample");
 
-    // Import all metadata in parallel
-    let (imported_asset_count, imported_exchange_count, imported_instrument_count) =
-        tokio::try_join!(
-            workflow::import_assets_metadata_sample(dbm_mddb, meta_data, sample_size),
-            workflow::import_exchanges_metadata_sample(dbm_mddb, meta_data, sample_size),
-            workflow::import_instruments_metadata_sample(dbm_mddb, meta_data, sample_size)
-        )
-        .expect("Failed to import metadata sample");
+    let imported_asset_count =
+        workflow::import_assets_metadata_sample(dbm_mddb, meta_data, assets_sample_size)
+            .await
+            .expect("Failed to import assets");
+
+    let imported_exchange_count =
+        workflow::import_exchanges_metadata_sample(dbm_mddb, meta_data, exchanges_sample_size)
+            .await
+            .expect("Failed to import exchanges");
+
+    let imported_instrument_count =
+        workflow::import_instruments_metadata_sample(dbm_mddb, meta_data, instruments_sample_size)
+            .await
+            .expect("Failed to import instruments");
 
     print_utils::print_stop_header(
         imported_asset_count,

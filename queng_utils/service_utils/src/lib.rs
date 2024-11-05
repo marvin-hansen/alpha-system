@@ -14,6 +14,7 @@ mod verify;
 pub enum ServiceWaitStrategy {
     Duration(Duration),
     HttpHealthCheck(String, Duration),
+    // GrpcHealthCheck(String, Duration),
 }
 
 #[derive(Debug)]

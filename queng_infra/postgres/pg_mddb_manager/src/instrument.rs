@@ -103,7 +103,7 @@ impl PostgresMDDBManager {
     pub async fn read_instrument(
         &self,
         instrument_id: &str,
-    ) -> Result<MetaInstrument, PostgresDBError> {
+    ) -> Result<Option<MetaInstrument>, PostgresDBError> {
         self.dbg_print("read_instrument");
         let conn = &mut self.get_connection();
 

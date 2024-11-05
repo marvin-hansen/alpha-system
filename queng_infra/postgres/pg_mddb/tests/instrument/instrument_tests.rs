@@ -276,7 +276,9 @@ async fn test_read_instrument_error() {
     let instrument_id = "Non-Existent".to_string();
 
     let result = Instrument::read(conn, &instrument_id);
-    assert!(result.is_err());
+    assert!(result.is_ok());
+    let result = result.unwrap();
+    assert!(result.is_none());
 }
 
 #[tokio::test]

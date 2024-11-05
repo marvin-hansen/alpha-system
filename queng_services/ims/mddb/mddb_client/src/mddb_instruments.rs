@@ -49,20 +49,14 @@ impl MDDBClient {
     pub async fn get_instrument(
         &self,
         instrument_id: &str,
-    ) -> Result<MetaInstrument, MDDBClientError> {
+    ) -> Result<Option<MetaInstrument>, MDDBClientError> {
         let mut client = self.client.clone();
         let request = instruments_utils::get_instrument_by_id_request(instrument_id);
 
         match client.get_instrument(request).await {
-            Ok(res) => {
-                let instrument = res
-                    .into_inner()
-                    .instrument
-                    .ok_or_else(|| MDDBClientError("Instrument not found".to_string()))?;
-                Ok(instruments_utils::proto_instrument_to_meta_instrument(
-                    &instrument,
-                ))
-            }
+            Ok(res) => Ok(res.into_inner().instrument.map(|instrument| {
+                instruments_utils::proto_instrument_to_meta_instrument(&instrument)
+            })),
             Err(e) => Err(MDDBClientError(e.to_string())),
         }
     }
@@ -332,45 +326,71 @@ impl MDDBClient {
         }
     }
 
-    /// Looks up the exchange pair code name for a given instrument ID.
+    /// Looks up the instrument primary ID (key) for a exchange symbol pair code
     ///
     /// # Arguments
-    /// * `instrument_id` - The ID of the instrument to look up
+    /// * `instrument_exchange_pair_code` - The  exchange symbol pair code of the instrument to look up
     ///
     /// # Returns
-    /// * `Result<String, MDDBClientError>` - The exchange pair code name on success, or an error if lookup fails
+    /// * `Result<String, MDDBClientError>` - The instrument primary ID (key) on success, or None if note found, or an error
     ///
-    pub async fn lookup_instrument_exchange_pair_code_name(
+    pub async fn lookup_instrument_id_by_exchange_pair_code(
         &self,
-        instrument_id: &str,
-    ) -> Result<String, MDDBClientError> {
+        instrument_exchange_pair_code: &str,
+    ) -> Result<Option<String>, MDDBClientError> {
         let mut client = self.client.clone();
-        let request =
-            instruments_utils::get_lookup_instrument_exchange_pair_code_request(instrument_id);
+        let request = instruments_utils::get_lookup_instrument_exchange_pair_code_request(
+            instrument_exchange_pair_code,
+        );
 
-        match client.lookup_instrument_exchange_pair_code(request).await {
-            Ok(res) => Ok(res.into_inner().instrument_exchange_pair_code),
+        match client
+            .lookup_instrument_id_by_exchange_pair_code(request)
+            .await
+        {
+            Ok(res) => Ok(res.into_inner().instrument_id),
             Err(e) => Err(MDDBClientError(e.to_string())),
         }
     }
 
-    /// Looks up the FIGI (Financial Instrument Global Identifier) for a given instrument ID.
+    /// Looks up the instrument primary ID (key) for a given FIGI (Financial Instrument Global Identifier)
     ///
     /// # Arguments
-    /// * `instrument_id` - The ID of the instrument to look up
+    /// * `instrument_figi` - The FIGI of the instrument to look up
     ///
     /// # Returns
-    /// * `Result<Option<String>, MDDBClientError>` - The FIGI if found, None if not found, or an error
+    /// * `Result<Option<String>, MDDBClientError>` - The instrument primary ID (key) if found, None if not found, or an error
     ///
-    pub async fn lookup_instrument_figi(
+    pub async fn lookup_instrument_id_by_figi(
         &self,
-        instrument_id: &str,
+        instrument_figi: &str,
     ) -> Result<Option<String>, MDDBClientError> {
         let mut client = self.client.clone();
-        let request = instruments_utils::get_lookup_instrument_figi_request(instrument_id);
+        let request = instruments_utils::get_lookup_instrument_id_by_figi_request(instrument_figi);
 
-        match client.lookup_instrument_figi(request).await {
-            Ok(res) => Ok(res.into_inner().instrument_pair_figi),
+        match client.lookup_instrument_id_by_figi(request).await {
+            Ok(res) => Ok(res.into_inner().instrument_id),
+            Err(e) => Err(MDDBClientError(e.to_string())),
+        }
+    }
+
+    /// Looks up the instrument primary ID (key) for a given Pair FIGI (Financial Instrument Global Identifier)
+    ///
+    /// # Arguments
+    /// * `instrument_pair_figi` - The pair FIGI of the instrument to look up
+    ///
+    /// # Returns
+    /// * `Result<String, MDDBClientError>` - The instrument primary ID (key) on success, or None if note found, or an error
+    ///
+    pub async fn lookup_instrument_id_by_pair_figi(
+        &self,
+        instrument_pair_figi: &str,
+    ) -> Result<Option<String>, MDDBClientError> {
+        let mut client = self.client.clone();
+        let request =
+            instruments_utils::get_lookup_instrument_id_by_pair_figi_request(instrument_pair_figi);
+
+        match client.lookup_instrument_id_by_pair_figi(request).await {
+            Ok(res) => Ok(res.into_inner().instrument_id),
             Err(e) => Err(MDDBClientError(e.to_string())),
         }
     }

@@ -201,6 +201,20 @@ impl MddbService for MDDBServer {
         }
     }
 
+    async fn get_instrument_by_pair_figi(
+        &self,
+        request: Request<GetInstrumentByPairFigiRequest>,
+    ) -> Result<Response<GetInstrumentByPairFigiResponse>, Status> {
+        let mut client = self.dbgw.clone();
+
+        match client.get_instrument_by_pair_figi(request).await {
+            Ok(res) => Ok(Response::new(GetInstrumentByPairFigiResponse {
+                instrument: res.into_inner().instrument,
+            })),
+            Err(e) => Err(Status::internal(e.to_string())),
+        }
+    }
+
     async fn get_all_instruments(
         &self,
         request: Request<GetAllInstrumentsRequest>,
@@ -314,25 +328,40 @@ impl MddbService for MDDBServer {
         }
     }
 
-    async fn lookup_instrument_exchange_pair_code(
+    async fn lookup_instrument_id_by_exchange_pair_code(
         &self,
-        request: Request<LookupInstrumentExchangePairCodeRequest>,
-    ) -> Result<Response<LookupInstrumentExchangePairCodeResponse>, Status> {
+        request: Request<LookupInstrumentIdByExchangePairCodeRequest>,
+    ) -> Result<Response<LookupInstrumentIdByExchangePairCodeResponse>, Status> {
         let mut client = self.dbgw.clone();
 
-        match client.lookup_instrument_exchange_pair_code(request).await {
+        match client
+            .lookup_instrument_id_by_exchange_pair_code(request)
+            .await
+        {
             Ok(res) => Ok(Response::new(res.into_inner())),
             Err(e) => Err(Status::internal(e.to_string())),
         }
     }
 
-    async fn lookup_instrument_figi(
+    async fn lookup_instrument_id_by_figi(
         &self,
-        request: Request<LookupInstrumentFigiRequest>,
-    ) -> Result<Response<LookupInstrumentFigiResponse>, Status> {
+        request: Request<LookupInstrumentIdByFigiRequest>,
+    ) -> Result<Response<LookupInstrumentIdByFigiResponse>, Status> {
         let mut client = self.dbgw.clone();
 
-        match client.lookup_instrument_figi(request).await {
+        match client.lookup_instrument_id_by_figi(request).await {
+            Ok(res) => Ok(Response::new(res.into_inner())),
+            Err(e) => Err(Status::internal(e.to_string())),
+        }
+    }
+
+    async fn lookup_instrument_id_by_pair_figi(
+        &self,
+        request: Request<LookupInstrumentIdByPairFigiRequest>,
+    ) -> Result<Response<LookupInstrumentIdByPairFigiResponse>, Status> {
+        let mut client = self.dbgw.clone();
+
+        match client.lookup_instrument_id_by_pair_figi(request).await {
             Ok(res) => Ok(Response::new(res.into_inner())),
             Err(e) => Err(Status::internal(e.to_string())),
         }

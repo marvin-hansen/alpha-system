@@ -77,7 +77,7 @@ async fn test_full_update() {
     let res = dbm_mddb.read_instrument(&instrument_id).await;
     dbg!(&res);
     assert!(res.is_ok());
-    let db_original_instrument = res.unwrap();
+    let db_original_instrument = res.unwrap().unwrap();
 
     //
     // Update all metadata
@@ -115,7 +115,7 @@ async fn test_full_update() {
     let res = dbm_mddb.read_instrument(&instrument_id.clone()).await;
     dbg!(&res);
     assert!(res.is_ok());
-    let db_updated_instrument = res.unwrap();
+    let db_updated_instrument = res.unwrap().unwrap();
 
     // Extract the reference instrument from the test data set
     let update_instrument = meta_data.instruments().data.first().unwrap();

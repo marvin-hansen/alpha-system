@@ -22,7 +22,7 @@ use common_metadata::prelude::{MetaDataDBRecords, MetaStats};
 pub async fn determine_workflow(
     stats: &MetaStats,
     meta_data_db: &MetaDataDBRecords,
-    sample_size: Option<usize>,
+    sample_size: Option<(usize, usize, usize)>,
 ) -> MetaDataDBWOp {
     print_utils::dbg_print("determine_workflow");
 
@@ -47,8 +47,13 @@ pub async fn determine_workflow(
     if db_asset_count == 0 && db_exchange_count == 0 && db_instrument_count == 0 {
         if sample_size.is_some() {
             print_utils::dbg_print("Nothing imported; sample requested return ImportSample");
-            let sample_size = sample_size.unwrap();
-            all_op = WorkflowOpAll::ImportSample(sample_size);
+            let (assets_sample_size, exchanges_sample_size, instruments_sample_size) =
+                sample_size.unwrap();
+            all_op = WorkflowOpAll::ImportSample(
+                assets_sample_size,
+                exchanges_sample_size,
+                instruments_sample_size,
+            );
 
             //
             return MetaDataDBWOp::new(all_op, assets_op, exchanges_op, instruments_op);
@@ -62,11 +67,11 @@ pub async fn determine_workflow(
 
     // Check of sample size import
     if sample_size.is_some() {
-        let sample_size = sample_size.unwrap() as u32;
-
-        if db_asset_count == sample_size
-            && db_exchange_count == sample_size
-            && db_instrument_count == sample_size
+        let (assets_sample_size, exchanges_sample_size, instruments_sample_size) =
+            sample_size.unwrap();
+        if db_asset_count == assets_sample_size as u32
+            && db_exchange_count == exchanges_sample_size as u32
+            && db_instrument_count == instruments_sample_size as u32
         {
             print_utils::dbg_print("Nothing imported; sample requested return ImportSample");
             all_op = WorkflowOpAll::NoOPAll;

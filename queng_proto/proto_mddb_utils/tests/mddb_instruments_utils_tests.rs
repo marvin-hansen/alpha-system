@@ -84,7 +84,7 @@ fn test_get_check_if_instrument_exists_response() {
 #[test]
 fn test_get_instrument_by_id_response() {
     let meta_instrument = create_test_meta_instrument();
-    let response = get_instrument_by_id_response(meta_instrument.clone());
+    let response = get_instrument_by_id_response(Some(meta_instrument.clone()));
     assert!(response.instrument.is_some());
     let proto_instrument = response.instrument.unwrap();
     assert_eq!(

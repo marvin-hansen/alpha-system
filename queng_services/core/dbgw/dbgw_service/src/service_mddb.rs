@@ -243,24 +243,33 @@ impl DbGatewayMddbService for MDDBServer {
         request: Request<GetInstrumentByFigiRequest>,
     ) -> Result<Response<GetInstrumentByFigiResponse>, Status> {
         self.dbg_print("get_instrument_by_figi");
-
         let figi = request.into_inner().instrument_figi;
         let dbm = self.dbm.read().await;
-        let res = dbm.read_instrument_by_figi(&figi).await;
 
-        match res {
+        match dbm.read_instrument_by_figi(&figi).await {
             Ok(instrument) => Ok(Response::new(
-                proto_mddb::proto::GetInstrumentByFigiResponse {
-                    instrument: if instrument.is_some() {
-                        let binding = instrument.unwrap();
-                        Some(instrument_utils::meta_instrument_to_proto_instrument(
-                            &binding,
-                        ))
-                    } else {
-                        None
-                    },
-                },
+                instrument_utils::get_instrument_by_figi_response(instrument),
             )),
+
+            Err(e) => Err(Status::internal(e.to_string())),
+        }
+    }
+
+    async fn get_instrument_by_pair_figi(
+        &self,
+        request: Request<GetInstrumentByPairFigiRequest>,
+    ) -> Result<Response<GetInstrumentByPairFigiResponse>, Status> {
+        let instrument_pair_figi = request.into_inner().instrument_pair_figi;
+        let dbm = self.dbm.read().await;
+
+        match dbm
+            .read_instrument_by_pair_figi(&instrument_pair_figi)
+            .await
+        {
+            Ok(instrument) => Ok(Response::new(
+                instrument_utils::get_instrument_by_pair_figi_response(instrument),
+            )),
+
             Err(e) => Err(Status::internal(e.to_string())),
         }
     }
@@ -406,40 +415,57 @@ impl DbGatewayMddbService for MDDBServer {
         }
     }
 
-    async fn lookup_instrument_exchange_pair_code(
+    async fn lookup_instrument_id_by_exchange_pair_code(
         &self,
-        request: Request<LookupInstrumentExchangePairCodeRequest>,
-    ) -> Result<Response<LookupInstrumentExchangePairCodeResponse>, Status> {
-        self.dbg_print("lookup_instrument_exchange_pair_code");
-
+        request: Request<LookupInstrumentIdByExchangePairCodeRequest>,
+    ) -> Result<Response<LookupInstrumentIdByExchangePairCodeResponse>, Status> {
+        self.dbg_print("lookup_instrument_id_by_exchange_pair_code");
         let req = request.into_inner();
         let dbm = self.dbm.read().await;
 
-        let res = dbm.read_instrument(&req.instrument_id).await;
-
-        match res {
-            Ok(instruments) => Ok(Response::new(
-                instrument_utils::get_lookup_instrument_exchange_pair_code_response(
-                    instruments.exchange_code,
+        match dbm
+            .read_instruments_by_exchange_pair_code(&req.instrument_exchange_pair_code)
+            .await
+        {
+            Ok(instrument) => Ok(Response::new(
+                instrument_utils::get_lookup_instrument_id_by_exchange_pair_code_response(
+                    instrument,
                 ),
             )),
             Err(e) => Err(Status::internal(e.to_string())),
         }
     }
 
-    async fn lookup_instrument_figi(
+    async fn lookup_instrument_id_by_figi(
         &self,
-        request: Request<LookupInstrumentFigiRequest>,
-    ) -> Result<Response<LookupInstrumentFigiResponse>, Status> {
-        self.dbg_print("lookup_instrument_figi");
-
-        let instrument_id = request.into_inner().instrument_id;
+        request: Request<LookupInstrumentIdByFigiRequest>,
+    ) -> Result<Response<LookupInstrumentIdByFigiResponse>, Status> {
+        self.dbg_print("lookup_instrument_id_by_figi");
+        let instrument_figi = request.into_inner().instrument_figi;
         let dbm = self.dbm.read().await;
-        let res = dbm.read_instrument(&instrument_id).await;
 
-        match res {
+        match dbm.read_instrument_by_figi(&instrument_figi).await {
             Ok(instrument) => Ok(Response::new(
-                instrument_utils::get_lookup_instrument_figi_response(instrument.metadata),
+                instrument_utils::get_lookup_instrument_by_figi_response(instrument),
+            )),
+            Err(e) => Err(Status::internal(e.to_string())),
+        }
+    }
+
+    async fn lookup_instrument_id_by_pair_figi(
+        &self,
+        request: Request<LookupInstrumentIdByPairFigiRequest>,
+    ) -> Result<Response<LookupInstrumentIdByPairFigiResponse>, Status> {
+        self.dbg_print("lookup_instrument_id_by_figi");
+        let instrument_pair_figi = request.into_inner().instrument_pair_figi;
+        let dbm = self.dbm.read().await;
+
+        match dbm
+            .read_instrument_by_pair_figi(&instrument_pair_figi)
+            .await
+        {
+            Ok(instrument) => Ok(Response::new(
+                instrument_utils::get_lookup_instrument_by_pair_figi_response(instrument),
             )),
             Err(e) => Err(Status::internal(e.to_string())),
         }

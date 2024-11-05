@@ -58,7 +58,15 @@ async fn test_sample_import() {
 }
 
 fn get_import_sample_op() -> MetaDataDBWOp {
-    let all_op: WorkflowOpAll = WorkflowOpAll::ImportSample(1);
+    let assets_sample_size = 1;
+    let exchanges_sample_size = 1;
+    let instruments_sample_size = 1;
+
+    let all_op: WorkflowOpAll = WorkflowOpAll::ImportSample(
+        assets_sample_size,
+        exchanges_sample_size,
+        instruments_sample_size,
+    );
     let assets_op: WorkflowOp = WorkflowOp::NoOP;
     let exchanges_op: WorkflowOp = WorkflowOp::NoOP;
     let instruments_op: WorkflowOp = WorkflowOp::NoOP;

@@ -4,14 +4,14 @@ use common_metadata::prelude::MetaInstrument;
 use pg_mddb::prelude::Instrument;
 
 impl PostgresMDDBManager {
-    pub async fn read_instruments_by_code(
+    pub async fn read_instruments_by_exchange_pair_code(
         &self,
         param_instrument_code: &str,
     ) -> Result<Option<MetaInstrument>, PostgresDBError> {
-        self.dbg_print("insert_instruments");
+        self.dbg_print("read_instruments_by_exchange_pair_code");
         let conn = &mut self.get_connection();
 
-        match Instrument::read_instruments_by_code(conn, param_instrument_code) {
+        match Instrument::read_instruments_by_exchange_pair_code(conn, param_instrument_code) {
             Ok(instrument) => Ok(instrument),
             Err(e) => Err(PostgresDBError::QueryFailed(e.to_string())),
         }
@@ -21,10 +21,23 @@ impl PostgresMDDBManager {
         &self,
         param_figi: &str,
     ) -> Result<Option<MetaInstrument>, PostgresDBError> {
-        self.dbg_print("insert_instruments");
+        self.dbg_print("read_instrument_by_figi");
         let conn = &mut self.get_connection();
 
         match Instrument::read_instrument_by_figi(conn, param_figi) {
+            Ok(instrument) => Ok(instrument),
+            Err(e) => Err(PostgresDBError::QueryFailed(e.to_string())),
+        }
+    }
+
+    pub async fn read_instrument_by_pair_figi(
+        &self,
+        param_pair_figi: &str,
+    ) -> Result<Option<MetaInstrument>, PostgresDBError> {
+        self.dbg_print("read_instrument_by_pair_figi");
+        let conn = &mut self.get_connection();
+
+        match Instrument::read_instrument_by_pair_figi(conn, param_pair_figi) {
             Ok(instrument) => Ok(instrument),
             Err(e) => Err(PostgresDBError::QueryFailed(e.to_string())),
         }

@@ -32,6 +32,10 @@ message GetInstrumentByFigiRequest {
   string instrument_figi = 1;
 }
 
+message GetInstrumentByPairFigiRequest {
+  string instrument_pair_figi = 1;
+}
+
 message GetAllInstrumentsRequest {}
 
 message GetAllInstrumentsForBaseAssetRequest {
@@ -62,13 +66,18 @@ message GetAllInstrumentsForBaseQuoteAssetAndExchangeRequest {
   string quote_asset = 3;
 }
 
-message LookupInstrumentExchangePairCodeRequest {
-  string instrument_id = 1;
+message LookupInstrumentIdByExchangePairCodeRequest {
+  string instrument_exchange_pair_code = 1;
 }
 
-message LookupInstrumentFigiRequest {
-  string instrument_id = 1;
+message LookupInstrumentIdByFigiRequest {
+  string instrument_figi = 1;
 }
+
+message LookupInstrumentIdByPairFigiRequest {
+  string instrument_pair_figi = 1;
+}
+
 
 // Response
 
@@ -82,11 +91,15 @@ message CheckIfInstrumentIdExistsResponse {
 }
 
 message GetInstrumentByIdResponse {
-  ProtoMetaInstrument instrument = 1;
+  optional ProtoMetaInstrument instrument = 1;
 }
 
 message GetInstrumentByFigiResponse {
-  ProtoMetaInstrument instrument = 1;
+  optional ProtoMetaInstrument instrument = 1;
+}
+
+message GetInstrumentByPairFigiResponse {
+  optional ProtoMetaInstrument instrument = 1;
 }
 
 message GetAllInstrumentsResponse {
@@ -117,11 +130,14 @@ message GetAllInstrumentsForBaseQuoteAssetAndExchangeResponse {
   repeated ProtoMetaInstrument instruments = 1;
 }
 
-message LookupInstrumentExchangePairCodeResponse {
-  string instrument_exchange_pair_code = 1;
+message LookupInstrumentIdByExchangePairCodeResponse {
+  optional string instrument_id = 1;
 }
 
-message LookupInstrumentFigiResponse {
-  optional string instrument_pair_figi = 1;
-  optional string  instrument_figi = 2;
+message LookupInstrumentIdByFigiResponse {
+  optional string instrument_id = 1;
+}
+
+message LookupInstrumentIdByPairFigiResponse{
+  optional string instrument_id = 1;
 }

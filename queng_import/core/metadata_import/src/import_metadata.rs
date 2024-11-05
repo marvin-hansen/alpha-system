@@ -5,7 +5,7 @@ use std::error::Error;
 impl MetadataImportManager {
     pub async fn determine_workflow(
         &self,
-        sample_size: Option<usize>,
+        sample_size: Option<(usize, usize, usize)>,
     ) -> Result<MetaDataDBWOp, Box<dyn Error>> {
         self.dbg_print("determine_workflow");
 
