@@ -36,16 +36,6 @@ async fn test_mddb() {
 
     // Here we assume you have a KaikoProxy service running locally;
     // On CI, we have to start the proxy service.
-    // if env_type == EnvironmentType::CI {
-    //     // Start KaikoProxy proxy service, which is required for metadata import.
-    //     let kaiko_proxy_container_config = api_proxy_container_config();
-    //     let result = docker_util.get_or_start_container_config(&kaiko_proxy_container_config);
-    //     dbg!(&result);
-    //     assert!(result.is_ok());
-    // }
-
-    // Here we assume you have a KaikoProxy service running locally;
-    // On CI, we have to start the proxy service.
     if env_type == EnvironmentType::CI {
         // Start KaikoProxy proxy service, which is required for metadata import.
         let kaiko_service_id = ServiceID::KaikoProxy;
