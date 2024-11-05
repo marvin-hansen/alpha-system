@@ -31,13 +31,11 @@ message CountAssetsResponse {
 }
 
 message CheckIfAssetIdExistsResponse {
-  string asset_id = 1;
-  bool exists = 2;
+  bool exists = 1;
 }
 
 message GetAssetResponse {
-  string asset_id = 1;
-  ProtoMetaAsset asset = 2;
+  optional ProtoMetaAsset asset = 1;
 }
 
 message GetAllAssetsResponse {

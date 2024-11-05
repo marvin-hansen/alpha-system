@@ -31,20 +31,17 @@ pub fn get_count_assets_response(count: u64) -> CountAssetsResponse {
     CountAssetsResponse { count }
 }
 
-pub fn get_check_if_asset_exists_response(
-    asset_id: &str,
-    exists: bool,
-) -> CheckIfAssetIdExistsResponse {
-    CheckIfAssetIdExistsResponse {
-        asset_id: asset_id.to_string(),
-        exists,
-    }
+pub fn get_check_if_asset_exists_response(exists: bool) -> CheckIfAssetIdExistsResponse {
+    CheckIfAssetIdExistsResponse { exists }
 }
 
-pub fn get_assets_response(asset_id: &str, asset: &MetaAsset) -> GetAssetResponse {
-    GetAssetResponse {
-        asset_id: asset_id.to_string(),
-        asset: Option::from(meta_asset_to_proto_asset(asset)),
+pub fn get_assets_response(meta_asset: Option<MetaAsset>) -> GetAssetResponse {
+    if meta_asset.is_some() {
+        GetAssetResponse {
+            asset: Option::from(meta_asset_to_proto_asset(&meta_asset.unwrap())),
+        }
+    } else {
+        GetAssetResponse { asset: None }
     }
 }
 

@@ -39,10 +39,8 @@ fn test_get_count_exchanges_response() {
 
 #[test]
 fn test_get_check_if_exchange_exists_response() {
-    let exchange_code = "gemini";
     let exists = true;
-    let response = get_check_if_exchange_exists_response(exchange_code, exists);
-    assert_eq!(response.exchange_code, exchange_code);
+    let response = get_check_if_exchange_exists_response(exists);
     assert_eq!(response.exists, exists);
 }
 
@@ -53,7 +51,7 @@ fn test_get_exchange_response() {
         name: "Bitfinex".to_string(),
         kaiko_legacy_slug: "".to_string(),
     };
-    let response = get_exchange_response(&meta_exchange);
+    let response = get_exchange_response(Some(meta_exchange.clone()));
     let proto_exchange = response.exchange.unwrap();
     assert_eq!(proto_exchange.exchange_code, meta_exchange.code);
     assert_eq!(proto_exchange.exchange_name, meta_exchange.name);

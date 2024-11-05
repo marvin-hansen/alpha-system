@@ -108,7 +108,7 @@ impl PostgresMDDBManager {
     pub async fn read_exchange(
         &self,
         exchange_id_str: String,
-    ) -> Result<MetaExchange, PostgresDBError> {
+    ) -> Result<Option<MetaExchange>, PostgresDBError> {
         self.dbg_print("read_exchange");
         let conn = &mut self.get_connection();
 

@@ -33,12 +33,11 @@ message CountExchangesResponse {
 }
 
 message CheckIfExchangeIdExistsResponse {
-  string exchange_code = 1;
-  bool exists = 2;
+  bool exists = 1;
 }
 
 message GetExchangeResponse {
-  ProtoMetaExchange exchange = 1;
+  optional ProtoMetaExchange exchange = 1;
 }
 
 
@@ -47,5 +46,5 @@ message GetAllExchangesResponse {
 }
 
 message LookupExchangeNameResponse {
-  string exchange_name = 1;
+  optional string exchange_name = 1;
 }

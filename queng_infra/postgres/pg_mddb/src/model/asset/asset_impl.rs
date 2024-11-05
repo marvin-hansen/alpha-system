@@ -1,9 +1,11 @@
 use crate::model::asset::Asset;
 use crate::prelude::UpdateAsset;
+use crate::schema::mddb::assets::asset_code;
 use crate::schema::mddb::assets::dsl::assets as assets_table;
 use crate::Connection;
 use common_metadata::prelude::MetaAsset;
 use diesel::dsl::insert_into;
+use diesel::ExpressionMethods;
 use diesel::{OptionalExtension, QueryDsl, QueryResult, RunQueryDsl};
 
 impl Asset {
@@ -99,10 +101,16 @@ impl Asset {
     ///
     /// Returns a `QueryResult` containing the retrieved `MetaAsset` if successful, or an error.
     ///
-    pub fn read(db: &mut Connection, asset_id: String) -> QueryResult<MetaAsset> {
-        match assets_table.find(asset_id).first::<Asset>(db) {
-            Ok(asset) => Ok(asset.to_meta_asset()),
-            Err(e) => Err(e),
+    pub fn read(db: &mut Connection, param_asset_id: String) -> QueryResult<Option<MetaAsset>> {
+        let exists = Self::check_if_asset_id_exists(db, param_asset_id.clone())?;
+
+        if !exists {
+            Ok(None)
+        } else {
+            assets_table
+                .filter(asset_code.eq(param_asset_id))
+                .first::<Asset>(db)
+                .map(|a| Some(a.to_meta_asset()))
         }
     }
 

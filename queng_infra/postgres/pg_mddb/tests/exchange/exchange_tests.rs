@@ -216,7 +216,7 @@ async fn test_read_valid_exchange_id() {
 
     let result = Exchange::read(conn, valid_exchange_id);
     assert!(result.is_ok());
-    let actual_exchange = result.unwrap();
+    let actual_exchange = result.unwrap().unwrap();
     assert_eq!(actual_exchange.name, test_data.name);
     assert_eq!(actual_exchange.code, test_data.code);
 }
@@ -274,7 +274,8 @@ async fn test_read_non_existent_exchange_id() {
 
     let invalid_exchange_id = "non_existent_exchange_id";
     let result = Exchange::read(conn, invalid_exchange_id.to_string());
-    assert!(result.is_err());
+    assert!(result.is_ok());
+    assert!(result.unwrap().is_none());
 }
 
 #[tokio::test]

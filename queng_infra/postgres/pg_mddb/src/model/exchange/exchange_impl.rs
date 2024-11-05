@@ -119,13 +119,18 @@ impl Exchange {
     ///
     /// A Result containing the retrieved MetaExchange if successful, or an Error if the operation fails.
     ///
-    pub fn read(conn: &mut Connection, exchange_id_str: String) -> Result<MetaExchange, Error> {
-        match exchanges_table
-            .filter(exchange_id.eq(exchange_id_str))
-            .first::<Exchange>(conn)
-        {
-            Ok(exchange) => Ok(exchange.to_meta_exchange()),
-            Err(e) => Err(e),
+    pub fn read(
+        conn: &mut Connection,
+        param_exchange_id: String,
+    ) -> Result<Option<MetaExchange>, Error> {
+        let exists = Self::check_if_exchange_id_exists(conn, param_exchange_id.clone())?;
+        if !exists {
+            Ok(None)
+        } else {
+            exchanges_table
+                .filter(exchange_id.eq(param_exchange_id))
+                .first::<Exchange>(conn)
+                .map(|e| Some(e.to_meta_exchange()))
         }
     }
 

@@ -52,14 +52,8 @@ fn test_get_count_assets_response() {
 fn test_get_check_if_asset_exists_response() {
     let asset_id = "test_asset_id";
     let exists = true;
-    let response = get_check_if_asset_exists_response(asset_id, exists);
-    assert_eq!(
-        response,
-        CheckIfAssetIdExistsResponse {
-            asset_id: asset_id.to_string(),
-            exists
-        }
-    );
+    let response = get_check_if_asset_exists_response(exists);
+    assert_eq!(response, CheckIfAssetIdExistsResponse { exists });
 }
 
 #[test]
@@ -81,8 +75,7 @@ fn test_get_assets_response() {
         }),
         addresses: None,
     };
-    let response = get_assets_response(asset_id, &meta_asset);
-    assert_eq!(response.asset_id, asset_id.to_string());
+    let response = get_assets_response(Some(meta_asset));
     assert!(response.asset.is_some());
 }
 

@@ -123,7 +123,7 @@ async fn test_read() {
     let result = Asset::read(conn, "test_asset_code".to_string());
     assert!(result.is_ok());
 
-    let asset = result.unwrap();
+    let asset = result.unwrap().unwrap();
     assert_eq!(asset.code, "test_asset_code".to_string());
 }
 
@@ -142,7 +142,8 @@ async fn test_read_error() {
     // Simulate an error scenario
     let result = Asset::read(conn, "DoesNotExists".to_string());
     // dbg!(&result);
-    assert!(result.is_err());
+    assert!(result.is_ok());
+    assert!(result.unwrap().is_none());
 }
 
 #[tokio::test]

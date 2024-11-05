@@ -63,14 +63,14 @@ async fn test_full_update() {
     let res = dbm_mddb.read_asset(asset_id.clone()).await;
     // dbg!(&res);
     assert!(res.is_ok());
-    let db_original_asset = res.unwrap();
+    let db_original_asset = res.unwrap().unwrap();
 
     // Load the original exchange metadata from the DB before performing the update
     let exchange_id = meta_data.exchanges().data.first().unwrap().code.clone();
     let res = dbm_mddb.read_exchange(exchange_id.clone()).await;
     // dbg!(&res);
     assert!(res.is_ok());
-    let db_original_exchange = res.unwrap();
+    let db_original_exchange = res.unwrap().unwrap();
 
     // Load the original instrument metadata from the DB before performing the update
     let instrument_id = meta_data.instruments().data.first().unwrap().primary_key();
@@ -91,7 +91,7 @@ async fn test_full_update() {
     let res = dbm_mddb.read_asset(asset_id.clone()).await;
     // dbg!(&res);
     assert!(res.is_ok());
-    let db_updated_asset = res.unwrap();
+    let db_updated_asset = res.unwrap().unwrap();
     // Extract the reference asset from the test data set
     let db_update_asset = meta_data.assets().data.first().unwrap();
     // Compare the hash of the reference asset in the test data set to the updated asset, which must be equal.
@@ -103,7 +103,7 @@ async fn test_full_update() {
     let res = dbm_mddb.read_exchange(exchange_id.clone()).await;
     // dbg!(&res);
     assert!(res.is_ok());
-    let db_updated_exchange = res.unwrap();
+    let db_updated_exchange = res.unwrap().unwrap();
     // Extract the reference exchange from the test data set
     let db_update_exchange = meta_data.exchanges().data.first().unwrap();
     // Compare the hash of the reference exchange in the test data set to the updated exchange, which must be equal.

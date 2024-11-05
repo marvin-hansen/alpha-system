@@ -176,7 +176,9 @@ async fn test_metadata_assets_api(mddb_client: &MDDBClient) {
 
     // Test get_asset - fail case
     let result = mddb_client.get_asset("zztopxyz_non_exist").await;
-    assert!(result.is_err());
+    assert!(result.is_ok());
+    let asset = result.unwrap();
+    assert!(asset.is_none());
 
     // Test get_all_assets - success case
     let result = mddb_client.get_all_assets().await;

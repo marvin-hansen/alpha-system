@@ -58,7 +58,7 @@ impl DbGatewayMddbService for MDDBServer {
 
         match res {
             Ok(exists) => Ok(Response::new(
-                asset_utils::get_check_if_asset_exists_response(&asset_id, exists),
+                asset_utils::get_check_if_asset_exists_response(exists),
             )),
             Err(e) => Err(Status::internal(e.to_string())),
         }
@@ -75,9 +75,7 @@ impl DbGatewayMddbService for MDDBServer {
         let res = dbm.read_asset(asset_id.clone()).await;
 
         match res {
-            Ok(asset) => Ok(Response::new(asset_utils::get_assets_response(
-                &asset_id, &asset,
-            ))),
+            Ok(asset) => Ok(Response::new(asset_utils::get_assets_response(asset))),
             Err(e) => Err(Status::internal(e.to_string())),
         }
     }
@@ -126,7 +124,7 @@ impl DbGatewayMddbService for MDDBServer {
 
         match res {
             Ok(exists) => Ok(Response::new(
-                exchange_utils::get_check_if_exchange_exists_response(&exchange_code, exists),
+                exchange_utils::get_check_if_exchange_exists_response(exists),
             )),
             Err(e) => Err(Status::internal(e.to_string())),
         }
@@ -144,7 +142,7 @@ impl DbGatewayMddbService for MDDBServer {
 
         match res {
             Ok(exchange) => Ok(Response::new(exchange_utils::get_exchange_response(
-                &exchange,
+                exchange,
             ))),
             Err(e) => Err(Status::internal(e.to_string())),
         }
@@ -179,7 +177,7 @@ impl DbGatewayMddbService for MDDBServer {
 
         match res {
             Ok(exchange) => Ok(Response::new(
-                exchange_utils::get_lookup_exchange_name_response(&exchange.name),
+                exchange_utils::get_lookup_exchange_name_response(exchange),
             )),
             Err(e) => Err(Status::internal(e.to_string())),
         }

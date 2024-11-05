@@ -39,7 +39,6 @@ impl MddbService for MDDBServer {
 
         match client.check_if_asset_id_exists(request).await {
             Ok(res) => Ok(Response::new(CheckIfAssetIdExistsResponse {
-                asset_id: res.get_ref().asset_id.clone(),
                 exists: res.get_ref().exists,
             })),
             Err(e) => Err(Status::internal(e.to_string())),
@@ -54,7 +53,6 @@ impl MddbService for MDDBServer {
 
         match client.get_asset(request).await {
             Ok(res) => Ok(Response::new(GetAssetResponse {
-                asset_id: res.get_ref().asset_id.clone(),
                 asset: res.into_inner().asset,
             })),
             Err(e) => Err(Status::internal(e.to_string())),
@@ -97,7 +95,6 @@ impl MddbService for MDDBServer {
 
         match client.check_if_exchange_id_exists(request).await {
             Ok(res) => Ok(Response::new(CheckIfExchangeIdExistsResponse {
-                exchange_code: res.get_ref().exchange_code.clone(),
                 exists: res.get_ref().exists,
             })),
             Err(e) => Err(Status::internal(e.to_string())),

@@ -108,7 +108,7 @@ impl PostgresMDDBManager {
     /// Returns the `MetaAsset` on success,
     ///   or a `PostgresDBError` if the read operation fails.
     ///
-    pub async fn read_asset(&self, asset_id: String) -> Result<MetaAsset, PostgresDBError> {
+    pub async fn read_asset(&self, asset_id: String) -> Result<Option<MetaAsset>, PostgresDBError> {
         self.dbg_print("read_asset");
         let conn = &mut self.get_connection();
 
