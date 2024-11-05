@@ -55,7 +55,7 @@ async fn test_mddb() {
         // Start KaikoProxy proxy service, which is required for metadata import.
         let kaiko_service_id = ServiceID::KaikoProxy;
         let kaiko_wait_strategy = ServiceWaitStrategy::HttpHealthCheck(
-            "http://localhost:8083/health".to_string(),
+            "http://localhost:7777/health".to_string(),
             Duration::from_secs(60),
         );
         let result = svc_util
@@ -98,13 +98,6 @@ async fn test_mddb() {
     let result = svc_util.start_service(&service_id, &wait_strategy).await;
     dbg!(&result);
     assert!(result.is_ok());
-
-    // Services other than DBGW usually start a lot faster.
-    let wait_strategy = if env_type == EnvironmentType::LOCAL {
-        ServiceWaitStrategy::Duration(Duration::from_millis(100))
-    } else {
-        ServiceWaitStrategy::Duration(Duration::from_millis(500))
-    };
 
     // Start SMDB service - depends on DBGW
     let service_id = ServiceID::SMDB;
