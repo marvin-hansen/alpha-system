@@ -13,7 +13,7 @@ rust_test_suite(
         # Tell BuildBuddy to preserve the microVM state across test runs.
         "test.recycle-runner": "true",
         # We want different different tests to be assigned to the same recycled runner,
-        "test.runner-recycling-key": "mddb_test_run",
+        "test.runner-recycling-key": "mddb_test_runner",
     },
     tags = [
         # The first tag is for local testing, which must be in sequential order b/c there is just one DB
@@ -29,6 +29,7 @@ rust_test_suite(
         "//alias:common_config",
         "//alias:common_env",
         "//alias:container_specs_postgres",
+        "//alias:container_specs_kaiko",
         "//alias:docker_utils",
         "//alias:service_import",
         "//alias:service_utils",
