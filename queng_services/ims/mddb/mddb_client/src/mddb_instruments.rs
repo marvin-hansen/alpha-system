@@ -84,6 +84,21 @@ impl MDDBClient {
         }
     }
 
+    pub async fn get_instrument_by_pair_figi(
+        &self,
+        instrument_pair_figi: &str,
+    ) -> Result<Option<MetaInstrument>, MDDBClientError> {
+        let mut client = self.client.clone();
+        let request = instruments_utils::get_instrument_by_pair_figi_request(instrument_pair_figi);
+
+        match client.get_instrument_by_pair_figi(request).await {
+            Ok(res) => Ok(res.into_inner().instrument.map(|instrument| {
+                instruments_utils::proto_instrument_to_meta_instrument(&instrument)
+            })),
+            Err(e) => Err(MDDBClientError(e.to_string())),
+        }
+    }
+
     /// Retrieves all available instruments from the market data database.
     ///
     /// Returns a Result containing either a Vector of MetaInstrument objects or an MDDBClientError.

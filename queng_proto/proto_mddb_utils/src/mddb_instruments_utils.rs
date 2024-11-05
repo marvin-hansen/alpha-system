@@ -30,6 +30,14 @@ pub fn get_instrument_by_figi_request(
     }
 }
 
+pub fn get_instrument_by_pair_figi_request(
+    instrument_pair_figi: &str,
+) -> proto_mddb::proto::GetInstrumentByPairFigiRequest {
+    proto_mddb::proto::GetInstrumentByPairFigiRequest {
+        instrument_pair_figi: instrument_pair_figi.to_string(),
+    }
+}
+
 pub fn get_all_instruments_request() -> proto_mddb::proto::GetAllInstrumentsRequest {
     proto_mddb::proto::GetAllInstrumentsRequest {}
 }

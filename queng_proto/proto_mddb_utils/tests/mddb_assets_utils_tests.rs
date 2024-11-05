@@ -50,7 +50,6 @@ fn test_get_count_assets_response() {
 
 #[test]
 fn test_get_check_if_asset_exists_response() {
-    let asset_id = "test_asset_id";
     let exists = true;
     let response = get_check_if_asset_exists_response(exists);
     assert_eq!(response, CheckIfAssetIdExistsResponse { exists });
@@ -58,7 +57,6 @@ fn test_get_check_if_asset_exists_response() {
 
 #[test]
 fn test_get_assets_response() {
-    let asset_id = "test_asset_id";
     let meta_asset = MetaAsset {
         code: "code".to_string(),
         name: "name".to_string(),

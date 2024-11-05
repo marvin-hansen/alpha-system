@@ -283,4 +283,234 @@ async fn test_metadata_instruments_api(mddb_client: &MDDBClient) {
     assert!(result.is_ok());
     let instrument = result.unwrap();
     assert!(instrument.is_none());
+
+    // Test get_instrument_by_pair_figi - success case
+    let exists_figi = "KKG000000SC3";
+    let result = mddb_client.get_instrument_by_pair_figi(exists_figi).await;
+    assert!(result.is_ok());
+    let instrument = result.unwrap();
+    assert!(instrument.is_some());
+
+    // Test get_instrument_by_pair_figi - fail case
+    let does_not_exists_figi = "zztopxyz_non_exist";
+    let result = mddb_client
+        .get_instrument_by_pair_figi(does_not_exists_figi)
+        .await;
+    assert!(result.is_ok());
+    let instrument = result.unwrap();
+    assert!(instrument.is_none());
+
+    // Test get_all_instruments - success case
+    let result = mddb_client.get_all_instruments().await;
+    assert!(result.is_ok());
+    let instruments = result.unwrap();
+    assert!(!instruments.is_empty());
+    let len = instruments.len();
+    assert_eq!(len, INSTRUMENTS_SAMPLE_SIZE);
+
+    // Test get_all_instruments_for_base_asset - success case
+    let exists_base_asset = "btc";
+    let result = mddb_client
+        .get_all_instruments_for_base_asset(exists_base_asset)
+        .await;
+    assert!(result.is_ok());
+    let instruments = result.unwrap();
+    assert!(!instruments.is_empty());
+    let len = instruments.len();
+    assert!(len > 1);
+
+    // Test get_all_instruments_for_base_asset - fail case
+    let does_not_exists_base_asset = "zztopxyz_non_exist";
+    let result = mddb_client
+        .get_all_instruments_for_base_asset(does_not_exists_base_asset)
+        .await;
+    assert!(result.is_ok());
+    let instruments = result.unwrap();
+    assert!(instruments.is_empty());
+    let len = instruments.len();
+    assert_eq!(len, 0);
+
+    // Test get_all_instruments_for_quote_asset - success case
+    let exists_quote_asset = "usdt";
+    let result = mddb_client
+        .get_all_instruments_for_quote_asset(exists_quote_asset)
+        .await;
+    assert!(result.is_ok());
+    let instruments = result.unwrap();
+    assert!(!instruments.is_empty());
+    let len = instruments.len();
+    assert!(len > 1);
+
+    // Test get_all_instruments_for_quote_asset - fail case
+    let does_not_exists_quote_asset = "zztopxyz_non_exist";
+    let result = mddb_client
+        .get_all_instruments_for_quote_asset(does_not_exists_quote_asset)
+        .await;
+    assert!(result.is_ok());
+    let instruments = result.unwrap();
+    assert!(instruments.is_empty());
+    let len = instruments.len();
+    assert_eq!(len, 0);
+
+    // Test get_all_instruments_for_exchange - success case
+    let exists_exchange = "bbit";
+    let result = mddb_client
+        .get_all_instruments_for_exchange(exists_exchange)
+        .await;
+    assert!(result.is_ok());
+    let instruments = result.unwrap();
+    assert!(!instruments.is_empty());
+    let len = instruments.len();
+    assert!(len > 1);
+
+    // Test get_all_instruments_for_exchange - fail case
+    let does_not_exists_exchange = "zztopxyz_non_exist";
+    let result = mddb_client
+        .get_all_instruments_for_exchange(does_not_exists_exchange)
+        .await;
+    assert!(result.is_ok());
+    let instruments = result.unwrap();
+    assert!(instruments.is_empty());
+    let len = instruments.len();
+    assert_eq!(len, 0);
+
+    // Test get_all_instruments_for_base_asset_and_exchange - success case
+    let exists_exchange = "bbit";
+    let exists_base_asset = "btc";
+    let result = mddb_client
+        .get_all_instruments_for_base_asset_and_exchange(exists_exchange, exists_base_asset)
+        .await;
+    assert!(result.is_ok());
+    let instruments = result.unwrap();
+    assert!(!instruments.is_empty());
+    let len = instruments.len();
+    assert!(len > 1);
+
+    // Test get_all_instruments_for_base_asset_and_exchange - fail case
+    let does_not_exists_exchange = "zztopxyz_non_exist";
+    let does_not_exists_base_asset = "zztopxyz_non_exist";
+    let result = mddb_client
+        .get_all_instruments_for_base_asset_and_exchange(
+            does_not_exists_exchange,
+            does_not_exists_base_asset,
+        )
+        .await;
+    assert!(result.is_ok());
+    let instruments = result.unwrap();
+    assert!(instruments.is_empty());
+    let len = instruments.len();
+    assert_eq!(len, 0);
+
+    // Test get_all_instruments_for_quote_asset_and_exchange - success case
+    let exists_exchange = "bbit";
+    let exists_quote_asset = "usdt";
+    let result = mddb_client
+        .get_all_instruments_for_quote_asset_and_exchange(exists_exchange, exists_quote_asset)
+        .await;
+    assert!(result.is_ok());
+    let instruments = result.unwrap();
+    assert!(!instruments.is_empty());
+    let len = instruments.len();
+    assert!(len > 1);
+
+    // Test get_all_instruments_for_quote_asset_and_exchange - fail case
+    let does_not_exists_exchange = "zztopxyz_non_exist";
+    let does_not_exists_quote_asset = "zztopxyz_non_exist";
+    let result = mddb_client
+        .get_all_instruments_for_quote_asset_and_exchange(
+            does_not_exists_exchange,
+            does_not_exists_quote_asset,
+        )
+        .await;
+    assert!(result.is_ok());
+    let instruments = result.unwrap();
+    assert!(instruments.is_empty());
+    let len = instruments.len();
+    assert_eq!(len, 0);
+
+    // Test get_all_instruments_for_base_quote_asset_and_exchange - success case
+    let exists_exchange = "bbit";
+    let exists_base_asset = "btc";
+    let exists_quote_asset = "usd";
+    let result = mddb_client
+        .get_all_instruments_for_base_quote_asset_and_exchange(
+            exists_exchange,
+            exists_base_asset,
+            exists_quote_asset,
+        )
+        .await;
+    assert!(result.is_ok());
+    let instruments = result.unwrap();
+    assert!(!instruments.is_empty());
+    let len = instruments.len();
+    assert_eq!(len, 1); // There should be just one one pair of BTCUSD
+
+    // Test get_all_instruments_for_base_quote_asset_and_exchange - fail case
+    let does_not_exists_exchange = "zztopxyz_non_exist";
+    let does_not_exists_base_asset = "zztopxyz_non_exist";
+    let does_not_exists_quote_asset = "zztopxyz_non_exist";
+    let result = mddb_client
+        .get_all_instruments_for_base_quote_asset_and_exchange(
+            does_not_exists_exchange,
+            does_not_exists_base_asset,
+            does_not_exists_quote_asset,
+        )
+        .await;
+    assert!(result.is_ok());
+    let instruments = result.unwrap();
+    assert!(instruments.is_empty());
+    let len = instruments.len();
+    assert_eq!(len, 0);
+
+    // Test lookup_instrument_id_by_exchange_pair_code - success case
+    let exists_instrument_exchange_pair_code = "BTCUSD";
+    let result = mddb_client
+        .lookup_instrument_id_by_exchange_pair_code(exists_instrument_exchange_pair_code)
+        .await;
+    assert!(result.is_ok());
+    let instrument_id = result.unwrap().unwrap();
+    assert_eq!(instrument_id, "bbit_perpetual-future_btc_usd");
+
+    // Test lookup_instrument_id_by_exchange_pair_code - fail case
+    let does_not_exists_instrument_exchange_pair_code = "zztopxyz_non_exist";
+    let result = mddb_client
+        .lookup_instrument_id_by_exchange_pair_code(does_not_exists_instrument_exchange_pair_code)
+        .await;
+    assert!(result.is_ok());
+    let instrument_id = result.unwrap();
+    assert!(instrument_id.is_none());
+
+    // Test lookup_instrument_id_by_figi - success case
+    let exists_figi = "KKG00000V2R0";
+    let result = mddb_client.lookup_instrument_id_by_figi(exists_figi).await;
+    assert!(result.is_ok());
+    let instrument_id = result.unwrap().unwrap();
+    assert_eq!(instrument_id, "bbsp_spot_btc_usdt");
+
+    // Test lookup_instrument_id_by_figi - fail case
+    let does_not_exists_figi = "zztopxyz_non_exist";
+    let result = mddb_client
+        .lookup_instrument_id_by_figi(does_not_exists_figi)
+        .await;
+    assert!(result.is_ok());
+    let instrument_id = result.unwrap();
+    assert!(instrument_id.is_none());
+
+    // Test lookup_instrument_id_by_pair_figi
+    let exists_pair_figi = "KKG000000SC3";
+    let result = mddb_client
+        .lookup_instrument_id_by_pair_figi(exists_pair_figi)
+        .await;
+    assert!(result.is_ok());
+    let instrument_id = result.unwrap().unwrap();
+    assert_eq!(instrument_id, "bbsp_spot_btc_usdt");
+
+    // Test lookup_instrument_id_by_pair_figi
+    let does_not_exists_pair_figi = "zztopxyz_non_exist";
+    let result = mddb_client
+        .lookup_instrument_id_by_pair_figi(does_not_exists_pair_figi)
+        .await;
+    assert!(result.is_ok());
+    let instrument_id = result.unwrap();
+    assert!(instrument_id.is_none());
 }
