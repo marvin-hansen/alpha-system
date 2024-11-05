@@ -49,7 +49,7 @@ pub fn get_exchange_response(
             exchange: Option::from(meta_exchange_to_proto_exchange(&meta_exchange.unwrap())),
         }
     } else {
-        return proto_mddb::proto::GetExchangeResponse { exchange: None };
+        proto_mddb::proto::GetExchangeResponse { exchange: None }
     }
 }
 

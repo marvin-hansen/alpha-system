@@ -53,7 +53,7 @@ impl ServiceUtil {
                     .expect("Failed to wait");
             }
             ServiceWaitStrategy::HttpHealthCheck(health_url, duration) => {
-                self.wait_until_http_health_check(&health_url, duration)
+                self.wait_until_http_health_check(health_url, duration)
                     .expect("Failed to wait for health check");
             }
         }
