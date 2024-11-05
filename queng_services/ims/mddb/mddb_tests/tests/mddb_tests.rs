@@ -5,7 +5,7 @@ use docker_utils::prelude::DockerUtil;
 use mddb_client::MDDBClient;
 use metadata_import::MetadataImportManager;
 use service_import::ServiceImportManager;
-use service_utils::ServiceUtil;
+use service_utils::{ServiceUtil, ServiceWaitStrategy};
 use std::time::Duration;
 
 #[tokio::test]
@@ -45,15 +45,16 @@ async fn test_mddb() {
     assert!(imported);
 
     // Here we assume you have a KaikoProxy service running locally;
-    // In any other environment i.e. CI, we start one except for cluster, which refers to prod.
-    if env_type != EnvironmentType::LOCAL && env_type != EnvironmentType::CLUSTER {
+    // On CI, we have to start the proxy service.
+    if env_type == EnvironmentType::CI {
         // Start KaikoProxy proxy service, which is required for metadata import.
-        let service_id = ServiceID::KaikoProxy;
+        let kaiko_service_id = ServiceID::KaikoProxy;
+        let kaiko_wait_strategy = ServiceWaitStrategy::HttpHealthCheck(
+            "http://localhost:8083/health".to_string(),
+            Duration::from_secs(60),
+        );
         let result = svc_util
-            //
-            // Set wait to a more appropriate strategy i.e. wait for health check
-            //
-            .start_service(&service_id, Duration::from_secs(20))
+            .start_service(&kaiko_service_id, &kaiko_wait_strategy)
             .await;
         dbg!(&result);
         assert!(result.is_ok());
@@ -76,26 +77,27 @@ async fn test_mddb() {
         .await
         .expect("Failed to execute workflow");
 
+    // Wait for services to be ready
+    let wait_strategy = if env_type == EnvironmentType::LOCAL {
+        ServiceWaitStrategy::Duration(Duration::from_millis(250))
+    } else {
+        ServiceWaitStrategy::Duration(Duration::from_millis(500))
+    };
+
     // Start DBGW service - depends on Database
     let service_id = ServiceID::DBGW;
-    let result = svc_util
-        .start_service(&service_id, Duration::from_millis(500))
-        .await;
+    let result = svc_util.start_service(&service_id, &wait_strategy).await;
     dbg!(&result);
     assert!(result.is_ok());
 
     // Start SMDB service - depends on DBGW
     let service_id = ServiceID::SMDB;
-    let result = svc_util
-        .start_service(&service_id, Duration::from_millis(500))
-        .await;
+    let result = svc_util.start_service(&service_id, &wait_strategy).await;
     assert!(result.is_ok());
 
     // Start MDDB service - depends on SMDB
     let service_id = ServiceID::MDDB;
-    let result = svc_util
-        .start_service(&service_id, Duration::from_millis(500))
-        .await;
+    let result = svc_util.start_service(&service_id, &wait_strategy).await;
     assert!(result.is_ok());
 
     let (mddb_host, mddb_port) = config_manager

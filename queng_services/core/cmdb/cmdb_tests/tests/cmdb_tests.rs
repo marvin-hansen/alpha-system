@@ -3,7 +3,7 @@ use common_config::prelude::ServiceID;
 use container_specs_postgres::postgres_db_container_config;
 use docker_utils::prelude::DockerUtil;
 use service_import::ServiceImportManager;
-use service_utils::ServiceUtil;
+use service_utils::{ServiceUtil, ServiceWaitStrategy};
 use std::time::Duration;
 
 #[tokio::test]
@@ -40,26 +40,22 @@ async fn test_smdb() {
     let imported = service_import_manager.check_if_already_imported().await;
     assert!(imported);
 
+    let wait_strategy = ServiceWaitStrategy::Duration(Duration::from_millis(500));
+
     // Start DBGW service - depends on Database
     let service_id = ServiceID::DBGW;
-    let result = svc_util
-        .start_service(&service_id, Duration::from_millis(500))
-        .await;
+    let result = svc_util.start_service(&service_id, &wait_strategy).await;
     dbg!(&result);
     assert!(result.is_ok());
 
     // Start SMDB service - depends on DBGW
     let service_id = ServiceID::SMDB;
-    let result = svc_util
-        .start_service(&service_id, Duration::from_millis(500))
-        .await;
+    let result = svc_util.start_service(&service_id, &wait_strategy).await;
     assert!(result.is_ok());
 
     // Start CMDDB service - depends on SMDB and DBGW
     let service_id = ServiceID::CMDB;
-    let result = svc_util
-        .start_service(&service_id, Duration::from_millis(500))
-        .await;
+    let result = svc_util.start_service(&service_id, &wait_strategy).await;
     assert!(result.is_ok());
 
     // Configure CMDB client

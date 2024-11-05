@@ -5,7 +5,7 @@ use tokio::time::{sleep, Instant};
 
 use crate::error::service_util_error::ServiceUtilError;
 use crate::fields::PATH;
-use crate::ServiceUtil;
+use crate::{ServiceUtil, ServiceWaitStrategy};
 
 impl ServiceUtil {
     /// Starts a service with the given ID.
@@ -20,7 +20,7 @@ impl ServiceUtil {
     pub async fn start_service(
         &self,
         svc: &ServiceID,
-        wait_duration: Duration,
+        wait_strategy: &ServiceWaitStrategy,
     ) -> Result<(), ServiceUtilError> {
         self.dbg_print("start_service");
         self.dbg_print(&format!(
@@ -46,15 +46,24 @@ impl ServiceUtil {
         cmd.spawn().expect("Failed to run command");
 
         self.dbg_print("Waiting for service to start");
-        sleep(wait_duration).await;
-
+        match wait_strategy {
+            ServiceWaitStrategy::Duration(duration) => {
+                self.wait_until_timeout(duration)
+                    .await
+                    .expect("Failed to wait");
+            }
+            ServiceWaitStrategy::HttpHealthCheck(health_url, duration) => {
+                self.wait_until_http_health_check(&health_url, duration)
+                    .expect("Failed to wait for health check");
+            }
+        }
         self.dbg_print("Service started");
 
         Ok(())
     }
 
-    async fn wait_until_timeout(&self, wait_duration: Duration) -> Result<(), ServiceUtilError> {
-        sleep(wait_duration).await;
+    async fn wait_until_timeout(&self, wait_duration: &Duration) -> Result<(), ServiceUtilError> {
+        sleep(wait_duration.to_owned()).await;
         Ok(())
     }
 
@@ -71,7 +80,7 @@ impl ServiceUtil {
     pub fn wait_until_http_health_check(
         &self,
         health_url: &str,
-        timeout: Duration,
+        timeout: &Duration,
     ) -> Result<(), ServiceUtilError> {
         let start_time = Instant::now();
 

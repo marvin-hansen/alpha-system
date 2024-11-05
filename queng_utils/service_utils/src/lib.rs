@@ -1,6 +1,7 @@
 use crate::error::service_util_error::ServiceUtilError;
 use config_manager::CfgManager;
 use std::fmt::{Display, Formatter};
+use std::time::Duration;
 
 mod error;
 mod fields;
@@ -8,6 +9,12 @@ pub mod prelude;
 mod service;
 mod types;
 mod verify;
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum ServiceWaitStrategy {
+    Duration(Duration),
+    HttpHealthCheck(String, Duration),
+}
 
 #[derive(Debug)]
 pub struct ServiceUtil {

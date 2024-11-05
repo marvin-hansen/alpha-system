@@ -2,6 +2,7 @@ use common_config::prelude::ServiceID;
 use container_specs_postgres::postgres_db_container_config;
 use docker_utils::prelude::DockerUtil;
 use service_utils::prelude::ServiceUtil;
+use service_utils::ServiceWaitStrategy;
 use std::time::Duration;
 use tokio::time::sleep;
 
@@ -25,26 +26,23 @@ async fn test_start_service_util() {
     assert!(res.is_ok());
     let svc_util = res.unwrap();
 
+    // Wait strategy
+    let wait_strategy = ServiceWaitStrategy::Duration(Duration::from_millis(500));
+
     // Start DBGW service
     let service_id = ServiceID::DBGW;
-    let result = svc_util
-        .start_service(&service_id, Duration::from_millis(500))
-        .await;
+    let result = svc_util.start_service(&service_id, &wait_strategy).await;
     dbg!(&result);
     assert!(result.is_ok());
 
     // Start SMDB service - depends on DBGW
     let service_id = ServiceID::SMDB;
-    let result = svc_util
-        .start_service(&service_id, Duration::from_millis(100))
-        .await;
+    let result = svc_util.start_service(&service_id, &wait_strategy).await;
     assert!(result.is_ok());
 
     // Start CMDB service - depends on SMDB
     let service_id = ServiceID::CMDB;
-    let result = svc_util
-        .start_service(&service_id, Duration::from_millis(100))
-        .await;
+    let result = svc_util.start_service(&service_id, &wait_strategy).await;
     assert!(result.is_ok());
 
     sleep(Duration::from_secs(1)).await;
