@@ -18,7 +18,7 @@ mod handler;
 #[global_allocator]
 static GLOBAL: MiMalloc = MiMalloc;
 
-const DBG: bool = true;
+const DBG: bool = false;
 
 const PORT_HTTP: u16 = 7777;
 

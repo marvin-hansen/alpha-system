@@ -48,7 +48,7 @@ impl InitManager {
                 }
 
                 // 3. Print the patched instrument.
-                self.print_instrument("Done! Patched instrument: {:?}", &patch_instrument);
+                self.print_instrument("Done! Patched instrument", &patch_instrument);
 
                 break;
             }
