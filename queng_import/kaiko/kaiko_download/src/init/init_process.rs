@@ -33,7 +33,7 @@ impl InitManager {
 
         self.print_duration("Level 1: took", &start.elapsed());
 
-        // valid_exchanges stores all exchanges codes as lowercase in a &str array
+        // valid_exchanges stores all exchanges codes as lowercase in a String array
         let valid_exchanges = exchanges_meta_data
             .iter()
             .map(|x| x.code.to_lowercase())

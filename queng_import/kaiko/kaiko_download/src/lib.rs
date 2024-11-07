@@ -45,10 +45,18 @@ pub async fn download_meta_data(
     };
 
     // Regardless of auto_detect_proxy, run the init process and return the downloaded meta_data_set
-    match im.init().await {
+    let meta_data = match im.init().await {
         Ok(meta_data_set) => Ok(meta_data_set),
         Err(e) => Err(e),
-    }
+    };
+
+    // drop the init manager and all temporary allocations with it.
+    // Usually this happens implicitly with the default allocator,
+    // but MiMalloc isn't always getting it.
+    drop(im);
+
+    // Return the final meta_data_set
+    meta_data
 }
 
 async fn init_manager_with_proxy(dbg: bool) -> InitManager {
