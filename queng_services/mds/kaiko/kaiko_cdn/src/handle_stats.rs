@@ -22,7 +22,7 @@ pub async fn handle_put_stats(mut req: Request, ctx: RouteContext<()>) -> worker
         Err(e) => return GenericResponse::error_internal(&e.to_string()),
     };
 
-    // Serialize the body into string
+    // Serialize the body into json string
     let value = match to_string(&body) {
         Ok(value) => value,
         Err(e) => return GenericResponse::error_internal(&e.to_string()),

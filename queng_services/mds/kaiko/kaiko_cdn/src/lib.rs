@@ -13,9 +13,13 @@ async fn main(req: Request, env: Env, _ctx: Context) -> Result<Response> {
     Router::new()
         //  health check
         .get_async("/health", handle_health::handle_get_health)
-        // assets metadata
+        // Get assets metadata
+        // curl -H "Content-Type: application/json" --request GET 'http://localhost:8787/assets'
         .get_async("/assets", handle_assets::handle_get_assets)
+        //  Try to put your data in a file, say body.json and then use
+        // curl -H "Content-Type: application/json" --request PUT --data @assets.json http://localhost:8787/assets
         .put_async("/assets", handle_assets::handle_put_assets)
+        // curl -H "Content-Type: application/json" --request POST --data @assets.json http://localhost:8787/assets
         .post_async("/assets", handle_assets::handle_post_assets)
         // exchanges metadata
         .get_async("/exchanges", handle_exchanges::handle_get_exchanges)
