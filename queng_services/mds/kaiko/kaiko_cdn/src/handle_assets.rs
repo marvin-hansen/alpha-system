@@ -8,14 +8,7 @@ pub async fn handle_get_assets(_: Request, ctx: RouteContext<()>) -> worker::Res
     let kv = ctx.kv(METADATA_KV)?;
 
     match kv.get(ASSETS_KEY).json::<MetaAssetRoot>().await? {
-        Some(assets) => {
-            let res = match serde_json::to_vec(&assets) {
-                Ok(res) => res,
-                Err(e) => return GenericResponse::error_internal(&e.to_string()),
-            };
-
-            Response::from_json(&res)
-        }
+        Some(assets) => Response::from_json(&assets),
         None => GenericResponse::error_not_found("Assets not found!"),
     }
 }

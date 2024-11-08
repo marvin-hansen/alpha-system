@@ -4,6 +4,18 @@ use common_metadata::prelude::MetaExchangesRoot;
 use serde_json::to_string;
 use worker::{Request, Response, RouteContext};
 
+/// Handles the GET /exchanges request by retrieving the exchanges metadata from the KV
+/// store and returning it as a JSON response.
+///
+/// # Arguments
+///
+/// * `_request` - The incoming request
+/// * `ctx` - The route context
+///
+/// # Returns
+///
+/// * `worker::Result<Response>` - A response indicating success or failure of the operation
+///
 pub async fn handle_get_exchanges(_: Request, ctx: RouteContext<()>) -> worker::Result<Response> {
     let kv = ctx.kv(METADATA_KV)?;
 
@@ -20,6 +32,23 @@ pub async fn handle_get_exchanges(_: Request, ctx: RouteContext<()>) -> worker::
     }
 }
 
+/// Updates the exchanges metadata by storing the provided `MetaExchangesRoot`
+/// in the KV storage under the `EXCHANGES_KEY`.
+///
+/// # Arguments
+///
+/// * `req` - A mutable `Request` containing the JSON body to be updated.
+/// * `ctx` - A `RouteContext` providing context for the route, including access to KV storage.
+///
+/// # Returns
+///
+/// * `worker::Result<Response>` - A response indicating success or failure of the operation.
+///
+/// # Errors
+///
+/// Returns a generic internal error response if there is an issue with deserializing
+/// the request body, serializing the updated data, or updating the KV storage.
+///
 pub async fn handle_put_exchanges(
     mut req: Request,
     ctx: RouteContext<()>,
@@ -51,6 +80,28 @@ pub async fn handle_put_exchanges(
     }
 }
 
+/// Handle POST /exchanges request
+///
+/// # Description
+///
+/// This function handles the POST /exchanges request by deserializing the request body
+/// into a `MetaExchangesRoot` object, serializing it into a string, and storing it in the KV
+/// storage under the key `EXCHANGES_KEY`.
+///
+/// # Arguments
+///
+/// * `req` - The incoming request
+/// * `ctx` - The route context
+///
+/// # Returns
+///
+/// * `worker::Result<Response>` - A response indicating success or failure of the operation
+///
+/// # Errors
+///
+/// Returns a generic internal error response if there is an issue with deserializing the request
+/// body, serializing the updated data, or storing the data in the KV storage.
+///
 pub async fn handle_post_exchanges(
     mut req: Request,
     ctx: RouteContext<()>,
