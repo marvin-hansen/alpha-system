@@ -36,9 +36,9 @@ pub fn get_check_if_asset_exists_response(exists: bool) -> CheckIfAssetIdExistsR
 }
 
 pub fn get_assets_response(meta_asset: Option<MetaAsset>) -> GetAssetResponse {
-    if meta_asset.is_some() {
+    if let Some(assets) = meta_asset {
         GetAssetResponse {
-            asset: Option::from(meta_asset_to_proto_asset(&meta_asset.unwrap())),
+            asset: Option::from(meta_asset_to_proto_asset(&assets)),
         }
     } else {
         GetAssetResponse { asset: None }

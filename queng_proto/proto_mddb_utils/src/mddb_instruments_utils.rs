@@ -140,11 +140,9 @@ pub fn get_check_if_instrument_exists_response(
 pub fn get_instrument_by_id_response(
     meta_instrument: Option<MetaInstrument>,
 ) -> proto_mddb::proto::GetInstrumentByIdResponse {
-    if meta_instrument.is_some() {
+    if let Some(instrument) = meta_instrument {
         proto_mddb::proto::GetInstrumentByIdResponse {
-            instrument: Option::from(meta_instrument_to_proto_instrument(
-                &meta_instrument.unwrap(),
-            )),
+            instrument: Option::from(meta_instrument_to_proto_instrument(&instrument)),
         }
     } else {
         proto_mddb::proto::GetInstrumentByIdResponse { instrument: None }
@@ -154,11 +152,9 @@ pub fn get_instrument_by_id_response(
 pub fn get_instrument_by_figi_response(
     meta_instrument: Option<MetaInstrument>,
 ) -> proto_mddb::proto::GetInstrumentByFigiResponse {
-    if meta_instrument.is_some() {
+    if let Some(instrument) = meta_instrument {
         proto_mddb::proto::GetInstrumentByFigiResponse {
-            instrument: Option::from(meta_instrument_to_proto_instrument(
-                &meta_instrument.unwrap(),
-            )),
+            instrument: Option::from(meta_instrument_to_proto_instrument(&instrument)),
         }
     } else {
         proto_mddb::proto::GetInstrumentByFigiResponse { instrument: None }
@@ -168,11 +164,9 @@ pub fn get_instrument_by_figi_response(
 pub fn get_instrument_by_pair_figi_response(
     meta_instrument: Option<MetaInstrument>,
 ) -> proto_mddb::proto::GetInstrumentByPairFigiResponse {
-    if meta_instrument.is_some() {
+    if let Some(instrument) = meta_instrument {
         proto_mddb::proto::GetInstrumentByPairFigiResponse {
-            instrument: Option::from(meta_instrument_to_proto_instrument(
-                &meta_instrument.unwrap(),
-            )),
+            instrument: Option::from(meta_instrument_to_proto_instrument(&instrument)),
         }
     } else {
         proto_mddb::proto::GetInstrumentByPairFigiResponse { instrument: None }
@@ -271,11 +265,11 @@ pub fn get_all_instruments_for_base_quote_asset_and_exchange_response(
 }
 
 pub fn get_lookup_instrument_id_by_exchange_pair_code_response(
-    instrument: Option<MetaInstrument>,
+    para_instrument: Option<MetaInstrument>,
 ) -> proto_mddb::proto::LookupInstrumentIdByExchangePairCodeResponse {
-    if instrument.is_some() {
+    if let Some(instrument) = para_instrument {
         proto_mddb::proto::LookupInstrumentIdByExchangePairCodeResponse {
-            instrument_id: Option::from(instrument.unwrap().primary_key()),
+            instrument_id: Option::from(instrument.primary_key()),
         }
     } else {
         proto_mddb::proto::LookupInstrumentIdByExchangePairCodeResponse {
@@ -285,11 +279,11 @@ pub fn get_lookup_instrument_id_by_exchange_pair_code_response(
 }
 
 pub fn get_lookup_instrument_by_figi_response(
-    instrument: Option<MetaInstrument>,
+    para_instrument: Option<MetaInstrument>,
 ) -> proto_mddb::proto::LookupInstrumentIdByFigiResponse {
-    if instrument.is_some() {
+    if let Some(instrument) = para_instrument {
         proto_mddb::proto::LookupInstrumentIdByFigiResponse {
-            instrument_id: Option::from(instrument.unwrap().primary_key()),
+            instrument_id: Option::from(instrument.primary_key()),
         }
     } else {
         proto_mddb::proto::LookupInstrumentIdByFigiResponse {
@@ -299,11 +293,11 @@ pub fn get_lookup_instrument_by_figi_response(
 }
 
 pub fn get_lookup_instrument_by_pair_figi_response(
-    instrument: Option<MetaInstrument>,
+    para_instrument: Option<MetaInstrument>,
 ) -> proto_mddb::proto::LookupInstrumentIdByPairFigiResponse {
-    if instrument.is_some() {
+    if let Some(instrument) = para_instrument {
         proto_mddb::proto::LookupInstrumentIdByPairFigiResponse {
-            instrument_id: Option::from(instrument.unwrap().primary_key()),
+            instrument_id: Option::from(instrument.primary_key()),
         }
     } else {
         proto_mddb::proto::LookupInstrumentIdByPairFigiResponse {

@@ -44,9 +44,9 @@ pub fn get_check_if_exchange_exists_response(exists: bool) -> CheckIfExchangeIdE
 pub fn get_exchange_response(
     meta_exchange: Option<MetaExchange>,
 ) -> proto_mddb::proto::GetExchangeResponse {
-    if meta_exchange.is_some() {
+    if let Some(exchanges) = meta_exchange {
         proto_mddb::proto::GetExchangeResponse {
-            exchange: Option::from(meta_exchange_to_proto_exchange(&meta_exchange.unwrap())),
+            exchange: Option::from(meta_exchange_to_proto_exchange(&exchanges)),
         }
     } else {
         proto_mddb::proto::GetExchangeResponse { exchange: None }
@@ -67,9 +67,9 @@ pub fn get_all_exchanges_response(
 pub fn get_lookup_exchange_name_response(
     exchange: Option<MetaExchange>,
 ) -> proto_mddb::proto::LookupExchangeNameResponse {
-    if exchange.is_some() {
+    if let Some(exchange) = exchange {
         proto_mddb::proto::LookupExchangeNameResponse {
-            exchange_name: Some(exchange.unwrap().name.to_string()),
+            exchange_name: Some(exchange.name.to_string()),
         }
     } else {
         proto_mddb::proto::LookupExchangeNameResponse {

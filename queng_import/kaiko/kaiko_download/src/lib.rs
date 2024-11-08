@@ -45,10 +45,7 @@ pub async fn download_meta_data(
     };
 
     // Regardless of auto_detect_proxy, run the init process and return the downloaded meta_data_set
-    let meta_data = match im.init().await {
-        Ok(meta_data_set) => Ok(meta_data_set),
-        Err(e) => Err(e),
-    };
+    let meta_data = im.init().await;
 
     // drop the init manager and all temporary allocations with it.
     // Usually this happens implicitly with the default allocator,
