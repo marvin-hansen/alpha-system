@@ -16,9 +16,12 @@ wasm-opt = false
 
 [lib]
 crate-type = ["cdylib"]
+path = "src/lib.rs"
+
 
 [dependencies]
 serde = {workspace = true}
+serde_json = {workspace = true}
 worker = {workspace = true}
 worker-macros = {workspace = true}
 console_error_panic_hook = {workspace = true}
