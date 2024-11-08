@@ -4,6 +4,18 @@ use common_metadata::prelude::MetaStats;
 use serde_json::to_string;
 use worker::{Request, Response, RouteContext};
 
+/// Handles the GET /stats request by retrieving the stats metadata from the KV
+/// store and returning it as a JSON response.
+///
+/// # Arguments
+///
+/// * `_request` - The incoming request
+/// * `ctx` - The route context
+///
+/// # Returns
+///
+/// * `worker::Result<Response>` - A response indicating success or failure of the operation
+///
 pub async fn handle_get_stats(_: Request, ctx: RouteContext<()>) -> worker::Result<Response> {
     let kv = ctx.kv(METADATA_KV)?;
 
@@ -13,6 +25,19 @@ pub async fn handle_get_stats(_: Request, ctx: RouteContext<()>) -> worker::Resu
     }
 }
 
+/// Handles the PUT /stats request by deserializing the request body into a `MetaStats`
+/// object, serializing it into a JSON string, and storing it in the KV storage under the
+/// key `STATS_KEY`.
+///
+/// # Arguments
+///
+/// * `req` - A mutable `Request` object containing the JSON body to be stored.
+/// * `ctx` - A `RouteContext` providing context for the route, including access to KV storage.
+///
+/// # Returns
+///
+/// * `worker::Result<Response>` - A response indicating success or failure of the operation
+///
 pub async fn handle_put_stats(mut req: Request, ctx: RouteContext<()>) -> worker::Result<Response> {
     let kv = ctx.kv(METADATA_KV)?;
 
@@ -35,6 +60,24 @@ pub async fn handle_put_stats(mut req: Request, ctx: RouteContext<()>) -> worker
     }
 }
 
+/// Handles the POST /stats request by deserializing the request body into a `MetaStats`
+/// object, serializing it into a JSON string, and storing it in the KV storage under the
+/// key `STATS_KEY`.
+///
+/// # Arguments
+///
+/// * `req` - A mutable `Request` object containing the JSON body to be stored.
+/// * `ctx` - A `RouteContext` providing context for the route, including access to KV storage.
+///
+/// # Returns
+///
+/// * `worker::Result<Response>` - A response indicating success or failure of the operation.
+///
+/// # Errors
+///
+/// Returns a generic internal error response if there is an issue with deserializing the request
+/// body, serializing the data, or storing it in the KV storage.
+///
 pub async fn handle_post_stats(
     mut req: Request,
     ctx: RouteContext<()>,

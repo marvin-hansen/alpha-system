@@ -9,6 +9,8 @@ pub(crate) struct GenericResponse {
 }
 
 impl GenericResponse {
+    /// Construct a new `GenericResponse` with the given status and message.
+    ///
     pub fn new(status: u16, message: String) -> Self {
         Self { status, message }
     }

@@ -4,6 +4,18 @@ use common_metadata::prelude::MetaAssetRoot;
 use serde_json::to_string;
 use worker::{Request, Response, RouteContext};
 
+/// Handles the GET /assets request by retrieving the assets metadata from the KV
+/// store and returning it as a JSON response.
+///
+/// # Arguments
+///
+/// * `_request` - The incoming request
+/// * `ctx` - The route context
+///
+/// # Returns
+///
+/// * `worker::Result<Response>` - A response indicating success or failure of the operation
+///
 pub async fn handle_get_assets(_: Request, ctx: RouteContext<()>) -> worker::Result<Response> {
     let kv = ctx.kv(METADATA_KV)?;
 
@@ -13,6 +25,28 @@ pub async fn handle_get_assets(_: Request, ctx: RouteContext<()>) -> worker::Res
     }
 }
 
+/// Handles the PUT /assets request.
+///
+/// # Description
+///
+/// This function processes the PUT request for assets by deserializing the request
+/// body into a `MetaAssetRoot` object, serializing it into a JSON string, and storing
+/// it in the KV storage under the key `ASSETS_KEY`.
+///
+/// # Arguments
+///
+/// * `req` - A mutable `Request` object containing the JSON body to be updated.
+/// * `ctx` - A `RouteContext` providing context for the route, including access to KV storage.
+///
+/// # Returns
+///
+/// * `worker::Result<Response>` - A response indicating success or failure of the operation.
+///
+/// # Errors
+///
+/// Returns a generic internal error response if there is an issue with deserializing the request
+/// body, serializing the updated data, or updating the KV storage.
+///
 pub async fn handle_put_assets(
     mut req: Request,
     ctx: RouteContext<()>,
@@ -44,6 +78,28 @@ pub async fn handle_put_assets(
     }
 }
 
+/// Handles the POST /assets request.
+///
+/// # Description
+///
+/// This function processes the POST request for assets by deserializing the request
+/// body into a `MetaAssetRoot` object, serializing it into a JSON string, and storing
+/// it in the KV storage under the key `ASSETS_KEY`.
+///
+/// # Arguments
+///
+/// * `req` - A mutable `Request` object containing the JSON body to be stored.
+/// * `ctx` - A `RouteContext` providing context for the route, including access to KV storage.
+///
+/// # Returns
+///
+/// * `worker::Result<Response>` - A response indicating success or failure of the operation.
+///
+/// # Errors
+///
+/// Returns a generic internal error response if there is an issue with deserializing the request
+/// body, serializing the data, or storing it in the KV storage.
+///
 pub async fn handle_post_assets(
     mut req: Request,
     ctx: RouteContext<()>,

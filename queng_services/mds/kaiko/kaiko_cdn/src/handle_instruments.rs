@@ -4,6 +4,18 @@ use common_metadata::prelude::MetaInstrumentsRoot;
 use serde_json::to_string;
 use worker::{Request, Response, RouteContext};
 
+/// Handles the GET /instruments request by retrieving the instruments metadata from the KV
+/// store and returning it as a JSON response.
+///
+/// # Arguments
+///
+/// * `_request` - The incoming request
+/// * `ctx` - The route context
+///
+/// # Returns
+///
+/// * `worker::Result<Response>` - A response indicating success or failure of the operation
+///
 pub async fn handle_get_instruments(_: Request, ctx: RouteContext<()>) -> worker::Result<Response> {
     let kv = ctx.kv(METADATA_KV)?;
 
@@ -12,18 +24,33 @@ pub async fn handle_get_instruments(_: Request, ctx: RouteContext<()>) -> worker
         .json::<MetaInstrumentsRoot>()
         .await?
     {
-        Some(instruments) => {
-            let res = match serde_json::to_vec(&instruments) {
-                Ok(res) => res,
-                Err(e) => return GenericResponse::error_internal(&e.to_string()),
-            };
-
-            Response::from_json(&res)
-        }
+        Some(instruments) => Response::from_json(&instruments),
         None => GenericResponse::error_not_found("Instruments not found!"),
     }
 }
 
+/// Handles the PUT /instruments request.
+///
+/// # Description
+///
+/// This function updates the instruments metadata by deserializing the request
+/// body into a `MetaInstrumentsRoot` object, serializing it into a string, and storing
+/// it in the KV storage under the key `INSTRUMENTS_KEY`.
+///
+/// # Arguments
+///
+/// * `req` - A mutable `Request` object containing the JSON body to be updated.
+/// * `ctx` - A `RouteContext` providing context for the route, including access to KV storage.
+///
+/// # Returns
+///
+/// * `worker::Result<Response>` - A response indicating success or failure of the operation.
+///
+/// # Errors
+///
+/// Returns a generic internal error response if there is an issue with deserializing the request
+/// body, serializing the updated data, or updating the KV storage.
+///
 pub async fn handle_put_instruments(
     mut req: Request,
     ctx: RouteContext<()>,
@@ -55,6 +82,28 @@ pub async fn handle_put_instruments(
     }
 }
 
+/// Handles the POST /instruments request.
+///
+/// # Description
+///
+/// This function processes the POST request for instruments by deserializing the request
+/// body into a `MetaInstrumentsRoot` object, serializing it into a JSON string, and storing
+/// it in the KV storage under the key `INSTRUMENTS_KEY`.
+///
+/// # Arguments
+///
+/// * `req` - A mutable `Request` object containing the JSON body to be stored.
+/// * `ctx` - A `RouteContext` providing context for the route, including access to KV storage.
+///
+/// # Returns
+///
+/// * `worker::Result<Response>` - A response indicating success or failure of the operation.
+///
+/// # Errors
+///
+/// Returns a generic internal error response if there is an issue with deserializing the request
+/// body, serializing the data, or storing it in the KV storage.
+///
 pub async fn handle_post_instruments(
     mut req: Request,
     ctx: RouteContext<()>,

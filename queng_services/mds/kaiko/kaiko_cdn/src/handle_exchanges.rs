@@ -20,14 +20,7 @@ pub async fn handle_get_exchanges(_: Request, ctx: RouteContext<()>) -> worker::
     let kv = ctx.kv(METADATA_KV)?;
 
     match kv.get(EXCHANGES_KEY).json::<MetaExchangesRoot>().await? {
-        Some(exchanges) => {
-            let res = match serde_json::to_vec(&exchanges) {
-                Ok(res) => res,
-                Err(e) => return GenericResponse::error_internal(&e.to_string()),
-            };
-
-            Response::from_json(&res)
-        }
+        Some(exchanges) => Response::from_json(&exchanges),
         None => GenericResponse::error_not_found("Exchanges not found!"),
     }
 }
