@@ -40,19 +40,35 @@ alias(
 )
 
 ###############################################################################
-# IMS Data Services
+# MDS Services
 ###############################################################################
 
 alias(
+    name = "kaiko_proxy",
+    actual = "//queng_services/mds/kaiko/kaiko_proxy:kaiko_proxy",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "kaiko_proxy_push",
+    actual = "//queng_services/mds/kaiko/kaiko_proxy:push",
+    visibility = ["//visibility:public"],
+)
+
+alias(
     name = "mddb",
-    actual = "//queng_services/ims/mddb/mddb_service:mddb",
+    actual = "//queng_services/mds/mddb/mddb_service:mddb",
     visibility = ["//visibility:public"],
 )
 
 alias(
     name = "mddb_push",
-    actual = "//queng_services/ims/mddb/mddb_service:push",
+    actual = "//queng_services/mds/mddb/mddb_service:push",
 )
+
+###############################################################################
+# IMS Data Services
+###############################################################################
 
 alias(
     name = "binance_data",

@@ -26,13 +26,22 @@ alias(
 )
 
 ###############################################################################
-# IMS Clients
+# MDS Clients
 ###############################################################################
 
 alias(
-    name = "mddb_client",
-    actual = "//queng_services/ims/mddb/mddb_client",
+    name = "kaiko_client",
+    actual = "//queng_services/mds/kaiko/kaiko_client",
 )
+
+alias(
+    name = "mddb_client",
+    actual = "//queng_services/mds/mddb/mddb_client",
+)
+
+###############################################################################
+# IMS Clients
+###############################################################################
 
 alias(
     name = "ims_data_client",
@@ -48,3 +57,4 @@ alias(
     name = "rest_client",
     actual = "//queng_services/ims/ims_clients/rest_client",
 )
+

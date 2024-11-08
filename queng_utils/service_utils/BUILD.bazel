@@ -70,7 +70,7 @@ copy_file(
 # Copy all meta services
 copy_file(
     name = "copy_kaiko_proxy",
-    src = "//alias:kaiko_proxy",
+    src = "//alias/service:kaiko_proxy",
     out = "kaiko_proxy",
     is_executable = True,
 )

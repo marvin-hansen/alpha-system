@@ -19,12 +19,9 @@ members = [
     "queng_import/core/config_import",
     "queng_import/core/metadata_import",
     "queng_import/core/service_import",
-    "queng_import/kaiko/kaiko_client",
     "queng_import/kaiko/kaiko_download",
     "queng_import/kaiko/kaiko_import",
-    "queng_import/kaiko/kaiko_proxy",
     "queng_import/kaiko/kaiko_test_utils",
-    "queng_import/kaiko/kaiko_tests",
     "queng_import/postgres/pg_import_config",
     "queng_import/postgres/pg_import_services",
     "queng_import/postgres/pg_import_metadata",
@@ -63,10 +60,6 @@ members = [
     "queng_services/core/smdb/smdb_service",
     "queng_services/core/smdb/smdb_specs",
     "queng_services/core/smdb/smdb_tests",
-    "queng_services/ims/mddb/mddb_service",
-    "queng_services/ims/mddb/mddb_specs",
-    "queng_services/ims/mddb/mddb_client",
-    "queng_services/ims/mddb/mddb_tests",
     "queng_services/ims/ims_clients/binance_client",
     "queng_services/ims/ims_clients/ims_data_client",
     "queng_services/ims/ims_clients/rest_client",
@@ -74,6 +67,13 @@ members = [
     "queng_services/ims/ims_data/binance_data",
     "queng_services/ims/ims_data/ims_data_binance_specs",
     "queng_services/ims/ims_data/ims_data_vex_specs",
+    "queng_services/mds/kaiko/kaiko_client",
+    "queng_services/mds/kaiko/kaiko_proxy",
+    "queng_services/mds/kaiko/kaiko_tests",
+    "queng_services/mds/mddb/mddb_service",
+    "queng_services/mds/mddb/mddb_specs",
+    "queng_services/mds/mddb/mddb_client",
+    "queng_services/mds/mddb/mddb_tests",
     "queng_services/templete/grpc_service",
     "queng_specs/portfolio_specs",
     "queng_specs/container_specs/container_specs_kaiko",
@@ -114,7 +114,7 @@ dbgw_mddb_client = { path = "queng_services/core/dbgw/dbgw_client/dbgw_mddb_clie
 dbgw_smdb_client = { path = "queng_services/core/dbgw/dbgw_client/dbgw_smdb_client" }
 ims_data_client = { path = "queng_services/ims/ims_clients/ims_data_client" }
 rest_client = { path = "queng_services/ims/ims_clients/rest_client" }
-mddb_client = { path = "queng_services/ims/mddb/mddb_client" }
+mddb_client = { path = "queng_services/mds/mddb/mddb_client" }
 smdb_client = { path = "queng_services/core/smdb/smdb_client" }
 
 # Common
@@ -141,10 +141,10 @@ config_import = { path = "queng_import/core/config_import" }
 metadata_import = { path = "queng_import/core/metadata_import" }
 service_import = { path = "queng_import/core/service_import" }
 # Kaiko
-kaiko_client = { path = "queng_import/kaiko/kaiko_client" }
+kaiko_client = { path = "queng_services/mds/kaiko/kaiko_client" }
 kaiko_download = { path = "queng_import/kaiko/kaiko_download" }
 kaiko_import = { path = "queng_import/kaiko/kaiko_import" }
-kaiko_proxy = { path = "queng_import/kaiko/kaiko_proxy" }
+kaiko_proxy = { path = "queng_services/mds/kaiko/kaiko_proxy" }
 kaiko_test_utils = { path =  "queng_import/kaiko/kaiko_test_utils" }
 # Postgres DB
 pg_import_config = { path = "queng_import/postgres/pg_import_config" }
@@ -186,7 +186,7 @@ dbgw = { path = "queng_services/core/dbgw" }
 smdb = { path = "queng_services/core/smdb" }
 ims_common = { path = "queng_services/ims/ims_common" }
 binance_data = { path = "queng_services/ims/ims_data/binance_data" }
-mddb = { path = "queng_services/ims/mddb" }
+mddb = { path = "queng_services/mds/mddb" }
 # Service template
 grpc_service = { path = "queng_services/templete/grpc_service" }
 
@@ -207,7 +207,7 @@ portfolio_specs = { path = "queng_specs/portfolio_specs" }
 cmdb_specs = { path = "queng_services/core/cmdb/cmdb_specs" }
 dbgw_specs = { path = "queng_services/core/dbgw/dbgw_specs" }
 smdb_specs = { path = "queng_services/core/smdb/smdb_specs" }
-mddb_specs = { path = "queng_services/ims/mddb/mddb_specs" }
+mddb_specs = { path = "queng_services/mds/mddb/mddb_specs" }
 ims_data_binance_specs = { path = "queng_services/ims/ims_data/ims_data_binance_specs" }
 ims_data_vex_specs = { path = "queng_services/ims/ims_data/ims_data_vex_specs" }
 shared_service_specs = { path = "queng_specs/service_specs/shared_service_specs" }

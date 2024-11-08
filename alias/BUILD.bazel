@@ -102,10 +102,6 @@ alias(
 
 ## Kaiko import
 ##############
-alias(
-    name = "kaiko_client",
-    actual = "//queng_import/kaiko/kaiko_client",
-)
 
 alias(
     name = "kaiko_download",
@@ -115,18 +111,6 @@ alias(
 alias(
     name = "kaiko_import",
     actual = "//queng_import/kaiko/kaiko_import",
-)
-
-alias(
-    name = "kaiko_proxy",
-    actual = "//queng_import/kaiko/kaiko_proxy:kaiko_proxy",
-    visibility = ["//visibility:public"],
-)
-
-alias(
-    name = "kaiko_proxy_push",
-    actual = "//queng_import/kaiko/kaiko_proxy:push",
-    visibility = ["//visibility:public"],
 )
 
 alias(
@@ -358,7 +342,7 @@ alias(
 # IMS service specs
 alias(
     name = "mddb_specs",
-    actual = "//queng_services/ims/mddb/mddb_specs",
+    actual = "//queng_services/mds/mddb/mddb_specs",
 )
 
 alias(

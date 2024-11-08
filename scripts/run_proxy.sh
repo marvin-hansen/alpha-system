@@ -4,7 +4,7 @@ set -o nounset
 set -o pipefail
 
 # Run with Bazel
-ENV=LOCAL bazel run  -c opt //alias:kaiko_proxy
+ENV=LOCAL bazel run  -c opt //alias/service:kaiko_proxy
 
 # Docker network is about 20x slower than localhost when accessing the proxy locally.
 # Find image tag and URL in queng_specs/container_specs/container_specs_kaiko/src/lib.rs

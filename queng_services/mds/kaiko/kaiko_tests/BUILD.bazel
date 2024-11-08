@@ -21,7 +21,7 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Crate under test
-        "//alias:kaiko_client",
+        "//alias/client:kaiko_client",
         # Internal crates
         "//alias:docker_utils",
         "//alias:container_specs_kaiko",
