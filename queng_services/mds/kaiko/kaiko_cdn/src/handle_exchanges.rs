@@ -1,5 +1,5 @@
 use crate::fields::{EXCHANGES_KEY, METADATA_KV};
-use crate::handle_shared::GenericResponse;
+use crate::handle_shared::HttpResponse;
 use common_metadata::prelude::MetaExchangesRoot;
 use serde_json::to_string;
 use worker::{Request, Response, RouteContext};
@@ -21,7 +21,7 @@ pub async fn handle_get_exchanges(_: Request, ctx: RouteContext<()>) -> worker::
 
     match kv.get(EXCHANGES_KEY).json::<MetaExchangesRoot>().await? {
         Some(exchanges) => Response::from_json(&exchanges),
-        None => GenericResponse::error_not_found("Exchanges not found!"),
+        None => HttpResponse::error_not_found("Exchanges not found!"),
     }
 }
 
@@ -51,7 +51,7 @@ pub async fn handle_put_exchanges(
     // Get the body of the request
     let body = match req.json::<MetaExchangesRoot>().await {
         Ok(body) => body,
-        Err(e) => return GenericResponse::error_internal(&e.to_string()),
+        Err(e) => return HttpResponse::error_internal(&e.to_string()),
     };
 
     // Create a new MetaExchangesRoot from the body
@@ -63,13 +63,13 @@ pub async fn handle_put_exchanges(
     // Serialize the body into string
     let value = match to_string(&new_exchanges) {
         Ok(value) => value,
-        Err(e) => return GenericResponse::error_internal(&e.to_string()),
+        Err(e) => return HttpResponse::error_internal(&e.to_string()),
     };
 
     // Update the new value in KV
     match kv.put(EXCHANGES_KEY, value)?.execute().await {
-        Ok(()) => GenericResponse::success("OK!"),
-        Err(e) => GenericResponse::error_internal(&e.to_string()),
+        Ok(()) => HttpResponse::success("OK!"),
+        Err(e) => HttpResponse::error_internal(&e.to_string()),
     }
 }
 
@@ -104,7 +104,7 @@ pub async fn handle_post_exchanges(
     // Get the body of the request
     let body = match req.json::<MetaExchangesRoot>().await {
         Ok(body) => body,
-        Err(e) => return GenericResponse::error_internal(&e.to_string()),
+        Err(e) => return HttpResponse::error_internal(&e.to_string()),
     };
 
     // Create a new MetaExchangesRoot from the body
@@ -116,12 +116,12 @@ pub async fn handle_post_exchanges(
     // Serialize the body into string
     let value = match to_string(&new_exchanges) {
         Ok(value) => value,
-        Err(e) => return GenericResponse::error_internal(&e.to_string()),
+        Err(e) => return HttpResponse::error_internal(&e.to_string()),
     };
 
     // Store the value in KV
     match kv.put(EXCHANGES_KEY, value)?.execute().await {
-        Ok(()) => GenericResponse::success("OK!"),
-        Err(e) => GenericResponse::error_internal(&e.to_string()),
+        Ok(()) => HttpResponse::success("OK!"),
+        Err(e) => HttpResponse::error_internal(&e.to_string()),
     }
 }

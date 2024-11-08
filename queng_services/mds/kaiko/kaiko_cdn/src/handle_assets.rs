@@ -1,5 +1,5 @@
 use crate::fields::{ASSETS_KEY, METADATA_KV};
-use crate::handle_shared::GenericResponse;
+use crate::handle_shared::HttpResponse;
 use common_metadata::prelude::MetaAssetRoot;
 use serde_json::to_string;
 use worker::{Request, Response, RouteContext};
@@ -21,7 +21,7 @@ pub async fn handle_get_assets(_: Request, ctx: RouteContext<()>) -> worker::Res
 
     match kv.get(ASSETS_KEY).json::<MetaAssetRoot>().await? {
         Some(assets) => Response::from_json(&assets),
-        None => GenericResponse::error_not_found("Assets not found!"),
+        None => HttpResponse::error_not_found("Assets not found!"),
     }
 }
 
@@ -56,7 +56,7 @@ pub async fn handle_put_assets(
     // Get the body of the request
     let body = match req.json::<MetaAssetRoot>().await {
         Ok(body) => body,
-        Err(e) => return GenericResponse::error_internal(&e.to_string()),
+        Err(e) => return HttpResponse::error_internal(&e.to_string()),
     };
 
     // Create a new MetaAssetRoot from the body
@@ -68,13 +68,13 @@ pub async fn handle_put_assets(
     // Serialize the body into string
     let value = match to_string(&new_assets) {
         Ok(value) => value,
-        Err(e) => return GenericResponse::error_internal(&e.to_string()),
+        Err(e) => return HttpResponse::error_internal(&e.to_string()),
     };
 
     // Update the new value in KV
     match kv.put(ASSETS_KEY, value)?.execute().await {
-        Ok(()) => GenericResponse::success("OK!"),
-        Err(e) => GenericResponse::error_internal(&e.to_string()),
+        Ok(()) => HttpResponse::success("OK!"),
+        Err(e) => HttpResponse::error_internal(&e.to_string()),
     }
 }
 
@@ -109,18 +109,18 @@ pub async fn handle_post_assets(
     // Create a new MetaAssetRoot from the body
     let body = match req.json::<MetaAssetRoot>().await {
         Ok(body) => body,
-        Err(e) => return GenericResponse::error_internal(&e.to_string()),
+        Err(e) => return HttpResponse::error_internal(&e.to_string()),
     };
 
     // Serialize the body to a string
     let value = match to_string(&body) {
         Ok(value) => value,
-        Err(e) => return GenericResponse::error_internal(&e.to_string()),
+        Err(e) => return HttpResponse::error_internal(&e.to_string()),
     };
 
     // Store the value in KV
     match kv.put(ASSETS_KEY, value)?.execute().await {
-        Ok(()) => GenericResponse::success("OK!"),
-        Err(e) => GenericResponse::error_internal(&e.to_string()),
+        Ok(()) => HttpResponse::success("OK!"),
+        Err(e) => HttpResponse::error_internal(&e.to_string()),
     }
 }

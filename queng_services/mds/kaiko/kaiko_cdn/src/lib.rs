@@ -14,7 +14,7 @@ async fn main(req: Request, env: Env, _ctx: Context) -> Result<Response> {
         //  health check
         // curl -H "Content-Type: application/json" --request GET 'http://localhost:8787/health'
         .get_async("/health", handle_health::handle_get_health)
-        // Get assets metadata
+        // Assets metadata
         // curl -H "Content-Type: application/json" --request GET 'http://localhost:8787/assets'
         .get_async("/assets", handle_assets::handle_get_assets)
         //  Try to put your data in a file, say body.json and then use

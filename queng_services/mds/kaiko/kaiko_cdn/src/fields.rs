@@ -1,3 +1,4 @@
+// Binding to the cloudflare KV namespace
 pub(crate) const METADATA_KV: &str = "METADATA";
 pub(crate) const ASSETS_KEY: &str = "assets";
 pub(crate) const EXCHANGES_KEY: &str = "exchanges";

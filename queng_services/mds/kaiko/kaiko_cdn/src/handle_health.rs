@@ -1,4 +1,4 @@
-use crate::handle_shared::GenericResponse;
+use crate::handle_shared::HttpResponse;
 use worker::{Request, Response, RouteContext};
 
 /// Handles the GET /health request by returning a successful response.
@@ -13,5 +13,5 @@ use worker::{Request, Response, RouteContext};
 /// * `worker::Result<Response>` - A response indicating success or failure of the operation
 ///
 pub async fn handle_get_health(_: Request, _ctx: RouteContext<()>) -> worker::Result<Response> {
-    GenericResponse::success("ok!")
+    HttpResponse::success("ok!")
 }
