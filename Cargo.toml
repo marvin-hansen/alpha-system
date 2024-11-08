@@ -68,6 +68,7 @@ members = [
     "queng_services/ims/ims_data/ims_data_binance_specs",
     "queng_services/ims/ims_data/ims_data_vex_specs",
     "queng_services/mds/kaiko/kaiko_client",
+    "queng_services/mds/kaiko/kaiko_cdn",
     "queng_services/mds/kaiko/kaiko_proxy",
     "queng_services/mds/kaiko/kaiko_tests",
     "queng_services/mds/mddb/mddb_service",
@@ -268,7 +269,10 @@ tokio-cron-scheduler = { version = "0.13.0", features = ["signal"] }
 tokio-timer = { version = "0.2.13" }
 tokio-tungstenite = { version = "0.24.0", default-features = false }
 warp = "0.3.7"
-
+# Depds for cloudflare workers; Not in Bazel
+worker = { version = "0.4.2", default-features = false  }
+worker-macros = { version="0.4.2" }
+console_error_panic_hook = { version = "0.1.1" }
 
 # Optimize all crates
 [profile.release]
