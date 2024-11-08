@@ -269,7 +269,7 @@ tokio-cron-scheduler = { version = "0.13.0", features = ["signal"] }
 tokio-timer = { version = "0.2.13" }
 tokio-tungstenite = { version = "0.24.0", default-features = false }
 warp = "0.3.7"
-# Depds for cloudflare workers; Not in Bazel
+# Depdendencies for cloudflare workers; Not in Bazel
 worker = { version = "0.4.2", default-features = false  }
 worker-macros = { version="0.4.2" }
 console_error_panic_hook = { version = "0.1.1" }

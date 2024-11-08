@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 use worker::*;
 
 #[derive(Debug, Deserialize, Serialize)]
-struct GenericResponse {
+struct HealthResponse {
     status: u16,
     message: String,
 }
@@ -15,8 +15,8 @@ async fn main(req: Request, env: Env, _ctx: Context) -> Result<Response> {
         .await
 }
 
-pub async fn handle_get_health(_: Request, _ctx: RouteContext<()>) -> worker::Result<Response> {
-    Response::from_json(&GenericResponse {
+pub async fn handle_get_health(_: Request, _ctx: RouteContext<()>) -> Result<Response> {
+    Response::from_json(&HealthResponse {
         status: 200,
         message: "ok!".to_string(),
     })
