@@ -20,6 +20,9 @@ path = "src/lib.rs"
 
 
 [dependencies]
+# Internal crates
+common_metadata = {workspace = true}
+# External crates
 serde = {workspace = true}
 serde_json = {workspace = true}
 worker = {workspace = true}
