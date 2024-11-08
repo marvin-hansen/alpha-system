@@ -11,6 +11,7 @@ use worker::*;
 #[event(fetch)]
 async fn main(req: Request, env: Env, _ctx: Context) -> Result<Response> {
     Router::new()
+        //  health check
         .get_async("/health", handle_health::handle_get_health)
         // assets metadata
         .get_async("/assets", handle_assets::handle_get_assets)
@@ -24,8 +25,10 @@ async fn main(req: Request, env: Env, _ctx: Context) -> Result<Response> {
         .get_async("/instruments", handle_instruments::handle_get_instruments)
         .put_async("/instruments", handle_instruments::handle_put_instruments)
         .post_async("/instruments", handle_instruments::handle_post_instruments)
-        // stats
+        // metadata stats
         .get_async("/stats", handle_stats::handle_get_stats)
+        .put_async("/stats", handle_stats::handle_put_stats)
+        .post_async("/stats", handle_stats::handle_post_stats)
         .run(req, env)
         .await
 }
