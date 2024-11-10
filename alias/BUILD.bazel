@@ -104,6 +104,11 @@ alias(
 ##############
 
 alias(
+    name = "kaiko_cdn_auth",
+    actual = "//queng_services/mds/kaiko/kaiko_cdn_auth",
+)
+
+alias(
     name = "kaiko_download",
     actual = "//queng_import/kaiko/kaiko_download",
 )
