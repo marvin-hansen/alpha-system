@@ -1,4 +1,4 @@
-use crate::fields::{METADATA_KV, STATS_KEY};
+use crate::fields::{AUTH_HEADER_KEY, METADATA_KV, RO_AUTH_KEY, RW_AUTH_KEY, STATS_KEY};
 use crate::handle_shared::HttpResponse;
 use common_metadata::prelude::MetaStats;
 use serde_json::to_string;
@@ -16,9 +16,21 @@ use worker::{Request, Response, RouteContext};
 ///
 /// * `worker::Result<Response>` - A response indicating success or failure of the operation
 ///
-pub async fn handle_get_stats(_: Request, ctx: RouteContext<()>) -> worker::Result<Response> {
+pub async fn handle_get_stats(req: Request, ctx: RouteContext<()>) -> worker::Result<Response> {
+    // Check authentication
+    let auth_header = match req.headers().get(AUTH_HEADER_KEY)? {
+        Some(header) => header,
+        None => return HttpResponse::error_forbidden("access denied"),
+    };
+
+    if auth_header != RO_AUTH_KEY {
+        return HttpResponse::error_forbidden("access denied");
+    }
+
+    // Get the KV store
     let kv = ctx.kv(METADATA_KV)?;
 
+    // Get the metadata
     match kv.get(STATS_KEY).json::<MetaStats>().await? {
         Some(stats) => Response::from_json(&stats),
         None => HttpResponse::error_not_found("Stats not found!"),
@@ -39,6 +51,17 @@ pub async fn handle_get_stats(_: Request, ctx: RouteContext<()>) -> worker::Resu
 /// * `worker::Result<Response>` - A response indicating success or failure of the operation
 ///
 pub async fn handle_put_stats(mut req: Request, ctx: RouteContext<()>) -> worker::Result<Response> {
+    // Check authentication
+    let auth_header = match req.headers().get(AUTH_HEADER_KEY)? {
+        Some(header) => header,
+        None => return HttpResponse::error_forbidden("access denied"),
+    };
+
+    if auth_header != RW_AUTH_KEY {
+        return HttpResponse::error_forbidden("access denied");
+    }
+
+    // Get the KV store
     let kv = ctx.kv(METADATA_KV)?;
 
     // Get the body of the request
@@ -82,6 +105,17 @@ pub async fn handle_post_stats(
     mut req: Request,
     ctx: RouteContext<()>,
 ) -> worker::Result<Response> {
+    // Check authentication
+    let auth_header = match req.headers().get(AUTH_HEADER_KEY)? {
+        Some(header) => header,
+        None => return HttpResponse::error_forbidden("access denied"),
+    };
+
+    if auth_header != RW_AUTH_KEY {
+        return HttpResponse::error_forbidden("access denied");
+    }
+
+    // Get the KV store
     let kv = ctx.kv(METADATA_KV)?;
 
     // Create a new MetaStats from the body

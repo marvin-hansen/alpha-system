@@ -1,4 +1,4 @@
-use crate::fields::{INSTRUMENTS_KEY, METADATA_KV};
+use crate::fields::{AUTH_HEADER_KEY, INSTRUMENTS_KEY, METADATA_KV, RO_AUTH_KEY, RW_AUTH_KEY};
 use crate::handle_shared::HttpResponse;
 use common_metadata::prelude::MetaInstrumentsRoot;
 use serde_json::to_string;
@@ -16,9 +16,24 @@ use worker::{Request, Response, RouteContext};
 ///
 /// * `worker::Result<Response>` - A response indicating success or failure of the operation
 ///
-pub async fn handle_get_instruments(_: Request, ctx: RouteContext<()>) -> worker::Result<Response> {
+pub async fn handle_get_instruments(
+    req: Request,
+    ctx: RouteContext<()>,
+) -> worker::Result<Response> {
+    // Check authentication
+    let auth_header = match req.headers().get(AUTH_HEADER_KEY)? {
+        Some(header) => header,
+        None => return HttpResponse::error_forbidden("access denied"),
+    };
+
+    if auth_header != RO_AUTH_KEY {
+        return HttpResponse::error_forbidden("access denied");
+    }
+
+    // Get the KV store
     let kv = ctx.kv(METADATA_KV)?;
 
+    // Get the metadata
     match kv
         .get(INSTRUMENTS_KEY)
         .json::<MetaInstrumentsRoot>()
@@ -55,6 +70,17 @@ pub async fn handle_put_instruments(
     mut req: Request,
     ctx: RouteContext<()>,
 ) -> worker::Result<Response> {
+    // Check authentication
+    let auth_header = match req.headers().get(AUTH_HEADER_KEY)? {
+        Some(header) => header,
+        None => return HttpResponse::error_forbidden("access denied"),
+    };
+
+    if auth_header != RW_AUTH_KEY {
+        return HttpResponse::error_forbidden("access denied");
+    }
+
+    // Get KV store
     let kv = ctx.kv(METADATA_KV)?;
 
     // Get the body of the request
@@ -108,6 +134,17 @@ pub async fn handle_post_instruments(
     mut req: Request,
     ctx: RouteContext<()>,
 ) -> worker::Result<Response> {
+    // Check authentication
+    let auth_header = match req.headers().get(AUTH_HEADER_KEY)? {
+        Some(header) => header,
+        None => return HttpResponse::error_forbidden("access denied"),
+    };
+
+    if auth_header != RW_AUTH_KEY {
+        return HttpResponse::error_forbidden("access denied");
+    }
+
+    // Get KV store
     let kv = ctx.kv(METADATA_KV)?;
 
     // Create a new MetaInstrumentsRoot from the body

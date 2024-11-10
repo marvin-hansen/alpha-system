@@ -1,4 +1,4 @@
-use crate::fields::{ASSETS_KEY, METADATA_KV};
+use crate::fields::{ASSETS_KEY, AUTH_HEADER_KEY, METADATA_KV, RO_AUTH_KEY};
 use crate::handle_shared::HttpResponse;
 use common_metadata::prelude::MetaAssetRoot;
 use serde_json::to_string;
@@ -16,9 +16,23 @@ use worker::{Request, Response, RouteContext};
 ///
 /// * `worker::Result<Response>` - A response indicating success or failure of the operation
 ///
-pub async fn handle_get_assets(_: Request, ctx: RouteContext<()>) -> worker::Result<Response> {
+pub async fn handle_get_assets(req: Request, ctx: RouteContext<()>) -> worker::Result<Response> {
+    // Check authentication
+    // https://developers.cloudflare.com/workers/examples/auth-with-headers/
+    let auth_header = match req.headers().get(AUTH_HEADER_KEY)? {
+        Some(header) => header,
+        None => return HttpResponse::error_forbidden("access denied"),
+    };
+
+    if auth_header != RO_AUTH_KEY {
+        return HttpResponse::error_forbidden("access denied");
+    }
+
+    // Get the KV store
     let kv = ctx.kv(METADATA_KV)?;
 
+    // Get the metadata
+    //  https://developers.cloudflare.com/kv/get-started/#5-access-your-kv-namespace-from-your-worker
     match kv.get(ASSETS_KEY).json::<MetaAssetRoot>().await? {
         Some(assets) => Response::from_json(&assets),
         None => HttpResponse::error_not_found("Assets not found!"),
@@ -51,6 +65,17 @@ pub async fn handle_put_assets(
     mut req: Request,
     ctx: RouteContext<()>,
 ) -> worker::Result<Response> {
+    // Check authentication
+    let auth_header = match req.headers().get(AUTH_HEADER_KEY)? {
+        Some(header) => header,
+        None => return HttpResponse::error_forbidden("access denied"),
+    };
+
+    if auth_header != RO_AUTH_KEY {
+        return HttpResponse::error_forbidden("access denied");
+    }
+
+    // Get KV store
     let kv = ctx.kv(METADATA_KV)?;
 
     // Get the body of the request
@@ -104,6 +129,17 @@ pub async fn handle_post_assets(
     mut req: Request,
     ctx: RouteContext<()>,
 ) -> worker::Result<Response> {
+    // Check authentication
+    let auth_header = match req.headers().get(AUTH_HEADER_KEY)? {
+        Some(header) => header,
+        None => return HttpResponse::error_forbidden("access denied"),
+    };
+
+    if auth_header != RO_AUTH_KEY {
+        return HttpResponse::error_forbidden("access denied");
+    }
+
+    // Get KV store
     let kv = ctx.kv(METADATA_KV)?;
 
     // Create a new MetaAssetRoot from the body

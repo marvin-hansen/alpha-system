@@ -21,6 +21,7 @@ path = "src/lib.rs"
 
 [dependencies]
 # Internal crates
+kaiko_cdn_auth = {workspace = true}
 common_metadata = {workspace = true}
 # External crates
 serde = {workspace = true}

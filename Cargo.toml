@@ -69,6 +69,7 @@ members = [
     "queng_services/ims/ims_data/ims_data_vex_specs",
     "queng_services/mds/kaiko/kaiko_client",
     "queng_services/mds/kaiko/kaiko_cdn",
+    "queng_services/mds/kaiko/kaiko_cdn_auth",
     "queng_services/mds/kaiko/kaiko_proxy",
     "queng_services/mds/kaiko/kaiko_tests",
     "queng_services/mds/mddb/mddb_service",
@@ -142,10 +143,8 @@ config_import = { path = "queng_import/core/config_import" }
 metadata_import = { path = "queng_import/core/metadata_import" }
 service_import = { path = "queng_import/core/service_import" }
 # Kaiko
-kaiko_client = { path = "queng_services/mds/kaiko/kaiko_client" }
 kaiko_download = { path = "queng_import/kaiko/kaiko_download" }
 kaiko_import = { path = "queng_import/kaiko/kaiko_import" }
-kaiko_proxy = { path = "queng_services/mds/kaiko/kaiko_proxy" }
 kaiko_test_utils = { path =  "queng_import/kaiko/kaiko_test_utils" }
 # Postgres DB
 pg_import_config = { path = "queng_import/postgres/pg_import_config" }
@@ -182,12 +181,20 @@ sbe_bindings = { path = "queng_sbe/bindings" }
 sbe_messages = { path = "queng_sbe/sbe_messages" }
 
 # Services
+# Core
 cmdb = { path = "queng_services/core/cmdb" }
 dbgw = { path = "queng_services/core/dbgw" }
 smdb = { path = "queng_services/core/smdb" }
+# IMS
 ims_common = { path = "queng_services/ims/ims_common" }
 binance_data = { path = "queng_services/ims/ims_data/binance_data" }
+# MDS
 mddb = { path = "queng_services/mds/mddb" }
+kaiko_client = { path = "queng_services/mds/kaiko/kaiko_client" }
+kaiko_proxy = { path = "queng_services/mds/kaiko/kaiko_proxy" }
+# Non-Bazel targets since CloudFlare workers are build with Wrangler
+kaiko_cdn = { path = "queng_services/mds/kaiko/kaiko_cdn" }
+kaiko_cdn_auth = { path = "queng_services/mds/kaiko/kaiko_cdn_auth" }
 # Service template
 grpc_service = { path = "queng_services/templete/grpc_service" }
 
@@ -199,11 +206,9 @@ container_specs_kaiko = { path = "queng_specs/container_specs/container_specs_ka
 # DB specs
 db_specs_clickhouse = { path = "queng_specs/database_specs/db_specs_clickhouse" }
 db_specs_postgres = { path = "queng_specs/database_specs/db_specs_postgres" }
-#
+# Misc specs
 exchange_specs = { path = "queng_specs/exchange_specs" }
-#
 portfolio_specs = { path = "queng_specs/portfolio_specs" }
-
 # Service specs
 cmdb_specs = { path = "queng_services/core/cmdb/cmdb_specs" }
 dbgw_specs = { path = "queng_services/core/dbgw/dbgw_specs" }
@@ -269,7 +274,7 @@ tokio-cron-scheduler = { version = "0.13.0", features = ["signal"] }
 tokio-timer = { version = "0.2.13" }
 tokio-tungstenite = { version = "0.24.0", default-features = false }
 warp = "0.3.7"
-# Depdendencies for cloudflare workers; Not in Bazel
+# Depdendencies for cloudflare workers that are not in Bazel
 worker = { version = "0.4.2", default-features = false  }
 worker-macros = { version="0.4.2" }
 console_error_panic_hook = { version = "0.1.1" }

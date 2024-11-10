@@ -1,4 +1,5 @@
-use crate::fields::{EXCHANGES_KEY, METADATA_KV};
+use crate::fields::{AUTH_HEADER_KEY, EXCHANGES_KEY, METADATA_KV, RO_AUTH_KEY, RW_AUTH_KEY};
+
 use crate::handle_shared::HttpResponse;
 use common_metadata::prelude::MetaExchangesRoot;
 use serde_json::to_string;
@@ -16,7 +17,17 @@ use worker::{Request, Response, RouteContext};
 ///
 /// * `worker::Result<Response>` - A response indicating success or failure of the operation
 ///
-pub async fn handle_get_exchanges(_: Request, ctx: RouteContext<()>) -> worker::Result<Response> {
+pub async fn handle_get_exchanges(req: Request, ctx: RouteContext<()>) -> worker::Result<Response> {
+    // Check authentication
+    let auth_header = match req.headers().get(AUTH_HEADER_KEY)? {
+        Some(header) => header,
+        None => return HttpResponse::error_forbidden("access denied"),
+    };
+
+    if auth_header != RO_AUTH_KEY {
+        return HttpResponse::error_forbidden("access denied");
+    }
+
     let kv = ctx.kv(METADATA_KV)?;
 
     match kv.get(EXCHANGES_KEY).json::<MetaExchangesRoot>().await? {
@@ -46,6 +57,17 @@ pub async fn handle_put_exchanges(
     mut req: Request,
     ctx: RouteContext<()>,
 ) -> worker::Result<Response> {
+    // Check authentication
+    let auth_header = match req.headers().get(AUTH_HEADER_KEY)? {
+        Some(header) => header,
+        None => return HttpResponse::error_forbidden("access denied"),
+    };
+
+    if auth_header != RW_AUTH_KEY {
+        return HttpResponse::error_forbidden("access denied");
+    }
+
+    // Get KV store
     let kv = ctx.kv(METADATA_KV)?;
 
     // Get the body of the request
@@ -99,6 +121,17 @@ pub async fn handle_post_exchanges(
     mut req: Request,
     ctx: RouteContext<()>,
 ) -> worker::Result<Response> {
+    // Check authentication
+    let auth_header = match req.headers().get(AUTH_HEADER_KEY)? {
+        Some(header) => header,
+        None => return HttpResponse::error_forbidden("access denied"),
+    };
+
+    if auth_header != RW_AUTH_KEY {
+        return HttpResponse::error_forbidden("access denied");
+    }
+
+    // Get KV store
     let kv = ctx.kv(METADATA_KV)?;
 
     // Get the body of the request
