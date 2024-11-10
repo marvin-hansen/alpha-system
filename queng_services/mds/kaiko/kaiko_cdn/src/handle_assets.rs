@@ -1,4 +1,4 @@
-use crate::fields::{ASSETS_KEY, AUTH_HEADER_KEY, METADATA_KV, RO_AUTH_KEY};
+use crate::fields::{ASSETS_KEY, AUTH_HEADER_KEY, METADATA_KV, RO_AUTH_KEY, RW_AUTH_KEY};
 use crate::handle_shared::HttpResponse;
 use common_metadata::prelude::MetaAssetRoot;
 use serde_json::to_string;
@@ -71,7 +71,7 @@ pub async fn handle_put_assets(
         None => return HttpResponse::error_forbidden("access denied"),
     };
 
-    if auth_header != RO_AUTH_KEY {
+    if auth_header != RW_AUTH_KEY {
         return HttpResponse::error_forbidden("access denied");
     }
 
@@ -135,7 +135,7 @@ pub async fn handle_post_assets(
         None => return HttpResponse::error_forbidden("access denied"),
     };
 
-    if auth_header != RO_AUTH_KEY {
+    if auth_header != RW_AUTH_KEY {
         return HttpResponse::error_forbidden("access denied");
     }
 
