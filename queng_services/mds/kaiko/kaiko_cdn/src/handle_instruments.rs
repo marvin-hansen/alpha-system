@@ -1,15 +1,15 @@
 use crate::fields::{AUTH_HEADER_KEY, INSTRUMENTS_KEY, METADATA_KV, RO_AUTH_KEY, RW_AUTH_KEY};
-use crate::handle_shared::HttpResponse;
+use crate::http_response::HttpResponse;
 use common_metadata::prelude::MetaInstrumentsRoot;
 use serde_json::to_string;
 use worker::{Request, Response, RouteContext};
 
-/// Handles the GET /instruments request by retrieving the instruments metadata from the KV
-/// store and returning it as a JSON response.
+/// Handles the GET /instruments request by retrieving the instruments metadata
+/// from the KV store and returning it as a JSON response.
 ///
 /// # Arguments
 ///
-/// * `_request` - The incoming request
+/// * `req` - The incoming request
 /// * `ctx` - The route context
 ///
 /// # Returns

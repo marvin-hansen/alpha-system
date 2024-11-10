@@ -3,8 +3,8 @@ mod handle_assets;
 mod handle_exchanges;
 mod handle_health;
 mod handle_instruments;
-mod handle_shared;
 mod handle_stats;
+mod http_response;
 
 use worker::*;
 

@@ -108,6 +108,7 @@ pub(crate) fn dbg_print(s: &str) {
 }
 
 pub(crate) async fn run_init() -> Result<MetaDataSet, InitError> {
+    // Download meta-data;
     let result = kaiko_download::download_meta_data(DBG, true).await;
     match result {
         Ok(meta_data_set) => Ok(meta_data_set),

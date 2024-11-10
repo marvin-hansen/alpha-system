@@ -1,4 +1,4 @@
-use crate::handle_shared::HttpResponse;
+use crate::http_response::HttpResponse;
 use worker::{Request, Response, RouteContext};
 
 /// Handles the GET /health request by returning a successful response.

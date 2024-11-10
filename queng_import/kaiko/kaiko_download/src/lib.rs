@@ -11,6 +11,20 @@ mod fields;
 mod init;
 mod utils;
 
+/// Downloads the metadata statistics set from Kaiko.
+///
+/// If `auto_detect_proxy` is `true`, then the proxy is automatically detected.
+/// Order of proxied download sources:
+/// 1) proxy cdn on Cloudflare. if that is not reachable;
+/// 2) proxy service on localhost. if that is not reachable;
+///
+/// If `auto_detect_proxy` is `false`, then a panic is thrown
+/// because stats can only be downloaded with proxy enabled
+///
+/// # Errors
+///
+/// Returns an error if the metadata statistics set can't be downloaded.
+///
 pub async fn download_meta_data_stats(
     dbg: bool,
     auto_detect_proxy: bool,
@@ -30,6 +44,23 @@ pub async fn download_meta_data_stats(
     }
 }
 
+/// Downloads the metadata set from Kaiko.
+///
+/// If `auto_detect_proxy` is `true`, then the proxy is automatically detected.
+/// Order of proxied download sources:
+/// 1) proxy cdn on Cloudflare. if that is not reachable;
+/// 2) proxy service on localhost. if that is not reachable;
+/// 3) no proxy; use the kaiko API
+///
+///If `auto_detect_proxy` is `false`, then no proxy is used
+/// and only the  kaiko API is used to download the metadata set.
+/// Note, this is last resort since the CDN or a local proxy is
+/// significantly faster than the kaiko API.
+///
+/// # Errors
+///
+/// Returns an error if the metadata set can't be downloaded.
+///
 pub async fn download_meta_data(
     dbg: bool,
     auto_detect_proxy: bool,
@@ -56,6 +87,25 @@ pub async fn download_meta_data(
     meta_data
 }
 
+/// Asynchronously returns an `InitManager` instance configured to use a proxy for downloading the metadata set.
+///
+/// The proxies are checked in the following order:
+///
+/// 1. The CDN proxy.
+/// 2. The local proxy.
+/// 3. The cluster proxy (if environment is `CLUSTER`).
+/// 4. The CI proxy (if environment is `CI`).
+///
+/// If no proxy is detected, returns a non-proxy `InitManager` instance.
+///
+/// # Arguments
+///
+/// * `dbg` - A boolean indicating whether debug mode is enabled.
+///
+/// # Returns
+///
+/// A `Result` containing an `InitManager` instance, or an error if the proxy detection failed.
+///
 async fn init_manager_with_proxy(dbg: bool) -> InitManager {
     match detect_proxy().await {
         Some(proxy) => InitManager::with_proxy_url(dbg, proxy),
@@ -65,6 +115,17 @@ async fn init_manager_with_proxy(dbg: bool) -> InitManager {
     }
 }
 
+/// Detects a proxy to use for downloading the metadata set.
+///
+/// The proxies are checked in the following order:
+///
+/// 1. The CDN proxy.
+/// 2. The local proxy.
+/// 3. The cluster proxy (if environment is `CLUSTER`).
+/// 4. The CI proxy (if environment is `CI`).
+///
+/// Returns `None` if no proxy is available.
+///
 async fn detect_proxy() -> Option<&'static str> {
     let config_manager = EnvironmentManager::new();
     let client = &util_client::get_client();
@@ -121,6 +182,17 @@ async fn detect_proxy() -> Option<&'static str> {
     }
 }
 
+/// Tests if a given proxy is reachable.
+///
+/// # Arguments
+///
+/// * `client` - a reqwest client
+/// * `proxy_url` - the URL of the proxy to be tested
+///
+/// # Returns
+///
+/// `true` if the proxy is reachable, `false` otherwise.
+///
 async fn test_proxy(client: &Client, proxy_url: &str) -> bool {
     let url = format!("{}{}", proxy_url, "health");
 

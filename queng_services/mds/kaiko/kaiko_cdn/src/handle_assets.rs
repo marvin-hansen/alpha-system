@@ -1,5 +1,5 @@
 use crate::fields::{ASSETS_KEY, AUTH_HEADER_KEY, METADATA_KV, RO_AUTH_KEY, RW_AUTH_KEY};
-use crate::handle_shared::HttpResponse;
+use crate::http_response::HttpResponse;
 use common_metadata::prelude::MetaAssetRoot;
 use serde_json::to_string;
 use worker::{Request, Response, RouteContext};
