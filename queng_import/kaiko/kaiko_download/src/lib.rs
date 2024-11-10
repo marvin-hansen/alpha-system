@@ -1,4 +1,4 @@
-use crate::fields::{CI_PROXY_URL, CLUSTER_PROXY_URL, LOCAL_PROXY_URL};
+use crate::fields::{CDN_PROXY_URL, CI_PROXY_URL, CLUSTER_PROXY_URL, LOCAL_PROXY_URL};
 use crate::init::InitManager;
 use crate::utils::util_client;
 use common_env::prelude::EnvironmentType;
@@ -71,6 +71,10 @@ async fn detect_proxy() -> Option<&'static str> {
 
     match config_manager.env_type() {
         EnvironmentType::UNKNOWN => {
+            if test_proxy(client, CDN_PROXY_URL).await {
+                return Some(CDN_PROXY_URL);
+            }
+
             if test_proxy(client, LOCAL_PROXY_URL).await {
                 return Some(LOCAL_PROXY_URL);
             }
@@ -82,6 +86,10 @@ async fn detect_proxy() -> Option<&'static str> {
             None
         }
         EnvironmentType::LOCAL => {
+            if test_proxy(client, CDN_PROXY_URL).await {
+                return Some(CDN_PROXY_URL);
+            }
+
             if test_proxy(client, LOCAL_PROXY_URL).await {
                 return Some(LOCAL_PROXY_URL);
             }
@@ -89,6 +97,10 @@ async fn detect_proxy() -> Option<&'static str> {
             None
         }
         EnvironmentType::CLUSTER => {
+            if test_proxy(client, CDN_PROXY_URL).await {
+                return Some(CDN_PROXY_URL);
+            }
+
             if test_proxy(client, CLUSTER_PROXY_URL).await {
                 return Some(CLUSTER_PROXY_URL);
             }
@@ -96,6 +108,10 @@ async fn detect_proxy() -> Option<&'static str> {
             None
         }
         EnvironmentType::CI => {
+            if test_proxy(client, CDN_PROXY_URL).await {
+                return Some(CDN_PROXY_URL);
+            }
+
             if test_proxy(client, CI_PROXY_URL).await {
                 return Some(CI_PROXY_URL);
             }

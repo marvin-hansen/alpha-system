@@ -20,6 +20,7 @@ rust_library(
         "//alias:crypto_utils",
         "//alias:common_service",
         "//alias:environment_manager",
+        "//alias:kaiko_cdn_auth",
         # External crates
         "//thirdparty/crates:chrono",
         "//thirdparty/crates:reqwest",

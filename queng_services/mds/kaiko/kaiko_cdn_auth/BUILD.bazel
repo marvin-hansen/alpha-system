@@ -1,0 +1,30 @@
+load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library")
+
+rust_library(
+    name = "kaiko_cdn_auth",
+    srcs = glob([
+        "src/**",
+    ]),
+    crate_root = "src/lib.rs",
+    tags = [
+        "kaiko",
+        "kaiko_cdn_auth",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+    ],
+)
+
+rust_doc(
+    name = "doc",
+    crate = ":kaiko_cdn_auth",
+    tags = ["doc"],
+    visibility = ["//visibility:public"],
+)
+
+rust_doc_test(
+    name = "doc_test",
+    crate = ":kaiko_cdn_auth",
+    tags = ["doc-test"],
+    visibility = ["//visibility:public"],
+)

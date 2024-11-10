@@ -1,3 +1,4 @@
+use crate::fields::{CDN_AUTH_HEADER_KEY, CDN_RO_AUTH_KEY};
 use common_errors::prelude::DownloadError;
 use reqwest::Client;
 
@@ -41,6 +42,7 @@ impl DownloadUtils {
             .client
             .get(url)
             .header("Accept", "application/json")
+            .header(CDN_AUTH_HEADER_KEY, CDN_RO_AUTH_KEY)
             .send()
             .await
             .expect("request failed");

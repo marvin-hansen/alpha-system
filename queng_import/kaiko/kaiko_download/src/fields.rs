@@ -1,4 +1,7 @@
 pub(crate) const BASE_URL: &str = "https://reference-data-api.kaiko.io/v1/";
+pub(crate) const CDN_PROXY_URL: &str = kaiko_cdn_auth::CDN_PROXY_URL;
+pub(crate) const CDN_AUTH_HEADER_KEY: &str = kaiko_cdn_auth::AUTH_HEADER_KEY;
+pub(crate) const CDN_RO_AUTH_KEY: &str = kaiko_cdn_auth::RO_AUTH_KEY;
 pub(crate) const LOCAL_PROXY_URL: &str = "http://127.0.0.1:7777/";
 pub(crate) const CLUSTER_PROXY_URL: &str =
     "http://apiproxy-service.default.svc.cluster.local:7777/";

@@ -15,6 +15,7 @@ common_metadata = {workspace = true}
 common_service =  {workspace = true}
 crypto_utils = {workspace = true}
 environment_manager = {workspace = true}
+kaiko_cdn_auth = {workspace = true}
 # External crates
 chrono = { workspace = true }
 reqwest = { workspace = true }
