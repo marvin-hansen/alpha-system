@@ -51,7 +51,7 @@ impl IntegrationConfig {
     ) -> QueryResult<bool> {
         let items: Vec<CreateIntegrationConfig> = configs
             .into_iter()
-            .map(|config| CreateIntegrationConfig::from_common_integration_config(config))
+            .map(CreateIntegrationConfig::from_common_integration_config)
             .collect();
 
         match insert_into(crate::schema::imdb::integration_config::table)
