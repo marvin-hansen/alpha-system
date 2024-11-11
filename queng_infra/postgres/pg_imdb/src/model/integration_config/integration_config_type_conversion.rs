@@ -44,7 +44,7 @@ impl IntegrationConfig {
             self.integration_version as u16,
             ImsIntegrationType::from(self.ims_integration_type as u16),
             self.online,
-            ExchangeID::from(self.exchange_id as u16),
+            ExchangeID::from(self.exchange_id),
             self.integration_message_config
                 .to_integration_message_config_type(),
         )

@@ -18,7 +18,7 @@ impl MessageConfig {
         IntegrationMessageConfig::new(
             self.id as u16,
             self.version as u16,
-            ExchangeID::from(self.exchange_id as u16),
+            ExchangeID::from(self.exchange_id),
         )
     }
 }
