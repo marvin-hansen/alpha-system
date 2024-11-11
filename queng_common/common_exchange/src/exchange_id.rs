@@ -12,26 +12,26 @@ pub enum ExchangeID {
 }
 
 // Convert an ExchangeID to an i32
-impl Into<i32> for ExchangeID {
+impl From<ExchangeID> for i32 {
     #[inline]
-    fn into(self) -> i32 {
-        self as i32
+    fn from(val: ExchangeID) -> Self {
+        val as i32
     }
 }
 
 // Convert an ExchangeID to an u32
-impl Into<u32> for ExchangeID {
+impl From<ExchangeID> for u32 {
     #[inline]
-    fn into(self) -> u32 {
-        self as u32
+    fn from(val: ExchangeID) -> Self {
+        val as u32
     }
 }
 
 // Convert an ExchangeID to an u8
-impl Into<u8> for ExchangeID {
+impl From<ExchangeID> for u8 {
     #[inline]
-    fn into(self) -> u8 {
-        self as u8
+    fn from(val: ExchangeID) -> Self {
+        val as u8
     }
 }
 

@@ -12,7 +12,7 @@ fn test_integration_config_roundtrip() {
     let config = IntegrationConfig::new(
         "test_integration".to_string(),
         1,
-        ImsIntegrationType::from(1),
+        ImsIntegrationType::from(1_u16),
         ExchangeID::from(123),
         message_config,
     );
