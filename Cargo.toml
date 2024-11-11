@@ -9,6 +9,7 @@ members = [
     "queng_common/common_database",
     "queng_common/common_env",
     "queng_common/common_exchange",
+    "queng_common/common_ims",
     "queng_common/common_metadata",
     "queng_common/common_service",
     "queng_common/common_trade",
