@@ -1,4 +1,4 @@
-use common_config::prelude::MessageClientConfig;
+use common_message_bus::prelude::MessageClientConfig;
 
 #[test]
 fn test_new() {

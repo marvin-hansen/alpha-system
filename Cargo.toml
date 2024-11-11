@@ -10,6 +10,7 @@ members = [
     "queng_common/common_env",
     "queng_common/common_exchange",
     "queng_common/common_ims",
+    "queng_common/common_message_bus",
     "queng_common/common_metadata",
     "queng_common/common_service",
     "queng_common/common_trade",
@@ -128,6 +129,8 @@ common_database = { path = "queng_common/common_database" }
 common_env = { path = "queng_common/common_env" }
 common_errors = { path = "queng_common/common_errors" }
 common_exchange = { path = "queng_common/common_exchange" }
+common_ims = { path = "queng_common/common_ims" }
+common_message_bus = { path = "queng_common/common_message_bus" }
 common_metadata = { path = "queng_common/common_metadata" }
 common_service = { path = "queng_common/common_service" }
 common_trade = { path = "queng_common/common_trade" }

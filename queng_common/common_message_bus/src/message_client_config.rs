@@ -1,4 +1,4 @@
-use crate::prelude::ServiceID;
+use common_config::prelude::ServiceID;
 use std::fmt;
 
 /// The MessageClientConfig struct represents the configuration for a message client.

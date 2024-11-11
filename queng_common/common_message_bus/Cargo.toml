@@ -1,5 +1,5 @@
 [package]
-name = "common_ims"
+name = "common_message_bus"
 version = "0.1.0"
 edition.workspace = true
 rust-version.workspace = true
@@ -9,4 +9,3 @@ authors.workspace = true
 
 [dependencies]
 common_config = { workspace = true }
-common_exchange = { workspace = true }

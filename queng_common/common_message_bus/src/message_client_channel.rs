@@ -14,7 +14,7 @@ use std::fmt;
 ///
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord)]
 #[repr(u8)]
-pub enum ClientChannel {
+pub enum MessageClientChannel {
     DataChannel = 0,
     ControlChannel = 1,
     ErrorChannel = 2,
@@ -22,7 +22,7 @@ pub enum ClientChannel {
     HeartbeatChannel = 4,
 }
 
-impl From<u8> for ClientChannel {
+impl From<u8> for MessageClientChannel {
     /// Implements the From trait to convert a u8 to a ClientChannel.
     ///
     /// Matches on the u8 value:
@@ -46,24 +46,24 @@ impl From<u8> for ClientChannel {
     #[inline]
     fn from(value: u8) -> Self {
         match value {
-            0 => ClientChannel::DataChannel,
-            1 => ClientChannel::ControlChannel,
-            2 => ClientChannel::ErrorChannel,
-            3 => ClientChannel::ExecutionChannel,
-            4 => ClientChannel::HeartbeatChannel,
+            0 => MessageClientChannel::DataChannel,
+            1 => MessageClientChannel::ControlChannel,
+            2 => MessageClientChannel::ErrorChannel,
+            3 => MessageClientChannel::ExecutionChannel,
+            4 => MessageClientChannel::HeartbeatChannel,
             _ => panic!("Unknown ClientChannel value: {}", value),
         }
     }
 }
 
-impl fmt::Display for ClientChannel {
+impl fmt::Display for MessageClientChannel {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match *self {
-            ClientChannel::DataChannel => write!(f, "DataChannel"),
-            ClientChannel::ControlChannel => write!(f, "ControlChannel"),
-            ClientChannel::ErrorChannel => write!(f, "ErrorChannel"),
-            ClientChannel::ExecutionChannel => write!(f, "ExecutionChannel"),
-            ClientChannel::HeartbeatChannel => write!(f, "HeartbeatChannel"),
+            MessageClientChannel::DataChannel => write!(f, "DataChannel"),
+            MessageClientChannel::ControlChannel => write!(f, "ControlChannel"),
+            MessageClientChannel::ErrorChannel => write!(f, "ErrorChannel"),
+            MessageClientChannel::ExecutionChannel => write!(f, "ExecutionChannel"),
+            MessageClientChannel::HeartbeatChannel => write!(f, "HeartbeatChannel"),
         }
     }
 }

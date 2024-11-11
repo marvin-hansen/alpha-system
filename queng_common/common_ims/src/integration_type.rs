@@ -1,4 +1,3 @@
-use std::fmt::Write;
 use std::fmt::{Display, Formatter};
 
 /// An ImsIntegrationType represents the type of integration to Interactive

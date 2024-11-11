@@ -2,8 +2,7 @@
 mod endpoint_host_tests;
 #[cfg(test)]
 mod endpoint_tests;
-#[cfg(test)]
-mod message_client_config_tests;
+
 #[cfg(test)]
 mod metric_config_tests;
 #[cfg(test)]
