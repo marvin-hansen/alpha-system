@@ -53,6 +53,7 @@ impl Service {
             .iter()
             .map(CreateService::from_common_svc_config)
             .collect::<Vec<CreateService>>();
+
         match insert_into(crate::schema::smdb::service::table)
             .values(&items)
             .execute(db)

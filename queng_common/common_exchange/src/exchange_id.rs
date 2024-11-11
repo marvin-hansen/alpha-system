@@ -50,6 +50,21 @@ impl From<u8> for ExchangeID {
     }
 }
 
+// Create an ExchangeID from an u16
+impl From<u16> for ExchangeID {
+    #[inline]
+    fn from(v: u16) -> Self {
+        match v {
+            0xff_u16 => Self::NullVal,
+            0x1_u16 => Self::Kraken,
+            0x2_u16 => Self::COINBASE,
+            0x3_u16 => Self::VEX,
+            0x4_u16 => Self::Binance,
+            _ => Self::NullVal,
+        }
+    }
+}
+
 // Create an ExchangeID from an u32
 impl From<u32> for ExchangeID {
     #[inline]

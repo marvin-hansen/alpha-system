@@ -13,15 +13,12 @@ impl MessageConfig {
             exchange_id: integration_message_config_type.exchange_id() as i32,
         }
     }
-}
-
-// Convert from a MessageConfig to a IntegrationMessageConfigType
-impl From<MessageConfig> for IntegrationMessageConfig {
-    fn from(message_config: MessageConfig) -> Self {
+    // Convert from a MessageConfig to a IntegrationMessageConfigType
+    pub fn to_integration_message_config_type(&self) -> IntegrationMessageConfig {
         IntegrationMessageConfig::new(
-            message_config.id as u16,
-            message_config.version as u16,
-            ExchangeID::from(message_config.exchange_id),
+            self.id as u16,
+            self.version as u16,
+            ExchangeID::from(self.exchange_id as u16),
         )
     }
 }
