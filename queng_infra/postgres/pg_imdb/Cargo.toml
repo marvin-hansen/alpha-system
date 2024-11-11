@@ -10,6 +10,7 @@ authors.workspace = true
 
 [dependencies]
 # Internal crates
+common_ims = {workspace = true}
 postgres_migrations = {workspace = true}
 
 # External crates
