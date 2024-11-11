@@ -82,6 +82,10 @@ impl IntegrationConfig {
     pub fn set_online(&mut self) {
         self.online = true;
     }
+
+    pub fn set_offline(&mut self) {
+        self.online = false;
+    }
 }
 
 impl IntegrationConfig {
