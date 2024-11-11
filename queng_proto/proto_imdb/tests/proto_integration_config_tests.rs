@@ -14,7 +14,7 @@ fn test_proto_integration_config() {
     assert_eq!(integration_config.integration_id, "test");
     assert_eq!(integration_config.integration_version, 1);
     assert_eq!(integration_config.ims_integration_type, 1);
-    assert_eq!(integration_config.online, true);
+    assert!(integration_config.online);
     assert_eq!(integration_config.exchange_id, 1);
     assert_eq!(integration_config.integration_message_config, None);
 }

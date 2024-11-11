@@ -26,7 +26,7 @@ fn test_debug_display_consistency() {
 #[test]
 fn test_clone_equality() {
     let original = ImsIntegrationType::Data;
-    let cloned = original.clone();
+    let cloned = original;
 
     assert_eq!(original, cloned);
     assert!(matches!(cloned, ImsIntegrationType::Data));

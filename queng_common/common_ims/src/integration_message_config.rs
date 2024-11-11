@@ -12,7 +12,7 @@ const NAME: &str = "integration";
 
 impl IntegrationMessageConfig {
     pub fn new(id: u16, version: u16, exchange_id: ExchangeID) -> Self {
-        let name = format!("{}-{}-{}", exchange_id.to_string(), NAME, id);
+        let name = format!("{}-{}-{}", exchange_id, NAME, id);
 
         Self {
             id,
