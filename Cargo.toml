@@ -33,6 +33,7 @@ members = [
     "queng_infra/postgres/pg_cmdb",
     "queng_infra/postgres/pg_cmdb_manager",
     "queng_infra/postgres/pg_imdb",
+    "queng_infra/postgres/pg_imdb_manager",
     "queng_infra/postgres/pg_smdb",
     "queng_infra/postgres/pg_smdb_manager",
     "queng_infra/postgres/pg_mddb",
@@ -168,6 +169,7 @@ pg_imdb = { path = "queng_infra/postgres/pg_imdb" }
 pg_mddb = { path = "queng_infra/postgres/pg_mddb" }
 pg_smdb = { path = "queng_infra/postgres/pg_smdb" }
 pg_cmdb_manager = { path = "queng_infra/postgres/pg_cmdb_manager" }
+pg_imdb_manager = { path = "queng_infra/postgres/pg_imdb_manager" }
 pg_mddb_manager = { path = "queng_infra/postgres/pg_mddb_manager" }
 pg_smdb_manager = { path = "queng_infra/postgres/pg_smdb_manager" }
 postgres_common = { path = "queng_infra/postgres/postgres_common" }

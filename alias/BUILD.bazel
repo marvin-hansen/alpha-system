@@ -196,6 +196,11 @@ alias(
 )
 
 alias(
+    name = "pg_imdb_manager",
+    actual = "//queng_infra/postgres/pg_imdb_manager",
+)
+
+alias(
     name = "pg_mddb",
     actual = "//queng_infra/postgres/pg_mddb",
 )
