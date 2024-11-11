@@ -1,0 +1,26 @@
+syntax = "proto3";
+package proto;
+
+import "imdb_messages.proto";
+
+service IMDBService {
+  rpc GetIntegrationsConfig (GetIntegrationsConfigRequest) returns (GetIntegrationConfigResponse) {}
+  rpc GetAllIntegrationsForExchange (GetAllIntegrationsForExchangeRequest) returns (GetAllIntegrationsForExchangeResponse) {}
+  rpc SetIntegrationOnline(SetIntegrationOnlineRequest) returns (SetIntegrationOnlineResponse) {}
+  rpc SetIntegrationOffline(SetIntegrationOfflineRequest) returns (SetIntegrationOfflineResponse) {}
+  rpc GetAllOnlineIntegrations(GetAllOnlineIntegrationsRequest) returns (GetAllOnlineIntegrationsResponse) {}
+  rpc GetAllOfflineIntegrations(GetAllOfflineIntegrationsRequest) returns (GetAllOfflineIntegrationsResponse) {}
+}
+
+// Service definitions: https://developers.google.com/protocol-buffers/docs/proto3#services
+service DBGatewayIMDBService {
+  rpc CreateIntegration (CreateIntegrationRequest) returns (CreateIntegrationResponse) {}
+  rpc ReadIntegrationsConfig (GetIntegrationsConfigRequest) returns (GetIntegrationConfigResponse) {}
+  rpc UpdateIntegration (UpdateIntegrationRequest) returns (UpdateIntegrationResponse) {}
+  rpc DeleteIntegration (DeleteIntegrationRequest) returns (DeleteIntegrationResponse) {}
+  rpc GetAllIntegrationsForExchange (GetAllIntegrationsForExchangeRequest) returns (GetAllIntegrationsForExchangeResponse) {}
+  rpc SetIntegrationOnline(SetIntegrationOnlineRequest) returns (SetIntegrationOnlineResponse) {}
+  rpc SetIntegrationOffline(SetIntegrationOfflineRequest) returns (SetIntegrationOfflineResponse) {}
+  rpc GetAllOnlineIntegrations(GetAllOnlineIntegrationsRequest) returns (GetAllOnlineIntegrationsResponse) {}
+  rpc GetAllOfflineIntegrations(GetAllOfflineIntegrationsRequest) returns (GetAllOfflineIntegrationsResponse) {}
+}

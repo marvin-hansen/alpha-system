@@ -18,21 +18,82 @@ message IntegrationConfig {
 }
 
 // Request
+message CreateIntegrationRequest {
+  IntegrationConfig integration = 1;
+}
+
+message GetIntegrationsConfigRequest {
+  uint32 integration_id = 1;
+}
+
+message UpdateIntegrationRequest {
+  IntegrationConfig integration = 1;
+}
+
+message DeleteIntegrationRequest {
+  string integration_id = 1;
+}
+
+message SetIntegrationOnlineRequest {
+  string integration_id = 1;
+}
+
+message SetIntegrationOfflineRequest {
+  string integration_id = 1;
+}
 
 message GetAllIntegrationsForExchangeRequest {
   uint32 exchange_id = 1;
 }
 
-message GetIntegrationsConfig {
-  uint32 integration_id = 1;
-}
+message GetAllOnlineIntegrationsRequest {}
+
+message GetAllOfflineIntegrationsRequest {}
+
 
 // Response
+message CreateIntegrationResponse {
+  string integration_id = 1;
+  bool ok = 2;
+  optional string error = 3;
+}
+
+message GetIntegrationConfigResponse {
+  optional IntegrationConfig integration = 1;
+}
+
+message UpdateIntegrationResponse {
+  string integration_id = 1;
+  bool ok = 2;
+  optional string error = 3;
+}
+
+message DeleteIntegrationResponse {
+  string integration_id = 1;
+  bool ok = 2;
+  optional string error = 3;
+}
 
 message GetAllIntegrationsForExchangeResponse {
   repeated IntegrationConfig integrations = 1;
 }
 
-message GetIntegrationsConfigResponse {
-  optional IntegrationConfig integration = 1;
+message SetIntegrationOnlineResponse {
+  string integration_id = 1;
+  bool ok = 2;
+  optional string error = 3;
+}
+
+message SetIntegrationOfflineResponse {
+  string integration_id = 1;
+  bool ok = 2;
+  optional string error = 3;
+}
+
+message GetAllOnlineIntegrationsResponse {
+  repeated IntegrationConfig integrations = 1;
+}
+
+message GetAllOfflineIntegrationsResponse {
+  repeated IntegrationConfig integrations = 1;
 }
