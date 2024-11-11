@@ -64,6 +64,15 @@ impl PostgresMDDBManager {
         Self::build(true, true, url).await
     }
 
+    pub async fn with_pool_and_debug(
+        dbg: bool,
+        pool: Pool<ConnectionManager<PgConnection>>,
+    ) -> Result<Self, PostgresDBError> {
+        Ok(Self { dbg, pool })
+    }
+}
+
+impl PostgresMDDBManager {
     async fn build(dbg: bool, test: bool, url: &str) -> Result<Self, PostgresDBError> {
         if dbg {
             println!("[PostgresMDDBManager]: Debug mode enabled");
@@ -81,11 +90,11 @@ impl PostgresMDDBManager {
 
     /// Returns a connection from the connection pool.
     pub(crate) fn get_connection(&self) -> PooledConnection<ConnectionManager<PgConnection>> {
-        self.pool.get().expect("Failed to get connection from pool")
+        self.pool
+            .get()
+            .expect("[PostgresMDDBManager]: Failed to get connection from pool")
     }
-}
 
-impl PostgresMDDBManager {
     pub fn dbg_print(&self, msg: &str) {
         if self.dbg {
             println!("[PostgresMDDBManager]: {}", msg);

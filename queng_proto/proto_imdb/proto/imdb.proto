@@ -4,23 +4,29 @@ package proto;
 import "imdb_messages.proto";
 
 service IMDBService {
-  rpc GetIntegrationsConfig (GetIntegrationsConfigRequest) returns (GetIntegrationConfigResponse) {}
-  rpc GetAllIntegrationsForExchange (GetAllIntegrationsForExchangeRequest) returns (GetAllIntegrationsForExchangeResponse) {}
-  rpc SetIntegrationOnline(SetIntegrationOnlineRequest) returns (SetIntegrationOnlineResponse) {}
-  rpc SetIntegrationOffline(SetIntegrationOfflineRequest) returns (SetIntegrationOfflineResponse) {}
+  rpc CountIntegrationConfigs (CountIntegrationRequest) returns (CountIntegrationResponse) {}
+  rpc CheckIfIntegrationConfigExists (CheckIfIntegrationConfigExistsRequest) returns (CheckIfIntegrationConfigExistsResponse) {}
+  rpc CheckIfIntegrationConfigOnline (CheckIfIntegrationConfigOnlineRequest) returns (CheckIfIntegrationConfigOnlineResponse) {}
+  rpc GetIntegrationsConfig (GetIntegrationConfigRequest) returns (GetIntegrationConfigResponse) {}
   rpc GetAllOnlineIntegrations(GetAllOnlineIntegrationsRequest) returns (GetAllOnlineIntegrationsResponse) {}
   rpc GetAllOfflineIntegrations(GetAllOfflineIntegrationsRequest) returns (GetAllOfflineIntegrationsResponse) {}
+  rpc GetAllIntegrations (GetAllIntegrationsRequest) returns (GetAllIntegrationsResponse) {}
+  rpc SetIntegrationOnline(SetIntegrationOnlineRequest) returns (SetIntegrationOnlineResponse) {}
+  rpc SetIntegrationOffline(SetIntegrationOfflineRequest) returns (SetIntegrationOfflineResponse) {}
 }
 
 // Service definitions: https://developers.google.com/protocol-buffers/docs/proto3#services
 service DBGatewayIMDBService {
-  rpc CreateIntegration (CreateIntegrationRequest) returns (CreateIntegrationResponse) {}
-  rpc ReadIntegrationsConfig (GetIntegrationsConfigRequest) returns (GetIntegrationConfigResponse) {}
-  rpc UpdateIntegration (UpdateIntegrationRequest) returns (UpdateIntegrationResponse) {}
-  rpc DeleteIntegration (DeleteIntegrationRequest) returns (DeleteIntegrationResponse) {}
-  rpc GetAllIntegrationsForExchange (GetAllIntegrationsForExchangeRequest) returns (GetAllIntegrationsForExchangeResponse) {}
-  rpc SetIntegrationOnline(SetIntegrationOnlineRequest) returns (SetIntegrationOnlineResponse) {}
-  rpc SetIntegrationOffline(SetIntegrationOfflineRequest) returns (SetIntegrationOfflineResponse) {}
+  rpc CreateIntegrationConfig (CreateIntegrationRequest) returns (CreateIntegrationResponse) {}
+  rpc CountIntegrationConfigs (CountIntegrationRequest) returns (CountIntegrationResponse) {}
+  rpc CheckIfIntegrationConfigExists (CheckIfIntegrationConfigExistsRequest) returns (CheckIfIntegrationConfigExistsResponse) {}
+  rpc CheckIfIntegrationConfigOnline (CheckIfIntegrationConfigOnlineRequest) returns (CheckIfIntegrationConfigOnlineResponse) {}
+  rpc GetIntegrationConfig (GetIntegrationConfigRequest) returns (GetIntegrationConfigResponse) {}
   rpc GetAllOnlineIntegrations(GetAllOnlineIntegrationsRequest) returns (GetAllOnlineIntegrationsResponse) {}
   rpc GetAllOfflineIntegrations(GetAllOfflineIntegrationsRequest) returns (GetAllOfflineIntegrationsResponse) {}
+  rpc GetAllIntegrations (GetAllIntegrationsRequest) returns (GetAllIntegrationsResponse) {}
+  rpc SetIntegrationOnline(SetIntegrationOnlineRequest) returns (SetIntegrationOnlineResponse) {}
+  rpc SetIntegrationOffline(SetIntegrationOfflineRequest) returns (SetIntegrationOfflineResponse) {}
+  rpc UpdateIntegrationConfig (UpdateIntegrationRequest) returns (UpdateIntegrationResponse) {}
+  rpc DeleteIntegrationConfig (DeleteIntegrationRequest) returns (DeleteIntegrationResponse) {}
 }

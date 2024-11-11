@@ -22,12 +22,29 @@ message CreateIntegrationRequest {
   ProtoIntegrationConfig integration = 1;
 }
 
-message GetIntegrationsConfigRequest {
-  uint32 integration_id = 1;
+message CountIntegrationRequest {
+}
+
+message CheckIfIntegrationConfigExistsRequest {
+  string integration_id = 1;
+}
+
+message CheckIfIntegrationConfigOnlineRequest {
+  string integration_id = 1;
+}
+
+message GetIntegrationConfigRequest {
+  string integration_id = 1;
+}
+
+
+message GetAllIntegrationsRequest {
+
 }
 
 message UpdateIntegrationRequest {
-  ProtoIntegrationConfig integration = 1;
+  string integration_id = 1;
+  ProtoIntegrationConfig integration = 2;
 }
 
 message DeleteIntegrationRequest {
@@ -42,9 +59,6 @@ message SetIntegrationOfflineRequest {
   string integration_id = 1;
 }
 
-message GetAllIntegrationsForExchangeRequest {
-  uint32 exchange_id = 1;
-}
 
 message GetAllOnlineIntegrationsRequest {}
 
@@ -53,41 +67,28 @@ message GetAllOfflineIntegrationsRequest {}
 
 // Response
 message CreateIntegrationResponse {
-  string integration_id = 1;
-  bool ok = 2;
-  optional string error = 3;
+  bool ok = 1;
+  optional string error = 2;
+}
+
+message CountIntegrationResponse {
+  uint64 count = 1;
+}
+
+message CheckIfIntegrationConfigExistsResponse {
+  bool exits = 1;
+}
+
+message CheckIfIntegrationConfigOnlineResponse {
+  bool online = 1;
 }
 
 message GetIntegrationConfigResponse {
   optional ProtoIntegrationConfig integration = 1;
 }
 
-message UpdateIntegrationResponse {
-  string integration_id = 1;
-  bool ok = 2;
-  optional string error = 3;
-}
-
-message DeleteIntegrationResponse {
-  string integration_id = 1;
-  bool ok = 2;
-  optional string error = 3;
-}
-
-message GetAllIntegrationsForExchangeResponse {
+message GetAllIntegrationsResponse {
   repeated ProtoIntegrationConfig integrations = 1;
-}
-
-message SetIntegrationOnlineResponse {
-  string integration_id = 1;
-  bool ok = 2;
-  optional string error = 3;
-}
-
-message SetIntegrationOfflineResponse {
-  string integration_id = 1;
-  bool ok = 2;
-  optional string error = 3;
 }
 
 message GetAllOnlineIntegrationsResponse {
@@ -97,3 +98,24 @@ message GetAllOnlineIntegrationsResponse {
 message GetAllOfflineIntegrationsResponse {
   repeated ProtoIntegrationConfig integrations = 1;
 }
+
+message SetIntegrationOnlineResponse {
+  bool ok = 1;
+  optional string error = 2;
+}
+
+message SetIntegrationOfflineResponse {
+  bool ok = 1;
+  optional string error = 2;
+}
+
+message UpdateIntegrationResponse {
+  bool ok = 1;
+  uint32 nr_updated = 2;
+  optional string error = 3;
+}
+
+message DeleteIntegrationResponse {
+  bool ok = 1;
+  uint32 nr_deleted = 2;
+  optional string error = 3;}

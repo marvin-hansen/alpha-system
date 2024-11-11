@@ -23,9 +23,9 @@ impl IntegrationConfig {
     ///
     pub fn create(
         db: &mut Connection,
-        svc: &CommonIntegrationConfig,
+        config: &CommonIntegrationConfig,
     ) -> QueryResult<CommonIntegrationConfig> {
-        let item = CreateIntegrationConfig::from_common_integration_config(svc.clone());
+        let item = CreateIntegrationConfig::from_common_integration_config(config);
         insert_into(crate::schema::imdb::integration_config::table)
             .values(item)
             .get_result::<IntegrationConfig>(db)
@@ -47,18 +47,24 @@ impl IntegrationConfig {
     /// containing the error that occurred during the operation.
     pub fn insert_integration_config_collection(
         db: &mut Connection,
-        configs: Vec<CommonIntegrationConfig>,
-    ) -> QueryResult<bool> {
+        configs: &[CommonIntegrationConfig],
+    ) -> QueryResult<usize> {
         let items: Vec<CreateIntegrationConfig> = configs
             .into_iter()
-            .map(CreateIntegrationConfig::from_common_integration_config)
+            .map(
+                |common_integration_config: &common_ims::prelude::IntegrationConfig| {
+                    CreateIntegrationConfig::from_common_integration_config(
+                        common_integration_config,
+                    )
+                },
+            )
             .collect();
 
         match insert_into(crate::schema::imdb::integration_config::table)
             .values(&items)
             .execute(db)
         {
-            Ok(_) => Ok(true),
+            Ok(res) => Ok(res),
             Err(e) => Err(e),
         }
     }
@@ -220,6 +226,34 @@ impl IntegrationConfig {
             })
     }
 
+    pub fn set_integration_config_online(
+        db: &mut Connection,
+        param_integration_id: String,
+    ) -> QueryResult<()> {
+        Self::set_online(db, param_integration_id, true)
+    }
+
+    pub fn set_integration_config_offline(
+        db: &mut Connection,
+        param_integration_id: String,
+    ) -> QueryResult<()> {
+        Self::set_online(db, param_integration_id, false)
+    }
+
+    fn set_online(
+        db: &mut Connection,
+        param_integration_id: String,
+        param_online: bool,
+    ) -> QueryResult<()> {
+        match diesel::update(integration_config.filter(integration_id.eq(param_integration_id)))
+            .set(online.eq(param_online))
+            .execute(db)
+        {
+            Ok(_) => Ok(()),
+            Err(e) => Err(e),
+        }
+    }
+
     /// Updates an integration configuration in the database.
     ///
     /// # Arguments
@@ -234,14 +268,13 @@ impl IntegrationConfig {
     pub fn update_integration_config(
         db: &mut Connection,
         config: CommonIntegrationConfig,
-    ) -> QueryResult<CommonIntegrationConfig> {
+    ) -> QueryResult<usize> {
         let update_config = UpdateIntegrationConfig::from_common_integration_config(config);
         diesel::update(
             integration_config.filter(integration_id.eq(&update_config.integration_id.clone())),
         )
         .set(update_config)
-        .get_result::<IntegrationConfig>(db)
-        .map(|config| config.to_common_integration_config())
+        .execute(db)
     }
 
     /// Deletes an integration configuration from the database.
