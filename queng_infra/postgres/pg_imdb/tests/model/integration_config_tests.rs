@@ -327,14 +327,14 @@ async fn test_get_all_integration_configs() {
             2,
             ImsIntegrationType::Execution,
             ExchangeID::Kraken,
-            IntegrationMessageConfig::new(02, 1, ExchangeID::Kraken),
+            IntegrationMessageConfig::new(2, 1, ExchangeID::Kraken),
         ),
         CommonIntegrationConfig::new(
             "config-3".to_string(),
             3,
             ImsIntegrationType::Data,
             ExchangeID::Binance,
-            IntegrationMessageConfig::new(03, 1, ExchangeID::Binance),
+            IntegrationMessageConfig::new(3, 1, ExchangeID::Binance),
         ),
     ];
 
@@ -391,7 +391,7 @@ async fn test_get_all_online_integration_configs() {
         2,
         ImsIntegrationType::Execution,
         ExchangeID::Kraken,
-        IntegrationMessageConfig::new(02, 1, ExchangeID::Kraken),
+        IntegrationMessageConfig::new(2, 1, ExchangeID::Kraken),
     );
     online_config2.set_online();
 
@@ -400,7 +400,7 @@ async fn test_get_all_online_integration_configs() {
         3,
         ImsIntegrationType::Data,
         ExchangeID::Binance,
-        IntegrationMessageConfig::new(03, 1, ExchangeID::Binance),
+        IntegrationMessageConfig::new(3, 1, ExchangeID::Binance),
     );
 
     // Insert configs
@@ -482,7 +482,7 @@ async fn test_get_all_offline_integration_configs() {
         2,
         ImsIntegrationType::Execution,
         ExchangeID::Kraken,
-        IntegrationMessageConfig::new(02, 1, ExchangeID::Kraken),
+        IntegrationMessageConfig::new(2, 1, ExchangeID::Kraken),
     );
 
     let offline_config2 = CommonIntegrationConfig::new(
@@ -490,7 +490,7 @@ async fn test_get_all_offline_integration_configs() {
         3,
         ImsIntegrationType::Data,
         ExchangeID::Binance,
-        IntegrationMessageConfig::new(03, 1, ExchangeID::Binance),
+        IntegrationMessageConfig::new(3, 1, ExchangeID::Binance),
     );
 
     // Insert configs
@@ -572,7 +572,7 @@ async fn test_update_integration_config() {
         2,                              // New version
         ImsIntegrationType::Execution,  // Changed type
         ExchangeID::Kraken,             // Changed exchange
-        IntegrationMessageConfig::new(02, 2, ExchangeID::Kraken),
+        IntegrationMessageConfig::new(2, 2, ExchangeID::Kraken),
     );
     updated_config.set_online(); // Changed online status
 
@@ -742,7 +742,7 @@ async fn test_delete_multiple_integration_configs() {
             2,
             ImsIntegrationType::Execution,
             ExchangeID::Kraken,
-            IntegrationMessageConfig::new(02, 1, ExchangeID::Kraken),
+            IntegrationMessageConfig::new(2, 1, ExchangeID::Kraken),
         ),
     ];
 
