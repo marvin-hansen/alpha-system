@@ -4,18 +4,18 @@ pub(crate) const SCHEMA_UP: &str = r#"
 CREATE SCHEMA IF NOT EXISTS imdb;
 
 CREATE TYPE imdb.integration_message_config AS (
-    id SMALLINT,
-    name VARCHAR(255),
-    version SMALLINT,
-    exchange_id SMALLINT
+    id Integer,
+    name Text,
+    version Integer,
+    exchange_id Integer
 );
 
 CREATE TABLE imdb.integration_config (
     integration_id VARCHAR(255) NOT NULL PRIMARY KEY,
-    integration_version SMALLINT NOT NULL,
-    ims_integration_type SMALLINT NOT NULL,
+    integration_version Integer NOT NULL,
+    ims_integration_type Integer NOT NULL,
     online BOOLEAN NOT NULL,
-    exchange_id SMALLINT NOT NULL,
+    exchange_id Integer NOT NULL,
     integration_message_config imdb.integration_message_config NOT NULL
 );
 

@@ -106,3 +106,9 @@ impl IntegrationMessageConfig {
         format!("{}-{}", self.name, "heartbeat")
     }
 }
+
+impl Default for IntegrationMessageConfig {
+    fn default() -> Self {
+        Self::new(0, 0, ExchangeID::default())
+    }
+}

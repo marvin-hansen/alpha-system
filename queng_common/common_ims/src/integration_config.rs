@@ -44,6 +44,44 @@ impl IntegrationConfig {
             integration_message_config,
         }
     }
+
+    /// Creates a new `IntegrationConfig` with the given parameters.
+    ///
+    /// # Parameters
+    ///
+    /// * `integration_id`: The unique identifier for this integration.
+    /// * `integration_version`: The version of this integration.
+    /// * `ims_integration_type`: The type of integration this is.
+    /// * `online`: Whether this integration is currently online.
+    /// * `exchange_id`: The exchange with which this integration is associated.
+    /// * `integration_message_config`: The configuration for the messages sent by this integration.
+    ///
+    /// # Returns
+    ///
+    /// A new `IntegrationConfig` with the given parameters.
+    pub fn from(
+        integration_id: String,
+        integration_version: u16,
+        ims_integration_type: ImsIntegrationType,
+        online: bool,
+        exchange_id: ExchangeID,
+        integration_message_config: IntegrationMessageConfig,
+    ) -> Self {
+        Self {
+            integration_id,
+            integration_version,
+            ims_integration_type,
+            online,
+            exchange_id,
+            integration_message_config,
+        }
+    }
+}
+
+impl IntegrationConfig {
+    pub fn set_online(&mut self) {
+        self.online = true;
+    }
 }
 
 impl IntegrationConfig {

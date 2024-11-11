@@ -5,7 +5,7 @@ use postgres_migrations::Connection;
 use std::error::Error;
 
 mod migrations;
-mod model;
+pub mod model;
 mod schema;
 
 pub const MIGRATIONS: EmbeddedMigrations = EMBEDDED_MIGRATIONS;

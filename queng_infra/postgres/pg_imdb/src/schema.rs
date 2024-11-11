@@ -14,10 +14,10 @@ pub mod imdb {
         imdb.integration_config (integration_id) {
             #[max_length = 255]
             integration_id -> Varchar,
-            integration_version -> Int2,
-            ims_integration_type -> Int2,
+            integration_version -> Int4,
+            ims_integration_type -> Int4,
             online -> Bool,
-            exchange_id -> Int2,
+            exchange_id -> Int4,
             integration_message_config -> IntegrationMessageConfig,
         }
     }

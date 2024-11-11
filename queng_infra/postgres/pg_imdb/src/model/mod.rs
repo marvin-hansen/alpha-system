@@ -1,2 +1,2 @@
-mod integration_config;
-mod integration_message_config_type;
+pub mod integration_config;
+pub mod integration_message_config_type;

@@ -21,4 +21,5 @@ diesel_migrations = { workspace = true }
 # For testing
 container_specs_postgres = {workspace = true}
 docker_utils = {workspace = true}
+postgres_migrations = {workspace = true}
 tokio = {workspace = true}

@@ -11,10 +11,10 @@ mod integration_config_type_update_conversion;
 #[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct IntegrationConfig {
     integration_id: String,
-    integration_version: i16,
-    ims_integration_type: i16,
+    integration_version: i32,
+    ims_integration_type: i32,
     online: bool,
-    exchange_id: i16,
+    exchange_id: i32,
     integration_message_config: MessageConfig,
 }
 
@@ -23,20 +23,20 @@ pub struct IntegrationConfig {
 #[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct CreateIntegrationConfig {
     integration_id: String,
-    integration_version: i16,
-    ims_integration_type: i16,
+    integration_version: i32,
+    ims_integration_type: i32,
     online: bool,
-    exchange_id: i16,
+    exchange_id: i32,
     integration_message_config: MessageConfig,
 }
 
 impl CreateIntegrationConfig {
     pub fn new(
         integration_id: String,
-        integration_version: i16,
-        ims_integration_type: i16,
+        integration_version: i32,
+        ims_integration_type: i32,
         online: bool,
-        exchange_id: i16,
+        exchange_id: i32,
         integration_message_config: MessageConfig,
     ) -> Self {
         Self {
@@ -55,20 +55,20 @@ impl CreateIntegrationConfig {
 #[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct UpdateIntegrationConfig {
     integration_id: String,
-    integration_version: i16,
-    ims_integration_type: i16,
+    integration_version: i32,
+    ims_integration_type: i32,
     online: bool,
-    exchange_id: i16,
+    exchange_id: i32,
     integration_message_config: MessageConfig,
 }
 
 impl UpdateIntegrationConfig {
     pub fn new(
         integration_id: String,
-        integration_version: i16,
-        ims_integration_type: i16,
+        integration_version: i32,
+        ims_integration_type: i32,
         online: bool,
-        exchange_id: i16,
+        exchange_id: i32,
         integration_message_config: MessageConfig,
     ) -> Self {
         Self {
