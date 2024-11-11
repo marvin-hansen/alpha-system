@@ -50,7 +50,7 @@ impl IntegrationConfig {
         configs: &[CommonIntegrationConfig],
     ) -> QueryResult<usize> {
         let items: Vec<CreateIntegrationConfig> = configs
-            .into_iter()
+            .iter()
             .map(
                 |common_integration_config: &common_ims::prelude::IntegrationConfig| {
                     CreateIntegrationConfig::from_common_integration_config(
