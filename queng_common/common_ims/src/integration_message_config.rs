@@ -4,18 +4,20 @@ use common_exchange::prelude::ExchangeID;
 pub struct IntegrationMessageConfig {
     id: u16,
     name: String,
+    version: u16,
     exchange_id: ExchangeID,
 }
 
 const NAME: &str = "integration";
 
 impl IntegrationMessageConfig {
-    pub fn new(id: u16, exchange_id: ExchangeID) -> Self {
+    pub fn new(id: u16, version: u16, exchange_id: ExchangeID) -> Self {
         let name = format!("{}-{}-{}", exchange_id.to_string(), NAME, id);
 
         Self {
             id,
             name,
+            version,
             exchange_id,
         }
     }
@@ -37,6 +39,15 @@ impl IntegrationMessageConfig {
     /// A string slice containing the name of the client.
     pub fn name(&self) -> &str {
         &self.name
+    }
+
+    /// Returns the client version.
+    ///
+    /// # Returns
+    ///
+    /// A string slice containing the version of the client.
+    pub fn version(&self) -> &u16 {
+        &self.version
     }
 
     /// Returns the ExchangeID of the client.

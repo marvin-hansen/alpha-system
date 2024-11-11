@@ -42,6 +42,8 @@ members = [
     "queng_infra/postgres/postgres_migrations",
     "queng_proto/proto_cmdb",
     "queng_proto/proto_cmdb_utils",
+    "queng_proto/proto_imdb",
+    "queng_proto/proto_imdb_utils",
     "queng_proto/proto_mddb",
     "queng_proto/proto_mddb_utils",
     "queng_proto/proto_smdb",
@@ -175,6 +177,8 @@ postgres_migrations = { path = "queng_infra/postgres/postgres_migrations" }
 # Proto
 proto_cmdb = { path = "queng_proto/proto_cmdb" }
 proto_cmdb_utils = { path = "queng_proto/proto_cmdb_utils" }
+proto_imdb = { path = "queng_proto/proto_imdb" }
+proto_imdb_utils = { path = "queng_proto/proto_imdb_utils" }
 proto_mddb = { path = "queng_proto/proto_mddb" }
 proto_mddb_utils = { path = "queng_proto/proto_mddb_utils" }
 proto_smdb = { path = "queng_proto/proto_smdb" }

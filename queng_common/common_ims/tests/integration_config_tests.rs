@@ -2,54 +2,52 @@ use common_exchange::prelude::ExchangeID;
 use common_ims::prelude::{ImsIntegrationType, IntegrationConfig, IntegrationMessageConfig};
 
 #[test]
-fn test_integration_config_initialization() {
-    let integration_id = "test-integration".to_string();
-    let ims_type = ImsIntegrationType::Data;
-    let exchange_id = ExchangeID::Binance;
-    let msg_config = IntegrationMessageConfig::new(1, exchange_id);
-
+fn test_new_integration_config_online_default() {
+    let msg_config = IntegrationMessageConfig::new(1, 1, ExchangeID::Binance);
     let config = IntegrationConfig::new(
-        integration_id.clone(),
-        ims_type,
-        exchange_id,
-        msg_config.clone(),
+        "test-integration".to_string(),
+        1,
+        ImsIntegrationType::Data,
+        ExchangeID::Binance,
+        msg_config,
     );
 
-    assert_eq!(config.integration_id(), integration_id);
-    assert_eq!(config.ims_integration_type(), ims_type);
-    assert_eq!(config.exchange_id(), exchange_id);
-    assert_eq!(config.integration_message_config(), &msg_config);
+    assert!(!config.online());
 }
 
 #[test]
 fn test_integration_config_display() {
-    let integration_id = "test-display".to_string();
+    let msg_config = IntegrationMessageConfig::new(1, 1, ExchangeID::Binance);
     let config = IntegrationConfig::new(
-        integration_id.clone(),
-        ImsIntegrationType::OMS,
-        ExchangeID::Kraken,
-        IntegrationMessageConfig::new(1, ExchangeID::Kraken),
+        "test-integration".to_string(),
+        1,
+        ImsIntegrationType::Data,
+        ExchangeID::Binance,
+        msg_config,
     );
 
-    assert_eq!(config.to_string(), integration_id);
+    assert_eq!(config.to_string(), "test-integration");
 }
 
 #[test]
 fn test_integration_config_getters() {
-    let integration_id = "test-getters".to_string();
-    let ims_type = ImsIntegrationType::Execution;
-    let exchange_id = ExchangeID::Binance;
-    let msg_config = IntegrationMessageConfig::new(2, exchange_id);
+    let integration_id = "test-integration".to_string();
+    let version = 2;
+    let integration_type = ImsIntegrationType::Execution;
+    let exchange = ExchangeID::Kraken;
+    let msg_config = IntegrationMessageConfig::new(1, 1, exchange);
 
     let config = IntegrationConfig::new(
         integration_id.clone(),
-        ims_type,
-        exchange_id,
+        version,
+        integration_type,
+        exchange,
         msg_config.clone(),
     );
 
-    assert_eq!(config.integration_id(), &integration_id);
-    assert_eq!(config.ims_integration_type(), ims_type);
-    assert_eq!(config.exchange_id(), exchange_id);
+    assert_eq!(config.integration_id(), integration_id);
+    assert_eq!(config.integration_version(), version);
+    assert_eq!(config.ims_integration_type(), integration_type);
+    assert_eq!(config.exchange_id(), exchange);
     assert_eq!(config.integration_message_config(), &msg_config);
 }

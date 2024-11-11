@@ -1,0 +1,38 @@
+syntax = "proto3";
+package proto;
+
+message IntegrationMessageConfig {
+  uint32 id = 1;
+  string name = 2;
+  uint32 version = 3;
+  uint32 exchange_id = 4;
+}
+
+message IntegrationConfig {
+  string integration_id = 1;
+  uint32 integration_version = 2;
+  uint32 ims_integration_type = 3;
+  bool online = 4;
+  uint32 exchange_id = 5;
+  IntegrationMessageConfig integration_message_config = 6;
+}
+
+// Request
+
+message GetAllIntegrationsForExchangeRequest {
+  uint32 exchange_id = 1;
+}
+
+message GetIntegrationsConfig {
+  uint32 integration_id = 1;
+}
+
+// Response
+
+message GetAllIntegrationsForExchangeResponse {
+  repeated IntegrationConfig integrations = 1;
+}
+
+message GetIntegrationsConfigResponse {
+  optional IntegrationConfig integration = 1;
+}
