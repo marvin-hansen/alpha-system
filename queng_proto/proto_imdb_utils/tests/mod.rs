@@ -1,0 +1,1 @@
+mod proto_integration_utils_tests;

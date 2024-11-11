@@ -9,4 +9,6 @@ authors.workspace = true
 
 [dependencies]
 # Internal dependencies
+common_exchange = { workspace = true }
+common_ims = { workspace = true }
 proto_imdb = { workspace = true }

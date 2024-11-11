@@ -1,8 +1,8 @@
-use proto_imdb::proto::IntegrationMessageConfig;
+use proto_imdb::proto::ProtoIntegrationMessageConfig;
 
 #[test]
 fn test_proto_integration_message_config() {
-    let integration_message_config = IntegrationMessageConfig {
+    let integration_message_config = ProtoIntegrationMessageConfig {
         id: 1,
         name: "test".to_string(),
         version: 1,

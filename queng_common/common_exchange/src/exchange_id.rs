@@ -11,6 +11,61 @@ pub enum ExchangeID {
     Binance = 4_u8,
 }
 
+// Convert an ExchangeID to an i32
+impl Into<i32> for ExchangeID {
+    #[inline]
+    fn into(self) -> i32 {
+        self as i32
+    }
+}
+
+// Convert an ExchangeID to an u32
+impl Into<u32> for ExchangeID {
+    #[inline]
+    fn into(self) -> u32 {
+        self as u32
+    }
+}
+
+// Convert an ExchangeID to an u8
+impl Into<u8> for ExchangeID {
+    #[inline]
+    fn into(self) -> u8 {
+        self as u8
+    }
+}
+
+// Create an ExchangeID from an u8
+impl From<u8> for ExchangeID {
+    #[inline]
+    fn from(v: u8) -> Self {
+        match v {
+            0 => Self::NullVal,
+            1 => Self::Kraken,
+            2 => Self::COINBASE,
+            3 => Self::VEX,
+            4 => Self::Binance,
+            _ => Self::NullVal,
+        }
+    }
+}
+
+// Create an ExchangeID from an u32
+impl From<u32> for ExchangeID {
+    #[inline]
+    fn from(v: u32) -> Self {
+        match v {
+            0xff_u32 => Self::NullVal,
+            0x1_u32 => Self::Kraken,
+            0x2_u32 => Self::COINBASE,
+            0x3_u32 => Self::VEX,
+            0x4_u32 => Self::Binance,
+            _ => Self::NullVal,
+        }
+    }
+}
+
+// Create an ExchangeID from an i32
 impl From<i32> for ExchangeID {
     #[inline]
     fn from(v: i32) -> Self {
@@ -20,34 +75,6 @@ impl From<i32> for ExchangeID {
             0x2_i32 => Self::COINBASE,
             0x3_i32 => Self::VEX,
             0x4_i32 => Self::Binance,
-            _ => Self::NullVal,
-        }
-    }
-}
-
-impl From<u8> for ExchangeID {
-    /// Create an ExchangeID from a u8 value.
-    ///
-    /// # Parameters
-    ///
-    /// * `v` - The u8 value to convert to an ExchangeID
-    ///
-    /// # Returns
-    ///
-    /// Returns the corresponding ExchangeID for the provided u8:
-    ///
-    /// - 0 -> ExchangeID::NullVal
-    /// - 1 -> ExchangeID::Kraken
-    ///
-    /// If the u8 does not match a valid mapping, returns ExchangeID::NullVal.
-    #[inline]
-    fn from(v: u8) -> Self {
-        match v {
-            0 => Self::NullVal,
-            1 => Self::Kraken,
-            2 => Self::COINBASE,
-            3 => Self::VEX,
-            4 => Self::Binance,
             _ => Self::NullVal,
         }
     }

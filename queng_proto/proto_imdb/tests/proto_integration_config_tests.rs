@@ -1,8 +1,8 @@
-use proto_imdb::proto::IntegrationConfig;
+use proto_imdb::proto::ProtoIntegrationConfig;
 
 #[test]
 fn test_proto_integration_config() {
-    let integration_config = IntegrationConfig {
+    let integration_config = ProtoIntegrationConfig {
         integration_id: "test".to_string(),
         integration_version: 1,
         ims_integration_type: 1,
