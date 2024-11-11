@@ -14,5 +14,7 @@ rust_test_suite(
     deps = [
         # Crate to test
         "//alias:common_ims",
+        # Internal crates
+        "//alias:common_exchange",
     ],
 )
