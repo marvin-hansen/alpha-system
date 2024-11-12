@@ -76,7 +76,7 @@ message CountIntegrationResponse {
 }
 
 message CheckIfIntegrationConfigExistsResponse {
-  bool exits = 1;
+  bool exists = 1;
 }
 
 message CheckIfIntegrationConfigOnlineResponse {
