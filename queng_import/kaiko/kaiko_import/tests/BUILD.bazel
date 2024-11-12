@@ -121,7 +121,6 @@ rust_test_suite(
     ],
 )
 
-
 rust_test_suite(
     name = "kaiko_update_partial_tests",
     srcs = glob([
