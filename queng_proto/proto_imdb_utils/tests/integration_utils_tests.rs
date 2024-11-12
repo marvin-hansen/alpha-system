@@ -1,9 +1,7 @@
 use common_exchange::prelude::ExchangeID;
 use common_ims::prelude::{ImsIntegrationType, IntegrationConfig, IntegrationMessageConfig};
 use proto_imdb::proto::ProtoIntegrationConfig;
-use proto_imdb_utils::integration_utils::{
-    integration_config_from_proto, integration_config_to_proto,
-};
+use proto_imdb_utils::prelude::*;
 
 #[test]
 fn test_integration_config_roundtrip() {
