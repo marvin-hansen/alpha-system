@@ -1,5 +1,9 @@
 load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 
+# Tests have to be isolated in separate groups b/c
+# otherwise the full import and full update test
+# spills over on CI and cause other tests to fail randomly.
+
 rust_test_suite(
     name = "kaiko_import_full",
     srcs = glob([
