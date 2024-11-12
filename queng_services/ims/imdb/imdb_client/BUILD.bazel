@@ -1,0 +1,34 @@
+load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library")
+
+rust_library(
+    name = "imdb_client",
+    srcs = glob([
+        "src/**",
+    ]),
+    crate_root = "src/lib.rs",
+    tags = ["client"],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Internal crates
+        "//alias:proto_imdb",
+        "//alias:proto_imdb_utils",
+        # Exteral crates
+        "//thirdparty/crates:tokio",
+        "//thirdparty/crates:tonic",
+        "//thirdparty/crates:prost",
+    ],
+)
+
+rust_doc(
+    name = "doc",
+    crate = ":imdb_client",
+    tags = ["doc"],
+    visibility = ["//visibility:public"],
+)
+
+rust_doc_test(
+    name = "doc_test",
+    crate = ":imdb_client",
+    tags = ["doc-test"],
+    visibility = ["//visibility:public"],
+)

@@ -33,8 +33,9 @@ multirun(
         "dbgw_push",
         "smdb_push",
         # IMS Services
+        "push_imdb",
         "push_binance_data",
-        "mddb_push",
+        "push_mddb",
     ],
     jobs = 0,  # Set to 0 to run in parallel
     visibility = ["//visibility:public"],
@@ -67,6 +68,17 @@ command(
     command = "//alias/service:smdb_push",
 )
 
+# IMS Data Services
+command(
+    name = "push_imdb",
+    command = "//alias/service:imdb_push",
+)
+
+command(
+    name = "push_binance_data",
+    command = "//alias/service:binance_data_push",
+)
+
 # MDS Services
 command(
     name = "push_kaiko_proxy",
@@ -74,12 +86,6 @@ command(
 )
 
 command(
-    name = "mddb_push",
+    name = "push_mddb",
     command = "//alias/service:mddb_push",
-)
-
-# IMS Data Services
-command(
-    name = "push_binance_data",
-    command = "//alias/service:binance_data_push",
 )

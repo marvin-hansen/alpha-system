@@ -1,0 +1,40 @@
+load("@rules_rust//rust:defs.bzl", "rust_test_suite")
+
+rust_test_suite(
+    name = "tests",
+    srcs = glob([
+        "*_tests.rs",
+    ]),
+    exec_properties = {
+        # Tell BuildBuddy to run this test using a Firecracker microVM.
+        "test.workload-isolation-type": "firecracker",
+        # Tell BuildBuddy to ensure that the Docker daemon is started
+        "test.init-dockerd": "true",
+        # Tell BuildBuddy to preserve the microVM state across test runs.
+        "test.recycle-runner": "true",
+        # We want different different tests to be assigned to the same recycled runner,
+        "test.runner-recycling-key": "imdb_test_runner",
+    },
+    tags = [
+        # The first tag is for local testing, which must be in sequential order b/c there is just one DB
+        "mddb_acceptance_test",
+        # The second tag is for acceptance testing on the CI, which runs in parallel.
+        # "acceptance_test",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate under test
+        "//alias/client:imdb_client",
+        # Internal crates
+        "//alias:common_config",
+        "//alias:common_env",
+        "//alias:container_specs_postgres",
+        "//alias:container_specs_kaiko",
+        "//alias:docker_utils",
+        "//alias:service_import",
+        "//alias:service_utils",
+        "//alias:metadata_import",
+        # External crates
+        "//thirdparty/crates:tokio",
+    ],
+)

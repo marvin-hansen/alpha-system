@@ -274,7 +274,7 @@ fn create_test_integration_config() -> IntegrationConfig {
 #[test]
 fn test_get_create_integration_response() {
     let response = get_create_integration_response();
-    assert!(!response.ok);
+    assert!(response.ok);
     assert!(response.error.is_none());
 }
 

@@ -7,20 +7,20 @@ load("//:build/container.bzl", "build_multi_arch_image", "git_with_timestamp_tag
 # Rust Binary
 ###############################################################################
 build_binary_opt(
-    name = "mddb",
+    name = "imdb",
     srcs = glob([
         "src/**/*.rs",
     ]),
     deps = [
         # Specs
-        "//alias:mddb_specs",
+        "//alias:imdb_specs",
         # Service template
         "//alias/service:grpc_service",
         # Internal crates
         "//alias:common_config",
         "//alias:common_errors",
         "//alias:config_manager",
-        "//alias:proto_mddb",
+        "//alias:proto_imdb",
         "//alias:common_service",
         "//alias/client:smdb_client",
         # Custom Memory Allocator
@@ -37,14 +37,14 @@ build_binary_opt(
 ###############################################################################
 rust_doc(
     name = "doc",
-    crate = ":mddb",
+    crate = ":imdb",
     tags = ["doc"],
     visibility = ["//visibility:public"],
 )
 
 rust_doc_test(
     name = "doc_test",
-    crate = ":mddb",
+    crate = ":imdb",
     tags = ["doc-test"],
     visibility = ["//visibility:public"],
 )
@@ -54,9 +54,9 @@ rust_doc_test(
 ###############################################################################
 build_multi_arch_image(
     name = "image_index",
-    srcs = ["mddb"],
+    srcs = ["imdb"],
     base = "//images/base_image",
-    entry_point = "mddb",
+    entry_point = "imdb",
     exposed_ports = [
         "7070",
         "8080",
@@ -77,6 +77,6 @@ oci_push(
     name = "push",
     image = ":image_index",
     remote_tags = ":remote_tag",
-    repository = "asia-northeast1-docker.pkg.dev/future-309012/image-repo/mddb",
+    repository = "asia-northeast1-docker.pkg.dev/future-309012/image-repo/imdb",
     visibility = ["//visibility:public"],
 )

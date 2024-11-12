@@ -1,0 +1,32 @@
+[package]
+name = "imdb_service"
+version = "0.1.0"
+edition.workspace = true
+rust-version.workspace = true
+readme.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+[[bin]]
+name = "imdb"
+path = "src/main.rs"
+
+
+[dependencies]
+# Service specs
+imdb_specs = { workspace = true }
+# Service template
+grpc_service = { workspace = true }
+# Custom Memory Allocator
+mimalloc = {workspace = true}
+# Internal crates
+common_config = {workspace = true}
+common_errors = {workspace = true}
+config_manager = {workspace = true}
+proto_imdb = {workspace = true}
+common_service =  {workspace = true}
+smdb_client = {workspace = true}
+# External crates
+tokio = { workspace = true }
+tonic = { workspace = true }
+tonic-health  = { workspace = true }

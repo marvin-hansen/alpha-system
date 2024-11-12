@@ -44,6 +44,11 @@ alias(
 ###############################################################################
 
 alias(
+    name = "imdb_client",
+    actual = "//queng_services/ims/imdb/imdb_client",
+)
+
+alias(
     name = "ims_data_client",
     actual = "//queng_services/ims/ims_clients/ims_data_client",
 )

@@ -65,6 +65,10 @@ members = [
     "queng_services/core/smdb/smdb_service",
     "queng_services/core/smdb/smdb_specs",
     "queng_services/core/smdb/smdb_tests",
+    "queng_services/ims/imdb/imdb_client",
+    "queng_services/ims/imdb/imdb_service",
+    "queng_services/ims/imdb/imdb_specs",
+    "queng_services/ims/imdb/imdb_tests",
     "queng_services/ims/ims_clients/binance_client",
     "queng_services/ims/ims_clients/ims_data_client",
     "queng_services/ims/ims_clients/rest_client",
@@ -119,6 +123,7 @@ cmdb_client = { path = "queng_services/core/cmdb/cmdb_client" }
 dbgw_cmdb_client = { path = "queng_services/core/dbgw/dbgw_client/dbgw_cmdb_client" }
 dbgw_mddb_client = { path = "queng_services/core/dbgw/dbgw_client/dbgw_mddb_client" }
 dbgw_smdb_client = { path = "queng_services/core/dbgw/dbgw_client/dbgw_smdb_client" }
+imdb_client = { path =  "queng_services/ims/imdb/imdb_client" }
 ims_data_client = { path = "queng_services/ims/ims_clients/ims_data_client" }
 rest_client = { path = "queng_services/ims/ims_clients/rest_client" }
 mddb_client = { path = "queng_services/mds/mddb/mddb_client" }
@@ -196,6 +201,7 @@ cmdb = { path = "queng_services/core/cmdb" }
 dbgw = { path = "queng_services/core/dbgw" }
 smdb = { path = "queng_services/core/smdb" }
 # IMS
+imdb = { path = "queng_services/ims/imdb/imdb_service" }
 ims_common = { path = "queng_services/ims/ims_common" }
 binance_data = { path = "queng_services/ims/ims_data/binance_data" }
 # MDS
@@ -223,6 +229,7 @@ portfolio_specs = { path = "queng_specs/portfolio_specs" }
 cmdb_specs = { path = "queng_services/core/cmdb/cmdb_specs" }
 dbgw_specs = { path = "queng_services/core/dbgw/dbgw_specs" }
 smdb_specs = { path = "queng_services/core/smdb/smdb_specs" }
+imdb_specs = { path = "queng_services/ims/imdb/imdb_specs" }
 mddb_specs = { path = "queng_services/mds/mddb/mddb_specs" }
 ims_data_binance_specs = { path = "queng_services/ims/ims_data/ims_data_binance_specs" }
 ims_data_vex_specs = { path = "queng_services/ims/ims_data/ims_data_vex_specs" }

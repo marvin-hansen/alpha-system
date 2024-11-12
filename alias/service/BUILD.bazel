@@ -71,6 +71,18 @@ alias(
 ###############################################################################
 
 alias(
+    name = "imdb",
+    actual = "//queng_services/ims/imdb/imdb_service:imdb",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "imdb_push",
+    actual = "//queng_services/ims/imdb/imdb_service:push",
+    visibility = ["//visibility:public"],
+)
+
+alias(
     name = "binance_data",
     actual = "//queng_services/ims/ims_data/binance_data:binance_data",
 )
