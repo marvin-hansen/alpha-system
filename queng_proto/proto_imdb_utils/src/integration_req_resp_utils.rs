@@ -108,55 +108,35 @@ pub fn get_check_if_integration_config_online_response(
 }
 
 pub fn get_integration_config_response(
-    integration_config: Option<IntegrationConfig>,
+    integration_config: Option<ProtoIntegrationConfig>,
 ) -> GetIntegrationConfigResponse {
     GetIntegrationConfigResponse {
-        integration: integration_config.map(integration_config_to_proto),
+        integration: integration_config,
     }
 }
 
 pub fn get_all_integrations_response(
-    integration_configs: Vec<IntegrationConfig>,
+    integrations: Vec<ProtoIntegrationConfig>,
 ) -> GetAllIntegrationsResponse {
-    GetAllIntegrationsResponse {
-        integrations: integration_configs
-            .into_iter()
-            .map(integration_config_to_proto)
-            .collect(),
-    }
+    GetAllIntegrationsResponse { integrations }
 }
 
 pub fn get_all_integrations_by_exchange_response(
-    integration_configs: Vec<IntegrationConfig>,
+    integrations: Vec<ProtoIntegrationConfig>,
 ) -> GetAllIntegrationsByExchangeResponse {
-    GetAllIntegrationsByExchangeResponse {
-        integrations: integration_configs
-            .into_iter()
-            .map(integration_config_to_proto)
-            .collect(),
-    }
+    GetAllIntegrationsByExchangeResponse { integrations }
 }
 
 pub fn get_all_online_integrations_response(
-    integration_configs: Vec<IntegrationConfig>,
+    integrations: Vec<ProtoIntegrationConfig>,
 ) -> GetAllOnlineIntegrationsResponse {
-    GetAllOnlineIntegrationsResponse {
-        integrations: integration_configs
-            .into_iter()
-            .map(integration_config_to_proto)
-            .collect(),
-    }
+    GetAllOnlineIntegrationsResponse { integrations }
 }
 
 pub fn get_all_offline_integrations_response(
-    integration_configs: Vec<IntegrationConfig>,
+    integrations: Vec<ProtoIntegrationConfig>,
 ) -> GetAllOfflineIntegrationsResponse {
-    GetAllOfflineIntegrationsResponse {
-        integrations: integration_configs
-            .into_iter()
-            .map(integration_config_to_proto)
-            .collect(),
-    }
+    GetAllOfflineIntegrationsResponse { integrations }
 }
 
 pub fn get_set_integration_online_response(

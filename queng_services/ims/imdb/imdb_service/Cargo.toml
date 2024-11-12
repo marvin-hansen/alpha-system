@@ -24,6 +24,7 @@ common_config = {workspace = true}
 common_errors = {workspace = true}
 config_manager = {workspace = true}
 proto_imdb = {workspace = true}
+proto_imdb_utils = {workspace = true}
 common_service =  {workspace = true}
 smdb_client = {workspace = true}
 # External crates

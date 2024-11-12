@@ -1,9 +1,11 @@
 mod service;
 
+use crate::service::IMDBServer;
 use common_config::prelude::ServiceID;
 use config_manager::CfgManager;
 use mimalloc::MiMalloc;
 use proto_imdb::proto::db_gateway_imdb_service_client::DbGatewayImdbServiceClient;
+use proto_imdb::proto::imdb_service_server::ImdbServiceServer;
 use std::error::Error;
 use tonic::transport::{Channel, Uri};
 
@@ -42,11 +44,13 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let dbgw_client = DbGatewayImdbServiceClient::new(channel);
 
     dbg_print("Configure gRPC server");
-
+    let grpc_svc = ImdbServiceServer::new(IMDBServer::new(dbgw_client));
+    let (mut health_reporter, health_service) = tonic_health::server::health_reporter();
+    health_reporter
+        .set_serving::<ImdbServiceServer<IMDBServer>>()
+        .await;
     // dbg_print("Start CMDB gRPC server");
-    // grpc_service::start(DBG, SVC_ID, cfg_manager, grpc_svc, health_service).await
-
-    Ok(())
+    grpc_service::start(DBG, SVC_ID, cfg_manager, grpc_svc, health_service).await
 }
 
 fn dbg_print(msg: &str) {

@@ -101,7 +101,12 @@ impl DbGatewayImdbService for IMDBServer {
 
         let dbm = self.dbm.write().await;
         match dbm.get_integrations_config(integration_id).await {
-            Ok(config) => Ok(Response::new(get_integration_config_response(config))),
+            Ok(config) => {
+                // Convert  Option<IntegrationConfig> into  Option<ProtoIntegrationConfig>
+                let proto_config = config.map(integration_config_to_proto);
+
+                Ok(Response::new(get_integration_config_response(proto_config)))
+            }
             Err(e) => Err(Status::internal(e.to_string())),
         }
     }
@@ -114,7 +119,15 @@ impl DbGatewayImdbService for IMDBServer {
 
         let dbm = self.dbm.write().await;
         match dbm.get_integration_config().await {
-            Ok(configs) => Ok(Response::new(get_all_integrations_response(configs))),
+            Ok(configs) => {
+                // Convert  Vec<IntegrationConfig> into  Vec<ProtoIntegrationConfig>
+                let proto_configs: Vec<ProtoIntegrationConfig> = configs
+                    .into_iter()
+                    .map(integration_config_to_proto)
+                    .collect();
+
+                Ok(Response::new(get_all_integrations_response(proto_configs)))
+            }
             Err(e) => Err(Status::internal(e.to_string())),
         }
     }
@@ -132,9 +145,17 @@ impl DbGatewayImdbService for IMDBServer {
             .get_all_integration_configs_by_exchange(exchange_id)
             .await
         {
-            Ok(configs) => Ok(Response::new(get_all_integrations_by_exchange_response(
-                configs,
-            ))),
+            Ok(configs) => {
+                // Convert  Vec<IntegrationConfig> into  Vec<ProtoIntegrationConfig>
+                let proto_configs: Vec<ProtoIntegrationConfig> = configs
+                    .into_iter()
+                    .map(integration_config_to_proto)
+                    .collect();
+
+                Ok(Response::new(get_all_integrations_by_exchange_response(
+                    proto_configs,
+                )))
+            }
             Err(e) => Err(Status::internal(e.to_string())),
         }
     }
@@ -147,7 +168,17 @@ impl DbGatewayImdbService for IMDBServer {
 
         let dbm = self.dbm.write().await;
         match dbm.get_all_online_integration_configs().await {
-            Ok(configs) => Ok(Response::new(get_all_online_integrations_response(configs))),
+            Ok(configs) => {
+                // Convert  Vec<IntegrationConfig> into  Vec<ProtoIntegrationConfig>
+                let proto_configs: Vec<ProtoIntegrationConfig> = configs
+                    .into_iter()
+                    .map(integration_config_to_proto)
+                    .collect();
+
+                Ok(Response::new(get_all_online_integrations_response(
+                    proto_configs,
+                )))
+            }
             Err(e) => Err(Status::internal(e.to_string())),
         }
     }
@@ -160,9 +191,17 @@ impl DbGatewayImdbService for IMDBServer {
 
         let dbm = self.dbm.write().await;
         match dbm.get_all_offline_integration_configs().await {
-            Ok(configs) => Ok(Response::new(get_all_offline_integrations_response(
-                configs,
-            ))),
+            Ok(configs) => {
+                // Convert  Vec<IntegrationConfig> into  Vec<ProtoIntegrationConfig>
+                let proto_configs: Vec<ProtoIntegrationConfig> = configs
+                    .into_iter()
+                    .map(integration_config_to_proto)
+                    .collect();
+
+                Ok(Response::new(get_all_offline_integrations_response(
+                    proto_configs,
+                )))
+            }
             Err(e) => Err(Status::internal(e.to_string())),
         }
     }

@@ -1,1 +1,1 @@
-//queng_services/core/dbgw/dbgw_service:dbgw
+//queng_services/ims/imdb/imdb_service:imdb

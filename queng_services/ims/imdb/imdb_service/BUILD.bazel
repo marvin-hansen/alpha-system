@@ -21,6 +21,7 @@ build_binary_opt(
         "//alias:common_errors",
         "//alias:config_manager",
         "//alias:proto_imdb",
+        "//alias:proto_imdb_utils",
         "//alias:common_service",
         "//alias/client:smdb_client",
         # Custom Memory Allocator

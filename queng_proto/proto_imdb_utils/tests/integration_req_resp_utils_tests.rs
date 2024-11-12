@@ -260,15 +260,22 @@ fn test_get_delete_integration_request_with_unicode_characters() {
     assert_eq!(request.integration_id, "删除集成");
 }
 
-fn create_test_integration_config() -> IntegrationConfig {
-    let message_config = IntegrationMessageConfig::new(1, 2, ExchangeID::from(100));
-    IntegrationConfig::new(
-        "test_integration".to_string(),
-        1,
-        ImsIntegrationType::from(1_u16),
-        ExchangeID::from(100),
-        message_config,
-    )
+fn create_test_integration_config() -> ProtoIntegrationConfig {
+    let message_config = ProtoIntegrationMessageConfig {
+        id: 1,
+        name: "test_integration".to_string(),
+        version: 2,
+        exchange_id: 100,
+    };
+
+    ProtoIntegrationConfig {
+        integration_id: "test_integration".to_string(),
+        integration_version: 2,
+        ims_integration_type: 1,
+        online: false,
+        exchange_id: 100,
+        integration_message_config: Some(message_config),
+    }
 }
 
 #[test]
