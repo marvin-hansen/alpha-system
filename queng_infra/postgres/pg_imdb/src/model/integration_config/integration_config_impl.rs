@@ -178,6 +178,32 @@ impl IntegrationConfig {
             })
     }
 
+    /// Retrieves all integration configurations for a specific exchange from the database.
+    ///
+    /// # Arguments
+    ///
+    /// * `db` - a mutable reference to a postgres database connection
+    /// * `param_exchange_id` - the ID of the exchange to filter configurations by
+    ///
+    /// # Returns
+    ///
+    /// A `QueryResult<Vec<CommonIntegrationConfig>>` containing all integration configurations for the specified exchange,
+    /// or an error if the operation fails.
+    pub fn get_all_integration_configs_by_exchange(
+        db: &mut Connection,
+        param_exchange_id: i32,
+    ) -> QueryResult<Vec<CommonIntegrationConfig>> {
+        integration_config
+            .filter(exchange_id.eq(param_exchange_id))
+            .load::<IntegrationConfig>(db)
+            .map(|configs| {
+                configs
+                    .into_iter()
+                    .map(|c| c.to_common_integration_config())
+                    .collect()
+            })
+    }
+
     /// Retrieves all online integration configurations from the database.
     ///
     /// # Arguments

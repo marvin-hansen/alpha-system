@@ -356,6 +356,62 @@ async fn test_get_all_integration_configs() {
 }
 
 #[tokio::test]
+async fn test_get_configs_for_valid_exchange() {
+    let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
+    assert!(connection.is_ok());
+    let conn = &mut connection.unwrap();
+
+    conn.begin_test_transaction()
+        .expect("Failed to begin test transaction");
+    let result = pg_imdb::run_imdb_db_migration(conn);
+    assert!(result.is_ok());
+
+    // Test empty state;  result must be zero
+    let configs = IntegrationConfig::get_all_integration_configs(conn).unwrap();
+    assert_eq!(configs.len(), 0);
+
+    // Create test configs;
+    let test_configs = vec![
+        CommonIntegrationConfig::new(
+            "config-1".to_string(),
+            1,
+            ImsIntegrationType::Data,
+            ExchangeID::Binance,
+            IntegrationMessageConfig::new(1, 1, ExchangeID::Binance),
+        ),
+        CommonIntegrationConfig::new(
+            "config-2".to_string(),
+            2,
+            ImsIntegrationType::Execution,
+            ExchangeID::Kraken,
+            IntegrationMessageConfig::new(2, 1, ExchangeID::Kraken),
+        ),
+        CommonIntegrationConfig::new(
+            "config-3".to_string(),
+            3,
+            ImsIntegrationType::Data,
+            ExchangeID::Binance,
+            IntegrationMessageConfig::new(3, 1, ExchangeID::Binance),
+        ),
+    ];
+
+    // Insert configs
+    IntegrationConfig::insert_integration_config_collection(conn, &test_configs).unwrap();
+
+    // Test retrieval
+    let stored_configs = IntegrationConfig::get_all_integration_configs(conn).unwrap();
+    assert_eq!(stored_configs.len(), 3);
+
+    let param_exchange_id = ExchangeID::Binance as i32;
+    let results =
+        IntegrationConfig::get_all_integration_configs_by_exchange(conn, param_exchange_id);
+
+    assert!(results.is_ok());
+    let res = results.unwrap();
+    assert_eq!(res.len(), 2);
+}
+
+#[tokio::test]
 async fn test_get_all_online_integration_configs() {
     let connection = get_or_wait_for_postgres_connection(DB_TEST_URL, None).await;
     assert!(connection.is_ok());

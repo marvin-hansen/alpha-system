@@ -145,7 +145,7 @@ impl PostgresIMDBManager {
     /// A `Result` containing a vector of `ImsIntegrationConfig` for all online integrations,
     /// or a `PostgresDBError` if the query fails.
     ///
-    pub async fn get_all_online_integrations(
+    pub async fn get_all_online_integration_configs(
         &self,
     ) -> Result<Vec<ImsIntegrationConfig>, PostgresDBError> {
         self.dbg_print("get_all_online_integrations");
@@ -164,7 +164,7 @@ impl PostgresIMDBManager {
     /// * `Result<Vec<ImsIntegrationConfig>, PostgresDBError>` - A vector of offline integration configs if successful,
     ///   or a PostgresDBError if the query fails
     ///
-    pub async fn get_all_offline_integrations(
+    pub async fn get_all_offline_integration_configs(
         &self,
     ) -> Result<Vec<ImsIntegrationConfig>, PostgresDBError> {
         self.dbg_print("get_all_offline_integrations");
@@ -183,11 +183,37 @@ impl PostgresIMDBManager {
     /// * `Result<Vec<ImsIntegrationConfig>, PostgresDBError>` - List of integration configs on success,
     /// or error on failure
     ///
-    pub async fn get_all_integrations(&self) -> Result<Vec<ImsIntegrationConfig>, PostgresDBError> {
+    pub async fn get_integration_config(
+        &self,
+    ) -> Result<Vec<ImsIntegrationConfig>, PostgresDBError> {
         self.dbg_print("get_all_integrations");
         let conn = &mut self.get_connection();
 
         match IntegrationConfig::get_all_integration_configs(conn) {
+            Ok(res) => Ok(res),
+            Err(e) => Err(PostgresDBError::QueryFailed(e.to_string())),
+        }
+    }
+
+    /// Retrieves all integration configurations for a specific exchange.
+    ///
+    /// # Arguments
+    ///
+    /// * `exchange_id` - The ID of the exchange to filter configurations by
+    ///
+    /// # Returns
+    ///
+    /// * `Result<Vec<ImsIntegrationConfig>, PostgresDBError>` - List of integration configs
+    /// for the exchange on success, or error on failure
+    ///
+    pub async fn get_all_integration_configs_by_exchange(
+        &self,
+        exchange_id: i32,
+    ) -> Result<Vec<ImsIntegrationConfig>, PostgresDBError> {
+        self.dbg_print("get_all_integrations_by_exchange_id");
+        let conn = &mut self.get_connection();
+
+        match IntegrationConfig::get_all_integration_configs_by_exchange(conn, exchange_id) {
             Ok(res) => Ok(res),
             Err(e) => Err(PostgresDBError::QueryFailed(e.to_string())),
         }

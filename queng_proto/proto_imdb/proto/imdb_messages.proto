@@ -22,8 +22,7 @@ message CreateIntegrationRequest {
   ProtoIntegrationConfig integration = 1;
 }
 
-message CountIntegrationRequest {
-}
+message CountIntegrationRequest {}
 
 message CheckIfIntegrationConfigExistsRequest {
   string integration_id = 1;
@@ -38,8 +37,22 @@ message GetIntegrationConfigRequest {
 }
 
 
-message GetAllIntegrationsRequest {
+message GetAllIntegrationsRequest {}
 
+message GetAllIntegrationsByExchangeRequest {
+  int32 exchange_id = 1;
+}
+
+message GetAllOnlineIntegrationsRequest {}
+
+message GetAllOfflineIntegrationsRequest {}
+
+message SetIntegrationOnlineRequest {
+  string integration_id = 1;
+}
+
+message SetIntegrationOfflineRequest {
+  string integration_id = 1;
 }
 
 message UpdateIntegrationRequest {
@@ -50,19 +63,6 @@ message UpdateIntegrationRequest {
 message DeleteIntegrationRequest {
   string integration_id = 1;
 }
-
-message SetIntegrationOnlineRequest {
-  string integration_id = 1;
-}
-
-message SetIntegrationOfflineRequest {
-  string integration_id = 1;
-}
-
-
-message GetAllOnlineIntegrationsRequest {}
-
-message GetAllOfflineIntegrationsRequest {}
 
 
 // Response
@@ -88,6 +88,10 @@ message GetIntegrationConfigResponse {
 }
 
 message GetAllIntegrationsResponse {
+  repeated ProtoIntegrationConfig integrations = 1;
+}
+
+message GetAllIntegrationsByExchangeResponse {
   repeated ProtoIntegrationConfig integrations = 1;
 }
 

@@ -7,10 +7,11 @@ service IMDBService {
   rpc CountIntegrationConfigs (CountIntegrationRequest) returns (CountIntegrationResponse) {}
   rpc CheckIfIntegrationConfigExists (CheckIfIntegrationConfigExistsRequest) returns (CheckIfIntegrationConfigExistsResponse) {}
   rpc CheckIfIntegrationConfigOnline (CheckIfIntegrationConfigOnlineRequest) returns (CheckIfIntegrationConfigOnlineResponse) {}
-  rpc GetIntegrationsConfig (GetIntegrationConfigRequest) returns (GetIntegrationConfigResponse) {}
-  rpc GetAllOnlineIntegrations(GetAllOnlineIntegrationsRequest) returns (GetAllOnlineIntegrationsResponse) {}
-  rpc GetAllOfflineIntegrations(GetAllOfflineIntegrationsRequest) returns (GetAllOfflineIntegrationsResponse) {}
-  rpc GetAllIntegrations (GetAllIntegrationsRequest) returns (GetAllIntegrationsResponse) {}
+  rpc GetIntegrationConfig (GetIntegrationConfigRequest) returns (GetIntegrationConfigResponse) {}
+  rpc GetAllIntegrationConfigs (GetAllIntegrationsRequest) returns (GetAllIntegrationsResponse) {}
+  rpc GetAllIntegrationConfigsByExchange (GetAllIntegrationsByExchangeRequest) returns (GetAllIntegrationsByExchangeResponse) {}
+  rpc GetAllOnlineIntegrationConfigs(GetAllOnlineIntegrationsRequest) returns (GetAllOnlineIntegrationsResponse) {}
+  rpc GetAllOfflineIntegrationConfigs(GetAllOfflineIntegrationsRequest) returns (GetAllOfflineIntegrationsResponse) {}
   rpc SetIntegrationOnline(SetIntegrationOnlineRequest) returns (SetIntegrationOnlineResponse) {}
   rpc SetIntegrationOffline(SetIntegrationOfflineRequest) returns (SetIntegrationOfflineResponse) {}
 }
@@ -22,9 +23,10 @@ service DBGatewayIMDBService {
   rpc CheckIfIntegrationConfigExists (CheckIfIntegrationConfigExistsRequest) returns (CheckIfIntegrationConfigExistsResponse) {}
   rpc CheckIfIntegrationConfigOnline (CheckIfIntegrationConfigOnlineRequest) returns (CheckIfIntegrationConfigOnlineResponse) {}
   rpc GetIntegrationConfig (GetIntegrationConfigRequest) returns (GetIntegrationConfigResponse) {}
-  rpc GetAllOnlineIntegrations(GetAllOnlineIntegrationsRequest) returns (GetAllOnlineIntegrationsResponse) {}
-  rpc GetAllOfflineIntegrations(GetAllOfflineIntegrationsRequest) returns (GetAllOfflineIntegrationsResponse) {}
-  rpc GetAllIntegrations (GetAllIntegrationsRequest) returns (GetAllIntegrationsResponse) {}
+  rpc GetAllIntegrationConfigs (GetAllIntegrationsRequest) returns (GetAllIntegrationsResponse) {}
+  rpc GetAllIntegrationConfigsByExchange (GetAllIntegrationsByExchangeRequest) returns (GetAllIntegrationsByExchangeResponse) {}
+  rpc GetAllOnlineIntegrationConfigs(GetAllOnlineIntegrationsRequest) returns (GetAllOnlineIntegrationsResponse) {}
+  rpc GetAllOfflineIntegrationConfigs(GetAllOfflineIntegrationsRequest) returns (GetAllOfflineIntegrationsResponse) {}
   rpc SetIntegrationOnline(SetIntegrationOnlineRequest) returns (SetIntegrationOnlineResponse) {}
   rpc SetIntegrationOffline(SetIntegrationOfflineRequest) returns (SetIntegrationOfflineResponse) {}
   rpc UpdateIntegrationConfig (UpdateIntegrationRequest) returns (UpdateIntegrationResponse) {}
