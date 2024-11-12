@@ -129,7 +129,7 @@ impl DbGatewayImdbService for IMDBServer {
 
         let dbm = self.dbm.write().await;
         match dbm
-            .get_all_integration_configs_by_exchange(exchange_id as i32)
+            .get_all_integration_configs_by_exchange(exchange_id)
             .await
         {
             Ok(configs) => Ok(Response::new(get_all_integrations_by_exchange_response(
