@@ -7,9 +7,9 @@ use proto_mddb::proto::mddb_service_client::MddbServiceClient;
 use std::fmt::Error;
 use tonic::transport::{Channel, Uri};
 
-/// Client for interacting with the SymdbService.
+/// Client for interacting with the MDDB.
 ///
-/// Wraps a SymdbServiceClient and provides methods to
+/// Wraps a MddbServiceClient and provides methods to
 /// lookup symbols, symbol IDs, and exchange names.
 ///
 #[derive(Debug, Clone)]
