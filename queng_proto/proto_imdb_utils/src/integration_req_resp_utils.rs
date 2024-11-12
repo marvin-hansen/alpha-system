@@ -86,7 +86,7 @@ pub fn get_delete_integration_request(integration_id: &str) -> DeleteIntegration
 
 pub fn get_create_integration_response() -> CreateIntegrationResponse {
     CreateIntegrationResponse {
-        ok: false,
+        ok: true,
         error: None,
     }
 }
@@ -128,8 +128,8 @@ pub fn get_all_integrations_response(
 
 pub fn get_all_integrations_by_exchange_response(
     integration_configs: Vec<IntegrationConfig>,
-) -> GetAllIntegrationsResponse {
-    GetAllIntegrationsResponse {
+) -> GetAllIntegrationsByExchangeResponse {
+    GetAllIntegrationsByExchangeResponse {
         integrations: integration_configs
             .into_iter()
             .map(integration_config_to_proto)

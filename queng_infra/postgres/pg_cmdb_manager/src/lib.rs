@@ -65,6 +65,32 @@ impl PostgresCMDBManager {
         Self::build(true, true, url).await
     }
 
+    /// Asynchronously initializes a PostgresCMDBManager with a given connection pool and debug mode.
+    ///
+    /// # Arguments
+    ///
+    /// * `pool` - A connection pool to the Postgres database.
+    /// * `dbg` - A boolean indicating whether debug mode is enabled.
+    ///
+    /// # Returns
+    ///
+    /// A Result containing the initialized PostgresCMDBManager instance or a PostgresDBError.
+    ///
+    pub async fn with_pool_and_debug(
+        pool: Pool<ConnectionManager<PgConnection>>,
+        dbg: bool,
+    ) -> Result<Self, PostgresDBError> {
+        let conn = &mut pool
+            .get()
+            .expect("Failed to get a connection from the pool");
+
+        run_cmdb_db_migration(conn).expect("Failed to run CMDB database migration");
+
+        Ok(Self { dbg, pool })
+    }
+}
+
+impl PostgresCMDBManager {
     async fn build(dbg: bool, test: bool, url: &str) -> Result<Self, PostgresDBError> {
         if dbg {
             println!("[PostgresCMDBManager]: Debug mode enabled");
@@ -74,8 +100,13 @@ impl PostgresCMDBManager {
             );
         }
 
-        let pool = postgres_common::build_pg_connection_pool(test, dbg, url, run_cmdb_db_migration)
-            .expect("[PostgresCMDBManager]: Failed to create Postgres connection pool");
+        let pool = postgres_common::build_pg_connection_pool_with_migration(
+            test,
+            dbg,
+            url,
+            run_cmdb_db_migration,
+        )
+        .expect("[PostgresCMDBManager]: Failed to create Postgres connection pool");
 
         Ok(Self { dbg, pool })
     }

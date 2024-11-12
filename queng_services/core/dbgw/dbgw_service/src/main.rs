@@ -8,20 +8,24 @@ use tonic::transport::Server;
 use warp::Filter;
 
 use crate::service_cmdb::CMDBServer;
+use crate::service_imdb::IMDBServer;
 use crate::service_mddb::MDDBServer;
 use crate::service_smdb::SMDBServer;
 use common_config::prelude::ServiceID;
 use common_service::{print_utils, shutdown_utils};
 use config_manager::CfgManager;
 use pg_cmdb_manager::PostgresCMDBManager;
+use pg_imdb_manager::PostgresIMDBManager;
 use pg_mddb_manager::PostgresMDDBManager;
 use pg_smdb_manager::PostgresSMDBManager;
 use postgres_config_manager::PostgresConfigManager;
 use proto_cmdb::proto::db_gateway_cmdb_service_server::DbGatewayCmdbServiceServer;
+use proto_imdb::proto::db_gateway_imdb_service_server::DbGatewayImdbServiceServer;
 use proto_mddb::proto::db_gateway_mddb_service_server::DbGatewayMddbServiceServer;
 use proto_smdb::proto::db_gateway_smdb_service_server::DbGatewaySmdbServiceServer;
 
 mod service_cmdb;
+mod service_imdb;
 mod service_mddb;
 mod service_smdb;
 
@@ -55,23 +59,34 @@ async fn main() -> Result<(), Box<dyn Error>> {
     dbg_print("Set up socket address for gRPC and HTTP");
     let grpc_addr = service_addr.parse().expect("DBGW: Failed to parse address");
 
-    dbg_print("Configure postgres database manager");
+    dbg_print("Configure postgres database connection pool");
+    // The connection pool is shared across all database managers
     let pg_config = pg_cfg_manager.postgres_db_config();
+    let url = &pg_config.pg_connection_url();
+    let max_size = 12;
+    let pool = postgres_common::build_pg_connection_pool(false, DBG, max_size, url)
+        .expect("Failed to create PG connection pool");
 
-    let dbm_smdb = PostgresSMDBManager::new(&pg_config.pg_connection_url())
+    dbg_print("Configure postgres database manager");
+    let dbm_smdb = PostgresSMDBManager::with_pool_and_debug(pool.clone(), DBG)
         .await
-        .expect("Failed to create DB Manager");
+        .expect("Failed to create SMDB DB Manager");
 
-    let dbm_cmdb = PostgresCMDBManager::new(&pg_config.pg_connection_url())
+    let dbm_cmdb = PostgresCMDBManager::with_pool_and_debug(pool.clone(), DBG)
         .await
-        .expect("Failed to create DB Manager");
+        .expect("Failed to create CMDB DB Manager");
 
-    let dbm_mddb = PostgresMDDBManager::new(&pg_config.pg_connection_url())
+    let dbm_imdb = PostgresIMDBManager::with_pool_and_debug(pool.clone(), DBG)
         .await
-        .expect("Failed to create DB Manager");
+        .expect("Failed to create IMDB DB Manager");
+
+    let dbm_mddb = PostgresMDDBManager::with_pool_and_debug(pool.clone(), DBG)
+        .await
+        .expect("Failed to create MDDB DB Manager");
 
     let arc_smdb_dbm = Arc::new(RwLock::new(dbm_smdb));
     let arc_dbm_cmdb = Arc::new(RwLock::new(dbm_cmdb));
+    let arc_dbm_imdb = Arc::new(RwLock::new(dbm_imdb));
     let arc_dbm_mddb = Arc::new(RwLock::new(dbm_mddb));
 
     dbg_print("Construct gRPC health_service");
@@ -83,12 +98,14 @@ async fn main() -> Result<(), Box<dyn Error>> {
     dbg_print("Construct gRPC server");
     let grpc_cmdb = DbGatewayCmdbServiceServer::new(CMDBServer::new(arc_dbm_cmdb));
     let grpc_smdb = DbGatewaySmdbServiceServer::new(SMDBServer::new(arc_smdb_dbm.clone()));
+    let grpc_imdb = DbGatewayImdbServiceServer::new(IMDBServer::new(arc_dbm_imdb));
     let grpc_mddb = DbGatewayMddbServiceServer::new(MDDBServer::new(arc_dbm_mddb));
 
     let signal = shutdown_utils::signal_handler("gRPC server");
     let grpc_server = Server::builder()
         .add_service(grpc_cmdb)
         .add_service(grpc_smdb)
+        .add_service(grpc_imdb)
         .add_service(grpc_mddb)
         .add_service(health_service)
         .serve_with_shutdown(grpc_addr, signal);

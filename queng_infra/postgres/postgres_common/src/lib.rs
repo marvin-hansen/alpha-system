@@ -32,6 +32,58 @@ impl<E> CustomizeConnection<PgConnection, E> for TestConnectionCustomizer {
 /// This function handles the following workflow:
 /// 1. Establishes a connection pool to the Postgres database using the provided URL.
 /// 2. Optionally enables debug mode to print debug messages.
+/// 3. Performs database migration if the `test` parameter is set to true.
+///
+/// # Arguments
+///
+/// * `test` - A boolean indicating whether to start a test transaction.
+/// * `dbg` - A boolean indicating whether to enable debug mode.
+/// * `max_size` - The maximum size of the connection pool.
+/// * `url` - A string slice representing the URL of the Postgres database.
+///
+/// # Returns
+///
+/// A Result containing the newly created connection pool,
+/// or a PostgresDBError if an error occurs.
+///
+pub fn build_pg_connection_pool(
+    test: bool,
+    dbg: bool,
+    max_size: u32,
+    url: &str,
+) -> Result<Pool<ConnectionManager<PgConnection>>, PostgresDBError> {
+    let pool = if test {
+        if dbg {
+            println!("Build test connection pool",);
+        }
+        Pool::builder()
+            .test_on_check_out(true)
+            .max_size(1)
+            .connection_customizer(Box::new(TestConnectionCustomizer))
+            .build(ConnectionManager::<PgConnection>::new(url))
+            .expect("Failed to create PG pool with test transaction")
+    } else {
+        if dbg {
+            println!("Build connection pool",);
+        }
+
+        Pool::builder()
+            .test_on_check_out(true)
+            .max_size(max_size)
+            .idle_timeout(Some(Duration::from_secs(10 * 60)))
+            .connection_timeout(Duration::from_secs(30))
+            .build(ConnectionManager::<PgConnection>::new(url))
+            .expect("Failed to create PG connection pool")
+    };
+
+    Ok(pool)
+}
+
+/// Builds a Postgres Connection Pool based on the provided configuration parameters.
+///
+/// This function handles the following workflow:
+/// 1. Establishes a connection pool to the Postgres database using the provided URL.
+/// 2. Optionally enables debug mode to print debug messages.
 /// 3. Performs database migration if the test parameter is set to true.
 ///
 /// # Arguments
@@ -45,7 +97,7 @@ impl<E> CustomizeConnection<PgConnection, E> for TestConnectionCustomizer {
 /// A Result containing the constructed Postgres Connection Pool
 /// or a PostgresDBError if an error occurs during the process.
 ///
-pub fn build_pg_connection_pool(
+pub fn build_pg_connection_pool_with_migration(
     test: bool,
     dbg: bool,
     url: &str,

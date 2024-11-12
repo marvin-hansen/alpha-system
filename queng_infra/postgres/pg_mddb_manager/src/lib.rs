@@ -64,10 +64,28 @@ impl PostgresMDDBManager {
         Self::build(true, true, url).await
     }
 
+    /// Creates a new PostgresMDDBManager instance with a provided connection pool
+    /// and enables debug mode.
+    ///
+    /// # Arguments
+    ///
+    /// * `pool` - The connection pool to use for the new instance.
+    /// * `dbg` - A boolean indicating whether debug mode is enabled.
+    ///
+    /// # Returns
+    ///
+    /// A Result containing the new instance or a PostgresDBError.
+    ///
     pub async fn with_pool_and_debug(
-        dbg: bool,
         pool: Pool<ConnectionManager<PgConnection>>,
+        dbg: bool,
     ) -> Result<Self, PostgresDBError> {
+        let conn = &mut pool
+            .get()
+            .expect("Failed to get a connection from the pool");
+
+        run_mddb_migration(conn).expect("Failed to run mddb migration");
+
         Ok(Self { dbg, pool })
     }
 }
@@ -82,8 +100,13 @@ impl PostgresMDDBManager {
             );
         }
 
-        let pool = postgres_common::build_pg_connection_pool(test, dbg, url, run_mddb_migration)
-            .expect("[PostgresMDDBManager]: Failed to create Postgres connection pool");
+        let pool = postgres_common::build_pg_connection_pool_with_migration(
+            test,
+            dbg,
+            url,
+            run_mddb_migration,
+        )
+        .expect("[PostgresMDDBManager]: Failed to create Postgres connection pool");
 
         Ok(Self { dbg, pool })
     }

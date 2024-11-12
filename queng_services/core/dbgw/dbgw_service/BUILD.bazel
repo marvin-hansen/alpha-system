@@ -17,19 +17,23 @@ build_binary_opt(
         # Specs
         "//alias:dbgw_specs",
         # Internal crates
+        "//alias:common_service",
         "//alias:common_config",
         "//alias:config_manager",
         "//alias:pg_cmdb_manager",
+        "//alias:pg_imdb_manager",
         "//alias:pg_mddb_manager",
         "//alias:pg_smdb_manager",
         "//alias:proto_cmdb",
         "//alias:proto_cmdb_utils",
+        "//alias:proto_imdb",
+        "//alias:proto_imdb_utils",
         "//alias:proto_mddb",
         "//alias:proto_mddb_utils",
         "//alias:proto_smdb",
         "//alias:proto_smdb_utils",
         "//alias:postgres_config_manager",
-        "//alias:common_service",
+        "//alias:postgres_common",
         # Custom Memory Allocator
         "//thirdparty/crates:mimalloc",
         # External crates

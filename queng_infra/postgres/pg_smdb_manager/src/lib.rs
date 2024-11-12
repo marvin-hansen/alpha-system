@@ -60,6 +60,32 @@ impl PostgresSMDBManager {
         Self::build(true, true, url).await
     }
 
+    /// Asynchronously initializes a connection with a provided connection pool and debug mode.
+    ///
+    /// # Arguments
+    ///
+    /// * `pool` - A connection pool to use for database connections.
+    /// * `dbg` - A boolean indicating whether debug mode is enabled.
+    ///
+    /// # Returns
+    ///
+    /// A Result containing the initialized PostgresSMDBManager instance or a PostgresDBError.
+    ///
+    pub async fn with_pool_and_debug(
+        pool: Pool<ConnectionManager<PgConnection>>,
+        dbg: bool,
+    ) -> Result<Self, PostgresDBError> {
+        let conn = &mut pool
+            .get()
+            .expect("Failed to get a connection from the pool");
+
+        run_smdb_db_migration(conn).expect("Failed to run SMDB DB migration");
+
+        Ok(Self { dbg, pool })
+    }
+}
+
+impl PostgresSMDBManager {
     /// Creates a new PostgresSMDBManager instance.
     ///
     /// # Arguments
@@ -82,8 +108,13 @@ impl PostgresSMDBManager {
             );
         }
 
-        let pool = postgres_common::build_pg_connection_pool(test, dbg, url, run_smdb_db_migration)
-            .expect("[PostgresSMDBManager]: Failed to create Postgres connection pool");
+        let pool = postgres_common::build_pg_connection_pool_with_migration(
+            test,
+            dbg,
+            url,
+            run_smdb_db_migration,
+        )
+        .expect("[PostgresSMDBManager]: Failed to create Postgres connection pool");
 
         Ok(Self { dbg, pool })
     }

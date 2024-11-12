@@ -1,1 +1,1 @@
-//queng_services/ims/mddb/mddb_tests/tests
+//queng_services/core/dbgw/dbgw_service:dbgw
