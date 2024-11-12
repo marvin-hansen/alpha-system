@@ -34,22 +34,6 @@ async fn test_mddb() {
     assert!(result.is_ok());
     let (pg_container_id, _) = result.unwrap();
 
-    // Here we assume you have a KaikoProxy service running locally;
-    // On CI, we have to start the proxy service.
-    if env_type == EnvironmentType::CI {
-        // Start KaikoProxy proxy service, which is required for metadata import.
-        let kaiko_service_id = ServiceID::KaikoProxy;
-        let kaiko_wait_strategy = ServiceWaitStrategy::HttpHealthCheck(
-            "http://localhost:7777/health".to_string(),
-            Duration::from_secs(120),
-        );
-        let result = svc_util
-            .start_service(&kaiko_service_id, &kaiko_wait_strategy)
-            .await;
-        dbg!(&result);
-        assert!(result.is_ok());
-    }
-
     // Test if service data is already imported in the DB; if not, do so.
     let service_import_manager = ServiceImportManager::with_debug().await;
     let imported = service_import_manager.check_if_already_imported().await;
