@@ -181,7 +181,7 @@ impl PostgresIMDBManager {
     /// # Returns
     ///
     /// * `Result<Vec<ImsIntegrationConfig>, PostgresDBError>` - List of integration configs on success,
-    /// or error on failure
+    ///    or error on failure
     ///
     pub async fn get_integration_config(
         &self,
@@ -204,7 +204,7 @@ impl PostgresIMDBManager {
     /// # Returns
     ///
     /// * `Result<Vec<ImsIntegrationConfig>, PostgresDBError>` - List of integration configs
-    /// for the exchange on success, or error on failure
+    ///    for the exchange on success, or error on failure
     ///
     pub async fn get_all_integration_configs_by_exchange(
         &self,
