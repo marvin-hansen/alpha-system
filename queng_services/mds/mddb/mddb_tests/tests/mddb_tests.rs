@@ -105,6 +105,8 @@ async fn test_mddb() {
 
     // Start MDDB service - depends on SMDB
     let service_id = ServiceID::MDDB;
+    // Somehow MDDB needs more time than others to start
+    let wait_strategy = ServiceWaitStrategy::Duration(Duration::from_millis(500));
     let result = svc_util.start_service(&service_id, &wait_strategy).await;
     assert!(result.is_ok());
 
