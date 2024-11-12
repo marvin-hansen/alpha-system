@@ -23,6 +23,7 @@ pub enum ServiceID {
     VEX = 0x6_u8,
     ImsDataBinance = 0x7_u8,
     KaikoProxy = 0x8_u8,
+    IMDB = 0x9_u8,
 }
 
 impl ServiceID {
@@ -59,6 +60,7 @@ impl From<i16> for ServiceID {
             0x6_i16 => Self::VEX,
             0x7_i16 => Self::ImsDataBinance,
             0x8_i16 => Self::KaikoProxy,
+            0x9_i16 => Self::IMDB,
             _ => Self::Default,
         }
     }
@@ -77,6 +79,7 @@ impl From<i32> for ServiceID {
             0x6_i32 => Self::VEX,
             0x7_i32 => Self::ImsDataBinance,
             0x8_i32 => Self::KaikoProxy,
+            0x9_i32 => Self::IMDB,
             _ => Self::Default,
         }
     }
@@ -95,6 +98,7 @@ impl From<u8> for ServiceID {
             6 => Self::VEX,
             7 => Self::ImsDataBinance,
             8 => Self::KaikoProxy,
+            9 => Self::IMDB,
             _ => Self::Default,
         }
     }
@@ -113,6 +117,7 @@ impl ServiceID {
             "ImsDataBinance" => Some(ServiceID::ImsDataBinance),
             "KaikoProxy" => Some(ServiceID::KaikoProxy),
             "KAIKO_PROXY" => Some(ServiceID::KaikoProxy),
+            "IMDB" => Some(ServiceID::IMDB),
             _ => None,
         }
     }
@@ -120,16 +125,6 @@ impl ServiceID {
 
 impl Display for ServiceID {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        match self {
-            ServiceID::Default => write!(f, "Default"),
-            ServiceID::SMDB => write!(f, "SMDB"),
-            ServiceID::CMDB => write!(f, "CMDB"),
-            ServiceID::DBGW => write!(f, "DBGW"),
-            ServiceID::QDGW => write!(f, "QDGW"),
-            ServiceID::MDDB => write!(f, "MDDB"),
-            ServiceID::VEX => write!(f, "VEX"),
-            ServiceID::ImsDataBinance => write!(f, "Ims_Data_Binance"),
-            ServiceID::KaikoProxy => write!(f, "Kaiko_Proxy"),
-        }
+        write!(f, "{:?}", self)
     }
 }

@@ -41,9 +41,9 @@ async fn main() -> Result<(), Box<dyn Error>> {
             s
         )
     });
+    let dbgw_client = DbGatewayMddbServiceClient::new(channel);
 
     dbg_print("Configure gRPC server");
-    let dbgw_client = DbGatewayMddbServiceClient::new(channel);
     let grpc_svc = MddbServiceServer::new(MDDBServer::new(dbgw_client));
     let (mut health_reporter, health_service) = tonic_health::server::health_reporter();
     health_reporter
