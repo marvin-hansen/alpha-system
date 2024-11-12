@@ -2,9 +2,7 @@ use crate::DBG;
 use pg_mddb_manager::PostgresMDDBManager;
 use proto_mddb::proto::db_gateway_mddb_service_server::DbGatewayMddbService;
 use proto_mddb::proto::*;
-use proto_mddb_utils::mddb_assets_utils as asset_utils;
-use proto_mddb_utils::mddb_exchanges_utils as exchange_utils;
-use proto_mddb_utils::mddb_instruments_utils as instrument_utils;
+use proto_mddb_utils::prelude::*;
 use std::sync::Arc;
 use tokio::sync::RwLock;
 use tonic::{Request, Response, Status};
@@ -41,7 +39,7 @@ impl DbGatewayMddbService for MDDBServer {
         let res = dbm.count_assets().await;
 
         match res {
-            Ok(count) => Ok(Response::new(asset_utils::get_count_assets_response(count))),
+            Ok(count) => Ok(Response::new(get_count_assets_response(count))),
             Err(e) => Err(Status::internal(e.to_string())),
         }
     }
@@ -57,9 +55,7 @@ impl DbGatewayMddbService for MDDBServer {
         let res = dbm.check_if_asset_id_exists(asset_id.clone()).await;
 
         match res {
-            Ok(exists) => Ok(Response::new(
-                asset_utils::get_check_if_asset_exists_response(exists),
-            )),
+            Ok(exists) => Ok(Response::new(get_check_if_asset_exists_response(exists))),
             Err(e) => Err(Status::internal(e.to_string())),
         }
     }
@@ -75,7 +71,7 @@ impl DbGatewayMddbService for MDDBServer {
         let res = dbm.read_asset(asset_id.clone()).await;
 
         match res {
-            Ok(asset) => Ok(Response::new(asset_utils::get_assets_response(asset))),
+            Ok(asset) => Ok(Response::new(get_assets_response(asset))),
             Err(e) => Err(Status::internal(e.to_string())),
         }
     }
@@ -90,7 +86,7 @@ impl DbGatewayMddbService for MDDBServer {
         let res = dbm.read_all_assets().await;
 
         match res {
-            Ok(assets) => Ok(Response::new(asset_utils::get_all_assets_response(assets))),
+            Ok(assets) => Ok(Response::new(get_all_assets_response(assets))),
             Err(e) => Err(Status::internal(e.to_string())),
         }
     }
@@ -105,9 +101,7 @@ impl DbGatewayMddbService for MDDBServer {
         let res = dbm.count_exchanges().await;
 
         match res {
-            Ok(count) => Ok(Response::new(exchange_utils::get_count_exchanges_response(
-                count,
-            ))),
+            Ok(count) => Ok(Response::new(get_count_exchanges_response(count))),
             Err(e) => Err(Status::internal(e.to_string())),
         }
     }
@@ -123,9 +117,7 @@ impl DbGatewayMddbService for MDDBServer {
         let res = dbm.check_if_exchange_id_exists(exchange_code.clone()).await;
 
         match res {
-            Ok(exists) => Ok(Response::new(
-                exchange_utils::get_check_if_exchange_exists_response(exists),
-            )),
+            Ok(exists) => Ok(Response::new(get_check_if_exchange_exists_response(exists))),
             Err(e) => Err(Status::internal(e.to_string())),
         }
     }
@@ -141,9 +133,7 @@ impl DbGatewayMddbService for MDDBServer {
         let res = dbm.read_exchange(exchange_code.clone()).await;
 
         match res {
-            Ok(exchange) => Ok(Response::new(exchange_utils::get_exchange_response(
-                exchange,
-            ))),
+            Ok(exchange) => Ok(Response::new(get_exchange_response(exchange))),
             Err(e) => Err(Status::internal(e.to_string())),
         }
     }
@@ -158,9 +148,7 @@ impl DbGatewayMddbService for MDDBServer {
         let res = dbm.read_all_exchanges().await;
 
         match res {
-            Ok(exchanges) => Ok(Response::new(exchange_utils::get_all_exchanges_response(
-                exchanges,
-            ))),
+            Ok(exchanges) => Ok(Response::new(get_all_exchanges_response(exchanges))),
             Err(e) => Err(Status::internal(e.to_string())),
         }
     }
@@ -176,9 +164,7 @@ impl DbGatewayMddbService for MDDBServer {
         let res = dbm.read_exchange(exchange_code.clone()).await;
 
         match res {
-            Ok(exchange) => Ok(Response::new(
-                exchange_utils::get_lookup_exchange_name_response(exchange),
-            )),
+            Ok(exchange) => Ok(Response::new(get_lookup_exchange_name_response(exchange))),
             Err(e) => Err(Status::internal(e.to_string())),
         }
     }
@@ -193,9 +179,7 @@ impl DbGatewayMddbService for MDDBServer {
         let res = dbm.count_instruments().await;
 
         match res {
-            Ok(count) => Ok(Response::new(
-                instrument_utils::get_count_instruments_response(count),
-            )),
+            Ok(count) => Ok(Response::new(get_count_instruments_response(count))),
             Err(e) => Err(Status::internal(e.to_string())),
         }
     }
@@ -211,9 +195,10 @@ impl DbGatewayMddbService for MDDBServer {
         let res = dbm.check_if_instrument_id_exists(&instrument_id).await;
 
         match res {
-            Ok(exists) => Ok(Response::new(
-                instrument_utils::get_check_if_instrument_exists_response(&instrument_id, exists),
-            )),
+            Ok(exists) => Ok(Response::new(get_check_if_instrument_exists_response(
+                &instrument_id,
+                exists,
+            ))),
             Err(e) => Err(Status::internal(e.to_string())),
         }
     }
@@ -229,9 +214,7 @@ impl DbGatewayMddbService for MDDBServer {
         let res = dbm.read_instrument(&instrument_id).await;
 
         match res {
-            Ok(instrument) => Ok(Response::new(
-                instrument_utils::get_instrument_by_id_response(instrument),
-            )),
+            Ok(instrument) => Ok(Response::new(get_instrument_by_id_response(instrument))),
             Err(e) => Err(Status::internal(e.to_string())),
         }
     }
@@ -245,9 +228,7 @@ impl DbGatewayMddbService for MDDBServer {
         let dbm = self.dbm.read().await;
 
         match dbm.read_instrument_by_figi(&figi).await {
-            Ok(instrument) => Ok(Response::new(
-                instrument_utils::get_instrument_by_figi_response(instrument),
-            )),
+            Ok(instrument) => Ok(Response::new(get_instrument_by_figi_response(instrument))),
 
             Err(e) => Err(Status::internal(e.to_string())),
         }
@@ -264,9 +245,9 @@ impl DbGatewayMddbService for MDDBServer {
             .read_instrument_by_pair_figi(&instrument_pair_figi)
             .await
         {
-            Ok(instrument) => Ok(Response::new(
-                instrument_utils::get_instrument_by_pair_figi_response(instrument),
-            )),
+            Ok(instrument) => Ok(Response::new(get_instrument_by_pair_figi_response(
+                instrument,
+            ))),
 
             Err(e) => Err(Status::internal(e.to_string())),
         }
@@ -282,9 +263,7 @@ impl DbGatewayMddbService for MDDBServer {
         let res = dbm.read_all_instruments().await;
 
         match res {
-            Ok(instruments) => Ok(Response::new(
-                instrument_utils::get_all_instruments_response(instruments),
-            )),
+            Ok(instruments) => Ok(Response::new(get_all_instruments_response(instruments))),
             Err(e) => Err(Status::internal(e.to_string())),
         }
     }
@@ -300,9 +279,9 @@ impl DbGatewayMddbService for MDDBServer {
         let res = dbm.read_all_instruments_for_base_asset(&base_asset).await;
 
         match res {
-            Ok(instruments) => Ok(Response::new(
-                instrument_utils::get_all_instruments_for_base_asset_response(instruments),
-            )),
+            Ok(instruments) => Ok(Response::new(get_all_instruments_for_base_asset_response(
+                instruments,
+            ))),
             Err(e) => Err(Status::internal(e.to_string())),
         }
     }
@@ -318,9 +297,9 @@ impl DbGatewayMddbService for MDDBServer {
         let res = dbm.read_all_instruments_for_quote_asset(&quote_asset).await;
 
         match res {
-            Ok(instruments) => Ok(Response::new(
-                instrument_utils::get_all_instruments_for_quote_asset_response(instruments),
-            )),
+            Ok(instruments) => Ok(Response::new(get_all_instruments_for_quote_asset_response(
+                instruments,
+            ))),
             Err(e) => Err(Status::internal(e.to_string())),
         }
     }
@@ -336,9 +315,9 @@ impl DbGatewayMddbService for MDDBServer {
         let res = dbm.read_all_instruments_for_exchange(&exchange_code).await;
 
         match res {
-            Ok(instruments) => Ok(Response::new(
-                instrument_utils::get_all_instruments_for_exchange_response(instruments),
-            )),
+            Ok(instruments) => Ok(Response::new(get_all_instruments_for_exchange_response(
+                instruments,
+            ))),
             Err(e) => Err(Status::internal(e.to_string())),
         }
     }
@@ -357,9 +336,7 @@ impl DbGatewayMddbService for MDDBServer {
 
         match res {
             Ok(instruments) => Ok(Response::new(
-                instrument_utils::get_all_instruments_for_base_asset_and_exchange_response(
-                    instruments,
-                ),
+                get_all_instruments_for_base_asset_and_exchange_response(instruments),
             )),
             Err(e) => Err(Status::internal(e.to_string())),
         }
@@ -379,9 +356,7 @@ impl DbGatewayMddbService for MDDBServer {
 
         match res {
             Ok(instruments) => Ok(Response::new(
-                instrument_utils::get_all_instruments_for_quote_asset_and_exchange_response(
-                    instruments,
-                ),
+                get_all_instruments_for_quote_asset_and_exchange_response(instruments),
             )),
             Err(e) => Err(Status::internal(e.to_string())),
         }
@@ -405,9 +380,7 @@ impl DbGatewayMddbService for MDDBServer {
 
         match res {
             Ok(instruments) => Ok(Response::new(
-                instrument_utils::get_all_instruments_for_base_quote_asset_and_exchange_response(
-                    instruments,
-                ),
+                get_all_instruments_for_base_quote_asset_and_exchange_response(instruments),
             )),
             Err(e) => Err(Status::internal(e.to_string())),
         }
@@ -426,9 +399,7 @@ impl DbGatewayMddbService for MDDBServer {
             .await
         {
             Ok(instrument) => Ok(Response::new(
-                instrument_utils::get_lookup_instrument_id_by_exchange_pair_code_response(
-                    instrument,
-                ),
+                get_lookup_instrument_id_by_exchange_pair_code_response(instrument),
             )),
             Err(e) => Err(Status::internal(e.to_string())),
         }
@@ -443,9 +414,9 @@ impl DbGatewayMddbService for MDDBServer {
         let dbm = self.dbm.read().await;
 
         match dbm.read_instrument_by_figi(&instrument_figi).await {
-            Ok(instrument) => Ok(Response::new(
-                instrument_utils::get_lookup_instrument_by_figi_response(instrument),
-            )),
+            Ok(instrument) => Ok(Response::new(get_lookup_instrument_by_figi_response(
+                instrument,
+            ))),
             Err(e) => Err(Status::internal(e.to_string())),
         }
     }
@@ -462,9 +433,9 @@ impl DbGatewayMddbService for MDDBServer {
             .read_instrument_by_pair_figi(&instrument_pair_figi)
             .await
         {
-            Ok(instrument) => Ok(Response::new(
-                instrument_utils::get_lookup_instrument_by_pair_figi_response(instrument),
-            )),
+            Ok(instrument) => Ok(Response::new(get_lookup_instrument_by_pair_figi_response(
+                instrument,
+            ))),
             Err(e) => Err(Status::internal(e.to_string())),
         }
     }

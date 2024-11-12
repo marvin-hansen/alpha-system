@@ -2,7 +2,7 @@ use crate::error::MDDBClientError;
 use crate::MDDBClient;
 use common_metadata::prelude::MetaInstrument;
 
-use proto_mddb_utils::mddb_instruments_utils as instruments_utils;
+use proto_mddb_utils::prelude::*;
 
 impl MDDBClient {
     /// Retrieves the total count of instruments from the database.
@@ -10,7 +10,7 @@ impl MDDBClient {
     /// Returns a Result containing either the count as u64 or an MDDBClientError if the operation fails.
     pub async fn count_instruments(&self) -> Result<u64, MDDBClientError> {
         let mut client = self.client.clone();
-        let request = instruments_utils::get_count_instruments_request();
+        let request = get_count_instruments_request();
 
         match client.count_instruments(request).await {
             Ok(res) => Ok(res.into_inner().count),
@@ -30,7 +30,7 @@ impl MDDBClient {
         instrument_id: &str,
     ) -> Result<bool, MDDBClientError> {
         let mut client = self.client.clone();
-        let request = instruments_utils::get_check_if_instrument_exists_request(instrument_id);
+        let request = get_check_if_instrument_exists_request(instrument_id);
 
         match client.check_if_instrument_id_exists(request).await {
             Ok(res) => Ok(res.get_ref().exists),
@@ -51,12 +51,13 @@ impl MDDBClient {
         instrument_id: &str,
     ) -> Result<Option<MetaInstrument>, MDDBClientError> {
         let mut client = self.client.clone();
-        let request = instruments_utils::get_instrument_by_id_request(instrument_id);
+        let request = get_instrument_by_id_request(instrument_id);
 
         match client.get_instrument(request).await {
-            Ok(res) => Ok(res.into_inner().instrument.map(|instrument| {
-                instruments_utils::proto_instrument_to_meta_instrument(&instrument)
-            })),
+            Ok(res) => Ok(res
+                .into_inner()
+                .instrument
+                .map(|instrument| proto_instrument_to_meta_instrument(&instrument))),
             Err(e) => Err(MDDBClientError(e.to_string())),
         }
     }
@@ -74,12 +75,13 @@ impl MDDBClient {
         instrument_figi: &str,
     ) -> Result<Option<MetaInstrument>, MDDBClientError> {
         let mut client = self.client.clone();
-        let request = instruments_utils::get_instrument_by_figi_request(instrument_figi);
+        let request = get_instrument_by_figi_request(instrument_figi);
 
         match client.get_instrument_by_figi(request).await {
-            Ok(res) => Ok(res.into_inner().instrument.map(|instrument| {
-                instruments_utils::proto_instrument_to_meta_instrument(&instrument)
-            })),
+            Ok(res) => Ok(res
+                .into_inner()
+                .instrument
+                .map(|instrument| proto_instrument_to_meta_instrument(&instrument))),
             Err(e) => Err(MDDBClientError(e.to_string())),
         }
     }
@@ -89,12 +91,13 @@ impl MDDBClient {
         instrument_pair_figi: &str,
     ) -> Result<Option<MetaInstrument>, MDDBClientError> {
         let mut client = self.client.clone();
-        let request = instruments_utils::get_instrument_by_pair_figi_request(instrument_pair_figi);
+        let request = get_instrument_by_pair_figi_request(instrument_pair_figi);
 
         match client.get_instrument_by_pair_figi(request).await {
-            Ok(res) => Ok(res.into_inner().instrument.map(|instrument| {
-                instruments_utils::proto_instrument_to_meta_instrument(&instrument)
-            })),
+            Ok(res) => Ok(res
+                .into_inner()
+                .instrument
+                .map(|instrument| proto_instrument_to_meta_instrument(&instrument))),
             Err(e) => Err(MDDBClientError(e.to_string())),
         }
     }
@@ -107,7 +110,7 @@ impl MDDBClient {
     ///
     pub async fn get_all_instruments(&self) -> Result<Vec<MetaInstrument>, MDDBClientError> {
         let mut client = self.client.clone();
-        let request = instruments_utils::get_all_instruments_request();
+        let request = get_all_instruments_request();
 
         match client.get_all_instruments(request).await {
             Ok(res) => {
@@ -115,9 +118,7 @@ impl MDDBClient {
                     .into_inner()
                     .instruments
                     .into_iter()
-                    .map(|proto_instrument| {
-                        instruments_utils::proto_instrument_to_meta_instrument(&proto_instrument)
-                    })
+                    .map(|proto_instrument| proto_instrument_to_meta_instrument(&proto_instrument))
                     .collect();
                 Ok(instruments)
             }
@@ -139,7 +140,7 @@ impl MDDBClient {
         base_asset: &str,
     ) -> Result<Vec<MetaInstrument>, MDDBClientError> {
         let mut client = self.client.clone();
-        let request = instruments_utils::get_all_instruments_for_base_asset_request(base_asset);
+        let request = get_all_instruments_for_base_asset_request(base_asset);
 
         match client.get_all_instruments_for_base_asset(request).await {
             Ok(res) => {
@@ -147,9 +148,7 @@ impl MDDBClient {
                     .into_inner()
                     .instruments
                     .into_iter()
-                    .map(|proto_instrument| {
-                        instruments_utils::proto_instrument_to_meta_instrument(&proto_instrument)
-                    })
+                    .map(|proto_instrument| proto_instrument_to_meta_instrument(&proto_instrument))
                     .collect();
                 Ok(instruments)
             }
@@ -171,7 +170,7 @@ impl MDDBClient {
         quote_asset: &str,
     ) -> Result<Vec<MetaInstrument>, MDDBClientError> {
         let mut client = self.client.clone();
-        let request = instruments_utils::get_all_instruments_for_quote_asset_request(quote_asset);
+        let request = get_all_instruments_for_quote_asset_request(quote_asset);
 
         match client.get_all_instruments_for_quote_asset(request).await {
             Ok(res) => {
@@ -179,9 +178,7 @@ impl MDDBClient {
                     .into_inner()
                     .instruments
                     .into_iter()
-                    .map(|proto_instrument| {
-                        instruments_utils::proto_instrument_to_meta_instrument(&proto_instrument)
-                    })
+                    .map(|proto_instrument| proto_instrument_to_meta_instrument(&proto_instrument))
                     .collect();
                 Ok(instruments)
             }
@@ -202,7 +199,7 @@ impl MDDBClient {
         exchange_code: &str,
     ) -> Result<Vec<MetaInstrument>, MDDBClientError> {
         let mut client = self.client.clone();
-        let request = instruments_utils::get_all_instruments_for_exchange_request(exchange_code);
+        let request = get_all_instruments_for_exchange_request(exchange_code);
 
         match client.get_all_instruments_for_exchange(request).await {
             Ok(res) => {
@@ -210,9 +207,7 @@ impl MDDBClient {
                     .into_inner()
                     .instruments
                     .into_iter()
-                    .map(|proto_instrument| {
-                        instruments_utils::proto_instrument_to_meta_instrument(&proto_instrument)
-                    })
+                    .map(|proto_instrument| proto_instrument_to_meta_instrument(&proto_instrument))
                     .collect();
                 Ok(instruments)
             }
@@ -235,10 +230,8 @@ impl MDDBClient {
         base_asset: &str,
     ) -> Result<Vec<MetaInstrument>, MDDBClientError> {
         let mut client = self.client.clone();
-        let request = instruments_utils::get_all_instruments_for_base_asset_and_exchange_request(
-            exchange_code,
-            base_asset,
-        );
+        let request =
+            get_all_instruments_for_base_asset_and_exchange_request(exchange_code, base_asset);
 
         match client
             .get_all_instruments_for_base_asset_and_exchange(request)
@@ -249,9 +242,7 @@ impl MDDBClient {
                     .into_inner()
                     .instruments
                     .into_iter()
-                    .map(|proto_instrument| {
-                        instruments_utils::proto_instrument_to_meta_instrument(&proto_instrument)
-                    })
+                    .map(|proto_instrument| proto_instrument_to_meta_instrument(&proto_instrument))
                     .collect();
                 Ok(instruments)
             }
@@ -274,10 +265,8 @@ impl MDDBClient {
         quote_asset: &str,
     ) -> Result<Vec<MetaInstrument>, MDDBClientError> {
         let mut client = self.client.clone();
-        let request = instruments_utils::get_all_instruments_for_quote_asset_and_exchange_request(
-            exchange_code,
-            quote_asset,
-        );
+        let request =
+            get_all_instruments_for_quote_asset_and_exchange_request(exchange_code, quote_asset);
 
         match client
             .get_all_instruments_for_quote_asset_and_exchange(request)
@@ -288,9 +277,7 @@ impl MDDBClient {
                     .into_inner()
                     .instruments
                     .into_iter()
-                    .map(|proto_instrument| {
-                        instruments_utils::proto_instrument_to_meta_instrument(&proto_instrument)
-                    })
+                    .map(|proto_instrument| proto_instrument_to_meta_instrument(&proto_instrument))
                     .collect();
                 Ok(instruments)
             }
@@ -315,12 +302,11 @@ impl MDDBClient {
         quote_asset: &str,
     ) -> Result<Vec<MetaInstrument>, MDDBClientError> {
         let mut client = self.client.clone();
-        let request =
-            instruments_utils::get_all_instruments_for_base_quote_asset_and_exchange_request(
-                exchange_code,
-                base_asset,
-                quote_asset,
-            );
+        let request = get_all_instruments_for_base_quote_asset_and_exchange_request(
+            exchange_code,
+            base_asset,
+            quote_asset,
+        );
 
         match client
             .get_all_instruments_for_base_quote_asset_and_exchange(request)
@@ -331,9 +317,7 @@ impl MDDBClient {
                     .into_inner()
                     .instruments
                     .into_iter()
-                    .map(|proto_instrument| {
-                        instruments_utils::proto_instrument_to_meta_instrument(&proto_instrument)
-                    })
+                    .map(|proto_instrument| proto_instrument_to_meta_instrument(&proto_instrument))
                     .collect();
                 Ok(instruments)
             }
@@ -354,9 +338,8 @@ impl MDDBClient {
         instrument_exchange_pair_code: &str,
     ) -> Result<Option<String>, MDDBClientError> {
         let mut client = self.client.clone();
-        let request = instruments_utils::get_lookup_instrument_exchange_pair_code_request(
-            instrument_exchange_pair_code,
-        );
+        let request =
+            get_lookup_instrument_exchange_pair_code_request(instrument_exchange_pair_code);
 
         match client
             .lookup_instrument_id_by_exchange_pair_code(request)
@@ -380,7 +363,7 @@ impl MDDBClient {
         instrument_figi: &str,
     ) -> Result<Option<String>, MDDBClientError> {
         let mut client = self.client.clone();
-        let request = instruments_utils::get_lookup_instrument_id_by_figi_request(instrument_figi);
+        let request = get_lookup_instrument_id_by_figi_request(instrument_figi);
 
         match client.lookup_instrument_id_by_figi(request).await {
             Ok(res) => Ok(res.into_inner().instrument_id),
@@ -401,8 +384,7 @@ impl MDDBClient {
         instrument_pair_figi: &str,
     ) -> Result<Option<String>, MDDBClientError> {
         let mut client = self.client.clone();
-        let request =
-            instruments_utils::get_lookup_instrument_id_by_pair_figi_request(instrument_pair_figi);
+        let request = get_lookup_instrument_id_by_pair_figi_request(instrument_pair_figi);
 
         match client.lookup_instrument_id_by_pair_figi(request).await {
             Ok(res) => Ok(res.into_inner().instrument_id),

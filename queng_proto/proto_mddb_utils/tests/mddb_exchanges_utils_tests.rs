@@ -1,7 +1,6 @@
-use proto_mddb_utils::mddb_exchanges_utils::*;
-
 use common_metadata::prelude::MetaExchange;
 use proto_mddb::proto::ProtoMetaExchange;
+use proto_mddb_utils::prelude::*;
 
 #[test]
 fn test_get_check_if_exchange_exists_request() {

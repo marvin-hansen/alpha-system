@@ -2,7 +2,7 @@ use crate::error::MDDBClientError;
 use crate::MDDBClient;
 use common_metadata::prelude::MetaExchange;
 
-use proto_mddb_utils::mddb_exchanges_utils as exchanges_utils;
+use proto_mddb_utils::prelude::*;
 
 impl MDDBClient {
     /// Retrieves the total count of exchanges from the database.
@@ -11,7 +11,7 @@ impl MDDBClient {
     ///
     pub async fn count_exchanges(&self) -> Result<u64, MDDBClientError> {
         let mut client = self.client.clone();
-        let request = exchanges_utils::get_count_exchanges_request();
+        let request = get_count_exchanges_request();
 
         match client.count_exchanges(request).await {
             Ok(res) => Ok(res.into_inner().count),
@@ -32,7 +32,7 @@ impl MDDBClient {
         exchange_code: &str,
     ) -> Result<bool, MDDBClientError> {
         let mut client = self.client.clone();
-        let request = exchanges_utils::get_check_if_exchange_exists_request(exchange_code);
+        let request = get_check_if_exchange_exists_request(exchange_code);
 
         match client.check_if_exchange_id_exists(request).await {
             Ok(res) => Ok(res.get_ref().exists),
@@ -50,14 +50,14 @@ impl MDDBClient {
     ///
     pub async fn get_exchange(&self, exchange_code: &str) -> Result<MetaExchange, MDDBClientError> {
         let mut client = self.client.clone();
-        let request = exchanges_utils::get_exchange_request(exchange_code);
+        let request = get_exchange_request(exchange_code);
 
         match client.get_exchange(request).await {
             Ok(res) => {
                 let exchange = res
                     .into_inner()
                     .exchange
-                    .map(|exchange| exchanges_utils::proto_exchange_to_meta_exchange(&exchange))
+                    .map(|exchange| proto_exchange_to_meta_exchange(&exchange))
                     .ok_or_else(|| MDDBClientError("Exchange not found".to_string()))?;
                 Ok(exchange)
             }
@@ -72,7 +72,7 @@ impl MDDBClient {
     ///
     pub async fn get_all_exchanges(&self) -> Result<Vec<MetaExchange>, MDDBClientError> {
         let mut client = self.client.clone();
-        let request = exchanges_utils::get_all_exchanges_request();
+        let request = get_all_exchanges_request();
 
         match client.get_all_exchanges(request).await {
             Ok(res) => {
@@ -80,9 +80,7 @@ impl MDDBClient {
                     .into_inner()
                     .exchanges
                     .into_iter()
-                    .map(|proto_exchange| {
-                        exchanges_utils::proto_exchange_to_meta_exchange(&proto_exchange)
-                    })
+                    .map(|proto_exchange| proto_exchange_to_meta_exchange(&proto_exchange))
                     .collect();
                 Ok(exchanges)
             }

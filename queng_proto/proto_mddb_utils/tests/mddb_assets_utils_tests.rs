@@ -3,7 +3,8 @@ use proto_mddb::proto::{
     CheckIfAssetIdExistsRequest, CheckIfAssetIdExistsResponse, CountAssetsRequest,
     CountAssetsResponse, GetAllAssetsRequest, GetAssetRequest, ProtoMetaAsset,
 };
-use proto_mddb_utils::mddb_assets_utils::*;
+
+use proto_mddb_utils::prelude::*;
 
 #[test]
 fn test_get_count_assets_request() {

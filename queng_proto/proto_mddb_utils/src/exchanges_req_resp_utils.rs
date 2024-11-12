@@ -1,5 +1,5 @@
+use crate::exchanges_utils;
 use common_metadata::prelude::MetaExchange;
-
 use proto_mddb::proto::{
     CheckIfExchangeIdExistsRequest, CheckIfExchangeIdExistsResponse, CountExchangesRequest,
     CountExchangesResponse, GetAllExchangesRequest, GetExchangeRequest, LookupExchangeNameRequest,
@@ -25,6 +25,7 @@ pub fn get_exchange_request(exchange_code: &str) -> GetExchangeRequest {
 pub fn get_all_exchanges_request() -> GetAllExchangesRequest {
     GetAllExchangesRequest {}
 }
+
 pub fn get_lookup_exchange_name_request(exchange_code: &str) -> LookupExchangeNameRequest {
     LookupExchangeNameRequest {
         exchange_code: exchange_code.to_string(),
@@ -46,7 +47,7 @@ pub fn get_exchange_response(
 ) -> proto_mddb::proto::GetExchangeResponse {
     if let Some(exchanges) = meta_exchange {
         proto_mddb::proto::GetExchangeResponse {
-            exchange: Option::from(meta_exchange_to_proto_exchange(&exchanges)),
+            exchange: Option::from(exchanges_utils::meta_exchange_to_proto_exchange(&exchanges)),
         }
     } else {
         proto_mddb::proto::GetExchangeResponse { exchange: None }
@@ -59,7 +60,9 @@ pub fn get_all_exchanges_response(
     proto_mddb::proto::GetAllExchangesResponse {
         exchanges: meta_exchanges
             .into_iter()
-            .map(|meta_exchange: MetaExchange| meta_exchange_to_proto_exchange(&meta_exchange))
+            .map(|meta_exchange: MetaExchange| {
+                exchanges_utils::meta_exchange_to_proto_exchange(&meta_exchange)
+            })
             .collect(),
     }
 }
@@ -75,25 +78,5 @@ pub fn get_lookup_exchange_name_response(
         proto_mddb::proto::LookupExchangeNameResponse {
             exchange_name: None,
         }
-    }
-}
-
-pub fn meta_exchange_to_proto_exchange(
-    meta_exchange: &MetaExchange,
-) -> proto_mddb::proto::ProtoMetaExchange {
-    proto_mddb::proto::ProtoMetaExchange {
-        exchange_code: meta_exchange.code.to_string(),
-        exchange_name: meta_exchange.name.to_string(),
-        exchange_hash: meta_exchange.hash(),
-    }
-}
-
-pub fn proto_exchange_to_meta_exchange(
-    proto_exchange: &proto_mddb::proto::ProtoMetaExchange,
-) -> MetaExchange {
-    MetaExchange {
-        code: proto_exchange.exchange_code.to_string(),
-        name: proto_exchange.exchange_name.to_string(),
-        kaiko_legacy_slug: "".to_string(),
     }
 }

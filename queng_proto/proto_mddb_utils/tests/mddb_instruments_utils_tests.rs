@@ -1,6 +1,6 @@
 use common_metadata::prelude::{InstrumentMetadata, MetaInstrument};
 use proto_mddb::proto::*;
-use proto_mddb_utils::mddb_instruments_utils::*;
+use proto_mddb_utils::prelude::*;
 
 fn create_test_meta_instrument() -> MetaInstrument {
     MetaInstrument {
