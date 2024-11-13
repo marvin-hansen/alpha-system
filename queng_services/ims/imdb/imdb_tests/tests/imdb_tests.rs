@@ -60,7 +60,10 @@ async fn test_imdb() {
     let result = svc_util.start_service(&service_id, &wait_strategy).await;
     assert!(result.is_ok());
 
-    // Start IMDB service - depends on SMDB
+    // Start IMDB service - depends on SMDB and DBGW
+    let service_id = ServiceID::IMDB;
+    let result = svc_util.start_service(&service_id, &wait_strategy).await;
+    assert!(result.is_ok());
 
     // Configure IMDB client
     let (host, port) = config_manager
@@ -78,13 +81,10 @@ async fn test_imdb() {
     // Test IMDB service with IMDB client
     test_imdb_integrations(&client).await;
 
-    // Cleanup
-    if env_type != EnvironmentType::LOCAL {
-        // Stop and remove container
-        let result = docker_util.stop_container(&pg_container_id);
-        dbg!(&result);
-        assert!(result.is_ok());
-    }
+    // Stop and remove container
+    let result = docker_util.stop_container(&pg_container_id);
+    dbg!(&result);
+    assert!(result.is_ok());
 }
 
 async fn test_imdb_integrations(_client: &IMDBClient) {

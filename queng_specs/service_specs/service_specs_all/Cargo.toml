@@ -12,5 +12,6 @@ authors.workspace = true
 common_config = { workspace = true }
 cmdb_specs = { workspace = true }
 dbgw_specs = { workspace = true }
+imdb_specs = { workspace = true }
 mddb_specs = { workspace = true }
 smdb_specs = { workspace = true }

@@ -116,12 +116,10 @@ async fn test_mddb() {
     // Test MDDB Instruments methods.
     test_metadata_instruments_api(&client).await;
 
-    if env_type != EnvironmentType::LOCAL {
-        // Stop and remove container
-        let result = docker_util.stop_container(&pg_container_id);
-        dbg!(&result);
-        assert!(result.is_ok());
-    }
+    // Stop and remove container
+    let result = docker_util.stop_container(&pg_container_id);
+    dbg!(&result);
+    assert!(result.is_ok());
 }
 
 async fn test_metadata_assets_api(mddb_client: &MDDBClient) {
