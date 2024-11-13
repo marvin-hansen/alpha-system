@@ -9,6 +9,7 @@ authors.workspace = true
 
 [dependencies]
 environment_manager = { workspace = true }
+integration_specs_all = { workspace = true }
 pg_imdb_manager = { workspace = true }
 postgres_config_manager = {workspace = true}
 

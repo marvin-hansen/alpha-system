@@ -13,6 +13,7 @@ rust_library(
     deps = [
         # Internal crates
         "//alias:environment_manager",
+        "//alias:integration_specs_all",
         "//alias:pg_imdb_manager",
         "//alias:postgres_config_manager",
         # External crates
