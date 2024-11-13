@@ -45,5 +45,15 @@ async fn test_start_service_util() {
     let result = svc_util.start_service(&service_id, &wait_strategy).await;
     assert!(result.is_ok());
 
+    // Starts  MDDB - depends on SMDB
+    let service_id = ServiceID::MDDB;
+    let result = svc_util.start_service(&service_id, &wait_strategy).await;
+    assert!(result.is_ok());
+
+    // Starts  IMDB - depends on SMDB
+    let service_id = ServiceID::IMDB;
+    let result = svc_util.start_service(&service_id, &wait_strategy).await;
+    assert!(result.is_ok());
+
     sleep(Duration::from_secs(1)).await;
 }

@@ -8,9 +8,13 @@ rust_library(
     ]),
     crate_root = "src/lib.rs",
     data = [
+        # core
         ":copy_core_cmdb",
         ":copy_core_dbgw",
         ":copy_core_smdb",
+        # ims
+        ":copy_ims_imdb",
+        # mds
         ":copy_kaiko_proxy",
         ":copy_mddb",
     ],
@@ -64,6 +68,14 @@ copy_file(
     name = "copy_core_smdb",
     src = "//alias/service:smdb",
     out = "smdb",
+    is_executable = True,
+)
+
+# Copy all ims services
+copy_file(
+    name = "copy_ims_imdb",
+    src = "//alias/service:imdb",
+    out = "imdb",
     is_executable = True,
 )
 
