@@ -343,6 +343,11 @@ alias(
     actual = "//queng_specs/exchange_specs",
 )
 
+alias(
+    name = "integration_specs_all",
+    actual = "//queng_specs/integration_specs/integration_specs_all",
+)
+
 # portfolio specs
 alias(
     name = "portfolio_specs",

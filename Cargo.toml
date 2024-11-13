@@ -95,6 +95,7 @@ members = [
     "queng_specs/database_specs/db_specs_clickhouse",
     "queng_specs/database_specs/db_specs_postgres",
     "queng_specs/exchange_specs",
+    "queng_specs/integration_specs/integration_specs_all",
     "queng_specs/service_specs/service_specs_all",
     "queng_specs/service_specs/shared_service_specs",
     "queng_utils/math_utils",
@@ -228,6 +229,7 @@ db_specs_clickhouse = { path = "queng_specs/database_specs/db_specs_clickhouse" 
 db_specs_postgres = { path = "queng_specs/database_specs/db_specs_postgres" }
 # Misc specs
 exchange_specs = { path = "queng_specs/exchange_specs" }
+integration_specs_all = { path = "queng_specs/integration_specs/integration_specs_all" }
 portfolio_specs = { path = "queng_specs/portfolio_specs" }
 # Service specs
 cmdb_specs = { path = "queng_services/core/cmdb/cmdb_specs" }

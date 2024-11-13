@@ -1,0 +1,31 @@
+load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library", "rust_test_suite")
+
+rust_library(
+    name = "integration_specs_all",
+    srcs = glob([
+        "src/*.rs",
+    ]),
+    crate_root = "src/lib.rs",
+    tags = [
+        "integration_specs_all",
+        "utils",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Internal crates
+    ],
+)
+
+rust_doc(
+    name = "doc",
+    crate = ":integration_specs_all",
+    tags = ["doc"],
+    visibility = ["//visibility:public"],
+)
+
+rust_doc_test(
+    name = "doc_test",
+    crate = ":integration_specs_all",
+    tags = ["doc-test"],
+    visibility = ["//visibility:public"],
+)
