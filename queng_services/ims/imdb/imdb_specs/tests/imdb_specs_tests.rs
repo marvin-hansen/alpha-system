@@ -17,7 +17,7 @@ fn test_imdb_service_base_properties() {
     assert_eq!(config.svc_id(), &ServiceID::IMDB);
     assert_eq!(config.name(), "imdb");
     assert_eq!(config.version(), 1);
-    assert!(config.online());
+    assert!(!config.online());
     assert_eq!(
         config.cluster_uri(),
         "imdb-service.default.svc.cluster.local"
