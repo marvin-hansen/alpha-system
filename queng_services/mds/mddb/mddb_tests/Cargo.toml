@@ -14,6 +14,9 @@ path = "src/fake_lib.rs"
 
 # For testing
 [dev-dependencies]
+# Crate under test
+mddb_client = {workspace = true}
+# Internal crates
 common_config = {workspace = true}
 common_env = {workspace = true}
 container_specs_postgres = {workspace = true}
@@ -21,6 +24,5 @@ container_specs_kaiko = {workspace = true}
 docker_utils = {workspace = true}
 service_import  = {workspace = true}
 service_utils = {workspace = true}
-mddb_client = {workspace = true}
 metadata_import = {workspace = true}
 tokio = {workspace = true}
