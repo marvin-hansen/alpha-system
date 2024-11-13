@@ -18,6 +18,7 @@ rust_library(
         "//alias:cmdb_specs",
         "//alias:dbgw_specs",
         "//alias:smdb_specs",
+        "//alias:imdb_specs",
         "//alias:mddb_specs",
         # External crates
         "//thirdparty/crates:hickory-resolver",

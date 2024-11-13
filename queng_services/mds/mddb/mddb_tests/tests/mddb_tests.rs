@@ -94,26 +94,27 @@ async fn test_mddb() {
     let result = svc_util.start_service(&service_id, &wait_strategy).await;
     assert!(result.is_ok());
 
-    let (mddb_host, mddb_port) = config_manager
+    // Configure MDDB client
+    let (host, port) = config_manager
         .get_mddb_host_port()
         .await
         .expect("Failed to get MDDB host");
-    dbg!(&mddb_host);
-    dbg!(&mddb_port);
+    dbg!(&host);
+    dbg!(&port);
 
     // Construct MDDB client
-    let mddb_client = MDDBClient::new(mddb_host, mddb_port)
+    let client = MDDBClient::new(host, port)
         .await
         .expect("Failed to create MDDB client");
 
     // Test MDDB Assets methods.
-    test_metadata_assets_api(&mddb_client).await;
+    test_metadata_assets_api(&client).await;
 
     // Test MDDB Exchanges methods.
-    test_metadata_exchanges_api(&mddb_client).await;
+    test_metadata_exchanges_api(&client).await;
 
     // Test MDDB Instruments methods.
-    test_metadata_instruments_api(&mddb_client).await;
+    test_metadata_instruments_api(&client).await;
 
     if env_type != EnvironmentType::LOCAL {
         // Stop and remove container

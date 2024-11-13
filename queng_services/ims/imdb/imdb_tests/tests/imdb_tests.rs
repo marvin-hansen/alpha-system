@@ -2,12 +2,13 @@ use common_config::prelude::ServiceID;
 use common_env::prelude::EnvironmentType;
 use container_specs_postgres::postgres_db_container_config;
 use docker_utils::prelude::DockerUtil;
+use imdb_client::IMDBClient;
 use service_import::ServiceImportManager;
 use service_utils::{ServiceUtil, ServiceWaitStrategy};
 use std::time::Duration;
 
 #[tokio::test]
-async fn test_mddb() {
+async fn test_imdb() {
     let docker_util = DockerUtil::with_debug().expect("Failed to get DockerUtil");
     // Start service util
     let res = ServiceUtil::with_debug().await;
@@ -61,9 +62,21 @@ async fn test_mddb() {
 
     // Start IMDB service - depends on SMDB
 
+    // Configure IMDB client
+    let (host, port) = config_manager
+        .get_imdb_host_port()
+        .await
+        .expect("Failed to get MDDB host");
+    dbg!(&host);
+    dbg!(&port);
+
     // Construct IMDB client
+    let client = IMDBClient::new(host, port)
+        .await
+        .expect("Failed to create IMDB client");
 
     // Test IMDB service with IMDB client
+    test_imdb_integrations(&client).await;
 
     // Cleanup
     if env_type != EnvironmentType::LOCAL {
@@ -72,4 +85,8 @@ async fn test_mddb() {
         dbg!(&result);
         assert!(result.is_ok());
     }
+}
+
+async fn test_imdb_integrations(_client: &IMDBClient) {
+    // Write acceptance tests
 }
