@@ -1,0 +1,19 @@
+[package]
+name = "integration_import"
+version = "0.1.0"
+edition.workspace = true
+rust-version.workspace = true
+readme.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+[dependencies]
+environment_manager = { workspace = true }
+pg_imdb_manager = { workspace = true }
+postgres_config_manager = {workspace = true}
+
+# For testing
+[dev-dependencies]
+container_specs_postgres = {workspace = true}
+docker_utils = {workspace = true}
+tokio = {workspace = true}

@@ -101,6 +101,11 @@ alias(
 )
 
 alias(
+    name = "integration_import",
+    actual = "//queng_import/core/integration_import",
+)
+
+alias(
     name = "metadata_import",
     actual = "//queng_import/core/metadata_import",
 )
