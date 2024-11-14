@@ -12,6 +12,7 @@ rust_library(
     visibility = ["//visibility:public"],
     deps = [
         # Internal crates
+        "//alias:common_ims",
         "//alias:environment_manager",
         "//alias:integration_specs_all",
         "//alias:pg_imdb_manager",

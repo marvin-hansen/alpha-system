@@ -84,12 +84,12 @@ alias(
 
 alias(
     name = "binance_data",
-    actual = "//queng_services/ims/ims_data/binance_data:binance_data",
+    actual = "//queng_services/ims/ims_data/binance/binance_data:binance_data",
 )
 
 alias(
     name = "binance_data_push",
-    actual = "//queng_services/ims/ims_data/binance_data:push",
+    actual = "//queng_services/ims/ims_data/binance/binance_data:push",
 )
 
 alias(

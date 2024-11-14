@@ -1,5 +1,26 @@
 use common_config::prelude::{ServiceConfig, ServiceID};
+use common_ims::prelude::{
+    ExchangeID, ImsIntegrationType, IntegrationConfig, IntegrationMessageConfig,
+};
 use shared_service_specs::{health_endpoint, ims_endpoint, metric_endpoint};
+
+/// Returns the configuration for the Binance data integration in the IMS system.
+///
+/// This function returns an `IntegrationConfig` instance with the specific settings for the Binance data integration.
+/// It defines the integration ID, name, version, integration type, exchange ID and the message configuration for the integration.
+///
+/// # Returns
+/// A `IntegrationConfig` instance with the specific settings for the Binance data integration in the IMS system.
+///
+pub fn ims_data_integration_binance_config() -> IntegrationConfig {
+    IntegrationConfig::new(
+        "binance".to_string(),
+        1,
+        ImsIntegrationType::Data,
+        ExchangeID::Binance,
+        IntegrationMessageConfig::new(1, 1, ExchangeID::Binance),
+    )
+}
 
 /// Configures the service for Binance data in the IMS system.
 ///

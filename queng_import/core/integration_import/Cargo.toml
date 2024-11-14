@@ -8,6 +8,7 @@ repository.workspace = true
 authors.workspace = true
 
 [dependencies]
+common_ims = {workspace = true}
 environment_manager = { workspace = true }
 integration_specs_all = { workspace = true }
 pg_imdb_manager = { workspace = true }

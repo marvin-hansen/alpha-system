@@ -2,16 +2,6 @@ use crate::ConfigImportManager;
 use std::io::{Error, ErrorKind};
 
 impl ConfigImportManager {
-    pub async fn check_if_portfolios_imported(&self) -> bool {
-        self.dbg_print("check_if_portfolios_already_imported");
-
-        let expected_count = self.portfolio_configs.len();
-        let actual_count = self.count_db_portfolios().await;
-
-        // If all portfolios have already been imported, return true
-        actual_count == expected_count
-    }
-
     pub async fn import_portfolio_configs(&self) -> Result<(), Box<dyn std::error::Error>> {
         self.dbg_print("import_portfolio_configs");
 
@@ -74,6 +64,16 @@ impl ConfigImportManager {
         }
 
         Ok(())
+    }
+
+    pub async fn check_if_portfolios_imported(&self) -> bool {
+        self.dbg_print("check_if_portfolios_already_imported");
+
+        let expected_count = self.portfolio_configs.len();
+        let actual_count = self.count_db_portfolios().await;
+
+        // If all portfolios have already been imported, return true
+        actual_count == expected_count
     }
 
     pub async fn count_db_portfolios(&self) -> usize {
