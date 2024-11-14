@@ -43,6 +43,8 @@ members = [
     "queng_infra/postgres/pg_mddb_manager",
     "queng_infra/postgres/postgres_common",
     "queng_infra/postgres/postgres_config_manager",
+    "queng_message_bus/message_consumer",
+    "queng_message_bus/message_producer",
     "queng_infra/postgres/postgres_migrations",
     "queng_proto/proto_cmdb",
     "queng_proto/proto_cmdb_utils",
@@ -187,6 +189,10 @@ pg_smdb_manager = { path = "queng_infra/postgres/pg_smdb_manager" }
 postgres_common = { path = "queng_infra/postgres/postgres_common" }
 postgres_config_manager = { path = "queng_infra/postgres/postgres_config_manager" }
 postgres_migrations = { path = "queng_infra/postgres/postgres_migrations" }
+
+# Mesasge bus
+message_consumer = { path = "queng_message_bus/message_consumer" }
+message_producer = { path = "queng_message_bus/message_producer" }
 
 # Proto
 proto_cmdb = { path = "queng_proto/proto_cmdb" }
