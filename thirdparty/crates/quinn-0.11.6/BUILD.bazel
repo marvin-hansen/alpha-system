@@ -32,6 +32,14 @@ rust_library(
             "WORKSPACE.bazel",
         ],
     ),
+    crate_features = [
+        "default",
+        "log",
+        "platform-verifier",
+        "ring",
+        "runtime-tokio",
+        "rustls-ring",
+    ],
     crate_root = "src/lib.rs",
     edition = "2021",
     rustc_flags = [
@@ -89,6 +97,7 @@ rust_library(
         "//thirdparty/crates/quinn-proto-0.11.9:quinn_proto",
         "//thirdparty/crates/quinn-udp-0.5.7:quinn_udp",
         "//thirdparty/crates/rustc-hash-2.0.0:rustc_hash",
+        "//thirdparty/crates/rustls-0.23.16:rustls",
         "//thirdparty/crates/socket2-0.5.7:socket2",
         "//thirdparty/crates/thiserror-2.0.3:thiserror",
         "//thirdparty/crates/tokio-1.41.1:tokio",

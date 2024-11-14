@@ -33,7 +33,12 @@ rust_library(
         "alloc",
         "default",
         "dev_urandom_fallback",
-    ],
+    ] + select({
+        "@rules_rust//rust/platform:wasm32-unknown-unknown": [
+            "wasm32_unknown_unknown_js",  # wasm32-unknown-unknown
+        ],
+        "//conditions:default": [],
+    }),
     crate_root = "src/lib.rs",
     edition = "2021",
     rustc_flags = [
@@ -209,7 +214,12 @@ cargo_build_script(
         "alloc",
         "default",
         "dev_urandom_fallback",
-    ],
+    ] + select({
+        "@rules_rust//rust/platform:wasm32-unknown-unknown": [
+            "wasm32_unknown_unknown_js",  # wasm32-unknown-unknown
+        ],
+        "//conditions:default": [],
+    }),
     crate_name = "build_script_build",
     crate_root = "build.rs",
     data = glob(
