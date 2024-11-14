@@ -3,6 +3,10 @@ use iggy::client_provider::ClientProviderConfig;
 //
 pub struct MessageProducer {
     client_config: ClientProviderConfig,
-    topic: String,
-    message: String,
+}
+
+impl MessageProducer {
+    pub fn client_config(&self) -> &ClientProviderConfig {
+        &self.client_config
+    }
 }
