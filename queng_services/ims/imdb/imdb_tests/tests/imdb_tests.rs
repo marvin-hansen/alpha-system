@@ -152,7 +152,7 @@ async fn test_imdb_integrations(client: &IMDBClient) {
     assert!(res.is_ok());
 
     let integrations = res.unwrap();
-    assert!(integrations.len() > 0);
+    assert!(!integrations.is_empty());
 
     // Test get_all_integrations_by_exchange
     let exchange_id = ExchangeID::Binance;
@@ -160,7 +160,7 @@ async fn test_imdb_integrations(client: &IMDBClient) {
     assert!(res.is_ok());
 
     let integrations = res.unwrap();
-    assert!(integrations.len() > 0);
+    assert!(!integrations.is_empty());
 
     // Test get_all_online_integrations
     // By default, all integrations are offline in the DB.
@@ -176,7 +176,7 @@ async fn test_imdb_integrations(client: &IMDBClient) {
     assert!(res.is_ok());
 
     let integrations = res.unwrap();
-    assert!(integrations.len() > 0);
+    assert!(!integrations.is_empty());
 
     // Test set_integration_online
     let integration_id = "binance_data".to_string();
