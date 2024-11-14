@@ -281,6 +281,11 @@ alias(
     actual = "//queng_message_bus/message_producer",
 )
 
+alias(
+    name = "message_shared",
+    actual = "//queng_message_bus/message_shared",
+)
+
 ###############################################################################
 # Proto
 ###############################################################################

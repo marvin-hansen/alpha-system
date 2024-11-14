@@ -1,5 +1,5 @@
 [package]
-name = "message_producer"
+name = "message_shared"
 version = "0.1.0"
 edition.workspace = true
 rust-version.workspace = true
@@ -9,4 +9,3 @@ authors.workspace = true
 
 [dependencies]
 iggy = {workspace = true}
-message_shared = {workspace = true}

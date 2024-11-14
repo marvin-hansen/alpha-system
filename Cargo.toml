@@ -45,6 +45,7 @@ members = [
     "queng_infra/postgres/postgres_config_manager",
     "queng_message_bus/message_consumer",
     "queng_message_bus/message_producer",
+    "queng_message_bus/message_shared",
     "queng_infra/postgres/postgres_migrations",
     "queng_proto/proto_cmdb",
     "queng_proto/proto_cmdb_utils",
@@ -193,6 +194,7 @@ postgres_migrations = { path = "queng_infra/postgres/postgres_migrations" }
 # Mesasge bus
 message_consumer = { path = "queng_message_bus/message_consumer" }
 message_producer = { path = "queng_message_bus/message_producer" }
+message_shared = { path = "queng_message_bus/message_shared" }
 
 # Proto
 proto_cmdb = { path = "queng_proto/proto_cmdb" }

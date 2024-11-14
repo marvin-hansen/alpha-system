@@ -1,7 +1,7 @@
 load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library")
 
 rust_library(
-    name = "message_consumer",
+    name = "message_shared",
     srcs = glob([
         "src/**",
     ]),
@@ -14,7 +14,7 @@ rust_library(
     visibility = ["//visibility:public"],
     deps = [
         # Internal crates
-        "//alias:message_shared",
+
         # External crates
         "//thirdparty/crates:iggy",
         "//thirdparty/crates:tokio",
@@ -23,14 +23,14 @@ rust_library(
 
 rust_doc(
     name = "doc",
-    crate = ":message_consumer",
+    crate = ":message_shared",
     tags = ["doc"],
     visibility = ["//visibility:public"],
 )
 
 rust_doc_test(
     name = "doc_test",
-    crate = ":message_consumer",
+    crate = ":message_shared",
     tags = ["doc-test"],
     visibility = ["//visibility:public"],
 )
