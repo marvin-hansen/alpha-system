@@ -1,5 +1,6 @@
 use common_config::prelude::ServiceID;
 use common_env::prelude::EnvironmentType;
+use common_ims::prelude::ExchangeID;
 use container_specs_postgres::postgres_db_container_config;
 use docker_utils::prelude::DockerUtil;
 use imdb_client::IMDBClient;
@@ -106,6 +107,110 @@ async fn test_imdb() {
     assert!(result.is_ok());
 }
 
-async fn test_imdb_integrations(_client: &IMDBClient) {
-    // Write acceptance tests
+async fn test_imdb_integrations(client: &IMDBClient) {
+    // Test count_integrations
+    let res = client.count_integrations().await;
+    assert!(res.is_ok());
+
+    let count = res.unwrap();
+    assert!(count > 0);
+
+    // Test check_if_integration_exists
+    let integration_id = "binance_data".to_string();
+    let res = client
+        .check_if_integration_exists(integration_id.clone())
+        .await;
+    assert!(res.is_ok());
+
+    let exists = res.unwrap();
+    assert!(exists);
+
+    // Test check_if_integration_online
+    let integration_id = "binance_data".to_string();
+    let res = client
+        .check_if_integration_online(integration_id.clone())
+        .await;
+    assert!(res.is_ok());
+
+    // By default, all integrations are offline in the DB.
+    let online = res.unwrap();
+    assert!(!online);
+
+    // Test get_integration
+    let integration_id = "binance_data".to_string();
+    let res = client.get_integration(integration_id.clone()).await;
+    assert!(res.is_ok());
+
+    let integration = res.unwrap();
+    assert!(integration.is_some());
+
+    let integration = integration.unwrap();
+    assert_eq!(integration.integration_id(), &integration_id);
+
+    // Test get_all_integrations
+    let res = client.get_all_integrations().await;
+    assert!(res.is_ok());
+
+    let integrations = res.unwrap();
+    assert!(integrations.len() > 0);
+
+    // Test get_all_integrations_by_exchange
+    let exchange_id = ExchangeID::Binance;
+    let res = client.get_all_integrations_by_exchange(exchange_id).await;
+    assert!(res.is_ok());
+
+    let integrations = res.unwrap();
+    assert!(integrations.len() > 0);
+
+    // Test get_all_online_integrations
+    // By default, all integrations are offline in the DB.
+    // Therefore, this is expected to return an empty vector.
+    let res = client.get_all_online_integrations().await;
+    assert!(res.is_ok());
+
+    let integrations = res.unwrap();
+    assert_eq!(integrations.len(), 0);
+
+    // get_all_offline_integrations
+    let res = client.get_all_offline_integrations().await;
+    assert!(res.is_ok());
+
+    let integrations = res.unwrap();
+    assert!(integrations.len() > 0);
+
+    // Test set_integration_online
+    let integration_id = "binance_data".to_string();
+
+    // Test if integration is offline, which it is by default.
+    let res = client
+        .check_if_integration_online(integration_id.clone())
+        .await;
+    assert!(res.is_ok());
+    // By default, all integrations are offline in the DB.
+    let online = res.unwrap();
+    assert!(!online);
+
+    // Set integration online
+    let res = client.set_integration_online(integration_id.clone()).await;
+    assert!(res.is_ok());
+
+    // Test if integration is online
+    let res = client
+        .check_if_integration_online(integration_id.clone())
+        .await;
+    assert!(res.is_ok());
+    let online = res.unwrap();
+    assert!(online);
+
+    // Test set_integration_offline
+    let res = client.set_integration_offline(integration_id.clone()).await;
+    assert!(res.is_ok());
+
+    // Test if integration is offline
+    let res = client
+        .check_if_integration_online(integration_id.clone())
+        .await;
+    assert!(res.is_ok());
+    let online = res.unwrap();
+    assert!(!online);
 }

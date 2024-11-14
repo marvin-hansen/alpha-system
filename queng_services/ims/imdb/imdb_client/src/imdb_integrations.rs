@@ -33,7 +33,6 @@ impl IMDBClient {
     ) -> Result<bool, IMDBClientError> {
         let mut client = self.client.clone();
         let request = get_check_if_integration_config_exists_request(integration_id);
-
         match client.check_if_integration_config_exists(request).await {
             Ok(res) => Ok(res.into_inner().exists),
             Err(e) => Err(IMDBClientError(e.to_string())),
@@ -54,7 +53,6 @@ impl IMDBClient {
     ) -> Result<bool, IMDBClientError> {
         let mut client = self.client.clone();
         let request = get_check_if_integration_config_online_request(integration_id);
-
         match client.check_if_integration_config_online(request).await {
             Ok(res) => Ok(res.into_inner().online),
             Err(e) => Err(IMDBClientError(e.to_string())),
@@ -75,7 +73,6 @@ impl IMDBClient {
     ) -> Result<Option<IntegrationConfig>, IMDBClientError> {
         let mut client = self.client.clone();
         let request = get_integration_request(&integration_id);
-
         match client.get_integration_config(request).await {
             Ok(res) => {
                 let proto_integration = res.into_inner().integration;
@@ -97,7 +94,6 @@ impl IMDBClient {
     pub async fn get_all_integrations(&self) -> Result<Vec<IntegrationConfig>, IMDBClientError> {
         let mut client = self.client.clone();
         let request = get_all_integrations_request();
-
         match client.get_all_integration_configs(request).await {
             Ok(res) => {
                 // Extract the Vec<ProtoIntegrationConfig>
@@ -131,7 +127,6 @@ impl IMDBClient {
     ) -> Result<Vec<IntegrationConfig>, IMDBClientError> {
         let mut client = self.client.clone();
         let request = get_all_integrations_by_exchange_request(exchange_id);
-
         match client
             .get_all_integration_configs_by_exchange(request)
             .await
@@ -164,7 +159,6 @@ impl IMDBClient {
     ) -> Result<Vec<IntegrationConfig>, IMDBClientError> {
         let mut client = self.client.clone();
         let request = get_all_online_integrations_request();
-
         match client.get_all_online_integration_configs(request).await {
             Ok(res) => {
                 // Extract the Vec<ProtoIntegrationConfig>
@@ -228,7 +222,6 @@ impl IMDBClient {
     ) -> Result<(), IMDBClientError> {
         let mut client = self.client.clone();
         let request = get_set_integration_online_request(&integration_id);
-
         match client.set_integration_online(request).await {
             Ok(res) => {
                 let res = res.into_inner();
@@ -252,9 +245,7 @@ impl IMDBClient {
         integration_id: String,
     ) -> Result<(), IMDBClientError> {
         let mut client = self.client.clone();
-
         let request = get_set_integration_offline_request(&integration_id);
-
         match client.set_integration_offline(request).await {
             Ok(res) => {
                 let res = res.into_inner();

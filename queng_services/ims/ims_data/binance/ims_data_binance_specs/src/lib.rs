@@ -14,7 +14,7 @@ use shared_service_specs::{health_endpoint, ims_endpoint, metric_endpoint};
 ///
 pub fn ims_data_integration_binance_config() -> IntegrationConfig {
     IntegrationConfig::new(
-        "binance".to_string(),
+        "binance_data".to_string(),
         1,
         ImsIntegrationType::Data,
         ExchangeID::Binance,

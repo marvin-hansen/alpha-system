@@ -49,3 +49,7 @@ echo "Build container images"
 echo "====================="
 
 command bazel build //:push --test_env=ENV=LOCAL
+
+# The last acceptance tests shutdowns the db container;
+# lets start a new one after all tests have been completed.
+command docker run --name postgres-5432 -p 5432:5432 -e POSTGRES_PASSWORD=postgres -d postgres:17-alpine3.20
