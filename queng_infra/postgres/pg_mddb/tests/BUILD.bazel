@@ -17,7 +17,6 @@ rust_test_suite(
         "//alias:container_specs_postgres",
         "//alias:postgres_migrations",
         # External crates
-        "//thirdparty/crates:bon",
         "//thirdparty/crates:diesel",
         "//thirdparty/crates:diesel_migrations",
     ],

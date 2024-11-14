@@ -96,10 +96,6 @@ crates_vendor(
             package = "base16ct",
             version = "0.2.0",
         ),
-        "bon": crate.spec(
-            package = "bon",
-            version = "2.3.0",
-        ),
         "binance-rs-async": crate.spec(
             default_features = False,
             # features = ["rustls-tls"],

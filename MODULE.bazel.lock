@@ -16,8 +16,8 @@
     "https://bcr.bazel.build/modules/aspect_bazel_lib/1.38.0/MODULE.bazel": "6307fec451ba9962c1c969eb516ebfe1e46528f7fa92e1c9ac8646bef4cdaa3f",
     "https://bcr.bazel.build/modules/aspect_bazel_lib/1.40.3/MODULE.bazel": "668e6bcb4d957fc0e284316dba546b705c8d43c857f87119619ee83c4555b859",
     "https://bcr.bazel.build/modules/aspect_bazel_lib/2.7.2/MODULE.bazel": "780d1a6522b28f5edb7ea09630748720721dfe27690d65a2d33aa7509de77e07",
-    "https://bcr.bazel.build/modules/aspect_bazel_lib/2.9.3/MODULE.bazel": "66baf724dbae7aff4787bf2245cc188d50cb08e07789769730151c0943587c14",
-    "https://bcr.bazel.build/modules/aspect_bazel_lib/2.9.3/source.json": "b290debdc0ab191a2a866b5a4e26f042c983026ff58b2e003ea634d838e3b6ae",
+    "https://bcr.bazel.build/modules/aspect_bazel_lib/2.9.4/MODULE.bazel": "ccc41028429f894b02fde7ef67d416cba3ba5084ed9ddb9bb6107aa82d118776",
+    "https://bcr.bazel.build/modules/aspect_bazel_lib/2.9.4/source.json": "9e20ebe57de2e7657a188af6e132a9562fa26c201b2d999bc0a8981e8f3b6c36",
     "https://bcr.bazel.build/modules/aspect_rules_js/1.33.1/MODULE.bazel": "db3e7f16e471cf6827059d03af7c21859e7a0d2bc65429a3a11f005d46fc501b",
     "https://bcr.bazel.build/modules/aspect_rules_js/1.39.0/MODULE.bazel": "aece421d479e3c31dc3e5f6d49a12acc2700457c03c556650ec7a0ff23fc0d95",
     "https://bcr.bazel.build/modules/aspect_rules_js/1.39.0/source.json": "a8f93e4ad8843e8aa407fa5fd7c8b63a63846c0ce255371ff23384582813b13d",
@@ -128,8 +128,8 @@
     "https://bcr.bazel.build/modules/rules_python/0.27.1/MODULE.bazel": "65dc875cc1a06c30d5bbdba7ab021fd9e551a6579e408a3943a61303e2228a53",
     "https://bcr.bazel.build/modules/rules_python/0.28.0/MODULE.bazel": "cba2573d870babc976664a912539b320cbaa7114cd3e8f053c720171cde331ed",
     "https://bcr.bazel.build/modules/rules_python/0.31.0/MODULE.bazel": "93a43dc47ee570e6ec9f5779b2e64c1476a6ce921c48cc9a1678a91dd5f8fd58",
-    "https://bcr.bazel.build/modules/rules_python/0.37.2/MODULE.bazel": "b5ffde91410745750b6c13be1c5dc4555ef5bc50562af4a89fd77807fdde626a",
-    "https://bcr.bazel.build/modules/rules_python/0.37.2/source.json": "af5c224d27ec98a612b4dcbdc481e02502cd5a4b49d87f0093200a10a35383e9",
+    "https://bcr.bazel.build/modules/rules_python/0.38.0/MODULE.bazel": "ee75c9510a481eb92c7c04e432f84023065bbc8dcf6e49b7399e7c660624acdd",
+    "https://bcr.bazel.build/modules/rules_python/0.38.0/source.json": "6772986f2989b639ecf8a59c8dc8c376fd10a7a7246fa84aa0a508d5d037230f",
     "https://bcr.bazel.build/modules/rules_python/0.4.0/MODULE.bazel": "9208ee05fd48bf09ac60ed269791cf17fb343db56c8226a720fbb1cdf467166c",
     "https://bcr.bazel.build/modules/rules_rust/0.45.1/MODULE.bazel": "a69d0db3a958fab2c6520961e1b2287afcc8b36690fd31bbc4f6f7391397150d",
     "https://bcr.bazel.build/modules/rules_rust/0.54.1/MODULE.bazel": "388547bb0cd6a751437bb15c94c6725226f50100eec576e4354c3a8b48c754fb",
@@ -186,8 +186,8 @@
     },
     "@@aspect_bazel_lib~//lib:extensions.bzl%toolchains": {
       "general": {
-        "bzlTransitiveDigest": "xOlbzeGJtMviNBabrKSUOG0zVTR0pKeFuNQdR48NeVY=",
-        "usagesDigest": "FehfkfRC/Rpi61A9b/B/kzu4wDguCIZd8j2syDmGces=",
+        "bzlTransitiveDigest": "v/pDtu7D4JNhqSOpd0zDAszKx5LE3MDNfIkE9hCiRxI=",
+        "usagesDigest": "I+dMl7XqM0OXnNsbO0hJ1tjjclI0uu3AFOugCbo51lM=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -654,7 +654,7 @@
     "@@platforms//host:extension.bzl%host_platform": {
       "general": {
         "bzlTransitiveDigest": "xelQcPZH8+tmuOHVjL9vDxMnnQNMlwj0SlvgoqBkm4U=",
-        "usagesDigest": "hkYK+bzahO4SEwt2YFc5tBeLQKBSxKn0RUhBni/nly0=",
+        "usagesDigest": "vCsjO4h3Yj7ycP6GFCd+8DsFsVKGl3ZNxglvEsg95WM=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -1423,7 +1423,7 @@
     },
     "@@rules_oci~//oci:extensions.bzl%oci": {
       "general": {
-        "bzlTransitiveDigest": "Ye7BdWMV39jDgxzGO4+1efOUDKFUCktxWkLHYVnre7U=",
+        "bzlTransitiveDigest": "icCSbnQL6YzHZbMP9cuYEww6Kp/sD5rw64/xTl92Xwk=",
         "usagesDigest": "qXTIMWUMwmA81SHLqietZvQGnWITsD3AKeUVAmYK3SY=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},

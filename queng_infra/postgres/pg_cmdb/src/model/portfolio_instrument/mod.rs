@@ -2,7 +2,7 @@ use diesel::{Associations, Identifiable, Insertable, Queryable, Selectable};
 
 mod portfolio_instrument_impl;
 
-#[derive(bon::Builder, Identifiable, Selectable, Queryable, Associations, Debug)]
+#[derive(Identifiable, Selectable, Queryable, Associations, Debug)]
 #[diesel(belongs_to(crate::model::portfolio::Portfolio))]
 #[diesel(belongs_to(crate::model::instrument::Instrument))]
 #[diesel(table_name=crate::schema::cmdb::portfolio_instrument)]
@@ -13,7 +13,7 @@ pub struct PortfolioInstrument {
     pub instrument_id: String,
 }
 
-#[derive(bon::Builder, Debug, Clone, Queryable, Insertable, Selectable)]
+#[derive(Debug, Clone, Queryable, Insertable, Selectable)]
 #[diesel(table_name=crate::schema::cmdb::portfolio_instrument)]
 #[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct CreatePortfolioInstrument {

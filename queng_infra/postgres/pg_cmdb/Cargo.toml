@@ -13,7 +13,6 @@ common_exchange = {workspace = true}
 postgres_migrations = { workspace = true }
 
 # External crates
-bon = {workspace = true}
 diesel = { workspace = true }
 diesel_migrations = { workspace = true }
 
