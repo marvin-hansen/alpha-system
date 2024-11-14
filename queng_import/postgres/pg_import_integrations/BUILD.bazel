@@ -19,6 +19,7 @@ build_binary_opt(
         # Internal crates
         "//alias:environment_manager",
         "//alias:integration_import",
+        "//alias:pg_import_print_utils",
         # External crates
         "//thirdparty/crates:tokio",
     ],

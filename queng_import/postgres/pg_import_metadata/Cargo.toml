@@ -13,5 +13,6 @@ mimalloc = { workspace = true }
 # Internal crates
 kaiko_import = {workspace = true}
 metadata_import = {workspace = true}
+pg_import_print_utils = { workspace = true }
 # External crates
 tokio = { workspace = true }

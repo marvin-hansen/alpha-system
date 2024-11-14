@@ -17,6 +17,7 @@ build_binary_opt(
         # Internal crates
         "//alias:kaiko_import",
         "//alias:metadata_import",
+        "//alias:pg_import_print_utils",
         # External crates
         "//thirdparty/crates:tokio",
     ],

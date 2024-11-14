@@ -27,6 +27,7 @@ members = [
     "queng_import/kaiko/kaiko_test_utils",
     "queng_import/postgres/pg_import_config",
     "queng_import/postgres/pg_import_integrations",
+    "queng_import/postgres/pg_import_print_utils",
     "queng_import/postgres/pg_import_services",
     "queng_import/postgres/pg_import_metadata",
     "queng_infra/clickhouse/clickhouse_config_manager",
@@ -167,6 +168,7 @@ pg_import_config = { path = "queng_import/postgres/pg_import_config" }
 pg_import_integrations = { path = "queng_import/postgres/pg_import_integrations" }
 pg_import_metadata = { path = "queng_import/postgres/pg_import_metadata" }
 pg_import_services = { path = "queng_import/postgres/pg_import_services" }
+pg_import_print_utils = { path = "queng_import/postgres/pg_import_print_utils" }
 
 # Infra
 # Clickhouse DB
@@ -296,7 +298,7 @@ tokio-cron-scheduler = { version = "0.13.0", features = ["signal"] }
 tokio-timer = { version = "0.2.13" }
 tokio-tungstenite = { version = "0.24.0", default-features = false }
 warp = "0.3.7"
-# Depdendencies for cloudflare workers that are not in Bazel
+# Depdendencies for cloudflare workers that are not build with Bazel
 worker = { version = "0.4.2", default-features = false  }
 worker-macros = { version="0.4.2" }
 console_error_panic_hook = { version = "0.1.1" }

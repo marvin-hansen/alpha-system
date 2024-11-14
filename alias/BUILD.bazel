@@ -161,6 +161,11 @@ alias(
     actual = "//queng_import/postgres/pg_import_metadata:push",
 )
 
+alias(
+    name = "pg_import_print_utils",
+    actual = "//queng_import/postgres/pg_import_print_utils",
+)
+
 ###############################################################################
 # Infra
 ###############################################################################
