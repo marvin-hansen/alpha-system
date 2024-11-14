@@ -16,22 +16,6 @@ async fn all_setup() {
 }
 
 #[tokio::test]
-pub async fn test_check_if_portfolios_already_imported() {
-    let config_import_manager = ConfigImportManager::with_test_and_debug().await;
-
-    let not_imported = config_import_manager.check_if_portfolios_imported().await;
-    assert!(!not_imported);
-
-    config_import_manager
-        .import_portfolio_configs()
-        .await
-        .expect("Failed to import portfolios");
-
-    let imported = config_import_manager.check_if_portfolios_imported().await;
-    assert!(imported);
-}
-
-#[tokio::test]
 async fn test_import_portfolios() {
     let config_import_manager = ConfigImportManager::with_test_and_debug().await;
 
@@ -51,6 +35,22 @@ async fn test_import_portfolios() {
 
     let not_zero_count = config_import_manager.count_db_portfolios().await;
     assert_ne!(zero_count, not_zero_count);
+}
+
+#[tokio::test]
+pub async fn test_check_if_portfolios_already_imported() {
+    let config_import_manager = ConfigImportManager::with_test_and_debug().await;
+
+    let not_imported = config_import_manager.check_if_portfolios_imported().await;
+    assert!(!not_imported);
+
+    config_import_manager
+        .import_portfolio_configs()
+        .await
+        .expect("Failed to import portfolios");
+
+    let imported = config_import_manager.check_if_portfolios_imported().await;
+    assert!(imported);
 }
 
 #[tokio::test]
