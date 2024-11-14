@@ -45,9 +45,9 @@ rust_library(
         "@rules_rust//rust/platform:aarch64-apple-darwin": [],
         "@rules_rust//rust/platform:aarch64-apple-ios": [],
         "@rules_rust//rust/platform:aarch64-apple-ios-sim": [],
-        "@rules_rust//rust/platform:aarch64-fuchsia": [],
         "@rules_rust//rust/platform:aarch64-linux-android": [],
         "@rules_rust//rust/platform:aarch64-pc-windows-msvc": [],
+        "@rules_rust//rust/platform:aarch64-unknown-fuchsia": [],
         "@rules_rust//rust/platform:aarch64-unknown-linux-gnu": [],
         "@rules_rust//rust/platform:aarch64-unknown-nixos-gnu": [],
         "@rules_rust//rust/platform:aarch64-unknown-nto-qnx710": [],
@@ -67,12 +67,13 @@ rust_library(
         "@rules_rust//rust/platform:thumbv8m.main-none-eabi": [],
         "@rules_rust//rust/platform:wasm32-unknown-unknown": [],
         "@rules_rust//rust/platform:wasm32-wasi": [],
+        "@rules_rust//rust/platform:wasm32-wasip1": [],
         "@rules_rust//rust/platform:x86_64-apple-darwin": [],
         "@rules_rust//rust/platform:x86_64-apple-ios": [],
-        "@rules_rust//rust/platform:x86_64-fuchsia": [],
         "@rules_rust//rust/platform:x86_64-linux-android": [],
         "@rules_rust//rust/platform:x86_64-pc-windows-msvc": [],
         "@rules_rust//rust/platform:x86_64-unknown-freebsd": [],
+        "@rules_rust//rust/platform:x86_64-unknown-fuchsia": [],
         "@rules_rust//rust/platform:x86_64-unknown-linux-gnu": [],
         "@rules_rust//rust/platform:x86_64-unknown-nixos-gnu": [],
         "@rules_rust//rust/platform:x86_64-unknown-none": [],
@@ -94,15 +95,15 @@ rust_library(
             "//thirdparty/crates/getrandom-0.2.15:getrandom",  # cfg(any(target_os = "linux", target_os = "android", target_os = "windows", target_os = "macos", target_os = "ios", target_os = "freebsd", target_os = "openbsd", target_os = "netbsd", target_os = "dragonfly", target_os = "solaris", target_os = "illumos", target_os = "fuchsia", target_os = "redox", target_os = "cloudabi", target_os = "haiku", target_os = "vxworks", target_os = "emscripten", target_os = "wasi"))
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
         ],
-        "@rules_rust//rust/platform:aarch64-fuchsia": [
-            "//thirdparty/crates/getrandom-0.2.15:getrandom",  # cfg(any(target_os = "linux", target_os = "android", target_os = "windows", target_os = "macos", target_os = "ios", target_os = "freebsd", target_os = "openbsd", target_os = "netbsd", target_os = "dragonfly", target_os = "solaris", target_os = "illumos", target_os = "fuchsia", target_os = "redox", target_os = "cloudabi", target_os = "haiku", target_os = "vxworks", target_os = "emscripten", target_os = "wasi"))
-            "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
-        ],
         "@rules_rust//rust/platform:aarch64-linux-android": [
             "//thirdparty/crates/getrandom-0.2.15:getrandom",  # cfg(any(target_os = "linux", target_os = "android", target_os = "windows", target_os = "macos", target_os = "ios", target_os = "freebsd", target_os = "openbsd", target_os = "netbsd", target_os = "dragonfly", target_os = "solaris", target_os = "illumos", target_os = "fuchsia", target_os = "redox", target_os = "cloudabi", target_os = "haiku", target_os = "vxworks", target_os = "emscripten", target_os = "wasi"))
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
         ],
         "@rules_rust//rust/platform:aarch64-pc-windows-msvc": [
+            "//thirdparty/crates/getrandom-0.2.15:getrandom",  # cfg(any(target_os = "linux", target_os = "android", target_os = "windows", target_os = "macos", target_os = "ios", target_os = "freebsd", target_os = "openbsd", target_os = "netbsd", target_os = "dragonfly", target_os = "solaris", target_os = "illumos", target_os = "fuchsia", target_os = "redox", target_os = "cloudabi", target_os = "haiku", target_os = "vxworks", target_os = "emscripten", target_os = "wasi"))
+            "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
+        ],
+        "@rules_rust//rust/platform:aarch64-unknown-fuchsia": [
             "//thirdparty/crates/getrandom-0.2.15:getrandom",  # cfg(any(target_os = "linux", target_os = "android", target_os = "windows", target_os = "macos", target_os = "ios", target_os = "freebsd", target_os = "openbsd", target_os = "netbsd", target_os = "dragonfly", target_os = "solaris", target_os = "illumos", target_os = "fuchsia", target_os = "redox", target_os = "cloudabi", target_os = "haiku", target_os = "vxworks", target_os = "emscripten", target_os = "wasi"))
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
         ],
@@ -170,15 +171,15 @@ rust_library(
             "//thirdparty/crates/getrandom-0.2.15:getrandom",  # cfg(any(target_os = "linux", target_os = "android", target_os = "windows", target_os = "macos", target_os = "ios", target_os = "freebsd", target_os = "openbsd", target_os = "netbsd", target_os = "dragonfly", target_os = "solaris", target_os = "illumos", target_os = "fuchsia", target_os = "redox", target_os = "cloudabi", target_os = "haiku", target_os = "vxworks", target_os = "emscripten", target_os = "wasi"))
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
         ],
+        "@rules_rust//rust/platform:wasm32-wasip1": [
+            "//thirdparty/crates/getrandom-0.2.15:getrandom",  # cfg(any(target_os = "linux", target_os = "android", target_os = "windows", target_os = "macos", target_os = "ios", target_os = "freebsd", target_os = "openbsd", target_os = "netbsd", target_os = "dragonfly", target_os = "solaris", target_os = "illumos", target_os = "fuchsia", target_os = "redox", target_os = "cloudabi", target_os = "haiku", target_os = "vxworks", target_os = "emscripten", target_os = "wasi"))
+            "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
+        ],
         "@rules_rust//rust/platform:x86_64-apple-darwin": [
             "//thirdparty/crates/getrandom-0.2.15:getrandom",  # cfg(any(target_os = "linux", target_os = "android", target_os = "windows", target_os = "macos", target_os = "ios", target_os = "freebsd", target_os = "openbsd", target_os = "netbsd", target_os = "dragonfly", target_os = "solaris", target_os = "illumos", target_os = "fuchsia", target_os = "redox", target_os = "cloudabi", target_os = "haiku", target_os = "vxworks", target_os = "emscripten", target_os = "wasi"))
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
         ],
         "@rules_rust//rust/platform:x86_64-apple-ios": [
-            "//thirdparty/crates/getrandom-0.2.15:getrandom",  # cfg(any(target_os = "linux", target_os = "android", target_os = "windows", target_os = "macos", target_os = "ios", target_os = "freebsd", target_os = "openbsd", target_os = "netbsd", target_os = "dragonfly", target_os = "solaris", target_os = "illumos", target_os = "fuchsia", target_os = "redox", target_os = "cloudabi", target_os = "haiku", target_os = "vxworks", target_os = "emscripten", target_os = "wasi"))
-            "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
-        ],
-        "@rules_rust//rust/platform:x86_64-fuchsia": [
             "//thirdparty/crates/getrandom-0.2.15:getrandom",  # cfg(any(target_os = "linux", target_os = "android", target_os = "windows", target_os = "macos", target_os = "ios", target_os = "freebsd", target_os = "openbsd", target_os = "netbsd", target_os = "dragonfly", target_os = "solaris", target_os = "illumos", target_os = "fuchsia", target_os = "redox", target_os = "cloudabi", target_os = "haiku", target_os = "vxworks", target_os = "emscripten", target_os = "wasi"))
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
         ],
@@ -191,6 +192,10 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
         ],
         "@rules_rust//rust/platform:x86_64-unknown-freebsd": [
+            "//thirdparty/crates/getrandom-0.2.15:getrandom",  # cfg(any(target_os = "linux", target_os = "android", target_os = "windows", target_os = "macos", target_os = "ios", target_os = "freebsd", target_os = "openbsd", target_os = "netbsd", target_os = "dragonfly", target_os = "solaris", target_os = "illumos", target_os = "fuchsia", target_os = "redox", target_os = "cloudabi", target_os = "haiku", target_os = "vxworks", target_os = "emscripten", target_os = "wasi"))
+            "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
+        ],
+        "@rules_rust//rust/platform:x86_64-unknown-fuchsia": [
             "//thirdparty/crates/getrandom-0.2.15:getrandom",  # cfg(any(target_os = "linux", target_os = "android", target_os = "windows", target_os = "macos", target_os = "ios", target_os = "freebsd", target_os = "openbsd", target_os = "netbsd", target_os = "dragonfly", target_os = "solaris", target_os = "illumos", target_os = "fuchsia", target_os = "redox", target_os = "cloudabi", target_os = "haiku", target_os = "vxworks", target_os = "emscripten", target_os = "wasi"))
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(all(target_arch = "arm", target_os = "none")))
         ],

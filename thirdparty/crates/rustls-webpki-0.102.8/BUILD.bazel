@@ -46,10 +46,6 @@ rust_library(
             "ring",  # aarch64-apple-ios-sim
             "std",  # aarch64-apple-ios-sim
         ],
-        "@rules_rust//rust/platform:aarch64-fuchsia": [
-            "ring",  # aarch64-fuchsia
-            "std",  # aarch64-fuchsia
-        ],
         "@rules_rust//rust/platform:aarch64-linux-android": [
             "ring",  # aarch64-linux-android
             "std",  # aarch64-linux-android
@@ -57,6 +53,10 @@ rust_library(
         "@rules_rust//rust/platform:aarch64-pc-windows-msvc": [
             "ring",  # aarch64-pc-windows-msvc
             "std",  # aarch64-pc-windows-msvc
+        ],
+        "@rules_rust//rust/platform:aarch64-unknown-fuchsia": [
+            "ring",  # aarch64-unknown-fuchsia
+            "std",  # aarch64-unknown-fuchsia
         ],
         "@rules_rust//rust/platform:aarch64-unknown-linux-gnu": [
             "ring",  # aarch64-unknown-linux-gnu
@@ -134,10 +134,6 @@ rust_library(
             "ring",  # x86_64-apple-ios
             "std",  # x86_64-apple-ios
         ],
-        "@rules_rust//rust/platform:x86_64-fuchsia": [
-            "ring",  # x86_64-fuchsia
-            "std",  # x86_64-fuchsia
-        ],
         "@rules_rust//rust/platform:x86_64-linux-android": [
             "ring",  # x86_64-linux-android
             "std",  # x86_64-linux-android
@@ -149,6 +145,10 @@ rust_library(
         "@rules_rust//rust/platform:x86_64-unknown-freebsd": [
             "ring",  # x86_64-unknown-freebsd
             "std",  # x86_64-unknown-freebsd
+        ],
+        "@rules_rust//rust/platform:x86_64-unknown-fuchsia": [
+            "ring",  # x86_64-unknown-fuchsia
+            "std",  # x86_64-unknown-fuchsia
         ],
         "@rules_rust//rust/platform:x86_64-unknown-linux-gnu": [
             "ring",  # x86_64-unknown-linux-gnu
@@ -180,9 +180,9 @@ rust_library(
         "@rules_rust//rust/platform:aarch64-apple-darwin": [],
         "@rules_rust//rust/platform:aarch64-apple-ios": [],
         "@rules_rust//rust/platform:aarch64-apple-ios-sim": [],
-        "@rules_rust//rust/platform:aarch64-fuchsia": [],
         "@rules_rust//rust/platform:aarch64-linux-android": [],
         "@rules_rust//rust/platform:aarch64-pc-windows-msvc": [],
+        "@rules_rust//rust/platform:aarch64-unknown-fuchsia": [],
         "@rules_rust//rust/platform:aarch64-unknown-linux-gnu": [],
         "@rules_rust//rust/platform:aarch64-unknown-nixos-gnu": [],
         "@rules_rust//rust/platform:aarch64-unknown-nto-qnx710": [],
@@ -202,12 +202,13 @@ rust_library(
         "@rules_rust//rust/platform:thumbv8m.main-none-eabi": [],
         "@rules_rust//rust/platform:wasm32-unknown-unknown": [],
         "@rules_rust//rust/platform:wasm32-wasi": [],
+        "@rules_rust//rust/platform:wasm32-wasip1": [],
         "@rules_rust//rust/platform:x86_64-apple-darwin": [],
         "@rules_rust//rust/platform:x86_64-apple-ios": [],
-        "@rules_rust//rust/platform:x86_64-fuchsia": [],
         "@rules_rust//rust/platform:x86_64-linux-android": [],
         "@rules_rust//rust/platform:x86_64-pc-windows-msvc": [],
         "@rules_rust//rust/platform:x86_64-unknown-freebsd": [],
+        "@rules_rust//rust/platform:x86_64-unknown-fuchsia": [],
         "@rules_rust//rust/platform:x86_64-unknown-linux-gnu": [],
         "@rules_rust//rust/platform:x86_64-unknown-nixos-gnu": [],
         "@rules_rust//rust/platform:x86_64-unknown-none": [],
@@ -227,14 +228,14 @@ rust_library(
         "@rules_rust//rust/platform:aarch64-apple-ios-sim": [
             "//thirdparty/crates/ring-0.17.8:ring",  # aarch64-apple-ios-sim
         ],
-        "@rules_rust//rust/platform:aarch64-fuchsia": [
-            "//thirdparty/crates/ring-0.17.8:ring",  # aarch64-fuchsia
-        ],
         "@rules_rust//rust/platform:aarch64-linux-android": [
             "//thirdparty/crates/ring-0.17.8:ring",  # aarch64-linux-android
         ],
         "@rules_rust//rust/platform:aarch64-pc-windows-msvc": [
             "//thirdparty/crates/ring-0.17.8:ring",  # aarch64-pc-windows-msvc
+        ],
+        "@rules_rust//rust/platform:aarch64-unknown-fuchsia": [
+            "//thirdparty/crates/ring-0.17.8:ring",  # aarch64-unknown-fuchsia
         ],
         "@rules_rust//rust/platform:aarch64-unknown-linux-gnu": [
             "//thirdparty/crates/ring-0.17.8:ring",  # aarch64-unknown-linux-gnu
@@ -293,9 +294,6 @@ rust_library(
         "@rules_rust//rust/platform:x86_64-apple-ios": [
             "//thirdparty/crates/ring-0.17.8:ring",  # x86_64-apple-ios
         ],
-        "@rules_rust//rust/platform:x86_64-fuchsia": [
-            "//thirdparty/crates/ring-0.17.8:ring",  # x86_64-fuchsia
-        ],
         "@rules_rust//rust/platform:x86_64-linux-android": [
             "//thirdparty/crates/ring-0.17.8:ring",  # x86_64-linux-android
         ],
@@ -304,6 +302,9 @@ rust_library(
         ],
         "@rules_rust//rust/platform:x86_64-unknown-freebsd": [
             "//thirdparty/crates/ring-0.17.8:ring",  # x86_64-unknown-freebsd
+        ],
+        "@rules_rust//rust/platform:x86_64-unknown-fuchsia": [
+            "//thirdparty/crates/ring-0.17.8:ring",  # x86_64-unknown-fuchsia
         ],
         "@rules_rust//rust/platform:x86_64-unknown-linux-gnu": [
             "//thirdparty/crates/ring-0.17.8:ring",  # x86_64-unknown-linux-gnu

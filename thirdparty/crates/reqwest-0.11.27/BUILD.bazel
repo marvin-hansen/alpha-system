@@ -48,9 +48,9 @@ rust_library(
         "@rules_rust//rust/platform:aarch64-apple-darwin": [],
         "@rules_rust//rust/platform:aarch64-apple-ios": [],
         "@rules_rust//rust/platform:aarch64-apple-ios-sim": [],
-        "@rules_rust//rust/platform:aarch64-fuchsia": [],
         "@rules_rust//rust/platform:aarch64-linux-android": [],
         "@rules_rust//rust/platform:aarch64-pc-windows-msvc": [],
+        "@rules_rust//rust/platform:aarch64-unknown-fuchsia": [],
         "@rules_rust//rust/platform:aarch64-unknown-linux-gnu": [],
         "@rules_rust//rust/platform:aarch64-unknown-nixos-gnu": [],
         "@rules_rust//rust/platform:aarch64-unknown-nto-qnx710": [],
@@ -70,12 +70,13 @@ rust_library(
         "@rules_rust//rust/platform:thumbv8m.main-none-eabi": [],
         "@rules_rust//rust/platform:wasm32-unknown-unknown": [],
         "@rules_rust//rust/platform:wasm32-wasi": [],
+        "@rules_rust//rust/platform:wasm32-wasip1": [],
         "@rules_rust//rust/platform:x86_64-apple-darwin": [],
         "@rules_rust//rust/platform:x86_64-apple-ios": [],
-        "@rules_rust//rust/platform:x86_64-fuchsia": [],
         "@rules_rust//rust/platform:x86_64-linux-android": [],
         "@rules_rust//rust/platform:x86_64-pc-windows-msvc": [],
         "@rules_rust//rust/platform:x86_64-unknown-freebsd": [],
+        "@rules_rust//rust/platform:x86_64-unknown-fuchsia": [],
         "@rules_rust//rust/platform:x86_64-unknown-linux-gnu": [],
         "@rules_rust//rust/platform:x86_64-unknown-nixos-gnu": [],
         "@rules_rust//rust/platform:x86_64-unknown-none": [],
@@ -88,12 +89,12 @@ rust_library(
         "//thirdparty/crates/futures-core-0.3.31:futures_core",
         "//thirdparty/crates/futures-util-0.3.31:futures_util",
         "//thirdparty/crates/http-0.2.12:http",
-        "//thirdparty/crates/serde-1.0.213:serde",
+        "//thirdparty/crates/serde-1.0.215:serde",
         "//thirdparty/crates/serde_json-1.0.132:serde_json",
         "//thirdparty/crates/serde_urlencoded-0.7.1:serde_urlencoded",
         "//thirdparty/crates/sync_wrapper-0.1.2:sync_wrapper",
         "//thirdparty/crates/tower-service-0.3.3:tower_service",
-        "//thirdparty/crates/url-2.5.2:url",
+        "//thirdparty/crates/url-2.5.3:url",
     ] + select({
         "@rules_rust//rust/platform:aarch64-apple-darwin": [
             "//thirdparty/crates/encoding_rs-0.8.35:encoding_rs",  # cfg(not(target_arch = "wasm32"))
@@ -107,7 +108,7 @@ rust_library(
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/system-configuration-0.5.1:system_configuration",  # cfg(target_os = "macos")
-            "//thirdparty/crates/tokio-1.41.0:tokio",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/tokio-1.41.1:tokio",  # cfg(not(target_arch = "wasm32"))
         ],
         "@rules_rust//rust/platform:aarch64-apple-ios": [
             "//thirdparty/crates/encoding_rs-0.8.35:encoding_rs",  # cfg(not(target_arch = "wasm32"))
@@ -120,7 +121,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/tokio-1.41.0:tokio",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/tokio-1.41.1:tokio",  # cfg(not(target_arch = "wasm32"))
         ],
         "@rules_rust//rust/platform:aarch64-apple-ios-sim": [
             "//thirdparty/crates/encoding_rs-0.8.35:encoding_rs",  # cfg(not(target_arch = "wasm32"))
@@ -133,20 +134,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/tokio-1.41.0:tokio",  # cfg(not(target_arch = "wasm32"))
-        ],
-        "@rules_rust//rust/platform:aarch64-fuchsia": [
-            "//thirdparty/crates/encoding_rs-0.8.35:encoding_rs",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/h2-0.3.26:h2",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/http-body-0.4.6:http_body",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/hyper-0.14.31:hyper",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/ipnet-2.10.1:ipnet",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/log-0.4.22:log",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/mime-0.3.17:mime",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/tokio-1.41.0:tokio",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/tokio-1.41.1:tokio",  # cfg(not(target_arch = "wasm32"))
         ],
         "@rules_rust//rust/platform:aarch64-linux-android": [
             "//thirdparty/crates/encoding_rs-0.8.35:encoding_rs",  # cfg(not(target_arch = "wasm32"))
@@ -159,7 +147,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/tokio-1.41.0:tokio",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/tokio-1.41.1:tokio",  # cfg(not(target_arch = "wasm32"))
         ],
         "@rules_rust//rust/platform:aarch64-pc-windows-msvc": [
             "//thirdparty/crates/encoding_rs-0.8.35:encoding_rs",  # cfg(not(target_arch = "wasm32"))
@@ -172,8 +160,21 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/tokio-1.41.0:tokio",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/tokio-1.41.1:tokio",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/winreg-0.50.0:winreg",  # cfg(windows)
+        ],
+        "@rules_rust//rust/platform:aarch64-unknown-fuchsia": [
+            "//thirdparty/crates/encoding_rs-0.8.35:encoding_rs",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/h2-0.3.26:h2",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/http-body-0.4.6:http_body",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/hyper-0.14.31:hyper",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/ipnet-2.10.1:ipnet",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/log-0.4.22:log",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/mime-0.3.17:mime",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/tokio-1.41.1:tokio",  # cfg(not(target_arch = "wasm32"))
         ],
         "@rules_rust//rust/platform:aarch64-unknown-linux-gnu": [
             "//thirdparty/crates/encoding_rs-0.8.35:encoding_rs",  # cfg(not(target_arch = "wasm32"))
@@ -186,7 +187,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/tokio-1.41.0:tokio",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/tokio-1.41.1:tokio",  # cfg(not(target_arch = "wasm32"))
         ],
         "@rules_rust//rust/platform:aarch64-unknown-nixos-gnu": [
             "//thirdparty/crates/encoding_rs-0.8.35:encoding_rs",  # cfg(not(target_arch = "wasm32"))
@@ -199,7 +200,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/tokio-1.41.0:tokio",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/tokio-1.41.1:tokio",  # cfg(not(target_arch = "wasm32"))
         ],
         "@rules_rust//rust/platform:aarch64-unknown-nto-qnx710": [
             "//thirdparty/crates/encoding_rs-0.8.35:encoding_rs",  # cfg(not(target_arch = "wasm32"))
@@ -212,7 +213,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/tokio-1.41.0:tokio",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/tokio-1.41.1:tokio",  # cfg(not(target_arch = "wasm32"))
         ],
         "@rules_rust//rust/platform:arm-unknown-linux-gnueabi": [
             "//thirdparty/crates/encoding_rs-0.8.35:encoding_rs",  # cfg(not(target_arch = "wasm32"))
@@ -225,7 +226,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/tokio-1.41.0:tokio",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/tokio-1.41.1:tokio",  # cfg(not(target_arch = "wasm32"))
         ],
         "@rules_rust//rust/platform:armv7-linux-androideabi": [
             "//thirdparty/crates/encoding_rs-0.8.35:encoding_rs",  # cfg(not(target_arch = "wasm32"))
@@ -238,7 +239,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/tokio-1.41.0:tokio",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/tokio-1.41.1:tokio",  # cfg(not(target_arch = "wasm32"))
         ],
         "@rules_rust//rust/platform:armv7-unknown-linux-gnueabi": [
             "//thirdparty/crates/encoding_rs-0.8.35:encoding_rs",  # cfg(not(target_arch = "wasm32"))
@@ -251,7 +252,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/tokio-1.41.0:tokio",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/tokio-1.41.1:tokio",  # cfg(not(target_arch = "wasm32"))
         ],
         "@rules_rust//rust/platform:i686-apple-darwin": [
             "//thirdparty/crates/encoding_rs-0.8.35:encoding_rs",  # cfg(not(target_arch = "wasm32"))
@@ -265,7 +266,7 @@ rust_library(
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/system-configuration-0.5.1:system_configuration",  # cfg(target_os = "macos")
-            "//thirdparty/crates/tokio-1.41.0:tokio",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/tokio-1.41.1:tokio",  # cfg(not(target_arch = "wasm32"))
         ],
         "@rules_rust//rust/platform:i686-linux-android": [
             "//thirdparty/crates/encoding_rs-0.8.35:encoding_rs",  # cfg(not(target_arch = "wasm32"))
@@ -278,7 +279,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/tokio-1.41.0:tokio",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/tokio-1.41.1:tokio",  # cfg(not(target_arch = "wasm32"))
         ],
         "@rules_rust//rust/platform:i686-pc-windows-msvc": [
             "//thirdparty/crates/encoding_rs-0.8.35:encoding_rs",  # cfg(not(target_arch = "wasm32"))
@@ -291,7 +292,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/tokio-1.41.0:tokio",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/tokio-1.41.1:tokio",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/winreg-0.50.0:winreg",  # cfg(windows)
         ],
         "@rules_rust//rust/platform:i686-unknown-freebsd": [
@@ -305,7 +306,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/tokio-1.41.0:tokio",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/tokio-1.41.1:tokio",  # cfg(not(target_arch = "wasm32"))
         ],
         "@rules_rust//rust/platform:i686-unknown-linux-gnu": [
             "//thirdparty/crates/encoding_rs-0.8.35:encoding_rs",  # cfg(not(target_arch = "wasm32"))
@@ -318,7 +319,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/tokio-1.41.0:tokio",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/tokio-1.41.1:tokio",  # cfg(not(target_arch = "wasm32"))
         ],
         "@rules_rust//rust/platform:powerpc-unknown-linux-gnu": [
             "//thirdparty/crates/encoding_rs-0.8.35:encoding_rs",  # cfg(not(target_arch = "wasm32"))
@@ -331,7 +332,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/tokio-1.41.0:tokio",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/tokio-1.41.1:tokio",  # cfg(not(target_arch = "wasm32"))
         ],
         "@rules_rust//rust/platform:riscv32imc-unknown-none-elf": [
             "//thirdparty/crates/encoding_rs-0.8.35:encoding_rs",  # cfg(not(target_arch = "wasm32"))
@@ -344,7 +345,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/tokio-1.41.0:tokio",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/tokio-1.41.1:tokio",  # cfg(not(target_arch = "wasm32"))
         ],
         "@rules_rust//rust/platform:riscv64gc-unknown-none-elf": [
             "//thirdparty/crates/encoding_rs-0.8.35:encoding_rs",  # cfg(not(target_arch = "wasm32"))
@@ -357,7 +358,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/tokio-1.41.0:tokio",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/tokio-1.41.1:tokio",  # cfg(not(target_arch = "wasm32"))
         ],
         "@rules_rust//rust/platform:s390x-unknown-linux-gnu": [
             "//thirdparty/crates/encoding_rs-0.8.35:encoding_rs",  # cfg(not(target_arch = "wasm32"))
@@ -370,7 +371,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/tokio-1.41.0:tokio",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/tokio-1.41.1:tokio",  # cfg(not(target_arch = "wasm32"))
         ],
         "@rules_rust//rust/platform:thumbv7em-none-eabi": [
             "//thirdparty/crates/encoding_rs-0.8.35:encoding_rs",  # cfg(not(target_arch = "wasm32"))
@@ -383,7 +384,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/tokio-1.41.0:tokio",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/tokio-1.41.1:tokio",  # cfg(not(target_arch = "wasm32"))
         ],
         "@rules_rust//rust/platform:thumbv8m.main-none-eabi": [
             "//thirdparty/crates/encoding_rs-0.8.35:encoding_rs",  # cfg(not(target_arch = "wasm32"))
@@ -396,7 +397,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/tokio-1.41.0:tokio",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/tokio-1.41.1:tokio",  # cfg(not(target_arch = "wasm32"))
         ],
         "@rules_rust//rust/platform:wasm32-unknown-unknown": [
             "//thirdparty/crates/js-sys-0.3.72:js_sys",  # cfg(target_arch = "wasm32")
@@ -405,6 +406,12 @@ rust_library(
             "//thirdparty/crates/web-sys-0.3.72:web_sys",  # cfg(target_arch = "wasm32")
         ],
         "@rules_rust//rust/platform:wasm32-wasi": [
+            "//thirdparty/crates/js-sys-0.3.72:js_sys",  # cfg(target_arch = "wasm32")
+            "//thirdparty/crates/wasm-bindgen-0.2.95:wasm_bindgen",  # cfg(target_arch = "wasm32")
+            "//thirdparty/crates/wasm-bindgen-futures-0.4.45:wasm_bindgen_futures",  # cfg(target_arch = "wasm32")
+            "//thirdparty/crates/web-sys-0.3.72:web_sys",  # cfg(target_arch = "wasm32")
+        ],
+        "@rules_rust//rust/platform:wasm32-wasip1": [
             "//thirdparty/crates/js-sys-0.3.72:js_sys",  # cfg(target_arch = "wasm32")
             "//thirdparty/crates/wasm-bindgen-0.2.95:wasm_bindgen",  # cfg(target_arch = "wasm32")
             "//thirdparty/crates/wasm-bindgen-futures-0.4.45:wasm_bindgen_futures",  # cfg(target_arch = "wasm32")
@@ -422,7 +429,7 @@ rust_library(
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/system-configuration-0.5.1:system_configuration",  # cfg(target_os = "macos")
-            "//thirdparty/crates/tokio-1.41.0:tokio",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/tokio-1.41.1:tokio",  # cfg(not(target_arch = "wasm32"))
         ],
         "@rules_rust//rust/platform:x86_64-apple-ios": [
             "//thirdparty/crates/encoding_rs-0.8.35:encoding_rs",  # cfg(not(target_arch = "wasm32"))
@@ -435,20 +442,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/tokio-1.41.0:tokio",  # cfg(not(target_arch = "wasm32"))
-        ],
-        "@rules_rust//rust/platform:x86_64-fuchsia": [
-            "//thirdparty/crates/encoding_rs-0.8.35:encoding_rs",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/h2-0.3.26:h2",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/http-body-0.4.6:http_body",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/hyper-0.14.31:hyper",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/ipnet-2.10.1:ipnet",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/log-0.4.22:log",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/mime-0.3.17:mime",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/tokio-1.41.0:tokio",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/tokio-1.41.1:tokio",  # cfg(not(target_arch = "wasm32"))
         ],
         "@rules_rust//rust/platform:x86_64-linux-android": [
             "//thirdparty/crates/encoding_rs-0.8.35:encoding_rs",  # cfg(not(target_arch = "wasm32"))
@@ -461,7 +455,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/tokio-1.41.0:tokio",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/tokio-1.41.1:tokio",  # cfg(not(target_arch = "wasm32"))
         ],
         "@rules_rust//rust/platform:x86_64-pc-windows-msvc": [
             "//thirdparty/crates/encoding_rs-0.8.35:encoding_rs",  # cfg(not(target_arch = "wasm32"))
@@ -474,7 +468,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/tokio-1.41.0:tokio",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/tokio-1.41.1:tokio",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/winreg-0.50.0:winreg",  # cfg(windows)
         ],
         "@rules_rust//rust/platform:x86_64-unknown-freebsd": [
@@ -488,7 +482,20 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/tokio-1.41.0:tokio",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/tokio-1.41.1:tokio",  # cfg(not(target_arch = "wasm32"))
+        ],
+        "@rules_rust//rust/platform:x86_64-unknown-fuchsia": [
+            "//thirdparty/crates/encoding_rs-0.8.35:encoding_rs",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/h2-0.3.26:h2",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/http-body-0.4.6:http_body",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/hyper-0.14.31:hyper",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/ipnet-2.10.1:ipnet",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/log-0.4.22:log",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/mime-0.3.17:mime",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/tokio-1.41.1:tokio",  # cfg(not(target_arch = "wasm32"))
         ],
         "@rules_rust//rust/platform:x86_64-unknown-linux-gnu": [
             "//thirdparty/crates/encoding_rs-0.8.35:encoding_rs",  # cfg(not(target_arch = "wasm32"))
@@ -501,7 +508,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/tokio-1.41.0:tokio",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/tokio-1.41.1:tokio",  # cfg(not(target_arch = "wasm32"))
         ],
         "@rules_rust//rust/platform:x86_64-unknown-nixos-gnu": [
             "//thirdparty/crates/encoding_rs-0.8.35:encoding_rs",  # cfg(not(target_arch = "wasm32"))
@@ -514,7 +521,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/tokio-1.41.0:tokio",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/tokio-1.41.1:tokio",  # cfg(not(target_arch = "wasm32"))
         ],
         "@rules_rust//rust/platform:x86_64-unknown-none": [
             "//thirdparty/crates/encoding_rs-0.8.35:encoding_rs",  # cfg(not(target_arch = "wasm32"))
@@ -527,7 +534,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/tokio-1.41.0:tokio",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/tokio-1.41.1:tokio",  # cfg(not(target_arch = "wasm32"))
         ],
         "//conditions:default": [],
     }),
