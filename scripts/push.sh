@@ -59,6 +59,16 @@ command bazel test //... --test_tag_filters=integration_test --test_env=ENV=LOCA
 
 echo ""
 echo "====================="
+echo "Run acceptance tests"
+echo "====================="
+# local testing must be in sequential order b/c there is just one DB
+command bazel test //... --test_tag_filters=smdb_acceptance_test --test_env=ENV=LOCAL
+command bazel test //... --test_tag_filters=cmdb_acceptance_test --test_env=ENV=LOCAL
+command bazel test //... --test_tag_filters=mddb_acceptance_test --test_env=ENV=LOCAL
+command bazel test //... --test_tag_filters=imdb_acceptance_test --test_env=ENV=LOCAL
+
+echo ""
+echo "====================="
 echo "Build container images"
 echo "====================="
 command bazel build //:push --test_env=ENV=LOCAL
