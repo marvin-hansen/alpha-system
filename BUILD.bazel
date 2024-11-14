@@ -25,9 +25,10 @@ multirun(
     name = "push",
     commands = [
         # Import tools
-        "push_kaiko_proxy",
-        "pg_import_services_push",
+        "pg_import_config_push",
+        "pg_import_integrations_push",
         "pg_import_metadata_push",
+        "pg_import_services_push",
         # Core services
         "cmdb_push",
         "dbgw_push",
@@ -35,6 +36,8 @@ multirun(
         # IMS Services
         "push_imdb",
         "push_binance_data",
+        # MDS Services
+        "push_kaiko_proxy",
         "push_mddb",
     ],
     jobs = 0,  # Set to 0 to run in parallel
@@ -43,13 +46,23 @@ multirun(
 
 # Import tools
 command(
-    name = "pg_import_services_push",
-    command = "//alias:pg_import_services_push",
+    name = "pg_import_config_push",
+    command = "//alias:pg_import_config_push",
+)
+
+command(
+    name = "pg_import_integrations_push",
+    command = "//alias:pg_import_integrations_push",
 )
 
 command(
     name = "pg_import_metadata_push",
     command = "//alias:pg_import_metadata_push",
+)
+
+command(
+    name = "pg_import_services_push",
+    command = "//alias:pg_import_services_push",
 )
 
 # Core services

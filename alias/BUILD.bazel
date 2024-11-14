@@ -141,14 +141,25 @@ alias(
 
 ## Postgres import
 ##############
+
 alias(
-    name = "pg_import_services",
-    actual = "//queng_import/postgres/pg_import_services",
+    name = "pg_import_config",
+    actual = "//queng_import/postgres/pg_import_config",
 )
 
 alias(
-    name = "pg_import_services_push",
-    actual = "//queng_import/postgres/pg_import_services:push",
+    name = "pg_import_config_push",
+    actual = "//queng_import/postgres/pg_import_config:push",
+)
+
+alias(
+    name = "pg_import_integrations",
+    actual = "//queng_import/postgres/pg_import_integrations",
+)
+
+alias(
+    name = "pg_import_integrations_push",
+    actual = "//queng_import/postgres/pg_import_integrations:push",
 )
 
 alias(
@@ -160,6 +171,17 @@ alias(
     name = "pg_import_metadata_push",
     actual = "//queng_import/postgres/pg_import_metadata:push",
 )
+
+alias(
+    name = "pg_import_services",
+    actual = "//queng_import/postgres/pg_import_services",
+)
+
+alias(
+    name = "pg_import_services_push",
+    actual = "//queng_import/postgres/pg_import_services:push",
+)
+
 
 alias(
     name = "pg_import_print_utils",
