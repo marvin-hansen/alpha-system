@@ -28,12 +28,6 @@ rust_library(
             "WORKSPACE.bazel",
         ],
     ),
-    crate_features = [
-        "log",
-        "platform-verifier",
-        "ring",
-        "rustls-ring",
-    ],
     crate_root = "src/lib.rs",
     edition = "2021",
     rustc_flags = [
@@ -88,10 +82,7 @@ rust_library(
     deps = [
         "//thirdparty/crates/bytes-1.8.0:bytes",
         "//thirdparty/crates/rand-0.8.5:rand",
-        "//thirdparty/crates/ring-0.17.8:ring",
         "//thirdparty/crates/rustc-hash-2.0.0:rustc_hash",
-        "//thirdparty/crates/rustls-0.23.16:rustls",
-        "//thirdparty/crates/rustls-platform-verifier-0.4.0:rustls_platform_verifier",
         "//thirdparty/crates/slab-0.4.9:slab",
         "//thirdparty/crates/thiserror-2.0.3:thiserror",
         "//thirdparty/crates/tinyvec-1.8.0:tinyvec",
@@ -99,6 +90,7 @@ rust_library(
     ] + select({
         "@rules_rust//rust/platform:wasm32-unknown-unknown": [
             "//thirdparty/crates/getrandom-0.2.15:getrandom",  # cfg(all(target_family = "wasm", target_os = "unknown"))
+            "//thirdparty/crates/ring-0.17.8:ring",  # cfg(all(target_family = "wasm", target_os = "unknown"))
             "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # cfg(all(target_family = "wasm", target_os = "unknown"))
             "//thirdparty/crates/web-time-1.1.0:web_time",  # cfg(all(target_family = "wasm", target_os = "unknown"))
         ],

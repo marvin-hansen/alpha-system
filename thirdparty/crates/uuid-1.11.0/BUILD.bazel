@@ -30,13 +30,10 @@ rust_library(
     ),
     crate_features = [
         "default",
-        "fast-rng",
         "rng",
         "serde",
         "std",
         "v4",
-        "v7",
-        "zerocopy",
     ],
     crate_root = "src/lib.rs",
     edition = "2018",
@@ -91,8 +88,6 @@ rust_library(
     version = "1.11.0",
     deps = [
         "//thirdparty/crates/getrandom-0.2.15:getrandom",
-        "//thirdparty/crates/rand-0.8.5:rand",
         "//thirdparty/crates/serde-1.0.215:serde",
-        "//thirdparty/crates/zerocopy-0.8.10:zerocopy",
     ],
 )

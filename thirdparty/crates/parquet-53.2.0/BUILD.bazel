@@ -114,7 +114,7 @@ rust_library(
         "//thirdparty/crates/brotli-7.0.0:brotli",
         "//thirdparty/crates/bytes-1.8.0:bytes",
         "//thirdparty/crates/chrono-0.4.38:chrono",
-        "//thirdparty/crates/flate2-1.0.34:flate2",
+        "//thirdparty/crates/flate2-1.0.35:flate2",
         "//thirdparty/crates/half-2.4.1:half",
         "//thirdparty/crates/hashbrown-0.14.5:hashbrown",
         "//thirdparty/crates/lz4_flex-0.11.3:lz4_flex",

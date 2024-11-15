@@ -133,14 +133,8 @@ alias(
 )
 
 alias(
-    name = "iggy",
-    actual = "//thirdparty/crates/iggy-0.6.33:iggy",
-    tags = ["manual"],
-)
-
-alias(
     name = "klickhouse",
-    actual = "//thirdparty/crates/klickhouse-0.13.1:klickhouse",
+    actual = "//thirdparty/crates/klickhouse-0.13.2:klickhouse",
     tags = ["manual"],
 )
 
