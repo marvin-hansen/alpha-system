@@ -30,11 +30,28 @@ rust_library(
         ],
     ),
     crate_features = [
-        "default",
         "i128",
-        "libm",
-        "std",
-    ],
+    ] + select({
+        "@rules_rust//rust/platform:aarch64-apple-darwin": [
+            "std",  # aarch64-apple-darwin
+        ],
+        "@rules_rust//rust/platform:aarch64-apple-ios": [
+            "std",  # aarch64-apple-ios
+        ],
+        "@rules_rust//rust/platform:aarch64-apple-ios-sim": [
+            "std",  # aarch64-apple-ios-sim
+        ],
+        "@rules_rust//rust/platform:i686-apple-darwin": [
+            "std",  # i686-apple-darwin
+        ],
+        "@rules_rust//rust/platform:x86_64-apple-darwin": [
+            "std",  # x86_64-apple-darwin
+        ],
+        "@rules_rust//rust/platform:x86_64-apple-ios": [
+            "std",  # x86_64-apple-ios
+        ],
+        "//conditions:default": [],
+    }),
     crate_root = "src/lib.rs",
     edition = "2021",
     rustc_flags = [
@@ -87,7 +104,6 @@ rust_library(
     }),
     version = "0.2.19",
     deps = [
-        "//thirdparty/crates/libm-0.2.11:libm",
         "//thirdparty/crates/num-traits-0.2.19:build_script_build",
     ],
 )
@@ -112,11 +128,28 @@ cargo_build_script(
         ],
     ),
     crate_features = [
-        "default",
         "i128",
-        "libm",
-        "std",
-    ],
+    ] + select({
+        "@rules_rust//rust/platform:aarch64-apple-darwin": [
+            "std",  # aarch64-apple-darwin
+        ],
+        "@rules_rust//rust/platform:aarch64-apple-ios": [
+            "std",  # aarch64-apple-ios
+        ],
+        "@rules_rust//rust/platform:aarch64-apple-ios-sim": [
+            "std",  # aarch64-apple-ios-sim
+        ],
+        "@rules_rust//rust/platform:i686-apple-darwin": [
+            "std",  # i686-apple-darwin
+        ],
+        "@rules_rust//rust/platform:x86_64-apple-darwin": [
+            "std",  # x86_64-apple-darwin
+        ],
+        "@rules_rust//rust/platform:x86_64-apple-ios": [
+            "std",  # x86_64-apple-ios
+        ],
+        "//conditions:default": [],
+    }),
     crate_name = "build_script_build",
     crate_root = "build.rs",
     data = glob(

@@ -28,67 +28,15 @@ crates_vendor(
     },
     mode = "local",
     packages = {
-        # Custom Memory Allocator
-        # https://www.tweag.io/blog/2023-08-10-rust-static-link-with-mimalloc/
-        "mimalloc": crate.spec(
-            package = "mimalloc",
-            version = "0.1.43",
-        ),
-        "rustls": crate.spec(
+        "ahash": crate.spec(
             default_features = False,
-            features = ["tls12"],
-            package = "rustls",
-            version = "0.23.13",
+            features = ["serde"],
+            package = "ahash",
+            version = "0.8.11",
         ),
-        #
-        # protobufs/gRPC in Rust
-        #
-        "prost": crate.spec(
-            package = "prost",
-            version = "0.13.3",
-        ),
-        "prost-types": crate.spec(
-            default_features = False,
-            package = "prost-types",
-            version = "0.13.3",
-        ),
-        "tonic": crate.spec(
-            features = ["transport"],
-            package = "tonic",
-            version = "0.12.2",
-        ),
-        "tonic-build": crate.spec(
-            package = "tonic-build",
-            version = "0.12.2",
-        ),
-        "tonic-health": crate.spec(
-            default_features = False,
-            features = ["transport"],
-            package = "tonic-health",
-            version = "0.12.2",
-        ),
-        "protoc-gen-prost": crate.spec(
-            package = "protoc-gen-prost",
-            version = "0.3.1",
-        ),
-        "protoc-gen-tonic": crate.spec(
-            package = "protoc-gen-tonic",
-            version = "0.4.0",
-        ),
-        # Other External Crates
         "anyhow": crate.spec(
             package = "anyhow",
             version = "1.0.89",
-        ),
-        "arc-swap": crate.spec(
-            package = "arc-swap",
-            version = "1.7.1",
-        ),
-        "base64ct": crate.spec(
-            default_features = False,
-            features = ["alloc"],
-            package = "base64ct",
-            version = "1.6.0",
         ),
         "base16ct": crate.spec(
             default_features = False,
@@ -96,33 +44,30 @@ crates_vendor(
             package = "base16ct",
             version = "0.2.0",
         ),
+        "base64ct": crate.spec(
+            default_features = False,
+            features = ["alloc"],
+            package = "base64ct",
+            version = "1.6.0",
+        ),
         "binance-rs-async": crate.spec(
             default_features = False,
-            # features = ["rustls-tls"],
             package = "binance-rs-async",
             version = "1.3.3",
+        ),
+        "blake3": crate.spec(
+            default_features = True,
+            package = "blake3",
+            version = "1.5.4",
         ),
         "chrono": crate.spec(
             features = ["serde"],
             package = "chrono",
             version = "0.4.38",
         ),
-        "config-file": crate.spec(
-            package = "config-file",
-            version = "0.2.3",
-        ),
         "ctrlc": crate.spec(
             package = "ctrlc",
             version = "3.4.5",
-        ),
-        "clickhouse-rs": crate.spec(
-            package = "clickhouse-rs",
-            version = "1.1.0-alpha.1",
-        ),
-        "csv": crate.spec(
-            default_features = False,
-            package = "csv",
-            version = "1.3.0",
         ),
         "diesel": crate.spec(
             default_features = False,
@@ -139,18 +84,9 @@ crates_vendor(
             package = "diesel_migrations",
             version = "2.2.0",
         ),
-        "dotenv": crate.spec(
-            default_features = False,
-            package = "dotenv",
-            version = "0.15.0",
-        ),
-        "encoding_rs": crate.spec(
-            package = "encoding_rs",
-            version = "0.8.34",
-        ),
         "futures": crate.spec(
             package = "futures",
-            version = "0.3.30",
+            version = "0.3.31",
         ),
         "hickory-resolver": crate.spec(
             default_features = False,
@@ -164,31 +100,32 @@ crates_vendor(
         ),
         "klickhouse": crate.spec(
             package = "klickhouse",
-            version = "0.13.1",
-        ),
-        "lazy_static": crate.spec(
-            package = "lazy_static",
-            version = "1.5.0",
+            version = "0.13.2",
         ),
         "lru": crate.spec(
             package = "lru",
             version = "0.12.4",
         ),
-        "mini-moka": crate.spec(
-            package = "mini-moka",
-            version = "0.10.3",
+        "mimalloc": crate.spec(
+            package = "mimalloc",
+            version = "0.1.43",
         ),
-        "udigest": crate.spec(
-            features = [
-                "derive",
-                "digest",
-            ],
-            package = "udigest",
-            version = "0.2.2",
+        "prost": crate.spec(
+            package = "prost",
+            version = "0.13.3",
         ),
-        "parquet": crate.spec(
-            package = "parquet",
-            version = "53.0.0",
+        "prost-types": crate.spec(
+            default_features = False,
+            package = "prost-types",
+            version = "0.13.3",
+        ),
+        "protoc-gen-prost": crate.spec(
+            package = "protoc-gen-prost",
+            version = "0.3.1",
+        ),
+        "protoc-gen-tonic": crate.spec(
+            package = "protoc-gen-tonic",
+            version = "0.4.0",
         ),
         "reqwest": crate.spec(
             default_features = False,
@@ -199,11 +136,7 @@ crates_vendor(
                 "gzip",
             ],
             package = "reqwest",
-            version = "0.12.7",
-        ),
-        "ring": crate.spec(
-            package = "ring",
-            version = "0.17.8",
+            version = "0.12.9",
         ),
         "rust_decimal": crate.spec(
             package = "rust_decimal",
@@ -213,24 +146,23 @@ crates_vendor(
             package = "rust_decimal_macros",
             version = "1.36.0",
         ),
+        "rustls": crate.spec(
+            package = "rustls",
+            version = "0.23.17",
+        ),
         "serde": crate.spec(
             features = ["derive"],
             package = "serde",
-            version = "1.0.210",
+            version = "1.0.215",
         ),
         "serde_json": crate.spec(
             package = "serde_json",
-            version = "1.0.128",
-        ),
-        "blake3": crate.spec(
-            default_features = True,
-            package = "blake3",
-            version = "1.5.4",
+            version = "1.0.133",
         ),
         "sha3": crate.spec(
             default_features = False,
             package = "sha3",
-            version = "0.11.0-pre.3",
+            version = "0.11.0-pre.4",
         ),
         "tokio": crate.spec(
             default_features = False,
@@ -244,22 +176,26 @@ crates_vendor(
             package = "tokio",
             version = "1.40.0",
         ),
-        "tokio-cron-scheduler": crate.spec(
-            features = ["signal"],
-            package = "tokio-cron-scheduler",
-            version = "0.13.0",
-        ),
         "tokio-tungstenite": crate.spec(
             default_features = False,
-            features = [
-                "rustls",
-            ],
+            features = ["rustls"],
             package = "tokio-tungstenite",
             version = "0.24.0",
         ),
-        "tokio-timer": crate.spec(
-            package = "tokio-timer",
-            version = "0.2.13",
+        "tonic": crate.spec(
+            features = ["transport"],
+            package = "tonic",
+            version = "0.12.3",
+        ),
+        "tonic-build": crate.spec(
+            package = "tonic-build",
+            version = "0.12.3",
+        ),
+        "tonic-health": crate.spec(
+            default_features = False,
+            features = ["transport"],
+            package = "tonic-health",
+            version = "0.12.3",
         ),
         "warp": crate.spec(
             package = "warp",

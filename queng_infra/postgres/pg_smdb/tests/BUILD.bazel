@@ -36,7 +36,6 @@ rust_test_suite(
         # External crates
         "//thirdparty/crates:tokio",
         "//thirdparty/crates:diesel",
-        "//thirdparty/crates:dotenv",
         "//thirdparty/crates:serde",
     ],
 )

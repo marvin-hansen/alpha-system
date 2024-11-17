@@ -8,5 +8,5 @@ repository.workspace = true
 authors.workspace = true
 
 [dependencies]
-# iggy = {workspace = true}
+iggy = {workspace = true}
 message_shared = {workspace = true}
