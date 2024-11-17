@@ -1,6 +1,6 @@
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     tonic_build::configure()
-        .compile(
+        .compile_protos(
             &["proto/service_messages.proto", "proto/smdb.proto"],
             &["proto"],
         )
