@@ -1,6 +1,5 @@
 mod produce;
 
-use common_message;
 use iggy::client::{Client, StreamClient, TopicClient, UserClient};
 use iggy::clients::client::IggyClient;
 use iggy::clients::producer::IggyProducer;
@@ -174,7 +173,6 @@ impl MessageProducer {
     /// Returns an `IggyError` if the client shutdown fails.
     ///
     pub async fn shutdown(&self) -> Result<(), IggyError> {
-
         // Connect client
         self.client.connect().await.expect("Failed to connect");
 
