@@ -60,6 +60,11 @@ crates_vendor(
             package = "blake3",
             version = "1.5.4",
         ),
+        "bytes": crate.spec(
+            default_features = True,
+            package = "bytes",
+            version = "1.8.0",
+        ),
         "chrono": crate.spec(
             features = ["serde"],
             package = "chrono",
@@ -86,6 +91,10 @@ crates_vendor(
         ),
         "futures": crate.spec(
             package = "futures",
+            version = "0.3.31",
+        ),
+        "futures-util": crate.spec(
+            package = "futures-util",
             version = "0.3.31",
         ),
         "hickory-resolver": crate.spec(
@@ -163,6 +172,11 @@ crates_vendor(
             default_features = False,
             package = "sha3",
             version = "0.11.0-pre.4",
+        ),
+        "trait-variant": crate.spec(
+            default_features = False,
+            package = "trait-variant",
+            version = "0.1.2",
         ),
         "tokio": crate.spec(
             default_features = False,

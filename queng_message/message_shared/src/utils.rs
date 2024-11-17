@@ -1,4 +1,3 @@
-use crate::Args;
 use iggy::client_provider;
 use iggy::client_provider::ClientProviderConfig;
 use iggy::clients::client::IggyClient;
@@ -21,11 +20,10 @@ use iggy::models::user_status::UserStatus;
 ///
 /// A `Result` wrapping the `IggyClient` instance or an `IggyError`.
 ///
-pub async fn build_client(args: &Args) -> Result<IggyClient, IggyError> {
+pub async fn build_client(args: iggy::args::Args) -> Result<IggyClient, IggyError> {
     // Build client provider configuration
     let client_provider_config = Arc::new(
-        ClientProviderConfig::from_args(args.to_sdk_args())
-            .expect("Failed to create client provider config"),
+        ClientProviderConfig::from_args(args).expect("Failed to create client provider config"),
     );
 
     // Build client_provider
@@ -71,7 +69,7 @@ pub async fn create_stream_and_user(
         stream.id,
         StreamPermissions {
             read_stream: true,
-            manage_topics: true,
+            read_topics: true,
             ..Default::default()
         },
     );

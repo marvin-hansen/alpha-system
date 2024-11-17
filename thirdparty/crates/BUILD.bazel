@@ -67,6 +67,12 @@ alias(
 )
 
 alias(
+    name = "bytes",
+    actual = "//thirdparty/crates/bytes-1.8.0:bytes",
+    tags = ["manual"],
+)
+
+alias(
     name = "chrono",
     actual = "//thirdparty/crates/chrono-0.4.38:chrono",
     tags = ["manual"],
@@ -93,6 +99,12 @@ alias(
 alias(
     name = "futures",
     actual = "//thirdparty/crates/futures-0.3.31:futures",
+    tags = ["manual"],
+)
+
+alias(
+    name = "futures-util",
+    actual = "//thirdparty/crates/futures-util-0.3.31:futures_util",
     tags = ["manual"],
 )
 
@@ -219,6 +231,12 @@ alias(
 alias(
     name = "tonic-health",
     actual = "//thirdparty/crates/tonic-health-0.12.3:tonic_health",
+    tags = ["manual"],
+)
+
+alias(
+    name = "trait-variant",
+    actual = "//thirdparty/crates/trait-variant-0.1.2:trait_variant",
     tags = ["manual"],
 )
 

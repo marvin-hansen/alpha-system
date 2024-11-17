@@ -1,12 +1,18 @@
+mod error;
+mod traits;
 pub mod utils;
 
-use common_message::prelude::{ImsDataConfig, ImsTcpTlsConfig};
+use common_message;
 use iggy::users::defaults::{DEFAULT_ROOT_PASSWORD, DEFAULT_ROOT_USERNAME};
 use iggy::utils::duration::IggyDuration;
 use std::str::FromStr;
 
-pub fn get_ims_data_config() -> ImsDataConfig {
-    ImsDataConfig::new(
+// Re export
+pub use error::*;
+pub use traits::*;
+
+pub fn get_ims_data_config() -> common_message::ImsDataConfig {
+    common_message::ImsDataConfig::new(
         DEFAULT_ROOT_USERNAME.to_string(),
         DEFAULT_ROOT_PASSWORD.to_string(),
         "example-stream".to_string(),
@@ -35,18 +41,15 @@ pub struct Args {
     pub encryption_key: String,
     pub http_api_url: String,
     pub http_retries: u32,
-    // TCP config
     pub tcp_reconnection_enabled: bool,
     pub tcp_reconnection_max_retries: Option<u32>,
     pub tcp_reconnection_interval: String,
     pub tcp_reconnection_reestablish_after: String,
     pub tcp_heartbeat_interval: String,
-    // TLS config
     pub tcp_server_address: String,
     pub tcp_tls_enabled: bool,
     pub tcp_tls_domain: String,
     pub tcp_tls_ca_file: Option<String>,
-    // QUIC config. Disabled by default
     pub quic_client_address: String,
     pub quic_server_address: String,
     pub quic_server_name: String,
@@ -84,7 +87,7 @@ impl Args {
         }
     }
 
-    pub fn from_ims_data_config(config: &ImsDataConfig) -> Self {
+    pub fn from_ims_data_config(config: &common_message::ImsDataConfig) -> Self {
         Self {
             username: config.stream_user().to_string(),
             password: config.stream_password().to_string(),
@@ -96,8 +99,8 @@ impl Args {
     }
 
     pub fn from_ims_data_and_tls_config(
-        config: &ImsDataConfig,
-        tcp_tls_config: &ImsTcpTlsConfig,
+        config: &common_message::ImsDataConfig,
+        tcp_tls_config: &common_message::ImsTcpTlsConfig,
     ) -> Self {
         Self {
             // General config
@@ -177,7 +180,6 @@ impl Args {
             http_retries: self.http_retries,
             username: self.username.clone(),
             password: self.password.clone(),
-            //
             tcp_server_address: self.tcp_server_address.clone(),
             tcp_reconnection_enabled: self.tcp_reconnection_enabled,
             tcp_reconnection_max_retries: self.tcp_reconnection_max_retries,
@@ -187,7 +189,6 @@ impl Args {
             tcp_tls_enabled: self.tcp_tls_enabled,
             tcp_tls_domain: self.tcp_tls_domain.clone(),
             tcp_tls_ca_file: self.tcp_tls_ca_file.clone(),
-            //
             quic_client_address: self.quic_client_address.clone(),
             quic_server_address: self.quic_server_address.clone(),
             quic_server_name: self.quic_server_name.clone(),

@@ -299,11 +299,13 @@ _NORMAL_DEPENDENCIES = {
             "base64ct": Label("//thirdparty/crates/base64ct-1.6.0:base64ct"),
             "binance_rs_async": Label("//thirdparty/crates/binance-rs-async-1.3.3:binance"),
             "blake3": Label("//thirdparty/crates/blake3-1.5.4:blake3"),
+            "bytes": Label("//thirdparty/crates/bytes-1.8.0:bytes"),
             "chrono": Label("//thirdparty/crates/chrono-0.4.38:chrono"),
             "ctrlc": Label("//thirdparty/crates/ctrlc-3.4.5:ctrlc"),
             "diesel": Label("//thirdparty/crates/diesel-2.2.4:diesel"),
             "diesel_migrations": Label("//thirdparty/crates/diesel_migrations-2.2.0:diesel_migrations"),
             "futures": Label("//thirdparty/crates/futures-0.3.31:futures"),
+            "futures-util": Label("//thirdparty/crates/futures-util-0.3.31:futures_util"),
             "hickory-resolver": Label("//thirdparty/crates/hickory-resolver-0.24.1:hickory_resolver"),
             "iggy": Label("//thirdparty/crates/iggy-0.6.40:iggy"),
             "klickhouse": Label("//thirdparty/crates/klickhouse-0.13.2:klickhouse"),
@@ -351,6 +353,7 @@ _PROC_MACRO_DEPENDENCIES = {
     "": {
         _COMMON_CONDITION: {
             "rust_decimal_macros": Label("//thirdparty/crates/rust_decimal_macros-1.36.0:rust_decimal_macros"),
+            "trait-variant": Label("//thirdparty/crates/trait-variant-0.1.2:trait_variant"),
         },
     },
 }

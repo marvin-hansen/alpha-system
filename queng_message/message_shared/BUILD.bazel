@@ -6,6 +6,9 @@ rust_library(
         "src/**",
     ]),
     crate_root = "src/lib.rs",
+    proc_macro_deps = [
+        "//thirdparty/crates:trait-variant",
+    ],
     tags = [
         "infra",
         "message_bus",
