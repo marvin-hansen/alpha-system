@@ -1,6 +1,6 @@
 pub mod utils;
 
-use common_message_bus::prelude::ImsDataConfig;
+use common_message_bus::prelude::{ImsDataConfig, ImsTcpTlsConfig};
 use iggy::users::defaults::{DEFAULT_ROOT_PASSWORD, DEFAULT_ROOT_USERNAME};
 use iggy::utils::duration::IggyDuration;
 use std::str::FromStr;
@@ -35,15 +35,18 @@ pub struct Args {
     pub encryption_key: String,
     pub http_api_url: String,
     pub http_retries: u32,
+    // TCP config
     pub tcp_reconnection_enabled: bool,
     pub tcp_reconnection_max_retries: Option<u32>,
     pub tcp_reconnection_interval: String,
     pub tcp_reconnection_reestablish_after: String,
     pub tcp_heartbeat_interval: String,
+    // TLS config
     pub tcp_server_address: String,
     pub tcp_tls_enabled: bool,
     pub tcp_tls_domain: String,
     pub tcp_tls_ca_file: Option<String>,
+    // QUIC config. Disabled by default
     pub quic_client_address: String,
     pub quic_server_address: String,
     pub quic_server_name: String,
@@ -88,6 +91,25 @@ impl Args {
             stream_id: config.stream_id().to_string(),
             topic_id: config.topic_ids().to_string(),
             tcp_server_address: config.tcp_server_address().to_string(),
+            ..Default::default()
+        }
+    }
+
+    pub fn from_ims_data_and_tls_config(
+        config: &ImsDataConfig,
+        tcp_tls_config: &ImsTcpTlsConfig,
+    ) -> Self {
+        Self {
+            // General config
+            username: config.stream_user().to_string(),
+            password: config.stream_password().to_string(),
+            stream_id: config.stream_id().to_string(),
+            topic_id: config.topic_ids().to_string(),
+            // Tls config
+            tcp_server_address: config.tcp_server_address().to_string(),
+            tcp_tls_enabled: tcp_tls_config.tcp_tls_enabled(),
+            tcp_tls_domain: tcp_tls_config.tcp_tls_domain().to_string(),
+            tcp_tls_ca_file: tcp_tls_config.tcp_tls_ca_file().to_owned(),
             ..Default::default()
         }
     }
@@ -164,7 +186,7 @@ impl Args {
             tcp_heartbeat_interval: self.tcp_heartbeat_interval.clone(),
             tcp_tls_enabled: self.tcp_tls_enabled,
             tcp_tls_domain: self.tcp_tls_domain.clone(),
-            tcp_tls_ca_file: None,
+            tcp_tls_ca_file: self.tcp_tls_ca_file.clone(),
             //
             quic_client_address: self.quic_client_address.clone(),
             quic_server_address: self.quic_server_address.clone(),
