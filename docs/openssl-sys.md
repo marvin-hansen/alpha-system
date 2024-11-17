@@ -2,7 +2,7 @@
 
 1) Find the package introducing the dependency
 
-> cargo tree -p openssl -i
+> cargo tree --target all -p openssl -i
 
 should show which dependencies are depending on that crate.
 
