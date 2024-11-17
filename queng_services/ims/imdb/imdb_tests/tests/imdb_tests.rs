@@ -93,6 +93,12 @@ async fn test_imdb() {
     dbg!(&host);
     dbg!(&port);
 
+    assert!(!host.is_empty());
+    assert!(port > 0);
+
+    // Wait 0.5 second before starting the IMDB client
+    tokio::time::sleep(Duration::from_millis(500)).await;
+
     // Construct IMDB client
     let client = IMDBClient::new(host, port)
         .await
