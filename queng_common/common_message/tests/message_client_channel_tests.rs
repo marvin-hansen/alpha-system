@@ -1,4 +1,4 @@
-use common_message_bus::prelude::MessageClientChannel;
+use common_message::prelude::MessageClientChannel;
 
 #[test]
 fn test_valid_u8_to_channel_conversion() {

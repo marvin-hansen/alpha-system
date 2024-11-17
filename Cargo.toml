@@ -10,7 +10,7 @@ members = [
     "queng_common/common_errors",
     "queng_common/common_exchange",
     "queng_common/common_ims",
-    "queng_common/common_message_bus",
+    "queng_common/common_message",
     "queng_common/common_metadata",
     "queng_common/common_service",
     "queng_common/common_trade",
@@ -44,9 +44,9 @@ members = [
     "queng_infra/postgres/postgres_common",
     "queng_infra/postgres/postgres_config_manager",
     "queng_infra/postgres/postgres_migrations",
-    "queng_message_bus/message_consumer",
-    "queng_message_bus/message_producer",
-    "queng_message_bus/message_shared",
+    "queng_message/message_consumer",
+    "queng_message/message_producer",
+    "queng_message/message_shared",
     "queng_proto/proto_cmdb",
     "queng_proto/proto_cmdb_utils",
     "queng_proto/proto_imdb",
@@ -158,7 +158,7 @@ common_env = { path = "queng_common/common_env" }
 common_errors = { path = "queng_common/common_errors" }
 common_exchange = { path = "queng_common/common_exchange" }
 common_ims = { path = "queng_common/common_ims" }
-common_message_bus = { path = "queng_common/common_message_bus" }
+common_message = { path = "queng_common/common_message" }
 common_metadata = { path = "queng_common/common_metadata" }
 common_service = { path = "queng_common/common_service" }
 common_trade = { path = "queng_common/common_trade" }
@@ -205,9 +205,9 @@ postgres_config_manager = { path = "queng_infra/postgres/postgres_config_manager
 postgres_migrations = { path = "queng_infra/postgres/postgres_migrations" }
 
 # Mesasge bus
-message_consumer = { path = "queng_message_bus/message_consumer" }
-message_producer = { path = "queng_message_bus/message_producer" }
-message_shared = { path = "queng_message_bus/message_shared" }
+message_consumer = { path = "queng_message/message_consumer" }
+message_producer = { path = "queng_message/message_producer" }
+message_shared = { path = "queng_message/message_shared" }
 
 # Proto
 proto_cmdb = { path = "queng_proto/proto_cmdb" }

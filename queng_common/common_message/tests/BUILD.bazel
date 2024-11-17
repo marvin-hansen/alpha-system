@@ -7,12 +7,12 @@ rust_test_suite(
     ]),
     tags = [
         "common",
-        "common_message_bus",
+        "common_message",
         "unit-test",
     ],
     visibility = ["//visibility:public"],
     deps = [
         # Crate to test
-        "//alias:common_message_bus",
+        "//alias:common_message",
     ],
 )

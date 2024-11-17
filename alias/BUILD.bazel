@@ -46,8 +46,8 @@ alias(
 )
 
 alias(
-    name = "common_message_bus",
-    actual = "//queng_common/common_message_bus",
+    name = "common_message",
+    actual = "//queng_common/common_message",
 )
 
 alias(
@@ -268,22 +268,22 @@ alias(
 )
 
 ###############################################################################
-# Message bus
+# Message
 ###############################################################################
 
 alias(
     name = "message_consumer",
-    actual = "//queng_message_bus/message_consumer",
+    actual = "//queng_message/message_consumer",
 )
 
 alias(
     name = "message_producer",
-    actual = "//queng_message_bus/message_producer",
+    actual = "//queng_message/message_producer",
 )
 
 alias(
     name = "message_shared",
-    actual = "//queng_message_bus/message_shared",
+    actual = "//queng_message/message_shared",
 )
 
 ###############################################################################
