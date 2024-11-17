@@ -33,7 +33,12 @@ rust_library(
         "alloc",
         "default",
         "dev_urandom_fallback",
-    ],
+    ] + select({
+        "@rules_rust//rust/platform:wasm32-unknown-unknown": [
+            "wasm32_unknown_unknown_js",  # wasm32-unknown-unknown
+        ],
+        "//conditions:default": [],
+    }),
     crate_root = "src/lib.rs",
     edition = "2021",
     rustc_flags = [
@@ -101,7 +106,7 @@ rust_library(
             "//thirdparty/crates/spin-0.9.8:spin",  # cfg(any(target_arch = "aarch64", target_arch = "arm", target_arch = "x86", target_arch = "x86_64"))
         ],
         "@rules_rust//rust/platform:aarch64-linux-android": [
-            "//thirdparty/crates/libc-0.2.162:libc",  # cfg(all(any(target_os = "android", target_os = "linux"), any(target_arch = "aarch64", target_arch = "arm")))
+            "//thirdparty/crates/libc-0.2.164:libc",  # cfg(all(any(target_os = "android", target_os = "linux"), any(target_arch = "aarch64", target_arch = "arm")))
             "//thirdparty/crates/spin-0.9.8:spin",  # cfg(any(target_arch = "aarch64", target_arch = "arm", target_arch = "x86", target_arch = "x86_64"))
         ],
         "@rules_rust//rust/platform:aarch64-pc-windows-msvc": [
@@ -112,26 +117,26 @@ rust_library(
             "//thirdparty/crates/spin-0.9.8:spin",  # cfg(any(target_arch = "aarch64", target_arch = "arm", target_arch = "x86", target_arch = "x86_64"))
         ],
         "@rules_rust//rust/platform:aarch64-unknown-linux-gnu": [
-            "//thirdparty/crates/libc-0.2.162:libc",  # cfg(all(any(target_os = "android", target_os = "linux"), any(target_arch = "aarch64", target_arch = "arm")))
+            "//thirdparty/crates/libc-0.2.164:libc",  # cfg(all(any(target_os = "android", target_os = "linux"), any(target_arch = "aarch64", target_arch = "arm")))
             "//thirdparty/crates/spin-0.9.8:spin",  # cfg(any(target_arch = "aarch64", target_arch = "arm", target_arch = "x86", target_arch = "x86_64"))
         ],
         "@rules_rust//rust/platform:aarch64-unknown-nixos-gnu": [
-            "//thirdparty/crates/libc-0.2.162:libc",  # cfg(all(any(target_os = "android", target_os = "linux"), any(target_arch = "aarch64", target_arch = "arm")))
+            "//thirdparty/crates/libc-0.2.164:libc",  # cfg(all(any(target_os = "android", target_os = "linux"), any(target_arch = "aarch64", target_arch = "arm")))
             "//thirdparty/crates/spin-0.9.8:spin",  # cfg(any(target_arch = "aarch64", target_arch = "arm", target_arch = "x86", target_arch = "x86_64"))
         ],
         "@rules_rust//rust/platform:aarch64-unknown-nto-qnx710": [
             "//thirdparty/crates/spin-0.9.8:spin",  # cfg(any(target_arch = "aarch64", target_arch = "arm", target_arch = "x86", target_arch = "x86_64"))
         ],
         "@rules_rust//rust/platform:arm-unknown-linux-gnueabi": [
-            "//thirdparty/crates/libc-0.2.162:libc",  # cfg(all(any(target_os = "android", target_os = "linux"), any(target_arch = "aarch64", target_arch = "arm")))
+            "//thirdparty/crates/libc-0.2.164:libc",  # cfg(all(any(target_os = "android", target_os = "linux"), any(target_arch = "aarch64", target_arch = "arm")))
             "//thirdparty/crates/spin-0.9.8:spin",  # cfg(any(target_arch = "aarch64", target_arch = "arm", target_arch = "x86", target_arch = "x86_64"))
         ],
         "@rules_rust//rust/platform:armv7-linux-androideabi": [
-            "//thirdparty/crates/libc-0.2.162:libc",  # cfg(all(any(target_os = "android", target_os = "linux"), any(target_arch = "aarch64", target_arch = "arm")))
+            "//thirdparty/crates/libc-0.2.164:libc",  # cfg(all(any(target_os = "android", target_os = "linux"), any(target_arch = "aarch64", target_arch = "arm")))
             "//thirdparty/crates/spin-0.9.8:spin",  # cfg(any(target_arch = "aarch64", target_arch = "arm", target_arch = "x86", target_arch = "x86_64"))
         ],
         "@rules_rust//rust/platform:armv7-unknown-linux-gnueabi": [
-            "//thirdparty/crates/libc-0.2.162:libc",  # cfg(all(any(target_os = "android", target_os = "linux"), any(target_arch = "aarch64", target_arch = "arm")))
+            "//thirdparty/crates/libc-0.2.164:libc",  # cfg(all(any(target_os = "android", target_os = "linux"), any(target_arch = "aarch64", target_arch = "arm")))
             "//thirdparty/crates/spin-0.9.8:spin",  # cfg(any(target_arch = "aarch64", target_arch = "arm", target_arch = "x86", target_arch = "x86_64"))
         ],
         "@rules_rust//rust/platform:i686-apple-darwin": [
@@ -209,7 +214,12 @@ cargo_build_script(
         "alloc",
         "default",
         "dev_urandom_fallback",
-    ],
+    ] + select({
+        "@rules_rust//rust/platform:wasm32-unknown-unknown": [
+            "wasm32_unknown_unknown_js",  # wasm32-unknown-unknown
+        ],
+        "//conditions:default": [],
+    }),
     crate_name = "build_script_build",
     crate_root = "build.rs",
     data = glob(

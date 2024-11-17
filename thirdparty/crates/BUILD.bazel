@@ -133,6 +133,12 @@ alias(
 )
 
 alias(
+    name = "iggy",
+    actual = "//thirdparty/crates/iggy-0.6.40:iggy",
+    tags = ["manual"],
+)
+
+alias(
     name = "klickhouse",
     actual = "//thirdparty/crates/klickhouse-0.13.2:klickhouse",
     tags = ["manual"],
@@ -218,7 +224,7 @@ alias(
 
 alias(
     name = "rustls",
-    actual = "//thirdparty/crates/rustls-0.23.16:rustls",
+    actual = "//thirdparty/crates/rustls-0.23.17:rustls",
     tags = ["manual"],
 )
 
@@ -230,7 +236,7 @@ alias(
 
 alias(
     name = "serde_json",
-    actual = "//thirdparty/crates/serde_json-1.0.132:serde_json",
+    actual = "//thirdparty/crates/serde_json-1.0.133:serde_json",
     tags = ["manual"],
 )
 

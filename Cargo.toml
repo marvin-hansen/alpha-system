@@ -1,14 +1,13 @@
 [workspace]
 resolver = "2"
 
-
 members = [
     "queng_common/common_config",
     "queng_common/common_container",
-    "queng_common/common_errors",
     "queng_common/common_data_bar",
     "queng_common/common_database",
     "queng_common/common_env",
+    "queng_common/common_errors",
     "queng_common/common_exchange",
     "queng_common/common_ims",
     "queng_common/common_message_bus",
@@ -28,9 +27,9 @@ members = [
     "queng_import/kaiko/kaiko_test_utils",
     "queng_import/postgres/pg_import_config",
     "queng_import/postgres/pg_import_integrations",
+    "queng_import/postgres/pg_import_metadata",
     "queng_import/postgres/pg_import_print_utils",
     "queng_import/postgres/pg_import_services",
-    "queng_import/postgres/pg_import_metadata",
     "queng_infra/clickhouse/clickhouse_config_manager",
     "queng_infra/clickhouse/clickhouse_utils",
     "queng_infra/clickhouse/db_clickhouse_manager",
@@ -38,16 +37,16 @@ members = [
     "queng_infra/postgres/pg_cmdb_manager",
     "queng_infra/postgres/pg_imdb",
     "queng_infra/postgres/pg_imdb_manager",
-    "queng_infra/postgres/pg_smdb",
-    "queng_infra/postgres/pg_smdb_manager",
     "queng_infra/postgres/pg_mddb",
     "queng_infra/postgres/pg_mddb_manager",
+    "queng_infra/postgres/pg_smdb",
+    "queng_infra/postgres/pg_smdb_manager",
     "queng_infra/postgres/postgres_common",
     "queng_infra/postgres/postgres_config_manager",
+    "queng_infra/postgres/postgres_migrations",
     "queng_message_bus/message_consumer",
     "queng_message_bus/message_producer",
     "queng_message_bus/message_shared",
-    "queng_infra/postgres/postgres_migrations",
     "queng_proto/proto_cmdb",
     "queng_proto/proto_cmdb_utils",
     "queng_proto/proto_imdb",
@@ -58,8 +57,8 @@ members = [
     "queng_proto/proto_smdb_utils",
     "queng_sbe/bindings",
     "queng_sbe/sbe_messages",
-    "queng_services/core/cmdb/cmdb_service",
     "queng_services/core/cmdb/cmdb_client",
+    "queng_services/core/cmdb/cmdb_service",
     "queng_services/core/cmdb/cmdb_specs",
     "queng_services/core/cmdb/cmdb_tests",
     "queng_services/core/dbgw/dbgw_client/dbgw_cmdb_client",
@@ -83,33 +82,32 @@ members = [
     "queng_services/ims/ims_data/binance/binance_data",
     "queng_services/ims/ims_data/binance/ims_data_binance_specs",
     "queng_services/ims/ims_data/vex/ims_data_vex_specs",
-    "queng_services/mds/kaiko/kaiko_client",
     "queng_services/mds/kaiko/kaiko_cdn",
     "queng_services/mds/kaiko/kaiko_cdn_auth",
+    "queng_services/mds/kaiko/kaiko_client",
     "queng_services/mds/kaiko/kaiko_proxy",
     "queng_services/mds/kaiko/kaiko_tests",
+    "queng_services/mds/mddb/mddb_client",
     "queng_services/mds/mddb/mddb_service",
     "queng_services/mds/mddb/mddb_specs",
-    "queng_services/mds/mddb/mddb_client",
     "queng_services/mds/mddb/mddb_tests",
     "queng_services/templete/grpc_service",
-    "queng_specs/portfolio_specs",
+    "queng_specs/container_specs/container_specs_clickhouse",
     "queng_specs/container_specs/container_specs_kaiko",
     "queng_specs/container_specs/container_specs_postgres",
-    "queng_specs/container_specs/container_specs_clickhouse",
     "queng_specs/database_specs/db_specs_clickhouse",
     "queng_specs/database_specs/db_specs_postgres",
     "queng_specs/exchange_specs",
     "queng_specs/integration_specs/integration_specs_all",
+    "queng_specs/portfolio_specs",
     "queng_specs/service_specs/service_specs_all",
     "queng_specs/service_specs/shared_service_specs",
-    "queng_utils/math_utils",
     "queng_utils/crypto_utils",
     "queng_utils/docker_utils",
     "queng_utils/grpc_utils",
+    "queng_utils/math_utils",
     "queng_utils/service_utils",
 ]
-
 
 [workspace.package]
 edition = "2021"
@@ -133,7 +131,6 @@ opt-level = 3
 strip = 'debuginfo'  # Automatically strip debug infos from the binary to reduce size
 codegen-units = 1 # Reduce Parallel Code Generation Units to Increase Optimization
 
-
 [workspace.dependencies]
 #
 # ==============
@@ -146,7 +143,7 @@ cmdb_client = { path = "queng_services/core/cmdb/cmdb_client" }
 dbgw_cmdb_client = { path = "queng_services/core/dbgw/dbgw_client/dbgw_cmdb_client" }
 dbgw_mddb_client = { path = "queng_services/core/dbgw/dbgw_client/dbgw_mddb_client" }
 dbgw_smdb_client = { path = "queng_services/core/dbgw/dbgw_client/dbgw_smdb_client" }
-imdb_client = { path =  "queng_services/ims/imdb/imdb_client" }
+imdb_client = { path = "queng_services/ims/imdb/imdb_client" }
 ims_data_client = { path = "queng_services/ims/ims_clients/ims_data_client" }
 rest_client = { path = "queng_services/ims/ims_clients/rest_client" }
 mddb_client = { path = "queng_services/mds/mddb/mddb_client" }
@@ -181,7 +178,7 @@ service_import = { path = "queng_import/core/service_import" }
 # Kaiko
 kaiko_download = { path = "queng_import/kaiko/kaiko_download" }
 kaiko_import = { path = "queng_import/kaiko/kaiko_import" }
-kaiko_test_utils = { path =  "queng_import/kaiko/kaiko_test_utils" }
+kaiko_test_utils = { path = "queng_import/kaiko/kaiko_test_utils" }
 # Postgres DB
 pg_import_config = { path = "queng_import/postgres/pg_import_config" }
 pg_import_integrations = { path = "queng_import/postgres/pg_import_integrations" }
@@ -301,7 +298,7 @@ dotenv = { version = "0.15.0", default-features = false }
 encoding_rs = "0.8.34"
 futures = { version = "0.3.30" }
 hickory-resolver = { version = "0.24.1", default-features = false, features = ["tokio-runtime"] }
-iggy = { version = "0.6.33" }
+iggy = { version = "0.6.40" }
 klickhouse = { version = "0.13.1" }
 lazy_static = { version = "1.5.0" }
 lru = { version = "0.12.4" }
@@ -324,7 +321,7 @@ tokio-timer = { version = "0.2.13" }
 tokio-tungstenite = { version = "0.24.0", default-features = false }
 warp = "0.3.7"
 # Depdendencies for cloudflare workers that are not build with Bazel
-worker = { version = "0.4.2", default-features = false  }
-worker-macros = { version="0.4.2" }
+worker = { version = "0.4.2", default-features = false }
+worker-macros = { version = "0.4.2" }
 console_error_panic_hook = { version = "0.1.1" }
 

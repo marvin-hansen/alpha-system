@@ -90,7 +90,7 @@ rust_library(
         "//thirdparty/crates/futures-util-0.3.31:futures_util",
         "//thirdparty/crates/http-0.2.12:http",
         "//thirdparty/crates/serde-1.0.215:serde",
-        "//thirdparty/crates/serde_json-1.0.132:serde_json",
+        "//thirdparty/crates/serde_json-1.0.133:serde_json",
         "//thirdparty/crates/serde_urlencoded-0.7.1:serde_urlencoded",
         "//thirdparty/crates/sync_wrapper-0.1.2:sync_wrapper",
         "//thirdparty/crates/tower-service-0.3.3:tower_service",
