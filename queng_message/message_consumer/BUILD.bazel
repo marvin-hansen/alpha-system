@@ -19,6 +19,7 @@ rust_library(
         # External crates
         "//thirdparty/crates:anyhow",
         "//thirdparty/crates:bytes",
+        "//thirdparty/crates:futures-util",
         "//thirdparty/crates:iggy",
         "//thirdparty/crates:tokio",
     ],
