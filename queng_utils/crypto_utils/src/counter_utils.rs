@@ -26,7 +26,7 @@ impl RelaxedAtomicCounter {
     /// # Examples
     ///
     /// ```
-    /// use crypto_utils::counter_utils::RelaxedAtomicCounter;
+    /// use crypto_utils::RelaxedAtomicCounter;
     ///
     /// let counter = RelaxedAtomicCounter::new();
     ///
