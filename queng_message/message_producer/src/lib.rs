@@ -1,6 +1,8 @@
+mod getters;
 mod produce;
+mod shutdown;
 
-use iggy::client::{Client, StreamClient, TopicClient, UserClient};
+use iggy::client::Client;
 use iggy::clients::client::IggyClient;
 use iggy::clients::producer::IggyProducer;
 use iggy::error::IggyError;
@@ -12,9 +14,9 @@ use message_shared::Args;
 use std::str::FromStr;
 
 pub struct MessageProducer {
-    user_id: String,
-    stream_id: String,
-    topic_id: String,
+    user_id: Identifier,
+    stream_id: Identifier,
+    topic_id: Identifier,
     client: IggyClient,
     producer: IggyProducer,
 }
@@ -109,10 +111,10 @@ impl MessageProducer {
         // Init producer
         producer.init().await.expect("Failed to init producer");
 
-        // Extract identifiers
-        let user_id = args.username;
-        let stream_id = args.stream_id;
-        let topic_id = args.topic_id;
+        // Create identifiers for stream, topic, and user.
+        let stream_id = Identifier::from_str_value(&args.stream_id).expect("Invalid stream id");
+        let topic_id = Identifier::from_str_value(&args.topic_id).expect("Invalid topic id");
+        let user_id = Identifier::from_str_value(&args.username).expect("Invalid user id");
 
         Ok(Self {
             user_id,
@@ -121,62 +123,5 @@ impl MessageProducer {
             client,
             producer,
         })
-    }
-}
-
-impl MessageProducer {
-    /// Cleans up the stream, topic, and user created by this `MessageProducer` and shuts down the underlying client.
-    ///
-    /// # Errors
-    ///
-    /// Returns an `IggyError` if the stream, topic, user deletion, or client shutdown fails.
-    ///
-    pub async fn clean_up_and_shutdown(&self) -> Result<(), IggyError> {
-        // Connect client
-        self.client.connect().await.expect("Failed to connect");
-
-        // Create identifiers for stream, topic, and user.
-        let stream_id =
-            Identifier::from_str_value(self.stream_id.as_str()).expect("Invalid stream id");
-        let topic_id =
-            Identifier::from_str_value(self.topic_id.as_str()).expect("Invalid topic id");
-        let user_id = Identifier::from_str_value(self.user_id.as_str()).expect("Invalid user id");
-
-        // Delete the topic
-        self.client
-            .delete_topic(&stream_id, &topic_id)
-            .await
-            .expect("Failed to delete topic");
-
-        // Delete the stream
-        self.client
-            .delete_stream(&stream_id)
-            .await
-            .expect("Failed to delete stream");
-
-        // Delete the user
-        self.client
-            .delete_user(&user_id)
-            .await
-            .expect("Failed to delete user");
-
-        // Shutdown
-        self.client.shutdown().await.expect("Failed to shutdown");
-
-        Ok(())
-    }
-
-    /// Shuts down the underlying client.
-    ///
-    /// # Errors
-    ///
-    /// Returns an `IggyError` if the client shutdown fails.
-    ///
-    pub async fn shutdown(&self) -> Result<(), IggyError> {
-        // Connect client
-        self.client.connect().await.expect("Failed to connect");
-
-        // Shutdown
-        self.client.shutdown().await
     }
 }

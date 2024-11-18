@@ -1,20 +1,25 @@
-mod consume;
-
 use common_message;
-use iggy::client::Client;
-use iggy::clients::consumer::{AutoCommit, AutoCommitWhen, IggyConsumer, ReceivedMessage};
+use iggy::client::{Client, StreamClient, TopicClient, UserClient};
+use iggy::clients::client::IggyClient;
+use iggy::clients::consumer::{AutoCommit, AutoCommitWhen, IggyConsumer};
 use iggy::consumer::ConsumerKind;
 use iggy::error::IggyError;
+use iggy::identifier::Identifier;
 use iggy::messages::poll_messages::PollingStrategy;
 use iggy::utils::duration::IggyDuration;
 use message_shared::utils as shared_utils;
 use message_shared::Args;
-use std::error::Error;
 use std::str::FromStr;
 
+mod getters;
+mod shutdown;
+
 pub struct MessageConsumer {
+    user_id: Identifier,
+    stream_id: Identifier,
+    topic_id: Identifier,
+    client: IggyClient,
     consumer: IggyConsumer,
-    message_handler: fn(&ReceivedMessage) -> Result<(), Box<dyn Error>>,
 }
 
 impl MessageConsumer {
@@ -28,7 +33,6 @@ impl MessageConsumer {
     /// * `stream_id` - The identifier of the stream.
     /// * `topic_id` - The identifier of the topic.
     /// * `tcp_server_address` - The tcp server address i.e. "127.0.0.1:8090"
-    /// * `message_handler` - A callback function that will be called for each received message.
     ///
     /// # Returns
     ///
@@ -41,12 +45,10 @@ impl MessageConsumer {
         stream_id: String,
         topic_id: String,
         tcp_server_address: String,
-        message_handler: fn(&ReceivedMessage) -> Result<(), Box<dyn Error>>,
     ) -> Result<Self, IggyError> {
         Self::build(
             Args::new(username, password, stream_id, topic_id, tcp_server_address),
             consumer_name,
-            message_handler,
         )
         .await
     }
@@ -57,7 +59,6 @@ impl MessageConsumer {
     ///
     /// * `config` - The `ImsDataConfig` to build the `MessageConsumer` instance from.
     /// * `consumer_name` - The name of the consumer.
-    /// * `message_handler` - A callback function that will be called for each received message.
     ///
     /// # Returns
     ///
@@ -66,14 +67,8 @@ impl MessageConsumer {
     pub async fn from_config(
         config: &common_message::ImsDataConfig,
         consumer_name: &str,
-        message_handler: fn(&ReceivedMessage) -> Result<(), Box<dyn Error>>,
     ) -> Result<Self, IggyError> {
-        Self::build(
-            Args::from_ims_data_config(config),
-            consumer_name,
-            message_handler,
-        )
-        .await
+        Self::build(Args::from_ims_data_config(config), consumer_name).await
     }
 
     /// Creates a new `MessageConsumer` instance using the default configuration.
@@ -84,22 +79,12 @@ impl MessageConsumer {
     ///
     pub async fn default() -> Result<Self, IggyError> {
         let consumer_name = "default-message-consumer";
-        let message_handler = Self::default_message_handler;
-        Self::build(Args::default(), consumer_name, message_handler).await
-    }
-
-    fn default_message_handler(message: &ReceivedMessage) -> Result<(), Box<dyn Error>> {
-        println!("Received message: {:?}", &message.message.id);
-        Ok(())
+        Self::build(Args::default(), consumer_name).await
     }
 }
 
 impl MessageConsumer {
-    async fn build(
-        args: Args,
-        consumer_name: &str,
-        message_handler: fn(&ReceivedMessage) -> Result<(), Box<dyn Error>>,
-    ) -> Result<Self, IggyError> {
+    async fn build(args: Args, consumer_name: &str) -> Result<Self, IggyError> {
         // Build client
         let client = shared_utils::build_client(args.to_sdk_args())
             .await
@@ -136,9 +121,17 @@ impl MessageConsumer {
             .await
             .expect("Failed to initialize consumer");
 
+        // Create identifiers for stream, topic, and user.
+        let stream_id = Identifier::from_str_value(&args.stream_id).expect("Invalid stream id");
+        let topic_id = Identifier::from_str_value(&args.topic_id).expect("Invalid topic id");
+        let user_id = Identifier::from_str_value(&args.username).expect("Invalid user id");
+
         Ok(Self {
+            user_id,
+            stream_id,
+            topic_id,
+            client,
             consumer,
-            message_handler,
         })
     }
 }
