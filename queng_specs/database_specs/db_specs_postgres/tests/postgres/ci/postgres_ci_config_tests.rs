@@ -1,5 +1,5 @@
 use common_env::EnvironmentType;
-use db_specs_postgres::postgres::get_postgres_config;
+use db_specs_postgres::get_postgres_config;
 
 #[test]
 fn test_get_ci_db_config() {

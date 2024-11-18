@@ -1,2 +1,3 @@
-pub mod postgres;
-pub mod prelude;
+mod postgres;
+
+pub use crate::postgres::*;

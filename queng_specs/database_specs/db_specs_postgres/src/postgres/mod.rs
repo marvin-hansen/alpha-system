@@ -1,8 +1,6 @@
 use common_database::PostgresDBConfig;
 use common_env::EnvironmentType;
 
-pub use crate::postgres;
-
 pub fn get_postgres_config(env_type: &EnvironmentType) -> PostgresDBConfig {
     match env_type {
         EnvironmentType::LOCAL => get_base_postgres_db_config(),

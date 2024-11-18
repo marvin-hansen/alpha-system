@@ -3,7 +3,7 @@ mod utils;
 
 use common_database::PostgresDBConfig;
 use common_env::EnvironmentType;
-use db_specs_postgres::postgres;
+use db_specs_postgres as postgres;
 
 #[derive(Debug, Eq, Clone, PartialEq)]
 pub struct PostgresConfigManager {

@@ -1,4 +1,4 @@
-use db_specs_postgres::postgres::get_cluster_db_config;
+use db_specs_postgres::get_cluster_db_config;
 
 #[test]
 fn test_get_cluster_db_config() {
