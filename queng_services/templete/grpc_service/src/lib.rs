@@ -60,7 +60,7 @@ where
     let service_addr = cfg_manager
         .get_svc_socket_addr()
         .await
-        .expect("Failed to get service host a       nd port");
+        .expect("Failed to get service host and port");
 
     dbg_print("Configuring socket address for gRPC service");
     let grpc_addr = service_addr

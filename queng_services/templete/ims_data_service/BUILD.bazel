@@ -9,10 +9,16 @@ rust_library(
     visibility = ["//visibility:public"],
     deps = [
         # Internal crates
+        "//alias:common_config",
+        "//alias:common_errors",
+        "//alias:common_exchange",
+        "//alias:common_service",
+        "//alias:config_manager",
         "//alias:common_message",
         "//alias:message_consumer",
         "//alias:message_producer",
         "//alias:message_shared",
+        "//alias/client:smdb_client",
         # External crates
         "//thirdparty/crates:iggy",
         "//thirdparty/crates:tokio",

@@ -1,1 +1,1 @@
-//queng_services/ims/imdb/imdb_service:imdb
+//alias/service:ims_data_service
