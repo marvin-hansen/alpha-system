@@ -1,5 +1,5 @@
 use crate::db::metadata::Metadata;
-use crate::prelude::ClickHouseUtilError;
+use crate::ClickHouseUtilError;
 
 impl Metadata {
     /// Drops all metadata tables in ClickHouse.

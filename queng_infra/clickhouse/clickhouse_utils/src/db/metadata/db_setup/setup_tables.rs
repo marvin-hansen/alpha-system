@@ -1,5 +1,5 @@
 use crate::db::metadata::{Metadata, DB_NAME, DB_TABLES};
-use crate::prelude::ClickHouseUtilError;
+use crate::ClickHouseUtilError;
 
 impl Metadata {
     /// Creates all the metadata tables in the database.

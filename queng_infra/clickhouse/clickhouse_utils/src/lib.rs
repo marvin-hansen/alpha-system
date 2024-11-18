@@ -1,12 +1,15 @@
 mod db;
 
 pub mod error;
-pub mod prelude;
 pub mod types;
 
 use crate::db::metadata::Metadata;
-use error::ClickHouseUtilError;
 use klickhouse::{Client, ClientOptions};
+
+pub use crate::db::utils;
+pub use crate::error::ClickHouseQueryError;
+pub use crate::error::ClickHouseUtilError;
+pub use klickhouse::Client as ClickHouseClient;
 
 pub struct ClickhouseUtil {
     dbg: bool,

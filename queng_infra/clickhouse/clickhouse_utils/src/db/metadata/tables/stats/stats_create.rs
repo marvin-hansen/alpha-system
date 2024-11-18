@@ -1,5 +1,5 @@
 use crate::db::metadata::Metadata;
-use crate::prelude::ClickHouseUtilError;
+use crate::ClickHouseUtilError;
 
 impl Metadata {
     /// Creates the stats table in the metadata database if it does not already exist.
