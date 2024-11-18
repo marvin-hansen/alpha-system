@@ -1,4 +1,4 @@
-use common_ims::prelude::IntegrationConfig;
+use common_ims::IntegrationConfig;
 use environment_manager::EnvironmentManager;
 use pg_imdb_manager::PostgresIMDBManager;
 use postgres_config_manager::PostgresConfigManager;

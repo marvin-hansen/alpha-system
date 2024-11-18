@@ -1,6 +1,6 @@
 use crate::error::IMDBClientError;
 use crate::IMDBClient;
-use common_ims::prelude::{ExchangeID, IntegrationConfig};
+use common_ims::{ExchangeID, IntegrationConfig};
 use proto_imdb::proto::ProtoIntegrationConfig;
 use proto_imdb_utils::prelude::*;
 

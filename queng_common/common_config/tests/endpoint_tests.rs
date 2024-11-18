@@ -1,4 +1,4 @@
-use common_config::prelude::{Endpoint, ProtocolType};
+use common_config::{Endpoint, ProtocolType};
 
 #[test]
 fn test_new() {

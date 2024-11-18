@@ -1,7 +1,7 @@
 mod service;
 
 use crate::service::IMDBServer;
-use common_config::prelude::ServiceID;
+use common_config::ServiceID;
 use config_manager::CfgManager;
 use mimalloc::MiMalloc;
 use proto_imdb::proto::db_gateway_imdb_service_client::DbGatewayImdbServiceClient;

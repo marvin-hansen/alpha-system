@@ -1,4 +1,4 @@
-use common_errors::prelude::PostgresDBError;
+use common_errors::PostgresDBError;
 use diesel::{Connection, PgConnection};
 use std::time::Duration;
 use tokio::time::{sleep, Instant};

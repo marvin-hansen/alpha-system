@@ -1,4 +1,4 @@
-use common_config::prelude::ProtocolType;
+use common_config::ProtocolType;
 
 #[test]
 fn test_default() {

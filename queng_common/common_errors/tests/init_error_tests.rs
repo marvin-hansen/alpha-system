@@ -1,4 +1,4 @@
-use common_errors::prelude::InitError;
+use common_errors::InitError;
 
 #[test]
 fn test_new_init_error() {

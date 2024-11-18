@@ -1,4 +1,4 @@
-use common_config::prelude::ServiceID;
+use common_config::ServiceID;
 use container_specs_postgres::postgres_db_container_config;
 use docker_utils::prelude::DockerUtil;
 use service_utils::prelude::ServiceUtil;

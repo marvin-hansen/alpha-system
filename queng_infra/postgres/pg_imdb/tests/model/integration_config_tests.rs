@@ -1,4 +1,4 @@
-use common_ims::prelude::{
+use common_ims::{
     ExchangeID, ImsIntegrationType, IntegrationConfig as CommonIntegrationConfig,
     IntegrationMessageConfig,
 };

@@ -1,4 +1,4 @@
-use common_config::prelude::{Endpoint, ServiceConfig, ServiceID};
+use common_config::{Endpoint, ServiceConfig, ServiceID};
 
 #[test]
 fn test_new() {

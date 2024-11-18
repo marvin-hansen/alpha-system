@@ -1,5 +1,5 @@
 use crate::CfgManager;
-use common_errors::prelude::InitError;
+use common_errors::InitError;
 
 impl CfgManager {
     /// Returns the metric socket address and uri to run the service in any

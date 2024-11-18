@@ -1,7 +1,7 @@
 use crate::types::OHLCVRow;
 use crate::{ClickhouseDBManager, FN_NAME};
-use common_data_bar::prelude::TimeResolution;
-use common_database::prelude::sanitize_utils;
+use common_data_bar::TimeResolution;
+use common_database::sanitize_utils;
 use futures::stream::BoxStream;
 use futures::StreamExt;
 use klickhouse::KlickhouseError;

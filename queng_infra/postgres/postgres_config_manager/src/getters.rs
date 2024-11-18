@@ -1,5 +1,5 @@
 use crate::PostgresConfigManager;
-use common_database::prelude::PostgresDBConfig;
+use common_database::PostgresDBConfig;
 
 impl PostgresConfigManager {
     pub fn postgres_db_config(&self) -> &PostgresDBConfig {

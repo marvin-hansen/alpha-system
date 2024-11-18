@@ -1,4 +1,4 @@
-use common_metadata::prelude::MetaAsset;
+use common_metadata::MetaAsset;
 use pg_mddb::prelude::Asset;
 
 #[test]

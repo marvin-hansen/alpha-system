@@ -1,4 +1,4 @@
-use crate::prelude::OHLCVBar;
+use crate::OHLCVBar;
 use std::fmt;
 use std::fmt::Display;
 

@@ -8,9 +8,9 @@ use tokio::sync::RwLock;
 use tokio::time::Instant;
 use warp::Filter;
 
-use common_config::prelude::ServiceID;
-use common_errors::prelude::InitError;
-use common_metadata::prelude::MetaDataSet;
+use common_config::ServiceID;
+use common_errors::InitError;
+use common_metadata::MetaDataSet;
 use common_service::{print_utils, shutdown_utils};
 
 mod handler;

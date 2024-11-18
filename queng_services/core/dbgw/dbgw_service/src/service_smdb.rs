@@ -2,7 +2,7 @@ use std::sync::Arc;
 use tokio::sync::RwLock;
 use tonic::{Request, Response, Status};
 
-use common_config::prelude::ServiceID;
+use common_config::ServiceID;
 use pg_smdb_manager::PostgresSMDBManager;
 use proto_smdb::proto::db_gateway_smdb_service_server::DbGatewaySmdbService;
 use proto_smdb::proto::*;

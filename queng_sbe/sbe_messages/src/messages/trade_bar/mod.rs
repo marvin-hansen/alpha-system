@@ -1,4 +1,4 @@
-use common_data_bar::prelude::TradeBar;
+use common_data_bar::TradeBar;
 
 use crate::errors::{SbeDecodeError, SbeEncodeError};
 

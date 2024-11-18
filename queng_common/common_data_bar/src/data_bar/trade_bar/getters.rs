@@ -1,7 +1,7 @@
 use chrono::{DateTime, Utc};
 use rust_decimal::Decimal;
 
-use crate::prelude::TradeBar;
+use crate::TradeBar;
 
 impl TradeBar {
     pub fn date_time(&self) -> DateTime<Utc> {

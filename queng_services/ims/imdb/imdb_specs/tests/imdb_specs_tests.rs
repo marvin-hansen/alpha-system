@@ -1,4 +1,4 @@
-use common_config::prelude::ServiceID;
+use common_config::ServiceID;
 use imdb_specs::imdb_service_config;
 
 #[test]

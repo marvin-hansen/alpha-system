@@ -1,4 +1,4 @@
-use common_config::prelude::ServiceID;
+use common_config::ServiceID;
 
 #[test]
 fn test_default() {

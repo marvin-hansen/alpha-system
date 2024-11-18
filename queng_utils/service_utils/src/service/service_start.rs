@@ -1,4 +1,4 @@
-use common_config::prelude::ServiceID;
+use common_config::ServiceID;
 use std::process::Command;
 use std::time::Duration;
 use tokio::time::{sleep, Instant};

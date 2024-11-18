@@ -1,5 +1,5 @@
 use crate::utils_shared;
-use common_metadata::prelude::MetaDataSet;
+use common_metadata::MetaDataSet;
 // Note, full and partial import test may run concurrently hence require different testdata
 // to ensure zero conflicts can happen in the DB.
 

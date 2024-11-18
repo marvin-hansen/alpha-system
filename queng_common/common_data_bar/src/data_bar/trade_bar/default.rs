@@ -1,4 +1,4 @@
-use crate::prelude::TradeBar;
+use crate::TradeBar;
 use chrono::Utc;
 use rust_decimal::prelude::Zero;
 use rust_decimal::Decimal;

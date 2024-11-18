@@ -1,8 +1,6 @@
 use crate::model::integration_config::IntegrationConfig;
 use crate::model::integration_message_config_type::MessageConfig;
-use common_ims::prelude::{
-    ExchangeID, ImsIntegrationType, IntegrationConfig as CommonIntegrationConfig,
-};
+use common_ims::{ExchangeID, ImsIntegrationType, IntegrationConfig as CommonIntegrationConfig};
 
 impl IntegrationConfig {
     /// Converts a common integration configuration into an integration configuration.

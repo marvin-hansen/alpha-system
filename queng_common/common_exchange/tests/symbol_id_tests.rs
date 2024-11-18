@@ -1,4 +1,4 @@
-use common_exchange::prelude::SymbolID;
+use common_exchange::SymbolID;
 
 #[test]
 fn test_symbol_id_from() {

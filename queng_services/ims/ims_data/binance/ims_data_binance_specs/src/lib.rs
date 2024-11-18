@@ -1,7 +1,5 @@
-use common_config::prelude::{ServiceConfig, ServiceID};
-use common_ims::prelude::{
-    ExchangeID, ImsIntegrationType, IntegrationConfig, IntegrationMessageConfig,
-};
+use common_config::{ServiceConfig, ServiceID};
+use common_ims::{ExchangeID, ImsIntegrationType, IntegrationConfig, IntegrationMessageConfig};
 use shared_service_specs::{health_endpoint, ims_endpoint, metric_endpoint};
 
 /// Returns the configuration for the Binance data integration in the IMS system.

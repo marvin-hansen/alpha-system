@@ -1,7 +1,7 @@
 use crate::model::portfolio::UpdatePortfolio;
 
 use crate::model::instrument::Instrument;
-use common_exchange::prelude::{
+use common_exchange::{
     AccountType, Instrument as CommonInstrument, PortfolioConfig as CommonPortfolioConfig,
 };
 impl UpdatePortfolio {

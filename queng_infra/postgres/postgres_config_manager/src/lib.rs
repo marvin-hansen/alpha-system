@@ -1,8 +1,8 @@
 mod getters;
 mod utils;
 
-use common_database::prelude::PostgresDBConfig;
-use common_env::prelude::EnvironmentType;
+use common_database::PostgresDBConfig;
+use common_env::EnvironmentType;
 use db_specs_postgres::postgres;
 
 #[derive(Debug, Eq, Clone, PartialEq)]

@@ -1,5 +1,5 @@
 use crate::ClickhouseConfigManager;
-use common_database::prelude::ClickHouseConfig;
+use common_database::ClickHouseConfig;
 
 impl ClickhouseConfigManager {
     pub fn clickhouse_db_config(&self) -> &ClickHouseConfig {

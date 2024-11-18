@@ -1,4 +1,4 @@
-use common_metadata::prelude::MetaInstrument;
+use common_metadata::MetaInstrument;
 use pg_mddb::prelude::Instrument;
 
 #[test]

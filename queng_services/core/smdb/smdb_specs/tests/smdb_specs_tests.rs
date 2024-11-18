@@ -1,4 +1,4 @@
-use common_config::prelude::{ProtocolType, ServiceID};
+use common_config::{ProtocolType, ServiceID};
 use smdb_specs::smdb_service_config;
 
 #[test]

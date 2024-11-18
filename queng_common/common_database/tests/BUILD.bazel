@@ -19,24 +19,6 @@ rust_test_suite(
 )
 
 rust_test_suite(
-    name = "error_types_tests",
-    srcs = glob([
-        "error_types/*_tests.rs",
-    ]),
-    tags = [
-        "common",
-        "common_database",
-        "unit-test",
-    ],
-    visibility = ["//visibility:public"],
-    deps = [
-        # Crate to test
-        "//alias:common_database",
-        # External crates
-    ],
-)
-
-rust_test_suite(
     name = "pg_types_tests",
     srcs = glob([
         "pg_types/*_tests.rs",
@@ -68,6 +50,7 @@ rust_test_suite(
     deps = [
         # Crate to test
         "//alias:common_database",
-        # External crates
+        # Internal crates
+        "//alias:common_errors",
     ],
 )

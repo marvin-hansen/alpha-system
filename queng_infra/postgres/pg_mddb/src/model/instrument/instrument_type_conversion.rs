@@ -1,6 +1,6 @@
 use crate::model::instrument::Instrument;
 use crate::prelude::{CreateInstrument, UpdateInstrument};
-use common_metadata::prelude::{InstrumentMetadata, MetaInstrument};
+use common_metadata::{InstrumentMetadata, MetaInstrument};
 
 impl Instrument {
     pub fn from_meta_instrument(meta_instrument: MetaInstrument) -> Self {

@@ -1,4 +1,4 @@
-use common_database::prelude::ClickHouseConfig;
+use common_database::ClickHouseConfig;
 
 pub fn get_ci_db_config() -> ClickHouseConfig {
     base_ci_db_config("metadata")

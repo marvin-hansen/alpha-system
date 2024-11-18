@@ -1,5 +1,5 @@
 use crate::model::protocol_type::ProtocolType;
-use common_config::prelude::ProtocolType as CommonProtocolType;
+use common_config::ProtocolType as CommonProtocolType;
 
 impl ProtocolType {
     pub fn from_common_protocol_type(common_protocol_type: &CommonProtocolType) -> Self {

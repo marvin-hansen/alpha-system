@@ -1,4 +1,4 @@
-use common_metadata::prelude::{InstrumentMetadata, MetaInstrument, MetaInstrumentsRoot};
+use common_metadata::{InstrumentMetadata, MetaInstrument, MetaInstrumentsRoot};
 
 #[test]
 fn test_instruments_root_and_instrument_properties() {

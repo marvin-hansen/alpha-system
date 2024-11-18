@@ -1,5 +1,5 @@
-use common_database::prelude::ClickHouseConfig;
-use common_env::prelude::EnvironmentType;
+use common_database::ClickHouseConfig;
+use common_env::EnvironmentType;
 
 pub mod ci_clickhouse_config;
 pub mod cluster_clickhouse_config;

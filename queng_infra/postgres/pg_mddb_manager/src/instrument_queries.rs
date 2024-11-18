@@ -1,6 +1,6 @@
 use crate::PostgresMDDBManager;
-use common_errors::prelude::PostgresDBError;
-use common_metadata::prelude::MetaInstrument;
+use common_errors::PostgresDBError;
+use common_metadata::MetaInstrument;
 use pg_mddb::prelude::Instrument;
 
 impl PostgresMDDBManager {

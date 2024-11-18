@@ -3,7 +3,7 @@ mod service;
 use std::error::Error;
 
 use crate::service::MDDBServer;
-use common_config::prelude::ServiceID;
+use common_config::ServiceID;
 use config_manager::CfgManager;
 use mimalloc::MiMalloc;
 use proto_mddb::proto::db_gateway_mddb_service_client::DbGatewayMddbServiceClient;

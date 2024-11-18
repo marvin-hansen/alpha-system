@@ -1,5 +1,5 @@
 use crate::utils_shared;
-use common_metadata::prelude::MetaDataSet;
+use common_metadata::MetaDataSet;
 
 pub fn get_partial_update_test_asset_id() -> String {
     "test_partial_update_asset_code".to_string()

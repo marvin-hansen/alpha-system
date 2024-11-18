@@ -1,4 +1,4 @@
-use common_metadata::prelude::{MetaExchange, MetaExchangesRoot};
+use common_metadata::{MetaExchange, MetaExchangesRoot};
 
 #[test]
 fn test_exchanges_root_and_exchange_properties() {

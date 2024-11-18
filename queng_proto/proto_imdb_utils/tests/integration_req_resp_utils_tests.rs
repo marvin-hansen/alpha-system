@@ -1,5 +1,5 @@
-use common_exchange::prelude::ExchangeID;
-use common_ims::prelude::{ImsIntegrationType, IntegrationConfig, IntegrationMessageConfig};
+use common_exchange::ExchangeID;
+use common_ims::{ImsIntegrationType, IntegrationConfig, IntegrationMessageConfig};
 use proto_imdb::proto::*;
 use proto_imdb_utils::prelude::*;
 

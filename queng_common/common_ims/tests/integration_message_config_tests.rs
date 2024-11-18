@@ -1,5 +1,5 @@
-use common_ims::prelude::ExchangeID;
-use common_ims::prelude::IntegrationMessageConfig;
+use common_ims::ExchangeID;
+use common_ims::IntegrationMessageConfig;
 
 #[test]
 fn test_new_config_name_format() {

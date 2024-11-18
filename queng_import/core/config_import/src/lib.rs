@@ -1,6 +1,6 @@
 mod import_portfolio_configs;
 
-use common_exchange::prelude::PortfolioConfig;
+use common_exchange::PortfolioConfig;
 use environment_manager::EnvironmentManager;
 use pg_cmdb_manager::PostgresCMDBManager;
 use portfolio_specs::get_all_portfolio_specs;

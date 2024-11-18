@@ -1,4 +1,4 @@
-use crate::prelude::{
+use crate::{
     MetaAsset, MetaAssetRoot, MetaExchange, MetaExchangesRoot, MetaInstrument, MetaInstrumentsRoot,
     MetaStats,
 };

@@ -1,5 +1,5 @@
 use crate::print_utils;
-use common_metadata::prelude::MetaDataSet;
+use common_metadata::MetaDataSet;
 use pg_mddb_manager::PostgresMDDBManager;
 
 /// Imports a sample of asset metadata into the database.

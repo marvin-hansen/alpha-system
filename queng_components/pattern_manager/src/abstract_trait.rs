@@ -1,4 +1,4 @@
-use common_data_bar::prelude::OHLCVBar;
+use common_data_bar::OHLCVBar;
 
 pub trait PatternTrait {
     fn get_eval_result(&self, index: usize) -> Result<bool, String>;

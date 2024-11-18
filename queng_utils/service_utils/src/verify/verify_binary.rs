@@ -1,6 +1,6 @@
 use std::process::Command;
 
-use common_env::prelude::EnvironmentType;
+use common_env::EnvironmentType;
 
 use crate::error::verify_binary_error::VerifyBinaryError;
 use crate::fields::{BINARIES, PATH};

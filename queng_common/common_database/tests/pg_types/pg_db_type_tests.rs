@@ -1,4 +1,4 @@
-use common_database::prelude::PostgresDBSchema;
+use common_database::PostgresDBSchema;
 
 #[test]
 fn test_from_u8() {

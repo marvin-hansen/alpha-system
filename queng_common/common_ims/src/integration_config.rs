@@ -1,6 +1,6 @@
 use crate::integration_message_config::IntegrationMessageConfig;
-use crate::prelude::ImsIntegrationType;
-pub use common_exchange::prelude::ExchangeID;
+use crate::ImsIntegrationType;
+pub use common_exchange::ExchangeID;
 use std::fmt::Display;
 
 #[derive(Debug, Clone, Eq, PartialEq)]

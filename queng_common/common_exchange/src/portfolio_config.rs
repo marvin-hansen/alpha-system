@@ -1,6 +1,6 @@
 use std::fmt::{Display, Formatter};
 
-use crate::prelude::{AccountType, Instrument};
+use crate::{AccountType, Instrument};
 
 #[derive(Debug, Default, Clone, PartialEq)]
 pub struct PortfolioConfig {

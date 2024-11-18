@@ -1,5 +1,5 @@
-use common_exchange::prelude::ExchangeID;
-use common_ims::prelude::{ImsIntegrationType, IntegrationConfig, IntegrationMessageConfig};
+use common_exchange::ExchangeID;
+use common_ims::{ImsIntegrationType, IntegrationConfig, IntegrationMessageConfig};
 
 #[test]
 fn test_new_integration_config_online_default() {

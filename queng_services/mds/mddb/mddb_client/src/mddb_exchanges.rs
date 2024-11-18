@@ -1,6 +1,6 @@
 use crate::error::MDDBClientError;
 use crate::MDDBClient;
-use common_metadata::prelude::MetaExchange;
+use common_metadata::MetaExchange;
 
 use proto_mddb_utils::prelude::*;
 

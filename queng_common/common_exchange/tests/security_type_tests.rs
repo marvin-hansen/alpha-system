@@ -1,4 +1,4 @@
-use common_exchange::prelude::SecurityType;
+use common_exchange::SecurityType;
 
 #[test]
 fn test_default_variant() {

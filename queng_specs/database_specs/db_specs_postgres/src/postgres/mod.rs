@@ -1,5 +1,5 @@
-use common_database::prelude::PostgresDBConfig;
-use common_env::prelude::EnvironmentType;
+use common_database::PostgresDBConfig;
+use common_env::EnvironmentType;
 
 pub use crate::postgres;
 

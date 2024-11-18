@@ -2,7 +2,7 @@ use std::fmt;
 
 use rust_decimal::Decimal;
 
-use crate::prelude::ExchangeID;
+use crate::ExchangeID;
 
 #[derive(Debug, Default, Clone, Eq, PartialEq)]
 pub struct Symbol {

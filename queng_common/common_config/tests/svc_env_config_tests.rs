@@ -1,4 +1,4 @@
-use common_config::prelude::{ServiceID, SvcEnvConfig};
+use common_config::{ServiceID, SvcEnvConfig};
 
 fn get_svc_env_config(service_id: ServiceID) -> SvcEnvConfig {
     let cluster_host = "127.0.0.1".to_string();

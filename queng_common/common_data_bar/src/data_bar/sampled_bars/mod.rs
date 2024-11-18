@@ -1,4 +1,4 @@
-use crate::prelude::OHLCVBar;
+use crate::OHLCVBar;
 
 /// Holds OHLCV bars aggregated at different time scales.
 ///

@@ -1,6 +1,6 @@
-use common_config::prelude::{ServiceConfig, ServiceID, SvcEnvConfig};
-use common_env::prelude::EnvironmentType;
-use common_exchange::prelude::ExchangeID;
+use common_config::{ServiceConfig, ServiceID, SvcEnvConfig};
+use common_env::EnvironmentType;
+use common_exchange::ExchangeID;
 use environment_manager::EnvironmentManager;
 use exchange_specs::prelude;
 use exchange_specs::prelude::{

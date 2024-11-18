@@ -1,4 +1,4 @@
-use common_config::prelude::ServiceID;
+use common_config::ServiceID;
 use common_service::{print_utils, shutdown_utils};
 use config_manager::CfgManager;
 use smdb_client::SMDBClient;

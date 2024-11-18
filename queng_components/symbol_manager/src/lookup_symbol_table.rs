@@ -1,5 +1,5 @@
 use crate::SymbolManager;
-use common_errors::prelude::LookupError;
+use common_errors::LookupError;
 
 impl SymbolManager {
     /// Retrieves the database table name for the given exchange ID and symbol ID.

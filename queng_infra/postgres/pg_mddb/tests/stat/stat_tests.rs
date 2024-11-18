@@ -1,4 +1,4 @@
-use common_metadata::prelude::MetaStats;
+use common_metadata::MetaStats;
 use container_specs_postgres::postgres_db_container_config;
 use diesel::Connection;
 use docker_utils::prelude::DockerUtil;

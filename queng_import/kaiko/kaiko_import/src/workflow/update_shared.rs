@@ -1,5 +1,5 @@
 use crate::print_utils;
-use common_metadata::prelude::MetaDataSet;
+use common_metadata::MetaDataSet;
 use pg_mddb_manager::PostgresMDDBManager;
 
 /// Updates assets metadata in the Postgres database based on a comparison with the provided MetaDataSet.

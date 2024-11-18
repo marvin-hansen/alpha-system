@@ -3,7 +3,7 @@ use std::error::Error;
 use tokio::time::Instant;
 use tonic::transport::{Channel, Server, Uri};
 
-use common_config::prelude::ServiceID;
+use common_config::ServiceID;
 use common_service::{print_utils, shutdown_utils};
 use config_manager::CfgManager;
 use proto_smdb::proto::db_gateway_smdb_service_client::DbGatewaySmdbServiceClient;

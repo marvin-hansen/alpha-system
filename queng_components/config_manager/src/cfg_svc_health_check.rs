@@ -1,6 +1,6 @@
 use crate::CfgManager;
-use common_config::prelude::ServiceID;
-use common_errors::prelude::InitError;
+use common_config::ServiceID;
+use common_errors::InitError;
 
 impl CfgManager {
     pub async fn get_health_check_url(&self, service_id: &ServiceID) -> Result<String, InitError> {

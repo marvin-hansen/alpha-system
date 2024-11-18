@@ -1,4 +1,4 @@
-use common_config::prelude::{ServiceConfig, ServiceID};
+use common_config::{ServiceConfig, ServiceID};
 use shared_service_specs::{health_endpoint, ims_endpoint, metric_endpoint};
 
 /// Constructs the configuration for the VEX service.

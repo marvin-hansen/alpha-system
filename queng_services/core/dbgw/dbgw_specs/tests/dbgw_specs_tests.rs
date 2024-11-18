@@ -1,4 +1,4 @@
-use common_config::prelude::{ProtocolType, ServiceID};
+use common_config::{ProtocolType, ServiceID};
 use dbgw_specs::dbgw_service_config;
 
 #[test]

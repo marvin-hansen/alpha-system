@@ -92,6 +92,7 @@ members = [
     "queng_services/mds/mddb/mddb_specs",
     "queng_services/mds/mddb/mddb_tests",
     "queng_services/templete/grpc_service",
+    "queng_services/templete/ims_data_service",
     "queng_specs/container_specs/container_specs_clickhouse",
     "queng_specs/container_specs/container_specs_kaiko",
     "queng_specs/container_specs/container_specs_postgres",
@@ -241,6 +242,7 @@ kaiko_cdn = { path = "queng_services/mds/kaiko/kaiko_cdn" }
 kaiko_cdn_auth = { path = "queng_services/mds/kaiko/kaiko_cdn_auth" }
 # Service template
 grpc_service = { path = "queng_services/templete/grpc_service" }
+ims_data_service = { path = "queng_services/templete/ims_data_service" }
 
 # Specs
 # Container specs

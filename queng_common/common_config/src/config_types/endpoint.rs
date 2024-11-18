@@ -1,6 +1,6 @@
 use std::fmt::{Display, Formatter};
 
-use crate::prelude::{HostEndpoint, ProtocolType};
+use crate::{HostEndpoint, ProtocolType};
 
 /// An Endpoint represents a single endpoint of a service.
 ///

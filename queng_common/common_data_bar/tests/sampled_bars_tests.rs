@@ -1,5 +1,5 @@
 use chrono::Utc;
-use common_data_bar::prelude::{OHLCVBar, SampledDataBars};
+use common_data_bar::{OHLCVBar, SampledDataBars};
 use rust_decimal::Decimal;
 
 fn get_ohlcv_bar(date_time: chrono::DateTime<Utc>) -> OHLCVBar {

@@ -1,6 +1,6 @@
 use crate::print_utils;
 use crate::types::worflow_op::{MetaDataDBWOp, WorkflowOp, WorkflowOpAll};
-use common_metadata::prelude::{MetaDataDBRecords, MetaStats};
+use common_metadata::{MetaDataDBRecords, MetaStats};
 
 /// This function determines the workflow operations needed to synchronize
 /// metadata between the Kaiko data source and the Postgres database.

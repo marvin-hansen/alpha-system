@@ -1,6 +1,6 @@
 use crate::model::exchange::Exchange;
 use crate::prelude::{CreateExchange, UpdateExchange};
-use common_metadata::prelude::MetaExchange;
+use common_metadata::MetaExchange;
 
 impl Exchange {
     pub fn from_meta_exchange(meta_exchange: MetaExchange) -> Self {

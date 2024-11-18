@@ -1,4 +1,4 @@
-use common_database::prelude::PostgresDBConfig;
+use common_database::PostgresDBConfig;
 
 #[test]
 fn test_postgres_db_config() {

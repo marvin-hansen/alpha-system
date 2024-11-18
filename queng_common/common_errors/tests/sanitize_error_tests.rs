@@ -1,4 +1,4 @@
-use common_database::prelude::SanitizeError;
+use common_errors::SanitizeError;
 
 #[test]
 fn test_display_invalid_table_name() {

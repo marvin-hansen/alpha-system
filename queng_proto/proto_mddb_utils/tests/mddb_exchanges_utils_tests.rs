@@ -1,4 +1,4 @@
-use common_metadata::prelude::MetaExchange;
+use common_metadata::MetaExchange;
 use proto_mddb::proto::ProtoMetaExchange;
 use proto_mddb_utils::prelude::*;
 

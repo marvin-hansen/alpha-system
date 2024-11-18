@@ -1,4 +1,4 @@
-use common_metadata::prelude::{InstrumentMetadata, MetaInstrument};
+use common_metadata::{InstrumentMetadata, MetaInstrument};
 
 // Conversion utils
 pub fn meta_instrument_to_proto_instrument(

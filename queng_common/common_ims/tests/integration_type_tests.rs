@@ -1,4 +1,4 @@
-use common_ims::prelude::ImsIntegrationType;
+use common_ims::ImsIntegrationType;
 use std::fmt::Write;
 
 #[test]

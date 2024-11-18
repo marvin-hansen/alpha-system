@@ -1,6 +1,6 @@
 use crate::model::stat::Stat;
 use crate::prelude::CreateStat;
-use common_metadata::prelude::MetaStats;
+use common_metadata::MetaStats;
 
 impl Stat {
     /// Converts `Stats` to `PostgresStat`

@@ -2,7 +2,7 @@ use crate::model::exchange::{CreateExchange, Exchange, UpdateExchange};
 use crate::schema::mddb::exchanges::dsl::exchanges as exchanges_table;
 use crate::schema::mddb::exchanges::exchange_id;
 use crate::Connection;
-use common_metadata::prelude::MetaExchange;
+use common_metadata::MetaExchange;
 use diesel::result::Error;
 use diesel::result::Error::DatabaseError;
 use diesel::{ExpressionMethods, QueryDsl, RunQueryDsl};

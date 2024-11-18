@@ -1,4 +1,4 @@
-use common_metadata::prelude::{AssetMetadata, MetaAsset};
+use common_metadata::{AssetMetadata, MetaAsset};
 
 pub fn meta_asset_to_proto_asset(meta_asset: &MetaAsset) -> proto_mddb::proto::ProtoMetaAsset {
     proto_mddb::proto::ProtoMetaAsset {

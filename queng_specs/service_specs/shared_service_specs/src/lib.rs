@@ -1,4 +1,4 @@
-use common_config::prelude::{Endpoint, ProtocolType};
+use common_config::{Endpoint, ProtocolType};
 
 pub fn ims_endpoint(exchange_id: &str, port: u32) -> Endpoint {
     let endpoint_name = format!("{}-ims-data-endpoint", exchange_id);

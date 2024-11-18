@@ -6,7 +6,7 @@ use crate::schema::cmdb::portfolio::dsl::*;
 use crate::schema::cmdb::portfolio::table as portfolio_table;
 use crate::schema::cmdb::portfolio_instrument::dsl::portfolio_instrument;
 use crate::Connection as PGConnection;
-use common_exchange::prelude::PortfolioConfig as CommonPortfolioConfig;
+use common_exchange::PortfolioConfig as CommonPortfolioConfig;
 use diesel::result::{DatabaseErrorKind, Error};
 use diesel::{Connection, ExpressionMethods, QueryDsl, QueryResult, RunQueryDsl};
 

@@ -1,6 +1,6 @@
-use common_config::prelude::ServiceID;
-use common_env::prelude::EnvironmentType;
-use common_ims::prelude::ExchangeID;
+use common_config::ServiceID;
+use common_env::EnvironmentType;
+use common_ims::ExchangeID;
 use container_specs_postgres::postgres_db_container_config;
 use docker_utils::prelude::DockerUtil;
 use imdb_client::IMDBClient;

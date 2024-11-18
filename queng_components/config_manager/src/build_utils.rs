@@ -1,6 +1,6 @@
 use crate::{DEFAULT_DNS, DEFAULT_HOST};
-use common_config::prelude::{ServiceConfig, ServiceID, SvcEnvConfig};
-use common_env::prelude::EnvironmentType;
+use common_config::{ServiceConfig, ServiceID, SvcEnvConfig};
+use common_env::EnvironmentType;
 use hickory_resolver::config::{NameServerConfig, Protocol, ResolverConfig, ResolverOpts};
 use hickory_resolver::TokioAsyncResolver;
 use std::net::SocketAddr;

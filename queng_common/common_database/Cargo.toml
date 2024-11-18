@@ -9,3 +9,4 @@ authors.workspace = true
 
 
 [dependencies]
+common_errors = { workspace = true }

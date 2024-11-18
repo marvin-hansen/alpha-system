@@ -1,0 +1,19 @@
+[package]
+name = "ims_data_service"
+version = "0.1.0"
+edition.workspace = true
+rust-version.workspace = true
+readme.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+[dependencies]
+# Internal crates
+common_message = {workspace = true}
+message_consumer = { workspace = true }
+message_producer = { workspace = true }
+message_shared = {workspace = true}
+
+# External crates
+iggy = { workspace = true }
+tokio = { workspace = true }

@@ -1,4 +1,4 @@
-use common_exchange::prelude::ExchangeID;
+use common_exchange::ExchangeID;
 
 use crate::prelude::{DataType, MessageType};
 

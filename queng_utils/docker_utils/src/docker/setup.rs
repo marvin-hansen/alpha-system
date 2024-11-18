@@ -1,5 +1,5 @@
 use crate::prelude::{DockerError, DockerUtil};
-use common_container::prelude::ContainerConfig;
+use common_container::ContainerConfig;
 
 impl DockerUtil {
     /// Sets up a Docker container according to its configuration

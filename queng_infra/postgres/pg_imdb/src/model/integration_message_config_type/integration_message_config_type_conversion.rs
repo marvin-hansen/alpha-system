@@ -1,5 +1,5 @@
 use crate::model::integration_message_config_type::MessageConfig;
-use common_ims::prelude::{ExchangeID, IntegrationMessageConfig};
+use common_ims::{ExchangeID, IntegrationMessageConfig};
 
 impl MessageConfig {
     // Convert from a IntegrationMessageConfigType to a MessageConfig

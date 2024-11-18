@@ -1,6 +1,6 @@
 use crate::prelude::{DataType, MessageType, StartDataMessage};
-use common_data_bar::prelude::TimeResolution;
-use common_exchange::prelude::ExchangeID;
+use common_data_bar::TimeResolution;
+use common_exchange::ExchangeID;
 use sbe_bindings::{MessageHeaderDecoder, ReadBuf, SbeResult, StartDataMsgDecoder};
 
 use sbe_bindings::start_data_msg_codec::SBE_TEMPLATE_ID;

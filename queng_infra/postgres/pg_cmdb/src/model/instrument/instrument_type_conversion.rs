@@ -1,6 +1,6 @@
 use crate::model::instrument::Instrument;
 
-use common_exchange::prelude::Instrument as CommonInstrument;
+use common_exchange::Instrument as CommonInstrument;
 
 impl Instrument {
     pub fn from_common_instrument(instrument: &CommonInstrument) -> Instrument {

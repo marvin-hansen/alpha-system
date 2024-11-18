@@ -1,4 +1,4 @@
-use common_env::prelude::EnvironmentType;
+use common_env::EnvironmentType;
 use db_specs_postgres::postgres::get_postgres_config;
 
 #[test]

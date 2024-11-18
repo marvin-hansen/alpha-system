@@ -1,7 +1,7 @@
 use crate::model::stat::{CreateStat, Stat};
 use crate::schema::mddb::stats::dsl::stats as stats_table;
 use crate::schema::mddb::stats::stats_id;
-use common_metadata::prelude::MetaStats;
+use common_metadata::MetaStats;
 use diesel::prelude::*;
 use diesel::result::Error::DatabaseError;
 

@@ -1,4 +1,4 @@
-use common_metadata::prelude::{InstrumentMetadata, MetaAsset, MetaExchange, MetaInstrument};
+use common_metadata::{InstrumentMetadata, MetaAsset, MetaExchange, MetaInstrument};
 
 pub(crate) fn get_test_asset(code: String) -> MetaAsset {
     MetaAsset {

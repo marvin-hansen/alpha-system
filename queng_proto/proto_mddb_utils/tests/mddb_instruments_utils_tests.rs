@@ -1,4 +1,4 @@
-use common_metadata::prelude::{InstrumentMetadata, MetaInstrument};
+use common_metadata::{InstrumentMetadata, MetaInstrument};
 use proto_mddb::proto::*;
 use proto_mddb_utils::prelude::*;
 

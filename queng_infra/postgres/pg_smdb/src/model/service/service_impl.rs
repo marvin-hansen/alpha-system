@@ -2,9 +2,9 @@ use crate::model::endpoint_type::Endpoint;
 use crate::model::service::{CreateService, Service, UpdateService};
 use crate::schema::smdb::service::dsl::*;
 use crate::Connection;
-use common_config::prelude::Endpoint as CommonEndpoint;
-use common_config::prelude::ServiceConfig as CommonServiceConfig;
-use common_config::prelude::ServiceID as CommonServiceID;
+use common_config::Endpoint as CommonEndpoint;
+use common_config::ServiceConfig as CommonServiceConfig;
+use common_config::ServiceID as CommonServiceID;
 use diesel::{
     insert_into, ExpressionMethods, OptionalExtension, QueryDsl, QueryResult, RunQueryDsl,
     SelectableHelper,

@@ -1,4 +1,4 @@
-use common_exchange::prelude::AccountType;
+use common_exchange::AccountType;
 use portfolio_specs::prelude::test_portfolio::get_test_portfolio_config;
 
 #[test]

@@ -4,7 +4,7 @@ mod instrument;
 mod instrument_queries;
 mod stat;
 
-use common_errors::prelude::PostgresDBError;
+use common_errors::PostgresDBError;
 use diesel::r2d2::{ConnectionManager, Pool, PooledConnection};
 use diesel::PgConnection;
 use pg_mddb::run_mddb_migration;

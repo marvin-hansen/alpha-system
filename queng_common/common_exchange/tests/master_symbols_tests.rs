@@ -1,4 +1,4 @@
-use common_exchange::prelude::{MasterSymbol, MasterSymbolRow};
+use common_exchange::{MasterSymbol, MasterSymbolRow};
 
 #[test]
 fn test_master_symbol_properties() {

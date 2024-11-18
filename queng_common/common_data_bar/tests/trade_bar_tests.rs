@@ -1,7 +1,7 @@
 use chrono::{DateTime, Utc};
 use rust_decimal::Decimal;
 
-use common_data_bar::prelude::TradeBar;
+use common_data_bar::TradeBar;
 
 fn get_trade_bar(date_time: DateTime<Utc>) -> TradeBar {
     let symbol_id = 1;

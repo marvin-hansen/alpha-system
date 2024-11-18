@@ -1,6 +1,6 @@
 use crate::prelude::{DataType, MessageType, StartDataMessage};
-use common_data_bar::prelude::TimeResolution;
-use common_exchange::prelude::ExchangeID;
+use common_data_bar::TimeResolution;
+use common_exchange::ExchangeID;
 
 impl StartDataMessage {
     pub fn message_type(&self) -> &MessageType {

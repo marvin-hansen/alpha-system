@@ -1,5 +1,5 @@
 use crate::{print_utils, workflow};
-use common_metadata::prelude::MetaDataSet;
+use common_metadata::MetaDataSet;
 use pg_mddb_manager::PostgresMDDBManager;
 
 /// Import all metadata into the database.

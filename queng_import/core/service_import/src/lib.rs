@@ -1,4 +1,4 @@
-use common_config::prelude::ServiceConfig;
+use common_config::ServiceConfig;
 use environment_manager::EnvironmentManager;
 use pg_smdb_manager::PostgresSMDBManager;
 use postgres_config_manager::PostgresConfigManager;

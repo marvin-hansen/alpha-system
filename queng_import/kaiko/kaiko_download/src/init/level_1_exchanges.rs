@@ -1,7 +1,7 @@
 use crate::fields::ACTIVE_EXCHANGES;
 use crate::init::InitManager;
-use common_errors::prelude::InitError;
-use common_metadata::prelude::MetaExchange;
+use common_errors::InitError;
+use common_metadata::MetaExchange;
 
 impl InitManager {
     /// Asynchronously initializes level 1 exchanges by downloading and processing exchange data.

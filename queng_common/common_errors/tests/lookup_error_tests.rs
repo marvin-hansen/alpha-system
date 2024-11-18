@@ -1,4 +1,4 @@
-use common_errors::prelude::LookupError;
+use common_errors::LookupError;
 
 #[test]
 fn test_lookup_error_new() {

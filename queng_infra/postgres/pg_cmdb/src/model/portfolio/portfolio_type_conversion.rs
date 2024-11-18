@@ -1,7 +1,7 @@
 use crate::model::portfolio::Portfolio;
 
 use crate::model::instrument::Instrument;
-use common_exchange::prelude::{
+use common_exchange::{
     AccountType, Instrument as CommonInstrument, PortfolioConfig as CommonPortfolioConfig,
 };
 

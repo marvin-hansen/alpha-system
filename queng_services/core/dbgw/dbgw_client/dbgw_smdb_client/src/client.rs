@@ -1,4 +1,4 @@
-use common_config::prelude::{Endpoint, ServiceConfig, ServiceID};
+use common_config::{Endpoint, ServiceConfig, ServiceID};
 use proto_smdb::proto::{
     CountServiceRequest, MultiServicesRequest, ServiceDependenciesRequest, ServiceEndpointsRequest,
     ServicesOfflineRequest, ServicesOnlineRequest, SingleServiceRequest,
@@ -9,7 +9,7 @@ use proto_smdb_utils::service_config_proto_utils::{
 };
 
 use crate::DBGWSmdbClient;
-use common_errors::prelude::DBGatewayError;
+use common_errors::DBGatewayError;
 
 impl DBGWSmdbClient {
     pub async fn create_service(&self, data: ServiceConfig) -> Result<bool, DBGatewayError> {

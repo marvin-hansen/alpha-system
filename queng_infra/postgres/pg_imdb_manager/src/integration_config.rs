@@ -1,6 +1,6 @@
 use crate::PostgresIMDBManager;
-use common_errors::prelude::PostgresDBError;
-use common_ims::prelude::IntegrationConfig as ImsIntegrationConfig;
+use common_errors::PostgresDBError;
+use common_ims::IntegrationConfig as ImsIntegrationConfig;
 use pg_imdb::prelude::IntegrationConfig;
 
 impl PostgresIMDBManager {

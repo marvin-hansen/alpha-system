@@ -1,6 +1,6 @@
 use std::fmt::{Display, Formatter};
 
-use crate::prelude::{Endpoint, MetricConfig, ServiceID};
+use crate::{Endpoint, MetricConfig, ServiceID};
 
 #[derive(Debug, Default, Clone, Eq, PartialEq)]
 pub struct ServiceConfig {

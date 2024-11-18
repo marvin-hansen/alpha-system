@@ -1,4 +1,4 @@
-use common_errors::prelude::DBGatewayError;
+use common_errors::DBGatewayError;
 
 #[test]
 fn test_new_dbgw_error() {

@@ -1,4 +1,4 @@
-use common_data_bar::prelude::TimeResolution;
+use common_data_bar::TimeResolution;
 
 impl crate::ClickhouseDBManager {
     /// Builds a SQL query to get all symbol IDs and symbols from a symbol table.
@@ -44,7 +44,7 @@ impl crate::ClickhouseDBManager {
             ORDER BY datetime
             "
         )
-        .to_string()
+            .to_string()
     }
 
     /// Builds a SQL query to get all trades from a trade table.

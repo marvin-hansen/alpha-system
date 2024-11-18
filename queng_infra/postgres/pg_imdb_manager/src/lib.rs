@@ -1,6 +1,6 @@
 mod integration_config;
 
-use common_errors::prelude::PostgresDBError;
+use common_errors::PostgresDBError;
 use diesel::r2d2::{ConnectionManager, Pool, PooledConnection};
 use diesel::PgConnection;
 use pg_imdb::run_imdb_db_migration;

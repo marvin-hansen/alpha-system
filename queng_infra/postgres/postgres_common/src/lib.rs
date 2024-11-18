@@ -1,4 +1,4 @@
-use common_errors::prelude::PostgresDBError;
+use common_errors::PostgresDBError;
 use diesel::r2d2::{ConnectionManager, CustomizeConnection, Pool};
 use diesel::{Connection, PgConnection};
 use std::error::Error;

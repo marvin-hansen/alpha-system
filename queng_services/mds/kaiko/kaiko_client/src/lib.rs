@@ -1,7 +1,7 @@
 pub mod error;
 
 use crate::error::KaikoClientError;
-use common_metadata::prelude::{
+use common_metadata::{
     MetaAsset, MetaAssetRoot, MetaExchange, MetaExchangesRoot, MetaInstrument, MetaInstrumentsRoot,
     MetaStats,
 };

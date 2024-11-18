@@ -1,4 +1,4 @@
-use common_exchange::prelude::FiatIsoCode;
+use common_exchange::FiatIsoCode;
 
 #[test]
 fn test_new() {

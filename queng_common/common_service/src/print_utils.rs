@@ -1,4 +1,4 @@
-use common_config::prelude::ServiceID;
+use common_config::ServiceID;
 use std::time::Duration;
 
 pub fn print_start_header_simple(service_name: &str, service_addr: &str) {

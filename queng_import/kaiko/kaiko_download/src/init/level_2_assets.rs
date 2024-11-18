@@ -1,6 +1,6 @@
 use crate::init::InitManager;
-use common_errors::prelude::InitError;
-use common_metadata::prelude::MetaAsset;
+use common_errors::InitError;
+use common_metadata::MetaAsset;
 
 impl InitManager {
     /// Initializes level 2 assets by downloading reference asset data asynchronously.

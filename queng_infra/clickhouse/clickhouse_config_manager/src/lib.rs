@@ -1,7 +1,7 @@
 mod getters;
 
-use common_database::prelude::ClickHouseConfig;
-use common_env::prelude::EnvironmentType;
+use common_database::ClickHouseConfig;
+use common_env::EnvironmentType;
 use db_specs_clickhouse::clickhouse;
 
 #[derive(Debug, Eq, Clone, PartialEq)]

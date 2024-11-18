@@ -1,4 +1,4 @@
-use common_metadata::prelude::MetaExchange;
+use common_metadata::MetaExchange;
 
 pub fn meta_exchange_to_proto_exchange(
     meta_exchange: &MetaExchange,

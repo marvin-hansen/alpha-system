@@ -1,6 +1,6 @@
 use crate::db::metadata::{Metadata, ASSETS_TABLE, DB_NAME};
 use crate::error::ClickHouseUtilError;
-use common_metadata::prelude::{AssetMetadata, MetaAsset};
+use common_metadata::{AssetMetadata, MetaAsset};
 
 impl Metadata {
     /// Imports asset metadata into the metadata database.

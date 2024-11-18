@@ -1,6 +1,6 @@
 use std::fmt::Error;
 
-use common_config::prelude::{ServiceConfig, ServiceID};
+use common_config::{ServiceConfig, ServiceID};
 use proto_smdb::proto::ProtoServiceConfig;
 
 use crate::endpoint_proto_utils::{endpoint_from_proto, endpoint_to_proto};

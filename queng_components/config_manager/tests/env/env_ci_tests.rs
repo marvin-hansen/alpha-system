@@ -1,5 +1,5 @@
-use common_config::prelude::ServiceID;
-use common_env::prelude::EnvironmentType;
+use common_config::ServiceID;
+use common_env::EnvironmentType;
 use config_manager::CfgManager;
 use smdb_specs::smdb_service_config;
 use std::env;

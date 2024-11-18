@@ -1,6 +1,6 @@
 use crate::model::endpoint_type::Endpoint;
 use crate::model::service::UpdateService;
-use common_config::prelude::ServiceConfig as CommonServiceConfig;
+use common_config::ServiceConfig as CommonServiceConfig;
 
 impl UpdateService {
     pub fn from_common_svc_config(common_svc_config: &CommonServiceConfig) -> UpdateService {

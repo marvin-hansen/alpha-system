@@ -1,5 +1,5 @@
 use crate::prelude::SbeEncodeError;
-use common_data_bar::prelude::TradeBar;
+use common_data_bar::TradeBar;
 use rust_decimal::prelude::ToPrimitive;
 
 use sbe_bindings::{

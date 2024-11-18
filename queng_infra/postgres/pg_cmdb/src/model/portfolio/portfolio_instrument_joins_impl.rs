@@ -2,7 +2,7 @@ use crate::model::instrument::Instrument;
 use crate::model::portfolio::Portfolio;
 use crate::model::portfolio_instrument::PortfolioInstrument;
 use crate::Connection as PGConnection;
-use common_exchange::prelude::PortfolioConfig as CommonPortfolioConfig;
+use common_exchange::PortfolioConfig as CommonPortfolioConfig;
 use diesel::result::DatabaseErrorKind;
 use diesel::{
     result::Error, BelongingToDsl, ExpressionMethods, QueryDsl, QueryResult, RunQueryDsl,

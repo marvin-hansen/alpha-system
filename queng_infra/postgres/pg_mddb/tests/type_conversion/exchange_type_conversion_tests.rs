@@ -1,4 +1,4 @@
-use common_metadata::prelude::MetaExchange;
+use common_metadata::MetaExchange;
 use pg_mddb::prelude::*;
 
 #[test]

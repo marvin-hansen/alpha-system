@@ -1,4 +1,4 @@
-use common_config::prelude::ProtocolType;
+use common_config::ProtocolType;
 use shared_service_specs::health_endpoint;
 
 #[test]

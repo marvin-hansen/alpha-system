@@ -1,4 +1,4 @@
-use common_metadata::prelude::{AssetMetadata, MetaAsset};
+use common_metadata::{AssetMetadata, MetaAsset};
 use proto_mddb::proto::{
     CheckIfAssetIdExistsRequest, CheckIfAssetIdExistsResponse, CountAssetsRequest,
     CountAssetsResponse, GetAllAssetsRequest, GetAssetRequest, ProtoMetaAsset,

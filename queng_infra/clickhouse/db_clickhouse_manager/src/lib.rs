@@ -8,7 +8,7 @@ mod stream_trades;
 pub mod types;
 
 use crate::error::ClickHouseDBError;
-use common_database::prelude::ClickHouseConfig;
+use common_database::ClickHouseConfig;
 use klickhouse::{Client, ClientOptions};
 
 const FN_NAME: &str = "[ClickhouseDBManager]:";

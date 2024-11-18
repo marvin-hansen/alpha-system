@@ -1,6 +1,6 @@
 use crate::model::endpoint_type::Endpoint;
 use crate::model::protocol_type::ProtocolType;
-use common_config::prelude::Endpoint as CommonEndpoint;
+use common_config::Endpoint as CommonEndpoint;
 
 impl Endpoint {
     pub fn from_common_endpoint(endpoint: &CommonEndpoint) -> Self {

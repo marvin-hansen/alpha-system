@@ -1,4 +1,4 @@
-use common_container::prelude::{ContainerConfig, WaitStrategy};
+use common_container::{ContainerConfig, WaitStrategy};
 
 /// Constructs the configuration for an API proxy container.
 ///

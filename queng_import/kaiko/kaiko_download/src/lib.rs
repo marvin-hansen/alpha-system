@@ -1,9 +1,9 @@
 use crate::fields::{CDN_PROXY_URL, CI_PROXY_URL, CLUSTER_PROXY_URL, LOCAL_PROXY_URL};
 use crate::init::InitManager;
 use crate::utils::util_client;
-use common_env::prelude::EnvironmentType;
-use common_errors::prelude::InitError;
-use common_metadata::prelude::{MetaDataSet, MetaStats};
+use common_env::EnvironmentType;
+use common_errors::InitError;
+use common_metadata::{MetaDataSet, MetaStats};
 use environment_manager::EnvironmentManager;
 use reqwest::Client;
 

@@ -1,6 +1,6 @@
 use cmdb_specs::cmdb_service_config;
-use common_config::prelude::ServiceID;
-use common_env::prelude::EnvironmentType;
+use common_config::ServiceID;
+use common_env::EnvironmentType;
 use config_manager::CfgManager;
 use dbgw_specs::dbgw_service_config;
 use smdb_specs::smdb_service_config;

@@ -1,6 +1,6 @@
-use common_exchange::prelude::AccountType::Spot;
-use common_exchange::prelude::Instrument as CommonInstrument;
-use common_exchange::prelude::PortfolioConfig as CommonPortfolioConfig;
+use common_exchange::AccountType::Spot;
+use common_exchange::Instrument as CommonInstrument;
+use common_exchange::PortfolioConfig as CommonPortfolioConfig;
 use container_specs_postgres::postgres_db_container_config;
 use diesel::Connection;
 use docker_utils::prelude::DockerUtil;

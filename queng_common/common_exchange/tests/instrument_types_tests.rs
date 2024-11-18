@@ -1,4 +1,4 @@
-use common_exchange::prelude::Instrument;
+use common_exchange::Instrument;
 
 #[test]
 fn test_new() {

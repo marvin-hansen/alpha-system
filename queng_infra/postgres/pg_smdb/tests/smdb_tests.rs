@@ -1,4 +1,4 @@
-use common_config::prelude::{ServiceConfig, ServiceID};
+use common_config::{ServiceConfig, ServiceID};
 use container_specs_postgres::postgres_db_container_config;
 use diesel::Connection;
 use docker_utils::prelude::DockerUtil;
@@ -16,8 +16,8 @@ fn get_test_service_config() -> ServiceConfig {
         "base_uri".to_string(),
         vec![ServiceID::DBGW],
         Vec::from([
-            common_config::prelude::Endpoint::default(),
-            common_config::prelude::Endpoint::default(),
+            common_config::Endpoint::default(),
+            common_config::Endpoint::default(),
         ]),
     )
 }
@@ -64,8 +64,8 @@ async fn test_create_service() {
     let base_uri = "base_uri".to_string();
     let dependencies = vec![ServiceID::DBGW];
     let endpoints = Vec::from([
-        common_config::prelude::Endpoint::default(),
-        common_config::prelude::Endpoint::default(),
+        common_config::Endpoint::default(),
+        common_config::Endpoint::default(),
     ]);
 
     assert_eq!(service.svc_id(), &id);
@@ -228,8 +228,8 @@ async fn test_service_read() {
     assert_eq!(
         service.endpoints(),
         &vec![
-            common_config::prelude::Endpoint::default(),
-            common_config::prelude::Endpoint::default(),
+            common_config::Endpoint::default(),
+            common_config::Endpoint::default(),
         ]
     );
 }
@@ -410,8 +410,8 @@ async fn test_service_update() {
     let base_uri = "base_uri".to_string();
     let dependencies = vec![ServiceID::DBGW];
     let endpoints = Vec::from([
-        common_config::prelude::Endpoint::default(),
-        common_config::prelude::Endpoint::default(),
+        common_config::Endpoint::default(),
+        common_config::Endpoint::default(),
     ]);
 
     let update = ServiceConfig::new(
@@ -440,8 +440,8 @@ async fn test_service_update() {
     assert_eq!(
         service.endpoints(),
         &vec![
-            common_config::prelude::Endpoint::default(),
-            common_config::prelude::Endpoint::default(),
+            common_config::Endpoint::default(),
+            common_config::Endpoint::default(),
         ]
     );
 }
@@ -474,8 +474,8 @@ async fn test_service_update_error() {
     let base_uri = "base_uri".to_string();
     let dependencies = vec![ServiceID::DBGW];
     let endpoints = Vec::from([
-        common_config::prelude::Endpoint::default(),
-        common_config::prelude::Endpoint::default(),
+        common_config::Endpoint::default(),
+        common_config::Endpoint::default(),
     ]);
 
     let update = ServiceConfig::new(

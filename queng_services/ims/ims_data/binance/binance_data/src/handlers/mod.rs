@@ -1,5 +1,5 @@
 use binance::ws_model::WebsocketEvent;
-use common_data_bar::prelude::DataType;
+use common_data_bar::DataType;
 use std::future::Future;
 use std::pin::Pin;
 use tokio::sync::mpsc::UnboundedSender;

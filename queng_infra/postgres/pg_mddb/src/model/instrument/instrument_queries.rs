@@ -4,7 +4,7 @@ use crate::schema::mddb::instruments::{
     instrument_figi, instrument_pair_figi, instrument_quote_asset, table as instruments_table,
 };
 use crate::Connection;
-use common_metadata::prelude::MetaInstrument;
+use common_metadata::MetaInstrument;
 use diesel::associations::HasTable;
 use diesel::ExpressionMethods;
 use diesel::{QueryDsl, RunQueryDsl};

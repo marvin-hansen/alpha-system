@@ -1,4 +1,4 @@
-use common_exchange::prelude::ExchangeID;
+use common_exchange::ExchangeID;
 use exchange_specs::prelude::{
     get_all_exchanges, get_all_exchanges_ids_names, get_exchange_symbol_tables,
 };

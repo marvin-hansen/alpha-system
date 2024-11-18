@@ -1,4 +1,4 @@
-use common_errors::prelude::MessageClientConfigError;
+use common_errors::MessageClientConfigError;
 
 #[test]
 fn test_new() {

@@ -11,7 +11,7 @@ use crate::service_cmdb::CMDBServer;
 use crate::service_imdb::IMDBServer;
 use crate::service_mddb::MDDBServer;
 use crate::service_smdb::SMDBServer;
-use common_config::prelude::ServiceID;
+use common_config::ServiceID;
 use common_service::{print_utils, shutdown_utils};
 use config_manager::CfgManager;
 use pg_cmdb_manager::PostgresCMDBManager;

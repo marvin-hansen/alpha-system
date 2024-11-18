@@ -3,7 +3,7 @@ use crate::model::integration_config::{
 };
 use crate::schema::imdb::integration_config::dsl::*;
 use crate::Connection;
-use common_ims::prelude::IntegrationConfig as CommonIntegrationConfig;
+use common_ims::IntegrationConfig as CommonIntegrationConfig;
 use diesel::dsl::{delete, insert_into};
 use diesel::prelude::*;
 use diesel::{QueryResult, RunQueryDsl};
@@ -52,7 +52,7 @@ impl IntegrationConfig {
         let items: Vec<CreateIntegrationConfig> = configs
             .iter()
             .map(
-                |common_integration_config: &common_ims::prelude::IntegrationConfig| {
+                |common_integration_config: &common_ims::IntegrationConfig| {
                     CreateIntegrationConfig::from_common_integration_config(
                         common_integration_config,
                     )

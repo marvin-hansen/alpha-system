@@ -1,6 +1,6 @@
 use std::fmt::{Display, Formatter};
 
-use crate::prelude::ServiceID;
+use crate::ServiceID;
 
 #[derive(Debug, Default, Clone, Eq, PartialEq)]
 pub struct SvcEnvConfig {

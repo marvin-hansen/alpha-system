@@ -1,4 +1,4 @@
-use crate::prelude::OHLCVBar;
+use crate::OHLCVBar;
 use chrono::{DateTime, Utc};
 use rust_decimal::Decimal;
 

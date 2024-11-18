@@ -1,7 +1,7 @@
 use crate::error::ClickHouseDBError;
 use crate::types::SymbolRow;
 use crate::ClickhouseDBManager;
-use common_database::prelude::sanitize_utils;
+use common_database::sanitize_utils;
 
 impl ClickhouseDBManager {
     /// Retrieves all symbols and their IDs from the given symbol table.

@@ -1,4 +1,4 @@
-use common_config::prelude::{Endpoint, ServiceConfig, ServiceID};
+use common_config::{Endpoint, ServiceConfig, ServiceID};
 use proto_smdb::proto::{ProtoEndpoint, ProtoServiceConfig};
 use proto_smdb_utils::service_config_proto_utils::{
     service_config_from_proto, service_config_to_proto,

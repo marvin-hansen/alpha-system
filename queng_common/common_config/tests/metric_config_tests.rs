@@ -1,4 +1,4 @@
-use common_config::prelude::{Endpoint, MetricConfig, ProtocolType};
+use common_config::{Endpoint, MetricConfig, ProtocolType};
 
 #[test]
 fn test_new() {

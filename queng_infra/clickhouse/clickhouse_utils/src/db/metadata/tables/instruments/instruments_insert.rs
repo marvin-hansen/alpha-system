@@ -1,5 +1,5 @@
 use crate::db::metadata::{Metadata, DB_NAME, INSTRUMENTS_TABLE};
-use common_metadata::prelude::{InstrumentMetadata, MetaInstrument};
+use common_metadata::{InstrumentMetadata, MetaInstrument};
 use std::error::Error;
 
 impl Metadata {

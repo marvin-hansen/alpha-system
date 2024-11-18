@@ -1,4 +1,4 @@
-use common_exchange::prelude::AccountType;
+use common_exchange::AccountType;
 
 #[test]
 fn test_unknown_account_type_display() {

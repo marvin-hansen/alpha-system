@@ -1,6 +1,6 @@
 use crate::DBGWCmdbClient;
-use common_errors::prelude::DBGatewayError;
-use common_exchange::prelude::PortfolioConfig;
+use common_errors::DBGatewayError;
+use common_exchange::PortfolioConfig;
 use proto_cmdb::proto::{MultiPortfolioRequest, SinglePortfolioRequest};
 use proto_cmdb_utils::portfolio_proto_utils::{
     portfolio_config_from_proto, portfolio_config_to_proto,

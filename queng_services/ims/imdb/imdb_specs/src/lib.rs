@@ -1,4 +1,4 @@
-use common_config::prelude::{ServiceConfig, ServiceID};
+use common_config::{ServiceConfig, ServiceID};
 use shared_service_specs::{default_grpc_service_endpoint, health_endpoint, metric_endpoint};
 
 pub fn imdb_service_config() -> ServiceConfig {

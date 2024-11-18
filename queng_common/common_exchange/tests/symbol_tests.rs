@@ -1,4 +1,4 @@
-use common_exchange::prelude::{ExchangeID, Symbol};
+use common_exchange::{ExchangeID, Symbol};
 use rust_decimal::Decimal;
 use std::str::FromStr;
 

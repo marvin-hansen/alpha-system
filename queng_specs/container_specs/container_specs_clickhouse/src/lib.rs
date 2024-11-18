@@ -1,5 +1,5 @@
-use common_container::prelude::ContainerConfig;
-use common_container::prelude::WaitStrategy::WaitForDuration;
+use common_container::ContainerConfig;
+use common_container::WaitStrategy::WaitForDuration;
 
 /// Constructs the configuration for a ClickHouse container.
 ///

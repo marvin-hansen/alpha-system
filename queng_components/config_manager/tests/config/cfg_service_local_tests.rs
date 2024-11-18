@@ -2,7 +2,7 @@ use config_manager::CfgManager;
 use std::env;
 
 use cmdb_specs::cmdb_service_config;
-use common_config::prelude::ServiceID;
+use common_config::ServiceID;
 use dbgw_specs::dbgw_service_config;
 use smdb_specs::smdb_service_config;
 

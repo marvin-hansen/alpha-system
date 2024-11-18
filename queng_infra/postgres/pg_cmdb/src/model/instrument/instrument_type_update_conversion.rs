@@ -1,5 +1,5 @@
 use crate::model::instrument::UpdateInstrument;
-use common_exchange::prelude::Instrument as CommonInstrument;
+use common_exchange::Instrument as CommonInstrument;
 
 impl UpdateInstrument {
     pub fn from_common_instrument(instrument: &CommonInstrument) -> UpdateInstrument {

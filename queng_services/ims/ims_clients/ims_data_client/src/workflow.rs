@@ -1,7 +1,7 @@
 use crate::error::ImsDataClientError;
 use crate::ImsDataClient;
-use common_data_bar::prelude::DataType;
-use common_exchange::prelude::ExchangeID;
+use common_data_bar::DataType;
+use common_exchange::ExchangeID;
 
 impl ImsDataClient {
     /// Sends a request to the IMS data client to start streaming data

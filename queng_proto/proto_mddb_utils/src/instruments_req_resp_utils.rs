@@ -1,5 +1,5 @@
 use crate::instruments_utils;
-use common_metadata::prelude::MetaInstrument;
+use common_metadata::MetaInstrument;
 
 // Request
 pub fn get_count_instruments_request() -> proto_mddb::proto::CountInstrumentsRequest {

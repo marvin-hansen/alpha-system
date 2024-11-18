@@ -1,5 +1,5 @@
 use crate::CfgManager;
-use common_env::prelude::EnvironmentType;
+use common_env::EnvironmentType;
 
 impl CfgManager {
     pub fn env_type(&self) -> EnvironmentType {

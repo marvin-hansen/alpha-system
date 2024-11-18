@@ -1,4 +1,4 @@
-use common_metadata::prelude::MetaStats;
+use common_metadata::MetaStats;
 
 #[test]
 fn test_meta_stats_new_initialization() {

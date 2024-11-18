@@ -1,4 +1,4 @@
-use common_exchange::prelude::AccountType;
+use common_exchange::AccountType;
 use proto_cmdb::proto::{ProtoInstrument, ProtoPortfolioConfig};
 use proto_cmdb_utils::portfolio_proto_utils::{instrument_from_proto, portfolio_config_from_proto};
 

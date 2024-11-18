@@ -1,6 +1,6 @@
 use crate::model::portfolio::CreatePortfolio;
 
-use common_exchange::prelude::PortfolioConfig as CommonPortfolioConfig;
+use common_exchange::PortfolioConfig as CommonPortfolioConfig;
 
 impl CreatePortfolio {
     pub fn from_common_portfolio(portfolio: &CommonPortfolioConfig) -> CreatePortfolio {

@@ -1,8 +1,8 @@
 use crate::error::ClickHouseDBError;
 use crate::types::TradeRow;
 use crate::ClickhouseDBManager;
-use common_data_bar::prelude::TradeBar;
-use common_database::prelude::sanitize_utils;
+use common_data_bar::TradeBar;
+use common_database::sanitize_utils;
 
 impl ClickhouseDBManager {
     /// Retrieves all trade bars for the given symbol table from the database.

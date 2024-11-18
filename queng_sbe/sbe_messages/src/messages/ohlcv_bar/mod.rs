@@ -1,4 +1,4 @@
-use common_data_bar::prelude::OHLCVBar;
+use common_data_bar::OHLCVBar;
 
 use crate::errors::{SbeDecodeError, SbeEncodeError};
 

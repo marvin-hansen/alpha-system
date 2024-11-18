@@ -1,4 +1,4 @@
-use common_config::prelude::HostEndpoint;
+use common_config::HostEndpoint;
 
 #[test]
 fn test_new() {

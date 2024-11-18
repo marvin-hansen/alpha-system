@@ -1,4 +1,4 @@
-use common_metadata::prelude::{Address, AssetMetadata, MetaAsset, MetaAssetRoot};
+use common_metadata::{Address, AssetMetadata, MetaAsset, MetaAssetRoot};
 
 #[test]
 fn asset_structs_properties_test() {

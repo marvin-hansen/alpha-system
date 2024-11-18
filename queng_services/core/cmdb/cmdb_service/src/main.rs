@@ -1,4 +1,4 @@
-use common_config::prelude::ServiceID;
+use common_config::ServiceID;
 use config_manager::CfgManager;
 use mimalloc::MiMalloc;
 use std::error::Error;

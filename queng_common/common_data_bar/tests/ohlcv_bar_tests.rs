@@ -1,7 +1,7 @@
 use chrono::{DateTime, Utc};
 use rust_decimal::Decimal;
 
-use common_data_bar::prelude::OHLCVBar;
+use common_data_bar::OHLCVBar;
 
 pub fn get_ohlcv_bar(date_time: DateTime<Utc>) -> OHLCVBar {
     let symbol_id = 123;

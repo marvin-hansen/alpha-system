@@ -1,7 +1,7 @@
 use crate::model::instrument::{CreateInstrument, Instrument, UpdateInstrument};
 use crate::schema::cmdb::instrument::dsl::*;
 use crate::Connection;
-use common_exchange::prelude::Instrument as CommonInstrument;
+use common_exchange::Instrument as CommonInstrument;
 use diesel::{ExpressionMethods, QueryDsl, QueryResult, RunQueryDsl, SelectableHelper};
 
 impl Instrument {

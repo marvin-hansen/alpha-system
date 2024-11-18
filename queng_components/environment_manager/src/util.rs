@@ -1,4 +1,4 @@
-use common_env::prelude::EnvironmentType;
+use common_env::EnvironmentType;
 use std::env;
 
 /// Detects the environment type based on the value of the "ENV" environment variable.

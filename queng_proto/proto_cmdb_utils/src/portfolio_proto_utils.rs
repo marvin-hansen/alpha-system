@@ -1,4 +1,4 @@
-use common_exchange::prelude::{AccountType, Instrument, PortfolioConfig};
+use common_exchange::{AccountType, Instrument, PortfolioConfig};
 use proto_cmdb::proto::{ProtoInstrument, ProtoPortfolioConfig};
 use std::fmt::Error;
 

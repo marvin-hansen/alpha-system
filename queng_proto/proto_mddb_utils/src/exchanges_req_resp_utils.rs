@@ -1,5 +1,5 @@
 use crate::exchanges_utils;
-use common_metadata::prelude::MetaExchange;
+use common_metadata::MetaExchange;
 use proto_mddb::proto::{
     CheckIfExchangeIdExistsRequest, CheckIfExchangeIdExistsResponse, CountExchangesRequest,
     CountExchangesResponse, GetAllExchangesRequest, GetExchangeRequest, LookupExchangeNameRequest,

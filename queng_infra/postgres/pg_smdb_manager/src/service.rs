@@ -1,6 +1,6 @@
 use crate::PostgresSMDBManager;
-use common_config::prelude::{Endpoint, ServiceConfig, ServiceID};
-use common_errors::prelude::PostgresDBError;
+use common_config::{Endpoint, ServiceConfig, ServiceID};
+use common_errors::PostgresDBError;
 use pg_smdb::model::service;
 
 impl PostgresSMDBManager {

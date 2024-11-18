@@ -1,8 +1,8 @@
 // Request
 
 use crate::integration_utils::integration_config_to_proto;
-use common_exchange::prelude::ExchangeID;
-use common_ims::prelude::IntegrationConfig;
+use common_exchange::ExchangeID;
+use common_ims::IntegrationConfig;
 use proto_imdb::proto::*;
 
 pub fn get_create_integration_request(

@@ -1,6 +1,6 @@
 use crate::model::integration_config::UpdateIntegrationConfig;
 use crate::model::integration_message_config_type::MessageConfig;
-use common_ims::prelude::IntegrationConfig as CommonIntegrationConfig;
+use common_ims::IntegrationConfig as CommonIntegrationConfig;
 
 impl UpdateIntegrationConfig {
     pub fn from_common_integration_config(

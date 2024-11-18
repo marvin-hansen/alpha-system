@@ -1,4 +1,4 @@
-use common_ims::prelude::IntegrationConfig;
+use common_ims::IntegrationConfig;
 use ims_data_binance_specs::ims_data_integration_binance_config;
 
 /// This module provides a public function to return a vector of IntegrationConfig instances.

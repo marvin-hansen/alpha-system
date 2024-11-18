@@ -1,7 +1,7 @@
 use crate::print_utils;
 use crate::types::worflow_op::{MetaDataDBWOp, WorkflowOp};
 use crate::workflow;
-use common_metadata::prelude::MetaDataSet;
+use common_metadata::MetaDataSet;
 use pg_mddb_manager::PostgresMDDBManager;
 
 /// Update partial metadata in the database.

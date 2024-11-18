@@ -1,4 +1,4 @@
-use common_exchange::prelude::ExchangeID;
+use common_exchange::ExchangeID;
 use std::collections::HashMap;
 
 const KRK_SYMBOL_TABLE: &str = "kraken_symbols";

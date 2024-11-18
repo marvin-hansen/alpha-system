@@ -1,6 +1,6 @@
 mod util;
 
-use common_env::prelude::EnvironmentType;
+use common_env::EnvironmentType;
 
 #[derive(Debug, Copy, Clone, Default, Eq, PartialEq)]
 pub struct EnvironmentManager {

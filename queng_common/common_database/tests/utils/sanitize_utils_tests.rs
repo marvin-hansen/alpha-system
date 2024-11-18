@@ -1,5 +1,5 @@
-use common_database::prelude::sanitize_utils::sanitize_table_name;
-use common_database::prelude::SanitizeError;
+use common_database::sanitize_utils::sanitize_table_name;
+use common_errors::SanitizeError;
 
 #[test]
 fn test_sanitize_table_name_empty() {

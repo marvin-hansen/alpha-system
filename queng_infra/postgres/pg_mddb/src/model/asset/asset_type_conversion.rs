@@ -1,6 +1,6 @@
 use crate::model::asset::Asset;
 use crate::prelude::UpdateAsset;
-use common_metadata::prelude::MetaAsset;
+use common_metadata::MetaAsset;
 
 impl Asset {
     pub fn from_meta_asset(meta_asset: MetaAsset) -> Self {

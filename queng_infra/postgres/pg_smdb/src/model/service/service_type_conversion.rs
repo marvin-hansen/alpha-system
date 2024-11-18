@@ -1,7 +1,7 @@
 use crate::model::service::Service;
 
 use crate::model::endpoint_type::Endpoint;
-use common_config::prelude::{ServiceConfig as CommonServiceConfig, ServiceID};
+use common_config::{ServiceConfig as CommonServiceConfig, ServiceID};
 
 impl Service {
     pub fn from_common_svc_config(common_svc_config: &CommonServiceConfig) -> Service {

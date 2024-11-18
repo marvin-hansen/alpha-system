@@ -1,6 +1,6 @@
 use crate::fields::{AUTH_HEADER_KEY, INSTRUMENTS_KEY, METADATA_KV, RO_AUTH_KEY, RW_AUTH_KEY};
 use crate::http_response::HttpResponse;
-use common_metadata::prelude::MetaInstrumentsRoot;
+use common_metadata::MetaInstrumentsRoot;
 use serde_json::to_string;
 use worker::{Request, Response, RouteContext};
 

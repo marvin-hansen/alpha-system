@@ -1,6 +1,6 @@
 use std::str::FromStr;
 
-use common_data_bar::prelude::TimeResolution;
+use common_data_bar::TimeResolution;
 
 #[test]
 fn test_time_resolution() {

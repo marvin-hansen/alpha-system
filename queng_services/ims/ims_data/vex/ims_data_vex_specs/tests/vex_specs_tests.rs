@@ -1,4 +1,4 @@
-use common_config::prelude::{ProtocolType, ServiceID};
+use common_config::{ProtocolType, ServiceID};
 use ims_data_vex_specs::vex_service_config;
 
 #[test]

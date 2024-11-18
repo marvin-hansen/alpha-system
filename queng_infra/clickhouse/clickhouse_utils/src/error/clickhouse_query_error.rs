@@ -1,4 +1,4 @@
-use common_errors::prelude::ValidationError;
+use common_errors::ValidationError;
 use std::error::Error;
 use std::fmt;
 

@@ -1,6 +1,6 @@
 use crate::model::endpoint_type::Endpoint;
 use crate::model::service::CreateService;
-use common_config::prelude::ServiceConfig as CommonServiceConfig;
+use common_config::ServiceConfig as CommonServiceConfig;
 
 impl CreateService {
     pub fn from_common_svc_config(common_svc_config: &CommonServiceConfig) -> CreateService {

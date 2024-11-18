@@ -1,4 +1,4 @@
-use common_data_bar::prelude::DataType;
+use common_data_bar::DataType;
 
 #[test]
 fn test_from_u8_conversion() {

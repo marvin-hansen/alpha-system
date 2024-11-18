@@ -1,6 +1,6 @@
 use crate::PostgresCMDBManager;
-use common_errors::prelude::PostgresDBError;
-use common_exchange::prelude::PortfolioConfig;
+use common_errors::PostgresDBError;
+use common_exchange::PortfolioConfig;
 use pg_cmdb::model::instrument::Instrument;
 use pg_cmdb::prelude::portfolio::Portfolio;
 

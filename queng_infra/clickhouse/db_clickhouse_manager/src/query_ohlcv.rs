@@ -1,8 +1,8 @@
 use crate::error::ClickHouseDBError;
 use crate::types::OHLCVRow;
 use crate::ClickhouseDBManager;
-use common_data_bar::prelude::{OHLCVBar, TimeResolution};
-use common_database::prelude::sanitize_utils;
+use common_data_bar::{OHLCVBar, TimeResolution};
+use common_database::sanitize_utils;
 
 impl ClickhouseDBManager {
     /// Retrieves all OHLCV data bars for the given symbol table and time resolution.

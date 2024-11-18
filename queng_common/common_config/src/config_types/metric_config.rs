@@ -1,6 +1,6 @@
 use std::fmt::{Display, Formatter};
 
-use crate::prelude::Endpoint;
+use crate::Endpoint;
 
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct MetricConfig {

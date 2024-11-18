@@ -1,4 +1,4 @@
-use crate::prelude::SanitizeError;
+use common_errors::SanitizeError;
 
 /// Sanitizes the provided table name to prevent SQL injection attacks.
 ///

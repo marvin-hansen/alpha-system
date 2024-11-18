@@ -1,4 +1,4 @@
-use common_container::prelude::WaitStrategy;
+use common_container::WaitStrategy;
 
 #[test]
 fn test_wait_strategy_variants() {

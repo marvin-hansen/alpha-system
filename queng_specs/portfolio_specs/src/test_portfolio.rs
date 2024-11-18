@@ -1,4 +1,4 @@
-use common_exchange::prelude::{AccountType, Instrument, PortfolioConfig};
+use common_exchange::{AccountType, Instrument, PortfolioConfig};
 
 pub fn get_test_portfolio_config() -> PortfolioConfig {
     let portfolio_id = 1;

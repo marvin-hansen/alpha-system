@@ -1,6 +1,6 @@
-use common_config::prelude::{ServiceConfig, ServiceID};
-use common_errors::prelude::InitError;
-use common_exchange::prelude::ExchangeID;
+use common_config::{ServiceConfig, ServiceID};
+use common_errors::InitError;
+use common_exchange::ExchangeID;
 
 use crate::CfgManager;
 

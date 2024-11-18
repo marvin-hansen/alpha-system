@@ -24,7 +24,7 @@ use std::fmt::{Display, Formatter};
 /// Examples:
 ///
 /// ```
-/// use common_container::prelude::WaitStrategy;
+/// use common_container::WaitStrategy;
 ///
 /// // No wait strategy, indicating immediate readiness.
 /// let no_wait = WaitStrategy::NoWait;

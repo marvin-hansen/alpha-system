@@ -1,6 +1,6 @@
 mod service;
 
-use common_errors::prelude::PostgresDBError;
+use common_errors::PostgresDBError;
 use diesel::r2d2::{ConnectionManager, Pool, PooledConnection};
 use diesel::PgConnection;
 use pg_smdb::run_smdb_db_migration;

@@ -1,5 +1,5 @@
 use crate::fields::{CDN_AUTH_HEADER_KEY, CDN_RO_AUTH_KEY};
-use common_errors::prelude::DownloadError;
+use common_errors::DownloadError;
 use reqwest::Client;
 
 pub(crate) mod util_client;

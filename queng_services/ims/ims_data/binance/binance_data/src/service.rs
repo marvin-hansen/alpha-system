@@ -1,5 +1,5 @@
 use crate::stream_manager::stream_manager;
-use common_data_bar::prelude::DataType;
+use common_data_bar::DataType;
 use ims_common::prelude::BinanceDataCommand;
 use std::sync::atomic;
 use std::sync::atomic::AtomicU32;
