@@ -3,7 +3,6 @@ use crate::fields::{
     ONE, ONE_HUNDRED, ONE_POINT_FIVE, POINT_FIVE, POINT_SEVEN_FIVE, POINT_TWO, THREE,
 };
 use common_data_bar::OHLCVBar;
-use math_utils;
 use rust_decimal::prelude::ToPrimitive;
 
 const SIZE: usize = 43;

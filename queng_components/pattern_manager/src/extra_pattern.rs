@@ -5,7 +5,6 @@
 use crate::abstract_trait::PatternTrait;
 use crate::fields::*;
 use common_data_bar::OHLCVBar;
-use math_utils;
 use rust_decimal::prelude::ToPrimitive;
 
 const SIZE: usize = 139;

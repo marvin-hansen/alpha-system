@@ -2,7 +2,6 @@ use common_config::ServiceConfig;
 use environment_manager::EnvironmentManager;
 use pg_smdb_manager::PostgresSMDBManager;
 use postgres_config_manager::PostgresConfigManager;
-use service_specs_all;
 
 mod import_services;
 

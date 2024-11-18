@@ -1,5 +1,3 @@
-use crypto_utils;
-
 #[test]
 fn test_sha512_digest() {
     let s = String::from("Hello Hash");

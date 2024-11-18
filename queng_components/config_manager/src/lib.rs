@@ -2,7 +2,6 @@ use common_config::{ServiceConfig, ServiceID, SvcEnvConfig};
 use common_env::EnvironmentType;
 use common_exchange::ExchangeID;
 use environment_manager::EnvironmentManager;
-use exchange_specs;
 use exchange_specs::{get_all_exchanges, get_all_exchanges_ids_names, get_exchange_symbol_tables};
 use hickory_resolver::TokioAsyncResolver;
 use smdb_specs::smdb_service_config;

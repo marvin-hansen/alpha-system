@@ -1,4 +1,3 @@
-use base16ct;
 use sha3::{Digest, Sha3_512};
 
 const SALT: &str = "2451!@43158)c2#$%b30d&(7f653a985>da7";

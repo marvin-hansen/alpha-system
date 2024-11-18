@@ -2,7 +2,6 @@ mod getters;
 
 use common_database::ClickHouseConfig;
 use common_env::EnvironmentType;
-use db_specs_clickhouse;
 
 #[derive(Debug, Eq, Clone, PartialEq)]
 pub struct ClickhouseConfigManager {
