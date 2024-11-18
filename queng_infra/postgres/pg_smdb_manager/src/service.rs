@@ -1,7 +1,7 @@
 use crate::PostgresSMDBManager;
 use common_config::{Endpoint, ServiceConfig, ServiceID};
 use common_errors::PostgresDBError;
-use pg_smdb::model::service;
+use pg_smdb::service;
 
 impl PostgresSMDBManager {
     /// Inserts a new service into the database.

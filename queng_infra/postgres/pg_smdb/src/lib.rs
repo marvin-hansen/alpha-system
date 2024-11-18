@@ -5,9 +5,12 @@ use postgres_migrations::Connection;
 use std::error::Error;
 
 mod migrations;
-pub mod model;
-pub mod prelude;
+pub(crate) mod model;
+
 pub(crate) mod schema;
+
+// Re-export models
+pub use crate::model::service;
 
 pub const MIGRATIONS: EmbeddedMigrations = EMBEDDED_MIGRATIONS;
 
