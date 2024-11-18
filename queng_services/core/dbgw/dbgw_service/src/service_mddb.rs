@@ -2,7 +2,7 @@ use crate::DBG;
 use pg_mddb_manager::PostgresMDDBManager;
 use proto_mddb::proto::db_gateway_mddb_service_server::DbGatewayMddbService;
 use proto_mddb::proto::*;
-use proto_mddb_utils::prelude::*;
+use proto_mddb_utils::*;
 use std::sync::Arc;
 use tokio::sync::RwLock;
 use tonic::{Request, Response, Status};

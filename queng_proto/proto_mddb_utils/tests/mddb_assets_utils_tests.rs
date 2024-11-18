@@ -4,7 +4,7 @@ use proto_mddb::proto::{
     CountAssetsResponse, GetAllAssetsRequest, GetAssetRequest, ProtoMetaAsset,
 };
 
-use proto_mddb_utils::prelude::*;
+use proto_mddb_utils::*;
 
 #[test]
 fn test_get_count_assets_request() {

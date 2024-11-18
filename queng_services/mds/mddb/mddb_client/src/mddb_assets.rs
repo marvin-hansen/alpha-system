@@ -2,7 +2,7 @@ use crate::error::MDDBClientError;
 use crate::MDDBClient;
 use common_metadata::MetaAsset;
 use proto_mddb::proto::*;
-use proto_mddb_utils::prelude::*;
+use proto_mddb_utils::*;
 
 impl MDDBClient {
     /// Returns the total number of assets in the MDDB

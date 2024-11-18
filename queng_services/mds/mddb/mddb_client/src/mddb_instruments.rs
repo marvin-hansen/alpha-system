@@ -2,7 +2,7 @@ use crate::error::MDDBClientError;
 use crate::MDDBClient;
 use common_metadata::MetaInstrument;
 
-use proto_mddb_utils::prelude::*;
+use proto_mddb_utils::*;
 
 impl MDDBClient {
     /// Retrieves the total count of instruments from the database.
