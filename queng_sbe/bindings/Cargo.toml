@@ -1,10 +1,9 @@
 [package]
 name = "sbe_bindings"
 version = "0.1.0"
-authors = ["sbetool"]
-description = "Fluvio DeepCausality Schema"
-edition = "2021"
+edition.workspace = true
+rust-version.workspace = true
+readme.workspace = true
+repository.workspace = true
+authors.workspace = true
 
-[lib]
-name = "sbe_bindings"
-path = "src/lib.rs"
