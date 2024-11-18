@@ -6,8 +6,10 @@ use std::error::Error;
 
 pub(crate) mod migrations;
 pub mod model;
-pub mod prelude;
 pub(crate) mod schema;
+
+// Re-export models
+pub use crate::model::portfolio;
 
 pub const MIGRATIONS: EmbeddedMigrations = EMBEDDED_MIGRATIONS;
 /// Run all pending migrations.

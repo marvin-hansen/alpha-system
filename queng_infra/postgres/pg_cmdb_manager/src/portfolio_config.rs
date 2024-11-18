@@ -2,7 +2,7 @@ use crate::PostgresCMDBManager;
 use common_errors::PostgresDBError;
 use common_exchange::PortfolioConfig;
 use pg_cmdb::model::instrument::Instrument;
-use pg_cmdb::prelude::portfolio::Portfolio;
+use pg_cmdb::portfolio::Portfolio;
 
 impl PostgresCMDBManager {
     /// Inserts a portfolio configuration into the database.
