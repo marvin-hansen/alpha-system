@@ -5,7 +5,7 @@
 use crate::abstract_trait::PatternTrait;
 use crate::fields::*;
 use common_data_bar::OHLCVBar;
-use math_utils::arithmetic;
+use math_utils;
 use rust_decimal::prelude::ToPrimitive;
 
 const SIZE: usize = 139;
@@ -65,11 +65,11 @@ impl PatternTrait for ExtraPattern {
         let lowd5 = day_5_bar.low().to_f64().unwrap();
         let closed5 = day_5_bar.close().to_f64().unwrap();
 
-        let body1d = arithmetic::abs(opend1 - closed1);
-        let body5d = arithmetic::abs(opend5 - closed1);
+        let body1d = math_utils::abs(opend1 - closed1);
+        let body5d = math_utils::abs(opend5 - closed1);
         let range1d = highd1 - lowd1;
-        let range5d = arithmetic::max(&[highd1, highd2, highd3, highd4, highd5])
-            - arithmetic::min(&[lowd1, lowd2, lowd3, lowd4, lowd5]);
+        let range5d = math_utils::max(&[highd1, highd2, highd3, highd4, highd5])
+            - math_utils::min(&[lowd1, lowd2, lowd3, lowd4, lowd5]);
 
         self.arr[0] = false;
         self.arr[1] = body1d < POINT_ONE * range1d;

@@ -1,4 +1,4 @@
-use math_utils::arithmetic::max;
+use math_utils::max;
 
 #[test]
 fn test_max_empty_list() {

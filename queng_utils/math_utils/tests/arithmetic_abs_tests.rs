@@ -1,4 +1,4 @@
-use math_utils::arithmetic::abs;
+use math_utils::abs;
 
 #[test]
 fn test_abs_negative_input() {

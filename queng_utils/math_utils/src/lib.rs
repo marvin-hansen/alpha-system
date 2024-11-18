@@ -1,2 +1,3 @@
-pub mod arithmetic;
-pub mod prelude;
+mod arithmetic;
+// Re export
+pub use crate::arithmetic::*;

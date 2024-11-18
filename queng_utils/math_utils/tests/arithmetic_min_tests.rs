@@ -1,4 +1,4 @@
-use math_utils::arithmetic::min;
+use math_utils::min;
 
 #[test]
 fn test_min_positive_numbers() {
