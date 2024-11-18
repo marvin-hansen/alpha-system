@@ -2,7 +2,7 @@ use crate::DBG;
 use pg_imdb_manager::PostgresIMDBManager;
 use proto_imdb::proto::db_gateway_imdb_service_server::DbGatewayImdbService;
 use proto_imdb::proto::*;
-use proto_imdb_utils::prelude::*;
+use proto_imdb_utils::*;
 use std::sync::Arc;
 use tokio::sync::RwLock;
 use tonic::{Request, Response, Status};

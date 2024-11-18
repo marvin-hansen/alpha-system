@@ -1,7 +1,7 @@
 use proto_imdb::proto::db_gateway_imdb_service_client::DbGatewayImdbServiceClient;
 use proto_imdb::proto::imdb_service_server::ImdbService;
 use proto_imdb::proto::*;
-use proto_imdb_utils::prelude::*;
+use proto_imdb_utils::*;
 use tonic::transport::Channel;
 use tonic::{Request, Response, Status};
 

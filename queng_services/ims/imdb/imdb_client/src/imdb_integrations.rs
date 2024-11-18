@@ -2,7 +2,7 @@ use crate::error::IMDBClientError;
 use crate::IMDBClient;
 use common_ims::{ExchangeID, IntegrationConfig};
 use proto_imdb::proto::ProtoIntegrationConfig;
-use proto_imdb_utils::prelude::*;
+use proto_imdb_utils::*;
 
 impl IMDBClient {
     /// Returns the total number of integrations in the database
