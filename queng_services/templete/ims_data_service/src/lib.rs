@@ -15,7 +15,7 @@ pub async fn start(
     cfg_manager: CfgManager,
     exchange_id: ExchangeID,
 ) -> Result<(), Box<dyn std::error::Error>> {
-    let svc_name = &format!("IMS {} Data Service", exchange_id.to_string());
+    let svc_name = &format!("IMS {} Data Service", exchange_id);
     let dbg_print = |msg: &str| {
         if dbg {
             println!("[{}]: {}", svc_name, msg)
@@ -64,7 +64,7 @@ pub async fn start(
 
     // Print service start header
     print_utils::print_duration("Starting service took:", &start.elapsed());
-    print_utils::print_start_header_simple(&svc_name, &service_addr);
+    print_utils::print_start_header_simple(svc_name, &service_addr);
 
     //Start server.
     match tokio::try_join!(service_handle) {

@@ -1,5 +1,4 @@
-use common_message;
-use iggy::client::{Client, StreamClient, TopicClient, UserClient};
+use iggy::client::Client;
 use iggy::clients::client::IggyClient;
 use iggy::clients::consumer::{AutoCommit, AutoCommitWhen, IggyConsumer};
 use iggy::consumer::ConsumerKind;

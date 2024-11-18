@@ -1,7 +1,6 @@
 use common_data_bar::{OHLCVBar, TradeBar};
 use common_errors::MessageProcessingError;
 use sbe_messages::{DataErrorType, DataType, SbeOHLCVBar, SbeTradeBar};
-use sbe_utils;
 
 use crate::service::Server;
 impl Server {
