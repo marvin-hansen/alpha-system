@@ -1,4 +1,4 @@
-use service_specs_all::prelude::get_all_service_specs;
+use service_specs_all::get_all_service_specs;
 
 #[test]
 fn test_get_all_service_specs() {

@@ -2,7 +2,7 @@ use common_config::ServiceConfig;
 use environment_manager::EnvironmentManager;
 use pg_smdb_manager::PostgresSMDBManager;
 use postgres_config_manager::PostgresConfigManager;
-use service_specs_all::prelude as service_specs;
+use service_specs_all;
 
 mod import_services;
 
@@ -46,7 +46,7 @@ impl ServiceImportManager {
                 .expect("Failed to create PostgresSMDBManager")
         };
 
-        let services = service_specs::get_all_service_specs();
+        let services = service_specs_all::get_all_service_specs();
 
         Self { dbg, dbm, services }
     }
