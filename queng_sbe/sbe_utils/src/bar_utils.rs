@@ -67,7 +67,7 @@ pub fn encode_first_bar(
 /// - `DataErrorType::DataEncodingError` if encoding fails
 /// - The underlying encoding error wrapped in `MessageProcessingError`
 ///
-pub(crate) async fn encode_last_bar(
+pub async fn encode_last_bar(
     date_type: &DataType,
     symbol_id: u16,
 ) -> Result<Vec<u8>, (DataErrorType, MessageProcessingError)> {

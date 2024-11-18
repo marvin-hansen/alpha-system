@@ -1,6 +1,7 @@
 use common_data_bar::{OHLCVBar, TradeBar};
 use common_errors::MessageProcessingError;
 use sbe_messages::{DataErrorType, DataType, SbeOHLCVBar, SbeTradeBar};
+use sbe_utils;
 
 use crate::service::Server;
 impl Server {
@@ -25,10 +26,10 @@ impl Server {
         data_type: &DataType,
     ) -> Result<(), (DataErrorType, MessageProcessingError)> {
         // Encode the first bar message
-        let enc_first_bar = Vec::new(); // match self.encode_first_bar(data_type, symbol_id).await {
-                                        //     Ok(v) => v,
-                                        //     Err(e) => return Err(e),
-                                        // };
+        let enc_first_bar = match sbe_utils::encode_first_bar(data_type, symbol_id) {
+            Ok(v) => v,
+            Err(e) => return Err(e),
+        };
 
         // Send the first bar message to inform the client that the data stream starts
         match self.send_client_data(client_id, enc_first_bar).await {
@@ -60,11 +61,10 @@ impl Server {
         data_type: &DataType,
     ) -> Result<(), (DataErrorType, MessageProcessingError)> {
         // Encode the last bar message
-        let enc_last_bar = Vec::new();
-        // match self.encode_last_bar(data_type, symbol_id).await {
-        //     Ok(v) => v,
-        //     Err(e) => return Err(e),
-        // };
+        let enc_last_bar = match sbe_utils::encode_last_bar(data_type, symbol_id).await {
+            Ok(v) => v,
+            Err(e) => return Err(e),
+        };
 
         // Send the first bar message to inform the client that the data stream starts
         match self.send_client_data(client_id, enc_last_bar).await {
@@ -121,7 +121,6 @@ impl Server {
     pub(crate) async fn send_ohlcv_bar(
         &self,
         client_id: u16,
-        symbol_id: u16,
         bar: &OHLCVBar,
     ) -> Result<(), (DataErrorType, MessageProcessingError)> {
         // Encode the trade bar message

@@ -1,5 +1,5 @@
 use common_errors::MessageProcessingError;
-use sbe_messages::{ClientErrorMessage, ClientErrorType, DataErrorMessage, DataErrorType};
+use sbe_messages::{ClientErrorType, DataErrorType};
 
 use crate::service::Server;
 
@@ -22,14 +22,12 @@ impl Server {
         client_id: u16,
         client_error: ClientErrorType,
     ) -> Result<(), MessageProcessingError> {
-        let message = ClientErrorMessage::new(client_id, client_error);
-        let enc = message.encode();
-        assert!(enc.is_ok());
-
-        let (_, bytes) = enc.unwrap();
+        // Encode message as SBE binary
+        let message = sbe_utils::encode_client_error(client_id, client_error)
+            .expect("Failed to encode client error message");
 
         // Send message
-        self.send_error(bytes)
+        self.send_error(message)
             .await
             .expect("Failed to send client error message");
 
@@ -54,13 +52,12 @@ impl Server {
         client_id: u16,
         data_error: DataErrorType,
     ) -> Result<(), MessageProcessingError> {
-        let message = DataErrorMessage::new(client_id, data_error);
-        let (_, bytes) = message
-            .encode()
+        // Encode message as SBE binary
+        let message = sbe_utils::encode_data_error(client_id, data_error)
             .expect("Failed to encode data error message");
 
         // Send message
-        self.send_error(bytes)
+        self.send_error(message)
             .await
             .expect("Failed to send error message");
 
