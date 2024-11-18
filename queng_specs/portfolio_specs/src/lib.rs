@@ -1,7 +1,8 @@
-pub mod prelude;
-pub mod test_portfolio;
+mod test_portfolio;
 
 use common_exchange::PortfolioConfig;
+
+pub use crate::test_portfolio::*;
 
 pub fn get_test_update_portfolio_config() -> PortfolioConfig {
     test_portfolio::get_test_update_portfolio_config()
