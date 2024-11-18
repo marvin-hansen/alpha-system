@@ -1,7 +1,7 @@
 use common_config::ServiceID;
 use container_specs_postgres::postgres_db_container_config;
 use docker_utils::DockerUtil;
-use service_utils::prelude::ServiceUtil;
+use service_utils::ServiceUtil;
 use service_utils::ServiceWaitStrategy;
 use std::time::Duration;
 use tokio::time::sleep;

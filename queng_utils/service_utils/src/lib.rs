@@ -5,10 +5,13 @@ use std::time::Duration;
 
 mod error;
 mod fields;
-pub mod prelude;
+
 mod service;
 mod types;
 mod verify;
+
+// Re-export errors
+pub use crate::error::service_util_error::ServiceUtilError::*;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum ServiceWaitStrategy {
