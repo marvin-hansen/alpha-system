@@ -1,5 +1,5 @@
 use crate::{MetadataImportManager, AUTO_DETECT_PROXY};
-use kaiko_import::prelude::{determine_workflow, execute_workflow, MetaDataDBWOp, WorkflowOpAll};
+use kaiko_import::{determine_workflow, execute_workflow, MetaDataDBWOp, WorkflowOpAll};
 use std::error::Error;
 
 impl MetadataImportManager {

@@ -1,5 +1,4 @@
 mod connection;
-pub mod prelude;
 
 use diesel::r2d2::R2D2Connection;
 use diesel::PgConnection;
