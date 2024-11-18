@@ -2,10 +2,8 @@ use common_config::{ServiceConfig, ServiceID, SvcEnvConfig};
 use common_env::EnvironmentType;
 use common_exchange::ExchangeID;
 use environment_manager::EnvironmentManager;
-use exchange_specs::prelude;
-use exchange_specs::prelude::{
-    get_all_exchanges, get_all_exchanges_ids_names, get_exchange_symbol_tables,
-};
+use exchange_specs;
+use exchange_specs::{get_all_exchanges, get_all_exchanges_ids_names, get_exchange_symbol_tables};
 use hickory_resolver::TokioAsyncResolver;
 use smdb_specs::smdb_service_config;
 use std::collections::HashMap;
@@ -199,7 +197,7 @@ impl CfgManager {
         let external_dns_resolver = build_utils::build_external_dns_resolver(dbg);
 
         // Remove this after adding MDDB service
-        let default_exchange = prelude::get_default_exchange();
+        let default_exchange = exchange_specs::get_default_exchange();
         let exchanges = get_all_exchanges();
         let exchanges_id_names = get_all_exchanges_ids_names();
         let exchanges_symbol_tables = get_exchange_symbol_tables();
