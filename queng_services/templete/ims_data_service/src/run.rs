@@ -1,5 +1,6 @@
 use crate::service::Server;
 use common_errors::MessageProcessingError;
+use std::error::Error;
 use std::future::Future;
 use tokio::{pin, select};
 
@@ -22,6 +23,22 @@ impl Server {
 
             } // end select
         } // end loop
+
+        self.stop().await.expect("Failed to stop message service");
+
+        Ok(())
+    }
+}
+
+impl Server {
+    pub(super) async fn stop(&self) -> Result<(), Box<dyn Error>> {
+        // Delete stream and topic of the consumer before shutting down.
+
+        // Logout user. Call it just once as consumer and producer use the same user.
+
+        // Shutdown consumer
+
+        // Shutdown producer
 
         Ok(())
     }

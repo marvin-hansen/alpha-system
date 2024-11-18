@@ -57,6 +57,7 @@ members = [
     "queng_proto/proto_smdb_utils",
     "queng_sbe/bindings",
     "queng_sbe/sbe_messages",
+    "queng_sbe/sbe_utils",
     "queng_services/core/cmdb/cmdb_client",
     "queng_services/core/cmdb/cmdb_service",
     "queng_services/core/cmdb/cmdb_specs",
@@ -223,6 +224,7 @@ proto_smdb_utils = { path = "queng_proto/proto_smdb_utils" }
 # SBE
 sbe_bindings = { path = "queng_sbe/bindings" }
 sbe_messages = { path = "queng_sbe/sbe_messages" }
+sbe_utils = { path = "queng_sbe/sbe_utils" }
 
 # Services
 # Core

@@ -1,3 +1,5 @@
+type Guarded<T> = std::sync::Arc<tokio::sync::RwLock<T>>;
+
 pub struct Server {}
 
 impl Server {

@@ -5,8 +5,10 @@ use config_manager::CfgManager;
 use smdb_client::SMDBClient;
 use tokio::time::Instant;
 
+mod handle;
 mod run;
 mod service;
+mod utils;
 
 pub async fn start(
     dbg: bool,
