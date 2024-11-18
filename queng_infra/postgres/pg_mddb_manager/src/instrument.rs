@@ -1,7 +1,7 @@
 use crate::PostgresMDDBManager;
 use common_errors::PostgresDBError;
 use common_metadata::MetaInstrument;
-use pg_mddb::prelude::Instrument;
+use pg_mddb::Instrument;
 
 impl PostgresMDDBManager {
     /// Inserts a new instrument into the database.

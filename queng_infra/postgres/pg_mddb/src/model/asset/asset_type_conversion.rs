@@ -1,5 +1,5 @@
 use crate::model::asset::Asset;
-use crate::prelude::UpdateAsset;
+use crate::UpdateAsset;
 use common_metadata::MetaAsset;
 
 impl Asset {

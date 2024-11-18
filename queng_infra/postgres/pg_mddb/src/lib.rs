@@ -6,8 +6,13 @@ use std::error::Error;
 
 mod migrations;
 mod model;
-pub mod prelude;
 mod schema;
+
+// Re exports
+pub use crate::model::asset::*;
+pub use crate::model::exchange::*;
+pub use crate::model::instrument::*;
+pub use crate::model::stat::*;
 
 pub const MIGRATIONS: EmbeddedMigrations = EMBEDDED_MIGRATIONS;
 

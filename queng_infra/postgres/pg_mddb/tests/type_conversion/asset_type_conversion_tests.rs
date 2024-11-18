@@ -1,5 +1,5 @@
 use common_metadata::MetaAsset;
-use pg_mddb::prelude::Asset;
+use pg_mddb::Asset;
 
 #[test]
 fn test_from_meta_asset() {

@@ -1,7 +1,7 @@
 use crate::PostgresMDDBManager;
 use common_errors::PostgresDBError;
 use common_metadata::MetaAsset;
-use pg_mddb::prelude::Asset;
+use pg_mddb::Asset;
 
 impl PostgresMDDBManager {
     /// Inserts a new asset into the database.

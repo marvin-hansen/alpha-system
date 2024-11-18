@@ -1,7 +1,7 @@
 use crate::PostgresMDDBManager;
 use common_errors::PostgresDBError;
 use common_metadata::MetaInstrument;
-use pg_mddb::prelude::Instrument;
+use pg_mddb::Instrument;
 
 impl PostgresMDDBManager {
     pub async fn read_instruments_by_exchange_pair_code(

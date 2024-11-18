@@ -1,7 +1,7 @@
 use crate::PostgresMDDBManager;
 use common_errors::PostgresDBError;
 use common_metadata::MetaExchange;
-use pg_mddb::prelude::Exchange;
+use pg_mddb::Exchange;
 
 impl PostgresMDDBManager {
     /// Inserts a new exchange into the database.

@@ -1,5 +1,5 @@
 use crate::model::stat::Stat;
-use crate::prelude::CreateStat;
+use crate::CreateStat;
 use common_metadata::MetaStats;
 
 impl Stat {

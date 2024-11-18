@@ -1,8 +1,8 @@
 use crate::model::asset::Asset;
-use crate::prelude::UpdateAsset;
 use crate::schema::mddb::assets::asset_code;
 use crate::schema::mddb::assets::dsl::assets as assets_table;
 use crate::Connection;
+use crate::UpdateAsset;
 use common_metadata::MetaAsset;
 use diesel::dsl::insert_into;
 use diesel::ExpressionMethods;

@@ -1,5 +1,5 @@
 use crate::model::instrument::Instrument;
-use crate::prelude::{CreateInstrument, UpdateInstrument};
+use crate::{CreateInstrument, UpdateInstrument};
 use common_metadata::{InstrumentMetadata, MetaInstrument};
 
 impl Instrument {

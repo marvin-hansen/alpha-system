@@ -1,5 +1,5 @@
 use crate::model::exchange::Exchange;
-use crate::prelude::{CreateExchange, UpdateExchange};
+use crate::{CreateExchange, UpdateExchange};
 use common_metadata::MetaExchange;
 
 impl Exchange {
