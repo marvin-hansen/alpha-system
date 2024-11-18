@@ -50,6 +50,18 @@ echo "====================="
 
 command bazel build //:push --test_env=ENV=LOCAL
 
-# The last acceptance tests shutdowns the db container;
-# lets start a new one after all tests have been completed.
-command docker run --name postgres-5432 -p 5432:5432 -e POSTGRES_PASSWORD=postgres -d postgres:17-alpine3.20
+
+# Check if a docker container with the name postgres-5432 is already running
+if [ "$(docker ps --filter "name=postgres-5432" --filter "status=running" -q)" ]; then
+ exit 0
+fi
+
+# Start the container if it is not running
+echo "Starting a new container postgres-5432!"
+docker run --name postgres-5432 -p 5432:5432 -e POSTGRES_PASSWORD=postgres -d postgres:17-alpine3.20
+
+echo ""
+echo "====================="
+echo "All Tests Passed"
+echo "====================="
+echo ""
