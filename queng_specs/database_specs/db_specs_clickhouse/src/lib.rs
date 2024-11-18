@@ -1,2 +1,3 @@
-pub mod clickhouse;
-pub mod prelude;
+mod clickhouse;
+
+pub use crate::clickhouse::*;

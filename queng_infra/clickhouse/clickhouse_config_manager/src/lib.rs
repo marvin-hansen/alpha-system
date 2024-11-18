@@ -2,7 +2,7 @@ mod getters;
 
 use common_database::ClickHouseConfig;
 use common_env::EnvironmentType;
-use db_specs_clickhouse::clickhouse;
+use db_specs_clickhouse;
 
 #[derive(Debug, Eq, Clone, PartialEq)]
 pub struct ClickhouseConfigManager {
@@ -30,7 +30,7 @@ fn get_clickhouse_config(dbg: bool, env_type: &EnvironmentType) -> ClickHouseCon
     if dbg {
         println!("[ClickhouseConfigManager]: get_clickhouse_config");
     }
-    clickhouse::get_clickhouse_config(env_type)
+    db_specs_clickhouse::get_clickhouse_config(env_type)
 }
 
 impl ClickhouseConfigManager {
