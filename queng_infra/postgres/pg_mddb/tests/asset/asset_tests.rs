@@ -2,7 +2,7 @@ use container_specs_postgres::postgres_db_container_config;
 use diesel::Connection;
 use docker_utils::prelude::DockerUtil;
 use pg_mddb::Asset;
-use postgres_migrations::prelude::{get_or_wait_for_postgres_connection, DB_TEST_URL};
+use postgres_migrations::{get_or_wait_for_postgres_connection, DB_TEST_URL};
 
 fn get_test_asset() -> Asset {
     Asset {

@@ -6,7 +6,7 @@ use container_specs_postgres::postgres_db_container_config;
 use diesel::Connection;
 use docker_utils::prelude::DockerUtil;
 use pg_imdb::model::integration_config::IntegrationConfig;
-use postgres_migrations::prelude::{get_or_wait_for_postgres_connection, DB_TEST_URL};
+use postgres_migrations::{get_or_wait_for_postgres_connection, DB_TEST_URL};
 
 //
 // Somehow tests seem to be executed or sorted in alphabetical order,

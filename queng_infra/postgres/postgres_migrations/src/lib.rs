@@ -6,6 +6,9 @@ use diesel::PgConnection;
 use diesel_migrations::{EmbeddedMigrations, MigrationHarness};
 use std::error::Error;
 
+// Re-exports
+pub use crate::connection::{get_or_wait_for_postgres_connection, DB_TEST_URL};
+
 // Alias for a pooled database connection.
 pub type ConnectionPool =
     diesel::r2d2::PooledConnection<diesel::r2d2::ConnectionManager<PgConnection>>;
