@@ -1,4 +1,4 @@
-use common_trade::prelude::PatternType;
+use common_trade::PatternType;
 
 #[test]
 fn test_debug() {

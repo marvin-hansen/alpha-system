@@ -1,4 +1,4 @@
-use common_trade::prelude::{PatternConfig, StrategyConfig, TradeEntryType, TradeStrategyType};
+use common_trade::{PatternConfig, StrategyConfig, TradeEntryType, TradeStrategyType};
 
 fn get_strategy_config() -> StrategyConfig {
     let strategy_id = "test_id".to_string();

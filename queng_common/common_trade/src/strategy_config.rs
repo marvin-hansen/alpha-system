@@ -1,6 +1,6 @@
 use std::fmt::{Display, Formatter};
 
-use crate::prelude::{PatternConfig, TradeEntryType, TradeStrategyType};
+use crate::{PatternConfig, TradeEntryType, TradeStrategyType};
 
 #[derive(Debug, Default, Clone, Eq, PartialEq)]
 pub struct StrategyConfig {

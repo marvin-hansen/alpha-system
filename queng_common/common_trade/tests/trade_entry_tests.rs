@@ -1,4 +1,4 @@
-use common_trade::prelude::TradeEntryType;
+use common_trade::TradeEntryType;
 
 #[test]
 fn test_default_value() {

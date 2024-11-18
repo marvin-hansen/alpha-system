@@ -11,7 +11,7 @@ use crate::long_pattern::LongPattern;
 use crate::short_pattern::ShortPattern;
 use abstract_trait::PatternTrait;
 use common_data_bar::OHLCVBar;
-use common_trade::prelude::PatternType;
+use common_trade::PatternType;
 use std::cell::RefCell;
 
 #[derive(Debug, Clone)]

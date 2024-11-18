@@ -1,4 +1,4 @@
-use common_trade::prelude::{PatternConfig, PatternType};
+use common_trade::{PatternConfig, PatternType};
 
 fn get_pattern_config() -> PatternConfig {
     PatternConfig::new(

@@ -1,5 +1,5 @@
 use common_data_bar::OHLCVBar;
-use common_trade::prelude::PatternType;
+use common_trade::PatternType;
 use pattern_manager::PatternManager;
 
 #[test]

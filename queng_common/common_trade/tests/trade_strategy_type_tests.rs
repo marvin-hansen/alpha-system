@@ -1,4 +1,4 @@
-use common_trade::prelude::TradeStrategyType;
+use common_trade::TradeStrategyType;
 
 #[test]
 fn test_display_default() {

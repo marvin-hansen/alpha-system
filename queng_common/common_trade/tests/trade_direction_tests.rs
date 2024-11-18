@@ -1,4 +1,4 @@
-use common_trade::prelude::TradeDirection;
+use common_trade::TradeDirection;
 
 #[test]
 fn test_debug() {

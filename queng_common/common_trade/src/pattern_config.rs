@@ -1,6 +1,6 @@
 use std::fmt::{Display, Formatter};
 
-use crate::prelude::PatternType;
+use crate::PatternType;
 
 #[derive(Debug, Default, Clone, Eq, PartialEq)]
 pub struct PatternConfig {
