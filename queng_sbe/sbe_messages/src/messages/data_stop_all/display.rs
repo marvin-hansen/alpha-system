@@ -1,4 +1,4 @@
-use crate::prelude::StopAllDataMessage;
+use crate::StopAllDataMessage;
 use std::fmt;
 
 impl fmt::Display for StopAllDataMessage {

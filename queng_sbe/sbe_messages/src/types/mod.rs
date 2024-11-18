@@ -11,7 +11,7 @@
 /// and provides a single source of truth for type definitions.
 ///
 /// The types are exposed in the prelude so they can be conveniently
-/// imported together via `use sbe_messages::prelude::*`.
+/// imported together via `use sbe_messages::*`.
 ///
 /// # Exports
 ///

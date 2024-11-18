@@ -1,4 +1,4 @@
-use sbe_messages::prelude::{LastTradeBar, MessageType};
+use sbe_messages::{LastTradeBar, MessageType};
 
 #[test]
 fn test_new() {

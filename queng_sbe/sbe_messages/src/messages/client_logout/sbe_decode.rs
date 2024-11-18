@@ -1,4 +1,4 @@
-use crate::prelude::{ClientLogoutMessage, MessageType};
+use crate::{ClientLogoutMessage, MessageType};
 use sbe_bindings::client_logout_codec::SBE_TEMPLATE_ID;
 use sbe_bindings::{ClientLogoutDecoder, MessageHeaderDecoder, ReadBuf, SbeResult};
 

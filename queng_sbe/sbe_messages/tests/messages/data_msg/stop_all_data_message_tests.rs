@@ -1,5 +1,5 @@
 use common_exchange::ExchangeID;
-use sbe_messages::prelude::{MessageType, StopAllDataMessage};
+use sbe_messages::{MessageType, StopAllDataMessage};
 
 #[test]
 fn test_new() {

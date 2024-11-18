@@ -1,4 +1,4 @@
-use crate::prelude::ClientErrorMessage;
+use crate::ClientErrorMessage;
 use std::fmt;
 
 impl fmt::Display for ClientErrorMessage {

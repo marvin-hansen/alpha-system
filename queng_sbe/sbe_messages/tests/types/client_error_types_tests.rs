@@ -1,4 +1,4 @@
-use sbe_messages::prelude::ClientErrorType;
+use sbe_messages::ClientErrorType;
 
 #[test]
 fn test_from_u8() {

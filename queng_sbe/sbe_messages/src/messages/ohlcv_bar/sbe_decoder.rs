@@ -1,5 +1,5 @@
 use crate::errors::SbeDecodeError;
-use crate::prelude::MessageType;
+use crate::MessageType;
 use chrono::{DateTime, TimeZone, Utc};
 use common_data_bar::OHLCVBar;
 use rust_decimal::prelude::FromPrimitive;

@@ -1,4 +1,4 @@
-use ims_common::prelude::{BinanceExchangeInfo, BinanceSymbol};
+use ims_common::{BinanceExchangeInfo, BinanceSymbol};
 
 #[test]
 fn test_exchange_info_struct() {

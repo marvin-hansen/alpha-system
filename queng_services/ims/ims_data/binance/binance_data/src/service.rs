@@ -1,6 +1,6 @@
 use crate::stream_manager::stream_manager;
 use common_data_bar::DataType;
-use ims_common::prelude::BinanceDataCommand;
+use ims_common::BinanceDataCommand;
 use std::sync::atomic;
 use std::sync::atomic::AtomicU32;
 use tokio::sync::mpsc::Sender;

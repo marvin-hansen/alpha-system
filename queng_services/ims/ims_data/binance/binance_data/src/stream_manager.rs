@@ -1,6 +1,6 @@
 use crate::handlers::trade_websocket;
 use binance::ws_model::WebsocketEvent;
-use ims_common::prelude::BinanceDataCommand;
+use ims_common::BinanceDataCommand;
 use std::collections::HashMap;
 use tokio::select;
 use tokio::sync::mpsc;

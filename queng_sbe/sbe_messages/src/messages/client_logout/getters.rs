@@ -1,4 +1,4 @@
-use crate::prelude::{ClientLogoutMessage, MessageType};
+use crate::{ClientLogoutMessage, MessageType};
 
 impl ClientLogoutMessage {
     pub fn message_type(&self) -> &MessageType {

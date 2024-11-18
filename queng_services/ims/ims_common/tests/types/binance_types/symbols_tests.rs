@@ -1,4 +1,4 @@
-use ims_common::prelude::BinanceSymbol;
+use ims_common::BinanceSymbol;
 
 #[test]
 fn test_symbol_struct() {

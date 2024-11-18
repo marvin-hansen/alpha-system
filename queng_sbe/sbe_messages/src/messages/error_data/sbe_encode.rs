@@ -1,5 +1,5 @@
 use crate::errors::SbeEncodeError;
-use crate::prelude::DataErrorMessage;
+use crate::DataErrorMessage;
 use sbe_bindings::MessageType as SbeMessageType;
 use sbe_bindings::{message_header_codec, DataErrorEncoder, Encoder, WriteBuf};
 

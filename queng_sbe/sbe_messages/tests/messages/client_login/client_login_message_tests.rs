@@ -1,4 +1,4 @@
-use sbe_messages::prelude::{ClientLoginMessage, MessageType};
+use sbe_messages::{ClientLoginMessage, MessageType};
 
 fn get_client_login_message(client_id: u16) -> ClientLoginMessage {
     ClientLoginMessage::new(client_id)

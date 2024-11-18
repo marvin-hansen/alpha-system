@@ -1,5 +1,5 @@
 use common_data_bar::DataType;
-use ims_common::prelude::BinanceDataCommand;
+use ims_common::BinanceDataCommand;
 
 #[test]
 fn test_data_command_variants() {

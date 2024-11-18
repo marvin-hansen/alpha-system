@@ -1,4 +1,4 @@
-use crate::prelude::{FirstTradeBar, MessageType};
+use crate::{FirstTradeBar, MessageType};
 use sbe_bindings::first_trade_bar_codec::SBE_TEMPLATE_ID;
 use sbe_bindings::{FirstTradeBarDecoder, MessageHeaderDecoder, ReadBuf, SbeResult};
 

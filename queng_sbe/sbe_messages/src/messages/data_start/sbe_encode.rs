@@ -1,7 +1,7 @@
 use sbe_bindings::MessageType as SbeMessageType;
 use sbe_bindings::{message_header_codec, Encoder, StartDataMsgEncoder, WriteBuf};
 
-use crate::prelude::{SbeEncodeError, StartDataMessage};
+use crate::{SbeEncodeError, StartDataMessage};
 
 impl StartDataMessage {
     /// Encodes a StartDataMessage to a byte buffer.

@@ -1,4 +1,4 @@
-use crate::prelude::{LastTradeBar, MessageType};
+use crate::{LastTradeBar, MessageType};
 use sbe_bindings::last_trade_bar_codec::SBE_TEMPLATE_ID;
 use sbe_bindings::{LastTradeBarDecoder, MessageHeaderDecoder, ReadBuf, SbeResult};
 

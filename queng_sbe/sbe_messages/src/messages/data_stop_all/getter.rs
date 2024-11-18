@@ -1,5 +1,5 @@
 use crate::messages::data_stop_all::StopAllDataMessage;
-use crate::prelude::MessageType;
+use crate::MessageType;
 use common_exchange::ExchangeID;
 
 impl StopAllDataMessage {

@@ -1,4 +1,4 @@
-use crate::prelude::MessageType;
+use crate::MessageType;
 
 mod display;
 mod getters;

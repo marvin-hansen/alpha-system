@@ -1,5 +1,5 @@
 use crate::messages::error_data::DataErrorMessage;
-use crate::prelude::{DataErrorType, MessageType};
+use crate::{DataErrorType, MessageType};
 
 impl DataErrorMessage {
     pub fn message_type(&self) -> MessageType {

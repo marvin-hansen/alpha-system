@@ -1,4 +1,4 @@
-use sbe_messages::prelude::DataType;
+use sbe_messages::DataType;
 
 #[test]
 fn test_from_u8() {

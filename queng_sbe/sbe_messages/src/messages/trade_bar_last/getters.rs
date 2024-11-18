@@ -1,4 +1,4 @@
-use crate::prelude::{LastTradeBar, MessageType};
+use crate::{LastTradeBar, MessageType};
 
 impl LastTradeBar {
     pub fn message_type(&self) -> MessageType {

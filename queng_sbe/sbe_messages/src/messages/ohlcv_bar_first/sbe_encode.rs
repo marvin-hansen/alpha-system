@@ -1,5 +1,5 @@
 use crate::errors::SbeEncodeError;
-use crate::prelude::FirstOHLCVBar;
+use crate::FirstOHLCVBar;
 use sbe_bindings::MessageType as SbeMessageType;
 use sbe_bindings::{message_header_codec, Encoder, FirstDataBarEncoder, WriteBuf};
 

@@ -1,4 +1,4 @@
-use crate::prelude::FirstOHLCVBar;
+use crate::FirstOHLCVBar;
 use std::fmt;
 
 impl fmt::Display for FirstOHLCVBar {

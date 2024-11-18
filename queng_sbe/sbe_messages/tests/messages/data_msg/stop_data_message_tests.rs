@@ -1,5 +1,5 @@
 use common_exchange::ExchangeID;
-use sbe_messages::prelude::{DataType, MessageType, StopDataMessage};
+use sbe_messages::{DataType, MessageType, StopDataMessage};
 
 fn get_message() -> StopDataMessage {
     let client_id = 1;

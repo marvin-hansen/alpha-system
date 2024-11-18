@@ -1,5 +1,5 @@
 use common_data_bar::OHLCVBar;
-use sbe_messages::prelude::SbeOHLCVBar;
+use sbe_messages::SbeOHLCVBar;
 
 #[test]
 fn test_encode_data_bar_message() {

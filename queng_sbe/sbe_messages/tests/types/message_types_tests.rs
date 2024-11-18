@@ -1,4 +1,4 @@
-use sbe_messages::prelude::MessageType;
+use sbe_messages::MessageType;
 
 #[test]
 fn test_from_u16() {

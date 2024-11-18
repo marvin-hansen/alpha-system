@@ -1,4 +1,4 @@
-use crate::prelude::ClientLogoutMessage;
+use crate::ClientLogoutMessage;
 use std::fmt;
 
 impl fmt::Display for ClientLogoutMessage {

@@ -1,5 +1,5 @@
 use crate::messages::client_login::ClientLoginMessage;
-use crate::prelude::MessageType;
+use crate::MessageType;
 
 impl ClientLoginMessage {
     pub fn message_type(&self) -> &MessageType {

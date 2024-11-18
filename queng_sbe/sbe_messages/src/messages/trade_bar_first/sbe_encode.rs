@@ -2,7 +2,7 @@ use sbe_bindings::MessageType as SbeMessageType;
 use sbe_bindings::{message_header_codec, Encoder, FirstTradeBarEncoder, WriteBuf};
 
 use crate::errors::SbeEncodeError;
-use crate::prelude::FirstTradeBar;
+use crate::FirstTradeBar;
 
 impl FirstTradeBar {
     /// Encodes a FirstTradeBar message to a byte buffer.

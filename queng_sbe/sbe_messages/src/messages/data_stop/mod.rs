@@ -1,6 +1,6 @@
 use common_exchange::ExchangeID;
 
-use crate::prelude::{DataType, MessageType};
+use crate::{DataType, MessageType};
 
 mod display;
 mod getter;

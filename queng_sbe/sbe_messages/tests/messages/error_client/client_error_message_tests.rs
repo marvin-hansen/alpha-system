@@ -1,4 +1,4 @@
-use sbe_messages::prelude::{ClientErrorMessage, ClientErrorType, MessageType};
+use sbe_messages::{ClientErrorMessage, ClientErrorType, MessageType};
 
 #[test]
 fn test_new() {

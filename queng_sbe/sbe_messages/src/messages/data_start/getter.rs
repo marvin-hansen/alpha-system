@@ -1,4 +1,4 @@
-use crate::prelude::{DataType, MessageType, StartDataMessage};
+use crate::{DataType, MessageType, StartDataMessage};
 use common_data_bar::TimeResolution;
 use common_exchange::ExchangeID;
 

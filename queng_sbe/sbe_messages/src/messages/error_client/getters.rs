@@ -1,4 +1,4 @@
-use crate::prelude::{ClientErrorMessage, ClientErrorType, MessageType};
+use crate::{ClientErrorMessage, ClientErrorType, MessageType};
 
 impl ClientErrorMessage {
     pub fn message_type(&self) -> MessageType {

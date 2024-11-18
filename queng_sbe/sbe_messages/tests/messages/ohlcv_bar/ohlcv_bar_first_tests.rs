@@ -1,4 +1,4 @@
-use sbe_messages::prelude::{FirstOHLCVBar, MessageType};
+use sbe_messages::{FirstOHLCVBar, MessageType};
 
 #[test]
 fn test_new() {

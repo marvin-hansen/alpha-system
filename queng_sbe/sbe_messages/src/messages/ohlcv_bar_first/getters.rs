@@ -1,4 +1,4 @@
-use crate::prelude::{FirstOHLCVBar, MessageType};
+use crate::{FirstOHLCVBar, MessageType};
 
 impl FirstOHLCVBar {
     pub fn message_type(&self) -> MessageType {

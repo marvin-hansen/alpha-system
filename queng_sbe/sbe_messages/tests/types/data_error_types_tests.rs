@@ -1,4 +1,4 @@
-use sbe_messages::prelude::DataErrorType;
+use sbe_messages::DataErrorType;
 
 #[test]
 fn test_from_u8() {

@@ -1,7 +1,7 @@
 use chrono::{DateTime, Utc};
 use common_data_bar::TradeBar;
 use rust_decimal::Decimal;
-use sbe_messages::prelude::SbeTradeBar;
+use sbe_messages::SbeTradeBar;
 
 // Default uses utc::now() for date_time, which is not deterministic,
 // and that would cause the encode test to fail. Therefore we use a fixed date.

@@ -1,4 +1,4 @@
-use crate::prelude::SbeEncodeError;
+use crate::SbeEncodeError;
 use common_data_bar::OHLCVBar;
 use rust_decimal::prelude::ToPrimitive;
 

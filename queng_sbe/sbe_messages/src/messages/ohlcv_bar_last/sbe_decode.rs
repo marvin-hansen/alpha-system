@@ -1,4 +1,4 @@
-use crate::prelude::{LastOHLCVBar, MessageType};
+use crate::{LastOHLCVBar, MessageType};
 use sbe_bindings::last_data_bar_codec::SBE_TEMPLATE_ID;
 use sbe_bindings::{LastDataBarDecoder, MessageHeaderDecoder, ReadBuf, SbeResult};
 

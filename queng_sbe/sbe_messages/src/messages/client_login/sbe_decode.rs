@@ -1,4 +1,4 @@
-use crate::prelude::{ClientLoginMessage, MessageType};
+use crate::{ClientLoginMessage, MessageType};
 use sbe_bindings::client_login_codec::SBE_TEMPLATE_ID;
 use sbe_bindings::{ClientLoginDecoder, MessageHeaderDecoder, ReadBuf, SbeResult};
 

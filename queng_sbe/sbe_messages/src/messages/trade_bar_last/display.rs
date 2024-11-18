@@ -1,4 +1,4 @@
-use crate::prelude::LastTradeBar;
+use crate::LastTradeBar;
 use std::fmt;
 
 impl fmt::Display for LastTradeBar {
