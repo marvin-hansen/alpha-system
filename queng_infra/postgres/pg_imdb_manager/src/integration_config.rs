@@ -1,7 +1,7 @@
 use crate::PostgresIMDBManager;
 use common_errors::PostgresDBError;
 use common_ims::IntegrationConfig as ImsIntegrationConfig;
-use pg_imdb::prelude::IntegrationConfig;
+use pg_imdb::IntegrationConfig;
 
 impl PostgresIMDBManager {
     /// Inserts a new IMS integration configuration into the database.
