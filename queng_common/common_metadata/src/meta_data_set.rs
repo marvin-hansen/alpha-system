@@ -3,7 +3,7 @@ use crate::{
     MetaStats,
 };
 use chrono::Utc;
-use crypto_utils::prelude::hash_utils;
+use crypto_utils;
 
 use serde::{Deserialize, Serialize};
 
@@ -24,7 +24,7 @@ impl MetaDataSet {
     ) -> Self {
         let sum = (assets.len() + exchanges.len() + instruments.len()) as u64;
         // The hash of the sum is used to determine if some meta-data have changed.
-        let hash = hash_utils::sha512_digest(sum.to_string());
+        let hash = crypto_utils::sha512_digest(sum.to_string());
 
         let download_timestamp = Utc::now().to_rfc2822();
 

@@ -1,4 +1,4 @@
-use crypto_utils::counter_utils::RelaxedAtomicCounter;
+use crypto_utils::RelaxedAtomicCounter;
 
 #[test]
 fn test_increment_and_get() {
