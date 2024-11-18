@@ -1,6 +1,6 @@
 use config_import::ConfigImportManager;
 use container_specs_postgres::postgres_db_container_config;
-use docker_utils::prelude::DockerUtil;
+use docker_utils::DockerUtil;
 
 // Somehow tests seem to be executed or sorted in alphabetical order,
 // so make sure that the setup is on top of the stack.

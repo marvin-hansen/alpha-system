@@ -2,7 +2,7 @@ use common_config::ServiceID;
 use common_env::EnvironmentType;
 use common_ims::ExchangeID;
 use container_specs_postgres::postgres_db_container_config;
-use docker_utils::prelude::DockerUtil;
+use docker_utils::DockerUtil;
 use imdb_client::IMDBClient;
 use integration_import::IntegrationImportManager;
 use service_import::ServiceImportManager;

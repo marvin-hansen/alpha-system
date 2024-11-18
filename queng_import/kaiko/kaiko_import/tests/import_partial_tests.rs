@@ -1,5 +1,5 @@
 use container_specs_postgres::postgres_db_container_config;
-use docker_utils::prelude::DockerUtil;
+use docker_utils::DockerUtil;
 use environment_manager::EnvironmentManager;
 use kaiko_import::{execute_workflow, MetaDataDBWOp, WorkflowOp, WorkflowOpAll};
 use kaiko_test_utils::utils_import;

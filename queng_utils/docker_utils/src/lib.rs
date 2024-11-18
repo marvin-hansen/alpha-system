@@ -1,4 +1,7 @@
 mod docker;
-
 mod error;
-pub mod prelude;
+
+// Re-exports
+pub use crate::docker::DockerUtil;
+
+pub use crate::error::DockerError;

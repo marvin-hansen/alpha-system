@@ -1,7 +1,7 @@
 use cmdb_client::CmdbClient;
 use common_config::ServiceID;
 use container_specs_postgres::postgres_db_container_config;
-use docker_utils::prelude::DockerUtil;
+use docker_utils::DockerUtil;
 use service_import::ServiceImportManager;
 use service_utils::{ServiceUtil, ServiceWaitStrategy};
 use std::time::Duration;

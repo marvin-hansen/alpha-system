@@ -4,7 +4,7 @@ use common_ims::{
 };
 use container_specs_postgres::postgres_db_container_config;
 use diesel::Connection;
-use docker_utils::prelude::DockerUtil;
+use docker_utils::DockerUtil;
 use pg_imdb::model::integration_config::IntegrationConfig;
 use postgres_migrations::{get_or_wait_for_postgres_connection, DB_TEST_URL};
 

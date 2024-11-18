@@ -1,4 +1,4 @@
-use crate::prelude::DockerError;
+use crate::DockerError;
 use std::process::Command;
 
 mod setup;
@@ -32,7 +32,7 @@ impl DockerUtil {
     /// # Examples
     ///
     /// ```
-    /// use docker_utils::prelude::DockerUtil;
+    /// use docker_utils::DockerUtil;
     ///
     /// // Requires running Docker. Start Docker and uncomment.
     /// //let docker_util = DockerUtil::with_debug().expect("Failed to create DockerUtil with debug mode");

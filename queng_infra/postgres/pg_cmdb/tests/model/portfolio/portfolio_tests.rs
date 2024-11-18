@@ -2,7 +2,7 @@ use common_exchange::AccountType;
 use common_exchange::PortfolioConfig as CommonPortfolioConfig;
 use container_specs_postgres::postgres_db_container_config;
 use diesel::Connection;
-use docker_utils::prelude::DockerUtil;
+use docker_utils::DockerUtil;
 use pg_cmdb::model::portfolio::Portfolio;
 use postgres_migrations::{get_or_wait_for_postgres_connection, DB_TEST_URL};
 

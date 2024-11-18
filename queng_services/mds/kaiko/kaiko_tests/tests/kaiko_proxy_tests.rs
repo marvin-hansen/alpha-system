@@ -1,5 +1,5 @@
 use container_specs_kaiko::api_proxy_container_config;
-use docker_utils::prelude::DockerUtil;
+use docker_utils::DockerUtil;
 use kaiko_client::error::KaikoClientError;
 use kaiko_client::KaikoClient;
 

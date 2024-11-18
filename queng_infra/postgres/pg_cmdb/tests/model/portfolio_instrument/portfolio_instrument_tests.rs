@@ -3,7 +3,7 @@ use common_exchange::Instrument as CommonInstrument;
 use common_exchange::PortfolioConfig as CommonPortfolioConfig;
 use container_specs_postgres::postgres_db_container_config;
 use diesel::Connection;
-use docker_utils::prelude::DockerUtil;
+use docker_utils::DockerUtil;
 use pg_cmdb::model::instrument::Instrument;
 use pg_cmdb::model::portfolio::Portfolio;
 use pg_cmdb::model::portfolio_instrument::{CreatePortfolioInstrument, PortfolioInstrument};

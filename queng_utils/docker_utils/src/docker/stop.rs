@@ -1,4 +1,4 @@
-use crate::prelude::{DockerError, DockerUtil};
+use crate::{DockerError, DockerUtil};
 
 use std::process::Command;
 
@@ -16,7 +16,7 @@ impl DockerUtil {
     /// # Examples
     ///
     /// ```
-    /// use docker_utils::prelude::DockerUtil;
+    /// use docker_utils::DockerUtil;
     ///
     /// // Requires running Docker. Start Docker and uncomment.
     /// // let mut docker_util = DockerUtil::new().expect("Failed to create DockerUtil");

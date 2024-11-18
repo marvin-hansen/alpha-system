@@ -1,7 +1,7 @@
 use common_config::ServiceID;
 use common_env::EnvironmentType;
 use container_specs_postgres::postgres_db_container_config;
-use docker_utils::prelude::DockerUtil;
+use docker_utils::DockerUtil;
 use mddb_client::MDDBClient;
 use metadata_import::MetadataImportManager;
 use service_import::ServiceImportManager;
