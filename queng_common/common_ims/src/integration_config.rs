@@ -142,6 +142,44 @@ impl IntegrationConfig {
     pub const fn integration_message_config(&self) -> &IntegrationMessageConfig {
         &self.integration_message_config
     }
+
+    /// Generates a channel name for the control channel based on the integration_id.
+    ///
+    /// # Returns
+    ///
+    /// A String in the format: "{integration_id}-control".
+    ///
+    pub fn control_channel(&self) -> String {
+        format!("{}-{}", self.integration_id, "control")
+    }
+
+    /// Generates a channel name for the data channel based on the integration_id.
+    ///
+    /// # Returns
+    ///
+    /// A String in the format: "{integration_id}-data".
+    ///
+    pub fn data_channel(&self) -> String {
+        format!("{}-{}", self.integration_id, "data")
+    }
+
+    /// Generates a channel name for the error channel based on the integration_id.
+    ///
+    /// # Returns
+    ///
+    /// A String in the format: "{integration_id}-error".
+    pub fn error_channel(&self) -> String {
+        format!("{}-{}", self.integration_id, "error")
+    }
+
+    /// Generates a channel name for the execution channel based on the integration_id.
+    ///
+    /// # Returns
+    ///
+    /// A String in the format: "{integration_id}-execution".
+    pub fn execution_channel(&self) -> String {
+        format!("{}-{}", self.integration_id, "execution")
+    }
 }
 
 impl Display for IntegrationConfig {

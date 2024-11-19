@@ -8,8 +8,9 @@ help:
 	@echo '    make cmdb   	Runs the cmdb service. Requires DBGW & SMDB'
 	@echo '    make dbgw   	Runs the dbgw service. Requires SurrealDB'
 	@echo '    make proxy          Runs the API proxy service.'
+	@echo '    make imdb   	Runs the imdb service. Requires DBGW and SMDB'
+	@echo '    make mddb   	Runs the mddb service. Requires DBGW and SMDB'
 	@echo '    make smdb   	Runs the smdb service. Requires DBGW'
-	@echo '    make mddb   	Runs the mddb service. Requires DBGW'
 	@echo ''
 	@echo ' Cloud Setup:'
 	@echo '    make gcp            Configures Google Cloud. Requires gcloud cli.'
@@ -60,15 +61,14 @@ dbgw:
 proxy:
 	@source scripts/run_proxy.sh
 
+.PHONY: mddb
+mddb:
+	@source scripts/run_mddb.sh
+
 
 .PHONY: smdb
 smdb:
 	@source scripts/run_smdb.sh
-
-
-.PHONY: mddb
-mddb:
-	@source scripts/run_mddb.sh
 
 
 # "---------------------------------------------------------"

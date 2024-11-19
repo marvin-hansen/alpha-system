@@ -1,5 +1,6 @@
 use common_data_bar::{OHLCVBar, TradeBar};
 use common_errors::MessageProcessingError;
+use message_shared::SendMessage;
 use sbe_messages::{DataErrorType, DataType, SbeOHLCVBar, SbeTradeBar};
 
 use crate::service::Server;
@@ -136,30 +137,25 @@ impl Server {
 
     pub(crate) async fn send_client_data(
         &self,
-        _client_id: u16,
-        _bytes: Vec<u8>,
+        client_id: u16,
+        bytes: Vec<u8>,
     ) -> Result<(), (DataErrorType, MessageProcessingError)> {
-        // // Lock the client_configs hashmap
-        // let client_configs = self.client_configs().write().await;
-        //
-        // // Get the client config for the client
-        // let iggy_config = client_configs.get(&client_id).unwrap();
-        //
-        // // lock the client_data_producers hashmap
-        // let client_data_producers = self.client_producers().read().await;
-        //
-        // // Get the producer for the error channel
-        // let producer = client_data_producers
-        //     .get(&client_id)
-        //     .expect("[QDGW/utils_message::send_client_data]: No producer found");
+        // lock the client_data_producers hashmap
+        let client_data_producers = self.client_producers().read().await;
+
+        // Get the producer for the client
+        let producer = client_data_producers
+            .get(&client_id)
+            .expect("[QDGW/utils_message::send_client_data]: No producer found");
 
         // Send the messages to the client's topic/partition
-
-        // Unlock the client_configs hashmap
-        // drop(client_configs);
+        producer
+            .send_one_message(bytes)
+            .await
+            .expect("Failed to send error");
 
         // Unlock the client_data_producers hashmap
-        // drop(client_data_producers);
+        drop(client_data_producers);
 
         Ok(())
     }

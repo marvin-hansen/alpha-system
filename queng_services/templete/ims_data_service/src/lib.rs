@@ -1,5 +1,7 @@
 use crate::service::Server;
 use common_exchange::ExchangeID;
+use common_ims::IntegrationConfig;
+use common_message::ImsDataConfig;
 use common_service::{print_utils, shutdown_utils};
 use config_manager::CfgManager;
 use smdb_client::SMDBClient;
@@ -12,6 +14,8 @@ mod utils;
 
 pub async fn start(
     dbg: bool,
+    integration_config: IntegrationConfig,
+    ims_data_config: ImsDataConfig,
     cfg_manager: CfgManager,
     exchange_id: ExchangeID,
 ) -> Result<(), Box<dyn std::error::Error>> {
@@ -52,16 +56,18 @@ pub async fn start(
         .await
         .expect("Failed to get service host and port");
 
+    // Free up some memory before starting the service,
+    drop(cfg_manager);
+
     dbg_print("Configuring server and signal handler");
     //Creates a new server
-    let server = Server::new().await;
+    let server = Server::new(integration_config, ims_data_config)
+        .await
+        .expect("Failed to build new service");
     let signal = shutdown_utils::signal_handler("gRPC server");
     let service_handle = tokio::spawn(server.run(signal));
 
     dbg_print("Set integration online");
-
-    // Free up some memory before starting the service,
-    drop(cfg_manager);
 
     // Print service start header
     print_utils::print_duration("Starting service took:", &start.elapsed());

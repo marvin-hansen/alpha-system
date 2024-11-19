@@ -26,4 +26,10 @@ impl MessageConsumer {
     pub const fn consumer(&self) -> &IggyConsumer {
         &self.consumer
     }
+
+    /// Returns a mutable reference to the underlying consumer.
+    #[must_use]
+    pub fn consumer_mut(&mut self) -> &mut IggyConsumer {
+        &mut self.consumer
+    }
 }

@@ -1,6 +1,7 @@
 use crate::service::Server;
 use common_errors::MessageProcessingError;
-use sbe_messages::MessageType;
+use iggy::models::messages::PolledMessage;
+use sbe_messages::{ClientLoginMessage, ClientLogoutMessage, MessageType};
 
 impl Server {
     /// Handles a single message by processing it and sending it to the appropriate
@@ -20,21 +21,30 @@ impl Server {
     ///
     pub(crate) async fn handle_message(
         &self,
-        raw_message: &[u8],
+        polled_message: PolledMessage,
     ) -> Result<(), MessageProcessingError> {
         //
+        let message = polled_message.payload.to_vec();
+        let raw_message = message.as_slice();
         let message_type = MessageType::from(u16::from(raw_message[2]));
 
         match message_type {
             MessageType::ClientLogin => {
-                todo!()
+                let client_login_msg = ClientLoginMessage::from(raw_message);
+                self.handle_client_login(&client_login_msg).await
             }
             MessageType::ClientLogout => {
-                todo!()
+                let client_logout_msg = ClientLogoutMessage::from(raw_message);
+                self.handle_client_logout(&client_logout_msg).await
             }
             MessageType::StartData => {
                 todo!()
             }
+
+            MessageType::StopData => {
+                todo!()
+            }
+
             MessageType::StopAllData => {
                 todo!()
             }

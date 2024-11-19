@@ -78,11 +78,13 @@ async fn test_imdb() {
     // Start SMDB service - depends on DBGW
     let service_id = ServiceID::SMDB;
     let result = svc_util.start_service(&service_id, &wait_strategy).await;
+    dbg!(&result);
     assert!(result.is_ok());
 
     // Start IMDB service - depends on SMDB and DBGW
     let service_id = ServiceID::IMDB;
     let result = svc_util.start_service(&service_id, &wait_strategy).await;
+    dbg!(&result);
     assert!(result.is_ok());
 
     // Configure IMDB client
@@ -116,23 +118,25 @@ async fn test_imdb() {
 async fn test_imdb_integrations(client: &IMDBClient) {
     // Test count_integrations
     let res = client.count_integrations().await;
+    dbg!(&res);
     assert!(res.is_ok());
 
     let count = res.unwrap();
     assert!(count > 0);
 
     // Test check_if_integration_exists
-    let integration_id = "binance_data".to_string();
+    let integration_id = "ims-data-binance".to_string();
     let res = client
         .check_if_integration_exists(integration_id.clone())
         .await;
+    dbg!(&res);
     assert!(res.is_ok());
 
     let exists = res.unwrap();
     assert!(exists);
 
     // Test check_if_integration_online
-    let integration_id = "binance_data".to_string();
+    let integration_id = "ims-data-binance".to_string();
     let res = client
         .check_if_integration_online(integration_id.clone())
         .await;
@@ -143,7 +147,7 @@ async fn test_imdb_integrations(client: &IMDBClient) {
     assert!(!online);
 
     // Test get_integration
-    let integration_id = "binance_data".to_string();
+    let integration_id = "ims-data-binance".to_string();
     let res = client.get_integration(integration_id.clone()).await;
     assert!(res.is_ok());
 
@@ -185,7 +189,7 @@ async fn test_imdb_integrations(client: &IMDBClient) {
     assert!(!integrations.is_empty());
 
     // Test set_integration_online
-    let integration_id = "binance_data".to_string();
+    let integration_id = "ims-data-binance".to_string();
 
     // Test if integration is offline, which it is by default.
     let res = client

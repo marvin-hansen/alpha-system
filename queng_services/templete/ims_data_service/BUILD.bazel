@@ -13,6 +13,7 @@ rust_library(
         "//alias:common_data_bar",
         "//alias:common_errors",
         "//alias:common_exchange",
+        "//alias:common_ims",
         "//alias:common_service",
         "//alias:config_manager",
         "//alias:common_message",
@@ -24,6 +25,7 @@ rust_library(
         "//alias/client:smdb_client",
         # External crates
         "//thirdparty/crates:iggy",
+        "//thirdparty/crates:futures-util",
         "//thirdparty/crates:tokio",
     ],
 )

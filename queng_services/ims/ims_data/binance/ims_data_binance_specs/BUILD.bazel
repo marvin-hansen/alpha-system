@@ -15,6 +15,7 @@ rust_library(
         # Internal dependencies
         "//alias:common_config",
         "//alias:common_ims",
+        "//alias:common_message",
         "//alias:shared_service_specs",
     ],
 )

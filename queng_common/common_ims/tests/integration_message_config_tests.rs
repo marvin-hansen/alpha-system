@@ -24,10 +24,6 @@ fn test_channel_name_generation() {
         config.execution_channel(),
         "Binance-integration-1-execution"
     );
-    assert_eq!(
-        config.heartbeat_channel(),
-        "Binance-integration-1-heartbeat"
-    );
 }
 
 #[test]

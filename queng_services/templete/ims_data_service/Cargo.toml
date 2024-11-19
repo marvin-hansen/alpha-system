@@ -15,6 +15,7 @@ common_config = { workspace = true }
 common_data_bar = { workspace = true }
 common_errors = { workspace = true }
 common_exchange = { workspace = true }
+common_ims = {workspace = true}
 common_service = { workspace = true }
 config_manager = { workspace = true }
 common_message = { workspace = true }
@@ -28,3 +29,4 @@ smdb_client = { workspace = true }
 # External crates
 iggy = { workspace = true }
 tokio = { workspace = true }
+futures-util = { workspace = true }

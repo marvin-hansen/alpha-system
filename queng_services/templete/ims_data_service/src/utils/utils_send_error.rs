@@ -1,4 +1,5 @@
 use common_errors::MessageProcessingError;
+use message_shared::SendMessage;
 use sbe_messages::{ClientErrorType, DataErrorType};
 
 use crate::service::Server;
@@ -64,8 +65,12 @@ impl Server {
         Ok(())
     }
 
-    pub(crate) async fn send_error(&self, _bytes: Vec<u8>) -> Result<(), MessageProcessingError> {
-        // Send the error message
+    pub(crate) async fn send_error(&self, bytes: Vec<u8>) -> Result<(), MessageProcessingError> {
+        // Send message
+        self.producer()
+            .send_one_message(bytes)
+            .await
+            .expect("Failed to send error message");
 
         Ok(())
     }

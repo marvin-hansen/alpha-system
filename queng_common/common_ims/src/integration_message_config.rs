@@ -105,16 +105,6 @@ impl IntegrationMessageConfig {
     pub fn execution_channel(&self) -> String {
         format!("{}-{}", self.name, "execution")
     }
-
-    /// Generates a channel name for the heartbeat channel based on the client name.
-    ///
-    /// # Returns
-    ///
-    /// A String in the format: "{client_name}-heartbeat".
-    #[must_use]
-    pub fn heartbeat_channel(&self) -> String {
-        format!("{}-{}", self.name, "heartbeat")
-    }
 }
 
 impl Default for IntegrationMessageConfig {
