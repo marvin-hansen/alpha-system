@@ -120,6 +120,9 @@ impl Asset {
     ///
     /// * `db` - A mutable reference to the database connection.
     ///
+    /// # Errors
+    /// Returns an error in case of failure to query the database
+    ///
     /// # Returns
     ///
     /// Returns a `QueryResult` containing a vector of `MetaAsset` if successful, or an error.
@@ -137,6 +140,9 @@ impl Asset {
     /// * `db` - A mutable reference to the database connection.
     /// * `asset_id` - The ID of the asset to update.
     /// * `item` - The `UpdateAsset` containing the fields to update.
+    ///
+    /// # Errors
+    /// Returns an error in case of failure to query the database
     ///
     /// # Returns
     ///
@@ -159,6 +165,9 @@ impl Asset {
     ///
     /// * `db` - A mutable reference to the database connection.
     /// * `asset_id` - The ID of the asset to delete.
+    ///
+    /// # Errors
+    /// Returns an error in case of failure to query the database
     ///
     /// # Returns
     ///

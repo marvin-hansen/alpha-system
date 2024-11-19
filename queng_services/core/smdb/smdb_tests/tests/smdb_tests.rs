@@ -305,6 +305,9 @@ async fn test_smdb() {
         .await;
     dbg!(&res);
 
+    // Drop SMDBClient as it is not needed anymore
+    drop(smdb_client);
+
     // Stop and remove container
     let result = docker_util.stop_container(&pg_container_id);
     dbg!(&result);

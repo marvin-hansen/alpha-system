@@ -11,10 +11,13 @@ use proto_imdb_utils::{
 };
 
 impl IMDBClient {
-    /// Returns the total number of integrations in the database
+    /// Counts the total number of integrations in the database
+    ///
+    /// # Errors
+    /// * `IMDBClientError` - If the operation fails
     ///
     /// # Returns
-    /// * `Result<u64, IMDBClientError>` - The count of integrations on success, or an error if the operation fails
+    /// * `Result<u64, IMDBClientError>` - The total number of integrations, or an error if the operation fails
     ///
     pub async fn count_integrations(&self) -> Result<u64, IMDBClientError> {
         let mut client = self.client.clone();
@@ -25,10 +28,14 @@ impl IMDBClient {
             Err(e) => Err(IMDBClientError(e.to_string())),
         }
     }
+
     /// Checks if an integration with the given ID exists in the database
     ///
     /// # Arguments
     /// * `integration_id` - The ID of the integration to check
+    ///
+    /// # Errors
+    /// * `IMDBClientError` - If the operation fails
     ///
     /// # Returns
     /// * `Result<bool, IMDBClientError>` - `true` if the integration exists, `false` if the integration does not exist, or an error if the operation fails
@@ -50,6 +57,9 @@ impl IMDBClient {
     /// # Arguments
     /// * `integration_id` - The ID of the integration to check
     ///
+    /// # Errors
+    /// * `IMDBClientError` - If the operation fails
+    ///
     /// # Returns
     /// * `Result<bool, IMDBClientError>` - `true` if the integration is online, `false` if the integration is offline, or an error if the operation fails
     ///
@@ -69,6 +79,9 @@ impl IMDBClient {
     ///
     /// # Arguments
     /// * `integration_id` - The ID of the integration to retrieve
+    ///
+    /// # Errors
+    /// * `IMDBClientError` - If the operation fails
     ///
     /// # Returns
     /// * `Result<Option<IntegrationConfig>, IMDBClientError>` - `Ok(Some(IntegrationConfig))` if the integration was found, `Ok(None)` if the integration was not found, or an error if the operation fails
@@ -93,6 +106,9 @@ impl IMDBClient {
     }
 
     /// Gets all integrations from the database
+    ///
+    /// # Errors
+    /// * `IMDBClientError` - If the operation fails
     ///
     /// # Returns
     /// * `Result<Vec<IntegrationConfig>, IMDBClientError>` - `Ok(Vec<IntegrationConfig>)` if the operation was successful, or an error if it failed
@@ -123,6 +139,9 @@ impl IMDBClient {
     ///
     /// # Arguments
     /// * `exchange_id` - The ID of the exchange to retrieve integrations for
+    ///
+    /// # Errors
+    /// * `IMDBClientError` - If the operation fails
     ///
     /// # Returns
     /// * `Result<Vec<IntegrationConfig>, IMDBClientError>` - `Ok(Vec<IntegrationConfig>)` if the operation was successful, or an error if it failed
@@ -157,6 +176,9 @@ impl IMDBClient {
 
     /// Gets all online integrations from the database
     ///
+    /// # Errors
+    /// * `IMDBClientError` - If the operation fails
+    ///
     /// # Returns
     /// * `Result<Vec<IntegrationConfig>, IMDBClientError>` - `Ok(Vec<IntegrationConfig>)` if the operation was successful, or an error if it failed
     ///
@@ -185,6 +207,9 @@ impl IMDBClient {
     }
 
     /// Gets all offline integrations from the database
+    ///
+    /// # Errors
+    /// * `IMDBClientError` - If the operation fails
     ///
     /// # Returns
     /// * `Result<Vec<IntegrationConfig>, IMDBClientError>` - `Ok(Vec<IntegrationConfig>)` if the operation was successful, or an error if it failed
@@ -219,6 +244,9 @@ impl IMDBClient {
     /// # Arguments
     /// * `integration_id` - The ID of the integration to set online
     ///
+    /// # Errors
+    /// * `IMDBClientError` - If the operation fails
+    ///
     /// # Returns
     /// * `Result<(), IMDBClientError>` - `Ok(())` if the operation was successful, or an error if it failed
     ///
@@ -242,6 +270,12 @@ impl IMDBClient {
     }
 
     /// Sets the integration with the given ID to offline
+    ///
+    /// # Arguments
+    /// * `integration_id` - The ID of the integration to set offline
+    ///
+    /// # Errors
+    /// * `IMDBClientError` - If the operation fails
     ///
     /// # Returns
     /// * `Result<(), IMDBClientError>` - `Ok(())` if the operation was successful, or an error if it failed

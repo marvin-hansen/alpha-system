@@ -18,7 +18,15 @@ impl Instrument {
     ///
     /// # Returns
     ///
-    /// A `Result` containing the inserted `MetaInstrument` if successful, else an `Error`.
+    /// * `Result<MetaInstrument, diesel::result::Error>` - The created instrument if successful
+    ///
+    /// # Errors
+    ///
+    /// Returns an error in the following cases:
+    /// * Database connection errors
+    /// * Unique constraint violations (if instrument_id already exists)
+    /// * Invalid data in meta_instrument (constraint violations)
+    /// * Serialization errors when converting between types
     ///
     pub fn create_instrument(
         conn: &mut Connection,
@@ -36,6 +44,9 @@ impl Instrument {
 
     /// Batch inserts a collection of instruments into the database.
     ///
+    /// For large collections (> MAX_BATCH), instruments are inserted in chunks
+    /// to prevent exceeding database parameter limits.
+    ///
     /// # Arguments
     ///
     /// * `conn` - A mutable reference to the database connection.
@@ -43,7 +54,17 @@ impl Instrument {
     ///
     /// # Returns
     ///
-    /// A `Result` indicating the success of the operation.
+    /// * `Result<usize, diesel::result::Error>` - Number of instruments successfully inserted
+    ///
+    /// # Errors
+    ///
+    /// Returns an error in the following cases:
+    /// * Empty collection provided (`DatabaseError(Unknown)`)
+    /// * Database connection errors
+    /// * Unique constraint violations
+    /// * Batch processing failures
+    /// * Data validation errors for any instrument in the collection
+    /// * Transaction failures during chunk processing
     ///
     pub fn create_instrument_collection(
         conn: &mut Connection,
@@ -99,7 +120,14 @@ impl Instrument {
     ///
     /// # Returns
     ///
-    /// * `Result<u64, Error>` - The total count of instruments if successful, an error otherwise.
+    /// * `Result<u64, diesel::result::Error>` - Total count of instruments
+    ///
+    /// # Errors
+    ///
+    /// Returns an error in the following cases:
+    /// * Database connection errors
+    /// * Query execution failures
+    /// * Type conversion errors when converting count from i64 to u64
     ///
     pub fn count(conn: &mut Connection) -> Result<u64, diesel::result::Error> {
         instruments_table
@@ -117,7 +145,14 @@ impl Instrument {
     ///
     /// # Returns
     ///
-    /// * `QueryResult<bool>` - A result indicating whether the instrument exists (true) or not (false).
+    /// * `QueryResult<bool>` - `true` if the instrument exists, `false` otherwise
+    ///
+    /// # Errors
+    ///
+    /// Returns an error in the following cases:
+    /// * Database connection errors
+    /// * Query execution failures
+    /// * Note: Not finding the instrument is NOT an error, it returns `Ok(false)`
     ///
     pub fn check_if_instrument_id_exists(
         conn: &mut Connection,
@@ -140,7 +175,16 @@ impl Instrument {
     ///
     /// # Returns
     ///
-    /// A `Result` containing the retrieved `MetaInstrument` if successful, else an `Error`.
+    /// * `Result<Option<MetaInstrument>, diesel::result::Error>` - The instrument if found, None if not found
+    ///
+    /// # Errors
+    ///
+    /// Returns an error in the following cases:
+    /// * Database connection errors
+    /// * Query execution failures
+    /// * Data deserialization errors
+    /// * Note: Not finding the instrument is NOT an error, it returns `Ok(None)`
+    ///
     pub fn read(
         conn: &mut Connection,
         instrument_id: &str,
@@ -164,7 +208,17 @@ impl Instrument {
     ///
     /// # Returns
     ///
-    /// A `Result` containing a vector of `MetaInstrument` objects if successful, else a `diesel::result::Error`.
+    /// * `Result<Vec<MetaInstrument>, diesel::result::Error>` - Vector of all instruments
+    ///   Returns an empty vector if no instruments exist
+    ///
+    /// # Errors
+    ///
+    /// Returns an error in the following cases:
+    /// * Database connection errors
+    /// * Query execution failures
+    /// * Data deserialization errors when converting to MetaInstrument
+    /// * Memory allocation errors for large result sets
+    ///
     pub fn read_all(conn: &mut Connection) -> Result<Vec<MetaInstrument>, diesel::result::Error> {
         instruments_table
             .load::<Self>(conn)
@@ -181,7 +235,17 @@ impl Instrument {
     ///
     /// # Returns
     ///
-    /// A `Result` indicating the number of rows affected if successful, else an `Error`.
+    /// * `Result<usize, diesel::result::Error>` - Number of rows affected (0 if not found, 1 if updated)
+    ///
+    /// # Errors
+    ///
+    /// Returns an error in the following cases:
+    /// * Database connection errors
+    /// * Query execution failures
+    /// * Constraint violations in the updated data
+    /// * Data validation errors
+    /// * Note: Not finding the instrument is NOT an error, it returns `Ok(0)`
+    ///
     pub fn update(
         conn: &mut Connection,
         instrument_id: &str,
@@ -205,11 +269,19 @@ impl Instrument {
     ///
     /// # Returns
     ///
-    /// Returns a `Result` containing the number of rows affected by the delete operation.
-    /// If the instrument does not exist, the query will return `Ok(0)`.
-    /// If the instrument exists and was deleted, the query will return `Ok(1)`.
+    /// * `Result<usize, diesel::result::Error>` - Number of rows affected:
+    ///   - Returns `Ok(0)` if the instrument didn't exist
+    ///   - Returns `Ok(1)` if the instrument was successfully deleted
     ///
-    /// Note, delete only returns an error when either the database connection or the query fails.
+    /// # Errors
+    ///
+    /// Returns an error in the following cases:
+    /// * Database connection errors
+    /// * Query execution failures
+    /// * Foreign key constraint violations (if instrument is referenced elsewhere)
+    /// * Transaction failures during deletion
+    /// * Panics if check_if_instrument_id_exists fails
+    ///
     pub fn delete(
         conn: &mut Connection,
         param_instrument_id: String,

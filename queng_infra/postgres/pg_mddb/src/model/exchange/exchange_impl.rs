@@ -11,11 +11,19 @@ impl Exchange {
     /// Creates a new exchange in the database based on the provided `MetaExchange` information.
     ///
     /// # Arguments
-    /// - `conn`: A mutable reference to the database connection.
-    /// - `meta_exchange`: The `MetaExchange` struct containing the exchange information to be inserted.
+    /// * `conn` - A mutable reference to the database connection.
+    /// * `meta_exchange` - The `MetaExchange` struct containing the exchange information to be inserted.
     ///
     /// # Returns
-    /// A Result containing the inserted `MetaExchange` if successful, or a diesel Error if an error occurs.
+    /// * `Result<MetaExchange, Error>` - The created exchange if successful
+    ///
+    /// # Errors
+    ///
+    /// Returns an error in the following cases:
+    /// * Database connection errors
+    /// * Unique constraint violations (if exchange_id already exists)
+    /// * Invalid data in meta_exchange (constraint violations)
+    /// * Serialization errors when converting between types
     ///
     pub fn create(
         conn: &mut Connection,
@@ -40,8 +48,18 @@ impl Exchange {
     ///
     /// # Returns
     ///
-    /// A Result indicating the success of the operation, where true represents successful creation
-    /// and an Error represents a failure.
+    /// * `Result<usize, Error>` - Number of exchanges successfully created
+    ///
+    /// # Errors
+    ///
+    /// Returns an error in the following cases:
+    /// * Empty collection provided (`DatabaseError(Unknown)`)
+    /// * Database connection errors
+    /// * Unique constraint violations
+    /// * Data validation errors for any exchange in the collection
+    /// * Batch insertion failures
+    /// * Transaction rollback if any exchange fails to insert
+    ///
     pub fn create_collection(
         conn: &mut Connection,
         meta_exchanges: &[MetaExchange],
@@ -77,7 +95,14 @@ impl Exchange {
     ///
     /// # Returns
     ///
-    /// * `Result<u64, Error>` - The total count of exchanges if successful, an error otherwise.
+    /// * `Result<u64, Error>` - Total count of exchanges
+    ///
+    /// # Errors
+    ///
+    /// Returns an error in the following cases:
+    /// * Database connection errors
+    /// * Query execution failures
+    /// * Type conversion errors when converting count from i64 to u64
     ///
     pub fn count(conn: &mut Connection) -> Result<u64, Error> {
         exchanges_table
@@ -95,7 +120,14 @@ impl Exchange {
     ///
     /// # Returns
     ///
-    /// Returns a `QueryResult` indicating whether the exchange exists or not.
+    /// * `Result<bool, Error>` - `true` if the exchange exists, `false` otherwise
+    ///
+    /// # Errors
+    ///
+    /// Returns an error in the following cases:
+    /// * Database connection errors
+    /// * Query execution failures
+    /// * Note: Not finding the exchange is NOT an error, it returns `Ok(false)`
     ///
     pub fn check_if_exchange_id_exists(
         conn: &mut Connection,
@@ -113,11 +145,19 @@ impl Exchange {
     /// # Arguments
     ///
     /// * `conn` - A mutable reference to the database connection.
-    /// * `exchange_id_str` - A String representing the exchange ID to search for.
+    /// * `param_exchange_id` - A String representing the exchange ID to search for.
     ///
     /// # Returns
     ///
-    /// A Result containing the retrieved `MetaExchange` if successful, or an Error if the operation fails.
+    /// * `Result<Option<MetaExchange>, Error>` - The exchange if found, None if not found
+    ///
+    /// # Errors
+    ///
+    /// Returns an error in the following cases:
+    /// * Database connection errors
+    /// * Query execution failures
+    /// * Data deserialization errors
+    /// * Note: Not finding the exchange is NOT an error, it returns `Ok(None)`
     ///
     pub fn read(
         conn: &mut Connection,
@@ -142,7 +182,16 @@ impl Exchange {
     ///
     /// # Returns
     ///
-    /// A Result containing a vector of `MetaExchange` objects if successful, or a diesel Error if an error occurs.
+    /// * `Result<Vec<MetaExchange>, Error>` - Vector of all exchanges
+    ///   Returns an empty vector if no exchanges exist
+    ///
+    /// # Errors
+    ///
+    /// Returns an error in the following cases:
+    /// * Database connection errors
+    /// * Query execution failures
+    /// * Data deserialization errors when converting to MetaExchange
+    /// * Memory allocation errors for large result sets
     ///
     pub fn read_all(conn: &mut Connection) -> Result<Vec<MetaExchange>, Error> {
         exchanges_table.load::<Self>(conn).map(|e| {
@@ -152,16 +201,26 @@ impl Exchange {
         })
     }
 
-    /// Checks if an exchange with the given exchange ID exists in the database.
+    /// Updates an exchange in the database based on the provided exchange ID.
     ///
     /// # Arguments
     ///
     /// * `conn` - A mutable reference to the database connection.
-    /// * `exchange_id_str` - The ID of the exchange to check for existence.
+    /// * `exchange_id_str` - The ID of the exchange to update.
+    /// * `meta_exchange` - The updated exchange metadata.
     ///
     /// # Returns
     ///
-    /// Returns a `QueryResult` indicating whether the exchange exists or not.
+    /// * `Result<usize, Error>` - Number of rows affected (0 if not found, 1 if updated)
+    ///
+    /// # Errors
+    ///
+    /// Returns an error in the following cases:
+    /// * Database connection errors
+    /// * Query execution failures
+    /// * Constraint violations in the updated data
+    /// * Data validation errors
+    /// * Note: Not finding the exchange is NOT an error, it returns `Ok(0)`
     ///
     pub fn update(
         conn: &mut Connection,
@@ -183,11 +242,18 @@ impl Exchange {
     ///
     /// # Returns
     ///
-    /// Returns a `QueryResult` containing the number of rows affected by the delete operation.
-    /// If the exchange does not exist, the query will return `Ok(0)`.
-    /// If the exchange exists and was deleted, the query will return `Ok(1)`.
+    /// * `Result<usize, Error>` - Number of rows affected:
+    ///   - Returns `Ok(0)` if the exchange didn't exist
+    ///   - Returns `Ok(1)` if the exchange was successfully deleted
     ///
-    /// Note, delete only returns an error when either the database connection or the query fails.
+    /// # Errors
+    ///
+    /// Returns an error in the following cases:
+    /// * Database connection errors
+    /// * Query execution failures
+    /// * Foreign key constraint violations (if exchange is referenced elsewhere)
+    /// * Transaction failures during deletion
+    /// * Concurrent modification conflicts
     ///
     pub fn delete(conn: &mut Connection, exchange_id_str: String) -> Result<usize, Error> {
         diesel::delete(exchanges_table.filter(exchange_id.eq(exchange_id_str))).execute(conn)

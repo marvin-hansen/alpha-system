@@ -18,7 +18,14 @@ impl PortfolioInstrument {
     ///
     /// # Returns
     ///
-    /// * `QueryResult<Self>` - The result of the insertion operation.
+    /// * `QueryResult<Self>` - The newly created portfolio instrument if successful.
+    ///
+    /// # Errors
+    ///
+    /// Returns an error if:
+    /// * The database connection fails
+    /// * The insert operation fails (e.g., due to constraint violations)
+    /// * The portfolio or instrument referenced in `item` doesn't exist
     ///
     pub fn create(db: &mut Connection, item: &CreatePortfolioInstrument) -> QueryResult<Self> {
         insert_into(portfolio_instrument)
@@ -39,6 +46,12 @@ impl PortfolioInstrument {
     /// # Returns
     ///
     /// * `QueryResult<bool>` - `true` if the portfolio instrument exists, `false` otherwise.
+    ///
+    /// # Errors
+    ///
+    /// Returns an error if:
+    /// * The database connection fails
+    /// * The query execution fails
     ///
     pub fn check_if_exists(
         db: &mut Connection,
@@ -65,9 +78,14 @@ impl PortfolioInstrument {
     /// # Returns
     ///
     /// * `QueryResult<Vec<PortfolioInstrument>>` - A vector containing the portfolio instruments if successful.
-    /// * Returns an error if the operation fails.
+    ///   Returns an empty vector if no instruments are found for the portfolio.
     ///
-    /// Note, when the portfolio has no instruments, an empty vector is returned.
+    /// # Errors
+    ///
+    /// Returns an error if:
+    /// * The database connection fails
+    /// * The query execution fails
+    /// * The portfolio ID does not exist
     ///
     pub fn read_instruments_for_portfolio(
         db: &mut Connection,
@@ -94,10 +112,15 @@ impl PortfolioInstrument {
     ///
     /// # Returns
     ///
-    /// A `QueryResult<usize>` indicating the number of rows affected by the delete operation.
+    /// * `QueryResult<usize>` - The number of rows affected by the delete operation.
+    ///   Returns `Ok(0)` if no matching record was found to delete.
     ///
-    /// Note, delete only returns an error when either the database connection or the query fails.
-    /// If no rows are affected, the result will be `Ok(0)`.
+    /// # Errors
+    ///
+    /// Returns an error if:
+    /// * The database connection fails
+    /// * The delete operation fails
+    /// * The query execution fails
     ///
     pub fn delete(
         db: &mut Connection,

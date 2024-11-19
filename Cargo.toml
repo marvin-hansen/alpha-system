@@ -124,6 +124,8 @@ authors = ["Marvin Hansen <marvin.hansen@gmail.com>"]
 all = "warn"
 pedantic = "warn"
 nursery = "warn"
+# Allow
+module_name_repetitions = "allow"
 
 # Linting strict mode
 [workspace.lints.rust]
