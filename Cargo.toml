@@ -2,114 +2,32 @@
 resolver = "2"
 
 members = [
-    "queng_common/common_config",
-    "queng_common/common_container",
-    "queng_common/common_data_bar",
-    "queng_common/common_database",
-    "queng_common/common_env",
-    "queng_common/common_errors",
-    "queng_common/common_exchange",
-    "queng_common/common_ims",
-    "queng_common/common_message",
-    "queng_common/common_metadata",
-    "queng_common/common_service",
-    "queng_common/common_trade",
-    "queng_components/config_manager",
-    "queng_components/environment_manager",
-    "queng_components/pattern_manager",
-    "queng_components/symbol_manager",
-    "queng_extensions/cow_ext",
-    "queng_import/core/config_import",
-    "queng_import/core/integration_import",
-    "queng_import/core/metadata_import",
-    "queng_import/core/service_import",
-    "queng_import/kaiko/kaiko_download",
-    "queng_import/kaiko/kaiko_import",
-    "queng_import/kaiko/kaiko_test_utils",
-    "queng_import/postgres/pg_import_config",
-    "queng_import/postgres/pg_import_integrations",
-    "queng_import/postgres/pg_import_metadata",
-    "queng_import/postgres/pg_import_print_utils",
-    "queng_import/postgres/pg_import_services",
-    "queng_infra/clickhouse/clickhouse_config_manager",
-    "queng_infra/clickhouse/clickhouse_utils",
-    "queng_infra/clickhouse/db_clickhouse_manager",
-    "queng_infra/postgres/pg_cmdb",
-    "queng_infra/postgres/pg_cmdb_manager",
-    "queng_infra/postgres/pg_imdb",
-    "queng_infra/postgres/pg_imdb_manager",
-    "queng_infra/postgres/pg_mddb",
-    "queng_infra/postgres/pg_mddb_manager",
-    "queng_infra/postgres/pg_smdb",
-    "queng_infra/postgres/pg_smdb_manager",
-    "queng_infra/postgres/postgres_common",
-    "queng_infra/postgres/postgres_config_manager",
-    "queng_infra/postgres/postgres_migrations",
-    "queng_message/message_consumer",
-    "queng_message/message_producer",
-    "queng_message/message_shared",
-    "queng_proto/proto_cmdb",
-    "queng_proto/proto_cmdb_utils",
-    "queng_proto/proto_imdb",
-    "queng_proto/proto_imdb_utils",
-    "queng_proto/proto_mddb",
-    "queng_proto/proto_mddb_utils",
-    "queng_proto/proto_smdb",
-    "queng_proto/proto_smdb_utils",
-    "queng_sbe/bindings",
-    "queng_sbe/sbe_messages",
-    "queng_sbe/sbe_utils",
-    "queng_services/core/cmdb/cmdb_client",
-    "queng_services/core/cmdb/cmdb_service",
-    "queng_services/core/cmdb/cmdb_specs",
-    "queng_services/core/cmdb/cmdb_tests",
-    "queng_services/core/dbgw/dbgw_client/dbgw_cmdb_client",
-    "queng_services/core/dbgw/dbgw_client/dbgw_mddb_client",
-    "queng_services/core/dbgw/dbgw_client/dbgw_smdb_client",
+    "queng_common/*",
+    "queng_components/*",
+    "queng_extensions/*",
+    "queng_import/*/*",
+    "queng_infra/*/*",
+    "queng_message/*",
+    "queng_proto/*",
+    "queng_sbe/*",
+    "queng_services/core/cmdb/*",
+    "queng_services/core/dbgw/dbgw_client/*",
     "queng_services/core/dbgw/dbgw_service",
     "queng_services/core/dbgw/dbgw_specs",
     "queng_services/core/dbgw/dbgw_tests",
-    "queng_services/core/smdb/smdb_client",
-    "queng_services/core/smdb/smdb_service",
-    "queng_services/core/smdb/smdb_specs",
-    "queng_services/core/smdb/smdb_tests",
-    "queng_services/ims/imdb/imdb_client",
-    "queng_services/ims/imdb/imdb_service",
-    "queng_services/ims/imdb/imdb_specs",
-    "queng_services/ims/imdb/imdb_tests",
-    "queng_services/ims/ims_clients/binance_client",
-    "queng_services/ims/ims_clients/ims_data_client",
-    "queng_services/ims/ims_clients/rest_client",
+    "queng_services/core/smdb/*",
+    "queng_services/ims/imdb/*",
+    "queng_services/ims/ims_clients/*",
     "queng_services/ims/ims_common",
-    "queng_services/ims/ims_data/binance/binance_data",
-    "queng_services/ims/ims_data/binance/ims_data_binance_specs",
-    "queng_services/ims/ims_data/vex/ims_data_vex_specs",
-    "queng_services/mds/kaiko/kaiko_cdn",
-    "queng_services/mds/kaiko/kaiko_cdn_auth",
-    "queng_services/mds/kaiko/kaiko_client",
-    "queng_services/mds/kaiko/kaiko_proxy",
-    "queng_services/mds/kaiko/kaiko_tests",
-    "queng_services/mds/mddb/mddb_client",
-    "queng_services/mds/mddb/mddb_service",
-    "queng_services/mds/mddb/mddb_specs",
-    "queng_services/mds/mddb/mddb_tests",
-    "queng_services/templete/grpc_service",
-    "queng_services/templete/ims_data_service",
-    "queng_specs/container_specs/container_specs_clickhouse",
-    "queng_specs/container_specs/container_specs_kaiko",
-    "queng_specs/container_specs/container_specs_postgres",
-    "queng_specs/database_specs/db_specs_clickhouse",
-    "queng_specs/database_specs/db_specs_postgres",
-    "queng_specs/exchange_specs",
-    "queng_specs/integration_specs/integration_specs_all",
-    "queng_specs/portfolio_specs",
-    "queng_specs/service_specs/service_specs_all",
-    "queng_specs/service_specs/shared_service_specs",
-    "queng_utils/crypto_utils",
-    "queng_utils/docker_utils",
-    "queng_utils/grpc_utils",
-    "queng_utils/math_utils",
-    "queng_utils/service_utils",
+    "queng_services/ims/ims_data/binance/*",
+    "queng_services/ims/ims_data/vex/*",
+    "queng_services/mds/*/*",
+    "queng_services/templete/*",
+    "queng_specs/*/*",
+    "queng_utils/*",
+]
+exclude = [
+    "queng_sbe/sbe_schema",
 ]
 
 [workspace.package]
@@ -240,7 +158,7 @@ proto_smdb = { path = "queng_proto/proto_smdb" }
 proto_smdb_utils = { path = "queng_proto/proto_smdb_utils" }
 
 # SBE
-sbe_bindings = { path = "queng_sbe/bindings" }
+sbe_bindings = { path = "queng_sbe/sbe_bindings" }
 sbe_messages = { path = "queng_sbe/sbe_messages" }
 sbe_utils = { path = "queng_sbe/sbe_utils" }
 
@@ -265,6 +183,8 @@ grpc_service = { path = "queng_services/templete/grpc_service" }
 ims_data_service = { path = "queng_services/templete/ims_data_service" }
 
 # Specs
+# Config specs
+portfolio_specs = { path = "queng_specs/config_specs/portfolio_specs" }
 # Container specs
 container_specs_clickhouse = { path = "queng_specs/container_specs/container_specs_clickhouse" }
 container_specs_postgres = { path = "queng_specs/container_specs/container_specs_postgres" }
@@ -272,10 +192,8 @@ container_specs_kaiko = { path = "queng_specs/container_specs/container_specs_ka
 # DB specs
 db_specs_clickhouse = { path = "queng_specs/database_specs/db_specs_clickhouse" }
 db_specs_postgres = { path = "queng_specs/database_specs/db_specs_postgres" }
-# Misc specs
-exchange_specs = { path = "queng_specs/exchange_specs" }
+# Integration specs
 integration_specs_all = { path = "queng_specs/integration_specs/integration_specs_all" }
-portfolio_specs = { path = "queng_specs/portfolio_specs" }
 # Service specs
 cmdb_specs = { path = "queng_services/core/cmdb/cmdb_specs" }
 dbgw_specs = { path = "queng_services/core/dbgw/dbgw_specs" }

@@ -13,30 +13,45 @@ use diesel::{Connection, ExpressionMethods, QueryDsl, QueryResult, RunQueryDsl};
 impl Portfolio {
     /// Creates a new portfolio in the database.
     ///
-    /// This function inserts a new portfolio and its associated instruments into the database.
-    /// It first checks if the portfolio ID exists. If it does not, it returns a `DatabaseError`.
-    /// Then, it starts a database transaction to insert the portfolio and its instruments.
-    /// If any instrument does not exist, it is created before being associated with the portfolio.
+    /// This function performs a transactional operation to:
+    /// 1. Create a new portfolio record
+    /// 2. Create or verify existence of each instrument
+    /// 3. Create portfolio-instrument relationships
     ///
     /// # Arguments
     ///
-    /// * `db` - A mutable reference to the `PGConnection` for database operations.
-    /// * `data` - A reference to the `CommonPortfolioConfig` containing the portfolio data.
+    /// * `db` - A mutable reference to the `PGConnection` for database operations
+    /// * `data` - A reference to the `CommonPortfolioConfig` containing the portfolio data
     ///
     /// # Returns
     ///
-    /// * `QueryResult<CommonPortfolioConfig>` - The created portfolio configuration with all its instruments
+    /// Returns a `QueryResult<CommonPortfolioConfig>`:
+    /// * `Ok(config)` - The created portfolio configuration with all its instruments
     ///
     /// # Errors
     ///
-    /// Returns an error in the following cases:
-    /// * `DatabaseError(NotNullViolation)` - If the portfolio ID already exists
-    /// * `DatabaseError` - If any database operation fails during:
+    /// This function will return an error in the following cases:
+    /// * Portfolio ID already exists (returns `DatabaseError(NotNullViolation)`)
+    /// * Database connection errors during transaction
+    /// * Transaction failures during:
     ///   - Portfolio creation
-    ///   - Instrument creation
-    ///   - Portfolio-instrument relation creation
-    /// * Connection errors during transaction
-    /// * Constraint violations in the database
+    ///   - Instrument creation or verification
+    ///   - Portfolio-instrument relationship creation
+    /// * Constraint violations:
+    ///   - Unique constraints on portfolio or instrument IDs
+    ///   - Foreign key constraints
+    ///   - Not null constraints
+    /// * Data validation errors:
+    ///   - Invalid portfolio data format
+    ///   - Invalid instrument data format
+    /// * Concurrent modification conflicts
+    ///
+    /// # Implementation Notes
+    ///
+    /// The function uses a database transaction to ensure atomicity:
+    /// * All operations succeed or all fail together
+    /// * Database remains in a consistent state
+    /// * Partial updates are not possible
     ///
     pub fn create(
         db: &mut PGConnection,
@@ -103,22 +118,37 @@ impl Portfolio {
     ///
     /// Creates a collection of portfolios in the database.
     ///
-    /// Inserts each portfolio from the provided data into the database using the `Portfolio::create` method.
-    /// The operation stops at the first error encountered.
+    /// This function creates multiple portfolios sequentially, where each portfolio
+    /// creation is itself a transactional operation.
     ///
     /// # Arguments
-    /// * `db` - A mutable reference to the `PGConnection` for database operations.
-    /// * `data` - A slice of `CommonPortfolioConfig` containing the portfolio data to be inserted.
+    ///
+    /// * `db` - A mutable reference to the `PGConnection` for database operations
+    /// * `data` - A slice of `CommonPortfolioConfig` containing the portfolio data
     ///
     /// # Returns
-    /// * `QueryResult<()>` - `Ok(())` if all portfolios were created successfully
+    ///
+    /// Returns a `QueryResult<()>`:
+    /// * `Ok(())` - All portfolios were created successfully
     ///
     /// # Errors
     ///
-    /// Returns an error in the following cases:
-    /// * Any error that would occur in `Portfolio::create` for any portfolio in the collection
-    /// * The operation stops at the first error encountered, leaving the database in a consistent state
-    /// * Previously successful portfolio creations in the collection are not rolled back
+    /// This function will return an error in the following cases:
+    /// * Any error that would occur in `Portfolio::create` for any portfolio
+    /// * The operation stops at the first error encountered
+    /// * Database connection errors
+    /// * Transaction failures
+    /// * Constraint violations:
+    ///   - Duplicate portfolio IDs
+    ///   - Invalid foreign keys
+    ///   - Not null constraints
+    /// * Data validation errors in any portfolio or instrument
+    ///
+    /// # Implementation Notes
+    ///
+    /// * Each portfolio creation is atomic but the collection operation is not
+    /// * Successfully created portfolios remain in the database even if later ones fail
+    /// * Consider using a larger transaction if all-or-nothing behavior is needed
     ///
     pub fn create_portfolio_collection(
         db: &mut PGConnection,
@@ -136,23 +166,36 @@ impl Portfolio {
     ///
     /// Reads all portfolio configurations from the database.
     ///
-    /// Retrieves all portfolios and their associated instruments, converting them to
-    /// `CommonPortfolioConfig` format.
+    /// This function retrieves all portfolios and their associated instruments,
+    /// performing the necessary joins and data conversions.
     ///
     /// # Arguments
-    /// * `db` - Mutable reference to the `PGConnection` for database operations.
+    ///
+    /// * `db` - A mutable reference to the `PGConnection` for database operations
     ///
     /// # Returns
-    /// * `QueryResult<Vec<CommonPortfolioConfig>>` - Vector of all portfolio configurations
-    ///   Returns an empty vector if no portfolios exist.
+    ///
+    /// Returns a `QueryResult<Vec<CommonPortfolioConfig>>`:
+    /// * `Ok(vec)` - Vector containing all portfolio configurations
+    /// * Returns an empty vector if no portfolios exist
     ///
     /// # Errors
     ///
-    /// Returns an error in the following cases:
+    /// This function will return an error in the following cases:
     /// * Database connection errors
-    /// * Query execution failures
-    /// * Data serialization errors when converting to `CommonPortfolioConfig`
-    /// * Errors from `Portfolio::read` when fetching individual portfolio details
+    /// * Query execution failures during:
+    ///   - Portfolio retrieval
+    ///   - Instrument relationship joins
+    /// * Data deserialization errors:
+    ///   - Converting database records to Portfolio structs
+    ///   - Converting to CommonPortfolioConfig format
+    /// * Memory allocation errors with large result sets
+    ///
+    /// # Performance Notes
+    ///
+    /// * This function performs joins to fetch instrument data
+    /// * Consider pagination for large datasets
+    /// * Memory usage scales with the number of portfolios and their instruments
     ///
     pub fn read_all(db: &mut PGConnection) -> QueryResult<Vec<CommonPortfolioConfig>> {
         let mut v = Vec::new();
@@ -182,18 +225,27 @@ impl Portfolio {
     ///
     /// # Arguments
     ///
-    /// * `db` - A mutable reference to the `PGConnection` for database operations.
+    /// * `db` - A mutable reference to the `PGConnection` for database operations
     ///
     /// # Returns
     ///
-    /// * `QueryResult<u64>` - The total count of portfolios
+    /// Returns a `QueryResult<u64>`:
+    /// * `Ok(count)` - The total number of portfolios in the database
     ///
     /// # Errors
     ///
-    /// Returns an error in the following cases:
+    /// This function will return an error in the following cases:
     /// * Database connection errors
     /// * Query execution failures
-    /// * Type conversion errors when converting count from i64 to u64
+    /// * Type conversion errors:
+    ///   - When converting count from i64 to u64
+    ///   - Overflow if count exceeds u64::MAX (extremely unlikely)
+    ///
+    /// # Performance Notes
+    ///
+    /// * Uses COUNT(*) SQL operation
+    /// * Relatively fast as it doesn't fetch actual records
+    /// * No joins or complex operations involved
     ///
     pub fn count(db: &mut PGConnection) -> QueryResult<u64> {
         portfolio.count().get_result::<i64>(db).map(|c| c as u64)
@@ -204,19 +256,27 @@ impl Portfolio {
     ///
     /// # Arguments
     ///
-    /// * `db` - A mutable reference to the `PGConnection` for database operations.
-    /// * `param_portfolio_id` - The ID of the portfolio to check for existence.
+    /// * `db` - A mutable reference to the `PGConnection` for database operations
+    /// * `param_portfolio_id` - The ID of the portfolio to check
     ///
     /// # Returns
     ///
-    /// * `QueryResult<bool>` - `true` if the portfolio ID exists, `false` otherwise
+    /// Returns a `QueryResult<bool>`:
+    /// * `Ok(true)` - The portfolio exists
+    /// * `Ok(false)` - No portfolio exists with the given ID
     ///
     /// # Errors
     ///
-    /// Returns an error in the following cases:
+    /// This function will return an error in the following cases:
     /// * Database connection errors
     /// * Query execution failures
-    /// * Note: Not finding the portfolio is NOT an error, it returns `Ok(false)`
+    /// * Type conversion errors when processing results
+    ///
+    /// # Implementation Notes
+    ///
+    /// * Uses EXISTS clause for efficient checking
+    /// * Does not retrieve the actual portfolio data
+    /// * Not finding a portfolio is NOT an error condition
     ///
     pub fn check_if_portfolio_id_exists(
         db: &mut PGConnection,
@@ -231,28 +291,44 @@ impl Portfolio {
     ///
     /// Updates a portfolio in the database if it exists.
     ///
-    /// Performs a transactional update of the portfolio and its associated instruments,
-    /// ensuring data consistency throughout the operation.
+    /// This function performs a transactional update of:
+    /// 1. The portfolio record itself
+    /// 2. Associated instruments (creating new ones if needed)
+    /// 3. Portfolio-instrument relationships
     ///
     /// # Arguments
-    /// * `db` - A mutable reference to the `PGConnection` for database operations.
-    /// * `param_portfolio_id` - The ID of the portfolio to update.
-    /// * `data` - A reference to the `CommonPortfolioConfig` containing the updated portfolio data.
+    ///
+    /// * `db` - A mutable reference to the `PGConnection` for database operations
+    /// * `param_portfolio_id` - The ID of the portfolio to update
+    /// * `data` - A reference to the `CommonPortfolioConfig` with updated data
     ///
     /// # Returns
-    /// * `QueryResult<()>` - `Ok(())` if the update was successful
+    ///
+    /// Returns a `QueryResult<()>`:
+    /// * `Ok(())` - The update was successful
     ///
     /// # Errors
     ///
-    /// Returns an error in the following cases:
-    /// * `DatabaseError` - If the portfolio does not exist
+    /// This function will return an error in the following cases:
+    /// * Portfolio does not exist (returns DatabaseError)
+    /// * Database connection errors
     /// * Transaction failures during:
     ///   - Portfolio update
-    ///   - Instrument creation or update
-    ///   - Portfolio-instrument relation updates
-    /// * Database connection errors
-    /// * Constraint violations
-    /// * Data validation errors
+    ///   - Instrument creation/update
+    ///   - Relationship updates
+    /// * Constraint violations:
+    ///   - Foreign key constraints
+    ///   - Unique constraints
+    ///   - Not null constraints
+    /// * Data validation errors in updated data
+    /// * Concurrent modification conflicts
+    ///
+    /// # Implementation Notes
+    ///
+    /// * Uses a transaction to ensure atomicity
+    /// * Existing relationships are preserved unless explicitly changed
+    /// * Missing instruments are created automatically
+    /// * Handles both additions and removals of instruments
     ///
     pub fn update(
         db: &mut PGConnection,
@@ -344,30 +420,43 @@ impl Portfolio {
     }
 
     ///
-    /// Deletes a portfolio and its associated instruments from the database.
+    /// Deletes a portfolio and its associated relationships from the database.
     ///
-    /// Performs a transactional deletion of the portfolio and all its relationships,
-    /// ensuring referential integrity is maintained.
+    /// This function performs a transactional deletion that:
+    /// 1. Removes portfolio-instrument relationships
+    /// 2. Deletes the portfolio record
+    /// 3. Maintains referential integrity
     ///
     /// # Arguments
     ///
-    /// * `db` - A mutable reference to the `PGConnection` for database operations.
-    /// * `param_portfolio_id` - The ID of the portfolio to be deleted.
+    /// * `db` - A mutable reference to the `PGConnection` for database operations
+    /// * `param_portfolio_id` - The ID of the portfolio to delete
     ///
     /// # Returns
     ///
-    /// * `QueryResult<usize>` - The number of rows affected by the deletion
-    ///   Returns `Ok(0)` if the portfolio didn't exist
+    /// Returns a `QueryResult<usize>`:
+    /// * `Ok(1)` - The portfolio was successfully deleted
+    /// * `Ok(0)` - No portfolio existed with the given ID
     ///
     /// # Errors
     ///
-    /// Returns an error in the following cases:
+    /// This function will return an error in the following cases:
     /// * Database connection errors
     /// * Transaction failures during:
+    ///   - Relationship deletion
     ///   - Portfolio deletion
-    ///   - Associated instrument relationship deletions
-    /// * Foreign key constraint violations
+    /// * Foreign key constraint violations:
+    ///   - If the portfolio is referenced by other tables
+    ///   - If relationships cannot be deleted
     /// * Concurrent modification conflicts
+    /// * Deadlock detection during cascading deletes
+    ///
+    /// # Implementation Notes
+    ///
+    /// * Uses a transaction to ensure atomicity
+    /// * Handles cascading deletes of relationships
+    /// * Does not delete the instruments themselves
+    /// * Safe to call on non-existent portfolio IDs
     ///
     pub fn delete(db: &mut PGConnection, param_portfolio_id: i32) -> QueryResult<usize> {
         // Start transaction

@@ -11,14 +11,39 @@ use diesel::{
 
 impl Portfolio {
     ///
-    /// Reads and retrieves portfolio configuration data for a given portfolio ID from the database.
+    /// Reads and retrieves portfolio configuration data along with its associated instruments from the database.
+    ///
+    /// This function performs a join operation between the portfolio and instrument tables through the
+    /// portfolio_instrument junction table to fetch all instruments associated with the portfolio.
     ///
     /// # Arguments
-    /// - `db`: Mutable reference to the `PGConnection` for the database operations.
-    /// - `param_portfolio_id`: The ID of the portfolio to retrieve configuration data for.
+    ///
+    /// * `db` - A mutable reference to the `PGConnection` for database operations
+    /// * `param_portfolio_id` - The ID of the portfolio to retrieve configuration data for
     ///
     /// # Returns
-    /// Result containing the `CommonPortfolioConfig` if successful, or a `QueryResult` error.
+    ///
+    /// Returns a `QueryResult<CommonPortfolioConfig>`:
+    /// * `Ok(config)` - The portfolio configuration with all associated instruments
+    ///
+    /// # Errors
+    ///
+    /// This function will return an error in the following cases:
+    /// * Database connection error
+    /// * Query execution failure
+    /// * Portfolio with given ID does not exist (returns NotNullViolation error)
+    /// * Join operation failures between portfolio and instrument tables
+    /// * Data deserialization errors when converting database records
+    /// * Foreign key constraint violations
+    /// * Transaction failures during the join operations
+    ///
+    /// # Implementation Notes
+    ///
+    /// The function performs the following steps:
+    /// 1. Checks if the portfolio exists
+    /// 2. Retrieves the portfolio data
+    /// 3. Performs a join operation to get all associated instruments
+    /// 4. Combines the data into a CommonPortfolioConfig
     ///
     pub fn read(
         db: &mut PGConnection,

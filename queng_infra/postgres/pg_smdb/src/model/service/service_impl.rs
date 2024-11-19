@@ -15,13 +15,20 @@ impl Service {
     ///
     /// # Arguments
     ///
-    /// * `db` - a mutable reference to a postgres database connection
-    /// * `svc` - a reference to a `CommonServiceConfig` containing the configuration for the new service
+    /// * `db` - A mutable reference to a postgres database connection
+    /// * `svc` - A reference to a `CommonServiceConfig` containing the configuration for the new service
     ///
     /// # Returns
     ///
-    /// A `QueryResult<ServiceConfig>` containing the configuration of the newly created service,
-    /// or an error if the operation fails.
+    /// * `QueryResult<ServiceConfig>` - The newly created service configuration
+    ///
+    /// # Errors
+    ///
+    /// Returns an error in the following cases:
+    /// * Database connection errors
+    /// * Unique constraint violations (if service_id already exists)
+    /// * Invalid data in service configuration (constraint violations)
+    /// * Serialization errors when converting between types
     ///
     pub fn create(
         db: &mut Connection,
@@ -38,12 +45,21 @@ impl Service {
     ///
     /// # Arguments
     ///
-    /// * `db` - a mutable reference to a postgres database connection
-    /// * `svc` - a slice of `CommonServiceConfig` containing the configuration for the services to add
+    /// * `db` - A mutable reference to a postgres database connection
+    /// * `svc` - A slice of `CommonServiceConfig` containing the configurations for the services to add
     ///
     /// # Returns
     ///
-    /// A `QueryResult<bool>` indicating whether the operation was successful.
+    /// * `QueryResult<bool>` - `true` if all services were inserted successfully
+    ///
+    /// # Errors
+    ///
+    /// Returns an error in the following cases:
+    /// * Database connection errors
+    /// * Unique constraint violations
+    /// * Invalid data in any service configuration
+    /// * Batch insertion failures
+    /// * Transaction rollback if any service fails to insert
     ///
     pub fn insert_service_collection(
         db: &mut Connection,
@@ -67,12 +83,18 @@ impl Service {
     ///
     /// # Arguments
     ///
-    /// * `db` - a mutable reference to a postgres database connection
+    /// * `db` - A mutable reference to a postgres database connection
     ///
     /// # Returns
     ///
-    /// A `QueryResult<u64>` containing the number of services, zero where there are none,
-    /// or an error if the operation fails.
+    /// * `QueryResult<u64>` - Total number of services
+    ///
+    /// # Errors
+    ///
+    /// Returns an error in the following cases:
+    /// * Database connection errors
+    /// * Query execution failures
+    /// * Type conversion errors when converting count from i64 to u64
     ///
     pub fn count(db: &mut Connection) -> QueryResult<u64> {
         service.count().get_result::<i64>(db).map(|c| c as u64)
@@ -82,13 +104,19 @@ impl Service {
     ///
     /// # Arguments
     ///
-    /// * `db` - a mutable reference to a postgres database connection
-    /// * `param_service_id` - the ID of the service to check
+    /// * `db` - A mutable reference to a postgres database connection
+    /// * `param_service_id` - The ID of the service to check
     ///
     /// # Returns
     ///
-    /// A `QueryResult<bool>` indicating whether the service ID exists or not.
-    /// If the operation fails, returns an error.
+    /// * `QueryResult<bool>` - `true` if the service exists, `false` otherwise
+    ///
+    /// # Errors
+    ///
+    /// Returns an error in the following cases:
+    /// * Database connection errors
+    /// * Query execution failures
+    /// * Note: Not finding the service is NOT an error, it returns `Ok(false)`
     ///
     pub fn check_if_service_id_exists(
         db: &mut Connection,
@@ -105,13 +133,19 @@ impl Service {
     ///
     /// # Arguments
     ///
-    /// * `db` - a mutable reference to a postgres database connection
-    /// * `param_service_id` - the ID of the service to check
+    /// * `db` - A mutable reference to a postgres database connection
+    /// * `param_service_id` - The ID of the service to check
     ///
     /// # Returns
     ///
-    /// A `QueryResult<bool>` indicating whether the service is online or not.
-    /// If the operation fails, returns an error.
+    /// * `QueryResult<bool>` - `true` if the service is online, `false` if offline or not found
+    ///
+    /// # Errors
+    ///
+    /// Returns an error in the following cases:
+    /// * Database connection errors
+    /// * Query execution failures
+    /// * Service ID does not exist
     ///
     pub fn check_if_service_id_online(
         db: &mut Connection,
@@ -131,12 +165,20 @@ impl Service {
     ///
     /// # Arguments
     ///
-    /// * `db` - a mutable reference to a postgres database connection
+    /// * `db` - A mutable reference to a postgres database connection
     ///
     /// # Returns
     ///
-    /// A `QueryResult<Vec<ServiceConfig>>` containing all online services,
-    /// or an error if the operation fails.
+    /// * `QueryResult<Vec<ServiceConfig>>` - List of all online services
+    ///   Returns an empty vector if no services are online
+    ///
+    /// # Errors
+    ///
+    /// Returns an error in the following cases:
+    /// * Database connection errors
+    /// * Query execution failures
+    /// * Data deserialization errors
+    /// * Memory allocation errors for large result sets
     ///
     pub fn get_all_online_services(db: &mut Connection) -> QueryResult<Vec<CommonServiceConfig>> {
         service
@@ -150,12 +192,20 @@ impl Service {
     ///
     /// # Arguments
     ///
-    /// * `db` - a mutable reference to a postgres database connection
+    /// * `db` - A mutable reference to a postgres database connection
     ///
     /// # Returns
     ///
-    /// A `QueryResult<Vec<ServiceConfig>>` containing all offline services,
-    /// or an error if the operation fails.
+    /// * `QueryResult<Vec<ServiceConfig>>` - List of all offline services
+    ///   Returns an empty vector if no services are offline
+    ///
+    /// # Errors
+    ///
+    /// Returns an error in the following cases:
+    /// * Database connection errors
+    /// * Query execution failures
+    /// * Data deserialization errors
+    /// * Memory allocation errors for large result sets
     ///
     pub fn get_all_offline_services(db: &mut Connection) -> QueryResult<Vec<CommonServiceConfig>> {
         service
@@ -169,13 +219,21 @@ impl Service {
     ///
     /// # Arguments
     ///
-    /// * `db` - a mutable reference to a postgres database connection
-    /// * `param_service_id` - the ID of the service to retrieve dependencies for
+    /// * `db` - A mutable reference to a postgres database connection
+    /// * `param_service_id` - The ID of the service to retrieve dependencies for
     ///
     /// # Returns
     ///
-    /// A `QueryResult<Vec<ServiceID>>` containing all service dependencies,
-    /// or an error if the operation fails.
+    /// * `QueryResult<Vec<ServiceID>>` - List of all service dependencies
+    ///   Returns an empty vector if the service has no dependencies
+    ///
+    /// # Errors
+    ///
+    /// Returns an error in the following cases:
+    /// * Database connection errors
+    /// * Query execution failures
+    /// * Service ID does not exist
+    /// * Data deserialization errors
     ///
     pub fn get_all_service_dependencies(
         db: &mut Connection,
@@ -197,13 +255,21 @@ impl Service {
     ///
     /// # Arguments
     ///
-    /// * `db` - a mutable reference to a postgres database connection
-    /// * `param_service_id` - the ID of the service to retrieve endpoints for
+    /// * `db` - A mutable reference to a postgres database connection
+    /// * `param_service_id` - The ID of the service to retrieve endpoints for
     ///
     /// # Returns
     ///
-    /// A `QueryResult<Vec<Endpoint>>` containing all endpoints for the service,
-    /// or an error if the operation fails.
+    /// * `QueryResult<Vec<Endpoint>>` - List of all service endpoints
+    ///   Returns an empty vector if the service has no endpoints
+    ///
+    /// # Errors
+    ///
+    /// Returns an error in the following cases:
+    /// * Database connection errors
+    /// * Query execution failures
+    /// * Service ID does not exist
+    /// * Data deserialization errors
     ///
     pub fn get_all_service_endpoints(
         db: &mut Connection,
@@ -225,13 +291,20 @@ impl Service {
     ///
     /// # Arguments
     ///
-    /// * `db` - a mutable reference to a postgres database connection
-    /// * `param_service_id` - the ID of the service to retrieve
+    /// * `db` - A mutable reference to a postgres database connection
+    /// * `param_service_id` - The ID of the service to retrieve
     ///
     /// # Returns
     ///
-    /// A `QueryResult<ServiceConfig>` containing the service configuration,
-    /// or an error if the operation fails.
+    /// * `QueryResult<ServiceConfig>` - The service configuration if found
+    ///
+    /// # Errors
+    ///
+    /// Returns an error in the following cases:
+    /// * Database connection errors
+    /// * Query execution failures
+    /// * Service ID does not exist
+    /// * Data deserialization errors
     ///
     pub fn read(
         db: &mut Connection,
@@ -247,12 +320,20 @@ impl Service {
     ///
     /// # Arguments
     ///
-    /// * `db` - a mutable reference to a postgres database connection
+    /// * `db` - A mutable reference to a postgres database connection
     ///
     /// # Returns
     ///
-    /// A `QueryResult<Vec<ServiceConfig>>` containing all service configurations,
-    /// or an error if the operation fails.
+    /// * `QueryResult<Vec<ServiceConfig>>` - List of all service configurations
+    ///   Returns an empty vector if no services exist
+    ///
+    /// # Errors
+    ///
+    /// Returns an error in the following cases:
+    /// * Database connection errors
+    /// * Query execution failures
+    /// * Data deserialization errors
+    /// * Memory allocation errors for large result sets
     ///
     pub fn read_all(db: &mut Connection) -> QueryResult<Vec<CommonServiceConfig>> {
         service
@@ -260,53 +341,25 @@ impl Service {
             .map(|s| s.iter().map(Self::to_common_svc_config).collect())
     }
 
-    /// Sets the online status of the service with the given ID.
-    ///
-    /// # Arguments
-    ///
-    /// * `db` - a mutable reference to a postgres database connection
-    /// * `param_service_id` - the ID of the service to set online or offline
-    ///
-    /// # Returns
-    ///
-    /// A `QueryResult<()>` indicating the success of the operation.
-    ///
-    pub fn set_service_online(
-        db: &mut Connection,
-        param_service_id: CommonServiceID,
-    ) -> QueryResult<()> {
-        Self::set_svc_online(db, param_service_id, true)
-    }
-
-    /// Sets the service with the given ID to offline.
-    ///
-    /// # Arguments
-    ///
-    /// * `db` - a mutable reference to a postgres database connection
-    /// * `param_service_id` - the ID of the service to set offline
-    ///
-    /// # Returns
-    ///
-    /// A `QueryResult<()>` indicating the success of the operation.
-    ///
-    pub fn set_service_offline(
-        db: &mut Connection,
-        param_service_id: CommonServiceID,
-    ) -> QueryResult<()> {
-        Self::set_svc_online(db, param_service_id, false)
-    }
-
     /// Sets the online status of a service.
     ///
     /// # Arguments
     ///
-    /// * `db` - a mutable reference to a postgres database connection
-    /// * `param_service_id` - the ID of the service
-    /// * `param_online` - whether to set the service online or offline
+    /// * `db` - A mutable reference to a postgres database connection
+    /// * `param_service_id` - The ID of the service
+    /// * `param_online` - Whether to set the service online or offline
     ///
     /// # Returns
     ///
-    /// A `QueryResult<()>` indicating the success of the operation.
+    /// * `QueryResult<()>` - Success if the status was updated
+    ///
+    /// # Errors
+    ///
+    /// Returns an error in the following cases:
+    /// * Database connection errors
+    /// * Query execution failures
+    /// * Service ID does not exist
+    /// * Concurrent modification conflicts
     ///
     fn set_svc_online(
         db: &mut Connection,
@@ -322,18 +375,79 @@ impl Service {
         }
     }
 
+    /// Sets the online status of the service with the given ID.
+    ///
+    /// # Arguments
+    ///
+    /// * `db` - A mutable reference to a postgres database connection
+    /// * `param_service_id` - The ID of the service to set online or offline
+    ///
+    /// # Returns
+    ///
+    /// * `QueryResult<()>` - Success if the status was updated
+    ///
+    /// # Errors
+    ///
+    /// Returns an error in the following cases:
+    /// * Database connection errors
+    /// * Query execution failures
+    /// * Service ID does not exist
+    /// * Concurrent modification conflicts
+    ///
+    pub fn set_service_online(
+        db: &mut Connection,
+        param_service_id: CommonServiceID,
+    ) -> QueryResult<()> {
+        Self::set_svc_online(db, param_service_id, true)
+    }
+
+    /// Sets the service with the given ID to offline.
+    ///
+    /// # Arguments
+    ///
+    /// * `db` - A mutable reference to a postgres database connection
+    /// * `param_service_id` - The ID of the service to set offline
+    ///
+    /// # Returns
+    ///
+    /// * `QueryResult<()>` - Success if the status was updated
+    ///
+    /// # Errors
+    ///
+    /// Returns an error in the following cases:
+    /// * Database connection errors
+    /// * Query execution failures
+    /// * Service ID does not exist
+    /// * Concurrent modification conflicts
+    ///
+    pub fn set_service_offline(
+        db: &mut Connection,
+        param_service_id: CommonServiceID,
+    ) -> QueryResult<()> {
+        Self::set_svc_online(db, param_service_id, false)
+    }
+
     /// Updates a service in the database with the provided configuration.
     ///
     /// # Arguments
     ///
-    /// * `db` - a mutable reference to a postgres database connection
-    /// * `param_service_id` - the ID of the service to update
-    /// * `item` - a reference to a `UpdateService` containing the updated configuration
+    /// * `db` - A mutable reference to a postgres database connection
+    /// * `param_service_id` - The ID of the service to update
+    /// * `item` - A reference to a `CommonServiceConfig` containing the updated configuration
     ///
     /// # Returns
     ///
-    /// A `QueryResult<ServiceConfig>` containing the updated configuration of the service,
-    /// or an error if the operation fails.
+    /// * `QueryResult<ServiceConfig>` - The updated service configuration
+    ///
+    /// # Errors
+    ///
+    /// Returns an error in the following cases:
+    /// * Database connection errors
+    /// * Query execution failures
+    /// * Service ID does not exist
+    /// * Constraint violations in the updated configuration
+    /// * Data validation errors
+    /// * Concurrent modification conflicts
     ///
     pub fn update(
         db: &mut Connection,
@@ -352,13 +466,22 @@ impl Service {
     ///
     /// # Arguments
     ///
-    /// * `db` - a mutable reference to a postgres database connection
-    /// * `param_service_id` - the ID of the service to delete
+    /// * `db` - A mutable reference to a postgres database connection
+    /// * `param_service_id` - The ID of the service to delete
     ///
     /// # Returns
     ///
-    /// A `QueryResult<usize>` containing the number of rows deleted,
-    /// or an error if the operation fails.
+    /// * `QueryResult<usize>` - Number of rows affected:
+    ///   - Returns `Ok(0)` if the service didn't exist
+    ///   - Returns `Ok(1)` if the service was successfully deleted
+    ///
+    /// # Errors
+    ///
+    /// Returns an error in the following cases:
+    /// * Database connection errors
+    /// * Query execution failures
+    /// * Foreign key constraint violations (if service is referenced elsewhere)
+    /// * Concurrent modification conflicts
     ///
     pub fn delete(db: &mut Connection, param_service_id: CommonServiceID) -> QueryResult<usize> {
         diesel::delete(service.filter(service_id.eq(param_service_id.as_i32()))).execute(db)

@@ -1,11 +1,8 @@
 use common_config::{ServiceConfig, ServiceID, SvcEnvConfig};
 use common_env::EnvironmentType;
-use common_exchange::ExchangeID;
 use environment_manager::EnvironmentManager;
-use exchange_specs::{get_all_exchanges, get_all_exchanges_ids_names, get_exchange_symbol_tables};
 use hickory_resolver::TokioAsyncResolver;
 use smdb_specs::smdb_service_config;
-use std::collections::HashMap;
 
 mod build_utils;
 mod cfg_getters;
@@ -40,14 +37,6 @@ pub struct CfgManager {
     svc_config: ServiceConfig,
     /// Service environment configuration for each service
     svc_env_config: SvcEnvConfig,
-    /// Default exchange
-    default_exchange: ExchangeID,
-    /// Vector of all supported exchanges.
-    exchanges: Vec<ExchangeID>,
-    /// Maps exchange IDs to their names. Used to configure Symbol Manager
-    exchanges_id_names: Vec<(u16, String)>,
-    /// Maps exchange IDs to their symbol table. Used to configure Query Manager
-    exchanges_symbol_tables: HashMap<ExchangeID, String>,
 }
 
 impl Default for CfgManager {
@@ -197,12 +186,6 @@ impl CfgManager {
         let external_dns_server = format!("{}{}", DEFAULT_DNS, ":53");
         let external_dns_resolver = build_utils::build_external_dns_resolver(dbg);
 
-        // Remove this after adding MDDB service
-        let default_exchange = exchange_specs::get_default_exchange();
-        let exchanges = get_all_exchanges();
-        let exchanges_id_names = get_all_exchanges_ids_names();
-        let exchanges_symbol_tables = get_exchange_symbol_tables();
-
         Self {
             dbg,
             env_type,
@@ -213,11 +196,6 @@ impl CfgManager {
             svc,
             svc_config,
             svc_env_config,
-            // Remove this after adding MDDB service
-            default_exchange,
-            exchanges,
-            exchanges_id_names,
-            exchanges_symbol_tables,
         }
     }
 

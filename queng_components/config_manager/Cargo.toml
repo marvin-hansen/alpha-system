@@ -23,7 +23,6 @@ common_env = { workspace = true }
 common_errors = { workspace = true }
 common_exchange = { workspace = true }
 environment_manager = { workspace = true }
-exchange_specs = { workspace = true }
 # Service specs
 cmdb_specs = { workspace = true }
 dbgw_specs = { workspace = true }

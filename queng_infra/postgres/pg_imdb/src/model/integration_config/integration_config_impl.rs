@@ -11,17 +11,26 @@ use diesel::prelude::*;
 use diesel::{QueryResult, RunQueryDsl};
 
 impl IntegrationConfig {
-    /// Creates a new integration configuration in the database with the provided configuration.
+    /// Creates a new integration configuration in the database.
     ///
     /// # Arguments
     ///
-    /// * `db` - a mutable reference to a postgres database connection
-    /// * `svc` - a reference to a `CommonIntegrationConfig` containing the configuration for the new integration
+    /// * `db` - A mutable reference to a postgres database connection
+    /// * `config` - A reference to a `CommonIntegrationConfig` containing the configuration for the new integration
     ///
     /// # Returns
     ///
-    /// A `QueryResult` containing the configuration of the newly created integration,
-    /// or an error if the operation fails.
+    /// Returns a `QueryResult<CommonIntegrationConfig>`:
+    /// * `Ok(config)` - The newly created integration configuration
+    ///
+    /// # Errors
+    ///
+    /// This function will return an error in the following cases:
+    /// * Database connection error
+    /// * Unique constraint violations (e.g., duplicate integration_id)
+    /// * Invalid data in config that violates database constraints
+    /// * Transaction failure during the insert operation
+    /// * Data conversion errors between CommonIntegrationConfig and database types
     ///
     pub fn create(
         db: &mut Connection,
@@ -38,15 +47,24 @@ impl IntegrationConfig {
     ///
     /// # Arguments
     ///
-    /// * `db` - a mutable reference to a postgres database connection
-    /// * `configs` - a vector of `CommonIntegrationConfig` containing the configurations to be inserted
+    /// * `db` - A mutable reference to a postgres database connection
+    /// * `configs` - A slice of `CommonIntegrationConfig` containing the configurations to be inserted
     ///
     /// # Returns
     ///
-    /// A `QueryResult<bool>` indicating whether the operation was successful.
+    /// Returns a `QueryResult<usize>`:
+    /// * `Ok(n)` - Number of configurations successfully inserted
     ///
-    /// The function returns `Ok(true)` if the insertion is successful, otherwise it returns an `Err`
-    /// containing the error that occurred during the operation.
+    /// # Errors
+    ///
+    /// This function will return an error in the following cases:
+    /// * Database connection error
+    /// * Unique constraint violations (e.g., duplicate integration_ids)
+    /// * Invalid data in any config that violates database constraints
+    /// * Transaction failure during the bulk insert operation
+    /// * Data conversion errors between CommonIntegrationConfig and database types
+    /// * The operation is atomic - either all configs are inserted or none are
+    ///
     pub fn insert_integration_config_collection(
         db: &mut Connection,
         configs: &[CommonIntegrationConfig],
@@ -75,11 +93,19 @@ impl IntegrationConfig {
     ///
     /// # Arguments
     ///
-    /// * `db` - a mutable reference to a postgres database connection
+    /// * `db` - A mutable reference to a postgres database connection
     ///
     /// # Returns
     ///
-    /// A `QueryResult` containing the count of integration configurations as `u64` if successful, or an error.
+    /// Returns a `QueryResult<u64>`:
+    /// * `Ok(count)` - The total number of integration configurations
+    ///
+    /// # Errors
+    ///
+    /// This function will return an error in the following cases:
+    /// * Database connection error
+    /// * Query execution failure
+    /// * Integer overflow when converting count from i64 to u64 (extremely unlikely)
     ///
     pub fn count(db: &mut Connection) -> QueryResult<u64> {
         integration_config
@@ -92,13 +118,21 @@ impl IntegrationConfig {
     ///
     /// # Arguments
     ///
-    /// * `db` - a mutable reference to a postgres database connection
-    /// * `config_id` - the ID of the integration configuration to check
+    /// * `db` - A mutable reference to a postgres database connection
+    /// * `config_id` - The ID of the integration configuration to check
     ///
     /// # Returns
     ///
-    /// A `QueryResult<bool>` indicating whether the integration configuration exists or not.
-    /// If the operation fails, returns an error.
+    /// Returns a `QueryResult<bool>`:
+    /// * `Ok(true)` - The integration configuration exists
+    /// * `Ok(false)` - No integration configuration exists with the given ID
+    ///
+    /// # Errors
+    ///
+    /// This function will return an error in the following cases:
+    /// * Database connection error
+    /// * Query execution failure
+    /// * Type conversion errors when processing the result
     ///
     pub fn check_if_integration_config_exists(
         db: &mut Connection,
@@ -116,13 +150,21 @@ impl IntegrationConfig {
     ///
     /// # Arguments
     ///
-    /// * `db` - a mutable reference to a postgres database connection
-    /// * `config_id` - the ID of the integration configuration to check
+    /// * `db` - A mutable reference to a postgres database connection
+    /// * `config_id` - The ID of the integration configuration to check
     ///
     /// # Returns
     ///
-    /// A `QueryResult<bool>` indicating whether the integration configuration is online or not.
-    /// If the operation fails, returns an error.
+    /// Returns a `QueryResult<bool>`:
+    /// * `Ok(true)` - The integration configuration is online
+    /// * `Ok(false)` - The integration configuration is offline or does not exist
+    ///
+    /// # Errors
+    ///
+    /// This function will return an error in the following cases:
+    /// * Database connection error
+    /// * Query execution failure
+    /// * Type conversion errors when processing the result
     ///
     pub fn check_if_integration_config_online(
         db: &mut Connection,
@@ -138,13 +180,21 @@ impl IntegrationConfig {
     ///
     /// # Arguments
     ///
-    /// * `db` - a mutable reference to a postgres database connection
-    /// * `config_id` - the ID of the integration configuration to retrieve
+    /// * `db` - A mutable reference to a postgres database connection
+    /// * `config_id` - The ID of the integration configuration to retrieve
     ///
     /// # Returns
     ///
-    /// A `QueryResult<Option<CommonIntegrationConfig>>` containing the retrieved integration configuration,
-    /// or `None` if no configuration with the given ID exists. If the operation fails, returns an error.
+    /// Returns a `QueryResult<Option<CommonIntegrationConfig>>`:
+    /// * `Ok(Some(config))` - The integration configuration was found
+    /// * `Ok(None)` - No integration configuration exists with the given ID
+    ///
+    /// # Errors
+    ///
+    /// This function will return an error in the following cases:
+    /// * Database connection error
+    /// * Query execution failure
+    /// * Data deserialization errors when converting database record to CommonIntegrationConfig
     ///
     pub fn get_integration_config(
         db: &mut Connection,
@@ -161,12 +211,22 @@ impl IntegrationConfig {
     ///
     /// # Arguments
     ///
-    /// * `db` - a mutable reference to a postgres database connection
+    /// * `db` - A mutable reference to a postgres database connection
     ///
     /// # Returns
     ///
-    /// A `QueryResult<Vec<CommonIntegrationConfig>>` containing all integration configurations in the database,
-    /// or an error if the operation fails.
+    /// Returns a `QueryResult<Vec<CommonIntegrationConfig>>`:
+    /// * `Ok(vec)` - A vector containing all integration configurations
+    /// * Returns an empty vector if no configurations exist
+    ///
+    /// # Errors
+    ///
+    /// This function will return an error in the following cases:
+    /// * Database connection error
+    /// * Query execution failure
+    /// * Data deserialization errors when converting database records
+    /// * Memory allocation errors when dealing with large result sets
+    ///
     pub fn get_all_integration_configs(
         db: &mut Connection,
     ) -> QueryResult<Vec<CommonIntegrationConfig>> {
@@ -182,13 +242,23 @@ impl IntegrationConfig {
     ///
     /// # Arguments
     ///
-    /// * `db` - a mutable reference to a postgres database connection
-    /// * `param_exchange_id` - the ID of the exchange to filter configurations by
+    /// * `db` - A mutable reference to a postgres database connection
+    /// * `param_exchange_id` - The ID of the exchange to filter configurations by
     ///
     /// # Returns
     ///
-    /// A `QueryResult<Vec<CommonIntegrationConfig>>` containing all integration configurations for the specified exchange,
-    /// or an error if the operation fails.
+    /// Returns a `QueryResult<Vec<CommonIntegrationConfig>>`:
+    /// * `Ok(vec)` - A vector containing all configurations for the specified exchange
+    /// * Returns an empty vector if no configurations exist for the exchange
+    ///
+    /// # Errors
+    ///
+    /// This function will return an error in the following cases:
+    /// * Database connection error
+    /// * Query execution failure
+    /// * Data deserialization errors when converting database records
+    /// * Invalid exchange_id format or type
+    ///
     pub fn get_all_integration_configs_by_exchange(
         db: &mut Connection,
         param_exchange_id: i32,
@@ -208,12 +278,22 @@ impl IntegrationConfig {
     ///
     /// # Arguments
     ///
-    /// * `db` - a mutable reference to a postgres database connection
+    /// * `db` - A mutable reference to a postgres database connection
     ///
     /// # Returns
     ///
-    /// A `QueryResult<Vec<CommonIntegrationConfig>>` containing all online integration configurations in the database,
-    /// or an error if the operation fails.
+    /// Returns a `QueryResult<Vec<CommonIntegrationConfig>>`:
+    /// * `Ok(vec)` - A vector containing all online integration configurations
+    /// * Returns an empty vector if no online configurations exist
+    ///
+    /// # Errors
+    ///
+    /// This function will return an error in the following cases:
+    /// * Database connection error
+    /// * Query execution failure
+    /// * Data deserialization errors when converting database records
+    /// * Memory allocation errors when dealing with large result sets
+    ///
     pub fn get_all_online_integration_configs(
         db: &mut Connection,
     ) -> QueryResult<Vec<CommonIntegrationConfig>> {
@@ -232,12 +312,22 @@ impl IntegrationConfig {
     ///
     /// # Arguments
     ///
-    /// * `db` - a mutable reference to a postgres database connection
+    /// * `db` - A mutable reference to a postgres database connection
     ///
     /// # Returns
     ///
-    /// A `QueryResult<Vec<CommonIntegrationConfig>>` containing all offline integration configurations in the database,
-    /// or an error if the operation fails.
+    /// Returns a `QueryResult<Vec<CommonIntegrationConfig>>`:
+    /// * `Ok(vec)` - A vector containing all offline integration configurations
+    /// * Returns an empty vector if no offline configurations exist
+    ///
+    /// # Errors
+    ///
+    /// This function will return an error in the following cases:
+    /// * Database connection error
+    /// * Query execution failure
+    /// * Data deserialization errors when converting database records
+    /// * Memory allocation errors when dealing with large result sets
+    ///
     pub fn get_all_offline_integration_configs(
         db: &mut Connection,
     ) -> QueryResult<Vec<CommonIntegrationConfig>> {
@@ -284,13 +374,24 @@ impl IntegrationConfig {
     ///
     /// # Arguments
     ///
-    /// * `db` - a mutable reference to a postgres database connection
-    /// * `config` - the `CommonIntegrationConfig` to update
+    /// * `db` - A mutable reference to a postgres database connection
+    /// * `config` - The updated `CommonIntegrationConfig` configuration
     ///
     /// # Returns
     ///
-    /// A `QueryResult<CommonIntegrationConfig>` containing the updated integration configuration,
-    /// or an error if the operation fails.
+    /// Returns a `QueryResult<usize>`:
+    /// * `Ok(1)` - The configuration was successfully updated
+    /// * `Ok(0)` - No configuration exists with the given ID
+    ///
+    /// # Errors
+    ///
+    /// This function will return an error in the following cases:
+    /// * Database connection error
+    /// * Query execution failure
+    /// * Constraint violations in the updated configuration
+    /// * Data conversion errors between CommonIntegrationConfig and database types
+    /// * Concurrent modification conflicts
+    ///
     pub fn update_integration_config(
         db: &mut Connection,
         config: CommonIntegrationConfig,
@@ -307,13 +408,24 @@ impl IntegrationConfig {
     ///
     /// # Arguments
     ///
-    /// * `db` - a mutable reference to a postgres database connection
-    /// * `config_id` - the ID of the integration configuration to delete
+    /// * `db` - A mutable reference to a postgres database connection
+    /// * `config_id` - The ID of the integration configuration to delete
     ///
     /// # Returns
     ///
-    /// A `QueryResult<usize>` containing the number of rows affected by the delete operation.
-    /// If the operation fails, returns an error.
+    /// Returns a `QueryResult<usize>`:
+    /// * `Ok(1)` - The configuration was successfully deleted
+    /// * `Ok(0)` - No configuration exists with the given ID
+    ///
+    /// # Errors
+    ///
+    /// This function will return an error in the following cases:
+    /// * Database connection error
+    /// * Query execution failure
+    /// * Foreign key constraint violations if the configuration is referenced by other tables
+    /// * Transaction failure during the delete operation
+    /// * Concurrent modification conflicts
+    ///
     pub fn delete_integration_config(db: &mut Connection, config_id: String) -> QueryResult<usize> {
         delete(integration_config.filter(integration_id.eq(config_id))).execute(db)
     }

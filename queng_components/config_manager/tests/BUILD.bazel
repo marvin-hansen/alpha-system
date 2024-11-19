@@ -17,7 +17,6 @@ rust_test_suite(
         # Internal crates
         "//alias:common_config",
         "//alias:common_env",
-        "//alias:exchange_specs",
         "//alias:cmdb_specs",
         "//alias:dbgw_specs",
         "//alias:smdb_specs",
@@ -43,7 +42,6 @@ rust_test_suite(
         # Internal crates
         "//alias:common_config",
         "//alias:common_env",
-        "//alias:exchange_specs",
         "//alias:cmdb_specs",
         "//alias:dbgw_specs",
         "//alias:smdb_specs",
