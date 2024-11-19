@@ -181,6 +181,7 @@ impl PostgresSMDBManager {
 
         Ok(true)
     }
+
     /// Retrieves all online services from the database.
     ///
     /// # Arguments
@@ -229,13 +230,29 @@ impl PostgresSMDBManager {
     ///
     /// # Arguments
     ///
-    /// * `id` - The ID of the service to retrieve dependencies for
+    /// * `id` - The ID of the service to retrieve dependencies for.
     ///
     /// # Returns
     ///
-    /// * `Result<Vec<ServiceID>, PostgresDBError>` - A result indicating success or failure.
-    ///    If successful, returns a vector of all service dependencies for the given service ID.
-    ///    If the operation fails, returns a `PostgresDBError`.
+    /// * `Result<Vec<ServiceID>, PostgresDBError>` - A result containing a vector of service IDs
+    ///   that the given service depends on.
+    ///
+    /// # Errors
+    ///
+    /// Returns a `PostgresDBError` in the following cases:
+    /// * `ReadFailed` - If the retrieval operation fails due to:
+    ///   - Database connection issues
+    ///   - Query execution failures
+    ///   - Invalid service ID format
+    ///   - Data corruption in dependency records
+    ///
+    /// # Implementation Notes
+    ///
+    /// This function:
+    /// 1. Gets a database connection from the connection pool
+    /// 2. Delegates to `Service::get_all_service_dependencies` for retrieval
+    /// 3. Uses indexed lookup for efficient dependency resolution
+    /// 4. Maps database errors to `PostgresDBError::ReadFailed`
     ///
     pub async fn get_all_service_dependencies(
         &self,
@@ -254,13 +271,29 @@ impl PostgresSMDBManager {
     ///
     /// # Arguments
     ///
-    /// * `id` - The ID of the service to retrieve endpoints for
+    /// * `id` - The ID of the service to retrieve endpoints for.
     ///
     /// # Returns
     ///
-    /// * `Result<Vec<Endpoint>, PostgresDBError>` - A result indicating success or failure.
-    ///    If successful, returns a vector of all service endpoints for the given service ID.
-    ///    If the operation fails, returns a `PostgresDBError`.
+    /// * `Result<Vec<Endpoint>, PostgresDBError>` - A result containing a vector of endpoint strings
+    ///   associated with the given service.
+    ///
+    /// # Errors
+    ///
+    /// Returns a `PostgresDBError` in the following cases:
+    /// * `ReadFailed` - If the retrieval operation fails due to:
+    ///   - Database connection issues
+    ///   - Query execution failures
+    ///   - Invalid service ID format
+    ///   - Data deserialization errors
+    ///
+    /// # Implementation Notes
+    ///
+    /// This function:
+    /// 1. Gets a database connection from the connection pool
+    /// 2. Delegates to `Service::get_all_service_endpoints` for retrieval
+    /// 3. Uses indexed lookup for efficient endpoint resolution
+    /// 4. Maps database errors to `PostgresDBError::ReadFailed`
     ///
     pub async fn get_all_service_endpoints(
         &self,
@@ -286,6 +319,24 @@ impl PostgresSMDBManager {
     /// * `Result<(), PostgresDBError>` - A result indicating success or failure.
     ///    If the service was set to online, returns `Ok(())`.
     ///
+    /// # Errors
+    ///
+    /// Returns a `PostgresDBError` in the following cases:
+    /// * `SetFieldFailed` - If the update operation fails due to:
+    ///   - Database connection issues
+    ///   - Query execution failures
+    ///   - Invalid service ID format
+    ///   - Transaction failures
+    ///   - Service not found
+    ///
+    /// # Implementation Notes
+    ///
+    /// This function:
+    /// 1. Gets a database connection from the connection pool
+    /// 2. Delegates to `Service::set_service_online` for the update
+    /// 3. Uses optimistic locking to handle concurrent updates
+    /// 4. Maps database errors to `PostgresDBError::SetFieldFailed`
+    ///
     pub async fn set_service_online(&self, id: &ServiceID) -> Result<(), PostgresDBError> {
         self.dbg_print("set_service_online");
         let conn = &mut self.get_connection();
@@ -307,6 +358,24 @@ impl PostgresSMDBManager {
     /// * `Result<(), PostgresDBError>` - A result indicating success or failure.
     ///    If the service was set to offline, returns `Ok(())`.
     ///
+    /// # Errors
+    ///
+    /// Returns a `PostgresDBError` in the following cases:
+    /// * `SetFieldFailed` - If the update operation fails due to:
+    ///   - Database connection issues
+    ///   - Query execution failures
+    ///   - Invalid service ID format
+    ///   - Transaction failures
+    ///   - Service not found
+    ///
+    /// # Implementation Notes
+    ///
+    /// This function:
+    /// 1. Gets a database connection from the connection pool
+    /// 2. Delegates to `Service::set_service_offline` for the update
+    /// 3. Uses optimistic locking to handle concurrent updates
+    /// 4. Maps database errors to `PostgresDBError::SetFieldFailed`
+    ///
     pub async fn set_service_offline(&self, id: &ServiceID) -> Result<(), PostgresDBError> {
         self.dbg_print("set_service_offline");
         let conn = &mut self.get_connection();
@@ -325,9 +394,25 @@ impl PostgresSMDBManager {
     ///
     /// # Returns
     ///
-    /// * `Result<Option<ServiceConfig>, PostgresDBError>` - A result indicating success or failure.
-    ///    If successful, returns a `Some(ServiceConfig)` with the service data.
-    ///    If the service does not exist, returns `Ok(None)`.
+    /// * `Result<Option<ServiceConfig>, PostgresDBError>` - A result containing an optional
+    ///   service configuration. Returns `None` if the service doesn't exist.
+    ///
+    /// # Errors
+    ///
+    /// Returns a `PostgresDBError` in the following cases:
+    /// * `ReadFailed` - If the retrieval operation fails due to:
+    ///   - Database connection issues
+    ///   - Query execution failures
+    ///   - Invalid service ID format
+    ///   - Data deserialization errors
+    ///
+    /// # Implementation Notes
+    ///
+    /// This function:
+    /// 1. Gets a database connection from the connection pool
+    /// 2. Delegates to `Service::get_service_by_id` for retrieval
+    /// 3. Uses indexed lookup for efficient service resolution
+    /// 4. Maps database errors to `PostgresDBError::ReadFailed`
     ///
     pub async fn read_service_by_id(
         &self,
@@ -380,13 +465,26 @@ impl PostgresSMDBManager {
     ///
     /// # Returns
     ///
-    /// * `Result<Option<ServiceConfig>, PostgresDBError>` - A result indicating success or failure.
-    ///    If successful, returns the updated service data.
-    ///    If the service does not exist, returns `Ok(None)`.
+    /// * `Result<Option<ServiceConfig>, PostgresDBError>` - A result containing an optional
+    ///   service configuration. Returns `None` if the service doesn't exist.
     ///
     /// # Errors
     ///
-    /// Returns a `PostgresDBError` if the update fails.
+    /// Returns a `PostgresDBError` in the following cases:
+    /// * `UpdateFailed` - If the update operation fails due to:
+    ///   - Database connection issues
+    ///   - Query execution failures
+    ///   - Invalid service ID format
+    ///   - Transaction failures
+    ///   - Service not found
+    ///
+    /// # Implementation Notes
+    ///
+    /// This function:
+    /// 1. Gets a database connection from the connection pool
+    /// 2. Delegates to `Service::update_service` for the update
+    /// 3. Uses optimistic locking to handle concurrent updates
+    /// 4. Maps database errors to `PostgresDBError::UpdateFailed`
     ///
     pub async fn update_service(
         &self,
@@ -422,6 +520,28 @@ impl PostgresSMDBManager {
     /// * `Result<bool, PostgresDBError>` - A result indicating success or failure.
     ///    If the service was deleted, returns `Ok(true)`.
     ///    If the service does not exist, returns `Ok(false)`.
+    ///
+    /// # Errors
+    ///
+    /// Returns a `PostgresDBError` in the following cases:
+    /// * `CheckIfExistsFailed` - If the existence check fails due to:
+    ///   - Database connection issues
+    ///   - Query execution failures
+    ///   - Invalid service ID format
+    /// * `DeleteFailed` - If the deletion operation fails due to:
+    ///   - Database connection issues
+    ///   - Query execution failures
+    ///   - Transaction failures
+    ///   - Referential integrity violations
+    ///
+    /// # Implementation Notes
+    ///
+    /// This function:
+    /// 1. Gets a database connection from the connection pool
+    /// 2. Checks if the service exists using `Service::check_if_service_id_exists`
+    /// 3. If the service exists, delegates to `Service::delete` for removal
+    /// 4. Uses a transaction to ensure atomicity of the operation
+    /// 5. Maps database errors to appropriate `PostgresDBError` variants
     ///
     pub async fn delete_service(&self, id: &ServiceID) -> Result<bool, PostgresDBError> {
         self.dbg_print("delete_service");
