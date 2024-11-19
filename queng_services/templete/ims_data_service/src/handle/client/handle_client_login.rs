@@ -120,7 +120,7 @@ impl Server {
     ///
     pub(crate) async fn client_login(&self, client_id: u16) -> Result<(), MessageProcessingError> {
         // Get new client
-        // Fix this by constructing the correct config in the utils_config
+        // FIXME: Fix this by constructing the correct config in the utils_config
         let config = ImsDataConfig::default();
 
         // Create an iggy client and initialize it as producer
