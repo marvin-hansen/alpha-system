@@ -19,7 +19,7 @@ pub struct OHLCVBar {
 }
 
 impl OHLCVBar {
-    /// Creates a new OHLCVBar instance with the provided parameters.
+    /// Creates a new `OHLCVBar` instance with the provided parameters.
     ///
     /// # Parameters
     ///
@@ -33,8 +33,9 @@ impl OHLCVBar {
     ///
     /// # Returns
     ///
-    /// A new OHLCVBar instance with the provided fields populated.
-    pub fn new(
+    /// A new `OHLCVBar` instance with the provided fields populated.
+    #[must_use]
+    pub const fn new(
         symbol_id: u16,
         date_time: DateTime<Utc>,
         open: Decimal,

@@ -58,29 +58,29 @@ fn test_from_string() {
 #[test]
 fn test_debug() {
     let e = ServiceID::Default;
-    assert_eq!(format!("{:?}", e), "Default");
+    assert_eq!(format!("{e:?}"), "Default");
 
     let e = ServiceID::CMDB;
-    assert_eq!(format!("{:?}", e), "CMDB");
+    assert_eq!(format!("{e:?}"), "CMDB");
 
     let e = ServiceID::DBGW;
-    assert_eq!(format!("{:?}", e), "DBGW");
+    assert_eq!(format!("{e:?}"), "DBGW");
 
     let e = ServiceID::QDGW;
-    assert_eq!(format!("{:?}", e), "QDGW");
+    assert_eq!(format!("{e:?}"), "QDGW");
 
     let e = ServiceID::SMDB;
-    assert_eq!(format!("{:?}", e), "SMDB");
+    assert_eq!(format!("{e:?}"), "SMDB");
 
     let e = ServiceID::MDDB;
-    assert_eq!(format!("{:?}", e), "MDDB");
+    assert_eq!(format!("{e:?}"), "MDDB");
 
     let e = ServiceID::VEX;
-    assert_eq!(format!("{:?}", e), "VEX");
+    assert_eq!(format!("{e:?}"), "VEX");
 
     let e = ServiceID::ImsDataBinance;
-    assert_eq!(format!("{:?}", e), "ImsDataBinance");
+    assert_eq!(format!("{e:?}"), "ImsDataBinance");
 
     let e = ServiceID::KaikoProxy;
-    assert_eq!(format!("{:?}", e), "KaikoProxy");
+    assert_eq!(format!("{e:?}"), "KaikoProxy");
 }

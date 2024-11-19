@@ -5,7 +5,8 @@ use std::fmt;
 pub struct ClickHouseUtilError(pub String);
 
 impl ClickHouseUtilError {
-    pub fn new(field0: String) -> Self {
+    #[must_use]
+    pub const fn new(field0: String) -> Self {
         Self(field0)
     }
 }

@@ -39,7 +39,8 @@ impl<'l> ContainerConfig<'l> {
     /// Returns a new instance of the `ContainerConfig` struct.
     ///
     #[allow(clippy::too_many_arguments)]
-    pub fn new(
+    #[must_use]
+    pub const fn new(
         name: &'l str,
         image: &'l str,
         tag: &'l str,
@@ -69,44 +70,57 @@ impl<'l> ContainerConfig<'l> {
 }
 
 impl<'l> ContainerConfig<'l> {
-    pub fn name(&self) -> &'l str {
+    #[must_use]
+    pub const fn name(&self) -> &'l str {
         self.name
     }
+    #[must_use]
     pub fn container_image(&self) -> String {
         format!("{}:{}", self.image, self.tag)
     }
+    #[must_use]
     pub fn container_name(&self) -> String {
         format!("{}-{}", self.name, self.connection_port)
     }
 
-    pub fn url(&self) -> &'l str {
+    #[must_use]
+    pub const fn url(&self) -> &'l str {
         self.url
     }
-    pub fn connection_port(&self) -> u16 {
+    #[must_use]
+    pub const fn connection_port(&self) -> u16 {
         self.connection_port
     }
-    pub fn additional_ports(&self) -> Option<&'l [u16]> {
+    #[must_use]
+    pub const fn additional_ports(&self) -> Option<&'l [u16]> {
         self.additional_ports
     }
-    pub fn additional_env_vars(&self) -> Option<&'l [&'l str]> {
+    #[must_use]
+    pub const fn additional_env_vars(&self) -> Option<&'l [&'l str]> {
         self.additional_env_vars
     }
-    pub fn platform(&self) -> Option<&'l str> {
+    #[must_use]
+    pub const fn platform(&self) -> Option<&'l str> {
         self.platform
     }
-    pub fn reuse_container(&self) -> bool {
+    #[must_use]
+    pub const fn reuse_container(&self) -> bool {
         self.reuse_container
     }
-    pub fn keep_configuration(&self) -> bool {
+    #[must_use]
+    pub const fn keep_configuration(&self) -> bool {
         self.keep_configuration
     }
-    pub fn wait_strategy(&self) -> &WaitStrategy {
+    #[must_use]
+    pub const fn wait_strategy(&self) -> &WaitStrategy {
         &self.wait_strategy
     }
-    pub fn image(&self) -> &'l str {
+    #[must_use]
+    pub const fn image(&self) -> &'l str {
         self.image
     }
-    pub fn tag(&self) -> &'l str {
+    #[must_use]
+    pub const fn tag(&self) -> &'l str {
         self.tag
     }
 }

@@ -6,7 +6,7 @@ mod handle_instruments;
 mod handle_stats;
 mod http_response;
 
-use worker::*;
+use worker::{event, Context, DurableObject, Env, Request, Response, Result, Router};
 
 #[event(fetch)]
 async fn main(req: Request, env: Env, _ctx: Context) -> Result<Response> {

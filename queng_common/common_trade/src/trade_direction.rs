@@ -10,9 +10,9 @@ pub enum TradeDirection {
 impl Display for TradeDirection {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
-            TradeDirection::Buy => write!(f, "Buy"),
-            TradeDirection::Sell => write!(f, "Sell"),
-            TradeDirection::Hold => write!(f, "Hold"),
+            Self::Buy => write!(f, "Buy"),
+            Self::Sell => write!(f, "Sell"),
+            Self::Hold => write!(f, "Hold"),
         }
     }
 }

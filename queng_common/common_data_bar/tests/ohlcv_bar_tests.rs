@@ -3,6 +3,7 @@ use rust_decimal::Decimal;
 
 use common_data_bar::OHLCVBar;
 
+#[must_use]
 pub fn get_ohlcv_bar(date_time: DateTime<Utc>) -> OHLCVBar {
     let symbol_id = 123;
     let open = Decimal::new(10000, 2);

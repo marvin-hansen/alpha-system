@@ -3,14 +3,14 @@ use serde::{Deserialize, Serialize};
 use worker::Response;
 
 #[derive(Debug, Deserialize, Serialize)]
-pub(crate) struct HttpResponse {
+pub struct HttpResponse {
     status: u16,
     message: String,
 }
 
 impl HttpResponse {
     /// Construct a new `HttpResponse` with the given status and message.
-    pub fn new(status: u16, message: String) -> Self {
+    pub const fn new(status: u16, message: String) -> Self {
         Self { status, message }
     }
 

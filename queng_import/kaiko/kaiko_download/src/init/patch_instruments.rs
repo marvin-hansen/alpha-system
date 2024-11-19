@@ -1,4 +1,4 @@
-use crate::init::patch_op::PatchOp::*;
+use crate::init::patch_op::PatchOp::{PatchBaseAsset, PatchClass, PatchQuoteAsset};
 use crate::init::patches::INSTRUMENT_PATCHES;
 use crate::init::InitManager;
 use common_metadata::MetaInstrument;
@@ -28,7 +28,7 @@ impl InitManager {
         let exchange_code = &meta_instrument.exchange_code;
         let pair_code = &meta_instrument.exchange_pair_code;
         for (exchange_code_to_patch, pair_code_to_patch, patch_op, value_to_patch) in
-            INSTRUMENT_PATCHES.into_iter()
+            INSTRUMENT_PATCHES
         {
             if exchange_code.eq(exchange_code_to_patch) && pair_code.eq(pair_code_to_patch) {
                 // 2 If so, apply the PatchOp and the value to the patch_instrument as follows:
@@ -60,7 +60,7 @@ impl InitManager {
     fn print_instrument(&self, msg: &str, meta_instrument: &MetaInstrument) {
         if self.dbg {
             println!();
-            println!("{}: {:?}", msg, meta_instrument);
+            println!("{msg}: {meta_instrument:?}");
             println!();
         }
     }

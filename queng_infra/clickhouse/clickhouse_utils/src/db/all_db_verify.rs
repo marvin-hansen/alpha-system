@@ -2,11 +2,11 @@ use crate::error::ClickHouseUtilError;
 use crate::ClickhouseUtil;
 
 impl ClickhouseUtil {
-    /// Verifies the existence of all required databases and tables in ClickHouse.
+    /// Verifies the existence of all required databases and tables in `ClickHouse`.
     ///
     /// This method internally calls the `verify_metadata_db_exists` and `verify_all_metadata_tables`
     /// methods to check if the metadata database and all required tables exist. It then combines
-    /// the results to determine if all necessary databases and tables are present in ClickHouse.
+    /// the results to determine if all necessary databases and tables are present in `ClickHouse`.
     ///
     /// # Returns
     ///

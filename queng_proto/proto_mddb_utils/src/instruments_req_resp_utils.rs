@@ -2,10 +2,12 @@ use crate::instruments_utils;
 use common_metadata::MetaInstrument;
 
 // Request
-pub fn get_count_instruments_request() -> proto_mddb::proto::CountInstrumentsRequest {
+#[must_use]
+pub const fn get_count_instruments_request() -> proto_mddb::proto::CountInstrumentsRequest {
     proto_mddb::proto::CountInstrumentsRequest {}
 }
 
+#[must_use]
 pub fn get_check_if_instrument_exists_request(
     instrument_id: &str,
 ) -> proto_mddb::proto::CheckIfInstrumentIdExistsRequest {
@@ -14,6 +16,7 @@ pub fn get_check_if_instrument_exists_request(
     }
 }
 
+#[must_use]
 pub fn get_instrument_by_id_request(
     instrument_id: &str,
 ) -> proto_mddb::proto::GetInstrumentByIdRequest {
@@ -22,6 +25,7 @@ pub fn get_instrument_by_id_request(
     }
 }
 
+#[must_use]
 pub fn get_instrument_by_figi_request(
     instrument_figi: &str,
 ) -> proto_mddb::proto::GetInstrumentByFigiRequest {
@@ -30,6 +34,7 @@ pub fn get_instrument_by_figi_request(
     }
 }
 
+#[must_use]
 pub fn get_instrument_by_pair_figi_request(
     instrument_pair_figi: &str,
 ) -> proto_mddb::proto::GetInstrumentByPairFigiRequest {
@@ -38,10 +43,12 @@ pub fn get_instrument_by_pair_figi_request(
     }
 }
 
-pub fn get_all_instruments_request() -> proto_mddb::proto::GetAllInstrumentsRequest {
+#[must_use]
+pub const fn get_all_instruments_request() -> proto_mddb::proto::GetAllInstrumentsRequest {
     proto_mddb::proto::GetAllInstrumentsRequest {}
 }
 
+#[must_use]
 pub fn get_all_instruments_for_base_asset_request(
     base_asset: &str,
 ) -> proto_mddb::proto::GetAllInstrumentsForBaseAssetRequest {
@@ -50,6 +57,7 @@ pub fn get_all_instruments_for_base_asset_request(
     }
 }
 
+#[must_use]
 pub fn get_all_instruments_for_quote_asset_request(
     quote_asset: &str,
 ) -> proto_mddb::proto::GetAllInstrumentsForQuoteAssetRequest {
@@ -58,6 +66,7 @@ pub fn get_all_instruments_for_quote_asset_request(
     }
 }
 
+#[must_use]
 pub fn get_all_instruments_for_exchange_request(
     exchange_code: &str,
 ) -> proto_mddb::proto::GetAllInstrumentsForExchangeRequest {
@@ -66,6 +75,7 @@ pub fn get_all_instruments_for_exchange_request(
     }
 }
 
+#[must_use]
 pub fn get_all_instruments_for_base_asset_and_exchange_request(
     exchange_code: &str,
     base_asset: &str,
@@ -76,6 +86,7 @@ pub fn get_all_instruments_for_base_asset_and_exchange_request(
     }
 }
 
+#[must_use]
 pub fn get_all_instruments_for_quote_asset_and_exchange_request(
     exchange_code: &str,
     quote_asset: &str,
@@ -86,6 +97,7 @@ pub fn get_all_instruments_for_quote_asset_and_exchange_request(
     }
 }
 
+#[must_use]
 pub fn get_all_instruments_for_base_quote_asset_and_exchange_request(
     exchange_code: &str,
     base_asset: &str,
@@ -98,6 +110,7 @@ pub fn get_all_instruments_for_base_quote_asset_and_exchange_request(
     }
 }
 
+#[must_use]
 pub fn get_lookup_instrument_exchange_pair_code_request(
     instrument_exchange_pair_code: &str,
 ) -> proto_mddb::proto::LookupInstrumentIdByExchangePairCodeRequest {
@@ -106,6 +119,7 @@ pub fn get_lookup_instrument_exchange_pair_code_request(
     }
 }
 
+#[must_use]
 pub fn get_lookup_instrument_id_by_figi_request(
     instrument_id: &str,
 ) -> proto_mddb::proto::LookupInstrumentIdByFigiRequest {
@@ -114,6 +128,7 @@ pub fn get_lookup_instrument_id_by_figi_request(
     }
 }
 
+#[must_use]
 pub fn get_lookup_instrument_id_by_pair_figi_request(
     instrument_pair_figi: &str,
 ) -> proto_mddb::proto::LookupInstrumentIdByPairFigiRequest {
@@ -124,10 +139,14 @@ pub fn get_lookup_instrument_id_by_pair_figi_request(
 
 // Response
 
-pub fn get_count_instruments_response(count: u64) -> proto_mddb::proto::CountInstrumentsResponse {
+#[must_use]
+pub const fn get_count_instruments_response(
+    count: u64,
+) -> proto_mddb::proto::CountInstrumentsResponse {
     proto_mddb::proto::CountInstrumentsResponse { count }
 }
 
+#[must_use]
 pub fn get_check_if_instrument_exists_response(
     instrument_id: &str,
     exists: bool,
@@ -138,6 +157,7 @@ pub fn get_check_if_instrument_exists_response(
     }
 }
 
+#[must_use]
 pub fn get_instrument_by_id_response(
     meta_instrument: Option<MetaInstrument>,
 ) -> proto_mddb::proto::GetInstrumentByIdResponse {
@@ -152,6 +172,7 @@ pub fn get_instrument_by_id_response(
     }
 }
 
+#[must_use]
 pub fn get_instrument_by_figi_response(
     meta_instrument: Option<MetaInstrument>,
 ) -> proto_mddb::proto::GetInstrumentByFigiResponse {
@@ -166,6 +187,7 @@ pub fn get_instrument_by_figi_response(
     }
 }
 
+#[must_use]
 pub fn get_instrument_by_pair_figi_response(
     meta_instrument: Option<MetaInstrument>,
 ) -> proto_mddb::proto::GetInstrumentByPairFigiResponse {
@@ -180,6 +202,7 @@ pub fn get_instrument_by_pair_figi_response(
     }
 }
 
+#[must_use]
 pub fn get_all_instruments_response(
     meta_instruments: Vec<MetaInstrument>,
 ) -> proto_mddb::proto::GetAllInstrumentsResponse {
@@ -193,6 +216,7 @@ pub fn get_all_instruments_response(
     }
 }
 
+#[must_use]
 pub fn get_all_instruments_for_base_asset_response(
     meta_instruments: Vec<MetaInstrument>,
 ) -> proto_mddb::proto::GetAllInstrumentsForBaseAssetResponse {
@@ -206,6 +230,7 @@ pub fn get_all_instruments_for_base_asset_response(
     }
 }
 
+#[must_use]
 pub fn get_all_instruments_for_quote_asset_response(
     meta_instruments: Vec<MetaInstrument>,
 ) -> proto_mddb::proto::GetAllInstrumentsForQuoteAssetResponse {
@@ -219,6 +244,7 @@ pub fn get_all_instruments_for_quote_asset_response(
     }
 }
 
+#[must_use]
 pub fn get_all_instruments_for_exchange_response(
     meta_instruments: Vec<MetaInstrument>,
 ) -> proto_mddb::proto::GetAllInstrumentsForExchangeResponse {
@@ -232,6 +258,7 @@ pub fn get_all_instruments_for_exchange_response(
     }
 }
 
+#[must_use]
 pub fn get_all_instruments_for_base_asset_and_exchange_response(
     meta_instruments: Vec<MetaInstrument>,
 ) -> proto_mddb::proto::GetAllInstrumentsForBaseAssetAndExchangeResponse {
@@ -245,6 +272,7 @@ pub fn get_all_instruments_for_base_asset_and_exchange_response(
     }
 }
 
+#[must_use]
 pub fn get_all_instruments_for_quote_asset_and_exchange_response(
     meta_instruments: Vec<MetaInstrument>,
 ) -> proto_mddb::proto::GetAllInstrumentsForQuoteAssetAndExchangeResponse {
@@ -258,6 +286,7 @@ pub fn get_all_instruments_for_quote_asset_and_exchange_response(
     }
 }
 
+#[must_use]
 pub fn get_all_instruments_for_base_quote_asset_and_exchange_response(
     meta_instruments: Vec<MetaInstrument>,
 ) -> proto_mddb::proto::GetAllInstrumentsForBaseQuoteAssetAndExchangeResponse {
@@ -271,6 +300,7 @@ pub fn get_all_instruments_for_base_quote_asset_and_exchange_response(
     }
 }
 
+#[must_use]
 pub fn get_lookup_instrument_id_by_exchange_pair_code_response(
     para_instrument: Option<MetaInstrument>,
 ) -> proto_mddb::proto::LookupInstrumentIdByExchangePairCodeResponse {
@@ -285,6 +315,7 @@ pub fn get_lookup_instrument_id_by_exchange_pair_code_response(
     }
 }
 
+#[must_use]
 pub fn get_lookup_instrument_by_figi_response(
     para_instrument: Option<MetaInstrument>,
 ) -> proto_mddb::proto::LookupInstrumentIdByFigiResponse {
@@ -299,6 +330,7 @@ pub fn get_lookup_instrument_by_figi_response(
     }
 }
 
+#[must_use]
 pub fn get_lookup_instrument_by_pair_figi_response(
     para_instrument: Option<MetaInstrument>,
 ) -> proto_mddb::proto::LookupInstrumentIdByPairFigiResponse {

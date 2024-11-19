@@ -6,7 +6,7 @@ use std::fmt::{Display, Formatter};
 ///
 /// * `NullVal`: Null value in case deserialization fails due to an unknown value.
 /// * `Default`: Default value.
-/// * `SMDB`: The SMDb service.
+/// * `SMDB`: The `SMDb` service.
 /// * `CMDB`: The CMDB service.
 /// * `DBGW`: The DBGW service.
 /// * `QDGW`: The QDGW service.
@@ -27,22 +27,27 @@ pub enum ServiceID {
 }
 
 impl ServiceID {
-    pub fn as_u8(&self) -> u8 {
+    #[must_use]
+    pub const fn as_u8(&self) -> u8 {
         *self as u8
     }
 
-    pub fn as_u16(&self) -> u16 {
+    #[must_use]
+    pub const fn as_u16(&self) -> u16 {
         *self as u16
     }
 
-    pub fn as_i32(&self) -> i32 {
+    #[must_use]
+    pub const fn as_i32(&self) -> i32 {
         *self as i32
     }
 
-    pub fn as_u32(&self) -> u32 {
+    #[must_use]
+    pub const fn as_u32(&self) -> u32 {
         *self as u32
     }
 
+    #[must_use]
     pub fn name(&self) -> String {
         self.to_string()
     }
@@ -105,19 +110,20 @@ impl From<u8> for ServiceID {
 }
 
 impl ServiceID {
-    pub fn from_string(n: &str) -> Option<ServiceID> {
+    #[must_use]
+    pub fn from_string(n: &str) -> Option<Self> {
         match n {
-            "Default" => Some(ServiceID::Default),
-            "SMDB" => Some(ServiceID::SMDB),
-            "CMDB" => Some(ServiceID::CMDB),
-            "DBGW" => Some(ServiceID::DBGW),
-            "QDGW" => Some(ServiceID::QDGW),
-            "MDDB" => Some(ServiceID::MDDB),
-            "VEX" => Some(ServiceID::VEX),
-            "ImsDataBinance" => Some(ServiceID::ImsDataBinance),
-            "KaikoProxy" => Some(ServiceID::KaikoProxy),
-            "KAIKO_PROXY" => Some(ServiceID::KaikoProxy),
-            "IMDB" => Some(ServiceID::IMDB),
+            "Default" => Some(Self::Default),
+            "SMDB" => Some(Self::SMDB),
+            "CMDB" => Some(Self::CMDB),
+            "DBGW" => Some(Self::DBGW),
+            "QDGW" => Some(Self::QDGW),
+            "MDDB" => Some(Self::MDDB),
+            "VEX" => Some(Self::VEX),
+            "ImsDataBinance" => Some(Self::ImsDataBinance),
+            "KaikoProxy" => Some(Self::KaikoProxy),
+            "KAIKO_PROXY" => Some(Self::KaikoProxy),
+            "IMDB" => Some(Self::IMDB),
             _ => None,
         }
     }
@@ -125,6 +131,6 @@ impl ServiceID {
 
 impl Display for ServiceID {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        write!(f, "{self:?}")
     }
 }

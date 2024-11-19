@@ -10,7 +10,8 @@ pub struct ExistsRow {
 }
 
 impl ExistsRow {
-    pub fn exists(&self) -> bool {
+    #[must_use]
+    pub const fn exists(&self) -> bool {
         self.value > 0
     }
 }

@@ -50,7 +50,7 @@ fn test_fmt() {
     let bar = LastTradeBar::new(123);
 
     let expected = "LastTradeBar { message_type: LastTradeBar, symbol_id: 123 }";
-    let actual = format!("{}", bar);
+    let actual = format!("{bar}");
 
     assert_eq!(actual, expected);
 }

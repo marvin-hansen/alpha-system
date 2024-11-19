@@ -55,10 +55,10 @@ pub fn get_test_update_portfolio_config() -> PortfolioConfig {
 pub fn get_test_update_error_portfolio_config() -> PortfolioConfig {
     PortfolioConfig::new_cash_portfolio(
         876,
-        "".to_string(),
+        String::new(),
         AccountType::Spot,
-        "".to_string(),
-        "".to_string(),
+        String::new(),
+        String::new(),
         0.0,
         0.0,
         vec![get_test_instrument()],

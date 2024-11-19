@@ -17,20 +17,20 @@ fn test_from_u16() {
 #[test]
 fn test_display() {
     let message_type = MessageType::ClientLogin;
-    assert_eq!(format!("{}", message_type), "ClientLogin");
+    assert_eq!(format!("{message_type}"), "ClientLogin");
 
     let message_type = MessageType::ClientLogout;
-    assert_eq!(format!("{}", message_type), "ClientLogout");
+    assert_eq!(format!("{message_type}"), "ClientLogout");
 
     let message_type = MessageType::StartData;
-    assert_eq!(format!("{}", message_type), "StartData");
+    assert_eq!(format!("{message_type}"), "StartData");
 
     let message_type = MessageType::StopData;
-    assert_eq!(format!("{}", message_type), "StopData");
+    assert_eq!(format!("{message_type}"), "StopData");
 
     let message_type = MessageType::StopAllData;
-    assert_eq!(format!("{}", message_type), "StopAllData");
+    assert_eq!(format!("{message_type}"), "StopAllData");
 
     let message_type = MessageType::UnknownMessageType;
-    assert_eq!(format!("{}", message_type), "UnknownMessageType");
+    assert_eq!(format!("{message_type}"), "UnknownMessageType");
 }

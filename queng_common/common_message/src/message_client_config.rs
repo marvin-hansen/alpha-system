@@ -1,7 +1,7 @@
 use common_config::ServiceID;
 use std::fmt;
 
-/// The MessageClientConfig struct represents the configuration for a message client.
+/// The `MessageClientConfig` struct represents the configuration for a message client.
 ///
 /// It contains the following fields:
 ///
@@ -20,59 +20,61 @@ pub struct MessageClientConfig {
 const NAME: &str = "client";
 
 impl MessageClientConfig {
-    /// Creates a new MessageClientConfig with the given id.
+    /// Creates a new `MessageClientConfig` with the given id.
     ///
     /// # Parameters
     ///
     /// - `id`: The unique id for the client config. Must be greater than 20 to avoid
-    ///   clashing with ids generated from ServiceID.
+    ///   clashing with ids generated from `ServiceID`.
     ///
     /// # Returns
     ///
-    /// A new MessageClientConfig with the given id and a generated name based on the id.
+    /// A new `MessageClientConfig` with the given id and a generated name based on the id.
     ///
+    #[must_use]
     pub fn new(id: u16) -> Self {
         // Prevents ID clash with configurations generated from ServiceID ENUM
         assert!(id > 20, "id must be greater than 20");
-        let name = format!("{}-{}", NAME, id);
+        let name = format!("{NAME}-{id}");
 
         Self { id, name }
     }
 
-    /// Creates a new MessageClientConfig from a ServiceID.
+    /// Creates a new `MessageClientConfig` from a `ServiceID`.
     ///
-    /// Uses the ServiceID's id and name to populate the config fields.
+    /// Uses the `ServiceID`'s id and name to populate the config fields.
     ///
     /// # Parameters
     ///
-    /// - `svc_id`: The ServiceID to create the config from.
+    /// - `svc_id`: The `ServiceID` to create the config from.
     ///
     /// # Returns
     ///
-    /// A new MessageClientConfig with an id and name derived from the ServiceID.
+    /// A new `MessageClientConfig` with an id and name derived from the `ServiceID`.
     /// The id is asserted to be less than 20 to avoid clashing with manually created configs.
     ///
+    #[must_use]
     pub fn from_svc_id(svc_id: ServiceID) -> Self {
         let id = svc_id.as_u8().into();
         let svc_name = svc_id.name();
 
         // Prevents ID clash with manually created configurations
         assert!(id < 20, "id must be less than 20");
-        let name = svc_name.to_lowercase().to_string();
+        let name = svc_name.to_lowercase();
 
         Self { id, name }
     }
 }
 
 impl Default for MessageClientConfig {
-    /// Creates a default MessageClientConfig.
+    /// Creates a default `MessageClientConfig`.
     ///
     /// The default config has an id of 100 and a name of
     /// "default-client-100".
     ///
     /// # Returns
     ///
-    /// The default MessageClientConfig.
+    /// The default `MessageClientConfig`.
     fn default() -> Self {
         Self {
             id: 100,
@@ -88,6 +90,7 @@ impl MessageClientConfig {
     ///
     /// A String in the format: "{client_name}-control".
     ///
+    #[must_use]
     pub fn control_channel(&self) -> String {
         format!("{}-{}", self.name, "control")
     }
@@ -98,6 +101,7 @@ impl MessageClientConfig {
     ///
     /// A String in the format: "{client_name}-data".
     ///
+    #[must_use]
     pub fn data_channel(&self) -> String {
         format!("{}-{}", self.name, "data")
     }
@@ -107,6 +111,7 @@ impl MessageClientConfig {
     /// # Returns
     ///
     /// A String in the format: "{client_name}-error".
+    #[must_use]
     pub fn error_channel(&self) -> String {
         format!("{}-{}", self.name, "error")
     }
@@ -116,6 +121,7 @@ impl MessageClientConfig {
     /// # Returns
     ///
     /// A String in the format: "{client_name}-execution".
+    #[must_use]
     pub fn execution_channel(&self) -> String {
         format!("{}-{}", self.name, "execution")
     }
@@ -125,15 +131,18 @@ impl MessageClientConfig {
     /// # Returns
     ///
     /// A String in the format: "{client_name}-heartbeat".
+    #[must_use]
     pub fn heartbeat_channel(&self) -> String {
         format!("{}-{}", self.name, "heartbeat")
     }
 }
 
 impl MessageClientConfig {
-    pub fn id(&self) -> u16 {
+    #[must_use]
+    pub const fn id(&self) -> u16 {
         self.id
     }
+    #[must_use]
     pub fn name(&self) -> &str {
         &self.name
     }

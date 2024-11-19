@@ -22,7 +22,8 @@ pub struct CreatePortfolioInstrument {
 }
 
 impl CreatePortfolioInstrument {
-    pub fn new(portfolio_id: i32, instrument_id: String) -> Self {
+    #[must_use]
+    pub const fn new(portfolio_id: i32, instrument_id: String) -> Self {
         Self {
             portfolio_id,
             instrument_id,

@@ -31,7 +31,8 @@ pub struct CreateIntegrationConfig {
 }
 
 impl CreateIntegrationConfig {
-    pub fn new(
+    #[must_use]
+    pub const fn new(
         integration_id: String,
         integration_version: i32,
         ims_integration_type: i32,
@@ -63,7 +64,8 @@ pub struct UpdateIntegrationConfig {
 }
 
 impl UpdateIntegrationConfig {
-    pub fn new(
+    #[must_use]
+    pub const fn new(
         integration_id: String,
         integration_version: i32,
         ims_integration_type: i32,

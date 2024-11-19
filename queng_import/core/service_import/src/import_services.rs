@@ -67,7 +67,7 @@ impl ServiceImportManager {
                     .expect("Failed to check if service exists");
 
                 if !exists {
-                    self.dbg_print(&format!("Importing service: {}", id));
+                    self.dbg_print(&format!("Importing service: {id}"));
                     self.dbm
                         .insert_service(s)
                         .await

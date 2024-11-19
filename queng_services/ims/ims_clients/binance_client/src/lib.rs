@@ -16,7 +16,7 @@ impl BinanceRESTClient {
         let client = RestClient::new(API_URL.to_string())
             .expect("Failed to construct BinanceRESTClient client");
 
-        Ok(BinanceRESTClient { client })
+        Ok(Self { client })
     }
 }
 

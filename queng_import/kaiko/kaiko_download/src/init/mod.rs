@@ -40,13 +40,13 @@ impl InitManager {
 impl InitManager {
     fn dbg_print(&self, s: &str) {
         if self.dbg {
-            println!("[DownloadManger]: {}", s);
+            println!("[DownloadManger]: {s}");
         }
     }
 
     fn print_duration(&self, msg: &str, elapsed: &Duration) {
         if self.dbg {
-            let msg = format!("[DownloadManger]: {}", msg);
+            let msg = format!("[DownloadManger]: {msg}");
             print_utils::print_duration(msg.as_str(), elapsed);
             println!("[DownloadManger]:");
         }

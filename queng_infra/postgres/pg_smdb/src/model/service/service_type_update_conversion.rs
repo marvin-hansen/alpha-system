@@ -3,8 +3,9 @@ use crate::model::service::UpdateService;
 use common_config::ServiceConfig as CommonServiceConfig;
 
 impl UpdateService {
-    pub fn from_common_svc_config(common_svc_config: &CommonServiceConfig) -> UpdateService {
-        UpdateService {
+    #[must_use]
+    pub fn from_common_svc_config(common_svc_config: &CommonServiceConfig) -> Self {
+        Self {
             name: Some(common_svc_config.name().to_string()),
             version: Some(common_svc_config.version() as i32),
             online: Some(common_svc_config.online()),

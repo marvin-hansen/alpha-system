@@ -12,15 +12,14 @@ impl Error for VerifyBinaryError {}
 impl Display for VerifyBinaryError {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
-            VerifyBinaryError::BinaryNotFound(e) => {
+            Self::BinaryNotFound(e) => {
                 write!(f, "[VerifyBinaryError]: Binary not found: {e}")
             }
-            VerifyBinaryError::BinaryWrongPlatform(target, actual) => {
+            Self::BinaryWrongPlatform(target, actual) => {
                 write!(
                     f,
                     "[VerifyBinaryError]: Binary has wrong platform. \n
-                    Binary platform should be {}, but got {} ",
-                    target, actual
+                    Binary platform should be {target}, but got {actual} "
                 )
             }
         }

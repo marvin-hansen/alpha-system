@@ -15,7 +15,7 @@ pub struct ShortPattern {
 }
 
 impl ShortPattern {
-    pub fn new() -> Self {
+    pub const fn new() -> Self {
         Self { arr: [false; SIZE] }
     }
 }
@@ -23,7 +23,7 @@ impl ShortPattern {
 impl PatternTrait for ShortPattern {
     fn get_eval_result(&self, index: usize) -> Result<bool, String> {
         if index >= self.arr.len() {
-            return Err(format!("short_pattern: index out of bound: {}", index));
+            return Err(format!("short_pattern: index out of bound: {index}"));
         }
 
         Ok(self.arr[index])

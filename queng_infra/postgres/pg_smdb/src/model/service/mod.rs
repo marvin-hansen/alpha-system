@@ -38,7 +38,8 @@ pub struct CreateService {
 
 impl CreateService {
     #[allow(clippy::too_many_arguments)]
-    pub fn new(
+    #[must_use]
+    pub const fn new(
         service_id: i32,
         name: String,
         version: i32,
@@ -79,7 +80,8 @@ pub struct UpdateService {
 
 impl UpdateService {
     #[allow(clippy::too_many_arguments)]
-    pub fn new(
+    #[must_use]
+    pub const fn new(
         name: Option<String>,
         version: Option<i32>,
         online: Option<bool>,

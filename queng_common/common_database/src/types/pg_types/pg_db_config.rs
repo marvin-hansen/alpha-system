@@ -19,7 +19,8 @@ pub struct PostgresDBConfig {
 }
 
 impl PostgresDBConfig {
-    pub fn new(
+    #[must_use]
+    pub const fn new(
         pg_host: String,
         pg_user: String,
         pg_password: String,
@@ -52,8 +53,9 @@ impl Default for PostgresDBConfig {
 }
 
 impl PostgresDBConfig {
-    /// PostgresSQL connection string from the DBConfig.
+    /// `PostgresSQL` connection string from the `DBConfig`.
     ///
+    #[must_use]
     pub fn pg_connection_url(&self) -> String {
         format!(
             "postgres://{}:{}@{}:{}/{}",
@@ -61,6 +63,7 @@ impl PostgresDBConfig {
         )
     }
 
+    #[must_use]
     pub fn tsn(&self) -> String {
         format!(
             "host={} user={} password={} dbname={}",
@@ -71,27 +74,33 @@ impl PostgresDBConfig {
 
 // getters
 impl PostgresDBConfig {
+    #[must_use]
     pub fn pg_host(&self) -> &str {
         &self.pg_host
     }
 
+    #[must_use]
     pub fn pg_user(&self) -> &str {
         &self.pg_user
     }
 
+    #[must_use]
     pub fn pg_password(&self) -> &str {
         &self.pg_password
     }
 
+    #[must_use]
     pub fn pg_database(&self) -> &str {
         &self.pg_database
     }
 
-    pub fn pg_port(&self) -> u16 {
+    #[must_use]
+    pub const fn pg_port(&self) -> u16 {
         self.pg_port
     }
 
-    pub fn pg_max_connections(&self) -> u32 {
+    #[must_use]
+    pub const fn pg_max_connections(&self) -> u32 {
         self.pg_max_connections
     }
 }

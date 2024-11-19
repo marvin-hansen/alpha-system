@@ -3,8 +3,9 @@ use crate::{CreateInstrument, UpdateInstrument};
 use common_metadata::{InstrumentMetadata, MetaInstrument};
 
 impl Instrument {
+    #[must_use]
     pub fn from_meta_instrument(meta_instrument: MetaInstrument) -> Self {
-        Instrument {
+        Self {
             instrument_id: meta_instrument.primary_key(),
             instrument_code: meta_instrument.code.to_string(),
             instrument_hash: meta_instrument.hash(),
@@ -44,6 +45,7 @@ impl Instrument {
         }
     }
 
+    #[must_use]
     pub fn to_meta_instrument(&self) -> MetaInstrument {
         let metadata = if self.instrument_figi.is_some() || self.instrument_pair_figi.is_some() {
             Some(InstrumentMetadata {
@@ -75,8 +77,9 @@ impl Instrument {
 }
 
 impl CreateInstrument {
+    #[must_use]
     pub fn from_meta_instrument(meta_instrument: MetaInstrument) -> Self {
-        CreateInstrument {
+        Self {
             instrument_id: meta_instrument.primary_key(),
             instrument_code: meta_instrument.code.to_string(),
             instrument_hash: meta_instrument.hash(),
@@ -118,8 +121,9 @@ impl CreateInstrument {
 }
 
 impl UpdateInstrument {
+    #[must_use]
     pub fn from_meta_instrument(meta_instrument: MetaInstrument) -> Self {
-        UpdateInstrument {
+        Self {
             instrument_class: meta_instrument.class.to_string(),
             instrument_code: meta_instrument.code.to_string(),
             instrument_hash: meta_instrument.hash(),

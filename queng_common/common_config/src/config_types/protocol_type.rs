@@ -1,6 +1,6 @@
 use std::fmt::{Display, Formatter};
 
-/// A ProtocolType represents the protocol type used for communication.
+/// A `ProtocolType` represents the protocol type used for communication.
 ///
 /// # Variants
 ///
@@ -20,7 +20,8 @@ pub enum ProtocolType {
 }
 
 impl ProtocolType {
-    pub fn as_u8(&self) -> u8 {
+    #[must_use]
+    pub const fn as_u8(&self) -> u8 {
         *self as u8
     }
 }
@@ -62,7 +63,7 @@ impl From<u8> for ProtocolType {
 impl From<i32> for ProtocolType {
     /// All .proto enumeration types convert to the Rust i32 type.
     /// This functions converts a raw i32 byte value back into a `ServiceType`.
-    /// Unknown message type results in NullVal
+    /// Unknown message type results in `NullVal`
     #[inline]
     fn from(value: i32) -> Self {
         match value {
@@ -75,11 +76,12 @@ impl From<i32> for ProtocolType {
 }
 
 impl ProtocolType {
-    pub fn from_string(s: &str) -> Option<ProtocolType> {
+    #[must_use]
+    pub fn from_string(s: &str) -> Option<Self> {
         match s {
-            "GRPC" => Some(ProtocolType::GRPC),
-            "HTTP" => Some(ProtocolType::HTTP),
-            "UDP" => Some(ProtocolType::UDP),
+            "GRPC" => Some(Self::GRPC),
+            "HTTP" => Some(Self::HTTP),
+            "UDP" => Some(Self::UDP),
             _ => None,
         }
     }
@@ -88,10 +90,10 @@ impl ProtocolType {
 impl Display for ProtocolType {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
-            ProtocolType::GRPC => write!(f, "GRPC"),
-            ProtocolType::HTTP => write!(f, "HTTP"),
-            ProtocolType::UDP => write!(f, "UDP"),
-            ProtocolType::UnknownProtocol => write!(f, "UnknownProtocol"),
+            Self::GRPC => write!(f, "GRPC"),
+            Self::HTTP => write!(f, "HTTP"),
+            Self::UDP => write!(f, "UDP"),
+            Self::UnknownProtocol => write!(f, "UnknownProtocol"),
         }
     }
 }

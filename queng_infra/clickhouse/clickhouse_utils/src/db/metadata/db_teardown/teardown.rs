@@ -2,7 +2,7 @@ use crate::db::metadata::Metadata;
 use crate::error::ClickHouseUtilError;
 
 impl Metadata {
-    /// Tears down the metadata database in ClickHouse.
+    /// Tears down the metadata database in `ClickHouse`.
     ///
     /// This method performs the teardown of the metadata database by executing the following steps:
     /// 1. Drops all metadata tables by calling the `drop_all_metadata_tables` method.
@@ -24,14 +24,14 @@ impl Metadata {
     pub async fn teardown_metadata_db(&self, drop_db: bool) -> Result<(), ClickHouseUtilError> {
         self.dbg_print("[teardown]: drop_all_metadata_tables");
         match self.drop_all_metadata_tables().await {
-            Ok(_) => (),
+            Ok(()) => (),
             Err(e) => return Err(e),
         }
 
         if drop_db {
             self.dbg_print("[teardown]: drop_metadata_db");
             match self.drop_metadata_db().await {
-                Ok(_) => (),
+                Ok(()) => (),
                 Err(e) => return Err(e),
             }
         }

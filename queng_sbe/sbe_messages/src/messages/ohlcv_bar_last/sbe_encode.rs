@@ -4,11 +4,11 @@ use sbe_bindings::MessageType as SbeMessageType;
 use sbe_bindings::{message_header_codec, Encoder, LastDataBarEncoder, WriteBuf};
 
 impl LastOHLCVBar {
-    /// Encodes a LastOHLCVBar to a byte buffer.
+    /// Encodes a `LastOHLCVBar` to a byte buffer.
     ///
     /// # Arguments
     ///
-    /// * `self` - LastOHLCVBar to encode
+    /// * `self` - `LastOHLCVBar` to encode
     ///
     /// # Returns
     ///
@@ -21,11 +21,11 @@ impl LastOHLCVBar {
     /// # Process
     ///
     /// - Create 12 byte buffer
-    /// - Create default LastDataBarEncoder
-    /// - Wrap buffer in WriteBuf
+    /// - Create default `LastDataBarEncoder`
+    /// - Wrap buffer in `WriteBuf`
     /// - Encode header
-    /// - Encode message_type
-    /// - Encode symbol_id
+    /// - Encode `message_type`
+    /// - Encode `symbol_id`
     /// - Return encoded size and buffer
     ///
     pub fn encode(&self) -> Result<(usize, Vec<u8>), SbeEncodeError> {

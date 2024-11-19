@@ -1,7 +1,7 @@
 use std::error::Error;
 use std::fmt;
 
-/// ValidationError custom error type.
+/// `ValidationError` custom error type.
 ///
 /// Contains a single String field to hold the error message.
 ///
@@ -13,14 +13,15 @@ use std::fmt;
 ///
 /// `Debug` - Formatted debug output
 /// `Clone` - Clone support
-/// `Error` - std::error::Error impl
+/// `Error` - `std::error::Error` impl
 /// `Display` - Formatted display output
 ///
 #[derive(Debug, Clone)]
 pub struct ValidationError(pub String);
 
 impl ValidationError {
-    pub fn new(field0: String) -> Self {
+    #[must_use]
+    pub const fn new(field0: String) -> Self {
         Self(field0)
     }
 }

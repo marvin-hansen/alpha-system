@@ -4,16 +4,20 @@ use rust_decimal::Decimal;
 use crate::TradeBar;
 
 impl TradeBar {
-    pub fn date_time(&self) -> DateTime<Utc> {
+    #[must_use]
+    pub const fn date_time(&self) -> DateTime<Utc> {
         self.date_time
     }
-    pub fn price(&self) -> Decimal {
+    #[must_use]
+    pub const fn price(&self) -> Decimal {
         self.price
     }
-    pub fn volume(&self) -> Decimal {
+    #[must_use]
+    pub const fn volume(&self) -> Decimal {
         self.volume
     }
-    pub fn symbol_id(&self) -> u16 {
+    #[must_use]
+    pub const fn symbol_id(&self) -> u16 {
         self.symbol_id
     }
 }

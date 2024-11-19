@@ -18,7 +18,7 @@ fn test_debug_display_consistency() {
 
     for variant in variants {
         let mut debug_output = String::new();
-        write!(&mut debug_output, "{:?}", variant).unwrap();
+        write!(&mut debug_output, "{variant:?}").unwrap();
         assert_eq!(variant.to_string(), debug_output);
     }
 }

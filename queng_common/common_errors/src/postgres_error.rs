@@ -26,71 +26,71 @@ impl Error for PostgresDBError {}
 impl fmt::Display for PostgresDBError {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
         match self {
-            PostgresDBError::ConnectionFailed(e) => {
+            Self::ConnectionFailed(e) => {
                 write!(
                     f,
                     "[PostgresDBError]: Connection to Postgres DB failed with error: {e}"
                 )
             }
 
-            PostgresDBError::CountFailed(e) => {
+            Self::CountFailed(e) => {
                 write!(f, "[PostgresDBError]: Count of DB Table has failed: {e}")
             }
 
-            PostgresDBError::CheckFailed(e) => {
+            Self::CheckFailed(e) => {
                 write!(f, "[PostgresDBError]: Check if DB Table has failed: {e}")
             }
 
-            PostgresDBError::CheckIfExistsFailed(e) => {
+            Self::CheckIfExistsFailed(e) => {
                 write!(f, "[PostgresDBError]: Check if DB Table exists failed: {e}")
             }
 
-            PostgresDBError::InsertFailed(e) => {
+            Self::InsertFailed(e) => {
                 write!(f, "[PostgresDBError]: Insert into DB failed: {e}")
             }
 
-            PostgresDBError::SetFieldFailed(e) => {
+            Self::SetFieldFailed(e) => {
                 write!(f, "[PostgresDBError]: Set field failed: {e}")
             }
 
-            PostgresDBError::UpdateFailed(e) => {
+            Self::UpdateFailed(e) => {
                 write!(f, "[PostgresDBError]: DB Update failed: {e}")
             }
 
-            PostgresDBError::DeleteFailed(e) => {
+            Self::DeleteFailed(e) => {
                 write!(f, "[PostgresDBError]: Delete failed: {e}")
             }
-            PostgresDBError::QueryFailed(e) => {
+            Self::QueryFailed(e) => {
                 write!(f, "[PostgresDBError]: DB Query failed: {e}")
             }
 
-            PostgresDBError::TableDoesNotExist(table_name, err) => {
+            Self::TableDoesNotExist(table_name, err) => {
                 write!(
                     f,
                     "Table does not exist: Table {table_name} does not exist. Error: {err}"
                 )
             }
 
-            PostgresDBError::TableSanitizeError(e) => {
+            Self::TableSanitizeError(e) => {
                 write!(f, "[PostgresDBError]: Table sanitization error: {e}")
             }
 
-            PostgresDBError::TransactionRollback(e) => {
+            Self::TransactionRollback(e) => {
                 write!(
                     f,
                     "[PostgresDBError]: Transaction failed and rolled back: {e}"
                 )
             }
 
-            PostgresDBError::DataRecordDoesNotExist(e) => {
+            Self::DataRecordDoesNotExist(e) => {
                 write!(f, "[PostgresDBError]: Data record does not exist: {e}")
             }
 
-            PostgresDBError::MigrationFailed(e) => {
+            Self::MigrationFailed(e) => {
                 write!(f, "[PostgresDBError]: Migration failed: {e}")
             }
 
-            PostgresDBError::UnknownError(e) => {
+            Self::UnknownError(e) => {
                 write!(f, "[PostgresDBError]: Unknown error: {e}")
             }
         }

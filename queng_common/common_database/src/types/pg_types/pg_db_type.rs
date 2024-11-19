@@ -1,6 +1,6 @@
 use std::fmt::Display;
 
-/// Enum representing the different PostgreSQL database schemas used by the
+/// Enum representing the different `PostgreSQL` database schemas used by the
 /// application.
 ///
 /// This enum is used to differentiate between different database schemas
@@ -9,7 +9,7 @@ use std::fmt::Display;
 ///
 /// # Variants
 ///
-/// * `Postgres` - The default PostgreSQL database schema.
+/// * `Postgres` - The default `PostgreSQL` database schema.
 /// * `SMDB` - The database schema for the System Manager database.
 /// * `CMDB` - The database schema for the Configuration Manager database.
 /// * `IMDB` - The database schema for the Integration Manager database.
@@ -20,7 +20,7 @@ use std::fmt::Display;
 pub enum PostgresDBSchema {
     /// All postgres schema
     PostgresDBSchemaALL = 255_u8,
-    /// The default PostgreSQL database schema.
+    /// The default `PostgreSQL` database schema.
     #[default]
     PostgresDBSchemaPostgres = 0_u8,
     /// The database schema for the System Manager database.
@@ -34,30 +34,33 @@ pub enum PostgresDBSchema {
 }
 
 impl PostgresDBSchema {
-    pub fn as_u8(&self) -> u8 {
+    #[must_use]
+    pub const fn as_u8(&self) -> u8 {
         *self as u8
     }
 
-    pub fn from_u8(n: u8) -> Option<PostgresDBSchema> {
+    #[must_use]
+    pub const fn from_u8(n: u8) -> Option<Self> {
         match n {
-            255 => Some(PostgresDBSchema::PostgresDBSchemaALL),
-            0 => Some(PostgresDBSchema::PostgresDBSchemaPostgres),
-            1 => Some(PostgresDBSchema::PostgresDBSchemaSMDB),
-            2 => Some(PostgresDBSchema::PostgresDBSchemaCMDB),
-            3 => Some(PostgresDBSchema::PostgresDBSchemaIMDB),
-            4 => Some(PostgresDBSchema::PostgresDBSchemaMDDB),
+            255 => Some(Self::PostgresDBSchemaALL),
+            0 => Some(Self::PostgresDBSchemaPostgres),
+            1 => Some(Self::PostgresDBSchemaSMDB),
+            2 => Some(Self::PostgresDBSchemaCMDB),
+            3 => Some(Self::PostgresDBSchemaIMDB),
+            4 => Some(Self::PostgresDBSchemaMDDB),
             _ => None,
         }
     }
 
-    pub fn from_string(n: &str) -> Option<PostgresDBSchema> {
+    #[must_use]
+    pub fn from_string(n: &str) -> Option<Self> {
         match n {
-            "ALL" => Some(PostgresDBSchema::PostgresDBSchemaALL),
-            "Postgres" => Some(PostgresDBSchema::PostgresDBSchemaPostgres),
-            "SMDB" => Some(PostgresDBSchema::PostgresDBSchemaSMDB),
-            "CMDB" => Some(PostgresDBSchema::PostgresDBSchemaCMDB),
-            "IMDB" => Some(PostgresDBSchema::PostgresDBSchemaIMDB),
-            "MDDB" => Some(PostgresDBSchema::PostgresDBSchemaMDDB),
+            "ALL" => Some(Self::PostgresDBSchemaALL),
+            "Postgres" => Some(Self::PostgresDBSchemaPostgres),
+            "SMDB" => Some(Self::PostgresDBSchemaSMDB),
+            "CMDB" => Some(Self::PostgresDBSchemaCMDB),
+            "IMDB" => Some(Self::PostgresDBSchemaIMDB),
+            "MDDB" => Some(Self::PostgresDBSchemaMDDB),
             _ => None,
         }
     }
@@ -66,12 +69,12 @@ impl PostgresDBSchema {
 impl Display for PostgresDBSchema {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            PostgresDBSchema::PostgresDBSchemaALL => write!(f, "ALL"),
-            PostgresDBSchema::PostgresDBSchemaPostgres => write!(f, "Postgres"),
-            PostgresDBSchema::PostgresDBSchemaSMDB => write!(f, "SMDB"),
-            PostgresDBSchema::PostgresDBSchemaCMDB => write!(f, "CMDB"),
-            PostgresDBSchema::PostgresDBSchemaIMDB => write!(f, "IMDB"),
-            PostgresDBSchema::PostgresDBSchemaMDDB => write!(f, "MDDB"),
+            Self::PostgresDBSchemaALL => write!(f, "ALL"),
+            Self::PostgresDBSchemaPostgres => write!(f, "Postgres"),
+            Self::PostgresDBSchemaSMDB => write!(f, "SMDB"),
+            Self::PostgresDBSchemaCMDB => write!(f, "CMDB"),
+            Self::PostgresDBSchemaIMDB => write!(f, "IMDB"),
+            Self::PostgresDBSchemaMDDB => write!(f, "MDDB"),
         }
     }
 }

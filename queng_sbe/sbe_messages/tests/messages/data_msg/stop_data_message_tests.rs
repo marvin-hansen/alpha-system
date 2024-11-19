@@ -1,7 +1,7 @@
 use common_exchange::ExchangeID;
 use sbe_messages::{DataType, MessageType, StopDataMessage};
 
-fn get_message() -> StopDataMessage {
+const fn get_message() -> StopDataMessage {
     let client_id = 1;
     let exchange_id = ExchangeID::Kraken;
     let symbol_id = 1;
@@ -105,6 +105,6 @@ fn test_display() {
     let message = get_message();
 
     let expected = "StopDataMessage[message_type: StopData, client_id: 1, exchange_id: Kraken, symbol_id: 1, data_type: TradeData]";
-    let actual = format!("{}", message);
+    let actual = format!("{message}");
     assert_eq!(expected, actual);
 }

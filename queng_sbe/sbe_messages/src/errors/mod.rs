@@ -1,6 +1,6 @@
 use std::fmt;
 
-/// SbeEncodeError struct definition.
+/// `SbeEncodeError` struct definition.
 ///
 /// Used to represent SBE encoding errors.
 ///
@@ -12,7 +12,7 @@ use std::fmt;
 ///
 /// `Clone`, `Debug`, `PartialEq`, `Eq`, `PartialOrd`, `Ord`, `Hash` - Rust defaults
 /// `fmt::Display` - Custom Display implementation to print error messages
-/// `std::error::Error` - Implements std::error::Error trait
+/// `std::error::Error` - Implements `std::error::Error` trait
 ///
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SbeEncodeError(pub String);
@@ -26,7 +26,7 @@ impl fmt::Display for SbeEncodeError {
 
 impl std::error::Error for SbeEncodeError {}
 
-/// SbeDecodeError struct definition.
+/// `SbeDecodeError` struct definition.
 ///
 /// Used to represent SBE decoding errors.
 ///
@@ -38,7 +38,7 @@ impl std::error::Error for SbeEncodeError {}
 ///
 /// `Clone`, `Debug`, `PartialEq`, `Eq`, `PartialOrd`, `Ord`, `Hash` - Rust defaults
 /// `fmt::Display` - Custom Display implementation to print error messages
-/// `std::error::Error` - Implements std::error::Error trait
+/// `std::error::Error` - Implements `std::error::Error` trait
 ///
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SbeDecodeError(pub String);

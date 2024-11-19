@@ -3,8 +3,9 @@ use crate::model::service::CreateService;
 use common_config::ServiceConfig as CommonServiceConfig;
 
 impl CreateService {
-    pub fn from_common_svc_config(common_svc_config: &CommonServiceConfig) -> CreateService {
-        CreateService {
+    #[must_use]
+    pub fn from_common_svc_config(common_svc_config: &CommonServiceConfig) -> Self {
+        Self {
             service_id: common_svc_config.svc_id().as_i32(),
             name: common_svc_config.name().to_string(),
             version: common_svc_config.version() as i32,

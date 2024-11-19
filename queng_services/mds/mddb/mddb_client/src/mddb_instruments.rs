@@ -2,12 +2,24 @@ use crate::error::MDDBClientError;
 use crate::MDDBClient;
 use common_metadata::MetaInstrument;
 
-use proto_mddb_utils::*;
+use proto_mddb_utils::{
+    get_all_instruments_for_base_asset_and_exchange_request,
+    get_all_instruments_for_base_asset_request,
+    get_all_instruments_for_base_quote_asset_and_exchange_request,
+    get_all_instruments_for_exchange_request,
+    get_all_instruments_for_quote_asset_and_exchange_request,
+    get_all_instruments_for_quote_asset_request, get_all_instruments_request,
+    get_check_if_instrument_exists_request, get_count_instruments_request,
+    get_instrument_by_figi_request, get_instrument_by_id_request,
+    get_instrument_by_pair_figi_request, get_lookup_instrument_exchange_pair_code_request,
+    get_lookup_instrument_id_by_figi_request, get_lookup_instrument_id_by_pair_figi_request,
+    proto_instrument_to_meta_instrument,
+};
 
 impl MDDBClient {
     /// Retrieves the total count of instruments from the database.
     ///
-    /// Returns a Result containing either the count as u64 or an MDDBClientError if the operation fails.
+    /// Returns a Result containing either the count as u64 or an `MDDBClientError` if the operation fails.
     pub async fn count_instruments(&self) -> Result<u64, MDDBClientError> {
         let mut client = self.client.clone();
         let request = get_count_instruments_request();
@@ -38,7 +50,7 @@ impl MDDBClient {
         }
     }
 
-    /// Retrieves a MetaInstrument by its instrument ID from the database.
+    /// Retrieves a `MetaInstrument` by its instrument ID from the database.
     ///
     /// # Arguments
     /// * `instrument_id` - The unique identifier of the instrument to retrieve
@@ -104,9 +116,9 @@ impl MDDBClient {
 
     /// Retrieves all available instruments from the market data database.
     ///
-    /// Returns a Result containing either a Vector of MetaInstrument objects or an MDDBClientError.
+    /// Returns a Result containing either a Vector of `MetaInstrument` objects or an `MDDBClientError`.
     /// The function makes an async request to get all instruments and converts the proto responses
-    /// into MetaInstrument format.
+    /// into `MetaInstrument` format.
     ///
     pub async fn get_all_instruments(&self) -> Result<Vec<MetaInstrument>, MDDBClientError> {
         let mut client = self.client.clone();
@@ -132,7 +144,7 @@ impl MDDBClient {
     /// * `base_asset` - The base asset identifier as a string
     ///
     /// # Returns
-    /// * `Result<Vec<MetaInstrument>>` - A vector of MetaInstrument objects on success
+    /// * `Result<Vec<MetaInstrument>>` - A vector of `MetaInstrument` objects on success
     /// * `MDDBClientError` - Error if the retrieval fails
     ///
     pub async fn get_all_instruments_for_base_asset(
@@ -162,8 +174,8 @@ impl MDDBClient {
     /// * `quote_asset` - The quote asset identifier as a string
     ///
     /// # Returns
-    /// * `Result<Vec<MetaInstrument>, MDDBClientError>` - A vector of MetaInstrument objects on success,
-    ///   or MDDBClientError on failure
+    /// * `Result<Vec<MetaInstrument>, MDDBClientError>` - A vector of `MetaInstrument` objects on success,
+    ///   or `MDDBClientError` on failure
     ///
     pub async fn get_all_instruments_for_quote_asset(
         &self,
@@ -222,7 +234,7 @@ impl MDDBClient {
     /// * `base_asset` - The base asset symbol
     ///
     /// # Returns
-    /// * `Result<Vec<MetaInstrument>, MDDBClientError>` - A vector of MetaInstrument objects on success, or MDDBClientError on failure
+    /// * `Result<Vec<MetaInstrument>, MDDBClientError>` - A vector of `MetaInstrument` objects on success, or `MDDBClientError` on failure
     ///
     pub async fn get_all_instruments_for_base_asset_and_exchange(
         &self,
@@ -257,7 +269,7 @@ impl MDDBClient {
     /// * `quote_asset` - The quote asset to filter instruments by
     ///
     /// # Returns
-    /// * `Result<Vec<MetaInstrument>, MDDBClientError>` - A vector of MetaInstrument on success, or MDDBClientError on failure
+    /// * `Result<Vec<MetaInstrument>, MDDBClientError>` - A vector of `MetaInstrument` on success, or `MDDBClientError` on failure
     ///
     pub async fn get_all_instruments_for_quote_asset_and_exchange(
         &self,
@@ -293,7 +305,7 @@ impl MDDBClient {
     /// * `quote_asset` - The quote asset symbol
     ///
     /// # Returns
-    /// * `Result<Vec<MetaInstrument>, MDDBClientError>` - A vector of MetaInstrument objects on success, or MDDBClientError on failure
+    /// * `Result<Vec<MetaInstrument>, MDDBClientError>` - A vector of `MetaInstrument` objects on success, or `MDDBClientError` on failure
     ///
     pub async fn get_all_instruments_for_base_quote_asset_and_exchange(
         &self,

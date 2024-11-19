@@ -228,7 +228,7 @@ impl DBGWSmdbClient {
         match client.read_service(request).await {
             Ok(res) => match res.into_inner().service_config {
                 Some(p) => {
-                    let service_config = service_config_from_proto(p.to_owned())
+                    let service_config = service_config_from_proto(p)
                         .expect("Failed to convert ProtoServiceConfig to Rust ServiceConfig");
 
                     Ok(Some(service_config))

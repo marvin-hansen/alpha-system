@@ -25,5 +25,5 @@ fn test_new() {
     assert_eq!(exchange_pair_code, instrument.exchange_pair_code());
     assert_eq!(base_asset, instrument.base_asset());
     assert_eq!(quote_asset, instrument.quote_asset());
-    assert!(instrument.instrument_figi().is_none())
+    assert!(instrument.instrument_figi().is_none());
 }

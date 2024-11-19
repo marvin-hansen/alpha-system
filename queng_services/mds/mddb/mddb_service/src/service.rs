@@ -1,6 +1,26 @@
 use proto_mddb::proto::db_gateway_mddb_service_client::DbGatewayMddbServiceClient;
 use proto_mddb::proto::mddb_service_server::MddbService;
-use proto_mddb::proto::*;
+use proto_mddb::proto::{
+    CheckIfAssetIdExistsRequest, CheckIfAssetIdExistsResponse, CheckIfExchangeIdExistsRequest,
+    CheckIfExchangeIdExistsResponse, CheckIfInstrumentIdExistsRequest,
+    CheckIfInstrumentIdExistsResponse, CountAssetsRequest, CountAssetsResponse,
+    CountExchangesRequest, CountExchangesResponse, CountInstrumentsRequest,
+    CountInstrumentsResponse, GetAllAssetsRequest, GetAllAssetsResponse, GetAllExchangesRequest,
+    GetAllExchangesResponse, GetAllInstrumentsForBaseAssetAndExchangeRequest,
+    GetAllInstrumentsForBaseAssetAndExchangeResponse, GetAllInstrumentsForBaseAssetRequest,
+    GetAllInstrumentsForBaseAssetResponse, GetAllInstrumentsForBaseQuoteAssetAndExchangeRequest,
+    GetAllInstrumentsForBaseQuoteAssetAndExchangeResponse, GetAllInstrumentsForExchangeRequest,
+    GetAllInstrumentsForExchangeResponse, GetAllInstrumentsForQuoteAssetAndExchangeRequest,
+    GetAllInstrumentsForQuoteAssetAndExchangeResponse, GetAllInstrumentsForQuoteAssetRequest,
+    GetAllInstrumentsForQuoteAssetResponse, GetAllInstrumentsRequest, GetAllInstrumentsResponse,
+    GetAssetRequest, GetAssetResponse, GetExchangeRequest, GetExchangeResponse,
+    GetInstrumentByFigiRequest, GetInstrumentByIdRequest, GetInstrumentByIdResponse,
+    GetInstrumentByPairFigiRequest, GetInstrumentByPairFigiResponse, LookupExchangeNameRequest,
+    LookupExchangeNameResponse, LookupInstrumentIdByExchangePairCodeRequest,
+    LookupInstrumentIdByExchangePairCodeResponse, LookupInstrumentIdByFigiRequest,
+    LookupInstrumentIdByFigiResponse, LookupInstrumentIdByPairFigiRequest,
+    LookupInstrumentIdByPairFigiResponse,
+};
 use tonic::transport::Channel;
 use tonic::{Request, Response, Status};
 
@@ -10,7 +30,7 @@ pub struct MDDBServer {
 }
 
 impl MDDBServer {
-    pub fn new(dbgw: DbGatewayMddbServiceClient<Channel>) -> Self {
+    pub const fn new(dbgw: DbGatewayMddbServiceClient<Channel>) -> Self {
         Self { dbgw }
     }
 }

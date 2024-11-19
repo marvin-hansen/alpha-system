@@ -6,7 +6,7 @@ set -o pipefail
 echo "=============="
 echo "Lint targets "
 echo "=============="
-command cargo clippy --all-targets
+command cargo clippy --all-targets -Wclippy::all -Wclippy::pedantic -Wclippy::nursery
 
 echo "=============="
 echo "Format targets "

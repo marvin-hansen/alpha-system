@@ -1,11 +1,11 @@
 use crate::init::patch_op::PatchOp;
-use crate::init::patch_op::PatchOp::*;
+use crate::init::patch_op::PatchOp::{PatchBaseAsset, PatchClass, PatchQuoteAsset};
 
 const SPOT: &str = "spot";
 const USDC: &str = "usdc";
 const LUNAC: &str = "lunac";
 
-pub(crate) const INSTRUMENT_PATCHES: [(&str, &str, PatchOp, &str); 7] = [
+pub const INSTRUMENT_PATCHES: [(&str, &str, PatchOp, &str); 7] = [
     // bbit
     ("bbit", "POLUSDT", PatchClass, SPOT), // bbit: Instrument_class should be SPOT https://www.bybit.com/en/trade/spot/POL/USDT
     ("bbit", "POLPERP", PatchQuoteAsset, USDC), // bbit: quote_asset should be  USDC https://www.bybit.com/trade/futures/usdc/POL-PERP

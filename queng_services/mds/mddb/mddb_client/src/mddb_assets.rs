@@ -1,8 +1,11 @@
 use crate::error::MDDBClientError;
 use crate::MDDBClient;
 use common_metadata::MetaAsset;
-use proto_mddb::proto::*;
-use proto_mddb_utils::*;
+use proto_mddb::proto::ProtoMetaAsset;
+use proto_mddb_utils::{
+    get_all_assets_request, get_asset_request, get_check_if_asset_exists_request,
+    get_count_assets_request, proto_asset_to_meta_asset,
+};
 
 impl MDDBClient {
     /// Returns the total number of assets in the MDDB
@@ -59,11 +62,11 @@ impl MDDBClient {
         }
     }
 
-    /// Retrieves all assets from the database and converts them to MetaAsset format.
+    /// Retrieves all assets from the database and converts them to `MetaAsset` format.
     ///
     /// # Returns
-    /// * `Result<Vec<MetaAsset>, MDDBClientError>` - A vector of MetaAsset objects if successful,
-    ///   or an MDDBClientError if the operation fails
+    /// * `Result<Vec<MetaAsset>, MDDBClientError>` - A vector of `MetaAsset` objects if successful,
+    ///   or an `MDDBClientError` if the operation fails
     ///
     pub async fn get_all_assets(&self) -> Result<Vec<MetaAsset>, MDDBClientError> {
         let mut client = self.client.clone();

@@ -10,7 +10,7 @@ impl PostgresMDDBManager {
     ///     instrument (MetaInstrument): The instrument to be inserted.
     ///
     /// Returns:
-    ///     Result<MetaInstrument, PostgresDBError>: The inserted instrument on success, or a `PostgresDBError` on failure.
+    ///     Result<`MetaInstrument`, PostgresDBError>: The inserted instrument on success, or a `PostgresDBError` on failure.
     ///
     /// Raises:
     ///     - `PostgresDBError::InsertFailed`: If the insertion operation fails due to database errors.
@@ -30,7 +30,7 @@ impl PostgresMDDBManager {
     /// Inserts a collection of instruments into the database.
     ///
     /// Args:
-    ///     instruments (&[MetaInstrument]): A slice of instruments to be inserted.
+    ///     instruments (&[`MetaInstrument`]): A slice of instruments to be inserted.
     ///
     /// Returns:
     ///     Result<usize, PostgresDBError>: The number of instruments successfully inserted, or a `PostgresDBError` on failure.
@@ -70,7 +70,7 @@ impl PostgresMDDBManager {
     /// Checks if an instrument with the specified ID exists in the database.
     ///
     /// Args:
-    ///     instrument_id (&str): The ID of the instrument to check.
+    ///     `instrument_id` (&str): The ID of the instrument to check.
     ///
     /// Returns:
     ///     `Result<bool, PostgresDBError>`: `true` if the instrument exists, `false` otherwise, or a `PostgresDBError` on failure.
@@ -93,7 +93,7 @@ impl PostgresMDDBManager {
     /// Reads an instrument from the database by its ID.
     ///
     /// Args:
-    ///     instrument_id (&str): The ID of the instrument to read.
+    ///     `instrument_id` (&str): The ID of the instrument to read.
     ///
     /// Returns:
     ///     `Result<MetaInstrument, PostgresDBError>`: The instrument on success, or a `PostgresDBError` on failure.
@@ -133,7 +133,7 @@ impl PostgresMDDBManager {
     /// Updates an existing instrument in the database.
     ///
     /// Args:
-    ///     instrument_id (&str): The ID of the instrument to update.
+    ///     `instrument_id` (&str): The ID of the instrument to update.
     ///     instrument (MetaInstrument): The new instrument data.
     ///
     /// Returns:
@@ -158,7 +158,7 @@ impl PostgresMDDBManager {
     /// Deletes an instrument from the database by its ID.
     ///
     /// Args:
-    ///     instrument_id (String): The ID of the instrument to delete.
+    ///     `instrument_id` (String): The ID of the instrument to delete.
     ///
     /// Returns:
     ///     `Result<usize, PostgresDBError>`: The number of rows affected on success, or a `PostgresDBError` on failure.

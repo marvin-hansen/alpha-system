@@ -1,6 +1,6 @@
 use crate::model::endpoint_type::Endpoint;
 use crate::model::service::{CreateService, Service, UpdateService};
-use crate::schema::smdb::service::dsl::*;
+use crate::schema::smdb::service::dsl::{dependencies, endpoints, online, service, service_id};
 use crate::Connection;
 use common_config::Endpoint as CommonEndpoint;
 use common_config::ServiceConfig as CommonServiceConfig;
@@ -30,7 +30,7 @@ impl Service {
         let item = CreateService::from_common_svc_config(svc);
         insert_into(crate::schema::smdb::service::table)
             .values(item)
-            .get_result::<Service>(db)
+            .get_result::<Self>(db)
             .map(|s| s.to_common_svc_config())
     }
 
@@ -96,9 +96,9 @@ impl Service {
     ) -> QueryResult<bool> {
         service
             .find(param_service_id.as_i32())
-            .first::<Service>(db)
+            .first::<Self>(db)
             .optional()
-            .map(|arg0: Option<Service>| Option::is_some(&arg0))
+            .map(|arg0: Option<Self>| Option::is_some(&arg0))
     }
 
     /// Checks if a service ID is online.
@@ -141,9 +141,9 @@ impl Service {
     pub fn get_all_online_services(db: &mut Connection) -> QueryResult<Vec<CommonServiceConfig>> {
         service
             .filter(online.eq(true))
-            .select(Service::as_returning())
-            .load::<Service>(db)
-            .map(|s| s.iter().map(|s| s.to_common_svc_config()).collect())
+            .select(Self::as_returning())
+            .load::<Self>(db)
+            .map(|s| s.iter().map(Self::to_common_svc_config).collect())
     }
 
     /// Retrieves all offline services from the database.
@@ -160,9 +160,9 @@ impl Service {
     pub fn get_all_offline_services(db: &mut Connection) -> QueryResult<Vec<CommonServiceConfig>> {
         service
             .filter(online.eq(false))
-            .select(Service::as_returning())
-            .load::<Service>(db)
-            .map(|s| s.iter().map(|s| s.to_common_svc_config()).collect())
+            .select(Self::as_returning())
+            .load::<Self>(db)
+            .map(|s| s.iter().map(Self::to_common_svc_config).collect())
     }
 
     /// Retrieves all service dependencies for a given service ID from the database.
@@ -213,7 +213,12 @@ impl Service {
             .filter(service_id.eq(param_service_id.as_i32()))
             .select(endpoints)
             .get_result::<Vec<Option<Endpoint>>>(db)
-            .map(|s| s.iter().flatten().map(|s| s.to_common_endpoint()).collect())
+            .map(|s| {
+                s.iter()
+                    .flatten()
+                    .map(super::super::endpoint_type::Endpoint::to_common_endpoint)
+                    .collect()
+            })
     }
 
     /// Retrieves the service configuration for a given service ID from the database.
@@ -234,7 +239,7 @@ impl Service {
     ) -> QueryResult<CommonServiceConfig> {
         service
             .filter(service_id.eq(param_service_id.as_i32()))
-            .get_result::<Service>(db)
+            .get_result::<Self>(db)
             .map(|s| s.to_common_svc_config())
     }
 
@@ -251,8 +256,8 @@ impl Service {
     ///
     pub fn read_all(db: &mut Connection) -> QueryResult<Vec<CommonServiceConfig>> {
         service
-            .load::<Service>(db)
-            .map(|s| s.iter().map(|s| s.to_common_svc_config()).collect())
+            .load::<Self>(db)
+            .map(|s| s.iter().map(Self::to_common_svc_config).collect())
     }
 
     /// Sets the online status of the service with the given ID.
@@ -338,8 +343,8 @@ impl Service {
         let item = UpdateService::from_common_svc_config(item);
         diesel::update(service.filter(service_id.eq(param_service_id.as_i32())))
             .set(item)
-            .returning(Service::as_returning())
-            .get_result::<Service>(db)
+            .returning(Self::as_returning())
+            .get_result::<Self>(db)
             .map(|s| s.to_common_svc_config())
     }
 

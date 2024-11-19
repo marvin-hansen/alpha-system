@@ -31,8 +31,7 @@ impl DockerUtil {
 
         if !exists {
             return Err(DockerError::from(format!(
-                "Container doesn't exists: {}",
-                container_id
+                "Container doesn't exists: {container_id}"
             )));
         }
 
@@ -49,8 +48,7 @@ impl DockerUtil {
             {
                 Ok(_) => Ok(()),
                 Err(e) => Err(DockerError::from(format!(
-                    "[stop_container]: Error stopping container {}: {}",
-                    container_id, e
+                    "[stop_container]: Error stopping container {container_id}: {e}"
                 ))),
             };
         }

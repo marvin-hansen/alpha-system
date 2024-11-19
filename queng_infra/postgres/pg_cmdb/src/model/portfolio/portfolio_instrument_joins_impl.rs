@@ -14,11 +14,11 @@ impl Portfolio {
     /// Reads and retrieves portfolio configuration data for a given portfolio ID from the database.
     ///
     /// # Arguments
-    /// - `db`: Mutable reference to the PGConnection for the database operations.
+    /// - `db`: Mutable reference to the `PGConnection` for the database operations.
     /// - `param_portfolio_id`: The ID of the portfolio to retrieve configuration data for.
     ///
     /// # Returns
-    /// Result containing the CommonPortfolioConfig if successful, or a QueryResult error.
+    /// Result containing the `CommonPortfolioConfig` if successful, or a `QueryResult` error.
     ///
     pub fn read(
         db: &mut PGConnection,
@@ -43,7 +43,7 @@ impl Portfolio {
 
         let portfolio = match crate::schema::cmdb::portfolio::table
             .filter(crate::schema::cmdb::portfolio::portfolio_id.eq(param_portfolio_id))
-            .select(Portfolio::as_select())
+            .select(Self::as_select())
             .get_result(db)
         {
             Ok(res) => res,
@@ -60,6 +60,6 @@ impl Portfolio {
         };
 
         // Convert from Vec<PortfolioConfig> to Vec<CommonPortfolioConfig>
-        Ok(Portfolio::to_common_portfolio(&portfolio, &instruments))
+        Ok(Self::to_common_portfolio(&portfolio, &instruments))
     }
 }

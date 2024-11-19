@@ -5,7 +5,7 @@ use std::error::Error;
 use std::time::Duration;
 
 /// A connection customizer designed for use in tests.
-/// Implements CustomizeConnection in a way
+/// Implements `CustomizeConnection` in a way
 /// that ensures transactions in a pool customized by it are never committed.
 ///
 /// During testing, set pool size to 1 to ensure that the same test transaction
@@ -44,7 +44,7 @@ impl<E> CustomizeConnection<PgConnection, E> for TestConnectionCustomizer {
 /// # Returns
 ///
 /// A Result containing the newly created connection pool,
-/// or a PostgresDBError if an error occurs.
+/// or a `PostgresDBError` if an error occurs.
 ///
 pub fn build_pg_connection_pool(
     test: bool,
@@ -95,7 +95,7 @@ pub fn build_pg_connection_pool(
 /// # Returns
 ///
 /// A Result containing the constructed Postgres Connection Pool
-/// or a PostgresDBError if an error occurs during the process.
+/// or a `PostgresDBError` if an error occurs during the process.
 ///
 pub fn build_pg_connection_pool_with_migration(
     test: bool,
@@ -133,7 +133,7 @@ pub fn build_pg_connection_pool_with_migration(
         println!("Run DB Migration",);
     }
     match migration_fun(&mut pool.get().expect("Failed to get connection from pool")) {
-        Ok(_) => {}
+        Ok(()) => {}
         Err(e) => {
             return Err(PostgresDBError::MigrationFailed(e.to_string()));
         }

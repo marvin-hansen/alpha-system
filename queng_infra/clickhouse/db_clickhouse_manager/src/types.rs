@@ -12,12 +12,15 @@ pub struct TradeRow {
 }
 
 impl TradeRow {
+    #[must_use]
     pub fn date_time(&self) -> DateTime<Utc> {
         Utc.timestamp_millis_opt(self.date_time.1 as i64).unwrap()
     }
+    #[must_use]
     pub fn price(&self) -> Decimal {
         Decimal::from_f64(self.price).unwrap()
     }
+    #[must_use]
     pub fn volume(&self) -> Decimal {
         Decimal::from_f64(self.volume).unwrap()
     }
@@ -34,21 +37,27 @@ pub struct OHLCVRow {
 }
 
 impl OHLCVRow {
+    #[must_use]
     pub fn date_time(&self) -> DateTime<Utc> {
-        Utc.timestamp_millis_opt(self.datetime as i64).unwrap()
+        Utc.timestamp_millis_opt(i64::from(self.datetime)).unwrap()
     }
+    #[must_use]
     pub fn open(&self) -> Decimal {
         Decimal::from_f64(self.open).unwrap()
     }
+    #[must_use]
     pub fn high(&self) -> Decimal {
         Decimal::from_f64(self.high).unwrap()
     }
+    #[must_use]
     pub fn low(&self) -> Decimal {
         Decimal::from_f64(self.low).unwrap()
     }
+    #[must_use]
     pub fn close(&self) -> Decimal {
         Decimal::from_f64(self.close).unwrap()
     }
+    #[must_use]
     pub fn volume(&self) -> Decimal {
         Decimal::from_f64(self.volume).unwrap()
     }
@@ -61,9 +70,11 @@ pub struct SymbolRow {
 }
 
 impl SymbolRow {
-    pub fn symbol_id(&self) -> u64 {
+    #[must_use]
+    pub const fn symbol_id(&self) -> u64 {
         self.symbol_id
     }
+    #[must_use]
     pub fn symbol(&self) -> String {
         self.symbol.to_string()
     }

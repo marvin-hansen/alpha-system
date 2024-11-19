@@ -14,18 +14,24 @@ pub struct TradeBar {
 }
 
 impl TradeBar {
-    /// Creates a new TradeBar with the provided values.
+    /// Creates a new `TradeBar` with the provided values.
     ///
     /// # Parameters
     ///
-    /// * `date_time` - The DateTime of the trade bar
+    /// * `date_time` - The `DateTime` of the trade bar
     /// * `price` - The price for the trade bar as a Decimal
     /// * `volume` - The volume for the trade bar as a Decimal
     ///
     /// # Returns
     ///
-    /// A new TradeBar instance with the given date_time, price and volume.
-    pub fn new(symbol_id: u16, date_time: DateTime<Utc>, price: Decimal, volume: Decimal) -> Self {
+    /// A new `TradeBar` instance with the given `date_time`, price and volume.
+    #[must_use]
+    pub const fn new(
+        symbol_id: u16,
+        date_time: DateTime<Utc>,
+        price: Decimal,
+        volume: Decimal,
+    ) -> Self {
         Self {
             symbol_id,
             date_time,

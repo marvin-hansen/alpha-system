@@ -47,7 +47,7 @@ impl PostgresCMDBManager {
         let conn = &mut self.get_connection();
 
         match Portfolio::create_portfolio_collection(conn, data) {
-            Ok(_) => Ok(()),
+            Ok(()) => Ok(()),
             Err(e) => Err(PostgresDBError::InsertFailed(e.to_string())),
         }
     }
@@ -84,7 +84,7 @@ impl PostgresCMDBManager {
     ///
     /// # Errors
     ///
-    /// Returns an PostgresDBError error if the query fails.
+    /// Returns an `PostgresDBError` error if the query fails.
     ///
     pub async fn check_if_portfolio_id_exists(
         &self,
@@ -93,7 +93,7 @@ impl PostgresCMDBManager {
         self.dbg_print("check_if_portfolio_id_exists");
         let conn = &mut self.get_connection();
 
-        match Portfolio::check_if_portfolio_id_exists(conn, portfolio_id as i32) {
+        match Portfolio::check_if_portfolio_id_exists(conn, i32::from(portfolio_id)) {
             Ok(exists) => Ok(exists),
             Err(e) => Err(PostgresDBError::CheckIfExistsFailed(e.to_string())),
         }
@@ -113,7 +113,7 @@ impl PostgresCMDBManager {
     ///
     /// # Errors
     ///
-    /// Returns an PostgresDBError error if the query fails.
+    /// Returns an `PostgresDBError` error if the query fails.
     ///
     pub async fn check_if_instrument_id_exists(
         &self,
@@ -148,7 +148,7 @@ impl PostgresCMDBManager {
         let conn = &mut self.get_connection();
 
         self.dbg_print("check_if_portfolio_id_exists");
-        match Portfolio::read(conn, portfolio_id as i32) {
+        match Portfolio::read(conn, i32::from(portfolio_id)) {
             Ok(res) => Ok(res),
             Err(e) => Err(PostgresDBError::QueryFailed(e.to_string())),
         }
@@ -196,7 +196,7 @@ impl PostgresCMDBManager {
 
         let portfolio_id = data.portfolio_id() as i32;
         match Portfolio::update(conn, portfolio_id, &data) {
-            Ok(_) => Ok(()),
+            Ok(()) => Ok(()),
             Err(e) => Err(PostgresDBError::UpdateFailed(e.to_string())),
         }
     }
@@ -223,7 +223,7 @@ impl PostgresCMDBManager {
                 if !exists {
                     Ok(false)
                 } else {
-                    match Portfolio::delete(conn, id as i32) {
+                    match Portfolio::delete(conn, i32::from(id)) {
                         Ok(_) => Ok(true),
                         Err(e) => Err(PostgresDBError::DeleteFailed(e.to_string())),
                     }

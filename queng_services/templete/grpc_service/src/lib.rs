@@ -29,7 +29,7 @@ where
 {
     let dbg_print = |msg: &str| {
         if dbg {
-            println!("[{}]: {}", svc_id, msg)
+            println!("[{svc_id}]: {msg}");
         }
     };
     let start = Instant::now();
@@ -51,9 +51,10 @@ where
             .await
             .expect(" Failed to check if service dependency exists");
 
-        if !available {
-            panic!("Service dependency {:?} is unavailable; please start it", d);
-        }
+        assert!(
+            available,
+            "Service dependency {d:?} is unavailable; please start it"
+        );
     }
 
     dbg_print("Configure service ip and port automatically relative to the detected context");
@@ -99,10 +100,7 @@ where
                 .set_service_offline(svc_id)
                 .await
                 .expect("Failed to set service offline!");
-            println!(
-                "Failed to start gRPC and HTTP server: {} due to error {:?}",
-                svc_id, e
-            );
+            println!("Failed to start gRPC and HTTP server: {svc_id} due to error {e:?}");
         }
     }
 

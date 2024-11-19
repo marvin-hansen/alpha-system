@@ -2,7 +2,7 @@ use crate::model::instrument::{CreateInstrument, Instrument};
 use crate::model::portfolio::{CreatePortfolio, Portfolio, UpdatePortfolio};
 use crate::model::portfolio_instrument::{CreatePortfolioInstrument, PortfolioInstrument};
 use crate::schema::cmdb::instrument::dsl::instrument;
-use crate::schema::cmdb::portfolio::dsl::*;
+use crate::schema::cmdb::portfolio::dsl::{portfolio, portfolio_id};
 use crate::schema::cmdb::portfolio::table as portfolio_table;
 use crate::schema::cmdb::portfolio_instrument::dsl::portfolio_instrument;
 use crate::Connection as PGConnection;
@@ -26,11 +26,11 @@ impl Portfolio {
     /// # Workflow
     ///
     /// 1. Check if the portfolio ID exists in the database.
-    /// 2. If the portfolio ID does not exist, return a DatabaseError.
+    /// 2. If the portfolio ID does not exist, return a `DatabaseError`.
     /// 3. Start a database transaction.
     /// 4. Insert the new portfolio into the database.
     /// 5. For each instrument in the portfolio, check if it exists; if not, create it.
-    /// 6. Associate each instrument with the portfolio by creating a new portfolio_instrument relation.
+    /// 6. Associate each instrument with the portfolio by creating a new `portfolio_instrument` relation.
     /// 7. Return the created portfolio configuration.
     ///
     /// # Returns
@@ -65,7 +65,7 @@ impl Portfolio {
             let create_portfolio = CreatePortfolio::from_common_portfolio(data);
             let inserted_portfolio = diesel::insert_into(portfolio_table)
                 .values(create_portfolio)
-                .get_result::<Portfolio>(db)?;
+                .get_result::<Self>(db)?;
 
             let common_instruments = data.portfolio_instruments();
             for instrument_data in common_instruments {
@@ -92,7 +92,7 @@ impl Portfolio {
             }
 
             // Return the created portfolio configuration.
-            let common_portfolio = Portfolio::to_common_portfolio_with_common_instruments(
+            let common_portfolio = Self::to_common_portfolio_with_common_instruments(
                 &inserted_portfolio,
                 common_instruments.to_owned(),
             );
@@ -121,7 +121,7 @@ impl Portfolio {
         data: &[CommonPortfolioConfig],
     ) -> QueryResult<()> {
         for pfc in data {
-            match Portfolio::create(db, pfc) {
+            match Self::create(db, pfc) {
                 Ok(_) => (),
                 Err(e) => return Err(e),
             }
@@ -130,19 +130,19 @@ impl Portfolio {
     }
 
     ///
-    /// Reads all portfolio configurations from the database and returns them as a vector of CommonPortfolioConfig.
+    /// Reads all portfolio configurations from the database and returns them as a vector of `CommonPortfolioConfig`.
     ///
     /// # Arguments
-    /// - `db`: Mutable reference to the PGConnection for the database operations.
+    /// - `db`: Mutable reference to the `PGConnection` for the database operations.
     ///
     /// # Returns
     ///
-    /// Result containing a vector of CommonPortfolioConfig if successful, or a QueryResult error.
+    /// Result containing a vector of `CommonPortfolioConfig` if successful, or a `QueryResult` error.
     ///
     pub fn read_all(db: &mut PGConnection) -> QueryResult<Vec<CommonPortfolioConfig>> {
         let mut v = Vec::new();
 
-        let res = match portfolio.load::<Portfolio>(db) {
+        let res = match portfolio.load::<Self>(db) {
             Ok(res) => {
                 if res.is_empty() {
                     return Ok(v);
@@ -151,7 +151,7 @@ impl Portfolio {
                 // consider using a parallel iterator here to improve performance
                 for i in &res {
                     let p = Self::read(db, i.portfolio_id)?;
-                    v.push(p)
+                    v.push(p);
                 }
 
                 v
@@ -193,7 +193,7 @@ impl Portfolio {
         db: &mut PGConnection,
         param_portfolio_id: i32,
     ) -> QueryResult<bool> {
-        match portfolio.find(param_portfolio_id).first::<Portfolio>(db) {
+        match portfolio.find(param_portfolio_id).first::<Self>(db) {
             Ok(_) => Ok(true),
             Err(_) => Ok(false),
         }
@@ -310,7 +310,7 @@ impl Portfolio {
 
             Ok(())
         }) {
-            Ok(_) => Ok(()),
+            Ok(()) => Ok(()),
             Err(e) => Err(e),
         }
     }
@@ -325,8 +325,8 @@ impl Portfolio {
     ///
     /// # Workflow
     ///
-    /// 1. Check if the portfolio ID exists using check_if_portfolio_id_exists.
-    /// 2. If the portfolio does not exist, return a DatabaseError.
+    /// 1. Check if the portfolio ID exists using `check_if_portfolio_id_exists`.
+    /// 2. If the portfolio does not exist, return a `DatabaseError`.
     /// 3. Start a database transaction.
     /// 4. Read all instruments associated with the portfolio.
     /// 5. Delete the portfolio.
@@ -345,10 +345,7 @@ impl Portfolio {
     ///
     pub fn delete(db: &mut PGConnection, param_portfolio_id: i32) -> QueryResult<usize> {
         // Start transaction
-        println!(
-            "[Delete]: Start transaction to delete portfolio: {}",
-            param_portfolio_id
-        );
+        println!("[Delete]: Start transaction to delete portfolio: {param_portfolio_id}");
         match db.transaction(|db| {
             // Read all portfolio_instrument for portfolio
             let portfolio_instruments =

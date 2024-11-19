@@ -5,11 +5,11 @@ use crate::errors::SbeEncodeError;
 use crate::FirstTradeBar;
 
 impl FirstTradeBar {
-    /// Encodes a FirstTradeBar message to a byte buffer.
+    /// Encodes a `FirstTradeBar` message to a byte buffer.
     ///
     /// # Arguments
     ///
-    /// * `self` - FirstTradeBar to encode
+    /// * `self` - `FirstTradeBar` to encode
     ///
     /// # Returns
     ///
@@ -22,11 +22,11 @@ impl FirstTradeBar {
     /// # Process
     ///
     /// - Create 12 byte buffer
-    /// - Create default FirstTradeBarEncoder
-    /// - Wrap buffer in WriteBuf
+    /// - Create default `FirstTradeBarEncoder`
+    /// - Wrap buffer in `WriteBuf`
     /// - Encode header
-    /// - Encode message_type
-    /// - Encode symbol_id
+    /// - Encode `message_type`
+    /// - Encode `symbol_id`
     /// - Return encoded size and buffer
     ///
     pub fn encode(&self) -> Result<(usize, Vec<u8>), SbeEncodeError> {

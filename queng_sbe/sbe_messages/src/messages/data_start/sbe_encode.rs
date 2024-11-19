@@ -4,11 +4,11 @@ use sbe_bindings::{message_header_codec, Encoder, StartDataMsgEncoder, WriteBuf}
 use crate::{SbeEncodeError, StartDataMessage};
 
 impl StartDataMessage {
-    /// Encodes a StartDataMessage to a byte buffer.
+    /// Encodes a `StartDataMessage` to a byte buffer.
     ///
     /// # Arguments
     ///
-    /// * `self` - StartDataMessage to encode
+    /// * `self` - `StartDataMessage` to encode
     ///
     /// # Returns
     ///
@@ -21,15 +21,15 @@ impl StartDataMessage {
     /// # Process
     ///
     /// - Create 17 byte buffer
-    /// - Create default StartDataMsgEncoder
-    /// - Wrap buffer in WriteBuf
+    /// - Create default `StartDataMsgEncoder`
+    /// - Wrap buffer in `WriteBuf`
     /// - Encode header
-    /// - Encode message_type
-    /// - Encode client_id
-    /// - Encode exchange_id
-    /// - Encode symbol_id
-    /// - Encode time_resolution
-    /// - Encode data_type_id
+    /// - Encode `message_type`
+    /// - Encode `client_id`
+    /// - Encode `exchange_id`
+    /// - Encode `symbol_id`
+    /// - Encode `time_resolution`
+    /// - Encode `data_type_id`
     /// - Return encoded size and buffer
     ///
     pub fn encode(&self) -> Result<(usize, Vec<u8>), SbeEncodeError> {

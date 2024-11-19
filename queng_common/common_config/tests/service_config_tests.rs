@@ -46,11 +46,11 @@ fn test_default() {
     let service_config = ServiceConfig::default();
 
     assert_eq!(service_config.svc_id(), &ServiceID::Default);
-    assert_eq!(service_config.name(), &String::from(""));
+    assert_eq!(service_config.name(), &String::new());
     assert_eq!(service_config.version(), 0);
     assert!(!service_config.online());
-    assert_eq!(service_config.description(), &String::from(""));
-    assert_eq!(service_config.health_check_uri(), &String::from(""));
-    assert_eq!(service_config.cluster_uri(), &String::from(""));
+    assert_eq!(service_config.description(), &String::new());
+    assert_eq!(service_config.health_check_uri(), &String::new());
+    assert_eq!(service_config.cluster_uri(), &String::new());
     assert_eq!(service_config.dependencies(), &Vec::new());
 }

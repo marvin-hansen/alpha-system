@@ -93,7 +93,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     match tokio::try_join!(http_handle) {
         Ok(_) => {}
         Err(e) => {
-            println!("Kaiko Proxy: Failed to start HTTP server: {:?}", e);
+            println!("Kaiko Proxy: Failed to start HTTP server: {e:?}");
         }
     }
 
@@ -103,7 +103,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
 pub(crate) fn dbg_print(s: &str) {
     if DBG {
-        println!("[main]: {}", s);
+        println!("[main]: {s}");
     }
 }
 

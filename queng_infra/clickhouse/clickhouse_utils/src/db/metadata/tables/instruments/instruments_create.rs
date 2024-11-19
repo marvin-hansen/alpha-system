@@ -15,7 +15,7 @@ impl Metadata {
     pub(crate) async fn create_instruments_table(&self) -> Result<(), ClickHouseUtilError> {
         let ddl = self.generate_create_instruments_table_ddl();
         match self.execute_query(&ddl).await {
-            Ok(_) => Ok(()),
+            Ok(()) => Ok(()),
             Err(e) => Err(ClickHouseUtilError::from(e.to_string())),
         }
     }

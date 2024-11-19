@@ -21,7 +21,7 @@ impl PostgresSMDBManager {
     ///
     /// # Returns
     ///
-    /// A Result containing the new instance or a PostgresDBError.
+    /// A Result containing the new instance or a `PostgresDBError`.
     ///
     pub async fn new(url: &str) -> Result<Self, PostgresDBError> {
         Self::build(false, false, url).await
@@ -35,7 +35,7 @@ impl PostgresSMDBManager {
     ///
     /// # Returns
     ///
-    /// A Result containing the initialized connection or a PostgresDBError.
+    /// A Result containing the initialized connection or a `PostgresDBError`.
     ///
     pub async fn with_debug(url: &str) -> Result<Self, PostgresDBError> {
         Self::build(true, false, url).await
@@ -43,7 +43,7 @@ impl PostgresSMDBManager {
 
     /// Asynchronously initializes a connection with debug mode and test mode enabled.
     /// Test mode means, all database transactions will be rolled back and
-    /// the DB connection closed automatically when the test instance of PostgresMDDBManager is dropped.
+    /// the DB connection closed automatically when the test instance of `PostgresMDDBManager` is dropped.
     ///
     /// A full DB schema migration happens during initialization.
     ///
@@ -54,7 +54,7 @@ impl PostgresSMDBManager {
     /// # Returns
     ///
     /// A Result containing the new instance with a test transaction
-    /// or a PostgresDBError.
+    /// or a `PostgresDBError`.
     ///
     pub async fn with_test_and_debug(url: &str) -> Result<Self, PostgresDBError> {
         Self::build(true, true, url).await
@@ -69,7 +69,7 @@ impl PostgresSMDBManager {
     ///
     /// # Returns
     ///
-    /// A Result containing the initialized PostgresSMDBManager instance or a PostgresDBError.
+    /// A Result containing the initialized `PostgresSMDBManager` instance or a `PostgresDBError`.
     ///
     pub async fn with_pool_and_debug(
         pool: Pool<ConnectionManager<PgConnection>>,
@@ -86,7 +86,7 @@ impl PostgresSMDBManager {
 }
 
 impl PostgresSMDBManager {
-    /// Creates a new PostgresSMDBManager instance.
+    /// Creates a new `PostgresSMDBManager` instance.
     ///
     /// # Arguments
     ///
@@ -96,8 +96,8 @@ impl PostgresSMDBManager {
     /// # Returns
     ///
     /// * `Result<Self, PostgresDBError>` - A result indicating success or failure.
-    ///    If successful, returns a PostgresSMDBManager instance.
-    ///    If the connection fails, returns a PostgresDBError indicating the failure.
+    ///    If successful, returns a `PostgresSMDBManager` instance.
+    ///    If the connection fails, returns a `PostgresDBError` indicating the failure.
     ///
     async fn build(dbg: bool, test: bool, url: &str) -> Result<Self, PostgresDBError> {
         if dbg {
@@ -120,6 +120,7 @@ impl PostgresSMDBManager {
     }
 
     /// Returns a connection from the connection pool.
+    #[must_use]
     pub fn get_connection(&self) -> PooledConnection<ConnectionManager<PgConnection>> {
         self.pool.get().expect("Failed to get connection from pool")
     }
@@ -128,7 +129,7 @@ impl PostgresSMDBManager {
 impl PostgresSMDBManager {
     pub fn dbg_print(&self, msg: &str) {
         if self.dbg {
-            println!("[PostgresSMDBManager]: {}", msg);
+            println!("[PostgresSMDBManager]: {msg}");
         }
     }
 }

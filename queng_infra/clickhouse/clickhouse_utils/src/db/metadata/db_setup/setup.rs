@@ -2,7 +2,7 @@ use crate::db::metadata::Metadata;
 use crate::ClickHouseUtilError;
 
 impl Metadata {
-    /// Sets up the metadata database for ClickHouse.
+    /// Sets up the metadata database for `ClickHouse`.
     ///
     /// This method initializes the metadata database by performing the following steps:
     /// 1. Calls the `create_metadata_db` method to create the metadata database.

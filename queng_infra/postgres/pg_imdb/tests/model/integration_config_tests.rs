@@ -463,7 +463,9 @@ async fn test_get_all_online_integration_configs() {
     assert_eq!(online_configs.len(), 2);
 
     // Verify all returned configs are online
-    assert!(online_configs.iter().all(|c| c.online()));
+    assert!(online_configs
+        .iter()
+        .all(common_ims::IntegrationConfig::online));
 
     // Verify correct configs returned
     let config_ids: Vec<String> = online_configs
@@ -630,7 +632,7 @@ async fn test_update_integration_config() {
     let result =
         IntegrationConfig::update_integration_config(conn, updated_config.clone()).unwrap();
 
-    assert_eq!(result, 1)
+    assert_eq!(result, 1);
 
     // Verify updated fields
     // assert_eq!(result.integration_id(), updated_config.integration_id());
@@ -672,7 +674,7 @@ async fn test_update_integration_config_not_found() {
     let result = IntegrationConfig::update_integration_config(conn, config);
     assert!(result.is_ok());
     let updated = result.unwrap();
-    assert_eq!(updated, 0)
+    assert_eq!(updated, 0);
 }
 
 #[tokio::test]
@@ -704,7 +706,7 @@ async fn test_update_integration_config_partial() {
     let result =
         IntegrationConfig::update_integration_config(conn, partial_update.clone()).unwrap();
 
-    assert_eq!(result, 1)
+    assert_eq!(result, 1);
 
     // Verify updated and unchanged fields
     // assert!(result.online());

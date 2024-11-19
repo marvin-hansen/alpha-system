@@ -2,7 +2,7 @@ use std::fmt::{Display, Formatter};
 
 #[derive(Debug, Default, Copy, Clone, Eq, PartialEq, Hash)]
 #[repr(u8)]
-pub(crate) enum Architecture {
+pub enum Architecture {
     Unknown = 0,
     Arm = 1,
     #[default]
@@ -12,9 +12,9 @@ pub(crate) enum Architecture {
 impl From<u8> for Architecture {
     fn from(value: u8) -> Self {
         match value {
-            1 => Architecture::Arm,
-            2 => Architecture::X86_64,
-            _ => Architecture::Unknown,
+            1 => Self::Arm,
+            2 => Self::X86_64,
+            _ => Self::Unknown,
         }
     }
 }
@@ -22,9 +22,9 @@ impl From<u8> for Architecture {
 impl Display for Architecture {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
-            Architecture::Unknown => write!(f, "Unknown"),
-            Architecture::Arm => write!(f, "Arm"),
-            Architecture::X86_64 => write!(f, "X86_64"),
+            Self::Unknown => write!(f, "Unknown"),
+            Self::Arm => write!(f, "Arm"),
+            Self::X86_64 => write!(f, "X86_64"),
         }
     }
 }

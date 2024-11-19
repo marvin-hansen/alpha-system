@@ -44,5 +44,5 @@ fn test_display() {
         config.port()
     );
 
-    assert_eq!(format!("{}", config), expected);
+    assert_eq!(format!("{config}"), expected);
 }

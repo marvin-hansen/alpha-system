@@ -7,7 +7,7 @@ use rust_decimal::Decimal;
 use sbe_bindings::data_bar_codec::SBE_TEMPLATE_ID;
 use sbe_bindings::{DataBarDecoder, MessageHeaderDecoder, ReadBuf};
 
-/// Decodes an OHLCVBar message from a byte buffer.
+/// Decodes an `OHLCVBar` message from a byte buffer.
 ///
 /// # Arguments
 ///
@@ -15,7 +15,7 @@ use sbe_bindings::{DataBarDecoder, MessageHeaderDecoder, ReadBuf};
 ///
 /// # Returns
 ///
-/// Decoded OHLCVBar
+/// Decoded `OHLCVBar`
 ///
 /// # Errors
 ///
@@ -23,18 +23,18 @@ use sbe_bindings::{DataBarDecoder, MessageHeaderDecoder, ReadBuf};
 ///
 /// # Process
 ///
-/// - Create default DataBarDecoder
-/// - Wrap buffer in ReadBuf
+/// - Create default `DataBarDecoder`
+/// - Wrap buffer in `ReadBuf`
 /// - Decode header and validate template ID
-/// - Decode and validate message_type
-/// - Decode symbol_id
-/// - Decode and parse date_time
-/// - Decode and parse open_price
-/// - Decode and parse high_price
-/// - Decode and parse low_price
-/// - Decode and parse close_price
+/// - Decode and validate `message_type`
+/// - Decode `symbol_id`
+/// - Decode and parse `date_time`
+/// - Decode and parse `open_price`
+/// - Decode and parse `high_price`
+/// - Decode and parse `low_price`
+/// - Decode and parse `close_price`
 /// - Decode and parse volume
-/// - Create and return OHLCVBar
+/// - Create and return `OHLCVBar`
 ///
 pub fn decode_data_bar_message(buffer: &[u8]) -> Result<OHLCVBar, SbeDecodeError> {
     let mut csg = DataBarDecoder::default();

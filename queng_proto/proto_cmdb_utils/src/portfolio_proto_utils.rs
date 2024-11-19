@@ -46,10 +46,11 @@ pub fn portfolio_config_from_proto(proto: ProtoPortfolioConfig) -> Result<Portfo
 /// into an `Instrument` struct. It extracts specific fields from each `ProtoInstrument`
 /// to construct a new `Instrument`.
 ///
+#[must_use]
 pub fn instrument_from_proto(proto: Vec<ProtoInstrument>) -> Vec<Instrument> {
     let mut v = Vec::new();
 
-    for p in proto.iter() {
+    for p in &proto {
         let i = Instrument::new(
             p.instrument_code.clone(),
             p.instrument_class.clone(),
@@ -99,10 +100,11 @@ pub fn portfolio_config_to_proto(
     })
 }
 
+#[must_use]
 pub fn instrument_to_proto(conf: Vec<Instrument>) -> Vec<ProtoInstrument> {
     let mut v = Vec::new();
 
-    for i in conf.iter() {
+    for i in &conf {
         v.push(ProtoInstrument {
             instrument_code: i.code().to_string(),
             instrument_class: i.class().to_string(),
@@ -111,7 +113,7 @@ pub fn instrument_to_proto(conf: Vec<Instrument>) -> Vec<ProtoInstrument> {
             base_asset: i.base_asset().to_string(),
             quote_asset: i.quote_asset().to_string(),
             instrument_figi: i.instrument_figi().clone(),
-        })
+        });
     }
     v
 }

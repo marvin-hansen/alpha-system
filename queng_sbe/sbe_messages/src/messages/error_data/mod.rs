@@ -5,7 +5,7 @@ mod getters;
 mod sbe_decode;
 mod sbe_encode;
 
-#[derive(Debug, Default, Clone, PartialEq)]
+#[derive(Debug, Default, Clone, PartialEq, Eq)]
 pub struct DataErrorMessage {
     message_type: MessageType,
     client_id: u16,
@@ -13,7 +13,7 @@ pub struct DataErrorMessage {
 }
 
 impl DataErrorMessage {
-    /// Creates a new DataErrorMessage instance.
+    /// Creates a new `DataErrorMessage` instance.
     ///
     /// # Arguments
     ///
@@ -22,13 +22,14 @@ impl DataErrorMessage {
     ///
     /// # Returns
     ///
-    /// New DataErrorMessage instance
+    /// New `DataErrorMessage` instance
     ///
     /// # Remarks
     ///
-    /// Sets message_type to DataError
+    /// Sets `message_type` to `DataError`
     ///
-    pub fn new(client_id: u16, data_error_type: DataErrorType) -> Self {
+    #[must_use]
+    pub const fn new(client_id: u16, data_error_type: DataErrorType) -> Self {
         let message_type = MessageType::DataError;
         Self {
             message_type,
@@ -39,15 +40,15 @@ impl DataErrorMessage {
 }
 
 impl From<&[u8]> for DataErrorMessage {
-    /// Decodes a DataErrorMessage from a byte buffer.
+    /// Decodes a `DataErrorMessage` from a byte buffer.
     ///
     /// # Arguments
     ///
-    /// * `value` - Byte buffer containing encoded DataErrorMessage
+    /// * `value` - Byte buffer containing encoded `DataErrorMessage`
     ///
     /// # Returns
     ///
-    /// Decoded DataErrorMessage on success
+    /// Decoded `DataErrorMessage` on success
     ///
     /// # Errors
     ///
@@ -55,7 +56,7 @@ impl From<&[u8]> for DataErrorMessage {
     ///
     /// # Remarks
     ///
-    /// Calls sbe_decode::decode_data_error_message to decode message
+    /// Calls `sbe_decode::decode_data_error_message` to decode message
     ///
     #[inline]
     fn from(value: &[u8]) -> Self {

@@ -16,11 +16,11 @@ fn test_from_u8() {
 fn test_display() {
     let error = DataErrorType::UnknownDataError;
     let expected = "UnknownDataError";
-    let actual = format!("{}", error);
+    let actual = format!("{error}");
     assert_eq!(expected, actual);
 
     let error = DataErrorType::DataTypeNotKnownError;
     let expected = "DataTypeNotKnownError";
-    let actual = format!("{}", error);
+    let actual = format!("{error}");
     assert_eq!(expected, actual);
 }

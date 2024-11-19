@@ -35,10 +35,11 @@ impl ServiceConfig {
     /// * `online` - Whether the service is online.
     /// * `description` - Service description.
     /// * `health_check_uri` - Health check URI.
-    /// * `cluster_uri` - CLuster URI.
+    /// * `cluster_uri` - `CLuster` URI.
     /// * `dependencies` - Service dependencies.
     /// * `endpoints` - Service endpoint.
     #[allow(clippy::too_many_arguments)]
+    #[must_use]
     pub fn new(
         svc_id: ServiceID,
         name: String,
@@ -50,13 +51,9 @@ impl ServiceConfig {
         dependencies: Vec<ServiceID>,
         endpoints: Vec<Endpoint>,
     ) -> Self {
-        if endpoints.is_empty() {
-            panic!("endpoints cannot be empty");
-        }
+        assert!(!endpoints.is_empty(), "endpoints cannot be empty");
 
-        if endpoints.len() < 2 {
-            panic!("endpoints cannot be less than 2. Just must specify at least a service endpoint, a metrics endpoint, and a health endpoint");
-        }
+        assert!(endpoints.len() >= 2, "endpoints cannot be less than 2. Just must specify at least a service endpoint, a metrics endpoint, and a health endpoint");
 
         Self {
             svc_id,
@@ -74,51 +71,63 @@ impl ServiceConfig {
 
 impl ServiceConfig {
     /// Returns the service ID.
-    pub fn svc_id(&self) -> &ServiceID {
+    #[must_use]
+    pub const fn svc_id(&self) -> &ServiceID {
         &self.svc_id
     }
     /// Returns the service name.
+    #[must_use]
     pub fn name(&self) -> &str {
         &self.name
     }
     /// Returns the service version.
-    pub fn version(&self) -> u32 {
+    #[must_use]
+    pub const fn version(&self) -> u32 {
         self.version
     }
     /// Returns whether the service is online.
-    pub fn online(&self) -> bool {
+    #[must_use]
+    pub const fn online(&self) -> bool {
         self.online
     }
     /// Returns the service description.
+    #[must_use]
     pub fn description(&self) -> &str {
         &self.description
     }
     /// Returns the health check URI.
+    #[must_use]
     pub fn health_check_uri(&self) -> &str {
         &self.health_check_uri
     }
     /// Returns the base URI.
+    #[must_use]
     pub fn cluster_uri(&self) -> &str {
         &self.cluster_uri
     }
     /// Returns the service dependencies.
-    pub fn dependencies(&self) -> &Vec<ServiceID> {
+    #[must_use]
+    pub const fn dependencies(&self) -> &Vec<ServiceID> {
         &self.dependencies
     }
     /// Returns all endpoints of the service
-    pub fn endpoints(&self) -> &Vec<Endpoint> {
+    #[must_use]
+    pub const fn endpoints(&self) -> &Vec<Endpoint> {
         &self.endpoints
     }
     /// Returns only the service endpoint.
+    #[must_use]
     pub fn service_endpoint(&self) -> Endpoint {
         self.endpoints.first().unwrap().to_owned()
     }
     /// Returns only the metrics endpoint.
+    #[must_use]
     pub fn metrics_endpoint(&self) -> MetricConfig {
         let endpoint = &self.endpoints.get(1).unwrap().to_owned();
         MetricConfig::from_endpoint(endpoint)
     }
     /// Returns an option to the health endpoint.
+    #[must_use]
     pub fn health_endpoint(&self) -> Endpoint {
         self.endpoints.get(2).unwrap().to_owned()
     }

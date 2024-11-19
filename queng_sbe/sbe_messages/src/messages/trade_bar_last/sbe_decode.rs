@@ -2,15 +2,15 @@ use crate::{LastTradeBar, MessageType};
 use sbe_bindings::last_trade_bar_codec::SBE_TEMPLATE_ID;
 use sbe_bindings::{LastTradeBarDecoder, MessageHeaderDecoder, ReadBuf, SbeResult};
 
-/// Decodes a LastTradeBar message from a byte buffer.
+/// Decodes a `LastTradeBar` message from a byte buffer.
 ///
 /// # Arguments
 ///
-/// * `buffer` - Byte buffer containing encoded LastTradeBar message
+/// * `buffer` - Byte buffer containing encoded `LastTradeBar` message
 ///
 /// # Returns
 ///
-/// Decoded LastTradeBar on success
+/// Decoded `LastTradeBar` on success
 ///
 /// # Errors
 ///
@@ -18,12 +18,12 @@ use sbe_bindings::{LastTradeBarDecoder, MessageHeaderDecoder, ReadBuf, SbeResult
 ///
 /// # Process
 ///
-/// - Create default LastTradeBarDecoder
-/// - Wrap buffer in ReadBuf
+/// - Create default `LastTradeBarDecoder`
+/// - Wrap buffer in `ReadBuf`
 /// - Decode header and validate template ID
-/// - Decode and validate message_type
-/// - Decode symbol_id
-/// - Create and return LastTradeBar
+/// - Decode and validate `message_type`
+/// - Decode `symbol_id`
+/// - Create and return `LastTradeBar`
 ///
 pub fn decode_last_trade_bar_message(buffer: &[u8]) -> SbeResult<LastTradeBar> {
     let mut csg = LastTradeBarDecoder::default();

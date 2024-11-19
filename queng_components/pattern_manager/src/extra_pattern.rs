@@ -3,7 +3,10 @@
  */
 
 use crate::abstract_trait::PatternTrait;
-use crate::fields::*;
+use crate::fields::{
+    ONE, ONE_POINT_FIVE, POINT_FIVE, POINT_NINE, POINT_ONE, POINT_SEVEN_FIVE, POINT_TWO,
+    POINT_TWO_FIVE, POINT_ZERO_ONE, THREE, TWO, TWO_POINT_FIVE,
+};
 use common_data_bar::OHLCVBar;
 use rust_decimal::prelude::ToPrimitive;
 
@@ -15,15 +18,15 @@ pub struct ExtraPattern {
 }
 
 impl ExtraPattern {
-    pub fn new() -> Self {
-        ExtraPattern { arr: [false; SIZE] }
+    pub const fn new() -> Self {
+        Self { arr: [false; SIZE] }
     }
 }
 
 impl PatternTrait for ExtraPattern {
     fn get_eval_result(&self, index: usize) -> Result<bool, String> {
         if index >= self.arr.len() {
-            return Err(format!("extra_pattern: index out of bound: {}", index));
+            return Err(format!("extra_pattern: index out of bound: {index}"));
         }
 
         Ok(self.arr[index])
@@ -133,64 +136,64 @@ impl PatternTrait for ExtraPattern {
         self.arr[50] = (highd1 > highd2) && (lowd1 > lowd2);
 
         self.arr[51] = (highd1 < highd2) && (lowd1 < lowd2);
-        self.arr[52] = highd0 > (lowd0 + lowd0 * POINT_FIVE * POINT_ZERO_ONE);
-        self.arr[53] = highd0 > (lowd0 + lowd0 * POINT_SEVEN_FIVE * POINT_ZERO_ONE);
-        self.arr[54] = highd0 > (lowd0 + lowd0 * ONE * POINT_ZERO_ONE);
-        self.arr[55] = highd0 > (lowd0 + lowd0 * ONE_POINT_FIVE * POINT_ZERO_ONE);
-        self.arr[56] = highd0 > (lowd0 + lowd0 * TWO * POINT_ZERO_ONE);
-        self.arr[57] = highd0 > (lowd0 + lowd0 * TWO_POINT_FIVE * POINT_ZERO_ONE);
-        self.arr[58] = highd0 > (lowd0 + lowd0 * THREE * POINT_ZERO_ONE);
-        self.arr[59] = highd0 < (lowd0 + lowd0 * POINT_FIVE * POINT_ZERO_ONE);
-        self.arr[60] = highd0 < (lowd0 + lowd0 * POINT_SEVEN_FIVE * POINT_ZERO_ONE);
+        self.arr[52] = highd0 > (lowd0 * POINT_FIVE).mul_add(POINT_ZERO_ONE, lowd0);
+        self.arr[53] = highd0 > (lowd0 * POINT_SEVEN_FIVE).mul_add(POINT_ZERO_ONE, lowd0);
+        self.arr[54] = highd0 > (lowd0 * ONE).mul_add(POINT_ZERO_ONE, lowd0);
+        self.arr[55] = highd0 > (lowd0 * ONE_POINT_FIVE).mul_add(POINT_ZERO_ONE, lowd0);
+        self.arr[56] = highd0 > (lowd0 * TWO).mul_add(POINT_ZERO_ONE, lowd0);
+        self.arr[57] = highd0 > (lowd0 * TWO_POINT_FIVE).mul_add(POINT_ZERO_ONE, lowd0);
+        self.arr[58] = highd0 > (lowd0 * THREE).mul_add(POINT_ZERO_ONE, lowd0);
+        self.arr[59] = highd0 < (lowd0 * POINT_FIVE).mul_add(POINT_ZERO_ONE, lowd0);
+        self.arr[60] = highd0 < (lowd0 * POINT_SEVEN_FIVE).mul_add(POINT_ZERO_ONE, lowd0);
 
-        self.arr[61] = highd0 < (lowd0 + lowd0 * ONE * POINT_ZERO_ONE);
-        self.arr[62] = highd0 < (lowd0 + lowd0 * ONE_POINT_FIVE * POINT_ZERO_ONE);
-        self.arr[63] = highd0 < (lowd0 + lowd0 * TWO * POINT_ZERO_ONE);
-        self.arr[64] = highd0 < (lowd0 + lowd0 * TWO_POINT_FIVE * POINT_ZERO_ONE);
-        self.arr[65] = highd0 < (lowd0 + lowd0 * THREE * POINT_ZERO_ONE);
+        self.arr[61] = highd0 < (lowd0 * ONE).mul_add(POINT_ZERO_ONE, lowd0);
+        self.arr[62] = highd0 < (lowd0 * ONE_POINT_FIVE).mul_add(POINT_ZERO_ONE, lowd0);
+        self.arr[63] = highd0 < (lowd0 * TWO).mul_add(POINT_ZERO_ONE, lowd0);
+        self.arr[64] = highd0 < (lowd0 * TWO_POINT_FIVE).mul_add(POINT_ZERO_ONE, lowd0);
+        self.arr[65] = highd0 < (lowd0 * THREE).mul_add(POINT_ZERO_ONE, lowd0);
         self.arr[66] = closed1 > closed2;
         self.arr[67] = closed1 < closed2;
         self.arr[68] = closed1 < opend1;
         self.arr[69] = closed1 > opend1;
-        self.arr[70] = closed1 < (closed2 - closed2 * POINT_FIVE * POINT_ZERO_ONE);
+        self.arr[70] = closed1 < (closed2 * POINT_FIVE).mul_add(-POINT_ZERO_ONE, closed2);
 
-        self.arr[71] = closed1 < (closed2 - closed2 * ONE * POINT_ZERO_ONE);
-        self.arr[72] = closed1 < (closed2 - closed2 * ONE_POINT_FIVE * POINT_ZERO_ONE);
-        self.arr[73] = closed1 < (closed2 - closed2 * TWO * POINT_ZERO_ONE);
-        self.arr[74] = closed1 < (closed2 - closed2 * TWO_POINT_FIVE * POINT_ZERO_ONE);
-        self.arr[75] = closed1 < (closed2 - closed2 * THREE * POINT_ZERO_ONE);
-        self.arr[76] = closed1 > (closed2 + closed2 * POINT_FIVE * POINT_ZERO_ONE);
-        self.arr[77] = closed1 > (closed2 + closed2 * ONE * POINT_ZERO_ONE);
-        self.arr[78] = closed1 > (closed2 + closed2 * ONE_POINT_FIVE * POINT_ZERO_ONE);
-        self.arr[79] = closed1 > (closed2 + closed2 * TWO * POINT_ZERO_ONE);
+        self.arr[71] = closed1 < (closed2 * ONE).mul_add(-POINT_ZERO_ONE, closed2);
+        self.arr[72] = closed1 < (closed2 * ONE_POINT_FIVE).mul_add(-POINT_ZERO_ONE, closed2);
+        self.arr[73] = closed1 < (closed2 * TWO).mul_add(-POINT_ZERO_ONE, closed2);
+        self.arr[74] = closed1 < (closed2 * TWO_POINT_FIVE).mul_add(-POINT_ZERO_ONE, closed2);
+        self.arr[75] = closed1 < (closed2 * THREE).mul_add(-POINT_ZERO_ONE, closed2);
+        self.arr[76] = closed1 > (closed2 * POINT_FIVE).mul_add(POINT_ZERO_ONE, closed2);
+        self.arr[77] = closed1 > (closed2 * ONE).mul_add(POINT_ZERO_ONE, closed2);
+        self.arr[78] = closed1 > (closed2 * ONE_POINT_FIVE).mul_add(POINT_ZERO_ONE, closed2);
+        self.arr[79] = closed1 > (closed2 * TWO).mul_add(POINT_ZERO_ONE, closed2);
         self.arr[80] = highd0 > highd1;
 
-        self.arr[81] = highd0 > (highd1 + highd1 * POINT_TWO_FIVE * POINT_ZERO_ONE);
-        self.arr[82] = highd0 > (highd1 + highd1 * POINT_FIVE * POINT_ZERO_ONE);
-        self.arr[83] = highd0 > (highd1 + highd1 * POINT_SEVEN_FIVE * POINT_ZERO_ONE);
-        self.arr[84] = highd0 > (highd1 + highd1 * ONE * POINT_ZERO_ONE);
-        self.arr[85] = highd0 > (highd1 + highd1 * ONE_POINT_FIVE * POINT_ZERO_ONE);
+        self.arr[81] = highd0 > (highd1 * POINT_TWO_FIVE).mul_add(POINT_ZERO_ONE, highd1);
+        self.arr[82] = highd0 > (highd1 * POINT_FIVE).mul_add(POINT_ZERO_ONE, highd1);
+        self.arr[83] = highd0 > (highd1 * POINT_SEVEN_FIVE).mul_add(POINT_ZERO_ONE, highd1);
+        self.arr[84] = highd0 > (highd1 * ONE).mul_add(POINT_ZERO_ONE, highd1);
+        self.arr[85] = highd0 > (highd1 * ONE_POINT_FIVE).mul_add(POINT_ZERO_ONE, highd1);
         self.arr[86] = highd0 < highd1;
-        self.arr[87] = highd0 < (highd1 - highd1 * POINT_FIVE * POINT_ZERO_ONE);
-        self.arr[88] = highd0 < (highd1 - highd1 * ONE * POINT_ZERO_ONE);
-        self.arr[89] = highd0 < (highd1 - highd1 * ONE_POINT_FIVE * POINT_ZERO_ONE);
-        self.arr[90] = highd0 < (highd1 - highd1 * TWO * POINT_ZERO_ONE);
+        self.arr[87] = highd0 < (highd1 * POINT_FIVE).mul_add(-POINT_ZERO_ONE, highd1);
+        self.arr[88] = highd0 < (highd1 * ONE).mul_add(-POINT_ZERO_ONE, highd1);
+        self.arr[89] = highd0 < (highd1 * ONE_POINT_FIVE).mul_add(-POINT_ZERO_ONE, highd1);
+        self.arr[90] = highd0 < (highd1 * TWO).mul_add(-POINT_ZERO_ONE, highd1);
 
-        self.arr[91] = highd0 < (highd1 - highd1 * TWO_POINT_FIVE * POINT_ZERO_ONE);
+        self.arr[91] = highd0 < (highd1 * TWO_POINT_FIVE).mul_add(-POINT_ZERO_ONE, highd1);
         self.arr[92] = highd1 > highd5;
         self.arr[93] = highd1 < highd5;
         self.arr[94] = lowd0 < lowd1;
-        self.arr[95] = lowd0 < (lowd1 - lowd1 * POINT_TWO_FIVE * POINT_ZERO_ONE);
-        self.arr[96] = lowd0 < (lowd1 - lowd1 * POINT_FIVE * POINT_ZERO_ONE);
-        self.arr[97] = lowd0 < (lowd1 - lowd1 * POINT_SEVEN_FIVE * POINT_ZERO_ONE);
-        self.arr[98] = lowd0 < (lowd1 - lowd1 * ONE * POINT_ZERO_ONE);
+        self.arr[95] = lowd0 < (lowd1 * POINT_TWO_FIVE).mul_add(-POINT_ZERO_ONE, lowd1);
+        self.arr[96] = lowd0 < (lowd1 * POINT_FIVE).mul_add(-POINT_ZERO_ONE, lowd1);
+        self.arr[97] = lowd0 < (lowd1 * POINT_SEVEN_FIVE).mul_add(-POINT_ZERO_ONE, lowd1);
+        self.arr[98] = lowd0 < (lowd1 * ONE).mul_add(-POINT_ZERO_ONE, lowd1);
         self.arr[99] = lowd0 > lowd1;
-        self.arr[100] = lowd0 > (lowd1 + lowd1 * POINT_FIVE * POINT_ZERO_ONE);
+        self.arr[100] = lowd0 > (lowd1 * POINT_FIVE).mul_add(POINT_ZERO_ONE, lowd1);
 
-        self.arr[101] = lowd0 > (lowd1 + lowd1 * ONE * POINT_ZERO_ONE);
-        self.arr[102] = lowd0 > (lowd1 + lowd1 * ONE_POINT_FIVE * POINT_ZERO_ONE);
-        self.arr[103] = lowd0 > (lowd1 + lowd1 * TWO * POINT_ZERO_ONE);
-        self.arr[104] = lowd0 > (lowd1 + lowd1 * TWO_POINT_FIVE * POINT_ZERO_ONE);
+        self.arr[101] = lowd0 > (lowd1 * ONE).mul_add(POINT_ZERO_ONE, lowd1);
+        self.arr[102] = lowd0 > (lowd1 * ONE_POINT_FIVE).mul_add(POINT_ZERO_ONE, lowd1);
+        self.arr[103] = lowd0 > (lowd1 * TWO).mul_add(POINT_ZERO_ONE, lowd1);
+        self.arr[104] = lowd0 > (lowd1 * TWO_POINT_FIVE).mul_add(POINT_ZERO_ONE, lowd1);
         self.arr[105] = lowd1 < lowd5;
         self.arr[106] = lowd1 > lowd5;
         self.arr[107] = (highd1 > highd2) && (highd1 > highd3) && (highd1 > highd4);
@@ -205,15 +208,15 @@ impl PatternTrait for ExtraPattern {
         self.arr[115] = opend0 < lowd1 || opend0 > highd1;
         self.arr[116] = opend0 < lowd1;
         self.arr[117] = opend0 > highd1;
-        self.arr[118] = opend0 < (closed1 - (closed1 * POINT_TWO_FIVE * POINT_ZERO_ONE));
-        self.arr[119] = opend0 < (closed1 - (closed1 * POINT_FIVE * POINT_ZERO_ONE));
-        self.arr[120] = opend0 < (closed1 - (closed1 * POINT_SEVEN_FIVE * POINT_ZERO_ONE));
+        self.arr[118] = opend0 < (closed1 * POINT_TWO_FIVE).mul_add(-POINT_ZERO_ONE, closed1);
+        self.arr[119] = opend0 < (closed1 * POINT_FIVE).mul_add(-POINT_ZERO_ONE, closed1);
+        self.arr[120] = opend0 < (closed1 * POINT_SEVEN_FIVE).mul_add(-POINT_ZERO_ONE, closed1);
 
-        self.arr[121] = opend0 < (closed1 - (closed1 * ONE * POINT_ZERO_ONE));
-        self.arr[122] = opend0 > (closed1 + (closed1 * POINT_TWO_FIVE * POINT_ZERO_ONE));
-        self.arr[123] = opend0 > (closed1 + (closed1 * POINT_FIVE * POINT_ZERO_ONE));
-        self.arr[124] = opend0 > (closed1 + (closed1 * POINT_SEVEN_FIVE * POINT_ZERO_ONE));
-        self.arr[125] = opend0 > (closed1 + (closed1 * ONE * POINT_ZERO_ONE));
+        self.arr[121] = opend0 < (closed1 * ONE).mul_add(-POINT_ZERO_ONE, closed1);
+        self.arr[122] = opend0 > (closed1 * POINT_TWO_FIVE).mul_add(POINT_ZERO_ONE, closed1);
+        self.arr[123] = opend0 > (closed1 * POINT_FIVE).mul_add(POINT_ZERO_ONE, closed1);
+        self.arr[124] = opend0 > (closed1 * POINT_SEVEN_FIVE).mul_add(POINT_ZERO_ONE, closed1);
+        self.arr[125] = opend0 > (closed1 * ONE).mul_add(POINT_ZERO_ONE, closed1);
         self.arr[126] = (highd0 < highd1) && (lowd0 > lowd1);
         self.arr[127] = range1d < ((highd2 - lowd2) + (highd3 - lowd3) / THREE);
         self.arr[128] = (range1d < (highd2 - lowd2)) && ((highd2 - lowd2) < (highd3 - lowd3));

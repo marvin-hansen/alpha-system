@@ -1,13 +1,48 @@
 use crate::DBG;
 use pg_mddb_manager::PostgresMDDBManager;
 use proto_mddb::proto::db_gateway_mddb_service_server::DbGatewayMddbService;
-use proto_mddb::proto::*;
-use proto_mddb_utils::*;
+use proto_mddb::proto::{
+    CheckIfAssetIdExistsRequest, CheckIfAssetIdExistsResponse, CheckIfExchangeIdExistsRequest,
+    CheckIfExchangeIdExistsResponse, CheckIfInstrumentIdExistsRequest,
+    CheckIfInstrumentIdExistsResponse, CountAssetsRequest, CountAssetsResponse,
+    CountExchangesRequest, CountExchangesResponse, CountInstrumentsRequest,
+    CountInstrumentsResponse, GetAllAssetsRequest, GetAllAssetsResponse, GetAllExchangesRequest,
+    GetAllExchangesResponse, GetAllInstrumentsForBaseAssetAndExchangeRequest,
+    GetAllInstrumentsForBaseAssetAndExchangeResponse, GetAllInstrumentsForBaseAssetRequest,
+    GetAllInstrumentsForBaseAssetResponse, GetAllInstrumentsForBaseQuoteAssetAndExchangeRequest,
+    GetAllInstrumentsForBaseQuoteAssetAndExchangeResponse, GetAllInstrumentsForExchangeRequest,
+    GetAllInstrumentsForExchangeResponse, GetAllInstrumentsForQuoteAssetAndExchangeRequest,
+    GetAllInstrumentsForQuoteAssetAndExchangeResponse, GetAllInstrumentsForQuoteAssetRequest,
+    GetAllInstrumentsForQuoteAssetResponse, GetAllInstrumentsRequest, GetAllInstrumentsResponse,
+    GetAssetRequest, GetAssetResponse, GetExchangeRequest, GetExchangeResponse,
+    GetInstrumentByFigiRequest, GetInstrumentByFigiResponse, GetInstrumentByIdRequest,
+    GetInstrumentByIdResponse, GetInstrumentByPairFigiRequest, GetInstrumentByPairFigiResponse,
+    LookupExchangeNameRequest, LookupExchangeNameResponse,
+    LookupInstrumentIdByExchangePairCodeRequest, LookupInstrumentIdByExchangePairCodeResponse,
+    LookupInstrumentIdByFigiRequest, LookupInstrumentIdByFigiResponse,
+    LookupInstrumentIdByPairFigiRequest, LookupInstrumentIdByPairFigiResponse,
+};
+use proto_mddb_utils::{
+    get_all_assets_response, get_all_exchanges_response,
+    get_all_instruments_for_base_asset_and_exchange_response,
+    get_all_instruments_for_base_asset_response,
+    get_all_instruments_for_base_quote_asset_and_exchange_response,
+    get_all_instruments_for_exchange_response,
+    get_all_instruments_for_quote_asset_and_exchange_response,
+    get_all_instruments_for_quote_asset_response, get_all_instruments_response,
+    get_assets_response, get_check_if_asset_exists_response, get_check_if_exchange_exists_response,
+    get_check_if_instrument_exists_response, get_count_assets_response,
+    get_count_exchanges_response, get_count_instruments_response, get_exchange_response,
+    get_instrument_by_figi_response, get_instrument_by_id_response,
+    get_instrument_by_pair_figi_response, get_lookup_exchange_name_response,
+    get_lookup_instrument_by_figi_response, get_lookup_instrument_by_pair_figi_response,
+    get_lookup_instrument_id_by_exchange_pair_code_response,
+};
 use std::sync::Arc;
 use tokio::sync::RwLock;
 use tonic::{Request, Response, Status};
 
-pub(crate) type SafePgMDDBManager = Arc<RwLock<PostgresMDDBManager>>;
+pub type SafePgMDDBManager = Arc<RwLock<PostgresMDDBManager>>;
 
 #[derive(Clone)]
 pub struct MDDBServer {
@@ -16,13 +51,13 @@ pub struct MDDBServer {
 }
 
 impl MDDBServer {
-    pub fn new(dbm: SafePgMDDBManager) -> Self {
+    pub const fn new(dbm: SafePgMDDBManager) -> Self {
         Self { dbg: DBG, dbm }
     }
 
     fn dbg_print(&self, msg: &str) {
         if self.dbg {
-            println!("[DBGW/service_mddb]: {}", msg)
+            println!("[DBGW/service_mddb]: {msg}");
         }
     }
 }

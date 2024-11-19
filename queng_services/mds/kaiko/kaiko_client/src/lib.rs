@@ -21,7 +21,7 @@ impl KaikoClient {
         // The origin API delivers large raw data so compression enabled by default is warranted
         let client = Self::get_client(true);
 
-        Ok(KaikoClient {
+        Ok(Self {
             client,
             url: API_URL.to_string(),
         })
@@ -29,7 +29,7 @@ impl KaikoClient {
 
     pub fn with_local_proxy() -> Result<Self, KaikoClientError> {
         let client = Self::get_client(true);
-        Ok(KaikoClient {
+        Ok(Self {
             client,
             url: API_PROXY_URL.to_string(),
         })
@@ -38,7 +38,7 @@ impl KaikoClient {
     pub fn with_url(url: &str, gzip: bool) -> Result<Self, KaikoClientError> {
         let client = Self::get_client(gzip);
 
-        Ok(KaikoClient {
+        Ok(Self {
             client,
             url: url.to_string(),
         })
@@ -83,8 +83,7 @@ impl KaikoClient {
                 Ok(assets_root.data)
             }
             Err(e) => Err(KaikoClientError::from(format!(
-                "Error downloading assets {}",
-                e
+                "Error downloading assets {e}"
             ))),
         };
     }
@@ -101,8 +100,7 @@ impl KaikoClient {
                 Ok(exchanges_root.data)
             }
             Err(e) => Err(KaikoClientError::from(format!(
-                "Error downloading exchanges {}",
-                e
+                "Error downloading exchanges {e}"
             ))),
         };
     }
@@ -125,8 +123,7 @@ impl KaikoClient {
                 Ok(instruments_root.data)
             }
             Err(e) => Err(KaikoClientError::from(format!(
-                "Error downloading instruments {}",
-                e
+                "Error downloading instruments {e}"
             ))),
         };
     }
@@ -142,8 +139,7 @@ impl KaikoClient {
                 Ok(stats)
             }
             Err(e) => Err(KaikoClientError::from(format!(
-                "Error downloading stats {}",
-                e
+                "Error downloading stats {e}"
             ))),
         };
     }

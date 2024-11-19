@@ -23,7 +23,7 @@ impl Server {
         raw_message: &[u8],
     ) -> Result<(), MessageProcessingError> {
         //
-        let message_type = MessageType::from(raw_message[2] as u16);
+        let message_type = MessageType::from(u16::from(raw_message[2]));
 
         match message_type {
             MessageType::ClientLogin => {

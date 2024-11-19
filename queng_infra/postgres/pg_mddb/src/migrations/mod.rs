@@ -1,5 +1,5 @@
-pub(crate) mod diesel_initial_setup;
-pub(crate) mod mddb_setup;
+pub mod diesel_initial_setup;
+pub mod mddb_setup;
 
 use crate::migrations::diesel_initial_setup::down::DIESEL_DOWN;
 use crate::migrations::diesel_initial_setup::up::DIESEL_UP;
@@ -8,7 +8,7 @@ use diesel_migrations::{EmbeddedMigration, EmbeddedMigrations, EmbeddedName, Tom
 use crate::migrations::mddb_setup::down::SCHEMA_DOWN;
 use crate::migrations::mddb_setup::up::SCHEMA_UP;
 
-pub(crate) const EMBEDDED_MIGRATIONS: EmbeddedMigrations =
+pub const EMBEDDED_MIGRATIONS: EmbeddedMigrations =
     EmbeddedMigrations::new(&[DIESEL_MIGRATION, SCHEMA_MIGRATION]);
 
 const DIESEL_NAME: &str = "00000000000000_diesel_initial_setup";

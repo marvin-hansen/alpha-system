@@ -5,7 +5,9 @@ mod instrument_type_conversion;
 mod instrument_type_create_conversion;
 mod instrument_type_update_conversion;
 
-#[derive(Debug, Clone, PartialEq, Queryable, Selectable, Identifiable, Insertable, AsChangeset)]
+#[derive(
+    Debug, Clone, PartialEq, Eq, Queryable, Selectable, Identifiable, Insertable, AsChangeset,
+)]
 #[diesel(table_name=crate::schema::cmdb::instrument, primary_key(code))]
 #[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct Instrument {
@@ -32,7 +34,8 @@ pub struct CreateInstrument {
 }
 
 impl CreateInstrument {
-    pub fn new(
+    #[must_use]
+    pub const fn new(
         code: String,
         class: String,
         exchange_code: String,
@@ -66,7 +69,8 @@ pub struct UpdateInstrument {
 }
 
 impl UpdateInstrument {
-    pub fn new(
+    #[must_use]
+    pub const fn new(
         class: Option<String>,
         exchange_code: Option<String>,
         exchange_pair_code: Option<String>,

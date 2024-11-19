@@ -8,14 +8,14 @@ use diesel::result::Error::DatabaseError;
 use diesel::{ExpressionMethods, QueryDsl, RunQueryDsl};
 
 impl Exchange {
-    /// Creates a new exchange in the database based on the provided MetaExchange information.
+    /// Creates a new exchange in the database based on the provided `MetaExchange` information.
     ///
     /// # Arguments
     /// - `conn`: A mutable reference to the database connection.
-    /// - `meta_exchange`: The MetaExchange struct containing the exchange information to be inserted.
+    /// - `meta_exchange`: The `MetaExchange` struct containing the exchange information to be inserted.
     ///
     /// # Returns
-    /// A Result containing the inserted MetaExchange if successful, or a diesel Error if an error occurs.
+    /// A Result containing the inserted `MetaExchange` if successful, or a diesel Error if an error occurs.
     ///
     pub fn create(
         conn: &mut Connection,
@@ -24,7 +24,7 @@ impl Exchange {
         let new_exchange = CreateExchange::from_meta_exchange(meta_exchange);
         match diesel::insert_into(exchanges_table)
             .values(&new_exchange)
-            .get_result::<Exchange>(conn)
+            .get_result::<Self>(conn)
         {
             Ok(res) => Ok(res.to_meta_exchange()),
             Err(e) => Err(e),
@@ -36,7 +36,7 @@ impl Exchange {
     /// # Arguments
     ///
     /// * `conn` - A mutable reference to the database connection.
-    /// * `meta_exchanges` - A vector of MetaExchange structs containing metadata for the exchanges to be created.
+    /// * `meta_exchanges` - A vector of `MetaExchange` structs containing metadata for the exchanges to be created.
     ///
     /// # Returns
     ///
@@ -108,7 +108,7 @@ impl Exchange {
         Ok(exists)
     }
 
-    /// Reads a MetaExchange from the database based on the provided exchange ID string.
+    /// Reads a `MetaExchange` from the database based on the provided exchange ID string.
     ///
     /// # Arguments
     ///
@@ -117,7 +117,7 @@ impl Exchange {
     ///
     /// # Returns
     ///
-    /// A Result containing the retrieved MetaExchange if successful, or an Error if the operation fails.
+    /// A Result containing the retrieved `MetaExchange` if successful, or an Error if the operation fails.
     ///
     pub fn read(
         conn: &mut Connection,
@@ -129,12 +129,12 @@ impl Exchange {
         } else {
             exchanges_table
                 .filter(exchange_id.eq(param_exchange_id))
-                .first::<Exchange>(conn)
+                .first::<Self>(conn)
                 .map(|e| Some(e.to_meta_exchange()))
         }
     }
 
-    /// Reads all exchanges from the database and converts them to MetaExchange objects.
+    /// Reads all exchanges from the database and converts them to `MetaExchange` objects.
     ///
     /// # Arguments
     ///
@@ -142,10 +142,10 @@ impl Exchange {
     ///
     /// # Returns
     ///
-    /// A Result containing a vector of MetaExchange objects if successful, or a diesel Error if an error occurs.
+    /// A Result containing a vector of `MetaExchange` objects if successful, or a diesel Error if an error occurs.
     ///
     pub fn read_all(conn: &mut Connection) -> Result<Vec<MetaExchange>, Error> {
-        exchanges_table.load::<Exchange>(conn).map(|e| {
+        exchanges_table.load::<Self>(conn).map(|e| {
             e.into_iter()
                 .map(|exchange| exchange.to_meta_exchange())
                 .collect()

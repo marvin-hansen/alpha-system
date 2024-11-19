@@ -49,9 +49,9 @@ impl DockerUtil {
         let reuse_container = container_config.reuse_container();
         let wait_strategy = container_config.wait_strategy();
 
-        let container_id = &format!("{}-{}", name, connection_port);
+        let container_id = &format!("{name}-{connection_port}");
 
-        println!("Container ID: {}", container_id);
+        println!("Container ID: {container_id}");
 
         self.dbg_print("Check if container is already running.");
         let is_running = self
@@ -94,7 +94,7 @@ impl DockerUtil {
         self.dbg_print("Container doesn't exist.");
         self.dbg_print("Pull container image.");
         match self.pull_container_image(container_id, image, platform) {
-            Ok(_) => {}
+            Ok(()) => {}
             Err(e) => return Err(e),
         };
 
@@ -143,8 +143,7 @@ impl DockerUtil {
     ) -> Result<(String, u16), DockerError> {
         // Example: docker run --rm --detach --publish 80:80 --name test-80 nginx:latest
         self.dbg_print(&format!(
-            "[start_container]: Starting new container: {}.",
-            container_id
+            "[start_container]: Starting new container: {container_id}."
         ));
 
         // construct initial command
@@ -158,7 +157,7 @@ impl DockerUtil {
         }
 
         // Format main connection port for docker
-        let port_publish = format!("{}:{}", connection_port, connection_port);
+        let port_publish = format!("{connection_port}:{connection_port}");
         cmd.arg("--publish").arg(port_publish);
 
         // Publish additional ports for the container, if applicable
@@ -166,14 +165,13 @@ impl DockerUtil {
             for port in additional_ports.expect("Failed to unwrap additional Docker ports") {
                 if *port == 0 {
                     return Err(DockerError::from(format!(
-                        "Error starting container {}: Port cannot be 0.",
-                        container_id,
+                        "Error starting container {container_id}: Port cannot be 0.",
                     )));
                 }
 
                 // Example: --publish 80:80
                 // Format port for docker
-                let port_publish = format!("{}:{}", port, port);
+                let port_publish = format!("{port}:{port}");
                 // Add argument
                 cmd.arg("--publish").arg(port_publish);
             }
@@ -198,7 +196,7 @@ impl DockerUtil {
         // Add container image to start
         cmd.arg(image);
 
-        self.dbg_print(&format!("[start_container]: Run Docker command: {:?}", cmd));
+        self.dbg_print(&format!("[start_container]: Run Docker command: {cmd:?}"));
 
         // There are multiple ways to spawn a child process and execute an arbitrary command on the machine:
         //
@@ -220,14 +218,13 @@ impl DockerUtil {
             }
             Err(e) => {
                 return Err(DockerError::from(format!(
-                    "Error starting container {}: {}",
-                    container_id, e
+                    "Error starting container {container_id}: {e}"
                 )))
             }
         };
 
         match self.wait_for_container(container_id, wait_strategy) {
-            Ok(_) => {}
+            Ok(()) => {}
             Err(e) => {
                 return Err(e);
             }
@@ -255,16 +252,14 @@ impl DockerUtil {
         match wait_strategy {
             WaitStrategy::WaitForDuration(duration) => {
                 self.dbg_print(&format!(
-                    "[start_container]: Waiting for {} seconds.",
-                    duration
+                    "[start_container]: Waiting for {duration} seconds."
                 ));
                 std::thread::sleep(Duration::from_secs(*duration));
                 Ok(())
             }
             WaitStrategy::WaitUntilConsoleOutputContains(expected_output, timeout) => {
                 self.dbg_print(&format!(
-                    "[start_container]: Waiting until console output contains '{}'",
-                    expected_output
+                    "[start_container]: Waiting until console output contains '{expected_output}'"
                 ));
                 self.wait_until_console_output_contains(container_id, expected_output, timeout)
                     .expect("Failed to wait until console output contains");
@@ -323,8 +318,7 @@ impl DockerUtil {
                 .output()
                 .map_err(|e| {
                     DockerError::from(format!(
-                        "[start_container]: Failed to run docker logs for container: {} Error: {}",
-                        container_id, e
+                        "[start_container]: Failed to run docker logs for container: {container_id} Error: {e}"
                     ))
                 }) {
                 Ok(o) => o,

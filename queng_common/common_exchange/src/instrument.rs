@@ -1,6 +1,6 @@
 use std::fmt::{Display, Formatter};
 
-#[derive(Default, Debug, Clone, PartialEq)]
+#[derive(Default, Debug, Clone, PartialEq, Eq)]
 pub struct Instrument {
     code: String,
     class: String,
@@ -12,7 +12,8 @@ pub struct Instrument {
 }
 
 impl Instrument {
-    pub fn new(
+    #[must_use]
+    pub const fn new(
         code: String,
         class: String,
         exchange_code: String,
@@ -34,37 +35,44 @@ impl Instrument {
 }
 
 impl Instrument {
+    #[must_use]
     pub fn code(&self) -> &str {
         &self.code
     }
 
+    #[must_use]
     pub fn class(&self) -> &str {
         &self.class
     }
 
+    #[must_use]
     pub fn exchange_code(&self) -> &str {
         &self.exchange_code
     }
 
+    #[must_use]
     pub fn exchange_pair_code(&self) -> &str {
         &self.exchange_pair_code
     }
 
+    #[must_use]
     pub fn base_asset(&self) -> &str {
         &self.base_asset
     }
 
+    #[must_use]
     pub fn quote_asset(&self) -> &str {
         &self.quote_asset
     }
 
-    pub fn instrument_figi(&self) -> &Option<String> {
+    #[must_use]
+    pub const fn instrument_figi(&self) -> &Option<String> {
         &self.instrument_figi
     }
 }
 
 impl Display for Instrument {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "Instrument: {:?}", self)
+        write!(f, "Instrument: {self:?}")
     }
 }

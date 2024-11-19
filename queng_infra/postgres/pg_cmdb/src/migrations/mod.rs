@@ -7,7 +7,7 @@ use crate::migrations::diesel_initial_setup::down::DIESEL_DOWN;
 use crate::migrations::diesel_initial_setup::up::DIESEL_UP;
 use diesel_migrations::{EmbeddedMigration, EmbeddedMigrations, EmbeddedName, TomlMetadataWrapper};
 
-pub(crate) const EMBEDDED_MIGRATIONS: EmbeddedMigrations =
+pub const EMBEDDED_MIGRATIONS: EmbeddedMigrations =
     EmbeddedMigrations::new(&[DIESEL_MIGRATION, SCHEMA_MIGRATION]);
 
 /// An embedded version of the DIESEL database migrations metadata tables.

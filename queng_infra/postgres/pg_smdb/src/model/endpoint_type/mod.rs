@@ -17,7 +17,7 @@ pub struct Endpoint {
 }
 
 impl Endpoint {
-    pub fn new(
+    pub const fn new(
         name: String,
         version: i32,
         base_uri: String,

@@ -15,10 +15,10 @@ impl From<u16> for SymbolID {
     #[inline]
     fn from(v: u16) -> Self {
         match v {
-            0xff_u16 => SymbolID::NullVal,
-            0x1_u16 => SymbolID::BTCUSD,
-            0x2_u16 => SymbolID::ETHUSD,
-            0x3_u16 => SymbolID::LTCUSD,
+            0xff_u16 => Self::NullVal,
+            0x1_u16 => Self::BTCUSD,
+            0x2_u16 => Self::ETHUSD,
+            0x3_u16 => Self::LTCUSD,
             _ => Self::NullVal,
         }
     }
@@ -27,10 +27,10 @@ impl From<u16> for SymbolID {
 impl Display for SymbolID {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
-            SymbolID::NullVal => write!(f, "NullVal"),
-            SymbolID::BTCUSD => write!(f, "BTCUSD"),
-            SymbolID::ETHUSD => write!(f, "ETHUSD"),
-            SymbolID::LTCUSD => write!(f, "LTCUSD"),
+            Self::NullVal => write!(f, "NullVal"),
+            Self::BTCUSD => write!(f, "BTCUSD"),
+            Self::ETHUSD => write!(f, "ETHUSD"),
+            Self::LTCUSD => write!(f, "LTCUSD"),
         }
     }
 }

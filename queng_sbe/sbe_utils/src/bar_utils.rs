@@ -3,11 +3,11 @@ use sbe_messages::{
     DataErrorType, DataType, FirstOHLCVBar, FirstTradeBar, LastOHLCVBar, LastTradeBar,
 };
 
-/// Encodes a FirstTradeBar or FirstOHLCVBar message for the given symbol id and data type.
+/// Encodes a `FirstTradeBar` or `FirstOHLCVBar` message for the given symbol id and data type.
 ///
 /// # Parameters
 ///
-/// * `date_type` - The data type to encode, TradeData or OHLCVData
+/// * `date_type` - The data type to encode, `TradeData` or `OHLCVData`
 /// * `symbol_id` - The numeric id of the symbol
 ///
 /// # Returns
@@ -51,11 +51,11 @@ pub fn encode_first_bar(
     }
 }
 
-/// Encodes a LastTradeBar or LastOHLCVBar message for the given symbol id and data type.
+/// Encodes a `LastTradeBar` or `LastOHLCVBar` message for the given symbol id and data type.
 ///
 /// # Parameters
 ///
-/// * `date_type` - The data type to encode, TradeData or OHLCVData
+/// * `date_type` - The data type to encode, `TradeData` or `OHLCVData`
 /// * `symbol_id` - The numeric id of the symbol
 ///
 /// # Returns

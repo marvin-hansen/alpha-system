@@ -18,10 +18,10 @@ fn create_test_meta_instrument() -> MetaInstrument {
         trade_end_timestamp: Some(1640995199),
         trade_compressed_size: 1024,
         trade_count: 10000,
-        kaiko_legacy_exchange_slug: "".to_string(),
+        kaiko_legacy_exchange_slug: String::new(),
         trade_start_time: None,
         trade_end_time: None,
-        kaiko_legacy_symbol: "".to_string(),
+        kaiko_legacy_symbol: String::new(),
     }
 }
 

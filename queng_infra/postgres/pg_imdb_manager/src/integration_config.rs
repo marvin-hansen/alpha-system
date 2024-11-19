@@ -162,7 +162,7 @@ impl PostgresIMDBManager {
     /// # Returns
     ///
     /// * `Result<Vec<ImsIntegrationConfig>, PostgresDBError>` - A vector of offline integration configs if successful,
-    ///   or a PostgresDBError if the query fails
+    ///   or a `PostgresDBError` if the query fails
     ///
     pub async fn get_all_offline_integration_configs(
         &self,
@@ -226,7 +226,7 @@ impl PostgresIMDBManager {
     ///
     /// # Returns
     ///
-    /// * `Result<(), PostgresDBError>` - Ok if successful, PostgresDBError if update fails
+    /// * `Result<(), PostgresDBError>` - Ok if successful, `PostgresDBError` if update fails
     pub async fn set_integration_online(
         &self,
         integration_id: String,
@@ -246,7 +246,7 @@ impl PostgresIMDBManager {
     /// * `integration_id` - The unique identifier of the integration to set offline
     ///
     /// # Returns
-    /// * `Result<(), PostgresDBError>` - Ok if successful, PostgresDBError if update fails
+    /// * `Result<(), PostgresDBError>` - Ok if successful, `PostgresDBError` if update fails
     ///
     pub async fn set_integration_offline(
         &self,

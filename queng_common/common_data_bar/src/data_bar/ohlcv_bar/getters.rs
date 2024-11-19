@@ -3,10 +3,12 @@ use chrono::{DateTime, Utc};
 use rust_decimal::Decimal;
 
 impl OHLCVBar {
+    #[must_use]
     pub fn range_change(&self) -> Decimal {
         self.close - self.open
     }
 
+    #[must_use]
     pub fn range_percent(&self) -> Decimal {
         let one_hundred = Decimal::new(100, 0);
         (((self.close - self.open) / self.open) * one_hundred).round_dp(4)
@@ -14,31 +16,38 @@ impl OHLCVBar {
 }
 
 impl OHLCVBar {
-    pub fn date_time(&self) -> DateTime<Utc> {
+    #[must_use]
+    pub const fn date_time(&self) -> DateTime<Utc> {
         self.date_time
     }
 
-    pub fn open(&self) -> Decimal {
+    #[must_use]
+    pub const fn open(&self) -> Decimal {
         self.open
     }
 
-    pub fn high(&self) -> Decimal {
+    #[must_use]
+    pub const fn high(&self) -> Decimal {
         self.high
     }
 
-    pub fn low(&self) -> Decimal {
+    #[must_use]
+    pub const fn low(&self) -> Decimal {
         self.low
     }
 
-    pub fn close(&self) -> Decimal {
+    #[must_use]
+    pub const fn close(&self) -> Decimal {
         self.close
     }
 
-    pub fn volume(&self) -> Decimal {
+    #[must_use]
+    pub const fn volume(&self) -> Decimal {
         self.volume
     }
 
-    pub fn symbol_id(&self) -> u16 {
+    #[must_use]
+    pub const fn symbol_id(&self) -> u16 {
         self.symbol_id
     }
 }

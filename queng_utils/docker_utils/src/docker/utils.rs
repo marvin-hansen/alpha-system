@@ -30,8 +30,7 @@ impl DockerUtil {
     ) -> Result<(), DockerError> {
         // Example docker pull --platform linux/amd64  asia-northeast1-docker.pkg.dev/future-309012/image-repo/api_proxy:b422ae3
         self.dbg_print(&format!(
-            "[pull_container_image]: Pull container image for: {}.",
-            container_id
+            "[pull_container_image]: Pull container image for: {container_id}."
         ));
 
         // construct initial command
@@ -46,15 +45,14 @@ impl DockerUtil {
         // Add the image
         cmd.arg(image);
 
-        self.dbg_print(&format!("[pull_container_image]: Pull command: {:?}", cmd));
+        self.dbg_print(&format!("[pull_container_image]: Pull command: {cmd:?}"));
 
         // Run the command & return error in case of failure
         match cmd.output() {
             Ok(out) => {
                 if out.status.success() {
                     self.dbg_print(&format!(
-                        "[pull_container_image]: success. Image Pulled {}",
-                        image
+                        "[pull_container_image]: success. Image Pulled {image}"
                     ));
                 } else {
                     eprintln!(
@@ -73,7 +71,7 @@ impl DockerUtil {
             }
             Err(e) => {
                 eprintln!();
-                eprintln!("Error pulling container image {}: {}", container_id, e);
+                eprintln!("Error pulling container image {container_id}: {e}");
                 eprintln!();
                 panic!("")
             }
@@ -92,14 +90,13 @@ impl DockerUtil {
     ///
     pub fn check_if_container_is_starting(&self, container_id: &str) -> Result<bool, DockerError> {
         self.dbg_print(&format!(
-            "[check_if_container_is_starting]: Check container image for: {}.",
-            container_id
+            "[check_if_container_is_starting]: Check container image for: {container_id}."
         ));
 
         // Example docker logs apiproxy-7777
         match Command::new("docker")
             .arg("logs")
-            .arg(format!(" {}", container_id))
+            .arg(format!(" {container_id}"))
             .output()
         {
             Ok(out) => {
@@ -150,12 +147,11 @@ impl DockerUtil {
     ///
     /// # Returns
     ///
-    /// Either returns the name and port of a container if its running, otherwise an DockerError.
+    /// Either returns the name and port of a container if its running, otherwise an `DockerError`.
     ///
     pub fn get_running_container(&self, container_id: &str) -> Result<(String, u16), DockerError> {
         self.dbg_print(&format!(
-            "[get_running_container]: Check container image for: {}.",
-            container_id
+            "[get_running_container]: Check container image for: {container_id}."
         ));
 
         let mut cmd = Command::new("docker");
@@ -165,16 +161,14 @@ impl DockerUtil {
         cmd.arg("--format={{.Names}}");
 
         self.dbg_print(&format!(
-            "[get_running_container]: Run Docker command: {:?}",
-            cmd
+            "[get_running_container]: Run Docker command: {cmd:?}"
         ));
 
         let container = match cmd.output() {
             Ok(out) => String::from_utf8_lossy(&out.stdout).to_string(),
             Err(e) => {
                 return Err(DockerError::from(format!(
-                    "[get_running_container]: Error getting container {}: {}",
-                    container_id, e
+                    "[get_running_container]: Error getting container {container_id}: {e}"
                 )));
             }
         };
@@ -186,8 +180,7 @@ impl DockerUtil {
 
         if container.is_empty() {
             return Err(DockerError::from(format!(
-                "[get_running_container]: Error no container found for ID: {}",
-                container_id,
+                "[get_running_container]: Error no container found for ID: {container_id}",
             )));
         }
 
@@ -230,8 +223,7 @@ impl DockerUtil {
             Ok(_) => {}
             Err(_) => {
                 return Err(DockerError::from(format!(
-                    "[get_running_container_image_tag]: Error no container found for ID: {}",
-                    container_id,
+                    "[get_running_container_image_tag]: Error no container found for ID: {container_id}",
                 )));
             }
         }
@@ -239,23 +231,21 @@ impl DockerUtil {
         self.dbg_print("");
         let container_image = match Command::new("docker")
             .arg("ps")
-            .arg(format!("--filter=name={}", container_id))
+            .arg(format!("--filter=name={container_id}"))
             .arg("--format={{.Image}}")
             .output()
         {
             Ok(out) => String::from_utf8_lossy(&out.stdout).to_string(),
             Err(e) => {
                 return Err(DockerError::from(format!(
-                    "[get_container_image_tag]: Error getting container image for {}: {}",
-                    container_id, e
+                    "[get_container_image_tag]: Error getting container image for {container_id}: {e}"
                 )));
             }
         };
 
         if container_image.is_empty() {
             return Err(DockerError::from(format!(
-                "[get_container_image_tag]: Error no image found for container ID: {}",
-                container_id,
+                "[get_container_image_tag]: Error no image found for container ID: {container_id}",
             )));
         }
 
@@ -300,8 +290,7 @@ impl DockerUtil {
             }
             Err(e) => {
                 Err(DockerError::from(format!(
-                    "[check_if_container_uses_target_tag]: Error getting container_tag for container ID: {} {}",
-                    container_id, e
+                    "[check_if_container_uses_target_tag]: Error getting container_tag for container ID: {container_id} {e}"
                 )))
             }
         }
@@ -332,10 +321,7 @@ impl DockerUtil {
             .spawn()
         {
             Ok(_) => Ok(()),
-            Err(e) => Err(DockerError::from(format!(
-                "Error pruning containers: {}",
-                e
-            ))),
+            Err(e) => Err(DockerError::from(format!("Error pruning containers: {e}"))),
         }
     }
 }

@@ -35,7 +35,7 @@ impl ClickhouseDBManager {
         self.client
             .query::<TradeRow>(query)
             .await
-            .unwrap_or_else(|_| panic!("{} Failed to execute stream_trades query ", FN_NAME))
+            .unwrap_or_else(|_| panic!("{FN_NAME} Failed to execute stream_trades query "))
             .boxed()
     }
 }

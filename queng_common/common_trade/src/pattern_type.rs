@@ -25,13 +25,14 @@ impl From<u8> for PatternType {
 }
 
 impl PatternType {
-    pub fn get_pattern_type(&self) -> PatternType {
+    #[must_use]
+    pub const fn get_pattern_type(&self) -> Self {
         match self {
-            PatternType::NullVal => PatternType::NullVal,
-            PatternType::Base => PatternType::Base,
-            PatternType::Extra => PatternType::Extra,
-            PatternType::Long => PatternType::Long,
-            PatternType::Short => PatternType::Short,
+            Self::NullVal => Self::NullVal,
+            Self::Base => Self::Base,
+            Self::Extra => Self::Extra,
+            Self::Long => Self::Long,
+            Self::Short => Self::Short,
         }
     }
 }
@@ -39,11 +40,11 @@ impl PatternType {
 impl Display for PatternType {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
-            PatternType::NullVal => write!(f, "NullVal"),
-            PatternType::Base => write!(f, "Base"),
-            PatternType::Extra => write!(f, "Extra"),
-            PatternType::Long => write!(f, "Long"),
-            PatternType::Short => write!(f, "Short"),
+            Self::NullVal => write!(f, "NullVal"),
+            Self::Base => write!(f, "Base"),
+            Self::Extra => write!(f, "Extra"),
+            Self::Long => write!(f, "Long"),
+            Self::Short => write!(f, "Short"),
         }
     }
 }

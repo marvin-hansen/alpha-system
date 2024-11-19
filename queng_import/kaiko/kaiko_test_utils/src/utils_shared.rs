@@ -1,6 +1,6 @@
 use common_metadata::{InstrumentMetadata, MetaAsset, MetaExchange, MetaInstrument};
 
-pub(crate) fn get_test_asset(code: String) -> MetaAsset {
+pub fn get_test_asset(code: String) -> MetaAsset {
     MetaAsset {
         code,
         name: "test_asset_name".to_string(),
@@ -11,7 +11,7 @@ pub(crate) fn get_test_asset(code: String) -> MetaAsset {
     }
 }
 
-pub(crate) fn get_test_update_asset(code: String) -> MetaAsset {
+pub fn get_test_update_asset(code: String) -> MetaAsset {
     MetaAsset {
         code,
         name: "test_asset_name".to_string(),
@@ -22,7 +22,7 @@ pub(crate) fn get_test_update_asset(code: String) -> MetaAsset {
     }
 }
 
-pub(crate) fn get_test_meta_exchange(code: String) -> MetaExchange {
+pub fn get_test_meta_exchange(code: String) -> MetaExchange {
     MetaExchange {
         code,
         name: "test_exchange_name".to_string(),
@@ -30,7 +30,7 @@ pub(crate) fn get_test_meta_exchange(code: String) -> MetaExchange {
     }
 }
 
-pub(crate) fn get_test_update_meta_exchange(code: String) -> MetaExchange {
+pub fn get_test_update_meta_exchange(code: String) -> MetaExchange {
     MetaExchange {
         code,
         name: "updated_test_exchange_name".to_string(),
@@ -38,7 +38,7 @@ pub(crate) fn get_test_update_meta_exchange(code: String) -> MetaExchange {
     }
 }
 
-pub(crate) fn get_test_meta_instrument(
+pub fn get_test_meta_instrument(
     base_asset: String,
     quote_asset: String,
     exchange_code: String,
@@ -67,7 +67,7 @@ pub(crate) fn get_test_meta_instrument(
     }
 }
 
-pub(crate) fn get_test_update_meta_instrument(
+pub fn get_test_update_meta_instrument(
     base_asset: String,
     quote_asset: String,
     exchange_code: String,

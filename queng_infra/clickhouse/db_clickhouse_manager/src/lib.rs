@@ -18,7 +18,7 @@ pub struct ClickhouseDBManager {
 }
 
 impl ClickhouseDBManager {
-    /// Creates a new QueryDBManager instance.
+    /// Creates a new `QueryDBManager` instance.
     ///
     /// # Arguments
     ///
@@ -26,7 +26,7 @@ impl ClickhouseDBManager {
     ///
     /// # Returns
     ///
-    /// A new QueryDBManager instance connected to the database.
+    /// A new `QueryDBManager` instance connected to the database.
     ///
     /// # Errors
     ///

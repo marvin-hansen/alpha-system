@@ -17,13 +17,10 @@ use crate::fields::{BINARIES, PATH};
 /// Returns `Ok(())` if all binaries are verified successfully, or an
 /// `Err(VerifyBinaryError)` if an error occurs.
 ///
-pub(crate) fn verify_all_binaries(
-    dbg: bool,
-    env: EnvironmentType,
-) -> Result<(), VerifyBinaryError> {
+pub fn verify_all_binaries(dbg: bool, env: EnvironmentType) -> Result<(), VerifyBinaryError> {
     for bin in BINARIES {
         match verify_binary(bin, dbg, env) {
-            Ok(_) => {}
+            Ok(()) => {}
             Err(e) => return Err(e),
         }
     }
@@ -44,24 +41,24 @@ pub(crate) fn verify_all_binaries(
 /// Returns `Ok(())` if the binary is verified successfully, or an
 /// `Err(VerifyBinaryError)` if an error occurs.
 ///
-pub(crate) fn verify_binary(
+pub fn verify_binary(
     binary: &str,
     dbg: bool,
     env: EnvironmentType,
 ) -> Result<(), VerifyBinaryError> {
     if dbg {
-        println!("Check if binary exists: {}", binary)
+        println!("Check if binary exists: {binary}");
     }
     match check_if_binary_exists(binary, dbg) {
-        Ok(_) => {}
+        Ok(()) => {}
         Err(e) => return Err(e),
     }
 
     if dbg {
-        println!("Check if binary architecture: {}", binary)
+        println!("Check if binary architecture: {binary}");
     }
     match check_binary_architecture(binary, dbg, env) {
-        Ok(_) => {}
+        Ok(()) => {}
         Err(e) => return Err(e),
     }
 
@@ -83,7 +80,7 @@ pub(crate) fn verify_binary(
 fn check_if_binary_exists(binary: &str, dbg: bool) -> Result<(), VerifyBinaryError> {
     // test -f /path/to/binary
     // https://sentry.io/answers/determine-whether-a-file-exists-or-not-in-bash/
-    let binary = format!("{}/{}", PATH, binary);
+    let binary = format!("{PATH}/{binary}");
     let mut cmd = Command::new("test");
     cmd.arg("-f").arg(binary.clone());
 
@@ -103,7 +100,7 @@ fn check_if_binary_exists(binary: &str, dbg: bool) -> Result<(), VerifyBinaryErr
             if out.status.success() {
                 Ok(())
             } else {
-                Err(VerifyBinaryError::BinaryNotFound(binary.to_string()))
+                Err(VerifyBinaryError::BinaryNotFound(binary))
             }
         }
         Err(e) => Err(VerifyBinaryError::BinaryNotFound(e.to_string())),
@@ -128,7 +125,7 @@ fn check_binary_architecture(
     dbg: bool,
     env: EnvironmentType,
 ) -> Result<(), VerifyBinaryError> {
-    let binary = format!("{}/{}", PATH, binary);
+    let binary = format!("{PATH}/{binary}");
 
     let mut cmd = Command::new("file");
     cmd.arg("-L").arg(binary.clone());
@@ -149,7 +146,7 @@ fn check_binary_architecture(
             if out.status.success() {
                 String::from_utf8_lossy(out.stdout.as_slice()).to_string()
             } else {
-                return Err(VerifyBinaryError::BinaryNotFound(binary.to_string()));
+                return Err(VerifyBinaryError::BinaryNotFound(binary));
             }
         }
         Err(e) => return Err(VerifyBinaryError::BinaryNotFound(e.to_string())),

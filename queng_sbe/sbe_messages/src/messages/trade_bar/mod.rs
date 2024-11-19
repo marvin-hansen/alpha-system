@@ -5,21 +5,22 @@ use crate::errors::{SbeDecodeError, SbeEncodeError};
 mod sbe_decode;
 mod sbe_encode;
 
-#[derive(Debug, Default, Clone, PartialEq)]
+#[derive(Debug, Default, Clone, PartialEq, Eq)]
 pub struct SbeTradeBar {}
 
 impl SbeTradeBar {
-    pub fn new() -> Self {
+    #[must_use]
+    pub const fn new() -> Self {
         Self {}
     }
 }
 
 impl SbeTradeBar {
-    /// Encodes a TradeBar message to a byte buffer.
+    /// Encodes a `TradeBar` message to a byte buffer.
     ///
     /// # Arguments
     ///
-    /// * `bar` - TradeBar to encode
+    /// * `bar` - `TradeBar` to encode
     ///
     /// # Returns
     ///
@@ -31,21 +32,21 @@ impl SbeTradeBar {
     ///
     /// # Remarks
     ///
-    /// Calls sbe_encode::encode_trade_bar_message to perform encoding
+    /// Calls `sbe_encode::encode_trade_bar_message` to perform encoding
     ///
     pub fn encode(bar: TradeBar) -> Result<(usize, Vec<u8>), SbeEncodeError> {
         sbe_encode::encode_trade_bar_message(bar)
     }
 
-    /// Decodes a TradeBar message from a byte buffer.
+    /// Decodes a `TradeBar` message from a byte buffer.
     ///
     /// # Arguments
     ///
-    /// * `buffer` - Byte buffer containing encoded TradeBar message
+    /// * `buffer` - Byte buffer containing encoded `TradeBar` message
     ///
     /// # Returns
     ///
-    /// Decoded TradeBar on success
+    /// Decoded `TradeBar` on success
     ///
     /// # Errors
     ///
@@ -53,7 +54,7 @@ impl SbeTradeBar {
     ///
     /// # Remarks
     ///
-    /// Calls sbe_decode::decode_trade_bar_message to perform decoding
+    /// Calls `sbe_decode::decode_trade_bar_message` to perform decoding
     ///
     pub fn decode(buffer: &[u8]) -> Result<TradeBar, SbeDecodeError> {
         sbe_decode::decode_trade_bar_message(buffer)

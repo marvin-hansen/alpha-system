@@ -39,6 +39,6 @@ pub fn print_duration(dbg: bool, msg: &str, elapsed: &Duration) {
 
 pub fn dbg_print(dbg: bool, msg: &str) {
     if dbg {
-        println!("[main]: {}", msg)
+        println!("[main]: {msg}");
     }
 }

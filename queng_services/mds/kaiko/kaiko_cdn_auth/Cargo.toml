@@ -7,4 +7,21 @@ readme.workspace = true
 repository.workspace = true
 authors.workspace = true
 
+[lints]
+workspace = true
+
+[package.metadata.release]
+release = false
+
+# https://github.com/rustwasm/wasm-pack/issues/1247
+[package.metadata.wasm-pack.profile.release]
+wasm-opt = false
+
+
 [dependencies]
+
+[profile.release]
+opt-level = "s" # Optimize for small code size
+lto = true    # Enable Link Time Optimization (LTO)
+strip = true  # Automatically strip debug symbols from the binary
+codegen-units = 1 # Reduce Parallel Code Generation Units to Increase Optimization

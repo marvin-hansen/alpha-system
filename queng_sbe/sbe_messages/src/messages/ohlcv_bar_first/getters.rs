@@ -1,10 +1,12 @@
 use crate::{FirstOHLCVBar, MessageType};
 
 impl FirstOHLCVBar {
-    pub fn message_type(&self) -> MessageType {
+    #[must_use]
+    pub const fn message_type(&self) -> MessageType {
         self.message_type
     }
-    pub fn symbol_id(&self) -> u16 {
+    #[must_use]
+    pub const fn symbol_id(&self) -> u16 {
         self.symbol_id
     }
 }

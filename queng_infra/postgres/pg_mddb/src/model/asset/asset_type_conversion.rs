@@ -4,7 +4,7 @@ use common_metadata::MetaAsset;
 
 impl Asset {
     pub fn from_meta_asset(meta_asset: MetaAsset) -> Self {
-        Asset {
+        Self {
             asset_code: meta_asset.code.clone(),
             asset_name: meta_asset.name.clone(),
             asset_class: meta_asset.asset_class.clone(),
@@ -15,10 +15,11 @@ impl Asset {
                 .map(Some)
                 .collect(),
             asset_figi: meta_asset.metadata.clone().and_then(|m| m.asset_figi),
-            asset_hash: meta_asset.hash().clone(),
+            asset_hash: meta_asset.hash(),
         }
     }
 
+    #[must_use]
     pub fn to_meta_asset(&self) -> MetaAsset {
         MetaAsset {
             code: self.asset_code.clone(),
@@ -27,7 +28,7 @@ impl Asset {
             asset_classes: self
                 .asset_classes
                 .iter()
-                .filter_map(|c| c.clone())
+                .filter_map(std::clone::Clone::clone)
                 .collect(),
             metadata: None,
             addresses: None,
@@ -37,7 +38,7 @@ impl Asset {
 
 impl UpdateAsset {
     pub fn from_meta_asset(meta_asset: MetaAsset) -> Self {
-        UpdateAsset {
+        Self {
             asset_name: meta_asset.name.clone(),
             asset_class: meta_asset.asset_class.clone(),
             asset_classes: meta_asset
@@ -47,10 +48,11 @@ impl UpdateAsset {
                 .map(Some)
                 .collect(),
             asset_figi: meta_asset.metadata.clone().and_then(|m| m.asset_figi),
-            asset_hash: meta_asset.hash().clone(),
+            asset_hash: meta_asset.hash(),
         }
     }
 
+    #[must_use]
     pub fn to_meta_asset(&self) -> MetaAsset {
         MetaAsset {
             code: String::new(), // Assuming code is not used in UpdateAsset
@@ -59,7 +61,7 @@ impl UpdateAsset {
             asset_classes: self
                 .asset_classes
                 .iter()
-                .filter_map(|c| c.clone())
+                .filter_map(std::clone::Clone::clone)
                 .collect(),
             metadata: None,
             addresses: None,

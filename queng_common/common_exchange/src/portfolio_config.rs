@@ -23,7 +23,8 @@ pub struct PortfolioConfig {
 
 impl PortfolioConfig {
     #[allow(clippy::too_many_arguments)]
-    pub fn new(
+    #[must_use]
+    pub const fn new(
         portfolio_id: u32,
         portfolio_description: String,
         portfolio_account_type: AccountType,
@@ -60,7 +61,8 @@ impl PortfolioConfig {
     }
 
     #[allow(clippy::too_many_arguments)]
-    pub fn new_cash_portfolio(
+    #[must_use]
+    pub const fn new_cash_portfolio(
         portfolio_id: u32,
         portfolio_description: String,
         portfolio_account_type: AccountType,
@@ -93,49 +95,64 @@ impl PortfolioConfig {
 }
 
 impl PortfolioConfig {
-    pub fn portfolio_id(&self) -> u32 {
+    #[must_use]
+    pub const fn portfolio_id(&self) -> u32 {
         self.portfolio_id
     }
+    #[must_use]
     pub fn portfolio_description(&self) -> &str {
         &self.portfolio_description
     }
-    pub fn portfolio_account_type(&self) -> AccountType {
+    #[must_use]
+    pub const fn portfolio_account_type(&self) -> AccountType {
         self.portfolio_account_type
     }
+    #[must_use]
     pub fn portfolio_account_id(&self) -> &str {
         &self.portfolio_account_id
     }
+    #[must_use]
     pub fn portfolio_currency(&self) -> &str {
         &self.portfolio_currency
     }
-    pub fn portfolio_cash(&self) -> f64 {
+    #[must_use]
+    pub const fn portfolio_cash(&self) -> f64 {
         self.portfolio_cash
     }
-    pub fn portfolio_margin(&self) -> f64 {
+    #[must_use]
+    pub const fn portfolio_margin(&self) -> f64 {
         self.portfolio_margin
     }
-    pub fn portfolio_max_drawdown(&self) -> f64 {
+    #[must_use]
+    pub const fn portfolio_max_drawdown(&self) -> f64 {
         self.portfolio_max_drawdown
     }
-    pub fn portfolio_instruments(&self) -> &Vec<Instrument> {
+    #[must_use]
+    pub const fn portfolio_instruments(&self) -> &Vec<Instrument> {
         &self.portfolio_instruments
     }
-    pub fn instrument_max_allocation(&self) -> f64 {
+    #[must_use]
+    pub const fn instrument_max_allocation(&self) -> f64 {
         self.instrument_max_allocation
     }
-    pub fn instrument_max_drawdown(&self) -> f64 {
+    #[must_use]
+    pub const fn instrument_max_drawdown(&self) -> f64 {
         self.instrument_max_drawdown
     }
-    pub fn portfolio_free_margin(&self) -> f64 {
+    #[must_use]
+    pub const fn portfolio_free_margin(&self) -> f64 {
         self.portfolio_free_margin
     }
-    pub fn portfolio_free_cash(&self) -> f64 {
+    #[must_use]
+    pub const fn portfolio_free_cash(&self) -> f64 {
         self.portfolio_free_cash
     }
-    pub fn portfolio_free_margin_percent(&self) -> f64 {
+    #[must_use]
+    pub const fn portfolio_free_margin_percent(&self) -> f64 {
         self.portfolio_free_margin_percent
     }
-    pub fn portfolio_free_cash_percent(&self) -> f64 {
+    #[must_use]
+    pub const fn portfolio_free_cash_percent(&self) -> f64 {
         self.portfolio_free_cash_percent
     }
 }

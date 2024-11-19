@@ -17,7 +17,7 @@ use pg_mddb_manager::PostgresMDDBManager;
 ///
 /// `meta_data` is the `MetaDataSet` containing the metadata to be imported.
 ///
-pub(crate) async fn update_partial_metadata(
+pub async fn update_partial_metadata(
     meta_data_ops: &MetaDataDBWOp,
     dbm_mddb: &PostgresMDDBManager,
     meta_data: &MetaDataSet,

@@ -10,16 +10,18 @@ pub struct ClickhouseConfigManager {
 }
 
 impl ClickhouseConfigManager {
+    #[must_use]
     pub fn new(env_type: &EnvironmentType) -> Self {
         Self::build(false, env_type)
     }
 
+    #[must_use]
     pub fn with_debug(env_type: &EnvironmentType) -> Self {
         Self::build(true, env_type)
     }
 
-    fn build(dbg: bool, env_type: &EnvironmentType) -> ClickhouseConfigManager {
-        ClickhouseConfigManager {
+    fn build(dbg: bool, env_type: &EnvironmentType) -> Self {
+        Self {
             dbg,
             db_clickhouse_config: get_clickhouse_config(dbg, env_type),
         }
@@ -35,7 +37,7 @@ fn get_clickhouse_config(dbg: bool, env_type: &EnvironmentType) -> ClickHouseCon
 impl ClickhouseConfigManager {
     pub fn dbg_print(&self, msg: &str) {
         if self.dbg {
-            println!("[ClickhouseConfigManager]: {}", msg);
+            println!("[ClickhouseConfigManager]: {msg}");
         }
     }
 }

@@ -15,13 +15,13 @@ pub enum SecurityType {
 impl Display for SecurityType {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
-            SecurityType::UnknownSecurityType => write!(f, "UnknownSecurityType"),
-            SecurityType::Spot => write!(f, "Spot"),
-            SecurityType::Index => write!(f, "Index"),
-            SecurityType::Future => write!(f, "Future"),
-            SecurityType::PerpetualFuture => write!(f, "PerpetualFuture"),
-            SecurityType::Option => write!(f, "Option"),
-            SecurityType::FutureOption => write!(f, "FutureOption"),
+            Self::UnknownSecurityType => write!(f, "UnknownSecurityType"),
+            Self::Spot => write!(f, "Spot"),
+            Self::Index => write!(f, "Index"),
+            Self::Future => write!(f, "Future"),
+            Self::PerpetualFuture => write!(f, "PerpetualFuture"),
+            Self::Option => write!(f, "Option"),
+            Self::FutureOption => write!(f, "FutureOption"),
         }
     }
 }

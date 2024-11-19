@@ -21,7 +21,7 @@ fn test_get_create_integration_request() {
     assert_eq!(proto.integration_id, config.integration_id());
     assert_eq!(
         proto.integration_version,
-        config.integration_version() as u32
+        u32::from(config.integration_version())
     );
     assert_eq!(
         proto.ims_integration_type,
@@ -55,7 +55,7 @@ fn test_get_check_if_integration_config_exists_request_with_special_chars() {
 
 #[test]
 fn test_get_check_if_integration_config_exists_request_with_empty_id() {
-    let integration_id = "".to_string();
+    let integration_id = String::new();
     let request = get_check_if_integration_config_exists_request(integration_id.clone());
     assert_eq!(request.integration_id, integration_id);
 }
@@ -76,7 +76,7 @@ fn test_get_check_if_integration_config_online_request_with_special_chars() {
 
 #[test]
 fn test_get_check_if_integration_config_online_request_with_empty_id() {
-    let integration_id = "".to_string();
+    let integration_id = String::new();
     let request = get_check_if_integration_config_online_request(integration_id.clone());
     assert_eq!(request.integration_id, integration_id);
 }
@@ -203,7 +203,7 @@ fn test_get_update_integration_request_with_valid_config() {
     assert_eq!(proto.integration_id, config.integration_id());
     assert_eq!(
         proto.integration_version,
-        config.integration_version() as u32
+        u32::from(config.integration_version())
     );
     assert_eq!(
         proto.ims_integration_type,
@@ -215,7 +215,7 @@ fn test_get_update_integration_request_with_valid_config() {
     let msg_config_proto = proto.integration_message_config.unwrap();
     assert_eq!(
         msg_config_proto.id,
-        config.integration_message_config().id() as u32
+        u32::from(config.integration_message_config().id())
     );
     assert_eq!(
         msg_config_proto.name,
@@ -223,7 +223,7 @@ fn test_get_update_integration_request_with_valid_config() {
     );
     assert_eq!(
         msg_config_proto.version,
-        *config.integration_message_config().version() as u32
+        u32::from(*config.integration_message_config().version())
     );
     assert_eq!(msg_config_proto.exchange_id, config.exchange_id() as u32);
 }
@@ -314,7 +314,7 @@ fn test_get_check_if_integration_config_online_response() {
 fn test_get_integration_config_response() {
     let config = create_test_integration_config();
 
-    let some_response = get_integration_config_response(Some(config.clone()));
+    let some_response = get_integration_config_response(Some(config));
     assert!(some_response.integration.is_some());
 
     let none_response = get_integration_config_response(None);

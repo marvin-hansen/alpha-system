@@ -12,7 +12,7 @@ fn test_validation_error_new() {
 fn test_validation_error_fmt() {
     let error_message = String::from("An error occurred");
     let validation_error = ValidationError::new(error_message);
-    let formatted_error = format!("{}", validation_error);
+    let formatted_error = format!("{validation_error}");
     assert_eq!(formatted_error, "ValidationError: An error occurred");
 }
 

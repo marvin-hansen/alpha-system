@@ -153,7 +153,7 @@ fn test_profit_target() {
 fn test_debug() {
     let strategy_config = get_strategy_config();
     let expected = "StrategyConfig { strategy_id: \"test_id\", strategy_name: \"test_name\", strategy_description: \"test_description\", strategy_type: BuyHold, intraday: false, day_to_filter: 1, trade_entry_type: NextBar, pattern_config: Some(PatternConfig { pattern_config_id: 0, pattern_config_name: \"\", pattern_config_description: \"\", pattern_type: Base, pattern_long_yes: 0, pattern_long_no: 0, pattern_short_yes: 0, pattern_short_no: 0 }), profit_target: 100, stop_target: 50, max_nr_bars: 10 }";
-    let actual = format!("{:?}", strategy_config);
+    let actual = format!("{strategy_config:?}");
 
     assert_eq!(actual, expected);
 }

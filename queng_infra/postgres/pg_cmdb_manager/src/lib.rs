@@ -24,7 +24,7 @@ impl PostgresCMDBManager {
     ///
     /// # Returns
     ///
-    /// A Result containing the newly created instance or a PostgresDBError.
+    /// A Result containing the newly created instance or a `PostgresDBError`.
     ///
     pub async fn new(url: &str) -> Result<Self, PostgresDBError> {
         Self::build(false, false, url).await
@@ -39,7 +39,7 @@ impl PostgresCMDBManager {
     ///
     /// # Returns
     ///
-    /// A Result containing the initialized connection or a PostgresDBError.
+    /// A Result containing the initialized connection or a `PostgresDBError`.
     ///
     pub async fn with_debug(url: &str) -> Result<Self, PostgresDBError> {
         Self::build(true, false, url).await
@@ -59,13 +59,13 @@ impl PostgresCMDBManager {
     ///
     /// # Returns
     ///
-    /// A Result containing the initialized connection or a PostgresDBError if an error occurs.
+    /// A Result containing the initialized connection or a `PostgresDBError` if an error occurs.
     ///
     pub async fn with_test_and_debug(url: &str) -> Result<Self, PostgresDBError> {
         Self::build(true, true, url).await
     }
 
-    /// Asynchronously initializes a PostgresCMDBManager with a given connection pool and debug mode.
+    /// Asynchronously initializes a `PostgresCMDBManager` with a given connection pool and debug mode.
     ///
     /// # Arguments
     ///
@@ -74,7 +74,7 @@ impl PostgresCMDBManager {
     ///
     /// # Returns
     ///
-    /// A Result containing the initialized PostgresCMDBManager instance or a PostgresDBError.
+    /// A Result containing the initialized `PostgresCMDBManager` instance or a `PostgresDBError`.
     ///
     pub async fn with_pool_and_debug(
         pool: Pool<ConnectionManager<PgConnection>>,
@@ -119,7 +119,7 @@ impl PostgresCMDBManager {
 impl PostgresCMDBManager {
     pub fn dbg_print(&self, msg: &str) {
         if self.dbg {
-            println!("[PostgresCMDBManager]: {}", msg);
+            println!("[PostgresCMDBManager]: {msg}");
         }
     }
 }

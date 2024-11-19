@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 use std::fmt::{Debug, Display, Formatter};
 
-#[derive(Debug, Default, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct MetaStats {
     download_timestamp: String,
     hash: String,
@@ -11,7 +11,8 @@ pub struct MetaStats {
 }
 
 impl MetaStats {
-    pub fn new(
+    #[must_use]
+    pub const fn new(
         download_timestamp: String,
         hash: String,
         number_assets: u32,
@@ -29,23 +30,28 @@ impl MetaStats {
 }
 
 impl MetaStats {
+    #[must_use]
     pub fn download_timestamp(&self) -> &str {
         &self.download_timestamp
     }
 
+    #[must_use]
     pub fn hash(&self) -> &str {
         &self.hash
     }
 
-    pub fn number_assets(&self) -> u32 {
+    #[must_use]
+    pub const fn number_assets(&self) -> u32 {
         self.number_assets
     }
 
-    pub fn number_exchanges(&self) -> u32 {
+    #[must_use]
+    pub const fn number_exchanges(&self) -> u32 {
         self.number_exchanges
     }
 
-    pub fn number_instruments(&self) -> u32 {
+    #[must_use]
+    pub const fn number_instruments(&self) -> u32 {
         self.number_instruments
     }
 }

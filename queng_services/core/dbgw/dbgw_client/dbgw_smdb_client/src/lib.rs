@@ -13,10 +13,10 @@ impl DBGWSmdbClient {
         let port = config.port();
         let host = config.host_uri();
 
-        let s = format!("http://{}:{}", host, port);
+        let s = format!("http://{host}:{port}");
         let uri = s
             .parse::<Uri>()
-            .unwrap_or_else(|_| panic!("DBGatewayClient: Failed to parse server URI: {}", s));
+            .unwrap_or_else(|_| panic!("DBGatewayClient: Failed to parse server URI: {s}"));
 
         Self::build(uri).await
     }
@@ -24,7 +24,7 @@ impl DBGWSmdbClient {
     pub async fn from_url(url: &str) -> Self {
         let uri = url
             .parse::<Uri>()
-            .unwrap_or_else(|_| panic!("DBGatewayClient: Failed to parse server URI: {}", url));
+            .unwrap_or_else(|_| panic!("DBGatewayClient: Failed to parse server URI: {url}"));
 
         Self::build(uri).await
     }
@@ -34,10 +34,7 @@ impl DBGWSmdbClient {
         let channel = match Channel::builder(uri.clone()).connect().await {
             Ok(res) => res,
             Err(e) => {
-                panic!(
-                    "DBGatewayClient: Failed to connect to server: {} due to error: {}",
-                    uri, e
-                );
+                panic!("DBGatewayClient: Failed to connect to server: {uri} due to error: {e}");
             }
         };
 

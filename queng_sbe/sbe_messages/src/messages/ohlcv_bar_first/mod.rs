@@ -5,16 +5,16 @@ mod getters;
 mod sbe_decode;
 mod sbe_encode;
 
-#[derive(Debug, Default, Clone, PartialEq)]
+#[derive(Debug, Default, Clone, PartialEq, Eq)]
 pub struct FirstOHLCVBar {
     message_type: MessageType,
     symbol_id: u16,
 }
 
 impl FirstOHLCVBar {
-    /// Creates a new FirstOHLCVBar instance.
+    /// Creates a new `FirstOHLCVBar` instance.
     ///
-    /// Sets the message_type to FirstOHLCVBar.
+    /// Sets the `message_type` to `FirstOHLCVBar`.
     ///
     /// # Arguments
     ///
@@ -22,9 +22,10 @@ impl FirstOHLCVBar {
     ///
     /// # Returns
     ///
-    /// FirstOHLCVBar instance
+    /// `FirstOHLCVBar` instance
     ///
-    pub fn new(symbol_id: u16) -> Self {
+    #[must_use]
+    pub const fn new(symbol_id: u16) -> Self {
         let message_type = MessageType::FirstOHLCVBar;
         Self {
             message_type,
@@ -34,9 +35,9 @@ impl FirstOHLCVBar {
 }
 
 impl From<&[u8]> for FirstOHLCVBar {
-    /// Implements the From trait to decode a FirstOHLCVBar from a byte slice.
+    /// Implements the From trait to decode a `FirstOHLCVBar` from a byte slice.
     ///
-    /// Calls the sbe_decode::decode_first_data_bar_message function to decode the message.
+    /// Calls the `sbe_decode::decode_first_data_bar_message` function to decode the message.
     ///
     /// # Arguments
     ///
@@ -44,7 +45,7 @@ impl From<&[u8]> for FirstOHLCVBar {
     ///
     /// # Returns
     ///
-    /// Decoded FirstOHLCVBar
+    /// Decoded `FirstOHLCVBar`
     ///
     /// # Errors
     ///

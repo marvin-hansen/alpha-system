@@ -15,7 +15,8 @@ pub struct MessageConfig {
 }
 
 impl MessageConfig {
-    pub fn new(id: i32, name: String, version: i32, exchange_id: i32) -> Self {
+    #[must_use]
+    pub const fn new(id: i32, name: String, version: i32, exchange_id: i32) -> Self {
         Self {
             id,
             name,

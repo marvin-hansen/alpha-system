@@ -5,14 +5,14 @@ mod getters;
 mod sbe_decode;
 mod sbe_encode;
 
-#[derive(Debug, Default, Clone, PartialEq)]
+#[derive(Debug, Default, Clone, PartialEq, Eq)]
 pub struct LastTradeBar {
     message_type: MessageType,
     symbol_id: u16,
 }
 
 impl LastTradeBar {
-    /// Creates a new LastTradeBar instance.
+    /// Creates a new `LastTradeBar` instance.
     ///
     /// # Arguments
     ///
@@ -20,13 +20,14 @@ impl LastTradeBar {
     ///
     /// # Returns
     ///
-    /// New LastTradeBar instance
+    /// New `LastTradeBar` instance
     ///
     /// # Remarks
     ///
-    /// Sets message_type to LastTradeBar
+    /// Sets `message_type` to `LastTradeBar`
     ///
-    pub fn new(symbol_id: u16) -> Self {
+    #[must_use]
+    pub const fn new(symbol_id: u16) -> Self {
         let message_type = MessageType::LastTradeBar;
         Self {
             message_type,
@@ -36,15 +37,15 @@ impl LastTradeBar {
 }
 
 impl From<&[u8]> for LastTradeBar {
-    /// Decodes a LastTradeBar message from a byte buffer.
+    /// Decodes a `LastTradeBar` message from a byte buffer.
     ///
     /// # Arguments
     ///
-    /// * `value` - Byte buffer containing encoded LastTradeBar message
+    /// * `value` - Byte buffer containing encoded `LastTradeBar` message
     ///
     /// # Returns
     ///
-    /// Decoded LastTradeBar on success
+    /// Decoded `LastTradeBar` on success
     ///
     /// # Errors
     ///
@@ -52,7 +53,7 @@ impl From<&[u8]> for LastTradeBar {
     ///
     /// # Remarks
     ///
-    /// Calls sbe_decode::decode_last_trade_bar_message to decode message
+    /// Calls `sbe_decode::decode_last_trade_bar_message` to decode message
     ///
     #[inline]
     fn from(value: &[u8]) -> Self {

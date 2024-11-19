@@ -24,7 +24,7 @@ fn asset_structs_properties_test() {
 
     let asset_root = MetaAssetRoot {
         result: "OK".to_string(),
-        data: vec![asset.clone()],
+        data: vec![asset],
     };
 
     // Test AssetRoot properties

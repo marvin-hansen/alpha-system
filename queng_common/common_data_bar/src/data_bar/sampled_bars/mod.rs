@@ -39,7 +39,8 @@ pub struct SampledDataBars {
 /// A new [`SampledDataBars`] instance with empty aggregrated bar vectors.
 ///
 impl SampledDataBars {
-    pub fn new() -> Self {
+    #[must_use]
+    pub const fn new() -> Self {
         Self {
             day_bars: Vec::new(),
             month_bars: Vec::new(),
@@ -59,13 +60,16 @@ impl SampledDataBars {
         self.year_bars = year_bars;
     }
 
-    pub fn day_bars(&self) -> &Vec<OHLCVBar> {
+    #[must_use]
+    pub const fn day_bars(&self) -> &Vec<OHLCVBar> {
         &self.day_bars
     }
-    pub fn month_bars(&self) -> &Vec<OHLCVBar> {
+    #[must_use]
+    pub const fn month_bars(&self) -> &Vec<OHLCVBar> {
         &self.month_bars
     }
-    pub fn year_bars(&self) -> &Vec<OHLCVBar> {
+    #[must_use]
+    pub const fn year_bars(&self) -> &Vec<OHLCVBar> {
         &self.year_bars
     }
 }

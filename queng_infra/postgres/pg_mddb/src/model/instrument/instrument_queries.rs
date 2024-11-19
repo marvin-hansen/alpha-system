@@ -27,7 +27,7 @@ impl Instrument {
     ) -> Result<Option<MetaInstrument>, diesel::result::Error> {
         match instruments_table::table()
             .filter(instrument_exchange_pair_code.eq(param_instrument_exchange_pair_code))
-            .first::<Instrument>(conn)
+            .first::<Self>(conn)
         {
             Ok(res) => Ok(Some(res.to_meta_instrument())),
             Err(_) => Ok(None),
@@ -53,7 +53,7 @@ impl Instrument {
     ) -> Result<Option<MetaInstrument>, diesel::result::Error> {
         match instruments_table::table()
             .filter(instrument_figi.eq(param_instrument_figi))
-            .first::<Instrument>(conn)
+            .first::<Self>(conn)
         {
             Ok(res) => Ok(Some(res.to_meta_instrument())),
             Err(_) => Ok(None),
@@ -66,7 +66,7 @@ impl Instrument {
     ) -> Result<Option<MetaInstrument>, diesel::result::Error> {
         match instruments_table::table()
             .filter(instrument_pair_figi.eq(param_instrument_pair_figi))
-            .first::<Instrument>(conn)
+            .first::<Self>(conn)
         {
             Ok(res) => Ok(Some(res.to_meta_instrument())),
             Err(_) => Ok(None),
@@ -92,11 +92,11 @@ impl Instrument {
     ) -> Result<Vec<MetaInstrument>, diesel::result::Error> {
         match instruments_table::table()
             .filter(instrument_exchanges_code.eq(param_exchange_code))
-            .load::<Instrument>(conn)
+            .load::<Self>(conn)
         {
             Ok(res) => {
                 // Convert the Vec<Instrument> into Vec<MetaInstrument>
-                Ok(res.iter().map(|i| i.to_meta_instrument()).collect())
+                Ok(res.iter().map(Self::to_meta_instrument).collect())
             }
             Err(e) => Err(e),
         }
@@ -109,18 +109,18 @@ impl Instrument {
     /// - `param_base_asset`: A string slice representing the base asset to filter the instruments by.
     ///
     /// # Returns
-    /// A Result containing a vector of MetaInstrument if the query is successful, otherwise a diesel::result::Error.
+    /// A Result containing a vector of `MetaInstrument` if the query is successful, otherwise a `diesel::result::Error`.
     pub fn read_all_instruments_for_base_asset(
         conn: &mut Connection,
         param_base_asset: &str,
     ) -> Result<Vec<MetaInstrument>, diesel::result::Error> {
         match instruments_table::table()
             .filter(instrument_base_asset.eq(param_base_asset))
-            .load::<Instrument>(conn)
+            .load::<Self>(conn)
         {
             Ok(res) => {
                 // Convert the Vec<Instrument> into Vec<MetaInstrument>
-                Ok(res.iter().map(|i| i.to_meta_instrument()).collect())
+                Ok(res.iter().map(Self::to_meta_instrument).collect())
             }
             Err(e) => Err(e),
         }
@@ -133,18 +133,18 @@ impl Instrument {
     /// - `param_quote_asset`: A string slice representing the quote asset to filter instruments by.
     ///
     /// # Returns
-    /// A Result containing a vector of MetaInstrument if the query is successful, otherwise a diesel::result::Error.
+    /// A Result containing a vector of `MetaInstrument` if the query is successful, otherwise a `diesel::result::Error`.
     pub fn read_all_instruments_for_quote_asset(
         conn: &mut Connection,
         param_quote_asset: &str,
     ) -> Result<Vec<MetaInstrument>, diesel::result::Error> {
         match instruments_table::table()
             .filter(instrument_quote_asset.eq(param_quote_asset))
-            .load::<Instrument>(conn)
+            .load::<Self>(conn)
         {
             Ok(res) => {
                 // Convert the Vec<Instrument> into Vec<MetaInstrument>
-                Ok(res.iter().map(|i| i.to_meta_instrument()).collect())
+                Ok(res.iter().map(Self::to_meta_instrument).collect())
             }
             Err(e) => Err(e),
         }
@@ -158,7 +158,7 @@ impl Instrument {
     /// - `param_exchange_code`: The exchange code to filter the instruments by.
     ///
     /// # Returns
-    /// A Result containing a vector of MetaInstrument if the query is successful, otherwise a diesel::result::Error.
+    /// A Result containing a vector of `MetaInstrument` if the query is successful, otherwise a `diesel::result::Error`.
     pub fn read_all_instruments_for_base_asset_on_exchange(
         conn: &mut Connection,
         param_base_asset: &str,
@@ -167,11 +167,11 @@ impl Instrument {
         match instruments_table::table()
             .filter(instrument_base_asset.eq(param_base_asset))
             .filter(instrument_exchanges_code.eq(param_exchange_code))
-            .load::<Instrument>(conn)
+            .load::<Self>(conn)
         {
             Ok(res) => {
                 // Convert the Vec<Instrument> into Vec<MetaInstrument>
-                Ok(res.iter().map(|i| i.to_meta_instrument()).collect())
+                Ok(res.iter().map(Self::to_meta_instrument).collect())
             }
             Err(e) => Err(e),
         }
@@ -186,8 +186,8 @@ impl Instrument {
     ///
     /// # Returns
     ///
-    /// A Result containing a vector of MetaInstrument if the query is successful,
-    /// otherwise a diesel::result::Error.
+    /// A Result containing a vector of `MetaInstrument` if the query is successful,
+    /// otherwise a `diesel::result::Error`.
     pub fn read_all_instruments_for_quote_asset_on_exchange(
         conn: &mut Connection,
         param_quote_asset: &str,
@@ -196,11 +196,11 @@ impl Instrument {
         match instruments_table::table()
             .filter(instrument_quote_asset.eq(param_quote_asset))
             .filter(instrument_exchanges_code.eq(param_exchange_code))
-            .load::<Instrument>(conn)
+            .load::<Self>(conn)
         {
             Ok(res) => {
                 // Convert the Vec<Instrument> into Vec<MetaInstrument>
-                Ok(res.iter().map(|i| i.to_meta_instrument()).collect())
+                Ok(res.iter().map(Self::to_meta_instrument).collect())
             }
             Err(e) => Err(e),
         }
@@ -215,7 +215,7 @@ impl Instrument {
     /// - `param_exchange_code`: The exchange code to filter the instruments by.
     ///
     /// # Returns
-    /// A Result containing a vector of MetaInstrument if successful, or a diesel::result::Error if an error occurs.
+    /// A Result containing a vector of `MetaInstrument` if successful, or a `diesel::result::Error` if an error occurs.
     pub fn read_all_instruments_for_base_quote_asset_on_exchange(
         conn: &mut Connection,
         param_base_asset: &str,
@@ -226,11 +226,11 @@ impl Instrument {
             .filter(instrument_base_asset.eq(param_base_asset))
             .filter(instrument_quote_asset.eq(param_quote_asset))
             .filter(instrument_exchanges_code.eq(param_exchange_code))
-            .load::<Instrument>(conn)
+            .load::<Self>(conn)
         {
             Ok(res) => {
                 // Convert the Vec<Instrument> into Vec<MetaInstrument>
-                Ok(res.iter().map(|i| i.to_meta_instrument()).collect())
+                Ok(res.iter().map(Self::to_meta_instrument).collect())
             }
             Err(e) => Err(e),
         }

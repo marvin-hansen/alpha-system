@@ -27,7 +27,7 @@ pub struct SymbolManager {
 }
 
 impl SymbolManager {
-    /// Creates a new SymbolManager instance.
+    /// Creates a new `SymbolManager` instance.
     ///
     /// # Parameters
     ///
@@ -35,7 +35,7 @@ impl SymbolManager {
     ///
     /// # Returns
     ///
-    /// A Result containing the new SymbolManager instance or an InitError.
+    /// A Result containing the new `SymbolManager` instance or an `InitError`.
     ///
     ///
     /// # Noteworthy
@@ -43,13 +43,13 @@ impl SymbolManager {
     ///
     /// - Determines hashmap capacities based on number of symbols.
     ///
-    /// - Initializes the symbol_to_index and index_to_symbol hashmaps.
+    /// - Initializes the `symbol_to_index` and `index_to_symbol` hashmaps.
     ///
     /// - Inserts all symbols and ids into the hashmaps.
     ///
-    /// - Closes the database connection and drops the QueryDBManager.
+    /// - Closes the database connection and drops the `QueryDBManager`.
     ///
-    /// - Creates and returns a SymbolManager instance containing the initialized
+    /// - Creates and returns a `SymbolManager` instance containing the initialized
     ///   hashmaps and caches.
     ///
     /// - Propagates any errors via the returned Result.
@@ -84,7 +84,7 @@ impl SymbolManager {
             index_to_exchange.insert(id, name);
         }
 
-        Ok(SymbolManager {
+        Ok(Self {
             symbol_to_index,
             index_to_symbol,
             index_to_exchange,

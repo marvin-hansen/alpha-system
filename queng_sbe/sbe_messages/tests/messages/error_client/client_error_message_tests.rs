@@ -54,6 +54,6 @@ fn test_display() {
     let message = ClientErrorMessage::new(client_id, client_error_type);
 
     let expected = "ClientErrorMessage { message_type: ClientError, client_id: 1, client_error_type: ClientAlreadyLoggedIn }";
-    let actual = format!("{}", message);
+    let actual = format!("{message}");
     assert_eq!(expected, actual);
 }

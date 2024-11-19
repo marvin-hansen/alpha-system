@@ -14,7 +14,7 @@ impl DBGWCmdbClient {
         let s = format!("http://{}:{}", config.host_uri(), config.port());
         let uri = s
             .parse::<Uri>()
-            .unwrap_or_else(|_| panic!("DBGWCmdbClient: Failed to parse server URI: {}", s));
+            .unwrap_or_else(|_| panic!("DBGWCmdbClient: Failed to parse server URI: {s}"));
 
         Self::build(uri).await
     }
@@ -22,7 +22,7 @@ impl DBGWCmdbClient {
     pub async fn from_url(url: &str) -> Self {
         let uri = url
             .parse::<Uri>()
-            .unwrap_or_else(|_| panic!("DBGWCmdbClient: Failed to parse server URI: {}", url));
+            .unwrap_or_else(|_| panic!("DBGWCmdbClient: Failed to parse server URI: {url}"));
 
         Self::build(uri).await
     }
@@ -31,10 +31,7 @@ impl DBGWCmdbClient {
         let channel = match Channel::builder(uri.clone()).connect().await {
             Ok(res) => res,
             Err(e) => {
-                panic!(
-                    "DBGWCmdbClient: Failed to connect to DBGW server: {} due to error: {}",
-                    uri, e
-                );
+                panic!("DBGWCmdbClient: Failed to connect to DBGW server: {uri} due to error: {e}");
             }
         };
 

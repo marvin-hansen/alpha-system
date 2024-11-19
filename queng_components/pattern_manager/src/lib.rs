@@ -29,7 +29,8 @@ impl Default for PatternManager {
 }
 
 impl PatternManager {
-    pub fn new() -> Self {
+    #[must_use]
+    pub const fn new() -> Self {
         Self {
             base_pattern: RefCell::new(BasePattern::new()),
             extra_pattern: RefCell::new(ExtraPattern::new()),

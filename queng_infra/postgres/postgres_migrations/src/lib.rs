@@ -42,7 +42,7 @@ pub fn run_db_migration(
     match conn.run_pending_migrations(embedded_migrations) {
         Ok(_) => Ok(()),
         Err(e) => {
-            eprint!("Error migrating database: {}", e);
+            eprint!("Error migrating database: {e}");
             Err(e)
         }
     }
@@ -78,7 +78,7 @@ pub fn check_db_migration(
             // Because we have already checked the DB connection,
             // this can only fail if the DB, schema, or table isn't set up properly.
             // Still print the error for debugging purposes
-            eprint!("Error loading migrations from the database: {}", e);
+            eprint!("Error loading migrations from the database: {e}");
             return Ok(false);
         }
     };
@@ -110,7 +110,7 @@ pub fn revert_db_migration(
     match conn.revert_all_migrations(embedded_migrations) {
         Ok(_) => Ok(()),
         Err(e) => {
-            eprint!("Error reverting database migrations: {}", e);
+            eprint!("Error reverting database migrations: {e}");
             Err(e)
         }
     }
@@ -134,9 +134,9 @@ fn check_db_connection(
     conn: &mut Connection,
 ) -> Result<(), Box<dyn Error + Send + Sync + 'static>> {
     match conn.ping() {
-        Ok(_) => Ok(()),
+        Ok(()) => Ok(()),
         Err(e) => {
-            eprint!("Error connecting to database: {}", e);
+            eprint!("Error connecting to database: {e}");
             Err(Box::new(e))
         }
     }

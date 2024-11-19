@@ -8,7 +8,7 @@ use pg_mddb_manager::PostgresMDDBManager;
 /// This function will import only the specified metadata into the database
 /// using the given `PostgresMDDBManager`.
 ///
-pub(crate) async fn import_partial_metadata(
+pub async fn import_partial_metadata(
     meta_data_ops: &MetaDataDBWOp,
     dbm_mddb: &PostgresMDDBManager,
     meta_data: &MetaDataSet,

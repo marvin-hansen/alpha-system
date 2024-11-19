@@ -10,11 +10,11 @@ use common_metadata::{MetaDataDBRecords, MetaStats};
 /// operations based on the differences found.
 ///
 /// Possible operations are:
-/// * NoOP: No operations are needed.
-/// * ImportAll: Import all assets, exchanges, and instruments from Kaiko.
-/// * UpdatedAll: Update all assets, exchanges, and instruments in the database.
-/// * PartialImport: Import only assets, exchanges, or instruments in the database.
-/// * PartialUpdate: Update only assets, exchanges, or instruments in the database.
+/// * `NoOP`: No operations are needed.
+/// * `ImportAll`: Import all assets, exchanges, and instruments from Kaiko.
+/// * `UpdatedAll`: Update all assets, exchanges, and instruments in the database.
+/// * `PartialImport`: Import only assets, exchanges, or instruments in the database.
+/// * `PartialUpdate`: Update only assets, exchanges, or instruments in the database.
 ///
 /// Returns a `MetaDataDBWOp` struct containing the workflow operations
 /// for all, assets, exchanges, and instruments.

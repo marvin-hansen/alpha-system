@@ -2,12 +2,15 @@ use crate::error::MDDBClientError;
 use crate::MDDBClient;
 use common_metadata::MetaExchange;
 
-use proto_mddb_utils::*;
+use proto_mddb_utils::{
+    get_all_exchanges_request, get_check_if_exchange_exists_request, get_count_exchanges_request,
+    get_exchange_request, proto_exchange_to_meta_exchange,
+};
 
 impl MDDBClient {
     /// Retrieves the total count of exchanges from the database.
     ///
-    /// Returns a Result containing either the count as u64 or an MDDBClientError if the operation fails.
+    /// Returns a Result containing either the count as u64 or an `MDDBClientError` if the operation fails.
     ///
     pub async fn count_exchanges(&self) -> Result<u64, MDDBClientError> {
         let mut client = self.client.clone();
@@ -67,8 +70,8 @@ impl MDDBClient {
 
     /// Retrieves all available exchanges from the database.
     ///
-    /// Returns a Result containing either a Vec of MetaExchange objects or an MDDBClientError.
-    /// The exchanges are fetched via gRPC and converted from proto format to MetaExchange type.
+    /// Returns a Result containing either a Vec of `MetaExchange` objects or an `MDDBClientError`.
+    /// The exchanges are fetched via gRPC and converted from proto format to `MetaExchange` type.
     ///
     pub async fn get_all_exchanges(&self) -> Result<Vec<MetaExchange>, MDDBClientError> {
         let mut client = self.client.clone();

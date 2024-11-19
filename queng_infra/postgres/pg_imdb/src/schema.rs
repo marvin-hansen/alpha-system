@@ -8,7 +8,7 @@ pub mod imdb {
     }
 
     diesel::table! {
-        use diesel::sql_types::*;
+        use diesel::sql_types::{Bool, Int4, Varchar};
         use super::sql_types::IntegrationMessageConfig;
 
         imdb.integration_config (integration_id) {

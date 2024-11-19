@@ -21,10 +21,10 @@ impl Asset {
     /// Returns a `QueryResult` containing the created `MetaAsset` if successful, or an error.
     ///
     pub fn create_asset(db: &mut Connection, meta_asset: MetaAsset) -> QueryResult<MetaAsset> {
-        let asset = Asset::from_meta_asset(meta_asset);
+        let asset = Self::from_meta_asset(meta_asset);
         match insert_into(assets_table)
             .values(&asset)
-            .get_result::<Asset>(db)
+            .get_result::<Self>(db)
         {
             Ok(asset) => Ok(asset.to_meta_asset()),
             Err(e) => Err(e),
@@ -46,9 +46,9 @@ impl Asset {
         conn: &mut Connection,
         meta_assets: &[MetaAsset],
     ) -> QueryResult<usize> {
-        let items: Vec<Asset> = meta_assets
+        let items: Vec<Self> = meta_assets
             .iter()
-            .map(|ma| Asset::from_meta_asset(ma.clone()))
+            .map(|ma| Self::from_meta_asset(ma.clone()))
             .collect();
         match insert_into(assets_table).values(&items).execute(conn) {
             Ok(res) => Ok(res),
@@ -84,7 +84,7 @@ impl Asset {
     pub fn check_if_asset_id_exists(db: &mut Connection, asset_id: String) -> QueryResult<bool> {
         let exists = assets_table
             .find(asset_id)
-            .first::<Asset>(db)
+            .first::<Self>(db)
             .optional()?
             .is_some();
         Ok(exists)
@@ -109,7 +109,7 @@ impl Asset {
         } else {
             assets_table
                 .filter(asset_code.eq(param_asset_id))
-                .first::<Asset>(db)
+                .first::<Self>(db)
                 .map(|a| Some(a.to_meta_asset()))
         }
     }
@@ -126,7 +126,7 @@ impl Asset {
     ///
     pub fn read_all(db: &mut Connection) -> QueryResult<Vec<MetaAsset>> {
         assets_table
-            .load::<Asset>(db)
+            .load::<Self>(db)
             .map(|a| a.into_iter().map(|asset| asset.to_meta_asset()).collect())
     }
 

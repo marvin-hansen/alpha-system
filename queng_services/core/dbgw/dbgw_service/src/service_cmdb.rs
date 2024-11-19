@@ -14,7 +14,7 @@ use std::sync::Arc;
 use tokio::sync::RwLock;
 use tonic::{Request, Response, Status};
 
-pub(crate) type SafePgCMDBManager = Arc<RwLock<PostgresCMDBManager>>;
+pub type SafePgCMDBManager = Arc<RwLock<PostgresCMDBManager>>;
 
 #[derive(Clone)]
 pub struct CMDBServer {
@@ -23,13 +23,13 @@ pub struct CMDBServer {
 }
 
 impl CMDBServer {
-    pub fn new(dbm: SafePgCMDBManager) -> Self {
+    pub const fn new(dbm: SafePgCMDBManager) -> Self {
         Self { dbg: DBG, dbm }
     }
 
     fn dbg_print(&self, msg: &str) {
         if self.dbg {
-            println!("[DBGW/service_cmdb]: {}", msg)
+            println!("[DBGW/service_cmdb]: {msg}");
         }
     }
 }
@@ -120,7 +120,7 @@ impl DbGatewayCmdbService for CMDBServer {
 
         let dbm = self.dbm.write().await;
         match dbm.update_portfolio_config(data).await {
-            Ok(_) => Ok(Response::new(UpdatePortfolioResponse {
+            Ok(()) => Ok(Response::new(UpdatePortfolioResponse {
                 portfolio_updated: true,
             })),
             Err(e) => Err(Status::internal(e.to_string())),

@@ -5,6 +5,7 @@ use std::fmt;
 pub struct DockerError(pub String);
 
 impl DockerError {
+    #[must_use]
     pub fn new(field0: &str) -> Self {
         Self(field0.to_string())
     }

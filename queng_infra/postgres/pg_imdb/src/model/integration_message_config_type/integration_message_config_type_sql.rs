@@ -10,7 +10,7 @@ impl ToSql<crate::schema::imdb::sql_types::IntegrationMessageConfig, Pg> for Mes
         serialize::WriteTuple::<(Integer, Text, Integer, Integer)>::write_tuple(
             &(
                 self.id.to_owned(),
-                self.name.to_owned(),
+                self.name.clone(),
                 self.version.to_owned(),
                 self.exchange_id.to_owned(),
             ),
@@ -24,7 +24,7 @@ impl FromSql<crate::schema::imdb::sql_types::IntegrationMessageConfig, Pg> for M
         let (id, name, version, exchange_id) =
             FromSql::<Record<(Integer, Text, Integer, Integer)>, Pg>::from_sql(bytes)?;
 
-        Ok(MessageConfig {
+        Ok(Self {
             id,
             name,
             version,

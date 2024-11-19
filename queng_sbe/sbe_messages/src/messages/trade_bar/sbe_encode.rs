@@ -6,11 +6,11 @@ use sbe_bindings::{
     Encoder, MessageType as SbeMessageType, TradeBarEncoder, WriteBuf, ENCODED_LENGTH,
 };
 
-/// Encodes a TradeBar message to a byte buffer.
+/// Encodes a `TradeBar` message to a byte buffer.
 ///
 /// # Arguments
 ///
-/// * `bar` - TradeBar to encode
+/// * `bar` - `TradeBar` to encode
 ///
 /// # Returns
 ///
@@ -23,12 +23,12 @@ use sbe_bindings::{
 /// # Process
 ///
 /// - Create 28 byte buffer
-/// - Create default TradeBarEncoder
-/// - Wrap buffer in WriteBuf
+/// - Create default `TradeBarEncoder`
+/// - Wrap buffer in `WriteBuf`
 /// - Encode header
-/// - Encode message_type
-/// - Encode symbol_id
-/// - Encode date_time as timestamp
+/// - Encode `message_type`
+/// - Encode `symbol_id`
+/// - Encode `date_time` as timestamp
 /// - Convert price to f32
 /// - Encode price
 /// - Convert volume to f32

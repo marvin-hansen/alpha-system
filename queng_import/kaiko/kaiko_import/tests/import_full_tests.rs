@@ -58,7 +58,7 @@ async fn test_full_import() {
     assert_eq!(count, 1);
 }
 
-fn get_full_import_op() -> MetaDataDBWOp {
+const fn get_full_import_op() -> MetaDataDBWOp {
     let all_op: WorkflowOpAll = WorkflowOpAll::ImportAll;
     let assets_op: WorkflowOp = WorkflowOp::NoOP;
     let exchanges_op: WorkflowOp = WorkflowOp::NoOP;

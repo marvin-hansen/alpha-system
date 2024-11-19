@@ -5,14 +5,14 @@ mod getters;
 mod sbe_decode;
 mod sbe_encode;
 
-#[derive(Debug, Default, Clone, PartialEq)]
+#[derive(Debug, Default, Clone, PartialEq, Eq)]
 pub struct FirstTradeBar {
     message_type: MessageType,
     symbol_id: u16,
 }
 
 impl FirstTradeBar {
-    /// Creates a new FirstTradeBar instance.
+    /// Creates a new `FirstTradeBar` instance.
     ///
     /// # Arguments
     ///
@@ -20,13 +20,14 @@ impl FirstTradeBar {
     ///
     /// # Returns
     ///
-    /// New FirstTradeBar instance
+    /// New `FirstTradeBar` instance
     ///
     /// # Remarks
     ///
-    /// Sets message_type to FirstTradeBar
+    /// Sets `message_type` to `FirstTradeBar`
 
-    pub fn new(symbol_id: u16) -> Self {
+    #[must_use]
+    pub const fn new(symbol_id: u16) -> Self {
         let message_type = MessageType::FirstTradeBar;
         Self {
             message_type,
@@ -36,15 +37,15 @@ impl FirstTradeBar {
 }
 
 impl From<&[u8]> for FirstTradeBar {
-    /// Decodes a FirstTradeBar message from a byte buffer.
+    /// Decodes a `FirstTradeBar` message from a byte buffer.
     ///
     /// # Arguments
     ///
-    /// * `value` - Byte buffer containing encoded FirstTradeBar message
+    /// * `value` - Byte buffer containing encoded `FirstTradeBar` message
     ///
     /// # Returns
     ///
-    /// Decoded FirstTradeBar on success
+    /// Decoded `FirstTradeBar` on success
     ///
     /// # Errors
     ///
@@ -52,7 +53,7 @@ impl From<&[u8]> for FirstTradeBar {
     ///
     /// # Remarks
     ///
-    /// Calls sbe_decode::decode_first_data_bar_message to decode message
+    /// Calls `sbe_decode::decode_first_data_bar_message` to decode message
     ///
     #[inline]
     fn from(value: &[u8]) -> Self {

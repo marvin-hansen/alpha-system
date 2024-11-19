@@ -6,7 +6,7 @@ impl CfgManager {
     pub async fn get_health_check_url(&self, service_id: &ServiceID) -> Result<String, InitError> {
         self.dbg_print("get_health_check_url");
 
-        let svc = self.svc_config.to_owned();
+        let svc = self.svc_config.clone();
         let health_endpoint = svc.health_endpoint();
 
         let health_host = self
@@ -20,7 +20,7 @@ impl CfgManager {
             .get_port(port, service_id)
             .expect("[CfgManager]: Failed to get port from config");
 
-        let health_check_url = format!("http://{}:{}/{}", health_host, health_port, health_uri);
+        let health_check_url = format!("http://{health_host}:{health_port}/{health_uri}");
 
         self.dbg_print(&health_check_url);
 

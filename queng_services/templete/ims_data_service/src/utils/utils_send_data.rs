@@ -32,7 +32,7 @@ impl Server {
 
         // Send the first bar message to inform the client that the data stream starts
         match self.send_client_data(client_id, enc_first_bar).await {
-            Ok(_) => {}
+            Ok(()) => {}
             Err(e) => return Err(e),
         }
 
@@ -67,7 +67,7 @@ impl Server {
 
         // Send the first bar message to inform the client that the data stream starts
         match self.send_client_data(client_id, enc_last_bar).await {
-            Ok(_) => {}
+            Ok(()) => {}
             Err(e) => return Err(e),
         }
 
@@ -97,7 +97,7 @@ impl Server {
 
         // Send trade bar message to inform the client that the data stream starts
         match self.send_client_data(client_id, enc_trade_bar).await {
-            Ok(_) => {}
+            Ok(()) => {}
             Err(e) => return Err(e),
         }
 
@@ -127,7 +127,7 @@ impl Server {
 
         // Send the ohlcv bar message to inform the client that the data stream starts
         match self.send_client_data(client_id, enc_ohlcv_bar).await {
-            Ok(_) => {}
+            Ok(()) => {}
             Err(e) => return Err(e),
         }
 

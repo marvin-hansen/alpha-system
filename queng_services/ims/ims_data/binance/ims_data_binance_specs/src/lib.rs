@@ -10,6 +10,7 @@ use shared_service_specs::{health_endpoint, ims_endpoint, metric_endpoint};
 /// # Returns
 /// A `IntegrationConfig` instance with the specific settings for the Binance data integration in the IMS system.
 ///
+#[must_use]
 pub fn ims_data_integration_binance_config() -> IntegrationConfig {
     IntegrationConfig::new(
         "binance_data".to_string(),
@@ -43,6 +44,7 @@ pub fn ims_data_integration_binance_config() -> IntegrationConfig {
 /// * `endpoint` - The endpoint configuration for the service.
 /// * `metrics` - The metric configuration for the service.
 ///
+#[must_use]
 pub fn ims_data_binance_config() -> ServiceConfig {
     ims_service_config("Binance", ServiceID::ImsDataBinance)
 }
@@ -50,15 +52,13 @@ pub fn ims_data_binance_config() -> ServiceConfig {
 fn ims_service_config(exchange_id: &str, service_id: ServiceID) -> ServiceConfig {
     let port = 7070;
     let id = service_id;
-    let name = format!("ims-service-{}", exchange_id);
+    let name = format!("ims-service-{exchange_id}");
     let version = 1;
     let online = false;
-    let description = format!("IMS controls streaming data for {} exchange", exchange_id);
-    let health_check_uri = format!(
-        "ims-data-service-{}.default.svc.cluster.local:{}/health",
-        exchange_id, port
-    );
-    let base_uri = format!("ims-data-service-{}.default.svc.cluster.local", exchange_id);
+    let description = format!("IMS controls streaming data for {exchange_id} exchange");
+    let health_check_uri =
+        format!("ims-data-service-{exchange_id}.default.svc.cluster.local:{port}/health");
+    let base_uri = format!("ims-data-service-{exchange_id}.default.svc.cluster.local");
     let dependencies = vec![ServiceID::SMDB];
     let endpoints = vec![
         ims_endpoint(exchange_id, port),

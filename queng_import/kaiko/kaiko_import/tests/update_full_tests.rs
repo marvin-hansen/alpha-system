@@ -125,7 +125,7 @@ async fn test_full_update() {
     assert_ne!(db_original_instrument.hash(), update_instrument.hash());
 }
 
-fn get_full_import_op() -> MetaDataDBWOp {
+const fn get_full_import_op() -> MetaDataDBWOp {
     let all_op: WorkflowOpAll = WorkflowOpAll::ImportAll;
     let assets_op: WorkflowOp = WorkflowOp::NoOP;
     let exchanges_op: WorkflowOp = WorkflowOp::NoOP;
@@ -133,7 +133,7 @@ fn get_full_import_op() -> MetaDataDBWOp {
     MetaDataDBWOp::new(all_op, assets_op, exchanges_op, instruments_op)
 }
 
-fn get_full_update_op() -> MetaDataDBWOp {
+const fn get_full_update_op() -> MetaDataDBWOp {
     let all_op: WorkflowOpAll = WorkflowOpAll::UpdateAll;
     let assets_op: WorkflowOp = WorkflowOp::NoOP;
     let exchanges_op: WorkflowOp = WorkflowOp::NoOP;

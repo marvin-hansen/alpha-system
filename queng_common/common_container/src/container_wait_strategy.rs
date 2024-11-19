@@ -49,6 +49,6 @@ pub enum WaitStrategy {
 
 impl Display for WaitStrategy {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        write!(f, "{self:?}")
     }
 }

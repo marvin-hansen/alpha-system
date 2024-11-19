@@ -8,7 +8,7 @@ use diesel_migrations::{EmbeddedMigration, EmbeddedMigrations, EmbeddedName, Tom
 use crate::migrations::imdb_setup::down::SCHEMA_DOWN;
 use crate::migrations::imdb_setup::up::SCHEMA_UP;
 
-pub(crate) const EMBEDDED_MIGRATIONS: EmbeddedMigrations =
+pub const EMBEDDED_MIGRATIONS: EmbeddedMigrations =
     EmbeddedMigrations::new(&[DIESEL_MIGRATION, SCHEMA_MIGRATION]);
 
 const DIESEL_NAME: &str = "00000000000000_diesel_initial_setup";

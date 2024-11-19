@@ -1,6 +1,6 @@
 use std::fmt::{Display, Formatter};
 
-/// An EnvironmentType represents the environment type of the application.
+/// An `EnvironmentType` represents the environment type of the application.
 ///
 /// # Variants
 ///

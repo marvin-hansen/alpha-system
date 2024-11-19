@@ -1,7 +1,23 @@
 use proto_imdb::proto::db_gateway_imdb_service_client::DbGatewayImdbServiceClient;
 use proto_imdb::proto::imdb_service_server::ImdbService;
-use proto_imdb::proto::*;
-use proto_imdb_utils::*;
+use proto_imdb::proto::{
+    CheckIfIntegrationConfigExistsRequest, CheckIfIntegrationConfigExistsResponse,
+    CheckIfIntegrationConfigOnlineRequest, CheckIfIntegrationConfigOnlineResponse,
+    CountIntegrationRequest, CountIntegrationResponse, GetAllIntegrationsByExchangeRequest,
+    GetAllIntegrationsByExchangeResponse, GetAllIntegrationsRequest, GetAllIntegrationsResponse,
+    GetAllOfflineIntegrationsRequest, GetAllOfflineIntegrationsResponse,
+    GetAllOnlineIntegrationsRequest, GetAllOnlineIntegrationsResponse, GetIntegrationConfigRequest,
+    GetIntegrationConfigResponse, SetIntegrationOfflineRequest, SetIntegrationOfflineResponse,
+    SetIntegrationOnlineRequest, SetIntegrationOnlineResponse,
+};
+use proto_imdb_utils::{
+    get_all_integrations_by_exchange_response, get_all_integrations_response,
+    get_all_offline_integrations_response, get_all_online_integrations_response,
+    get_check_if_integration_config_exists_response,
+    get_check_if_integration_config_online_response, get_count_integration_response,
+    get_integration_config_response, get_set_integration_offline_response,
+    get_set_integration_online_response,
+};
 use tonic::transport::Channel;
 use tonic::{Request, Response, Status};
 
@@ -11,7 +27,7 @@ pub struct IMDBServer {
 }
 
 impl IMDBServer {
-    pub fn new(dbgw: DbGatewayImdbServiceClient<Channel>) -> Self {
+    pub const fn new(dbgw: DbGatewayImdbServiceClient<Channel>) -> Self {
         Self { dbgw }
     }
 }

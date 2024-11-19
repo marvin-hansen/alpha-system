@@ -18,25 +18,25 @@ impl Error for ClickHouseDBError {}
 impl fmt::Display for ClickHouseDBError {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
         match self {
-            ClickHouseDBError::ConnectionFailed(e) => {
+            Self::ConnectionFailed(e) => {
                 write!(f, "[ClickHouseDBError]: Connection to DB failed: {e}")
             }
-            ClickHouseDBError::InsertFailed(e) => {
+            Self::InsertFailed(e) => {
                 write!(f, "[ClickHouseDBError]: Insert into DB failed: {e}")
             }
-            ClickHouseDBError::UpdateFailed(e) => {
+            Self::UpdateFailed(e) => {
                 write!(f, "[ClickHouseDBError]: DB Update failed: {e}")
             }
-            ClickHouseDBError::DeleteFailed(e) => {
+            Self::DeleteFailed(e) => {
                 write!(f, "[ClickHouseDBError]: Delete failed: {e}")
             }
-            ClickHouseDBError::QueryFailed(e) => {
+            Self::QueryFailed(e) => {
                 write!(f, "[ClickHouseDBError]: DB Query failed: {e}")
             }
-            ClickHouseDBError::TableSanitizeError(e) => {
+            Self::TableSanitizeError(e) => {
                 write!(f, "[ClickHouseDBError]: Table sanitization error: {e}")
             }
-            ClickHouseDBError::UnknownError(e) => {
+            Self::UnknownError(e) => {
                 write!(f, "[SurrealDBError]: Unknown error: {e}")
             }
         }

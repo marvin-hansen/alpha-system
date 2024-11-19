@@ -291,7 +291,7 @@ impl PostgresSMDBManager {
         let conn = &mut self.get_connection();
 
         match service::Service::set_service_online(conn, *id) {
-            Ok(_) => Ok(()),
+            Ok(()) => Ok(()),
             Err(e) => Err(PostgresDBError::SetFieldFailed(e.to_string())),
         }
     }
@@ -312,7 +312,7 @@ impl PostgresSMDBManager {
         let conn = &mut self.get_connection();
 
         match service::Service::set_service_offline(conn, *id) {
-            Ok(_) => Ok(()),
+            Ok(()) => Ok(()),
             Err(e) => Err(PostgresDBError::SetFieldFailed(e.to_string())),
         }
     }
@@ -360,7 +360,7 @@ impl PostgresSMDBManager {
     ///
     /// # Errors
     ///
-    /// Returns an PostgresDBError if the query fails.
+    /// Returns an `PostgresDBError` if the query fails.
     ///
     pub async fn read_all_services(&self) -> Result<Vec<ServiceConfig>, PostgresDBError> {
         self.dbg_print("read_all_services");
@@ -386,7 +386,7 @@ impl PostgresSMDBManager {
     ///
     /// # Errors
     ///
-    /// Returns a PostgresDBError if the update fails.
+    /// Returns a `PostgresDBError` if the update fails.
     ///
     pub async fn update_service(
         &self,

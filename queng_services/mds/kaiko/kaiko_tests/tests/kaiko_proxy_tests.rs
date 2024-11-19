@@ -64,5 +64,5 @@ async fn test_kaiko_client() {
     let expected = stats.number_instruments();
     let actual = instruments.len() as u32;
 
-    assert_eq!(actual, expected)
+    assert_eq!(actual, expected);
 }

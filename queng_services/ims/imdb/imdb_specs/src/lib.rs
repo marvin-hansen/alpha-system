@@ -1,6 +1,7 @@
 use common_config::{ServiceConfig, ServiceID};
 use shared_service_specs::{default_grpc_service_endpoint, health_endpoint, metric_endpoint};
 
+#[must_use]
 pub fn imdb_service_config() -> ServiceConfig {
     let id = ServiceID::IMDB;
     let name = "imdb".to_string();

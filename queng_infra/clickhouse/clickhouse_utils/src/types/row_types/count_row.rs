@@ -8,7 +8,8 @@ pub struct CountRow {
 }
 
 impl CountRow {
-    pub fn count(&self) -> u64 {
+    #[must_use]
+    pub const fn count(&self) -> u64 {
         self.count
     }
 }

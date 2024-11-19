@@ -6,7 +6,7 @@ use tokio::time::Instant;
 impl InitManager {
     /// Retrieves reference exchange data, which includes a hash of all assets, exchanges, and instruments.
     /// This data is used to determine if the data in the database has changed.
-    /// Returns a Result containing MetaStats on success, or InitError on failure.
+    /// Returns a Result containing `MetaStats` on success, or `InitError` on failure.
     pub async fn get_meta_data_stats(&self) -> Result<MetaStats, InitError> {
         match self.dl_utils.download_stats().await {
             Ok(meta_stats) => Ok(meta_stats),
@@ -14,9 +14,9 @@ impl InitManager {
         }
     }
 
-    /// Asynchronously initializes the InitManager by retrieving reference exchange,
+    /// Asynchronously initializes the `InitManager` by retrieving reference exchange,
     /// asset, and instrument data in three levels.
-    /// Returns a Result containing MetaDataSet on success, or InitError on failure.
+    /// Returns a Result containing `MetaDataSet` on success, or `InitError` on failure.
     pub async fn init(&self) -> Result<MetaDataSet, InitError> {
         self.dbg_print("");
         self.dbg_print("=================");

@@ -1,7 +1,9 @@
 use crate::model::integration_config::{
     CreateIntegrationConfig, IntegrationConfig, UpdateIntegrationConfig,
 };
-use crate::schema::imdb::integration_config::dsl::*;
+use crate::schema::imdb::integration_config::dsl::{
+    exchange_id, integration_config, integration_id, online,
+};
 use crate::Connection;
 use common_ims::IntegrationConfig as CommonIntegrationConfig;
 use diesel::dsl::{delete, insert_into};
@@ -28,7 +30,7 @@ impl IntegrationConfig {
         let item = CreateIntegrationConfig::from_common_integration_config(config);
         insert_into(crate::schema::imdb::integration_config::table)
             .values(item)
-            .get_result::<IntegrationConfig>(db)
+            .get_result::<Self>(db)
             .map(|s| s.to_common_integration_config())
     }
 
@@ -150,7 +152,7 @@ impl IntegrationConfig {
     ) -> QueryResult<Option<CommonIntegrationConfig>> {
         integration_config
             .filter(integration_id.eq(config_id))
-            .first::<IntegrationConfig>(db)
+            .first::<Self>(db)
             .optional()
             .map(|opt| opt.map(|config| config.to_common_integration_config()))
     }
@@ -168,14 +170,12 @@ impl IntegrationConfig {
     pub fn get_all_integration_configs(
         db: &mut Connection,
     ) -> QueryResult<Vec<CommonIntegrationConfig>> {
-        integration_config
-            .load::<IntegrationConfig>(db)
-            .map(|configs| {
-                configs
-                    .into_iter()
-                    .map(|c| c.to_common_integration_config())
-                    .collect()
-            })
+        integration_config.load::<Self>(db).map(|configs| {
+            configs
+                .into_iter()
+                .map(|c| c.to_common_integration_config())
+                .collect()
+        })
     }
 
     /// Retrieves all integration configurations for a specific exchange from the database.
@@ -195,7 +195,7 @@ impl IntegrationConfig {
     ) -> QueryResult<Vec<CommonIntegrationConfig>> {
         integration_config
             .filter(exchange_id.eq(param_exchange_id))
-            .load::<IntegrationConfig>(db)
+            .load::<Self>(db)
             .map(|configs| {
                 configs
                     .into_iter()
@@ -219,7 +219,7 @@ impl IntegrationConfig {
     ) -> QueryResult<Vec<CommonIntegrationConfig>> {
         integration_config
             .filter(online.eq(true))
-            .load::<IntegrationConfig>(db)
+            .load::<Self>(db)
             .map(|configs| {
                 configs
                     .into_iter()
@@ -243,7 +243,7 @@ impl IntegrationConfig {
     ) -> QueryResult<Vec<CommonIntegrationConfig>> {
         integration_config
             .filter(online.eq(false))
-            .load::<IntegrationConfig>(db)
+            .load::<Self>(db)
             .map(|configs| {
                 configs
                     .into_iter()

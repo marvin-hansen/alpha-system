@@ -2,22 +2,19 @@ use crate::print_utils;
 use common_metadata::MetaDataSet;
 use pg_mddb_manager::PostgresMDDBManager;
 
-/// Updates assets metadata in the Postgres database based on a comparison with the provided MetaDataSet.
+/// Updates assets metadata in the Postgres database based on a comparison with the provided `MetaDataSet`.
 ///
 /// # Arguments
 ///
-/// * `dbm_mddb` - A reference to the PostgresMDDBManager for database operations.
-/// * `meta_data` - A reference to the MetaDataSet containing assets metadata to be updated.
+/// * `dbm_mddb` - A reference to the `PostgresMDDBManager` for database operations.
+/// * `meta_data` - A reference to the `MetaDataSet` containing assets metadata to be updated.
 ///
 /// This function compares the existing assets in the database with the provided metadata and updates accordingly.
 /// If the number of assets in the database is greater than expected, extra assets are deleted.
 /// If the number of assets in the database is less than expected, missing assets are inserted.
 /// It then compared all hashes of the existing assets with the hashes in the metadata and updates accordingly.
 ///
-pub(crate) async fn update_assets_metadata(
-    dbm_mddb: &PostgresMDDBManager,
-    meta_data: &MetaDataSet,
-) {
+pub async fn update_assets_metadata(dbm_mddb: &PostgresMDDBManager, meta_data: &MetaDataSet) {
     print_utils::dbg_print("update_assets_metadata");
 
     let stats = meta_data.stats();
@@ -54,7 +51,7 @@ pub(crate) async fn update_assets_metadata(
 
     // find the assets that are in the meta_data parameter but not in the database,
     // and insert them into the database.
-    for meta_asset in meta_data.assets().data.iter() {
+    for meta_asset in &meta_data.assets().data {
         if !db_assets.iter().any(|da| da.code == meta_asset.code) {
             // Double check that the ID really does not exists already in the database
             //  This prevents unique key constraint violations
@@ -109,12 +106,12 @@ pub(crate) async fn update_assets_metadata(
 ///
 /// # Arguments
 ///
-/// - `dbm_mddb`: A reference to the PostgresMDDBManager for database operations.
-/// - `meta_data`: A reference to the MetaDataSet containing exchange metadata.
+/// - `dbm_mddb`: A reference to the `PostgresMDDBManager` for database operations.
+/// - `meta_data`: A reference to the `MetaDataSet` containing exchange metadata.
 ///
-/// This function compares the exchanges in the database with the ones in the meta_data parameter.
-/// It deletes exchanges that are in the database but not in meta_data and inserts exchanges
-/// that are in meta_data but not in the database.
+/// This function compares the exchanges in the database with the ones in the `meta_data` parameter.
+/// It deletes exchanges that are in the database but not in `meta_data` and inserts exchanges
+/// that are in `meta_data` but not in the database.
 /// Finally, it updates exchanges with different hashes.
 ///
 /// Prints debug messages during the update process.
@@ -127,10 +124,7 @@ pub(crate) async fn update_assets_metadata(
 ///
 /// Asserts that the number of exchanges in the database matches the expected count after the update.
 ///
-pub(crate) async fn update_exchanges_metadata(
-    dbm_mddb: &PostgresMDDBManager,
-    meta_data: &MetaDataSet,
-) {
+pub async fn update_exchanges_metadata(dbm_mddb: &PostgresMDDBManager, meta_data: &MetaDataSet) {
     print_utils::dbg_print("update_exchanges_metadata");
 
     let stats = meta_data.stats();
@@ -164,7 +158,7 @@ pub(crate) async fn update_exchanges_metadata(
     }
 
     // Find and insert exchanges that are in the meta_data parameter but not in the database
-    for meta_exchange in meta_data.exchanges().data.iter() {
+    for meta_exchange in &meta_data.exchanges().data {
         if !db_exchanges.iter().any(|de| de.code == meta_exchange.code) {
             let exists = dbm_mddb
                 .check_if_exchange_id_exists(meta_exchange.code.clone())
@@ -214,12 +208,12 @@ pub(crate) async fn update_exchanges_metadata(
 ///
 /// # Arguments
 ///
-/// - `dbm_mddb`: A reference to the PostgresMDDBManager for database operations.
-/// - `meta_data`: A reference to the MetaDataSet containing instrument metadata.
+/// - `dbm_mddb`: A reference to the `PostgresMDDBManager` for database operations.
+/// - `meta_data`: A reference to the `MetaDataSet` containing instrument metadata.
 ///
-/// This function compares the instruments in the database with the ones in the meta_data parameter.
-/// It deletes instruments that are in the database but not in meta_data and inserts instruments
-/// that are in meta_data but not in the database.
+/// This function compares the instruments in the database with the ones in the `meta_data` parameter.
+/// It deletes instruments that are in the database but not in `meta_data` and inserts instruments
+/// that are in `meta_data` but not in the database.
 /// Finally, it updates instruments with different hashes.
 ///
 /// Prints debug messages during the update process.
@@ -232,10 +226,7 @@ pub(crate) async fn update_exchanges_metadata(
 ///
 /// Asserts that the number of instruments in the database matches the expected count after the update.
 ///
-pub(crate) async fn update_instruments_metadata(
-    dbm_mddb: &PostgresMDDBManager,
-    meta_data: &MetaDataSet,
-) {
+pub async fn update_instruments_metadata(dbm_mddb: &PostgresMDDBManager, meta_data: &MetaDataSet) {
     print_utils::dbg_print("update_instruments_metadata");
 
     let stats = meta_data.stats();
@@ -269,7 +260,7 @@ pub(crate) async fn update_instruments_metadata(
     }
 
     // Find and insert instruments that are in the meta_data parameter but not in the database
-    for meta_instrument in meta_data.instruments().data.iter() {
+    for meta_instrument in &meta_data.instruments().data {
         if !db_instruments
             .iter()
             .any(|di| di.code == meta_instrument.code)

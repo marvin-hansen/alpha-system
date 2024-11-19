@@ -6,8 +6,8 @@ use pg_mddb_manager::PostgresMDDBManager;
 ///
 /// # Arguments
 ///
-/// * `dbm_mddb` - A reference to the PostgresMDDBManager for database operations.
-/// * `meta_data` - A reference to the MetaDataSet containing assets metadata.
+/// * `dbm_mddb` - A reference to the `PostgresMDDBManager` for database operations.
+/// * `meta_data` - A reference to the `MetaDataSet` containing assets metadata.
 ///
 /// # Panics
 ///
@@ -21,7 +21,7 @@ use pg_mddb_manager::PostgresMDDBManager;
 ///
 /// This function does not return a value but prints debug messages during the import process.
 ///
-pub(crate) async fn import_assets_metadata(
+pub async fn import_assets_metadata(
     dbm_mddb: &PostgresMDDBManager,
     meta_data: &MetaDataSet,
 ) -> Result<usize, &'static str> {
@@ -41,20 +41,20 @@ pub(crate) async fn import_assets_metadata(
         .await
         .expect("Failed to count assets") as usize;
 
-    print_utils::dbg_print(&format!("db_asset_count: {}", db_asset_count));
-    print_utils::dbg_print(&format!("expected_asset_count: {}", expected_asset_count));
+    print_utils::dbg_print(&format!("db_asset_count: {db_asset_count}"));
+    print_utils::dbg_print(&format!("expected_asset_count: {expected_asset_count}"));
 
     print_utils::dbg_print("Completed importing assets");
 
     Ok(db_asset_count)
 }
 
-/// Asynchronously imports exchange metadata into the PostgresMDDBManager.
+/// Asynchronously imports exchange metadata into the `PostgresMDDBManager`.
 ///
 /// # Arguments
 ///
-/// * `dbm_mddb` - A reference to the PostgresMDDBManager for database operations.
-/// * `meta_data` - A reference to the MetaDataSet containing exchange metadata.
+/// * `dbm_mddb` - A reference to the `PostgresMDDBManager` for database operations.
+/// * `meta_data` - A reference to the `MetaDataSet` containing exchange metadata.
 ///
 /// # Panics
 ///
@@ -68,7 +68,7 @@ pub(crate) async fn import_assets_metadata(
 ///
 /// This function does not return a value but prints debug messages during the import process.
 ///
-pub(crate) async fn import_exchanges_metadata(
+pub async fn import_exchanges_metadata(
     dbm_mddb: &PostgresMDDBManager,
     meta_data: &MetaDataSet,
 ) -> Result<usize, &'static str> {
@@ -90,10 +90,9 @@ pub(crate) async fn import_exchanges_metadata(
         .await
         .expect("Failed to count exchanges") as usize;
 
-    print_utils::dbg_print(&format!("db_exchange_count: {}", db_exchange_count));
+    print_utils::dbg_print(&format!("db_exchange_count: {db_exchange_count}"));
     print_utils::dbg_print(&format!(
-        "expected_exchange_count: {}",
-        expected_exchange_count
+        "expected_exchange_count: {expected_exchange_count}"
     ));
 
     print_utils::dbg_print("Completed importing exchanges");
@@ -104,8 +103,8 @@ pub(crate) async fn import_exchanges_metadata(
 ///
 /// # Arguments
 ///
-/// - `dbm_mddb`: A reference to the PostgresMDDBManager for interacting with the database.
-/// - `meta_data`: A reference to the MetaDataSet containing the instruments metadata to import.
+/// - `dbm_mddb`: A reference to the `PostgresMDDBManager` for interacting with the database.
+/// - `meta_data`: A reference to the `MetaDataSet` containing the instruments metadata to import.
 ///
 /// # Panics
 ///
@@ -120,7 +119,7 @@ pub(crate) async fn import_exchanges_metadata(
 ///
 /// This function does not return a value but prints debug messages during the import process.
 ///
-pub(crate) async fn import_instruments_metadata(
+pub async fn import_instruments_metadata(
     dbm_mddb: &PostgresMDDBManager,
     meta_data: &MetaDataSet,
 ) -> Result<usize, &'static str> {
@@ -141,10 +140,9 @@ pub(crate) async fn import_instruments_metadata(
         .await
         .expect("Failed to count instruments") as usize;
 
-    print_utils::dbg_print(&format!("db_instrument_count: {}", db_instrument_count));
+    print_utils::dbg_print(&format!("db_instrument_count: {db_instrument_count}"));
     print_utils::dbg_print(&format!(
-        "expected_instrument_count: {}",
-        expected_instrument_count
+        "expected_instrument_count: {expected_instrument_count}"
     ));
 
     print_utils::dbg_print("Completed importing instruments");

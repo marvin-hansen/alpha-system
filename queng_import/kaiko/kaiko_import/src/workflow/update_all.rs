@@ -13,7 +13,7 @@ use pg_mddb_manager::PostgresMDDBManager;
 ///
 /// `meta_data` is the `MetaDataSet` containing the metadata to be updated.
 ///
-pub(crate) async fn update_all_metadata(dbm_mddb: &PostgresMDDBManager, meta_data: &MetaDataSet) {
+pub async fn update_all_metadata(dbm_mddb: &PostgresMDDBManager, meta_data: &MetaDataSet) {
     print_utils::dbg_print("update_all_metadata");
 
     workflow::update_assets_metadata(dbm_mddb, meta_data).await;

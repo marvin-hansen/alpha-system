@@ -24,6 +24,6 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
 fn dbg_print(msg: &str) {
     if DBG {
-        println!("[IMS Data Binance/main]: {}", msg)
+        println!("[IMS Data Binance/main]: {msg}");
     }
 }

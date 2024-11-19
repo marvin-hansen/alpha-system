@@ -10,7 +10,7 @@ impl Metadata {
 
     /// Asynchronously executes a query in the metadata database.
     ///
-    /// This method executes the specified query in the metadata database using the ClickHouse client.
+    /// This method executes the specified query in the metadata database using the `ClickHouse` client.
     ///
     /// # Arguments
     ///

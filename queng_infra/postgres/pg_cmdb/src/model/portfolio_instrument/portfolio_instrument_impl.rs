@@ -1,5 +1,7 @@
 use crate::model::portfolio_instrument::{CreatePortfolioInstrument, PortfolioInstrument};
-use crate::schema::cmdb::portfolio_instrument::dsl::*;
+use crate::schema::cmdb::portfolio_instrument::dsl::{
+    instrument_id, portfolio_id, portfolio_instrument,
+};
 use crate::Connection;
 use diesel::{
     insert_into, ExpressionMethods, QueryDsl, QueryResult, RunQueryDsl, SelectableHelper,
@@ -21,7 +23,7 @@ impl PortfolioInstrument {
     pub fn create(db: &mut Connection, item: &CreatePortfolioInstrument) -> QueryResult<Self> {
         insert_into(portfolio_instrument)
             .values(item)
-            .returning(PortfolioInstrument::as_returning())
+            .returning(Self::as_returning())
             .get_result::<Self>(db)
     }
 
@@ -70,7 +72,7 @@ impl PortfolioInstrument {
     pub fn read_instruments_for_portfolio(
         db: &mut Connection,
         param_portfolio_id: i32,
-    ) -> QueryResult<Vec<PortfolioInstrument>> {
+    ) -> QueryResult<Vec<Self>> {
         match portfolio_instrument
             .filter(portfolio_id.eq(param_portfolio_id))
             .load(db)

@@ -4,13 +4,13 @@ use sbe_messages::{ClientErrorType, DataErrorType};
 use crate::service::Server;
 
 impl Server {
-    /// Sends a ClientError message to the given producer.
+    /// Sends a `ClientError` message to the given producer.
     ///
     /// # Parameters
     ///
     /// * `producer` - The topic producer to send the message on
     /// * `client_id` - The id of the client the error is for
-    /// * `client_error` - The ClientErrorType to send
+    /// * `client_error` - The `ClientErrorType` to send
     ///
     /// # Returns
     ///
@@ -34,13 +34,13 @@ impl Server {
         Ok(())
     }
 
-    /// Sends a DataError message to the given producer.
+    /// Sends a `DataError` message to the given producer.
     ///
     /// # Parameters
     ///
     /// * `producer` - The topic producer to send the message on
     /// * `client_id` - The id of the client the error is for
-    /// * `data_error` - The DataErrorType to send
+    /// * `data_error` - The `DataErrorType` to send
     ///
     /// # Returns
     ///

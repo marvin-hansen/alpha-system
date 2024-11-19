@@ -49,14 +49,14 @@ impl CmdbClient {
         id: u16,
     ) -> Result<Option<PortfolioConfig>, CMDBError> {
         let request = tonic::Request::new(SinglePortfolioRequest {
-            portfolio_id: id as u32,
+            portfolio_id: u32::from(id),
         });
 
         let mut client = self.client.clone();
 
         match client.read_portfolio_config(request).await {
             Ok(res) => match res.into_inner().portfolio_config {
-                Some(p) => Ok(Some(portfolio_config_from_proto(p.to_owned()).expect(
+                Some(p) => Ok(Some(portfolio_config_from_proto(p).expect(
                     "Failed to convert ProtoPortfolioConfig to Rust PortfolioConfig",
                 ))),
                 None => Ok(None),
@@ -140,7 +140,7 @@ impl CmdbClient {
     /// or an `Err` containing a `CMDBError` if there was an error deleting the portfolio configuration.
     pub async fn delete_portfolio_config(&self, id: u16) -> Result<bool, CMDBError> {
         let request = tonic::Request::new(SinglePortfolioRequest {
-            portfolio_id: id as u32,
+            portfolio_id: u32::from(id),
         });
 
         let mut client = self.client.clone();

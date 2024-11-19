@@ -4,11 +4,11 @@ use sbe_bindings::MessageType as SbeMessageType;
 use sbe_bindings::{message_header_codec, Encoder, FirstDataBarEncoder, WriteBuf};
 
 impl FirstOHLCVBar {
-    /// Encodes a FirstOHLCVBar to a byte buffer.
+    /// Encodes a `FirstOHLCVBar` to a byte buffer.
     ///
     /// # Arguments
     ///
-    /// * `self` - FirstOHLCVBar to encode
+    /// * `self` - `FirstOHLCVBar` to encode
     ///
     /// # Returns
     ///
@@ -21,11 +21,11 @@ impl FirstOHLCVBar {
     /// # Process
     ///
     /// - Create 12 byte buffer
-    /// - Create default FirstDataBarEncoder
-    /// - Wrap buffer in WriteBuf
+    /// - Create default `FirstDataBarEncoder`
+    /// - Wrap buffer in `WriteBuf`
     /// - Encode header
-    /// - Encode message_type
-    /// - Encode symbol_id
+    /// - Encode `message_type`
+    /// - Encode `symbol_id`
     /// - Return encoded size and buffer
     ///
     pub fn encode(&self) -> Result<(usize, Vec<u8>), SbeEncodeError> {

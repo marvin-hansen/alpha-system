@@ -12,7 +12,7 @@ impl Metadata {
     /// * `Result<u64, ClickHouseUtilError>` - The number of exchanges in the table, or an error if the count fails.
     ///
     pub async fn count_exchanges(&self) -> Result<u64, ClickHouseUtilError> {
-        let table_name = &format!("{}.{}", DB_NAME, EXCHANGES_TABLE);
+        let table_name = &format!("{DB_NAME}.{EXCHANGES_TABLE}");
 
         match self.count_rows(table_name).await {
             Ok(count) => Ok(count),

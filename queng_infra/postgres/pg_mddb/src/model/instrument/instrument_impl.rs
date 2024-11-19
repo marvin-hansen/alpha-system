@@ -24,10 +24,10 @@ impl Instrument {
         conn: &mut Connection,
         meta_instrument: MetaInstrument,
     ) -> Result<MetaInstrument, diesel::result::Error> {
-        let instrument = Instrument::from_meta_instrument(meta_instrument.clone());
+        let instrument = Self::from_meta_instrument(meta_instrument);
         match diesel::insert_into(instruments_table)
             .values(&instrument)
-            .get_result::<Instrument>(conn)
+            .get_result::<Self>(conn)
         {
             Ok(res) => Ok(res.to_meta_instrument()),
             Err(e) => Err(e),
@@ -59,9 +59,9 @@ impl Instrument {
         }
 
         // Convert the meta_instruments to instruments
-        let instruments: Vec<Instrument> = meta_instruments
+        let instruments: Vec<Self> = meta_instruments
             .iter()
-            .map(|meta_instrument| Instrument::from_meta_instrument(meta_instrument.clone()))
+            .map(|meta_instrument| Self::from_meta_instrument(meta_instrument.clone()))
             .collect();
 
         let number_instruments = instruments.len();
@@ -125,7 +125,7 @@ impl Instrument {
     ) -> QueryResult<bool> {
         let exists = instruments_table
             .find(instrument_id)
-            .first::<Instrument>(conn)
+            .first::<Self>(conn)
             .optional()?
             .is_some();
         Ok(exists)
@@ -145,13 +145,13 @@ impl Instrument {
         conn: &mut Connection,
         instrument_id: &str,
     ) -> Result<Option<MetaInstrument>, diesel::result::Error> {
-        let exists = Instrument::check_if_instrument_id_exists(conn, instrument_id)?;
+        let exists = Self::check_if_instrument_id_exists(conn, instrument_id)?;
         if !exists {
             Ok(None)
         } else {
             instruments_table
                 .filter(crate::schema::mddb::instruments::instrument_id.eq(instrument_id))
-                .first::<Instrument>(conn)
+                .first::<Self>(conn)
                 .map(|instrument| Some(instrument.to_meta_instrument()))
         }
     }
@@ -167,13 +167,8 @@ impl Instrument {
     /// A `Result` containing a vector of `MetaInstrument` objects if successful, else a `diesel::result::Error`.
     pub fn read_all(conn: &mut Connection) -> Result<Vec<MetaInstrument>, diesel::result::Error> {
         instruments_table
-            .load::<Instrument>(conn)
-            .map(|instruments| {
-                instruments
-                    .iter()
-                    .map(|instrument| instrument.to_meta_instrument())
-                    .collect()
-            })
+            .load::<Self>(conn)
+            .map(|instruments| instruments.iter().map(Self::to_meta_instrument).collect())
     }
 
     /// Updates an instrument entry in the database.
@@ -220,7 +215,7 @@ impl Instrument {
         param_instrument_id: String,
     ) -> Result<usize, diesel::result::Error> {
         // Check if the instrument exists
-        let exists = Instrument::check_if_instrument_id_exists(conn, &param_instrument_id)
+        let exists = Self::check_if_instrument_id_exists(conn, &param_instrument_id)
             .expect("Failed to check if instrument ID exists");
 
         // Return Ok(0) if the instrument does not exist

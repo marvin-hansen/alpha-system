@@ -19,7 +19,7 @@ fn test_get_exchange_request() {
 #[test]
 fn test_get_all_exchanges_request() {
     let request = get_all_exchanges_request();
-    assert_eq!(format!("{:?}", request), "GetAllExchangesRequest");
+    assert_eq!(format!("{request:?}"), "GetAllExchangesRequest");
 }
 
 #[test]
@@ -48,7 +48,7 @@ fn test_get_exchange_response() {
     let meta_exchange = MetaExchange {
         code: "bitfinex".to_string(),
         name: "Bitfinex".to_string(),
-        kaiko_legacy_slug: "".to_string(),
+        kaiko_legacy_slug: String::new(),
     };
     let response = get_exchange_response(Some(meta_exchange.clone()));
     let proto_exchange = response.exchange.unwrap();
@@ -63,12 +63,12 @@ fn test_get_all_exchanges_response() {
         MetaExchange {
             code: "huobi".to_string(),
             name: "Huobi".to_string(),
-            kaiko_legacy_slug: "".to_string(),
+            kaiko_legacy_slug: String::new(),
         },
         MetaExchange {
             code: "okex".to_string(),
             name: "OKEx".to_string(),
-            kaiko_legacy_slug: "".to_string(),
+            kaiko_legacy_slug: String::new(),
         },
     ];
 
@@ -87,7 +87,7 @@ fn test_meta_exchange_to_proto_exchange() {
     let meta_exchange = MetaExchange {
         code: "kucoin".to_string(),
         name: "KuCoin".to_string(),
-        kaiko_legacy_slug: "".to_string(),
+        kaiko_legacy_slug: String::new(),
     };
 
     let proto_exchange = meta_exchange_to_proto_exchange(&meta_exchange);

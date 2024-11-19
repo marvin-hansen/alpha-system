@@ -1,5 +1,6 @@
 use common_metadata::{AssetMetadata, MetaAsset};
 
+#[must_use]
 pub fn meta_asset_to_proto_asset(meta_asset: &MetaAsset) -> proto_mddb::proto::ProtoMetaAsset {
     proto_mddb::proto::ProtoMetaAsset {
         asset_code: meta_asset.code.clone(),
@@ -15,6 +16,7 @@ pub fn meta_asset_to_proto_asset(meta_asset: &MetaAsset) -> proto_mddb::proto::P
     }
 }
 
+#[must_use]
 pub fn proto_asset_to_meta_asset(proto_asset: &proto_mddb::proto::ProtoMetaAsset) -> MetaAsset {
     MetaAsset {
         code: proto_asset.asset_code.clone(),

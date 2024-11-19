@@ -7,7 +7,7 @@ use pg_mddb_manager::PostgresMDDBManager;
 /// This function will import all assets, exchanges and instruments from the
 /// given `MetaDataSet` into the database using the given `PostgresMDDBManager`.
 ///
-pub(crate) async fn import_all_metadata(dbm_mddb: &PostgresMDDBManager, meta_data: &MetaDataSet) {
+pub async fn import_all_metadata(dbm_mddb: &PostgresMDDBManager, meta_data: &MetaDataSet) {
     print_utils::dbg_print("import_all_metadata");
 
     // Import all metadata in parallel
@@ -23,20 +23,20 @@ pub(crate) async fn import_all_metadata(dbm_mddb: &PostgresMDDBManager, meta_dat
         imported_asset_count,
         imported_exchange_count,
         imported_instrument_count,
-    )
+    );
 }
 
 /// Imports a sample of metadata into the database, including assets, exchanges, and instruments.
 ///
 /// # Arguments
-/// * `dbm_mddb` - PostgreSQL metadata database manager
+/// * `dbm_mddb` - `PostgreSQL` metadata database manager
 /// * `meta_data` - Source metadata set to import from
 /// * `sample_size` - Number of records to import for each category
 ///
 /// # Returns
 /// Nothing. Prints debug information about the import process and final counts.
 ///
-pub(crate) async fn import_metadata_sample(
+pub async fn import_metadata_sample(
     dbm_mddb: &PostgresMDDBManager,
     meta_data: &MetaDataSet,
     assets_sample_size: usize,

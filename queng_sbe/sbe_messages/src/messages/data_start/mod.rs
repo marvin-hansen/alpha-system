@@ -8,7 +8,7 @@ mod getter;
 mod sbe_decode;
 mod sbe_encode;
 
-#[derive(Debug, Default, Clone, PartialEq)]
+#[derive(Debug, Default, Clone, PartialEq, Eq)]
 pub struct StartDataMessage {
     message_type: MessageType,
     client_id: u16,
@@ -19,23 +19,24 @@ pub struct StartDataMessage {
 }
 
 impl StartDataMessage {
-    /// Creates a new StartDataMessage instance.
+    /// Creates a new `StartDataMessage` instance.
     ///
-    /// Sets the message_type to StartData.
+    /// Sets the `message_type` to `StartData`.
     ///
     /// # Arguments
     ///
     /// * `client_id` - u16 client ID
-    /// * `exchange_id` - ExchangeID exchange ID
+    /// * `exchange_id` - `ExchangeID` exchange ID
     /// * `symbol_id` - u16 symbol ID
-    /// * `time_resolution` - TimeResolution time resolution
-    /// * `data_type_id` - DataType data type ID
+    /// * `time_resolution` - `TimeResolution` time resolution
+    /// * `data_type_id` - `DataType` data type ID
     ///
     /// # Returns
     ///
-    /// StartDataMessage instance
+    /// `StartDataMessage` instance
     ///
-    pub fn new(
+    #[must_use]
+    pub const fn new(
         client_id: u16,
         exchange_id: ExchangeID,
         symbol_id: u16,
@@ -56,9 +57,9 @@ impl StartDataMessage {
 }
 
 impl From<&[u8]> for StartDataMessage {
-    /// Implements the From trait to decode a StartDataMessage from a byte slice.
+    /// Implements the From trait to decode a `StartDataMessage` from a byte slice.
     ///
-    /// Calls the sbe_decode::decode_start_data_message function to decode the message.
+    /// Calls the `sbe_decode::decode_start_data_message` function to decode the message.
     ///
     /// # Arguments
     ///
@@ -66,7 +67,7 @@ impl From<&[u8]> for StartDataMessage {
     ///
     /// # Returns
     ///
-    /// Decoded StartDataMessage
+    /// Decoded `StartDataMessage`
     ///
     /// # Errors
     ///

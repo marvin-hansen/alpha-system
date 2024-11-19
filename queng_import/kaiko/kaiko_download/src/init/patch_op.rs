@@ -1,5 +1,5 @@
 use std::fmt::{Display, Formatter};
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 #[repr(u8)]
 pub enum PatchOp {
     PatchBaseAsset,

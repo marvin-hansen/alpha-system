@@ -52,7 +52,7 @@ fn test_display() {
 
     let expected = "FirstTradeBar { message_type: FirstTradeBar, symbol_id: 123 }";
 
-    let actual = format!("{}", bar);
+    let actual = format!("{bar}");
 
     assert_eq!(actual, expected);
 }

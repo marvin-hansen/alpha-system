@@ -21,7 +21,7 @@ impl PostgresIMDBManager {
     ///
     /// # Returns
     ///
-    /// A Result containing the new instance or a PostgresDBError.
+    /// A Result containing the new instance or a `PostgresDBError`.
     ///
     pub async fn new(url: &str) -> Result<Self, PostgresDBError> {
         Self::build(false, false, url).await
@@ -35,7 +35,7 @@ impl PostgresIMDBManager {
     ///
     /// # Returns
     ///
-    /// A Result containing the new instance or a PostgresDBError.
+    /// A Result containing the new instance or a `PostgresDBError`.
     ///
     pub async fn with_debug(url: &str) -> Result<Self, PostgresDBError> {
         Self::build(true, false, url).await
@@ -43,7 +43,7 @@ impl PostgresIMDBManager {
 
     /// Asynchronously initializes a connection with debug mode and test mode enabled.
     /// Test mode means, all database transactions will be rolled back and
-    /// the DB connection closed automatically when the test instance of PostgresIMDBManager is dropped.
+    /// the DB connection closed automatically when the test instance of `PostgresIMDBManager` is dropped.
     ///
     /// A full DB schema migration happens during initialization.
     ///
@@ -54,7 +54,7 @@ impl PostgresIMDBManager {
     /// # Returns
     ///
     /// A Result containing the new instance with a test transaction
-    /// or a PostgresDBError.
+    /// or a `PostgresDBError`.
     ///
     pub async fn with_test_and_debug(url: &str) -> Result<Self, PostgresDBError> {
         Self::build(true, true, url).await
@@ -69,7 +69,7 @@ impl PostgresIMDBManager {
     ///
     /// # Returns
     ///
-    /// A Result containing the new instance or a PostgresDBError.
+    /// A Result containing the new instance or a `PostgresDBError`.
     ///
     pub async fn with_pool_and_debug(
         pool: Pool<ConnectionManager<PgConnection>>,
@@ -114,7 +114,7 @@ impl PostgresIMDBManager {
 
     pub fn dbg_print(&self, msg: &str) {
         if self.dbg {
-            println!("[PostgresIMDBManager]: {}", msg);
+            println!("[PostgresIMDBManager]: {msg}");
         }
     }
 }

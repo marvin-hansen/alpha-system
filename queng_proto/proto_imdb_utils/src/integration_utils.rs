@@ -12,6 +12,7 @@ use proto_imdb::proto::{ProtoIntegrationConfig, ProtoIntegrationMessageConfig};
 ///
 /// An `IntegrationConfig` containing the converted configuration data
 ///
+#[must_use]
 pub fn integration_config_from_proto(proto: ProtoIntegrationConfig) -> IntegrationConfig {
     let exchange_id = ExchangeID::from(proto.exchange_id);
 
@@ -47,19 +48,20 @@ pub fn integration_config_from_proto(proto: ProtoIntegrationConfig) -> Integrati
 ///
 /// A `ProtoIntegrationConfig` containing the converted configuration data
 ///
+#[must_use]
 pub fn integration_config_to_proto(config: IntegrationConfig) -> ProtoIntegrationConfig {
     let msg_config = config.integration_message_config();
 
     ProtoIntegrationConfig {
         integration_id: config.integration_id().to_string(),
-        integration_version: config.integration_version() as u32,
+        integration_version: u32::from(config.integration_version()),
         ims_integration_type: config.ims_integration_type() as u32,
         online: config.online(),
         exchange_id: config.exchange_id() as u32,
         integration_message_config: Some(ProtoIntegrationMessageConfig {
-            id: msg_config.id() as u32,
+            id: u32::from(msg_config.id()),
             name: msg_config.name().to_string(),
-            version: *msg_config.version() as u32,
+            version: u32::from(*msg_config.version()),
             exchange_id: config.exchange_id() as u32,
         }),
     }

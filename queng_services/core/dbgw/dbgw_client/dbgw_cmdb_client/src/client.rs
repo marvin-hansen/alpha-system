@@ -58,14 +58,14 @@ impl DBGWCmdbClient {
         id: u16,
     ) -> Result<Option<PortfolioConfig>, DBGatewayError> {
         let request = tonic::Request::new(SinglePortfolioRequest {
-            portfolio_id: id as u32,
+            portfolio_id: u32::from(id),
         });
 
         let res = self.client.read_portfolio_config(request).await;
 
         match res {
             Ok(res) => match res.into_inner().portfolio_config {
-                Some(p) => Ok(Some(portfolio_config_from_proto(p.to_owned()).expect(
+                Some(p) => Ok(Some(portfolio_config_from_proto(p).expect(
                     "Failed to convert ProtoPortfolioConfig to Rust PortfolioConfig",
                 ))),
                 None => Ok(None),
@@ -93,7 +93,7 @@ impl DBGWCmdbClient {
 
     pub async fn delete_portfolio_config(mut self, id: u16) -> Result<bool, DBGatewayError> {
         let request = tonic::Request::new(SinglePortfolioRequest {
-            portfolio_id: id as u32,
+            portfolio_id: u32::from(id),
         });
 
         let res = self.client.delete_portfolio_config(request).await;

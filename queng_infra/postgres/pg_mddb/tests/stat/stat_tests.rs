@@ -13,8 +13,8 @@ fn get_test_meta_stats() -> MetaStats {
     let number_instruments = 50;
 
     MetaStats::new(
-        download_timestamp.clone(),
-        hash.clone(),
+        download_timestamp,
+        hash,
         number_assets,
         number_exchanges,
         number_instruments,

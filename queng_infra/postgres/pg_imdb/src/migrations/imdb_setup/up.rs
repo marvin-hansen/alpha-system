@@ -1,4 +1,4 @@
-pub(crate) const SCHEMA_UP: &str = r#"
+pub const SCHEMA_UP: &str = r"
 -- Your SQL goes here
 
 CREATE SCHEMA IF NOT EXISTS imdb;
@@ -19,4 +19,4 @@ CREATE TABLE imdb.integration_config (
     integration_message_config imdb.integration_message_config NOT NULL
 );
 
-"#;
+";

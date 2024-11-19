@@ -10,7 +10,8 @@ pub struct ExistsDBRow {
 }
 
 impl ExistsDBRow {
-    pub fn value(&self) -> &String {
+    #[must_use]
+    pub const fn value(&self) -> &String {
         &self.value
     }
 }

@@ -5,6 +5,7 @@ pub mod ci_clickhouse_config;
 pub mod cluster_clickhouse_config;
 pub mod local_clickhouse_config;
 
+#[must_use]
 pub fn get_clickhouse_config(env_type: &EnvironmentType) -> ClickHouseConfig {
     match env_type {
         EnvironmentType::LOCAL => local_clickhouse_config::get_local_db_config(),

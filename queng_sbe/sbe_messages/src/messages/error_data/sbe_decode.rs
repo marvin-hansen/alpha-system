@@ -2,15 +2,15 @@ use crate::{DataErrorMessage, DataErrorType, MessageType};
 use sbe_bindings::data_error_codec::SBE_TEMPLATE_ID;
 use sbe_bindings::{DataErrorDecoder, MessageHeaderDecoder, ReadBuf, SbeResult};
 
-/// Decodes a DataErrorMessage from a byte buffer.
+/// Decodes a `DataErrorMessage` from a byte buffer.
 ///
 /// # Arguments
 ///
-/// * `buffer` - Byte buffer containing encoded DataErrorMessage
+/// * `buffer` - Byte buffer containing encoded `DataErrorMessage`
 ///
 /// # Returns
 ///
-/// Decoded DataErrorMessage on success
+/// Decoded `DataErrorMessage` on success
 ///
 /// # Errors
 ///
@@ -18,13 +18,13 @@ use sbe_bindings::{DataErrorDecoder, MessageHeaderDecoder, ReadBuf, SbeResult};
 ///
 /// # Process
 ///
-/// - Create default DataErrorDecoder
-/// - Wrap buffer in ReadBuf
+/// - Create default `DataErrorDecoder`
+/// - Wrap buffer in `ReadBuf`
 /// - Decode header and validate template ID
-/// - Decode and validate message_type
-/// - Decode client_id
-/// - Decode and validate data_error_type
-/// - Create and return DataErrorMessage
+/// - Decode and validate `message_type`
+/// - Decode `client_id`
+/// - Decode and validate `data_error_type`
+/// - Create and return `DataErrorMessage`
 ///
 pub fn decode_client_error_message(buffer: &[u8]) -> SbeResult<DataErrorMessage> {
     let mut csg = DataErrorDecoder::default();

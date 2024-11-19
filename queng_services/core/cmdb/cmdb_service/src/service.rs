@@ -1,5 +1,9 @@
 use proto_cmdb::proto::cmdb_service_server::CmdbService;
-use proto_cmdb::proto::*;
+use proto_cmdb::proto::{
+    CreatePortfolioResponse, DeletePortfolioResponse, MultiPortfolioRequest, ProtoPortfolioConfig,
+    ReadAllPortfoliosResponse, ReadPortfolioResponse, SinglePortfolioRequest,
+    UpdatePortfolioResponse,
+};
 
 use proto_cmdb::proto::db_gateway_cmdb_service_client::DbGatewayCmdbServiceClient;
 use tonic::transport::Channel;
@@ -11,7 +15,7 @@ pub struct CMDBServer {
 }
 
 impl CMDBServer {
-    pub fn new(dbgw: DbGatewayCmdbServiceClient<Channel>) -> Self {
+    pub const fn new(dbgw: DbGatewayCmdbServiceClient<Channel>) -> Self {
         Self { dbgw }
     }
 }

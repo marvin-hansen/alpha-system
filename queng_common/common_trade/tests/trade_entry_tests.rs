@@ -9,7 +9,7 @@ fn test_default_value() {
 #[test]
 fn test_display() {
     let entry_type = TradeEntryType::CurrentBar;
-    assert_eq!(format!("{:?}", entry_type), "CurrentBar");
+    assert_eq!(format!("{entry_type:?}"), "CurrentBar");
 }
 
 #[test]

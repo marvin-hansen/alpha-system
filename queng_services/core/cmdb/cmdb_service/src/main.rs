@@ -30,16 +30,13 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .expect("[CMDB]: Failed to get host and port for DBGW");
 
     dbg_print("Configure DBGW URI");
-    let s = format!("http://{}:{}", dbgw_host, dbgw_port);
+    let s = format!("http://{dbgw_host}:{dbgw_port}");
     let uri = s.parse::<Uri>().unwrap();
     dbg_print(&uri.to_string());
 
     dbg_print("Connect to DBGW service");
     let channel = Channel::builder(uri).connect().await.unwrap_or_else(|_| {
-        panic!(
-            "\r\n [CMDB]: Failed to connect to DBGW service on: {} \r\n  \r\n Detail: \r\n",
-            s
-        )
+        panic!("\r\n [CMDB]: Failed to connect to DBGW service on: {s} \r\n  \r\n Detail: \r\n")
     });
 
     dbg_print("Configure gRPC server");
@@ -56,6 +53,6 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
 fn dbg_print(msg: &str) {
     if DBG {
-        println!("[CMDB/main]: {}", msg)
+        println!("[CMDB/main]: {msg}");
     }
 }

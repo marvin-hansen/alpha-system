@@ -123,6 +123,7 @@ impl CfgManager {
     /// # Returns
     ///
     /// A vector of `ServiceID`s representing the dependencies of the service.
+    #[must_use]
     pub fn get_service_dependencies(&self) -> Vec<ServiceID> {
         self.dbg_print("get_service_dependencies");
 
@@ -134,7 +135,7 @@ impl CfgManager {
         self.dbg_print("get_svc_socket_addr");
 
         // Get the configuration of the service
-        let svc_config = self.svc_env_config.to_owned();
+        let svc_config = self.svc_env_config.clone();
         // Get the host and port of the service
         let svc_port: u16 = svc_config
             .service_port()
@@ -147,7 +148,7 @@ impl CfgManager {
 
         // Set host to default (0.0.0.0) to listen on all interfaces
         // Merge the host and port into a socket address i.e. 0.0.0.0:7070
-        let socket_addr = format!("{}:{}", DEFAULT_HOST, port);
+        let socket_addr = format!("{DEFAULT_HOST}:{port}");
 
         Ok(socket_addr)
     }

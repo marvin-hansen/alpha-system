@@ -2,7 +2,7 @@ use crate::ClickhouseUtil;
 use std::error::Error;
 
 impl ClickhouseUtil {
-    /// Asynchronously sets up the ClickHouse databases for the `AllDb` struct.
+    /// Asynchronously sets up the `ClickHouse` databases for the `AllDb` struct.
     ///
     /// This method creates the metadata database and specs database if they do not already exist.
     ///

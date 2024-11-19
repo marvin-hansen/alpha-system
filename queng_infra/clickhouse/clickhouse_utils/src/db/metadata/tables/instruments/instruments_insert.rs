@@ -20,12 +20,12 @@ impl Metadata {
         &self,
         instruments: &[MetaInstrument],
     ) -> Result<(), Box<dyn Error>> {
-        for instrument in instruments.iter() {
+        for instrument in instruments {
             let insert_query = self.generate_instruments_insert(instrument);
 
             self.execute_query(&insert_query)
                 .await
-                .expect("Failed to insert asset")
+                .expect("Failed to insert asset");
         }
 
         Ok(())
@@ -71,24 +71,23 @@ impl Metadata {
         '{instrument_figi}'
         );"
         )
-        .to_string()
     }
 
     fn extract_instrument_figi(&self, metadata: &Option<InstrumentMetadata>) -> (String, String) {
         let pair_figi = match metadata {
             Some(metadata) => match &metadata.pair_figi {
                 Some(figi) => figi.to_owned(),
-                None => "".to_string(),
+                None => String::new(),
             },
-            None => "".to_string(),
+            None => String::new(),
         };
 
         let instrument_figi = match metadata {
             Some(metadata) => match &metadata.instrument_figi {
                 Some(figi) => figi.to_owned(),
-                None => "".to_string(),
+                None => String::new(),
             },
-            None => "".to_string(),
+            None => String::new(),
         };
 
         (pair_figi, instrument_figi)

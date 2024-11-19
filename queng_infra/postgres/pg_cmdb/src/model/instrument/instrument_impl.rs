@@ -1,5 +1,5 @@
 use crate::model::instrument::{CreateInstrument, Instrument, UpdateInstrument};
-use crate::schema::cmdb::instrument::dsl::*;
+use crate::schema::cmdb::instrument::dsl::{code, instrument};
 use crate::Connection;
 use common_exchange::Instrument as CommonInstrument;
 use diesel::{ExpressionMethods, QueryDsl, QueryResult, RunQueryDsl, SelectableHelper};
@@ -25,8 +25,8 @@ impl Instrument {
         let item = CreateInstrument::from_common_instrument(ins);
         diesel::insert_into(instrument)
             .values(item)
-            .returning(Instrument::as_returning())
-            .get_result::<Instrument>(db)
+            .returning(Self::as_returning())
+            .get_result::<Self>(db)
             .map(|s| s.to_common_instrument())
     }
 
@@ -65,10 +65,7 @@ impl Instrument {
         db: &mut Connection,
         param_instrument_code: String,
     ) -> QueryResult<bool> {
-        match instrument
-            .find(param_instrument_code)
-            .first::<Instrument>(db)
-        {
+        match instrument.find(param_instrument_code).first::<Self>(db) {
             Ok(_) => Ok(true),
             Err(_) => Ok(false),
         }
@@ -89,7 +86,7 @@ impl Instrument {
         instrument
             .filter(code.eq(param_code))
             .limit(1)
-            .get_result::<Instrument>(db)
+            .get_result::<Self>(db)
             .map(|s| s.to_common_instrument())
     }
 
@@ -105,8 +102,8 @@ impl Instrument {
     ///
     pub fn read_all(db: &mut Connection) -> QueryResult<Vec<CommonInstrument>> {
         instrument
-            .load::<Instrument>(db)
-            .map(|s| s.iter().map(|s| s.to_common_instrument()).collect())
+            .load::<Self>(db)
+            .map(|s| s.iter().map(Self::to_common_instrument).collect())
     }
 
     /// Updates an instrument's record in the database
@@ -130,8 +127,8 @@ impl Instrument {
 
         diesel::update(instrument.filter(code.eq(param_code)))
             .set(item)
-            .returning(Instrument::as_returning())
-            .get_result::<Instrument>(db)
+            .returning(Self::as_returning())
+            .get_result::<Self>(db)
             .map(|s| s.to_common_instrument())
     }
 

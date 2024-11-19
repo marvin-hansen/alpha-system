@@ -2,7 +2,7 @@ use crate::{LastOHLCVBar, MessageType};
 use sbe_bindings::last_data_bar_codec::SBE_TEMPLATE_ID;
 use sbe_bindings::{LastDataBarDecoder, MessageHeaderDecoder, ReadBuf, SbeResult};
 
-/// Decodes a LastOHLCVBar message from a byte buffer.
+/// Decodes a `LastOHLCVBar` message from a byte buffer.
 ///
 /// # Arguments
 ///
@@ -10,7 +10,7 @@ use sbe_bindings::{LastDataBarDecoder, MessageHeaderDecoder, ReadBuf, SbeResult}
 ///
 /// # Returns
 ///
-/// Decoded LastOHLCVBar
+/// Decoded `LastOHLCVBar`
 ///
 /// # Errors
 ///
@@ -18,12 +18,12 @@ use sbe_bindings::{LastDataBarDecoder, MessageHeaderDecoder, ReadBuf, SbeResult}
 ///
 /// # Process
 ///
-/// - Create default LastDataBarDecoder
-/// - Wrap buffer in ReadBuf
+/// - Create default `LastDataBarDecoder`
+/// - Wrap buffer in `ReadBuf`
 /// - Decode header and validate template ID
-/// - Decode and validate message_type
-/// - Decode symbol_id
-/// - Create and return LastOHLCVBar
+/// - Decode and validate `message_type`
+/// - Decode `symbol_id`
+/// - Create and return `LastOHLCVBar`
 ///
 pub fn decode_last_data_bar_message(buffer: &[u8]) -> SbeResult<LastOHLCVBar> {
     let mut csg = LastDataBarDecoder::default();

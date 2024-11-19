@@ -3,7 +3,8 @@ use std::collections::HashMap;
 
 const KRK_SYMBOL_TABLE: &str = "kraken_symbols";
 
-pub fn get_default_exchange() -> ExchangeID {
+#[must_use]
+pub const fn get_default_exchange() -> ExchangeID {
     ExchangeID::Kraken
 }
 
@@ -11,8 +12,9 @@ pub fn get_default_exchange() -> ExchangeID {
 ///
 /// # Returns
 ///
-/// A vector containing all supported ExchangeID variants.
+/// A vector containing all supported `ExchangeID` variants.
 /// Currently only returns Kraken.
+#[must_use]
 pub fn get_all_exchanges() -> Vec<ExchangeID> {
     vec![ExchangeID::Kraken]
 }
@@ -22,18 +24,20 @@ pub fn get_all_exchanges() -> Vec<ExchangeID> {
 ///
 /// A vector of tuples containing the u16 ID and name string
 /// for each supported exchange. Currently only returns Kraken.
+#[must_use]
 pub fn get_all_exchanges_ids_names() -> Vec<(u16, String)> {
     vec![(ExchangeID::Kraken as u16, "kraken".to_string())]
 }
 
-/// Get a HashMap of symbol tables for supported exchanges.
+/// Get a `HashMap` of symbol tables for supported exchanges.
 ///
-/// The key is the ExchangeID and the value is the symbol table name.
+/// The key is the `ExchangeID` and the value is the symbol table name.
 ///
 /// # Returns
 ///
-/// A HashMap mapping ExchangeID to symbol table name string.
+/// A `HashMap` mapping `ExchangeID` to symbol table name string.
 /// Currently only contains mapping for Kraken.
+#[must_use]
 pub fn get_exchange_symbol_tables() -> HashMap<ExchangeID, String> {
     let mut tables = HashMap::new();
     tables.insert(ExchangeID::Kraken, KRK_SYMBOL_TABLE.to_string());

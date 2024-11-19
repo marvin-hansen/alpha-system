@@ -11,8 +11,9 @@ impl crate::ClickhouseDBManager {
     ///
     /// Returns a SQL query string to retrieve all symbol IDs and symbols from the given symbol table.
     ///
+    #[must_use]
     pub fn build_get_symbol_id_query(&self, symbol_table: &str) -> String {
-        format!("SELECT symbol_id, symbol FROM {}", symbol_table)
+        format!("SELECT symbol_id, symbol FROM {symbol_table}")
     }
 
     /// Builds a SQL query to get OHLCV bars from a trade table at a given time resolution.
@@ -26,6 +27,7 @@ impl crate::ClickhouseDBManager {
     ///
     /// Returns a SQL query string to retrieve OHLCV bars from the trade table resampled to the time resolution.
     ///
+    #[must_use]
     pub fn build_get_ohlcv_bars_query(
         &self,
         trade_table: &str,
@@ -44,7 +46,6 @@ impl crate::ClickhouseDBManager {
             ORDER BY datetime
             "
         )
-            .to_string()
     }
 
     /// Builds a SQL query to get all trades from a trade table.
@@ -57,7 +58,8 @@ impl crate::ClickhouseDBManager {
     ///
     /// Returns a SQL query string to retrieve all timestamps, prices, and volumes from the given trade table.
     ///
+    #[must_use]
     pub fn build_get_trades_query(&self, trade_table: &str) -> String {
-        format!("SELECT timestamp, price, volume FROM {}", trade_table)
+        format!("SELECT timestamp, price, volume FROM {trade_table}")
     }
 }

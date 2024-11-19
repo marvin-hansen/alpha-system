@@ -1,6 +1,6 @@
 use std::fmt::Display;
 
-#[derive(Debug, Default, Clone, PartialEq)]
+#[derive(Debug, Default, Clone, PartialEq, Eq)]
 pub struct MetaDataDBRecords {
     number_db_assets: u32,
     number_db_exchanges: u32,
@@ -8,7 +8,8 @@ pub struct MetaDataDBRecords {
 }
 
 impl MetaDataDBRecords {
-    pub fn new(
+    #[must_use]
+    pub const fn new(
         number_db_assets: u32,
         number_db_exchanges: u32,
         number_db_instruments: u32,
@@ -22,15 +23,18 @@ impl MetaDataDBRecords {
 }
 
 impl MetaDataDBRecords {
-    pub fn number_db_assets(&self) -> u32 {
+    #[must_use]
+    pub const fn number_db_assets(&self) -> u32 {
         self.number_db_assets
     }
 
-    pub fn number_db_exchanges(&self) -> u32 {
+    #[must_use]
+    pub const fn number_db_exchanges(&self) -> u32 {
         self.number_db_exchanges
     }
 
-    pub fn number_db_instruments(&self) -> u32 {
+    #[must_use]
+    pub const fn number_db_instruments(&self) -> u32 {
         self.number_db_instruments
     }
 }

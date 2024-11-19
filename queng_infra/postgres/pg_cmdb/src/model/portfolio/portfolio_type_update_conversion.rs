@@ -5,8 +5,9 @@ use common_exchange::{
     AccountType, Instrument as CommonInstrument, PortfolioConfig as CommonPortfolioConfig,
 };
 impl UpdatePortfolio {
-    pub fn from_common_portfolio(portfolio: &CommonPortfolioConfig) -> UpdatePortfolio {
-        UpdatePortfolio {
+    #[must_use]
+    pub fn from_common_portfolio(portfolio: &CommonPortfolioConfig) -> Self {
+        Self {
             portfolio_description: Some(portfolio.portfolio_description().to_string()),
             portfolio_account_type: Some(portfolio.portfolio_account_type().as_i32()),
             portfolio_account_id: Some(portfolio.portfolio_account_id().to_string()),
@@ -23,6 +24,7 @@ impl UpdatePortfolio {
         }
     }
 
+    #[must_use]
     pub fn to_common_portfolio(
         &self,
         portfolio_id: u32,
@@ -30,16 +32,16 @@ impl UpdatePortfolio {
     ) -> CommonPortfolioConfig {
         CommonPortfolioConfig::new(
             portfolio_id,
-            self.portfolio_description.clone().unwrap().to_string(),
+            self.portfolio_description.clone().unwrap(),
             AccountType::from(self.portfolio_account_type.unwrap_or_default()),
-            self.portfolio_account_id.clone().unwrap().to_string(),
-            self.portfolio_currency.clone().unwrap().to_string(),
+            self.portfolio_account_id.clone().unwrap(),
+            self.portfolio_currency.clone().unwrap(),
             self.portfolio_cash.unwrap_or_default(),
             self.portfolio_margin.unwrap_or_default(),
             self.portfolio_max_drawdown.unwrap_or_default(),
             instrument
                 .iter()
-                .map(|i| i.to_common_instrument())
+                .map(super::super::instrument::Instrument::to_common_instrument)
                 .collect(),
             self.instrument_max_allocation.unwrap_or_default(),
             self.instrument_max_drawdown.unwrap_or_default(),
@@ -50,6 +52,7 @@ impl UpdatePortfolio {
         )
     }
 
+    #[must_use]
     pub fn to_common_portfolio_with_instruments(
         &self,
         portfolio_id: u32,
@@ -57,10 +60,10 @@ impl UpdatePortfolio {
     ) -> CommonPortfolioConfig {
         CommonPortfolioConfig::new(
             portfolio_id,
-            self.portfolio_description.clone().unwrap().to_string(),
+            self.portfolio_description.clone().unwrap(),
             AccountType::from(self.portfolio_account_type.unwrap_or_default()),
-            self.portfolio_account_id.clone().unwrap().to_string(),
-            self.portfolio_currency.clone().unwrap().to_string(),
+            self.portfolio_account_id.clone().unwrap(),
+            self.portfolio_currency.clone().unwrap(),
             self.portfolio_cash.unwrap_or_default(),
             self.portfolio_margin.unwrap_or_default(),
             self.portfolio_max_drawdown.unwrap_or_default(),

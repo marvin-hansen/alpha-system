@@ -1,6 +1,6 @@
 use std::fmt::{Display, Formatter};
 
-/// A ServiceType represents the type of service.
+/// A `ServiceType` represents the type of service.
 ///
 /// # Variants
 ///
@@ -18,7 +18,8 @@ pub enum ServiceType {
 }
 
 impl ServiceType {
-    pub fn as_u8(&self) -> u8 {
+    #[must_use]
+    pub const fn as_u8(&self) -> u8 {
         *self as u8
     }
 }
@@ -36,7 +37,7 @@ impl From<i16> for ServiceType {
 
 impl From<i32> for ServiceType {
     /// Converts a raw byte value into a `ServiceType`.
-    /// Unknown message type results in NullVal
+    /// Unknown message type results in `NullVal`
     #[inline]
     fn from(v: i32) -> Self {
         match v {
@@ -51,9 +52,9 @@ impl From<i32> for ServiceType {
 impl Display for ServiceType {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
-            ServiceType::ENDPOINT => write!(f, "ENDPOINT"),
-            ServiceType::CHANNEL => write!(f, "CHANNEL"),
-            ServiceType::NullVal => write!(f, "NullVal"),
+            Self::ENDPOINT => write!(f, "ENDPOINT"),
+            Self::CHANNEL => write!(f, "CHANNEL"),
+            Self::NullVal => write!(f, "NullVal"),
         }
     }
 }

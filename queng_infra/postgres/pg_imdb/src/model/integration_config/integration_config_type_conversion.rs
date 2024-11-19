@@ -13,12 +13,13 @@ impl IntegrationConfig {
     ///
     /// A new `IntegrationConfig` instance containing the converted data.
     ///
+    #[must_use]
     pub fn from_common_integration_config(
         common_integration_config: CommonIntegrationConfig,
-    ) -> IntegrationConfig {
-        IntegrationConfig {
+    ) -> Self {
+        Self {
             integration_id: common_integration_config.integration_id().to_owned(),
-            integration_version: common_integration_config.integration_version() as i32,
+            integration_version: i32::from(common_integration_config.integration_version()),
             ims_integration_type: common_integration_config.ims_integration_type() as i32,
             online: common_integration_config.online(),
             exchange_id: common_integration_config.exchange_id() as i32,
@@ -36,6 +37,7 @@ impl IntegrationConfig {
     ///
     /// A new `CommonIntegrationConfig` instance containing the converted data.
     ///
+    #[must_use]
     pub fn to_common_integration_config(&self) -> CommonIntegrationConfig {
         CommonIntegrationConfig::from(
             self.integration_id.clone(),

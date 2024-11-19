@@ -1,6 +1,7 @@
 use common_metadata::{InstrumentMetadata, MetaInstrument};
 
 // Conversion utils
+#[must_use]
 pub fn meta_instrument_to_proto_instrument(
     meta_instrument: &MetaInstrument,
 ) -> proto_mddb::proto::ProtoMetaInstrument {
@@ -42,6 +43,7 @@ pub fn meta_instrument_to_proto_instrument(
     }
 }
 
+#[must_use]
 pub fn proto_instrument_to_meta_instrument(
     proto_instrument: &proto_mddb::proto::ProtoMetaInstrument,
 ) -> MetaInstrument {

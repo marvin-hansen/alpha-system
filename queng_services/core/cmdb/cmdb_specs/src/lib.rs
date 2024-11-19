@@ -16,6 +16,7 @@ use shared_service_specs::{default_grpc_service_endpoint, health_endpoint, metri
 ///
 /// # Returns
 /// A `ServiceConfig` instance with all the necessary settings for the CMDB service.
+#[must_use]
 pub fn cmdb_service_config() -> ServiceConfig {
     let id = ServiceID::CMDB;
     let name = "cmdb".to_string();

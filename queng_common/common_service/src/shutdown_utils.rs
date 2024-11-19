@@ -2,7 +2,7 @@
 /// Registers a signal handler that waits for a signal that indicates a shutdown request.
 // https://stackoverflow.com/questions/77585473/rust-tokio-how-to-handle-more-signals-than-just-sigint-i-e-sigquit?noredirect=1#comment136778587_77585473
 pub async fn signal_handler(svc: &str) {
-    wait_for_signal_impl(svc).await
+    wait_for_signal_impl(svc).await;
 }
 
 /// Waits for a signal that requests a graceful shutdown. Supports the following signals on unix:

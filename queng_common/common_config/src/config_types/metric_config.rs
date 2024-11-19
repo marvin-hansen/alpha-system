@@ -10,10 +10,12 @@ pub struct MetricConfig {
 }
 
 impl MetricConfig {
-    pub fn new(uri: String, host: String, port: u32) -> Self {
+    #[must_use]
+    pub const fn new(uri: String, host: String, port: u32) -> Self {
         Self { uri, host, port }
     }
 
+    #[must_use]
     pub fn from_endpoint(endpoint: &Endpoint) -> Self {
         let uri = endpoint.uri().to_string();
         let host = String::from("0.0.0.0");
@@ -33,13 +35,16 @@ impl Default for MetricConfig {
 }
 
 impl MetricConfig {
+    #[must_use]
     pub fn uri(&self) -> &str {
         &self.uri
     }
+    #[must_use]
     pub fn host(&self) -> &str {
         &self.host
     }
-    pub fn port(&self) -> u32 {
+    #[must_use]
+    pub const fn port(&self) -> u32 {
         self.port
     }
 }

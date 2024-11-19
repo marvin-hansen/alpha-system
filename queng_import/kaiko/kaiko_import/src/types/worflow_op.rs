@@ -1,6 +1,6 @@
 use std::fmt::Display;
 
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct MetaDataDBWOp {
     all_op: WorkflowOpAll,
     assets_op: WorkflowOp,
@@ -9,7 +9,8 @@ pub struct MetaDataDBWOp {
 }
 
 impl MetaDataDBWOp {
-    pub fn new(
+    #[must_use]
+    pub const fn new(
         all_op: WorkflowOpAll,
         assets_op: WorkflowOp,
         exchanges_op: WorkflowOp,
@@ -25,19 +26,23 @@ impl MetaDataDBWOp {
 }
 
 impl MetaDataDBWOp {
-    pub fn all_op(&self) -> WorkflowOpAll {
+    #[must_use]
+    pub const fn all_op(&self) -> WorkflowOpAll {
         self.all_op
     }
 
-    pub fn assets_op(&self) -> WorkflowOp {
+    #[must_use]
+    pub const fn assets_op(&self) -> WorkflowOp {
         self.assets_op
     }
 
-    pub fn exchanges_op(&self) -> WorkflowOp {
+    #[must_use]
+    pub const fn exchanges_op(&self) -> WorkflowOp {
         self.exchanges_op
     }
 
-    pub fn instruments_op(&self) -> WorkflowOp {
+    #[must_use]
+    pub const fn instruments_op(&self) -> WorkflowOp {
         self.instruments_op
     }
 }
@@ -48,7 +53,7 @@ impl Display for MetaDataDBWOp {
     }
 }
 
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 #[repr(u8)]
 pub enum WorkflowOpAll {
     NoOPAll, // Nothing to do.
@@ -65,7 +70,7 @@ impl Display for WorkflowOpAll {
     }
 }
 
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 #[repr(u8)]
 pub enum WorkflowOp {
     NoOP, // Nothing to do.

@@ -80,6 +80,6 @@ fn test_display() {
 
     let expected =
         "StopAllDataMessage[message_type: StopAllData, client_id: 1, exchange_id: Kraken]";
-    let actual = format!("{}", message);
+    let actual = format!("{message}");
     assert_eq!(expected, actual);
 }

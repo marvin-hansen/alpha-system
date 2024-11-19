@@ -24,7 +24,8 @@ impl ImsDataConfig {
     ///
     /// An `ImsDataConfig` instance .
     ///
-    pub fn new(
+    #[must_use]
+    pub const fn new(
         stream_user: String,
         stream_password: String,
         stream_id: String,
@@ -42,22 +43,27 @@ impl ImsDataConfig {
 }
 
 impl ImsDataConfig {
+    #[must_use]
     pub fn stream_user(&self) -> &str {
         &self.stream_user
     }
 
+    #[must_use]
     pub fn stream_id(&self) -> &str {
         &self.stream_id
     }
 
+    #[must_use]
     pub fn topic_ids(&self) -> &str {
         &self.topic_ids
     }
 
+    #[must_use]
     pub fn stream_password(&self) -> &str {
         &self.stream_password
     }
 
+    #[must_use]
     pub fn tcp_server_address(&self) -> &str {
         &self.tcp_server_address
     }
@@ -65,6 +71,6 @@ impl ImsDataConfig {
 
 impl Display for ImsDataConfig {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        write!(f, "{self:?}")
     }
 }

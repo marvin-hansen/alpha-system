@@ -2,15 +2,15 @@ use crate::{ClientErrorMessage, ClientErrorType, MessageType};
 use sbe_bindings::client_error_codec::SBE_TEMPLATE_ID;
 use sbe_bindings::{ClientErrorDecoder, MessageHeaderDecoder, ReadBuf, SbeResult};
 
-/// Decodes a ClientErrorMessage from a byte buffer.
+/// Decodes a `ClientErrorMessage` from a byte buffer.
 ///
 /// # Arguments
 ///
-/// * `buffer` - Byte buffer containing encoded ClientErrorMessage
+/// * `buffer` - Byte buffer containing encoded `ClientErrorMessage`
 ///
 /// # Returns
 ///
-/// Decoded ClientErrorMessage on success
+/// Decoded `ClientErrorMessage` on success
 ///
 /// # Errors
 ///
@@ -18,13 +18,13 @@ use sbe_bindings::{ClientErrorDecoder, MessageHeaderDecoder, ReadBuf, SbeResult}
 ///
 /// # Process
 ///
-/// - Create default ClientErrorDecoder
-/// - Wrap buffer in ReadBuf
+/// - Create default `ClientErrorDecoder`
+/// - Wrap buffer in `ReadBuf`
 /// - Decode header and validate template ID
-/// - Decode and validate message_type
-/// - Decode client_id
-/// - Decode and validate client_error_type
-/// - Create and return ClientErrorMessage
+/// - Decode and validate `message_type`
+/// - Decode `client_id`
+/// - Decode and validate `client_error_type`
+/// - Create and return `ClientErrorMessage`
 ///
 pub fn decode_client_error_message(buffer: &[u8]) -> SbeResult<ClientErrorMessage> {
     let mut csg = ClientErrorDecoder::default();

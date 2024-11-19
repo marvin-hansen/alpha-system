@@ -6,11 +6,11 @@ use sbe_bindings::{
     message_header_codec, DataBarEncoder, Encoder, MessageType as SbeMessageType, WriteBuf,
 };
 
-/// Encodes an OHLCVBar to a byte buffer.
+/// Encodes an `OHLCVBar` to a byte buffer.
 ///
 /// # Arguments
 ///
-/// * `bar` - OHLCVBar to encode
+/// * `bar` - `OHLCVBar` to encode
 ///
 /// # Returns
 ///
@@ -23,16 +23,16 @@ use sbe_bindings::{
 /// # Process
 ///
 /// - Create 40 byte buffer
-/// - Create default DataBarEncoder
-/// - Wrap buffer in WriteBuf
+/// - Create default `DataBarEncoder`
+/// - Wrap buffer in `WriteBuf`
 /// - Encode header
-/// - Encode message_type
-/// - Encode symbol_id
-/// - Encode date_time
-/// - Encode and convert open_price to f32
-/// - Encode and convert high_price to f32
-/// - Encode and convert low_price to f32
-/// - Encode and convert close_price to f32
+/// - Encode `message_type`
+/// - Encode `symbol_id`
+/// - Encode `date_time`
+/// - Encode and convert `open_price` to f32
+/// - Encode and convert `high_price` to f32
+/// - Encode and convert `low_price` to f32
+/// - Encode and convert `close_price` to f32
 /// - Encode and convert volume to f32
 /// - Return encoded size and buffer
 ///

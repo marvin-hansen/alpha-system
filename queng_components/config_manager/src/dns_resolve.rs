@@ -25,7 +25,7 @@ impl CfgManager {
 /**
  * Resolves a hostname using the specified DNS resolver.
  */
-pub(crate) async fn resolve_address(
+pub async fn resolve_address(
     resolver: &TokioAsyncResolver,
     host: &str,
 ) -> Result<IpAddr, ResolveError> {

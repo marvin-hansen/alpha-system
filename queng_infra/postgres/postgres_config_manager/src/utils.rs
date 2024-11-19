@@ -1,4 +1,4 @@
-pub(crate) fn get_value_from_env(key: &str) -> String {
+pub fn get_value_from_env(key: &str) -> String {
     match std::env::var(key) {
         Ok(cluster_dns_server) => cluster_dns_server,
         Err(e) => {

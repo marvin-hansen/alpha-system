@@ -64,7 +64,7 @@ async fn test_partial_import() {
     assert_eq!(count, 1);
 }
 
-fn get_assets_import_op() -> MetaDataDBWOp {
+const fn get_assets_import_op() -> MetaDataDBWOp {
     let all_op: WorkflowOpAll = WorkflowOpAll::ImportPartial;
     let assets_op: WorkflowOp = WorkflowOp::ImportAssets;
     let exchanges_op: WorkflowOp = WorkflowOp::NoOP;
@@ -72,7 +72,7 @@ fn get_assets_import_op() -> MetaDataDBWOp {
     MetaDataDBWOp::new(all_op, assets_op, exchanges_op, instruments_op)
 }
 
-fn get_exchanges_import_op() -> MetaDataDBWOp {
+const fn get_exchanges_import_op() -> MetaDataDBWOp {
     let all_op: WorkflowOpAll = WorkflowOpAll::ImportPartial;
     let assets_op: WorkflowOp = WorkflowOp::NoOP;
     let exchanges_op: WorkflowOp = WorkflowOp::ImportExchanges;
@@ -80,7 +80,7 @@ fn get_exchanges_import_op() -> MetaDataDBWOp {
     MetaDataDBWOp::new(all_op, assets_op, exchanges_op, instruments_op)
 }
 
-fn get_instruments_import_op() -> MetaDataDBWOp {
+const fn get_instruments_import_op() -> MetaDataDBWOp {
     let all_op: WorkflowOpAll = WorkflowOpAll::ImportPartial;
     let assets_op: WorkflowOp = WorkflowOp::NoOP;
     let exchanges_op: WorkflowOp = WorkflowOp::NoOP;

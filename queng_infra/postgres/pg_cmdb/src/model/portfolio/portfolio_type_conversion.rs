@@ -6,8 +6,9 @@ use common_exchange::{
 };
 
 impl Portfolio {
-    pub fn from_common_portfolio(portfolio: CommonPortfolioConfig) -> Portfolio {
-        Portfolio {
+    #[must_use]
+    pub fn from_common_portfolio(portfolio: CommonPortfolioConfig) -> Self {
+        Self {
             portfolio_id: portfolio.portfolio_id() as i32,
             portfolio_description: portfolio.portfolio_description().to_string(),
             portfolio_account_type: portfolio.portfolio_account_type().as_i32(),
@@ -25,6 +26,7 @@ impl Portfolio {
         }
     }
 
+    #[must_use]
     pub fn to_common_portfolio(&self, instruments: &[Instrument]) -> CommonPortfolioConfig {
         CommonPortfolioConfig::new(
             self.portfolio_id as u32,
@@ -37,7 +39,7 @@ impl Portfolio {
             self.portfolio_max_drawdown,
             instruments
                 .iter()
-                .map(|i| i.to_common_instrument())
+                .map(super::super::instrument::Instrument::to_common_instrument)
                 .collect(),
             self.instrument_max_allocation,
             self.instrument_max_drawdown,
@@ -48,6 +50,7 @@ impl Portfolio {
         )
     }
 
+    #[must_use]
     pub fn to_common_portfolio_with_common_instruments(
         &self,
         instruments: Vec<CommonInstrument>,

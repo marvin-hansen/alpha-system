@@ -5,16 +5,16 @@ mod getters;
 mod sbe_decode;
 mod sbe_encode;
 
-#[derive(Debug, Default, Clone, PartialEq)]
+#[derive(Debug, Default, Clone, PartialEq, Eq)]
 pub struct ClientLogoutMessage {
     message_type: MessageType,
     client_id: u16,
 }
 
 impl ClientLogoutMessage {
-    /// Creates a new ClientLogoutMessage instance.
+    /// Creates a new `ClientLogoutMessage` instance.
     ///
-    /// Sets the message_type to ClientLogout.
+    /// Sets the `message_type` to `ClientLogout`.
     ///
     /// # Arguments
     ///
@@ -22,9 +22,10 @@ impl ClientLogoutMessage {
     ///
     /// # Returns
     ///
-    /// ClientLogoutMessage instance
+    /// `ClientLogoutMessage` instance
     ///
-    pub fn new(client_id: u16) -> Self {
+    #[must_use]
+    pub const fn new(client_id: u16) -> Self {
         let message_type = MessageType::ClientLogout;
         Self {
             message_type,
@@ -34,9 +35,9 @@ impl ClientLogoutMessage {
 }
 
 impl From<&[u8]> for ClientLogoutMessage {
-    /// Implements the From trait to decode a ClientLogoutMessage from a byte slice.
+    /// Implements the From trait to decode a `ClientLogoutMessage` from a byte slice.
     ///
-    /// Calls the sbe_decode::decode_client_logout_message function to decode the message.
+    /// Calls the `sbe_decode::decode_client_logout_message` function to decode the message.
     ///
     /// # Arguments
     ///
@@ -44,7 +45,7 @@ impl From<&[u8]> for ClientLogoutMessage {
     ///
     /// # Returns
     ///
-    /// Decoded ClientLogoutMessage
+    /// Decoded `ClientLogoutMessage`
     ///
     /// # Errors
     ///

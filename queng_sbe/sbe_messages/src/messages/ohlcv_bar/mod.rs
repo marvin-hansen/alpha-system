@@ -5,21 +5,22 @@ use crate::errors::{SbeDecodeError, SbeEncodeError};
 pub mod sbe_decoder;
 pub mod sbe_encoder;
 
-#[derive(Debug, Default, Clone, PartialEq)]
+#[derive(Debug, Default, Clone, PartialEq, Eq)]
 pub struct SbeOHLCVBar {}
 
 impl SbeOHLCVBar {
-    pub fn new() -> Self {
+    #[must_use]
+    pub const fn new() -> Self {
         Self {}
     }
 }
 
 impl SbeOHLCVBar {
-    /// Encodes an OHLCVBar into an SBE message buffer.
+    /// Encodes an `OHLCVBar` into an SBE message buffer.
     ///
     /// # Parameters
     ///
-    /// - `bar` - The OHLCVBar to encode
+    /// - `bar` - The `OHLCVBar` to encode
     ///
     /// # Returns
     ///
@@ -31,7 +32,7 @@ impl SbeOHLCVBar {
         sbe_encoder::encode_data_bar_message(bar)
     }
 
-    /// Decodes an SBE message buffer into an OHLCVBar.
+    /// Decodes an SBE message buffer into an `OHLCVBar`.
     ///
     /// # Parameters
     ///
@@ -39,7 +40,7 @@ impl SbeOHLCVBar {
     ///
     /// # Returns
     ///
-    /// A Result containing the decoded OHLCVBar or a decoding error.
+    /// A Result containing the decoded `OHLCVBar` or a decoding error.
     #[inline]
     pub fn decode(buffer: &[u8]) -> Result<OHLCVBar, SbeDecodeError> {
         sbe_decoder::decode_data_bar_message(buffer)

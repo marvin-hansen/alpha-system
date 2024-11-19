@@ -16,7 +16,8 @@ const RPC_TIMEOUT: u64 = 100;
 pub struct GrpcHealthError(pub String);
 
 impl GrpcHealthError {
-    pub fn new(field0: String) -> Self {
+    #[must_use]
+    pub const fn new(field0: String) -> Self {
         Self(field0)
     }
 }
@@ -65,25 +66,24 @@ pub async fn check_grpc_health(addr: String) -> Result<(), Box<dyn std::error::E
     let mut client = HealthClient::new(channel);
 
     let request = Request::new(HealthCheckRequest {
-        service: "".to_string(),
+        service: String::new(),
     });
 
     match client.check(request).await {
         Ok(response) => {
             let status = response.into_inner().status();
-            match status {
-                ServingStatus::Serving => Ok(()),
-                _ => {
-                    eprintln!("service unhealthy (responded with {:?})", status);
-                    Err(GrpcHealthError::new("service unhealthy".to_string()).into())
-                }
+            if status == ServingStatus::Serving {
+                Ok(())
+            } else {
+                eprintln!("service unhealthy (responded with {status:?})");
+                Err(GrpcHealthError::new("service unhealthy".to_string()).into())
             }
         }
         Err(status) => {
             match status.code() {
                 tonic::Code::Unimplemented =>
                     eprintln!("error: this server does not implement the grpc health protocol (grpc.health.v1.Health): {}", status.message()),
-                tonic::Code::DeadlineExceeded => println!("timeout: health rpc did not complete within {}", RPC_TIMEOUT),
+                tonic::Code::DeadlineExceeded => println!("timeout: health rpc did not complete within {RPC_TIMEOUT}"),
                 _ => eprintln!("error: health rpc failed: {}", status.message()),
             };
             process::exit(ERROR_CODE_RPC_FAILURE);

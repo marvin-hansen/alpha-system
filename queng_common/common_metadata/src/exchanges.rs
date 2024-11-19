@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 use std::fmt::Display;
 
-#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Default, Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct MetaExchangesRoot {
     pub result: String,
     pub data: Vec<MetaExchange>,
@@ -15,6 +15,7 @@ pub struct MetaExchange {
 }
 
 impl MetaExchange {
+    #[must_use]
     pub fn hash(&self) -> String {
         let binding = format!("{}{}", self.code, self.name);
         let input = binding.as_bytes();
@@ -25,6 +26,6 @@ impl MetaExchange {
 
 impl Display for MetaExchange {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "MetaExchange: {:?}", self)
+        write!(f, "MetaExchange: {self:?}")
     }
 }

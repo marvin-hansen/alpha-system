@@ -21,11 +21,11 @@ impl Metadata {
         &self,
         exchanges: &[MetaExchange],
     ) -> Result<(), ClickHouseUtilError> {
-        for exchange in exchanges.iter() {
+        for exchange in exchanges {
             let insert_query = self.generate_exchange_insert(exchange);
             self.execute_query(&insert_query)
                 .await
-                .expect("Failed to insert asset")
+                .expect("Failed to insert asset");
         }
 
         Ok(())
@@ -33,7 +33,7 @@ impl Metadata {
 }
 
 impl Metadata {
-    /// Generates a ClickHouse SQL query to insert an exchange into the exchanges table.
+    /// Generates a `ClickHouse` SQL query to insert an exchange into the exchanges table.
     ///
     /// This method generates a SQL query that can be used to insert an exchange into the exchanges table.
     ///

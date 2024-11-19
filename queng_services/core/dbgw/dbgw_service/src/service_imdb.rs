@@ -1,13 +1,34 @@
 use crate::DBG;
 use pg_imdb_manager::PostgresIMDBManager;
 use proto_imdb::proto::db_gateway_imdb_service_server::DbGatewayImdbService;
-use proto_imdb::proto::*;
-use proto_imdb_utils::*;
+use proto_imdb::proto::{
+    CheckIfIntegrationConfigExistsRequest, CheckIfIntegrationConfigExistsResponse,
+    CheckIfIntegrationConfigOnlineRequest, CheckIfIntegrationConfigOnlineResponse,
+    CountIntegrationRequest, CountIntegrationResponse, CreateIntegrationRequest,
+    CreateIntegrationResponse, DeleteIntegrationRequest, DeleteIntegrationResponse,
+    GetAllIntegrationsByExchangeRequest, GetAllIntegrationsByExchangeResponse,
+    GetAllIntegrationsRequest, GetAllIntegrationsResponse, GetAllOfflineIntegrationsRequest,
+    GetAllOfflineIntegrationsResponse, GetAllOnlineIntegrationsRequest,
+    GetAllOnlineIntegrationsResponse, GetIntegrationConfigRequest, GetIntegrationConfigResponse,
+    ProtoIntegrationConfig, SetIntegrationOfflineRequest, SetIntegrationOfflineResponse,
+    SetIntegrationOnlineRequest, SetIntegrationOnlineResponse, UpdateIntegrationRequest,
+    UpdateIntegrationResponse,
+};
+use proto_imdb_utils::{
+    get_all_integrations_by_exchange_response, get_all_integrations_response,
+    get_all_offline_integrations_response, get_all_online_integrations_response,
+    get_check_if_integration_config_exists_response,
+    get_check_if_integration_config_online_response, get_count_integration_response,
+    get_create_integration_response, get_delete_integration_response,
+    get_integration_config_response, get_set_integration_offline_response,
+    get_set_integration_online_response, get_update_integration_response,
+    integration_config_from_proto, integration_config_to_proto,
+};
 use std::sync::Arc;
 use tokio::sync::RwLock;
 use tonic::{Request, Response, Status};
 
-pub(crate) type SafePgIMDBManager = Arc<RwLock<PostgresIMDBManager>>;
+pub type SafePgIMDBManager = Arc<RwLock<PostgresIMDBManager>>;
 
 #[derive(Clone)]
 pub struct IMDBServer {
@@ -16,13 +37,13 @@ pub struct IMDBServer {
 }
 
 impl IMDBServer {
-    pub fn new(dbm: SafePgIMDBManager) -> Self {
+    pub const fn new(dbm: SafePgIMDBManager) -> Self {
         Self { dbg: DBG, dbm }
     }
 
     fn dbg_print(&self, msg: &str) {
         if self.dbg {
-            println!("[DBGW/service_imdb]: {}", msg)
+            println!("[DBGW/service_imdb]: {msg}");
         }
     }
 }
@@ -216,7 +237,7 @@ impl DbGatewayImdbService for IMDBServer {
 
         let dbm = self.dbm.write().await;
         match dbm.set_integration_online(integration_id).await {
-            Ok(_) => Ok(Response::new(get_set_integration_online_response(
+            Ok(()) => Ok(Response::new(get_set_integration_online_response(
                 true, None,
             ))),
             Err(e) => Ok(Response::new(get_set_integration_online_response(
@@ -236,7 +257,7 @@ impl DbGatewayImdbService for IMDBServer {
 
         let dbm = self.dbm.write().await;
         match dbm.set_integration_offline(integration_id).await {
-            Ok(_) => Ok(Response::new(get_set_integration_offline_response(
+            Ok(()) => Ok(Response::new(get_set_integration_offline_response(
                 true, None,
             ))),
             Err(e) => Ok(Response::new(get_set_integration_offline_response(

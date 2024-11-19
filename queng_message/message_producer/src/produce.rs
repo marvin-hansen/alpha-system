@@ -23,7 +23,7 @@ impl SendMessage for MessageProducer {
 
         // Send the message
         match self.producer.send_one(message).await {
-            Ok(_) => Ok(()),
+            Ok(()) => Ok(()),
             Err(e) => Err(SendMessageError {
                 message: e.to_string(),
             }),
@@ -51,7 +51,7 @@ impl SendMessage for MessageProducer {
 
         // Send the message batch
         match self.producer.send(messages).await {
-            Ok(_) => Ok(()),
+            Ok(()) => Ok(()),
             Err(e) => Err(SendMessageError {
                 message: e.to_string(),
             }),

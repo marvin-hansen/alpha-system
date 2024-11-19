@@ -5,16 +5,16 @@ mod getters;
 mod sbe_decode;
 mod sbe_encode;
 
-#[derive(Debug, Default, Clone, PartialEq)]
+#[derive(Debug, Default, Clone, PartialEq, Eq)]
 pub struct LastOHLCVBar {
     message_type: MessageType,
     symbol_id: u16,
 }
 
 impl LastOHLCVBar {
-    /// Creates a new LastOHLCVBar instance.
+    /// Creates a new `LastOHLCVBar` instance.
     ///
-    /// Sets the message_type to LastOHLCVBar.
+    /// Sets the `message_type` to `LastOHLCVBar`.
     ///
     /// # Arguments
     ///
@@ -22,9 +22,10 @@ impl LastOHLCVBar {
     ///
     /// # Returns
     ///
-    /// LastOHLCVBar instance
+    /// `LastOHLCVBar` instance
     ///
-    pub fn new(symbol_id: u16) -> Self {
+    #[must_use]
+    pub const fn new(symbol_id: u16) -> Self {
         let message_type = MessageType::LastOHLCVBar;
         Self {
             message_type,
@@ -34,9 +35,9 @@ impl LastOHLCVBar {
 }
 
 impl From<&[u8]> for LastOHLCVBar {
-    /// Implements the From trait to decode a LastOHLCVBar from a byte slice.
+    /// Implements the From trait to decode a `LastOHLCVBar` from a byte slice.
     ///
-    /// Calls the sbe_decode::decode_last_data_bar_message function to decode the message.
+    /// Calls the `sbe_decode::decode_last_data_bar_message` function to decode the message.
     ///
     /// # Arguments
     ///
@@ -44,7 +45,7 @@ impl From<&[u8]> for LastOHLCVBar {
     ///
     /// # Returns
     ///
-    /// Decoded LastOHLCVBar
+    /// Decoded `LastOHLCVBar`
     ///
     /// # Errors
     ///

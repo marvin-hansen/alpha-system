@@ -25,7 +25,7 @@ impl PostgresMDDBManager {
     ///
     /// # Returns
     ///
-    /// A Result containing the new instance or a PostgresDBError.
+    /// A Result containing the new instance or a `PostgresDBError`.
     ///
     pub async fn new(url: &str) -> Result<Self, PostgresDBError> {
         Self::build(false, false, url).await
@@ -39,7 +39,7 @@ impl PostgresMDDBManager {
     ///
     /// # Returns
     ///
-    /// A Result containing the initialized connection or a PostgresDBError.
+    /// A Result containing the initialized connection or a `PostgresDBError`.
     ///
     pub async fn with_debug(url: &str) -> Result<Self, PostgresDBError> {
         Self::build(true, false, url).await
@@ -47,7 +47,7 @@ impl PostgresMDDBManager {
 
     /// Asynchronously initializes a connection with debug mode and test mode enabled.
     /// Test mode means, all database transactions will be rolled back and
-    /// the DB connection closed automatically when the test instance of PostgresMDDBManager is dropped.
+    /// the DB connection closed automatically when the test instance of `PostgresMDDBManager` is dropped.
     ///
     /// A full DB schema migration happens during initialization.
     ///
@@ -58,13 +58,13 @@ impl PostgresMDDBManager {
     /// # Returns
     ///
     /// A Result containing the new instance with a test transaction
-    /// or a PostgresDBError.
+    /// or a `PostgresDBError`.
     ///
     pub async fn with_test_and_debug(url: &str) -> Result<Self, PostgresDBError> {
         Self::build(true, true, url).await
     }
 
-    /// Creates a new PostgresMDDBManager instance with a provided connection pool
+    /// Creates a new `PostgresMDDBManager` instance with a provided connection pool
     /// and enables debug mode.
     ///
     /// # Arguments
@@ -74,7 +74,7 @@ impl PostgresMDDBManager {
     ///
     /// # Returns
     ///
-    /// A Result containing the new instance or a PostgresDBError.
+    /// A Result containing the new instance or a `PostgresDBError`.
     ///
     pub async fn with_pool_and_debug(
         pool: Pool<ConnectionManager<PgConnection>>,
@@ -120,7 +120,7 @@ impl PostgresMDDBManager {
 
     pub fn dbg_print(&self, msg: &str) {
         if self.dbg {
-            println!("[PostgresMDDBManager]: {}", msg);
+            println!("[PostgresMDDBManager]: {msg}");
         }
     }
 }

@@ -146,7 +146,7 @@ async fn test_partial_update() {
     assert_ne!(db_original_instrument.hash(), update_instrument.hash());
 }
 
-fn get_full_import_op() -> MetaDataDBWOp {
+const fn get_full_import_op() -> MetaDataDBWOp {
     let all_op: WorkflowOpAll = WorkflowOpAll::ImportAll;
     let assets_op: WorkflowOp = WorkflowOp::NoOP;
     let exchanges_op: WorkflowOp = WorkflowOp::NoOP;
@@ -154,7 +154,7 @@ fn get_full_import_op() -> MetaDataDBWOp {
     MetaDataDBWOp::new(all_op, assets_op, exchanges_op, instruments_op)
 }
 
-fn get_assets_update_op() -> MetaDataDBWOp {
+const fn get_assets_update_op() -> MetaDataDBWOp {
     let all_op: WorkflowOpAll = WorkflowOpAll::UpdatePartial;
     let assets_op: WorkflowOp = WorkflowOp::UpdateAssets;
     let exchanges_op: WorkflowOp = WorkflowOp::NoOP;
@@ -162,7 +162,7 @@ fn get_assets_update_op() -> MetaDataDBWOp {
     MetaDataDBWOp::new(all_op, assets_op, exchanges_op, instruments_op)
 }
 
-fn get_exchanges_update_op() -> MetaDataDBWOp {
+const fn get_exchanges_update_op() -> MetaDataDBWOp {
     let all_op: WorkflowOpAll = WorkflowOpAll::UpdatePartial;
     let assets_op: WorkflowOp = WorkflowOp::NoOP;
     let exchanges_op: WorkflowOp = WorkflowOp::UpdateExchanges;
@@ -170,7 +170,7 @@ fn get_exchanges_update_op() -> MetaDataDBWOp {
     MetaDataDBWOp::new(all_op, assets_op, exchanges_op, instruments_op)
 }
 
-fn get_instruments_update_op() -> MetaDataDBWOp {
+const fn get_instruments_update_op() -> MetaDataDBWOp {
     let all_op: WorkflowOpAll = WorkflowOpAll::UpdatePartial;
     let assets_op: WorkflowOp = WorkflowOp::NoOP;
     let exchanges_op: WorkflowOp = WorkflowOp::NoOP;

@@ -32,6 +32,7 @@ const SALT: &str = "2451!@43158)c2#$%b30d&(7f653a985>da7";
 ///
 /// The `base16ct::lower::encode_string` function is used to encode the digest value as a
 /// lowercase hex string.
+#[must_use]
 pub fn sha512_digest(val: String) -> String {
     // https://github.com/RustCrypto/hashes/tree/master/sha3
     let hash = Sha3_512::new()

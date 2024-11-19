@@ -164,7 +164,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
             dbm.set_service_offline(&SVC_ID)
                 .await
                 .expect("DBGW: Failed to set service online");
-            println!("DBGW: Failed to start gRPC and HTTP server: {:?}", e);
+            println!("DBGW: Failed to start gRPC and HTTP server: {e:?}");
         }
     }
 
@@ -187,6 +187,6 @@ pub(crate) async fn health_handler() -> Result<impl warp::Reply, warp::Rejection
 
 fn dbg_print(msg: &str) {
     if DBG {
-        println!("[DBGW/main]: {}", msg)
+        println!("[DBGW/main]: {msg}");
     }
 }

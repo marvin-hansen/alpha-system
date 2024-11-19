@@ -14,7 +14,7 @@ pub struct LongPattern {
 }
 
 impl LongPattern {
-    pub fn new() -> Self {
+    pub const fn new() -> Self {
         Self { arr: [false; SIZE] }
     }
 }
@@ -22,7 +22,7 @@ impl LongPattern {
 impl PatternTrait for LongPattern {
     fn get_eval_result(&self, index: usize) -> Result<bool, String> {
         if index >= self.arr.len() {
-            return Err(format!("long_pattern: index out of bound: {}", index));
+            return Err(format!("long_pattern: index out of bound: {index}"));
         }
 
         Ok(self.arr[index])

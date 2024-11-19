@@ -1,14 +1,14 @@
 use serde::{Deserialize, Serialize};
 use std::fmt::Display;
 
-#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Default, Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct MetaAssetRoot {
     pub result: String,
     pub data: Vec<MetaAsset>,
 }
 
-#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Default, Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct MetaAsset {
     pub code: String,
@@ -24,11 +24,12 @@ pub struct MetaAsset {
 
 impl Display for MetaAsset {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "MetaAsset: {:?}", self)
+        write!(f, "MetaAsset: {self:?}")
     }
 }
 
 impl MetaAsset {
+    #[must_use]
     pub fn hash(&self) -> String {
         // Metadata and addresses are not stored in the DB, thus not included in the hash.
         let binding = format!(
@@ -44,7 +45,7 @@ impl MetaAsset {
     }
 }
 
-#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Default, Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct AssetMetadata {
     #[serde(rename = "eth_address")]
@@ -65,11 +66,11 @@ pub struct AssetMetadata {
 
 impl Display for AssetMetadata {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "AssetMetadata: {:?}", self)
+        write!(f, "AssetMetadata: {self:?}")
     }
 }
 
-#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Default, Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Address {
     pub address: String,
@@ -78,6 +79,6 @@ pub struct Address {
 
 impl Display for Address {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "Address: {:?}", self)
+        write!(f, "Address: {self:?}")
     }
 }

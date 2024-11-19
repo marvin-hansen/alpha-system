@@ -21,7 +21,14 @@ pub struct Endpoint {
 }
 
 impl Endpoint {
-    pub fn new(name: String, version: u32, uri: String, port: u32, protocol: ProtocolType) -> Self {
+    #[must_use]
+    pub const fn new(
+        name: String,
+        version: u32,
+        uri: String,
+        port: u32,
+        protocol: ProtocolType,
+    ) -> Self {
         Self {
             name,
             version: version as i32,
@@ -33,24 +40,30 @@ impl Endpoint {
 }
 
 impl Endpoint {
+    #[must_use]
     pub fn name(&self) -> &str {
         &self.name
     }
-    pub fn version(&self) -> u32 {
+    #[must_use]
+    pub const fn version(&self) -> u32 {
         self.version as u32
     }
+    #[must_use]
     pub fn uri(&self) -> &str {
         &self.uri
     }
-    pub fn port(&self) -> u32 {
+    #[must_use]
+    pub const fn port(&self) -> u32 {
         self.port as u32
     }
-    pub fn protocol(&self) -> ProtocolType {
+    #[must_use]
+    pub const fn protocol(&self) -> ProtocolType {
         self.protocol
     }
 }
 
 impl Endpoint {
+    #[must_use]
     pub fn host_endpoint(&self) -> HostEndpoint {
         HostEndpoint::new(self.uri(), self.port() as u16)
     }

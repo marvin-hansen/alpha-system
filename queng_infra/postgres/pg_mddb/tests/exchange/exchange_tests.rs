@@ -234,7 +234,7 @@ async fn test_read_all_with_entries() {
     assert!(result.is_ok());
 
     let test_data1 = get_test_meta_exchange();
-    Exchange::create(conn, test_data1.clone()).expect("Failed to create exchange");
+    Exchange::create(conn, test_data1).expect("Failed to create exchange");
 
     let result = Exchange::read_all(conn);
     assert!(result.is_ok());
@@ -292,7 +292,7 @@ async fn test_update_error() {
 
     let invalid_exchange_id = "invalid_exchange_id";
     let updated_data = get_test_meta_exchange(); // Replace with actual updated data
-    let result = Exchange::update(conn, invalid_exchange_id.to_string(), updated_data.clone());
+    let result = Exchange::update(conn, invalid_exchange_id.to_string(), updated_data);
     assert!(result.is_ok());
     assert_eq!(result.unwrap(), 0);
 }

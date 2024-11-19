@@ -27,7 +27,8 @@ pub struct StrategyConfig {
 
 impl StrategyConfig {
     #[allow(clippy::too_many_arguments)]
-    pub fn new(
+    #[must_use]
+    pub const fn new(
         strategy_id: String,
         strategy_name: String,
         strategy_description: String,
@@ -57,37 +58,48 @@ impl StrategyConfig {
 }
 
 impl StrategyConfig {
+    #[must_use]
     pub fn strategy_id(&self) -> &str {
         &self.strategy_id
     }
+    #[must_use]
     pub fn strategy_name(&self) -> &str {
         &self.strategy_name
     }
+    #[must_use]
     pub fn strategy_description(&self) -> &str {
         &self.strategy_description
     }
-    pub fn strategy_type(&self) -> &TradeStrategyType {
+    #[must_use]
+    pub const fn strategy_type(&self) -> &TradeStrategyType {
         &self.strategy_type
     }
-    pub fn intraday(&self) -> bool {
+    #[must_use]
+    pub const fn intraday(&self) -> bool {
         self.intraday
     }
-    pub fn day_to_filter(&self) -> u8 {
+    #[must_use]
+    pub const fn day_to_filter(&self) -> u8 {
         self.day_to_filter
     }
-    pub fn trade_entry_type(&self) -> &TradeEntryType {
+    #[must_use]
+    pub const fn trade_entry_type(&self) -> &TradeEntryType {
         &self.trade_entry_type
     }
-    pub fn pattern_config(&self) -> &Option<PatternConfig> {
+    #[must_use]
+    pub const fn pattern_config(&self) -> &Option<PatternConfig> {
         &self.pattern_config
     }
-    pub fn profit_target(&self) -> u32 {
+    #[must_use]
+    pub const fn profit_target(&self) -> u32 {
         self.profit_target
     }
-    pub fn stop_target(&self) -> u32 {
+    #[must_use]
+    pub const fn stop_target(&self) -> u32 {
         self.stop_target
     }
-    pub fn max_nr_bars(&self) -> u32 {
+    #[must_use]
+    pub const fn max_nr_bars(&self) -> u32 {
         self.max_nr_bars
     }
 }

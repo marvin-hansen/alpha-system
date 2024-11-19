@@ -1,4 +1,4 @@
-use crate::*;
+use crate::{ReadBuf, Reader, SbeErr, SbeResult, WriteBuf, Writer};
 
 pub use decoder::MessageHeaderDecoder;
 pub use encoder::MessageHeaderEncoder;
@@ -6,7 +6,7 @@ pub use encoder::MessageHeaderEncoder;
 pub const ENCODED_LENGTH: usize = 8;
 
 pub mod encoder {
-    use super::*;
+    use super::{SbeErr, SbeResult, WriteBuf, Writer};
 
     #[derive(Debug, Default)]
     pub struct MessageHeaderEncoder<P> {
@@ -102,7 +102,7 @@ pub mod encoder {
 } // end encoder mod
 
 pub mod decoder {
-    use super::*;
+    use super::{ReadBuf, Reader, SbeErr, SbeResult};
 
     #[derive(Debug, Default)]
     pub struct MessageHeaderDecoder<P> {

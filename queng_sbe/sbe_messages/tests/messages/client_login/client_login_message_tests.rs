@@ -1,6 +1,6 @@
 use sbe_messages::{ClientLoginMessage, MessageType};
 
-fn get_client_login_message(client_id: u16) -> ClientLoginMessage {
+const fn get_client_login_message(client_id: u16) -> ClientLoginMessage {
     ClientLoginMessage::new(client_id)
 }
 
@@ -65,5 +65,5 @@ fn test_display() {
     let actual = ClientLoginMessage::new(client_id);
     let expected = "ClientLoginMessage { client_id: 100 }";
 
-    assert_eq!(format!("{}", actual), expected);
+    assert_eq!(format!("{actual}"), expected);
 }

@@ -48,6 +48,6 @@ fn test_click_house_config_display() {
 
     let expected =
         "ClickHouseConfig { url: 127.0.0.1, port: 9000, database: default, username: default }";
-    let actual = format!("{}", config);
+    let actual = format!("{config}");
     assert_eq!(expected, actual);
 }

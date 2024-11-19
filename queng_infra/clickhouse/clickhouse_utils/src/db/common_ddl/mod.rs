@@ -1,1 +1,1 @@
-pub(crate) mod ddl_db;
+pub mod ddl_db;

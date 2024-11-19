@@ -12,7 +12,7 @@ impl Metadata {
         let ddl = format!("DROP DATABASE IF EXISTS {DB_NAME}");
 
         match self.execute_query(&ddl).await {
-            Ok(_) => (),
+            Ok(()) => (),
             Err(e) => return Err(ClickHouseUtilError::from(e.to_string())),
         };
 

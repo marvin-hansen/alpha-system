@@ -35,7 +35,7 @@ fn test_display() {
     let code = FiatIsoCode::new("USD".to_string(), ['U', 'S', 'D'], 840);
 
     let expected = "USD (USD, 840)";
-    let actual = format!("{}", code);
+    let actual = format!("{code}");
 
     assert_eq!(actual, expected);
 }

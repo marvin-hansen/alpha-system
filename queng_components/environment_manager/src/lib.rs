@@ -17,6 +17,7 @@ impl EnvironmentManager {
     ///
     /// The constructed instance of `EnvironmentManager`.
     ///
+    #[must_use]
     pub fn new() -> Self {
         let env_type = util::detect_env_type(false);
         Self::build(false, env_type)
@@ -28,18 +29,20 @@ impl EnvironmentManager {
     ///
     /// The constructed instance of `EnvironmentManager`.
     ///
+    #[must_use]
     pub fn with_debug() -> Self {
         let env_type = util::detect_env_type(true);
         Self::build(true, env_type)
     }
 
-    fn build(dbg: bool, env_type: EnvironmentType) -> EnvironmentManager {
-        EnvironmentManager { dbg, env_type }
+    const fn build(dbg: bool, env_type: EnvironmentType) -> Self {
+        Self { dbg, env_type }
     }
 }
 
 impl EnvironmentManager {
-    pub fn env_type(&self) -> EnvironmentType {
+    #[must_use]
+    pub const fn env_type(&self) -> EnvironmentType {
         self.env_type
     }
 }

@@ -7,3 +7,5 @@ readme.workspace = true
 repository.workspace = true
 authors.workspace = true
 
+[lints]
+workspace = true

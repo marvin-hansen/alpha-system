@@ -1,7 +1,8 @@
 use common_config::{Endpoint, ProtocolType};
 
+#[must_use]
 pub fn ims_endpoint(exchange_id: &str, port: u32) -> Endpoint {
-    let endpoint_name = format!("{}-ims-data-endpoint", exchange_id);
+    let endpoint_name = format!("{exchange_id}-ims-data-endpoint");
     let endpoint_version = 1;
     let endpoint_uri = "/".to_string();
     let endpoint_port = port;
@@ -31,6 +32,7 @@ pub fn ims_endpoint(exchange_id: &str, port: u32) -> Endpoint {
 /// - `port`: 7070
 /// - `protocol`: `ProtocolType::GRPC`
 ///
+#[must_use]
 pub fn default_grpc_service_endpoint(endpoint_name: &str, endpoint_port: u32) -> Endpoint {
     let endpoint_name = endpoint_name.to_string();
     let endpoint_version = 1;
@@ -62,6 +64,7 @@ pub fn default_grpc_service_endpoint(endpoint_name: &str, endpoint_port: u32) ->
 /// - `port`: 7070
 /// - `protocol`: `ProtocolType::HTTP`
 ///
+#[must_use]
 pub fn default_http_service_endpoint(endpoint_name: &str, endpoint_uri: &str) -> Endpoint {
     let endpoint_name = endpoint_name.to_string();
     let endpoint_version = 1;
@@ -87,6 +90,7 @@ pub fn default_http_service_endpoint(endpoint_name: &str, endpoint_uri: &str) ->
 /// - `port`: 8080
 /// - `protocol`: `ProtocolType::HTTP`
 ///
+#[must_use]
 pub fn metric_endpoint() -> Endpoint {
     let endpoint_name = "Metrics Endpoint".to_string();
     let endpoint_version = 1;
@@ -113,6 +117,7 @@ pub fn metric_endpoint() -> Endpoint {
 /// - `port`: 8080
 /// - `protocol`: `ProtocolType::HTTP`
 ///
+#[must_use]
 pub fn health_endpoint() -> Endpoint {
     let endpoint_name = "Health Endpoint".to_string();
     let endpoint_version = 1;

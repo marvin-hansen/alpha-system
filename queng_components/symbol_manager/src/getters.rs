@@ -1,7 +1,7 @@
 use crate::SymbolManager;
 
 impl SymbolManager {
-    /// Returns the number of symbols stored in this SymbolManager.
+    /// Returns the number of symbols stored in this `SymbolManager`.
     ///
     /// # Returns
     ///
@@ -10,12 +10,13 @@ impl SymbolManager {
     /// # Functionality
     ///
     /// Simply returns the `number_of_symbols` field which tracks the total count of
-    /// symbols in this SymbolManager.
-    pub fn number_of_symbols(&self) -> usize {
+    /// symbols in this `SymbolManager`.
+    #[must_use]
+    pub const fn number_of_symbols(&self) -> usize {
         self.number_of_symbols
     }
 
-    /// Returns the number of exchanges stored in this SymbolManager.
+    /// Returns the number of exchanges stored in this `SymbolManager`.
     ///
     /// # Returns
     ///
@@ -24,8 +25,9 @@ impl SymbolManager {
     /// # Functionality
     ///
     /// Simply returns the `number_of_exchanges` field which tracks the total count of
-    /// exchanges in this SymbolManager.
-    pub fn number_of_exchanges(&self) -> usize {
+    /// exchanges in this `SymbolManager`.
+    #[must_use]
+    pub const fn number_of_exchanges(&self) -> usize {
         self.number_of_exchanges
     }
 }

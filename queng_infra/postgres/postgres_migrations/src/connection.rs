@@ -27,17 +27,15 @@ pub async fn get_or_wait_for_postgres_connection(
     let timeout = Duration::from_secs(timeout.unwrap_or(120));
 
     loop {
-        match PgConnection::establish(database_url) {
-            Ok(conn) => return Ok(conn),
-            Err(_) => {
-                if start_time.elapsed() > timeout {
-                    return Err(PostgresDBError::ConnectionFailed(format!(
-                        "Failed to connect to Postgres server at: {} after several retries for 90 seconds",
-                        database_url
-                    )));
-                }
-                sleep(retry_interval).await;
+        if let Ok(conn) = PgConnection::establish(database_url) {
+            return Ok(conn);
+        } else {
+            if start_time.elapsed() > timeout {
+                return Err(PostgresDBError::ConnectionFailed(format!(
+                    "Failed to connect to Postgres server at: {database_url} after several retries for 90 seconds"
+                )));
             }
+            sleep(retry_interval).await;
         }
     }
 }

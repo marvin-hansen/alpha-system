@@ -2,9 +2,9 @@ use crate::db::metadata::Metadata;
 use crate::ClickHouseUtilError;
 
 impl Metadata {
-    /// Drops all metadata tables in ClickHouse.
+    /// Drops all metadata tables in `ClickHouse`.
     ///
-    /// This method is responsible for dropping all tables related to metadata in ClickHouse. It sequentially
+    /// This method is responsible for dropping all tables related to metadata in `ClickHouse`. It sequentially
     /// drops each metadata table including stats, assets, exchanges, and instruments tables.
     ///
     /// # Returns

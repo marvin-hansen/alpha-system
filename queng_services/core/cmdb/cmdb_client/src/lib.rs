@@ -14,15 +14,15 @@ pub struct CmdbClient {
 
 impl CmdbClient {
     pub async fn new(host: String, port: u16) -> Self {
-        let s = format!("http://{}:{}", host, port);
+        let s = format!("http://{host}:{port}");
         let uri = s
             .parse::<Uri>()
-            .unwrap_or_else(|_| panic!("[CMDBProvider]: Failed to parse server URI: {}", s));
+            .unwrap_or_else(|_| panic!("[CMDBProvider]: Failed to parse server URI: {s}"));
 
         let channel = Channel::builder(uri)
             .connect()
             .await
-            .unwrap_or_else(|_| panic!("\r\n [CMDBProvider]: Failed to connect to SMDB service on: {} \r\n  \r\n Detail: \r\n", s));
+            .unwrap_or_else(|_| panic!("\r\n [CMDBProvider]: Failed to connect to SMDB service on: {s} \r\n  \r\n Detail: \r\n"));
 
         let client = CmdbServiceClient::new(channel);
 

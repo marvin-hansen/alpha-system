@@ -77,10 +77,7 @@ pub async fn handle_put_exchanges(
     };
 
     // Create a new MetaExchangesRoot from the body
-    let new_exchanges = MetaExchangesRoot {
-        result: body.result,
-        data: body.data,
-    };
+    let new_exchanges = body;
 
     // Serialize the body into string
     let value = match to_string(&new_exchanges) {
@@ -141,10 +138,7 @@ pub async fn handle_post_exchanges(
     };
 
     // Create a new MetaExchangesRoot from the body
-    let new_exchanges = MetaExchangesRoot {
-        result: body.result,
-        data: body.data,
-    };
+    let new_exchanges = body;
 
     // Serialize the body into string
     let value = match to_string(&new_exchanges) {

@@ -7,15 +7,15 @@ use rust_decimal::Decimal;
 use sbe_bindings::trade_bar_codec::SBE_TEMPLATE_ID;
 use sbe_bindings::{MessageHeaderDecoder, ReadBuf, TradeBarDecoder};
 
-/// Decodes a TradeBar message from a byte buffer.
+/// Decodes a `TradeBar` message from a byte buffer.
 ///
 /// # Arguments
 ///
-/// * `buffer` - Byte buffer containing encoded TradeBar message
+/// * `buffer` - Byte buffer containing encoded `TradeBar` message
 ///
 /// # Returns
 ///
-/// Decoded TradeBar on success
+/// Decoded `TradeBar` on success
 ///
 /// # Errors
 ///
@@ -23,15 +23,15 @@ use sbe_bindings::{MessageHeaderDecoder, ReadBuf, TradeBarDecoder};
 ///
 /// # Process
 ///
-/// - Create default TradeBarDecoder
-/// - Wrap buffer in ReadBuf
+/// - Create default `TradeBarDecoder`
+/// - Wrap buffer in `ReadBuf`
 /// - Decode header and validate template ID
-/// - Decode and validate message_type
-/// - Decode symbol_id
-/// - Decode date_time as timestamp and create DateTime
+/// - Decode and validate `message_type`
+/// - Decode `symbol_id`
+/// - Decode `date_time` as timestamp and create `DateTime`
 /// - Decode price as f32 and convert to Decimal
 /// - Decode volume as f32 and convert to Decimal
-/// - Create and return TradeBar
+/// - Create and return `TradeBar`
 ///
 pub fn decode_trade_bar_message(buffer: &[u8]) -> Result<TradeBar, SbeDecodeError> {
     let mut csg = TradeBarDecoder::default();

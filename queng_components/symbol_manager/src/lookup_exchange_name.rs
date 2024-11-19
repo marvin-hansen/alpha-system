@@ -27,8 +27,7 @@ impl SymbolManager {
             Some(symbol) => symbol,
             None => {
                 return Err(LookupError::new(format!(
-                    "[SymbolManager]: Exchange not found for ID: {}",
-                    exchange_id
+                    "[SymbolManager]: Exchange not found for ID: {exchange_id}"
                 )));
             }
         };

@@ -11,12 +11,12 @@ fn test_debug() {
     let error = MessageProcessingError("test error".to_string());
     assert_eq!(
         "MessageProcessingError(\"test error\")",
-        format!("{:?}", error)
+        format!("{error:?}")
     );
 }
 
 #[test]
 fn test_display() {
     let error = MessageProcessingError("test error".to_string());
-    assert_eq!("MessageProcessingError: test error", format!("{}", error));
+    assert_eq!("MessageProcessingError: test error", format!("{error}"));
 }

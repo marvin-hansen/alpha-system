@@ -45,7 +45,7 @@ fn test_display() {
     let bar = FirstOHLCVBar::new(42);
 
     let expected = "FirstOHLCVBar { message_type: FirstOHLCVBar, symbol_id: 42 }";
-    let actual = format!("{}", bar);
+    let actual = format!("{bar}");
 
     assert_eq!(expected, actual);
 }

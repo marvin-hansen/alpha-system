@@ -1,25 +1,24 @@
-pub(crate) const BASE_URL: &str = "https://reference-data-api.kaiko.io/v1/";
-pub(crate) const CDN_PROXY_URL: &str = kaiko_cdn_auth::CDN_PROXY_URL;
-pub(crate) const CDN_AUTH_HEADER_KEY: &str = kaiko_cdn_auth::AUTH_HEADER_KEY;
-pub(crate) const CDN_RO_AUTH_KEY: &str = kaiko_cdn_auth::RO_AUTH_KEY;
-pub(crate) const LOCAL_PROXY_URL: &str = "http://127.0.0.1:7777/";
-pub(crate) const CLUSTER_PROXY_URL: &str =
-    "http://apiproxy-service.default.svc.cluster.local:7777/";
+pub const BASE_URL: &str = "https://reference-data-api.kaiko.io/v1/";
+pub const CDN_PROXY_URL: &str = kaiko_cdn_auth::CDN_PROXY_URL;
+pub const CDN_AUTH_HEADER_KEY: &str = kaiko_cdn_auth::AUTH_HEADER_KEY;
+pub const CDN_RO_AUTH_KEY: &str = kaiko_cdn_auth::RO_AUTH_KEY;
+pub const LOCAL_PROXY_URL: &str = "http://127.0.0.1:7777/";
+pub const CLUSTER_PROXY_URL: &str = "http://apiproxy-service.default.svc.cluster.local:7777/";
 
-pub(crate) const CI_PROXY_URL: &str = "http://127.0.0.1:7777/";
+pub const CI_PROXY_URL: &str = "http://127.0.0.1:7777/";
 
 // https://docs.kaiko.com/#dex-coverage
-pub(crate) const DEX: [&str; 12] = [
+pub const DEX: [&str; 12] = [
     "usp2", "usp3", "sush", "pksp", "curv", "blcr", "blc2", "tjv1", "tjv2", "tjv3", "qsp2", "qsp3",
 ];
 
-pub(crate) const NON_UNIQUE_EXCHANGE_INSTRUMENT_ID: [&str; 1] = ["1000NEIROCTOUSDT"];
+pub const NON_UNIQUE_EXCHANGE_INSTRUMENT_ID: [&str; 1] = ["1000NEIROCTOUSDT"];
 
-pub(crate) const NON_TRADE_INSTRUMENT_ID: [&str; 5] =
+pub const NON_TRADE_INSTRUMENT_ID: [&str; 5] =
     ["etf", "option", "option_combo", "future_combo", "future"];
 
 // https://docs.kaiko.com/coverage/centralized-exchanges
-pub(crate) const ACTIVE_EXCHANGES: [&str; 64] = [
+pub const ACTIVE_EXCHANGES: [&str; 64] = [
     "bcex",
     "btc-alpha",
     "btcc",

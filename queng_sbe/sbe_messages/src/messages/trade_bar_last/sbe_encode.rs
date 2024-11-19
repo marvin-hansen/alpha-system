@@ -4,11 +4,11 @@ use sbe_bindings::MessageType as SbeMessageType;
 use sbe_bindings::{message_header_codec, Encoder, LastTradeBarEncoder, WriteBuf};
 
 impl LastTradeBar {
-    /// Encodes a LastTradeBar message to a byte buffer.
+    /// Encodes a `LastTradeBar` message to a byte buffer.
     ///
     /// # Arguments
     ///
-    /// * `self` - LastTradeBar to encode
+    /// * `self` - `LastTradeBar` to encode
     ///
     /// # Returns
     ///
@@ -21,11 +21,11 @@ impl LastTradeBar {
     /// # Process
     ///
     /// - Create 12 byte buffer
-    /// - Create default LastTradeBarEncoder
-    /// - Wrap buffer in WriteBuf
+    /// - Create default `LastTradeBarEncoder`
+    /// - Wrap buffer in `WriteBuf`
     /// - Encode header
-    /// - Encode message_type
-    /// - Encode symbol_id
+    /// - Encode `message_type`
+    /// - Encode `symbol_id`
     /// - Return encoded size and buffer
     ///
     pub fn encode(&self) -> Result<(usize, Vec<u8>), SbeEncodeError> {

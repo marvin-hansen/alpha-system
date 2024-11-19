@@ -36,16 +36,13 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .expect("[SMDB]: Failed to get host and port for DBGW");
 
     dbg_print("Configure DBGW URI");
-    let s = format!("http://{}:{}", dbgw_host, dbgw_port);
+    let s = format!("http://{dbgw_host}:{dbgw_port}");
     let uri = s.parse::<Uri>().unwrap();
     dbg_print(&uri.to_string());
 
     dbg_print("Connect to DBGW service");
     let channel = Channel::builder(uri).connect().await.unwrap_or_else(|_| {
-        panic!(
-            "\r\n [SMDB]: Failed to connect to DBGW service on: {} \r\n  \r\n Detail: \r\n",
-            s
-        )
+        panic!("\r\n [SMDB]: Failed to connect to DBGW service on: {s} \r\n  \r\n Detail: \r\n")
     });
 
     dbg_print("Configure DBGW client");
@@ -112,7 +109,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
                 .set_service_offline(service::get_svc_request())
                 .await
                 .expect("[SMDB]: Failed to set service offline!");
-            println!("[SMDB]: Failed to start gRPC server: {:?}", e);
+            println!("[SMDB]: Failed to start gRPC server: {e:?}");
         }
     }
 
@@ -128,6 +125,6 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
 fn dbg_print(msg: &str) {
     if DBG {
-        println!("[SMDB/main]: {}", msg)
+        println!("[SMDB/main]: {msg}");
     }
 }

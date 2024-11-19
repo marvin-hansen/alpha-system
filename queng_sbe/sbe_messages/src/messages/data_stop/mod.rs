@@ -7,7 +7,7 @@ mod getter;
 mod sbe_decode;
 mod sbe_encode;
 
-#[derive(Debug, Default, Clone, PartialEq)]
+#[derive(Debug, Default, Clone, PartialEq, Eq)]
 pub struct StopDataMessage {
     message_type: MessageType,
     client_id: u16,
@@ -17,22 +17,23 @@ pub struct StopDataMessage {
 }
 
 impl StopDataMessage {
-    /// Creates a new StopDataMessage instance.
+    /// Creates a new `StopDataMessage` instance.
     ///
-    /// Sets the message_type to StopData.
+    /// Sets the `message_type` to `StopData`.
     ///
     /// # Arguments
     ///
     /// * `client_id` - u16 client ID
-    /// * `exchange_id` - ExchangeID exchange ID
+    /// * `exchange_id` - `ExchangeID` exchange ID
     /// * `symbol_id` - u16 symbol ID
-    /// * `data_type_id` - DataType data type ID
+    /// * `data_type_id` - `DataType` data type ID
     ///
     /// # Returns
     ///
-    /// StopDataMessage instance
+    /// `StopDataMessage` instance
     ///
-    pub fn new(
+    #[must_use]
+    pub const fn new(
         client_id: u16,
         exchange_id: ExchangeID,
         symbol_id: u16,
@@ -50,9 +51,9 @@ impl StopDataMessage {
 }
 
 impl From<&[u8]> for StopDataMessage {
-    /// Implements the From trait to decode a StopDataMessage from a byte slice.
+    /// Implements the From trait to decode a `StopDataMessage` from a byte slice.
     ///
-    /// Calls the sbe_decode::decode_stop_data_message function to decode the message.
+    /// Calls the `sbe_decode::decode_stop_data_message` function to decode the message.
     ///
     /// # Arguments
     ///
@@ -60,7 +61,7 @@ impl From<&[u8]> for StopDataMessage {
     ///
     /// # Returns
     ///
-    /// Decoded StopDataMessage
+    /// Decoded `StopDataMessage`
     ///
     /// # Errors
     ///

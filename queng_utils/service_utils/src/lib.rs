@@ -63,15 +63,12 @@ impl ServiceUtil {
         let env = config_manager.env_type();
 
         if dbg {
-            println!(
-                "[ServiceUtil]: Verify all binaries for environment: {:?}",
-                env
-            );
+            println!("[ServiceUtil]: Verify all binaries for environment: {env:?}");
         }
         match verify::verify_binary::verify_all_binaries(dbg, env) {
-            Ok(_) => {}
+            Ok(()) => {}
             Err(e) => {
-                panic!("Failed to verify binaries: {}", e)
+                panic!("Failed to verify binaries: {e}")
             }
         }
 
@@ -81,7 +78,8 @@ impl ServiceUtil {
         })
     }
 
-    pub fn config_manager(&self) -> &CfgManager {
+    #[must_use]
+    pub const fn config_manager(&self) -> &CfgManager {
         &self.config_manager
     }
 }
@@ -89,7 +87,7 @@ impl ServiceUtil {
 impl ServiceUtil {
     pub fn dbg_print(&self, s: &str) {
         if self.dbg {
-            println!("[ServiceUtil]: {}", s);
+            println!("[ServiceUtil]: {s}");
         }
     }
 }

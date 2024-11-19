@@ -6,16 +6,16 @@ use diesel::prelude::*;
 use diesel::result::Error::DatabaseError;
 
 impl Stat {
-    /// Creates a new stat entry in the database based on the provided MetaStats information.
+    /// Creates a new stat entry in the database based on the provided `MetaStats` information.
     ///
     /// # Arguments
     ///
     /// - `conn`: A mutable reference to the database connection.
-    /// - `meta_stats`: The MetaStats struct containing the stat information to be inserted.
+    /// - `meta_stats`: The `MetaStats` struct containing the stat information to be inserted.
     ///
     /// # Returns
     ///
-    /// A Result containing the inserted MetaStats if successful, or a diesel Error if an error occurs.
+    /// A Result containing the inserted `MetaStats` if successful, or a diesel Error if an error occurs.
     ///
     pub fn create(
         conn: &mut crate::Connection,
@@ -90,14 +90,14 @@ impl Stat {
         .get_result(conn)
     }
 
-    /// Reads a stat entry from the database based on the provided stat_id.
+    /// Reads a stat entry from the database based on the provided `stat_id`.
     ///
     /// # Arguments
     /// - `conn`: A mutable reference to the database connection.
     /// - `stat_id`: The ID of the stat entry to read.
     ///
     /// # Returns
-    /// A Result containing the retrieved MetaStats if successful,
+    /// A Result containing the retrieved `MetaStats` if successful,
     /// or a diesel Error if an error occurs.
     ///
     pub fn read(
@@ -116,7 +116,7 @@ impl Stat {
     /// - `conn`: A mutable reference to the database connection.
     ///
     /// # Returns
-    /// A Result containing a vector of MetaStats if successful, or a diesel Error if an error occurs.
+    /// A Result containing a vector of `MetaStats` if successful, or a diesel Error if an error occurs.
     ///
     pub fn read_all(conn: &mut crate::Connection) -> Result<Vec<MetaStats>, diesel::result::Error> {
         stats_table

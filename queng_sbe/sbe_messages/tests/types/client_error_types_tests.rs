@@ -23,11 +23,11 @@ fn test_from_u8() {
 fn test_display() {
     let error = ClientErrorType::UnknownClientError;
     let expected = "UnknownClientError";
-    let actual = format!("{}", error);
+    let actual = format!("{error}");
     assert_eq!(expected, actual);
 
     let error = ClientErrorType::ClientAlreadyLoggedIn;
     let expected = "ClientAlreadyLoggedIn";
-    let actual = format!("{}", error);
+    let actual = format!("{error}");
     assert_eq!(expected, actual);
 }

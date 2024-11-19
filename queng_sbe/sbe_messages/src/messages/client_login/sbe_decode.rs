@@ -2,7 +2,7 @@ use crate::{ClientLoginMessage, MessageType};
 use sbe_bindings::client_login_codec::SBE_TEMPLATE_ID;
 use sbe_bindings::{ClientLoginDecoder, MessageHeaderDecoder, ReadBuf, SbeResult};
 
-/// Decodes a ClientLoginMessage from a byte buffer.
+/// Decodes a `ClientLoginMessage` from a byte buffer.
 ///
 /// # Arguments
 ///
@@ -10,7 +10,7 @@ use sbe_bindings::{ClientLoginDecoder, MessageHeaderDecoder, ReadBuf, SbeResult}
 ///
 /// # Returns
 ///
-/// Decoded ClientLoginMessage
+/// Decoded `ClientLoginMessage`
 ///
 /// # Errors
 ///
@@ -18,12 +18,12 @@ use sbe_bindings::{ClientLoginDecoder, MessageHeaderDecoder, ReadBuf, SbeResult}
 ///
 /// # Process
 ///
-/// - Create default ClientLoginDecoder
-/// - Wrap buffer in ReadBuf
+/// - Create default `ClientLoginDecoder`
+/// - Wrap buffer in `ReadBuf`
 /// - Decode header and validate template ID
-/// - Decode message_type and validate
-/// - Decode client_id
-/// - Create and return ClientLoginMessage
+/// - Decode `message_type` and validate
+/// - Decode `client_id`
+/// - Create and return `ClientLoginMessage`
 ///
 pub fn decode_client_login_message(buffer: &[u8]) -> SbeResult<ClientLoginMessage> {
     let mut csg = ClientLoginDecoder::default();

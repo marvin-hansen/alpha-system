@@ -11,8 +11,9 @@ pub struct IntegrationMessageConfig {
 const NAME: &str = "integration";
 
 impl IntegrationMessageConfig {
+    #[must_use]
     pub fn new(id: u16, version: u16, exchange_id: ExchangeID) -> Self {
-        let name = format!("{}-{}-{}", exchange_id, NAME, id);
+        let name = format!("{exchange_id}-{NAME}-{id}");
 
         Self {
             id,
@@ -28,7 +29,8 @@ impl IntegrationMessageConfig {
     /// # Returns
     ///
     /// A u16 representing the client id.
-    pub fn id(&self) -> u16 {
+    #[must_use]
+    pub const fn id(&self) -> u16 {
         self.id
     }
 
@@ -37,6 +39,7 @@ impl IntegrationMessageConfig {
     /// # Returns
     ///
     /// A string slice containing the name of the client.
+    #[must_use]
     pub fn name(&self) -> &str {
         &self.name
     }
@@ -46,16 +49,18 @@ impl IntegrationMessageConfig {
     /// # Returns
     ///
     /// A string slice containing the version of the client.
-    pub fn version(&self) -> &u16 {
+    #[must_use]
+    pub const fn version(&self) -> &u16 {
         &self.version
     }
 
-    /// Returns the ExchangeID of the client.
+    /// Returns the `ExchangeID` of the client.
     ///
     /// # Returns
     ///
-    /// An ExchangeID representing the id of the exchange the client is connected to.
-    pub fn exchange_id(&self) -> ExchangeID {
+    /// An `ExchangeID` representing the id of the exchange the client is connected to.
+    #[must_use]
+    pub const fn exchange_id(&self) -> ExchangeID {
         self.exchange_id
     }
 
@@ -65,6 +70,7 @@ impl IntegrationMessageConfig {
     ///
     /// A String in the format: "{client_name}-control".
     ///
+    #[must_use]
     pub fn control_channel(&self) -> String {
         format!("{}-{}", self.name, "control")
     }
@@ -75,6 +81,7 @@ impl IntegrationMessageConfig {
     ///
     /// A String in the format: "{client_name}-data".
     ///
+    #[must_use]
     pub fn data_channel(&self) -> String {
         format!("{}-{}", self.name, "data")
     }
@@ -84,6 +91,7 @@ impl IntegrationMessageConfig {
     /// # Returns
     ///
     /// A String in the format: "{client_name}-error".
+    #[must_use]
     pub fn error_channel(&self) -> String {
         format!("{}-{}", self.name, "error")
     }
@@ -93,6 +101,7 @@ impl IntegrationMessageConfig {
     /// # Returns
     ///
     /// A String in the format: "{client_name}-execution".
+    #[must_use]
     pub fn execution_channel(&self) -> String {
         format!("{}-{}", self.name, "execution")
     }
@@ -102,6 +111,7 @@ impl IntegrationMessageConfig {
     /// # Returns
     ///
     /// A String in the format: "{client_name}-heartbeat".
+    #[must_use]
     pub fn heartbeat_channel(&self) -> String {
         format!("{}-{}", self.name, "heartbeat")
     }

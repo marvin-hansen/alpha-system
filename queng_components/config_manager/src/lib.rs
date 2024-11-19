@@ -75,19 +75,19 @@ impl CfgManager {
     ///
     /// For a cluster environment, the following environment variables must be set:
     ///  * ENV: CLUSTER
-    ///  * DNS_SERVER: The Cluster's DNS server
-    ///  * PG_USER: The Postgres user for the cluster postgres database
-    ///  * PG_PASSWORD: The Postgres password for the cluster postgres database
-    ///  * PG_DATABASE: The Postgres database for the cluster postgres database
+    ///  * `DNS_SERVER`: The Cluster's DNS server
+    ///  * `PG_USER`: The Postgres user for the cluster postgres database
+    ///  * `PG_PASSWORD`: The Postgres password for the cluster postgres database
+    ///  * `PG_DATABASE`: The Postgres database for the cluster postgres database
     ///
     /// If any of these variables is missing, the constructor will panic with an error
     /// indicating the missing environment variable.
     ///
-    /// It is recommended to set PG_USER, PG_PASSWORD and PG_DATABASE as cluster secrets.
+    /// It is recommended to set `PG_USER`, `PG_PASSWORD` and `PG_DATABASE` as cluster secrets.
     ///
     /// In case `CfgManager` cannot detect a context, it sets the default context to UNKNOWN and
     /// configures all configurations with default values. If you observe unexpected behavior, please
-    /// call the with_debug constructor to enable debug mode to diagnose the issue.
+    /// call the `with_debug` constructor to enable debug mode to diagnose the issue.
     ///
     /// # Arguments
     ///
@@ -119,15 +119,15 @@ impl CfgManager {
     ///
     /// For a cluster environment, the following environment variables must be set:
     ///  * ENV: CLUSTER
-    ///  * DNS_SERVER: The Cluster's DNS server
-    ///  * PG_USER: The Postgres user for the cluster postgres database
-    ///  * PG_PASSWORD: The Postgres password for the cluster postgres database
-    ///  * PG_DATABASE: The Postgres database for the cluster postgres database
+    ///  * `DNS_SERVER`: The Cluster's DNS server
+    ///  * `PG_USER`: The Postgres user for the cluster postgres database
+    ///  * `PG_PASSWORD`: The Postgres password for the cluster postgres database
+    ///  * `PG_DATABASE`: The Postgres database for the cluster postgres database
     ///
     /// If any of these variables is missing, the constructor will panic with an error
     /// indicating the missing environment variable.
     ///
-    /// It is recommended to set PG_USER, PG_PASSWORD and PG_DATABASE as cluster secrets.
+    /// It is recommended to set `PG_USER`, `PG_PASSWORD` and `PG_DATABASE` as cluster secrets.
     ///
     /// # Arguments
     ///
@@ -161,16 +161,17 @@ impl CfgManager {
     ///
     /// For a cluster environment, the following environment variables must be set:
     ///  * ENV: CLUSTER
-    ///  * DNS_SERVER: The Cluster's DNS server
-    ///  * PG_USER: The Postgres user for the cluster postgres database
-    ///  * PG_PASSWORD: The Postgres password for the cluster postgres database
-    ///  * PG_DATABASE: The Postgres database for the cluster postgres database
+    ///  * `DNS_SERVER`: The Cluster's DNS server
+    ///  * `PG_USER`: The Postgres user for the cluster postgres database
+    ///  * `PG_PASSWORD`: The Postgres password for the cluster postgres database
+    ///  * `PG_DATABASE`: The Postgres database for the cluster postgres database
     ///
     /// If any of these variables is missing, the constructor will panic with an error
     /// indicating the missing environment variable.
     ///
-    /// It is recommended to set PG_USER, PG_PASSWORD and PG_DATABASE as cluster secrets.
+    /// It is recommended to set `PG_USER`, `PG_PASSWORD` and `PG_DATABASE` as cluster secrets.
     ///
+    #[must_use]
     pub fn default_with_debug() -> Self {
         Self::build(true, ServiceID::Default, smdb_service_config())
     }
@@ -181,6 +182,7 @@ impl CfgManager {
     ///
     /// Returns the constructed instance.
     ///
+    #[must_use]
     pub fn build(dbg: bool, svc: ServiceID, svc_config: ServiceConfig) -> Self {
         //
         let env_type = Self::detect_env_type(dbg);
@@ -222,17 +224,18 @@ impl CfgManager {
     ///
     /// Detects the environment type based on the value of the "ENV" environment variable.
     ///
-    /// * If the variable is set to "CI", returns EnvironmentType::CI.
-    /// * If set to "CLUSTER", returns EnvironmentType::CLUSTER.
-    /// * If set to "LOCAL", returns EnvironmentType::LOCAL.
-    /// * If set to "UNKNOWN" or any other value, returns EnvironmentType::UNKNOWN.
+    /// * If the variable is set to "CI", returns `EnvironmentType::CI`.
+    /// * If set to "CLUSTER", returns `EnvironmentType::CLUSTER`.
+    /// * If set to "LOCAL", returns `EnvironmentType::LOCAL`.
+    /// * If set to "UNKNOWN" or any other value, returns `EnvironmentType::UNKNOWN`.
     ///
     /// Prints debug messages if the 'dbg' parameter is true.
     ///
     /// Panics if unable to read the "ENV" environment variable.
     ///
-    /// Returns the detected EnvironmentType.
+    /// Returns the detected `EnvironmentType`.
     ///
+    #[must_use]
     pub fn detect_env_type(dbg: bool) -> EnvironmentType {
         let config_manager = if dbg {
             println!("[CfgManager]: Debug mode enabled");
@@ -248,7 +251,7 @@ impl CfgManager {
 impl CfgManager {
     pub fn dbg_print(&self, msg: &str) {
         if self.dbg {
-            println!("[CfgManager]: {}", msg);
+            println!("[CfgManager]: {msg}");
         }
     }
 }

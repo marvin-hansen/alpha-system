@@ -72,7 +72,7 @@ async fn test_stream_trades() {
     let mut stream = manager.stream_trades(trade_table).await;
 
     while let Some(Ok(record)) = stream.next().await {
-        println!("Got {:?}", record);
+        println!("Got {record:?}");
     }
 }
 

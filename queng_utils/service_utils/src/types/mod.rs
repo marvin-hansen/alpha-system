@@ -1,1 +1,1 @@
-pub(crate) mod architecture;
+pub mod architecture;

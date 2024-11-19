@@ -4,8 +4,9 @@ use crate::model::endpoint_type::Endpoint;
 use common_config::{ServiceConfig as CommonServiceConfig, ServiceID};
 
 impl Service {
-    pub fn from_common_svc_config(common_svc_config: &CommonServiceConfig) -> Service {
-        Service {
+    #[must_use]
+    pub fn from_common_svc_config(common_svc_config: &CommonServiceConfig) -> Self {
+        Self {
             service_id: common_svc_config.svc_id().as_i32(),
             name: common_svc_config.name().to_string(),
             version: common_svc_config.version() as i32,
@@ -26,6 +27,7 @@ impl Service {
         }
     }
 
+    #[must_use]
     pub fn to_common_svc_config(&self) -> CommonServiceConfig {
         CommonServiceConfig::new(
             ServiceID::from(self.service_id),
@@ -43,7 +45,7 @@ impl Service {
             self.endpoints
                 .iter()
                 .flatten()
-                .map(|endpoint| endpoint.to_common_endpoint())
+                .map(super::super::endpoint_type::Endpoint::to_common_endpoint)
                 .collect(),
         )
     }

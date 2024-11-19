@@ -54,7 +54,7 @@ impl ConfigImportManager {
 
                 // If the portfolio doesn't exist, import it
                 if !exists {
-                    self.dbg_print(&format!("Importing portfolio: {}", id));
+                    self.dbg_print(&format!("Importing portfolio: {id}"));
                     self.dbm
                         .insert_portfolio_config(p)
                         .await

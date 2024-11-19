@@ -10,10 +10,10 @@ impl PostgresMDDBManager {
     ///     exchange (MetaExchange): A `MetaExchange` object representing the exchange to be inserted.
     ///
     /// Returns:
-    ///     Result<MetaExchange, PostgresDBError>: The inserted `MetaExchange` on success.
+    ///     Result<`MetaExchange`, PostgresDBError>: The inserted `MetaExchange` on success.
     ///
     /// Raises:
-    ///     PostgresDBError: If the insertion fails due to database errors.
+    ///     `PostgresDBError`: If the insertion fails due to database errors.
     ///
     pub async fn insert_exchange(
         &self,
@@ -31,13 +31,13 @@ impl PostgresMDDBManager {
     /// Inserts a collection of exchanges into the database.
     ///
     /// Args:
-    ///     exchanges (&[MetaExchange]): A slice of `MetaExchange` objects representing the exchanges to be inserted.
+    ///     exchanges (&[`MetaExchange`]): A slice of `MetaExchange` objects representing the exchanges to be inserted.
     ///
     /// Returns:
     ///     Result<usize, PostgresDBError>: The number of inserted exchanges on success.
     ///
     /// Raises:
-    ///     PostgresDBError: If the insertion fails due to database errors.
+    ///     `PostgresDBError`: If the insertion fails due to database errors.
     ///
     pub async fn insert_exchange_collection(
         &self,
@@ -58,7 +58,7 @@ impl PostgresMDDBManager {
     ///     Result<u64, PostgresDBError>: The count of exchanges on success.
     ///
     /// Raises:
-    ///     PostgresDBError: If the count operation fails due to database errors.
+    ///     `PostgresDBError`: If the count operation fails due to database errors.
     ///
     pub async fn count_exchanges(&self) -> Result<u64, PostgresDBError> {
         self.dbg_print("count_exchanges");
@@ -73,13 +73,13 @@ impl PostgresMDDBManager {
     /// Checks if an exchange with the specified ID exists in the database.
     ///
     /// Args:
-    ///     exchange_id_str (String): A `String` representing the ID of the exchange to check.
+    ///     `exchange_id_str` (String): A `String` representing the ID of the exchange to check.
     ///
     /// Returns:
     ///     Result<bool, PostgresDBError>: `true` if the exchange exists, `false` otherwise.
     ///
     /// Raises:
-    ///     PostgresDBError: If the check operation fails due to database errors.
+    ///     `PostgresDBError`: If the check operation fails due to database errors.
     ///
     pub async fn check_if_exchange_id_exists(
         &self,
@@ -97,13 +97,13 @@ impl PostgresMDDBManager {
     /// Reads an exchange from the database by its ID.
     ///
     /// Args:
-    ///     exchange_id_str (String): A `String` representing the ID of the exchange to read.
+    ///     `exchange_id_str` (String): A `String` representing the ID of the exchange to read.
     ///
     /// Returns:
-    ///     Result<MetaExchange, PostgresDBError>: The `MetaExchange` object on success.
+    ///     Result<`MetaExchange`, PostgresDBError>: The `MetaExchange` object on success.
     ///
     /// Raises:
-    ///     PostgresDBError: If the read operation fails due to database errors.
+    ///     `PostgresDBError`: If the read operation fails due to database errors.
     ///
     pub async fn read_exchange(
         &self,
@@ -126,7 +126,7 @@ impl PostgresMDDBManager {
     /// A vector of `MetaExchange` objects on success.
     ///
     /// Raises:
-    ///     PostgresDBError: If the read operation fails due to database errors.
+    ///     `PostgresDBError`: If the read operation fails due to database errors.
     ///
     pub async fn read_all_exchanges(&self) -> Result<Vec<MetaExchange>, PostgresDBError> {
         self.dbg_print("read_all_exchanges");
@@ -141,14 +141,14 @@ impl PostgresMDDBManager {
     /// Updates an existing exchange in the database.
     ///
     /// Args:
-    ///     exchange_id_str (String): A `String` representing the ID of the exchange to update.
+    ///     `exchange_id_str` (String): A `String` representing the ID of the exchange to update.
     ///     exchange (MetaExchange): A `MetaExchange` object containing the updated exchange data.
     ///
     /// Returns:
     ///     Result<usize, PostgresDBError>: The number of updated exchanges on success.
     ///
     /// Raises:
-    ///     PostgresDBError: If the update operation fails due to database errors.
+    ///     `PostgresDBError`: If the update operation fails due to database errors.
     ///
     pub async fn update_exchange(
         &self,
@@ -167,13 +167,13 @@ impl PostgresMDDBManager {
     /// Deletes an exchange from the database by its ID.
     ///
     /// Args:
-    ///     exchange_id_str (String): A `String` representing the ID of the exchange to delete.
+    ///     `exchange_id_str` (String): A `String` representing the ID of the exchange to delete.
     ///
     /// Returns:
     ///     Result<usize, PostgresDBError>: The number of deleted exchanges on success.
     ///
     /// Raises:
-    ///     PostgresDBError: If the delete operation fails due to database errors.
+    ///     `PostgresDBError`: If the delete operation fails due to database errors.
     ///
     pub async fn delete_exchange(&self, exchange_id_str: String) -> Result<usize, PostgresDBError> {
         self.dbg_print("delete_exchange");

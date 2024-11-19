@@ -15,7 +15,7 @@ pub enum ExchangeID {
 impl From<ExchangeID> for i32 {
     #[inline]
     fn from(val: ExchangeID) -> Self {
-        val as i32
+        val as Self
     }
 }
 
@@ -23,7 +23,7 @@ impl From<ExchangeID> for i32 {
 impl From<ExchangeID> for u32 {
     #[inline]
     fn from(val: ExchangeID) -> Self {
-        val as u32
+        val as Self
     }
 }
 
@@ -31,7 +31,7 @@ impl From<ExchangeID> for u32 {
 impl From<ExchangeID> for u8 {
     #[inline]
     fn from(val: ExchangeID) -> Self {
-        val as u8
+        val as Self
     }
 }
 
@@ -97,6 +97,6 @@ impl From<i32> for ExchangeID {
 
 impl Display for ExchangeID {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        write!(f, "{self:?}")
     }
 }

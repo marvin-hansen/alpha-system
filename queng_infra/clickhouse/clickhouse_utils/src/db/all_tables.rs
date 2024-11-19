@@ -2,9 +2,9 @@ use crate::ClickhouseUtil;
 use std::error::Error;
 
 impl ClickhouseUtil {
-    /// Asynchronously sets up all tables in the ClickHouse database.
+    /// Asynchronously sets up all tables in the `ClickHouse` database.
     ///
-    /// This method triggers the setup process for all tables in the ClickHouse database.
+    /// This method triggers the setup process for all tables in the `ClickHouse` database.
     /// Each table's setup is performed asynchronously.
     ///
     /// # Returns
@@ -27,9 +27,9 @@ impl ClickhouseUtil {
         Ok(())
     }
 
-    /// Asynchronously tears down all tables in the ClickHouse database.
+    /// Asynchronously tears down all tables in the `ClickHouse` database.
     ///
-    /// This method triggers the teardown process for all tables in the ClickHouse database.
+    /// This method triggers the teardown process for all tables in the `ClickHouse` database.
     /// Each table's teardown is performed asynchronously.
     ///
     /// # Returns

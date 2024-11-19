@@ -14,9 +14,9 @@ use std::net::SocketAddr;
 ///
 /// # Returns
 ///
-/// A TokioAsyncResolver configured with Cloudflare resolver settings.
+/// A `TokioAsyncResolver` configured with Cloudflare resolver settings.
 ///
-pub(super) fn build_external_dns_resolver(dbg: bool) -> TokioAsyncResolver {
+pub fn build_external_dns_resolver(dbg: bool) -> TokioAsyncResolver {
     if dbg {
         println!("[CfgManager]: build_external_dns_resolver");
     }
@@ -37,14 +37,14 @@ pub(super) fn build_external_dns_resolver(dbg: bool) -> TokioAsyncResolver {
 ///
 /// A `TokioAsyncResolver` configured with the specified address and default resolver options.
 ///
-pub(super) fn build_internal_dns_resolver(dbg: bool, address: &str) -> TokioAsyncResolver {
+pub fn build_internal_dns_resolver(dbg: bool, address: &str) -> TokioAsyncResolver {
     if dbg {
         println!("[CfgManager]: build_internal_dns_resolver");
     }
 
     let socket_addr: SocketAddr = match address.parse() {
         Ok(addr) => addr,
-        Err(e) => panic!("Failed to parse DNS SERVER address: {}", e),
+        Err(e) => panic!("Failed to parse DNS SERVER address: {e}"),
     };
 
     let name_server = NameServerConfig::new(socket_addr, Protocol::Udp);
@@ -68,7 +68,7 @@ pub(super) fn build_internal_dns_resolver(dbg: bool, address: &str) -> TokioAsyn
 ///
 /// A string representing the internal DNS server address.
 ///
-pub(super) fn get_internal_dns_server(dbg: bool, env_type: &EnvironmentType) -> String {
+pub fn get_internal_dns_server(dbg: bool, env_type: &EnvironmentType) -> String {
     if dbg {
         println!("[CfgManager]: get_internal_dns_server");
     }
@@ -100,7 +100,7 @@ pub(super) fn get_internal_dns_server(dbg: bool, env_type: &EnvironmentType) -> 
 ///
 /// Panics if there is an error while retrieving the environment variable, providing a descriptive error message.
 ///
-pub(super) fn get_value_from_env(key: &str) -> String {
+pub fn get_value_from_env(key: &str) -> String {
     match std::env::var(key) {
         Ok(cluster_dns_server) => cluster_dns_server,
         Err(e) => {
@@ -126,7 +126,7 @@ pub(super) fn get_value_from_env(key: &str) -> String {
 ///
 /// A `SvcEnvConfig` object containing the service environment configuration.
 ///
-pub(crate) fn get_svc_env_config(
+pub fn get_svc_env_config(
     dbg: bool,
     service_id: ServiceID,
     service_config: &ServiceConfig,

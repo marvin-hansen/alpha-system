@@ -9,7 +9,7 @@ impl InitManager {
     /// Asynchronously initializes level 3 instruments by downloading and processing instrument data.
     ///
     /// # Returns
-    /// Returns a vector of MetaInstrument structs on success, or an InitError on failure.
+    /// Returns a vector of `MetaInstrument` structs on success, or an `InitError` on failure.
     ///
     /// This method prints debug messages based on the use of a proxy and debug mode.
     ///
@@ -30,7 +30,7 @@ impl InitManager {
                     "Level 3: Returning {} downloaded Instruments",
                     downloaded_instruments.len()
                 );
-                self.dbg_print(&msg)
+                self.dbg_print(&msg);
             }
             return Ok(downloaded_instruments);
         }
@@ -46,7 +46,7 @@ impl InitManager {
                 "Level 3: Returning {} valid Instruments",
                 processed_instruments.len()
             );
-            self.dbg_print(&msg)
+            self.dbg_print(&msg);
         }
 
         // Free memory.
@@ -64,11 +64,11 @@ impl InitManager {
         let capacity = downloaded_instruments.len() * 0.10 as usize;
         let mut processed_instruments = Vec::with_capacity(capacity);
 
-        for i in downloaded_instruments.iter() {
+        for i in downloaded_instruments {
             if is_valid_instrument(i, valid_exchanges) {
                 //  if not, add instrument to the list
                 if !requires_patching(i) {
-                    processed_instruments.push(i.to_owned())
+                    processed_instruments.push(i.to_owned());
                 } else {
                     // if it does need patching, swap out the original instrument with the patched one
                     let patched_instrument = self.patch_instruments(i.to_owned());

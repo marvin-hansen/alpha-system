@@ -1,6 +1,7 @@
 use common_database::PostgresDBConfig;
 use common_env::EnvironmentType;
 
+#[must_use]
 pub fn get_postgres_config(env_type: &EnvironmentType) -> PostgresDBConfig {
     match env_type {
         EnvironmentType::LOCAL => get_base_postgres_db_config(),
@@ -9,6 +10,7 @@ pub fn get_postgres_config(env_type: &EnvironmentType) -> PostgresDBConfig {
     }
 }
 
+#[must_use]
 pub fn get_cluster_db_host() -> String {
     // Note, there are three services: postgres-cluster-rw,postgres-cluster-r, and postgres-cluster-ro
     // Select the postgres-cluster-rw service if you want to write to the database. The others are read and read-only.
@@ -16,7 +18,8 @@ pub fn get_cluster_db_host() -> String {
     "postgres-rw.default.svc.cluster.local".to_string()
 }
 
-pub fn get_cluster_db_config(
+#[must_use]
+pub const fn get_cluster_db_config(
     pg_user: String,
     pg_password: String,
     pg_database: String,

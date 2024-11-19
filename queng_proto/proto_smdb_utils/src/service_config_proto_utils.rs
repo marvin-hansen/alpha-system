@@ -20,7 +20,10 @@ pub fn service_config_from_proto(proto: ProtoServiceConfig) -> Result<ServiceCon
     let svc_id = ServiceID::from(proto_svc_id);
 
     let proto_dependencies = proto.dependencies;
-    let dependencies: Vec<ServiceID> = proto_dependencies.into_iter().map(|x| x.into()).collect();
+    let dependencies: Vec<ServiceID> = proto_dependencies
+        .into_iter()
+        .map(std::convert::Into::into)
+        .collect();
 
     let endpoint =
         endpoint_from_proto(proto.endpoint).expect("Failed to create endpoint from proto");

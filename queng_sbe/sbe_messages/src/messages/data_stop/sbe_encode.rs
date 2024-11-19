@@ -4,11 +4,11 @@ use sbe_bindings::{message_header_codec, Encoder, StopDataMsgEncoder, WriteBuf};
 use crate::{SbeEncodeError, StopDataMessage};
 
 impl StopDataMessage {
-    /// Encodes a StopDataMessage to a byte buffer.
+    /// Encodes a `StopDataMessage` to a byte buffer.
     ///
     /// # Arguments
     ///
-    /// * `self` - StopDataMessage to encode
+    /// * `self` - `StopDataMessage` to encode
     ///
     /// # Returns
     ///
@@ -21,14 +21,14 @@ impl StopDataMessage {
     /// # Process
     ///
     /// - Create 16 byte buffer
-    /// - Create default StopDataMsgEncoder
-    /// - Wrap buffer in WriteBuf
+    /// - Create default `StopDataMsgEncoder`
+    /// - Wrap buffer in `WriteBuf`
     /// - Encode header
-    /// - Encode message_type
-    /// - Encode client_id
-    /// - Encode exchange_id
-    /// - Encode symbol_id
-    /// - Encode data_type_id
+    /// - Encode `message_type`
+    /// - Encode `client_id`
+    /// - Encode `exchange_id`
+    /// - Encode `symbol_id`
+    /// - Encode `data_type_id`
     /// - Return encoded size and buffer
     ///
     pub fn encode(&self) -> Result<(usize, Vec<u8>), SbeEncodeError> {

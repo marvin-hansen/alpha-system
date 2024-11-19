@@ -20,7 +20,7 @@ impl InitManager {
 
         if self.dbg {
             let msg = format!("Level 2: Returning {} assets", downloaded_assets.len());
-            self.dbg_print(&msg)
+            self.dbg_print(&msg);
         }
 
         Ok(downloaded_assets)

@@ -1,6 +1,6 @@
 use std::fmt::{Display, Formatter};
 
-/// An ImsIntegrationType represents the type of integration to Interactive
+/// An `ImsIntegrationType` represents the type of integration to Interactive
 /// Brokers.
 ///
 /// # Variants
@@ -21,7 +21,7 @@ pub enum ImsIntegrationType {
 impl From<ImsIntegrationType> for u8 {
     #[inline]
     fn from(value: ImsIntegrationType) -> Self {
-        value as u8
+        value as Self
     }
 }
 
@@ -29,7 +29,7 @@ impl From<ImsIntegrationType> for u8 {
 impl From<ImsIntegrationType> for u32 {
     #[inline]
     fn from(value: ImsIntegrationType) -> Self {
-        value as u32
+        value as Self
     }
 }
 
@@ -38,10 +38,10 @@ impl From<u8> for ImsIntegrationType {
     #[inline]
     fn from(value: u8) -> Self {
         match value {
-            0 => ImsIntegrationType::Data,
-            1 => ImsIntegrationType::Execution,
-            2 => ImsIntegrationType::OMS,
-            _ => panic!("Invalid ImsIntegrationType value: {}", value),
+            0 => Self::Data,
+            1 => Self::Execution,
+            2 => Self::OMS,
+            _ => panic!("Invalid ImsIntegrationType value: {value}"),
         }
     }
 }
@@ -51,10 +51,10 @@ impl From<u16> for ImsIntegrationType {
     #[inline]
     fn from(value: u16) -> Self {
         match value {
-            0 => ImsIntegrationType::Data,
-            1 => ImsIntegrationType::Execution,
-            2 => ImsIntegrationType::OMS,
-            _ => panic!("Invalid ImsIntegrationType value: {}", value),
+            0 => Self::Data,
+            1 => Self::Execution,
+            2 => Self::OMS,
+            _ => panic!("Invalid ImsIntegrationType value: {value}"),
         }
     }
 }
@@ -64,10 +64,10 @@ impl From<u32> for ImsIntegrationType {
     #[inline]
     fn from(value: u32) -> Self {
         match value {
-            0 => ImsIntegrationType::Data,
-            1 => ImsIntegrationType::Execution,
-            2 => ImsIntegrationType::OMS,
-            _ => panic!("Invalid ImsIntegrationType value: {}", value),
+            0 => Self::Data,
+            1 => Self::Execution,
+            2 => Self::OMS,
+            _ => panic!("Invalid ImsIntegrationType value: {value}"),
         }
     }
 }

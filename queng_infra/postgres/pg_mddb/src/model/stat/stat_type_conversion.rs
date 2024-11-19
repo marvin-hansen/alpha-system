@@ -14,6 +14,7 @@ impl Stat {
     /// - When retrieving meta data set from database the `PostgresStat` is converted to `Stats`
     ///   and returned to the user.
     ///
+    #[must_use]
     pub fn from_meta_stats(meta_stats: MetaStats) -> Self {
         Self {
             stats_id: 0, // Assuming stats_id is auto-generated
@@ -26,7 +27,7 @@ impl Stat {
     }
     /// Converts `PostgresStat` to `Stats`
     ///
-    /// This method takes `PostgresStat` and returns `Stats` from common_metadata crate.
+    /// This method takes `PostgresStat` and returns `Stats` from `common_metadata` crate.
     ///
     /// It is used in the following workflows:
     ///
@@ -35,6 +36,7 @@ impl Stat {
     /// - When retrieving meta data set from database the `PostgresStat` is converted to `Stats`
     ///   and returned to the user.
     ///
+    #[must_use]
     pub fn to_meta_stats(&self) -> MetaStats {
         MetaStats::new(
             self.stats_download_timestamp.clone(),
@@ -47,6 +49,7 @@ impl Stat {
 }
 
 impl CreateStat {
+    #[must_use]
     pub fn from_meta_stats(meta_stats: MetaStats) -> Self {
         Self {
             stats_id: 0, // Assuming stats_id is auto-generated

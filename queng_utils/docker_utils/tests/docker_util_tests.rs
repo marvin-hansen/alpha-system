@@ -49,7 +49,7 @@ async fn test_pull(
     println!("test_pull");
     let image = container_config.image();
     let tag = container_config.tag();
-    let image = &format!("{}:{}", image, tag);
+    let image = &format!("{image}:{tag}");
     let platform = container_config.platform();
 
     let res = docker_util.pull_container_image(container_id, image, platform);

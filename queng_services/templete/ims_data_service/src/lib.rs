@@ -15,10 +15,10 @@ pub async fn start(
     cfg_manager: CfgManager,
     exchange_id: ExchangeID,
 ) -> Result<(), Box<dyn std::error::Error>> {
-    let svc_name = &format!("IMS {} Data Service", exchange_id);
+    let svc_name = &format!("IMS {exchange_id} Data Service");
     let dbg_print = |msg: &str| {
         if dbg {
-            println!("[{}]: {}", svc_name, msg)
+            println!("[{svc_name}]: {msg}");
         }
     };
     let start = Instant::now();
@@ -40,9 +40,10 @@ pub async fn start(
             .await
             .expect(" Failed to check if service dependency exists");
 
-        if !available {
-            panic!("Service dependency {:?} is unavailable; please start it", d);
-        }
+        assert!(
+            available,
+            "Service dependency {d:?} is unavailable; please start it"
+        );
     }
 
     dbg_print("Configure service ip and port automatically relative to the detected context");
@@ -70,10 +71,7 @@ pub async fn start(
     match tokio::try_join!(service_handle) {
         Ok(_) => {}
         Err(e) => {
-            println!(
-                "[{svc_name}]/main: Failed to start Message service: {:?}",
-                e
-            );
+            println!("[{svc_name}]/main: Failed to start Message service: {e:?}");
         }
     }
     //

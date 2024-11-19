@@ -12,10 +12,12 @@ pub struct PostgresConfigManager {
 }
 
 impl PostgresConfigManager {
+    #[must_use]
     pub fn new(env_type: &EnvironmentType) -> Self {
         Self::build(false, env_type)
     }
 
+    #[must_use]
     pub fn with_debug(env_type: &EnvironmentType) -> Self {
         Self::build(true, env_type)
     }
@@ -50,7 +52,7 @@ fn build_postgres_config(dbg: bool, env_type: &EnvironmentType) -> PostgresDBCon
 impl PostgresConfigManager {
     pub fn dbg_print(&self, msg: &str) {
         if self.dbg {
-            println!("[PostgresConfigManager]: {}", msg);
+            println!("[PostgresConfigManager]: {msg}");
         }
     }
 }

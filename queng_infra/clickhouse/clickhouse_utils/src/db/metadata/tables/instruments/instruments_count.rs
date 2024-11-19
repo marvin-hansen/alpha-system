@@ -10,7 +10,7 @@ impl Metadata {
     /// # Returns
     ///
     pub async fn count_instruments(&self) -> Result<u64, ClickHouseUtilError> {
-        let table_name = &format!("{}.{}", DB_NAME, INSTRUMENTS_TABLE);
+        let table_name = &format!("{DB_NAME}.{INSTRUMENTS_TABLE}");
 
         match self.count_rows(table_name).await {
             Ok(count) => Ok(count),

@@ -26,7 +26,8 @@ impl ImsTcpTlsConfig {
     ///
     /// A `TcpTlsConfig` instance.
     ///
-    pub fn new(
+    #[must_use]
+    pub const fn new(
         tcp_server_address: String,
         tcp_tls_enabled: bool,
         tcp_tls_domain: String,
@@ -42,19 +43,23 @@ impl ImsTcpTlsConfig {
 }
 
 impl ImsTcpTlsConfig {
+    #[must_use]
     pub fn tcp_server_address(&self) -> &str {
         &self.tcp_server_address
     }
 
-    pub fn tcp_tls_enabled(&self) -> bool {
+    #[must_use]
+    pub const fn tcp_tls_enabled(&self) -> bool {
         self.tcp_tls_enabled
     }
 
+    #[must_use]
     pub fn tcp_tls_domain(&self) -> &str {
         &self.tcp_tls_domain
     }
 
-    pub fn tcp_tls_ca_file(&self) -> &Option<String> {
+    #[must_use]
+    pub const fn tcp_tls_ca_file(&self) -> &Option<String> {
         &self.tcp_tls_ca_file
     }
 }

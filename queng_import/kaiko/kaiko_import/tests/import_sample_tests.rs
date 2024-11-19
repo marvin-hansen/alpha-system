@@ -57,7 +57,7 @@ async fn test_sample_import() {
     assert_eq!(count, 1);
 }
 
-fn get_import_sample_op() -> MetaDataDBWOp {
+const fn get_import_sample_op() -> MetaDataDBWOp {
     let assets_sample_size = 1;
     let exchanges_sample_size = 1;
     let instruments_sample_size = 1;

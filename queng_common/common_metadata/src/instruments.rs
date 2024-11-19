@@ -1,14 +1,14 @@
 use serde::{Deserialize, Serialize};
 use std::fmt::Display;
 
-#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Default, Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct MetaInstrumentsRoot {
     pub result: String,
     pub data: Vec<MetaInstrument>,
 }
 
-#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Default, Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct MetaInstrument {
     #[serde(rename = "kaiko_legacy_exchange_slug")]
@@ -42,11 +42,12 @@ pub struct MetaInstrument {
 
 impl Display for MetaInstrument {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "MetaInstrument: {:?}", self)
+        write!(f, "MetaInstrument: {self:?}")
     }
 }
 
 impl MetaInstrument {
+    #[must_use]
     pub fn exchange_code(&self) -> &str {
         &self.exchange_code
     }
@@ -54,6 +55,7 @@ impl MetaInstrument {
 
 impl MetaInstrument {
     // This is necessary because names are not unique across asset classes even on the same exchange.
+    #[must_use]
     pub fn primary_key(&self) -> String {
         format!(
             "{}_{}_{}_{}",
@@ -64,6 +66,7 @@ impl MetaInstrument {
         )
     }
 
+    #[must_use]
     pub fn hash(&self) -> String {
         let binding = format!(
             "{}{}{}{}{}{}{:?}{:?}",
@@ -88,7 +91,7 @@ impl MetaInstrument {
     }
 }
 
-#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Default, Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct InstrumentMetadata {
     #[serde(rename = "pair_figi")]
@@ -99,6 +102,6 @@ pub struct InstrumentMetadata {
 
 impl Display for InstrumentMetadata {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "InstrumentMetadata: {:?}", self)
+        write!(f, "InstrumentMetadata: {self:?}")
     }
 }

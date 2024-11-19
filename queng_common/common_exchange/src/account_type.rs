@@ -11,11 +11,13 @@ pub enum AccountType {
 }
 
 impl AccountType {
-    pub fn as_u8(&self) -> u8 {
+    #[must_use]
+    pub const fn as_u8(&self) -> u8 {
         *self as u8
     }
 
-    pub fn as_i32(&self) -> i32 {
+    #[must_use]
+    pub const fn as_i32(&self) -> i32 {
         *self as i32
     }
 }
@@ -82,10 +84,10 @@ impl From<&str> for AccountType {
 impl Display for AccountType {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
-            AccountType::Spot => write!(f, "Spot"),
-            AccountType::Margin => write!(f, "Margin"),
-            AccountType::Future => write!(f, "Future"),
-            AccountType::NullVal => write!(f, "NullVal"),
+            Self::Spot => write!(f, "Spot"),
+            Self::Margin => write!(f, "Margin"),
+            Self::Future => write!(f, "Future"),
+            Self::NullVal => write!(f, "NullVal"),
         }
     }
 }

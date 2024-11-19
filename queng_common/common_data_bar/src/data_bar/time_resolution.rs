@@ -22,16 +22,16 @@ impl FromStr for TimeResolution {
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s {
-            "NoValue" => Ok(TimeResolution::NoValue),
-            "OneMin" => Ok(TimeResolution::OneMin),
-            "FiveMin" => Ok(TimeResolution::FiveMin),
-            "FifteenMin" => Ok(TimeResolution::FifteenMin),
-            "ThirtyMin" => Ok(TimeResolution::ThirtyMin),
-            "OneHour" => Ok(TimeResolution::OneHour),
-            "OneDay" => Ok(TimeResolution::OneDay),
-            "OneWeek" => Ok(TimeResolution::OneWeek),
-            "OneMonth" => Ok(TimeResolution::OneMonth),
-            "OneYear" => Ok(TimeResolution::OneYear),
+            "NoValue" => Ok(Self::NoValue),
+            "OneMin" => Ok(Self::OneMin),
+            "FiveMin" => Ok(Self::FiveMin),
+            "FifteenMin" => Ok(Self::FifteenMin),
+            "ThirtyMin" => Ok(Self::ThirtyMin),
+            "OneHour" => Ok(Self::OneHour),
+            "OneDay" => Ok(Self::OneDay),
+            "OneWeek" => Ok(Self::OneWeek),
+            "OneMonth" => Ok(Self::OneMonth),
+            "OneYear" => Ok(Self::OneYear),
             _ => Err(()),
         }
     }
@@ -59,16 +59,16 @@ impl From<u8> for TimeResolution {
 impl fmt::Display for TimeResolution {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            TimeResolution::NoValue => write!(f, "NoValue"),
-            TimeResolution::OneMin => write!(f, "1 minute"),
-            TimeResolution::FiveMin => write!(f, "5 minute"),
-            TimeResolution::FifteenMin => write!(f, "15 minute"),
-            TimeResolution::ThirtyMin => write!(f, "30 minute"),
-            TimeResolution::OneHour => write!(f, "1 hour"),
-            TimeResolution::OneDay => write!(f, "1 day"),
-            TimeResolution::OneWeek => write!(f, "1 week"),
-            TimeResolution::OneMonth => write!(f, "1 month"),
-            TimeResolution::OneYear => write!(f, "1 year"),
+            Self::NoValue => write!(f, "NoValue"),
+            Self::OneMin => write!(f, "1 minute"),
+            Self::FiveMin => write!(f, "5 minute"),
+            Self::FifteenMin => write!(f, "15 minute"),
+            Self::ThirtyMin => write!(f, "30 minute"),
+            Self::OneHour => write!(f, "1 hour"),
+            Self::OneDay => write!(f, "1 day"),
+            Self::OneWeek => write!(f, "1 week"),
+            Self::OneMonth => write!(f, "1 month"),
+            Self::OneYear => write!(f, "1 year"),
         }
     }
 }

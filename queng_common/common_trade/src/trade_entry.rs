@@ -10,8 +10,8 @@ pub enum TradeEntryType {
 impl Display for TradeEntryType {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
-            TradeEntryType::CurrentBar => write!(f, "CurrentBar"),
-            TradeEntryType::NextBar => write!(f, "NextBar"),
+            Self::CurrentBar => write!(f, "CurrentBar"),
+            Self::NextBar => write!(f, "NextBar"),
         }
     }
 }

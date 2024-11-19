@@ -18,6 +18,7 @@ use shared_service_specs::{health_endpoint, ims_endpoint, metric_endpoint};
 ///
 /// # Returns
 /// A `ServiceConfig` instance with all the necessary settings for the CMDB service.
+#[must_use]
 pub fn vex_service_config() -> ServiceConfig {
     let id = ServiceID::VEX;
     let name = "vexv1".to_string();

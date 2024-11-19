@@ -4,11 +4,11 @@ use sbe_bindings::MessageType as SbeMessageType;
 use sbe_bindings::{message_header_codec, ClientLoginEncoder, Encoder, WriteBuf};
 
 impl ClientLoginMessage {
-    /// Encodes a ClientLoginMessage to a byte buffer.
+    /// Encodes a `ClientLoginMessage` to a byte buffer.
     ///
     /// # Arguments
     ///
-    /// * `self` - ClientLoginMessage to encode
+    /// * `self` - `ClientLoginMessage` to encode
     ///
     /// # Returns
     ///
@@ -21,11 +21,11 @@ impl ClientLoginMessage {
     /// # Process
     ///
     /// - Create a 12 byte buffer
-    /// - Create default ClientLoginEncoder
-    /// - Wrap buffer in WriteBuf
+    /// - Create default `ClientLoginEncoder`
+    /// - Wrap buffer in `WriteBuf`
     /// - Encode header
-    /// - Encode message_type
-    /// - Encode client_id
+    /// - Encode `message_type`
+    /// - Encode `client_id`
     /// - Return encoded size and buffer
     ///
     pub fn encode(&self) -> Result<(usize, Vec<u8>), SbeEncodeError> {

@@ -80,7 +80,7 @@ impl RestClient {
         let mut url: String = format!("{}{}", self.host, endpoint);
         if let Some(request) = request {
             if !request.is_empty() {
-                url.push_str(format!("?{}", request).as_str());
+                url.push_str(format!("?{request}").as_str());
             }
         }
 
@@ -92,7 +92,7 @@ impl RestClient {
 
     pub async fn post<T: DeserializeOwned>(&self, endpoint: &str) -> Result<T> {
         let url: String = format!("{}{}", self.host, endpoint);
-        let headers = self.header_map.to_owned();
+        let headers = self.header_map.clone();
 
         let client = &self.inner_client;
         let response = client

@@ -8,7 +8,7 @@ pub mod smdb {
     }
 
     diesel::table! {
-        use diesel::sql_types::*;
+        use diesel::sql_types::{Array, Bool, Int4, Nullable, Text};
         use super::sql_types::ServiceEndpoint;
 
         smdb.service (service_id) {

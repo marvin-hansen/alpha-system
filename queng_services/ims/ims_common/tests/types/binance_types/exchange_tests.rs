@@ -15,5 +15,5 @@ fn test_exchange_info_struct() {
 
     assert_eq!(exchange_info.timezone, "UTC");
     assert_eq!(exchange_info.server_time, 9000);
-    assert_eq!(exchange_info.symbols, vec![symbol.clone()]);
+    assert_eq!(exchange_info.symbols, vec![symbol]);
 }

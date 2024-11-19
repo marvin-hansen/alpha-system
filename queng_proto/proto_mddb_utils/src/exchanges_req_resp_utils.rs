@@ -6,26 +6,31 @@ use proto_mddb::proto::{
 };
 
 // Request
-pub fn get_count_exchanges_request() -> CountExchangesRequest {
+#[must_use]
+pub const fn get_count_exchanges_request() -> CountExchangesRequest {
     CountExchangesRequest {}
 }
 
+#[must_use]
 pub fn get_check_if_exchange_exists_request(exchange_code: &str) -> CheckIfExchangeIdExistsRequest {
     CheckIfExchangeIdExistsRequest {
         exchange_code: exchange_code.to_string(),
     }
 }
 
+#[must_use]
 pub fn get_exchange_request(exchange_code: &str) -> GetExchangeRequest {
     GetExchangeRequest {
         exchange_code: exchange_code.to_string(),
     }
 }
 
-pub fn get_all_exchanges_request() -> GetAllExchangesRequest {
+#[must_use]
+pub const fn get_all_exchanges_request() -> GetAllExchangesRequest {
     GetAllExchangesRequest {}
 }
 
+#[must_use]
 pub fn get_lookup_exchange_name_request(exchange_code: &str) -> LookupExchangeNameRequest {
     LookupExchangeNameRequest {
         exchange_code: exchange_code.to_string(),
@@ -34,14 +39,19 @@ pub fn get_lookup_exchange_name_request(exchange_code: &str) -> LookupExchangeNa
 
 // Response
 
-pub fn get_count_exchanges_response(count: u64) -> CountExchangesResponse {
+#[must_use]
+pub const fn get_count_exchanges_response(count: u64) -> CountExchangesResponse {
     CountExchangesResponse { count }
 }
 
-pub fn get_check_if_exchange_exists_response(exists: bool) -> CheckIfExchangeIdExistsResponse {
+#[must_use]
+pub const fn get_check_if_exchange_exists_response(
+    exists: bool,
+) -> CheckIfExchangeIdExistsResponse {
     CheckIfExchangeIdExistsResponse { exists }
 }
 
+#[must_use]
 pub fn get_exchange_response(
     meta_exchange: Option<MetaExchange>,
 ) -> proto_mddb::proto::GetExchangeResponse {
@@ -54,6 +64,7 @@ pub fn get_exchange_response(
     }
 }
 
+#[must_use]
 pub fn get_all_exchanges_response(
     meta_exchanges: Vec<MetaExchange>,
 ) -> proto_mddb::proto::GetAllExchangesResponse {
@@ -67,12 +78,13 @@ pub fn get_all_exchanges_response(
     }
 }
 
+#[must_use]
 pub fn get_lookup_exchange_name_response(
     exchange: Option<MetaExchange>,
 ) -> proto_mddb::proto::LookupExchangeNameResponse {
     if let Some(exchange) = exchange {
         proto_mddb::proto::LookupExchangeNameResponse {
-            exchange_name: Some(exchange.name.to_string()),
+            exchange_name: Some(exchange.name),
         }
     } else {
         proto_mddb::proto::LookupExchangeNameResponse {

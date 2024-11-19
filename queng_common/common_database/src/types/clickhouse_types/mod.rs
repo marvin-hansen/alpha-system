@@ -1,1 +1,1 @@
-pub(crate) mod click_house_config;
+pub mod click_house_config;

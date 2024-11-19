@@ -29,7 +29,7 @@ impl MetadataImportManager {
         let env_manager = EnvironmentManager::new();
         let env_type = env_manager.env_type();
         if dbg {
-            println!("[main]: Environment type: {:?}", env_type);
+            println!("[main]: Environment type: {env_type:?}");
         }
 
         let pg_cfg_manager = PostgresConfigManager::new(&env_type);
@@ -50,7 +50,7 @@ impl MetadataImportManager {
 
     fn dbg_print(&self, s: &str) {
         if self.dbg {
-            println!("[MetadataImportManager]: {}", s)
+            println!("[MetadataImportManager]: {s}");
         }
     }
 }

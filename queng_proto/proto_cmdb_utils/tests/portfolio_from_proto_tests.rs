@@ -93,7 +93,7 @@ fn test_portfolio_config_from_proto_invalid_account_type() {
 fn test_instrument_from_proto_conversion() {
     let proto_instruments = vec![
         ProtoInstrument {
-            instrument_code: "".to_string(),
+            instrument_code: String::new(),
             exchange_code: "NYSE".to_string(),
             instrument_class: "Equity".to_string(),
             exchange_pair_code: "AAPL".to_string(),
@@ -102,7 +102,7 @@ fn test_instrument_from_proto_conversion() {
             instrument_figi: None,
         },
         ProtoInstrument {
-            instrument_code: "".to_string(),
+            instrument_code: String::new(),
             exchange_code: "NASDAQ".to_string(),
             instrument_class: "Equity".to_string(),
             exchange_pair_code: "GOOGL".to_string(),
@@ -138,12 +138,12 @@ fn test_instrument_from_proto_empty_vector() {
 #[test]
 fn test_instrument_from_proto_with_empty_fields() {
     let proto_instruments = vec![ProtoInstrument {
-        instrument_code: "".to_string(),
-        exchange_code: "".to_string(),
-        instrument_class: "".to_string(),
-        exchange_pair_code: "".to_string(),
-        base_asset: "".to_string(),
-        quote_asset: "".to_string(),
+        instrument_code: String::new(),
+        exchange_code: String::new(),
+        instrument_class: String::new(),
+        exchange_pair_code: String::new(),
+        base_asset: String::new(),
+        quote_asset: String::new(),
         instrument_figi: None,
     }];
 

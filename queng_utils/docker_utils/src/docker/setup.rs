@@ -25,48 +25,37 @@ impl DockerUtil {
         let target_tag = container_config.tag();
 
         self.dbg_print(&format!(
-            "Check if Container already exists: {}",
-            container_name
+            "Check if Container already exists: {container_name}"
         ));
 
         let exists = self
             .check_if_container_is_running(container_name)
             .unwrap_or_else(|_| {
-                panic!(
-                    "[get_running_container]:  container already exists: {}",
-                    container_name
-                )
+                panic!("[get_running_container]:  container already exists: {container_name}")
             });
-        self.dbg_print(&format!("Container {} exists: {}", container_name, exists));
+        self.dbg_print(&format!("Container {container_name} exists: {exists}"));
 
         if exists {
             self.dbg_print(&format!(
-                "Check if running Container {} uses target tag: {}",
-                container_name, target_tag,
+                "Check if running Container {container_name} uses target tag: {target_tag}",
             ));
 
             let container_current = self
                 .check_if_running_container_uses_target_tag(container_name, target_tag)
-                .unwrap_or_else(|_| panic!("[TestEnv/CI:setup_container]: Failed to check if container {} use target tag: {}",
-                                           container_name, target_tag));
+                .unwrap_or_else(|_| panic!("[TestEnv/CI:setup_container]: Failed to check if container {container_name} use target tag: {target_tag}"));
 
             if !container_current {
-                self.dbg_print(&format!(
-                    "Container uses DIFFERENT tag : {}",
-                    container_name
-                ));
-                self.dbg_print(&format!("STOP running Container : {}", container_name));
+                self.dbg_print(&format!("Container uses DIFFERENT tag : {container_name}"));
+                self.dbg_print(&format!("STOP running Container : {container_name}"));
 
                 self.stop_container(container_name).unwrap_or_else(|_| {
                     panic!(
-                        "[TestEnv/CI:setup_container]: Failed to check stop container {} ",
-                        container_name
+                        "[TestEnv/CI:setup_container]: Failed to check stop container {container_name} "
                     )
-                })
+                });
             } else {
                 self.dbg_print(&format!(
-                    "Container {} uses target tag: {}",
-                    container_name, container_current
+                    "Container {container_name} uses target tag: {container_current}"
                 ));
             }
         }
@@ -74,21 +63,16 @@ impl DockerUtil {
         let (container_name, container_port) = self
             .get_or_start_container_config(container_config)
             .unwrap_or_else(|_| {
-                panic!(
-                    "[TestEnv/CI:setup_container]: Failed to setup container: {}",
-                    container_name
-                )
+                panic!("[TestEnv/CI:setup_container]: Failed to setup container: {container_name}")
             });
 
         if !exists {
             self.dbg_print(&format!(
-                "Start container {} with target tag {}",
-                container_name, target_tag
+                "Start container {container_name} with target tag {target_tag}"
             ));
         } else {
             self.dbg_print(&format!(
-                "Reuse Container {} with target tag {}",
-                container_name, target_tag
+                "Reuse Container {container_name} with target tag {target_tag}"
             ));
         }
 

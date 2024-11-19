@@ -1,4 +1,7 @@
-use crate::*;
+use crate::{
+    message_header_codec, Decoder, Encoder, MessageHeaderDecoder, MessageHeaderEncoder,
+    MessageType, ReadBuf, Reader, WriteBuf, Writer,
+};
 
 pub use decoder::DataBarDecoder;
 pub use encoder::DataBarEncoder;
@@ -10,7 +13,10 @@ pub const SBE_SCHEMA_VERSION: u16 = 1;
 pub const SBE_SEMANTIC_VERSION: &str = "5.2";
 
 pub mod encoder {
-    use super::*;
+    use super::{
+        Encoder, MessageHeaderEncoder, MessageType, WriteBuf, Writer, SBE_BLOCK_LENGTH,
+        SBE_SCHEMA_ID, SBE_SCHEMA_VERSION, SBE_TEMPLATE_ID,
+    };
 
     #[derive(Debug, Default)]
     pub struct DataBarEncoder<'a> {
@@ -40,7 +46,8 @@ pub mod encoder {
     }
 
     impl<'a> DataBarEncoder<'a> {
-        pub fn wrap(mut self, buf: WriteBuf<'a>, offset: usize) -> Self {
+        #[must_use]
+        pub const fn wrap(mut self, buf: WriteBuf<'a>, offset: usize) -> Self {
             let limit = offset + SBE_BLOCK_LENGTH as usize;
             self.buf = buf;
             self.initial_offset = offset;
@@ -50,10 +57,12 @@ pub mod encoder {
         }
 
         #[inline]
-        pub fn encoded_length(&self) -> usize {
+        #[must_use]
+        pub const fn encoded_length(&self) -> usize {
             self.limit - self.offset
         }
 
+        #[must_use]
         pub fn header(self, offset: usize) -> MessageHeaderEncoder<Self> {
             let mut header = MessageHeaderEncoder::default().wrap(self, offset);
             header.block_length(SBE_BLOCK_LENGTH);
@@ -67,7 +76,7 @@ pub mod encoder {
         #[inline]
         pub fn message_type(&mut self, value: MessageType) {
             let offset = self.offset;
-            self.get_buf_mut().put_u16_at(offset, value as u16)
+            self.get_buf_mut().put_u16_at(offset, value as u16);
         }
 
         /// primitive field 'symbolID'
@@ -171,7 +180,10 @@ pub mod encoder {
 } // end encoder
 
 pub mod decoder {
-    use super::*;
+    use super::{
+        message_header_codec, Decoder, MessageHeaderDecoder, MessageType, ReadBuf, Reader,
+        SBE_TEMPLATE_ID,
+    };
 
     #[derive(Clone, Copy, Debug, Default)]
     pub struct DataBarDecoder<'a> {
@@ -203,7 +215,8 @@ pub mod decoder {
     }
 
     impl<'a> DataBarDecoder<'a> {
-        pub fn wrap(
+        #[must_use]
+        pub const fn wrap(
             mut self,
             buf: ReadBuf<'a>,
             offset: usize,
@@ -221,10 +234,12 @@ pub mod decoder {
         }
 
         #[inline]
-        pub fn encoded_length(&self) -> usize {
+        #[must_use]
+        pub const fn encoded_length(&self) -> usize {
             self.limit - self.offset
         }
 
+        #[must_use]
         pub fn header(self, mut header: MessageHeaderDecoder<ReadBuf<'a>>) -> Self {
             debug_assert_eq!(SBE_TEMPLATE_ID, header.template_id());
             let acting_block_length = header.block_length();
@@ -240,48 +255,56 @@ pub mod decoder {
 
         /// REQUIRED enum
         #[inline]
+        #[must_use]
         pub fn message_type(&self) -> MessageType {
             self.get_buf().get_u16_at(self.offset).into()
         }
 
         /// primitive field - 'REQUIRED'
         #[inline]
+        #[must_use]
         pub fn symbol_id(&self) -> u16 {
             self.get_buf().get_u16_at(self.offset + 2)
         }
 
         /// primitive field - 'REQUIRED'
         #[inline]
+        #[must_use]
         pub fn date_time(&self) -> i64 {
             self.get_buf().get_i64_at(self.offset + 4)
         }
 
         /// primitive field - 'REQUIRED'
         #[inline]
+        #[must_use]
         pub fn open_price(&self) -> f32 {
             self.get_buf().get_f32_at(self.offset + 12)
         }
 
         /// primitive field - 'REQUIRED'
         #[inline]
+        #[must_use]
         pub fn high_price(&self) -> f32 {
             self.get_buf().get_f32_at(self.offset + 16)
         }
 
         /// primitive field - 'REQUIRED'
         #[inline]
+        #[must_use]
         pub fn low_price(&self) -> f32 {
             self.get_buf().get_f32_at(self.offset + 20)
         }
 
         /// primitive field - 'REQUIRED'
         #[inline]
+        #[must_use]
         pub fn close_price(&self) -> f32 {
             self.get_buf().get_f32_at(self.offset + 24)
         }
 
         /// primitive field - 'REQUIRED'
         #[inline]
+        #[must_use]
         pub fn volume(&self) -> f32 {
             self.get_buf().get_f32_at(self.offset + 28)
         }

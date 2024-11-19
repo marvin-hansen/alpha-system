@@ -5,7 +5,7 @@ mod getters;
 mod sbe_decode;
 mod sbe_encode;
 
-#[derive(Debug, Default, Clone, PartialEq)]
+#[derive(Debug, Default, Clone, PartialEq, Eq)]
 pub struct ClientErrorMessage {
     message_type: MessageType,
     client_id: u16,
@@ -13,7 +13,7 @@ pub struct ClientErrorMessage {
 }
 
 impl ClientErrorMessage {
-    /// Creates a new ClientErrorMessage instance.
+    /// Creates a new `ClientErrorMessage` instance.
     ///
     /// # Arguments
     ///
@@ -22,13 +22,14 @@ impl ClientErrorMessage {
     ///
     /// # Returns
     ///
-    /// New ClientErrorMessage instance
+    /// New `ClientErrorMessage` instance
     ///
     /// # Remarks
     ///
-    /// Sets message_type to ClientError
+    /// Sets `message_type` to `ClientError`
     ///
-    pub fn new(client_id: u16, client_error_type: ClientErrorType) -> Self {
+    #[must_use]
+    pub const fn new(client_id: u16, client_error_type: ClientErrorType) -> Self {
         let message_type = MessageType::ClientError;
         Self {
             message_type,
@@ -39,15 +40,15 @@ impl ClientErrorMessage {
 }
 
 impl From<&[u8]> for ClientErrorMessage {
-    /// Decodes a ClientErrorMessage from a byte buffer.
+    /// Decodes a `ClientErrorMessage` from a byte buffer.
     ///
     /// # Arguments
     ///
-    /// * `value` - Byte buffer containing encoded ClientErrorMessage
+    /// * `value` - Byte buffer containing encoded `ClientErrorMessage`
     ///
     /// # Returns
     ///
-    /// Decoded ClientErrorMessage on success
+    /// Decoded `ClientErrorMessage` on success
     ///
     /// # Errors
     ///
@@ -55,7 +56,7 @@ impl From<&[u8]> for ClientErrorMessage {
     ///
     /// # Remarks
     ///
-    /// Calls sbe_decode::decode_client_error_message to decode message
+    /// Calls `sbe_decode::decode_client_error_message` to decode message
     ///
     #[inline]
     fn from(value: &[u8]) -> Self {

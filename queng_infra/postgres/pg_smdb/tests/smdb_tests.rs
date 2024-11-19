@@ -416,14 +416,14 @@ async fn test_service_update() {
 
     let update = ServiceConfig::new(
         id,
-        name.clone(),
+        name,
         version,
         online,
-        description.clone(),
-        health_check_uri.clone(),
-        base_uri.clone(),
-        dependencies.clone(),
-        endpoints.clone(),
+        description,
+        health_check_uri,
+        base_uri,
+        dependencies,
+        endpoints,
     );
     let result = service::Service::update(conn, &param_service_id, &update);
     // dbg!(&result);
@@ -480,14 +480,14 @@ async fn test_service_update_error() {
 
     let update = ServiceConfig::new(
         id,
-        name.clone(),
+        name,
         version,
         online,
-        description.clone(),
-        health_check_uri.clone(),
-        base_uri.clone(),
-        dependencies.clone(),
-        endpoints.clone(),
+        description,
+        health_check_uri,
+        base_uri,
+        dependencies,
+        endpoints,
     );
     let result = service::Service::update(conn, &param_service_id, &update);
     // dbg!(&result);

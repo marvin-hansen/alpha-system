@@ -1,16 +1,16 @@
 use std::fmt;
 
-/// The ClientChannel enum represents the different channels a client can use.
+/// The `ClientChannel` enum represents the different channels a client can use.
 ///
 /// This is represented as a u8 under the hood and includes the following variants:
 ///
-/// - DataChannel - The channel for sending data payloads. This has the underlying value 0.
+/// - `DataChannel` - The channel for sending data payloads. This has the underlying value 0.
 ///
-/// - ControlChannel - The channel for sending control messages. This has the underlying value 1.
+/// - `ControlChannel` - The channel for sending control messages. This has the underlying value 1.
 ///
-/// - ExecutionChannel - The channel for sending execution messages. This has the underlying value 2.
+/// - `ExecutionChannel` - The channel for sending execution messages. This has the underlying value 2.
 ///
-/// - HeartbeatChannel - The channel for sending heartbeat messages. This has the underlying value 3.
+/// - `HeartbeatChannel` - The channel for sending heartbeat messages. This has the underlying value 3.
 ///
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord)]
 #[repr(u8)]
@@ -23,15 +23,15 @@ pub enum MessageClientChannel {
 }
 
 impl From<u8> for MessageClientChannel {
-    /// Implements the From trait to convert a u8 to a ClientChannel.
+    /// Implements the From trait to convert a u8 to a `ClientChannel`.
     ///
     /// Matches on the u8 value:
     ///
-    /// 0 -> DataChannel
-    /// 1 -> ControlChannel
-    /// 2 -> ErrorChannel
-    /// 3 -> ExecutionChannel
-    /// 4 -> HeartbeatChannel
+    /// 0 -> `DataChannel`
+    /// 1 -> `ControlChannel`
+    /// 2 -> `ErrorChannel`
+    /// 3 -> `ExecutionChannel`
+    /// 4 -> `HeartbeatChannel`
     ///
     /// Panics on unknown value.
     ///
@@ -41,17 +41,17 @@ impl From<u8> for MessageClientChannel {
     ///
     /// # Returns
     ///
-    /// ClientChannel variant
+    /// `ClientChannel` variant
     ///
     #[inline]
     fn from(value: u8) -> Self {
         match value {
-            0 => MessageClientChannel::DataChannel,
-            1 => MessageClientChannel::ControlChannel,
-            2 => MessageClientChannel::ErrorChannel,
-            3 => MessageClientChannel::ExecutionChannel,
-            4 => MessageClientChannel::HeartbeatChannel,
-            _ => panic!("Unknown ClientChannel value: {}", value),
+            0 => Self::DataChannel,
+            1 => Self::ControlChannel,
+            2 => Self::ErrorChannel,
+            3 => Self::ExecutionChannel,
+            4 => Self::HeartbeatChannel,
+            _ => panic!("Unknown ClientChannel value: {value}"),
         }
     }
 }
@@ -59,11 +59,11 @@ impl From<u8> for MessageClientChannel {
 impl fmt::Display for MessageClientChannel {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match *self {
-            MessageClientChannel::DataChannel => write!(f, "DataChannel"),
-            MessageClientChannel::ControlChannel => write!(f, "ControlChannel"),
-            MessageClientChannel::ErrorChannel => write!(f, "ErrorChannel"),
-            MessageClientChannel::ExecutionChannel => write!(f, "ExecutionChannel"),
-            MessageClientChannel::HeartbeatChannel => write!(f, "HeartbeatChannel"),
+            Self::DataChannel => write!(f, "DataChannel"),
+            Self::ControlChannel => write!(f, "ControlChannel"),
+            Self::ErrorChannel => write!(f, "ErrorChannel"),
+            Self::ExecutionChannel => write!(f, "ExecutionChannel"),
+            Self::HeartbeatChannel => write!(f, "HeartbeatChannel"),
         }
     }
 }

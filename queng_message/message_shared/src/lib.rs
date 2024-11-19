@@ -10,6 +10,7 @@ use std::str::FromStr;
 pub use error::*;
 pub use traits::*;
 
+#[must_use]
 pub fn get_ims_data_config() -> common_message::ImsDataConfig {
     common_message::ImsDataConfig::new(
         DEFAULT_ROOT_USERNAME.to_string(),
@@ -69,6 +70,7 @@ pub struct Args {
 }
 
 impl Args {
+    #[must_use]
     pub fn new(
         username: String,
         password: String,
@@ -86,6 +88,7 @@ impl Args {
         }
     }
 
+    #[must_use]
     pub fn from_ims_data_config(config: &common_message::ImsDataConfig) -> Self {
         Self {
             username: config.stream_user().to_string(),
@@ -97,6 +100,7 @@ impl Args {
         }
     }
 
+    #[must_use]
     pub fn from_ims_data_and_tls_config(
         config: &common_message::ImsDataConfig,
         tcp_tls_config: &common_message::ImsTcpTlsConfig,
@@ -137,7 +141,7 @@ impl Default for Args {
             offset: 0,
             auto_commit: false,
             transport: "tcp".to_string(),
-            encryption_key: "".to_string(),
+            encryption_key: String::new(),
             http_api_url: "http://localhost:3000".to_string(),
             http_retries: 3,
             tcp_reconnection_enabled: true,
@@ -171,6 +175,7 @@ impl Default for Args {
 }
 
 impl Args {
+    #[must_use]
     pub fn to_sdk_args(&self) -> iggy::args::Args {
         iggy::args::Args {
             transport: self.transport.clone(),
@@ -208,6 +213,7 @@ impl Args {
         }
     }
 
+    #[must_use]
     pub fn get_interval(&self) -> Option<IggyDuration> {
         match self.interval.to_lowercase().as_str() {
             "" | "0" | "none" => None,

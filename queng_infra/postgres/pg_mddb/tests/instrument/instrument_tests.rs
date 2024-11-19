@@ -346,7 +346,7 @@ async fn test_update_instrument() {
     let update_data = get_test_meta_instrument();
     let result = Instrument::update(conn, &instrument_id, update_data);
     assert!(result.is_ok());
-    assert_eq!(result.unwrap(), 1)
+    assert_eq!(result.unwrap(), 1);
 }
 
 #[tokio::test]
@@ -364,7 +364,7 @@ async fn test_update_instrument_non_existent() {
     let update_data = get_test_meta_instrument();
     let result = Instrument::update(conn, &instrument_id, update_data);
     assert!(result.is_ok());
-    assert_eq!(result.unwrap(), 0)
+    assert_eq!(result.unwrap(), 0);
 }
 
 #[tokio::test]
@@ -394,7 +394,7 @@ async fn test_delete_instrument() {
 
     let result = Instrument::delete(conn, instrument_id);
     assert!(result.is_ok());
-    assert_eq!(result.unwrap(), 1)
+    assert_eq!(result.unwrap(), 1);
 }
 
 #[tokio::test]
@@ -411,5 +411,5 @@ async fn test_delete_instrument_non_existent() {
     let instrument_id = String::from("Non-Existent");
     let result = Instrument::delete(conn, instrument_id);
     assert!(result.is_ok());
-    assert_eq!(result.unwrap(), 0)
+    assert_eq!(result.unwrap(), 0);
 }

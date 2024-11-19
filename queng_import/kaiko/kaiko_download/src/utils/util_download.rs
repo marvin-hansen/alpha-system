@@ -15,10 +15,7 @@ impl DownloadUtils {
 
                 Ok(assets.data)
             }
-            Err(e) => Err(DownloadError::from(format!(
-                "Error downloading assets {}",
-                e
-            ))),
+            Err(e) => Err(DownloadError::from(format!("Error downloading assets {e}"))),
         }
     }
 
@@ -31,8 +28,7 @@ impl DownloadUtils {
                 Ok(exchanges.data)
             }
             Err(e) => Err(DownloadError::from(format!(
-                "Error downloading exchanges {}",
-                e
+                "Error downloading exchanges {e}"
             ))),
         }
     }
@@ -47,8 +43,7 @@ impl DownloadUtils {
                 Ok(instruments.data)
             }
             Err(e) => Err(DownloadError::from(format!(
-                "Error downloading instruments {}",
-                e
+                "Error downloading instruments {e}"
             ))),
         }
     }
@@ -61,10 +56,7 @@ impl DownloadUtils {
                     serde_json::from_slice(bytes.as_slice()).expect("Failed to parse exchanges");
                 Ok(stats)
             }
-            Err(e) => Err(DownloadError::from(format!(
-                "Error downloading stats {}",
-                e
-            ))),
+            Err(e) => Err(DownloadError::from(format!("Error downloading stats {e}"))),
         }
     }
 }

@@ -2,10 +2,12 @@ use crate::CfgManager;
 use common_env::EnvironmentType;
 
 impl CfgManager {
-    pub fn env_type(&self) -> EnvironmentType {
+    #[must_use]
+    pub const fn env_type(&self) -> EnvironmentType {
         self.env_type
     }
 
+    #[must_use]
     pub fn env_var(&self) -> (String, String) {
         self.dbg_print("env_var");
         self.dbg_print("EnvironmentType");

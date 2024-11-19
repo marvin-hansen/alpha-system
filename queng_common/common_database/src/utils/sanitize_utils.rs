@@ -29,24 +29,21 @@ pub fn sanitize_table_name(table_name: &str) -> Result<&str, SanitizeError> {
     // check for empty name
     if table_name.is_empty() {
         return Err(SanitizeError::EmptyTableName(format!(
-            "Table: {}",
-            table_name
+            "Table: {table_name}"
         )));
     }
 
     // check for invalid characters
     if table_name.chars().any(|c| !c.is_alphanumeric() && c != '_') {
         return Err(SanitizeError::InvalidTableName(format!(
-            "Table: {}",
-            table_name
+            "Table: {table_name}"
         )));
     }
 
     // check for length
     if table_name.len() > 64 {
         return Err(SanitizeError::TableNameTooLong(format!(
-            "Table: {}",
-            table_name
+            "Table: {table_name}"
         )));
     }
 

@@ -90,10 +90,7 @@ pub async fn handle_put_instruments(
     };
 
     // Create a new MetaInstrumentsRoot from the body
-    let updated_instruments = MetaInstrumentsRoot {
-        result: body.result,
-        data: body.data,
-    };
+    let updated_instruments = body;
 
     // Serialize the body into string
     let value = match to_string(&updated_instruments) {

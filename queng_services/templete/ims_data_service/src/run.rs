@@ -15,7 +15,7 @@ impl Server {
 
         loop {
             select! {
-                    _ = &mut signal_future => {
+                    () = &mut signal_future => {
                     break;
                 }
 

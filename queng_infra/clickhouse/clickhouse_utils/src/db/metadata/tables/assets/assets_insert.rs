@@ -23,17 +23,17 @@ impl Metadata {
         &self,
         assets: &[MetaAsset],
     ) -> Result<(), ClickHouseUtilError> {
-        for asset in assets.iter() {
+        for asset in assets {
             let insert_query = self.generate_asset_insert(asset);
             self.execute_query(&insert_query)
                 .await
-                .expect("Failed to insert asset")
+                .expect("Failed to insert asset");
         }
 
         Ok(())
     }
 
-    /// Generates a ClickHouse SQL query to insert an asset into the assets table.
+    /// Generates a `ClickHouse` SQL query to insert an asset into the assets table.
     ///
     /// This method generates a SQL query that can be used to insert an asset into the assets table.
     ///
@@ -66,7 +66,7 @@ impl Metadata {
     }
 
     fn extract_asset_figi(&self, metadata: &Option<AssetMetadata>) -> String {
-        let empty_string = "".to_string();
+        let empty_string = String::new();
 
         match metadata {
             Some(metadata) => match &metadata.asset_figi {

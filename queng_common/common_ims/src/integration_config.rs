@@ -28,7 +28,8 @@ impl IntegrationConfig {
     /// # Returns
     ///
     /// A new `IntegrationConfig` with the given parameters.
-    pub fn new(
+    #[must_use]
+    pub const fn new(
         integration_id: String,
         integration_version: u16,
         ims_integration_type: ImsIntegrationType,
@@ -59,7 +60,8 @@ impl IntegrationConfig {
     /// # Returns
     ///
     /// A new `IntegrationConfig` with the given parameters.
-    pub fn from(
+    #[must_use]
+    pub const fn from(
         integration_id: String,
         integration_version: u16,
         ims_integration_type: ImsIntegrationType,
@@ -94,6 +96,7 @@ impl IntegrationConfig {
     /// # Returns
     ///
     /// The unique identifier associated with this configuration.
+    #[must_use]
     pub fn integration_id(&self) -> &str {
         &self.integration_id
     }
@@ -103,7 +106,8 @@ impl IntegrationConfig {
     /// # Returns
     ///
     /// The version associated with this configuration.
-    pub fn integration_version(&self) -> u16 {
+    #[must_use]
+    pub const fn integration_version(&self) -> u16 {
         self.integration_version
     }
 
@@ -112,7 +116,8 @@ impl IntegrationConfig {
     /// # Returns
     ///
     /// The `ImsIntegrationType` associated with this configuration.
-    pub fn ims_integration_type(&self) -> ImsIntegrationType {
+    #[must_use]
+    pub const fn ims_integration_type(&self) -> ImsIntegrationType {
         self.ims_integration_type
     }
 
@@ -121,17 +126,20 @@ impl IntegrationConfig {
     /// # Returns
     ///
     /// `true` if the integration is online, `false` otherwise.
-    pub fn online(&self) -> bool {
+    #[must_use]
+    pub const fn online(&self) -> bool {
         self.online
     }
 
     /// Returns the `ExchangeID` associated with this configuration.
-    pub fn exchange_id(&self) -> ExchangeID {
+    #[must_use]
+    pub const fn exchange_id(&self) -> ExchangeID {
         self.exchange_id
     }
 
     /// Returns a reference to the `IntegrationMessageConfig` associated with this configuration.
-    pub fn integration_message_config(&self) -> &IntegrationMessageConfig {
+    #[must_use]
+    pub const fn integration_message_config(&self) -> &IntegrationMessageConfig {
         &self.integration_message_config
     }
 }

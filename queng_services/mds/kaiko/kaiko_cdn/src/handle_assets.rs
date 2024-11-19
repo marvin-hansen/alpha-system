@@ -85,10 +85,7 @@ pub async fn handle_put_assets(
     };
 
     // Create a new MetaAssetRoot from the body
-    let new_assets = MetaAssetRoot {
-        result: body.result,
-        data: body.data,
-    };
+    let new_assets = body;
 
     // Serialize the body into string
     let value = match to_string(&new_assets) {

@@ -17,22 +17,22 @@ impl Error for ServiceUtilError {}
 impl fmt::Display for ServiceUtilError {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
         match self {
-            ServiceUtilError::ServiceStartFailed(e) => {
+            Self::ServiceStartFailed(e) => {
                 write!(f, "[ServiceUtilError]: Service start failed: {e}")
             }
-            ServiceUtilError::ServiceHealthcheckFailed(e) => {
+            Self::ServiceHealthcheckFailed(e) => {
                 write!(f, "[ServiceUtilError]: Service healthcheck failed: {e}")
             }
-            ServiceUtilError::ServiceStopFailed(e) => {
+            Self::ServiceStopFailed(e) => {
                 write!(f, "[ServiceUtilError]: Service stop failed: {e}")
             }
-            ServiceUtilError::ServiceNotSupported(e) => {
+            Self::ServiceNotSupported(e) => {
                 write!(f, "[ServiceUtilError]: Service not supported: {e}")
             }
-            ServiceUtilError::ServiceNotRunning(e) => {
+            Self::ServiceNotRunning(e) => {
                 write!(f, "[ServiceUtilError]: Service not running: {e}")
             }
-            ServiceUtilError::UnknownError(e) => {
+            Self::UnknownError(e) => {
                 write!(f, "[ServiceUtilError]: Unknown error: {e}")
             }
         }

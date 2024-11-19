@@ -9,13 +9,13 @@ impl CfgManager {
             .expect("Failed to get metric host, uri, and port");
 
         // Merge the host and port into a socket address i.e. 0.0.0.0:8080
-        let socket_addr = format!("{}:{}", metrics_host, metrics_port);
+        let socket_addr = format!("{metrics_host}:{metrics_port}");
 
         Ok((socket_addr, metrics_uri))
     }
 
     pub(super) fn get_svc_metric_host_uri_port(&self) -> Result<(String, String, u32), InitError> {
-        let svc = self.svc_env_config.to_owned();
+        let svc = self.svc_env_config.clone();
         let metric_host = svc.metrics_host().to_string();
         let metrics_uri = svc.metrics_uri().to_string();
         let port = *svc.metrics_port() as u16;
@@ -24,6 +24,6 @@ impl CfgManager {
             .get_port(port, &self.svc)
             .expect("[EnvManager]: Failed to get port from config");
 
-        Ok((metric_host, metrics_uri, metrics_port as u32))
+        Ok((metric_host, metrics_uri, u32::from(metrics_port)))
     }
 }

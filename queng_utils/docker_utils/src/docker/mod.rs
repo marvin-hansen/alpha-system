@@ -55,8 +55,7 @@ impl DockerUtil {
         match Command::new("docker").arg("-v").spawn() {
             Ok(_) => Ok(Self { dbg }),
             Err(e) => Err(DockerError::from(format!(
-                "Error connecting to Docker. Is Docker running? Error: {}",
-                e
+                "Error connecting to Docker. Is Docker running? Error: {e}"
             ))),
         }
     }
@@ -71,7 +70,7 @@ impl Default for DockerUtil {
 impl DockerUtil {
     pub(crate) fn dbg_print(&self, s: &str) {
         if self.dbg {
-            println!("[DockerUtil]: {}", s);
+            println!("[DockerUtil]: {s}");
         }
     }
 }

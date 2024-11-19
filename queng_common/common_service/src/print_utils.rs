@@ -3,9 +3,9 @@ use std::time::Duration;
 
 pub fn print_start_header_simple(service_name: &str, service_addr: &str) {
     println!();
-    println!("||  {}  ||", service_name);
+    println!("||  {service_name}  ||");
     println!("==========================================");
-    println!("Service on endpoint: {}", service_addr);
+    println!("Service on endpoint: {service_addr}");
     println!("==========================================");
     println!();
 }
@@ -17,11 +17,11 @@ pub fn print_start_header(
     metrics_uri: &str,
     health_uri: &str,
 ) {
-    println!("||  {}  ||", service_id);
+    println!("||  {service_id}  ||");
     println!("==========================================");
-    println!("Service on endpoint: {}", service_addr);
-    println!("Metrics on endpoint: {}/{}", metrics_addr, metrics_uri);
-    println!("Health  on endpoint: {}/{}", metrics_addr, health_uri);
+    println!("Service on endpoint: {service_addr}");
+    println!("Metrics on endpoint: {metrics_addr}/{metrics_uri}");
+    println!("Health  on endpoint: {metrics_addr}/{health_uri}");
     println!("==========================================");
     println!();
 }
@@ -32,10 +32,10 @@ pub fn print_start_header_message_service(
     metrics_addr: &str,
     metrics_uri: &str,
 ) {
-    println!("||  {}  ||", service_id);
+    println!("||  {service_id}  ||");
     println!("==========================================");
-    println!("Listening on topic: {}", service_topic);
-    println!("Metrics on endpoint: {}/{}", metrics_addr, metrics_uri);
+    println!("Listening on topic: {service_topic}");
+    println!("Metrics on endpoint: {metrics_addr}/{metrics_uri}");
     println!("==========================================");
     println!();
 }
@@ -43,7 +43,7 @@ pub fn print_start_header_message_service(
 pub fn print_stop_header(service_id: &ServiceID) {
     println!();
     println!("==========================================");
-    println!("{} service shutdown complete", service_id);
+    println!("{service_id} service shutdown complete");
     println!("==========================================");
 }
 

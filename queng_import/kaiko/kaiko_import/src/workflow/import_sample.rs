@@ -5,14 +5,14 @@ use pg_mddb_manager::PostgresMDDBManager;
 /// Imports a sample of asset metadata into the database.
 ///
 /// # Arguments
-/// * `dbm_mddb` - PostgreSQL metadata database manager
+/// * `dbm_mddb` - `PostgreSQL` metadata database manager
 /// * `meta_data` - Source metadata set containing assets
 /// * `sample_size` - Number of assets to import (must be less than total assets)
 ///
 /// # Returns
 /// The number of assets in the database after import
 ///
-pub(crate) async fn import_assets_metadata_sample(
+pub async fn import_assets_metadata_sample(
     dbm_mddb: &PostgresMDDBManager,
     meta_data: &MetaDataSet,
     sample_size: usize,
@@ -40,8 +40,8 @@ pub(crate) async fn import_assets_metadata_sample(
         .await
         .expect("Failed to count assets") as usize;
 
-    print_utils::dbg_print(&format!("db_asset_count: {}", db_asset_count));
-    print_utils::dbg_print(&format!("expected_asset_count: {}", expected_asset_count));
+    print_utils::dbg_print(&format!("db_asset_count: {db_asset_count}"));
+    print_utils::dbg_print(&format!("expected_asset_count: {expected_asset_count}"));
 
     print_utils::dbg_print("Completed importing assets");
 
@@ -60,7 +60,7 @@ pub(crate) async fn import_assets_metadata_sample(
 ///
 /// The total number of exchanges in the database after import.
 ///
-pub(crate) async fn import_exchanges_metadata_sample(
+pub async fn import_exchanges_metadata_sample(
     dbm_mddb: &PostgresMDDBManager,
     meta_data: &MetaDataSet,
     sample_size: usize,
@@ -88,10 +88,9 @@ pub(crate) async fn import_exchanges_metadata_sample(
         .await
         .expect("Failed to count exchanges") as usize;
 
-    print_utils::dbg_print(&format!("db_exchange_count: {}", db_exchange_count));
+    print_utils::dbg_print(&format!("db_exchange_count: {db_exchange_count}"));
     print_utils::dbg_print(&format!(
-        "expected_exchange_count: {}",
-        expected_exchange_count
+        "expected_exchange_count: {expected_exchange_count}"
     ));
 
     print_utils::dbg_print("Completed importing exchanges");
@@ -102,14 +101,14 @@ pub(crate) async fn import_exchanges_metadata_sample(
 /// Imports a sample of instruments metadata into the database.
 ///
 /// # Arguments
-/// * `dbm_mddb` - PostgreSQL metadata database manager
+/// * `dbm_mddb` - `PostgreSQL` metadata database manager
 /// * `meta_data` - Source metadata set containing instruments
 /// * `sample_size` - Number of instruments to import (must be less than total instruments)
 ///
 /// # Returns
 /// Number of instruments in database after import
 ///
-pub(crate) async fn import_instruments_metadata_sample(
+pub async fn import_instruments_metadata_sample(
     dbm_mddb: &PostgresMDDBManager,
     meta_data: &MetaDataSet,
     sample_size: usize,
@@ -138,10 +137,9 @@ pub(crate) async fn import_instruments_metadata_sample(
         .await
         .expect("Failed to count instruments") as usize;
 
-    print_utils::dbg_print(&format!("db_instrument_count: {}", db_instrument_count));
+    print_utils::dbg_print(&format!("db_instrument_count: {db_instrument_count}"));
     print_utils::dbg_print(&format!(
-        "expected_instrument_count: {}",
-        expected_instrument_count
+        "expected_instrument_count: {expected_instrument_count}"
     ));
 
     print_utils::dbg_print("Completed importing instruments");

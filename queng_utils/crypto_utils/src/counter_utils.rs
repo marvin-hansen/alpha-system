@@ -42,17 +42,19 @@ impl RelaxedAtomicCounter {
     /// For code that requires full synchronization, use a sequentially consistent
     /// atomic counter instead.
     ///
-    pub fn new() -> Self {
+    #[must_use]
+    pub const fn new() -> Self {
         // No ordering constraints, only atomic operations.
         // https://doc.rust-lang.org/std/sync/atomic/enum.Ordering.html#variant.Relaxed
-        RelaxedAtomicCounter(AtomicU64::new(0))
+        Self(AtomicU64::new(0))
     }
 
     /// Creates a new counter from a start value with relaxed atomic increment operation.
-    pub fn with_start_value(v: u64) -> Self {
+    #[must_use]
+    pub const fn with_start_value(v: u64) -> Self {
         // No ordering constraints, only atomic operations.
         // https://doc.rust-lang.org/std/sync/atomic/enum.Ordering.html#variant.Relaxed
-        RelaxedAtomicCounter(AtomicU64::new(v))
+        Self(AtomicU64::new(v))
     }
 
     /// Increment and return new value.

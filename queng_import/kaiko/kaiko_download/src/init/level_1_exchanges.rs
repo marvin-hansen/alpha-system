@@ -5,7 +5,7 @@ use common_metadata::MetaExchange;
 
 impl InitManager {
     /// Asynchronously initializes level 1 exchanges by downloading and processing exchange data.
-    /// Returns a vector of MetaExchange structs on success, or an InitError on failure.
+    /// Returns a vector of `MetaExchange` structs on success, or an `InitError` on failure.
     /// This method prints debug messages based on the use of a proxy and debug mode.
     pub(super) async fn init_level_1_exchanges(&self) -> Result<Vec<MetaExchange>, InitError> {
         //
@@ -22,7 +22,7 @@ impl InitManager {
                     "Level 1: Returning {} downloaded exchanges",
                     downloaded_exchanges.len()
                 );
-                self.dbg_print(&msg)
+                self.dbg_print(&msg);
             }
             return Ok(downloaded_exchanges);
         }
@@ -37,7 +37,7 @@ impl InitManager {
                 "Level 1: Returning {} processed exchanges",
                 processed_exchanges.len()
             );
-            self.dbg_print(&msg)
+            self.dbg_print(&msg);
         }
 
         drop(downloaded_exchanges);
@@ -51,19 +51,19 @@ impl InitManager {
 ///
 /// # Arguments
 ///
-/// * `downloaded_exchanges` - A slice of MetaExchange structs representing the downloaded exchanges.
+/// * `downloaded_exchanges` - A slice of `MetaExchange` structs representing the downloaded exchanges.
 ///
 /// # Returns
 ///
-/// A Result containing a vector of MetaExchange structs with duplicates removed and sorted alphabetically,
-/// or an InitError if processing fails.
+/// A Result containing a vector of `MetaExchange` structs with duplicates removed and sorted alphabetically,
+/// or an `InitError` if processing fails.
 ///
 async fn process_exchanges(
     downloaded_exchanges: &[MetaExchange],
 ) -> Result<Vec<MetaExchange>, InitError> {
     let mut processed_exchanges: Vec<MetaExchange> = Vec::with_capacity(50);
 
-    for e in downloaded_exchanges.iter() {
+    for e in downloaded_exchanges {
         if ACTIVE_EXCHANGES.contains(&e.name.to_lowercase().as_str()) {
             processed_exchanges.push(e.to_owned());
         }

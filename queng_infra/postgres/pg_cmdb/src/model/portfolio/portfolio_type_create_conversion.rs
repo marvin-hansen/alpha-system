@@ -3,8 +3,9 @@ use crate::model::portfolio::CreatePortfolio;
 use common_exchange::PortfolioConfig as CommonPortfolioConfig;
 
 impl CreatePortfolio {
-    pub fn from_common_portfolio(portfolio: &CommonPortfolioConfig) -> CreatePortfolio {
-        CreatePortfolio {
+    #[must_use]
+    pub fn from_common_portfolio(portfolio: &CommonPortfolioConfig) -> Self {
+        Self {
             portfolio_id: portfolio.portfolio_id() as i32,
             portfolio_description: portfolio.portfolio_description().to_string(),
             portfolio_account_type: portfolio.portfolio_account_type().as_i32(),

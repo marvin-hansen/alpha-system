@@ -9,24 +9,23 @@ use std::env;
 ///
 /// # Returns
 ///
-/// The detected EnvironmentType.
+/// The detected `EnvironmentType`.
 ///
 /// # Panics
 ///
 /// If the "ENV" environment variable is not set or empty.
 ///
-pub(crate) fn detect_env_type(dbg: bool) -> EnvironmentType {
+pub fn detect_env_type(dbg: bool) -> EnvironmentType {
     if dbg {
         println!("[EnvironmentManager]: Debug mode enabled");
     }
 
     let key = "ENV";
     // Check if the environment variable is set.
-    if !env_is_set(key) {
-        panic!(
-            "[EnvironmentManager]: ENV environment variable is not set or empty. Ensure ENV is set"
-        );
-    }
+    assert!(
+        env_is_set(key),
+        "[EnvironmentManager]: ENV environment variable is not set or empty. Ensure ENV is set"
+    );
 
     // If so, read its value and return the detected environment type.
     let env_type = match env::var(key) {
@@ -38,7 +37,7 @@ pub(crate) fn detect_env_type(dbg: bool) -> EnvironmentType {
             _ => EnvironmentType::UNKNOWN,
         },
         Err(e) => {
-            eprintln!("Error: {}", e);
+            eprintln!("Error: {e}");
             panic!(
                 "[EnvironmentManager]: Failed to read ENV environment variable. Ensure ENV is set"
             );

@@ -16,7 +16,8 @@ pub struct Symbol {
 }
 
 impl Symbol {
-    pub fn new(
+    #[must_use]
+    pub const fn new(
         symbol_id_global: String,
         symbol_id_exchange: String,
         exchange_id: ExchangeID,
@@ -38,25 +39,32 @@ impl Symbol {
 }
 
 impl Symbol {
+    #[must_use]
     pub fn symbol_id_global(&self) -> &str {
         &self.symbol_id_global
     }
+    #[must_use]
     pub fn symbol_id_exchange(&self) -> &str {
         &self.symbol_id_exchange
     }
-    pub fn exchange_id(&self) -> &ExchangeID {
+    #[must_use]
+    pub const fn exchange_id(&self) -> &ExchangeID {
         &self.exchange_id
     }
+    #[must_use]
     pub fn asset_base_exchange(&self) -> &str {
         &self.asset_base_exchange
     }
+    #[must_use]
     pub fn asset_quote_exchange(&self) -> &str {
         &self.asset_quote_exchange
     }
-    pub fn price_precision(&self) -> Decimal {
+    #[must_use]
+    pub const fn price_precision(&self) -> Decimal {
         self.price_precision
     }
-    pub fn size_precision(&self) -> Decimal {
+    #[must_use]
+    pub const fn size_precision(&self) -> Decimal {
         self.size_precision
     }
 }

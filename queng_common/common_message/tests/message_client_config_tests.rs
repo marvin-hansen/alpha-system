@@ -48,7 +48,7 @@ fn test_display() {
     let id = 100;
     let config = MessageClientConfig::new(id);
 
-    let actual = format!("{}", config);
+    let actual = format!("{config}");
     let expected = "MessageClientConfig { id: 100, name: client-100 }".to_string();
 
     assert_eq!(actual, expected);

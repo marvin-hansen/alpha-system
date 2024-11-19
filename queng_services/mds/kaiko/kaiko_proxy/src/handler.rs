@@ -1,14 +1,12 @@
 use crate::MetaDataStore;
 
-pub(crate) async fn get_assets_handler(
-    store: MetaDataStore,
-) -> Result<impl warp::Reply, warp::Rejection> {
+pub async fn get_assets_handler(store: MetaDataStore) -> Result<impl warp::Reply, warp::Rejection> {
     let guard = store.read().await;
     let result = guard.assets();
     Ok(warp::reply::json(result))
 }
 
-pub(crate) async fn get_exchanges_handler(
+pub async fn get_exchanges_handler(
     store: MetaDataStore,
 ) -> Result<impl warp::Reply, warp::Rejection> {
     let guard = store.read().await;
@@ -16,7 +14,7 @@ pub(crate) async fn get_exchanges_handler(
     Ok(warp::reply::json(result))
 }
 
-pub(crate) async fn get_instruments_handler(
+pub async fn get_instruments_handler(
     store: MetaDataStore,
 ) -> Result<impl warp::Reply, warp::Rejection> {
     let guard = store.read().await;
@@ -24,9 +22,7 @@ pub(crate) async fn get_instruments_handler(
     Ok(warp::reply::json(result))
 }
 
-pub(crate) async fn get_stats_handler(
-    store: MetaDataStore,
-) -> Result<impl warp::Reply, warp::Rejection> {
+pub async fn get_stats_handler(store: MetaDataStore) -> Result<impl warp::Reply, warp::Rejection> {
     let guard = store.read().await;
     let result = guard.stats();
     Ok(warp::reply::json(result))
@@ -35,20 +31,20 @@ pub(crate) async fn get_stats_handler(
 // ###############################################################################
 // Health handler
 // ###############################################################################
-pub(crate) async fn get_health_handler() -> Result<impl warp::Reply, warp::Rejection> {
+pub async fn get_health_handler() -> Result<impl warp::Reply, warp::Rejection> {
     let result = Health::ok();
     Ok(warp::reply::json(&result))
 }
 
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Copy, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Health<'s> {
     status: &'s str,
 }
 
 impl Health<'_> {
-    pub fn ok() -> Self {
+    pub const fn ok() -> Self {
         Self { status: "OK" }
     }
 }

@@ -45,20 +45,20 @@ impl From<u8> for DataErrorType {
     #[inline]
     fn from(value: u8) -> Self {
         match value {
-            0_u8 => DataErrorType::UnknownDataError,
-            1_u8 => DataErrorType::DataTypeNotKnownError,
-            2_u8 => DataErrorType::DataUnavailableError,
-            3_u8 => DataErrorType::DataEncodingError,
-            4_u8 => DataErrorType::DataTableNotFound,
-            5_u8 => DataErrorType::DataSendError,
-            6_u8 => DataErrorType::DataChannelError,
-            _ => DataErrorType::UnknownDataError,
+            0_u8 => Self::UnknownDataError,
+            1_u8 => Self::DataTypeNotKnownError,
+            2_u8 => Self::DataUnavailableError,
+            3_u8 => Self::DataEncodingError,
+            4_u8 => Self::DataTableNotFound,
+            5_u8 => Self::DataSendError,
+            6_u8 => Self::DataChannelError,
+            _ => Self::UnknownDataError,
         }
     }
 }
 
 impl Display for DataErrorType {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        write!(f, "{self:?}")
     }
 }

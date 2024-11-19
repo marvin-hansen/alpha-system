@@ -16,6 +16,7 @@ pub struct MetaDataSet {
 }
 
 impl MetaDataSet {
+    #[must_use]
     pub fn new(
         assets: Vec<MetaAsset>,
         exchanges: Vec<MetaExchange>,
@@ -55,19 +56,24 @@ impl MetaDataSet {
 }
 
 impl MetaDataSet {
-    pub fn assets(&self) -> &MetaAssetRoot {
+    #[must_use]
+    pub const fn assets(&self) -> &MetaAssetRoot {
         &self.assets
     }
-    pub fn exchanges(&self) -> &MetaExchangesRoot {
+    #[must_use]
+    pub const fn exchanges(&self) -> &MetaExchangesRoot {
         &self.exchanges
     }
-    pub fn instruments(&self) -> &MetaInstrumentsRoot {
+    #[must_use]
+    pub const fn instruments(&self) -> &MetaInstrumentsRoot {
         &self.instruments
     }
-    pub fn stats(&self) -> &MetaStats {
+    #[must_use]
+    pub const fn stats(&self) -> &MetaStats {
         &self.stats
     }
-    pub fn hash(&self) -> u64 {
+    #[must_use]
+    pub const fn hash(&self) -> u64 {
         self.hash
     }
 }

@@ -16,17 +16,20 @@ impl<'l> HostEndpoint<'l> {
     ///
     /// * `host_uri` - Host URI.
     /// * `port` - Port number.
-    pub fn new(host_uri: &'l str, port: u16) -> Self {
+    #[must_use]
+    pub const fn new(host_uri: &'l str, port: u16) -> Self {
         Self { host_uri, port }
     }
 
     /// Returns the host URI.
-    pub fn host_uri(&self) -> &str {
+    #[must_use]
+    pub const fn host_uri(&self) -> &str {
         self.host_uri
     }
 
     /// Returns the port number.
-    pub fn port(&self) -> u16 {
+    #[must_use]
+    pub const fn port(&self) -> u16 {
         self.port
     }
 }

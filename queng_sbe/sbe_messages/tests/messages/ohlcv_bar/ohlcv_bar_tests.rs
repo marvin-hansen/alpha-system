@@ -28,7 +28,7 @@ fn test_decode_data_bar_message() {
     assert!(result.is_ok()); // Assert decode passes
 
     let decoded_bar = result.unwrap();
-    let original_bar = bar.clone();
+    let original_bar = bar;
 
     // Compare decoded bar with original bar field by field
     // Timestamp seems to have a loss of precision during encoding/decoding

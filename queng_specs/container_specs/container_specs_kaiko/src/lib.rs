@@ -6,6 +6,7 @@ use common_container::{ContainerConfig, WaitStrategy};
 /// setting up an API proxy container.
 /// # Returns
 /// A `ContainerConfig` instance containing all the necessary configuration for the API proxy container.
+#[must_use]
 pub fn api_proxy_container_config() -> ContainerConfig<'static> {
     ContainerConfig::new(
         "apiproxy",

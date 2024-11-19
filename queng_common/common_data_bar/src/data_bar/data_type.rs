@@ -1,6 +1,6 @@
 use std::fmt::{Display, Formatter};
 
-/// The DataType enum represents the different data types that can be transmitted.
+/// The `DataType` enum represents the different data types that can be transmitted.
 ///
 /// The variants represent the following data types:
 ///
@@ -39,15 +39,15 @@ impl From<u8> for DataType {
     #[inline]
     fn from(value: u8) -> Self {
         match value {
-            1_u8 => DataType::TradeData,
-            2_u8 => DataType::OHLCVData,
-            _ => DataType::UnknownDataType,
+            1_u8 => Self::TradeData,
+            2_u8 => Self::OHLCVData,
+            _ => Self::UnknownDataType,
         }
     }
 }
 
 impl Display for DataType {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        write!(f, "{self:?}")
     }
 }

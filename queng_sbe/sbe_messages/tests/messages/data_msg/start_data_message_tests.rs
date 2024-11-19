@@ -2,7 +2,7 @@ use common_data_bar::TimeResolution;
 use common_exchange::ExchangeID;
 use sbe_messages::{DataType, MessageType, StartDataMessage};
 
-fn get_message() -> StartDataMessage {
+const fn get_message() -> StartDataMessage {
     let client_id = 1;
     let exchange_id = ExchangeID::Kraken;
     let symbol_id = 1;
@@ -134,6 +134,6 @@ fn test_display() {
         message.data_type_id()
     );
 
-    let actual = format!("{}", message);
+    let actual = format!("{message}");
     assert_eq!(expected, actual);
 }

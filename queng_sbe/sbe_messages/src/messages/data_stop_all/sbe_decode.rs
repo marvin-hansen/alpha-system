@@ -4,7 +4,7 @@ use sbe_bindings::{MessageHeaderDecoder, ReadBuf, SbeResult, StopAllDataMsgDecod
 
 use sbe_bindings::stop_all_data_msg_codec::SBE_TEMPLATE_ID;
 
-/// Decodes a StopAllDataMessage from a byte buffer.
+/// Decodes a `StopAllDataMessage` from a byte buffer.
 ///
 /// # Arguments
 ///
@@ -12,7 +12,7 @@ use sbe_bindings::stop_all_data_msg_codec::SBE_TEMPLATE_ID;
 ///
 /// # Returns
 ///
-/// Decoded StopAllDataMessage
+/// Decoded `StopAllDataMessage`
 ///
 /// # Errors
 ///
@@ -20,13 +20,13 @@ use sbe_bindings::stop_all_data_msg_codec::SBE_TEMPLATE_ID;
 ///
 /// # Process
 ///
-/// - Create default StopAllDataMsgDecoder
-/// - Wrap buffer in ReadBuf
+/// - Create default `StopAllDataMsgDecoder`
+/// - Wrap buffer in `ReadBuf`
 /// - Decode header and validate template ID
-/// - Decode and validate message_type
-/// - Decode client_id
-/// - Decode and create exchange_id
-/// - Create and return StopAllDataMessage
+/// - Decode and validate `message_type`
+/// - Decode `client_id`
+/// - Decode and create `exchange_id`
+/// - Create and return `StopAllDataMessage`
 ///
 pub fn decode_stop_all_data_message(buffer: &[u8]) -> SbeResult<StopAllDataMessage> {
     let mut csg = StopAllDataMsgDecoder::default();

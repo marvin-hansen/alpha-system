@@ -16,7 +16,8 @@ pub struct PatternConfig {
 
 impl PatternConfig {
     #[allow(clippy::too_many_arguments)]
-    pub fn new(
+    #[must_use]
+    pub const fn new(
         pattern_config_id: u32,
         pattern_config_name: String,
         pattern_config_description: String,
@@ -40,28 +41,36 @@ impl PatternConfig {
 }
 
 impl PatternConfig {
-    pub fn pattern_config_id(&self) -> u32 {
+    #[must_use]
+    pub const fn pattern_config_id(&self) -> u32 {
         self.pattern_config_id
     }
+    #[must_use]
     pub fn pattern_config_name(&self) -> &str {
         &self.pattern_config_name
     }
+    #[must_use]
     pub fn pattern_config_description(&self) -> &str {
         &self.pattern_config_description
     }
-    pub fn pattern_type(&self) -> &PatternType {
+    #[must_use]
+    pub const fn pattern_type(&self) -> &PatternType {
         &self.pattern_type
     }
-    pub fn pattern_long_yes(&self) -> u8 {
+    #[must_use]
+    pub const fn pattern_long_yes(&self) -> u8 {
         self.pattern_long_yes
     }
-    pub fn pattern_long_no(&self) -> u8 {
+    #[must_use]
+    pub const fn pattern_long_no(&self) -> u8 {
         self.pattern_long_no
     }
-    pub fn pattern_short_yes(&self) -> u8 {
+    #[must_use]
+    pub const fn pattern_short_yes(&self) -> u8 {
         self.pattern_short_yes
     }
-    pub fn pattern_short_no(&self) -> u8 {
+    #[must_use]
+    pub const fn pattern_short_no(&self) -> u8 {
         self.pattern_short_no
     }
 }

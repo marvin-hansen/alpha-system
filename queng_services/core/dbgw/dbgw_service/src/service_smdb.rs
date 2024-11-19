@@ -5,7 +5,16 @@ use tonic::{Request, Response, Status};
 use common_config::ServiceID;
 use pg_smdb_manager::PostgresSMDBManager;
 use proto_smdb::proto::db_gateway_smdb_service_server::DbGatewaySmdbService;
-use proto_smdb::proto::*;
+use proto_smdb::proto::{
+    CheckServiceIdExistsResponse, CheckServiceIdOnlineResponse, CheckServicesExistsResponse,
+    CheckServicesOnlineResponse, CountServiceRequest, CountServiceResponse, CreateServiceResponse,
+    DeleteServiceResponse, MultiServicesRequest, ProtoServiceConfig, ReadAllServicesResponse,
+    ReadServiceResponse, ServiceDependenciesRequest, ServiceDependenciesResponse,
+    ServiceEndpointsRequest, ServiceEndpointsResponse, ServicesOfflineRequest,
+    ServicesOfflineResponse, ServicesOnlineRequest, ServicesOnlineResponse,
+    SetServiceOfflineResponse, SetServiceOnlineResponse, SingleServiceRequest,
+    UpdateServiceResponse,
+};
 use proto_smdb_utils::endpoint_proto_utils::endpoint_to_proto;
 use proto_smdb_utils::service_config_proto_utils::{
     service_config_collection_to_proto, service_config_from_proto, service_config_to_proto,
@@ -13,7 +22,7 @@ use proto_smdb_utils::service_config_proto_utils::{
 
 use crate::DBG;
 
-pub(crate) type SafePgSMDBManager = Arc<RwLock<PostgresSMDBManager>>;
+pub type SafePgSMDBManager = Arc<RwLock<PostgresSMDBManager>>;
 
 #[derive(Clone)]
 pub struct SMDBServer {
@@ -22,12 +31,12 @@ pub struct SMDBServer {
 }
 
 impl SMDBServer {
-    pub fn new(dbm: SafePgSMDBManager) -> Self {
+    pub const fn new(dbm: SafePgSMDBManager) -> Self {
         Self { dbg: DBG, dbm }
     }
     fn dbg_print(&self, msg: &str) {
         if self.dbg {
-            println!("[DBGW/service_smdb]: {}", msg)
+            println!("[DBGW/service_smdb]: {msg}");
         }
     }
 }
@@ -47,7 +56,7 @@ impl DbGatewaySmdbService for SMDBServer {
         let res = dbm.insert_service(&data).await;
 
         match res {
-            Ok(_) => Ok(Response::new(CreateServiceResponse {
+            Ok(()) => Ok(Response::new(CreateServiceResponse {
                 service_created: true,
             })),
             Err(e) => Err(Status::internal(e.to_string())),
@@ -96,7 +105,10 @@ impl DbGatewaySmdbService for SMDBServer {
 
         let proto_services = request.into_inner().services_id;
 
-        let services: Vec<ServiceID> = proto_services.into_iter().map(|x| x.into()).collect();
+        let services: Vec<ServiceID> = proto_services
+            .into_iter()
+            .map(std::convert::Into::into)
+            .collect();
         let dbm = self.dbm.read().await;
 
         match dbm.check_if_services_exists(&services).await {
@@ -132,7 +144,10 @@ impl DbGatewaySmdbService for SMDBServer {
         self.dbg_print("check_services_online");
 
         let proto_services = request.into_inner().services_id;
-        let services = proto_services.into_iter().map(|x| x.into()).collect();
+        let services = proto_services
+            .into_iter()
+            .map(std::convert::Into::into)
+            .collect();
         let dbm = self.dbm.read().await;
 
         match dbm.check_if_services_online(&services).await {
@@ -161,7 +176,8 @@ impl DbGatewaySmdbService for SMDBServer {
                     }))
                 } else {
                     // Convert Service IDs to i32
-                    let dependencies: Vec<i32> = res.iter().map(|x| x.as_i32()).collect();
+                    let dependencies: Vec<i32> =
+                        res.iter().map(common_config::ServiceID::as_i32).collect();
 
                     Ok(Response::new(ServiceDependenciesResponse {
                         service_id: id.as_i32(),
@@ -325,8 +341,7 @@ impl DbGatewaySmdbService for SMDBServer {
             Ok(exists) => {
                 if !exists {
                     return Err(Status::not_found(format!(
-                        "Service with ID {} does not exist in the DB",
-                        id
+                        "Service with ID {id} does not exist in the DB"
                     )));
                 }
             }
@@ -337,7 +352,7 @@ impl DbGatewaySmdbService for SMDBServer {
 
         // Here, we know the service exists in the DB is not online. Set it online now.
         match dbm.set_service_online(&id).await {
-            Ok(_) => Ok(Response::new(SetServiceOnlineResponse {
+            Ok(()) => Ok(Response::new(SetServiceOnlineResponse {
                 service_online: true,
             })),
 
@@ -359,8 +374,7 @@ impl DbGatewaySmdbService for SMDBServer {
             Ok(exists) => {
                 if !exists {
                     return Err(Status::not_found(format!(
-                        "Service with ID {} does not exist in the DB",
-                        id
+                        "Service with ID {id} does not exist in the DB"
                     )));
                 }
             }
@@ -370,7 +384,7 @@ impl DbGatewaySmdbService for SMDBServer {
         };
 
         match dbm.set_service_offline(&id).await {
-            Ok(_) => Ok(Response::new(SetServiceOfflineResponse {
+            Ok(()) => Ok(Response::new(SetServiceOfflineResponse {
                 service_offline: true,
             })),
             Err(e) => Err(Status::internal(e.to_string())),

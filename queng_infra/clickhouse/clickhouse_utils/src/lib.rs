@@ -57,7 +57,7 @@ impl ClickhouseUtil {
 impl ClickhouseUtil {
     fn dbg_print(&self, s: &str) {
         if self.dbg {
-            println!("[ClickhouseUtil]: {}", s);
+            println!("[ClickhouseUtil]: {s}");
         }
     }
 }

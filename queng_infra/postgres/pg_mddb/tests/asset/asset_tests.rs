@@ -100,7 +100,7 @@ async fn test_create_error() {
     assert!(result.is_ok());
 
     // Simulate an error scenario by trying to create the same asset again with the same code (primary key)
-    let result = Asset::create_asset(conn, asset.clone());
+    let result = Asset::create_asset(conn, asset);
     assert!(result.is_err());
 }
 

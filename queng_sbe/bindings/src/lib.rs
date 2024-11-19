@@ -85,13 +85,14 @@ pub struct ReadBuf<'a> {
 }
 impl<'a> Reader<'a> for ReadBuf<'a> {
     #[inline]
-    fn get_buf(&self) -> &ReadBuf<'a> {
+    fn get_buf(&self) -> &Self {
         self
     }
 }
 impl<'a> ReadBuf<'a> {
     #[inline]
-    pub fn new(data: &'a [u8]) -> Self {
+    #[must_use]
+    pub const fn new(data: &'a [u8]) -> Self {
         Self { data }
     }
 
@@ -108,56 +109,67 @@ impl<'a> ReadBuf<'a> {
     }
 
     #[inline]
-    pub fn get_u8_at(&self, index: usize) -> u8 {
+    #[must_use]
+    pub const fn get_u8_at(&self, index: usize) -> u8 {
         self.data[index]
     }
 
     #[inline]
+    #[must_use]
     pub fn get_i8_at(&self, index: usize) -> i8 {
         i8::from_le_bytes(Self::get_bytes_at(self.data, index))
     }
 
     #[inline]
+    #[must_use]
     pub fn get_i16_at(&self, index: usize) -> i16 {
         i16::from_le_bytes(Self::get_bytes_at(self.data, index))
     }
 
     #[inline]
+    #[must_use]
     pub fn get_i32_at(&self, index: usize) -> i32 {
         i32::from_le_bytes(Self::get_bytes_at(self.data, index))
     }
 
     #[inline]
+    #[must_use]
     pub fn get_i64_at(&self, index: usize) -> i64 {
         i64::from_le_bytes(Self::get_bytes_at(self.data, index))
     }
 
     #[inline]
+    #[must_use]
     pub fn get_u16_at(&self, index: usize) -> u16 {
         u16::from_le_bytes(Self::get_bytes_at(self.data, index))
     }
 
     #[inline]
+    #[must_use]
     pub fn get_u32_at(&self, index: usize) -> u32 {
         u32::from_le_bytes(Self::get_bytes_at(self.data, index))
     }
 
     #[inline]
+    #[must_use]
     pub fn get_u64_at(&self, index: usize) -> u64 {
         u64::from_le_bytes(Self::get_bytes_at(self.data, index))
     }
 
     #[inline]
+    #[must_use]
     pub fn get_f32_at(&self, index: usize) -> f32 {
         f32::from_le_bytes(Self::get_bytes_at(self.data, index))
     }
 
     #[inline]
+    #[must_use]
     pub fn get_f64_at(&self, index: usize) -> f64 {
         f64::from_le_bytes(Self::get_bytes_at(self.data, index))
     }
 
     #[inline]
+    #[must_use]
     pub fn get_slice_at(&self, index: usize, len: usize) -> &[u8] {
         &self.data[index..index + len]
     }

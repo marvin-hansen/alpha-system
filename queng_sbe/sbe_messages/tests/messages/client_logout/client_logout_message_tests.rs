@@ -60,5 +60,5 @@ fn test_display() {
 
     let expected = "ClientLogoutMessage { client_id: 123 }";
 
-    assert_eq!(format!("{}", message), expected);
+    assert_eq!(format!("{message}"), expected);
 }

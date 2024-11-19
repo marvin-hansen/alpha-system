@@ -35,7 +35,7 @@ impl SymbolManager {
             Err(err) => return Err(err),
         };
 
-        let symbol_table_name = format!("{}_{}", exchange_name, symbol);
+        let symbol_table_name = format!("{exchange_name}_{symbol}");
 
         Ok(symbol_table_name)
     }
@@ -58,7 +58,7 @@ impl SymbolManager {
             Err(err) => return Err(err),
         };
 
-        let symbol_table_name = format!("{}_symbols", exchange_name);
+        let symbol_table_name = format!("{exchange_name}_symbols");
 
         Ok(symbol_table_name)
     }
