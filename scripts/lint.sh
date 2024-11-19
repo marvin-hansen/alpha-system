@@ -8,7 +8,7 @@ echo "Lint targets "
 echo "=============="
 # https://users.rust-lang.org/t/ive-ran-clippy-on-100k-crates/117127
 # https://www.reddit.com/r/rust/comments/a4wblu/how_to_configure_clippy_to_be_as_annoying_as/
-command cargo clippy --all-targets -Wclippy::all -Wclippy::pedantic -Wclippy::nursery
+command cargo clippy --all-targets -Wclippy::all -Wclippy::pedantic -Wclippy::nursery -Wclippy::cargo
 
 echo "=============="
 echo "Format targets "

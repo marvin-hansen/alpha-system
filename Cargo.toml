@@ -129,9 +129,7 @@ nursery = "warn"
 [workspace.lints.rust]
 # Warnings
 deprecated-safe = "warn"
-# Forbid
-unsafe_code = "forbid"
-
+deprecated_safe_2024 = "warn"
 
 # Optimize all crates
 [profile.release]
