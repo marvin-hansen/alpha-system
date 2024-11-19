@@ -135,10 +135,10 @@ pub const fn get_check_if_exchange_exists_response(
 /// * `meta_exchange` - Optional [`MetaExchange`] to include in the response
 ///
 /// # Returns
-/// Returns a [`GetExchangeResponse`] containing the exchange if provided, or None if not.
+/// Returns a proto::GetExchangeResponse containing the exchange if provided, or None if not.
 ///
 /// # Implementation Notes
-/// - Converts the MetaExchange to a ProtoExchange if present
+/// - Converts the `MetaExchange` to a `ProtoExchange` if present
 /// - Returns an empty response if None is provided
 /// - Used for single exchange retrieval responses
 /// - The conversion preserves all exchange metadata and properties
@@ -161,10 +161,10 @@ pub fn get_exchange_response(
 /// * `meta_exchanges` - Vector of [`MetaExchange`]s to include in the response
 ///
 /// # Returns
-/// Returns a [`GetAllExchangesResponse`] containing all provided exchanges converted to proto format.
+/// Returns a proto::GetAllExchangesResponse containing all provided exchanges converted to proto format.
 ///
 /// # Implementation Notes
-/// - Efficiently converts each MetaExchange to ProtoExchange using into_iter
+/// - Efficiently converts each `MetaExchange` to `ProtoExchange` using `into_iter`
 /// - Takes ownership of the input vector for efficiency
 /// - Used for bulk exchange retrieval responses
 /// - The conversion preserves all exchange metadata and properties
@@ -188,10 +188,10 @@ pub fn get_all_exchanges_response(
 /// * `exchange` - Optional [`MetaExchange`] containing the exchange information
 ///
 /// # Returns
-/// Returns a [`LookupExchangeNameResponse`] containing the exchange name if found, or None if not.
+/// Returns a proto::LookupExchangeNameResponse containing the exchange name if found, or None if not.
 ///
 /// # Implementation Notes
-/// - Extracts only the name field from the MetaExchange if present
+/// - Extracts only the name field from the `MetaExchange` if present
 /// - Returns None if the exchange is not found
 /// - Used for efficient name lookups without transferring full exchange details
 /// - The name is cloned from the exchange data

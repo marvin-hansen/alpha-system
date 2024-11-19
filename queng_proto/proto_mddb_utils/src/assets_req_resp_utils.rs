@@ -112,7 +112,7 @@ pub const fn get_check_if_asset_exists_response(exists: bool) -> CheckIfAssetIdE
 /// Returns a [`GetAssetResponse`] containing the asset if provided, or None if not.
 ///
 /// # Implementation Notes
-/// - Converts the MetaAsset to a ProtoMetaAsset if present
+/// - Converts the `MetaAsset` to a `ProtoMetaAsset` if present
 /// - Returns an empty response if None is provided
 /// - Used for single asset retrieval responses
 #[must_use]
@@ -135,7 +135,7 @@ pub fn get_assets_response(meta_asset: Option<MetaAsset>) -> GetAssetResponse {
 /// Returns a [`GetAllAssetsResponse`] containing all provided assets converted to proto format.
 ///
 /// # Implementation Notes
-/// - Efficiently converts each MetaAsset to ProtoMetaAsset using iterators
+/// - Efficiently converts each `MetaAsset` to `ProtoMetaAsset` using iterators
 /// - Takes a reference to avoid unnecessary cloning of the input data
 /// - Used for bulk asset retrieval responses
 #[must_use]

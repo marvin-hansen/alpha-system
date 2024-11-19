@@ -121,7 +121,7 @@ impl DbGatewayMddbService for MDDBServer {
         let res = dbm.read_all_assets().await;
 
         match res {
-            Ok(assets) => Ok(Response::new(get_all_assets_response(assets))),
+            Ok(assets) => Ok(Response::new(get_all_assets_response(&assets))),
             Err(e) => Err(Status::internal(e.to_string())),
         }
     }

@@ -1,6 +1,6 @@
 use common_metadata::{InstrumentMetadata, MetaInstrument};
 
-/// Converts a MetaInstrument to its protobuf representation.
+/// Converts a `MetaInstrument` to its protobuf representation.
 ///
 /// # Arguments
 ///
@@ -18,13 +18,13 @@ use common_metadata::{InstrumentMetadata, MetaInstrument};
 ///    - Safely unwrapping metadata if present
 ///    - Providing None for missing FIGI values
 /// 3. Converts timestamp fields:
-///    - Maps trade_start_timestamp from u64 to i64
-///    - Preserves trade_end_timestamp as is
+///    - Maps `trade_start_timestamp` from u64 to i64
+///    - Preserves `trade_end_timestamp` as is
 ///
 /// # Safety
 ///
 /// This function is marked as `#[must_use]` to ensure the caller handles the returned value.
-/// All string conversions are performed using clone() to ensure ownership transfer.
+/// All string conversions are performed using `clone()` to ensure ownership transfer.
 ///
 #[must_use]
 pub fn meta_instrument_to_proto_instrument(
@@ -68,7 +68,7 @@ pub fn meta_instrument_to_proto_instrument(
     }
 }
 
-/// Converts a protobuf ProtoMetaInstrument back to a MetaInstrument.
+/// Converts a protobuf `ProtoMetaInstrument` back to a `MetaInstrument`.
 ///
 /// # Arguments
 ///
@@ -82,16 +82,16 @@ pub fn meta_instrument_to_proto_instrument(
 ///
 /// This function:
 /// 1. Constructs optional metadata if either FIGI field is present
-/// 2. Initializes legacy fields with empty strings (kaiko_legacy_exchange_slug, kaiko_legacy_symbol)
-/// 3. Sets unused numeric fields to 0 (trade_compressed_size, trade_count)
+/// 2. Initializes legacy fields with empty strings (`kaiko_legacy_exchange_slug`, `kaiko_legacy_symbol`)
+/// 3. Sets unused numeric fields to 0 (`trade_compressed_size`, `trade_count`)
 /// 4. Converts timestamps:
-///    - Maps trade_start_timestamp from i64 to u64
-///    - Preserves trade_end_timestamp as is
+///    - Maps `trade_start_timestamp` from i64 to u64
+///    - Preserves `trade_end_timestamp` as is
 ///
 /// # Safety
 ///
 /// This function is marked as `#[must_use]` to ensure the caller handles the returned value.
-/// All string conversions are performed using clone() to ensure ownership transfer.
+/// All string conversions are performed using `clone()` to ensure ownership transfer.
 ///
 #[must_use]
 pub fn proto_instrument_to_meta_instrument(
