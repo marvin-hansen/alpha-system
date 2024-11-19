@@ -27,6 +27,10 @@ impl MessageClientConfig {
     /// - `id`: The unique id for the client config. Must be greater than 20 to avoid
     ///   clashing with ids generated from `ServiceID`.
     ///
+    /// # Panics
+    ///
+    /// Panics if the id is less than 20.
+    ///
     /// # Returns
     ///
     /// A new `MessageClientConfig` with the given id and a generated name based on the id.

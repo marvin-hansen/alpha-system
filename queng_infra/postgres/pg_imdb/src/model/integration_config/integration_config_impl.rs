@@ -32,6 +32,18 @@ impl IntegrationConfig {
     /// * Transaction failure during the insert operation
     /// * Data conversion errors between CommonIntegrationConfig and database types
     ///
+    /// # Implementation Notes
+    ///
+    /// This function:
+    /// 1. Converts the CommonIntegrationConfig to a database-specific CreateIntegrationConfig
+    /// 2. Performs the insert operation with automatic returning of the created record
+    /// 3. Converts the result back to CommonIntegrationConfig format
+    ///
+    /// # Performance Considerations
+    ///
+    /// * Uses a single database roundtrip for insert and return
+    /// * Requires validation of unique constraints before insertion
+    ///
     pub fn create(
         db: &mut Connection,
         config: &CommonIntegrationConfig,
@@ -227,6 +239,19 @@ impl IntegrationConfig {
     /// * Data deserialization errors when converting database records
     /// * Memory allocation errors when dealing with large result sets
     ///
+    /// # Implementation Notes
+    ///
+    /// This function:
+    /// 1. Queries all records from the integration_config table
+    /// 2. Converts each record to CommonIntegrationConfig format
+    /// 3. Collects results into a vector
+    ///
+    /// # Performance Considerations
+    ///
+    /// * For large datasets, consider using pagination or limiting the result set
+    /// * Memory usage scales linearly with the number of configurations
+    /// * Consider using get_all_integration_configs_by_exchange for filtered results
+    ///
     pub fn get_all_integration_configs(
         db: &mut Connection,
     ) -> QueryResult<Vec<CommonIntegrationConfig>> {
@@ -253,11 +278,24 @@ impl IntegrationConfig {
     ///
     /// # Errors
     ///
-    /// This function will return an error in the following cases:
+    /// Returns an error if:
     /// * Database connection error
     /// * Query execution failure
     /// * Data deserialization errors when converting database records
     /// * Invalid exchange_id format or type
+    ///
+    /// # Implementation Notes
+    ///
+    /// This function:
+    /// 1. Filters integration_config table by the specified exchange_id
+    /// 2. Converts matching records to CommonIntegrationConfig format
+    /// 3. Returns results as a vector
+    ///
+    /// # Performance Considerations
+    ///
+    /// * Uses an index on exchange_id for efficient filtering
+    /// * Memory usage scales with the number of configurations per exchange
+    /// * More efficient than get_all_integration_configs when filtering by exchange
     ///
     pub fn get_all_integration_configs_by_exchange(
         db: &mut Connection,
@@ -294,6 +332,19 @@ impl IntegrationConfig {
     /// * Data deserialization errors when converting database records
     /// * Memory allocation errors when dealing with large result sets
     ///
+    /// # Implementation Notes
+    ///
+    /// This function:
+    /// 1. Filters integration_config table where online = true
+    /// 2. Converts matching records to CommonIntegrationConfig format
+    /// 3. Returns results as a vector
+    ///
+    /// # Performance Considerations
+    ///
+    /// * Uses an index on the online field for efficient filtering
+    /// * More efficient than filtering in application code
+    /// * Consider implementing pagination for large result sets
+    ///
     pub fn get_all_online_integration_configs(
         db: &mut Connection,
     ) -> QueryResult<Vec<CommonIntegrationConfig>> {
@@ -328,6 +379,19 @@ impl IntegrationConfig {
     /// * Data deserialization errors when converting database records
     /// * Memory allocation errors when dealing with large result sets
     ///
+    /// # Implementation Notes
+    ///
+    /// This function:
+    /// 1. Filters integration_config table where online = false
+    /// 2. Converts matching records to CommonIntegrationConfig format
+    /// 3. Returns results as a vector
+    ///
+    /// # Performance Considerations
+    ///
+    /// * Uses an index on the online field for efficient filtering
+    /// * More efficient than filtering in application code
+    /// * Consider implementing pagination for large result sets
+    ///
     pub fn get_all_offline_integration_configs(
         db: &mut Connection,
     ) -> QueryResult<Vec<CommonIntegrationConfig>> {
@@ -349,6 +413,33 @@ impl IntegrationConfig {
         Self::set_online(db, param_integration_id, true)
     }
 
+    /// Sets an integration configuration's online status to true.
+    ///
+    /// # Arguments
+    ///
+    /// * `db` - A mutable reference to a postgres database connection
+    /// * `param_integration_id` - The ID of the integration configuration to update
+    ///
+    /// # Returns
+    ///
+    /// Returns a `QueryResult<()>`:
+    /// * `Ok(())` - The online status was successfully updated
+    ///
+    /// # Errors
+    ///
+    /// This function will return an error in the following cases:
+    /// * Database connection error
+    /// * The integration configuration does not exist
+    /// * Query execution failure
+    /// * Concurrent modification conflicts
+    ///
+    /// # Implementation Notes
+    ///
+    /// This function:
+    /// 1. Uses the generic set_online function with online=true
+    /// 2. Updates only the online status field
+    /// 3. Performs an atomic update operation
+    ///
     pub fn set_integration_config_offline(
         db: &mut Connection,
         param_integration_id: String,
@@ -356,6 +447,33 @@ impl IntegrationConfig {
         Self::set_online(db, param_integration_id, false)
     }
 
+    /// Sets an integration configuration's online status to false.
+    ///
+    /// # Arguments
+    ///
+    /// * `db` - A mutable reference to a postgres database connection
+    /// * `param_integration_id` - The ID of the integration configuration to update
+    ///
+    /// # Returns
+    ///
+    /// Returns a `QueryResult<()>`:
+    /// * `Ok(())` - The online status was successfully updated
+    ///
+    /// # Errors
+    ///
+    /// This function will return an error in the following cases:
+    /// * Database connection error
+    /// * The integration configuration does not exist
+    /// * Query execution failure
+    /// * Concurrent modification conflicts
+    ///
+    /// # Implementation Notes
+    ///
+    /// This function:
+    /// 1. Uses the generic set_online function with online=false
+    /// 2. Updates only the online status field
+    /// 3. Performs an atomic update operation
+    ///
     fn set_online(
         db: &mut Connection,
         param_integration_id: String,

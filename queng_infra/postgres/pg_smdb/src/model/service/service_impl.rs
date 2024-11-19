@@ -26,7 +26,7 @@ impl Service {
     ///
     /// Returns an error in the following cases:
     /// * Database connection errors
-    /// * Unique constraint violations (if service_id already exists)
+    /// * Unique constraint violations (if `service_id` already exists)
     /// * Invalid data in service configuration (constraint violations)
     /// * Serialization errors when converting between types
     ///

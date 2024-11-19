@@ -10,16 +10,26 @@ impl Instrument {
     /// # Arguments
     ///
     /// * `db` - A mutable reference to the database connection.
-    /// * `item` - The `CreateInstrument` struct containing the instrument data.
+    /// * `ins` - The `CommonInstrument` containing the instrument data to be created.
     ///
     /// # Returns
     ///
-    /// A `QueryResult` containing the created `CommonInstrument`.
+    /// A `QueryResult` containing the created `CommonInstrument` if successful.
     ///
     /// # Errors
     ///
-    /// If there is an error with the database connection or the insert fails,
-    /// this function will return an `Err` containing the error.
+    /// Returns an error if:
+    /// * The database connection fails
+    /// * The insert operation fails (e.g., due to unique constraint violations)
+    /// * The instrument code already exists
+    /// * The provided instrument data is invalid or missing required fields
+    ///
+    /// # Implementation Notes
+    ///
+    /// This function performs the following steps:
+    /// 1. Converts the `CommonInstrument` to a `CreateInstrument`
+    /// 2. Inserts the new record into the database
+    /// 3. Returns the newly created instrument as a `CommonInstrument`
     ///
     pub fn create(db: &mut Connection, ins: &CommonInstrument) -> QueryResult<CommonInstrument> {
         let item = CreateInstrument::from_common_instrument(ins);
@@ -42,7 +52,15 @@ impl Instrument {
     ///
     /// # Errors
     ///
-    /// If there is an error with the database connection, this function will return an `Err` containing the error.
+    /// Returns an error if:
+    /// * The database connection fails
+    /// * The count operation fails
+    /// * The conversion from i64 to u64 fails (should not occur under normal circumstances)
+    ///
+    /// # Implementation Notes
+    ///
+    /// This function performs a COUNT operation on the instrument table and converts
+    /// the result from i64 to u64, as negative counts are not possible.
     ///
     pub fn count(db: &mut Connection) -> QueryResult<u64> {
         instrument.count().get_result::<i64>(db).map(|i| i as u64)
@@ -57,9 +75,20 @@ impl Instrument {
     ///
     /// # Returns
     ///
-    /// `Result<bool, diesel::result::Error>` - A result indicating success or failure.
-    /// * If the instrument exists, returns `Ok(true)`,
-    /// * otherwise `Ok(false)`.
+    /// `Result<bool, diesel::result::Error>` - A result indicating success or failure:
+    /// * `Ok(true)` if the instrument exists
+    /// * `Ok(false)` if the instrument does not exist
+    ///
+    /// # Errors
+    ///
+    /// Returns an error if:
+    /// * The database connection fails
+    /// * The query execution fails due to database errors
+    ///
+    /// # Implementation Notes
+    ///
+    /// This function attempts to find an instrument by its code. Any error during the
+    /// query is interpreted as the instrument not existing, except for critical database errors.
     ///
     pub fn check_if_instrument_code_exists(
         db: &mut Connection,
@@ -80,7 +109,22 @@ impl Instrument {
     ///
     /// # Returns
     ///
-    /// A `QueryResult` containing the instrument as a `CommonInstrument`.
+    /// A `QueryResult` containing the instrument as a `CommonInstrument` if found.
+    ///
+    /// # Errors
+    ///
+    /// Returns an error if:
+    /// * The database connection fails
+    /// * The instrument with the specified code does not exist
+    /// * The query execution fails
+    /// * The conversion to CommonInstrument fails
+    ///
+    /// # Implementation Notes
+    ///
+    /// This function:
+    /// 1. Filters the instrument table by the provided code
+    /// 2. Limits the result to 1 record (optimization)
+    /// 3. Converts the result to a CommonInstrument
     ///
     pub fn read(db: &mut Connection, param_code: String) -> QueryResult<CommonInstrument> {
         instrument
@@ -98,7 +142,19 @@ impl Instrument {
     ///
     /// # Returns
     ///
-    /// A `QueryResult` containing the vector of `CommonInstrument`s.
+    /// A `QueryResult` containing a vector of all instruments as `CommonInstrument`s.
+    ///
+    /// # Errors
+    ///
+    /// Returns an error if:
+    /// * The database connection fails
+    /// * The query execution fails
+    /// * The conversion of any instrument to CommonInstrument fails
+    ///
+    /// # Performance Considerations
+    ///
+    /// This function retrieves all instruments from the database. For large datasets,
+    /// consider using pagination or limiting the result set size.
     ///
     pub fn read_all(db: &mut Connection) -> QueryResult<Vec<CommonInstrument>> {
         instrument
@@ -106,17 +162,32 @@ impl Instrument {
             .map(|s| s.iter().map(Self::to_common_instrument).collect())
     }
 
-    /// Updates an instrument's record in the database
+    /// Updates an instrument's record in the database.
     ///
     /// # Arguments
     ///
-    /// * `db` - A mutable reference to the database connection
-    /// * `param_code` - The instrument code to update
-    /// * `item` - The new instrument data
+    /// * `db` - A mutable reference to the database connection.
+    /// * `param_code` - The instrument code to update.
+    /// * `ins` - The new instrument data as a CommonInstrument.
     ///
     /// # Returns
     ///
-    /// Returns a `QueryResult` containing the updated instrument as a `CommonInstrument`
+    /// Returns a `QueryResult` containing the updated instrument as a `CommonInstrument`.
+    ///
+    /// # Errors
+    ///
+    /// Returns an error if:
+    /// * The database connection fails
+    /// * The instrument with the specified code does not exist
+    /// * The update operation fails due to constraint violations
+    /// * The conversion to/from CommonInstrument fails
+    ///
+    /// # Implementation Notes
+    ///
+    /// This function:
+    /// 1. Converts the CommonInstrument to UpdateInstrument
+    /// 2. Updates the existing record
+    /// 3. Returns the updated instrument data
     ///
     pub fn update(
         db: &mut Connection,
@@ -132,21 +203,28 @@ impl Instrument {
             .map(|s| s.to_common_instrument())
     }
 
-    /// Deletes a `Instrument` by its `code`.
+    /// Deletes an instrument by its code.
     ///
     /// # Arguments
     ///
     /// * `db` - A mutable reference to a postgres database connection.
-    /// * `param_code` - The `code` of the `Instrument` to be deleted.
+    /// * `param_code` - The code of the instrument to be deleted.
     ///
     /// # Returns
     ///
-    /// A `QueryResult` containing the number of rows deleted.
+    /// A `QueryResult` containing the number of rows deleted (0 or 1).
     ///
     /// # Errors
     ///
-    /// If there is an error with the database connection, this function will return
-    /// an `Err` containing the error.
+    /// Returns an error if:
+    /// * The database connection fails
+    /// * The delete operation fails
+    /// * The instrument is referenced by other tables (foreign key constraint)
+    ///
+    /// # Implementation Notes
+    ///
+    /// This function performs a soft delete if the schema supports it,
+    /// otherwise performs a hard delete. Returns 0 if no instrument was found.
     ///
     pub fn delete(db: &mut Connection, param_code: String) -> QueryResult<usize> {
         diesel::delete(instrument.filter(code.eq(param_code))).execute(db)

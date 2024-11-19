@@ -9,7 +9,7 @@ impl Endpoint {
             version: endpoint.version() as i32,
             base_uri: endpoint.uri().to_string(),
             port: endpoint.port() as i32,
-            protocol: ProtocolType::from_common_protocol_type(&endpoint.protocol()),
+            protocol: ProtocolType::from_common_protocol_type(endpoint.protocol()),
         }
     }
 

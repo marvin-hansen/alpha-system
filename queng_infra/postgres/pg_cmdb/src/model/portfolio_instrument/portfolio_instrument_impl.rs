@@ -26,6 +26,20 @@ impl PortfolioInstrument {
     /// * The database connection fails
     /// * The insert operation fails (e.g., due to constraint violations)
     /// * The portfolio or instrument referenced in `item` doesn't exist
+    /// * A duplicate portfolio-instrument relationship already exists
+    /// * Foreign key constraints are violated
+    ///
+    /// # Implementation Notes
+    ///
+    /// This function:
+    /// 1. Validates the existence of both portfolio and instrument through foreign key constraints
+    /// 2. Creates a new portfolio-instrument relationship
+    /// 3. Returns the created relationship record
+    ///
+    /// # Performance Considerations
+    ///
+    /// The operation requires checking foreign key constraints before insertion.
+    /// Consider batching multiple insertions if adding multiple instruments to a portfolio.
     ///
     pub fn create(db: &mut Connection, item: &CreatePortfolioInstrument) -> QueryResult<Self> {
         insert_into(portfolio_instrument)
@@ -51,7 +65,19 @@ impl PortfolioInstrument {
     ///
     /// Returns an error if:
     /// * The database connection fails
-    /// * The query execution fails
+    /// * The query execution fails due to database errors
+    /// * The portfolio ID or instrument ID format is invalid
+    ///
+    /// # Implementation Notes
+    ///
+    /// This function:
+    /// 1. Uses the composite primary key (portfolio_id, instrument_id) to look up the record
+    /// 2. Converts any NotFound errors to Ok(false)
+    /// 3. Propagates other database errors
+    ///
+    /// # Performance Considerations
+    ///
+    /// This operation uses the primary key for lookup and is optimized for performance.
     ///
     pub fn check_if_exists(
         db: &mut Connection,
@@ -86,6 +112,21 @@ impl PortfolioInstrument {
     /// * The database connection fails
     /// * The query execution fails
     /// * The portfolio ID does not exist
+    /// * The portfolio ID format is invalid
+    /// * The database transaction fails
+    ///
+    /// # Implementation Notes
+    ///
+    /// This function:
+    /// 1. Filters the portfolio_instrument table by the provided portfolio_id
+    /// 2. Loads all matching records into a vector
+    /// 3. Returns an empty vector if no instruments are found
+    ///
+    /// # Performance Considerations
+    ///
+    /// * This operation retrieves all instruments for a portfolio in a single query
+    /// * For portfolios with a large number of instruments, consider implementing pagination
+    /// * The query uses an index on portfolio_id for efficient retrieval
     ///
     pub fn read_instruments_for_portfolio(
         db: &mut Connection,
@@ -121,6 +162,20 @@ impl PortfolioInstrument {
     /// * The database connection fails
     /// * The delete operation fails
     /// * The query execution fails
+    /// * The portfolio ID or instrument ID format is invalid
+    /// * A database constraint violation occurs
+    ///
+    /// # Implementation Notes
+    ///
+    /// This function:
+    /// 1. Constructs a delete query with filters for both portfolio_id and instrument_id
+    /// 2. Executes the delete operation
+    /// 3. Returns the number of affected rows (0 or 1)
+    ///
+    /// # Performance Considerations
+    ///
+    /// * The operation uses a composite index on (`portfolio_id`, `instrument_id`) for efficient deletion
+    /// * Consider using batch deletion for removing multiple instruments from a portfolio
     ///
     pub fn delete(
         db: &mut Connection,

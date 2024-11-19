@@ -43,7 +43,9 @@ all = "warn"
 pedantic = "warn"
 nursery = "warn"
 # Allow
+cast_possible_wrap = "allow"
 module_name_repetitions = "allow"
+stutter = "allow"
 
 # Linting strict mode
 [workspace.lints.rust]

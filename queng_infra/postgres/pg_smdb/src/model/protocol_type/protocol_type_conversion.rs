@@ -2,7 +2,7 @@ use crate::model::protocol_type::ProtocolType;
 use common_config::ProtocolType as CommonProtocolType;
 
 impl ProtocolType {
-    pub const fn from_common_protocol_type(common_protocol_type: &CommonProtocolType) -> Self {
+    pub const fn from_common_protocol_type(common_protocol_type: CommonProtocolType) -> Self {
         match common_protocol_type {
             CommonProtocolType::UnknownProtocol => Self::UnknownProtocol,
             CommonProtocolType::GRPC => Self::GRPC,
