@@ -6,7 +6,7 @@ use chrono::Utc;
 
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Default, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct MetaDataSet {
     assets: MetaAssetRoot,
     exchanges: MetaExchangesRoot,

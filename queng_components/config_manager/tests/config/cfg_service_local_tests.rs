@@ -8,7 +8,8 @@ use smdb_specs::smdb_service_config;
 
 #[tokio::test]
 async fn test_get_cmdb_host() {
-    env::set_var("ENV", "LOCAL");
+    // Environment access only happens in single-threaded code.
+    unsafe { env::set_var("ENV", "LOCAL") };
 
     let service_id = ServiceID::CMDB;
     let cfg_manager = CfgManager::with_debug(service_id, cmdb_service_config()).await;
@@ -22,7 +23,8 @@ async fn test_get_cmdb_host() {
 
 #[tokio::test]
 async fn test_get_smdb_host() {
-    env::set_var("ENV", "LOCAL");
+    // Environment access only happens in single-threaded code.
+    unsafe { env::set_var("ENV", "LOCAL") };
 
     let service_id = ServiceID::SMDB;
     let cfg_manager = CfgManager::with_debug(service_id, smdb_service_config()).await;
@@ -35,7 +37,8 @@ async fn test_get_smdb_host() {
 
 #[tokio::test]
 async fn test_get_dbgw_host() {
-    env::set_var("ENV", "LOCAL");
+    // Environment access only happens in single-threaded code.
+    unsafe { env::set_var("ENV", "LOCAL") };
 
     let service_id = ServiceID::DBGW;
     let cfg_manager = CfgManager::with_debug(service_id, dbgw_service_config()).await;

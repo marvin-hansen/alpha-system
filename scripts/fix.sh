@@ -4,6 +4,6 @@ set -o nounset
 set -o pipefail
 
 
-MIGRATION_DATA="migrations"  cargo fix --allow-dirty
-
-MIGRATION_DATA="migrations"  cargo clippy --fix --allow-dirty
+# https://users.rust-lang.org/t/ive-ran-clippy-on-100k-crates/117127
+# https://www.reddit.com/r/rust/comments/a4wblu/how_to_configure_clippy_to_be_as_annoying_as/
+MIGRATION_DATA="migrations"  cargo clippy --all --fix --allow-dirty -- -Wclippy::all -Wclippy::pedantic -Wclippy::nursery

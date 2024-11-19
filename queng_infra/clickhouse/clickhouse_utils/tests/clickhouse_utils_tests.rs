@@ -7,7 +7,8 @@ use tokio::time::sleep;
 
 async fn setup_ci_env() {
     // Set the environment variable.
-    env::set_var("ENV", "CI");
+    // Environment access only happens in single-threaded code.
+    unsafe { env::set_var("ENV", "CI") };
 
     // Create new DockerUtil
     let ci_env = DockerUtil::with_debug().expect("Failed to get DockerUtil");

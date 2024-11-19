@@ -4,7 +4,8 @@ use std::env;
 
 #[test]
 fn test_local_env_type() {
-    env::set_var("ENV", "LOCAL");
+    // Environment access only happens in single-threaded code.
+    unsafe { env::set_var("ENV", "LOCAL") };
 
     let config_manager = EnvironmentManager::new();
 

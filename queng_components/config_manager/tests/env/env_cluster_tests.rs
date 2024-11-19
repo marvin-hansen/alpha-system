@@ -8,8 +8,10 @@ use std::env;
 
 #[tokio::test]
 async fn test_env_type() {
-    env::set_var("ENV", "CLUSTER");
-    env::set_var("DNS_SERVER", "9.9.9.9");
+    // Environment access only happens in single-threaded code.
+    unsafe { env::set_var("ENV", "CLUSTER") };
+    // Environment access only happens in single-threaded code.
+    unsafe { env::set_var("DNS_SERVER", "9.9.9.9") };
 
     let config_manager = CfgManager::new(ServiceID::SMDB, smdb_service_config()).await;
 

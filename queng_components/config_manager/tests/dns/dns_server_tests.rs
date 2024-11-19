@@ -6,12 +6,17 @@ use std::env;
 
 #[tokio::test]
 async fn test_new() {
-    env::set_var("ENV", "CLUSTER");
-    env::set_var("DNS_SERVER", "9.9.9.9");
+    // Environment access only happens in single-threaded code.
+    unsafe { env::set_var("ENV", "CLUSTER") };
+    // Environment access only happens in single-threaded code.
+    unsafe { env::set_var("DNS_SERVER", "9.9.9.9") };
     // On a K8s cluster, PG_USER, PG_PASSWORD and PG_DATABASE usually are set as cluster secrets
-    env::set_var("PG_USER", "postgres");
-    env::set_var("PG_PASSWORD", "password");
-    env::set_var("PG_DATABASE", "database");
+    // Environment access only happens in single-threaded code.
+    unsafe { env::set_var("PG_USER", "postgres") };
+    // Environment access only happens in single-threaded code.
+    unsafe { env::set_var("PG_PASSWORD", "password") };
+    // Environment access only happens in single-threaded code.
+    unsafe { env::set_var("PG_DATABASE", "database") };
 
     let config_manager = CfgManager::new(ServiceID::SMDB, smdb_service_config()).await;
     assert_eq!(config_manager.env_type(), EnvironmentType::CLUSTER);
@@ -22,12 +27,17 @@ async fn test_new() {
 
 #[tokio::test]
 async fn test_internal_dns() {
-    env::set_var("ENV", "CLUSTER");
-    env::set_var("DNS_SERVER", "9.9.9.9");
+    // Environment access only happens in single-threaded code.
+    unsafe { env::set_var("ENV", "CLUSTER") };
+    // Environment access only happens in single-threaded code.
+    unsafe { env::set_var("DNS_SERVER", "9.9.9.9") };
     // On a K8s cluster, PG_USER, PG_PASSWORD and PG_DATABASE usually are set as cluster secrets
-    env::set_var("PG_USER", "postgres");
-    env::set_var("PG_PASSWORD", "password");
-    env::set_var("PG_DATABASE", "database");
+    // Environment access only happens in single-threaded code.
+    unsafe { env::set_var("PG_USER", "postgres") };
+    // Environment access only happens in single-threaded code.
+    unsafe { env::set_var("PG_PASSWORD", "password") };
+    // Environment access only happens in single-threaded code.
+    unsafe { env::set_var("PG_DATABASE", "database") };
 
     let config_manager = CfgManager::with_debug(ServiceID::SMDB, smdb_service_config()).await;
 
@@ -41,12 +51,17 @@ async fn test_internal_dns() {
 
 #[tokio::test]
 async fn test_external_dns() {
-    env::set_var("ENV", "CLUSTER");
-    env::set_var("DNS_SERVER", "9.9.9.9");
+    // Environment access only happens in single-threaded code.
+    unsafe { env::set_var("ENV", "CLUSTER") };
+    // Environment access only happens in single-threaded code.
+    unsafe { env::set_var("DNS_SERVER", "9.9.9.9") };
     // On a K8s cluster, PG_USER, PG_PASSWORD and PG_DATABASE usually are set as cluster secrets
-    env::set_var("PG_USER", "postgres");
-    env::set_var("PG_PASSWORD", "password");
-    env::set_var("PG_DATABASE", "database");
+    // Environment access only happens in single-threaded code.
+    unsafe { env::set_var("PG_USER", "postgres") };
+    // Environment access only happens in single-threaded code.
+    unsafe { env::set_var("PG_PASSWORD", "password") };
+    // Environment access only happens in single-threaded code.
+    unsafe { env::set_var("PG_DATABASE", "database") };
 
     let config_manager = CfgManager::with_debug(ServiceID::SMDB, smdb_service_config()).await;
     assert_eq!(config_manager.env_type(), EnvironmentType::CLUSTER);
@@ -57,12 +72,17 @@ async fn test_external_dns() {
 
 #[tokio::test]
 async fn test_resolve_external_dns() {
-    env::set_var("ENV", "CLUSTER");
-    env::set_var("DNS_SERVER", "9.9.9.9");
+    // Environment access only happens in single-threaded code.
+    unsafe { env::set_var("ENV", "CLUSTER") };
+    // Environment access only happens in single-threaded code.
+    unsafe { env::set_var("DNS_SERVER", "9.9.9.9") };
     // On a K8s cluster, PG_USER, PG_PASSWORD and PG_DATABASE usually are set as cluster secrets
-    env::set_var("PG_USER", "postgres");
-    env::set_var("PG_PASSWORD", "password");
-    env::set_var("PG_DATABASE", "database");
+    // Environment access only happens in single-threaded code.
+    unsafe { env::set_var("PG_USER", "postgres") };
+    // Environment access only happens in single-threaded code.
+    unsafe { env::set_var("PG_PASSWORD", "password") };
+    // Environment access only happens in single-threaded code.
+    unsafe { env::set_var("PG_DATABASE", "database") };
 
     let config_manager = CfgManager::with_debug(ServiceID::SMDB, smdb_service_config()).await;
 

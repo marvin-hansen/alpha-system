@@ -6,7 +6,8 @@ use std::env;
 
 #[tokio::test]
 async fn test_env_type() {
-    env::set_var("ENV", "UNKNOWN");
+    // Environment access only happens in single-threaded code.
+    unsafe { env::set_var("ENV", "UNKNOWN") };
 
     let config_manager = CfgManager::new(ServiceID::SMDB, smdb_service_config()).await;
 

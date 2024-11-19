@@ -4,7 +4,8 @@ use std::env;
 
 #[test]
 fn test_ci_env_type() {
-    env::set_var("ENV", "CI");
+    // Environment access only happens in single-threaded code.
+    unsafe { env::set_var("ENV", "CI") };
 
     let config_manager = EnvironmentManager::new();
 

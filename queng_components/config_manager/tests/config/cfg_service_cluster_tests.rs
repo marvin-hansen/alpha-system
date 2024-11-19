@@ -17,12 +17,17 @@ use std::env;
 
 #[tokio::test]
 async fn test_init_smdb_env() {
-    env::set_var("ENV", "CLUSTER");
-    env::set_var("DNS_SERVER", "9.9.9.9");
+    // Environment access only happens in single-threaded code.
+    unsafe { env::set_var("ENV", "CLUSTER") };
+    // Environment access only happens in single-threaded code.
+    unsafe { env::set_var("DNS_SERVER", "9.9.9.9") };
     // On a K8s cluster, PG_USER, PG_PASSWORD and PG_DATABASE usually are set as cluster secrets
-    env::set_var("PG_USER", "postgres");
-    env::set_var("PG_PASSWORD", "password");
-    env::set_var("PG_DATABASE", "database");
+    // Environment access only happens in single-threaded code.
+    unsafe { env::set_var("PG_USER", "postgres") };
+    // Environment access only happens in single-threaded code.
+    unsafe { env::set_var("PG_PASSWORD", "password") };
+    // Environment access only happens in single-threaded code.
+    unsafe { env::set_var("PG_DATABASE", "database") };
 
     let service_id = ServiceID::SMDB;
     let cfg_manager = CfgManager::with_debug(service_id, smdb_service_config()).await;
@@ -34,8 +39,10 @@ async fn test_init_smdb_env() {
 
 #[tokio::test]
 async fn test_init_cmdb_env() {
-    env::set_var("ENV", "CLUSTER");
-    env::set_var("DNS_SERVER", "9.9.9.9");
+    // Environment access only happens in single-threaded code.
+    unsafe { env::set_var("ENV", "CLUSTER") };
+    // Environment access only happens in single-threaded code.
+    unsafe { env::set_var("DNS_SERVER", "9.9.9.9") };
 
     let service_id = ServiceID::CMDB;
     let cfg_manager = CfgManager::with_debug(service_id, cmdb_service_config()).await;
@@ -47,8 +54,10 @@ async fn test_init_cmdb_env() {
 
 #[tokio::test]
 async fn test_init_dbgw_env() {
-    env::set_var("ENV", "CLUSTER");
-    env::set_var("DNS_SERVER", "9.9.9.9");
+    // Environment access only happens in single-threaded code.
+    unsafe { env::set_var("ENV", "CLUSTER") };
+    // Environment access only happens in single-threaded code.
+    unsafe { env::set_var("DNS_SERVER", "9.9.9.9") };
 
     let service_id = ServiceID::DBGW;
     let cfg_manager = CfgManager::with_debug(service_id, dbgw_service_config()).await;

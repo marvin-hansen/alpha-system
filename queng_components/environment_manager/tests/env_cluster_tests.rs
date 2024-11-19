@@ -4,7 +4,8 @@ use std::env;
 
 #[test]
 fn test_cluster_env_type() {
-    env::set_var("ENV", "CLUSTER");
+    // Environment access only happens in single-threaded code.
+    unsafe { env::set_var("ENV", "CLUSTER") };
 
     let config_manager = EnvironmentManager::new();
 
