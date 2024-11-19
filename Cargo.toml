@@ -40,12 +40,6 @@ authors = ["Marvin Hansen <marvin.hansen@gmail.com>"]
 # Linting with clippy
 [workspace.lints.clippy]
 all = "warn"
-pedantic = "warn"
-nursery = "warn"
-# Allow
-cast_possible_wrap = "allow"
-module_name_repetitions = "allow"
-stutter = "allow"
 
 # Linting strict mode
 [workspace.lints.rust]
