@@ -18,6 +18,7 @@ members = [
     "queng_components/environment_manager",
     "queng_components/pattern_manager",
     "queng_components/symbol_manager",
+    "queng_extensions/cow_ext",
     "queng_import/core/config_import",
     "queng_import/core/integration_import",
     "queng_import/core/metadata_import",
@@ -170,6 +171,9 @@ config_manager = { path = "queng_components/config_manager" }
 environment_manager = { path = "queng_components/environment_manager" }
 pattern_manager = { path = "queng_components/pattern_manager" }
 symbol_manager = { path = "queng_components/symbol_manager" }
+
+# Extensions
+cow_ext = { path = "queng_extensions/cow_ext" }
 
 # Import
 # Core
