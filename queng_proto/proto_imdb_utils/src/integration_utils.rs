@@ -2,15 +2,29 @@ use common_exchange::ExchangeID;
 use common_ims::{ImsIntegrationType, IntegrationConfig, IntegrationMessageConfig};
 use proto_imdb::proto::{ProtoIntegrationConfig, ProtoIntegrationMessageConfig};
 
-/// Converts a protobuf integration configuration into an `IntegrationConfig`.
+/// Converts a `ProtoIntegrationConfig` into an `IntegrationConfig`.
 ///
-/// # Parameters
+/// # Arguments
 ///
-/// * `proto` - The protobuf integration configuration to convert
+/// * `proto` - The `ProtoIntegrationConfig` to convert
 ///
 /// # Returns
 ///
 /// An `IntegrationConfig` containing the converted configuration data
+///
+/// # Implementation Notes
+///
+/// This function:
+/// 1. Converts `ProtoIntegrationConfig` fields to their domain counterparts
+/// 2. Converts `ProtoIntegrationMessageConfig` fields to domain counterparts
+/// 3. Provides a default `IntegrationMessageConfig` if the field is absent
+///
+/// # Errors
+///
+/// This function will not return an error, but will panic if:
+/// * The `ProtoIntegrationConfig` is invalid
+/// * The `ProtoIntegrationMessageConfig` conversion fails
+/// * The `ExchangeID` cannot be converted from a `u32`
 ///
 #[must_use]
 pub fn integration_config_from_proto(proto: ProtoIntegrationConfig) -> IntegrationConfig {
@@ -38,15 +52,29 @@ pub fn integration_config_from_proto(proto: ProtoIntegrationConfig) -> Integrati
     )
 }
 
-/// Converts an `IntegrationConfig` into its protobuf representation.
+/// Converts an `IntegrationConfig` into a protobuf integration configuration.
 ///
-/// # Parameters
+/// # Arguments
 ///
-/// * `config` - The integration configuration to convert
+/// * `config` - The `IntegrationConfig` to convert
 ///
 /// # Returns
 ///
 /// A `ProtoIntegrationConfig` containing the converted configuration data
+///
+/// # Implementation Notes
+///
+/// This function:
+/// 1. Converts `IntegrationConfig` fields to their protobuf counterparts
+/// 2. Converts `IntegrationMessageConfig` fields to protobuf counterparts
+/// 3. Wraps `IntegrationMessageConfig` in a `Some` as it is an optional field in the protobuf
+///
+/// # Errors
+///
+/// This function will not return an error, but will panic if:
+/// * The `IntegrationConfig` is invalid
+/// * The `IntegrationMessageConfig` is invalid
+/// * The `ExchangeID` cannot be converted to a `u32`
 ///
 #[must_use]
 pub fn integration_config_to_proto(config: IntegrationConfig) -> ProtoIntegrationConfig {

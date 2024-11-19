@@ -1,5 +1,29 @@
 use common_metadata::{AssetMetadata, MetaAsset};
 
+/// Converts a MetaAsset to its protobuf representation.
+///
+/// # Arguments
+///
+/// * `meta_asset` - The `MetaAsset` to convert.
+///
+/// # Returns
+///
+/// Returns a `ProtoMetaAsset` containing all the converted fields from the input.
+///
+/// # Implementation Notes
+///
+/// This function:
+/// 1. Maps basic fields (code, name, class, classes) using clone()
+/// 2. Handles optional FIGI metadata:
+///    - Safely unwraps metadata if present
+///    - Extracts asset_figi field
+/// 3. Computes and includes the asset hash
+///
+/// # Safety
+///
+/// This function is marked as `#[must_use]` to ensure the caller handles the returned value.
+/// All string and vector conversions use clone() to ensure proper ownership transfer.
+///
 #[must_use]
 pub fn meta_asset_to_proto_asset(meta_asset: &MetaAsset) -> proto_mddb::proto::ProtoMetaAsset {
     proto_mddb::proto::ProtoMetaAsset {
@@ -16,6 +40,30 @@ pub fn meta_asset_to_proto_asset(meta_asset: &MetaAsset) -> proto_mddb::proto::P
     }
 }
 
+/// Converts a protobuf ProtoMetaAsset back to a MetaAsset.
+///
+/// # Arguments
+///
+/// * `proto_asset` - The `ProtoMetaAsset` to convert back.
+///
+/// # Returns
+///
+/// Returns a `MetaAsset` containing all the converted fields from the input.
+///
+/// # Implementation Notes
+///
+/// This function:
+/// 1. Maps basic fields (code, name, class, classes) using clone()
+/// 2. Constructs optional metadata if FIGI is present:
+///    - Creates AssetMetadata with asset_figi
+///    - Initializes all blockchain addresses as None
+/// 3. Initializes addresses field as None
+///
+/// # Safety
+///
+/// This function is marked as `#[must_use]` to ensure the caller handles the returned value.
+/// All string and vector conversions use clone() to ensure proper ownership transfer.
+///
 #[must_use]
 pub fn proto_asset_to_meta_asset(proto_asset: &proto_mddb::proto::ProtoMetaAsset) -> MetaAsset {
     MetaAsset {

@@ -98,7 +98,7 @@ fn test_get_all_assets_response() {
             addresses: None,
         },
     ];
-    let response = get_all_assets_response(meta_assets.clone());
+    let response = get_all_assets_response(&meta_assets);
     assert_eq!(response.assets.len(), meta_assets.len());
 }
 

@@ -1,6 +1,31 @@
 use common_metadata::{InstrumentMetadata, MetaInstrument};
 
-// Conversion utils
+/// Converts a MetaInstrument to its protobuf representation.
+///
+/// # Arguments
+///
+/// * `meta_instrument` - The `MetaInstrument` to convert.
+///
+/// # Returns
+///
+/// Returns a `ProtoMetaInstrument` containing all the converted fields from the input.
+///
+/// # Implementation Notes
+///
+/// This function:
+/// 1. Maps all basic fields directly (id, code, hash, class, assets)
+/// 2. Handles optional FIGI fields by:
+///    - Safely unwrapping metadata if present
+///    - Providing None for missing FIGI values
+/// 3. Converts timestamp fields:
+///    - Maps trade_start_timestamp from u64 to i64
+///    - Preserves trade_end_timestamp as is
+///
+/// # Safety
+///
+/// This function is marked as `#[must_use]` to ensure the caller handles the returned value.
+/// All string conversions are performed using clone() to ensure ownership transfer.
+///
 #[must_use]
 pub fn meta_instrument_to_proto_instrument(
     meta_instrument: &MetaInstrument,
@@ -43,6 +68,31 @@ pub fn meta_instrument_to_proto_instrument(
     }
 }
 
+/// Converts a protobuf ProtoMetaInstrument back to a MetaInstrument.
+///
+/// # Arguments
+///
+/// * `proto_instrument` - The `ProtoMetaInstrument` to convert back.
+///
+/// # Returns
+///
+/// Returns a `MetaInstrument` containing all the converted fields from the input.
+///
+/// # Implementation Notes
+///
+/// This function:
+/// 1. Constructs optional metadata if either FIGI field is present
+/// 2. Initializes legacy fields with empty strings (kaiko_legacy_exchange_slug, kaiko_legacy_symbol)
+/// 3. Sets unused numeric fields to 0 (trade_compressed_size, trade_count)
+/// 4. Converts timestamps:
+///    - Maps trade_start_timestamp from i64 to u64
+///    - Preserves trade_end_timestamp as is
+///
+/// # Safety
+///
+/// This function is marked as `#[must_use]` to ensure the caller handles the returned value.
+/// All string conversions are performed using clone() to ensure ownership transfer.
+///
 #[must_use]
 pub fn proto_instrument_to_meta_instrument(
     proto_instrument: &proto_mddb::proto::ProtoMetaInstrument,
