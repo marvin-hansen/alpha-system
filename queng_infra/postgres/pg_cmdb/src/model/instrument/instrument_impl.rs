@@ -117,14 +117,14 @@ impl Instrument {
     /// * The database connection fails
     /// * The instrument with the specified code does not exist
     /// * The query execution fails
-    /// * The conversion to CommonInstrument fails
+    /// * The conversion to `CommonInstrument` fails
     ///
     /// # Implementation Notes
     ///
     /// This function:
     /// 1. Filters the instrument table by the provided code
     /// 2. Limits the result to 1 record (optimization)
-    /// 3. Converts the result to a CommonInstrument
+    /// 3. Converts the result to a `CommonInstrument`
     ///
     pub fn read(db: &mut Connection, param_code: String) -> QueryResult<CommonInstrument> {
         instrument
@@ -149,7 +149,7 @@ impl Instrument {
     /// Returns an error if:
     /// * The database connection fails
     /// * The query execution fails
-    /// * The conversion of any instrument to CommonInstrument fails
+    /// * The conversion of any instrument to `CommonInstrument` fails
     ///
     /// # Performance Considerations
     ///
@@ -168,7 +168,7 @@ impl Instrument {
     ///
     /// * `db` - A mutable reference to the database connection.
     /// * `param_code` - The instrument code to update.
-    /// * `ins` - The new instrument data as a CommonInstrument.
+    /// * `ins` - The new instrument data as a `CommonInstrument`.
     ///
     /// # Returns
     ///
@@ -180,12 +180,12 @@ impl Instrument {
     /// * The database connection fails
     /// * The instrument with the specified code does not exist
     /// * The update operation fails due to constraint violations
-    /// * The conversion to/from CommonInstrument fails
+    /// * The conversion to/from `CommonInstrument` fails
     ///
     /// # Implementation Notes
     ///
     /// This function:
-    /// 1. Converts the CommonInstrument to UpdateInstrument
+    /// 1. Converts the `CommonInstrument` to `UpdateInstrument`
     /// 2. Updates the existing record
     /// 3. Returns the updated instrument data
     ///

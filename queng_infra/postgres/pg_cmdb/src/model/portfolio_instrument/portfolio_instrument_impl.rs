@@ -71,8 +71,8 @@ impl PortfolioInstrument {
     /// # Implementation Notes
     ///
     /// This function:
-    /// 1. Uses the composite primary key (portfolio_id, instrument_id) to look up the record
-    /// 2. Converts any NotFound errors to Ok(false)
+    /// 1. Uses the composite primary key (`portfolio_id`, `instrument_id`) to look up the record
+    /// 2. Converts any `NotFound` errors to Ok(false)
     /// 3. Propagates other database errors
     ///
     /// # Performance Considerations
@@ -118,7 +118,7 @@ impl PortfolioInstrument {
     /// # Implementation Notes
     ///
     /// This function:
-    /// 1. Filters the portfolio_instrument table by the provided portfolio_id
+    /// 1. Filters the `portfolio_instrument` table by the provided `portfolio_id`
     /// 2. Loads all matching records into a vector
     /// 3. Returns an empty vector if no instruments are found
     ///
@@ -126,7 +126,7 @@ impl PortfolioInstrument {
     ///
     /// * This operation retrieves all instruments for a portfolio in a single query
     /// * For portfolios with a large number of instruments, consider implementing pagination
-    /// * The query uses an index on portfolio_id for efficient retrieval
+    /// * The query uses an index on `portfolio_id` for efficient retrieval
     ///
     pub fn read_instruments_for_portfolio(
         db: &mut Connection,
@@ -168,7 +168,7 @@ impl PortfolioInstrument {
     /// # Implementation Notes
     ///
     /// This function:
-    /// 1. Constructs a delete query with filters for both portfolio_id and instrument_id
+    /// 1. Constructs a delete query with filters for both `portfolio_id` and `instrument_id`
     /// 2. Executes the delete operation
     /// 3. Returns the number of affected rows (0 or 1)
     ///

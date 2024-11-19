@@ -188,7 +188,7 @@ impl Portfolio {
     ///   - Instrument relationship joins
     /// * Data deserialization errors:
     ///   - Converting database records to Portfolio structs
-    ///   - Converting to CommonPortfolioConfig format
+    ///   - Converting to `CommonPortfolioConfig` format
     /// * Memory allocation errors with large result sets
     ///
     /// # Performance Notes
@@ -239,7 +239,7 @@ impl Portfolio {
     /// * Query execution failures
     /// * Type conversion errors:
     ///   - When converting count from i64 to u64
-    ///   - Overflow if count exceeds u64::MAX (extremely unlikely)
+    ///   - Overflow if count exceeds `u64::MAX` (extremely unlikely)
     ///
     /// # Performance Notes
     ///
@@ -310,7 +310,7 @@ impl Portfolio {
     /// # Errors
     ///
     /// This function will return an error in the following cases:
-    /// * Portfolio does not exist (returns DatabaseError)
+    /// * Portfolio does not exist (returns `DatabaseError`)
     /// * Database connection errors
     /// * Transaction failures during:
     ///   - Portfolio update

@@ -21,8 +21,8 @@ impl Exchange {
     ///
     /// Returns an error in the following cases:
     /// * Database connection errors
-    /// * Unique constraint violations (if exchange_id already exists)
-    /// * Invalid data in meta_exchange (constraint violations)
+    /// * Unique constraint violations (if `exchange_id` already exists)
+    /// * Invalid data in `meta_exchange` (constraint violations)
     /// * Serialization errors when converting between types
     ///
     pub fn create(
@@ -190,7 +190,7 @@ impl Exchange {
     /// Returns an error in the following cases:
     /// * Database connection errors
     /// * Query execution failures
-    /// * Data deserialization errors when converting to MetaExchange
+    /// * Data deserialization errors when converting to `MetaExchange`
     /// * Memory allocation errors for large result sets
     ///
     pub fn read_all(conn: &mut Connection) -> Result<Vec<MetaExchange>, Error> {

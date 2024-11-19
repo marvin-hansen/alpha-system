@@ -24,8 +24,8 @@ impl Instrument {
     ///
     /// Returns an error in the following cases:
     /// * Database connection errors
-    /// * Unique constraint violations (if instrument_id already exists)
-    /// * Invalid data in meta_instrument (constraint violations)
+    /// * Unique constraint violations (if `instrument_id` already exists)
+    /// * Invalid data in `meta_instrument` (constraint violations)
     /// * Serialization errors when converting between types
     ///
     pub fn create_instrument(
@@ -44,7 +44,7 @@ impl Instrument {
 
     /// Batch inserts a collection of instruments into the database.
     ///
-    /// For large collections (> MAX_BATCH), instruments are inserted in chunks
+    /// For large collections (> `MAX_BATCH`), instruments are inserted in chunks
     /// to prevent exceeding database parameter limits.
     ///
     /// # Arguments
@@ -216,7 +216,7 @@ impl Instrument {
     /// Returns an error in the following cases:
     /// * Database connection errors
     /// * Query execution failures
-    /// * Data deserialization errors when converting to MetaInstrument
+    /// * Data deserialization errors when converting to `MetaInstrument`
     /// * Memory allocation errors for large result sets
     ///
     pub fn read_all(conn: &mut Connection) -> Result<Vec<MetaInstrument>, diesel::result::Error> {
@@ -280,7 +280,7 @@ impl Instrument {
     /// * Query execution failures
     /// * Foreign key constraint violations (if instrument is referenced elsewhere)
     /// * Transaction failures during deletion
-    /// * Panics if check_if_instrument_id_exists fails
+    /// * Panics if `check_if_instrument_id_exists` fails
     ///
     pub fn delete(
         conn: &mut Connection,

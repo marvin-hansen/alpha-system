@@ -22,10 +22,10 @@ impl Stat {
     ///
     /// This function will return an error in the following cases:
     /// * Database connection error
-    /// * Unique constraint violations (e.g., duplicate stat_id)
-    /// * Invalid data in meta_stats that violates database constraints
+    /// * Unique constraint violations (e.g., duplicate `stat_id`)
+    /// * Invalid data in `meta_stats` that violates database constraints
     /// * Transaction failure during the insert operation
-    /// * Data conversion errors between MetaStats and database types
+    /// * Data conversion errors between `MetaStats` and database types
     ///
     pub fn create(
         conn: &mut crate::Connection,
@@ -54,12 +54,12 @@ impl Stat {
     /// # Errors
     ///
     /// This function will return an error in the following cases:
-    /// * Empty collection provided (returns a DatabaseError with Unknown kind)
+    /// * Empty collection provided (returns a `DatabaseError` with Unknown kind)
     /// * Database connection error
     /// * Unique constraint violations in any of the stats
-    /// * Invalid data in any meta_stats that violates database constraints
+    /// * Invalid data in any `meta_stats` that violates database constraints
     /// * Transaction failure during the bulk insert operation
-    /// * Data conversion errors between MetaStats and database types
+    /// * Data conversion errors between `MetaStats` and database types
     ///
     pub fn create_stat_collection(
         conn: &mut crate::Connection,
@@ -157,7 +157,7 @@ impl Stat {
     /// This function will return an error in the following cases:
     /// * Database connection error
     /// * Query execution failure
-    /// * Data deserialization error when converting database record to MetaStats
+    /// * Data deserialization error when converting database record to `MetaStats`
     /// * Type conversion errors when processing the result
     ///
     pub fn read(
@@ -187,7 +187,7 @@ impl Stat {
     /// This function will return an error in the following cases:
     /// * Database connection error
     /// * Query execution failure
-    /// * Data deserialization errors when converting database records to MetaStats
+    /// * Data deserialization errors when converting database records to `MetaStats`
     /// * Memory allocation errors when dealing with large result sets
     ///
     pub fn read_all(conn: &mut crate::Connection) -> Result<Vec<MetaStats>, diesel::result::Error> {

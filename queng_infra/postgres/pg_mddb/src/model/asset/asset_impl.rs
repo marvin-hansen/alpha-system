@@ -25,7 +25,7 @@ impl Asset {
     /// This function will return an error in the following cases:
     /// * Database connection error
     /// * Unique constraint violation if an asset with the same ID already exists
-    /// * Invalid data in the meta_asset that violates database constraints
+    /// * Invalid data in the `meta_asset` that violates database constraints
     /// * Transaction failure during the insert operation
     ///
     pub fn create_asset(db: &mut Connection, meta_asset: MetaAsset) -> QueryResult<MetaAsset> {
@@ -55,7 +55,7 @@ impl Asset {
     /// This function will return an error in the following cases:
     /// * Database connection error
     /// * Unique constraint violations if any asset IDs already exist
-    /// * Invalid data in any meta_asset that violates database constraints
+    /// * Invalid data in any `meta_asset` that violates database constraints
     /// * Transaction failure during the bulk insert operation
     /// * The operation is atomic - either all assets are inserted or none are
     ///
@@ -141,7 +141,7 @@ impl Asset {
     /// This function will return an error in the following cases:
     /// * Database connection error
     /// * Query execution failure
-    /// * Data deserialization error when converting database record to MetaAsset
+    /// * Data deserialization error when converting database record to `MetaAsset`
     ///
     pub fn read(db: &mut Connection, param_asset_id: String) -> QueryResult<Option<MetaAsset>> {
         let exists = Self::check_if_asset_id_exists(db, param_asset_id.clone())?;
@@ -172,7 +172,7 @@ impl Asset {
     /// This function will return an error in the following cases:
     /// * Database connection error
     /// * Query execution failure
-    /// * Data deserialization errors when converting database records to MetaAsset
+    /// * Data deserialization errors when converting database records to `MetaAsset`
     /// * Memory allocation errors when dealing with large result sets
     ///
     pub fn read_all(db: &mut Connection) -> QueryResult<Vec<MetaAsset>> {
@@ -200,7 +200,7 @@ impl Asset {
     /// This function will return an error in the following cases:
     /// * Database connection error
     /// * Query execution failure
-    /// * Constraint violations in the new meta_asset data
+    /// * Constraint violations in the new `meta_asset` data
     /// * Transaction failure during the update operation
     /// * Concurrent modification conflicts
     ///

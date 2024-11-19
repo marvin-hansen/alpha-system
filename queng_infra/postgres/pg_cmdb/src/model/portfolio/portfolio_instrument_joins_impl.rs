@@ -14,7 +14,7 @@ impl Portfolio {
     /// Reads and retrieves portfolio configuration data along with its associated instruments from the database.
     ///
     /// This function performs a join operation between the portfolio and instrument tables through the
-    /// portfolio_instrument junction table to fetch all instruments associated with the portfolio.
+    /// `portfolio_instrument` junction table to fetch all instruments associated with the portfolio.
     ///
     /// # Arguments
     ///
@@ -31,7 +31,7 @@ impl Portfolio {
     /// This function will return an error in the following cases:
     /// * Database connection error
     /// * Query execution failure
-    /// * Portfolio with given ID does not exist (returns NotNullViolation error)
+    /// * Portfolio with given ID does not exist (returns `NotNullViolation` error)
     /// * Join operation failures between portfolio and instrument tables
     /// * Data deserialization errors when converting database records
     /// * Foreign key constraint violations
@@ -43,7 +43,7 @@ impl Portfolio {
     /// 1. Checks if the portfolio exists
     /// 2. Retrieves the portfolio data
     /// 3. Performs a join operation to get all associated instruments
-    /// 4. Combines the data into a CommonPortfolioConfig
+    /// 4. Combines the data into a `CommonPortfolioConfig`
     ///
     pub fn read(
         db: &mut PGConnection,

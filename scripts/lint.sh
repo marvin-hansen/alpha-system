@@ -10,6 +10,8 @@ echo "=============="
 # https://www.reddit.com/r/rust/comments/a4wblu/how_to_configure_clippy_to_be_as_annoying_as/
 command cargo clippy --all-targets -Wclippy::all -Wclippy::pedantic -Wclippy::nursery -Wclippy::cargo
 
+cargo clippy --workspace --all-targets --exclude proto_cmdb --exclude proto_imdb --exclude proto_mddb --exclude  proto_smdb -- -Wclippy::all -Wclippy::nursery
+
 echo "=============="
 echo "Format targets "
 echo "=============="

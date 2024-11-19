@@ -27,17 +27,17 @@ impl IntegrationConfig {
     ///
     /// This function will return an error in the following cases:
     /// * Database connection error
-    /// * Unique constraint violations (e.g., duplicate integration_id)
+    /// * Unique constraint violations (e.g., duplicate `integration_id`)
     /// * Invalid data in config that violates database constraints
     /// * Transaction failure during the insert operation
-    /// * Data conversion errors between CommonIntegrationConfig and database types
+    /// * Data conversion errors between `CommonIntegrationConfig` and database types
     ///
     /// # Implementation Notes
     ///
     /// This function:
-    /// 1. Converts the CommonIntegrationConfig to a database-specific CreateIntegrationConfig
+    /// 1. Converts the `CommonIntegrationConfig` to a database-specific `CreateIntegrationConfig`
     /// 2. Performs the insert operation with automatic returning of the created record
-    /// 3. Converts the result back to CommonIntegrationConfig format
+    /// 3. Converts the result back to `CommonIntegrationConfig` format
     ///
     /// # Performance Considerations
     ///
@@ -71,10 +71,10 @@ impl IntegrationConfig {
     ///
     /// This function will return an error in the following cases:
     /// * Database connection error
-    /// * Unique constraint violations (e.g., duplicate integration_ids)
+    /// * Unique constraint violations (e.g., duplicate `integration_ids`)
     /// * Invalid data in any config that violates database constraints
     /// * Transaction failure during the bulk insert operation
-    /// * Data conversion errors between CommonIntegrationConfig and database types
+    /// * Data conversion errors between `CommonIntegrationConfig` and database types
     /// * The operation is atomic - either all configs are inserted or none are
     ///
     pub fn insert_integration_config_collection(
@@ -206,7 +206,7 @@ impl IntegrationConfig {
     /// This function will return an error in the following cases:
     /// * Database connection error
     /// * Query execution failure
-    /// * Data deserialization errors when converting database record to CommonIntegrationConfig
+    /// * Data deserialization errors when converting database record to `CommonIntegrationConfig`
     ///
     pub fn get_integration_config(
         db: &mut Connection,
@@ -242,15 +242,15 @@ impl IntegrationConfig {
     /// # Implementation Notes
     ///
     /// This function:
-    /// 1. Queries all records from the integration_config table
-    /// 2. Converts each record to CommonIntegrationConfig format
+    /// 1. Queries all records from the `integration_config` table
+    /// 2. Converts each record to `CommonIntegrationConfig` format
     /// 3. Collects results into a vector
     ///
     /// # Performance Considerations
     ///
     /// * For large datasets, consider using pagination or limiting the result set
     /// * Memory usage scales linearly with the number of configurations
-    /// * Consider using get_all_integration_configs_by_exchange for filtered results
+    /// * Consider using `get_all_integration_configs_by_exchange` for filtered results
     ///
     pub fn get_all_integration_configs(
         db: &mut Connection,
@@ -282,20 +282,20 @@ impl IntegrationConfig {
     /// * Database connection error
     /// * Query execution failure
     /// * Data deserialization errors when converting database records
-    /// * Invalid exchange_id format or type
+    /// * Invalid `exchange_id` format or type
     ///
     /// # Implementation Notes
     ///
     /// This function:
-    /// 1. Filters integration_config table by the specified exchange_id
-    /// 2. Converts matching records to CommonIntegrationConfig format
+    /// 1. Filters `integration_config` table by the specified `exchange_id`
+    /// 2. Converts matching records to `CommonIntegrationConfig` format
     /// 3. Returns results as a vector
     ///
     /// # Performance Considerations
     ///
-    /// * Uses an index on exchange_id for efficient filtering
+    /// * Uses an index on `exchange_id` for efficient filtering
     /// * Memory usage scales with the number of configurations per exchange
-    /// * More efficient than get_all_integration_configs when filtering by exchange
+    /// * More efficient than `get_all_integration_configs` when filtering by exchange
     ///
     pub fn get_all_integration_configs_by_exchange(
         db: &mut Connection,
@@ -335,8 +335,8 @@ impl IntegrationConfig {
     /// # Implementation Notes
     ///
     /// This function:
-    /// 1. Filters integration_config table where online = true
-    /// 2. Converts matching records to CommonIntegrationConfig format
+    /// 1. Filters `integration_config` table where online = true
+    /// 2. Converts matching records to `CommonIntegrationConfig` format
     /// 3. Returns results as a vector
     ///
     /// # Performance Considerations
@@ -382,8 +382,8 @@ impl IntegrationConfig {
     /// # Implementation Notes
     ///
     /// This function:
-    /// 1. Filters integration_config table where online = false
-    /// 2. Converts matching records to CommonIntegrationConfig format
+    /// 1. Filters `integration_config` table where online = false
+    /// 2. Converts matching records to `CommonIntegrationConfig` format
     /// 3. Returns results as a vector
     ///
     /// # Performance Considerations
@@ -436,7 +436,7 @@ impl IntegrationConfig {
     /// # Implementation Notes
     ///
     /// This function:
-    /// 1. Uses the generic set_online function with online=true
+    /// 1. Uses the generic `set_online` function with online=true
     /// 2. Updates only the online status field
     /// 3. Performs an atomic update operation
     ///
@@ -470,7 +470,7 @@ impl IntegrationConfig {
     /// # Implementation Notes
     ///
     /// This function:
-    /// 1. Uses the generic set_online function with online=false
+    /// 1. Uses the generic `set_online` function with online=false
     /// 2. Updates only the online status field
     /// 3. Performs an atomic update operation
     ///
@@ -507,7 +507,7 @@ impl IntegrationConfig {
     /// * Database connection error
     /// * Query execution failure
     /// * Constraint violations in the updated configuration
-    /// * Data conversion errors between CommonIntegrationConfig and database types
+    /// * Data conversion errors between `CommonIntegrationConfig` and database types
     /// * Concurrent modification conflicts
     ///
     pub fn update_integration_config(

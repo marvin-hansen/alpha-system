@@ -6,8 +6,8 @@ impl DockerUtil {
     ///
     /// # Arguments
     ///
-    /// * `self` - Reference to the DockerUtil instance
-    /// * `container_config` - Reference to a ContainerConfig containing the container configuration:
+    /// * `self` - Reference to the `DockerUtil` instance
+    /// * `container_config` - Reference to a `ContainerConfig` containing the container configuration:
     ///   - Container name
     ///   - Image tag
     ///   - Other container-specific settings
@@ -22,7 +22,7 @@ impl DockerUtil {
     ///
     /// # Errors
     ///
-    /// Returns a DockerError if:
+    /// Returns a `DockerError` if:
     /// * Container existence check fails
     /// * Container tag verification fails
     /// * Container stop operation fails (when tag mismatch)
