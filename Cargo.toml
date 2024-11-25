@@ -4,6 +4,7 @@ resolver = "2"
 members = [
     "queng_common/*",
     "queng_components/*",
+    "queng_datastructures/*",
     "queng_extensions/*",
     "queng_import/*/*",
     "queng_infra/*/*",
@@ -99,6 +100,10 @@ config_manager = { path = "queng_components/config_manager" }
 environment_manager = { path = "queng_components/environment_manager" }
 pattern_manager = { path = "queng_components/pattern_manager" }
 symbol_manager = { path = "queng_components/symbol_manager" }
+
+# Datastructures
+ring_buffer = { path = "queng_datastructures/ring_buffer" }
+sliding_window = { path = "queng_datastructures/sliding_window" }
 
 # Extensions
 cow_ext = { path = "queng_extensions/cow_ext" }

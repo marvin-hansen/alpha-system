@@ -1,0 +1,18 @@
+load("@rules_rust//rust:defs.bzl", "rust_test_suite")
+
+rust_test_suite(
+    name = "tests_safe",
+    srcs = glob([
+        "storage_safe/*_tests.rs",
+    ]),
+    tags = [
+        "sliding_window",
+        "datastructures",
+        "unit-test",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        "//alias:sliding_window",
+    ],
+)
