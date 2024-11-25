@@ -6,8 +6,8 @@ rust_test_suite(
         "storage_safe/*_tests.rs",
     ]),
     tags = [
-        "sliding_window",
         "datastructures",
+        "sliding_window",
         "unit-test",
     ],
     visibility = ["//visibility:public"],

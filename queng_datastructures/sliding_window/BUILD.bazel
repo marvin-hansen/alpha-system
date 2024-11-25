@@ -7,8 +7,8 @@ rust_library(
     ]),
     crate_root = "src/lib.rs",
     tags = [
-        "sliding_window",
         "datastructures",
+        "sliding_window",
     ],
     visibility = ["//visibility:public"],
     deps = [
