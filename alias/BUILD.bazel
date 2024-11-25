@@ -94,6 +94,11 @@ alias(
 ###############################################################################
 
 alias(
+    name = "ring_buffer",
+    actual = "//queng_datastructures/ring_buffer",
+)
+
+alias(
     name = "sliding_window",
     actual = "//queng_datastructures/sliding_window",
 )

@@ -97,7 +97,7 @@ rust_library(
         "//thirdparty/crates/rand-0.8.5:rand",
         "//thirdparty/crates/sha1-0.10.6:sha1",
         "//thirdparty/crates/thiserror-1.0.69:thiserror",
-        "//thirdparty/crates/url-2.5.3:url",
+        "//thirdparty/crates/url-2.5.4:url",
         "//thirdparty/crates/utf-8-0.7.6:utf8",
     ],
 )

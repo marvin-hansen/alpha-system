@@ -83,8 +83,8 @@ rust_library(
     }),
     version = "1.5.0",
     deps = [
-        "//thirdparty/crates/yoke-0.7.4:yoke",
-        "//thirdparty/crates/zerofrom-0.1.4:zerofrom",
+        "//thirdparty/crates/yoke-0.7.5:yoke",
+        "//thirdparty/crates/zerofrom-0.1.5:zerofrom",
         "//thirdparty/crates/zerovec-0.10.4:zerovec",
     ],
 )

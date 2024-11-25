@@ -112,7 +112,7 @@ rust_library(
         "//thirdparty/crates/reqwest-0.12.9:reqwest",
         "//thirdparty/crates/reqwest-middleware-0.4.0:reqwest_middleware",
         "//thirdparty/crates/reqwest-retry-0.7.0:reqwest_retry",
-        "//thirdparty/crates/rustls-0.23.17:rustls",
+        "//thirdparty/crates/rustls-0.23.18:rustls",
         "//thirdparty/crates/serde-1.0.215:serde",
         "//thirdparty/crates/serde_json-1.0.133:serde_json",
         "//thirdparty/crates/serde_with-3.11.0:serde_with",
@@ -123,6 +123,6 @@ rust_library(
         "//thirdparty/crates/toml-0.8.19:toml",
         "//thirdparty/crates/tracing-0.1.40:tracing",
         "//thirdparty/crates/uuid-1.11.0:uuid",
-        "//thirdparty/crates/webpki-roots-0.26.6:webpki_roots",
+        "//thirdparty/crates/webpki-roots-0.26.7:webpki_roots",
     ],
 )

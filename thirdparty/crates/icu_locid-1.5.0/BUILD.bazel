@@ -86,7 +86,7 @@ rust_library(
     }),
     version = "1.5.0",
     deps = [
-        "//thirdparty/crates/litemap-0.7.3:litemap",
+        "//thirdparty/crates/litemap-0.7.4:litemap",
         "//thirdparty/crates/tinystr-0.7.6:tinystr",
         "//thirdparty/crates/writeable-0.5.5:writeable",
         "//thirdparty/crates/zerovec-0.10.4:zerovec",

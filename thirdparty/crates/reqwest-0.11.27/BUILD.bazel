@@ -94,7 +94,7 @@ rust_library(
         "//thirdparty/crates/serde_urlencoded-0.7.1:serde_urlencoded",
         "//thirdparty/crates/sync_wrapper-0.1.2:sync_wrapper",
         "//thirdparty/crates/tower-service-0.3.3:tower_service",
-        "//thirdparty/crates/url-2.5.3:url",
+        "//thirdparty/crates/url-2.5.4:url",
     ] + select({
         "@rules_rust//rust/platform:aarch64-apple-darwin": [
             "//thirdparty/crates/encoding_rs-0.8.35:encoding_rs",  # cfg(not(target_arch = "wasm32"))

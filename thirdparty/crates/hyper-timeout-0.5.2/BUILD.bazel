@@ -80,7 +80,7 @@ rust_library(
     }),
     version = "0.5.2",
     deps = [
-        "//thirdparty/crates/hyper-1.5.0:hyper",
+        "//thirdparty/crates/hyper-1.5.1:hyper",
         "//thirdparty/crates/hyper-util-0.1.10:hyper_util",
         "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",
         "//thirdparty/crates/tokio-1.41.1:tokio",

@@ -83,8 +83,8 @@ rust_library(
         "//thirdparty/crates/darling-0.20.10:darling",
         "//thirdparty/crates/either-1.13.0:either",
         "//thirdparty/crates/heck-0.5.0:heck",
-        "//thirdparty/crates/proc-macro2-1.0.89:proc_macro2",
+        "//thirdparty/crates/proc-macro2-1.0.92:proc_macro2",
         "//thirdparty/crates/quote-1.0.37:quote",
-        "//thirdparty/crates/syn-2.0.87:syn",
+        "//thirdparty/crates/syn-2.0.89:syn",
     ],
 )

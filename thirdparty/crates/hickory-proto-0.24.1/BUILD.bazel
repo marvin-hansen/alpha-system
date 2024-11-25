@@ -101,6 +101,6 @@ rust_library(
         "//thirdparty/crates/tinyvec-1.8.0:tinyvec",
         "//thirdparty/crates/tokio-1.41.1:tokio",
         "//thirdparty/crates/tracing-0.1.40:tracing",
-        "//thirdparty/crates/url-2.5.3:url",
+        "//thirdparty/crates/url-2.5.4:url",
     ],
 )

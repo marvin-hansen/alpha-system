@@ -91,8 +91,8 @@ rust_library(
         "//thirdparty/crates/stable_deref_trait-1.2.0:stable_deref_trait",
         "//thirdparty/crates/tinystr-0.7.6:tinystr",
         "//thirdparty/crates/writeable-0.5.5:writeable",
-        "//thirdparty/crates/yoke-0.7.4:yoke",
-        "//thirdparty/crates/zerofrom-0.1.4:zerofrom",
+        "//thirdparty/crates/yoke-0.7.5:yoke",
+        "//thirdparty/crates/zerofrom-0.1.5:zerofrom",
         "//thirdparty/crates/zerovec-0.10.4:zerovec",
     ],
 )

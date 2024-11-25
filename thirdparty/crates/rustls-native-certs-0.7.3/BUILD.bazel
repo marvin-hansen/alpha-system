@@ -99,7 +99,7 @@ rust_library(
             "//thirdparty/crates/openssl-probe-0.1.5:openssl_probe",  # cfg(all(unix, not(target_os = "macos")))
         ],
         "@rules_rust//rust/platform:aarch64-pc-windows-msvc": [
-            "//thirdparty/crates/schannel-0.1.26:schannel",  # cfg(windows)
+            "//thirdparty/crates/schannel-0.1.27:schannel",  # cfg(windows)
         ],
         "@rules_rust//rust/platform:aarch64-unknown-fuchsia": [
             "//thirdparty/crates/openssl-probe-0.1.5:openssl_probe",  # cfg(all(unix, not(target_os = "macos")))
@@ -129,7 +129,7 @@ rust_library(
             "//thirdparty/crates/openssl-probe-0.1.5:openssl_probe",  # cfg(all(unix, not(target_os = "macos")))
         ],
         "@rules_rust//rust/platform:i686-pc-windows-msvc": [
-            "//thirdparty/crates/schannel-0.1.26:schannel",  # cfg(windows)
+            "//thirdparty/crates/schannel-0.1.27:schannel",  # cfg(windows)
         ],
         "@rules_rust//rust/platform:i686-unknown-freebsd": [
             "//thirdparty/crates/openssl-probe-0.1.5:openssl_probe",  # cfg(all(unix, not(target_os = "macos")))
@@ -153,7 +153,7 @@ rust_library(
             "//thirdparty/crates/openssl-probe-0.1.5:openssl_probe",  # cfg(all(unix, not(target_os = "macos")))
         ],
         "@rules_rust//rust/platform:x86_64-pc-windows-msvc": [
-            "//thirdparty/crates/schannel-0.1.26:schannel",  # cfg(windows)
+            "//thirdparty/crates/schannel-0.1.27:schannel",  # cfg(windows)
         ],
         "@rules_rust//rust/platform:x86_64-unknown-freebsd": [
             "//thirdparty/crates/openssl-probe-0.1.5:openssl_probe",  # cfg(all(unix, not(target_os = "macos")))

@@ -89,7 +89,7 @@ rust_library(
     }),
     version = "0.102.8",
     deps = [
-        "//thirdparty/crates/aws-lc-rs-1.11.0:aws_lc_rs",
+        "//thirdparty/crates/aws-lc-rs-1.11.1:aws_lc_rs",
         "//thirdparty/crates/ring-0.17.8:ring",
         "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",
         "//thirdparty/crates/untrusted-0.9.0:untrusted",

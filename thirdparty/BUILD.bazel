@@ -70,6 +70,10 @@ crates_vendor(
             package = "chrono",
             version = "0.4.38",
         ),
+        "crossbeam": crate.spec(
+            package = "crossbeam",
+            version = "0.8.4",
+        ),
         "ctrlc": crate.spec(
             package = "ctrlc",
             version = "3.4.5",

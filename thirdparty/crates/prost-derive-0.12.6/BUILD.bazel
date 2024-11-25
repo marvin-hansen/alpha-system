@@ -82,8 +82,8 @@ rust_proc_macro(
     deps = [
         "//thirdparty/crates/anyhow-1.0.93:anyhow",
         "//thirdparty/crates/itertools-0.12.1:itertools",
-        "//thirdparty/crates/proc-macro2-1.0.89:proc_macro2",
+        "//thirdparty/crates/proc-macro2-1.0.92:proc_macro2",
         "//thirdparty/crates/quote-1.0.37:quote",
-        "//thirdparty/crates/syn-2.0.87:syn",
+        "//thirdparty/crates/syn-2.0.89:syn",
     ],
 )

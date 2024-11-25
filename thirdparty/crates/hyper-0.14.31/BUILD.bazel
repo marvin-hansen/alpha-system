@@ -198,7 +198,7 @@ rust_library(
         "//thirdparty/crates/http-body-0.4.6:http_body",
         "//thirdparty/crates/httparse-1.9.5:httparse",
         "//thirdparty/crates/httpdate-1.0.3:httpdate",
-        "//thirdparty/crates/itoa-1.0.11:itoa",
+        "//thirdparty/crates/itoa-1.0.13:itoa",
         "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",
         "//thirdparty/crates/socket2-0.5.7:socket2",
         "//thirdparty/crates/tokio-1.41.1:tokio",
