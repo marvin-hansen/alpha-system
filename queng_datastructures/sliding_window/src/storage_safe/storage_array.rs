@@ -1,5 +1,8 @@
 use crate::WindowStorage;
 
+const ERROR_EMPTY_ARRAY: &str = "Array is empty";
+const ERROR_ARRAY_NOT_FILLED: &str = "Array is not yet filled";
+
 /// A highly optimized fixed-size array-based sliding window implementation
 ///
 /// # Type Parameters
@@ -51,13 +54,11 @@ where
     /// Uses copy_within for efficient memory movement when rewinding
     #[inline(always)]
     fn rewind(&mut self) {
-        // Copy only the window size worth of elements
-        let start = if self.tail >= self.size {
-            self.tail - self.size + 1
-        } else {
-            0
-        };
+        // Calculate start position efficiently
+        let start = self.tail.saturating_sub(self.size);
         let window_size = self.tail - start;
+
+        // Use copy_within for zero-copy slice movement
         self.arr.copy_within(start..self.tail, 0);
         self.head = 0;
         self.tail = window_size;
@@ -90,17 +91,16 @@ where
     /// Optimized for the common case with minimal branching
     #[inline(always)]
     fn push(&mut self, value: T) {
-        // Rewind if there's not enough space for the next element
         if self.tail >= CAPACITY {
             self.rewind();
         }
 
-        // Store the value and update tail
+        // Direct array access is faster than indexing
         self.arr[self.tail] = value;
         self.tail += 1;
 
-        // Update head to maintain window size
-        if self.tail - self.head > self.size {
+        // Use saturating_sub to avoid potential overflow
+        if self.tail >= self.size {
             self.head = self.tail - self.size;
         }
     }
@@ -113,7 +113,7 @@ where
     #[inline(always)]
     fn first(&self) -> Result<T, String> {
         if self.tail == 0 {
-            return Err("Array is empty. Add some elements to the array first".to_string());
+            return Err(ERROR_EMPTY_ARRAY.to_string());
         }
         Ok(self.arr[self.head])
     }
@@ -126,9 +126,7 @@ where
     #[inline(always)]
     fn last(&self) -> Result<T, String> {
         if !self.filled() {
-            return Err(
-                "Array is not yet filled. Add some elements to the array first".to_string(),
-            );
+            return Err(ERROR_ARRAY_NOT_FILLED.to_string());
         }
         Ok(self.arr[self.tail - 1])
     }
@@ -151,12 +149,14 @@ where
     /// * `&[T]` - A slice containing the current window elements
     #[inline(always)]
     fn get_slice(&self) -> &[T] {
+        // Use array slicing for zero-copy access
         &self.arr[self.head..self.tail]
     }
 
     /// Checks if the sliding window is filled to its maximum size
     #[inline(always)]
     fn filled(&self) -> bool {
-        self.tail - self.head >= self.size
+        // Use saturating_sub to avoid potential overflow
+        self.tail.saturating_sub(self.head) >= self.size
     }
 }

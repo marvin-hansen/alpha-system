@@ -4,6 +4,11 @@
 use crate::WindowStorage;
 
 #[cfg(feature = "unsafe")]
+const ERROR_EMPTY_ARRAY: &str = "Array is empty";
+#[cfg(feature = "unsafe")]
+const ERROR_ARRAY_NOT_FILLED: &str = "Array is not yet filled";
+
+#[cfg(feature = "unsafe")]
 #[repr(C, align(64))]
 #[derive(Debug)]
 pub struct UnsafeArrayStorage<T, const SIZE: usize, const CAPACITY: usize>
@@ -113,7 +118,7 @@ where
     #[inline(always)]
     fn first(&self) -> Result<T, String> {
         if self.tail == 0 {
-            return Err("Array is empty. Add some elements to the array first".to_string());
+            return Err(ERROR_EMPTY_ARRAY.to_string());
         }
 
         Ok(self.arr[self.head])
@@ -129,9 +134,7 @@ where
     #[inline(always)]
     fn last(&self) -> Result<T, String> {
         if !self.filled() {
-            return Err(
-                "Array is not yet filled. Add some elements to the array first".to_string(),
-            );
+            return Err(ERROR_ARRAY_NOT_FILLED.to_string());
         }
         Ok(self.arr[self.tail - 1])
     }
