@@ -87,7 +87,6 @@ rust_test_suite(
     ],
 )
 
-
 rust_test_suite(
     name = "ringbuffer",
     srcs = glob([
@@ -104,7 +103,6 @@ rust_test_suite(
         "//alias:ring_buffer",
     ],
 )
-
 
 rust_test_suite(
     name = "sequence",
@@ -123,7 +121,6 @@ rust_test_suite(
     ],
 )
 
-
 rust_test_suite(
     name = "utils",
     srcs = glob([
@@ -140,7 +137,6 @@ rust_test_suite(
         "//alias:ring_buffer",
     ],
 )
-
 
 rust_test_suite(
     name = "wait_strategy",

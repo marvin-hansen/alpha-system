@@ -7,10 +7,30 @@ readme.workspace = true
 repository.workspace = true
 authors.workspace = true
 
-[dependencies]
+[[example]]
+name = "ring_buffer_single_producer_single_consume"
+path = "examples/ring_buffer_single_producer_single_consumer.rs"
+
+[[example]]
+name = "ring_buffer_single_producer_multi_consumer"
+path = "examples/ring_buffer_single_producer_multi_consumer.rs"
+
+[[example]]
+name = "ring_buffer_multi_producer_single_consumer"
+path = "examples/ring_buffer_multi_producer_single_consumer.rs"
+
+[[example]]
+name = "ring_buffer_multi_producer_multi_consumer"
+path = "examples/ring_buffer_multi_producer_multi_consumer.rs"
+
+[[bench]]
+name = "bench_ring_buffer"
+harness = false
 
 [lints]
 workspace = true
+
+[dependencies]
 
 [dev-dependencies]
 crossbeam= {workspace = true}
