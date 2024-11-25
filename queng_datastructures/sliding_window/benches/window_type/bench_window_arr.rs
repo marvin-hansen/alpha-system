@@ -2,14 +2,14 @@ use criterion::{criterion_group, Criterion};
 
 use sliding_window::{ArrayStorage, SlidingWindow};
 
-use crate::window_type::fields::{MULT, SIZE};
+use crate::window_type::fields::{CAPACITY, SIZE};
 
 #[derive(Default, Debug, Copy, Clone, Hash, Eq, PartialEq)]
 pub struct Data {
     dats: i32,
 }
 
-fn get_sliding_window() -> SlidingWindow<ArrayStorage<Data, SIZE, MULT>, Data> {
+fn get_sliding_window() -> SlidingWindow<ArrayStorage<Data, SIZE, CAPACITY>, Data> {
     sliding_window::new_with_array_storage()
 }
 

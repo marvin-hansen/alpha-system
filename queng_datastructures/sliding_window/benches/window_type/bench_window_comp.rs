@@ -5,12 +5,9 @@ use sliding_window::{
     ArrayStorage, UnsafeArrayStorage, UnsafeVectorStorage, VectorStorage, WindowStorage,
 };
 
+use crate::window_type::fields::{CAPACITY, MULT, SIZE};
 #[cfg(not(feature = "unsafe"))]
 use sliding_window::{ArrayStorage, VectorStorage, WindowStorage};
-
-const SIZE: usize = 4;
-const CAPACITY: usize = 1200;
-const MULT: usize = 300; // 300 * 4 = 1200 Same capacity for Vec impl as for Array impl
 
 //
 // Safe ArrayStorage
