@@ -17,9 +17,9 @@ where
     [T; CAPACITY]: Sized,
 {
     arr: [T; CAPACITY],
-    size: usize,
     head: usize,
     tail: usize,
+    size: usize,
 }
 
 #[cfg(feature = "unsafe")]
@@ -28,36 +28,59 @@ where
     T: PartialEq + Copy + Default,
     [T; CAPACITY]: Sized,
 {
-    /// Creates a new UnsafeArrayStorage instance
-    ///
-    /// # Implementation Notes
-    /// - Initializes array with default values
-    /// - Requires 4-byte alignment for optimal performance
     #[inline(always)]
     pub fn new() -> Self {
         assert!(CAPACITY > SIZE, "CAPACITY must be greater than SIZE");
         Self {
             arr: [T::default(); CAPACITY],
-            size: SIZE,
             head: 0,
             tail: 0,
+            size: SIZE,
         }
     }
 
-    /// Checks if the sliding window is filled to its maximum size
     #[inline(always)]
     fn filled(&self) -> bool {
-        self.tail - self.head >= self.size
+        unsafe { self.tail.unchecked_sub(self.head) >= self.size }
     }
 
-    /// Rewinds the storage by copying elements to array start
-    ///
-    /// # Implementation Notes
-    /// - Copies the last SIZE elements to the beginning
     #[inline(always)]
     fn rewind(&mut self) {
-        // Copy the last SIZE elements to the beginning
-        self.arr.copy_within(self.tail - self.size..self.tail, 0);
+        unsafe {
+            let type_size = std::mem::size_of::<T>();
+            let src = self.arr.as_ptr().add(self.tail - self.size);
+            let dst = self.arr.as_mut_ptr();
+
+            if type_size >= 4 {
+                // For 4+ byte types, use optimized copying
+                let bytes_to_copy = self.size * type_size;
+                let chunks_16 = bytes_to_copy / 16;
+                let remainder = bytes_to_copy % 16;
+
+                // Copy 16-byte chunks
+                if chunks_16 > 0 {
+                    let src_bytes = src as *const u8;
+                    let dst_bytes = dst as *mut u8;
+                    for i in 0..chunks_16 {
+                        std::ptr::copy_nonoverlapping(
+                            src_bytes.add(i * 16),
+                            dst_bytes.add(i * 16),
+                            16,
+                        );
+                    }
+                }
+
+                // Copy remaining bytes
+                if remainder > 0 {
+                    let src_bytes = (src as *const u8).add(chunks_16 * 16);
+                    let dst_bytes = (dst as *mut u8).add(chunks_16 * 16);
+                    std::ptr::copy_nonoverlapping(src_bytes, dst_bytes, remainder);
+                }
+            } else {
+                // Fall back to standard copy for smaller types
+                std::ptr::copy_nonoverlapping(src, dst, self.size);
+            }
+        }
         self.head = 0;
         self.tail = self.size;
     }
@@ -69,7 +92,6 @@ where
     T: PartialEq + Copy + Default,
     [T; SIZE]: Sized,
 {
-    /// Creates a default UnsafeArrayStorage instance
     #[inline(always)]
     fn default() -> Self {
         Self::new()
@@ -83,80 +105,55 @@ where
     T: PartialEq + Copy + Default,
     [T; SIZE]: Sized,
 {
-    /// Pushes a new value into storage
-    ///
-    /// # Args
-    /// * `value` - Value to push
-    ///
-    /// # Implementation Notes
-    /// - Automatically rewinds when full
-    /// - Adjusts head to maintain window size
     #[inline(always)]
     fn push(&mut self, value: T) {
-        // Rewind if there's not enough space for the next element
-        if self.tail + 1 >= CAPACITY {
-            self.rewind();
-        }
+        unsafe {
+            if self.tail >= CAPACITY {
+                self.rewind();
+            }
 
-        // Store the value and update tail
-        self.arr[self.tail] = value;
-        self.tail += 1;
+            *self.arr.get_unchecked_mut(self.tail) = value;
+            self.tail = self.tail.wrapping_add(1);
 
-        // Update head if window size exceeded
-        if self.tail - self.head > self.size {
-            self.head = self.tail - self.size;
+            if self.tail.unchecked_sub(self.head) > self.size {
+                self.head = self.tail.unchecked_sub(self.size);
+            }
         }
     }
 
-    /// Returns first element in window
-    ///
-    /// # Errors
-    /// Returns error if storage is empty
-    ///
-    /// # Implementation Notes
-    /// - Handles both normal and wrapped states
     #[inline(always)]
     fn first(&self) -> Result<T, String> {
         if self.tail == 0 {
             return Err(ERROR_EMPTY_ARRAY.to_string());
         }
-
-        Ok(self.arr[self.head])
+        unsafe { Ok(*self.arr.get_unchecked(self.head)) }
     }
 
-    /// Returns last element in window
-    ///
-    /// # Errors
-    /// Returns error if storage not filled
-    ///
-    /// # Implementation Notes
-    /// - Verifies fill state before access
     #[inline(always)]
     fn last(&self) -> Result<T, String> {
         if !self.filled() {
             return Err(ERROR_ARRAY_NOT_FILLED.to_string());
         }
-        Ok(self.arr[self.tail - 1])
+        unsafe { Ok(*self.arr.get_unchecked(self.tail - 1)) }
     }
 
-    /// Returns current tail position
     #[inline(always)]
     fn tail(&self) -> usize {
         self.tail
     }
 
-    /// Returns window size
     #[inline(always)]
     fn size(&self) -> usize {
         self.size
     }
 
-    /// Returns slice of current window contents
-    ///
-    /// # Implementation Notes
-    /// - Handles both normal and wrapped states
     #[inline(always)]
     fn get_slice(&self) -> &[T] {
-        &self.arr[self.head..self.tail.min(self.head + self.size)]
+        unsafe {
+            std::slice::from_raw_parts(
+                self.arr.as_ptr().add(self.head),
+                self.tail.saturating_sub(self.head).min(self.size),
+            )
+        }
     }
 }

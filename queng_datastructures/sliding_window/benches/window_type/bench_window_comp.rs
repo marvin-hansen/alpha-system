@@ -237,7 +237,7 @@ fn unsafe_vector_operations(c: &mut Criterion) {
 criterion_group! {
     name = window_impl_comp;
     config = Criterion::default().sample_size(100);
-    targets = array_operations, unsafe_array_operations, vector_operations, unsafe_vector_operations
+    targets = array_operations, unsafe_array_operations, // vector_operations, unsafe_vector_operations
 }
 
 #[cfg(not(feature = "unsafe"))]
