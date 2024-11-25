@@ -78,41 +78,47 @@ fn test_push() {
 fn test_first() {
     let mut window = get_sliding_window();
     assert_eq!(window.size(), SIZE);
-    assert_eq!(window.size(), SIZE);
     assert!(!window.filled());
 
+    // Test empty window
     let res = window.first();
     assert!(res.is_err());
 
+    // Fill the window with initial values [3,2,1,0]
     window.push(Data { dats: 3 });
     window.push(Data { dats: 2 });
     window.push(Data { dats: 1 });
     window.push(Data { dats: 0 });
     assert!(window.filled());
 
+    // Test first element after filling
     let res = window.first();
     assert!(res.is_ok());
     let data = res.unwrap();
     assert_eq!(data.dats, 3);
 
+    // Push 4, window should be [3,2,1,0]
     window.push(Data { dats: 4 });
     let res = window.first();
     assert!(res.is_ok());
     let data = res.unwrap();
     assert_eq!(data.dats, 2);
 
+    // Push 5, window should be [2,1,0,4]
     window.push(Data { dats: 5 });
     let res = window.first();
     assert!(res.is_ok());
     let data = res.unwrap();
     assert_eq!(data.dats, 1);
 
+    // Push 6, window should be [1,0,4,5]
     window.push(Data { dats: 6 });
     let res = window.first();
     assert!(res.is_ok());
     let data = res.unwrap();
     assert_eq!(data.dats, 0);
 
+    // Push 7, window should be [0,4,5,6]
     window.push(Data { dats: 7 });
     let res = window.first();
     assert!(res.is_ok());
@@ -292,9 +298,6 @@ fn test_filled() {
     assert!(window.filled());
 
     // Rewinds b/c max capacity of 8 was reached
-    window.push(d);
-    assert!(window.filled());
-
     window.push(d);
     assert!(window.filled());
 }

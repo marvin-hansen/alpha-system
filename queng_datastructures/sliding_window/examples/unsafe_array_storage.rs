@@ -9,18 +9,19 @@ fn main() {
     println!("Creating window...");
 
     // Create type alias for better readability
-    type Window = SlidingWindow<UnsafeArrayStorage<u32, SIZE, CAPACITY>, u32>;
+    type Window = SlidingWindow<UnsafeArrayStorage<i32, SIZE, CAPACITY>, i32>;
 
     // Create a new sliding window with unsafe array storage for better performance
     let mut window: Window = sliding_window::new_with_unsafe_array_storage();
 
     println!("Window created. Pushing values...");
 
-    // Push some values
-    window.push(100);
-    window.push(200);
-    window.push(300);
-    window.push(400);
+    // Push some values - we need to push SIZE elements to fill the window
+    for i in 1..=SIZE {
+        window.push(i as i32 * 100);
+        println!("Pushed: {}", i * 100);
+        println!("First value: {:?}", window.first());
+    }
 
     println!("Values pushed. Checking if filled...");
 

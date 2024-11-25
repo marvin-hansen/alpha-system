@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-// Copyright (c) "2023" . The DeepCausality Authors. All Rights Reserved.
 use crate::WindowStorage;
 
 /// A highly optimized fixed-size array-based sliding window implementation
@@ -53,10 +51,16 @@ where
     /// Uses copy_within for efficient memory movement when rewinding
     #[inline(always)]
     fn rewind(&mut self) {
-        self.arr
-            .copy_within(self.head..self.head + self.size - 1, 0);
+        // Copy only the window size worth of elements
+        let start = if self.tail >= self.size {
+            self.tail - self.size + 1
+        } else {
+            0
+        };
+        let window_size = self.tail - start;
+        self.arr.copy_within(start..self.tail, 0);
         self.head = 0;
-        self.tail = self.size;
+        self.tail = window_size;
     }
 }
 
@@ -87,7 +91,7 @@ where
     #[inline(always)]
     fn push(&mut self, value: T) {
         // Rewind if there's not enough space for the next element
-        if self.tail + 1 >= CAPACITY {
+        if self.tail >= CAPACITY {
             self.rewind();
         }
 
@@ -95,7 +99,7 @@ where
         self.arr[self.tail] = value;
         self.tail += 1;
 
-        // Update head if window size exceeded
+        // Update head to maintain window size
         if self.tail - self.head > self.size {
             self.head = self.tail - self.size;
         }

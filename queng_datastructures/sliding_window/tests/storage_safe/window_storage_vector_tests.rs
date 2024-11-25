@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-// Copyright (c) "2023" . The DeepCausality Authors. All Rights Reserved.
 use sliding_window::{SlidingWindow, VectorStorage, WindowStorage};
 
 // Maximum number of elements held in the sliding window.
