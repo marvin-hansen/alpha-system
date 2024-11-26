@@ -77,24 +77,16 @@ impl Args {
         }
     }
 
-    #[must_use]
-    pub fn from_ims_data_config(config: &common_message::ImsDataConfig) -> Self {
-        Self {
-            stream_id: config.stream_id().to_string(),
-            topic_id: config.topic_ids().to_string(),
-            ..Default::default()
-        }
-    }
-
-    #[must_use]
-    pub fn from_ims_data_and_tls_config(
-        config: &common_message::ImsDataConfig,
+    pub fn with_server_and_tls_config(
+        stream_id: String,
+        topic_id: String,
+        tcp_server_address: String,
         tcp_tls_config: &common_message::ImsTcpTlsConfig,
     ) -> Self {
         Self {
-            // General config
-            stream_id: config.stream_id().to_string(),
-            topic_id: config.topic_ids().to_string(),
+            stream_id,
+            topic_id,
+            tcp_server_address,
             // Tls config
             tcp_tls_enabled: tcp_tls_config.tcp_tls_enabled(),
             tcp_tls_domain: tcp_tls_config.tcp_tls_domain().to_string(),

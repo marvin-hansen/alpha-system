@@ -4,7 +4,7 @@ mod shutdown;
 
 use ahash::AHashMap;
 use common_message::StreamUser;
-use iggy::client::{Client, StreamClient, TopicClient, UserClient};
+use iggy::client::{Client, StreamClient, UserClient};
 use iggy::clients::client::IggyClient;
 use iggy::clients::producer::IggyProducer;
 use iggy::error::IggyError;
@@ -49,25 +49,6 @@ impl MessageProducer {
         let args = Args::new(stream_id, topic_id);
         Self::build(args, stream_user).await
     }
-
-    /// Creates a new `MessageProducer` instance using the provided `ImsDataConfig`.
-    ///
-    /// # Arguments
-    ///
-    /// * `config` - The `ImsDataConfig` to build the `MessageProducer` instance from.
-    ///
-    /// # Returns
-    ///
-    /// A `Result` wrapping the `MessageProducer` instance or an `IggyError`.
-    ///
-    pub async fn from_config(
-        config: &common_message::ImsDataConfig,
-        stream_user: &StreamUser,
-    ) -> Result<Self, IggyError> {
-        let args = Args::from_ims_data_config(config);
-        Self::build(args, stream_user).await
-    }
-
     /// Creates a new `MessageProducer` instance using the default configuration.
     ///
     /// # Returns

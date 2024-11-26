@@ -46,27 +46,6 @@ impl MessageConsumer {
         Self::build(args, consumer_name, stream_user).await
     }
 
-    /// Creates a new `MessageConsumer` instance using the provided credentials and identifiers.
-    ///
-    /// # Arguments
-    ///
-    /// * `config` - ImsDataConfig.
-    /// * `consumer_name` - The name of the consumer.
-    /// * `stream_user` - The `StreamUser` for authentication.
-    ///
-    /// # Returns
-    ///
-    /// A `Result` wrapping the `MessageConsumer` instance or an `IggyError`.
-    ///
-    pub async fn from_config(
-        config: &common_message::ImsDataConfig,
-        consumer_name: &str,
-        stream_user: &StreamUser,
-    ) -> Result<Self, IggyError> {
-        let args = Args::from_ims_data_config(config);
-        Self::build(args, consumer_name, stream_user).await
-    }
-
     /// Creates a new `MessageConsumer` instance using the default configuration.
     ///
     /// # Returns

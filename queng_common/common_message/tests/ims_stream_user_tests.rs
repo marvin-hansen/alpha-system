@@ -10,8 +10,8 @@ fn test_message_user_new() {
 #[test]
 fn test_message_user_default() {
     let user = StreamUser::default();
-    assert_eq!(user.username(), "iggy");
-    assert_eq!(user.password(), "iggy");
+    assert_eq!(user.username(), "default_user");
+    assert_eq!(user.password(), "default_password");
 }
 
 #[test]

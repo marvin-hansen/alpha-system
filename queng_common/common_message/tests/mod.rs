@@ -1,6 +1,4 @@
 #[cfg(test)]
-mod ims_data_config_tests;
-#[cfg(test)]
 mod ims_stream_user_tests;
 #[cfg(test)]
 mod ims_tcp_tls_config_tests;

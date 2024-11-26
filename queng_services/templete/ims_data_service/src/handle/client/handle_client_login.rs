@@ -1,6 +1,5 @@
 use crate::service::Server;
 use common_errors::MessageProcessingError;
-use common_message::ImsDataConfig;
 use message_producer::MessageProducer;
 use sbe_messages::{ClientErrorType, ClientLoginMessage};
 
@@ -120,12 +119,12 @@ impl Server {
     ///
     pub(crate) async fn client_login(&self, client_id: u16) -> Result<(), MessageProcessingError> {
         // Get new client
-        // FIXME: Fix this by constructing the correct config in the utils_config
-        let config = ImsDataConfig::default();
         let user = self.client_stream_user();
+        let stream_id = "".to_string();
+        let topic_id = "".to_string();
 
         // Create an iggy client and initialize it as producer
-        let producer = MessageProducer::from_config(&config, user)
+        let producer = MessageProducer::new(stream_id, topic_id, user)
             .await
             .expect("Failed to create producer client");
 
