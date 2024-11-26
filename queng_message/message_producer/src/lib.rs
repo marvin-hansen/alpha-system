@@ -135,8 +135,8 @@ impl MessageProducer {
         dbg!("Creating custom stream user");
         match client
             .create_user(
-                &stream_user.username(),
-                &stream_user.password(),
+                stream_user.username(),
+                stream_user.password(),
                 UserStatus::Active,
                 Some(permissions),
             )
