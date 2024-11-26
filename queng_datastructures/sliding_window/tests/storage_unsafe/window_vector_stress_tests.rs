@@ -1,7 +1,5 @@
-#[cfg(feature = "unsafe")]
 use sliding_window::{UnsafeVectorStorage, WindowStorage};
 
-#[cfg(feature = "unsafe")]
 #[test]
 fn test_vector_storage_capacity_limits() {
     // Test with small capacity
@@ -20,7 +18,6 @@ fn test_vector_storage_capacity_limits() {
     assert_eq!(storage.vec().unwrap(), vec![3, 4]);
 }
 
-#[cfg(feature = "unsafe")]
 #[test]
 fn test_vector_storage_memory_behavior() {
     let mut storage = UnsafeVectorStorage::<i32>::new(3, 3); // size=3, capacity=9
@@ -38,7 +35,6 @@ fn test_vector_storage_memory_behavior() {
     assert_eq!(storage.vec().unwrap(), vec![2, 3, 4]);
 }
 
-#[cfg(feature = "unsafe")]
 #[test]
 fn test_vector_storage_concurrent_access() {
     use std::sync::Arc;
@@ -68,7 +64,6 @@ fn test_vector_storage_concurrent_access() {
     assert!(final_storage.filled());
 }
 
-#[cfg(feature = "unsafe")]
 #[test]
 fn test_vector_storage_edge_cases() {
     // Test with minimum size

@@ -11,7 +11,7 @@ criterion_main! {
 }
 
 // Run these benchmarks only when unsafe feature is enabled
-#[cfg(feature = "unsafe")]
+
 criterion_main! {
      window_type::bench_window_arr::window_array_backed,
      window_type::bench_window_vec::window_vector_backed,

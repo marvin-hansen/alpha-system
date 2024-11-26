@@ -1,4 +1,3 @@
-#[cfg(feature = "unsafe")]
 use sliding_window::{SlidingWindow, UnsafeArrayStorage, WindowStorage};
 
 const SIZE: usize = 4;
@@ -8,12 +7,11 @@ const CAPACITY: usize = 1200;
 pub struct Data {
     dats: i32,
 }
-#[cfg(feature = "unsafe")]
+
 fn get_sliding_window() -> SlidingWindow<UnsafeArrayStorage<Data, SIZE, CAPACITY>, Data> {
     sliding_window::new_with_unsafe_array_storage()
 }
 
-#[cfg(feature = "unsafe")]
 #[test]
 fn test_empty() {
     let d1 = Data { dats: 0 };
@@ -25,7 +23,6 @@ fn test_empty() {
     assert!(!window.empty());
 }
 
-#[cfg(feature = "unsafe")]
 #[test]
 fn test_partial_fill() {
     let mut window = get_sliding_window();
@@ -39,7 +36,6 @@ fn test_partial_fill() {
     assert!(!window.filled());
 }
 
-#[cfg(feature = "unsafe")]
 #[test]
 fn test_array_storage_default() {
     const SIZE: usize = 3;
@@ -50,7 +46,6 @@ fn test_array_storage_default() {
     assert!(storage.get_slice().is_empty());
 }
 
-#[cfg(feature = "unsafe")]
 #[test]
 #[should_panic(expected = "CAPACITY must be greater than SIZE")]
 fn test_array_storage_invalid_capacity() {
@@ -59,7 +54,6 @@ fn test_array_storage_invalid_capacity() {
     let _storage = UnsafeArrayStorage::<i32, SIZE, CAPACITY>::new();
 }
 
-#[cfg(feature = "unsafe")]
 #[test]
 fn test_push() {
     let mut window = get_sliding_window();
@@ -108,7 +102,6 @@ fn test_drop_old_values() {
     assert_eq!(window.vec().unwrap(), vec![7, 8, 9]);
 }
 
-#[cfg(feature = "unsafe")]
 #[test]
 fn test_first() {
     let mut window = get_sliding_window();
@@ -161,7 +154,6 @@ fn test_first() {
     assert_eq!(data.dats, 4);
 }
 
-#[cfg(feature = "unsafe")]
 #[test]
 fn test_last() {
     let mut window = get_sliding_window();
@@ -194,7 +186,6 @@ fn test_last() {
     assert_eq!(data.dats, 42);
 }
 
-#[cfg(feature = "unsafe")]
 #[test]
 fn test_multiple_rewinds() {
     const SIZE: usize = 4;
@@ -213,7 +204,6 @@ fn test_multiple_rewinds() {
     }
 }
 
-#[cfg(feature = "unsafe")]
 #[test]
 fn test_big_size() {
     const SIZE: usize = 128;
@@ -237,7 +227,6 @@ fn test_big_size() {
     }
 }
 
-#[cfg(feature = "unsafe")]
 #[test]
 fn test_small_size() {
     const SIZE: usize = 2;
@@ -266,7 +255,7 @@ fn test_small_size() {
         }
     }
 }
-#[cfg(feature = "unsafe")]
+
 #[test]
 fn test_rewind_at_capacity_boundary() {
     const SIZE: usize = 4;
@@ -298,7 +287,6 @@ fn test_rewind_at_capacity_boundary() {
     assert_eq!(slice_after_rewind[3].dats, 42);
 }
 
-#[cfg(feature = "unsafe")]
 #[test]
 fn test_filled() {
     let d = Data { dats: 0 };
@@ -337,7 +325,6 @@ fn test_filled() {
     assert!(window.filled());
 }
 
-#[cfg(feature = "unsafe")]
 #[test]
 fn test_slice() {
     let mut window = get_sliding_window();
@@ -373,7 +360,6 @@ fn test_slice() {
     assert_eq!(slice[3].dats, 0);
 }
 
-#[cfg(feature = "unsafe")]
 #[test]
 fn test_first_element_sliding() {
     let mut window = get_sliding_window();
@@ -392,7 +378,6 @@ fn test_first_element_sliding() {
     assert_eq!(window.first().unwrap().dats, 3);
 }
 
-#[cfg(feature = "unsafe")]
 #[test]
 fn test_slice_err() {
     let window = get_sliding_window();
@@ -403,7 +388,6 @@ fn test_slice_err() {
     assert!(s.is_err());
 }
 
-#[cfg(feature = "unsafe")]
 #[test]
 fn test_vec() {
     let d1 = Data { dats: 0 };
@@ -439,7 +423,6 @@ fn test_vec() {
     assert_eq!(e2.dats, v2.dats);
 }
 
-#[cfg(feature = "unsafe")]
 #[test]
 fn test_vec_err() {
     let window = get_sliding_window();
@@ -450,7 +433,6 @@ fn test_vec_err() {
     assert!(v.is_err());
 }
 
-#[cfg(feature = "unsafe")]
 #[test]
 fn test_arr() {
     let d1 = Data { dats: 0 };
@@ -509,7 +491,6 @@ fn test_arr() {
     assert_eq!(arr[3].dats, 0);
 }
 
-#[cfg(feature = "unsafe")]
 #[test]
 fn test_arr_err() {
     let window = get_sliding_window();
@@ -520,7 +501,6 @@ fn test_arr_err() {
     assert!(arr.is_err());
 }
 
-#[cfg(feature = "unsafe")]
 #[test]
 fn test_push_when_full() {
     let mut window = get_sliding_window();

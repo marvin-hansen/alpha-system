@@ -12,7 +12,6 @@ pub use crate::storage::WindowStorage;
 pub use crate::storage_safe::storage_array::ArrayStorage;
 pub use crate::storage_safe::storage_vec::VectorStorage;
 
-#[cfg(feature = "unsafe")]
 pub use crate::storage_unsafe::{UnsafeArrayStorage, UnsafeVectorStorage};
 
 /// Returns a new sliding window with a vector storage and the size and capacity given as parameters.
@@ -90,7 +89,7 @@ where
 /// * Memory is properly allocated and deallocated
 /// * No out-of-bounds access occurs
 /// * No uninitialized memory is read
-#[cfg(feature = "unsafe")]
+
 pub fn new_with_unsafe_vector_storage<T>(
     size: usize,
     multiple: usize,
@@ -192,7 +191,6 @@ where
 /// * `CAPACITY` must be greater than or equal to `SIZE`
 /// * Both `SIZE` and `CAPACITY` must be non-zero
 
-#[cfg(feature = "unsafe")]
 pub fn new_with_unsafe_array_storage<T, const SIZE: usize, const CAPACITY: usize>(
 ) -> SlidingWindow<UnsafeArrayStorage<T, SIZE, CAPACITY>, T>
 where

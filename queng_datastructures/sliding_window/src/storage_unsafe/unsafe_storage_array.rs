@@ -1,14 +1,25 @@
-// SPDX-License-Identifier: MIT
-// Copyright (c) "2023" . The DeepCausality Authors. All Rights Reserved.
-#[cfg(feature = "unsafe")]
 use crate::WindowStorage;
 
-#[cfg(feature = "unsafe")]
 const ERROR_EMPTY_ARRAY: &str = "Array is empty";
-#[cfg(feature = "unsafe")]
+
 const ERROR_ARRAY_NOT_FILLED: &str = "Array is not yet filled";
 
-#[cfg(feature = "unsafe")]
+/// A high-performance, unsafe implementation of a fixed-size sliding window storage using a raw array.
+/// This implementation prioritizes performance by using unsafe Rust features and manual memory management.
+///
+/// # Type Parameters
+/// - `T`: The type of elements stored in the array
+/// - `SIZE`: The logical size of the sliding window
+/// - `CAPACITY`: The physical capacity of the underlying array
+///
+/// # Constraints
+/// - `T` must implement `PartialEq + Copy + Default`
+/// - `CAPACITY` must be greater than `SIZE`
+/// - The array `[T; CAPACITY]` must be sized
+///
+/// # Memory Layout
+/// The structure is aligned to 64 bytes for optimal cache line usage.
+///
 #[repr(C, align(64))]
 #[derive(Debug)]
 pub struct UnsafeArrayStorage<T, const SIZE: usize, const CAPACITY: usize>
@@ -16,18 +27,26 @@ where
     T: PartialEq + Copy + Default,
     [T; CAPACITY]: Sized,
 {
+    /// The underlying array storing the elements
     arr: [T; CAPACITY],
+    /// Index of the first element in the window
     head: usize,
+    /// Index where the next element will be inserted
     tail: usize,
+    /// The logical size of the sliding window
     size: usize,
 }
 
-#[cfg(feature = "unsafe")]
 impl<T, const SIZE: usize, const CAPACITY: usize> UnsafeArrayStorage<T, SIZE, CAPACITY>
 where
     T: PartialEq + Copy + Default,
     [T; CAPACITY]: Sized,
 {
+    /// Creates a new `UnsafeArrayStorage` instance.
+    ///
+    /// # Panics
+    /// Panics if `CAPACITY` is not greater than `SIZE`.
+    ///
     #[inline(always)]
     pub fn new() -> Self {
         assert!(CAPACITY > SIZE, "CAPACITY must be greater than SIZE");
@@ -39,11 +58,25 @@ where
         }
     }
 
+    /// Checks if the storage contains the full window size of elements.
+    ///
+    /// # Safety
+    /// Uses unchecked subtraction for performance.
+    ///
     #[inline(always)]
     fn filled(&self) -> bool {
         unsafe { self.tail.unchecked_sub(self.head) >= self.size }
     }
 
+    /// Rewinds the storage by copying the last `SIZE` elements to the beginning.
+    ///
+    /// This method uses optimized copying strategies:
+    /// - For types >= 4 bytes: Uses 16-byte chunk copying
+    /// - For smaller types: Falls back to standard copying
+    ///
+    /// # Safety
+    /// Uses unsafe pointer manipulation and unchecked arithmetic.
+    ///
     #[inline(always)]
     fn rewind(&mut self) {
         unsafe {
@@ -86,7 +119,6 @@ where
     }
 }
 
-#[cfg(feature = "unsafe")]
 impl<T, const SIZE: usize, const CAPACITY: usize> Default for UnsafeArrayStorage<T, SIZE, CAPACITY>
 where
     T: PartialEq + Copy + Default,
@@ -98,13 +130,20 @@ where
     }
 }
 
-#[cfg(feature = "unsafe")]
 impl<T, const SIZE: usize, const CAPACITY: usize> WindowStorage<T>
     for UnsafeArrayStorage<T, SIZE, CAPACITY>
 where
     T: PartialEq + Copy + Default,
     [T; SIZE]: Sized,
 {
+    /// Pushes a new value into the storage.
+    /// Drops old values if the storage is full relative to its size.
+    ///
+    /// If the storage is full, it automatically rewinds by moving the last `SIZE`
+    /// elements to the beginning of the array.
+    ///
+    /// # Safety
+    /// Uses unchecked operations for performance.
     #[inline(always)]
     fn push(&mut self, value: T) {
         unsafe {
@@ -121,6 +160,13 @@ where
         }
     }
 
+    /// Returns the last element in the storage.
+    ///
+    /// # Errors
+    /// Returns an error if the storage is not filled to size.
+    ///
+    /// # Safety
+    /// Uses unchecked array access for performance.
     #[inline(always)]
     fn first(&self) -> Result<T, String> {
         if self.tail == 0 {
@@ -129,6 +175,13 @@ where
         unsafe { Ok(*self.arr.get_unchecked(self.head)) }
     }
 
+    /// Returns the first element in the storage.
+    ///
+    /// # Errors
+    /// Returns an error if the storage is not filled to size.
+    ///
+    /// # Safety
+    /// Uses unchecked array access for performance.
     #[inline(always)]
     fn last(&self) -> Result<T, String> {
         if !self.filled() {
@@ -137,16 +190,22 @@ where
         unsafe { Ok(*self.arr.get_unchecked(self.tail - 1)) }
     }
 
+    /// Returns the current tail index.
     #[inline(always)]
     fn tail(&self) -> usize {
         self.tail
     }
 
+    /// Returns the size of the sliding window.
     #[inline(always)]
     fn size(&self) -> usize {
         self.size
     }
 
+    /// Returns a slice of the current window contents.
+    ///
+    /// # Safety
+    /// Uses unsafe raw pointer manipulation for creating the slice.
     #[inline(always)]
     fn get_slice(&self) -> &[T] {
         unsafe {

@@ -9,10 +9,6 @@ authors.workspace = true
 
 [dependencies]
 
-[features]
-default = []
-unsafe = [] # Enable unsafe implementations
-
 [lints]
 workspace = true
 

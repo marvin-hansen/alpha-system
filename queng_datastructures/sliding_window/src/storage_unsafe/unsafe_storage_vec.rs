@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT
 // Copyright (c) "2023" . The DeepCausality Authors. All Rights Reserved.
 
-#[cfg(feature = "unsafe")]
 use crate::WindowStorage;
 
 /// An unsafe but highly optimized sliding window implementation using a vector as the underlying storage.
@@ -20,7 +19,7 @@ use crate::WindowStorage;
 /// - Pre-allocated uninitialized memory
 /// - Bounds-check elimination where safe
 /// - Cache-line alignment for better CPU cache utilization
-#[cfg(feature = "unsafe")]
+
 #[repr(align(64))]
 #[derive(Debug)]
 pub struct UnsafeVectorStorage<T>
@@ -34,7 +33,6 @@ where
     capacity: usize,
 }
 
-#[cfg(feature = "unsafe")]
 impl<T> UnsafeVectorStorage<T>
 where
     T: PartialEq + Copy + Default,
@@ -61,7 +59,6 @@ where
     }
 }
 
-#[cfg(feature = "unsafe")]
 impl<T> WindowStorage<T> for UnsafeVectorStorage<T>
 where
     T: PartialEq + Copy + Default,

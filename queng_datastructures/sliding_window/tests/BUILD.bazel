@@ -16,3 +16,20 @@ rust_test_suite(
         "//alias:sliding_window",
     ],
 )
+
+rust_test_suite(
+    name = "tests_unsafe",
+    srcs = glob([
+        "storage_unsafe/*_tests.rs",
+    ]),
+    tags = [
+        "datastructures",
+        "sliding_window",
+        "unit-test",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        "//alias:sliding_window",
+    ],
+)

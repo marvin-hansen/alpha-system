@@ -1,4 +1,4 @@
-use sliding_window::{ArrayStorage, VectorStorage, WindowStorage};
+use sliding_window::{ArrayStorage, WindowStorage};
 
 #[test]
 fn test_vector_storage_capacity_limits() {
@@ -78,7 +78,7 @@ fn test_edge_cases() {
     assert_eq!(storage.last(), Ok(2));
 
     // Test with zero pushes
-    let empty_storage = VectorStorage::<i32>::new(1, 2);
+    let empty_storage = ArrayStorage::<i32, SIZE, CAPACITY>::new();
     assert!(empty_storage.first().is_err());
     assert!(empty_storage.last().is_err());
 }

@@ -1,6 +1,5 @@
 use criterion::{black_box, criterion_group, BenchmarkId, Criterion};
 
-#[cfg(feature = "unsafe")]
 use sliding_window::{
     ArrayStorage, UnsafeArrayStorage, UnsafeVectorStorage, VectorStorage, WindowStorage,
 };
@@ -80,7 +79,7 @@ fn array_operations(c: &mut Criterion) {
 //
 // Unsafe ArrayStorage
 //
-#[cfg(feature = "unsafe")]
+
 fn unsafe_array_operations(c: &mut Criterion) {
     let mut group = c.benchmark_group("unsafe_array_operations");
 
@@ -192,7 +191,7 @@ fn vector_operations(c: &mut Criterion) {
 //
 // Unsafe VectorStorage
 //
-#[cfg(feature = "unsafe")]
+
 fn unsafe_vector_operations(c: &mut Criterion) {
     let mut group = c.benchmark_group("unsafe_vector_operations");
 
@@ -233,7 +232,6 @@ fn unsafe_vector_operations(c: &mut Criterion) {
     group.finish();
 }
 
-#[cfg(feature = "unsafe")]
 criterion_group! {
     name = window_impl_comp;
     config = Criterion::default().sample_size(100);
