@@ -10,17 +10,6 @@ use std::str::FromStr;
 pub use error::*;
 pub use traits::*;
 
-#[must_use]
-pub fn get_ims_data_config() -> common_message::ImsDataConfig {
-    common_message::ImsDataConfig::new(
-        DEFAULT_ROOT_USERNAME.to_string(),
-        DEFAULT_ROOT_PASSWORD.to_string(),
-        "example-stream".to_string(),
-        "example-topic".to_string(),
-        "127.0.0.1:8090".to_string(),
-    )
-}
-
 #[derive(Debug)]
 pub struct Args {
     pub message_batches_limit: u64,
@@ -71,16 +60,16 @@ pub struct Args {
 
 impl Args {
     #[must_use]
-    pub fn new(
-        username: String,
-        password: String,
-        stream_id: String,
-        topic_id: String,
-        tcp_server_address: String,
-    ) -> Self {
+    pub fn new(stream_id: String, topic_id: String) -> Self {
         Self {
-            username,
-            password,
+            stream_id,
+            topic_id,
+            ..Default::default()
+        }
+    }
+
+    pub fn with_server(stream_id: String, topic_id: String, tcp_server_address: String) -> Self {
+        Self {
             stream_id,
             topic_id,
             tcp_server_address,
@@ -91,11 +80,8 @@ impl Args {
     #[must_use]
     pub fn from_ims_data_config(config: &common_message::ImsDataConfig) -> Self {
         Self {
-            username: config.stream_user().to_string(),
-            password: config.stream_password().to_string(),
             stream_id: config.stream_id().to_string(),
             topic_id: config.topic_ids().to_string(),
-            tcp_server_address: config.tcp_server_address().to_string(),
             ..Default::default()
         }
     }
@@ -107,12 +93,9 @@ impl Args {
     ) -> Self {
         Self {
             // General config
-            username: config.stream_user().to_string(),
-            password: config.stream_password().to_string(),
             stream_id: config.stream_id().to_string(),
             topic_id: config.topic_ids().to_string(),
             // Tls config
-            tcp_server_address: config.tcp_server_address().to_string(),
             tcp_tls_enabled: tcp_tls_config.tcp_tls_enabled(),
             tcp_tls_domain: tcp_tls_config.tcp_tls_domain().to_string(),
             tcp_tls_ca_file: tcp_tls_config.tcp_tls_ca_file().to_owned(),

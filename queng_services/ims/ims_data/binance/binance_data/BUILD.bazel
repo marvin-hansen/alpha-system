@@ -18,7 +18,9 @@ build_binary_opt(
         # Internal crates
         "//alias:common_data_bar",
         "//alias:common_config",
+        "//alias:common_exchange",
         "//alias:config_manager",
+        "//alias/service:ims_data_service",
         # Custom Memory Allocator
         "//thirdparty/crates:mimalloc",
         # External crates

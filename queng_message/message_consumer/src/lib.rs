@@ -39,17 +39,10 @@ impl MessageConsumer {
     ///
     pub async fn new(
         consumer_name: &str,
-        username: String,
-        password: String,
         stream_id: String,
         topic_id: String,
-        tcp_server_address: String,
     ) -> Result<Self, IggyError> {
-        Self::build(
-            Args::new(username, password, stream_id, topic_id, tcp_server_address),
-            consumer_name,
-        )
-        .await
+        Self::build(Args::new(stream_id, topic_id), consumer_name).await
     }
 
     /// Creates a new `MessageConsumer` instance using the provided `ImsDataConfig`.

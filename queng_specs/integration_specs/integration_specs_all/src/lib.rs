@@ -1,5 +1,5 @@
 use common_ims::IntegrationConfig;
-use ims_data_binance_specs::ims_data_integration_binance_config;
+use ims_data_binance_specs::binance_ims_data_integration_config;
 
 /// This module provides a public function to return a vector of `IntegrationConfig` instances.
 ///
@@ -8,5 +8,5 @@ use ims_data_binance_specs::ims_data_integration_binance_config;
 //
 #[must_use]
 pub fn get_all_integration_configs() -> Vec<IntegrationConfig> {
-    vec![ims_data_integration_binance_config()]
+    vec![binance_ims_data_integration_config()]
 }

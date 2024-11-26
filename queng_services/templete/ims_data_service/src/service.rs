@@ -1,5 +1,5 @@
 use common_ims::IntegrationConfig;
-use common_message::ImsDataConfig;
+use common_message::StreamUser;
 use message_consumer::MessageConsumer;
 use message_producer::MessageProducer;
 use std::collections::HashMap;
@@ -14,9 +14,9 @@ type Guarded<T> = std::sync::Arc<tokio::sync::RwLock<T>>;
 pub struct Server {
     dbg: bool,
     integration_config: IntegrationConfig,
-    ims_data_config: ImsDataConfig,
     consumer: Guarded<MessageConsumer>,
     producer: MessageProducer,
+    client_stream_user: StreamUser,
     client_producers: Guarded<HashMap<u16, MessageProducer>>,
 }
 
@@ -26,7 +26,7 @@ impl Server {
     /// # Arguments
     ///
     /// * `integration_config` - Configuration for integration endpoints and channels
-    /// * `ims_data_config` - Configuration for IMS data processing and authentication
+    /// * `stream_user` - Custom stream user shared between producer and consumer
     ///
     /// # Returns
     ///
@@ -40,9 +40,9 @@ impl Server {
     /// * Failed to initialize communication channels
     pub async fn new(
         integration_config: IntegrationConfig,
-        ims_data_config: ImsDataConfig,
+        stream_user: StreamUser,
     ) -> Result<Self, Box<dyn Error>> {
-        Self::build(false, integration_config, ims_data_config).await
+        Self::build(false, integration_config, stream_user).await
     }
 
     /// Creates a new IMS data service server with debug mode enabled.
@@ -50,7 +50,7 @@ impl Server {
     /// # Arguments
     ///
     /// * `integration_config` - Configuration for integration endpoints and channels
-    /// * `ims_data_config` - Configuration for IMS data processing and authentication
+    /// * `stream_user` - Custom stream user shared between producer and consumer
     ///
     /// # Returns
     ///
@@ -64,9 +64,9 @@ impl Server {
     /// * Failed to initialize communication channels
     pub async fn with_debug(
         integration_config: IntegrationConfig,
-        ims_data_config: ImsDataConfig,
+        stream_user: StreamUser,
     ) -> Result<Self, Box<dyn Error>> {
-        Self::build(true, integration_config, ims_data_config).await
+        Self::build(true, integration_config, stream_user).await
     }
 }
 
@@ -77,7 +77,7 @@ impl Server {
     ///
     /// * `dbg` - Whether to enable debug mode
     /// * `integration_config` - Configuration for integration endpoints and channels
-    /// * `ims_data_config` - Configuration for IMS data processing and authentication
+    /// * `stream_user` - Custom stream user shared between producer and consumer
     ///
     /// # Returns
     ///
@@ -93,32 +93,35 @@ impl Server {
     async fn build(
         dbg: bool,
         integration_config: IntegrationConfig,
-        ims_data_config: ImsDataConfig,
+        client_stream_user: StreamUser,
     ) -> Result<Self, Box<dyn Error>> {
-        let consumer_name = "ims-data-binance-control";
-        let username = ims_data_config.stream_user().to_owned();
-        let password = ims_data_config.stream_password().to_owned();
-        let stream_id = integration_config.control_channel();
-        let topic_id = integration_config.control_channel();
-        let tcp_server_address = ims_data_config.tcp_server_address().to_owned();
-
-        let consumer = MessageConsumer::new(
-            consumer_name,
-            username.clone(),
-            password.clone(),
-            stream_id,
-            topic_id,
-            tcp_server_address.clone(),
-        )
-        .await
-        .expect("Failed to create consumer");
+        if dbg {
+            println!("Configure iggy producer")
+        }
 
         let stream_id = integration_config.data_channel();
         let topic_id = integration_config.data_channel();
-        let producer =
-            MessageProducer::new(username, password, stream_id, topic_id, tcp_server_address)
-                .await
-                .expect("Failed to create producer");
+
+        if dbg {
+            println!("Construct iggy producer")
+        }
+        let producer = MessageProducer::new(stream_id, topic_id, &client_stream_user)
+            .await
+            .expect("Failed to create producer");
+
+        if dbg {
+            println!("Configure iggy consumer")
+        }
+        let consumer_name = "ims-data-binance-control";
+        let stream_id = integration_config.control_channel();
+        let topic_id = integration_config.control_channel();
+
+        if dbg {
+            println!("Construct iggy consumer")
+        }
+        let consumer = MessageConsumer::new(consumer_name, stream_id, topic_id)
+            .await
+            .expect("Failed to create consumer");
 
         // Create a new HashMap to store data producers for each client
         let client_producers = std::sync::Arc::new(tokio::sync::RwLock::new(HashMap::new()));
@@ -126,10 +129,10 @@ impl Server {
         Ok(Self {
             dbg,
             integration_config,
-            ims_data_config,
             consumer: std::sync::Arc::new(tokio::sync::RwLock::new(consumer)),
             producer,
             client_producers,
+            client_stream_user,
         })
     }
 
@@ -164,5 +167,24 @@ impl Server {
     /// A reference to the `MessageProducer` used for sending messages.
     pub fn producer(&self) -> &MessageProducer {
         &self.producer
+    }
+
+    /// Returns a reference to the custom stream user used for client connections.
+    ///
+    /// The custom stream user is used to authenticate clients connecting to the server.
+    ///
+    /// # Returns
+    ///
+    /// A reference to the `StreamUser` instance used for client authentication.
+    pub fn client_stream_user(&self) -> &StreamUser {
+        &self.client_stream_user
+    }
+}
+
+impl Server {
+    fn dbg_print(&self, msg: &str) {
+        if self.dbg {
+            println!("[IMSData/Server]: {msg}");
+        }
     }
 }

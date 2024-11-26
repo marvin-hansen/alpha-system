@@ -1,9 +1,9 @@
+use crate::StreamUser;
 use std::fmt::Display;
 
 #[derive(Debug, Clone, Eq, PartialEq, Default)]
 pub struct ImsDataConfig {
-    stream_user: String,
-    stream_password: String,
+    stream_user: StreamUser,
     stream_id: String,
     topic_ids: String,
     tcp_server_address: String,
@@ -14,8 +14,7 @@ impl ImsDataConfig {
     ///
     /// # Arguments
     ///
-    /// * `stream_user` - The username for stream authentication.
-    /// * `stream_password` - The password for stream authentication.
+    /// * `stream_user` - The MessageUser for stream authentication.
     /// * `stream_id` - The identifier of the stream.
     /// * `topic_ids` - The identifiers of the topics.
     /// * `tcp_server_address` - The tcp server address i.e. "127.0.0.1:8090"
@@ -26,15 +25,13 @@ impl ImsDataConfig {
     ///
     #[must_use]
     pub const fn new(
-        stream_user: String,
-        stream_password: String,
+        stream_user: StreamUser,
         stream_id: String,
         topic_ids: String,
         tcp_server_address: String,
     ) -> Self {
         Self {
             stream_user,
-            stream_password,
             stream_id,
             topic_ids,
             tcp_server_address,
@@ -44,7 +41,7 @@ impl ImsDataConfig {
 
 impl ImsDataConfig {
     #[must_use]
-    pub fn stream_user(&self) -> &str {
+    pub fn stream_user(&self) -> &StreamUser {
         &self.stream_user
     }
 
@@ -56,11 +53,6 @@ impl ImsDataConfig {
     #[must_use]
     pub fn topic_ids(&self) -> &str {
         &self.topic_ids
-    }
-
-    #[must_use]
-    pub fn stream_password(&self) -> &str {
-        &self.stream_password
     }
 
     #[must_use]

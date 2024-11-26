@@ -1,8 +1,8 @@
 use crate::service::Server;
 use common_exchange::ExchangeID;
 use common_ims::IntegrationConfig;
-use common_message::ImsDataConfig;
-use common_service::{print_utils, shutdown_utils};
+use common_message::StreamUser;
+use common_service::print_utils;
 use config_manager::CfgManager;
 use smdb_client::SMDBClient;
 use tokio::time::Instant;
@@ -14,10 +14,10 @@ mod utils;
 
 pub async fn start(
     dbg: bool,
-    integration_config: IntegrationConfig,
-    ims_data_config: ImsDataConfig,
-    cfg_manager: CfgManager,
     exchange_id: ExchangeID,
+    integration_config: IntegrationConfig,
+    stream_user: StreamUser,
+    cfg_manager: CfgManager,
 ) -> Result<(), Box<dyn std::error::Error>> {
     let svc_name = &format!("IMS {exchange_id} Data Service");
     let dbg_print = |msg: &str| {
@@ -50,7 +50,7 @@ pub async fn start(
         );
     }
 
-    dbg_print("Configure service ip and port automatically relative to the detected context");
+    dbg_print("Configure service ip and port automatically!");
     let service_addr = cfg_manager
         .get_svc_socket_addr()
         .await
@@ -61,11 +61,14 @@ pub async fn start(
 
     dbg_print("Configuring server and signal handler");
     //Creates a new server
-    let server = Server::new(integration_config, ims_data_config)
+    let server = Server::with_debug(integration_config, stream_user)
         .await
         .expect("Failed to build new service");
-    let signal = shutdown_utils::signal_handler("gRPC server");
-    let service_handle = tokio::spawn(server.run(signal));
+
+    // let signal = shutdown_utils::signal_handler("gRPC server");
+
+    dbg_print("Run service");
+    let service_handle = tokio::spawn(server.run());
 
     dbg_print("Set integration online");
 

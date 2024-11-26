@@ -1,5 +1,6 @@
 use common_config::{ServiceConfig, ServiceID};
 use common_ims::{ExchangeID, ImsIntegrationType, IntegrationConfig, IntegrationMessageConfig};
+use common_message::StreamUser;
 use shared_service_specs::{health_endpoint, ims_endpoint, metric_endpoint};
 
 /// Returns the configuration for the Binance data integration in the IMS system.
@@ -11,7 +12,7 @@ use shared_service_specs::{health_endpoint, ims_endpoint, metric_endpoint};
 /// A `IntegrationConfig` instance with the specific settings for the Binance data integration in the IMS system.
 ///
 #[must_use]
-pub fn ims_data_integration_binance_config() -> IntegrationConfig {
+pub fn binance_ims_data_integration_config() -> IntegrationConfig {
     IntegrationConfig::new(
         "ims-data-binance".to_string(),
         1,
@@ -19,6 +20,10 @@ pub fn ims_data_integration_binance_config() -> IntegrationConfig {
         ExchangeID::Binance,
         IntegrationMessageConfig::new(1, 1, ExchangeID::Binance),
     )
+}
+
+pub fn binance_stream_user() -> StreamUser {
+    StreamUser::new("binance-data-user", "secret")
 }
 
 /// Configures the service for Binance data in the IMS system.

@@ -122,9 +122,10 @@ impl Server {
         // Get new client
         // FIXME: Fix this by constructing the correct config in the utils_config
         let config = ImsDataConfig::default();
+        let user = self.client_stream_user();
 
         // Create an iggy client and initialize it as producer
-        let producer = MessageProducer::from_config(&config)
+        let producer = MessageProducer::from_config(&config, user)
             .await
             .expect("Failed to create producer client");
 
