@@ -99,8 +99,8 @@ impl Server {
             println!("Configure iggy producer")
         }
 
-        let stream_id = integration_config.data_channel();
-        let topic_id = integration_config.data_channel();
+        let stream_id = integration_config.control_channel();
+        let topic_id = integration_config.control_channel();
 
         if dbg {
             println!("Construct iggy producer")
@@ -119,9 +119,10 @@ impl Server {
         if dbg {
             println!("Construct iggy consumer")
         }
-        let consumer = MessageConsumer::new(consumer_name, stream_id, topic_id)
-            .await
-            .expect("Failed to create consumer");
+        let consumer =
+            MessageConsumer::new(consumer_name, stream_id, topic_id, &client_stream_user)
+                .await
+                .expect("Failed to create consumer");
 
         // Create a new HashMap to store data producers for each client
         let client_producers = std::sync::Arc::new(tokio::sync::RwLock::new(HashMap::new()));

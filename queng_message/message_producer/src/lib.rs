@@ -4,7 +4,7 @@ mod shutdown;
 
 use ahash::AHashMap;
 use common_message::StreamUser;
-use iggy::client::{Client, StreamClient, UserClient};
+use iggy::client::{Client, StreamClient, TopicClient, UserClient};
 use iggy::clients::client::IggyClient;
 use iggy::clients::producer::IggyProducer;
 use iggy::error::IggyError;
@@ -81,15 +81,27 @@ impl MessageProducer {
 
 impl MessageProducer {
     async fn build(args: Args, stream_user: &StreamUser) -> Result<Self, IggyError> {
-        // Build client
+        // Create identifiers for stream, topic, and user.
+        dbg!("Creating identifiers");
+        let stream_id = Identifier::from_str_value(&args.stream_id).expect("Invalid stream id");
+        let topic_id = Identifier::from_str_value(&args.topic_id).expect("Invalid topic id");
+        let user_id = Identifier::from_str_value(&args.username).expect("Invalid user id");
+
+        dbg!("Building client");
         let client = shared_utils::build_client(args.to_sdk_args())
             .await
             .expect("Failed to create client");
 
-        // Connect client
+        dbg!("Connecting client");
         client.connect().await.expect("Failed to connect");
 
-        // Create producer
+        dbg!("Login admin user to stream");
+        client
+            .login_user(&args.username, &args.password)
+            .await
+            .expect("Failed to login user");
+
+        dbg!("Creating producer");
         let mut producer = client
             .producer(&args.stream_id, &args.topic_id)
             .expect("Failed to create producer")
@@ -99,12 +111,30 @@ impl MessageProducer {
             .build();
 
         // Create stream
-        let stream = client
-            .create_stream(&args.stream_id, None)
-            .await
-            .expect("Failed to create stream");
+        dbg!("Creating stream");
+        let res = client.create_stream(&args.stream_id, None).await;
+        dbg!(&res);
+
+        let stream = if res.is_err() {
+            let code = res.as_ref().unwrap_err().as_code();
+            if code == IggyError::StreamIdAlreadyExists as u32 {
+                // Stream already exists
+                dbg!("Stream already exists");
+                client
+                    .get_stream(&Identifier::from_str_value(&args.stream_id)?)
+                    .await
+                    .expect("Failed to get stream")
+                    .unwrap()
+            } else {
+                dbg!("Error creating stream");
+                return Err(res.unwrap_err());
+            }
+        } else {
+            res?
+        };
 
         // Configure stream permissions
+        dbg!("Configuring stream permissions");
         let mut streams_permissions = AHashMap::new();
         streams_permissions.insert(
             stream.id,
@@ -121,7 +151,8 @@ impl MessageProducer {
         };
 
         // Create custom stream user
-        client
+        dbg!("Creating custom stream user");
+        match client
             .create_user(
                 &stream_user.username(),
                 &stream_user.password(),
@@ -129,15 +160,25 @@ impl MessageProducer {
                 Some(permissions),
             )
             .await
-            .expect("Failed to create user");
+        {
+            Ok(_) => {
+                // user crated
+                dbg!("User created");
+            }
+            Err(e) => {
+                // Error code 46 means user already exists; so we will not create it again.
+                if e.as_code() == 304 {
+                    // Do nothing
+                    dbg!("User already exists");
+                } else {
+                    return Err(e);
+                }
+            }
+        }
 
         // Init producer
+        dbg!("Initializing producer");
         producer.init().await.expect("Failed to init producer");
-
-        // Create identifiers for stream, topic, and user.
-        let stream_id = Identifier::from_str_value(&args.stream_id).expect("Invalid stream id");
-        let topic_id = Identifier::from_str_value(&args.topic_id).expect("Invalid topic id");
-        let user_id = Identifier::from_str_value(&args.username).expect("Invalid user id");
 
         Ok(Self {
             user_id,

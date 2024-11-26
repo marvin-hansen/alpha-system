@@ -20,3 +20,4 @@ anyhow ={workspace = true}
 bytes = { workspace = true }
 iggy = {workspace = true}
 tokio = {workspace = true}
+log = "0.4.21"
