@@ -1,9 +1,11 @@
-use sliding_window::{ArrayStorage, VectorStorage, WindowStorage};
+#[cfg(feature = "unsafe")]
+use sliding_window::{UnsafeVectorStorage, WindowStorage};
 
+#[cfg(feature = "unsafe")]
 #[test]
 fn test_vector_storage_capacity_limits() {
     // Test with small capacity
-    let mut storage = VectorStorage::<i32>::new(2, 4); // size=2, capacity=8
+    let mut storage = UnsafeVectorStorage::<i32>::new(2, 4); // size=2, capacity=8
     assert_eq!(storage.size(), 2);
 
     // Fill to capacity
@@ -18,9 +20,10 @@ fn test_vector_storage_capacity_limits() {
     assert_eq!(storage.vec().unwrap(), vec![3, 4]);
 }
 
+#[cfg(feature = "unsafe")]
 #[test]
 fn test_vector_storage_memory_behavior() {
-    let mut storage = VectorStorage::<i32>::new(3, 3); // size=3, capacity=9
+    let mut storage = UnsafeVectorStorage::<i32>::new(3, 3); // size=3, capacity=9
 
     // Test with stack-allocated data
     storage.push(1);
@@ -35,31 +38,13 @@ fn test_vector_storage_memory_behavior() {
     assert_eq!(storage.vec().unwrap(), vec![2, 3, 4]);
 }
 
-#[test]
-fn test_array_storage_memory_behavior() {
-    const SIZE: usize = 3;
-    const CAPACITY: usize = 9;
-    let mut storage = ArrayStorage::<i32, SIZE, CAPACITY>::new();
-
-    // Test with stack-allocated data
-    storage.push(1);
-    storage.push(2);
-    storage.push(3);
-
-    assert!(storage.filled());
-    assert_eq!(storage.vec().unwrap(), vec![1, 2, 3]);
-
-    // Test overflow behavior
-    storage.push(4);
-    assert_eq!(storage.vec().unwrap(), vec![2, 3, 4]);
-}
-
+#[cfg(feature = "unsafe")]
 #[test]
 fn test_vector_storage_concurrent_access() {
     use std::sync::Arc;
     use std::thread;
 
-    let storage = Arc::new(std::sync::Mutex::new(VectorStorage::<i32>::new(5, 2)));
+    let storage = Arc::new(std::sync::Mutex::new(UnsafeVectorStorage::<i32>::new(5, 2)));
     let mut handles = vec![];
 
     // Spawn multiple threads to push data
@@ -83,10 +68,11 @@ fn test_vector_storage_concurrent_access() {
     assert!(final_storage.filled());
 }
 
+#[cfg(feature = "unsafe")]
 #[test]
-fn test_edge_cases() {
+fn test_vector_storage_edge_cases() {
     // Test with minimum size
-    let mut storage = VectorStorage::<i32>::new(1, 2);
+    let mut storage = UnsafeVectorStorage::<i32>::new(1, 2);
     assert_eq!(storage.size(), 1);
 
     // Test single element behavior
@@ -101,37 +87,7 @@ fn test_edge_cases() {
     assert_eq!(storage.last(), Ok(2));
 
     // Test with zero pushes
-    let empty_storage = VectorStorage::<i32>::new(1, 2);
+    let empty_storage = UnsafeVectorStorage::<i32>::new(1, 2);
     assert!(empty_storage.first().is_err());
     assert!(empty_storage.last().is_err());
-}
-
-#[test]
-fn test_performance_comparison() {
-    use std::time::Instant;
-
-    const SIZE: usize = 100;
-    const CAPACITY: usize = 1000;
-    const ITERATIONS: usize = 1000;
-
-    // Test VectorStorage performance
-    let mut vector_storage = VectorStorage::<i32>::new(SIZE, CAPACITY);
-    let start = Instant::now();
-    for i in 0..ITERATIONS {
-        vector_storage.push(i as i32);
-    }
-    let vector_duration = start.elapsed();
-    println!("Vector Storage Duration: {:?}", vector_duration);
-
-    // Test ArrayStorage performance
-    let mut array_storage = ArrayStorage::<i32, SIZE, CAPACITY>::new();
-    let start = Instant::now();
-    for i in 0..ITERATIONS {
-        array_storage.push(i as i32);
-    }
-    let array_duration = start.elapsed();
-    println!("Array Storage Duration: {:?}", array_duration);
-
-    // Verify both storages have the same last element
-    assert_eq!(vector_storage.last(), array_storage.last());
 }
