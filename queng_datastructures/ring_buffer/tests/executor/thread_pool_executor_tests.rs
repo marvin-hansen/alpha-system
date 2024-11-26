@@ -44,7 +44,7 @@ fn test_executor_creation() {
     let runnables = vec![runnable];
 
     let _executor = ThreadedExecutor::with_runnables(runnables);
-    assert!(true, "Executor created successfully");
+    // assert!(true, "Executor created successfully");
 }
 
 #[test]
@@ -143,5 +143,5 @@ fn test_executor_empty_runnables() {
     let _executor = ThreadedExecutor::with_runnables(runnables);
     let handle = _executor.spawn();
     handle.join();
-    assert!(true, "Empty executor completed successfully");
+    // assert!(true, "Empty executor completed successfully");
 }

@@ -13,7 +13,7 @@ fn create_test_dependencies(value: Sequence) -> Vec<AtomicSequence> {
 #[test]
 fn test_blocking_wait_strategy_creation() {
     let _ = BlockingWaitStrategy::new();
-    assert!(true, "BlockingWaitStrategy created successfully");
+    // assert!(true, "BlockingWaitStrategy created successfully");
 }
 
 #[test]

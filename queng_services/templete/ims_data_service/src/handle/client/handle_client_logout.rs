@@ -19,7 +19,7 @@ impl Server {
     /// # Errors
     ///
     /// - MessageProcessingError if there is an issue getting the client's control channel, checking their login status,
-    /// or logging them out.
+    ///   or logging them out.
     ///
     pub(crate) async fn handle_client_logout(
         &self,

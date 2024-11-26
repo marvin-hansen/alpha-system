@@ -97,8 +97,8 @@ impl MessageProducer {
         dbg!(&res);
 
         let stream = if res.is_err() {
-            let code = res.as_ref().unwrap_err().as_code();
-            if code == IggyError::StreamIdAlreadyExists as u32 {
+            let code = res.as_ref().unwrap_err().as_code() as usize;
+            if code == IggyError::StreamIdAlreadyExists as usize {
                 // Stream already exists
                 dbg!("Stream already exists");
                 client

@@ -1,4 +1,5 @@
 use ring_buffer::*;
+use std::f64::consts::PI;
 use std::sync::Arc;
 use std::thread;
 
@@ -91,8 +92,8 @@ fn test_different_types() {
         assert!(*rb_bool.get(0));
 
         // Test f64
-        *rb_f64.get_mut(0) = 3.14;
-        assert!(((*rb_f64.get(0) - 3.14).abs() < f64::EPSILON));
+        *rb_f64.get_mut(0) = PI;
+        assert!(((*rb_f64.get(0) - PI).abs() < f64::EPSILON));
     }
 }
 

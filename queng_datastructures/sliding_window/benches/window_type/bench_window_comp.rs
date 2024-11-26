@@ -5,8 +5,6 @@ use sliding_window::{
 };
 
 use crate::window_type::fields::{CAPACITY, MULT, SIZE};
-#[cfg(not(feature = "unsafe"))]
-use sliding_window::{ArrayStorage, VectorStorage, WindowStorage};
 
 //
 // Safe ArrayStorage
@@ -122,7 +120,7 @@ fn unsafe_array_operations(c: &mut Criterion) {
             let mut storage = UnsafeArrayStorage::<i32, SIZE, CAPACITY>::new();
             b.iter(|| {
                 for i in 0..size {
-                    storage.push(black_box(i as i32));
+                    storage.push(black_box(i));
                 }
             });
         });
@@ -223,7 +221,7 @@ fn unsafe_vector_operations(c: &mut Criterion) {
             let mut storage = UnsafeVectorStorage::new(SIZE, MULT);
             b.iter(|| {
                 for i in 0..size {
-                    storage.push(black_box(i as i32));
+                    storage.push(black_box(i));
                 }
             });
         });
@@ -235,12 +233,5 @@ fn unsafe_vector_operations(c: &mut Criterion) {
 criterion_group! {
     name = window_impl_comp;
     config = Criterion::default().sample_size(100);
-    targets = array_operations, unsafe_array_operations, // vector_operations, unsafe_vector_operations
-}
-
-#[cfg(not(feature = "unsafe"))]
-criterion_group! {
-    name = window_impl_comp;
-    config = Criterion::default().sample_size(100);
-    targets = array_operations, vector_operations
+    targets = array_operations, unsafe_array_operations, vector_operations, unsafe_vector_operations
 }
