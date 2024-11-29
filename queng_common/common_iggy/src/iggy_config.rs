@@ -40,6 +40,8 @@ impl IggyConfig {
     }
 
     pub fn from_client_id(user: IggyUser, client_id: u32) -> Self {
+        assert!(client_id >= 100, "id must be greater than 100");
+
         Self {
             user,
             stream_id: Identifier::numeric(client_id).unwrap(),

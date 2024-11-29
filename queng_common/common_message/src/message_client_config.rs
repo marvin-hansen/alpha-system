@@ -38,7 +38,7 @@ impl MessageClientConfig {
     #[must_use]
     pub fn new(id: u16) -> Self {
         // Prevents ID clash with configurations generated from ServiceID ENUM
-        assert!(id > 20, "id must be greater than 20");
+        assert!(id >= 100, "id must be greater than 100");
         let name = format!("{NAME}-{id}");
 
         Self { id, name }

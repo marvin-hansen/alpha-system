@@ -148,7 +148,6 @@ impl Service {
     pub fn client_producers(&self) -> &Guarded<HashMap<u16, MessageStream>> {
         &self.client_producers
     }
-
     pub fn consumer(&self) -> &Guarded<MessageConsumer> {
         &self.consumer
     }

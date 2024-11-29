@@ -24,14 +24,14 @@ fn test_new_iggy_config() {
 #[test]
 fn test_from_client_id() {
     let user = create_test_user();
-    let config = IggyConfig::from_client_id(user.clone(), 5);
+    let config = IggyConfig::from_client_id(user.clone(), 100);
 
-    assert_eq!(config.stream_id(), Identifier::numeric(5).unwrap());
-    assert_eq!(config.stream_name(), "stream_5");
-    assert_eq!(config.topic_id(), Identifier::numeric(5).unwrap());
-    assert_eq!(config.topic_name(), "topic_5");
+    assert_eq!(config.stream_id(), Identifier::numeric(100).unwrap());
+    assert_eq!(config.stream_name(), "stream_100");
+    assert_eq!(config.topic_id(), Identifier::numeric(100).unwrap());
+    assert_eq!(config.topic_name(), "topic_100");
     assert_eq!(config.tcp_server_addr(), "127.0.0.1:8090");
-    assert_eq!(config.partition_id(), 5);
+    assert_eq!(config.partition_id(), 100);
     assert_eq!(config.messages_per_batch(), 10);
     assert!(config.auto_commit());
     assert_eq!(config.user(), &user);

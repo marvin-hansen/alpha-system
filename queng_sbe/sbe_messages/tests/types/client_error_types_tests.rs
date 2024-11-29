@@ -15,6 +15,10 @@ fn test_from_u8() {
     assert_eq!(ClientErrorType::from(4), ClientErrorType::ClientLogOutError);
     assert_eq!(
         ClientErrorType::from(5),
+        ClientErrorType::ClientNotAuthorized
+    );
+    assert_eq!(
+        ClientErrorType::from(7),
         ClientErrorType::UnknownClientError
     );
 }

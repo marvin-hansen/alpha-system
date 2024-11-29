@@ -54,14 +54,27 @@ impl Service {
                 }
                 //
                 false => {
-                    // println!("::handle_client_login]: Client not logged in, proceed with login");
-                    let res = self.client_login(client_id).await;
+                    if !self.client_allowed(client_id) {
+                        println!("[handle_client_login] ClientNotAllowed: {:?}", client_id);
 
-                    match res {
+                        let client_error_type = ClientErrorType::ClientNotAuthorized;
+                        match self.send_client_error(client_id, client_error_type).await {
+                            Ok(_) => {}
+                            Err(err) => {
+                                println!(
+                                    "[handle_client_login] ClientNotAllowed: {:?}",
+                                    err.to_string()
+                                );
+                            }
+                        }
+                    }
+
+                    // println!("::handle_client_login]: Client not logged in, proceed with login");
+                    match self.client_login(client_id).await {
                         Ok(_) => {}
                         Err(err) => {
                             println!(
-                                "[QDGW/handle_client_login] ClientLogInError: {:?}",
+                                "[handle_client_login] ClientLogInError: {:?}",
                                 err.to_string()
                             );
 
@@ -97,6 +110,26 @@ impl Service {
         }
 
         Ok(())
+    }
+
+    /// Checks if a client is allowed to log in.
+    ///
+    /// This function should be overriden by the implementation of the service.
+    /// The default implementation allows clients with an ID > 99.
+    ///
+    /// # Parameters
+    ///
+    /// - `client_id`: The ID of the client to check
+    ///
+    /// # Returns
+    ///
+    /// `true` if the client is allowed, `false` otherwise
+    pub(crate) fn client_allowed(&self, client_id: u16) -> bool {
+        if client_id >= 100 {
+            true
+        } else {
+            false
+        }
     }
 
     /// Login a client by adding them to the client database.
