@@ -107,8 +107,8 @@ pub async fn start(
             integration_config,
             iggy_config,
         )
-            .await
-            .expect("Failed to build new service")
+        .await
+        .expect("Failed to build new service")
     } else {
         Service::new(
             &consumer_client,
@@ -116,8 +116,8 @@ pub async fn start(
             integration_config,
             iggy_config,
         )
-            .await
-            .expect("Failed to build new service")
+        .await
+        .expect("Failed to build new service")
     };
 
     dbg_print("Set integration online");

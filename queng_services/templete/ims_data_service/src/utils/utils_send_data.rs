@@ -150,6 +150,7 @@ impl Service {
 
         // Send the messages to the client's topic/partition
         producer
+            .iggy_producer()
             .send_one_message(bytes)
             .await
             .expect("Failed to send error");
