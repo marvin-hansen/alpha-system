@@ -44,7 +44,7 @@ pub async fn cleanup(client: &IggyClient, iggy_config: &IggyConfig) -> Result<()
 pub async fn logout_user(client: &IggyClient) -> Result<(), Box<dyn Error>> {
     match client.logout_user().await {
         Ok(_) => Ok(()),
-        Err(err) => return Err(Box::from(err)),
+        Err(err) => Err(Box::from(err)),
     }
 }
 /// Shuts down an Iggy client, disconnecting it from the server.

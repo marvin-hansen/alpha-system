@@ -33,10 +33,7 @@ impl MessageStream {
         iggy_client.connect().await.expect("Failed to connect");
 
         iggy_client
-            .login_user(
-                &iggy_config.user().username(),
-                &iggy_config.user().password(),
-            )
+            .login_user(iggy_config.user().username(), iggy_config.user().password())
             .await
             .expect("Failed to login user");
 

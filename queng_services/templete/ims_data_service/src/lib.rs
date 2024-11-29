@@ -74,10 +74,7 @@ pub async fn start(
 
     dbg_print("Login producer");
     producer_client
-        .login_user(
-            &iggy_config.user().username(),
-            &iggy_config.user().password(),
-        )
+        .login_user(iggy_config.user().username(), iggy_config.user().password())
         .await
         .expect("Failed to login user");
 
@@ -91,10 +88,7 @@ pub async fn start(
 
     dbg!("Login consumer");
     consumer_client
-        .login_user(
-            &iggy_config.user().username(),
-            &iggy_config.user().password(),
-        )
+        .login_user(iggy_config.user().username(), iggy_config.user().password())
         .await
         .expect("Failed to login user");
 

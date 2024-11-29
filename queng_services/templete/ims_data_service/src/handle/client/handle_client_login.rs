@@ -125,11 +125,7 @@ impl Service {
     ///
     /// `true` if the client is allowed, `false` otherwise
     pub(crate) fn client_allowed(&self, client_id: u16) -> bool {
-        if client_id >= 100 {
-            true
-        } else {
-            false
-        }
+        client_id >= 100
     }
 
     /// Login a client by adding them to the client database.

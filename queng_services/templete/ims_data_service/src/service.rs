@@ -96,14 +96,14 @@ impl Service {
 
         dbg!("Create MessageProducer");
         let producer =
-            MessageProducer::from_client(&producer_client, stream_id.clone(), topic_id.clone())
+            MessageProducer::from_client(producer_client, stream_id.clone(), topic_id.clone())
                 .await
                 .expect("Failed to create producer");
         let producer = std::sync::Arc::new(tokio::sync::RwLock::new(producer));
 
         dbg!("Create MessageConsumer");
         let consumer = MessageConsumer::from_client(
-            &consumer_client,
+            consumer_client,
             "control_consumer",
             stream_id.clone(),
             topic_id.clone(),
