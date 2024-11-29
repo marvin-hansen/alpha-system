@@ -117,11 +117,6 @@ impl Server {
     /// - MessageProcessingError if there was an issue adding the client to the database.
     ///
     pub(crate) async fn client_login(&self, client_id: u16) -> Result<(), MessageProcessingError> {
-        // Get new client
-        // let user = self.client_stream_user();
-        // let stream_id = "".to_string();
-        // let topic_id = "".to_string();
-        //
         // // Create an iggy client and initialize it as producer
         // let producer = MessageProducer::from_client(stream_id, topic_id, user)
         //     .await

@@ -39,12 +39,7 @@ impl IggyConfig {
         }
     }
 
-    pub fn from_client_id(
-        user: IggyUser,
-        client_id: u32,
-        messages_per_batch: u32,
-        auto_commit: bool,
-    ) -> Self {
+    pub fn from_client_id(user: IggyUser, client_id: u32) -> Self {
         Self {
             user,
             stream_id: Identifier::numeric(client_id).unwrap(),
@@ -53,8 +48,8 @@ impl IggyConfig {
             topic_name: format!("topic_{}", client_id),
             tcp_server_addr: "127.0.0.1:8090".to_owned(),
             partition_id: client_id,
-            messages_per_batch,
-            auto_commit,
+            messages_per_batch: 10,
+            auto_commit: true,
         }
     }
 }

@@ -23,6 +23,7 @@ common_message = { workspace = true }
 message_consumer = { workspace = true }
 message_producer = { workspace = true }
 message_shared = { workspace = true }
+message_stream = { workspace = true }
 sbe_messages = { workspace = true }
 sbe_utils = { workspace = true }
 smdb_client = { workspace = true }

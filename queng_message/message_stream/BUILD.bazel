@@ -1,47 +1,39 @@
 load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library")
 
 rust_library(
-    name = "ims_data_service",
+    name = "message_stream",
     srcs = glob([
         "src/**",
     ]),
     crate_root = "src/lib.rs",
+    tags = [
+        "infra",
+        "message_bus",
+        "message_stream",
+    ],
     visibility = ["//visibility:public"],
     deps = [
         # Internal crates
-        "//alias:common_config",
-        "//alias:common_data_bar",
-        "//alias:common_errors",
-        "//alias:common_exchange",
-        "//alias:common_iggy",
-        "//alias:common_ims",
-        "//alias:common_service",
-        "//alias:config_manager",
         "//alias:common_message",
-        "//alias:message_consumer",
+        "//alias:common_iggy",
         "//alias:message_producer",
         "//alias:message_shared",
-        "//alias:message_stream",
-        "//alias:sbe_messages",
-        "//alias:sbe_utils",
-        "//alias/client:smdb_client",
         # External crates
         "//thirdparty/crates:iggy",
-        "//thirdparty/crates:futures-util",
         "//thirdparty/crates:tokio",
     ],
 )
 
 rust_doc(
     name = "doc",
-    crate = ":ims_data_service",
+    crate = ":message_stream",
     tags = ["doc"],
     visibility = ["//visibility:public"],
 )
 
 rust_doc_test(
     name = "doc_test",
-    crate = ":ims_data_service",
+    crate = ":message_stream",
     tags = ["doc-test"],
     visibility = ["//visibility:public"],
 )

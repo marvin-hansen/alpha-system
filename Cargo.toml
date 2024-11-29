@@ -148,6 +148,7 @@ postgres_migrations = { path = "queng_infra/postgres/postgres_migrations" }
 message_consumer = { path = "queng_message/message_consumer" }
 message_producer = { path = "queng_message/message_producer" }
 message_shared = { path = "queng_message/message_shared" }
+message_stream = { path = "queng_message/message_stream" }
 
 # Proto
 proto_cmdb = { path = "queng_proto/proto_cmdb" }

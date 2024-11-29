@@ -314,6 +314,11 @@ alias(
     actual = "//queng_message/message_shared",
 )
 
+alias(
+    name = "message_stream",
+    actual = "//queng_message/message_stream",
+)
+
 ###############################################################################
 # Proto
 ###############################################################################
