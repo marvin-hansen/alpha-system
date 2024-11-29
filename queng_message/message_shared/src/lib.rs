@@ -1,13 +1,17 @@
+mod client;
+
 mod error;
+mod shutdown_utils;
 mod traits;
-pub mod utils;
 
 use iggy::users::defaults::{DEFAULT_ROOT_PASSWORD, DEFAULT_ROOT_USERNAME};
 use iggy::utils::duration::IggyDuration;
 use std::str::FromStr;
 
 // Re export
+pub use client::*;
 pub use error::*;
+pub use shutdown_utils::*;
 pub use traits::*;
 
 #[derive(Debug)]

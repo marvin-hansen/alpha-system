@@ -41,6 +41,11 @@ alias(
 )
 
 alias(
+    name = "common_iggy",
+    actual = "//queng_common/common_iggy",
+)
+
+alias(
     name = "common_ims",
     actual = "//queng_common/common_ims",
 )

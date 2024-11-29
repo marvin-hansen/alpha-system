@@ -68,6 +68,8 @@ impl Server {
     pub(crate) async fn send_error(&self, bytes: Vec<u8>) -> Result<(), MessageProcessingError> {
         // Send message
         self.producer()
+            .read()
+            .await
             .send_one_message(bytes)
             .await
             .expect("Failed to send error message");

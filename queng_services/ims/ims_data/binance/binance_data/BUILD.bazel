@@ -29,8 +29,6 @@ build_binary_opt(
         "//thirdparty/crates:futures",
         "//thirdparty/crates:serde",
         "//thirdparty/crates:tokio",
-        "//thirdparty/crates:tonic",
-        "//thirdparty/crates:prost",
     ],
 )
 

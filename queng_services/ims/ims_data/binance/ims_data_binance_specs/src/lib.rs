@@ -1,6 +1,6 @@
 use common_config::{ServiceConfig, ServiceID};
+use common_iggy::{IggyConfig, IggyUser};
 use common_ims::{ExchangeID, ImsIntegrationType, IntegrationConfig, IntegrationMessageConfig};
-use common_message::StreamUser;
 use shared_service_specs::{health_endpoint, ims_endpoint, metric_endpoint};
 
 /// Returns the configuration for the Binance data integration in the IMS system.
@@ -11,7 +11,6 @@ use shared_service_specs::{health_endpoint, ims_endpoint, metric_endpoint};
 /// # Returns
 /// A `IntegrationConfig` instance with the specific settings for the Binance data integration in the IMS system.
 ///
-#[must_use]
 pub fn binance_ims_data_integration_config() -> IntegrationConfig {
     IntegrationConfig::new(
         "ims-data-binance".to_string(),
@@ -22,8 +21,8 @@ pub fn binance_ims_data_integration_config() -> IntegrationConfig {
     )
 }
 
-pub fn binance_stream_user() -> StreamUser {
-    StreamUser::new("binance-data-user", "secret")
+pub fn ims_data_iggy_config() -> IggyConfig {
+    IggyConfig::new(IggyUser::default(), "127.0.0.1:8090", 1, 1, 1, 1, true)
 }
 
 /// Configures the service for Binance data in the IMS system.

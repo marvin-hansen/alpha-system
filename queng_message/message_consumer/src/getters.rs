@@ -3,12 +3,6 @@ use iggy::clients::consumer::IggyConsumer;
 use iggy::identifier::Identifier;
 
 impl MessageConsumer {
-    /// Returns a reference to the user identifier.
-    #[must_use]
-    pub const fn user_id(&self) -> &Identifier {
-        &self.user_id
-    }
-
     /// Returns a reference to the stream identifier.
     #[must_use]
     pub const fn stream_id(&self) -> &Identifier {

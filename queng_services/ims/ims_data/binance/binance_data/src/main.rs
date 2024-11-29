@@ -19,7 +19,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     let integration_config = ims_data_binance_specs::binance_ims_data_integration_config();
 
-    let stream_user = ims_data_binance_specs::binance_stream_user();
+    let iggy_config = ims_data_binance_specs::ims_data_iggy_config();
 
     let cfg_manager = CfgManager::new(SVC_ID, svc_config).await;
 
@@ -27,8 +27,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
     ims_data_service::start(
         DBG,
         EXCHANGE_ID,
-        integration_config,
-        stream_user,
+        &integration_config,
+        &iggy_config,
         cfg_manager,
     )
     .await

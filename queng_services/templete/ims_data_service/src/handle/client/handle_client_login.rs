@@ -1,6 +1,5 @@
 use crate::service::Server;
 use common_errors::MessageProcessingError;
-use message_producer::MessageProducer;
 use sbe_messages::{ClientErrorType, ClientLoginMessage};
 
 impl Server {
@@ -119,23 +118,23 @@ impl Server {
     ///
     pub(crate) async fn client_login(&self, client_id: u16) -> Result<(), MessageProcessingError> {
         // Get new client
-        let user = self.client_stream_user();
-        let stream_id = "".to_string();
-        let topic_id = "".to_string();
-
-        // Create an iggy client and initialize it as producer
-        let producer = MessageProducer::new(stream_id, topic_id, user)
-            .await
-            .expect("Failed to create producer client");
-
-        // lock the client_data_producers hashmap
-        let mut client_data_producers = self.client_producers().write().await;
-
-        // add the client data producer to the hashmap
-        client_data_producers.insert(client_id, producer);
-
-        // Unlock the client_data_producers hashmap
-        drop(client_data_producers);
+        // let user = self.client_stream_user();
+        // let stream_id = "".to_string();
+        // let topic_id = "".to_string();
+        //
+        // // Create an iggy client and initialize it as producer
+        // let producer = MessageProducer::from_client(stream_id, topic_id, user)
+        //     .await
+        //     .expect("Failed to create producer client");
+        //
+        // // lock the client_data_producers hashmap
+        // let mut client_data_producers = self.client_producers().write().await;
+        //
+        // // add the client data producer to the hashmap
+        // client_data_producers.insert(client_id, producer);
+        //
+        // // Unlock the client_data_producers hashmap
+        // drop(client_data_producers);
 
         Ok(())
     }

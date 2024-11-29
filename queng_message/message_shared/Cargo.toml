@@ -12,6 +12,7 @@ workspace = true
 
 [dependencies]
 # Internal crates
+common_iggy = {workspace = true}
 common_message = {workspace = true}
 # External crates
 ahash = {workspace = true}

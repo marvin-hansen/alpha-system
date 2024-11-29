@@ -1,22 +1,24 @@
 use crate::service::Server;
 use common_exchange::ExchangeID;
+use common_iggy::IggyConfig;
 use common_ims::IntegrationConfig;
-use common_message::StreamUser;
 use common_service::print_utils;
 use config_manager::CfgManager;
+use iggy::client::{Client, UserClient};
 use smdb_client::SMDBClient;
 use tokio::time::Instant;
 
 mod handle;
 mod run;
 mod service;
+mod shutdown;
 mod utils;
 
 pub async fn start(
     dbg: bool,
     exchange_id: ExchangeID,
-    integration_config: IntegrationConfig,
-    stream_user: StreamUser,
+    integration_config: &IntegrationConfig,
+    iggy_config: &IggyConfig,
     cfg_manager: CfgManager,
 ) -> Result<(), Box<dyn std::error::Error>> {
     let svc_name = &format!("IMS {exchange_id} Data Service");
@@ -59,32 +61,104 @@ pub async fn start(
     // Free up some memory before starting the service,
     drop(cfg_manager);
 
+    let stream_id = integration_config.control_channel();
+    let topic_id = integration_config.control_channel();
+
+    dbg_print("Construct iggy producer client");
+    let producer_client = message_shared::build_client(stream_id.clone(), topic_id.clone())
+        .await
+        .expect("Failed to build client");
+
+    dbg_print("Connecting producer");
+    producer_client.connect().await.expect("Failed to connect");
+
+    dbg_print("Login producer");
+    producer_client
+        .login_user(
+            &iggy_config.user().username(),
+            &iggy_config.user().password(),
+        )
+        .await
+        .expect("Failed to login user");
+
+    dbg!("Construct iggy consumer");
+    let consumer_client = message_shared::build_client(stream_id.clone(), topic_id.clone())
+        .await
+        .expect("Failed to build client");
+
+    dbg!("Connecting consumer");
+    consumer_client.connect().await.expect("Failed to connect");
+
+    dbg!("Login consumer");
+    consumer_client
+        .login_user(
+            &iggy_config.user().username(),
+            &iggy_config.user().password(),
+        )
+        .await
+        .expect("Failed to login user");
+
     dbg_print("Configuring server and signal handler");
     //Creates a new server
-    let server = Server::with_debug(integration_config, stream_user)
+    let server = if dbg {
+        Server::with_debug(
+            &consumer_client,
+            &producer_client,
+            integration_config,
+            iggy_config,
+        )
         .await
-        .expect("Failed to build new service");
-
-    // let signal = shutdown_utils::signal_handler("gRPC server");
-
-    dbg_print("Run service");
-    let service_handle = tokio::spawn(server.run());
+        .expect("Failed to build new service")
+    } else {
+        Server::new(
+            &consumer_client,
+            &producer_client,
+            integration_config,
+            iggy_config,
+        )
+        .await
+        .expect("Failed to build new service")
+    };
 
     dbg_print("Set integration online");
+    //
+
+    dbg_print("Run server");
+    server.run().await.expect("Failed to run service");
 
     // Print service start header
     print_utils::print_duration("Starting service took:", &start.elapsed());
     print_utils::print_start_header_simple(svc_name, &service_addr);
 
-    //Start server.
-    match tokio::try_join!(service_handle) {
-        Ok(_) => {}
-        Err(e) => {
-            println!("[{svc_name}]/main: Failed to start Message service: {e:?}");
+    #[cfg(unix)]
+    let (mut ctrl_c, mut sigterm) = {
+        use tokio::signal::unix::{signal, SignalKind};
+        (
+            signal(SignalKind::interrupt())?,
+            signal(SignalKind::terminate())?,
+        )
+    };
+
+    #[cfg(unix)]
+    tokio::select! {
+        _ = ctrl_c.recv() => {
+            dbg!("Received SIGINT. Shutting down {NAME} {VERSION}...");
+        },
+        _ = sigterm.recv() => {
+            dbg!("Received SIGTERM. Shutting down {NAME} {VERSION}...");
         }
     }
-    //
+
+    dbg_print("Shutdown server");
+    shutdown::shutdown_and_cleanup(&producer_client, iggy_config)
+        .await
+        .expect("Failed to shutdown service");
+    shutdown::shutdown(&consumer_client)
+        .await
+        .expect("Failed to shutdown service");
+
     dbg_print("Set integration offline");
+    //
 
     Ok(())
 }
