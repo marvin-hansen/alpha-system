@@ -1,2 +1,2 @@
-use crate::service::Server;
-impl Server {}
+use crate::service::Service;
+impl Service {}

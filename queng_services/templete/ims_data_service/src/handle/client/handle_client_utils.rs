@@ -1,7 +1,7 @@
-use crate::service::Server;
+use crate::service::Service;
 use common_errors::MessageProcessingError;
 
-impl Server {
+impl Service {
     /// Checks if a client with the specified ID is logged in.
     ///
     /// This method checks the client producers map to verify if a client with the given ID

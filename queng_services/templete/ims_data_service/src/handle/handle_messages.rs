@@ -1,9 +1,9 @@
-use crate::service::Server;
+use crate::service::Service;
 use common_errors::MessageProcessingError;
 use iggy::models::messages::PolledMessage;
 use sbe_messages::{ClientLoginMessage, ClientLogoutMessage, MessageType};
 
-impl Server {
+impl Service {
     /// Handles a single message by processing it and sending it to the appropriate
     /// manager for further processing.
     ///

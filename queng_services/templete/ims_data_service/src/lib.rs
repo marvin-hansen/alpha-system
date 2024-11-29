@@ -1,4 +1,4 @@
-use crate::service::Server;
+use crate::service::Service;
 use common_exchange::ExchangeID;
 use common_iggy::IggyConfig;
 use common_ims::IntegrationConfig;
@@ -101,23 +101,23 @@ pub async fn start(
     dbg_print("Configuring server and signal handler");
     //Creates a new server
     let server = if dbg {
-        Server::with_debug(
+        Service::with_debug(
             &consumer_client,
             &producer_client,
             integration_config,
             iggy_config,
         )
-        .await
-        .expect("Failed to build new service")
+            .await
+            .expect("Failed to build new service")
     } else {
-        Server::new(
+        Service::new(
             &consumer_client,
             &producer_client,
             integration_config,
             iggy_config,
         )
-        .await
-        .expect("Failed to build new service")
+            .await
+            .expect("Failed to build new service")
     };
 
     dbg_print("Set integration online");

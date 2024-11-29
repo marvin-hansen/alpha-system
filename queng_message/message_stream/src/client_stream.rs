@@ -5,7 +5,7 @@ use iggy::identifier::Identifier;
 use message_producer::MessageProducer;
 use std::fmt::Error;
 
-pub struct ClientStream {
+pub struct MessageStream {
     client_id: u16,
     stream_id: Identifier,
     topic_id: Identifier,
@@ -13,7 +13,7 @@ pub struct ClientStream {
     iggy_producer: MessageProducer,
 }
 
-impl ClientStream {
+impl MessageStream {
     pub async fn new(client_id: u16) -> Result<Self, Error> {
         Self::build(client_id).await
     }
@@ -55,7 +55,7 @@ impl ClientStream {
     }
 }
 
-impl ClientStream {
+impl MessageStream {
     pub fn client_id(&self) -> u16 {
         self.client_id
     }

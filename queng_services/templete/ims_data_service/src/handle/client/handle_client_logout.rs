@@ -1,8 +1,8 @@
-use crate::service::Server;
+use crate::service::Service;
 use common_errors::MessageProcessingError;
 use sbe_messages::{ClientErrorType, ClientLogoutMessage};
 
-impl Server {
+impl Service {
     /// Handles a client logout message by validating the client ID and logging them out.
     ///
     /// Gets the client's control channel, checks if they are logged in, and logs them out if so.

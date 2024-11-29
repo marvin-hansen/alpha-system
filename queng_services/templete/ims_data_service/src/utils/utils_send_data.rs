@@ -3,8 +3,8 @@ use common_errors::MessageProcessingError;
 use message_shared::SendMessage;
 use sbe_messages::{DataErrorType, DataType, SbeOHLCVBar, SbeTradeBar};
 
-use crate::service::Server;
-impl Server {
+use crate::service::Service;
+impl Service {
     /// Sends a first bar message to the client to indicate the start of a data stream.
     ///
     /// # Arguments

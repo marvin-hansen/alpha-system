@@ -3,6 +3,7 @@ use common_ims::IntegrationConfig;
 use iggy::clients::client::IggyClient;
 use message_consumer::MessageConsumer;
 use message_producer::MessageProducer;
+use message_stream::MessageStream;
 use std::collections::HashMap;
 use std::error::Error;
 
@@ -12,17 +13,17 @@ type Guarded<T> = std::sync::Arc<tokio::sync::RwLock<T>>;
 ///
 /// The server manages message consumption and production for both control and data channels,
 /// maintaining thread-safe access to shared resources using Tokio's async-aware locks.
-pub struct Server {
+pub struct Service {
     dbg: bool,
     consumer: Guarded<MessageConsumer>,
     producer: Guarded<MessageProducer>,
     iggy_config: IggyConfig,
     integration_config: IntegrationConfig,
     client_configs: Guarded<HashMap<u16, IggyConfig>>,
-    client_producers: Guarded<HashMap<u16, MessageProducer>>,
+    client_producers: Guarded<HashMap<u16, MessageStream>>,
 }
 
-impl Server {
+impl Service {
     /// Creates a new server instance with debugging disabled.
     ///
     /// # Arguments
@@ -82,7 +83,7 @@ impl Server {
     }
 }
 
-impl Server {
+impl Service {
     async fn build(
         dbg: bool,
         consumer_client: &IggyClient,
@@ -127,7 +128,7 @@ impl Server {
     }
 }
 
-impl Server {
+impl Service {
     pub fn dbg(&self) -> bool {
         self.dbg
     }
@@ -144,7 +145,7 @@ impl Server {
         &self.client_configs
     }
 
-    pub fn client_producers(&self) -> &Guarded<HashMap<u16, MessageProducer>> {
+    pub fn client_producers(&self) -> &Guarded<HashMap<u16, MessageStream>> {
         &self.client_producers
     }
 
@@ -157,7 +158,7 @@ impl Server {
     }
 }
 
-impl Server {
+impl Service {
     pub(crate) fn dbg_print(&self, msg: &str) {
         if self.dbg {
             println!("[IMSData/Server]: {msg}");
