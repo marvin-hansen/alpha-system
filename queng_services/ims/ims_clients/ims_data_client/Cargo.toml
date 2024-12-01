@@ -7,12 +7,9 @@ readme.workspace = true
 repository.workspace = true
 authors.workspace = true
 
+
 [lints]
 workspace = true
-
-[lib]
-name = "ims_data_client"
-path = "src/lib.rs"
 
 
 [dependencies]
@@ -23,5 +20,3 @@ common_exchange = {workspace = true}
 
 # Exteral crates
 tokio = { workspace = true }
-tonic = { workspace = true }
-prost = { workspace = true }

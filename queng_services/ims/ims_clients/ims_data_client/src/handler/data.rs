@@ -1,5 +1,4 @@
-use crate::error::ImsDataClientError;
-use crate::ImsDataClient;
+use crate::{ImsDataClient, ImsDataClientError};
 use common_data_bar::DataType;
 use common_exchange::ExchangeID;
 
