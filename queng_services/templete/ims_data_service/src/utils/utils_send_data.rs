@@ -1,80 +1,10 @@
 use common_data_bar::{OHLCVBar, TradeBar};
 use common_errors::MessageProcessingError;
 use message_shared::SendMessage;
-use sbe_messages::{DataErrorType, DataType, SbeOHLCVBar, SbeTradeBar};
+use sbe_messages::{DataErrorType, SbeOHLCVBar, SbeTradeBar};
 
 use crate::service::Service;
 impl Service {
-    /// Sends a first bar message to the client to indicate the start of a data stream.
-    ///
-    /// # Arguments
-    ///
-    /// * `client_id` - The id of the client to send the message to.
-    /// * `symbol_id` - The symbol id for the first bar message.
-    /// * `data_type` - The data type (OHLCV or Trade) for encoding the first bar message.
-    ///
-    /// # Errors
-    ///
-    /// Returns a Result with the error variants:
-    ///
-    /// - `(DataErrorType, MessageProcessingError)` - Error encoding or sending the first bar message.
-    ///
-    pub(crate) async fn send_first_bar(
-        &self,
-        client_id: u16,
-        symbol_id: u16,
-        data_type: &DataType,
-    ) -> Result<(), (DataErrorType, MessageProcessingError)> {
-        // Encode the first bar message
-        let enc_first_bar = match sbe_utils::encode_first_bar(data_type, symbol_id) {
-            Ok(v) => v,
-            Err(e) => return Err(e),
-        };
-
-        // Send the first bar message to inform the client that the data stream starts
-        match self.send_client_data(client_id, enc_first_bar).await {
-            Ok(()) => {}
-            Err(e) => return Err(e),
-        }
-
-        Ok(())
-    }
-
-    /// Sends a last bar message to the client to indicate the end of a data stream.
-    ///
-    /// # Arguments
-    ///
-    /// * `client_id` - The id of the client to send the message to.
-    /// * `symbol_id` - The symbol id for the last bar message.
-    /// * `data_type` - The data type (OHLCV or Trade) for encoding the last bar message.
-    ///
-    /// # Errors
-    ///
-    /// Returns a Result with the error variants:
-    ///
-    /// - `(DataErrorType, MessageProcessingError)` - Error encoding or sending the last bar message.
-    ///
-    pub(crate) async fn send_last_bar(
-        &self,
-        client_id: u16,
-        symbol_id: u16,
-        data_type: &DataType,
-    ) -> Result<(), (DataErrorType, MessageProcessingError)> {
-        // Encode the last bar message
-        let enc_last_bar = match sbe_utils::encode_last_bar(data_type, symbol_id).await {
-            Ok(v) => v,
-            Err(e) => return Err(e),
-        };
-
-        // Send the first bar message to inform the client that the data stream starts
-        match self.send_client_data(client_id, enc_last_bar).await {
-            Ok(()) => {}
-            Err(e) => return Err(e),
-        }
-
-        Ok(())
-    }
-
     /// Sends a trade bar message to the client to inform it that the data stream starts.
     ///
     /// # Arguments
@@ -97,7 +27,7 @@ impl Service {
         let (_, enc_trade_bar) = SbeTradeBar::encode(bar.to_owned()).unwrap();
 
         // Send trade bar message to inform the client that the data stream starts
-        match self.send_client_data(client_id, enc_trade_bar).await {
+        match self.send_data(client_id, enc_trade_bar).await {
             Ok(()) => {}
             Err(e) => return Err(e),
         }
@@ -127,7 +57,7 @@ impl Service {
         let (_, enc_ohlcv_bar) = SbeOHLCVBar::encode(bar.to_owned()).unwrap();
 
         // Send the ohlcv bar message to inform the client that the data stream starts
-        match self.send_client_data(client_id, enc_ohlcv_bar).await {
+        match self.send_data(client_id, enc_ohlcv_bar).await {
             Ok(()) => {}
             Err(e) => return Err(e),
         }
@@ -135,7 +65,7 @@ impl Service {
         Ok(())
     }
 
-    pub(crate) async fn send_client_data(
+    pub(crate) async fn send_data(
         &self,
         client_id: u16,
         bytes: Vec<u8>,
