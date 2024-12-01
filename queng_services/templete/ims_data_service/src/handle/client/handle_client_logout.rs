@@ -37,7 +37,6 @@ impl Service {
             Ok(exists) => match exists {
                 true => {
                     // println!("[::handle_client_logout]: Client is logged in, proceed with logout");
-
                     let res = self.client_logout(client_id).await;
                     match res {
                         Ok(_) => {}
@@ -94,36 +93,6 @@ impl Service {
                 }
             }
         }
-
-        Ok(())
-    }
-
-    /// Logs out a client by removing them from the client database.
-    ///
-    /// Locks the client manager and removes the client with the given ID.
-    ///
-    /// # Parameters
-    ///
-    /// - `client_id`: The ID of the client to log out
-    ///
-    /// # Returns
-    ///
-    /// A Result with no value if the client was logged out successfully,
-    /// or a MessageProcessingError if there was an issue.
-    ///
-    /// # Errors
-    ///
-    /// - MessageProcessingError if there was an issue removing the client from the database.
-    ///
-    pub(crate) async fn client_logout(&self, client_id: u16) -> Result<(), MessageProcessingError> {
-        // lock the client_data_producers hashmap
-        let mut client_data_producers = self.client_producers().write().await;
-
-        // Remove the client's data producer from the hashmap
-        client_data_producers.remove(&client_id);
-
-        // Unlock the client_data_producers hashmap
-        drop(client_data_producers);
 
         Ok(())
     }

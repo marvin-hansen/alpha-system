@@ -8,6 +8,7 @@ use iggy::client::{Client, UserClient};
 use smdb_client::SMDBClient;
 use tokio::time::Instant;
 
+mod auth;
 mod handle;
 mod run;
 mod service;
