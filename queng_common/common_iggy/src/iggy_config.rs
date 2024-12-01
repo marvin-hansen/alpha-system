@@ -39,8 +39,10 @@ impl IggyConfig {
         }
     }
 
-    pub fn from_client_id(user: IggyUser, client_id: u32) -> Self {
+    pub fn from_client_id(user: IggyUser, client_id: u16) -> Self {
         assert!(client_id >= 100, "id must be greater than 100");
+
+        let client_id = client_id as u32;
 
         Self {
             user,

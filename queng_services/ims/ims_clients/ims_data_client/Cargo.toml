@@ -14,9 +14,18 @@ workspace = true
 
 [dependencies]
 # Internal crates
-common_data_bar = {workspace = true}
-common_config = {workspace = true}
-common_exchange = {workspace = true}
+common_data_bar = { workspace = true }
+common_config = { workspace = true }
+common_exchange = { workspace = true }
+common_iggy = { workspace = true }
+common_ims = { workspace = true }
+message_consumer = { workspace = true }
+message_producer = { workspace = true }
+message_stream = { workspace = true }
+message_shared = { workspace = true }
+sbe_messages = { workspace = true }
 
 # Exteral crates
+bytes = { workspace = true }
+iggy = { workspace = true }
 tokio = { workspace = true }

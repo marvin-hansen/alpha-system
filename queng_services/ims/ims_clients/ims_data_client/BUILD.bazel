@@ -13,7 +13,15 @@ rust_library(
         "//alias:common_data_bar",
         "//alias:common_config",
         "//alias:common_exchange",
-        # Exteral crates
+        "//alias:common_iggy",
+        "//alias:common_ims",
+        "//alias:message_consumer",
+        "//alias:message_producer",
+        "//alias:message_shared",
+        "//alias:sbe_messages",
+        # External crates
+        "//thirdparty/crates:bytes",
+        "//thirdparty/crates:iggy",
         "//thirdparty/crates:tokio",
     ],
 )
