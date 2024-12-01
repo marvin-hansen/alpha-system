@@ -2,16 +2,24 @@ use crate::{ImsDataClient, ImsDataClientError};
 use sbe_messages::ClientLogoutMessage;
 
 impl ImsDataClient {
+    /// Logs out the client via control channel.
+    ///
+    /// # Errors
+    ///
+    /// If the message fails to send, it will return an `ImsDataClientError` with the error message.
+    ///
     pub async fn logout(&self) -> Result<(), ImsDataClientError> {
-        // Construct login message
-        let login_message = ClientLogoutMessage::new(self.client_id);
+        self.dbg_print("logout");
 
-        // Encode SBE message
-        let (_, message) = login_message
+        self.dbg_print("Construct logout message");
+        let logout_message = ClientLogoutMessage::new(self.client_id);
+
+        self.dbg_print("Encode SBE message");
+        let (_, message) = logout_message
             .encode()
             .expect("[ImsDataClient/login]: Failed to encode message");
 
-        // Send message out
+        self.dbg_print("Send message");
         self.send_one_message(message)
             .await
             .expect("[ImsDataClient/login]: Failed to send login message!");

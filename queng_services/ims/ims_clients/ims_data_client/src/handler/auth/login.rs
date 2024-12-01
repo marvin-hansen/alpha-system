@@ -9,15 +9,17 @@ impl ImsDataClient {
     /// If the message fails to send, it will return an `ImsDataClientError` with the error message.
     ///
     pub async fn login(&self) -> Result<(), ImsDataClientError> {
-        // Construct login message
+        self.dbg_print("login");
+
+        self.dbg_print("Construct login message");
         let login_message = ClientLoginMessage::new(self.client_id);
 
-        // Encode SBE message
+        self.dbg_print("Encode SBE message");
         let (_, message) = login_message
             .encode()
             .expect("[ImsDataClient/login]: Failed to encode message");
 
-        // Send message out
+        self.dbg_print("Send message");
         self.send_one_message(message)
             .await
             .expect("[ImsDataClient/login]: Failed to send login message!");

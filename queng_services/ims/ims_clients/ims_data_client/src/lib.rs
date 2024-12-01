@@ -21,6 +21,17 @@ pub struct ImsDataClient {
 }
 
 impl ImsDataClient {
+    /// Creates a new `ImsDataClient` instance with debugging disabled.
+    ///
+    /// # Arguments
+    ///
+    /// * `client_id` - The client ID to use for this instance.
+    /// * `integration_config` - The integration configuration for the server.
+    ///
+    /// # Returns
+    ///
+    /// A `Result` containing the newly created `ImsDataClient` instance or an error.
+    ///
     pub async fn new(
         client_id: u16,
         integration_config: IntegrationConfig,
@@ -28,13 +39,23 @@ impl ImsDataClient {
         Self::build(false, client_id, integration_config).await
     }
 
+    /// Creates a new `ImsDataClient` instance with debugging enabled.
+    ///
+    /// # Arguments
+    ///
+    /// * `client_id` - The client ID to use for this instance.
+    /// * `integration_config` - The integration configuration for the server.
+    ///
+    /// # Returns
+    ///
+    /// A `Result` containing the newly created `ImsDataClient` instance or an error.
+    ///
     pub async fn with_debug(
         client_id: u16,
         integration_config: IntegrationConfig,
     ) -> Result<Self, ImsDataClientError> {
         Self::build(true, client_id, integration_config).await
     }
-
     pub async fn build(
         dbg: bool,
         client_id: u16,
@@ -124,5 +145,13 @@ impl ImsDataClient {
 
     pub fn integration_config(&self) -> &IntegrationConfig {
         &self.integration_config
+    }
+}
+
+impl ImsDataClient {
+    pub(crate) fn dbg_print(&self, msg: &str) {
+        if self.dbg {
+            println!("[ImsDataClient]: {msg}");
+        }
     }
 }
