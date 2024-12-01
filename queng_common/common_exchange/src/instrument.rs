@@ -1,5 +1,16 @@
 use std::fmt::{Display, Formatter};
 
+/// A struct to represent an instrument traded on a specific exchange.
+///
+/// The information contained by the struct is as follows:
+/// - `code`: the instrument's code
+/// - `class`: the instrument's class
+/// - `exchange_code`: the instrument's exchange code
+/// - `exchange_pair_code`: the instrument's exchange pair code
+/// - `base_asset`: the instrument's base asset
+/// - `quote_asset`: the instrument's quote asset
+/// - `instrument_figi`: the instrument's Figi (Financial Instrument Global Identifier)
+///
 #[derive(Default, Debug, Clone, PartialEq, Eq)]
 pub struct Instrument {
     code: String,
@@ -11,6 +22,15 @@ pub struct Instrument {
     instrument_figi: Option<String>,
 }
 
+/// Construct a new `Instrument` from its components.
+///
+/// `code`: the instrument's code
+/// `class`: the instrument's class
+/// `exchange_code`: the instrument's exchange code
+/// `exchange_pair_code`: the instrument's exchange pair code
+/// `base_asset`: the instrument's base asset
+/// `quote_asset`: the instrument's quote asset
+/// `instrument_figi`: the instrument's Figi (Financial Instrument Global Identifier)
 impl Instrument {
     #[must_use]
     pub const fn new(
@@ -34,6 +54,7 @@ impl Instrument {
     }
 }
 
+/// Getters for the instrument's properties.
 impl Instrument {
     #[must_use]
     pub fn code(&self) -> &str {
