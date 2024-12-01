@@ -5,12 +5,12 @@ use sbe_messages::ClientLoginMessage;
 impl Service {
     /// Handles a client login message by validating the client ID and logging them in.
     ///
-    /// Gets the client's control channel, checks if they are already logged in, and logs them in if not.
+    /// Gets the client's control channel, checks if they are not already logged in, and logs them in if allowed.
     /// Sends back any errors over the control channel.
     ///
     /// # Parameters
     ///
-    /// - `client_login_msg`: The incoming ClientLoginMessage from the client
+    /// - `client_login_msg`: The incoming ClientLoginMessage from the client.
     ///
     /// # Returns
     ///
@@ -18,15 +18,13 @@ impl Service {
     ///
     /// # Errors
     ///
-    /// - MessageProcessingError if there is an issue getting the client's control channel, checking their login status,
-    ///   or logging them in.
+    /// - MessageProcessingError if there is an issue checking the client's login status or logging them in.
     ///
-    /// ```
     pub(crate) async fn handle_client_login(
         &self,
         client_login_msg: &ClientLoginMessage,
     ) -> Result<(), MessageProcessingError> {
-        // println!("::handle_client_login]: Extract the client ID from the message");
+        self.dbg_print("handle_client_login");
         let client_id = client_login_msg.client_id();
 
         match self.client_login(client_id).await {
@@ -41,7 +39,7 @@ impl Service {
                     Ok(_) => {}
                     Err(err) => {
                         println!(
-                            "[QDGW/handle_client_login] ClientLogInError: {:?}",
+                            "[handle_client_login] ClientLogInError: {:?}",
                             err.to_string()
                         );
                     }

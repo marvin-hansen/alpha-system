@@ -10,6 +10,8 @@ use std::fmt::{Display, Formatter};
 /// - `ClientNotLoggedIn` = `3_u8`
 /// - `ClientLogOutError` = `4_u8`
 /// - `ClientNotAuthorized` = `5_u8`
+/// - `ClientShutdownError` = `6_u8`
+///
 ///
 /// # Remarks
 ///
@@ -32,6 +34,7 @@ pub enum ClientErrorType {
     ClientNotLoggedIn = 3_u8,
     ClientLogOutError = 4_u8,
     ClientNotAuthorized = 5_u8,
+    ClientShutdownError = 6_u8,
 }
 
 impl From<u8> for ClientErrorType {
@@ -51,6 +54,7 @@ impl From<u8> for ClientErrorType {
     /// - 3 -> `ClientNotLoggedIn`
     /// - 4 -> `ClientLogOutError`
     /// - 5 -> `ClientNotAuthorized`
+    /// - 6 -> `ClientShutdownError`
     /// - Other -> `UnknownClientError`
     ///
     /// # Remarks
@@ -67,6 +71,7 @@ impl From<u8> for ClientErrorType {
             3_u8 => Self::ClientNotLoggedIn,
             4_u8 => Self::ClientLogOutError,
             5_u8 => Self::ClientNotAuthorized,
+            6_u8 => Self::ClientShutdownError,
             _ => Self::UnknownClientError,
         }
     }
