@@ -23,7 +23,6 @@ impl ClientLoginMessage {
     /// # Returns
     ///
     /// `ClientLoginMessage` instance
-
     #[must_use]
     pub const fn new(client_id: u16) -> Self {
         let message_type = MessageType::ClientLogin;

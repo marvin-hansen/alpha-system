@@ -25,7 +25,6 @@ impl FirstTradeBar {
     /// # Remarks
     ///
     /// Sets `message_type` to `FirstTradeBar`
-
     #[must_use]
     pub const fn new(symbol_id: u16) -> Self {
         let message_type = MessageType::FirstTradeBar;
