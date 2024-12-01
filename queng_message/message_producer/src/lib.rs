@@ -42,21 +42,29 @@ impl MessageProducer {
 impl MessageProducer {
     async fn build(args: Args, client: &IggyClient) -> Result<Self, IggyError> {
         // Create identifiers for stream, topic, and user.
-        dbg!("Creating identifiers");
-        let stream_id = Identifier::from_str_value(&args.stream_id).expect("Invalid stream id");
-        let topic_id = Identifier::from_str_value(&args.topic_id).expect("Invalid topic id");
+        // dbg!("Creating identifiers");
+        let stream_id = Identifier::from_str_value(&args.stream_id)
+            .expect("[MessageProducer]: Invalid stream id");
+        let topic_id = Identifier::from_str_value(&args.topic_id)
+            .expect("[MessageProducer]: Invalid topic id");
 
-        dbg!("Creating producer");
+        // dbg!("Creating producer");
         let mut producer = client
             .producer(&args.stream_id, &args.topic_id)
-            .expect("Failed to create producer")
+            .expect("[MessageProducer]: Failed to create producer")
             .batch_size(args.messages_per_batch)
-            .send_interval(IggyDuration::from_str(&args.interval).expect("Invalid interval format"))
+            .send_interval(
+                IggyDuration::from_str(&args.interval)
+                    .expect("[MessageProducer]: Invalid interval format"),
+            )
             .partitioning(Partitioning::balanced())
             .build();
 
-        dbg!("Initializing producer");
-        producer.init().await.expect("Failed to init producer");
+        // dbg!("Initializing producer");
+        producer
+            .init()
+            .await
+            .expect("[MessageProducer]: Failed to init producer");
 
         Ok(Self {
             stream_id,

@@ -13,7 +13,7 @@ use std::error::Error;
 /// This function will panic if the Iggy stream and topic cannot be cleaned up.
 ///
 pub(super) async fn shutdown(iggy_client: &IggyClient) -> Result<(), Box<dyn Error>> {
-    println!("Shutting down");
+    println!("Shutting down iggy client");
     // Shutdown producer
     message_shared::shutdown(iggy_client)
         .await
@@ -41,20 +41,28 @@ pub(super) async fn shutdown(iggy_client: &IggyClient) -> Result<(), Box<dyn Err
 ///
 /// This function will panic if the cleanup of streams and topics or the user logout fails.
 pub(super) async fn shutdown_and_cleanup(
+    dbg: bool,
     iggy_client: &IggyClient,
     iggy_config: &IggyConfig,
 ) -> Result<(), Box<dyn Error>> {
-    println!("Shutting down and cleaning up");
+    let dbg_print = |msg: &str| {
+        if dbg {
+            println!("[/shutdown_and_cleanup]: {msg}");
+        }
+    };
 
+    dbg_print("Cleaning up");
+    dbg_print("Deleting streams and topics");
     message_shared::cleanup(iggy_client, iggy_config)
         .await
         .expect("Failed to clean up iggy");
 
+    dbg_print("Logging out user");
     message_shared::logout_user(iggy_client)
         .await
         .expect("Failed to logout user");
 
-    // Shutdown
+    dbg_print("Shutting down iggy client");
     message_shared::shutdown(iggy_client)
         .await
         .expect("Failed to shutdown iggy consumer");

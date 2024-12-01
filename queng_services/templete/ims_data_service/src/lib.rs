@@ -79,15 +79,15 @@ pub async fn start(
         .await
         .expect("Failed to login user");
 
-    dbg!("Construct iggy consumer");
+    dbg_print("Construct iggy consumer");
     let consumer_client = message_shared::build_client(stream_id.clone(), topic_id.clone())
         .await
         .expect("Failed to build client");
 
-    dbg!("Connecting consumer");
+    dbg_print("Connecting consumer");
     consumer_client.connect().await.expect("Failed to connect");
 
-    dbg!("Login consumer");
+    dbg_print("Login consumer");
     consumer_client
         .login_user(iggy_config.user().username(), iggy_config.user().password())
         .await
@@ -137,15 +137,15 @@ pub async fn start(
     #[cfg(unix)]
     tokio::select! {
         _ = ctrl_c.recv() => {
-            dbg!("Received SIGINT. Shutting down {NAME} {VERSION}...");
+            dbg_print("Received SIGINT. Shutting down {NAME} {VERSION}...");
         },
         _ = sigterm.recv() => {
-            dbg!("Received SIGTERM. Shutting down {NAME} {VERSION}...");
+            dbg_print("Received SIGTERM. Shutting down {NAME} {VERSION}...");
         }
     }
 
     dbg_print("Shutdown server");
-    shutdown::shutdown_and_cleanup(&producer_client, iggy_config)
+    shutdown::shutdown_and_cleanup(dbg, &producer_client, iggy_config)
         .await
         .expect("Failed to shutdown service");
     shutdown::shutdown(&consumer_client)

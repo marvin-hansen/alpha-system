@@ -91,17 +91,24 @@ impl Service {
         integration_config: &IntegrationConfig,
         iggy_config: &IggyConfig,
     ) -> Result<Self, Box<dyn Error>> {
+        let dbg_print = |msg: &str| {
+            if dbg {
+                println!("[/Service]: {msg}");
+            }
+        };
+
+        dbg_print("Create Identifiers for control stream and topic");
         let stream_id = integration_config.control_channel();
         let topic_id = integration_config.control_channel();
 
-        dbg!("Create MessageProducer");
+        dbg_print("Create MessageProducer");
         let producer =
             MessageProducer::from_client(producer_client, stream_id.clone(), topic_id.clone())
                 .await
                 .expect("Failed to create producer");
         let producer = std::sync::Arc::new(tokio::sync::RwLock::new(producer));
 
-        dbg!("Create MessageConsumer");
+        dbg_print("Create MessageConsumer");
         let consumer = MessageConsumer::from_client(
             consumer_client,
             "control_consumer",
@@ -109,13 +116,15 @@ impl Service {
             topic_id.clone(),
         )
         .await
-        .expect("Failed to create consumer");
+        .expect("[Service]: Failed to create consumer");
         let consumer = std::sync::Arc::new(tokio::sync::RwLock::new(consumer));
 
         // Create a new HashMap to store data producers for each client
+        dbg_print("Create HashMaps");
         let client_configs = std::sync::Arc::new(tokio::sync::RwLock::new(HashMap::new()));
         let client_producers = std::sync::Arc::new(tokio::sync::RwLock::new(HashMap::new()));
 
+        dbg_print("Create Service");
         Ok(Self {
             dbg,
             consumer,
