@@ -41,9 +41,9 @@ pub async fn start(
 
     dbg_print("Checking whether all dependencies are online");
     let smdb_manager = SMDBClient::new(smdb_host, smdb_port).await;
-    for d in dependencies {
+    for d in &dependencies {
         let available = smdb_manager
-            .check_if_service_id_exists(d)
+            .check_if_service_id_exists(*d)
             .await
             .expect(" Failed to check if service dependency exists");
 
@@ -58,9 +58,6 @@ pub async fn start(
         .get_svc_socket_addr()
         .await
         .expect("Failed to get service host and port");
-
-    // Free up some memory before starting the service,
-    drop(cfg_manager);
 
     let stream_id = integration_config.control_channel();
     let topic_id = integration_config.control_channel();
@@ -117,6 +114,11 @@ pub async fn start(
 
     dbg_print("Set integration online");
     //
+
+    // Free up some memory before starting the service,
+    drop(cfg_manager);
+    drop(smdb_manager);
+    drop(dependencies);
 
     dbg_print("Run server");
     server.run().await.expect("Failed to run service");
