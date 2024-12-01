@@ -87,7 +87,7 @@ pub(crate) async fn verify_db_exists(
     let query = format!("show databases like '{db_name}'");
 
     let res: Result<ExistsDBRow, KlickhouseError> = client.query_one(query).await;
-    return match res {
+    match res {
         Ok(row) => {
             let val = row.value();
 
@@ -96,7 +96,7 @@ pub(crate) async fn verify_db_exists(
             Ok(db_exists)
         }
         Err(_) => Ok(false),
-    };
+    }
 }
 
 /// Counts the number of rows in a specified table in the `ClickHouse` database.

@@ -42,7 +42,7 @@ impl Service {
                     MessageProcessingError(format!(
                         "Failed to check if client with id {} is logged in due to error: { }",
                         client_id,
-                        err.to_string()
+                        err
                     )),
                 ))
             }
@@ -69,7 +69,7 @@ impl Service {
                     MessageProcessingError(format!(
                     "Failed to check if client with id {} is allowed to log in due to error: { }",
                     client_id,
-                    err.to_string()
+                    err
                 )),
                 ))
             }
@@ -97,7 +97,7 @@ impl Service {
                     MessageProcessingError(format!(
                         "Failed to create message stream for client with id {} due to error: { }",
                         client_id,
-                        err.to_string()
+                        err
                     )),
                 ))
             }
@@ -107,16 +107,13 @@ impl Service {
         let mut client_data_producers = self.client_producers().write().await;
 
         self.dbg_print(&format!("Login in client with id {}", client_id));
-        match client_data_producers.insert(client_id, message_stream) {
-            None => {
-                return Err((
-                    ClientErrorType::ClientLogInError,
-                    MessageProcessingError(
-                        format!("Failed to login client with id {}", client_id,),
-                    ),
-                ))
-            }
-            Some(_) => {}
+        if client_data_producers.insert(client_id, message_stream).is_none() {
+            return Err((
+                ClientErrorType::ClientLogInError,
+                MessageProcessingError(
+                    format!("Failed to login client with id {}", client_id,),
+                ),
+            ))
         };
 
         // Unlock the client_data_producers hashmap

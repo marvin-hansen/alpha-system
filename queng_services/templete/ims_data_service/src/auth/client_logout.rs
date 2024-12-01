@@ -40,7 +40,7 @@ impl Service {
                     MessageProcessingError(format!(
                         "Failed to check if client with id {} is logged in due to error: { }",
                         client_id,
-                        err.to_string()
+                        err
                     )),
                 ))
             }
@@ -67,14 +67,11 @@ impl Service {
                 match message_stream.iggy_client().shutdown().await {
                     Ok(_) => {}
                     Err(e) => {
-                        (
-                            ClientErrorType::ClientShutdownError,
-                            MessageProcessingError(format!(
+                        ClientErrorType::ClientShutdownError;MessageProcessingError(format!(
                                 "Failed to shutdown client with id {} due to error: {}",
                                 client_id,
-                                e.to_string()
-                            )),
-                        );
+                                e
+                            ));
                     }
                 }
 

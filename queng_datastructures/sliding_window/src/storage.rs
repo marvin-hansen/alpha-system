@@ -112,14 +112,14 @@ where
     /// # Implementation Note
     /// Default implementation returns the slice only if the window is filled
     fn slice(&self) -> Result<&[T], String> {
-        return if !self.filled() {
+        if !self.filled() {
             Err(
                 "Sliding window is not yet filled. Add some elements to the array first"
                     .to_string(),
             )
         } else {
             Ok(self.get_slice())
-        };
+        }
     }
 
     /// Returns the sliding window as a vector
@@ -131,13 +131,13 @@ where
     /// # Implementation Note
     /// Default implementation converts the window slice to a vector
     fn vec(&self) -> Result<Vec<T>, String> {
-        return if !self.filled() {
+        if !self.filled() {
             Err(
                 "Sliding window is not yet filled. Add some elements to the array first"
                     .to_string(),
             )
         } else {
             Ok(self.get_slice().to_vec())
-        };
+        }
     }
 }
