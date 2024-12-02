@@ -469,8 +469,8 @@ alias(
 
 # IMS Data sepcs
 alias(
-    name = "ims_data_binance_specs",
-    actual = "//queng_services/ims_data/binance/ims_data_binance_specs",
+    name = "binance_data_specs",
+    actual = "//queng_services/ims_data/binance/binance_data_specs",
 )
 
 alias(

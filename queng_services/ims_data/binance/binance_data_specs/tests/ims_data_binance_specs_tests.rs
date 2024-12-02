@@ -1,5 +1,5 @@
+use binance_data_specs::ims_data_binance_config;
 use common_config::{ProtocolType, ServiceID};
-use ims_data_binance_specs::ims_data_binance_config;
 
 #[test]
 fn test_ims_data_binance_config() {

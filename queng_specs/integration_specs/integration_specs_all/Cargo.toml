@@ -11,4 +11,4 @@ authors.workspace = true
 workspace = true
 [dependencies]
 common_ims = {workspace = true}
-ims_data_binance_specs = {workspace = true}
+binance_data_specs = {workspace = true}

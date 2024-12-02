@@ -1,7 +1,7 @@
 load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 
 rust_test_suite(
-    name = "ims_data_binance_tests",
+    name = "tests",
     srcs = glob([
         "*_tests.rs",
     ]),
@@ -12,7 +12,7 @@ rust_test_suite(
     visibility = ["//visibility:public"],
     deps = [
         # Test target
-        "//alias:ims_data_binance_specs",
+        "//alias:binance_data_specs",
         # Internal dependencies
         "//alias:common_config",
     ],

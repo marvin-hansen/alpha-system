@@ -1,5 +1,5 @@
 [package]
-name = "binance_tests"
+name = "binance_data_tests"
 version = "0.1.0"
 edition.workspace = true
 rust-version.workspace = true
@@ -11,12 +11,15 @@ authors.workspace = true
 [lib]
 path = "src/fake_lib.rs"
 
+
 [lints]
 workspace = true
+
 
 # For testing
 [dev-dependencies]
 container_specs_postgres = {workspace = true}
+container_specs_iggy = {workspace = true}
 docker_utils = {workspace = true}
 service_utils = {workspace = true}
 service_import  = {workspace = true}

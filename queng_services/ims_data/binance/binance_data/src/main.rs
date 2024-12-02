@@ -13,9 +13,9 @@ const DBG: bool = true;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
-    let svc_config = ims_data_binance_specs::ims_data_binance_config();
-    let integration_config = ims_data_binance_specs::binance_ims_data_integration_config();
-    let iggy_config = ims_data_binance_specs::ims_data_iggy_config();
+    let svc_config = binance_data_specs::ims_data_binance_config();
+    let integration_config = binance_data_specs::binance_ims_data_integration_config();
+    let iggy_config = binance_data_specs::ims_data_iggy_config();
     let cfg_manager = CfgManager::new(SVC_ID, svc_config).await;
 
     ims_data_service::start(
