@@ -8,12 +8,12 @@ pub fn iggy_container_config() -> ContainerConfig<'static> {
         // also update the iggy.sh script in scripts/ folder
         "0.4.84",
         "0.0.0.0",
-        8090,
-        Some(&[3000]),
+        3000,
+        Some(&[8080, 8090]),
         None,
         None,
         true, // Keep the container running for re-use
         true, // Keep the same container config across all env. setups.
-        WaitStrategy::WaitForDuration(1),
+        WaitStrategy::WaitUntilConsoleOutputContains("Iggy server has started -".to_string(), 10),
     )
 }
