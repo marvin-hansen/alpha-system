@@ -16,7 +16,7 @@ pub fn iggy_container_config() -> ContainerConfig<'static> {
         true, // Keep the container running for re-use
         true, // Keep the same container config across all env. setups.
         WaitStrategy::WaitForHttpHealthCheck(
-            "localhost:3000/ping".to_string(),
+            "http://0.0.0.0:3000/ping".to_string(),
             Duration::from_secs(30),
         ),
     )
