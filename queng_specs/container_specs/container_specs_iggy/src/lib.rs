@@ -1,4 +1,5 @@
 use common_container::{ContainerConfig, WaitStrategy};
+use std::time::Duration;
 
 pub fn iggy_container_config() -> ContainerConfig<'static> {
     ContainerConfig::new(
@@ -8,15 +9,15 @@ pub fn iggy_container_config() -> ContainerConfig<'static> {
         // also update the iggy.sh script in scripts/ folder
         "0.4.84",
         "0.0.0.0",
-        8090,
+        3000,
         Some(&[8080, 8090]),
         None,
         None,
         true, // Keep the container running for re-use
         true, // Keep the same container config across all env. setups.
-        WaitStrategy::WaitUntilConsoleOutputContains(
-            "Iggy TCP server has started on: 0.0.0.0:8090".to_string(),
-            120,
+        WaitStrategy::WaitForHttpHealthCheck(
+            "http://0.0.0.0:3000/ping".to_string(),
+            Duration::from_secs(60),
         ),
     )
 }
