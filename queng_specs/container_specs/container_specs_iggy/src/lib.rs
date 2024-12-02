@@ -10,14 +10,14 @@ pub fn iggy_container_config() -> ContainerConfig<'static> {
         "0.4.84",
         "0.0.0.0",
         8090,
-        Some(&[3000, 8080]),
+        Some(&[3000]),
         None,
         None,
         true, // Keep the container running for re-use
         true, // Keep the same container config across all env. setups.
         WaitStrategy::WaitForHttpHealthCheck(
             "http://0.0.0.0:3000/ping".to_string(),
-            Duration::from_secs(30),
+            Duration::from_secs(15),
         ),
     )
 }

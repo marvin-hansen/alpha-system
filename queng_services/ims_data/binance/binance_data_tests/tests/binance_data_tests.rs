@@ -21,19 +21,21 @@ async fn test_binance_data() {
     let config_manager = svc_util.config_manager();
     let env_type = config_manager.env_type();
 
-    dbg!("Start or reuse iggy container");
-    let iggy_container_config = iggy_container_config();
-    let result = docker_util.get_or_start_container_config(&iggy_container_config);
-    dbg!(&result);
-    assert!(result.is_ok());
-    let (iggy_container_id, _) = result.unwrap();
-
     dbg!("Start or reuse postgres container");
     let pg_container_config = postgres_db_container_config();
+    dbg!(&pg_container_config);
     let result = docker_util.get_or_start_container_config(&pg_container_config);
     dbg!(&result);
     assert!(result.is_ok());
     let (pg_container_id, _) = result.unwrap();
+
+    dbg!("Start or reuse iggy container");
+    let iggy_container_config = iggy_container_config();
+    dbg!(&iggy_container_config);
+    let result = docker_util.get_or_start_container_config(&iggy_container_config);
+    dbg!(&result);
+    assert!(result.is_ok());
+    let (iggy_container_id, _) = result.unwrap();
 
     dbg!("Test if service data is already imported in the DB; if not, do so.");
     let service_import_manager = ServiceImportManager::with_debug().await;
