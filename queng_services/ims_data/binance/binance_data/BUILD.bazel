@@ -9,13 +9,12 @@ load("//:build/container.bzl", "build_multi_arch_image", "git_with_timestamp_tag
 build_binary_opt(
     name = "binance_data",
     srcs = glob([
-        "src/**/*.rs",
+        "src/*.rs",
     ]),
     deps = [
         # Service specs
         "//alias:ims_data_binance_specs",
         # Internal crates
-        "//alias:common_data_bar",
         "//alias:common_config",
         "//alias:common_exchange",
         "//alias:config_manager",
@@ -23,10 +22,6 @@ build_binary_opt(
         # Custom Memory Allocator
         "//thirdparty/crates:mimalloc",
         # External crates
-        "//thirdparty/crates:binance_rs_async",
-        "//thirdparty/crates:chrono",
-        "//thirdparty/crates:futures",
-        "//thirdparty/crates:serde",
         "//thirdparty/crates:tokio",
     ],
 )
