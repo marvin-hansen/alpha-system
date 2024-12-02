@@ -45,6 +45,13 @@ command bazel test //... --test_tag_filters=imdb_acceptance_test --test_env=ENV=
 
 echo ""
 echo "====================="
+echo "Run IMS acceptance tests"
+echo "====================="
+command bazel test //... --test_tag_filters=binance_data_acceptance_test --test_env=ENV=LOCAL
+
+
+echo ""
+echo "====================="
 echo "Build container images"
 echo "====================="
 
