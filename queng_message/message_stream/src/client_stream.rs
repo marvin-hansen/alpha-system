@@ -1,4 +1,4 @@
-use common_iggy::{IggyConfig, IggyUser};
+use common_ims::{IggyConfig, IggyUser};
 use iggy::client::{Client, UserClient};
 use iggy::clients::client::IggyClient;
 use iggy::identifier::Identifier;

@@ -1,6 +1,6 @@
 use crate::service::Service;
 use common_exchange::ExchangeID;
-use common_iggy::IggyConfig;
+use common_ims::IggyConfig;
 use common_ims::IntegrationConfig;
 use common_service::print_utils;
 use config_manager::CfgManager;

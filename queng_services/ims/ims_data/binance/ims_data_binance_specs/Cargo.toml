@@ -14,7 +14,6 @@ workspace = true
 [dependencies]
 # Internal crates
 common_config = {workspace = true}
-common_iggy = {workspace = true}
 common_ims = {workspace = true}
 common_message = {workspace = true}
 shared_service_specs = {workspace = true}

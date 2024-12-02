@@ -89,7 +89,6 @@ where
 /// * Memory is properly allocated and deallocated
 /// * No out-of-bounds access occurs
 /// * No uninitialized memory is read
-
 pub fn new_with_unsafe_vector_storage<T>(
     size: usize,
     multiple: usize,
@@ -190,7 +189,6 @@ where
 ///
 /// * `CAPACITY` must be greater than or equal to `SIZE`
 /// * Both `SIZE` and `CAPACITY` must be non-zero
-
 pub fn new_with_unsafe_array_storage<T, const SIZE: usize, const CAPACITY: usize>(
 ) -> SlidingWindow<UnsafeArrayStorage<T, SIZE, CAPACITY>, T>
 where

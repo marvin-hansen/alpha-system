@@ -13,7 +13,6 @@ rust_library(
         "//alias:common_data_bar",
         "//alias:common_config",
         "//alias:common_exchange",
-        "//alias:common_iggy",
         "//alias:common_ims",
         "//alias:message_consumer",
         "//alias:message_producer",

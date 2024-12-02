@@ -1,4 +1,4 @@
-use common_iggy::IggyUser;
+use common_ims::IggyUser;
 
 #[test]
 fn test_new_iggy_user() {

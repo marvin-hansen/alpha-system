@@ -15,7 +15,7 @@ rust_library(
     deps = [
         # Internal crates
         "//alias:common_message",
-        "//alias:common_iggy",
+        "//alias:common_ims",
         "//alias:message_producer",
         "//alias:message_shared",
         # External crates

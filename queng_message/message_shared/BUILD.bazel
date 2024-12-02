@@ -17,7 +17,7 @@ rust_library(
     visibility = ["//visibility:public"],
     deps = [
         # Internal crates
-        "//alias:common_iggy",
+        "//alias:common_ims",
         "//alias:common_message",
         # External crates
         "//thirdparty/crates:ahash",

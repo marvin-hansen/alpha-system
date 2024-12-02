@@ -1,4 +1,4 @@
-use common_iggy::{IggyConfig, IggyUser};
+use common_ims::{IggyConfig, IggyUser};
 use iggy::identifier::Identifier;
 
 fn create_test_user() -> IggyUser {

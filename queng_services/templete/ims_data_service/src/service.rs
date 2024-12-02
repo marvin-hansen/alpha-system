@@ -1,5 +1,4 @@
-use common_iggy::IggyConfig;
-use common_ims::IntegrationConfig;
+use common_ims::{IggyConfig, IntegrationConfig};
 use iggy::clients::client::IggyClient;
 use message_consumer::MessageConsumer;
 use message_producer::MessageProducer;

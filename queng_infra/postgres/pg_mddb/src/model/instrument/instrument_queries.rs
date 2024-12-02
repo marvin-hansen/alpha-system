@@ -20,7 +20,6 @@ impl Instrument {
     /// - `Result<Option<MetaInstrument>, diesel::result::Error>`
     ///
     /// A Result containing either Some(MetaInstrument) if the instrument is found, or None if not found.
-
     pub fn read_instruments_by_exchange_pair_code(
         conn: &mut Connection,
         param_instrument_exchange_pair_code: &str,

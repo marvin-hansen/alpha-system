@@ -14,7 +14,6 @@ rust_library(
     deps = [
         # Internal dependencies
         "//alias:common_config",
-        "//alias:common_iggy",
         "//alias:common_ims",
         "//alias:common_message",
         "//alias:shared_service_specs",

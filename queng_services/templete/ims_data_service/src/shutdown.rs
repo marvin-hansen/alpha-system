@@ -1,4 +1,4 @@
-use common_iggy::IggyConfig;
+use common_ims::IggyConfig;
 use iggy::clients::client::IggyClient;
 use std::error::Error;
 

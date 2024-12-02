@@ -19,7 +19,6 @@ use crate::WindowStorage;
 /// - Pre-allocated uninitialized memory
 /// - Bounds-check elimination where safe
 /// - Cache-line alignment for better CPU cache utilization
-
 #[repr(align(64))]
 #[derive(Debug)]
 pub struct UnsafeVectorStorage<T>

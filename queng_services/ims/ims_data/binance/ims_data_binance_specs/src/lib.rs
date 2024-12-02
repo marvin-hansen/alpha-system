@@ -1,6 +1,6 @@
 use common_config::{ServiceConfig, ServiceID};
-use common_iggy::{IggyConfig, IggyUser};
 use common_ims::{ExchangeID, ImsIntegrationType, IntegrationConfig, IntegrationMessageConfig};
+use common_ims::{IggyConfig, IggyUser};
 use shared_service_specs::{health_endpoint, ims_endpoint, metric_endpoint};
 
 /// Returns the configuration for the Binance data integration in the IMS system.
