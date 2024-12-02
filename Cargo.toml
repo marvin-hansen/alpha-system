@@ -2,6 +2,7 @@
 resolver = "2"
 
 members = [
+    "queng_clients/*",
     "queng_common/*",
     "queng_components/*",
     "queng_datastructures/*",
@@ -12,8 +13,7 @@ members = [
     "queng_proto/*",
     "queng_sbe/*",
     "queng_services/core/*/*",
-    "queng_services/ims/imdb/*",
-    "queng_services/ims/ims_clients/*",
+    "queng_services/ims/*/*",
     "queng_services/ims_data/*/*",
     "queng_services/mds/*/*",
     "queng_services/templete/*",
@@ -62,15 +62,16 @@ codegen-units = 1 # Reduce Parallel Code Generation Units to Increase Optimizati
 # Internal Aliases
 # ==============
 #
-# Clients
-binance_client = { path = "queng_services/ims/ims_clients/binance_client" }
+# General Clients
+rest_client = { path = "queng_clients/rest_client" }
+
+# Servide clients
 cmdb_client = { path = "queng_services/core/cmdb/cmdb_client" }
 dbgw_cmdb_client = { path = "queng_services/core/dbgw/dbgw_cmdb_client" }
 dbgw_mddb_client = { path = "queng_services/core/dbgw/dbgw_mddb_client" }
 dbgw_smdb_client = { path = "queng_services/core/dbgw/dbgw_smdb_client" }
 imdb_client = { path = "queng_services/ims/imdb/imdb_client" }
-ims_data_client = { path = "queng_services/ims/ims_clients/ims_data_client" }
-rest_client = { path = "queng_services/ims/ims_clients/rest_client" }
+ims_data_client = { path = "queng_services/ims_data/ims_clients/ims_data_client" }
 mddb_client = { path = "queng_services/mds/mddb/mddb_client" }
 smdb_client = { path = "queng_services/core/smdb/smdb_client" }
 

@@ -2,6 +2,15 @@
 package(default_visibility = ["//visibility:public"])
 
 ###############################################################################
+# Common Clients
+###############################################################################
+
+alias(
+    name = "rest_client",
+    actual = "//queng_clients/rest_client",
+)
+
+###############################################################################
 # Core Clients
 ###############################################################################
 
@@ -55,16 +64,6 @@ alias(
 
 alias(
     name = "ims_data_client",
-    actual = "//queng_services/ims/ims_clients/ims_data_client",
-)
-
-alias(
-    name = "binance_client",
-    actual = "//queng_services/ims/ims_clients/binance_client",
-)
-
-alias(
-    name = "rest_client",
-    actual = "//queng_services/ims/ims_clients/rest_client",
+    actual = "//queng_services/ims_data/ims_clients/ims_data_client",
 )
 

@@ -18,6 +18,8 @@ workspace = true
 
 # For testing
 [dev-dependencies]
+common_config = {workspace = true}
+common_env = {workspace = true}
 container_specs_postgres = {workspace = true}
 container_specs_iggy = {workspace = true}
 docker_utils = {workspace = true}
