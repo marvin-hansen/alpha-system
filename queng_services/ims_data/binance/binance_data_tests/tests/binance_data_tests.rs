@@ -13,7 +13,7 @@ async fn test_binance_data() {
 
     dbg!("Start service util");
     let res = ServiceUtil::with_debug().await;
-    dbg!(&res);
+    // dbg!(&res);
     assert!(res.is_ok());
     let svc_util = res.unwrap();
 
