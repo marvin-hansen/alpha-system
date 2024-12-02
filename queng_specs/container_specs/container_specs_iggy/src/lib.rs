@@ -11,7 +11,7 @@ pub fn iggy_container_config() -> ContainerConfig<'static> {
         8090,
         None, //Some(&[8080, 8090]),
         None,
-        None,
+        Some("linux/amd64"),
         true, // Keep the container running for re-use
         true, // Keep the same container config across all env. setups.
         WaitStrategy::WaitUntilConsoleOutputContains(
