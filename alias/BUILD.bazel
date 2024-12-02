@@ -462,14 +462,15 @@ alias(
     actual = "//queng_services/ims/imdb/imdb_specs",
 )
 
+# IMS Data sepcs
 alias(
     name = "ims_data_binance_specs",
-    actual = "//queng_services/ims/ims_data/binance/ims_data_binance_specs",
+    actual = "//queng_services/ims_data/binance/ims_data_binance_specs",
 )
 
 alias(
     name = "ims_data_vex_specs",
-    actual = "//queng_services/ims/ims_data/vex/ims_data_vex_specs",
+    actual = "//queng_services/ims_data/vex/ims_data_vex_specs",
 )
 
 # MDS service specs

@@ -67,7 +67,7 @@ alias(
 )
 
 ###############################################################################
-# IMS Data Services
+# IMS Services
 ###############################################################################
 
 alias(
@@ -82,14 +82,18 @@ alias(
     visibility = ["//visibility:public"],
 )
 
+###############################################################################
+# IMS Data Services
+###############################################################################
+
 alias(
     name = "binance_data",
-    actual = "//queng_services/ims/ims_data/binance/binance_data:binance_data",
+    actual = "//queng_services/ims_data/binance/binance_data:binance_data",
 )
 
 alias(
     name = "binance_data_push",
-    actual = "//queng_services/ims/ims_data/binance/binance_data:push",
+    actual = "//queng_services/ims_data/binance/binance_data:push",
 )
 
 ###############################################################################
