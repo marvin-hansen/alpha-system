@@ -222,6 +222,29 @@ impl DockerUtil {
             }
         };
 
+        if self.dbg {
+            // construct docker docker ps -a
+            let mut cmd = Command::new("docker");
+
+            cmd.arg("ps").arg("-a");
+            match cmd.output() {
+                Ok(out) => {
+                    self.dbg_print(&format!(
+                        "[start_container]: \n
+                    success: {} \n
+                    Output: {}",
+                        out.status.success(),
+                        String::from_utf8_lossy(out.stdout.as_slice()),
+                    ));
+                }
+                Err(e) => {
+                    return Err(DockerError::from(format!(
+                        "Error running docker ps -a for container {container_id} due to error: {e}"
+                    )))
+                }
+            };
+        }
+
         match self.wait_for_container(container_id, wait_strategy) {
             Ok(()) => {}
             Err(e) => {

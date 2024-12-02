@@ -89,6 +89,8 @@ async fn test_binance_data() {
     let result = docker_util.stop_container(&iggy_container_id);
     dbg!(&result);
     assert!(result.is_ok());
+
+    assert!(4 == 42);
 }
 
 async fn test_client_authentication() {}

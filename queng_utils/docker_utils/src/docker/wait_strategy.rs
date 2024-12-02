@@ -121,6 +121,17 @@ impl DockerUtil {
             }
         }
 
+        if self.dbg {
+            // construct docker docker ps -a
+            let mut cmd = Command::new("docker");
+            cmd.arg("logs").arg("-t").arg(container_id);
+            let output = cmd.output().expect("Failed to run docker logs");
+            println!(
+                "DEBUG: container logs: {}",
+                String::from_utf8_lossy(&output.stdout)
+            );
+        }
+
         Ok(())
     }
 

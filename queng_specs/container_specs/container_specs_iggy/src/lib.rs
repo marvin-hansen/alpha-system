@@ -1,5 +1,4 @@
 use common_container::{ContainerConfig, WaitStrategy};
-use std::time::Duration;
 
 pub fn iggy_container_config() -> ContainerConfig<'static> {
     ContainerConfig::new(
@@ -10,14 +9,14 @@ pub fn iggy_container_config() -> ContainerConfig<'static> {
         "0.4.84",
         "0.0.0.0",
         3000,
-        Some(&[8080, 8090]),
+        None,
         None,
         None,
         true, // Keep the container running for re-use
         true, // Keep the same container config across all env. setups.
-        WaitStrategy::WaitForHttpHealthCheck(
-            "http://0.0.0.0:3000/ping".to_string(),
-            Duration::from_secs(15),
+        WaitStrategy::WaitUntilConsoleOutputContains(
+            "Started HTTP API on: 0.0.0.0:3000".to_string(),
+            10,
         ),
     )
 }
