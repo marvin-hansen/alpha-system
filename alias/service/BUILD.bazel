@@ -92,12 +92,6 @@ alias(
     actual = "//queng_services/ims/ims_data/binance/binance_data:push",
 )
 
-alias(
-    name = "ims_common",
-    actual = "//queng_services/ims/ims_common",
-)
-
-
 ###############################################################################
 # Template
 ###############################################################################

@@ -19,9 +19,10 @@ members = [
     "queng_services/core/smdb/*",
     "queng_services/ims/imdb/*",
     "queng_services/ims/ims_clients/*",
-    "queng_services/ims/ims_common",
+
     "queng_services/ims/ims_data/binance/*",
     "queng_services/ims/ims_data/vex/*",
+
     "queng_services/mds/*/*",
     "queng_services/templete/*",
     "queng_specs/*/*",
@@ -171,7 +172,6 @@ dbgw = { path = "queng_services/core/dbgw" }
 smdb = { path = "queng_services/core/smdb" }
 # IMS
 imdb = { path = "queng_services/ims/imdb/imdb_service" }
-ims_common = { path = "queng_services/ims/ims_common" }
 binance_data = { path = "queng_services/ims/ims_data/binance/binance_data" }
 # MDS
 mddb = { path = "queng_services/mds/mddb" }
