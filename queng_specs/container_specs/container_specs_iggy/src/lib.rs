@@ -16,7 +16,7 @@ pub fn iggy_container_config() -> ContainerConfig<'static> {
         true, // Keep the same container config across all env. setups.
         WaitStrategy::WaitUntilConsoleOutputContains(
             "Started HTTP API on: 0.0.0.0:3000".to_string(),
-            10,
+            20,
         ),
     )
 }

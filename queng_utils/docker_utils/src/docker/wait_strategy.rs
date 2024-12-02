@@ -83,6 +83,17 @@ impl DockerUtil {
         self.dbg_print("wait_until_console_output_contains");
 
         loop {
+            if self.dbg {
+                // construct docker docker ps -a
+                let mut cmd = Command::new("docker");
+                cmd.arg("logs").arg("-t").arg(container_id);
+                let output = cmd.output().expect("Failed to run docker logs");
+                println!(
+                    "DEBUG: container logs: {}",
+                    String::from_utf8_lossy(&output.stdout)
+                );
+            }
+
             std::thread::sleep(Duration::from_millis(100));
 
             if start_time.elapsed() > timeout {
@@ -119,17 +130,6 @@ impl DockerUtil {
                     break;
                 }
             }
-        }
-
-        if self.dbg {
-            // construct docker docker ps -a
-            let mut cmd = Command::new("docker");
-            cmd.arg("logs").arg("-t").arg(container_id);
-            let output = cmd.output().expect("Failed to run docker logs");
-            println!(
-                "DEBUG: container logs: {}",
-                String::from_utf8_lossy(&output.stdout)
-            );
         }
 
         Ok(())
