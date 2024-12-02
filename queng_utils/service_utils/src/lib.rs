@@ -6,9 +6,11 @@ use std::time::Duration;
 mod error;
 mod fields;
 
-mod service;
+mod api;
+mod start;
 mod types;
 mod verify;
+mod wait_strategies;
 
 // Re-export errors
 pub use crate::error::service_util_error::ServiceUtilError::*;
@@ -78,7 +80,6 @@ impl ServiceUtil {
         })
     }
 
-    #[must_use]
     pub const fn config_manager(&self) -> &CfgManager {
         &self.config_manager
     }

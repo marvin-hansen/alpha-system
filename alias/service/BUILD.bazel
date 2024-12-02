@@ -2,6 +2,20 @@
 package(default_visibility = ["//visibility:public"])
 
 ###############################################################################
+# Service Templates
+###############################################################################
+
+alias(
+    name = "grpc_service",
+    actual = "//queng_services/templete/grpc_service",
+)
+
+alias(
+    name = "ims_data_service",
+    actual = "//queng_services/templete/ims_data_service",
+)
+
+###############################################################################
 # Core Services
 ###############################################################################
 
@@ -94,18 +108,4 @@ alias(
 alias(
     name = "binance_data_push",
     actual = "//queng_services/ims_data/binance/binance_data:push",
-)
-
-###############################################################################
-# Template
-###############################################################################
-
-alias(
-    name = "grpc_service",
-    actual = "//queng_services/templete/grpc_service",
-)
-
-alias(
-    name = "ims_data_service",
-    actual = "//queng_services/templete/ims_data_service",
 )

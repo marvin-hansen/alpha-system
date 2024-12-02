@@ -12,11 +12,13 @@ rust_library(
         ":copy_core_cmdb",
         ":copy_core_dbgw",
         ":copy_core_smdb",
-        # ims
-        ":copy_ims_imdb",
         # mds
         ":copy_kaiko_proxy",
         ":copy_mddb",
+        # ims
+        ":copy_ims_imdb",
+        # ims data
+        ":copy_binance_data",
     ],
     tags = [
         "service_utils",
@@ -27,6 +29,8 @@ rust_library(
         # Internal crates
         "//alias:common_config",
         "//alias:common_env",
+        "//alias:common_exchange",
+        "//alias:common_ims",
         "//alias:config_manager",
         # External crates
         "//thirdparty/crates:tokio",
@@ -71,14 +75,6 @@ copy_file(
     is_executable = True,
 )
 
-# Copy all ims services
-copy_file(
-    name = "copy_ims_imdb",
-    src = "//alias/service:imdb",
-    out = "imdb",
-    is_executable = True,
-)
-
 # Copy all meta services
 copy_file(
     name = "copy_kaiko_proxy",
@@ -91,5 +87,21 @@ copy_file(
     name = "copy_mddb",
     src = "//alias/service:mddb",
     out = "mddb",
+    is_executable = True,
+)
+
+# Copy all ims services
+copy_file(
+    name = "copy_ims_imdb",
+    src = "//alias/service:imdb",
+    out = "imdb",
+    is_executable = True,
+)
+
+# Copy all ims data services
+copy_file(
+    name = "copy_binance_data",
+    src = "//alias/service:binance_data",
+    out = "binance_data",
     is_executable = True,
 )
