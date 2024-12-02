@@ -10,7 +10,7 @@ pub fn iggy_container_config() -> ContainerConfig<'static> {
         "0.0.0.0",
         3000,
         None,
-        None,
+        Some(&["RUST_LOG=debug"]),
         None,
         true, // Keep the container running for re-use
         true, // Keep the same container config across all env. setups.
