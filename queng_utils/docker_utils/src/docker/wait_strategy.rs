@@ -37,7 +37,10 @@ impl DockerUtil {
                 Ok(())
             }
             WaitStrategy::WaitForHttpHealthCheck(url, duration) => {
-                self.dbg_print(&format!("[start_container]: Waiting for {:?} on HTTP health check on {}.", duration, url));
+                self.dbg_print(&format!(
+                    "[start_container]: Waiting for {:?} on HTTP health check on {}.",
+                    duration, url
+                ));
                 self.wait_for_http_health_check(url, duration)
                     .expect("Failed to wait for HTTP health check");
 
