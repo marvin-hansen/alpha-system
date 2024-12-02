@@ -1,0 +1,30 @@
+load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library", "rust_test_suite")
+
+rust_library(
+    name = "container_specs_iggy",
+    srcs = glob([
+        "src/*.rs",
+    ]),
+    tags = [
+        "container_specs_iggy",
+        "specs",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//alias:common_container",
+    ],
+)
+
+rust_doc(
+    name = "doc",
+    crate = ":container_specs_iggy",
+    tags = ["doc"],
+    visibility = ["//visibility:public"],
+)
+
+rust_doc_test(
+    name = "doc_test",
+    crate = ":container_specs_iggy",
+    tags = ["doc-test"],
+    visibility = ["//visibility:public"],
+)

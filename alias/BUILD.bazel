@@ -397,6 +397,11 @@ alias(
 )
 
 alias(
+    name = "container_specs_iggy",
+    actual = "//queng_specs/container_specs/container_specs_iggy",
+)
+
+alias(
     name = "container_specs_kaiko",
     actual = "//queng_specs/container_specs/container_specs_kaiko",
 )
