@@ -44,7 +44,7 @@ impl ServiceUtil {
                     String::from_utf8_lossy(out.stdout.as_slice()),
                 ));
 
-                if out.status.success() && String::from_utf8_lossy(&out.stdout).contains("OK") {
+                if out.status.success() {
                     self.dbg_print("Service online");
 
                     break Ok(());

@@ -6,6 +6,7 @@ mod start;
 mod stop;
 
 mod utils;
+mod wait_strategy;
 
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq)]
 pub struct DockerUtil {

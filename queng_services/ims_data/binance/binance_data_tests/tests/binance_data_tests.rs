@@ -68,7 +68,7 @@ async fn test_binance_data() {
     assert!(result.is_ok());
 
     dbg!("Start Binance data integration service - depends on SMDB and DBGW");
-    //
+    // let exchange_id = ExchangeID::BINANCE;
 
     dbg!("Test client authentication");
     test_client_authentication().await;
