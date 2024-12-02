@@ -225,8 +225,10 @@ impl DockerUtil {
         if self.dbg {
             // construct docker docker ps -a
             let mut cmd = Command::new("docker");
-
             cmd.arg("ps").arg("-a");
+
+            self.dbg_print(&format!("[start_container]: Run Docker command: {cmd:?}"));
+
             match cmd.output() {
                 Ok(out) => {
                     self.dbg_print(&format!(
