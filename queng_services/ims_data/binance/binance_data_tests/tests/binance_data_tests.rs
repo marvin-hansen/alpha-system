@@ -2,6 +2,7 @@ use common_config::ServiceID;
 use container_specs_iggy::iggy_container_config;
 use container_specs_postgres::postgres_db_container_config;
 use docker_utils::DockerUtil;
+use integration_import::IntegrationImportManager;
 use service_import::ServiceImportManager;
 use service_utils::ServiceUtil;
 use wait_utils::WaitStrategy;
@@ -53,6 +54,24 @@ async fn test_binance_data() {
     }
 
     let imported = service_import_manager.check_if_already_imported().await;
+    assert!(imported);
+
+    dbg!("Test if integration data has already been imported in the DB; if not, do so.");
+    let integration_import_manager = IntegrationImportManager::with_debug().await;
+
+    let imported = integration_import_manager
+        .check_if_integrations_imported()
+        .await;
+    if !imported {
+        integration_import_manager
+            .import_integration_configs()
+            .await
+            .expect("Failed to import integrations");
+    }
+
+    let imported = integration_import_manager
+        .check_if_integrations_imported()
+        .await;
     assert!(imported);
 
     dbg!("Start DBGW service - depends on Database");

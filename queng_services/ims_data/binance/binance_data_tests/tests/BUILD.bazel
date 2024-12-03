@@ -33,6 +33,7 @@ rust_test_suite(
         "//alias:docker_utils",
         "//alias:service_utils",
         "//alias:service_import",
+        "//alias:integration_import",
         "//alias:wait_utils",
         # External crates
         "//thirdparty/crates:tokio",

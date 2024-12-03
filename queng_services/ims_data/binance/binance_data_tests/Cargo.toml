@@ -26,6 +26,7 @@ container_specs_postgres = {workspace = true}
 docker_utils = {workspace = true}
 service_utils = {workspace = true}
 service_import  = {workspace = true}
+integration_import = {workspace = true}
 wait_utils = { workspace = true }
 # External crates
 tokio = {workspace = true}
