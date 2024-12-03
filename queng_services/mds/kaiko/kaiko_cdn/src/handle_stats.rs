@@ -27,8 +27,11 @@ pub async fn handle_get_stats(req: Request, ctx: RouteContext<()>) -> worker::Re
         return HttpResponse::error_forbidden("access denied");
     }
 
-    // Get the KV store
-    let kv = ctx.kv(METADATA_KV)?;
+    // Get KV store
+    let kv = match ctx.kv(METADATA_KV) {
+        Ok(kv) => kv,
+        Err(e) => return HttpResponse::error_internal(&e.to_string()),
+    };
 
     // Get the metadata
     match kv.get(STATS_KEY).json::<MetaStats>().await? {
@@ -61,8 +64,11 @@ pub async fn handle_put_stats(mut req: Request, ctx: RouteContext<()>) -> worker
         return HttpResponse::error_forbidden("access denied");
     }
 
-    // Get the KV store
-    let kv = ctx.kv(METADATA_KV)?;
+    // Get KV store
+    let kv = match ctx.kv(METADATA_KV) {
+        Ok(kv) => kv,
+        Err(e) => return HttpResponse::error_internal(&e.to_string()),
+    };
 
     // Get the body of the request
     let body = match req.json::<MetaStats>().await {
@@ -115,8 +121,11 @@ pub async fn handle_post_stats(
         return HttpResponse::error_forbidden("access denied");
     }
 
-    // Get the KV store
-    let kv = ctx.kv(METADATA_KV)?;
+    // Get KV store
+    let kv = match ctx.kv(METADATA_KV) {
+        Ok(kv) => kv,
+        Err(e) => return HttpResponse::error_internal(&e.to_string()),
+    };
 
     // Create a new MetaStats from the body
     let body = match req.json::<MetaStats>().await {

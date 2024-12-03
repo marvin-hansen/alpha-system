@@ -29,7 +29,10 @@ pub async fn handle_get_assets(req: Request, ctx: RouteContext<()>) -> worker::R
     }
 
     // Get the KV store
-    let kv = ctx.kv(METADATA_KV)?;
+    let kv = match ctx.kv(METADATA_KV) {
+        Ok(kv) => kv,
+        Err(e) => return HttpResponse::error_internal(&e.to_string()),
+    };
 
     // Get the metadata
     //  https://developers.cloudflare.com/kv/get-started/#5-access-your-kv-namespace-from-your-worker
@@ -76,7 +79,10 @@ pub async fn handle_put_assets(
     }
 
     // Get KV store
-    let kv = ctx.kv(METADATA_KV)?;
+    let kv = match ctx.kv(METADATA_KV) {
+        Ok(kv) => kv,
+        Err(e) => return HttpResponse::error_internal(&e.to_string()),
+    };
 
     // Get the body of the request
     let body = match req.json::<MetaAssetRoot>().await {
@@ -137,7 +143,10 @@ pub async fn handle_post_assets(
     }
 
     // Get KV store
-    let kv = ctx.kv(METADATA_KV)?;
+    let kv = match ctx.kv(METADATA_KV) {
+        Ok(kv) => kv,
+        Err(e) => return HttpResponse::error_internal(&e.to_string()),
+    };
 
     // Create a new MetaAssetRoot from the body
     let body = match req.json::<MetaAssetRoot>().await {

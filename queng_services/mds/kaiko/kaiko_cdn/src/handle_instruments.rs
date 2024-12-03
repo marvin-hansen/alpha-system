@@ -30,8 +30,11 @@ pub async fn handle_get_instruments(
         return HttpResponse::error_forbidden("access denied");
     }
 
-    // Get the KV store
-    let kv = ctx.kv(METADATA_KV)?;
+    // Get KV store
+    let kv = match ctx.kv(METADATA_KV) {
+        Ok(kv) => kv,
+        Err(e) => return HttpResponse::error_internal(&e.to_string()),
+    };
 
     // Get the metadata
     match kv
@@ -81,7 +84,10 @@ pub async fn handle_put_instruments(
     }
 
     // Get KV store
-    let kv = ctx.kv(METADATA_KV)?;
+    let kv = match ctx.kv(METADATA_KV) {
+        Ok(kv) => kv,
+        Err(e) => return HttpResponse::error_internal(&e.to_string()),
+    };
 
     // Get the body of the request
     let body = match req.json::<MetaInstrumentsRoot>().await {
@@ -142,7 +148,10 @@ pub async fn handle_post_instruments(
     }
 
     // Get KV store
-    let kv = ctx.kv(METADATA_KV)?;
+    let kv = match ctx.kv(METADATA_KV) {
+        Ok(kv) => kv,
+        Err(e) => return HttpResponse::error_internal(&e.to_string()),
+    };
 
     // Create a new MetaInstrumentsRoot from the body
     let body = match req.json::<MetaInstrumentsRoot>().await {

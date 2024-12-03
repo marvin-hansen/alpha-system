@@ -28,7 +28,11 @@ pub async fn handle_get_exchanges(req: Request, ctx: RouteContext<()>) -> worker
         return HttpResponse::error_forbidden("access denied");
     }
 
-    let kv = ctx.kv(METADATA_KV)?;
+    // Get KV store
+    let kv = match ctx.kv(METADATA_KV) {
+        Ok(kv) => kv,
+        Err(e) => return HttpResponse::error_internal(&e.to_string()),
+    };
 
     match kv.get(EXCHANGES_KEY).json::<MetaExchangesRoot>().await? {
         Some(exchanges) => Response::from_json(&exchanges),
@@ -68,7 +72,10 @@ pub async fn handle_put_exchanges(
     }
 
     // Get KV store
-    let kv = ctx.kv(METADATA_KV)?;
+    let kv = match ctx.kv(METADATA_KV) {
+        Ok(kv) => kv,
+        Err(e) => return HttpResponse::error_internal(&e.to_string()),
+    };
 
     // Get the body of the request
     let body = match req.json::<MetaExchangesRoot>().await {
@@ -129,7 +136,10 @@ pub async fn handle_post_exchanges(
     }
 
     // Get KV store
-    let kv = ctx.kv(METADATA_KV)?;
+    let kv = match ctx.kv(METADATA_KV) {
+        Ok(kv) => kv,
+        Err(e) => return HttpResponse::error_internal(&e.to_string()),
+    };
 
     // Get the body of the request
     let body = match req.json::<MetaExchangesRoot>().await {
