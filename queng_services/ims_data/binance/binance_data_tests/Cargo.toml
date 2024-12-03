@@ -21,6 +21,8 @@ workspace = true
 # Internal crates
 common_config = {workspace = true}
 common_env = {workspace = true}
+common_exchange = {workspace = true}
+common_ims = {workspace = true}
 container_specs_iggy = {workspace = true}
 container_specs_postgres = {workspace = true}
 docker_utils = {workspace = true}

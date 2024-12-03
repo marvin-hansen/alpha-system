@@ -53,8 +53,8 @@ impl ServiceUtil {
     ///
     pub async fn start_ims_integration(
         &self,
-        exchange_id: ExchangeID,
-        ims_integration_type: ImsIntegrationType,
+        exchange_id: &ExchangeID,
+        ims_integration_type: &ImsIntegrationType,
         wait_strategy: &WaitStrategy,
     ) -> Result<(), ServiceUtilError> {
         self.dbg_print("start_ims_integration");

@@ -1,4 +1,3 @@
-use common_service::shutdown_utils;
 use std::future::Future;
 use std::net::SocketAddr;
 use warp::Filter;
@@ -16,10 +15,7 @@ pub(crate) async fn get_http_health_server(
         .parse()
         .expect("[DBGW/main]: Failed to parse address");
 
-    let signal = shutdown_utils::signal_handler("http server");
-    let (_, http_server) = warp::serve(routes).bind_with_graceful_shutdown(http_addr, signal);
-
-    http_server
+    warp::serve(routes).bind(http_addr)
 }
 
 async fn health_handler() -> Result<impl warp::Reply, warp::Rejection> {

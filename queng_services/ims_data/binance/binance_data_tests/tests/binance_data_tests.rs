@@ -1,4 +1,6 @@
 use common_config::ServiceID;
+use common_exchange::ExchangeID;
+use common_ims::ImsIntegrationType;
 use container_specs_iggy::iggy_container_config;
 use container_specs_postgres::postgres_db_container_config;
 use docker_utils::DockerUtil;
@@ -106,7 +108,13 @@ async fn test_binance_data() {
     assert!(result.is_ok());
 
     dbg!("Start Binance data integration service - depends on IMDB, SMDB and DBGW");
-    // let exchange_id = ExchangeID::BINANCE;
+    let exchange_id = ExchangeID::Binance;
+    let integration_type = ImsIntegrationType::Data;
+    let wait_strategy = WaitStrategy::WaitForHttpHealthCheck("http://0.0.0.0:8080".to_string(), 10);
+    let result = svc_util
+        .start_ims_integration(&exchange_id, &integration_type, &wait_strategy)
+        .await;
+    assert!(result.is_ok());
 
     dbg!("Test client authentication");
     test_client_authentication().await;

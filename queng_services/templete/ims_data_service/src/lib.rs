@@ -154,15 +154,12 @@ pub async fn start(
     drop(smdb_manager);
     drop(dependencies);
 
-    dbg_print("Run server");
-    server.run().await.expect("Failed to run service");
-
-    dbg_print("Run health check server");
-    http_server.await;
-
     // Print service start header
     print_utils::print_duration("Starting service took:", &start.elapsed());
     print_utils::print_start_header_simple(svc_name, &service_addr);
+
+    server.run().await.expect("Failed to run service");
+    http_server.await;
 
     #[cfg(unix)]
     let (mut ctrl_c, mut sigterm) = {
