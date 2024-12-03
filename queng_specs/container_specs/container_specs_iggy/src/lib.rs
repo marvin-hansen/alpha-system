@@ -10,13 +10,10 @@ pub fn iggy_container_config() -> ContainerConfig<'static> {
         "0.0.0.0",
         3000,
         Some(&[8090]),
-        Some(&["RUST_LOG=debug"]),
+        None,
         None,
         true, // Keep the container running for re-use
         true, // Keep the same container config across all env. setups.
-        WaitStrategy::WaitUntilConsoleOutputContains(
-            "Started HTTP API on: 0.0.0.0:3000".to_string(),
-            20,
-        ),
+        WaitStrategy::WaitForHttpHealthCheck("http://0.0.0.0:3000/ping".to_string(), 15),
     )
 }

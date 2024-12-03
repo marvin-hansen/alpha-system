@@ -11,12 +11,8 @@ fn test_iggy_container_config() {
     assert_eq!(container_config.tag(), "latest");
     assert_eq!(container_config.url(), "0.0.0.0");
     assert_eq!(container_config.connection_port(), 3000);
-    // assert!(container_config.additional_env_vars().is_none());
+    assert!(container_config.additional_env_vars().is_none());
     assert!(container_config.platform().is_none());
     assert!(container_config.reuse_container());
     assert!(container_config.keep_configuration());
-    // assert_eq!(
-    //     container_config.wait_strategy(),
-    //     &WaitStrategy::WaitUntilConsoleOutputContains("Iggy server has started".to_string(), 30)
-    // );
 }

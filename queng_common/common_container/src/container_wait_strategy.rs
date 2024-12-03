@@ -1,5 +1,4 @@
 use std::fmt::{Display, Formatter};
-use std::time::Duration;
 
 /// Represents the strategy to wait for a container to reach a certain state.
 ///
@@ -46,7 +45,7 @@ pub enum WaitStrategy {
     NoWait,
     WaitForDuration(u64),
     WaitUntilConsoleOutputContains(String, u64),
-    WaitForHttpHealthCheck(String, Duration),
+    WaitForHttpHealthCheck(String, u64),
 }
 
 impl Display for WaitStrategy {

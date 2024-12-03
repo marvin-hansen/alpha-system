@@ -151,9 +151,10 @@ impl DockerUtil {
     pub(crate) fn wait_for_http_health_check(
         &self,
         health_url: &str,
-        timeout: &Duration,
+        timeout: &u64,
     ) -> Result<(), DockerError> {
         let start_time = Instant::now();
+        let timeout = Duration::from_secs(*timeout);
 
         loop {
             std::thread::sleep(Duration::from_millis(100));

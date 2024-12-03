@@ -71,6 +71,11 @@ async fn test_binance_data() {
     let result = svc_util.start_service(&service_id, &wait_strategy).await;
     assert!(result.is_ok());
 
+    dbg!("Start IMDB - depends on SMDB");
+    let service_id = ServiceID::IMDB;
+    let result = svc_util.start_service(&service_id, &wait_strategy).await;
+    assert!(result.is_ok());
+
     dbg!("Start Binance data integration service - depends on SMDB and DBGW");
     // let exchange_id = ExchangeID::BINANCE;
 
