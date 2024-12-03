@@ -11,6 +11,7 @@ use tokio::time::Instant;
 
 mod auth;
 mod handle;
+mod health_check;
 mod run;
 mod service;
 mod shutdown;
@@ -112,6 +113,15 @@ pub async fn start(
         .await
         .expect("Failed to login user");
 
+    dbg_print("Configuring metrics endpoint");
+    let (metrics_addr, _) = cfg_manager
+        .get_metrics_socket_addr_uri()
+        .expect("DBGW: Failed to get metric host, uri, and port");
+    dbg_print(&metrics_addr);
+
+    dbg_print("Construct health endpoint server");
+    let http_server = health_check::health_handler::get_http_health_server(metrics_addr).await;
+
     dbg_print("Construct server");
     let server = if dbg {
         Service::with_debug(
@@ -146,6 +156,9 @@ pub async fn start(
 
     dbg_print("Run server");
     server.run().await.expect("Failed to run service");
+
+    dbg_print("Run health check server");
+    http_server.await;
 
     // Print service start header
     print_utils::print_duration("Starting service took:", &start.elapsed());

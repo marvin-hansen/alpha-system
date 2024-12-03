@@ -29,6 +29,7 @@ rust_library(
         "//thirdparty/crates:iggy",
         "//thirdparty/crates:futures-util",
         "//thirdparty/crates:tokio",
+        "//thirdparty/crates:warp",
     ],
 )
 

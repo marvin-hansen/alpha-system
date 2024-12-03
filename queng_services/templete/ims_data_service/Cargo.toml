@@ -32,3 +32,4 @@ smdb_client = { workspace = true }
 iggy = { workspace = true }
 tokio = { workspace = true }
 futures-util = { workspace = true }
+warp = { workspace = true }
