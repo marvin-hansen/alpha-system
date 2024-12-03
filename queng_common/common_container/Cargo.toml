@@ -7,9 +7,12 @@ readme.workspace = true
 repository.workspace = true
 authors.workspace = true
 
+
 [lints]
 workspace = true
 
 
 [dependencies]
+# Internal crates
+wait_utils = {workspace = true}
 # External crates

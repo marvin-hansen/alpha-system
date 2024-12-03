@@ -1,5 +1,5 @@
-use crate::container_wait_strategy::WaitStrategy;
 use std::fmt::Display;
+use wait_utils::WaitStrategy;
 
 #[derive(Debug, Default, Clone, Eq, PartialOrd, Ord, PartialEq, Hash)]
 pub struct ContainerConfig<'l> {

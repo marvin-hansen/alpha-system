@@ -12,7 +12,8 @@ rust_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        # External crates
+        # Internal crates
+        "//alias:wait_utils",
     ],
 )
 
