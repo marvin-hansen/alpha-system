@@ -108,18 +108,6 @@ impl DockerUtil {
                 Err(e) => return Err(e),
             };
 
-            if self.dbg {
-                println!("DEBUG: container status: {}", &output.status);
-                println!(
-                    "DEBUG: container stderr logs: {:?}",
-                    String::from_utf8_lossy(&output.stderr)
-                );
-                println!(
-                    "DEBUG: container stderr logs: {:?}",
-                    String::from_utf8_lossy(&output.stderr)
-                );
-            }
-
             if output.status.success() {
                 self.dbg_print("status.success");
                 if String::from_utf8_lossy(&output.stdout).contains(expected_output) {
