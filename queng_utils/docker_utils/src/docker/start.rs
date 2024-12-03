@@ -1,6 +1,7 @@
 use crate::{DockerError, DockerUtil};
-use common_container::{ContainerConfig, WaitStrategy};
+use common_container::ContainerConfig;
 use std::process::Command;
+use wait_utils::WaitStrategy;
 
 impl DockerUtil {
     /// Gets an existing container or starts a new one with the specified configuration
@@ -255,5 +256,76 @@ impl DockerUtil {
         }
         //
         Ok((container_id.to_string(), connection_port))
+    }
+
+    /// Waits for a new Docker container to finish starting.
+    ///
+    /// # Arguments
+    ///
+    /// * `container_id` - The ID of the container.
+    /// * `wait_strategy` - The wait strategy to use for the container.
+    ///
+    /// # Returns
+    ///
+    /// Returns Ok if successful,
+    /// or a `DockerError` if an error occurs.
+    pub(crate) fn wait_for_container(
+        &self,
+        container_id: &str,
+        wait_strategy: &WaitStrategy,
+    ) -> Result<(), DockerError> {
+        match wait_strategy {
+
+            WaitStrategy::WaitForDuration(duration) => {
+                self.dbg_print(&format!(
+                    "[start_container]: Waiting for {duration} seconds."
+                ));
+                wait_utils::wait_until_timeout(duration).expect("Failed to wait for duration");
+                Ok(())
+            }
+
+            WaitStrategy::WaitUntilConsoleOutputContains(expected_output, timeout) => {
+                self.dbg_print(&format!(
+                    "[start_container]: Waiting until console output contains '{expected_output}'"
+                ));
+                wait_utils::wait_until_console_output(
+                    self.dbg,
+                    container_id,
+                    expected_output,
+                    timeout,
+                )
+                .expect("Failed to wait until console output contains");
+
+                Ok(())
+            }
+
+            WaitStrategy::WaitForHttpHealthCheck(url, duration) => {
+                self.dbg_print(&format!(
+                    "[start_container]: Waiting for {:?} on HTTP health check on {}.",
+                    duration, url
+                ));
+                wait_utils::wait_until_http_health_check(self.dbg, url, duration)
+                    .expect("Failed to wait for HTTP health check");
+
+                Ok(())
+            }
+
+            WaitStrategy::WaitForGrpcHealthCheck(url, duration) => {
+                self.dbg_print(&format!(
+                    "[start_container]: Waiting for {:?} on GRPC health check on {}.",
+                    duration, url
+                ));
+                wait_utils::wait_until_grpc_health_check(self.dbg, url, duration)
+                    .expect("Failed to wait for HTTP health check");
+
+                Ok(())
+            }
+
+            WaitStrategy::NoWait => {
+                self.dbg_print("[start_container]: No wait. Return immediately.");
+                // Do nothing
+                Ok(())
+            }
+        }
     }
 }

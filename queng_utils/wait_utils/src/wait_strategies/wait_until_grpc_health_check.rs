@@ -16,12 +16,13 @@ use tonic_health::pb::HealthCheckRequest;
 pub async fn wait_until_grpc_health_check(
     dbg: bool,
     health_url: &str,
-    timeout: &Duration,
+    timeout: &u64,
 ) -> Result<(), WaitStrategyError> {
     let start_time = Instant::now();
 
     loop {
         tokio::time::sleep(Duration::from_millis(50)).await;
+        let timeout = Duration::from_secs(*timeout);
 
         if start_time.elapsed().as_secs() > timeout.as_secs() {
             return Err(WaitStrategyError(format!(

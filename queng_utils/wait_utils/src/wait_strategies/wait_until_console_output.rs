@@ -18,7 +18,7 @@ use tokio::time::Instant;
 /// Returns `Ok(())` if the expected output is found within the timeout, or an
 /// `Err(DockerError)` if the expected output is not found.
 ///
-pub(crate) fn wait_until_console_output_contains(
+pub fn wait_until_console_output(
     dbg: bool,
     container_id: &str,
     expected_output: &str,

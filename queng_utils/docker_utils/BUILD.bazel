@@ -15,6 +15,7 @@ rust_library(
     deps = [
         # Internal crates
         "//alias:common_container",
+        "//alias:wait_utils",
         # External crates
         "//thirdparty/crates:tokio",
     ],

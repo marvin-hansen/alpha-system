@@ -1,6 +1,6 @@
 use crate::WaitStrategyError;
+use std::thread::sleep;
 use std::time::Duration;
-use tokio::time::sleep;
 
 /// Waits for the given duration asynchronously.
 ///
@@ -12,7 +12,8 @@ use tokio::time::sleep;
 ///
 /// Returns Ok(()) when the wait is complete.
 ///
-pub async fn wait_until_timeout(wait_duration: &Duration) -> Result<(), WaitStrategyError> {
-    sleep(wait_duration.to_owned()).await;
+pub fn wait_until_timeout(timeout: &u64) -> Result<(), WaitStrategyError> {
+    let timeout = Duration::from_secs(*timeout);
+    sleep(timeout);
     Ok(())
 }
