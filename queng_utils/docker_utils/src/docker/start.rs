@@ -275,7 +275,6 @@ impl DockerUtil {
         wait_strategy: &WaitStrategy,
     ) -> Result<(), DockerError> {
         match wait_strategy {
-
             WaitStrategy::WaitForDuration(duration) => {
                 self.dbg_print(&format!(
                     "[start_container]: Waiting for {duration} seconds."
