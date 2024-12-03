@@ -24,6 +24,7 @@ rust_library(
         "//alias:sbe_messages",
         "//alias:sbe_utils",
         "//alias/client:smdb_client",
+        "//alias/client:imdb_client",
         # External crates
         "//thirdparty/crates:iggy",
         "//thirdparty/crates:futures-util",

@@ -5,6 +5,7 @@ use common_ims::IntegrationConfig;
 use common_service::print_utils;
 use config_manager::CfgManager;
 use iggy::client::{Client, UserClient};
+use imdb_client::IMDBClient;
 use smdb_client::SMDBClient;
 use tokio::time::Instant;
 
@@ -53,6 +54,27 @@ pub async fn start(
         );
     }
 
+    dbg_print("Configure IMDB client");
+    let (host, port) = cfg_manager
+        .get_imdb_host_port()
+        .await
+        .expect("Failed to get MDDB host");
+
+    dbg_print("Construct IMDB client");
+    let client = IMDBClient::new(host, port)
+        .await
+        .expect("Failed to create IMDB client");
+
+    dbg_print("Get integration form IMDB");
+    let integration_id = "ims-data-binance".to_string();
+    let exists = client
+        .check_if_integration_exists(integration_id.clone())
+        .await
+        .expect("Failed to get integration");
+    if !exists {
+        panic!("Integration {integration_id} does not exist on IMDB");
+    }
+
     dbg_print("Configure service ip and port automatically!");
     let service_addr = cfg_manager
         .get_svc_socket_addr()
@@ -90,8 +112,7 @@ pub async fn start(
         .await
         .expect("Failed to login user");
 
-    dbg_print("Configuring server and signal handler");
-    //Creates a new server
+    dbg_print("Construct server");
     let server = if dbg {
         Service::with_debug(
             &consumer_client,
@@ -112,8 +133,11 @@ pub async fn start(
         .expect("Failed to build new service")
     };
 
-    dbg_print("Set integration online");
-    //
+    dbg_print("Set integration online on IMDB");
+    client
+        .set_integration_online(integration_id.clone())
+        .await
+        .expect("Failed to set integration online");
 
     // Free up some memory before starting the service,
     drop(cfg_manager);
@@ -154,8 +178,11 @@ pub async fn start(
         .await
         .expect("Failed to shutdown service");
 
-    dbg_print("Set integration offline");
-    //
+    dbg_print("Set integration offline on IMDB");
+    client
+        .set_integration_offline(integration_id.clone())
+        .await
+        .expect("Failed to set integration offline on IMDB");
 
     Ok(())
 }

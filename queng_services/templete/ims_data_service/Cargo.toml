@@ -19,6 +19,7 @@ common_ims = {workspace = true}
 common_service = { workspace = true }
 config_manager = { workspace = true }
 common_message = { workspace = true }
+imdb_client = { workspace = true }
 message_consumer = { workspace = true }
 message_producer = { workspace = true }
 message_shared = { workspace = true }
