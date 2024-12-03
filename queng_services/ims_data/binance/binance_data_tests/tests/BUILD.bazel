@@ -19,7 +19,7 @@ rust_test_suite(
         # The first tag is for local testing, which must be in sequential order b/c there is just one DB
         "binance_data_acceptance_test",
         # The second tag is for acceptance testing on the CI, which runs in parallel.
-        # "acceptance_test",
+        "acceptance_test",
     ],
     visibility = ["//visibility:public"],
     deps = [
