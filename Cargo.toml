@@ -205,7 +205,6 @@ service_specs_all = { path = "queng_specs/service_specs/service_specs_all" }
 crypto_utils = { path = "queng_utils/crypto_utils" }
 math_utils = { path = "queng_utils/math_utils" }
 docker_utils = { path = "queng_utils/docker_utils" }
-grpc_utils = { path = "queng_utils/grpc_utils" }
 service_utils = { path = "queng_utils/service_utils" }
 #
 # ==============

@@ -1,11 +1,15 @@
 use common_config::ServiceID;
-use common_env::EnvironmentType;
 use container_specs_iggy::iggy_container_config;
 use container_specs_postgres::postgres_db_container_config;
 use docker_utils::DockerUtil;
 use service_import::ServiceImportManager;
 use service_utils::{ServiceUtil, ServiceWaitStrategy};
 use std::time::Duration;
+
+async fn get_service_wait_strategy(host: String, port: u16) -> ServiceWaitStrategy {
+    let url = format!("http://{host}:{port}");
+    ServiceWaitStrategy::GrpcHealthCheck(url, Duration::from_secs(10))
+}
 
 #[tokio::test]
 async fn test_binance_data() {
@@ -19,7 +23,6 @@ async fn test_binance_data() {
 
     dbg!("Get config manger for automatic configuration");
     let config_manager = svc_util.config_manager();
-    let env_type = config_manager.env_type();
 
     dbg!("Start or reuse iggy container");
     let iggy_container_config = iggy_container_config();
@@ -53,26 +56,34 @@ async fn test_binance_data() {
     let imported = service_import_manager.check_if_already_imported().await;
     assert!(imported);
 
-    // Wait for services to be ready
-    let wait_strategy = if env_type == EnvironmentType::LOCAL {
-        ServiceWaitStrategy::Duration(Duration::from_millis(250))
-    } else {
-        ServiceWaitStrategy::Duration(Duration::from_millis(500))
-    };
-
     dbg!("Start DBGW service - depends on Database");
     let service_id = ServiceID::DBGW;
+    let (host, port) = config_manager
+        .get_dbgw_host_port()
+        .await
+        .expect("Failed to get host and port for DBGW");
+    let wait_strategy = get_service_wait_strategy(host, port).await;
     let result = svc_util.start_service(&service_id, &wait_strategy).await;
     dbg!(&result);
     assert!(result.is_ok());
 
     dbg!("Start SMDB service - depends on DBGW");
     let service_id = ServiceID::SMDB;
+    let (host, port) = config_manager
+        .get_smdb_host_port()
+        .await
+        .expect("Failed to get host and port for DBGW");
+    let wait_strategy = get_service_wait_strategy(host, port).await;
     let result = svc_util.start_service(&service_id, &wait_strategy).await;
     assert!(result.is_ok());
 
     dbg!("Start IMDB - depends on SMDB");
     let service_id = ServiceID::IMDB;
+    let (host, port) = config_manager
+        .get_imdb_host_port()
+        .await
+        .expect("Failed to get host and port for DBGW");
+    let wait_strategy = get_service_wait_strategy(host, port).await;
     let result = svc_util.start_service(&service_id, &wait_strategy).await;
     assert!(result.is_ok());
 

@@ -50,7 +50,12 @@ impl ServiceUtil {
             }
             ServiceWaitStrategy::HttpHealthCheck(health_url, duration) => {
                 self.wait_until_http_health_check(health_url, duration)
-                    .expect("Failed to wait for health check");
+                    .expect("Failed to wait for http health check");
+            }
+            ServiceWaitStrategy::GrpcHealthCheck(health_url, duration) => {
+                self.wait_until_grpc_health_check(health_url, duration)
+                    .await
+                    .expect("Failed to wait for grpc health check");
             }
         }
         self.dbg_print("Service started");

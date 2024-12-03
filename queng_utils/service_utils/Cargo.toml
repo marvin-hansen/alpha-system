@@ -18,6 +18,8 @@ common_exchange = { workspace = true }
 common_ims = { workspace = true }
 config_manager = { workspace = true }
 tokio = { workspace = true }
+tonic = { workspace = true }
+tonic-health = { workspace = true }
 
 [dev-dependencies]
 docker_utils = {workspace = true}

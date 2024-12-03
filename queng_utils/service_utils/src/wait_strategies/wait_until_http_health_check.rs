@@ -27,7 +27,7 @@ impl ServiceUtil {
 
             if start_time.elapsed().as_secs() > timeout.as_secs() {
                 return Err(ServiceUtilError::ServiceHealthcheckFailed(format!(
-                    "[wait_until_http_health_check]: !!Timeout!! Waited {} seconds for service to respond to health check",
+                    "[wait_until_http_health_check]: !!Timeout!! Waited {} seconds for service health check",
                     timeout.as_secs(),
                 )));
             }

@@ -19,7 +19,7 @@ pub use crate::error::service_util_error::ServiceUtilError::*;
 pub enum ServiceWaitStrategy {
     Duration(Duration),
     HttpHealthCheck(String, Duration),
-    // GrpcHealthCheck(String, Duration),
+    GrpcHealthCheck(String, Duration),
 }
 
 #[derive(Debug)]

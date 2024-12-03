@@ -6,6 +6,11 @@ use service_utils::{ServiceUtil, ServiceWaitStrategy};
 use smdb_client::SMDBClient;
 use std::time::Duration;
 
+async fn get_service_wait_strategy(host: String, port: u16) -> ServiceWaitStrategy {
+    let url = format!("http://{host}:{port}");
+    ServiceWaitStrategy::GrpcHealthCheck(url, Duration::from_secs(10))
+}
+
 #[tokio::test]
 async fn test_smdb() {
     let docker_util = DockerUtil::with_debug().expect("Failed to get DockerUtil");
@@ -40,16 +45,24 @@ async fn test_smdb() {
     let imported = service_import_manager.check_if_already_imported().await;
     assert!(imported);
 
-    let wait_strategy = ServiceWaitStrategy::Duration(Duration::from_millis(500));
-
-    // Start DBGW service - depends on Database
+    dbg!("Start DBGW service - depends on Database");
     let service_id = ServiceID::DBGW;
+    let (host, port) = config_manager
+        .get_dbgw_host_port()
+        .await
+        .expect("Failed to get host and port for DBGW");
+    let wait_strategy = get_service_wait_strategy(host, port).await;
     let result = svc_util.start_service(&service_id, &wait_strategy).await;
     dbg!(&result);
     assert!(result.is_ok());
 
-    // Start SMDB service - depends on DBGW
+    dbg!("Start SMDB service - depends on DBGW");
     let service_id = ServiceID::SMDB;
+    let (host, port) = config_manager
+        .get_smdb_host_port()
+        .await
+        .expect("Failed to get host and port for DBGW");
+    let wait_strategy = get_service_wait_strategy(host, port).await;
     let result = svc_util.start_service(&service_id, &wait_strategy).await;
     assert!(result.is_ok());
 
