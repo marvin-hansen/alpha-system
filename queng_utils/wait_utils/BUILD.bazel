@@ -17,6 +17,8 @@ rust_library(
         "//alias:common_container",
         # External crates
         "//thirdparty/crates:tokio",
+        "//thirdparty/crates:tonic",
+        "//thirdparty/crates:tonic-health",
     ],
 )
 
