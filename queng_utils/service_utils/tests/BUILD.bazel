@@ -16,6 +16,7 @@ rust_test_suite(
     deps = [
         # Crate under test
         "//alias:service_utils",
+        "//alias:wait_utils",
         # Internal crates
         "//alias:common_config",
         "//alias:docker_utils",

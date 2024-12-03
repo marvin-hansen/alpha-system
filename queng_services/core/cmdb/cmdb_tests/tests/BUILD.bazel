@@ -32,6 +32,7 @@ rust_test_suite(
         "//alias:service_import",
         "//alias:service_utils",
         "//alias:portfolio_specs",
+        "//alias:wait_utils",
         # External crates
         "//thirdparty/crates:tokio",
     ],

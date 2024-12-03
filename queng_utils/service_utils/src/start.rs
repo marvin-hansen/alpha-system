@@ -97,6 +97,7 @@ impl ServiceUtil {
                     duration, url
                 ));
                 wait_utils::wait_until_grpc_health_check(self.dbg, url, duration)
+                    .await
                     .expect("Failed to wait for HTTP health check");
             }
 

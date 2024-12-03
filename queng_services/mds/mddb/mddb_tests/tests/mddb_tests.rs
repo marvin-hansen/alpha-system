@@ -4,17 +4,17 @@ use docker_utils::DockerUtil;
 use mddb_client::MDDBClient;
 use metadata_import::MetadataImportManager;
 use service_import::ServiceImportManager;
-use service_utils::{ServiceUtil, ServiceWaitStrategy};
-use std::time::Duration;
+use service_utils::ServiceUtil;
+use wait_utils::WaitStrategy;
 
 const ASSETS_SAMPLE_SIZE: usize = 50;
 const EXCHANGES_SAMPLE_SIZE: usize = 50;
 //  We need to import more instruments b/c the first 50 do not have FIGI ID's assigned.
 const INSTRUMENTS_SAMPLE_SIZE: usize = 500;
 
-async fn get_service_wait_strategy(host: String, port: u16) -> ServiceWaitStrategy {
+async fn get_service_wait_strategy(host: String, port: u16) -> WaitStrategy {
     let url = format!("http://{host}:{port}");
-    ServiceWaitStrategy::GrpcHealthCheck(url, Duration::from_secs(10))
+    WaitStrategy::WaitForGrpcHealthCheck(url, 10)
 }
 
 #[tokio::test]

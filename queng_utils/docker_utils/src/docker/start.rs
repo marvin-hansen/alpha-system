@@ -309,16 +309,9 @@ impl DockerUtil {
                 Ok(())
             }
 
-            WaitStrategy::WaitForGrpcHealthCheck(url, duration) => {
-                self.dbg_print(&format!(
-                    "[start_container]: Waiting for {:?} on GRPC health check on {}.",
-                    duration, url
-                ));
-                wait_utils::wait_until_grpc_health_check(self.dbg, url, duration)
-                    .expect("Failed to wait for HTTP health check");
-
-                Ok(())
-            }
+            WaitStrategy::WaitForGrpcHealthCheck(_, _) => Err(DockerError::from(
+                "WaitForGrpcHealthCheck for yet supported".to_string(),
+            )),
 
             WaitStrategy::NoWait => {
                 self.dbg_print("[start_container]: No wait. Return immediately.");

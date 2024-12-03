@@ -22,4 +22,6 @@ docker_utils = {workspace = true}
 service_utils = {workspace = true}
 service_import  = {workspace = true}
 portfolio_specs = { workspace = true }
+wait_utils = { workspace = true }
+# External crates
 tokio = {workspace = true}

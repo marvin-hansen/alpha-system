@@ -2,9 +2,10 @@ use common_config::ServiceID;
 use container_specs_postgres::postgres_db_container_config;
 use docker_utils::DockerUtil;
 use service_utils::ServiceUtil;
-use service_utils::ServiceWaitStrategy;
 use std::time::Duration;
 use tokio::time::sleep;
+use wait_utils;
+use wait_utils::WaitStrategy::WaitForDuration;
 
 // Somehow tests seem to be executed or sorted in alphabetical order,
 // so make sure that the setup is on top of the stack.
@@ -27,7 +28,7 @@ async fn test_start_service_util() {
     let svc_util = res.unwrap();
 
     // Wait strategy
-    let wait_strategy = ServiceWaitStrategy::Duration(Duration::from_millis(500));
+    let wait_strategy = WaitForDuration(1);
 
     // Start DBGW service
     let service_id = ServiceID::DBGW;

@@ -5,12 +5,13 @@ use docker_utils::DockerUtil;
 use imdb_client::IMDBClient;
 use integration_import::IntegrationImportManager;
 use service_import::ServiceImportManager;
-use service_utils::{ServiceUtil, ServiceWaitStrategy};
+use service_utils::ServiceUtil;
 use std::time::Duration;
+use wait_utils::WaitStrategy;
 
-async fn get_service_wait_strategy(host: String, port: u16) -> ServiceWaitStrategy {
+async fn get_service_wait_strategy(host: String, port: u16) -> WaitStrategy {
     let url = format!("http://{host}:{port}");
-    ServiceWaitStrategy::GrpcHealthCheck(url, Duration::from_secs(10))
+    WaitStrategy::WaitForGrpcHealthCheck(url, 10)
 }
 
 #[tokio::test]
