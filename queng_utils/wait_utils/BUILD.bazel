@@ -14,7 +14,7 @@ rust_library(
     visibility = ["//visibility:public"],
     deps = [
         # Internal crates
-        "//alias:common_container",
+
         # External crates
         "//thirdparty/crates:tokio",
         "//thirdparty/crates:tonic",

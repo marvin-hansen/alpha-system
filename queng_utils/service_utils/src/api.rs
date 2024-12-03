@@ -1,9 +1,10 @@
 use crate::error::service_util_error::ServiceUtilError;
 use crate::fields::PATH;
-use crate::{ServiceUtil, ServiceWaitStrategy};
+use crate::ServiceUtil;
 use common_config::ServiceID;
 use common_exchange::ExchangeID;
 use common_ims::ImsIntegrationType;
+use wait_utils::WaitStrategy;
 
 impl ServiceUtil {
     /// Starts a specified service using the provided service ID and wait strategy.
@@ -21,7 +22,7 @@ impl ServiceUtil {
     pub async fn start_service(
         &self,
         svc: &ServiceID,
-        wait_strategy: &ServiceWaitStrategy,
+        wait_strategy: &WaitStrategy,
     ) -> Result<(), ServiceUtilError> {
         self.dbg_print("start_service");
         self.dbg_print(&format!(
@@ -54,7 +55,7 @@ impl ServiceUtil {
         &self,
         exchange_id: ExchangeID,
         ims_integration_type: ImsIntegrationType,
-        wait_strategy: &ServiceWaitStrategy,
+        wait_strategy: &WaitStrategy,
     ) -> Result<(), ServiceUtilError> {
         self.dbg_print("start_ims_integration");
 

@@ -32,6 +32,7 @@ rust_library(
         "//alias:common_exchange",
         "//alias:common_ims",
         "//alias:config_manager",
+        "//alias:wait_utils",
         # External crates
         "//thirdparty/crates:tokio",
         "//thirdparty/crates:tonic",
