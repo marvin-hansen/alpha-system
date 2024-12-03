@@ -513,3 +513,8 @@ alias(
     name = "service_utils",
     actual = "//queng_utils/service_utils",
 )
+
+alias(
+    name = "wait_utils",
+    actual = "//queng_utils/wait_utils",
+)

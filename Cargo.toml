@@ -206,6 +206,7 @@ crypto_utils = { path = "queng_utils/crypto_utils" }
 math_utils = { path = "queng_utils/math_utils" }
 docker_utils = { path = "queng_utils/docker_utils" }
 service_utils = { path = "queng_utils/service_utils" }
+wait_utils = { path = "queng_utils/wait_utils" }
 #
 # ==============
 # External crates
