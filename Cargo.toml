@@ -9,6 +9,7 @@ members = [
     "queng_extensions/*",
     "queng_import/*/*",
     "queng_infra/*/*",
+    "queng_integration/data/*", "queng_integration/traits/trait_data_integration",
     "queng_message/*",
     "queng_proto/*",
     "queng_sbe/*",
@@ -136,6 +137,14 @@ pg_smdb_manager = { path = "queng_infra/postgres/pg_smdb_manager" }
 postgres_common = { path = "queng_infra/postgres/postgres_common" }
 postgres_config_manager = { path = "queng_infra/postgres/postgres_config_manager" }
 postgres_migrations = { path = "queng_infra/postgres/postgres_migrations" }
+
+# Integration
+# Data integration
+all_data_integration = { path = "queng_integration/data/all_data_integration" }
+binance_data_integration = { path = "queng_integration/data/binance_data_integration" }
+mock_data_integration = { path = "queng_integration/data/mock_data_integration" }
+# Traits
+trait_data_integration = { path = "queng_integration/traits/trait_data_integration" }
 
 # Mesasge bus
 message_consumer = { path = "queng_message/message_consumer" }

@@ -1,0 +1,30 @@
+load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library")
+
+rust_library(
+    name = "mock_data_integration",
+    srcs = glob([
+        "src/**",
+    ]),
+    crate_root = "src/lib.rs",
+    tags = [
+        "data_integration",
+        "mock_data_integration",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+    ],
+)
+
+rust_doc(
+    name = "doc",
+    crate = ":mock_data_integration",
+    tags = ["doc"],
+    visibility = ["//visibility:public"],
+)
+
+rust_doc_test(
+    name = "doc_test",
+    crate = ":mock_data_integration",
+    tags = ["doc-test"],
+    visibility = ["//visibility:public"],
+)
