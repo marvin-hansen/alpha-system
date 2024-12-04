@@ -15,7 +15,7 @@ rust_test_suite(
         # Crate to test
         "//alias:all_data_integration",
         # Internal crates
-        "//alias:mock_data_integration",
+
         # External crates
         "//thirdparty/crates:tokio",
     ],

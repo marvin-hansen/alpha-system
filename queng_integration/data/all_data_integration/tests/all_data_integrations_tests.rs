@@ -1,18 +1,12 @@
-use all_data_integration::ImsDataIntegration;
-use all_data_integration::ImsDataIntegration::MockDataIntegration as MockDataIntegrationEnum;
-use mock_data_integration::MockDataIntegration;
-use trait_data_integration::LocalImsDataIntegration;
+use all_data_integration::{
+    BinanceDataIntegration, DataIntegration, MockDataIntegration, TraitDataIntegration,
+};
 
 #[tokio::test]
 async fn test_all_data_integration() {
-    let mock_data = ImsDataIntegration::from(MockDataIntegrationEnum(MockDataIntegration));
+    let mock_data: DataIntegration = MockDataIntegration.into();
+    let binance_data: DataIntegration = BinanceDataIntegration.into();
 
-    // mock_data.start_trade_date(&["AAPL".to_string()], ).await.unwrap();
-    mock_data
-        .stop_trade_date(&["AAPL".to_string()])
-        .await
-        .unwrap();
-    mock_data.stop_all_trade_date().await.unwrap();
-
-    assert_eq!(1, 3)
+    assert_eq!(mock_data.run().await.unwrap(), 20);
+    assert_eq!(binance_data.run().await.unwrap(), 42);
 }

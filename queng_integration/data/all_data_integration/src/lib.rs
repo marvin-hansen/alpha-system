@@ -1,7 +1,7 @@
-use enum_dispatch::enum_dispatch;
-use mock_data_integration::MockDataIntegration;
+mod all_data_integrations;
+mod binance_data_integration;
+mod mock_data_implementation;
 
-#[enum_dispatch]
-pub enum ImsDataIntegration {
-    MockDataIntegration,
-}
+pub use all_data_integrations::*;
+pub use binance_data_integration::*;
+pub use mock_data_implementation::*;
