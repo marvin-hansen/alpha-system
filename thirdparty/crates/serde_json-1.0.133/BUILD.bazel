@@ -85,7 +85,7 @@ rust_library(
     }),
     version = "1.0.133",
     deps = [
-        "//thirdparty/crates/itoa-1.0.13:itoa",
+        "//thirdparty/crates/itoa-1.0.14:itoa",
         "//thirdparty/crates/memchr-2.7.4:memchr",
         "//thirdparty/crates/ryu-1.0.18:ryu",
         "//thirdparty/crates/serde-1.0.215:serde",

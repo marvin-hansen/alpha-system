@@ -93,6 +93,10 @@ crates_vendor(
             package = "diesel_migrations",
             version = "2.2.0",
         ),
+        "enum_dispatch": crate.spec(
+            package = "enum_dispatch",
+            version = "0.3.13",
+        ),
         "futures": crate.spec(
             package = "futures",
             version = "0.3.31",

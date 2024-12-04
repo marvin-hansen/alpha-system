@@ -95,7 +95,7 @@ rust_library(
         "//thirdparty/crates/bitflags-2.6.0:bitflags",
         "//thirdparty/crates/core-foundation-0.9.4:core_foundation",
         "//thirdparty/crates/core-foundation-sys-0.8.7:core_foundation_sys",
-        "//thirdparty/crates/libc-0.2.164:libc",
+        "//thirdparty/crates/libc-0.2.167:libc",
         "//thirdparty/crates/num-bigint-0.4.6:num_bigint",
         "//thirdparty/crates/security-framework-sys-2.12.1:security_framework_sys",
     ],

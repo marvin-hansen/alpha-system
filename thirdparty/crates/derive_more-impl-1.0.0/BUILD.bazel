@@ -110,7 +110,7 @@ rust_proc_macro(
         "//thirdparty/crates/convert_case-0.6.0:convert_case",
         "//thirdparty/crates/proc-macro2-1.0.92:proc_macro2",
         "//thirdparty/crates/quote-1.0.37:quote",
-        "//thirdparty/crates/syn-2.0.89:syn",
+        "//thirdparty/crates/syn-2.0.90:syn",
         "//thirdparty/crates/unicode-xid-0.2.6:unicode_xid",
     ],
 )

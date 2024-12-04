@@ -81,7 +81,7 @@ rust_library(
     version = "0.24.0",
     deps = [
         "//thirdparty/crates/byteorder-1.5.0:byteorder",
-        "//thirdparty/crates/bytes-1.8.0:bytes",
+        "//thirdparty/crates/bytes-1.9.0:bytes",
         "//thirdparty/crates/log-0.4.22:log",
         "//thirdparty/crates/rand-0.8.5:rand",
         "//thirdparty/crates/thiserror-1.0.69:thiserror",

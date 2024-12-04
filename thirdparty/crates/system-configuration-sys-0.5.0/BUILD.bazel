@@ -82,7 +82,7 @@ rust_library(
     version = "0.5.0",
     deps = [
         "//thirdparty/crates/core-foundation-sys-0.8.7:core_foundation_sys",
-        "//thirdparty/crates/libc-0.2.164:libc",
+        "//thirdparty/crates/libc-0.2.167:libc",
         "//thirdparty/crates/system-configuration-sys-0.5.0:build_script_build",
     ],
 )

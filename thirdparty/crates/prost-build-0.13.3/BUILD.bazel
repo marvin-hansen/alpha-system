@@ -84,7 +84,7 @@ rust_library(
     }),
     version = "0.13.3",
     deps = [
-        "//thirdparty/crates/bytes-1.8.0:bytes",
+        "//thirdparty/crates/bytes-1.9.0:bytes",
         "//thirdparty/crates/heck-0.5.0:heck",
         "//thirdparty/crates/itertools-0.13.0:itertools",
         "//thirdparty/crates/log-0.4.22:log",
@@ -95,7 +95,7 @@ rust_library(
         "//thirdparty/crates/prost-0.13.3:prost",
         "//thirdparty/crates/prost-types-0.13.3:prost_types",
         "//thirdparty/crates/regex-1.11.1:regex",
-        "//thirdparty/crates/syn-2.0.89:syn",
+        "//thirdparty/crates/syn-2.0.90:syn",
         "//thirdparty/crates/tempfile-3.14.0:tempfile",
     ],
 )

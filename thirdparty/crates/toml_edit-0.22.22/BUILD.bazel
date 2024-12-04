@@ -129,7 +129,7 @@ rust_library(
     }),
     version = "0.22.22",
     deps = [
-        "//thirdparty/crates/indexmap-2.6.0:indexmap",
+        "//thirdparty/crates/indexmap-2.7.0:indexmap",
         "//thirdparty/crates/serde-1.0.215:serde",
         "//thirdparty/crates/serde_spanned-0.6.8:serde_spanned",
         "//thirdparty/crates/toml_datetime-0.6.8:toml_datetime",

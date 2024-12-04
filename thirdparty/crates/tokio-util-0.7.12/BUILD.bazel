@@ -85,10 +85,10 @@ rust_library(
     }),
     version = "0.7.12",
     deps = [
-        "//thirdparty/crates/bytes-1.8.0:bytes",
+        "//thirdparty/crates/bytes-1.9.0:bytes",
         "//thirdparty/crates/futures-core-0.3.31:futures_core",
         "//thirdparty/crates/futures-sink-0.3.31:futures_sink",
         "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",
-        "//thirdparty/crates/tokio-1.41.1:tokio",
+        "//thirdparty/crates/tokio-1.42.0:tokio",
     ],
 )

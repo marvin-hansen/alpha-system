@@ -87,7 +87,7 @@ rust_library(
     }),
     version = "0.3.7",
     deps = [
-        "//thirdparty/crates/bytes-1.8.0:bytes",
+        "//thirdparty/crates/bytes-1.9.0:bytes",
         "//thirdparty/crates/futures-channel-0.3.31:futures_channel",
         "//thirdparty/crates/futures-util-0.3.31:futures_util",
         "//thirdparty/crates/headers-0.3.9:headers",
@@ -103,10 +103,10 @@ rust_library(
         "//thirdparty/crates/serde-1.0.215:serde",
         "//thirdparty/crates/serde_json-1.0.133:serde_json",
         "//thirdparty/crates/serde_urlencoded-0.7.1:serde_urlencoded",
-        "//thirdparty/crates/tokio-1.41.1:tokio",
+        "//thirdparty/crates/tokio-1.42.0:tokio",
         "//thirdparty/crates/tokio-tungstenite-0.21.0:tokio_tungstenite",
         "//thirdparty/crates/tokio-util-0.7.12:tokio_util",
         "//thirdparty/crates/tower-service-0.3.3:tower_service",
-        "//thirdparty/crates/tracing-0.1.40:tracing",
+        "//thirdparty/crates/tracing-0.1.41:tracing",
     ],
 )

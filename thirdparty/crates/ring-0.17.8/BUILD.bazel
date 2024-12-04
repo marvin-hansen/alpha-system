@@ -106,7 +106,7 @@ rust_library(
             "//thirdparty/crates/spin-0.9.8:spin",  # cfg(any(target_arch = "aarch64", target_arch = "arm", target_arch = "x86", target_arch = "x86_64"))
         ],
         "@rules_rust//rust/platform:aarch64-linux-android": [
-            "//thirdparty/crates/libc-0.2.164:libc",  # cfg(all(any(target_os = "android", target_os = "linux"), any(target_arch = "aarch64", target_arch = "arm")))
+            "//thirdparty/crates/libc-0.2.167:libc",  # cfg(all(any(target_os = "android", target_os = "linux"), any(target_arch = "aarch64", target_arch = "arm")))
             "//thirdparty/crates/spin-0.9.8:spin",  # cfg(any(target_arch = "aarch64", target_arch = "arm", target_arch = "x86", target_arch = "x86_64"))
         ],
         "@rules_rust//rust/platform:aarch64-pc-windows-msvc": [
@@ -117,26 +117,26 @@ rust_library(
             "//thirdparty/crates/spin-0.9.8:spin",  # cfg(any(target_arch = "aarch64", target_arch = "arm", target_arch = "x86", target_arch = "x86_64"))
         ],
         "@rules_rust//rust/platform:aarch64-unknown-linux-gnu": [
-            "//thirdparty/crates/libc-0.2.164:libc",  # cfg(all(any(target_os = "android", target_os = "linux"), any(target_arch = "aarch64", target_arch = "arm")))
+            "//thirdparty/crates/libc-0.2.167:libc",  # cfg(all(any(target_os = "android", target_os = "linux"), any(target_arch = "aarch64", target_arch = "arm")))
             "//thirdparty/crates/spin-0.9.8:spin",  # cfg(any(target_arch = "aarch64", target_arch = "arm", target_arch = "x86", target_arch = "x86_64"))
         ],
         "@rules_rust//rust/platform:aarch64-unknown-nixos-gnu": [
-            "//thirdparty/crates/libc-0.2.164:libc",  # cfg(all(any(target_os = "android", target_os = "linux"), any(target_arch = "aarch64", target_arch = "arm")))
+            "//thirdparty/crates/libc-0.2.167:libc",  # cfg(all(any(target_os = "android", target_os = "linux"), any(target_arch = "aarch64", target_arch = "arm")))
             "//thirdparty/crates/spin-0.9.8:spin",  # cfg(any(target_arch = "aarch64", target_arch = "arm", target_arch = "x86", target_arch = "x86_64"))
         ],
         "@rules_rust//rust/platform:aarch64-unknown-nto-qnx710": [
             "//thirdparty/crates/spin-0.9.8:spin",  # cfg(any(target_arch = "aarch64", target_arch = "arm", target_arch = "x86", target_arch = "x86_64"))
         ],
         "@rules_rust//rust/platform:arm-unknown-linux-gnueabi": [
-            "//thirdparty/crates/libc-0.2.164:libc",  # cfg(all(any(target_os = "android", target_os = "linux"), any(target_arch = "aarch64", target_arch = "arm")))
+            "//thirdparty/crates/libc-0.2.167:libc",  # cfg(all(any(target_os = "android", target_os = "linux"), any(target_arch = "aarch64", target_arch = "arm")))
             "//thirdparty/crates/spin-0.9.8:spin",  # cfg(any(target_arch = "aarch64", target_arch = "arm", target_arch = "x86", target_arch = "x86_64"))
         ],
         "@rules_rust//rust/platform:armv7-linux-androideabi": [
-            "//thirdparty/crates/libc-0.2.164:libc",  # cfg(all(any(target_os = "android", target_os = "linux"), any(target_arch = "aarch64", target_arch = "arm")))
+            "//thirdparty/crates/libc-0.2.167:libc",  # cfg(all(any(target_os = "android", target_os = "linux"), any(target_arch = "aarch64", target_arch = "arm")))
             "//thirdparty/crates/spin-0.9.8:spin",  # cfg(any(target_arch = "aarch64", target_arch = "arm", target_arch = "x86", target_arch = "x86_64"))
         ],
         "@rules_rust//rust/platform:armv7-unknown-linux-gnueabi": [
-            "//thirdparty/crates/libc-0.2.164:libc",  # cfg(all(any(target_os = "android", target_os = "linux"), any(target_arch = "aarch64", target_arch = "arm")))
+            "//thirdparty/crates/libc-0.2.167:libc",  # cfg(all(any(target_os = "android", target_os = "linux"), any(target_arch = "aarch64", target_arch = "arm")))
             "//thirdparty/crates/spin-0.9.8:spin",  # cfg(any(target_arch = "aarch64", target_arch = "arm", target_arch = "x86", target_arch = "x86_64"))
         ],
         "@rules_rust//rust/platform:i686-apple-darwin": [
@@ -250,7 +250,7 @@ cargo_build_script(
     version = "0.17.8",
     visibility = ["//visibility:private"],
     deps = [
-        "//thirdparty/crates/cc-1.2.1:cc",
+        "//thirdparty/crates/cc-1.2.2:cc",
     ],
 )
 

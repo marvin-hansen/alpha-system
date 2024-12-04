@@ -99,8 +99,8 @@ rust_library(
         "//thirdparty/crates/rand-0.8.5:rand",
         "//thirdparty/crates/thiserror-1.0.69:thiserror",
         "//thirdparty/crates/tinyvec-1.8.0:tinyvec",
-        "//thirdparty/crates/tokio-1.41.1:tokio",
-        "//thirdparty/crates/tracing-0.1.40:tracing",
+        "//thirdparty/crates/tokio-1.42.0:tokio",
+        "//thirdparty/crates/tracing-0.1.41:tracing",
         "//thirdparty/crates/url-2.5.4:url",
     ],
 )

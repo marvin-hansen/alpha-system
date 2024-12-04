@@ -38,7 +38,7 @@ alias(
 
 alias(
     name = "anyhow",
-    actual = "//thirdparty/crates/anyhow-1.0.93:anyhow",
+    actual = "//thirdparty/crates/anyhow-1.0.94:anyhow",
     tags = ["manual"],
 )
 
@@ -62,13 +62,13 @@ alias(
 
 alias(
     name = "blake3",
-    actual = "//thirdparty/crates/blake3-1.5.4:blake3",
+    actual = "//thirdparty/crates/blake3-1.5.5:blake3",
     tags = ["manual"],
 )
 
 alias(
     name = "bytes",
-    actual = "//thirdparty/crates/bytes-1.8.0:bytes",
+    actual = "//thirdparty/crates/bytes-1.9.0:bytes",
     tags = ["manual"],
 )
 
@@ -92,13 +92,19 @@ alias(
 
 alias(
     name = "diesel",
-    actual = "//thirdparty/crates/diesel-2.2.5:diesel",
+    actual = "//thirdparty/crates/diesel-2.2.6:diesel",
     tags = ["manual"],
 )
 
 alias(
     name = "diesel_migrations",
     actual = "//thirdparty/crates/diesel_migrations-2.2.0:diesel_migrations",
+    tags = ["manual"],
+)
+
+alias(
+    name = "enum_dispatch",
+    actual = "//thirdparty/crates/enum_dispatch-0.3.13:enum_dispatch",
     tags = ["manual"],
 )
 
@@ -122,7 +128,7 @@ alias(
 
 alias(
     name = "iggy",
-    actual = "//thirdparty/crates/iggy-0.6.40:iggy",
+    actual = "//thirdparty/crates/iggy-0.6.50:iggy",
     tags = ["manual"],
 )
 
@@ -188,7 +194,7 @@ alias(
 
 alias(
     name = "rustls",
-    actual = "//thirdparty/crates/rustls-0.23.18:rustls",
+    actual = "//thirdparty/crates/rustls-0.23.19:rustls",
     tags = ["manual"],
 )
 
@@ -212,7 +218,7 @@ alias(
 
 alias(
     name = "tokio",
-    actual = "//thirdparty/crates/tokio-1.41.1:tokio",
+    actual = "//thirdparty/crates/tokio-1.42.0:tokio",
     tags = ["manual"],
 )
 

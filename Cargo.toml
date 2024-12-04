@@ -9,7 +9,8 @@ members = [
     "queng_extensions/*",
     "queng_import/*/*",
     "queng_infra/*/*",
-    "queng_integration/data/*", "queng_integration/traits/trait_data_integration",
+    "queng_integration/data/*",
+    "queng_integration/traits/*",
     "queng_message/*",
     "queng_proto/*",
     "queng_sbe/*",
@@ -216,6 +217,7 @@ math_utils = { path = "queng_utils/math_utils" }
 docker_utils = { path = "queng_utils/docker_utils" }
 service_utils = { path = "queng_utils/service_utils" }
 wait_utils = { path = "queng_utils/wait_utils" }
+
 #
 # ==============
 # External crates
@@ -234,6 +236,7 @@ config-file = { version = "0.2.3" }
 ctrlc = { version = "3.4.5" }
 diesel = { version = "2.2.4", default-features = false, features = ["postgres", "pq-src", "r2d2"] }
 diesel_migrations = { version = "2.2.0", default-features = false, features = ["postgres"] }
+enum_dispatch = {version = "0.3.13"}
 futures = { version = "0.3.31" }
 futures-util = {version = "0.3.31"}
 hickory-resolver = { version = "0.24.1", default-features = false, features = ["tokio-runtime"] }

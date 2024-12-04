@@ -83,6 +83,6 @@ rust_proc_macro(
         "//thirdparty/crates/darling-0.20.10:darling",
         "//thirdparty/crates/proc-macro2-1.0.92:proc_macro2",
         "//thirdparty/crates/quote-1.0.37:quote",
-        "//thirdparty/crates/syn-2.0.89:syn",
+        "//thirdparty/crates/syn-2.0.90:syn",
     ],
 )
