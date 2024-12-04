@@ -7,7 +7,13 @@ readme.workspace = true
 repository.workspace = true
 authors.workspace = true
 
-[dependencies]
 
 [lints]
 workspace = true
+
+
+[dependencies]
+# Internal crates
+trait_data_integration = {workspace = true}
+# External crates
+tokio = {workspace = true}

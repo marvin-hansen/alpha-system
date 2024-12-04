@@ -6,12 +6,20 @@ rust_library(
         "src/**",
     ]),
     crate_root = "src/lib.rs",
+    proc_macro_deps = [
+        "//thirdparty/crates:enum_dispatch",
+    ],
     tags = [
         "all_data_integration",
         "data_integration",
     ],
     visibility = ["//visibility:public"],
     deps = [
+        # Internal crates
+        "//alias:trait_data_integration",
+        "//alias:mock_data_integration",
+        # External crates
+        "//thirdparty/crates:tokio",
     ],
 )
 

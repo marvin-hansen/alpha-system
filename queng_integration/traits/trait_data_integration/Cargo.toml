@@ -14,3 +14,4 @@ workspace = true
 
 [dependencies]
 enum_dispatch = {workspace = true}
+trait-variant  = {workspace = true}

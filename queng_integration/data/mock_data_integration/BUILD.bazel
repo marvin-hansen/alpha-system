@@ -12,6 +12,10 @@ rust_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
+        # Internal crates
+        "//alias:trait_data_integration",
+        # External crates
+        "//thirdparty/crates:tokio",
     ],
 )
 
