@@ -5,15 +5,9 @@ use vex_data_integration::ImsVexDataIntegration;
 
 const ID: &str = "VexDataIntegration";
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Default, Clone, Copy)]
 pub struct VexDataIntegration {
     integration: ImsVexDataIntegration,
-}
-
-impl Default for VexDataIntegration {
-    fn default() -> Self {
-        Self::new()
-    }
 }
 
 impl VexDataIntegration {

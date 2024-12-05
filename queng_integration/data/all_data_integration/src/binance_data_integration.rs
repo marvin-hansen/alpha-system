@@ -5,15 +5,9 @@ use trait_data_integration::{EventProcessor, ImsDataIntegration};
 
 const ID: &str = "BinanceDataIntegration";
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Default, Clone, Copy)]
 pub struct BinanceDataIntegration {
     integration: ImsBinanceDataIntegration,
-}
-
-impl Default for BinanceDataIntegration {
-    fn default() -> Self {
-        Self::new()
-    }
 }
 
 impl BinanceDataIntegration {

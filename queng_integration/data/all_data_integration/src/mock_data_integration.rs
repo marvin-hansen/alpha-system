@@ -5,15 +5,9 @@ use trait_data_integration::{EventProcessor, ImsDataIntegration};
 
 const ID: &str = "MockDataIntegration";
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Default, Clone, Copy)]
 pub struct MockDataIntegration {
     integration: ImsMockDataIntegration,
-}
-
-impl Default for MockDataIntegration {
-    fn default() -> Self {
-        Self::new()
-    }
 }
 
 impl MockDataIntegration {
