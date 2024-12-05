@@ -66,7 +66,6 @@ impl Service {
                 match message_stream.iggy_client().shutdown().await {
                     Ok(_) => {}
                     Err(e) => {
-                        ClientErrorType::ClientShutdownError;
                         MessageProcessingError(format!(
                             "Failed to shutdown client with id {} due to error: {}",
                             client_id, e

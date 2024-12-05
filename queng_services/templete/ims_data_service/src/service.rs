@@ -1,4 +1,5 @@
-use common_ims::{IggyConfig, IntegrationConfig};
+use common_exchange::ExchangeID;
+use common_ims::{ExchangeDataIntegrationID, IggyConfig, IntegrationConfig};
 use iggy::clients::client::IggyClient;
 use message_consumer::MessageConsumer;
 use message_producer::MessageProducer;
@@ -14,6 +15,8 @@ type Guarded<T> = std::sync::Arc<tokio::sync::RwLock<T>>;
 /// maintaining thread-safe access to shared resources using Tokio's async-aware locks.
 pub struct Service {
     dbg: bool,
+    exchange_data_integration_id: ExchangeDataIntegrationID,
+    exchange_id: ExchangeID,
     consumer: Guarded<MessageConsumer>,
     producer: Guarded<MessageProducer>,
     iggy_config: IggyConfig,
@@ -96,6 +99,11 @@ impl Service {
             }
         };
 
+        let exchange_data_integration_id = integration_config
+            .exchange_data_integration_id()
+            .expect("Failed to get data integration id");
+        let exchange_id = integration_config.exchange_id();
+
         dbg_print("Create Identifiers for control stream and topic");
         let stream_id = integration_config.control_channel();
         let topic_id = integration_config.control_channel();
@@ -126,6 +134,8 @@ impl Service {
         dbg_print("Create Service");
         Ok(Self {
             dbg,
+            exchange_data_integration_id,
+            exchange_id,
             consumer,
             producer,
             iggy_config: iggy_config.clone(),
@@ -139,6 +149,13 @@ impl Service {
 impl Service {
     pub fn dbg(&self) -> bool {
         self.dbg
+    }
+    pub fn exchange_data_integration_id(&self) -> ExchangeDataIntegrationID {
+        self.exchange_data_integration_id
+    }
+
+    pub fn exchange_id(&self) -> ExchangeID {
+        self.exchange_id
     }
 
     pub fn iggy_config(&self) -> &IggyConfig {

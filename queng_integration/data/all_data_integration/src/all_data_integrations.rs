@@ -2,18 +2,7 @@ use crate::all_dispatch::DataIntegration;
 use crate::binance_data_integration::BinanceDataIntegration;
 use crate::mock_data_integration::MockDataIntegration;
 use crate::vex_data_integration::VexDataIntegration;
-
-/// Enum for specifying the type of data integration
-///
-/// Data integration is used for fetching data from an exchange. The supported
-/// types of data integrations are Binance and Mock.
-#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord)]
-#[repr(u8)]
-pub enum ExchangeDataIntegration {
-    BinanceData,
-    MockData,
-    VexData,
-}
+use common_ims::ExchangeDataIntegrationID;
 
 /// Returns a `DataIntegration` instance based on the provided `ExchangeDataIntegration` enum value.
 ///
@@ -30,12 +19,14 @@ pub enum ExchangeDataIntegration {
 ///
 /// A `DataIntegration` instance corresponding to the provided `ExchangeDataIntegration` enum value.
 ///
-pub fn get_data_integration(exchange_data_integration: ExchangeDataIntegration) -> DataIntegration {
+pub fn get_data_integration(
+    exchange_data_integration: ExchangeDataIntegrationID,
+) -> DataIntegration {
     match exchange_data_integration {
-        ExchangeDataIntegration::BinanceData => {
+        ExchangeDataIntegrationID::BinanceData => {
             DataIntegration::from(BinanceDataIntegration::new())
         }
-        ExchangeDataIntegration::MockData => DataIntegration::from(MockDataIntegration::new()),
-        ExchangeDataIntegration::VexData => DataIntegration::from(VexDataIntegration::new()),
+        ExchangeDataIntegrationID::MockData => DataIntegration::from(MockDataIntegration::new()),
+        ExchangeDataIntegrationID::VexData => DataIntegration::from(VexDataIntegration::new()),
     }
 }

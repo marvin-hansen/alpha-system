@@ -1,5 +1,4 @@
 use common_config::ServiceID;
-use common_exchange::ExchangeID;
 use config_manager::CfgManager;
 use mimalloc::MiMalloc;
 use std::error::Error;
@@ -8,7 +7,6 @@ use std::error::Error;
 static GLOBAL: MiMalloc = MiMalloc;
 
 const SVC_ID: ServiceID = ServiceID::Default;
-const EXCHANGE_ID: ExchangeID = ExchangeID::Binance;
 const DBG: bool = true;
 
 #[tokio::main]
@@ -18,15 +16,9 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let iggy_config = binance_data_specs::ims_data_iggy_config();
     let cfg_manager = CfgManager::new(SVC_ID, svc_config).await;
 
-    ims_data_service::start(
-        DBG,
-        EXCHANGE_ID,
-        &integration_config,
-        &iggy_config,
-        cfg_manager,
-    )
-    .await
-    .expect("Failed to start Binance IMS Data service");
+    ims_data_service::start(DBG, &integration_config, &iggy_config, cfg_manager)
+        .await
+        .expect("Failed to start Binance IMS Data service");
 
     Ok(())
 }

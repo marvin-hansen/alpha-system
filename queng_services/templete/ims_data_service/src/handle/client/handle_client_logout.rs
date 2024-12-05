@@ -34,10 +34,14 @@ impl Service {
 
                 match self.send_client_error(client_id, client_error_type).await {
                     Ok(_) => {}
-                    Err(err) => println!(
-                        "[handle_client_logout]: ClientLogOutError: {:?}",
-                        err.to_string()
-                    ),
+                    Err(err) => {
+                        println!(
+                            "[handle_client_logout]: ClientLogOutError: {:?}",
+                            err.to_string()
+                        );
+
+                        return Err(err);
+                    }
                 }
             }
         }

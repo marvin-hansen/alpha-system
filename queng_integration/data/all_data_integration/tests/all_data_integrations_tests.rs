@@ -1,5 +1,5 @@
-use all_data_integration::ExchangeDataIntegration::{BinanceData, MockData, VexData};
 use all_data_integration::{DataIntegration, LocalDataIntegrationTrait};
+use common_ims::ExchangeDataIntegrationID::*;
 
 #[tokio::test]
 async fn test_all_data_integration_id() {

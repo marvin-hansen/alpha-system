@@ -11,6 +11,8 @@ use std::fmt::{Display, Formatter};
 /// * `DataTableNotFound` - The requested data table does not exist.
 /// * `DataSendError` - Error sending the requested data.
 /// * `DataChannelError` - Error getting the clients data channel.
+/// * `DataWrongExchangeError` - Error getting the clients data exchange.
+/// * `DataClientNotLoggedInError` - The client is not logged in.
 ///
 /// The enum variants are represented as `u8` values for serialization.
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -24,6 +26,8 @@ pub enum DataErrorType {
     DataTableNotFound = 4_u8,
     DataSendError = 5_u8,
     DataChannelError = 6_u8,
+    DataWrongExchangeError = 7_u8,
+    DataClientNotLoggedInError = 8_u8,
 }
 
 impl From<u8> for DataErrorType {
@@ -38,6 +42,8 @@ impl From<u8> for DataErrorType {
     /// * 4 -> `DataTableNotFound`
     /// * 5 -> `DataSendError`
     /// * 6 -> `DataChannelError`
+    /// * 7 -> `DataWrongExchangeError`
+    /// * 8 -> `DataClientNotLoggedInError`
     ///
     /// Any other `u8` value maps to `UnknownDataError`.
     ///
@@ -52,6 +58,8 @@ impl From<u8> for DataErrorType {
             4_u8 => Self::DataTableNotFound,
             5_u8 => Self::DataSendError,
             6_u8 => Self::DataChannelError,
+            7_u8 => Self::DataWrongExchangeError,
+            8_u8 => Self::DataClientNotLoggedInError,
             _ => Self::UnknownDataError,
         }
     }

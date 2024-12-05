@@ -1,5 +1,4 @@
 use crate::service::Service;
-use common_exchange::ExchangeID;
 use common_ims::IggyConfig;
 use common_ims::IntegrationConfig;
 use common_service::print_utils;
@@ -10,6 +9,7 @@ use smdb_client::SMDBClient;
 use tokio::time::Instant;
 
 mod auth;
+mod data;
 mod handle;
 mod health_check;
 mod run;
@@ -19,12 +19,14 @@ mod utils;
 
 pub async fn start(
     dbg: bool,
-    exchange_id: ExchangeID,
     integration_config: &IntegrationConfig,
     iggy_config: &IggyConfig,
     cfg_manager: CfgManager,
 ) -> Result<(), Box<dyn std::error::Error>> {
-    let svc_name = &format!("IMS {exchange_id} Data Service");
+    let data_integration = integration_config
+        .exchange_data_integration_id()
+        .expect("Failed to get data integration id");
+    let svc_name = &format!("IMS {data_integration} Service");
     let dbg_print = |msg: &str| {
         if dbg {
             println!("[{svc_name}]: {msg}");

@@ -1,7 +1,10 @@
 use crate::service::Service;
 use common_errors::MessageProcessingError;
 use iggy::models::messages::PolledMessage;
-use sbe_messages::{ClientLoginMessage, ClientLogoutMessage, MessageType};
+use sbe_messages::{
+    ClientLoginMessage, ClientLogoutMessage, MessageType, StartDataMessage, StopAllDataMessage,
+    StopDataMessage,
+};
 
 impl Service {
     /// Handles a single message by processing it and sending it to the appropriate
@@ -38,15 +41,18 @@ impl Service {
                 self.handle_client_logout(&client_logout_msg).await
             }
             MessageType::StartData => {
-                todo!()
+                let start_data_msg = StartDataMessage::from(raw_message);
+                self.handle_start_data(&start_data_msg).await
             }
 
             MessageType::StopData => {
-                todo!()
+                let stop_data_msg = StopDataMessage::from(raw_message);
+                self.handle_stop_data(&stop_data_msg).await
             }
 
             MessageType::StopAllData => {
-                todo!()
+                let stop_all_data_msg = StopAllDataMessage::from(raw_message);
+                self.handle_stop_all_data(&stop_all_data_msg).await
             }
 
             _ => Err(MessageProcessingError(

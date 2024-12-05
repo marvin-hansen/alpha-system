@@ -1,5 +1,5 @@
-use all_data_integration::ExchangeDataIntegration::MockData;
 use all_data_integration::{DataIntegration, LocalDataIntegrationTrait};
+use common_ims::ExchangeDataIntegrationID::*;
 use std::fmt::Error;
 use std::future::Future;
 use trait_data_integration::EventProcessor;

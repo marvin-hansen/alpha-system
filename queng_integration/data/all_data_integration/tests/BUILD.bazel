@@ -15,8 +15,8 @@ rust_test_suite(
         # Crate to test
         "//alias:all_data_integration",
         # Internal crates
+        "//alias:common_ims",
         "//alias:trait_data_integration",
-
         # External crates
         "//thirdparty/crates:tokio",
     ],

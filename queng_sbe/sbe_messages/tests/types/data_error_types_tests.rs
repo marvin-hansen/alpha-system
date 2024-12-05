@@ -9,7 +9,15 @@ fn test_from_u8() {
     assert_eq!(DataErrorType::from(4), DataErrorType::DataTableNotFound);
     assert_eq!(DataErrorType::from(5), DataErrorType::DataSendError);
     assert_eq!(DataErrorType::from(6), DataErrorType::DataChannelError);
-    assert_eq!(DataErrorType::from(7), DataErrorType::UnknownDataError);
+    assert_eq!(
+        DataErrorType::from(7),
+        DataErrorType::DataWrongExchangeError
+    );
+    assert_eq!(
+        DataErrorType::from(8),
+        DataErrorType::DataClientNotLoggedInError
+    );
+    assert_eq!(DataErrorType::from(42), DataErrorType::UnknownDataError);
 }
 
 #[test]

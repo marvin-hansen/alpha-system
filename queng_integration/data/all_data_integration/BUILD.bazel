@@ -17,6 +17,7 @@ rust_library(
     visibility = ["//visibility:public"],
     deps = [
         # Internal crates
+        "//alias:common_ims",
         "//alias:binance_data_integration",
         "//alias:mock_data_integration",
         "//alias:vex_data_integration",

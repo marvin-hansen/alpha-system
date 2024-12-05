@@ -1,0 +1,56 @@
+use crate::service::Service;
+use common_errors::MessageProcessingError;
+use common_exchange::ExchangeID;
+use sbe_messages::DataErrorType;
+
+impl Service {
+    pub async fn verify_data_request(
+        &self,
+        client_id: u16,
+        exchange_id: &ExchangeID,
+    ) -> Result<(), (DataErrorType, MessageProcessingError)> {
+        self.dbg_print(&format!(
+            "Checking if client with id {} is logged in",
+            client_id
+        ));
+        let exists = match self.check_client_login(client_id).await {
+            Ok(exists) => exists,
+            Err(e) => return Err((DataErrorType::UnknownDataError, e)),
+        };
+
+        if !exists {
+            return Err((
+                DataErrorType::DataClientNotLoggedInError,
+                MessageProcessingError(format!("Client with id {} is not logged in", client_id)),
+            ));
+        }
+
+        self.dbg_print(&format!(
+            "Checking if Exchange with id {} is correct",
+            exchange_id
+        ));
+
+        match self.verify_exchange_id(exchange_id) {
+            true => {}
+            false => {
+                return Err(
+                    (
+                        DataErrorType::DataWrongExchangeError,
+                        MessageProcessingError(format!(
+                            "Client with id {} has requested to stop data from the wrong exchange. \
+                    The client requested exchange id: {}; however this service connects to correct exchange: {}",
+                            client_id,
+                            exchange_id,
+                            self.exchange_id()
+                        ))
+                    ));
+            }
+        };
+
+        Ok(())
+    }
+
+    pub(crate) fn verify_exchange_id(&self, exchange_id: &ExchangeID) -> bool {
+        self.exchange_id() == *exchange_id
+    }
+}

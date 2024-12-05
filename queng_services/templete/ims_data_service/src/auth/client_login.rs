@@ -60,21 +60,7 @@ impl Service {
             client_id
         ));
 
-        let allowed = match self.check_client_login(client_id).await {
-            Ok(allowed) => allowed,
-            Err(err) => {
-                return Err((
-                    ClientErrorType::ClientLogInError,
-                    MessageProcessingError(format!(
-                    "Failed to check if client with id {} is allowed to log in due to error: { }",
-                    client_id,
-                    err
-                )),
-                ))
-            }
-        };
-
-        if !allowed {
+        if !self.check_client_allowed(client_id) {
             return Err((
                 ClientErrorType::ClientNotAuthorized,
                 MessageProcessingError(format!(
