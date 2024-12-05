@@ -4,6 +4,12 @@ use trait_data_integration::{EventProcessor, ImsDataIntegration};
 #[derive(Debug, Clone, Copy)]
 pub struct ImsMockDataIntegration;
 
+impl Default for ImsMockDataIntegration {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl ImsMockDataIntegration {
     pub fn new() -> Self {
         Self {}

@@ -10,6 +10,12 @@ pub struct VexDataIntegration {
     integration: ImsVexDataIntegration,
 }
 
+impl Default for VexDataIntegration {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl VexDataIntegration {
     pub fn new() -> Self {
         let integration = ImsVexDataIntegration::new();

@@ -4,7 +4,6 @@ use docker_utils::DockerUtil;
 use service_utils::ServiceUtil;
 use std::time::Duration;
 use tokio::time::sleep;
-use wait_utils;
 use wait_utils::WaitStrategy::WaitForDuration;
 
 // Somehow tests seem to be executed or sorted in alphabetical order,

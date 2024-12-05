@@ -10,6 +10,12 @@ pub struct MockDataIntegration {
     integration: ImsMockDataIntegration,
 }
 
+impl Default for MockDataIntegration {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl MockDataIntegration {
     pub fn new() -> Self {
         let mock_data_integration = ImsMockDataIntegration::new();

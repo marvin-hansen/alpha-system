@@ -4,6 +4,12 @@ use trait_data_integration::{EventProcessor, ImsDataIntegration};
 #[derive(Debug, Clone, Copy)]
 pub struct ImsBinanceDataIntegration;
 
+impl Default for ImsBinanceDataIntegration {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl ImsBinanceDataIntegration {
     pub fn new() -> Self {
         Self {}

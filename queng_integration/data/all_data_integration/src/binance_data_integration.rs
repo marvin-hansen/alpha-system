@@ -10,6 +10,12 @@ pub struct BinanceDataIntegration {
     integration: ImsBinanceDataIntegration,
 }
 
+impl Default for BinanceDataIntegration {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl BinanceDataIntegration {
     pub fn new() -> Self {
         let binance_data_integration = ImsBinanceDataIntegration::new();
