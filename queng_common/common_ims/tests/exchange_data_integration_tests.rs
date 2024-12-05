@@ -47,7 +47,7 @@ fn test_ord_trait() {
 #[test]
 fn test_clone_trait() {
     let original = ExchangeDataIntegrationID::BinanceData;
-    let cloned = original.clone();
+    let cloned = original;
     assert_eq!(original, cloned);
 }
 

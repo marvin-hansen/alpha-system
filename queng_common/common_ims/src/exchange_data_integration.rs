@@ -25,9 +25,9 @@ impl From<u8> for ExchangeDataIntegrationID {
     }
 }
 
-impl Into<u8> for ExchangeDataIntegrationID {
-    fn into(self) -> u8 {
-        self as u8
+impl From<ExchangeDataIntegrationID> for u8 {
+    fn from(val: ExchangeDataIntegrationID) -> Self {
+        val as u8
     }
 }
 
@@ -42,9 +42,9 @@ impl From<u16> for ExchangeDataIntegrationID {
     }
 }
 
-impl Into<u16> for ExchangeDataIntegrationID {
-    fn into(self) -> u16 {
-        self as u16
+impl From<ExchangeDataIntegrationID> for u16 {
+    fn from(val: ExchangeDataIntegrationID) -> Self {
+        val as u16
     }
 }
 
@@ -59,8 +59,8 @@ impl From<u32> for ExchangeDataIntegrationID {
     }
 }
 
-impl Into<u32> for ExchangeDataIntegrationID {
-    fn into(self) -> u32 {
-        self as u32
+impl From<ExchangeDataIntegrationID> for u32 {
+    fn from(val: ExchangeDataIntegrationID) -> Self {
+        val as u32
     }
 }

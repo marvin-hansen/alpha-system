@@ -24,13 +24,13 @@ impl Service {
             Ok(_) => {}
             Err((error_type, err)) => {
                 // Print error
-                println!("[handle_start_data]: StartDataError: {}", err.to_string());
+                println!("[handle_start_data]: StartDataError: {}", err);
 
                 // Send error message to client
                 match self.send_data_error(client_id, error_type).await {
                     Ok(_) => {}
                     Err(e) => {
-                        println!("[handle_start_data]: SendDataError: {}", e.to_string());
+                        println!("[handle_start_data]: SendDataError: {}", e);
                         return Err(e);
                     }
                 }
