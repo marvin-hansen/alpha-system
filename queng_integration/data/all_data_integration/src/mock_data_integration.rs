@@ -1,25 +1,25 @@
 use crate::DataIntegrationTrait;
-use binance_data_integration::ImsBinanceDataIntegration;
+use mock_data_integration::ImsMockDataIntegration;
 use std::fmt::Error;
 use trait_data_integration::{EventProcessor, ImsDataIntegration};
 
-const ID: &str = "BinanceDataIntegration";
+const ID: &str = "MockDataIntegration";
 
 #[derive(Debug, Clone, Copy)]
-pub struct BinanceDataIntegration {
-    integration: ImsBinanceDataIntegration,
+pub struct MockDataIntegration {
+    integration: ImsMockDataIntegration,
 }
 
-impl BinanceDataIntegration {
+impl MockDataIntegration {
     pub fn new() -> Self {
-        let binance_data_integration = ImsBinanceDataIntegration::new();
+        let mock_data_integration = ImsMockDataIntegration::new();
         Self {
-            integration: binance_data_integration,
+            integration: mock_data_integration,
         }
     }
 }
 
-impl DataIntegrationTrait for BinanceDataIntegration {
+impl DataIntegrationTrait for MockDataIntegration {
     async fn id(&self) -> Result<String, Error> {
         Ok(ID.to_string())
     }

@@ -1,5 +1,5 @@
 [package]
-name = "all_data_integration"
+name = "vex_data_integration"
 version = "0.1.0"
 edition.workspace = true
 rust-version.workspace = true
@@ -14,11 +14,6 @@ workspace = true
 
 [dependencies]
 # Internal crates
-binance_data_integration = {workspace = true}
-mock_data_integration = {workspace = true}
-vex_data_integration = {workspace = true}
 trait_data_integration = {workspace = true}
 # External crates
-enum_dispatch = {workspace = true}
-trait-variant  = {workspace = true}
 tokio = {workspace = true}

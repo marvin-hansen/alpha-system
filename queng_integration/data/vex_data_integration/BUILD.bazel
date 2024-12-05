@@ -1,25 +1,18 @@
 load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library")
 
 rust_library(
-    name = "all_data_integration",
+    name = "vex_data_integration",
     srcs = glob([
         "src/**",
     ]),
     crate_root = "src/lib.rs",
-    proc_macro_deps = [
-        "//thirdparty/crates:enum_dispatch",
-        "//thirdparty/crates:trait-variant",
-    ],
     tags = [
-        "all_data_integration",
         "data_integration",
+        "vex_data_integration",
     ],
     visibility = ["//visibility:public"],
     deps = [
         # Internal crates
-        "//alias:binance_data_integration",
-        "//alias:mock_data_integration",
-        "//alias:vex_data_integration",
         "//alias:trait_data_integration",
         # External crates
         "//thirdparty/crates:tokio",
@@ -28,14 +21,14 @@ rust_library(
 
 rust_doc(
     name = "doc",
-    crate = ":all_data_integration",
+    crate = ":vex_data_integration",
     tags = ["doc"],
     visibility = ["//visibility:public"],
 )
 
 rust_doc_test(
     name = "doc_test",
-    crate = ":all_data_integration",
+    crate = ":vex_data_integration",
     tags = ["doc-test"],
     visibility = ["//visibility:public"],
 )

@@ -1,36 +1,45 @@
 use std::fmt::Error;
-use trait_data_integration::{ImsDataIntegration, StreamProcessor};
+use trait_data_integration::{EventProcessor, ImsDataIntegration};
 
-pub struct MockDataIntegration;
+#[derive(Debug, Clone, Copy)]
+pub struct ImsMockDataIntegration;
 
-impl ImsDataIntegration for MockDataIntegration {
-    async fn start_trade_date<P>(&self, symbols: &[String], processor: P) -> Result<(), Error>
+impl ImsMockDataIntegration {
+    pub fn new() -> Self {
+        Self {}
+    }
+}
+
+impl ImsDataIntegration for ImsMockDataIntegration {
+    async fn start_date<P>(&self, symbols: &[String], processor: P) -> Result<(), Error>
     where
-        P: StreamProcessor + Send + Sync + 'static,
+        P: EventProcessor + Send + Sync + 'static,
     {
-        println!("start_trade_date for symbols: {:?}", symbols);
-
-        // generate 100 strings, send them to the processor,
-        // and async wait for 5 ms before sending the next one.
-        for _ in 0..100 {
-            match processor.process(&[Vec::from("test".to_string())]).await {
+        println!("MockDataIntegration start_date");
+        println!("Start data for symbols: {:#?}", symbols);
+        // Iterate a 100 times to simulate data ingestion;
+        // for each iteration call the processor to process the data
+        // Then wait 5 ms async to simulate some processing
+        for i in 0..100 {
+            let s = format!("test {}", i);
+            match processor.process(&[s.as_bytes().to_vec()]).await {
                 Ok(_) => {}
-                Err(e) => println!("Error processing data: {}", e),
+                Err(e) => return Err(e),
             };
-            tokio::time::sleep(std::time::Duration::from_millis(5)).await;
+            tokio::time::sleep(tokio::time::Duration::from_millis(5)).await;
         }
 
         Ok(())
     }
 
-    async fn stop_trade_date(&self, symbols: &[String]) -> Result<(), Error> {
-        println!("stop_trade_date for symbols: {:?}", symbols);
-
+    async fn stop_date(&self, symbols: &[String]) -> Result<(), Error> {
+        println!("MockDataIntegration stop_date");
+        println!("Stop data for symbols: {:#?}", symbols);
         Ok(())
     }
 
-    async fn stop_all_trade_date(&self) -> Result<(), Error> {
-        println!("stop_all_trade_date");
+    async fn stop_all_date(&self) -> Result<(), Error> {
+        println!("MockDataIntegration stop_all_date");
 
         Ok(())
     }

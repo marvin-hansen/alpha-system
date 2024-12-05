@@ -1,25 +1,23 @@
 use crate::DataIntegrationTrait;
-use binance_data_integration::ImsBinanceDataIntegration;
 use std::fmt::Error;
 use trait_data_integration::{EventProcessor, ImsDataIntegration};
+use vex_data_integration::ImsVexDataIntegration;
 
-const ID: &str = "BinanceDataIntegration";
+const ID: &str = "VexDataIntegration";
 
 #[derive(Debug, Clone, Copy)]
-pub struct BinanceDataIntegration {
-    integration: ImsBinanceDataIntegration,
+pub struct VexDataIntegration {
+    integration: ImsVexDataIntegration,
 }
 
-impl BinanceDataIntegration {
+impl VexDataIntegration {
     pub fn new() -> Self {
-        let binance_data_integration = ImsBinanceDataIntegration::new();
-        Self {
-            integration: binance_data_integration,
-        }
+        let integration = ImsVexDataIntegration::new();
+        Self { integration }
     }
 }
 
-impl DataIntegrationTrait for BinanceDataIntegration {
+impl DataIntegrationTrait for VexDataIntegration {
     async fn id(&self) -> Result<String, Error> {
         Ok(ID.to_string())
     }
