@@ -25,6 +25,8 @@ impl ImsDataIntegration for ImsBinanceDataIntegration {
     where
         P: EventProcessor + Send + Sync + 'static,
     {
+        // https://github.com/barter-rs/barter-rs/blob/develop/barter-data/examples/dynamic_multi_stream_multi_exchange.rs
+
         Ok(())
     }
 

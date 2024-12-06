@@ -20,4 +20,5 @@ sbe_messages = {workspace = true}
 trait_data_integration = {workspace = true}
 
 # External crates
+barter-data = {workspace = true}
 tokio = {workspace = true}
