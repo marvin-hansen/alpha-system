@@ -89,7 +89,7 @@ rust_library(
         "//thirdparty/crates/indexmap-2.7.0:indexmap",
         "//thirdparty/crates/slab-0.4.9:slab",
         "//thirdparty/crates/tokio-1.42.0:tokio",
-        "//thirdparty/crates/tokio-util-0.7.12:tokio_util",
+        "//thirdparty/crates/tokio-util-0.7.13:tokio_util",
         "//thirdparty/crates/tracing-0.1.41:tracing",
     ],
 )

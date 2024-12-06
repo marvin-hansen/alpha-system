@@ -105,7 +105,7 @@ rust_library(
         "//thirdparty/crates/serde_urlencoded-0.7.1:serde_urlencoded",
         "//thirdparty/crates/tokio-1.42.0:tokio",
         "//thirdparty/crates/tokio-tungstenite-0.21.0:tokio_tungstenite",
-        "//thirdparty/crates/tokio-util-0.7.12:tokio_util",
+        "//thirdparty/crates/tokio-util-0.7.13:tokio_util",
         "//thirdparty/crates/tower-service-0.3.3:tower_service",
         "//thirdparty/crates/tracing-0.1.41:tracing",
     ],

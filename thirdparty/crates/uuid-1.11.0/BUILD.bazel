@@ -93,6 +93,6 @@ rust_library(
         "//thirdparty/crates/getrandom-0.2.15:getrandom",
         "//thirdparty/crates/rand-0.8.5:rand",
         "//thirdparty/crates/serde-1.0.215:serde",
-        "//thirdparty/crates/zerocopy-0.8.12:zerocopy",
+        "//thirdparty/crates/zerocopy-0.8.13:zerocopy",
     ],
 )
