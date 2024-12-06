@@ -43,12 +43,6 @@ alias(
 )
 
 alias(
-    name = "barter-data",
-    actual = "//thirdparty/crates/barter-data-0.9.0:barter_data",
-    tags = ["manual"],
-)
-
-alias(
     name = "base16ct",
     actual = "//thirdparty/crates/base16ct-0.2.0:base16ct",
     tags = ["manual"],

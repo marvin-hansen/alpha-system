@@ -33,7 +33,6 @@ rust_library(
     ),
     crate_features = [
         "http1",
-        "http2",
         "ring",
         "tls12",
         "webpki-roots",
