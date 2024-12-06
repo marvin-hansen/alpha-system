@@ -1,4 +1,5 @@
-use std::fmt::Error;
+use common_errors::MessageProcessingError;
+use std::sync::Arc;
 use trait_data_integration::{EventProcessor, ImsDataIntegration};
 
 #[derive(Debug, Clone, Copy)]
@@ -17,7 +18,11 @@ impl ImsMockDataIntegration {
 }
 
 impl ImsDataIntegration for ImsMockDataIntegration {
-    async fn start_trade_data<P>(&self, symbols: &[String], processor: P) -> Result<(), Error>
+    async fn start_trade_data<P>(
+        &self,
+        symbols: &[String],
+        processor: Arc<P>,
+    ) -> Result<(), MessageProcessingError>
     where
         P: EventProcessor + Send + Sync + 'static,
     {
@@ -38,13 +43,17 @@ impl ImsDataIntegration for ImsMockDataIntegration {
         Ok(())
     }
 
-    async fn stop_all_trade_data(&self) -> Result<(), Error> {
+    async fn stop_all_trade_data(&self) -> Result<(), MessageProcessingError> {
         println!("MockDataIntegration stop_all_data");
 
         Ok(())
     }
 
-    async fn start_ohlcv_data<P>(&self, symbols: &[String], _processor: P) -> Result<(), Error>
+    async fn start_ohlcv_data<P>(
+        &self,
+        symbols: &[String],
+        _processor: Arc<P>,
+    ) -> Result<(), MessageProcessingError>
     where
         P: EventProcessor + Send + Sync + 'static,
     {
@@ -53,7 +62,7 @@ impl ImsDataIntegration for ImsMockDataIntegration {
         Ok(())
     }
 
-    async fn stop_all_ohlcv_data(&self) -> Result<(), Error> {
+    async fn stop_all_ohlcv_data(&self) -> Result<(), MessageProcessingError> {
         println!("MockDataIntegration stop_all_data");
 
         Ok(())

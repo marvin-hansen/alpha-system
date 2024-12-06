@@ -5,7 +5,7 @@ use std::fmt::{Display, Formatter};
 pub enum ExchangeDataIntegrationID {
     BinanceData = 0,
     MockData = 1,
-    VexData = 2,
+    // VexData = 2,
 }
 
 impl Display for ExchangeDataIntegrationID {
@@ -19,7 +19,7 @@ impl From<u8> for ExchangeDataIntegrationID {
         match value {
             0 => ExchangeDataIntegrationID::BinanceData,
             1 => ExchangeDataIntegrationID::MockData,
-            2 => ExchangeDataIntegrationID::VexData,
+            // 2 => ExchangeDataIntegrationID::VexData,
             _ => panic!("Invalid exchange data integration"),
         }
     }
@@ -36,7 +36,7 @@ impl From<u16> for ExchangeDataIntegrationID {
         match value {
             0 => ExchangeDataIntegrationID::BinanceData,
             1 => ExchangeDataIntegrationID::MockData,
-            2 => ExchangeDataIntegrationID::VexData,
+            // 2 => ExchangeDataIntegrationID::VexData,
             _ => panic!("Invalid exchange data integration"),
         }
     }
@@ -53,7 +53,7 @@ impl From<u32> for ExchangeDataIntegrationID {
         match value {
             0 => ExchangeDataIntegrationID::BinanceData,
             1 => ExchangeDataIntegrationID::MockData,
-            2 => ExchangeDataIntegrationID::VexData,
+            // 2 => ExchangeDataIntegrationID::VexData,
             _ => panic!("Invalid exchange data integration"),
         }
     }

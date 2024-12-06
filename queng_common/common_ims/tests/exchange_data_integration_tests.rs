@@ -4,7 +4,7 @@ use common_ims::ExchangeDataIntegrationID;
 fn test_enum_values() {
     assert_eq!(ExchangeDataIntegrationID::BinanceData as u8, 0);
     assert_eq!(ExchangeDataIntegrationID::MockData as u8, 1);
-    assert_eq!(ExchangeDataIntegrationID::VexData as u8, 2);
+    // assert_eq!(ExchangeDataIntegrationID::VexData as u8, 2);
 }
 
 #[test]
@@ -17,7 +17,7 @@ fn test_display_trait() {
         format!("{}", ExchangeDataIntegrationID::MockData),
         "MockData"
     );
-    assert_eq!(format!("{}", ExchangeDataIntegrationID::VexData), "VexData");
+    // assert_eq!(format!("{}", ExchangeDataIntegrationID::VexData), "VexData");
 }
 
 #[test]
@@ -68,8 +68,8 @@ fn test_debug_trait() {
         format!("{:?}", ExchangeDataIntegrationID::MockData),
         "MockData"
     );
-    assert_eq!(
-        format!("{:?}", ExchangeDataIntegrationID::VexData),
-        "VexData"
-    );
+    // assert_eq!(
+    //     format!("{:?}", ExchangeDataIntegrationID::VexData),
+    //     "VexData"
+    // );
 }

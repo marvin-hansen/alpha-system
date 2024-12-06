@@ -219,6 +219,10 @@ crates_vendor(
             package = "tonic-health",
             version = "0.12.3",
         ),
+        "url": crate.spec(
+            package = "url",
+            version = "2.5.4",
+        ),
         "warp": crate.spec(
             package = "warp",
             version = "0.3.7",

@@ -1,7 +1,8 @@
 use all_data_integration::{DataIntegration, LocalDataIntegrationTrait};
+use common_errors::MessageProcessingError;
 use common_ims::ExchangeDataIntegrationID::*;
-use std::fmt::Error;
 use std::future::Future;
+use std::sync::Arc;
 use trait_data_integration::EventProcessor;
 
 #[tokio::test]
@@ -47,7 +48,10 @@ impl PrintEventProcessor {
 }
 
 impl EventProcessor for PrintEventProcessor {
-    fn process(&self, data: &[Vec<u8>]) -> impl Future<Output = Result<(), Error>> + Send {
+    fn process(
+        &self,
+        data: &[Vec<u8>],
+    ) -> impl Future<Output = Result<(), MessageProcessingError>> + Send {
         println!("data len: {}", data.len());
         let data = data.first().unwrap();
         println!("data first value: {:?}", String::from_utf8(data.to_owned()));
@@ -58,29 +62,29 @@ impl EventProcessor for PrintEventProcessor {
 async fn call_data_integration_start_trade_data(
     data_integration: DataIntegration,
     symbols: &[String],
-) -> Result<(), Error> {
-    let p = PrintEventProcessor::new();
+) -> Result<(), MessageProcessingError> {
+    let p = Arc::new(PrintEventProcessor::new());
 
     data_integration.start_trade_data(symbols, p).await
 }
 
 async fn call_data_integration_stop_all_trade_data(
     data_integration: DataIntegration,
-) -> Result<(), Error> {
+) -> Result<(), MessageProcessingError> {
     data_integration.stop_all_trade_data().await
 }
 
 async fn call_data_integration_start_ohlcv_data(
     data_integration: DataIntegration,
     symbols: &[String],
-) -> Result<(), Error> {
-    let p = PrintEventProcessor::new();
+) -> Result<(), MessageProcessingError> {
+    let p = Arc::new(PrintEventProcessor::new());
 
     data_integration.start_ohlcv_data(symbols, p).await
 }
 
 async fn call_data_integration_stop_all_ohlcv_data(
     data_integration: DataIntegration,
-) -> Result<(), Error> {
+) -> Result<(), MessageProcessingError> {
     data_integration.stop_all_trade_data().await
 }

@@ -1,7 +1,6 @@
 use crate::all_dispatch::DataIntegration;
 use crate::binance_data_integration::BinanceDataIntegration;
 use crate::mock_data_integration::MockDataIntegration;
-use crate::vex_data_integration::VexDataIntegration;
 use common_ims::ExchangeDataIntegrationID;
 
 /// Returns a `DataIntegration` instance based on the provided `ExchangeDataIntegration` enum value.
@@ -27,6 +26,5 @@ pub fn get_data_integration(
             DataIntegration::from(BinanceDataIntegration::new())
         }
         ExchangeDataIntegrationID::MockData => DataIntegration::from(MockDataIntegration::new()),
-        ExchangeDataIntegrationID::VexData => DataIntegration::from(VexDataIntegration::new()),
     }
 }
