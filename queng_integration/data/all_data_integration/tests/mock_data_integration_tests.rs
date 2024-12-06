@@ -5,27 +5,35 @@ use std::future::Future;
 use trait_data_integration::EventProcessor;
 
 #[tokio::test]
-async fn test_mock_integration_start_data() {
+async fn test_mock_integration_start_trade_data() {
     let mock_data: DataIntegration = all_data_integration::get_data_integration(MockData);
     let symbols = ["BTCUSDT".to_string()];
-    let res = call_data_integration_start_data(mock_data, &symbols).await;
+    let res = call_data_integration_start_trade_data(mock_data, &symbols).await;
     dbg!(&res);
     assert!(res.is_ok());
 }
 
 #[tokio::test]
-async fn test_mock_integration_stop_data() {
+async fn test_mock_integration_stop_all_trade_data() {
     let mock_data: DataIntegration = all_data_integration::get_data_integration(MockData);
-    let symbols = ["BTCUSDT".to_string()];
-    let res = call_data_integration_stop_data(mock_data, &symbols).await;
+    let res = call_data_integration_stop_all_trade_data(mock_data).await;
     dbg!(&res);
     assert!(res.is_ok());
 }
 
 #[tokio::test]
-async fn test_mock_integration_stop_all_data() {
+async fn test_mock_integration_start_ohlcv_data() {
     let mock_data: DataIntegration = all_data_integration::get_data_integration(MockData);
-    let res = call_data_integration_stop_all_data(mock_data).await;
+    let symbols = ["BTCUSDT".to_string()];
+    let res = call_data_integration_start_ohlcv_data(mock_data, &symbols).await;
+    dbg!(&res);
+    assert!(res.is_ok());
+}
+
+#[tokio::test]
+async fn test_mock_integration_stop_all_ohlcv_data() {
+    let mock_data: DataIntegration = all_data_integration::get_data_integration(MockData);
+    let res = call_data_integration_stop_all_ohlcv_data(mock_data).await;
     dbg!(&res);
     assert!(res.is_ok());
 }
@@ -47,24 +55,32 @@ impl EventProcessor for PrintEventProcessor {
     }
 }
 
-async fn call_data_integration_start_data(
+async fn call_data_integration_start_trade_data(
     data_integration: DataIntegration,
     symbols: &[String],
 ) -> Result<(), Error> {
     let p = PrintEventProcessor::new();
 
-    data_integration.start_date(symbols, p).await
+    data_integration.start_trade_data(symbols, p).await
 }
 
-async fn call_data_integration_stop_data(
+async fn call_data_integration_stop_all_trade_data(
+    data_integration: DataIntegration,
+) -> Result<(), Error> {
+    data_integration.stop_all_trade_data().await
+}
+
+async fn call_data_integration_start_ohlcv_data(
     data_integration: DataIntegration,
     symbols: &[String],
 ) -> Result<(), Error> {
-    data_integration.stop_date(symbols).await
+    let p = PrintEventProcessor::new();
+
+    data_integration.start_ohlcv_data(symbols, p).await
 }
 
-async fn call_data_integration_stop_all_data(
+async fn call_data_integration_stop_all_ohlcv_data(
     data_integration: DataIntegration,
 ) -> Result<(), Error> {
-    data_integration.stop_all_date().await
+    data_integration.stop_all_trade_data().await
 }

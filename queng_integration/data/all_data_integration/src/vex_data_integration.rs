@@ -22,18 +22,25 @@ impl DataIntegrationTrait for VexDataIntegration {
         Ok(ID.to_string())
     }
 
-    async fn start_date<P>(&self, symbols: &[String], processor: P) -> Result<(), Error>
+    async fn start_trade_data<P>(&self, symbols: &[String], processor: P) -> Result<(), Error>
     where
         P: EventProcessor + Send + Sync + 'static,
     {
-        self.integration.start_date(symbols, processor).await
+        self.integration.start_trade_data(symbols, processor).await
     }
 
-    async fn stop_date(&self, symbols: &[String]) -> Result<(), Error> {
-        self.integration.stop_date(symbols).await
+    async fn stop_all_trade_data(&self) -> Result<(), Error> {
+        self.integration.stop_all_trade_data().await
     }
 
-    async fn stop_all_date(&self) -> Result<(), Error> {
-        self.integration.stop_all_date().await
+    async fn start_ohlcv_data<P>(&self, symbols: &[String], processor: P) -> Result<(), Error>
+    where
+        P: EventProcessor + Send + Sync + 'static,
+    {
+        self.integration.start_ohlcv_data(symbols, processor).await
+    }
+
+    async fn stop_all_ohlcv_data(&self) -> Result<(), Error> {
+        self.integration.stop_all_ohlcv_data().await
     }
 }

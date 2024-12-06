@@ -17,18 +17,33 @@ impl ImsBinanceDataIntegration {
 }
 
 impl ImsDataIntegration for ImsBinanceDataIntegration {
-    async fn start_date<P>(&self, _symbols: &[String], _processor: P) -> Result<(), Error>
+    async fn start_trade_data<P>(&self, symbols: &[String], _processor: P) -> Result<(), Error>
     where
         P: EventProcessor + Send + Sync + 'static,
     {
+        println!("ImsBinanceDataIntegration start_trade_data");
+        println!("Start data for symbols: {:#?}", symbols);
         Ok(())
     }
 
-    async fn stop_date(&self, _symbols: &[String]) -> Result<(), Error> {
+    async fn stop_all_trade_data(&self) -> Result<(), Error> {
+        println!("ImsBinanceDataIntegration stop_all_data");
+
         Ok(())
     }
 
-    async fn stop_all_date(&self) -> Result<(), Error> {
+    async fn start_ohlcv_data<P>(&self, symbols: &[String], _processor: P) -> Result<(), Error>
+    where
+        P: EventProcessor + Send + Sync + 'static,
+    {
+        println!("ImsBinanceDataIntegration start_trade_data");
+        println!("Start data for symbols: {:#?}", symbols);
+        Ok(())
+    }
+
+    async fn stop_all_ohlcv_data(&self) -> Result<(), Error> {
+        println!("ImsBinanceDataIntegration stop_all_data");
+
         Ok(())
     }
 }
