@@ -185,7 +185,19 @@ impl ImsDataIntegration for ImsBinanceDataIntegration {
 
                 while let Some(Ok(msg)) = read.next().await {
                     if let Message::Text(text) = msg {
+                        // {
+                        //   "e": "trade",       // Event type
+                        //   "E": 1672515782136, // Event time
+                        //   "s": "BNBBTC",      // Symbol
+                        //   "t": 12345,         // Trade ID
+                        //   "p": "0.001",       // Price
+                        //   "q": "100",         // Quantity
+                        //   "T": 1672515782136, // Trade time
+                        //   "m": true,          // Is the buyer the market maker?
+                        //   "M": true           // Ignore
+                        // }
                         let data = text.as_bytes().to_vec();
+
                         if let Err(e) = processor.process(&[data]).await {
                             eprintln!("Error processing trade data: {}", e);
                             break;

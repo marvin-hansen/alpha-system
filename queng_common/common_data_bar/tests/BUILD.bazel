@@ -36,6 +36,25 @@ rust_test_suite(
 )
 
 rust_test_suite(
+    name = "trade_tests",
+    srcs = glob([
+        "trade_tests.rs",
+    ]),
+    tags = [
+        "common",
+        "unit-test",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        "//alias:common_data_bar",
+        # External crates
+        "//thirdparty/crates:chrono",
+        "//thirdparty/crates:rust_decimal",
+    ],
+)
+
+rust_test_suite(
     name = "trade_bar_tests",
     srcs = glob([
         "trade_bar_tests.rs",
