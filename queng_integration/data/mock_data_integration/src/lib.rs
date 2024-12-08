@@ -2,14 +2,8 @@ use common_errors::MessageProcessingError;
 use std::sync::Arc;
 use trait_data_integration::{EventProcessor, ImsDataIntegration};
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Default, Clone, Copy)]
 pub struct ImsMockDataIntegration;
-
-impl Default for ImsMockDataIntegration {
-    fn default() -> Self {
-        Self::new()
-    }
-}
 
 impl ImsMockDataIntegration {
     pub fn new() -> Self {
