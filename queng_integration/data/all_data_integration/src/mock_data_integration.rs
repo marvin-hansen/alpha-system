@@ -7,6 +7,7 @@ use trait_data_integration::{EventProcessor, ImsDataIntegration};
 
 const ID: &str = "MockDataIntegration";
 
+#[derive(Default)]
 pub struct MockDataIntegration {
     integration: ImsMockDataIntegration,
 }

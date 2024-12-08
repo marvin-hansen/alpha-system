@@ -7,6 +7,7 @@ use trait_data_integration::{EventProcessor, ImsDataIntegration};
 
 const ID: &str = "BinanceDataIntegration";
 
+#[derive(Default)]
 pub struct BinanceDataIntegration {
     integration: ImsBinanceDataIntegration,
 }

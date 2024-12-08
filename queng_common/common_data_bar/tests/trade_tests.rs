@@ -1,4 +1,4 @@
-use chrono::{DateTime, TimeZone, Utc};
+use chrono::{TimeZone, Utc};
 use common_data_bar::trade::Trade;
 use rust_decimal::Decimal;
 
