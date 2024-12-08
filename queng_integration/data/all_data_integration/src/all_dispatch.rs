@@ -35,4 +35,6 @@ pub trait LocalDataIntegrationTrait {
         P: EventProcessor + Send + Sync + 'static;
 
     async fn stop_all_ohlcv_data(&self) -> Result<(), MessageProcessingError>;
+
+    async fn validate_symbols(&self, symbols: &[String]) -> Result<bool, MessageProcessingError>;
 }

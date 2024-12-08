@@ -67,4 +67,8 @@ impl ImsDataIntegration for ImsMockDataIntegration {
 
         Ok(())
     }
+
+    async fn validate_symbols(&self, symbols: &[String]) -> Result<bool, MessageProcessingError> {
+        Ok(true)
+    }
 }

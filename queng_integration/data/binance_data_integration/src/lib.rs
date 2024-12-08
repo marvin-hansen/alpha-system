@@ -48,4 +48,8 @@ impl ImsDataIntegration for ImsBinanceDataIntegration {
     async fn stop_all_ohlcv_data(&self) -> Result<(), MessageProcessingError> {
         Ok(())
     }
+
+    async fn validate_symbols(&self, symbols: &[String]) -> Result<bool, MessageProcessingError> {
+        Ok(true)
+    }
 }
