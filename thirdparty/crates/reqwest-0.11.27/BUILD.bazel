@@ -400,22 +400,22 @@ rust_library(
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
         ],
         "@rules_rust//rust/platform:wasm32-unknown-unknown": [
-            "//thirdparty/crates/js-sys-0.3.74:js_sys",  # cfg(target_arch = "wasm32")
-            "//thirdparty/crates/wasm-bindgen-0.2.97:wasm_bindgen",  # cfg(target_arch = "wasm32")
-            "//thirdparty/crates/wasm-bindgen-futures-0.4.47:wasm_bindgen_futures",  # cfg(target_arch = "wasm32")
-            "//thirdparty/crates/web-sys-0.3.74:web_sys",  # cfg(target_arch = "wasm32")
+            "//thirdparty/crates/js-sys-0.3.76:js_sys",  # cfg(target_arch = "wasm32")
+            "//thirdparty/crates/wasm-bindgen-0.2.99:wasm_bindgen",  # cfg(target_arch = "wasm32")
+            "//thirdparty/crates/wasm-bindgen-futures-0.4.49:wasm_bindgen_futures",  # cfg(target_arch = "wasm32")
+            "//thirdparty/crates/web-sys-0.3.76:web_sys",  # cfg(target_arch = "wasm32")
         ],
         "@rules_rust//rust/platform:wasm32-wasi": [
-            "//thirdparty/crates/js-sys-0.3.74:js_sys",  # cfg(target_arch = "wasm32")
-            "//thirdparty/crates/wasm-bindgen-0.2.97:wasm_bindgen",  # cfg(target_arch = "wasm32")
-            "//thirdparty/crates/wasm-bindgen-futures-0.4.47:wasm_bindgen_futures",  # cfg(target_arch = "wasm32")
-            "//thirdparty/crates/web-sys-0.3.74:web_sys",  # cfg(target_arch = "wasm32")
+            "//thirdparty/crates/js-sys-0.3.76:js_sys",  # cfg(target_arch = "wasm32")
+            "//thirdparty/crates/wasm-bindgen-0.2.99:wasm_bindgen",  # cfg(target_arch = "wasm32")
+            "//thirdparty/crates/wasm-bindgen-futures-0.4.49:wasm_bindgen_futures",  # cfg(target_arch = "wasm32")
+            "//thirdparty/crates/web-sys-0.3.76:web_sys",  # cfg(target_arch = "wasm32")
         ],
         "@rules_rust//rust/platform:wasm32-wasip1": [
-            "//thirdparty/crates/js-sys-0.3.74:js_sys",  # cfg(target_arch = "wasm32")
-            "//thirdparty/crates/wasm-bindgen-0.2.97:wasm_bindgen",  # cfg(target_arch = "wasm32")
-            "//thirdparty/crates/wasm-bindgen-futures-0.4.47:wasm_bindgen_futures",  # cfg(target_arch = "wasm32")
-            "//thirdparty/crates/web-sys-0.3.74:web_sys",  # cfg(target_arch = "wasm32")
+            "//thirdparty/crates/js-sys-0.3.76:js_sys",  # cfg(target_arch = "wasm32")
+            "//thirdparty/crates/wasm-bindgen-0.2.99:wasm_bindgen",  # cfg(target_arch = "wasm32")
+            "//thirdparty/crates/wasm-bindgen-futures-0.4.49:wasm_bindgen_futures",  # cfg(target_arch = "wasm32")
+            "//thirdparty/crates/web-sys-0.3.76:web_sys",  # cfg(target_arch = "wasm32")
         ],
         "@rules_rust//rust/platform:x86_64-apple-darwin": [
             "//thirdparty/crates/encoding_rs-0.8.35:encoding_rs",  # cfg(not(target_arch = "wasm32"))

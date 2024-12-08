@@ -80,6 +80,6 @@ rust_library(
     }),
     version = "0.11.0-rc.3",
     deps = [
-        "//thirdparty/crates/hybrid-array-0.2.1:hybrid_array",
+        "//thirdparty/crates/hybrid-array-0.2.3:hybrid_array",
     ],
 )

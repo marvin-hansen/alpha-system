@@ -152,13 +152,13 @@ alias(
 
 alias(
     name = "prost",
-    actual = "//thirdparty/crates/prost-0.13.3:prost",
+    actual = "//thirdparty/crates/prost-0.13.4:prost",
     tags = ["manual"],
 )
 
 alias(
     name = "prost-types",
-    actual = "//thirdparty/crates/prost-types-0.13.3:prost_types",
+    actual = "//thirdparty/crates/prost-types-0.13.4:prost_types",
     tags = ["manual"],
 )
 

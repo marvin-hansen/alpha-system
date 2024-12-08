@@ -93,7 +93,7 @@ rust_library(
         "//thirdparty/crates/rustls-0.23.19:rustls",
         "//thirdparty/crates/rustls-platform-verifier-0.4.0:rustls_platform_verifier",
         "//thirdparty/crates/slab-0.4.9:slab",
-        "//thirdparty/crates/thiserror-2.0.4:thiserror",
+        "//thirdparty/crates/thiserror-2.0.5:thiserror",
         "//thirdparty/crates/tinyvec-1.8.0:tinyvec",
         "//thirdparty/crates/tracing-0.1.41:tracing",
     ] + select({
