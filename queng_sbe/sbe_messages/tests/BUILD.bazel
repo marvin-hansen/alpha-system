@@ -152,6 +152,28 @@ rust_test_suite(
 )
 
 rust_test_suite(
+    name = "trade",
+    srcs = glob([
+        "messages/trade/*_tests.rs",
+    ]),
+    tags = [
+        "sbe",
+        "unit-test",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        "//alias:sbe_messages",
+        # Internal crates
+        "//alias:common_data_bar",
+        "//alias:sbe_bindings",
+        # External crates
+        "//thirdparty/crates:rust_decimal",
+        "//thirdparty/crates:chrono",
+    ],
+)
+
+rust_test_suite(
     name = "trade_bar",
     srcs = glob([
         "messages/trade_bar/*_tests.rs",

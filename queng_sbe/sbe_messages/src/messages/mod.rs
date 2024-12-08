@@ -38,6 +38,7 @@ pub mod error_data;
 pub mod ohlcv_bar;
 pub mod ohlcv_bar_first;
 pub mod ohlcv_bar_last;
+pub mod trade;
 pub mod trade_bar;
 pub mod trade_bar_first;
 pub mod trade_bar_last;
