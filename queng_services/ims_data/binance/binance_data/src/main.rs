@@ -11,6 +11,11 @@ const DBG: bool = true;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
+    // https://github.com/snapview/tokio-tungstenite/issues/353
+    rustls::crypto::ring::default_provider()
+        .install_default()
+        .expect("Failed to install default rustls crypto provider");
+
     let svc_config = binance_data_specs::ims_data_binance_config();
     let integration_config = binance_data_specs::binance_ims_data_integration_config();
     let iggy_config = binance_data_specs::ims_data_iggy_config();

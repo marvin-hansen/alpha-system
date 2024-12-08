@@ -22,6 +22,7 @@ build_binary_opt(
         # Custom Memory Allocator
         "//thirdparty/crates:mimalloc",
         # External crates
+        "//thirdparty/crates:rustls",
         "//thirdparty/crates:tokio",
     ],
 )

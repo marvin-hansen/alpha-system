@@ -55,7 +55,7 @@ impl DataIntegrationTrait for MockDataIntegration {
         self.integration.stop_all_ohlcv_data().await
     }
 
-    async fn validate_symbols(&self, symbols: &[String]) -> Result<bool, MessageProcessingError> {
+    async fn validate_symbols(&self, _symbols: &[String]) -> Result<bool, MessageProcessingError> {
         Ok(true)
     }
 }
