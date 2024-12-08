@@ -19,6 +19,12 @@ use std::fmt;
 #[derive(Debug, Clone)]
 pub struct MessageProcessingError(pub String);
 
+impl MessageProcessingError {
+    pub fn new(field0: String) -> Self {
+        Self(field0)
+    }
+}
+
 impl Error for MessageProcessingError {}
 
 impl fmt::Display for MessageProcessingError {
