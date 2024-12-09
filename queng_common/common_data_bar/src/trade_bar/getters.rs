@@ -7,7 +7,7 @@ impl TradeBar {
     /// Returns the timestamp of TradeBar
     #[must_use]
     pub const fn date_time(&self) -> DateTime<Utc> {
-        self.date_time
+        self.trade_time
     }
     /// Returns the price of TradeBar
     #[must_use]

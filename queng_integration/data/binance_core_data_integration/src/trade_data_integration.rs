@@ -1,5 +1,6 @@
 use crate::ImsBinanceDataIntegration;
 use common_errors::MessageProcessingError;
+use sbe_messages::SbeTradeBar;
 use std::sync::Arc;
 use trait_data_integration::{EventProcessor, ImsDataIntegration, ImsTradeDataIntegration};
 
@@ -42,34 +43,27 @@ impl ImsTradeDataIntegration for ImsBinanceDataIntegration {
             }
 
             let stream_name = format!("{}@trade", symbol);
-
             let ws_stream = self.connect_websocket(&stream_name).await?;
             let processor = Arc::clone(&processor);
 
+            let symbol_clone = symbol.clone();
             let handle = tokio::spawn(async move {
+                use crate::utils;
                 use futures_util::StreamExt;
                 use tokio_tungstenite::tungstenite::Message;
 
                 let (_, mut read) = ws_stream.split();
-
                 while let Some(Ok(msg)) = read.next().await {
                     if let Message::Text(text) = msg {
-                        // {
-                        //   "e": "trade",       // Event type
-                        //   "E": 1672515782136, // Event time
-                        //   "s": "BNBBTC",      // Symbol
-                        //   "t": 12345,         // Trade ID
-                        //   "p": "0.001",       // Price
-                        //   "q": "100",         // Quantity
-                        //   "T": 1672515782136, // Trade time
-                        //   "m": true,          // Is the buyer the market maker?
-                        //   "M": true           // Ignore
-                        // }
-                        let data = text.as_bytes().to_vec();
+                        let bar = utils::extract_trade_bar_from_json(&text, &symbol_clone).await;
 
-                        if let Err(e) = processor.process(&[data]).await {
-                            eprintln!("Error processing trade data: {}", e);
-                            break;
+                        if let Some(bar) = bar {
+                            let (_, data) =
+                                SbeTradeBar::encode(bar).expect("Failed to encode OHLCV data");
+                            if let Err(e) = processor.process(&[data]).await {
+                                eprintln!("Error processing OHLCV data: {}", e);
+                                break;
+                            }
                         }
                     }
                 }

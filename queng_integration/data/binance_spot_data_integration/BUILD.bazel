@@ -15,6 +15,7 @@ rust_library(
         # Internal crates
         "//alias:common_errors",
         "//alias:binance_core_data_integration",
+        "//alias:sbe_messages",
         "//alias:trait_data_integration",
         # External crates
         "//thirdparty/crates:rustls",

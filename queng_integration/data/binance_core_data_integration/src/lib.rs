@@ -1,6 +1,7 @@
 mod ims_integration;
 mod ohlcv_data_integration;
 mod trade_data_integration;
+mod utils;
 
 use common_errors::MessageProcessingError;
 use reqwest::Client;

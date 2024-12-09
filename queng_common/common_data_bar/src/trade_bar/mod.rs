@@ -7,7 +7,7 @@ mod getters;
 #[derive(Debug, Default, Eq, Clone, PartialEq)]
 pub struct TradeBar {
     symbol_id: String,
-    date_time: DateTime<Utc>,
+    trade_time: DateTime<Utc>,
     price: Decimal,
     volume: Decimal,
 }
@@ -27,13 +27,13 @@ impl TradeBar {
     #[must_use]
     pub const fn new(
         symbol_id: String,
-        date_time: DateTime<Utc>,
+        trade_time: DateTime<Utc>,
         price: Decimal,
         volume: Decimal,
     ) -> Self {
         Self {
             symbol_id,
-            date_time,
+            trade_time,
             price,
             volume,
         }

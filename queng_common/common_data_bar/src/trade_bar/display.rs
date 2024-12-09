@@ -5,7 +5,7 @@ impl std::fmt::Display for TradeBar {
         write!(
             f,
             "symbol_id: {}, timestamp: {}: price={}, volume={}",
-            self.symbol_id, self.date_time, self.price, self.volume
+            self.symbol_id, self.trade_time, self.price, self.volume
         )
     }
 }

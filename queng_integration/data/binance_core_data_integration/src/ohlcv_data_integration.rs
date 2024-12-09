@@ -1,25 +1,12 @@
 use crate::ImsBinanceDataIntegration;
 use common_errors::MessageProcessingError;
+use sbe_messages::SbeOHLCVBar;
+use serde_json;
 use std::sync::Arc;
 use trait_data_integration::{EventProcessor, ImsDataIntegration, ImsOhlcvDataIntegration};
 
 impl ImsOhlcvDataIntegration for ImsBinanceDataIntegration {
     /// Starts real-time OHLCV (candlestick) data streams for the specified symbols.
-    ///
-    /// This method:
-    /// 1. Validates all symbols before establishing connections
-    /// 2. Creates a WebSocket connection for each symbol's 1-minute kline stream
-    /// 3. Spawns an async task to process incoming OHLCV data
-    /// 4. Stores task handles for lifecycle management
-    ///
-    /// # Arguments
-    /// * `symbols` - List of trading symbols (e.g., ["BTCUSDT", "ETHUSDT"])
-    /// * `processor` - Event processor to handle incoming OHLCV data
-    ///
-    /// # Returns
-    /// - `Ok(())`: If all streams are started successfully
-    /// - `Err(MessageProcessingError)`: If symbol validation fails or connection errors occur
-    ///
     async fn start_ohlcv_data<P>(
         &self,
         symbols: &[String],
@@ -46,18 +33,24 @@ impl ImsOhlcvDataIntegration for ImsBinanceDataIntegration {
             let ws_stream = self.connect_websocket(&stream_name).await?;
             let processor = Arc::clone(&processor);
 
+            let symbol_clone = symbol.clone();
             let handle = tokio::spawn(async move {
+                use crate::utils;
                 use futures_util::StreamExt;
                 use tokio_tungstenite::tungstenite::Message;
 
                 let (_, mut read) = ws_stream.split();
                 while let Some(Ok(msg)) = read.next().await {
                     if let Message::Text(text) = msg {
-                        //
-                        let data = text.as_bytes().to_vec();
-                        if let Err(e) = processor.process(&[data]).await {
-                            eprintln!("Error processing OHLCV data: {}", e);
-                            break;
+                        // Process the OHLCV data
+                        let bar = utils::extract_ohlcv_bar_from_json(&text, &symbol_clone).await;
+                        if let Some(bar) = bar {
+                            let (_, data) =
+                                SbeOHLCVBar::encode(bar).expect("Failed to encode OHLCV data");
+                            if let Err(e) = processor.process(&[data]).await {
+                                eprintln!("Error processing OHLCV data: {}", e);
+                                break;
+                            }
                         }
                     }
                 }
