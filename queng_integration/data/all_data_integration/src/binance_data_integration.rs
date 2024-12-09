@@ -1,6 +1,7 @@
 use crate::DataIntegrationTrait;
 use binance_spot_data_integration::ImsBinanceSpotDataIntegration;
 use common_errors::MessageProcessingError;
+use std::collections::HashSet;
 use std::fmt::Error;
 use std::sync::Arc;
 use trait_data_integration::{
@@ -39,6 +40,10 @@ impl DataIntegrationTrait for BinanceSpotDataIntegration {
         self.integration.start_trade_data(symbols, processor).await
     }
 
+    async fn stop_trade_data(&self, symbols: &[String]) -> Result<(), MessageProcessingError> {
+        self.integration.stop_trade_data(symbols).await
+    }
+
     async fn stop_all_trade_data(&self) -> Result<(), MessageProcessingError> {
         self.integration.stop_all_trade_data().await
     }
@@ -54,8 +59,16 @@ impl DataIntegrationTrait for BinanceSpotDataIntegration {
         self.integration.start_ohlcv_data(symbols, processor).await
     }
 
+    async fn stop_ohlcv_data(&self, symbols: &[String]) -> Result<(), MessageProcessingError> {
+        self.integration.stop_ohlcv_data(symbols).await
+    }
+
     async fn stop_all_ohlcv_data(&self) -> Result<(), MessageProcessingError> {
         self.integration.stop_all_ohlcv_data().await
+    }
+
+    async fn get_exchange_symbols(&self) -> Result<HashSet<String>, MessageProcessingError> {
+        self.integration.get_exchange_symbols().await
     }
 
     async fn validate_symbols(&self, symbols: &[String]) -> Result<bool, MessageProcessingError> {

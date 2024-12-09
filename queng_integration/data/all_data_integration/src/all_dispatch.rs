@@ -1,6 +1,7 @@
 use crate::BinanceSpotDataIntegration;
 use common_errors::MessageProcessingError;
 use enum_dispatch::enum_dispatch;
+use std::collections::HashSet;
 use std::fmt::Error;
 use std::sync::Arc;
 use trait_data_integration::EventProcessor;
@@ -23,6 +24,8 @@ pub trait LocalDataIntegrationTrait {
     where
         P: EventProcessor + Send + Sync + 'static;
 
+    async fn stop_trade_data(&self, symbols: &[String]) -> Result<(), MessageProcessingError>;
+
     async fn stop_all_trade_data(&self) -> Result<(), MessageProcessingError>;
 
     async fn start_ohlcv_data<P>(
@@ -33,7 +36,11 @@ pub trait LocalDataIntegrationTrait {
     where
         P: EventProcessor + Send + Sync + 'static;
 
+    async fn stop_ohlcv_data(&self, symbols: &[String]) -> Result<(), MessageProcessingError>;
+
     async fn stop_all_ohlcv_data(&self) -> Result<(), MessageProcessingError>;
+
+    async fn get_exchange_symbols(&self) -> Result<HashSet<String>, MessageProcessingError>;
 
     async fn validate_symbols(&self, symbols: &[String]) -> Result<bool, MessageProcessingError>;
 }
