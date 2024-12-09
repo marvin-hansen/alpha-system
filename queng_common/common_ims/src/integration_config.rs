@@ -95,8 +95,7 @@ impl IntegrationConfig {
         if self.ims_integration_type == ImsIntegrationType::Data {
             match self.exchange_id {
                 ExchangeID::Binance => Some(ExchangeDataIntegrationID::BinanceData),
-                // ExchangeID::VEX => Some(ExchangeDataIntegrationID::VexData),
-                _ => Some(ExchangeDataIntegrationID::MockData),
+                _ => Some(ExchangeDataIntegrationID::NullVal),
             }
         } else {
             None

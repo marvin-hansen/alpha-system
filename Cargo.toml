@@ -144,7 +144,6 @@ postgres_migrations = { path = "queng_infra/postgres/postgres_migrations" }
 # Data integration
 all_data_integration = { path = "queng_integration/data/all_data_integration" }
 binance_data_integration = { path = "queng_integration/data/binance_data_integration" }
-mock_data_integration = { path = "queng_integration/data/mock_data_integration" }
 vex_data_integration = { path = "queng_integration/data/vex_data_integration" }
 # Traits
 trait_data_integration = { path = "queng_integration/traits/trait_data_integration" }

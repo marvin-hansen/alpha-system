@@ -1,4 +1,4 @@
-use crate::{BinanceDataIntegration, MockDataIntegration};
+use crate::BinanceDataIntegration;
 use common_errors::MessageProcessingError;
 use enum_dispatch::enum_dispatch;
 use std::fmt::Error;
@@ -8,7 +8,6 @@ use trait_data_integration::EventProcessor;
 #[enum_dispatch]
 pub enum DataIntegration {
     BinanceDataIntegration,
-    MockDataIntegration,
 }
 
 #[enum_dispatch(DataIntegration)]

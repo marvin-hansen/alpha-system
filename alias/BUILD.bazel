@@ -313,11 +313,6 @@ alias(
 )
 
 alias(
-    name = "mock_data_integration",
-    actual = "//queng_integration/data/mock_data_integration",
-)
-
-alias(
     name = "vex_data_integration",
     actual = "//queng_integration/data/vex_data_integration",
 )
