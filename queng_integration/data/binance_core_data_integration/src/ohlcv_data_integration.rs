@@ -35,6 +35,12 @@ impl ImsOhlcvDataIntegration for ImsBinanceDataIntegration {
 
         for symbol in symbols {
             let symbol = symbol.to_lowercase();
+
+            if handlers.contains_key(&symbol) {
+                // Symbol is already in the handlers collection, do nothing
+                continue;
+            }
+
             let stream_name = format!("{}@kline_1m", symbol);
 
             let ws_stream = self.connect_websocket(&stream_name).await?;
@@ -63,7 +69,54 @@ impl ImsOhlcvDataIntegration for ImsBinanceDataIntegration {
         Ok(())
     }
 
+    /// Stops real-time OHLCV data streams for the specified symbols.
+    ///
+    /// This method:
+    /// 1. Checks if the specified symbols are active OHLCV streams
+    /// 2. Aborts each handler immediately
+    /// 3. Removes the handler from the storage
+    ///
+    /// # Arguments
+    /// * `symbols` - List of trading symbols (e.g., ["BTCUSDT", "ETHUSDT"])
+    ///
+    /// # Returns
+    /// - `Ok(())`: If all streams are stopped successfully
+    /// - `Err(MessageProcessingError)`: If any symbols are not active OHLCV streams
+    ///
     async fn stop_ohlcv_data(&self, symbols: &[String]) -> Result<(), MessageProcessingError> {
+        // If no symbols provided, do nothing
+        if symbols.is_empty() {
+            return Ok(());
+        }
+
+        let mut handlers = self.ohlcv_handlers.write().await;
+        let mut stopped_symbols = Vec::new();
+        let mut not_found_symbols = Vec::new();
+
+        for symbol in symbols {
+            let symbol = symbol.to_lowercase();
+
+            // If symbol is not in ohlcv_handlers, track it
+            if !handlers.contains_key(&symbol) {
+                not_found_symbols.push(symbol.clone());
+                continue;
+            }
+
+            // Remove and abort the handler for this symbol
+            if let Some(handle) = handlers.remove(&symbol) {
+                handle.abort();
+                stopped_symbols.push(symbol);
+            }
+        }
+
+        // If any symbols were not found in ohlcv_handlers, return an error
+        if !not_found_symbols.is_empty() {
+            return Err(MessageProcessingError::new(format!(
+                "The following symbols were not active OHLCV streams: {:?}",
+                not_found_symbols
+            )));
+        }
+
         Ok(())
     }
 

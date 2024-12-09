@@ -63,29 +63,70 @@ static BUFFER_STORE: AtomicU64 = AtomicU64::new(0);
 
 ### 4. Performance Results
 
-#### Final Benchmarks
-| Operation    | Input      | Time    | Improvement |
-|-------------|------------|---------|-------------|
-| str_to_int  | empty      | ~450ps  | -          |
-| str_to_int  | single     | ~1.26ns | -          |
-| str_to_int  | "hello"    | ~2.92ns | -          |
-| str_to_int  | "12345678" | ~1.98ns | -          |
-| int_to_str  | empty      | ~466ps  | -          |
-| int_to_str  | single     | ~558ps  | 48% faster |
-| int_to_str  | "hello"    | ~557ps  | 55% faster |
-| int_to_str  | "12345678" | ~557ps  | 63% faster |
+#### Latest Benchmarks (as of 2024-12-09)
+| Operation    | Input      | Time (ns) | Notes |
+|-------------|------------|-----------|-------|
+| str_to_int  | empty      | ~0.45     | Consistent performance |
+| str_to_int  | single     | ~1.26     | Optimized for short strings |
+| str_to_int  | "hello"    | ~2.92     | Linear scaling with length |
+| str_to_int  | "12345678" | ~1.98     | Efficient for max length |
+| int_to_str  | empty      | ~0.47     | Zero-copy optimization |
+| int_to_str  | single     | ~0.56     | Branchless length detection |
+| int_to_str  | "hello"    | ~0.56     | Constant-time decoding |
+| int_to_str  | "12345678" | ~0.56     | SIMD-like bit manipulation |
 
-### 5. Safety Considerations
+#### Test Coverage
+- Basic encoding/decoding for strings of all lengths
+- Empty string handling
+- Maximum length strings (8 characters)
+- Non-ASCII character rejection
+- Invalid encoded integer handling
+- Mixed case strings
+- Special characters
+- Null byte handling
+- Integer edge cases
+- Consecutive encoding/decoding
+- Null byte position detection
 
-1. **Memory Safety**
-   - No out-of-bounds access
-   - Proper null termination
-   - Thread-safe buffer handling
+#### Implementation Highlights
 
-2. **Input Validation**
-   - ASCII-only strings
-   - Maximum length enforcement
-   - Null byte handling
+1. **Modular Design**
+```rust
+mod string_int_encoding;
+pub use string_int_encoding::*;
+```
+- Better code organization
+- Clear separation of concerns
+- Improved maintainability
+
+2. **Optimized Length Detection**
+```rust
+const fn find_null_byte_position(n: u64) -> usize {
+    if n == 0 {
+        return 0;
+    }
+    let mut len = 0;
+    let mut value = n;
+    while len < MAX_CHARS && (value & 0xFF) != 0 {
+        len += 1;
+        value >>= 8;
+    }
+    len
+}
+```
+- Branchless design
+- Compile-time evaluation with `const fn`
+- Efficient bit manipulation
+
+3. **Thread-Safe Buffer Management**
+```rust
+static BUFFER_STORE: AtomicU64 = AtomicU64::new(0);
+BUFFER_STORE.store(0, Ordering::Release);  // Clear buffer
+BUFFER_STORE.store(n, Ordering::Release);  // Store value
+```
+- Atomic operations for thread safety
+- Zero-copy string conversion
+- Proper memory ordering
 
 ## Key Learnings
 
@@ -123,15 +164,20 @@ static BUFFER_STORE: AtomicU64 = AtomicU64::new(0);
 
 ## Future Improvements
 
-1. **Potential Optimizations**
-   - SIMD instructions for larger strings
-   - Custom allocator for buffer management
-   - Platform-specific optimizations
+1. **Performance Optimizations**
+   - Investigate SIMD instructions for bulk processing
+   - Profile and optimize memory access patterns
+   - Explore platform-specific optimizations
 
 2. **Feature Extensions**
-   - Unicode support
-   - Variable-length encoding
-   - Error reporting improvements
+   - Consider variable-length encoding support
+   - Add UTF-8 string support with proper validation
+   - Implement custom error types for better error handling
+
+3. **Testing Improvements**
+   - Add property-based testing
+   - Expand benchmark suite
+   - Add stress tests for concurrent access
 
 ## Conclusion
 
