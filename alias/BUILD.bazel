@@ -545,6 +545,11 @@ alias(
 )
 
 alias(
+    name = "encoding_utils",
+    actual = "//queng_utils/encoding_utils",
+)
+
+alias(
     name = "math_utils",
     actual = "//queng_utils/math_utils",
 )
