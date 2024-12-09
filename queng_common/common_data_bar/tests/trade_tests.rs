@@ -31,10 +31,13 @@ fn test_trade_defaults() {
 
 #[test]
 fn test_trade_eq() {
+    // Timestamp must be equal for both trades to test equality
+    let time = Utc::now();
+
     let trade1 = Trade::new(
         "AAPL".to_string(),
-        Utc::now(),
-        Utc::now(),
+        time,
+        time,
         "12345".to_string(),
         Decimal::new(100, 2),
         Decimal::new(10, 0),
@@ -42,8 +45,8 @@ fn test_trade_eq() {
 
     let trade2 = Trade::new(
         "AAPL".to_string(),
-        Utc::now(),
-        Utc::now(),
+        time,
+        time,
         "12345".to_string(),
         Decimal::new(100, 2),
         Decimal::new(10, 0),

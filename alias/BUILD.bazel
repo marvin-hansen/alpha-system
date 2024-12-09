@@ -56,6 +56,11 @@ alias(
 )
 
 alias(
+    name = "common_orderbook",
+    actual = "//queng_common/common_orderbook",
+)
+
+alias(
     name = "common_service",
     actual = "//queng_common/common_service",
 )
