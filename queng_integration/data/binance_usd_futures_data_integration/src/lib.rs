@@ -7,6 +7,7 @@ use trait_data_integration::{
 };
 
 // Binance USD-M Futures API endpoints
+// https://binance-docs.github.io/apidocs/futures/en/#general-info
 const API_BASE_URL: &str = "https://fapi.binance.com/fapi/v1";
 const API_WSS_URL: &str = "wss://fstream.binance.com/ws";
 

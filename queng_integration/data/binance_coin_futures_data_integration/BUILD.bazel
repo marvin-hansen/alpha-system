@@ -1,0 +1,37 @@
+load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library")
+
+rust_library(
+    name = "binance_coin_futures_data_integration",
+    srcs = glob([
+        "src/**",
+    ]),
+    crate_root = "src/lib.rs",
+    tags = [
+        "binance_coin_futures_data_integration",
+        "data_integration",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Internal crates
+        "//alias:common_errors",
+        "//alias:binance_core_data_integration",
+        "//alias:trait_data_integration",
+        # External crates
+        "//thirdparty/crates:rustls",
+        "//thirdparty/crates:tokio",
+    ],
+)
+
+rust_doc(
+    name = "doc",
+    crate = ":binance_coin_futures_data_integration",
+    tags = ["doc"],
+    visibility = ["//visibility:public"],
+)
+
+rust_doc_test(
+    name = "doc_test",
+    crate = ":binance_coin_futures_data_integration",
+    tags = ["doc-test"],
+    visibility = ["//visibility:public"],
+)
