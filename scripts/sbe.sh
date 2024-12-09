@@ -15,9 +15,15 @@ command java --version >/dev/null 2>&1 || {
 #  https://github.com/real-logic/simple-binary-encoding?tab=readme-ov-file
 command java -Dsbe.generate.ir=true -Dsbe.target.language=Rust -Dsbe.target.namespace=sbe -Dsbe.output.dir=queng_sbe/ -Dsbe.errorLog=yes -jar tools/sbe/sbe-all-1.30.0.jar queng_sbe/sbe_schema/schema.xml
 
+# Check if folder queng_sbe/sbe_bindings exists, and if so remove it
+if [ -d "queng_sbe/sbe_bindings" ]; then
+    rm -rf queng_sbe/sbe_bindings
+fi
+
+# Rename queng_sbe/bindings to queng_sbe/sbe_bindings
 mv queng_sbe/bindings queng_sbe/sbe_bindings
 
-# Create a new file named BUILD.bazel in the queng_sbe/sbe_bindings folder
+# Create a BUILD.bazel in the queng_sbe/sbe_bindings folder to build with Bazel
 cat > queng_sbe/sbe_bindings/BUILD.bazel <<EOF
 load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library", "rust_test")
 
