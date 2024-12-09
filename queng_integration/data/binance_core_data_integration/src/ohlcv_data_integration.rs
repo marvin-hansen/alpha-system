@@ -51,9 +51,9 @@ impl ImsOhlcvDataIntegration for ImsBinanceDataIntegration {
                 use tokio_tungstenite::tungstenite::Message;
 
                 let (_, mut read) = ws_stream.split();
-
                 while let Some(Ok(msg)) = read.next().await {
                     if let Message::Text(text) = msg {
+                        //
                         let data = text.as_bytes().to_vec();
                         if let Err(e) = processor.process(&[data]).await {
                             eprintln!("Error processing OHLCV data: {}", e);
