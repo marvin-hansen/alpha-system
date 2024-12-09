@@ -9,6 +9,7 @@
 
 use binance_usd_futures_data_integration::ImsBinanceUsdFuturesDataIntegration;
 use common_errors::MessageProcessingError;
+use sbe_messages::MessageType;
 use std::sync::Arc;
 use std::time::Duration;
 use tokio::time;
@@ -24,12 +25,32 @@ struct PrintEventProcessor;
 
 impl EventProcessor for PrintEventProcessor {
     async fn process(&self, data: &[Vec<u8>]) -> Result<(), MessageProcessingError> {
-        for msg in data {
-            match String::from_utf8(msg.clone()) {
-                Ok(text) => println!("Received data: {}", text),
-                Err(e) => eprintln!("Error decoding message: {}", e),
+        let raw_message = data
+            .first()
+            .expect("Failed to get first element")
+            .as_slice();
+        // Determine SBE message type based on the second byte
+        let message_type = MessageType::from(u16::from(raw_message[2]));
+
+        // Decode and print SBE message relative to its message type
+        match message_type {
+            MessageType::TradeBar => {
+                let bar = sbe_messages::SbeTradeBar::decode(raw_message)
+                    .expect("Failed to decode trade bar message");
+                println!("Received trade data:");
+                println!("{}", bar);
+            }
+            MessageType::OHLCVBar => {
+                let bar = sbe_messages::SbeOHLCVBar::decode(raw_message)
+                    .expect("Failed to decode OHLCV bar message");
+                println!("Received OHLCV data:");
+                println!("{}", bar);
+            }
+            _ => {
+                println!("Received unknown message type: {}", message_type);
             }
         }
+
         Ok(())
     }
 }

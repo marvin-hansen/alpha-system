@@ -16,6 +16,7 @@ workspace = true
 # Internal crates
 common_errors = {workspace = true}
 binance_core_data_integration = {workspace = true}
+sbe_messages = {workspace = true}
 trait_data_integration = {workspace = true}
 # External crates
 rustls = {workspace = true}
