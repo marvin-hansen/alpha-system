@@ -1,10 +1,13 @@
 use std::fmt::{Display, Formatter};
 
-#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Default)]
 #[repr(u8)]
 pub enum ExchangeDataIntegrationID {
+    #[default]
     NullVal = 0,
     BinanceSpotData = 1,
+    BinanceUsdFuturesData = 2,
+    BinanceCoinFuturesData = 3,
 }
 
 impl Display for ExchangeDataIntegrationID {
@@ -18,6 +21,8 @@ impl From<u8> for ExchangeDataIntegrationID {
         match value {
             0 => ExchangeDataIntegrationID::NullVal,
             1 => ExchangeDataIntegrationID::BinanceSpotData,
+            2 => ExchangeDataIntegrationID::BinanceUsdFuturesData,
+            3 => ExchangeDataIntegrationID::BinanceCoinFuturesData,
             _ => panic!("Invalid exchange data integration"),
         }
     }
@@ -34,6 +39,8 @@ impl From<u16> for ExchangeDataIntegrationID {
         match value {
             0 => ExchangeDataIntegrationID::NullVal,
             1 => ExchangeDataIntegrationID::BinanceSpotData,
+            2 => ExchangeDataIntegrationID::BinanceUsdFuturesData,
+            3 => ExchangeDataIntegrationID::BinanceCoinFuturesData,
             _ => panic!("Invalid exchange data integration"),
         }
     }
@@ -50,6 +57,8 @@ impl From<u32> for ExchangeDataIntegrationID {
         match value {
             0 => ExchangeDataIntegrationID::NullVal,
             1 => ExchangeDataIntegrationID::BinanceSpotData,
+            2 => ExchangeDataIntegrationID::BinanceUsdFuturesData,
+            3 => ExchangeDataIntegrationID::BinanceCoinFuturesData,
             _ => panic!("Invalid exchange data integration"),
         }
     }

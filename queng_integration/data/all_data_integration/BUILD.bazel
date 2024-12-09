@@ -20,6 +20,9 @@ rust_library(
         "//alias:common_errors",
         "//alias:common_ims",
         "//alias:binance_spot_data_integration",
+        "//alias:binance_testnet_data_integration",
+        "//alias:binance_usd_futures_data_integration",
+        "//alias:binance_coin_futures_data_integration",
         "//alias:vex_data_integration",
         "//alias:trait_data_integration",
         # External crates

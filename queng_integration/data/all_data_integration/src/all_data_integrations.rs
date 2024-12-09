@@ -1,5 +1,7 @@
 use crate::all_dispatch::DataIntegration;
-use crate::binance_data_integration::BinanceSpotDataIntegration;
+use crate::binance_spot_data::BinanceSpotDataIntegration;
+use crate::BinanceCoinFuturesDataIntegration;
+use crate::BinanceUsdFuturesDataIntegration;
 use common_ims::ExchangeDataIntegrationID;
 
 /// Returns a `DataIntegration` instance based on the provided `ExchangeDataIntegration` enum value.
@@ -23,6 +25,12 @@ pub fn get_data_integration(
     match exchange_data_integration {
         ExchangeDataIntegrationID::BinanceSpotData => {
             DataIntegration::from(BinanceSpotDataIntegration::new())
+        }
+        ExchangeDataIntegrationID::BinanceUsdFuturesData => {
+            DataIntegration::from(BinanceUsdFuturesDataIntegration::new())
+        }
+        ExchangeDataIntegrationID::BinanceCoinFuturesData => {
+            DataIntegration::from(BinanceCoinFuturesDataIntegration::new())
         }
         _ => {
             panic!("Invalid exchange data integration");

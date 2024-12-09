@@ -1,4 +1,6 @@
+use crate::BinanceCoinFuturesDataIntegration;
 use crate::BinanceSpotDataIntegration;
+use crate::BinanceUsdFuturesDataIntegration;
 use common_errors::MessageProcessingError;
 use enum_dispatch::enum_dispatch;
 use std::collections::HashSet;
@@ -9,6 +11,8 @@ use trait_data_integration::EventProcessor;
 #[enum_dispatch]
 pub enum DataIntegration {
     BinanceSpotDataIntegration,
+    BinanceUsdFuturesDataIntegration,
+    BinanceCoinFuturesDataIntegration,
 }
 
 #[enum_dispatch(DataIntegration)]

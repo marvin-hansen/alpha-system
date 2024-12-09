@@ -1,6 +1,7 @@
 use crate::DataIntegrationTrait;
 use binance_spot_data_integration::ImsBinanceSpotDataIntegration;
 use common_errors::MessageProcessingError;
+use common_ims::ExchangeDataIntegrationID;
 use std::collections::HashSet;
 use std::fmt::Error;
 use std::sync::Arc;
@@ -8,25 +9,24 @@ use trait_data_integration::{
     EventProcessor, ImsDataIntegration, ImsOhlcvDataIntegration, ImsTradeDataIntegration,
 };
 
-const ID: &str = "BinanceDataIntegration";
-
 #[derive(Default)]
 pub struct BinanceSpotDataIntegration {
+    integration_id: ExchangeDataIntegrationID,
     integration: ImsBinanceSpotDataIntegration,
 }
 
 impl BinanceSpotDataIntegration {
     pub fn new() -> Self {
-        let binance_data_integration = ImsBinanceSpotDataIntegration::new();
         Self {
-            integration: binance_data_integration,
+            integration_id: ExchangeDataIntegrationID::BinanceSpotData,
+            integration: ImsBinanceSpotDataIntegration::new(),
         }
     }
 }
 
 impl DataIntegrationTrait for BinanceSpotDataIntegration {
     async fn id(&self) -> Result<String, Error> {
-        Ok(ID.to_string())
+        Ok(self.integration_id.to_string())
     }
 
     async fn start_trade_data<P>(
