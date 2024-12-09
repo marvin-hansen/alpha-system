@@ -7,14 +7,14 @@ fn benchmark_encoding(c: &mut Criterion) {
     let mut group = c.benchmark_group("string_encoding");
 
     for &s in &test_strings {
-        group.bench_function(&format!("str_to_int_{}", s), |b| {
+        group.bench_function(format!("str_to_int_{}", s), |b| {
             b.iter(|| str_to_int(black_box(s)))
         });
     }
 
     for &s in &test_strings {
         if let Some(encoded) = str_to_int(s) {
-            group.bench_function(&format!("int_to_str_{}", s), |b| {
+            group.bench_function(format!("int_to_str_{}", s), |b| {
                 b.iter(|| int_to_str(black_box(encoded)))
             });
         }
