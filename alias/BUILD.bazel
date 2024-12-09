@@ -323,6 +323,11 @@ alias(
 )
 
 alias(
+    name = "binance_usd_futures_data_integration",
+    actual = "//queng_integration/data/binance_usd_futures_data_integration",
+)
+
+alias(
     name = "vex_data_integration",
     actual = "//queng_integration/data/vex_data_integration",
 )
