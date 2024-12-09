@@ -1,56 +1,130 @@
-use chrono::{TimeZone, Utc};
+use chrono::Utc;
 use common_data_bar::trade::Trade;
 use rust_decimal::Decimal;
 
 #[test]
-fn test_trade_new() {
-    let symbol = "AAPL".to_string();
-    let date_time = Utc.with_ymd_and_hms(2024, 12, 8, 10, 43, 32).unwrap();
-    let price = Decimal::new(15000, 2); // 150.00
-    let quantity = Decimal::new(100, 0); // 100
-
-    let trade = Trade::new(symbol.clone(), date_time, price, quantity);
+fn test_trade_creation() {
+    let trade = Trade::new(
+        "AAPL".to_string(),
+        Utc::now(),
+        Utc::now(),
+        "12345".to_string(),
+        Decimal::new(100, 2),
+        Decimal::new(10, 0),
+    );
 
     assert_eq!(trade.symbol(), "AAPL");
-    assert_eq!(trade.date_time(), date_time);
-    assert_eq!(trade.price(), price);
-    assert_eq!(trade.quantity(), quantity);
+    assert_eq!(trade.trade_id(), "12345");
+    assert_eq!(trade.price(), Decimal::new(100, 2));
+    assert_eq!(trade.quantity(), Decimal::new(10, 0));
 }
 
 #[test]
-fn test_trade_default() {
+fn test_trade_defaults() {
     let trade = Trade::default();
 
     assert_eq!(trade.symbol(), "");
+    assert_eq!(trade.trade_id(), "");
     assert_eq!(trade.price(), Decimal::new(0, 0));
     assert_eq!(trade.quantity(), Decimal::new(0, 0));
 }
 
 #[test]
-fn test_trade_clone_and_eq() {
-    let symbol = "TSLA".to_string();
-    let date_time = Utc.with_ymd_and_hms(2024, 12, 8, 10, 43, 32).unwrap();
-    let price = Decimal::new(25000, 2); // 250.00
-    let quantity = Decimal::new(50, 0); // 50
+fn test_trade_eq() {
+    let trade1 = Trade::new(
+        "AAPL".to_string(),
+        Utc::now(),
+        Utc::now(),
+        "12345".to_string(),
+        Decimal::new(100, 2),
+        Decimal::new(10, 0),
+    );
 
-    let trade1 = Trade::new(symbol.clone(), date_time, price, quantity);
-    let trade2 = trade1.clone();
+    let trade2 = Trade::new(
+        "AAPL".to_string(),
+        Utc::now(),
+        Utc::now(),
+        "12345".to_string(),
+        Decimal::new(100, 2),
+        Decimal::new(10, 0),
+    );
 
     assert_eq!(trade1, trade2);
 }
 
 #[test]
+fn test_trade_neq() {
+    let trade1 = Trade::new(
+        "AAPL".to_string(),
+        Utc::now(),
+        Utc::now(),
+        "12345".to_string(),
+        Decimal::new(100, 2),
+        Decimal::new(10, 0),
+    );
+
+    let trade2 = Trade::new(
+        "GOOG".to_string(),
+        Utc::now(),
+        Utc::now(),
+        "67890".to_string(),
+        Decimal::new(200, 2),
+        Decimal::new(20, 0),
+    );
+
+    assert_ne!(trade1, trade2);
+}
+
+#[test]
+fn test_trade_clone() {
+    let trade = Trade::new(
+        "AAPL".to_string(),
+        Utc::now(),
+        Utc::now(),
+        "12345".to_string(),
+        Decimal::new(100, 2),
+        Decimal::new(10, 0),
+    );
+
+    let cloned_trade = trade.clone();
+
+    assert_eq!(trade, cloned_trade);
+}
+
+#[test]
+fn test_trade_debug() {
+    let trade = Trade::new(
+        "AAPL".to_string(),
+        Utc::now(),
+        Utc::now(),
+        "12345".to_string(),
+        Decimal::new(100, 2),
+        Decimal::new(10, 0),
+    );
+
+    let debug_str = format!("{:?}", trade);
+    assert!(debug_str.contains("Trade"));
+    assert!(debug_str.contains("symbol"));
+    assert!(debug_str.contains("trade_id"));
+    assert!(debug_str.contains("price"));
+    assert!(debug_str.contains("quantity"));
+}
+
+#[test]
 fn test_trade_display() {
-    let symbol = "GOOGL".to_string();
-    let date_time = Utc.with_ymd_and_hms(2024, 12, 8, 10, 43, 32).unwrap();
-    let price = Decimal::new(135000, 2); // 1350.00
-    let quantity = Decimal::new(10, 0); // 10
+    let trade = Trade::new(
+        "AAPL".to_string(),
+        Utc::now(),
+        Utc::now(),
+        "12345".to_string(),
+        Decimal::new(100, 2),
+        Decimal::new(10, 0),
+    );
 
-    let trade = Trade::new(symbol, date_time, price, quantity);
-    let display_string = format!("{}", trade);
-
-    assert!(display_string.contains("GOOGL"));
-    assert!(display_string.contains("1350"));
-    assert!(display_string.contains("10"));
-    assert!(display_string.contains(&date_time.to_string()));
+    let display_str = format!("{}", trade);
+    assert!(display_str.contains("Trade"));
+    assert!(display_str.contains("symbol"));
+    assert!(display_str.contains("trade_id"));
+    assert!(display_str.contains("price"));
+    assert!(display_str.contains("quantity"));
 }
