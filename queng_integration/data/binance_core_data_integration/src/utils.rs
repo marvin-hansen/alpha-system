@@ -69,10 +69,10 @@ pub(crate) async fn extract_ohlcv_bar_from_json(json_text: &str, symbol: &str) -
         .get("t")
         .and_then(|t| t.as_u64())
         .map(|ms| Utc.timestamp_millis_opt(ms as i64).unwrap())
-        .unwrap_or_else(|| Utc::now());
+        .unwrap_or_else(Utc::now);
 
     // Generate a unique symbol ID
-    let symbol_id = format!("{}", symbol);
+    let symbol_id = symbol.to_string();
 
     // Create and return the OHLCVBar
     Some(OHLCVBar::new(
@@ -120,10 +120,10 @@ pub(crate) async fn extract_trade_bar_from_json(json_text: &str, symbol: &str) -
         .get("T")
         .and_then(|t| t.as_u64())
         .map(|ms| Utc.timestamp_millis_opt(ms as i64).unwrap())
-        .unwrap_or_else(|| Utc::now());
+        .unwrap_or_else(Utc::now);
 
     // Generate a unique trade bar ID
-    let symbol_id = format!("{}", symbol);
+    let symbol_id = symbol.to_string();
 
     // Create and return the TradeBar
     Some(TradeBar::new(symbol_id, trade_time, price, volume))
@@ -140,5 +140,5 @@ fn parse_decimal(value: Option<&serde_json::Value>) -> Decimal {
     value
         .and_then(|v| v.as_str())
         .and_then(|s| s.parse::<Decimal>().ok())
-        .unwrap_or(Decimal::default())
+        .unwrap_or_default()
 }
