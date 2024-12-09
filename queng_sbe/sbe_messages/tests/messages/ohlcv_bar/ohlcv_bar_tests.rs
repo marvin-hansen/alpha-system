@@ -6,11 +6,10 @@ fn test_encode_data_bar_message() {
     let bar = OHLCVBar::default(); // Create a sample DataBar
 
     let result = SbeOHLCVBar::encode(bar);
-
     assert!(result.is_ok()); // Assert encode passes
 
     let (size, encoded) = result.unwrap();
-    assert_eq!(size, 40); // Assert encoded message size matches expected
+    assert_eq!(size, 46); // Assert encoded message size matches expected
     assert!(!encoded.is_empty()); // Assert non-empty encoded message
 }
 
@@ -19,7 +18,7 @@ fn test_decode_data_bar_message() {
     // Encode a sample DataBar
     let bar = OHLCVBar::default();
     let (size, encoded) = SbeOHLCVBar::encode(bar.clone()).unwrap();
-    assert_eq!(size, 40); // Assert encoded message size matches expected
+    assert_eq!(size, 46); // Assert encoded message size matches expected
     assert!(!encoded.is_empty()); // Assert non-empty encoded message
 
     // Decode the encoded message

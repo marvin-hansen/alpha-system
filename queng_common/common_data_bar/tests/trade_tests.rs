@@ -6,14 +6,14 @@ use rust_decimal::Decimal;
 fn test_trade_creation() {
     let trade = Trade::new(
         "AAPL".to_string(),
-        Utc::now(),
-        Utc::now(),
         "12345".to_string(),
+        Utc::now(),
+        Utc::now(),
         Decimal::new(100, 2),
         Decimal::new(10, 0),
     );
 
-    assert_eq!(trade.symbol(), "AAPL");
+    assert_eq!(trade.symbol_id(), "AAPL");
     assert_eq!(trade.trade_id(), "12345");
     assert_eq!(trade.price(), Decimal::new(100, 2));
     assert_eq!(trade.quantity(), Decimal::new(10, 0));
@@ -23,7 +23,7 @@ fn test_trade_creation() {
 fn test_trade_defaults() {
     let trade = Trade::default();
 
-    assert_eq!(trade.symbol(), "");
+    assert_eq!(trade.symbol_id(), "");
     assert_eq!(trade.trade_id(), "");
     assert_eq!(trade.price(), Decimal::new(0, 0));
     assert_eq!(trade.quantity(), Decimal::new(0, 0));
@@ -36,18 +36,18 @@ fn test_trade_eq() {
 
     let trade1 = Trade::new(
         "AAPL".to_string(),
-        time,
-        time,
         "12345".to_string(),
+        time,
+        time,
         Decimal::new(100, 2),
         Decimal::new(10, 0),
     );
 
     let trade2 = Trade::new(
         "AAPL".to_string(),
-        time,
-        time,
         "12345".to_string(),
+        time,
+        time,
         Decimal::new(100, 2),
         Decimal::new(10, 0),
     );
@@ -59,18 +59,18 @@ fn test_trade_eq() {
 fn test_trade_neq() {
     let trade1 = Trade::new(
         "AAPL".to_string(),
-        Utc::now(),
-        Utc::now(),
         "12345".to_string(),
+        Utc::now(),
+        Utc::now(),
         Decimal::new(100, 2),
         Decimal::new(10, 0),
     );
 
     let trade2 = Trade::new(
         "GOOG".to_string(),
-        Utc::now(),
-        Utc::now(),
         "67890".to_string(),
+        Utc::now(),
+        Utc::now(),
         Decimal::new(200, 2),
         Decimal::new(20, 0),
     );
@@ -82,9 +82,9 @@ fn test_trade_neq() {
 fn test_trade_clone() {
     let trade = Trade::new(
         "AAPL".to_string(),
-        Utc::now(),
-        Utc::now(),
         "12345".to_string(),
+        Utc::now(),
+        Utc::now(),
         Decimal::new(100, 2),
         Decimal::new(10, 0),
     );
@@ -98,9 +98,9 @@ fn test_trade_clone() {
 fn test_trade_debug() {
     let trade = Trade::new(
         "AAPL".to_string(),
-        Utc::now(),
-        Utc::now(),
         "12345".to_string(),
+        Utc::now(),
+        Utc::now(),
         Decimal::new(100, 2),
         Decimal::new(10, 0),
     );
@@ -117,9 +117,9 @@ fn test_trade_debug() {
 fn test_trade_display() {
     let trade = Trade::new(
         "AAPL".to_string(),
-        Utc::now(),
-        Utc::now(),
         "12345".to_string(),
+        Utc::now(),
+        Utc::now(),
         Decimal::new(100, 2),
         Decimal::new(10, 0),
     );

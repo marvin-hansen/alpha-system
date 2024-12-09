@@ -6,16 +6,10 @@
 use ::core::convert::TryInto;
 
 pub mod client_error_codec;
-pub mod client_error_type;
 pub mod client_login_codec;
 pub mod client_logout_codec;
 pub mod data_bar_codec;
 pub mod data_error_codec;
-pub mod exchange_id;
-pub mod first_data_bar_codec;
-pub mod first_trade_bar_codec;
-pub mod last_data_bar_codec;
-pub mod last_trade_bar_codec;
 pub mod message_header_codec;
 pub mod message_type;
 pub mod start_data_msg_codec;
@@ -24,16 +18,10 @@ pub mod stop_data_msg_codec;
 pub mod trade_bar_codec;
 
 pub use crate::client_error_codec::*;
-pub use crate::client_error_type::*;
 pub use crate::client_login_codec::*;
 pub use crate::client_logout_codec::*;
 pub use crate::data_bar_codec::*;
 pub use crate::data_error_codec::*;
-pub use crate::exchange_id::*;
-pub use crate::first_data_bar_codec::*;
-pub use crate::first_trade_bar_codec::*;
-pub use crate::last_data_bar_codec::*;
-pub use crate::last_trade_bar_codec::*;
 pub use crate::message_header_codec::*;
 pub use crate::message_type::*;
 pub use crate::start_data_msg_codec::*;
@@ -85,14 +73,13 @@ pub struct ReadBuf<'a> {
 }
 impl<'a> Reader<'a> for ReadBuf<'a> {
     #[inline]
-    fn get_buf(&self) -> &Self {
+    fn get_buf(&self) -> &ReadBuf<'a> {
         self
     }
 }
 impl<'a> ReadBuf<'a> {
     #[inline]
-    #[must_use]
-    pub const fn new(data: &'a [u8]) -> Self {
+    pub fn new(data: &'a [u8]) -> Self {
         Self { data }
     }
 
@@ -109,67 +96,56 @@ impl<'a> ReadBuf<'a> {
     }
 
     #[inline]
-    #[must_use]
-    pub const fn get_u8_at(&self, index: usize) -> u8 {
+    pub fn get_u8_at(&self, index: usize) -> u8 {
         self.data[index]
     }
 
     #[inline]
-    #[must_use]
     pub fn get_i8_at(&self, index: usize) -> i8 {
         i8::from_le_bytes(Self::get_bytes_at(self.data, index))
     }
 
     #[inline]
-    #[must_use]
     pub fn get_i16_at(&self, index: usize) -> i16 {
         i16::from_le_bytes(Self::get_bytes_at(self.data, index))
     }
 
     #[inline]
-    #[must_use]
     pub fn get_i32_at(&self, index: usize) -> i32 {
         i32::from_le_bytes(Self::get_bytes_at(self.data, index))
     }
 
     #[inline]
-    #[must_use]
     pub fn get_i64_at(&self, index: usize) -> i64 {
         i64::from_le_bytes(Self::get_bytes_at(self.data, index))
     }
 
     #[inline]
-    #[must_use]
     pub fn get_u16_at(&self, index: usize) -> u16 {
         u16::from_le_bytes(Self::get_bytes_at(self.data, index))
     }
 
     #[inline]
-    #[must_use]
     pub fn get_u32_at(&self, index: usize) -> u32 {
         u32::from_le_bytes(Self::get_bytes_at(self.data, index))
     }
 
     #[inline]
-    #[must_use]
     pub fn get_u64_at(&self, index: usize) -> u64 {
         u64::from_le_bytes(Self::get_bytes_at(self.data, index))
     }
 
     #[inline]
-    #[must_use]
     pub fn get_f32_at(&self, index: usize) -> f32 {
         f32::from_le_bytes(Self::get_bytes_at(self.data, index))
     }
 
     #[inline]
-    #[must_use]
     pub fn get_f64_at(&self, index: usize) -> f64 {
         f64::from_le_bytes(Self::get_bytes_at(self.data, index))
     }
 
     #[inline]
-    #[must_use]
     pub fn get_slice_at(&self, index: usize, len: usize) -> &[u8] {
         &self.data[index..index + len]
     }

@@ -3,7 +3,7 @@ use common_data_bar::{OHLCVBar, SampledDataBars};
 use rust_decimal::Decimal;
 
 fn get_ohlcv_bar(date_time: chrono::DateTime<Utc>) -> OHLCVBar {
-    let symbol_id = 123;
+    let symbol_id = "APPL".to_string();
     let open = Decimal::new(10000, 2);
     let high = Decimal::new(11000, 2);
     let low = Decimal::new(9000, 2);

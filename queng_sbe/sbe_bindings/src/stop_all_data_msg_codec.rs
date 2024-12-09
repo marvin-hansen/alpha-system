@@ -1,7 +1,4 @@
-use crate::{
-    message_header_codec, Decoder, Encoder, MessageHeaderDecoder, MessageHeaderEncoder,
-    MessageType, ReadBuf, Reader, WriteBuf, Writer,
-};
+use crate::*;
 
 pub use decoder::StopAllDataMsgDecoder;
 pub use encoder::StopAllDataMsgEncoder;
@@ -13,10 +10,7 @@ pub const SBE_SCHEMA_VERSION: u16 = 1;
 pub const SBE_SEMANTIC_VERSION: &str = "5.2";
 
 pub mod encoder {
-    use super::{
-        Encoder, MessageHeaderEncoder, MessageType, WriteBuf, Writer, SBE_BLOCK_LENGTH,
-        SBE_SCHEMA_ID, SBE_SCHEMA_VERSION, SBE_TEMPLATE_ID,
-    };
+    use super::*;
 
     #[derive(Debug, Default)]
     pub struct StopAllDataMsgEncoder<'a> {
@@ -46,8 +40,7 @@ pub mod encoder {
     }
 
     impl<'a> StopAllDataMsgEncoder<'a> {
-        #[must_use]
-        pub const fn wrap(mut self, buf: WriteBuf<'a>, offset: usize) -> Self {
+        pub fn wrap(mut self, buf: WriteBuf<'a>, offset: usize) -> Self {
             let limit = offset + SBE_BLOCK_LENGTH as usize;
             self.buf = buf;
             self.initial_offset = offset;
@@ -57,12 +50,10 @@ pub mod encoder {
         }
 
         #[inline]
-        #[must_use]
-        pub const fn encoded_length(&self) -> usize {
+        pub fn encoded_length(&self) -> usize {
             self.limit - self.offset
         }
 
-        #[must_use]
         pub fn header(self, offset: usize) -> MessageHeaderEncoder<Self> {
             let mut header = MessageHeaderEncoder::default().wrap(self, offset);
             header.block_length(SBE_BLOCK_LENGTH);
@@ -76,7 +67,7 @@ pub mod encoder {
         #[inline]
         pub fn message_type(&mut self, value: MessageType) {
             let offset = self.offset;
-            self.get_buf_mut().put_u16_at(offset, value as u16);
+            self.get_buf_mut().put_u16_at(offset, value as u16)
         }
 
         /// primitive field 'clientID'
@@ -110,10 +101,7 @@ pub mod encoder {
 } // end encoder
 
 pub mod decoder {
-    use super::{
-        message_header_codec, Decoder, MessageHeaderDecoder, MessageType, ReadBuf, Reader,
-        SBE_TEMPLATE_ID,
-    };
+    use super::*;
 
     #[derive(Clone, Copy, Debug, Default)]
     pub struct StopAllDataMsgDecoder<'a> {
@@ -145,8 +133,7 @@ pub mod decoder {
     }
 
     impl<'a> StopAllDataMsgDecoder<'a> {
-        #[must_use]
-        pub const fn wrap(
+        pub fn wrap(
             mut self,
             buf: ReadBuf<'a>,
             offset: usize,
@@ -164,12 +151,10 @@ pub mod decoder {
         }
 
         #[inline]
-        #[must_use]
-        pub const fn encoded_length(&self) -> usize {
+        pub fn encoded_length(&self) -> usize {
             self.limit - self.offset
         }
 
-        #[must_use]
         pub fn header(self, mut header: MessageHeaderDecoder<ReadBuf<'a>>) -> Self {
             debug_assert_eq!(SBE_TEMPLATE_ID, header.template_id());
             let acting_block_length = header.block_length();
@@ -185,21 +170,18 @@ pub mod decoder {
 
         /// REQUIRED enum
         #[inline]
-        #[must_use]
         pub fn message_type(&self) -> MessageType {
             self.get_buf().get_u16_at(self.offset).into()
         }
 
         /// primitive field - 'REQUIRED'
         #[inline]
-        #[must_use]
         pub fn client_id(&self) -> u16 {
             self.get_buf().get_u16_at(self.offset + 2)
         }
 
         /// primitive field - 'REQUIRED'
         #[inline]
-        #[must_use]
         pub fn exchange_id(&self) -> u8 {
             self.get_buf().get_u8_at(self.offset + 4)
         }

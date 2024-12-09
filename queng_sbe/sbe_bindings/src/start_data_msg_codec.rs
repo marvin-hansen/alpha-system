@@ -1,22 +1,16 @@
-use crate::{
-    message_header_codec, Decoder, Encoder, MessageHeaderDecoder, MessageHeaderEncoder,
-    MessageType, ReadBuf, Reader, WriteBuf, Writer,
-};
+use crate::*;
 
 pub use decoder::StartDataMsgDecoder;
 pub use encoder::StartDataMsgEncoder;
 
-pub const SBE_BLOCK_LENGTH: u16 = 9;
+pub const SBE_BLOCK_LENGTH: u16 = 15;
 pub const SBE_TEMPLATE_ID: u16 = 201;
 pub const SBE_SCHEMA_ID: u16 = 1;
 pub const SBE_SCHEMA_VERSION: u16 = 1;
 pub const SBE_SEMANTIC_VERSION: &str = "5.2";
 
 pub mod encoder {
-    use super::{
-        Encoder, MessageHeaderEncoder, MessageType, WriteBuf, Writer, SBE_BLOCK_LENGTH,
-        SBE_SCHEMA_ID, SBE_SCHEMA_VERSION, SBE_TEMPLATE_ID,
-    };
+    use super::*;
 
     #[derive(Debug, Default)]
     pub struct StartDataMsgEncoder<'a> {
@@ -46,8 +40,7 @@ pub mod encoder {
     }
 
     impl<'a> StartDataMsgEncoder<'a> {
-        #[must_use]
-        pub const fn wrap(mut self, buf: WriteBuf<'a>, offset: usize) -> Self {
+        pub fn wrap(mut self, buf: WriteBuf<'a>, offset: usize) -> Self {
             let limit = offset + SBE_BLOCK_LENGTH as usize;
             self.buf = buf;
             self.initial_offset = offset;
@@ -57,12 +50,10 @@ pub mod encoder {
         }
 
         #[inline]
-        #[must_use]
-        pub const fn encoded_length(&self) -> usize {
+        pub fn encoded_length(&self) -> usize {
             self.limit - self.offset
         }
 
-        #[must_use]
         pub fn header(self, offset: usize) -> MessageHeaderEncoder<Self> {
             let mut header = MessageHeaderEncoder::default().wrap(self, offset);
             header.block_length(SBE_BLOCK_LENGTH);
@@ -76,7 +67,7 @@ pub mod encoder {
         #[inline]
         pub fn message_type(&mut self, value: MessageType) {
             let offset = self.offset;
-            self.get_buf_mut().put_u16_at(offset, value as u16);
+            self.get_buf_mut().put_u16_at(offset, value as u16)
         }
 
         /// primitive field 'clientID'
@@ -109,16 +100,16 @@ pub mod encoder {
 
         /// primitive field 'symbolID'
         /// - min value: 0
-        /// - max value: 65534
-        /// - null value: 65535
+        /// - max value: -2
+        /// - null value: -1
         /// - characterEncoding: null
         /// - semanticType: null
         /// - encodedOffset: 5
-        /// - encodedLength: 2
+        /// - encodedLength: 8
         #[inline]
-        pub fn symbol_id(&mut self, value: u16) {
+        pub fn symbol_id(&mut self, value: u64) {
             let offset = self.offset + 5;
-            self.get_buf_mut().put_u16_at(offset, value);
+            self.get_buf_mut().put_u64_at(offset, value);
         }
 
         /// primitive field 'timeResolution'
@@ -127,11 +118,11 @@ pub mod encoder {
         /// - null value: 255
         /// - characterEncoding: null
         /// - semanticType: null
-        /// - encodedOffset: 7
+        /// - encodedOffset: 13
         /// - encodedLength: 1
         #[inline]
         pub fn time_resolution(&mut self, value: u8) {
-            let offset = self.offset + 7;
+            let offset = self.offset + 13;
             self.get_buf_mut().put_u8_at(offset, value);
         }
 
@@ -141,21 +132,18 @@ pub mod encoder {
         /// - null value: 255
         /// - characterEncoding: null
         /// - semanticType: null
-        /// - encodedOffset: 8
+        /// - encodedOffset: 14
         /// - encodedLength: 1
         #[inline]
         pub fn data_type_id(&mut self, value: u8) {
-            let offset = self.offset + 8;
+            let offset = self.offset + 14;
             self.get_buf_mut().put_u8_at(offset, value);
         }
     }
 } // end encoder
 
 pub mod decoder {
-    use super::{
-        message_header_codec, Decoder, MessageHeaderDecoder, MessageType, ReadBuf, Reader,
-        SBE_TEMPLATE_ID,
-    };
+    use super::*;
 
     #[derive(Clone, Copy, Debug, Default)]
     pub struct StartDataMsgDecoder<'a> {
@@ -187,8 +175,7 @@ pub mod decoder {
     }
 
     impl<'a> StartDataMsgDecoder<'a> {
-        #[must_use]
-        pub const fn wrap(
+        pub fn wrap(
             mut self,
             buf: ReadBuf<'a>,
             offset: usize,
@@ -206,12 +193,10 @@ pub mod decoder {
         }
 
         #[inline]
-        #[must_use]
-        pub const fn encoded_length(&self) -> usize {
+        pub fn encoded_length(&self) -> usize {
             self.limit - self.offset
         }
 
-        #[must_use]
         pub fn header(self, mut header: MessageHeaderDecoder<ReadBuf<'a>>) -> Self {
             debug_assert_eq!(SBE_TEMPLATE_ID, header.template_id());
             let acting_block_length = header.block_length();
@@ -227,44 +212,38 @@ pub mod decoder {
 
         /// REQUIRED enum
         #[inline]
-        #[must_use]
         pub fn message_type(&self) -> MessageType {
             self.get_buf().get_u16_at(self.offset).into()
         }
 
         /// primitive field - 'REQUIRED'
         #[inline]
-        #[must_use]
         pub fn client_id(&self) -> u16 {
             self.get_buf().get_u16_at(self.offset + 2)
         }
 
         /// primitive field - 'REQUIRED'
         #[inline]
-        #[must_use]
         pub fn exchange_id(&self) -> u8 {
             self.get_buf().get_u8_at(self.offset + 4)
         }
 
         /// primitive field - 'REQUIRED'
         #[inline]
-        #[must_use]
-        pub fn symbol_id(&self) -> u16 {
-            self.get_buf().get_u16_at(self.offset + 5)
+        pub fn symbol_id(&self) -> u64 {
+            self.get_buf().get_u64_at(self.offset + 5)
         }
 
         /// primitive field - 'REQUIRED'
         #[inline]
-        #[must_use]
         pub fn time_resolution(&self) -> u8 {
-            self.get_buf().get_u8_at(self.offset + 7)
+            self.get_buf().get_u8_at(self.offset + 13)
         }
 
         /// primitive field - 'REQUIRED'
         #[inline]
-        #[must_use]
         pub fn data_type_id(&self) -> u8 {
-            self.get_buf().get_u8_at(self.offset + 8)
+            self.get_buf().get_u8_at(self.offset + 14)
         }
     }
 } // end decoder

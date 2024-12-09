@@ -1,11 +1,10 @@
 [package]
 name = "sbe_bindings"
 version = "0.1.0"
-edition.workspace = true
-rust-version.workspace = true
-readme.workspace = true
-repository.workspace = true
-authors.workspace = true
+authors = ["sbetool"]
+description = "Quant engine Schema"
+edition = "2021"
 
-[lints]
-workspace = true
+[lib]
+name = "sbe_bindings"
+path = "src/lib.rs"

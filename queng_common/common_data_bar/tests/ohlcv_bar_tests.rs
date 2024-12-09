@@ -5,7 +5,7 @@ use common_data_bar::OHLCVBar;
 
 #[must_use]
 pub fn get_ohlcv_bar(date_time: DateTime<Utc>) -> OHLCVBar {
-    let symbol_id = 123;
+    let symbol_id = "APPL".to_string();
     let open = Decimal::new(10000, 2);
     let high = Decimal::new(11000, 2);
     let low = Decimal::new(9000, 2);
@@ -86,7 +86,7 @@ fn test_symbol_id() {
     let now = Utc::now();
     let bar = get_ohlcv_bar(now);
 
-    let expected = 123;
+    let expected = "APPL".to_string();
     let actual = bar.symbol_id();
 
     assert_eq!(expected, actual);

@@ -4,10 +4,10 @@ use std::fmt::{Display, Formatter};
 
 #[derive(Debug, Default, Eq, Clone, PartialEq)]
 pub struct Trade {
-    symbol: String,
+    symbol_id: String,
+    trade_id: String,
     time_exchange: DateTime<Utc>,
     time_integration: DateTime<Utc>,
-    trade_id: String,
     price: Decimal,
     quantity: Decimal,
 }
@@ -27,18 +27,18 @@ impl Trade {
     /// - A new `Trade` instance
     ///
     pub fn new(
-        symbol: String,
+        symbol_id: String,
+        trade_id: String,
         time_exchange: DateTime<Utc>,
         time_integration: DateTime<Utc>,
-        trade_id: String,
         price: Decimal,
         quantity: Decimal,
     ) -> Self {
         Self {
-            symbol,
+            symbol_id,
+            trade_id,
             time_exchange,
             time_integration,
-            trade_id,
             price,
             quantity,
         }
@@ -46,8 +46,8 @@ impl Trade {
 }
 
 impl Trade {
-    pub fn symbol(&self) -> &str {
-        &self.symbol
+    pub fn symbol_id(&self) -> &str {
+        &self.symbol_id
     }
 
     pub fn time_exchange(&self) -> DateTime<Utc> {

@@ -13,7 +13,7 @@ pub struct StartDataMessage {
     message_type: MessageType,
     client_id: u16,
     exchange_id: ExchangeID,
-    symbol_id: u16,
+    symbol_id: String,
     time_resolution: TimeResolution,
     data_type_id: DataType,
 }
@@ -39,7 +39,7 @@ impl StartDataMessage {
     pub const fn new(
         client_id: u16,
         exchange_id: ExchangeID,
-        symbol_id: u16,
+        symbol_id: String,
         time_resolution: TimeResolution,
         data_type_id: DataType,
     ) -> Self {

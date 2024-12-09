@@ -21,7 +21,7 @@ impl TradeBar {
     }
     /// Returns the symbol_id of TradeBar
     #[must_use]
-    pub const fn symbol_id(&self) -> u16 {
-        self.symbol_id
+    pub fn symbol_id(&self) -> &str {
+        &self.symbol_id
     }
 }

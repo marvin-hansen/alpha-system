@@ -54,7 +54,7 @@ impl OHLCVBar {
 
     /// Returns the `symbol_id` field of the `OHLCVBar`.
     #[must_use]
-    pub const fn symbol_id(&self) -> u16 {
-        self.symbol_id
+    pub fn symbol_id(&self) -> &str {
+        &self.symbol_id
     }
 }

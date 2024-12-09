@@ -16,7 +16,7 @@ impl StopDataMessage {
         &self.exchange_id
     }
     #[must_use]
-    pub const fn symbol_id(&self) -> &u16 {
+    pub const fn symbol_id(&self) -> &String {
         &self.symbol_id
     }
 

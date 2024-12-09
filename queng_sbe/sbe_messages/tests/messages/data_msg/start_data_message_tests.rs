@@ -2,10 +2,10 @@ use common_data_bar::TimeResolution;
 use common_exchange::ExchangeID;
 use sbe_messages::{DataType, MessageType, StartDataMessage};
 
-const fn get_message() -> StartDataMessage {
+fn get_message() -> StartDataMessage {
     let client_id = 1;
     let exchange_id = ExchangeID::Kraken;
-    let symbol_id = 1;
+    let symbol_id = "APPL".to_string();
     let data_type = DataType::TradeData;
     let time_resolution = TimeResolution::NoValue; // TimeResolution only applies to OHLCV data type
     StartDataMessage::new(
@@ -22,7 +22,7 @@ fn test_new() {
     let message = get_message();
 
     let exchange_id = ExchangeID::Kraken;
-    let symbol_id = 1;
+    let symbol_id = "APPL".to_string();
     let data_type = DataType::TradeData;
     let time_resolution = TimeResolution::NoValue;
 
@@ -39,7 +39,7 @@ fn test_encode() {
     let message = get_message();
 
     let exchange_id = ExchangeID::Kraken;
-    let symbol_id = 1;
+    let symbol_id = "APPL".to_string();
     let time_resolution = TimeResolution::NoValue;
     let data_type = DataType::TradeData;
 
@@ -54,9 +54,11 @@ fn test_encode() {
     assert!(enc.is_ok());
 
     let (limit, buffer) = enc.unwrap();
-    assert_eq!(limit, 17);
+    assert_eq!(limit, 23);
 
-    let expected: Vec<u8> = vec![9, 0, 201, 0, 1, 0, 1, 0, 201, 0, 1, 0, 1, 1, 0, 0, 1];
+    let expected: Vec<u8> = vec![
+        15, 0, 201, 0, 1, 0, 1, 0, 201, 0, 1, 0, 1, 65, 80, 80, 76, 0, 0, 0, 0, 0, 1,
+    ];
     let actual = buffer;
 
     assert_eq!(expected, actual);
@@ -64,13 +66,15 @@ fn test_encode() {
 
 #[test]
 fn test_decode() {
-    let encoded: Vec<u8> = vec![9, 0, 201, 0, 1, 0, 1, 0, 201, 0, 1, 0, 1, 1, 0, 0, 1];
+    let encoded: Vec<u8> = vec![
+        15, 0, 201, 0, 1, 0, 1, 0, 201, 0, 1, 0, 1, 65, 80, 80, 76, 0, 0, 0, 0, 0, 1,
+    ];
     let buffer = encoded.as_slice();
 
     let message = StartDataMessage::from(buffer);
 
     let exchange_id = ExchangeID::Kraken;
-    let symbol_id = 1;
+    let symbol_id = "APPL".to_string();
     let time_resolution = TimeResolution::NoValue;
     let data_type = DataType::TradeData;
 
@@ -107,7 +111,7 @@ fn test_exchange_id() {
 #[test]
 fn test_symbol_id() {
     let message = get_message();
-    let symbol_id = 1;
+    let symbol_id = "APPL".to_string();
 
     assert_eq!(message.symbol_id(), &symbol_id);
 }

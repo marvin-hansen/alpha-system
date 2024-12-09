@@ -53,8 +53,15 @@ impl ClickhouseDBManager {
 
         let mut trades = Vec::with_capacity(trade_rows.len());
 
+        let symbol_id = symbol_id.to_string();
+
         for row in trade_rows {
-            let bar = TradeBar::new(symbol_id, row.date_time(), row.price(), row.volume());
+            let bar = TradeBar::new(
+                symbol_id.clone(),
+                row.date_time(),
+                row.price(),
+                row.volume(),
+            );
             trades.push(bar);
         }
 

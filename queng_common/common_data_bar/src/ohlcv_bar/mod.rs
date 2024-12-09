@@ -3,13 +3,12 @@ use std::fmt::Debug;
 use chrono::{DateTime, Utc};
 use rust_decimal::Decimal;
 
-mod default;
 mod display;
 mod getters;
 
-#[derive(Debug, Eq, Clone, PartialEq)]
+#[derive(Debug, Default, Eq, Clone, PartialEq)]
 pub struct OHLCVBar {
-    symbol_id: u16,
+    symbol_id: String,
     date_time: DateTime<Utc>,
     open: Decimal,
     high: Decimal,
@@ -36,7 +35,7 @@ impl OHLCVBar {
     /// A new `OHLCVBar` instance with the provided fields populated.
     #[must_use]
     pub const fn new(
-        symbol_id: u16,
+        symbol_id: String,
         date_time: DateTime<Utc>,
         open: Decimal,
         high: Decimal,

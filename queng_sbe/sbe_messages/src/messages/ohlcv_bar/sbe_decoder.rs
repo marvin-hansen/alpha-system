@@ -48,7 +48,8 @@ pub fn decode_data_bar_message(buffer: &[u8]) -> Result<OHLCVBar, SbeDecodeError
     let message_type = MessageType::from(sbe_message_type as u16);
     assert_eq!(message_type, MessageType::OHLCVBar);
 
-    let symbol_id = csg.symbol_id();
+    let val = encoding_utils::int_to_str(csg.symbol_id()).expect("Failed to decode symbol ID");
+    let symbol_id = String::from(val);
 
     let sbe_date_time = csg.date_time();
     let date_time: DateTime<Utc> = Utc.timestamp_micros(sbe_date_time).unwrap();

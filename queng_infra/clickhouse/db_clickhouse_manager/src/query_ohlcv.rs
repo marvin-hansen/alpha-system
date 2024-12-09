@@ -59,9 +59,11 @@ impl ClickhouseDBManager {
 
         let mut bars = Vec::with_capacity(ohlcv_rows.len());
 
+        let symbol_id = symbol_id.to_string();
+
         for row in ohlcv_rows {
             let bar = OHLCVBar::new(
-                symbol_id,
+                symbol_id.clone(),
                 row.date_time(),
                 row.open(),
                 row.high(),

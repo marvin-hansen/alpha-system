@@ -17,12 +17,9 @@ pub use crate::messages::data_stop_all::StopAllDataMessage;
 pub use crate::messages::error_client::ClientErrorMessage;
 pub use crate::messages::error_data::DataErrorMessage;
 pub use crate::messages::ohlcv_bar::SbeOHLCVBar;
-pub use crate::messages::ohlcv_bar_first::FirstOHLCVBar;
-pub use crate::messages::ohlcv_bar_last::LastOHLCVBar;
 pub use crate::messages::trade::SbeTrade;
 pub use crate::messages::trade_bar::SbeTradeBar;
-pub use crate::messages::trade_bar_first::FirstTradeBar;
-pub use crate::messages::trade_bar_last::LastTradeBar;
+
 // Message types
 pub use crate::types::client_error_types::ClientErrorType;
 pub use crate::types::data_error_types::DataErrorType;

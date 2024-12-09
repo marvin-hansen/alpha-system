@@ -15,6 +15,7 @@ rust_library(
         # Internal crates
         "//alias:common_data_bar",
         "//alias:common_exchange",
+        "//alias:encoding_utils",
         "//alias:sbe_bindings",
         # External crates
         "//thirdparty/crates:rust_decimal",

@@ -14,6 +14,7 @@ workspace = true
 # Internal crates
 common_data_bar = { workspace = true }
 common_exchange = { workspace = true }
+encoding_utils = { workspace = true }
 sbe_bindings = { workspace = true }
 # External crates
 rust_decimal = { workspace = true }

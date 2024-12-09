@@ -12,7 +12,7 @@ pub struct StopDataMessage {
     message_type: MessageType,
     client_id: u16,
     exchange_id: ExchangeID,
-    symbol_id: u16,
+    symbol_id: String,
     data_type_id: DataType,
 }
 
@@ -36,7 +36,7 @@ impl StopDataMessage {
     pub const fn new(
         client_id: u16,
         exchange_id: ExchangeID,
-        symbol_id: u16,
+        symbol_id: String,
         data_type_id: DataType,
     ) -> Self {
         let message_type = MessageType::StopData;

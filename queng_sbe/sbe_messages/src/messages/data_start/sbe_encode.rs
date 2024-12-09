@@ -33,8 +33,8 @@ impl StartDataMessage {
     /// - Return encoded size and buffer
     ///
     pub fn encode(&self) -> Result<(usize, Vec<u8>), SbeEncodeError> {
-        // precise buffer size is 17 bytes for the entire message.
-        let mut buffer = vec![0u8; 17];
+        // precise buffer size is 22 bytes for the entire message.
+        let mut buffer = vec![0u8; 23];
 
         let mut csg = StartDataMsgEncoder::default();
 
@@ -54,7 +54,7 @@ impl StartDataMessage {
         let value = self.exchange_id as u8;
         csg.exchange_id(value);
 
-        let value = self.symbol_id;
+        let value = encoding_utils::str_to_int(&self.symbol_id).expect("Failed to encode string");
         csg.symbol_id(value);
 
         let value = self.time_resolution as u8;

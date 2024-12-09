@@ -32,7 +32,7 @@ impl StopDataMessage {
     /// - Return encoded size and buffer
     ///
     pub fn encode(&self) -> Result<(usize, Vec<u8>), SbeEncodeError> {
-        let mut buffer = vec![0u8; 16];
+        let mut buffer = vec![0u8; 22];
 
         let mut csg = StopDataMsgEncoder::default();
 
@@ -52,7 +52,7 @@ impl StopDataMessage {
         let value = self.exchange_id as u8;
         csg.exchange_id(value);
 
-        let value = self.symbol_id;
+        let value = encoding_utils::str_to_int(&self.symbol_id).expect("Failed to encode string");
         csg.symbol_id(value);
 
         let value = self.data_type_id as u8;
