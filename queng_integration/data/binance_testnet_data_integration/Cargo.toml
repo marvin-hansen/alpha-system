@@ -1,5 +1,5 @@
 [package]
-name = "binance_spot_data_integration"
+name = "binance_testnet_data_integration"
 version = "0.1.0"
 edition.workspace = true
 rust-version.workspace = true
@@ -11,7 +11,6 @@ authors.workspace = true
 [lints]
 workspace = true
 
-
 [dependencies]
 # Internal crates
 common_errors = {workspace = true}
@@ -21,7 +20,6 @@ trait_data_integration = {workspace = true}
 rustls = {workspace = true}
 tokio = {workspace = true}
 
-
 [[example]]
-name = "binance_spot_data_example"
-path = "examples/binance_spot_data_example.rs"
+name = "binance_testnet_data_example"
+path = "examples/binance_testnet_data_example.rs"

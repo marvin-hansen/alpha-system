@@ -318,6 +318,11 @@ alias(
 )
 
 alias(
+    name = "binance_testnet_data_integration",
+    actual = "//queng_integration/data/binance_testnet_data_integration",
+)
+
+alias(
     name = "vex_data_integration",
     actual = "//queng_integration/data/vex_data_integration",
 )
