@@ -308,8 +308,13 @@ alias(
 )
 
 alias(
-    name = "binance_data_integration",
-    actual = "//queng_integration/data/binance_data_integration",
+    name = "binance_core_data_integration",
+    actual = "//queng_integration/data/binance_core_data_integration",
+)
+
+alias(
+    name = "binance_spot_data_integration",
+    actual = "//queng_integration/data/binance_spot_data_integration",
 )
 
 alias(

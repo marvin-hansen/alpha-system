@@ -1,42 +1,37 @@
 load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library")
 
 rust_library(
-    name = "all_data_integration",
+    name = "binance_spot_data_integration",
     srcs = glob([
         "src/**",
     ]),
     crate_root = "src/lib.rs",
-    proc_macro_deps = [
-        "//thirdparty/crates:enum_dispatch",
-        "//thirdparty/crates:trait-variant",
-    ],
     tags = [
-        "all_data_integration",
+        "binance_spot_data_integration",
         "data_integration",
     ],
     visibility = ["//visibility:public"],
     deps = [
         # Internal crates
         "//alias:common_errors",
-        "//alias:common_ims",
-        "//alias:binance_spot_data_integration",
-        "//alias:vex_data_integration",
+        "//alias:binance_core_data_integration",
         "//alias:trait_data_integration",
         # External crates
+        "//thirdparty/crates:rustls",
         "//thirdparty/crates:tokio",
     ],
 )
 
 rust_doc(
     name = "doc",
-    crate = ":all_data_integration",
+    crate = ":binance_spot_data_integration",
     tags = ["doc"],
     visibility = ["//visibility:public"],
 )
 
 rust_doc_test(
     name = "doc_test",
-    crate = ":all_data_integration",
+    crate = ":binance_spot_data_integration",
     tags = ["doc-test"],
     visibility = ["//visibility:public"],
 )

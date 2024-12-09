@@ -1,8 +1,10 @@
-use binance_data_integration::ImsBinanceDataIntegration;
+use binance_spot_data_integration::ImsBinanceSpotDataIntegration;
 use common_errors::MessageProcessingError;
 use std::sync::Arc;
 use tokio::time::Duration;
-use trait_data_integration::{EventProcessor, ImsDataIntegration};
+use trait_data_integration::{
+    EventProcessor, ImsDataIntegration, ImsOhlcvDataIntegration, ImsTradeDataIntegration,
+};
 
 /// A simple event processor that prints received data to the console.
 /// In a real application, you might want to parse the JSON and process
@@ -37,7 +39,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .expect("Failed to install default rustls crypto provider");
 
     // Create a new instance of the Binance integration
-    let integration = ImsBinanceDataIntegration::new();
+    let integration = ImsBinanceSpotDataIntegration::new();
     let processor = Arc::new(PrintEventProcessor);
 
     // Example symbols - you can modify these to any valid Binance trading pairs

@@ -1,17 +1,11 @@
 [package]
-name = "binance_data_integration"
+name = "binance_core_data_integration"
 version = "0.1.0"
 edition.workspace = true
 rust-version.workspace = true
 readme.workspace = true
 repository.workspace = true
 authors.workspace = true
-
-
-[[example]]
-name = "binance_data_example"
-path = "examples/binance_data_example.rs"
-
 
 
 [lints]

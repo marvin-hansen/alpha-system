@@ -3,7 +3,7 @@ use common_ims::ExchangeDataIntegrationID::*;
 
 #[tokio::test]
 async fn test_all_data_integration_id() {
-    let binance_data: DataIntegration = all_data_integration::get_data_integration(BinanceData);
+    let binance_data: DataIntegration = all_data_integration::get_data_integration(BinanceSpotData);
 
     let id = binance_data.id().await.unwrap();
     assert_eq!(id, "BinanceDataIntegration".to_string());

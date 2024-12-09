@@ -1,27 +1,29 @@
 use crate::DataIntegrationTrait;
-use binance_data_integration::ImsBinanceDataIntegration;
+use binance_spot_data_integration::ImsBinanceSpotDataIntegration;
 use common_errors::MessageProcessingError;
 use std::fmt::Error;
 use std::sync::Arc;
-use trait_data_integration::{EventProcessor, ImsDataIntegration};
+use trait_data_integration::{
+    EventProcessor, ImsDataIntegration, ImsOhlcvDataIntegration, ImsTradeDataIntegration,
+};
 
 const ID: &str = "BinanceDataIntegration";
 
 #[derive(Default)]
-pub struct BinanceDataIntegration {
-    integration: ImsBinanceDataIntegration,
+pub struct BinanceSpotDataIntegration {
+    integration: ImsBinanceSpotDataIntegration,
 }
 
-impl BinanceDataIntegration {
+impl BinanceSpotDataIntegration {
     pub fn new() -> Self {
-        let binance_data_integration = ImsBinanceDataIntegration::new();
+        let binance_data_integration = ImsBinanceSpotDataIntegration::new();
         Self {
             integration: binance_data_integration,
         }
     }
 }
 
-impl DataIntegrationTrait for BinanceDataIntegration {
+impl DataIntegrationTrait for BinanceSpotDataIntegration {
     async fn id(&self) -> Result<String, Error> {
         Ok(ID.to_string())
     }

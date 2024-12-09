@@ -94,7 +94,7 @@ impl IntegrationConfig {
     pub fn exchange_data_integration_id(&self) -> Option<ExchangeDataIntegrationID> {
         if self.ims_integration_type == ImsIntegrationType::Data {
             match self.exchange_id {
-                ExchangeID::Binance => Some(ExchangeDataIntegrationID::BinanceData),
+                ExchangeID::Binance => Some(ExchangeDataIntegrationID::BinanceSpotData),
                 _ => Some(ExchangeDataIntegrationID::NullVal),
             }
         } else {
