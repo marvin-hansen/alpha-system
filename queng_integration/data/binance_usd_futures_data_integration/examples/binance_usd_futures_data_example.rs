@@ -64,7 +64,7 @@ async fn main() -> Result<(), MessageProcessingError> {
         .await
     {
         eprintln!("✗ Failed to start trade data stream: {}", e);
-        return Err(e.into());
+        return Err(e);
     }
     println!("✓ Trade data stream started successfully!");
 
@@ -73,7 +73,7 @@ async fn main() -> Result<(), MessageProcessingError> {
         eprintln!("✗ Failed to start OHLCV data stream: {}", e);
         // Make sure to stop trade stream if OHLCV stream fails
         integration.stop_all_trade_data().await?;
-        return Err(e.into());
+        return Err(e);
     }
     println!("✓ OHLCV data stream started successfully!");
 
