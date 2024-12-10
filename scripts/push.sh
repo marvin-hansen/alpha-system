@@ -13,7 +13,7 @@ echo "Format targets "
 echo "=============="
 # Bazel file formatting (Installed via homebrew)
 # https://github.com/bazelbuild/buildtools
-command buildifier -r MODULE.bazel BUILD.bazel WORKSPACE.bzlmod thirdparty/BUILD.bazel
+command buildifier -r MODULE.bazel BUILD.bazel thirdparty/BUILD.bazel
 command buildifier -r build images queng_*
 
 # Rust code formatting
