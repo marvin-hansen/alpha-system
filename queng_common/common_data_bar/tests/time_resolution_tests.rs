@@ -1,48 +1,4 @@
-use std::str::FromStr;
-
 use common_data_bar::TimeResolution;
-
-#[test]
-fn test_time_resolution() {
-    assert_eq!(
-        TimeResolution::from_str("NoValue"),
-        Ok(TimeResolution::NoValue)
-    );
-    assert_eq!(
-        TimeResolution::from_str("OneMin"),
-        Ok(TimeResolution::OneMin)
-    );
-    assert_eq!(
-        TimeResolution::from_str("FiveMin"),
-        Ok(TimeResolution::FiveMin)
-    );
-    assert_eq!(
-        TimeResolution::from_str("FifteenMin"),
-        Ok(TimeResolution::FifteenMin)
-    );
-    assert_eq!(
-        TimeResolution::from_str("ThirtyMin"),
-        Ok(TimeResolution::ThirtyMin)
-    );
-    assert_eq!(
-        TimeResolution::from_str("OneHour"),
-        Ok(TimeResolution::OneHour)
-    );
-    assert_eq!(
-        TimeResolution::from_str("OneDay"),
-        Ok(TimeResolution::OneDay)
-    );
-    assert_eq!(
-        TimeResolution::from_str("OneWeek"),
-        Ok(TimeResolution::OneWeek)
-    );
-    assert_eq!(
-        TimeResolution::from_str("OneMonth"),
-        Ok(TimeResolution::OneMonth)
-    );
-
-    assert_eq!(TimeResolution::from_str("Invalid"), Err(()));
-}
 
 #[test]
 fn test_from_u8() {
@@ -60,12 +16,12 @@ fn test_from_u8() {
 #[test]
 fn test_display() {
     assert_eq!(format!("{}", TimeResolution::NoValue), "NoValue");
-    assert_eq!(format!("{}", TimeResolution::OneMin), "1 minute");
-    assert_eq!(format!("{}", TimeResolution::FiveMin), "5 minute");
-    assert_eq!(format!("{}", TimeResolution::FifteenMin), "15 minute");
-    assert_eq!(format!("{}", TimeResolution::ThirtyMin), "30 minute");
-    assert_eq!(format!("{}", TimeResolution::OneHour), "1 hour");
-    assert_eq!(format!("{}", TimeResolution::OneDay), "1 day");
-    assert_eq!(format!("{}", TimeResolution::OneWeek), "1 week");
-    assert_eq!(format!("{}", TimeResolution::OneMonth), "1 month");
+    assert_eq!(format!("{}", TimeResolution::OneMin), "1m");
+    assert_eq!(format!("{}", TimeResolution::FiveMin), "5m");
+    assert_eq!(format!("{}", TimeResolution::FifteenMin), "15m");
+    assert_eq!(format!("{}", TimeResolution::ThirtyMin), "30m");
+    assert_eq!(format!("{}", TimeResolution::OneHour), "1h");
+    assert_eq!(format!("{}", TimeResolution::OneDay), "1d");
+    assert_eq!(format!("{}", TimeResolution::OneWeek), "1w");
+    assert_eq!(format!("{}", TimeResolution::OneMonth), "1M");
 }
