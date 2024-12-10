@@ -19,25 +19,6 @@ rust_test_suite(
 )
 
 rust_test_suite(
-    name = "misc_tests",
-    srcs = glob([
-        "message_client_config_tests.rs",
-        "metric_config_tests.rs",
-        "protocol_type_tests.rs",
-    ]),
-    tags = [
-        "common",
-        "common_config",
-        "unit-test",
-    ],
-    visibility = ["//visibility:public"],
-    deps = [
-        # Crate to test
-        "//alias:common_config",
-    ],
-)
-
-rust_test_suite(
     name = "service_config_tests",
     srcs = glob([
         "service_config_tests.rs",

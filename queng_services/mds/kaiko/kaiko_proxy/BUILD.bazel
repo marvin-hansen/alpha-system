@@ -9,7 +9,6 @@ load("//:build/container.bzl", "build_multi_arch_image", "git_with_timestamp_tag
 build_binary_opt(
     name = "kaiko_proxy",
     srcs = glob([
-        "src/*/*.rs",
         "src/*.rs",
     ]),
     deps = [
