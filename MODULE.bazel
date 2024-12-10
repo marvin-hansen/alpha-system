@@ -6,8 +6,8 @@ module(name = "quant-engine")
 ###############################################################################
 bazel_dep(name = "aspect_bazel_lib", version = "2.9.4")
 bazel_dep(name = "bazel_skylib", version = "1.7.1")
-bazel_dep(name = "protobuf", version = "29.1")
 bazel_dep(name = "platforms", version = "0.0.10")
+bazel_dep(name = "protobuf", version = "29.1")
 bazel_dep(name = "rules_apko", version = "1.4.0")
 bazel_dep(name = "rules_multirun", version = "0.10.0")
 bazel_dep(name = "rules_oci", version = "2.0.1")
@@ -19,6 +19,12 @@ bazel_dep(name = "rules_rust", version = "0.54.1")
 bazel_dep(name = "toolchains_protoc", version = "0.3.5", dev_dependency = True)
 bazel_dep(name = "toolchains_llvm", version = "1.2.0", dev_dependency = True)
 bazel_dep(name = "toolchains_musl", version = "0.1.20", dev_dependency = True)
+bazel_dep(name = "toolchains_buildbuddy", dev_dependency = True)
+git_override(
+    module_name = "toolchains_buildbuddy",
+    commit = "ffd296b7a9821174cdb2188d1373fd262cacb09d",
+    remote = "https://github.com/buildbuddy-io/buildbuddy-toolchain",
+)
 
 # https://github.com/brainhivenl/libpq
 bazel_dep(name = "libpq", version = "0.0.1")
@@ -40,6 +46,15 @@ apk.translate_lock(
     lock = "//images/base_image:apko.lock.json",
 )
 use_repo(apk, "base_image")
+
+###############################################################################
+# BuildBuddy Rules
+# https://github.com/chainguard-dev/rules_apko
+###############################################################################
+
+buildbuddy = use_extension("@toolchains_buildbuddy//:extensions.bzl", "buildbuddy", dev_dependency = True)
+buildbuddy.platform(container_image = "docker://ghcr.io/marvin-hansen/rbe-custom/rbe:latest")
+use_repo(buildbuddy, "buildbuddy_toolchain")
 
 ###############################################################################
 # LLVM toolchain #
@@ -108,5 +123,4 @@ python.toolchain(
 )
 
 ###############################################################################
-# BuildBuddy toolchain; see WORKSPACE.bzlmod
 # Rust dependencies; see thirdparty/BUILD.bazel
