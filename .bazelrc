@@ -18,7 +18,7 @@ build --workspace_status_command=build/tools/workspace_status.sh
 build --symlink_prefix=target-bzl/
 
 # Non-empty glob test is disabled because some Bazels deps fail the test.
-# build --incompatible_disallow_empty_glob
+build --incompatible_disallow_empty_glob=false
 
 # This flag improves execution throughput by executing more actions in parallel.
 build --jobs=18
