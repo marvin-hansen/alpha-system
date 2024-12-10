@@ -74,7 +74,7 @@ alias(
 
 alias(
     name = "chrono",
-    actual = "//thirdparty/crates/chrono-0.4.38:chrono",
+    actual = "//thirdparty/crates/chrono-0.4.39:chrono",
     tags = ["manual"],
 )
 

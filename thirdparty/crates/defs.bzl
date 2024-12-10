@@ -300,7 +300,7 @@ _NORMAL_DEPENDENCIES = {
             "binance_rs_async": Label("//thirdparty/crates/binance-rs-async-1.3.3:binance"),
             "blake3": Label("//thirdparty/crates/blake3-1.5.5:blake3"),
             "bytes": Label("//thirdparty/crates/bytes-1.9.0:bytes"),
-            "chrono": Label("//thirdparty/crates/chrono-0.4.38:chrono"),
+            "chrono": Label("//thirdparty/crates/chrono-0.4.39:chrono"),
             "crossbeam": Label("//thirdparty/crates/crossbeam-0.8.4:crossbeam"),
             "ctrlc": Label("//thirdparty/crates/ctrlc-3.4.5:ctrlc"),
             "diesel": Label("//thirdparty/crates/diesel-2.2.6:diesel"),

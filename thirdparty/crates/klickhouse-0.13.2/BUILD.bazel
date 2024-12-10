@@ -96,7 +96,7 @@ rust_library(
     }),
     version = "0.13.2",
     deps = [
-        "//thirdparty/crates/chrono-0.4.38:chrono",
+        "//thirdparty/crates/chrono-0.4.39:chrono",
         "//thirdparty/crates/chrono-tz-0.9.0:chrono_tz",
         "//thirdparty/crates/cityhash-rs-1.0.1:cityhash_rs",
         "//thirdparty/crates/compiler-tools-0.2.0:compiler_tools",

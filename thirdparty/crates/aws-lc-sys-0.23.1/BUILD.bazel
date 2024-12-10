@@ -88,7 +88,7 @@ rust_library(
     version = "0.23.1",
     deps = [
         "//thirdparty/crates/aws-lc-sys-0.23.1:build_script_main",
-        "//thirdparty/crates/libc-0.2.167:libc",
+        "//thirdparty/crates/libc-0.2.168:libc",
     ],
 )
 

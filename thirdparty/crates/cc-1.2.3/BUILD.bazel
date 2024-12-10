@@ -87,37 +87,37 @@ rust_library(
         "//thirdparty/crates/shlex-1.3.0:shlex",
     ] + select({
         "@rules_rust//rust/platform:aarch64-apple-darwin": [
-            "//thirdparty/crates/libc-0.2.167:libc",  # aarch64-apple-darwin
+            "//thirdparty/crates/libc-0.2.168:libc",  # aarch64-apple-darwin
         ],
         "@rules_rust//rust/platform:aarch64-unknown-linux-gnu": [
-            "//thirdparty/crates/libc-0.2.167:libc",  # aarch64-unknown-linux-gnu
+            "//thirdparty/crates/libc-0.2.168:libc",  # aarch64-unknown-linux-gnu
         ],
         "@rules_rust//rust/platform:aarch64-unknown-nixos-gnu": [
-            "//thirdparty/crates/libc-0.2.167:libc",  # aarch64-unknown-linux-gnu, aarch64-unknown-nixos-gnu
+            "//thirdparty/crates/libc-0.2.168:libc",  # aarch64-unknown-linux-gnu, aarch64-unknown-nixos-gnu
         ],
         "@rules_rust//rust/platform:arm-unknown-linux-gnueabi": [
-            "//thirdparty/crates/libc-0.2.167:libc",  # arm-unknown-linux-gnueabi
+            "//thirdparty/crates/libc-0.2.168:libc",  # arm-unknown-linux-gnueabi
         ],
         "@rules_rust//rust/platform:i686-unknown-linux-gnu": [
-            "//thirdparty/crates/libc-0.2.167:libc",  # i686-unknown-linux-gnu
+            "//thirdparty/crates/libc-0.2.168:libc",  # i686-unknown-linux-gnu
         ],
         "@rules_rust//rust/platform:powerpc-unknown-linux-gnu": [
-            "//thirdparty/crates/libc-0.2.167:libc",  # powerpc-unknown-linux-gnu
+            "//thirdparty/crates/libc-0.2.168:libc",  # powerpc-unknown-linux-gnu
         ],
         "@rules_rust//rust/platform:s390x-unknown-linux-gnu": [
-            "//thirdparty/crates/libc-0.2.167:libc",  # s390x-unknown-linux-gnu
+            "//thirdparty/crates/libc-0.2.168:libc",  # s390x-unknown-linux-gnu
         ],
         "@rules_rust//rust/platform:x86_64-apple-darwin": [
-            "//thirdparty/crates/libc-0.2.167:libc",  # x86_64-apple-darwin
+            "//thirdparty/crates/libc-0.2.168:libc",  # x86_64-apple-darwin
         ],
         "@rules_rust//rust/platform:x86_64-unknown-freebsd": [
-            "//thirdparty/crates/libc-0.2.167:libc",  # x86_64-unknown-freebsd
+            "//thirdparty/crates/libc-0.2.168:libc",  # x86_64-unknown-freebsd
         ],
         "@rules_rust//rust/platform:x86_64-unknown-linux-gnu": [
-            "//thirdparty/crates/libc-0.2.167:libc",  # x86_64-unknown-linux-gnu
+            "//thirdparty/crates/libc-0.2.168:libc",  # x86_64-unknown-linux-gnu
         ],
         "@rules_rust//rust/platform:x86_64-unknown-nixos-gnu": [
-            "//thirdparty/crates/libc-0.2.167:libc",  # x86_64-unknown-linux-gnu, x86_64-unknown-nixos-gnu
+            "//thirdparty/crates/libc-0.2.168:libc",  # x86_64-unknown-linux-gnu, x86_64-unknown-nixos-gnu
         ],
         "//conditions:default": [],
     }),
