@@ -35,8 +35,11 @@ test --verbose_failures
 ## Common configuration
 ###############################################################################
 
+# Both flags below can be removed with Bazel 9
 # Enable Bzlmod for every Bazel command
 common --enable_bzlmod
+# Disable the workspace config  format
+common --noenable_workspace
 
 # Write build outputs in a platform-specific directory;
 # avoid outputs being wiped and rewritten when switching between platforms.
