@@ -51,7 +51,6 @@ use_repo(apk, "base_image")
 # BuildBuddy Rules
 # https://github.com/chainguard-dev/rules_apko
 ###############################################################################
-
 buildbuddy = use_extension("@toolchains_buildbuddy//:extensions.bzl", "buildbuddy", dev_dependency = True)
 buildbuddy.platform(container_image = "docker://ghcr.io/marvin-hansen/rbe-custom/rbe:latest")
 use_repo(buildbuddy, "buildbuddy_toolchain")
