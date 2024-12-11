@@ -152,6 +152,7 @@ binance_coin_futures_data_integration = { path = "queng_integration/data/binance
 vex_data_integration = { path = "queng_integration/data/vex_data_integration" }
 # Traits
 trait_data_integration = { path = "queng_integration/traits/trait_data_integration" }
+trait_exec_integration = { path = "queng_integration/traits/trait_exec_integration" }
 
 # Mesasge bus
 message_consumer = { path = "queng_message/message_consumer" }
