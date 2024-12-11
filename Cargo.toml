@@ -88,6 +88,7 @@ common_exchange = { path = "queng_common/common_exchange" }
 common_ims = { path = "queng_common/common_ims" }
 common_message = { path = "queng_common/common_message" }
 common_metadata = { path = "queng_common/common_metadata" }
+common_order = { path = "queng_common/common_order" }
 common_orderbook = { path = "queng_common/common_orderbook" }
 common_service = { path = "queng_common/common_service" }
 common_trade = { path = "queng_common/common_trade" }

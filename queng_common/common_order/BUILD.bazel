@@ -1,0 +1,35 @@
+load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library")
+
+rust_library(
+    name = "common_order",
+    srcs = glob([
+        "src/*.rs",
+    ]),
+    crate_root = "src/lib.rs",
+    tags = [
+        "common",
+        "common_order",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Internal crates
+        "//alias:common_exchange",
+        # External crates
+        "//thirdparty/crates:chrono",
+        "//thirdparty/crates:rust_decimal",
+    ],
+)
+
+rust_doc(
+    name = "doc",
+    crate = ":common_order",
+    tags = ["doc"],
+    visibility = ["//visibility:public"],
+)
+
+rust_doc_test(
+    name = "doc_test",
+    crate = ":common_order",
+    tags = ["doc-test"],
+    visibility = ["//visibility:public"],
+)
