@@ -6,13 +6,22 @@ use std::fmt::Display;
 pub struct OrderCancelSingle {
     exchange_id: ExchangeID,
     symbol_id: String,
+    client_order_id: String,
+    exchange_order_id: String,
 }
 
 impl OrderCancelSingle {
-    pub fn new(exchange_id: ExchangeID, symbol_id: String) -> Self {
+    pub fn new(
+        exchange_id: ExchangeID,
+        symbol_id: String,
+        client_order_id: String,
+        exchange_order_id: String,
+    ) -> Self {
         Self {
             exchange_id,
             symbol_id,
+            client_order_id,
+            exchange_order_id,
         }
     }
 }
@@ -24,6 +33,14 @@ impl OrderCancelSingle {
 
     pub fn symbol_id(&self) -> &str {
         &self.symbol_id
+    }
+
+    pub fn client_order_id(&self) -> &str {
+        &self.client_order_id
+    }
+
+    pub fn exchange_order_id(&self) -> &str {
+        &self.exchange_order_id
     }
 }
 

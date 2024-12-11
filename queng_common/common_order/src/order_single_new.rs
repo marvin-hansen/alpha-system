@@ -4,7 +4,7 @@ use rust_decimal::Decimal;
 use std::fmt::Display;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub struct OrderNewSingle {
+pub struct OrderSingleNew {
     exchange_id: ExchangeID,
     client_order_id: String,
     symbol_id: String,
@@ -18,7 +18,7 @@ pub struct OrderNewSingle {
     quantity: Decimal,
 }
 
-impl OrderNewSingle {
+impl OrderSingleNew {
     pub fn new(
         exchange_id: ExchangeID,
         client_order_id: String,
@@ -46,7 +46,7 @@ impl OrderNewSingle {
     }
 }
 
-impl OrderNewSingle {
+impl OrderSingleNew {
     pub fn exchange_id(&self) -> ExchangeID {
         self.exchange_id
     }
@@ -88,7 +88,7 @@ impl OrderNewSingle {
     }
 }
 
-impl Display for OrderNewSingle {
+impl Display for OrderSingleNew {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "{self:?}")
     }
