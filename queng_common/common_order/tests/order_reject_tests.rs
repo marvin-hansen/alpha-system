@@ -215,8 +215,7 @@ fn test_order_reject_reason_clone_and_eq() {
     assert_ne!(original, OrderRejectReason::OTHER);
 
     // Test all unique variants
-    let variants = vec![
-        OrderRejectReason::OTHER,
+    let variants = [OrderRejectReason::OTHER,
         OrderRejectReason::UnknownSymbol,
         OrderRejectReason::UnknownExchange,
         OrderRejectReason::ExchangeClosed,
@@ -230,8 +229,7 @@ fn test_order_reject_reason_clone_and_eq() {
         OrderRejectReason::InvalidLossPrice,
         OrderRejectReason::InvalidOrderId,
         OrderRejectReason::OrderIdNotFound,
-        OrderRejectReason::OrderStatusConflict,
-    ];
+        OrderRejectReason::OrderStatusConflict];
 
     // Ensure all variants are unique
     for (i, variant1) in variants.iter().enumerate() {
