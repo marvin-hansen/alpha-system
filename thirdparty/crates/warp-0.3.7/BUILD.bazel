@@ -100,7 +100,7 @@ rust_library(
         "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",
         "//thirdparty/crates/pin-project-1.1.7:pin_project",
         "//thirdparty/crates/scoped-tls-1.0.1:scoped_tls",
-        "//thirdparty/crates/serde-1.0.215:serde",
+        "//thirdparty/crates/serde-1.0.216:serde",
         "//thirdparty/crates/serde_json-1.0.133:serde_json",
         "//thirdparty/crates/serde_urlencoded-0.7.1:serde_urlencoded",
         "//thirdparty/crates/tokio-1.42.0:tokio",

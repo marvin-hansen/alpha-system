@@ -88,7 +88,7 @@ rust_library(
         "//thirdparty/crates/itoa-1.0.14:itoa",
         "//thirdparty/crates/memchr-2.7.4:memchr",
         "//thirdparty/crates/ryu-1.0.18:ryu",
-        "//thirdparty/crates/serde-1.0.215:serde",
+        "//thirdparty/crates/serde-1.0.216:serde",
         "//thirdparty/crates/serde_json-1.0.133:build_script_build",
     ],
 )
