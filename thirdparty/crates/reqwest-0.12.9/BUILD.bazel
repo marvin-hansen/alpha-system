@@ -117,7 +117,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/rustls-0.23.19:rustls",  # aarch64-apple-darwin
+            "//thirdparty/crates/rustls-0.23.20:rustls",  # aarch64-apple-darwin
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # aarch64-apple-darwin
             "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # aarch64-apple-darwin
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
@@ -139,7 +139,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/rustls-0.23.19:rustls",  # aarch64-apple-ios
+            "//thirdparty/crates/rustls-0.23.20:rustls",  # aarch64-apple-ios
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # aarch64-apple-ios
             "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # aarch64-apple-ios
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
@@ -161,7 +161,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/rustls-0.23.19:rustls",  # aarch64-apple-ios-sim
+            "//thirdparty/crates/rustls-0.23.20:rustls",  # aarch64-apple-ios-sim
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # aarch64-apple-ios-sim
             "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # aarch64-apple-ios-sim
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
@@ -183,7 +183,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/rustls-0.23.19:rustls",  # aarch64-linux-android
+            "//thirdparty/crates/rustls-0.23.20:rustls",  # aarch64-linux-android
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # aarch64-linux-android
             "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # aarch64-linux-android
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
@@ -205,7 +205,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/rustls-0.23.19:rustls",  # aarch64-pc-windows-msvc
+            "//thirdparty/crates/rustls-0.23.20:rustls",  # aarch64-pc-windows-msvc
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # aarch64-pc-windows-msvc
             "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # aarch64-pc-windows-msvc
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
@@ -228,7 +228,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/rustls-0.23.19:rustls",  # aarch64-unknown-fuchsia
+            "//thirdparty/crates/rustls-0.23.20:rustls",  # aarch64-unknown-fuchsia
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # aarch64-unknown-fuchsia
             "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # aarch64-unknown-fuchsia
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
@@ -250,7 +250,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/rustls-0.23.19:rustls",  # aarch64-unknown-linux-gnu
+            "//thirdparty/crates/rustls-0.23.20:rustls",  # aarch64-unknown-linux-gnu
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # aarch64-unknown-linux-gnu
             "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # aarch64-unknown-linux-gnu
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
@@ -272,7 +272,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/rustls-0.23.19:rustls",  # aarch64-unknown-linux-gnu, aarch64-unknown-nixos-gnu
+            "//thirdparty/crates/rustls-0.23.20:rustls",  # aarch64-unknown-linux-gnu, aarch64-unknown-nixos-gnu
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # aarch64-unknown-linux-gnu, aarch64-unknown-nixos-gnu
             "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # aarch64-unknown-linux-gnu, aarch64-unknown-nixos-gnu
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
@@ -294,7 +294,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/rustls-0.23.19:rustls",  # aarch64-unknown-nto-qnx710
+            "//thirdparty/crates/rustls-0.23.20:rustls",  # aarch64-unknown-nto-qnx710
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # aarch64-unknown-nto-qnx710
             "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # aarch64-unknown-nto-qnx710
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
@@ -316,7 +316,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/rustls-0.23.19:rustls",  # arm-unknown-linux-gnueabi
+            "//thirdparty/crates/rustls-0.23.20:rustls",  # arm-unknown-linux-gnueabi
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # arm-unknown-linux-gnueabi
             "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # arm-unknown-linux-gnueabi
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
@@ -338,7 +338,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/rustls-0.23.19:rustls",  # armv7-linux-androideabi
+            "//thirdparty/crates/rustls-0.23.20:rustls",  # armv7-linux-androideabi
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # armv7-linux-androideabi
             "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # armv7-linux-androideabi
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
@@ -360,7 +360,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/rustls-0.23.19:rustls",  # armv7-unknown-linux-gnueabi
+            "//thirdparty/crates/rustls-0.23.20:rustls",  # armv7-unknown-linux-gnueabi
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # armv7-unknown-linux-gnueabi
             "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # armv7-unknown-linux-gnueabi
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
@@ -382,7 +382,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/rustls-0.23.19:rustls",  # i686-apple-darwin
+            "//thirdparty/crates/rustls-0.23.20:rustls",  # i686-apple-darwin
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # i686-apple-darwin
             "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # i686-apple-darwin
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
@@ -404,7 +404,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/rustls-0.23.19:rustls",  # i686-linux-android
+            "//thirdparty/crates/rustls-0.23.20:rustls",  # i686-linux-android
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # i686-linux-android
             "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # i686-linux-android
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
@@ -426,7 +426,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/rustls-0.23.19:rustls",  # i686-pc-windows-msvc
+            "//thirdparty/crates/rustls-0.23.20:rustls",  # i686-pc-windows-msvc
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # i686-pc-windows-msvc
             "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # i686-pc-windows-msvc
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
@@ -449,7 +449,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/rustls-0.23.19:rustls",  # i686-unknown-freebsd
+            "//thirdparty/crates/rustls-0.23.20:rustls",  # i686-unknown-freebsd
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # i686-unknown-freebsd
             "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # i686-unknown-freebsd
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
@@ -471,7 +471,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/rustls-0.23.19:rustls",  # i686-unknown-linux-gnu
+            "//thirdparty/crates/rustls-0.23.20:rustls",  # i686-unknown-linux-gnu
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # i686-unknown-linux-gnu
             "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # i686-unknown-linux-gnu
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
@@ -493,7 +493,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/rustls-0.23.19:rustls",  # powerpc-unknown-linux-gnu
+            "//thirdparty/crates/rustls-0.23.20:rustls",  # powerpc-unknown-linux-gnu
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # powerpc-unknown-linux-gnu
             "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # powerpc-unknown-linux-gnu
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
@@ -515,7 +515,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/rustls-0.23.19:rustls",  # riscv32imc-unknown-none-elf
+            "//thirdparty/crates/rustls-0.23.20:rustls",  # riscv32imc-unknown-none-elf
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # riscv32imc-unknown-none-elf
             "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # riscv32imc-unknown-none-elf
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
@@ -537,7 +537,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/rustls-0.23.19:rustls",  # riscv64gc-unknown-none-elf
+            "//thirdparty/crates/rustls-0.23.20:rustls",  # riscv64gc-unknown-none-elf
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # riscv64gc-unknown-none-elf
             "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # riscv64gc-unknown-none-elf
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
@@ -559,7 +559,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/rustls-0.23.19:rustls",  # s390x-unknown-linux-gnu
+            "//thirdparty/crates/rustls-0.23.20:rustls",  # s390x-unknown-linux-gnu
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # s390x-unknown-linux-gnu
             "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # s390x-unknown-linux-gnu
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
@@ -581,7 +581,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/rustls-0.23.19:rustls",  # thumbv7em-none-eabi
+            "//thirdparty/crates/rustls-0.23.20:rustls",  # thumbv7em-none-eabi
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # thumbv7em-none-eabi
             "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # thumbv7em-none-eabi
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
@@ -603,7 +603,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/rustls-0.23.19:rustls",  # thumbv8m.main-none-eabi
+            "//thirdparty/crates/rustls-0.23.20:rustls",  # thumbv8m.main-none-eabi
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # thumbv8m.main-none-eabi
             "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # thumbv8m.main-none-eabi
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
@@ -643,7 +643,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/rustls-0.23.19:rustls",  # x86_64-apple-darwin
+            "//thirdparty/crates/rustls-0.23.20:rustls",  # x86_64-apple-darwin
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # x86_64-apple-darwin
             "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # x86_64-apple-darwin
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
@@ -665,7 +665,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/rustls-0.23.19:rustls",  # x86_64-apple-ios
+            "//thirdparty/crates/rustls-0.23.20:rustls",  # x86_64-apple-ios
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # x86_64-apple-ios
             "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # x86_64-apple-ios
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
@@ -687,7 +687,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/rustls-0.23.19:rustls",  # x86_64-linux-android
+            "//thirdparty/crates/rustls-0.23.20:rustls",  # x86_64-linux-android
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # x86_64-linux-android
             "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # x86_64-linux-android
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
@@ -709,7 +709,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/rustls-0.23.19:rustls",  # x86_64-pc-windows-msvc
+            "//thirdparty/crates/rustls-0.23.20:rustls",  # x86_64-pc-windows-msvc
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # x86_64-pc-windows-msvc
             "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # x86_64-pc-windows-msvc
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
@@ -732,7 +732,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/rustls-0.23.19:rustls",  # x86_64-unknown-freebsd
+            "//thirdparty/crates/rustls-0.23.20:rustls",  # x86_64-unknown-freebsd
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # x86_64-unknown-freebsd
             "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # x86_64-unknown-freebsd
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
@@ -754,7 +754,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/rustls-0.23.19:rustls",  # x86_64-unknown-fuchsia
+            "//thirdparty/crates/rustls-0.23.20:rustls",  # x86_64-unknown-fuchsia
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # x86_64-unknown-fuchsia
             "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # x86_64-unknown-fuchsia
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
@@ -776,7 +776,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/rustls-0.23.19:rustls",  # x86_64-unknown-linux-gnu
+            "//thirdparty/crates/rustls-0.23.20:rustls",  # x86_64-unknown-linux-gnu
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # x86_64-unknown-linux-gnu
             "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # x86_64-unknown-linux-gnu
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
@@ -798,7 +798,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/rustls-0.23.19:rustls",  # x86_64-unknown-linux-gnu, x86_64-unknown-nixos-gnu
+            "//thirdparty/crates/rustls-0.23.20:rustls",  # x86_64-unknown-linux-gnu, x86_64-unknown-nixos-gnu
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # x86_64-unknown-linux-gnu, x86_64-unknown-nixos-gnu
             "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # x86_64-unknown-linux-gnu, x86_64-unknown-nixos-gnu
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
@@ -820,7 +820,7 @@ rust_library(
             "//thirdparty/crates/once_cell-1.20.2:once_cell",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/rustls-0.23.19:rustls",  # x86_64-unknown-none
+            "//thirdparty/crates/rustls-0.23.20:rustls",  # x86_64-unknown-none
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # x86_64-unknown-none
             "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # x86_64-unknown-none
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))

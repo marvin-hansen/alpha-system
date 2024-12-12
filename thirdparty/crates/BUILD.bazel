@@ -194,7 +194,7 @@ alias(
 
 alias(
     name = "rustls",
-    actual = "//thirdparty/crates/rustls-0.23.19:rustls",
+    actual = "//thirdparty/crates/rustls-0.23.20:rustls",
     tags = ["manual"],
 )
 

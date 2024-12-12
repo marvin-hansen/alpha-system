@@ -18,15 +18,10 @@ crates_vendor(
                 build_script_env = {
                     "PQ_LIB_STATIC": "1",
                 },
-                # The following only works with Bazel 8 or newer
-                # data = ["$(location :@libpq)"],
-                # rustc_flags = ["-L", "$(location :@libpq)"]
-                #
-                # This works with Bazel 7 or older but doesn't work from Bazel 8 onwards
-                data = ["@@libpq~~_repo_rules~postgres//:libpq"],
+                data = ["@@libpq++_repo_rules+postgres//:libpq"],
                 rustc_flags = [
                     "-L",
-                    "$(BINDIR)/external/libpq~~_repo_rules~postgres",
+                    "$(BINDIR)/external/libpq++_repo_rules+postgres",
                 ],
             ),
         ],
@@ -43,10 +38,6 @@ crates_vendor(
             package = "anyhow",
             version = "1.0.89",
         ),
-        # "barter-data": crate.spec(
-        #    package = "barter-data",
-        #    version = "0.9.0",
-        # ),
         "base16ct": crate.spec(
             default_features = False,
             features = ["alloc"],

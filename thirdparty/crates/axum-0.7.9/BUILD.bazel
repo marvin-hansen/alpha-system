@@ -98,7 +98,7 @@ rust_library(
         "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",
         "//thirdparty/crates/serde-1.0.216:serde",
         "//thirdparty/crates/sync_wrapper-1.0.2:sync_wrapper",
-        "//thirdparty/crates/tower-0.5.1:tower",
+        "//thirdparty/crates/tower-0.5.2:tower",
         "//thirdparty/crates/tower-layer-0.3.3:tower_layer",
         "//thirdparty/crates/tower-service-0.3.3:tower_service",
     ],

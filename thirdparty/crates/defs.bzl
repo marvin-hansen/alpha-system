@@ -318,7 +318,7 @@ _NORMAL_DEPENDENCIES = {
             "protoc-gen-tonic": Label("//thirdparty/crates/protoc-gen-tonic-0.4.1:protoc_gen_tonic"),
             "reqwest": Label("//thirdparty/crates/reqwest-0.12.9:reqwest"),
             "rust_decimal": Label("//thirdparty/crates/rust_decimal-1.36.0:rust_decimal"),
-            "rustls": Label("//thirdparty/crates/rustls-0.23.19:rustls"),
+            "rustls": Label("//thirdparty/crates/rustls-0.23.20:rustls"),
             "serde": Label("//thirdparty/crates/serde-1.0.216:serde"),
             "serde_json": Label("//thirdparty/crates/serde_json-1.0.133:serde_json"),
             "sha3": Label("//thirdparty/crates/sha3-0.11.0-pre.4:sha3"),
