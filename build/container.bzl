@@ -14,6 +14,17 @@ def build_multi_arch_image(
         exposed_ports = [],
         platforms = [],
         visibility = None):
+    """Builds a multi-arch container image from a Bazel binary.
+
+    Args:
+        name: str, name of the image
+        entry_point: str, entry point of the binary
+        base: str, base image for the container
+        srcs: list of Files, source files to include in the image
+        exposed_ports: list of int, ports to expose
+        platforms: list of str, platforms to build the image for
+        visibility: list of Labels, visibility of the image
+    """
     layer_name = "tar_layer"
 
     # Compress binary to a layer using pkg_tar
@@ -46,7 +57,23 @@ def build_multi_arch_image(
         visibility = visibility,
     )
 
-def build_image(name, srcs, base, exposed_ports = [], visibility = None):
+def build_image(
+    name,
+    srcs,
+    base,
+    exposed_ports = [],
+    visibility = None
+    ):
+    """Builds a container image from a Bazel binary.
+
+    Args:
+        name: str, name of the image
+        srcs: list of Files, source files to include in the image
+        base: str, base image for the container
+        exposed_ports: list of int, ports to expose
+        visibility: list of Labels, visibility of the image
+    """
+
     entry_point = "bin"
     layer_name = "tar_layer"
 

@@ -38,3 +38,6 @@ Cargo.lock
 # Apple stuff
 .DS_Store
 */.DS_Store
+
+# windsurf rules
+.windsurfrules

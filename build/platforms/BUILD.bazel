@@ -17,6 +17,7 @@ platform(
     ],
 )
 
+# Host platform for local development
 platform(
     name = "darwin-aarch64",
     constraint_values = [
@@ -25,7 +26,7 @@ platform(
     ],
 )
 
-# Platform for cross compilation.
+# Platform for cross compilation on CI.
 platform(
     name = "linux-x86_64",
     constraint_values = [
@@ -35,6 +36,7 @@ platform(
     exec_properties = {"container-image": "docker://ghcr.io/marvin-hansen/rbe-custom/rbe:latest"},
 )
 
+# Platform for cross compilation on CI.
 platform(
     name = "linux-aarch64",
     constraint_values = [
