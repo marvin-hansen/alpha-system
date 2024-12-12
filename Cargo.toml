@@ -272,4 +272,4 @@ warp = "0.3.7"
 # Depdendencies for cloudflare workers that are not build with Bazel
 console_error_panic_hook = { version = "0.1.1" }
 worker = { version = "0.4.2", default-features = false }
-worker-macros = { version = "0.4.2" }
+worker-macros = { version = "0.5.0" }
