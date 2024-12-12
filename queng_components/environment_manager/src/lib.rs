@@ -41,6 +41,14 @@ impl EnvironmentManager {
 }
 
 impl EnvironmentManager {
+    /// Returns the type of environment.
+    ///
+    /// This method returns the `EnvironmentType` of the current `EnvironmentManager` instance.
+    ///
+    /// # Returns
+    ///
+    /// The `EnvironmentType` associated with this manager.
+    ///
     #[must_use]
     pub const fn env_type(&self) -> EnvironmentType {
         self.env_type

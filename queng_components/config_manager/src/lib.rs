@@ -40,6 +40,13 @@ pub struct CfgManager {
 }
 
 impl Default for CfgManager {
+    /// Returns a default instance of `CfgManager`.
+    ///
+    /// The default service ID is `ServiceID::Default`, and the default service
+    /// configuration is `smdb_service_config()`.
+    ///
+    /// Debug mode is disabled by default.
+    #[must_use]
     fn default() -> Self {
         Self::build(false, ServiceID::Default, smdb_service_config())
     }
