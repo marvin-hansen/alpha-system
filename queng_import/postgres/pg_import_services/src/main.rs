@@ -12,6 +12,7 @@ const DBG: bool = true;
 async fn main() -> Result<(), Box<dyn Error>> {
     pg_import_print_utils::print_start_header();
 
+    // Check if all services have already been imported
     let service_import_manager = ServiceImportManager::new().await;
     let already_imported = service_import_manager.check_if_already_imported().await;
 
@@ -28,6 +29,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .await
         .expect("Failed to import services");
 
+    // Print the number of imported services
     let nr_of_services = service_import_manager.count_db_services().await;
     pg_import_print_utils::print_stop_header(nr_of_services, "ServiceConfig", true);
 
