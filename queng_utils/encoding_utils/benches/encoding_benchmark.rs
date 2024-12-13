@@ -2,7 +2,7 @@ use criterion::{criterion_group, criterion_main, Criterion};
 use encoding_utils::string_int_encoding::{int_to_str, str_to_int};
 
 fn bench_str_to_int(c: &mut Criterion) {
-    let test_cases = vec![
+    let test_cases = [
         "A",          // Single char
         "ABC",        // Short string
         "TEST_123",   // Medium string
@@ -19,7 +19,7 @@ fn bench_str_to_int(c: &mut Criterion) {
 }
 
 fn bench_int_to_str(c: &mut Criterion) {
-    let test_cases = vec![
+    let test_cases = [
         str_to_int("A").unwrap(),
         str_to_int("ABC").unwrap(),
         str_to_int("TEST_123").unwrap(),
@@ -36,7 +36,7 @@ fn bench_int_to_str(c: &mut Criterion) {
 }
 
 fn bench_roundtrip(c: &mut Criterion) {
-    let test_cases = vec!["A", "ABC", "TEST_123", "ABCDEFGHIJ"];
+    let test_cases = ["A", "ABC", "TEST_123", "ABCDEFGHIJ"];
 
     let mut group = c.benchmark_group("roundtrip");
     for test_str in test_cases {

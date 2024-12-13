@@ -6,7 +6,11 @@ const MAX_ENCODED_LENGTH: usize = 10; // Maximum safe length for u64 (64 bits / 
 
 #[inline(always)]
 pub fn str_to_int(s: &str) -> Option<u64> {
-    if s.is_empty() || s.len() > MAX_ENCODED_LENGTH {
+    if s.is_empty() {
+        return Some(0);
+    }
+
+    if s.len() > MAX_ENCODED_LENGTH {
         return None;
     }
 
@@ -44,7 +48,7 @@ pub fn str_to_int(s: &str) -> Option<u64> {
 #[inline(always)]
 pub fn int_to_str(n: u64) -> Option<String> {
     if n == 0 {
-        return None;
+        return Some(String::new());
     }
 
     // Fast character count using leading zeros

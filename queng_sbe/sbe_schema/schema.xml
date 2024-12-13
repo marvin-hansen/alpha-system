@@ -91,7 +91,7 @@
         <field name="messageType" id="1" type="MessageType"/>
         <field name="clientID" id="2" type="ClientID"/>
         <field name="exchangeID" id="3" type="ExchangeID"/>
-        <field name="symbolID" id="4" type="SymbolID"/>
+        <field name="symbolID" id="4" type="uint64"/>
         <field name="timeResolution" id="5" type="TimeResolution"/>
         <field name="dataTypeID" id="6" type="DataTypeID"/>
     </sbe:message>
@@ -100,7 +100,7 @@
         <field name="messageType" id="1" type="MessageType"/>
         <field name="clientID" id="2" type="ClientID"/>
         <field name="exchangeID" id="3" type="ExchangeID"/>
-        <field name="symbolID" id="4" type="SymbolID"/>
+        <field name="symbolID" id="4" type="uint64"/>
         <field name="dataTypeID" id="5" type="DataTypeID"/>
     </sbe:message>
 
@@ -112,7 +112,7 @@
 
     <sbe:message name="DataBar" id="204">
         <field name="messageType" id="1" type="MessageType"/>
-        <field name="symbolID" id="2" type="SymbolID"/>
+        <field name="symbolID" id="2" type="uint64"/>
         <field name="dateTime" id="3" type="Timestamp"/>
         <field name="openPrice" id="4" type="float"/>
         <field name="highPrice" id="5" type="float"/>
@@ -123,7 +123,7 @@
 
     <sbe:message name="TradeBar" id="207">
         <field name="messageType" id="1" type="MessageType"/>
-        <field name="symbolID" id="2" type="SymbolID"/>
+        <field name="symbolID" id="2" type="uint64"/>
         <field name="dateTime" id="3" type="Timestamp"/>
         <field name="price" id="4" type="float"/>
         <field name="volume" id="5" type="float"/>

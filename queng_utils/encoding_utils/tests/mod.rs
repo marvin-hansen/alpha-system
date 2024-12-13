@@ -1,1 +1,1 @@
-mod string_int_encoding_test;
+mod string_int_encoding_tests;

@@ -1,6 +1,5 @@
 pub mod client_login;
 pub mod client_logout;
-
 pub mod data_start;
 pub mod data_stop;
 pub mod data_stop_all;
@@ -32,5 +31,4 @@ pub mod error_data;
 /// - `trade_bar` - `TradeBarMessage`
 ///
 pub mod ohlcv_bar;
-pub mod trade;
 pub mod trade_bar;

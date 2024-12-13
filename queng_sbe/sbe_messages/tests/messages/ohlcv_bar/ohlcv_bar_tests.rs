@@ -2,7 +2,7 @@ use common_data_bar::OHLCVBar;
 use sbe_messages::SbeOHLCVBar;
 
 #[test]
-fn test_encode_data_bar_message() {
+fn test_encode_ohlcv_bar_message() {
     let bar = OHLCVBar::default(); // Create a sample DataBar
 
     let result = SbeOHLCVBar::encode(bar);
@@ -14,7 +14,7 @@ fn test_encode_data_bar_message() {
 }
 
 #[test]
-fn test_decode_data_bar_message() {
+fn test_decode_ohlcv_bar_message() {
     // Encode a sample DataBar
     let bar = OHLCVBar::default();
     let (size, encoded) = SbeOHLCVBar::encode(bar.clone()).unwrap();

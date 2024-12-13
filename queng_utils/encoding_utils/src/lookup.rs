@@ -78,7 +78,6 @@ struct AlignedCharArray {
 static LOOKUP_STR: AlignedCharArray = AlignedCharArray {
     data: {
         let mut arr = ['\0'; MAX_CHARS as usize];
-        arr[0] = '\0';
         arr[1] = 'A';
         arr[2] = 'B';
         arr[3] = 'C';

@@ -17,7 +17,6 @@ pub use crate::messages::data_stop_all::StopAllDataMessage;
 pub use crate::messages::error_client::ClientErrorMessage;
 pub use crate::messages::error_data::DataErrorMessage;
 pub use crate::messages::ohlcv_bar::SbeOHLCVBar;
-pub use crate::messages::trade::SbeTrade;
 pub use crate::messages::trade_bar::SbeTradeBar;
 
 // Message types

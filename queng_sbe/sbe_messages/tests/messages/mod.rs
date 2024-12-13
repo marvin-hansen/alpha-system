@@ -1,8 +1,9 @@
 mod client_login;
 mod client_logout;
-mod data_msg;
+mod data_start_msg;
+mod data_stop_all_msg;
+mod data_stop_msg;
 mod error_client;
 mod error_data;
 mod ohlcv_bar;
-mod trade;
 mod trade_bar;

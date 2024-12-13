@@ -46,8 +46,8 @@ pub fn decode_start_data_message(buffer: &[u8]) -> SbeResult<StartDataMessage> {
 
     let client_id = csg.client_id();
     let exchange_id = ExchangeID::from(csg.exchange_id());
-    let val = encoding_utils::int_to_str(csg.symbol_id()).expect("Failed to decode symbol ID");
-    let symbol_id = String::from(val);
+    let symbol_id =
+        encoding_utils::int_to_str(csg.symbol_id()).expect("Failed to decode symbol ID");
     let data_type_id = DataType::from(csg.data_type_id());
     let time_resolution = TimeResolution::from(csg.time_resolution());
 

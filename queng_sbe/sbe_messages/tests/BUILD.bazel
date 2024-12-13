@@ -7,6 +7,7 @@ rust_test_suite(
     ]),
     tags = [
         "sbe",
+        "sbe-error",
         "unit-test",
     ],
     visibility = ["//visibility:public"],
@@ -23,6 +24,7 @@ rust_test_suite(
     ]),
     tags = [
         "sbe",
+        "sbe-types",
         "unit-test",
     ],
     visibility = ["//visibility:public"],
@@ -39,6 +41,7 @@ rust_test_suite(
     ]),
     tags = [
         "sbe",
+        "sbe-client-login",
         "unit-test",
     ],
     visibility = ["//visibility:public"],
@@ -55,6 +58,7 @@ rust_test_suite(
     ]),
     tags = [
         "sbe",
+        "sbe-client-logout",
         "unit-test",
     ],
     visibility = ["//visibility:public"],
@@ -65,12 +69,64 @@ rust_test_suite(
 )
 
 rust_test_suite(
-    name = "data",
+    name = "data_start_msg",
     srcs = glob([
-        "messages/data_msg/*_tests.rs",
+        "messages/data_start_msg/*_tests.rs",
     ]),
     tags = [
         "sbe",
+        "sbe-data",
+        "sbe-data-start-msg",
+        "unit-test",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        "//alias:sbe_messages",
+        # Internal crates
+        "//alias:common_data_bar",
+        "//alias:common_exchange",
+        "//alias:sbe_bindings",
+        # External crates
+        "//thirdparty/crates:rust_decimal",
+        "//thirdparty/crates:chrono",
+    ],
+)
+
+rust_test_suite(
+    name = "data_stop_msg",
+    srcs = glob([
+        "messages/data_stop_msg/*_tests.rs",
+    ]),
+    tags = [
+        "sbe",
+        "sbe-data",
+        "sbe-data-stop-msg",
+        "unit-test",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        "//alias:sbe_messages",
+        # Internal crates
+        "//alias:common_data_bar",
+        "//alias:common_exchange",
+        "//alias:sbe_bindings",
+        # External crates
+        "//thirdparty/crates:rust_decimal",
+        "//thirdparty/crates:chrono",
+    ],
+)
+
+rust_test_suite(
+    name = "data_stop_all_msg",
+    srcs = glob([
+        "messages/data_stop_all_msg/*_tests.rs",
+    ]),
+    tags = [
+        "sbe",
+        "sbe-data",
+        "sbe-data-stop-all-msg",
         "unit-test",
     ],
     visibility = ["//visibility:public"],

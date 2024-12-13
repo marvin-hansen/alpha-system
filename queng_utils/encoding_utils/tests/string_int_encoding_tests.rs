@@ -1,6 +1,15 @@
 use encoding_utils::{int_to_str, str_to_int};
 
 #[test]
+fn test_empty_string_encoding() {
+    let encoded = str_to_int("").unwrap();
+    assert_eq!(encoded, 0);
+
+    let decoded = int_to_str(encoded).unwrap();
+    assert_eq!("", decoded);
+}
+
+#[test]
 fn test_single_char_encoding() {
     let test_cases = vec!["A", "B", "Z", "0", "9", "_", "-"];
 
@@ -24,9 +33,6 @@ fn test_multi_char_encoding() {
 
 #[test]
 fn test_invalid_input() {
-    // Empty string
-    assert!(str_to_int("").is_none());
-
     // Too long string
     assert!(str_to_int("ABCDEFGHIJKLM").is_none());
 
@@ -64,13 +70,16 @@ fn test_deterministic() {
 }
 
 #[test]
-fn test_edge_cases() {
+fn test_max_length() {
     // Max length string
     let max_str = "ABCDEFGHIJ";
     let encoded = str_to_int(max_str).unwrap();
     let decoded = int_to_str(encoded).unwrap();
     assert_eq!(max_str, decoded);
+}
 
+#[test]
+fn test_all_chars() {
     // All possible characters
     let all_chars = "ABCZ0123_-";
     let encoded = str_to_int(all_chars).unwrap();
@@ -103,9 +112,6 @@ fn test_boundary_values() {
 
 #[test]
 fn test_int_to_str_edge_cases() {
-    // Test 0 (should return None)
-    assert!(int_to_str(0).is_none());
-
     // Test maximum valid value
     let max_str = "ZZZZZZZZZZ"; // 10 'Z's
     let encoded = str_to_int(max_str).unwrap();
