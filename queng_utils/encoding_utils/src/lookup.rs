@@ -16,16 +16,18 @@ pub fn lookup_char(x: u64) -> char {
     LOOKUP_STR.data[x as usize]
 }
 
-// Wrapper struct for aligned array
+// Wrapper struct for cache aligned array
 #[repr(align(64))]
 struct AlignedU64Array {
     data: [u64; 128],
 }
 
-// The lookup table for encoding characters to U64 integers
+// The constant lookup table for encoding characters to U64 integers
+// Performance of Rust's match vs. lookup tables
+// https://kevinlynagh.com/notes/match-vs-lookup/
 static LOOKUP_INT64: AlignedU64Array = AlignedU64Array {
     data: {
-        let mut arr = [0; 128];
+        let mut arr = [0; 128]; // Actual size is 96 bytes, but 128 aligns better to 64 bytes cache size
         arr[b'A' as usize] = 1;
         arr[b'B' as usize] = 2;
         arr[b'C' as usize] = 3;
