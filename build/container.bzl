@@ -58,12 +58,11 @@ def build_multi_arch_image(
     )
 
 def build_image(
-    name,
-    srcs,
-    base,
-    exposed_ports = [],
-    visibility = None
-    ):
+        name,
+        srcs,
+        base,
+        exposed_ports = [],
+        visibility = None):
     """Builds a container image from a Bazel binary.
 
     Args:
