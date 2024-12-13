@@ -15,6 +15,7 @@ rust_library(
         # Internal crates
 
         # External crates
+        "//thirdparty/crates:lazy_static",
     ],
 )
 

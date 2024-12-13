@@ -1,6 +1,5 @@
-#![no_std]
-extern crate alloc;
+mod lookup;
+pub mod string_int_encoding;
 
-mod string_int_encoding;
-
+pub use lookup::*;
 pub use string_int_encoding::*;
