@@ -119,6 +119,10 @@ crates_vendor(
             package = "klickhouse",
             version = "0.13.2",
         ),
+        "lazy_static": crate.spec(
+            package = "lazy_static",
+            version = "1.4.0",
+        ),
         "lru": crate.spec(
             package = "lru",
             version = "0.12.4",

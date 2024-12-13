@@ -236,8 +236,12 @@ mod tests {
         hhb.add_message(&app_data_ignored);
         hhb.add_message(&end_of_early_data_flight);
         assert_eq!(
-            hhb.start_hash(&SHA256).current_hash().as_ref(),
-            SHA256.hash(b"\x0e\x00\x00\x00\x05\x00\x00\x00").as_ref()
+            hhb.start_hash(&SHA256)
+                .current_hash()
+                .as_ref(),
+            SHA256
+                .hash(b"\x0e\x00\x00\x00\x05\x00\x00\x00")
+                .as_ref()
         );
 
         // non-buffered mode
@@ -247,7 +251,9 @@ mod tests {
         hh.add_message(&end_of_early_data_flight);
         assert_eq!(
             hh.current_hash().as_ref(),
-            SHA256.hash(b"\x0e\x00\x00\x00\x05\x00\x00\x00").as_ref()
+            SHA256
+                .hash(b"\x0e\x00\x00\x00\x05\x00\x00\x00")
+                .as_ref()
         );
     }
 
@@ -259,9 +265,19 @@ mod tests {
         hhb.add_raw(b"hello");
         assert_eq!(hhb.buffer.len(), 5);
         let mut hh = hhb.start_hash(&SHA256);
-        assert_eq!(hh.client_auth.as_ref().map(|buf| buf.len()), Some(5));
+        assert_eq!(
+            hh.client_auth
+                .as_ref()
+                .map(|buf| buf.len()),
+            Some(5)
+        );
         hh.add_raw(b"world");
-        assert_eq!(hh.client_auth.as_ref().map(|buf| buf.len()), Some(10));
+        assert_eq!(
+            hh.client_auth
+                .as_ref()
+                .map(|buf| buf.len()),
+            Some(10)
+        );
         let h = hh.current_hash();
         let h = h.as_ref();
         assert_eq!(h[0], 0x93);
@@ -279,7 +295,12 @@ mod tests {
         hhb.add_raw(b"hello");
         assert_eq!(hhb.buffer.len(), 5);
         let mut hh = hhb.start_hash(&SHA256);
-        assert_eq!(hh.client_auth.as_ref().map(|buf| buf.len()), Some(5));
+        assert_eq!(
+            hh.client_auth
+                .as_ref()
+                .map(|buf| buf.len()),
+            Some(5)
+        );
         hh.abandon_client_auth();
         assert_eq!(hh.client_auth, None);
         hh.add_raw(b"world");

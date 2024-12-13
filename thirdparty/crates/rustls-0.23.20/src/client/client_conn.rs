@@ -640,7 +640,12 @@ mod connection {
         /// How many bytes you may send.  Writes will become short
         /// once this reaches zero.
         pub fn bytes_left(&self) -> usize {
-            self.sess.inner.core.data.early_data.bytes_left()
+            self.sess
+                .inner
+                .core
+                .data
+                .early_data
+                .bytes_left()
         }
     }
 
@@ -672,7 +677,8 @@ mod connection {
 
     impl fmt::Debug for ClientConnection {
         fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-            f.debug_struct("ClientConnection").finish()
+            f.debug_struct("ClientConnection")
+                .finish()
         }
     }
 
@@ -705,7 +711,13 @@ mod connection {
         /// in this case the data is lost but the connection continues.  You
         /// can tell this happened using `is_early_data_accepted`.
         pub fn early_data(&mut self) -> Option<WriteEarlyData<'_>> {
-            if self.inner.core.data.early_data.is_enabled() {
+            if self
+                .inner
+                .core
+                .data
+                .early_data
+                .is_enabled()
+            {
                 Some(WriteEarlyData::new(self))
             } else {
                 None
@@ -747,7 +759,10 @@ mod connection {
                 .data
                 .early_data
                 .check_write(data.len())
-                .map(|sz| self.inner.send_early_plaintext(&data[..sz]))
+                .map(|sz| {
+                    self.inner
+                        .send_early_plaintext(&data[..sz])
+                })
         }
     }
 
@@ -855,7 +870,13 @@ impl TransmitTlsData<'_, ClientConnectionData> {
     ///
     /// IF allowed by the protocol
     pub fn may_encrypt_early_data(&mut self) -> Option<MayEncryptEarlyData<'_>> {
-        if self.conn.core.data.early_data.is_enabled() {
+        if self
+            .conn
+            .core
+            .data
+            .early_data
+            .is_enabled()
+        {
             Some(MayEncryptEarlyData { conn: self.conn })
         } else {
             None

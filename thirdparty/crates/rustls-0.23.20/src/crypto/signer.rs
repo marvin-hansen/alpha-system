@@ -135,7 +135,9 @@ impl CertifiedKey {
 
     /// The end-entity certificate.
     pub fn end_entity_cert(&self) -> Result<&CertificateDer<'_>, Error> {
-        self.cert.first().ok_or(Error::NoCertificatesPresented)
+        self.cert
+            .first()
+            .ok_or(Error::NoCertificatesPresented)
     }
 }
 

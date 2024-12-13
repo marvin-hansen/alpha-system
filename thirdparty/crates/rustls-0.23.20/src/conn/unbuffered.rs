@@ -53,14 +53,24 @@ impl<Data> UnbufferedConnectionCommon<Data> {
                 break (buffer.pending_discard(), execute(self, incoming_tls, value));
             }
 
-            if let Some(chunk) = self.core.common_state.received_plaintext.pop() {
+            if let Some(chunk) = self
+                .core
+                .common_state
+                .received_plaintext
+                .pop()
+            {
                 break (
                     buffer.pending_discard(),
                     ReadTraffic::new(self, incoming_tls, chunk).into(),
                 );
             }
 
-            if let Some(chunk) = self.core.common_state.sendable_tls.pop() {
+            if let Some(chunk) = self
+                .core
+                .common_state
+                .sendable_tls
+                .pop()
+            {
                 break (
                     buffer.pending_discard(),
                     EncodeTlsData::new(self, chunk).into(),
@@ -117,9 +127,17 @@ impl<Data> UnbufferedConnectionCommon<Data> {
                     buffer.pending_discard(),
                     TransmitTlsData { conn: self }.into(),
                 );
-            } else if self.core.common_state.has_received_close_notify {
+            } else if self
+                .core
+                .common_state
+                .has_received_close_notify
+            {
                 break (buffer.pending_discard(), ConnectionState::Closed);
-            } else if self.core.common_state.may_send_application_data {
+            } else if self
+                .core
+                .common_state
+                .may_send_application_data
+            {
                 break (
                     buffer.pending_discard(),
                     ConnectionState::WriteTraffic(WriteTraffic { conn: self }),
@@ -250,9 +268,13 @@ impl<Data> fmt::Debug for ConnectionState<'_, '_, Data> {
 
             Self::EncodeTlsData(..) => f.debug_tuple("EncodeTlsData").finish(),
 
-            Self::TransmitTlsData(..) => f.debug_tuple("TransmitTlsData").finish(),
+            Self::TransmitTlsData(..) => f
+                .debug_tuple("TransmitTlsData")
+                .finish(),
 
-            Self::BlockedHandshake => f.debug_tuple("BlockedHandshake").finish(),
+            Self::BlockedHandshake => f
+                .debug_tuple("BlockedHandshake")
+                .finish(),
 
             Self::WriteTraffic(..) => f.debug_tuple("WriteTraffic").finish(),
         }
@@ -386,7 +408,9 @@ impl<Data> WriteTraffic<'_, Data> {
         application_data: &[u8],
         outgoing_tls: &mut [u8],
     ) -> Result<usize, EncryptError> {
-        self.conn.core.maybe_refresh_traffic_keys();
+        self.conn
+            .core
+            .maybe_refresh_traffic_keys();
         self.conn
             .core
             .common_state
@@ -474,7 +498,12 @@ impl<Data> TransmitTlsData<'_, Data> {
     ///
     /// If allowed at this stage of the handshake process
     pub fn may_encrypt_app_data(&mut self) -> Option<WriteTraffic<'_, Data>> {
-        if self.conn.core.common_state.may_send_application_data {
+        if self
+            .conn
+            .core
+            .common_state
+            .may_send_application_data
+        {
             Some(WriteTraffic { conn: self.conn })
         } else {
             None

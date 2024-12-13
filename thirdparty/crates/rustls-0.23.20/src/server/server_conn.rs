@@ -177,8 +177,11 @@ impl<'a> ClientHello<'a> {
     /// The server can specify supported ALPN protocols by setting [`ServerConfig::alpn_protocols`].
     /// During the handshake, the server will select the first protocol configured that the client supports.
     pub fn alpn(&self) -> Option<impl Iterator<Item = &'a [u8]>> {
-        self.alpn
-            .map(|protocols| protocols.iter().map(|proto| proto.as_ref()))
+        self.alpn.map(|protocols| {
+            protocols
+                .iter()
+                .map(|proto| proto.as_ref())
+        })
     }
 
     /// Get cipher suites.
@@ -662,7 +665,8 @@ mod connection {
 
     impl Debug for ServerConnection {
         fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-            f.debug_struct("ServerConnection").finish()
+            f.debug_struct("ServerConnection")
+                .finish()
         }
     }
 

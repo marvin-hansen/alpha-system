@@ -307,7 +307,9 @@ impl ConvertServerNameList for [ServerName] {
             }
         }
 
-        self.iter().filter_map(only_dns_hostnames).next()
+        self.iter()
+            .filter_map(only_dns_hostnames)
+            .next()
     }
 }
 
@@ -683,7 +685,8 @@ impl Codec<'_> for ClientExtension {
             _ => Self::Unknown(UnknownExtension::read(typ, &mut sub)),
         };
 
-        sub.expect_empty("ClientExtension").map(|_| ext)
+        sub.expect_empty("ClientExtension")
+            .map(|_| ext)
     }
 }
 
@@ -694,7 +697,9 @@ fn trim_hostname_trailing_dot_for_sni(dns_name: &DnsName<'_>) -> DnsName<'static
     // ASCII encoding without a trailing dot"
     if dns_name_str.ends_with('.') {
         let trimmed = &dns_name_str[0..dns_name_str.len() - 1];
-        DnsName::try_from(trimmed).unwrap().to_owned()
+        DnsName::try_from(trimmed)
+            .unwrap()
+            .to_owned()
     } else {
         dns_name.to_owned()
     }
@@ -825,7 +830,8 @@ impl Codec<'_> for ServerExtension {
             _ => Self::Unknown(UnknownExtension::read(typ, &mut sub)),
         };
 
-        sub.expect_empty("ServerExtension").map(|_| ext)
+        sub.expect_empty("ServerExtension")
+            .map(|_| ext)
     }
 }
 
@@ -937,15 +943,19 @@ impl ClientHelloPayload {
         let compressed_end_idx = compressed_start_idx.map(|start| start + to_compress.len());
         let marker_ext = ClientExtension::EncryptedClientHelloOuterExtensions(to_compress);
 
-        let exts = self.extensions.iter().enumerate().filter_map(|(i, ext)| {
-            if Some(i) == compressed_start_idx {
-                Some(&marker_ext)
-            } else if Some(i) > compressed_start_idx && Some(i) < compressed_end_idx {
-                None
-            } else {
-                Some(ext)
-            }
-        });
+        let exts = self
+            .extensions
+            .iter()
+            .enumerate()
+            .filter_map(|(i, ext)| {
+                if Some(i) == compressed_start_idx {
+                    Some(&marker_ext)
+                } else if Some(i) > compressed_start_idx && Some(i) < compressed_end_idx {
+                    None
+                } else {
+                    Some(ext)
+                }
+            });
 
         let nested = LengthPrefixedBuffer::new(ListLength::U16, bytes);
         for ext in exts {
@@ -956,11 +966,17 @@ impl ClientHelloPayload {
     /// Returns true if there is more than one extension of a given
     /// type.
     pub(crate) fn has_duplicate_extension(&self) -> bool {
-        has_duplicates::<_, _, u16>(self.extensions.iter().map(|ext| ext.ext_type()))
+        has_duplicates::<_, _, u16>(
+            self.extensions
+                .iter()
+                .map(|ext| ext.ext_type()),
+        )
     }
 
     pub(crate) fn find_extension(&self, ext: ExtensionType) -> Option<&ClientExtension> {
-        self.extensions.iter().find(|x| x.ext_type() == ext)
+        self.extensions
+            .iter()
+            .find(|x| x.ext_type() == ext)
     }
 
     pub(crate) fn sni_extension(&self) -> Option<&[ServerName]> {
@@ -1071,7 +1087,11 @@ impl ClientHelloPayload {
     pub(crate) fn has_keyshare_extension_with_duplicates(&self) -> bool {
         self.keyshare_extension()
             .map(|entries| {
-                has_duplicates::<_, _, u16>(entries.iter().map(|kse| u16::from(kse.group)))
+                has_duplicates::<_, _, u16>(
+                    entries
+                        .iter()
+                        .map(|kse| u16::from(kse.group)),
+                )
             })
             .unwrap_or_default()
     }
@@ -1118,7 +1138,8 @@ impl ClientHelloPayload {
     }
 
     pub(crate) fn early_data_extension_offered(&self) -> bool {
-        self.find_extension(ExtensionType::EarlyData).is_some()
+        self.find_extension(ExtensionType::EarlyData)
+            .is_some()
     }
 
     pub(crate) fn certificate_compression_extension(
@@ -1192,7 +1213,8 @@ impl Codec<'_> for HelloRetryExtension {
             _ => Self::Unknown(UnknownExtension::read(typ, &mut sub)),
         };
 
-        sub.expect_empty("HelloRetryExtension").map(|_| ext)
+        sub.expect_empty("HelloRetryExtension")
+            .map(|_| ext)
     }
 }
 
@@ -1235,7 +1257,11 @@ impl HelloRetryRequest {
     /// Returns true if there is more than one extension of a given
     /// type.
     pub(crate) fn has_duplicate_extension(&self) -> bool {
-        has_duplicates::<_, _, u16>(self.extensions.iter().map(|ext| ext.ext_type()))
+        has_duplicates::<_, _, u16>(
+            self.extensions
+                .iter()
+                .map(|ext| ext.ext_type()),
+        )
     }
 
     pub(crate) fn has_unknown_extension(&self) -> bool {
@@ -1248,7 +1274,9 @@ impl HelloRetryRequest {
     }
 
     fn find_extension(&self, ext: ExtensionType) -> Option<&HelloRetryExtension> {
-        self.extensions.iter().find(|x| x.ext_type() == ext)
+        self.extensions
+            .iter()
+            .find(|x| x.ext_type() == ext)
     }
 
     pub fn requested_key_share_group(&self) -> Option<NamedGroup> {
@@ -1353,7 +1381,8 @@ impl Codec<'_> for ServerHelloPayload {
             extensions,
         };
 
-        r.expect_empty("ServerHelloPayload").map(|_| ret)
+        r.expect_empty("ServerHelloPayload")
+            .map(|_| ret)
     }
 }
 
@@ -1432,7 +1461,12 @@ pub struct CertificateChain<'a>(pub Vec<CertificateDer<'a>>);
 
 impl CertificateChain<'_> {
     pub(crate) fn into_owned(self) -> CertificateChain<'static> {
-        CertificateChain(self.0.into_iter().map(|c| c.into_owned()).collect())
+        CertificateChain(
+            self.0
+                .into_iter()
+                .map(|c| c.into_owned())
+                .collect(),
+        )
     }
 }
 
@@ -1521,7 +1555,8 @@ impl<'a> Codec<'a> for CertificateExtension<'a> {
             _ => Self::Unknown(UnknownExtension::read(typ, &mut sub)),
         };
 
-        sub.expect_empty("CertificateExtension").map(|_| ext)
+        sub.expect_empty("CertificateExtension")
+            .map(|_| ext)
     }
 }
 
@@ -1569,7 +1604,11 @@ impl<'a> CertificateEntry<'a> {
     }
 
     pub(crate) fn has_duplicate_extension(&self) -> bool {
-        has_duplicates::<_, _, u16>(self.exts.iter().map(|ext| ext.ext_type()))
+        has_duplicates::<_, _, u16>(
+            self.exts
+                .iter()
+                .map(|ext| ext.ext_type()),
+        )
     }
 
     pub(crate) fn has_unknown_extension(&self) -> bool {
@@ -1632,9 +1671,10 @@ impl<'a> CertificatePayloadTls13<'a> {
                 .map(|(cert, ocsp)| {
                     let mut e = CertificateEntry::new(cert.clone());
                     if let Some(ocsp) = ocsp {
-                        e.exts.push(CertificateExtension::CertificateStatus(
-                            CertificateStatus::new(ocsp),
-                        ));
+                        e.exts
+                            .push(CertificateExtension::CertificateStatus(
+                                CertificateStatus::new(ocsp),
+                            ));
                     }
                     e
                 })
@@ -1692,7 +1732,12 @@ impl<'a> CertificatePayloadTls13<'a> {
     }
 
     pub(crate) fn into_certificate_chain(self) -> CertificateChain<'a> {
-        CertificateChain(self.entries.into_iter().map(|e| e.cert).collect())
+        CertificateChain(
+            self.entries
+                .into_iter()
+                .map(|e| e.cert)
+                .collect(),
+        )
     }
 }
 
@@ -2014,11 +2059,17 @@ pub(crate) trait HasServerExtensions {
     /// Returns true if there is more than one extension of a given
     /// type.
     fn has_duplicate_extension(&self) -> bool {
-        has_duplicates::<_, _, u16>(self.extensions().iter().map(|ext| ext.ext_type()))
+        has_duplicates::<_, _, u16>(
+            self.extensions()
+                .iter()
+                .map(|ext| ext.ext_type()),
+        )
     }
 
     fn find_extension(&self, ext: ExtensionType) -> Option<&ServerExtension> {
-        self.extensions().iter().find(|x| x.ext_type() == ext)
+        self.extensions()
+            .iter()
+            .find(|x| x.ext_type() == ext)
     }
 
     fn alpn_protocol(&self) -> Option<&[u8]> {
@@ -2065,7 +2116,8 @@ pub(crate) trait HasServerExtensions {
     }
 
     fn early_data_extension_offered(&self) -> bool {
-        self.find_extension(ExtensionType::EarlyData).is_some()
+        self.find_extension(ExtensionType::EarlyData)
+            .is_some()
     }
 }
 
@@ -2201,7 +2253,8 @@ impl Codec<'_> for CertReqExtension {
             _ => Self::Unknown(UnknownExtension::read(typ, &mut sub)),
         };
 
-        sub.expect_empty("CertReqExtension").map(|_| ext)
+        sub.expect_empty("CertReqExtension")
+            .map(|_| ext)
     }
 }
 
@@ -2234,7 +2287,9 @@ impl Codec<'_> for CertificateRequestPayloadTls13 {
 
 impl CertificateRequestPayloadTls13 {
     pub(crate) fn find_extension(&self, ext: ExtensionType) -> Option<&CertReqExtension> {
-        self.extensions.iter().find(|x| x.ext_type() == ext)
+        self.extensions
+            .iter()
+            .find(|x| x.ext_type() == ext)
     }
 
     pub(crate) fn sigalgs_extension(&self) -> Option<&[SignatureScheme]> {
@@ -2338,7 +2393,8 @@ impl Codec<'_> for NewSessionTicketExtension {
             _ => Self::Unknown(UnknownExtension::read(typ, &mut sub)),
         };
 
-        sub.expect_empty("NewSessionTicketExtension").map(|_| ext)
+        sub.expect_empty("NewSessionTicketExtension")
+            .map(|_| ext)
     }
 }
 
@@ -2367,11 +2423,17 @@ impl NewSessionTicketPayloadTls13 {
     }
 
     pub(crate) fn has_duplicate_extension(&self) -> bool {
-        has_duplicates::<_, _, u16>(self.exts.iter().map(|ext| ext.ext_type()))
+        has_duplicates::<_, _, u16>(
+            self.exts
+                .iter()
+                .map(|ext| ext.ext_type()),
+        )
     }
 
     pub(crate) fn find_extension(&self, ext: ExtensionType) -> Option<&NewSessionTicketExtension> {
-        self.exts.iter().find(|x| x.ext_type() == ext)
+        self.exts
+            .iter()
+            .find(|x| x.ext_type() == ext)
     }
 
     pub(crate) fn max_early_data_size(&self) -> Option<u32> {
@@ -2701,7 +2763,9 @@ impl<'a> HandshakeMessagePayload<'a> {
             HandshakePayload::ClientHello(ref ch) => match ch.extensions.last() {
                 Some(ClientExtension::PresharedKey(ref offer)) => {
                     let mut binders_encoding = Vec::new();
-                    offer.binders.encode(&mut binders_encoding);
+                    offer
+                        .binders
+                        .encode(&mut binders_encoding);
                     binders_encoding.len()
                 }
                 _ => 0,
@@ -2796,7 +2860,8 @@ impl Codec<'_> for HpkeKeyConfig {
         self.config_id.encode(bytes);
         self.kem_id.encode(bytes);
         self.public_key.encode(bytes);
-        self.symmetric_cipher_suites.encode(bytes);
+        self.symmetric_cipher_suites
+            .encode(bytes);
     }
 
     fn read(r: &mut Reader<'_>) -> Result<Self, InvalidMessage> {
@@ -2821,7 +2886,11 @@ impl EchConfigContents {
     /// Returns true if there is more than one extension of a given
     /// type.
     pub(crate) fn has_duplicate_extension(&self) -> bool {
-        has_duplicates::<_, _, u16>(self.extensions.iter().map(|ext| ext.ext_type()))
+        has_duplicates::<_, _, u16>(
+            self.extensions
+                .iter()
+                .map(|ext| ext.ext_type()),
+        )
     }
 
     /// Returns true if there is at least one mandatory unsupported extension.
@@ -2944,7 +3013,8 @@ impl Codec<'_> for EchConfigExtension {
             _ => Self::Unknown(UnknownExtension::read(typ, &mut sub)),
         };
 
-        sub.expect_empty("EchConfigExtension").map(|_| ext)
+        sub.expect_empty("EchConfigExtension")
+            .map(|_| ext)
     }
 }
 
@@ -3085,7 +3155,9 @@ mod tests {
             payload: Payload::new(vec![0x42]),
         });
         let mut config = config_template();
-        config.extensions.push(unknown_ext.clone());
+        config
+            .extensions
+            .push(unknown_ext.clone());
         config.extensions.push(unknown_ext);
 
         assert!(config.has_duplicate_extension());
@@ -3099,7 +3171,9 @@ mod tests {
             payload: Payload::new(vec![0x42]),
         });
         let mut config = config_template();
-        config.extensions.push(mandatory_unknown_ext);
+        config
+            .extensions
+            .push(mandatory_unknown_ext);
 
         assert!(!config.has_duplicate_extension());
         assert!(config.has_unknown_mandatory_extension());

@@ -86,7 +86,9 @@ fn find_session(
 
     if let Some(resuming) = &found {
         if cx.common.is_quic() {
-            cx.common.quic.params = resuming.tls13().map(|v| v.quic_params());
+            cx.common.quic.params = resuming
+                .tls13()
+                .map(|v| v.quic_params());
         }
     }
 
@@ -100,7 +102,10 @@ pub(super) fn start_handshake(
     cx: &mut ClientContext<'_>,
 ) -> NextStateOrError<'static> {
     let mut transcript_buffer = HandshakeHashBuffer::new();
-    if config.client_auth_cert_resolver.has_certs() {
+    if config
+        .client_auth_cert_resolver
+        .has_certs()
+    {
         transcript_buffer.set_client_auth_enabled();
     }
 
@@ -153,7 +158,9 @@ pub(super) fn start_handshake(
         Some(EchMode::Enable(ech_config)) => Some(EchState::new(
             ech_config,
             server_name.clone(),
-            config.client_auth_cert_resolver.has_certs(),
+            config
+                .client_auth_cert_resolver
+                .has_certs(),
             config.provider.secure_random,
             config.enable_sni,
         )?),
@@ -255,7 +262,11 @@ fn emit_client_hello_for_retry(
     let mut exts = vec![
         ClientExtension::SupportedVersions(supported_versions),
         ClientExtension::NamedGroups(offered_groups),
-        ClientExtension::SignatureAlgorithms(config.verifier.supported_verify_schemes()),
+        ClientExtension::SignatureAlgorithms(
+            config
+                .verifier
+                .supported_verify_schemes(),
+        ),
         ClientExtension::ExtendedMasterSecretRequest,
         ClientExtension::CertificateStatusRequest(CertificateStatusRequest::build_ocsp()),
     ];
@@ -300,11 +311,13 @@ fn emit_client_hello_for_retry(
             // for "free".  We only do this if the same algorithm is also supported
             // separately by our provider for this version (`find_kx_group` looks that up).
             if let Some((component_group, component_share)) =
-                key_share.hybrid_component().filter(|(group, _)| {
-                    config
-                        .find_kx_group(*group, ProtocolVersion::TLSv1_3)
-                        .is_some()
-                })
+                key_share
+                    .hybrid_component()
+                    .filter(|(group, _)| {
+                        config
+                            .find_kx_group(*group, ProtocolVersion::TLSv1_3)
+                            .is_some()
+                    })
             {
                 shares.push(KeyShareEntry::new(component_group, component_share));
             }
@@ -348,13 +361,19 @@ fn emit_client_hello_for_retry(
         false
     };
 
-    if config.client_auth_cert_resolver.only_raw_public_keys() {
+    if config
+        .client_auth_cert_resolver
+        .only_raw_public_keys()
+    {
         exts.push(ClientExtension::ClientCertTypes(vec![
             CertificateType::RawPublicKey,
         ]));
     }
 
-    if config.verifier.requires_raw_public_keys() {
+    if config
+        .verifier
+        .requires_raw_public_keys()
+    {
         exts.push(ClientExtension::ServerCertTypes(vec![
             CertificateType::RawPublicKey,
         ]));
@@ -417,14 +436,17 @@ fn emit_client_hello_for_retry(
         extensions: exts,
     };
 
-    let ech_grease_ext = config.ech_mode.as_ref().and_then(|mode| match mode {
-        EchMode::Grease(cfg) => Some(cfg.grease_ext(
-            config.provider.secure_random,
-            input.server_name.clone(),
-            &chp_payload,
-        )),
-        _ => None,
-    });
+    let ech_grease_ext = config
+        .ech_mode
+        .as_ref()
+        .and_then(|mode| match mode {
+            EchMode::Grease(cfg) => Some(cfg.grease_ext(
+                config.provider.secure_random,
+                input.server_name.clone(),
+                &chp_payload,
+            )),
+            _ => None,
+        });
 
     match (cx.data.ech_status, &mut ech_state) {
         // If we haven't offered ECH, or have offered ECH but got a non-rejecting HRR, then
@@ -442,7 +464,9 @@ fn emit_client_hello_for_retry(
             if let Some(grease_ext) = ech_grease_ext {
                 // Add the GREASE ECH extension.
                 let grease_ext = grease_ext?;
-                chp_payload.extensions.push(grease_ext.clone());
+                chp_payload
+                    .extensions
+                    .push(grease_ext.clone());
                 cx.data.ech_status = EchStatus::Grease;
                 // Store the GREASE ECH extension in case we need to carry it forward in a
                 // subsequent hello.
@@ -629,7 +653,10 @@ pub(super) fn process_alpn_protocol(
     common.alpn_protocol = proto.map(ToOwned::to_owned);
 
     if let Some(alpn_protocol) = &common.alpn_protocol {
-        if !config.alpn_protocols.contains(alpn_protocol) {
+        if !config
+            .alpn_protocols
+            .contains(alpn_protocol)
+        {
             return Err(common.send_fatal_alert(
                 AlertDescription::IllegalParameter,
                 PeerMisbehaved::SelectedUnofferedApplicationProtocol,
@@ -652,7 +679,10 @@ pub(super) fn process_alpn_protocol(
 
     debug!(
         "ALPN protocol is {:?}",
-        common.alpn_protocol.as_ref().map(|v| bs_debug::BsDebug(v))
+        common
+            .alpn_protocol
+            .as_ref()
+            .map(|v| bs_debug::BsDebug(v))
     );
     Ok(())
 }
@@ -662,7 +692,9 @@ pub(super) fn process_server_cert_type_extension(
     config: &ClientConfig,
     server_cert_extension: Option<&CertificateType>,
 ) -> Result<(), Error> {
-    let requires_server_rpk = config.verifier.requires_raw_public_keys();
+    let requires_server_rpk = config
+        .verifier
+        .requires_raw_public_keys();
     let server_offers_rpk = matches!(server_cert_extension, Some(CertificateType::RawPublicKey));
 
     let raw_key_negotation_params = RawKeyNegotiationParams {
@@ -683,7 +715,9 @@ pub(super) fn process_client_cert_type_extension(
     config: &ClientConfig,
     client_cert_extension: Option<&CertificateType>,
 ) -> Result<(), Error> {
-    let requires_client_rpk = config.client_auth_cert_resolver.only_raw_public_keys();
+    let requires_client_rpk = config
+        .client_auth_cert_resolver
+        .only_raw_public_keys();
     let server_allows_rpk = matches!(client_cert_extension, Some(CertificateType::RawPublicKey));
 
     let raw_key_negotation_params = RawKeyNegotiationParams {
@@ -733,7 +767,10 @@ impl State<ClientConnectionData> for ExpectServerHello {
                     return Err(PeerMisbehaved::OfferedEarlyDataWithOldProtocolVersion.into());
                 }
 
-                if server_hello.supported_versions().is_some() {
+                if server_hello
+                    .supported_versions()
+                    .is_some()
+                {
                     return Err({
                         cx.common.send_fatal_alert(
                             AlertDescription::IllegalParameter,
@@ -836,7 +873,9 @@ impl State<ClientConnectionData> for ExpectServerHello {
         }
 
         // Start our handshake hash, and input the server-hello.
-        let mut transcript = self.transcript_buffer.start_hash(suite.hash_provider());
+        let mut transcript = self
+            .transcript_buffer
+            .start_hash(suite.hash_provider());
         transcript.add_message(&m);
 
         let randoms = ConnectionRandoms::new(self.input.random, server_hello.random);
@@ -845,14 +884,14 @@ impl State<ClientConnectionData> for ExpectServerHello {
         match suite {
             SupportedCipherSuite::Tls13(suite) => {
                 #[allow(clippy::bind_instead_of_map)]
-                let resuming_session =
-                    self.input
-                        .resuming
-                        .and_then(|resuming| match resuming.value {
-                            ClientSessionValue::Tls13(inner) => Some(inner),
-                            #[cfg(feature = "tls12")]
-                            ClientSessionValue::Tls12(_) => None,
-                        });
+                let resuming_session = self
+                    .input
+                    .resuming
+                    .and_then(|resuming| match resuming.value {
+                        ClientSessionValue::Tls13(inner) => Some(inner),
+                        #[cfg(feature = "tls12")]
+                        ClientSessionValue::Tls12(_) => None,
+                    });
 
                 tls13::handle_server_hello(
                     self.input.config,
@@ -874,13 +913,13 @@ impl State<ClientConnectionData> for ExpectServerHello {
             }
             #[cfg(feature = "tls12")]
             SupportedCipherSuite::Tls12(suite) => {
-                let resuming_session =
-                    self.input
-                        .resuming
-                        .and_then(|resuming| match resuming.value {
-                            ClientSessionValue::Tls12(inner) => Some(inner),
-                            ClientSessionValue::Tls13(_) => None,
-                        });
+                let resuming_session = self
+                    .input
+                    .resuming
+                    .and_then(|resuming| match resuming.value {
+                        ClientSessionValue::Tls12(inner) => Some(inner),
+                        ClientSessionValue::Tls13(_) => None,
+                    });
 
                 tls12::CompleteServerHelloHandling {
                     config: self.input.config,
@@ -1055,7 +1094,10 @@ impl ExpectServerHelloOrHelloRetryRequest {
         };
 
         // This is the draft19 change where the transcript became a tree
-        let transcript = self.next.transcript_buffer.start_hash(cs.hash_provider());
+        let transcript = self
+            .next
+            .transcript_buffer
+            .start_hash(cs.hash_provider());
         let mut transcript_buffer = transcript.into_hrr_buffer();
         transcript_buffer.add_message(&m);
 
@@ -1115,7 +1157,9 @@ impl State<ClientConnectionData> for ExpectServerHelloOrHelloRetryRequest {
                         ..
                     },
                 ..
-            } => self.into_expect_server_hello().handle(cx, m),
+            } => self
+                .into_expect_server_hello()
+                .handle(cx, m),
             MessagePayload::Handshake {
                 parsed:
                     HandshakeMessagePayload {
@@ -1170,11 +1214,17 @@ impl Deref for ClientSessionValue {
 }
 
 fn low_quality_integer_hash(mut x: u32) -> u32 {
-    x = x.wrapping_add(0x7ed55d16).wrapping_add(x << 12);
+    x = x
+        .wrapping_add(0x7ed55d16)
+        .wrapping_add(x << 12);
     x = (x ^ 0xc761c23c) ^ (x >> 19);
-    x = x.wrapping_add(0x165667b1).wrapping_add(x << 5);
+    x = x
+        .wrapping_add(0x165667b1)
+        .wrapping_add(x << 5);
     x = x.wrapping_add(0xd3a2646c) ^ (x << 9);
-    x = x.wrapping_add(0xfd7046c5).wrapping_add(x << 3);
+    x = x
+        .wrapping_add(0xfd7046c5)
+        .wrapping_add(x << 3);
     x = (x ^ 0xb55a4f09) ^ (x >> 16);
     x
 }

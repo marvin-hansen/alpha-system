@@ -38,7 +38,9 @@ fn test_read_fuzz_corpus() {
             continue;
         };
 
-        let enc = PlainMessage::from(msg).into_unencrypted_opaque().encode();
+        let enc = PlainMessage::from(msg)
+            .into_unencrypted_opaque()
+            .encode();
         assert_eq!(bytes.to_vec(), enc);
         assert_eq!(bytes[..rd.used()].to_vec(), enc);
     }

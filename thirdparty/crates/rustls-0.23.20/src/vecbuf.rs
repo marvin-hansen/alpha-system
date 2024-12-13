@@ -213,7 +213,10 @@ mod tests {
 
     #[test]
     fn every_possible_chunk_interleaving() {
-        let input = (0..=0xffu8).cycle().take(4096).collect::<Vec<u8>>();
+        let input = (0..=0xffu8)
+            .cycle()
+            .take(4096)
+            .collect::<Vec<u8>>();
 
         for input_chunk_len in 1..64usize {
             for output_chunk_len in 1..65usize {

@@ -83,9 +83,9 @@ rust_library(
         "@rules_rust//rust/platform:x86_64-unknown-none": [],
         "//conditions:default": ["@platforms//:incompatible"],
     }),
-    version = "1.0.23",
+    version = "1.0.24",
     deps = [
-        "//thirdparty/crates/semver-1.0.23:build_script_build",
+        "//thirdparty/crates/semver-1.0.24:build_script_build",
     ],
 )
 
@@ -138,7 +138,7 @@ cargo_build_script(
         "noclippy",
         "norustfmt",
     ],
-    version = "1.0.23",
+    version = "1.0.24",
     visibility = ["//visibility:private"],
 )
 

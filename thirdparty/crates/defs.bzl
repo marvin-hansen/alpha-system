@@ -310,6 +310,7 @@ _NORMAL_DEPENDENCIES = {
             "hickory-resolver": Label("//thirdparty/crates/hickory-resolver-0.24.2:hickory_resolver"),
             "iggy": Label("//thirdparty/crates/iggy-0.6.51:iggy"),
             "klickhouse": Label("//thirdparty/crates/klickhouse-0.13.2:klickhouse"),
+            "lazy_static": Label("//thirdparty/crates/lazy_static-1.5.0:lazy_static"),
             "lru": Label("//thirdparty/crates/lru-0.12.5:lru"),
             "mimalloc": Label("//thirdparty/crates/mimalloc-0.1.43:mimalloc"),
             "prost": Label("//thirdparty/crates/prost-0.13.4:prost"),

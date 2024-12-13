@@ -128,7 +128,10 @@ impl SupportedCipherSuite {
     pub(crate) fn usable_for_protocol(&self, proto: Protocol) -> bool {
         match proto {
             Protocol::Tcp => true,
-            Protocol::Quic => self.tls13().and_then(|cs| cs.quic).is_some(),
+            Protocol::Quic => self
+                .tls13()
+                .and_then(|cs| cs.quic)
+                .is_some(),
         }
     }
 

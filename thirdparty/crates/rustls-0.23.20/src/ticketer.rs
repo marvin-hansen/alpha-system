@@ -184,26 +184,37 @@ impl ProducesTickets for TicketSwitcher {
         #[cfg(feature = "std")]
         let now = UnixTime::now();
         #[cfg(not(feature = "std"))]
-        let now = self.time_provider.current_time().unwrap();
+        let now = self
+            .time_provider
+            .current_time()
+            .unwrap();
 
-        self.maybe_roll(now)?.current.encrypt(message)
+        self.maybe_roll(now)?
+            .current
+            .encrypt(message)
     }
 
     fn decrypt(&self, ciphertext: &[u8]) -> Option<Vec<u8>> {
         #[cfg(feature = "std")]
         let now = UnixTime::now();
         #[cfg(not(feature = "std"))]
-        let now = self.time_provider.current_time().unwrap();
+        let now = self
+            .time_provider
+            .current_time()
+            .unwrap();
 
         let state = self.maybe_roll(now)?;
 
         // Decrypt with the current key; if that fails, try with the previous.
-        state.current.decrypt(ciphertext).or_else(|| {
-            state
-                .previous
-                .as_ref()
-                .and_then(|previous| previous.decrypt(ciphertext))
-        })
+        state
+            .current
+            .decrypt(ciphertext)
+            .or_else(|| {
+                state
+                    .previous
+                    .as_ref()
+                    .and_then(|previous| previous.decrypt(ciphertext))
+            })
     }
 }
 
@@ -323,25 +334,31 @@ impl ProducesTickets for TicketRotator {
     }
 
     fn encrypt(&self, message: &[u8]) -> Option<Vec<u8>> {
-        self.maybe_roll(UnixTime::now())?.current.encrypt(message)
+        self.maybe_roll(UnixTime::now())?
+            .current
+            .encrypt(message)
     }
 
     fn decrypt(&self, ciphertext: &[u8]) -> Option<Vec<u8>> {
         let state = self.maybe_roll(UnixTime::now())?;
 
         // Decrypt with the current key; if that fails, try with the previous.
-        state.current.decrypt(ciphertext).or_else(|| {
-            state
-                .previous
-                .as_ref()
-                .and_then(|previous| previous.decrypt(ciphertext))
-        })
+        state
+            .current
+            .decrypt(ciphertext)
+            .or_else(|| {
+                state
+                    .previous
+                    .as_ref()
+                    .and_then(|previous| previous.decrypt(ciphertext))
+            })
     }
 }
 
 #[cfg(feature = "std")]
 impl core::fmt::Debug for TicketRotator {
     fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
-        f.debug_struct("TicketRotator").finish_non_exhaustive()
+        f.debug_struct("TicketRotator")
+            .finish_non_exhaustive()
     }
 }

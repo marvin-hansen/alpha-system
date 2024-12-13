@@ -329,9 +329,11 @@ mod tests {
 
     fn load_roots(roots_der: &[&[u8]]) -> Arc<RootCertStore> {
         let mut roots = RootCertStore::empty();
-        roots_der
-            .iter()
-            .for_each(|der| roots.add(CertificateDer::from(der.to_vec())).unwrap());
+        roots_der.iter().for_each(|der| {
+            roots
+                .add(CertificateDer::from(der.to_vec()))
+                .unwrap()
+        });
         roots.into()
     }
 

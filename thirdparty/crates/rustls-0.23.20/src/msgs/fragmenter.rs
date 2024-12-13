@@ -140,8 +140,11 @@ mod tests {
         };
 
         let mut frag = MessageFragmenter::default();
-        frag.set_max_fragment_size(Some(32)).unwrap();
-        let q = frag.fragment_message(&m).collect::<Vec<_>>();
+        frag.set_max_fragment_size(Some(32))
+            .unwrap();
+        let q = frag
+            .fragment_message(&m)
+            .collect::<Vec<_>>();
         assert_eq!(q.len(), 3);
         msg_eq(
             &q[0],
@@ -181,8 +184,11 @@ mod tests {
         };
 
         let mut frag = MessageFragmenter::default();
-        frag.set_max_fragment_size(Some(32)).unwrap();
-        let q = frag.fragment_message(&m).collect::<Vec<_>>();
+        frag.set_max_fragment_size(Some(32))
+            .unwrap();
+        let q = frag
+            .fragment_message(&m)
+            .collect::<Vec<_>>();
         assert_eq!(q.len(), 1);
         msg_eq(
             &q[0],

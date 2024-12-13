@@ -216,9 +216,13 @@ impl Nonce {
         let mut nonce = Self([0u8; NONCE_LEN]);
         codec::put_u64(seq, &mut nonce.0[4..]);
 
-        nonce.0.iter_mut().zip(iv.0.iter()).for_each(|(nonce, iv)| {
-            *nonce ^= *iv;
-        });
+        nonce
+            .0
+            .iter_mut()
+            .zip(iv.0.iter())
+            .for_each(|(nonce, iv)| {
+                *nonce ^= *iv;
+            });
 
         nonce
     }

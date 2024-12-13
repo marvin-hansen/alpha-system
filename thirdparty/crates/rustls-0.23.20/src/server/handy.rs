@@ -64,12 +64,19 @@ mod cache {
 
     impl server::StoresServerSessions for ServerSessionMemoryCache {
         fn put(&self, key: Vec<u8>, value: Vec<u8>) -> bool {
-            self.cache.lock().unwrap().insert(key, value);
+            self.cache
+                .lock()
+                .unwrap()
+                .insert(key, value);
             true
         }
 
         fn get(&self, key: &[u8]) -> Option<Vec<u8>> {
-            self.cache.lock().unwrap().get(key).cloned()
+            self.cache
+                .lock()
+                .unwrap()
+                .get(key)
+                .cloned()
         }
 
         fn take(&self, key: &[u8]) -> Option<Vec<u8>> {
@@ -83,7 +90,8 @@ mod cache {
 
     impl Debug for ServerSessionMemoryCache {
         fn fmt(&self, f: &mut Formatter<'_>) -> core::fmt::Result {
-            f.debug_struct("ServerSessionMemoryCache").finish()
+            f.debug_struct("ServerSessionMemoryCache")
+                .finish()
         }
     }
 
@@ -271,7 +279,8 @@ mod sni_resolver {
                 .and_then(|cert| verify_server_name(&cert, &server_name))?;
 
             if let ServerName::DnsName(name) = server_name {
-                self.by_name.insert(name.as_ref().to_string(), Arc::new(ck));
+                self.by_name
+                    .insert(name.as_ref().to_string(), Arc::new(ck));
             }
             Ok(())
         }
@@ -311,7 +320,9 @@ mod sni_resolver {
         #[test]
         fn test_resolvesservercertusingsni_handles_unknown_name() {
             let rscsni = ResolvesServerCertUsingSni::new();
-            let name = DnsName::try_from("hello.com").unwrap().to_owned();
+            let name = DnsName::try_from("hello.com")
+                .unwrap()
+                .to_owned();
             assert!(rscsni
                 .resolve(ClientHello {
                     server_name: &Some(name),

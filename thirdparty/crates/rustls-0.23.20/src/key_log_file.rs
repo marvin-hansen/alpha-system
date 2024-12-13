@@ -26,7 +26,11 @@ impl KeyLogFileInner {
         };
 
         #[cfg_attr(not(feature = "logging"), allow(unused_variables))]
-        let file = match OpenOptions::new().append(true).create(true).open(path) {
+        let file = match OpenOptions::new()
+            .append(true)
+            .create(true)
+            .open(path)
+        {
             Ok(f) => Some(f),
             Err(e) => {
                 warn!("unable to create key log file {:?}: {}", path, e);
@@ -121,27 +125,35 @@ mod tests {
     use super::*;
 
     fn init() {
-        let _ = env_logger::builder().is_test(true).try_init();
+        let _ = env_logger::builder()
+            .is_test(true)
+            .try_init();
     }
 
     #[test]
     fn test_env_var_is_not_set() {
         init();
         let mut inner = KeyLogFileInner::new(None);
-        assert!(inner.try_write("label", b"random", b"secret").is_ok());
+        assert!(inner
+            .try_write("label", b"random", b"secret")
+            .is_ok());
     }
 
     #[test]
     fn test_env_var_cannot_be_opened() {
         init();
         let mut inner = KeyLogFileInner::new(Some("/dev/does-not-exist".into()));
-        assert!(inner.try_write("label", b"random", b"secret").is_ok());
+        assert!(inner
+            .try_write("label", b"random", b"secret")
+            .is_ok());
     }
 
     #[test]
     fn test_env_var_cannot_be_written() {
         init();
         let mut inner = KeyLogFileInner::new(Some("/dev/full".into()));
-        assert!(inner.try_write("label", b"random", b"secret").is_err());
+        assert!(inner
+            .try_write("label", b"random", b"secret")
+            .is_err());
     }
 }

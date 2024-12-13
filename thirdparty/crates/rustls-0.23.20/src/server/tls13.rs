@@ -101,7 +101,9 @@ mod client_hello {
                 _ => unreachable!(),
             };
 
-            let handshake_hash = self.transcript.hash_given(&binder_plaintext);
+            let handshake_hash = self
+                .transcript
+                .hash_given(&binder_plaintext);
 
             let key_schedule = KeyScheduleEarly::new(suite, psk);
             let real_binder =
@@ -145,12 +147,14 @@ mod client_hello {
 
             sigschemes_ext.retain(SignatureScheme::supported_in_tls13);
 
-            let shares_ext = client_hello.keyshare_extension().ok_or_else(|| {
-                cx.common.send_fatal_alert(
-                    AlertDescription::HandshakeFailure,
-                    PeerIncompatible::KeyShareExtensionRequired,
-                )
-            })?;
+            let shares_ext = client_hello
+                .keyshare_extension()
+                .ok_or_else(|| {
+                    cx.common.send_fatal_alert(
+                        AlertDescription::HandshakeFailure,
+                        PeerIncompatible::KeyShareExtensionRequired,
+                    )
+                })?;
 
             if client_hello.has_keyshare_extension_with_duplicates() {
                 return Err(cx.common.send_fatal_alert(
@@ -166,10 +170,9 @@ mod client_hello {
                 ));
             }
 
-            let cert_compressor =
-                client_hello
-                    .certificate_compression_extension()
-                    .and_then(|offered|
+            let cert_compressor = client_hello
+                .certificate_compression_extension()
+                .and_then(|offered|
                     // prefer server order when choosing a compression: the client's
                     // extension here does not denote any preference.
                     self.config
@@ -336,7 +339,9 @@ mod client_hello {
                 &client_hello.session_id,
                 chosen_share_and_kxg,
                 chosen_psk_index,
-                resumedata.as_ref().map(|x| &x.master_secret.0[..]),
+                resumedata
+                    .as_ref()
+                    .map(|x| &x.master_secret.0[..]),
                 &self.config,
             )?;
             if !self.done_retry {
@@ -344,7 +349,9 @@ mod client_hello {
             }
 
             if full_handshake {
-                cx.common.handshake_kind.get_or_insert(HandshakeKind::Full);
+                cx.common
+                    .handshake_kind
+                    .get_or_insert(HandshakeKind::Full);
             } else {
                 cx.common.handshake_kind = Some(HandshakeKind::Resumed);
             }
@@ -417,11 +424,16 @@ mod client_hello {
                 // Application data can be sent immediately after Finished, in one
                 // flight.  However, if client auth is enabled, we don't want to send
                 // application data to an unauthenticated peer.
-                cx.common.start_outgoing_traffic(&mut cx.sendable_plaintext);
+                cx.common
+                    .start_outgoing_traffic(&mut cx.sendable_plaintext);
             }
 
             if doing_client_auth {
-                if self.config.cert_decompressors.is_empty() {
+                if self
+                    .config
+                    .cert_decompressors
+                    .is_empty()
+                {
                     Ok(Box::new(ExpectCertificate {
                         config: self.config,
                         transcript: self.transcript,
@@ -573,10 +585,12 @@ mod client_hello {
             extensions: Vec::new(),
         };
 
-        req.extensions.push(HelloRetryExtension::KeyShare(group));
-        req.extensions.push(HelloRetryExtension::SupportedVersions(
-            ProtocolVersion::TLSv1_3,
-        ));
+        req.extensions
+            .push(HelloRetryExtension::KeyShare(group));
+        req.extensions
+            .push(HelloRetryExtension::SupportedVersions(
+                ProtocolVersion::TLSv1_3,
+            ));
 
         let m = Message {
             version: ProtocolVersion::TLSv1_2,
@@ -690,7 +704,9 @@ mod client_hello {
             extensions: Vec::new(),
         };
 
-        let schemes = config.verifier.supported_verify_schemes();
+        let schemes = config
+            .verifier
+            .supported_verify_schemes();
         cr.extensions
             .push(CertReqExtension::SignatureAlgorithms(schemes.to_vec()));
 
@@ -771,12 +787,14 @@ mod client_hello {
     ) -> Result<(), Error> {
         let message = construct_server_verify_message(&flight.transcript.current_hash());
 
-        let signer = signing_key.choose_scheme(schemes).ok_or_else(|| {
-            common.send_fatal_alert(
-                AlertDescription::HandshakeFailure,
-                PeerIncompatible::NoSignatureSchemesInCommon,
-            )
-        })?;
+        let signer = signing_key
+            .choose_scheme(schemes)
+            .ok_or_else(|| {
+                common.send_fatal_alert(
+                    AlertDescription::HandshakeFailure,
+                    PeerIncompatible::NoSignatureSchemesInCommon,
+                )
+            })?;
 
         let scheme = signer.scheme();
         let sig = signer.sign(message.as_ref())?;
@@ -991,7 +1009,11 @@ impl State<ServerConnectionData> for ExpectCompressedCertificate {
         trace!(
             "Client certificate decompressed using {:?} ({} bytes -> {})",
             compressed_cert.alg,
-            compressed_cert.compressed.0.bytes().len(),
+            compressed_cert
+                .compressed
+                .0
+                .bytes()
+                .len(),
             compressed_cert.uncompressed_len,
         );
 
@@ -1054,7 +1076,10 @@ impl State<ServerConnectionData> for ExpectCertificate {
 
         let client_cert = certp.into_certificate_chain();
 
-        let mandatory = self.config.verifier.client_auth_mandatory();
+        let mandatory = self
+            .config
+            .verifier
+            .client_auth_mandatory();
 
         let Some((end_entity, intermediates)) = client_cert.split_first() else {
             if !mandatory {
@@ -1080,7 +1105,10 @@ impl State<ServerConnectionData> for ExpectCertificate {
         self.config
             .verifier
             .verify_client_cert(end_entity, intermediates, now)
-            .map_err(|err| cx.common.send_cert_verify_error_alert(err))?;
+            .map_err(|err| {
+                cx.common
+                    .send_cert_verify_error_alert(err)
+            })?;
 
         Ok(Box::new(ExpectCertificateVerify {
             config: self.config,
@@ -1132,7 +1160,9 @@ impl State<ServerConnectionData> for ExpectCertificateVerify {
         };
 
         if let Err(e) = rc {
-            return Err(cx.common.send_cert_verify_error_alert(e));
+            return Err(cx
+                .common
+                .send_cert_verify_error_alert(e));
         }
 
         trace!("client CertificateVerify OK");
@@ -1175,7 +1205,11 @@ impl State<ServerConnectionData> for ExpectEarlyData {
     {
         match m.payload {
             MessagePayload::ApplicationData(payload) => {
-                match cx.data.early_data.take_received_plaintext(payload) {
+                match cx
+                    .data
+                    .early_data
+                    .take_received_plaintext(payload)
+                {
                     true => Ok(self),
                     false => Err(cx.common.send_fatal_alert(
                         AlertDescription::UnexpectedMessage,
@@ -1191,7 +1225,8 @@ impl State<ServerConnectionData> for ExpectEarlyData {
                     },
                 ..
             } => {
-                self.key_schedule.update_decrypter(cx.common);
+                self.key_schedule
+                    .update_decrypter(cx.common);
                 self.transcript.add_message(&m);
                 Ok(Box::new(ExpectFinished {
                     config: self.config,
@@ -1273,7 +1308,9 @@ impl ExpectFinished {
             (ticket, config.ticketer.lifetime())
         } else {
             let id = rand::random_vec(secure_random, 32)?;
-            let stored = config.session_storage.put(id.clone(), plain);
+            let stored = config
+                .session_storage
+                .put(id.clone(), plain);
             if !stored {
                 trace!("resumption not available; not issuing ticket");
                 return Ok(());
@@ -1286,9 +1323,11 @@ impl ExpectFinished {
 
         if config.max_early_data_size > 0 {
             if !stateless {
-                payload.exts.push(NewSessionTicketExtension::EarlyData(
-                    config.max_early_data_size,
-                ));
+                payload
+                    .exts
+                    .push(NewSessionTicketExtension::EarlyData(
+                        config.max_early_data_size,
+                    ));
             } else {
                 // We implement RFC8446 section 8.1: by enforcing that 0-RTT is
                 // only possible if using stateful resumption
@@ -1350,7 +1389,8 @@ impl State<ServerConnectionData> for ExpectFinished {
         flight.finish(cx.common);
 
         // Application data may now flow, even if we have client auth enabled.
-        cx.common.start_traffic(&mut cx.sendable_plaintext);
+        cx.common
+            .start_traffic(&mut cx.sendable_plaintext);
 
         Ok(match cx.common.is_quic() {
             true => Box::new(ExpectQuicTraffic {
@@ -1391,11 +1431,13 @@ impl ExpectTraffic {
         common.check_aligned_handshake()?;
 
         if common.should_update_key(key_update_request)? {
-            self.key_schedule.update_encrypter_and_notify(common);
+            self.key_schedule
+                .update_encrypter_and_notify(common);
         }
 
         // Update our read-side keys.
-        self.key_schedule.update_decrypter(common);
+        self.key_schedule
+            .update_decrypter(common);
         Ok(())
     }
 }
@@ -1410,7 +1452,9 @@ impl State<ServerConnectionData> for ExpectTraffic {
         Self: 'm,
     {
         match m.payload {
-            MessagePayload::ApplicationData(payload) => cx.common.take_received_plaintext(payload),
+            MessagePayload::ApplicationData(payload) => cx
+                .common
+                .take_received_plaintext(payload),
             MessagePayload::Handshake {
                 parsed:
                     HandshakeMessagePayload {
@@ -1442,7 +1486,8 @@ impl State<ServerConnectionData> for ExpectTraffic {
     }
 
     fn extract_secrets(&self) -> Result<PartiallyExtractedSecrets, Error> {
-        self.key_schedule.extract_secrets(Side::Server)
+        self.key_schedule
+            .extract_secrets(Side::Server)
     }
 
     fn send_key_update_request(&mut self, common: &mut CommonState) -> Result<(), Error> {

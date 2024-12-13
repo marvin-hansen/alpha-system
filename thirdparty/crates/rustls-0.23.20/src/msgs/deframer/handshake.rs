@@ -53,7 +53,11 @@ impl HandshakeDeframer {
         //
         // we cannot merge these processes, because `coalesce` mutates the underlying
         // buffer, and `msg` borrows it.
-        if let Some(_last_incomplete) = self.spans.last().filter(|span| !span.is_complete()) {
+        if let Some(_last_incomplete) = self
+            .spans
+            .last()
+            .filter(|span| !span.is_complete())
+        {
             self.spans.push(FragmentSpan {
                 version: msg.version,
                 size: None,
@@ -90,7 +94,9 @@ impl HandshakeDeframer {
     /// We are "aligned" if there is no partial fragment of a handshake
     /// message.
     pub(crate) fn is_aligned(&self) -> bool {
-        self.spans.iter().all(|span| span.is_complete())
+        self.spans
+            .iter()
+            .all(|span| span.is_complete())
     }
 
     /// Iterate over the complete messages.
@@ -210,12 +216,14 @@ impl HandshakeDeframer {
     /// Returns an index into `spans` for the first non-complete span:
     /// this will never be the last item.
     fn requires_coalesce(&self) -> Option<usize> {
-        self.spans.split_last().and_then(|(_last, elements)| {
-            elements
-                .iter()
-                .enumerate()
-                .find_map(|(i, span)| (!span.is_complete()).then_some(i))
-        })
+        self.spans
+            .split_last()
+            .and_then(|(_last, elements)| {
+                elements
+                    .iter()
+                    .enumerate()
+                    .find_map(|(i, span)| (!span.is_complete()).then_some(i))
+            })
     }
 }
 
@@ -268,7 +276,9 @@ impl Iterator for DissectHandshakeIter<'_, '_> {
         let (header, rest) = mem::take(&mut self.payload).split_at(HANDSHAKE_HEADER_LEN);
 
         // safety: header[1..] is exactly 3 bytes, so `u24::read_bytes` cannot fail
-        let size = u24::read_bytes(&header[1..]).unwrap().into();
+        let size = u24::read_bytes(&header[1..])
+            .unwrap()
+            .into();
 
         let available = if size < rest.len() {
             self.payload = &rest[size..];
@@ -317,7 +327,9 @@ impl<'b> Iterator for HandshakeIter<'_, 'b> {
             InboundPlainMessage {
                 typ: ContentType::Handshake,
                 version: next_span.version,
-                payload: self.containing_buffer.slice_from_range(&next_span.bounds),
+                payload: self
+                    .containing_buffer
+                    .slice_from_range(&next_span.bounds),
             },
             discard,
         ))

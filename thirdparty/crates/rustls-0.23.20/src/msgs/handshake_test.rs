@@ -493,14 +493,16 @@ fn client_alpn_extension() {
 #[test]
 fn client_client_certificate_extension() {
     test_client_extension_getter(ExtensionType::ClientCertificateType, |chp| {
-        chp.client_certificate_extension().is_some()
+        chp.client_certificate_extension()
+            .is_some()
     });
 }
 
 #[test]
 fn client_server_certificate_extension() {
     test_client_extension_getter(ExtensionType::ServerCertificateType, |chp| {
-        chp.server_certificate_extension().is_some()
+        chp.server_certificate_extension()
+            .is_some()
     });
 }
 
@@ -586,7 +588,8 @@ fn test_truncated_hello_retry_extension_is_detected() {
 #[test]
 fn hello_retry_requested_key_share_group() {
     test_hello_retry_extension_getter(ExtensionType::KeyShare, |hrr| {
-        hrr.requested_key_share_group().is_some()
+        hrr.requested_key_share_group()
+            .is_some()
     });
 }
 
@@ -714,7 +717,9 @@ fn cert_entry_ocsp_response() {
 }
 
 fn test_cert_extension_getter(typ: ExtensionType, getter: fn(&CertificateEntry<'_>) -> bool) {
-    let mut ce = sample_certificate_payload_tls13().entries.remove(0);
+    let mut ce = sample_certificate_payload_tls13()
+        .entries
+        .remove(0);
     let mut exts = core::mem::take(&mut ce.exts);
     exts.retain(|ext| ext.ext_type() == typ);
 

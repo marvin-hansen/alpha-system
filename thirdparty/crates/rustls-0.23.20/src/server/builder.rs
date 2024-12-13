@@ -67,7 +67,10 @@ impl ConfigBuilder<ServerConfig, WantsServerCert> {
         cert_chain: Vec<CertificateDer<'static>>,
         key_der: PrivateKeyDer<'static>,
     ) -> Result<ServerConfig, Error> {
-        let private_key = self.provider.key_provider.load_private_key(key_der)?;
+        let private_key = self
+            .provider
+            .key_provider
+            .load_private_key(key_der)?;
 
         let certified_key = CertifiedKey::new(cert_chain, private_key);
         match certified_key.keys_match() {
@@ -99,7 +102,10 @@ impl ConfigBuilder<ServerConfig, WantsServerCert> {
         key_der: PrivateKeyDer<'static>,
         ocsp: Vec<u8>,
     ) -> Result<ServerConfig, Error> {
-        let private_key = self.provider.key_provider.load_private_key(key_der)?;
+        let private_key = self
+            .provider
+            .key_provider
+            .load_private_key(key_der)?;
 
         let certified_key = CertifiedKey::new(cert_chain, private_key);
         match certified_key.keys_match() {

@@ -57,7 +57,11 @@ impl HeaderProtectionKey {
         let pn_len = (first_plain & 0x03) as usize + 1;
 
         *first ^= first_mask & bits;
-        for (dst, m) in packet_number.iter_mut().zip(pn_mask).take(pn_len) {
+        for (dst, m) in packet_number
+            .iter_mut()
+            .zip(pn_mask)
+            .take(pn_len)
+        {
             *dst ^= m;
         }
 
@@ -232,7 +236,9 @@ mod tests {
         let builder = KeyBuilder::new(
             &secret,
             version,
-            TLS13_CHACHA20_POLY1305_SHA256_INTERNAL.quic.unwrap(),
+            TLS13_CHACHA20_POLY1305_SHA256_INTERNAL
+                .quic
+                .unwrap(),
             TLS13_CHACHA20_POLY1305_SHA256_INTERNAL.hkdf_provider,
         );
         let packet = builder.packet_key();
@@ -242,7 +248,9 @@ mod tests {
 
         let mut buf = PLAIN.to_vec();
         let (header, payload) = buf.split_at_mut(4);
-        let tag = packet.encrypt_in_place(PN, header, payload).unwrap();
+        let tag = packet
+            .encrypt_in_place(PN, header, payload)
+            .unwrap();
         buf.extend(tag.as_ref());
 
         let pn_offset = 1;
@@ -257,10 +265,13 @@ mod tests {
         let (header, sample) = buf.split_at_mut(pn_offset + 4);
         let (first, rest) = header.split_at_mut(1);
         let sample = &sample[..hpk.sample_len()];
-        hpk.decrypt_in_place(sample, &mut first[0], rest).unwrap();
+        hpk.decrypt_in_place(sample, &mut first[0], rest)
+            .unwrap();
 
         let (header, payload_tag) = buf.split_at_mut(4);
-        let plain = packet.decrypt_in_place(PN, header, payload_tag).unwrap();
+        let plain = packet
+            .decrypt_in_place(PN, header, payload_tag)
+            .unwrap();
 
         assert_eq!(plain, &PLAIN[4..]);
     }
@@ -300,7 +311,9 @@ mod tests {
                 ][..],
             ),
             TLS13_AES_128_GCM_SHA256_INTERNAL,
-            TLS13_AES_128_GCM_SHA256_INTERNAL.quic.unwrap(),
+            TLS13_AES_128_GCM_SHA256_INTERNAL
+                .quic
+                .unwrap(),
             Side::Client,
             Version::V1,
         );
@@ -347,7 +360,9 @@ mod tests {
         let server = Keys::initial(
             Version::V2,
             TLS13_AES_128_GCM_SHA256_INTERNAL,
-            TLS13_AES_128_GCM_SHA256_INTERNAL.quic.unwrap(),
+            TLS13_AES_128_GCM_SHA256_INTERNAL
+                .quic
+                .unwrap(),
             &icid,
             Side::Server,
         );

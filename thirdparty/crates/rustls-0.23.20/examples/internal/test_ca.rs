@@ -30,10 +30,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             // Otherwise we dig out the issuer and issuer_key for the issuer, which should have
             // been produced in earlier iterations based on the careful ordering of roles.
             let cert = match role {
-                Role::TrustAnchor => role.params(alg).self_signed(&key_pair)?,
+                Role::TrustAnchor => role
+                    .params(alg)
+                    .self_signed(&key_pair)?,
                 Role::Intermediate => {
-                    let issuer: &CertifiedKey =
-                        certified_keys.get(&(Role::TrustAnchor, alg.inner)).unwrap();
+                    let issuer: &CertifiedKey = certified_keys
+                        .get(&(Role::TrustAnchor, alg.inner))
+                        .unwrap();
                     role.params(alg)
                         .signed_by(&key_pair, &issuer.cert, &issuer.key_pair)?
                 }
@@ -59,17 +62,22 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 // intermediates this will be the trust anchor, and for client/EE certs this will
                 // be the intermediate.
                 let issuer = match role {
-                    Role::Intermediate => {
-                        certified_keys.get(&(Role::TrustAnchor, alg.inner)).unwrap()
-                    }
+                    Role::Intermediate => certified_keys
+                        .get(&(Role::TrustAnchor, alg.inner))
+                        .unwrap(),
                     Role::EndEntity | Role::Client => certified_keys
                         .get(&(Role::Intermediate, alg.inner))
                         .unwrap(),
                     _ => panic!("unexpected role for CRL generation: {role:?}"),
                 };
 
-                let revoked_crl = crl_for_serial(cert.params().serial_number.clone().unwrap())
-                    .signed_by(&issuer.cert, &issuer.key_pair)?;
+                let revoked_crl = crl_for_serial(
+                    cert.params()
+                        .serial_number
+                        .clone()
+                        .unwrap(),
+                )
+                .signed_by(&issuer.cert, &issuer.key_pair)?;
                 let mut revoked_crl_file = File::create(
                     alg.output_directory()
                         .join(format!("{}.revoked.crl.pem", role.label())),
@@ -227,7 +235,8 @@ impl Role {
     }
 
     fn key_file_path(&self, alg: &'static SigAlgContext) -> PathBuf {
-        alg.output_directory().join(format!("{}.key", self.label()))
+        alg.output_directory()
+            .join(format!("{}.key", self.label()))
     }
 
     fn cert_pem_file_path(&self, alg: &'static SigAlgContext) -> PathBuf {
@@ -236,7 +245,8 @@ impl Role {
     }
 
     fn cert_der_file_path(&self, alg: &'static SigAlgContext) -> PathBuf {
-        alg.output_directory().join(format!("{}.der", self.label()))
+        alg.output_directory()
+            .join(format!("{}.der", self.label()))
     }
 
     fn label(&self) -> &'static str {
@@ -292,7 +302,11 @@ impl SigAlgContext {
         let output_dir = PathBuf::from(env::var("CARGO_MANIFEST_DIR").unwrap())
             .join("../")
             .join("test-ca")
-            .join(self.issuer_cn.to_lowercase().replace(' ', "-"));
+            .join(
+                self.issuer_cn
+                    .to_lowercase()
+                    .replace(' ', "-"),
+            );
         fs::create_dir_all(&output_dir).unwrap();
         output_dir
     }

@@ -118,8 +118,12 @@ mod connection {
             context: Option<&[u8]>,
         ) -> Result<T, Error> {
             match self {
-                Self::Client(conn) => conn.core.export_keying_material(output, label, context),
-                Self::Server(conn) => conn.core.export_keying_material(output, label, context),
+                Self::Client(conn) => conn
+                    .core
+                    .export_keying_material(output, label, context),
+                Self::Server(conn) => conn
+                    .core
+                    .export_keying_material(output, label, context),
             }
         }
     }
@@ -210,7 +214,8 @@ mod connection {
 
     impl Debug for ClientConnection {
         fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-            f.debug_struct("quic::ClientConnection").finish()
+            f.debug_struct("quic::ClientConnection")
+                .finish()
         }
     }
 
@@ -309,7 +314,8 @@ mod connection {
 
     impl Debug for ServerConnection {
         fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-            f.debug_struct("quic::ServerConnection").finish()
+            f.debug_struct("quic::ServerConnection")
+                .finish()
         }
     }
 
@@ -353,7 +359,11 @@ mod connection {
             Some(DirectionalKeys::new(
                 suite,
                 suite.quic?,
-                self.core.common_state.quic.early_secret.as_ref()?,
+                self.core
+                    .common_state
+                    .quic
+                    .early_secret
+                    .as_ref()?,
                 self.core.common_state.quic.version,
             ))
         }
@@ -388,7 +398,10 @@ mod connection {
         ///
         /// When this returns `Some(_)`, the new keys must be used for future handshake data.
         pub fn write_hs(&mut self, buf: &mut Vec<u8>) -> Option<KeyChange> {
-            self.core.common_state.quic.write_hs(buf)
+            self.core
+                .common_state
+                .quic
+                .write_hs(buf)
         }
 
         /// Emit the TLS description code of a fatal alert, if one has arisen.
@@ -779,7 +792,8 @@ impl<'a> KeyBuilder<'a> {
 
         let packet_iv =
             hkdf_expand_label(self.expander.as_ref(), self.version.packet_iv_label(), &[]);
-        self.alg.packet_key(packet_key, packet_iv)
+        self.alg
+            .packet_key(packet_key, packet_iv)
     }
 
     /// Derive header protection keys
@@ -790,7 +804,8 @@ impl<'a> KeyBuilder<'a> {
             self.version.header_key_label(),
             &[],
         );
-        self.alg.header_protection_key(header_key)
+        self.alg
+            .header_protection_key(header_key)
     }
 }
 

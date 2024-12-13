@@ -106,10 +106,18 @@ mod tests {
 
     #[test]
     fn iterator_empty_before_header_received() {
-        assert!(DeframerIter::new(&mut []).next().is_none());
-        assert!(DeframerIter::new(&mut [0x16]).next().is_none());
-        assert!(DeframerIter::new(&mut [0x16, 0x03]).next().is_none());
-        assert!(DeframerIter::new(&mut [0x16, 0x03, 0x03]).next().is_none());
+        assert!(DeframerIter::new(&mut [])
+            .next()
+            .is_none());
+        assert!(DeframerIter::new(&mut [0x16])
+            .next()
+            .is_none());
+        assert!(DeframerIter::new(&mut [0x16, 0x03])
+            .next()
+            .is_none());
+        assert!(DeframerIter::new(&mut [0x16, 0x03, 0x03])
+            .next()
+            .is_none());
         assert!(DeframerIter::new(&mut [0x16, 0x03, 0x03, 0x00])
             .next()
             .is_none());

@@ -251,6 +251,7 @@ futures-util = {version = "0.3.31"}
 hickory-resolver = { version = "0.24.1", default-features = false, features = ["tokio-runtime"] }
 iggy = { version = "0.6.40" }
 klickhouse = { version = "0.13.2" }
+lazy_static = { version = "1.4.0" }
 lru = { version = "0.12.4" }
 mimalloc = { version = "0.1.43" }
 prost = { version = "0.13.3" }

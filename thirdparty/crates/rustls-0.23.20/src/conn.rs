@@ -218,7 +218,8 @@ mod connection {
                 return Ok(len);
             }
 
-            self.check_no_bytes_state().map(|()| len)
+            self.check_no_bytes_state()
+                .map(|()| len)
         }
 
         /// Obtain plaintext data received from the peer over this TLS connection.
@@ -245,7 +246,8 @@ mod connection {
         #[cfg(read_buf)]
         fn read_buf(&mut self, mut cursor: core::io::BorrowedCursor<'_>) -> io::Result<()> {
             let before = cursor.written();
-            self.received_plaintext.read_buf(cursor.reborrow())?;
+            self.received_plaintext
+                .read_buf(cursor.reborrow())?;
             let len = cursor.written() - before;
             if len > 0 || cursor.capacity() == 0 {
                 return Ok(());
@@ -324,7 +326,10 @@ https://docs.rs/rustls/latest/rustls/manual/_03_howto/index.html#unexpected-eof"
                 0 => return Ok(0),
                 1 => OutboundChunks::Single(bufs[0].deref()),
                 _ => {
-                    payload_owner = bufs.iter().map(|io_slice| io_slice.deref()).collect();
+                    payload_owner = bufs
+                        .iter()
+                        .map(|io_slice| io_slice.deref())
+                        .collect();
 
                     OutboundChunks::new(&payload_owner)
                 }
@@ -417,7 +422,8 @@ impl<Data> ConnectionCommon<Data> {
         label: &[u8],
         context: Option<&[u8]>,
     ) -> Result<T, Error> {
-        self.core.export_keying_material(output, label, context)
+        self.core
+            .export_keying_material(output, label, context)
     }
 
     /// Extract secrets, so they can be used when configuring kTLS, for example.
@@ -661,7 +667,8 @@ impl<Data> ConnectionCommon<Data> {
 
         match res? {
             Some(Ok(msg)) => {
-                self.deframer_buffer.discard(buffer_progress.take_discard());
+                self.deframer_buffer
+                    .discard(buffer_progress.take_discard());
                 Ok(Some(msg))
             }
             Some(Err(err)) => Err(self.send_fatal_alert(AlertDescription::DecodeError, err)),
@@ -851,7 +858,10 @@ impl<Data> ConnectionCore<Data> {
                 }
             }
 
-            if self.common_state.has_received_close_notify {
+            if self
+                .common_state
+                .has_received_close_notify
+            {
                 // "Any data received after a closure alert has been received MUST be ignored."
                 // -- <https://datatracker.ietf.org/doc/html/rfc8446#section-6.1>
                 // This is data that has already been accepted in `read_tls`.
@@ -930,7 +940,10 @@ impl<Data> ConnectionCore<Data> {
                     // * The payload size is indicative of a plaintext alert message.
                     ContentType::Alert
                         if version_is_tls13
-                            && !self.common_state.record_layer.has_decrypted()
+                            && !self
+                                .common_state
+                                .record_layer
+                                .has_decrypted()
                             && message.payload.len() <= 2 =>
                     {
                         true
@@ -943,7 +956,11 @@ impl<Data> ConnectionCore<Data> {
                     break (message.into_plain_message(), iter.bytes_consumed());
                 }
 
-                let message = match self.common_state.record_layer.decrypt_incoming(message) {
+                let message = match self
+                    .common_state
+                    .record_layer
+                    .decrypt_incoming(message)
+                {
                     // failed decryption during trial decryption is not allowed to be
                     // interleaved with partial handshake data.
                     Ok(None) if !self.hs_deframer.is_aligned() => {
@@ -1020,7 +1037,9 @@ impl<Data> ConnectionCore<Data> {
 
             if self.hs_deframer.has_message_ready() {
                 // trial decryption finishes with the first handshake message after it started.
-                self.common_state.record_layer.finish_trial_decryption();
+                self.common_state
+                    .record_layer
+                    .finish_trial_decryption();
 
                 return Ok(self.take_handshake_message(buffer, buffer_progress));
             }
@@ -1061,7 +1080,9 @@ impl<Data> ConnectionCore<Data> {
     ) -> Result<Box<dyn State<Data>>, Error> {
         // Drop CCS messages during handshake in TLS1.3
         if msg.typ == ContentType::ChangeCipherSpec
-            && !self.common_state.may_receive_application_data
+            && !self
+                .common_state
+                .may_receive_application_data
             && self.common_state.is_tls13()
         {
             if !msg.is_valid_ccs() {
@@ -1074,7 +1095,8 @@ impl<Data> ConnectionCore<Data> {
                 ));
             }
 
-            self.common_state.received_tls13_change_cipher_spec()?;
+            self.common_state
+                .received_tls13_change_cipher_spec()?;
             trace!("Dropping CCS");
             return Ok(state);
         }
@@ -1121,7 +1143,11 @@ impl<Data> ConnectionCore<Data> {
 
     /// Trigger a `refresh_traffic_keys` if required by `CommonState`.
     fn maybe_refresh_traffic_keys(&mut self) {
-        if mem::take(&mut self.common_state.refresh_traffic_keys_pending) {
+        if mem::take(
+            &mut self
+                .common_state
+                .refresh_traffic_keys_pending,
+        ) {
             let _ = self.refresh_traffic_keys();
         }
     }

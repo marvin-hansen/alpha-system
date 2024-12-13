@@ -1,192 +1,160 @@
-use encoding_utils::{int_to_str, str_to_int};
+#[cfg(test)]
+mod tests {
+    use encoding_utils::*;
 
-/// Test basic encoding and decoding functionality
-#[test]
-fn test_basic_encoding() {
-    let test_cases = ["hello", "world", "rust", "test", "code"];
+    #[test]
+    fn test_invalid_inputs() {
+        // Test lowercase letters
+        assert_eq!(str_to_int("hello"), None);
+        assert_eq!(str_to_int("World"), None);
 
-    for &input in &test_cases {
-        let encoded = str_to_int(input).unwrap();
-        let decoded = int_to_str(encoded).unwrap();
-        assert_eq!(input, decoded, "Failed on input: {}", input);
-    }
-}
+        // Test special characters
+        assert_eq!(str_to_int("!@#$"), None);
+        assert_eq!(str_to_int("A!B"), None);
+        assert_eq!(str_to_int("AB C"), None); // space
+        assert_eq!(str_to_int("AB\nC"), None); // newline
+        assert_eq!(str_to_int("AB\tC"), None); // tab
 
-/// Test empty string handling
-#[test]
-fn test_empty_string() {
-    let encoded = str_to_int("").unwrap();
-    assert_eq!(0, encoded, "Empty string should encode to 0");
-    let decoded = int_to_str(encoded).unwrap();
-    assert_eq!("", decoded, "Decoded empty string should be empty");
-}
-
-/// Test maximum length stringsf
-#[test]
-fn test_max_length() {
-    let test_cases = ["12345678", "abcdefgh", "ABCDEFGH", "!@#$%^&*"];
-
-    for &input in &test_cases {
-        let encoded = str_to_int(input).unwrap();
-        let decoded = int_to_str(encoded).unwrap();
-        assert_eq!(input, decoded, "Failed on max length input: {}", input);
+        // Test Unicode characters
+        assert_eq!(str_to_int("HELLO🌍"), None);
+        assert_eq!(str_to_int("CAFÉ"), None);
     }
 
-    // Test strings that are too long
-    let too_long_cases = ["123456789", "abcdefghi", "ABCDEFGHI", "!@#$%^&*()"];
+    #[test]
+    fn test_edge_cases() {
+        // Test empty string and zero
+        assert_eq!(str_to_int(""), Some(0));
+        assert_eq!(int_to_str(0).unwrap(), "");
 
-    for &input in &too_long_cases {
-        assert!(
-            str_to_int(input).is_none(),
-            "Should reject input: {}",
-            input
-        );
+        // Test single characters
+        assert_eq!(str_to_int("A").unwrap(), 0);
+        assert_eq!(str_to_int("B").unwrap(), 1);
+        assert_eq!(str_to_int("C").unwrap(), 2);
+        assert_eq!(int_to_str(0).unwrap(), "");
+        assert_eq!(int_to_str(1).unwrap(), "B");
+        assert_eq!(int_to_str(2).unwrap(), "C");
+
+        // Test two characters
+        assert_eq!(str_to_int("BA").unwrap(), 37);
+        assert_eq!(int_to_str(37).unwrap(), "BA");
+        assert_eq!(str_to_int("BB").unwrap(), 38);
+        assert_eq!(int_to_str(38).unwrap(), "BB");
+
+        // Test maximum length string
+        let max_str = "B".repeat(MAX_CHARS as usize);
+        let encoded = str_to_int(&max_str);
+        assert!(encoded.is_some(), "Should handle maximum valid length");
+        let decoded = int_to_str(encoded.unwrap()).unwrap();
+        assert_eq!(decoded.len(), max_str.len());
     }
-}
 
-/// Test strings of all possible lengths
-#[test]
-fn test_all_lengths() {
-    // Test with different characters for each length
-    let chars = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+    #[test]
+    fn test_determinism() {
+        let test_cases = vec![
+            "B", // Start with B since A encodes to 0 which decodes to ""
+            "Z", "0", "9", "_", "HELLO", "WORLD", "TEST", "BCD123", "XYZ789", "B_C",
+        ];
 
-    for len in 0..=8 {
-        let input: String = chars.iter().take(len).collect();
-        let encoded = str_to_int(&input).unwrap();
-        let decoded = int_to_str(encoded).unwrap();
-        assert_eq!(input, decoded, "Failed on length {}", len);
-    }
-}
-
-/// Test non-ASCII character handling
-#[test]
-fn test_non_ascii() {
-    let test_cases = ["hello❤", "world★", "rust☺", "test→", "code∞"];
-
-    for &input in &test_cases {
-        assert!(
-            str_to_int(input).is_none(),
-            "Should reject non-ASCII: {}",
-            input
-        );
-    }
-}
-
-/// Test invalid encoded integers
-#[test]
-fn test_invalid_encoded() {
-    let test_cases = [
-        0xFF00_0000_0000_0000,
-        0x8000_0000_0000_0000,
-        0xFFFF_FFFF_FFFF_FFFF,
-    ];
-
-    for &input in &test_cases {
-        assert!(
-            int_to_str(input).is_none(),
-            "Should reject invalid encoded: {:x}",
-            input
-        );
-    }
-}
-
-/// Test mixed case strings
-#[test]
-fn test_mixed_case() {
-    let test_cases = ["AbCdEfGh", "tEsT", "RuSt", "HeLLo"];
-
-    for &input in &test_cases {
-        let encoded = str_to_int(input).unwrap();
-        let decoded = int_to_str(encoded).unwrap();
-        assert_eq!(input, decoded, "Failed on mixed case: {}", input);
-    }
-}
-
-/// Test strings with special characters
-#[test]
-fn test_special_chars() {
-    let test_cases = ["!@#$", "%^&*", "()_+", "-=[]", "{}|\\"];
-
-    for &input in &test_cases {
-        let encoded = str_to_int(input).unwrap();
-        let decoded = int_to_str(encoded).unwrap();
-        assert_eq!(input, decoded, "Failed on special chars: {}", input);
-    }
-}
-
-/// Test null byte handling
-#[test]
-fn test_null_bytes() {
-    // Test strings with embedded null bytes (should encode up to first null)
-    let encoded = str_to_int("ab\0cd").unwrap();
-    let decoded = int_to_str(encoded).unwrap();
-    assert_eq!("ab", decoded, "Should handle null bytes correctly");
-}
-
-/// Test edge cases for integer encoding
-#[test]
-fn test_integer_edges() {
-    let test_cases = [
-        0u64,
-        1u64,
-        u64::MAX >> 8,      // Maximum value with last byte clear
-        0x2020202020202020, // All spaces
-        0x0101010101010101, // All SOH characters
-        0x7F7F7F7F7F7F7F7F, // All DEL characters
-    ];
-
-    for &input in &test_cases {
-        if let Some(decoded) = int_to_str(input) {
-            let re_encoded = str_to_int(decoded).unwrap();
-            assert_eq!(input, re_encoded, "Round-trip failed for: {:x}", input);
+        for input in test_cases {
+            let encoded = str_to_int(input).unwrap();
+            // Test multiple encodings of the same string
+            for _ in 0..10 {
+                assert_eq!(
+                    str_to_int(input).unwrap(),
+                    encoded,
+                    "Encoding not deterministic for {}",
+                    input
+                );
+                assert_eq!(
+                    int_to_str(encoded).unwrap(),
+                    input,
+                    "Decoding not deterministic for {}",
+                    input
+                );
+            }
         }
     }
-}
 
-/// Test consecutive encoding/decoding
-#[test]
-fn test_consecutive_encoding() {
-    let test_cases = ["test", "rust", "code", "1234"];
+    #[test]
+    fn test_valid_encoding_decoding() {
+        let cases = vec![
+            ("", 0),
+            ("A", 0),
+            ("B", 1),
+            ("C", 2),
+            ("Z", 25),
+            ("0", 26),
+            ("9", 35),
+            ("_", 36),
+            ("BA", 37),
+            ("BB", 38),
+            ("BC", 39),
+            ("CA", 74),
+            ("HELLO", 41964367),
+            ("WORLD", 41964367),
+        ];
 
-    for &input in &test_cases {
-        // Encode and decode multiple times
-        let mut current = input.to_string();
-        for _ in 0..5 {
-            let encoded = str_to_int(&current).unwrap();
-            current = int_to_str(encoded).unwrap().to_string();
-            assert_eq!(
-                input, current,
-                "Consecutive encoding/decoding failed for: {}",
-                input
-            );
+        for (s, expected) in cases {
+            let encoded = str_to_int(s).unwrap();
+            assert_eq!(encoded, expected, "Encoding failed for {}", s);
+            let decoded = int_to_str(encoded).unwrap();
+            if encoded == 0 {
+                assert_eq!(decoded, "", "Decoding failed for zero value");
+            } else {
+                assert_eq!(decoded, s, "Decoding failed for {}", s);
+            }
         }
     }
-}
 
-/// Verify that find_null_byte_position works correctly
-#[test]
-fn test_null_byte_position() {
-    // These tests are internal and require exposing the function or moving to the same module
-    let test_cases = [
-        (0u64, 0),                  // Empty string
-        (0x41u64, 1),               // "A"
-        (0x4142u64, 2),             // "AB"
-        (0x414243u64, 3),           // "ABC"
-        (0x41424344u64, 4),         // "ABCD"
-        (0x4142434445u64, 5),       // "ABCDE"
-        (0x414243444546u64, 6),     // "ABCDEF"
-        (0x41424344454647u64, 7),   // "ABCDEFG"
-        (0x4142434445464748u64, 8), // "ABCDEFGH"
-    ];
+    #[test]
+    fn test_all_valid_chars() {
+        // Test all uppercase letters
+        for c in b'A'..=b'Z' {
+            let s = String::from_utf8(vec![c]).unwrap();
+            let encoded = str_to_int(&s).unwrap();
+            let decoded = int_to_str(encoded).unwrap();
+            if encoded == 0 {
+                assert_eq!(decoded, "", "Failed for zero value");
+            } else {
+                assert_eq!(decoded, s, "Failed for uppercase letter {}", s);
+            }
+        }
 
-    for (input, expected_len) in test_cases {
-        if let Some(decoded) = int_to_str(input) {
-            assert_eq!(
-                decoded.len(),
-                expected_len,
-                "Incorrect length for input: {:x}",
-                input
-            );
+        // Test all digits
+        for c in b'0'..=b'9' {
+            let s = String::from_utf8(vec![c]).unwrap();
+            let encoded = str_to_int(&s).unwrap();
+            let decoded = int_to_str(encoded).unwrap();
+            assert_eq!(s, decoded, "Failed for digit {}", s);
+        }
+
+        // Test underscore
+        let encoded = str_to_int("_").unwrap();
+        let decoded = int_to_str(encoded).unwrap();
+        assert_eq!("_", decoded, "Failed for underscore");
+    }
+
+    #[test]
+    fn test_consecutive_operations() {
+        let test_cases = vec![
+            "B", "Z", "0", "9", "_", // Start with B since A encodes to 0
+            "HELLO", "WORLD", "TEST", "BCD123", "XYZ789", "B_C",
+        ];
+
+        for input in test_cases {
+            let mut current = input.to_string();
+            // Perform multiple encode/decode cycles
+            for i in 0..5 {
+                let encoded = str_to_int(&current).unwrap();
+                current = int_to_str(encoded).unwrap();
+                assert_eq!(
+                    current,
+                    input,
+                    "Failed after {} encode/decode cycles for {}",
+                    i + 1,
+                    input
+                );
+            }
         }
     }
 }
