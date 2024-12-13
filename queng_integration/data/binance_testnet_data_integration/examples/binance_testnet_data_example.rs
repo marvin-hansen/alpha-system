@@ -21,6 +21,12 @@ use trait_data_integration::{EventProcessor, ImsDataIntegration, ImsTradeDataInt
 #[derive(Debug, Clone, Copy)]
 struct TradeDataProcessor {}
 
+impl TradeDataProcessor {
+    pub fn new() -> Self {
+        Self {}
+    }
+}
+
 impl EventProcessor for TradeDataProcessor {
     async fn process(&self, data: &[Vec<u8>]) -> Result<(), MessageProcessingError> {
         let raw_message = data
@@ -76,7 +82,7 @@ async fn main() -> Result<(), MessageProcessingError> {
     integration.validate_symbols(&test_symbols).await?;
 
     // Create a new processor instance
-    let processor = Arc::new(TradeDataProcessor);
+    let processor = Arc::new(TradeDataProcessor::new());
 
     // Start trade data streams
     for symbol in test_symbols.iter() {
