@@ -52,7 +52,7 @@ pub fn int_to_str(n: u64) -> Option<String> {
     }
 
     // Fast character count using leading zeros
-    let char_count = (64 - n.leading_zeros() + BITS_PER_CHAR - 1) / BITS_PER_CHAR;
+    let char_count = (64 - n.leading_zeros()).div_ceil(BITS_PER_CHAR);
     let char_count = char_count as usize;
 
     // Pre-allocate exact buffer size

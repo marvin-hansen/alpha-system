@@ -3,7 +3,7 @@ pub const MAX_CHARS: u64 = 39;
 // Checks if a character is valid i.e. in the range [0-9,A-Z,_,-]
 #[inline(always)]
 pub fn is_valid_char(x: u8) -> bool {
-    x >= b'0' && x <= b'9' || x >= b'A' && x <= b'Z' || x == b'_' || x == b'-'
+    x.is_ascii_digit() || x.is_ascii_uppercase() || x == b'_' || x == b'-'
 }
 
 #[inline(always)]

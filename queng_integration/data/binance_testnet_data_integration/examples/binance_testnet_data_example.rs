@@ -18,7 +18,7 @@ use trait_data_integration::{EventProcessor, ImsDataIntegration, ImsTradeDataInt
 /// A simple event processor that prints received trade data to the console.
 /// In a real application, you might want to parse the JSON and process
 /// the data according to your needs.
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 struct TradeDataProcessor {}
 
 impl EventProcessor for TradeDataProcessor {
@@ -75,16 +75,13 @@ async fn main() -> Result<(), MessageProcessingError> {
     // Validate the symbols
     integration.validate_symbols(&test_symbols).await?;
 
-    // Create a processor for each symbol
-    let processors: Vec<_> = test_symbols
-        .iter()
-        .map(|symbol| Arc::new(TradeDataProcessor {}))
-        .collect();
+    // Create a new processor instance
+    let processor = Arc::new(TradeDataProcessor);
 
     // Start trade data streams
-    for (symbol, processor) in test_symbols.iter().zip(processors.iter()) {
+    for symbol in test_symbols.iter() {
         integration
-            .start_trade_data(&[symbol.clone()], Arc::clone(processor))
+            .start_trade_data(&[symbol.clone()], Arc::clone(&processor))
             .await?;
     }
 

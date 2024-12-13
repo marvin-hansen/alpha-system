@@ -46,7 +46,7 @@ pub fn decode_trade_bar_message(buffer: &[u8]) -> Result<TradeBar, SbeDecodeErro
     assert_eq!(message_type, MessageType::TradeBar);
 
     let val = encoding_utils::int_to_str(csg.symbol_id()).expect("Failed to decode symbol ID");
-    let symbol_id = String::from(val);
+    let symbol_id = val;
 
     let sbe_date_time = csg.date_time();
     let date_time: DateTime<Utc> = Utc.timestamp_micros(sbe_date_time).unwrap();

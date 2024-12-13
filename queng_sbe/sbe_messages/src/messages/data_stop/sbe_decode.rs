@@ -45,7 +45,7 @@ pub fn decode_stop_data_message(buffer: &[u8]) -> SbeResult<StopDataMessage> {
     let client_id = csg.client_id();
     let exchange_id = ExchangeID::from(csg.exchange_id());
     let val = encoding_utils::int_to_str(csg.symbol_id()).expect("Failed to decode symbol ID");
-    let symbol_id = String::from(val);
+    let symbol_id = val;
     let data_type_id = DataType::from(csg.data_type_id());
 
     let message = StopDataMessage {
