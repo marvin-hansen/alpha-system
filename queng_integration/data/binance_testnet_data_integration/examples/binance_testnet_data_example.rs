@@ -19,9 +19,7 @@ use trait_data_integration::{EventProcessor, ImsDataIntegration, ImsTradeDataInt
 /// In a real application, you might want to parse the JSON and process
 /// the data according to your needs.
 #[derive(Debug)]
-struct TradeDataProcessor {
-    symbol: String,
-}
+struct TradeDataProcessor {}
 
 impl EventProcessor for TradeDataProcessor {
     async fn process(&self, data: &[Vec<u8>]) -> Result<(), MessageProcessingError> {
@@ -80,11 +78,7 @@ async fn main() -> Result<(), MessageProcessingError> {
     // Create a processor for each symbol
     let processors: Vec<_> = test_symbols
         .iter()
-        .map(|symbol| {
-            Arc::new(TradeDataProcessor {
-                symbol: symbol.clone(),
-            })
-        })
+        .map(|symbol| Arc::new(TradeDataProcessor {}))
         .collect();
 
     // Start trade data streams
