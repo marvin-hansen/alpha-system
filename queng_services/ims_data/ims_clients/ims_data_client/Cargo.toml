@@ -22,7 +22,11 @@ message_consumer = { workspace = true }
 message_producer = { workspace = true }
 message_stream = { workspace = true }
 message_shared = { workspace = true }
-sbe_messages = { workspace = true }
+
+sbe_messages_control = {workspace = true}
+sbe_messages_client = {workspace = true}
+sbe_messages_data = {workspace = true}
+sbe_types = {workspace = true}
 
 # Exteral crates
 bytes = { workspace = true }

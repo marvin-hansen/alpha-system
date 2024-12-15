@@ -1,7 +1,7 @@
 use crate::service::Service;
 use common_errors::MessageProcessingError;
 use iggy::client::Client;
-use sbe_messages::ClientErrorType;
+use sbe_types::ClientErrorType;
 
 impl Service {
     //

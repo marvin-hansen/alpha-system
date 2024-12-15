@@ -1,6 +1,6 @@
 use crate::service::Service;
 use common_errors::MessageProcessingError;
-use sbe_messages::ClientLogoutMessage;
+use sbe_messages_client::ClientLogoutMessage;
 
 impl Service {
     /// Handles a client logout message.

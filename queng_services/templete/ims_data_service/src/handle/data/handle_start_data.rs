@@ -1,6 +1,6 @@
 use crate::service::Service;
 use common_errors::MessageProcessingError;
-use sbe_messages::StartDataMessage;
+use sbe_messages_control::StartDataMessage;
 
 impl Service {
     /// Handle a start data message from a client. This involves verifying the message

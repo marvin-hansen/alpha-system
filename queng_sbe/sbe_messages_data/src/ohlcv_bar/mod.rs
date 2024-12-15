@@ -1,0 +1,47 @@
+use common_data_bar::OHLCVBar;
+use sbe_types::{SbeDecodeError, SbeEncodeError};
+
+pub mod sbe_decoder;
+pub mod sbe_encoder;
+
+#[derive(Debug, Default, Clone, PartialEq, Eq)]
+pub struct SbeOHLCVBar {}
+
+impl SbeOHLCVBar {
+    #[must_use]
+    pub const fn new() -> Self {
+        Self {}
+    }
+}
+
+impl SbeOHLCVBar {
+    /// Encodes an `OHLCVBar` into an SBE message buffer.
+    ///
+    /// # Parameters
+    ///
+    /// - `bar` - The `OHLCVBar` to encode
+    ///
+    /// # Returns
+    ///
+    /// A Result containing:
+    ///
+    /// - The size of the encoded message
+    /// - The encoded message buffer
+    pub fn encode(bar: OHLCVBar) -> Result<(usize, Vec<u8>), SbeEncodeError> {
+        sbe_encoder::encode_data_bar_message(bar)
+    }
+
+    /// Decodes an SBE message buffer into an `OHLCVBar`.
+    ///
+    /// # Parameters
+    ///
+    /// - `buffer` - The SBE encoded message buffer
+    ///
+    /// # Returns
+    ///
+    /// A Result containing the decoded `OHLCVBar` or a decoding error.
+    #[inline]
+    pub fn decode(buffer: &[u8]) -> Result<OHLCVBar, SbeDecodeError> {
+        sbe_decoder::decode_data_bar_message(buffer)
+    }
+}

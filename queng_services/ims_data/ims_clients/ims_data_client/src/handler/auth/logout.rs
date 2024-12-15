@@ -1,5 +1,5 @@
 use crate::{ImsDataClient, ImsDataClientError};
-use sbe_messages::ClientLogoutMessage;
+use sbe_messages_client::ClientLogoutMessage;
 
 impl ImsDataClient {
     /// Logs out the client via control channel.

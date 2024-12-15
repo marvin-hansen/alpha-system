@@ -172,7 +172,11 @@ proto_smdb_utils = { path = "queng_proto/proto_smdb_utils" }
 
 # SBE
 sbe_bindings = { path = "queng_sbe/sbe_bindings" }
-sbe_messages = { path = "queng_sbe/sbe_messages" }
+sbe_messages_client = { path = "queng_sbe/sbe_messages_client" }
+sbe_messages_control = { path = "queng_sbe/sbe_messages_control" }
+sbe_messages_data = { path = "queng_sbe/sbe_messages_data" }
+sbe_messages_order = { path = "queng_sbe/sbe_messages_order" }
+sbe_types = { path = "queng_sbe/sbe_types" }
 sbe_utils = { path = "queng_sbe/sbe_utils" }
 
 # Services

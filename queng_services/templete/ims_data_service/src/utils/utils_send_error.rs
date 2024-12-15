@@ -1,8 +1,7 @@
+use crate::service::Service;
 use common_errors::MessageProcessingError;
 use message_shared::SendMessage;
-use sbe_messages::{ClientErrorType, DataErrorType};
-
-use crate::service::Service;
+use sbe_types::{ClientErrorType, DataErrorType};
 
 impl Service {
     /// Sends a `ClientError` message to the given producer.

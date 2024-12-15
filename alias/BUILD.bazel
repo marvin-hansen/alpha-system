@@ -433,8 +433,28 @@ alias(
 )
 
 alias(
-    name = "sbe_messages",
-    actual = "//queng_sbe/sbe_messages"
+    name = "sbe_messages_client",
+    actual = "//queng_sbe/sbe_messages_client"
+)
+
+alias(
+    name = "sbe_messages_control",
+    actual = "//queng_sbe/sbe_messages_control"
+)
+
+alias(
+    name = "sbe_messages_data",
+    actual = "//queng_sbe/sbe_messages_data"
+)
+
+alias(
+    name = "sbe_messages_order",
+    actual = "//queng_sbe/sbe_messages_order"
+)
+
+alias(
+    name = "sbe_types",
+    actual = "//queng_sbe/sbe_types"
 )
 
 alias(

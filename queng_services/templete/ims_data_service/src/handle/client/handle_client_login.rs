@@ -1,6 +1,6 @@
 use crate::service::Service;
 use common_errors::MessageProcessingError;
-use sbe_messages::ClientLoginMessage;
+use sbe_messages_client::ClientLoginMessage;
 
 impl Service {
     /// Handles a client login message by validating the client ID and logging them in.

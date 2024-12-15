@@ -1,5 +1,5 @@
 use common_errors::MessageProcessingError;
-use sbe_messages::{ClientErrorMessage, ClientErrorType, DataErrorMessage, DataErrorType};
+use sbe_types::{ClientErrorMessage, ClientErrorType, DataErrorMessage, DataErrorType};
 
 /// Encodes a `ClientErrorMessage` message for the given client id and client error type.
 ///

@@ -17,7 +17,9 @@ rust_library(
         "//alias:message_consumer",
         "//alias:message_producer",
         "//alias:message_shared",
-        "//alias:sbe_messages",
+        "//alias:sbe_messages_client",
+        "//alias:sbe_messages_control",
+        "//alias:sbe_types",
         # External crates
         "//thirdparty/crates:bytes",
         "//thirdparty/crates:iggy",

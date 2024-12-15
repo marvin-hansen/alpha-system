@@ -1,6 +1,6 @@
 use crate::service::Service;
 use common_errors::MessageProcessingError;
-use sbe_messages::StopAllDataMessage;
+use sbe_messages_control::StopAllDataMessage;
 
 impl Service {
     /// Handles a stop all data message from a client. This involves verifying the message

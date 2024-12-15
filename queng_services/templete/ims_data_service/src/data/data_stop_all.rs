@@ -1,7 +1,7 @@
 use crate::service::Service;
 use common_errors::MessageProcessingError;
 use common_exchange::ExchangeID;
-use sbe_messages::DataErrorType;
+use sbe_types::DataErrorType;
 
 impl Service {
     pub async fn stop_all_data(

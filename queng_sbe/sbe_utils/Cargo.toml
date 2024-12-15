@@ -11,4 +11,5 @@ authors.workspace = true
 workspace = true
 [dependencies]
 common_errors = { workspace = true }
-sbe_messages = {workspace = true}
+sbe_bindings = { workspace = true }
+sbe_types  = { workspace = true }

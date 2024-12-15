@@ -1,5 +1,5 @@
 use crate::{ImsDataClient, ImsDataClientError};
-use sbe_messages::ClientLoginMessage;
+use sbe_messages_client::ClientLoginMessage;
 
 impl ImsDataClient {
     /// Logs in the client via control channel.

@@ -1,6 +1,6 @@
 use crate::ImsBinanceDataIntegration;
 use common_errors::MessageProcessingError;
-use sbe_messages::SbeTradeBar;
+use sbe_messages_data::SbeTradeBar;
 use std::sync::Arc;
 use trait_data_integration::{EventProcessor, ImsDataIntegration, ImsTradeDataIntegration};
 
