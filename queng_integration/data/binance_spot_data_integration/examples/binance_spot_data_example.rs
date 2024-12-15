@@ -1,6 +1,7 @@
 use binance_spot_data_integration::ImsBinanceSpotDataIntegration;
 use common_errors::MessageProcessingError;
-use sbe_messages::MessageType;
+use sbe_messages_data::{SbeOHLCVBar, SbeTradeBar};
+use sbe_types::MessageType;
 use std::sync::Arc;
 use tokio::time::Duration;
 use trait_data_integration::{
@@ -25,14 +26,14 @@ impl EventProcessor for PrintEventProcessor {
         // Decode and print SBE message relative to its message type
         match message_type {
             MessageType::TradeBar => {
-                let bar = sbe_messages::SbeTradeBar::decode(raw_message)
-                    .expect("Failed to decode trade bar message");
+                let bar =
+                    SbeTradeBar::decode(raw_message).expect("Failed to decode trade bar message");
                 println!("Received trade data:");
                 println!("{}", bar);
             }
             MessageType::OHLCVBar => {
-                let bar = sbe_messages::SbeOHLCVBar::decode(raw_message)
-                    .expect("Failed to decode OHLCV bar message");
+                let bar =
+                    SbeOHLCVBar::decode(raw_message).expect("Failed to decode OHLCV bar message");
                 println!("Received OHLCV data:");
                 println!("{}", bar);
             }
