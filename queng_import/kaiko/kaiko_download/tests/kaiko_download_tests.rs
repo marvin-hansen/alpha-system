@@ -22,11 +22,11 @@ async fn test_download_meta_data() {
     let metedata = result.unwrap();
 
     let assets = metedata.assets().data.to_vec();
-    assert!(assets.len() > 0);
+    assert!(!assets.is_empty());
 
     let instruments = metedata.instruments().data.to_vec();
-    assert!(instruments.len() > 0);
+    assert!(!instruments.is_empty());
 
     let exchanges = metedata.exchanges().data.to_vec();
-    assert!(exchanges.len() > 0);
+    assert!(!exchanges.is_empty());
 }
