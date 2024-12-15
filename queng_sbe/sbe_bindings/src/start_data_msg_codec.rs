@@ -3,7 +3,7 @@ use crate::*;
 pub use decoder::StartDataMsgDecoder;
 pub use encoder::StartDataMsgEncoder;
 
-pub const SBE_BLOCK_LENGTH: u16 = 15;
+pub const SBE_BLOCK_LENGTH: u16 = 27;
 pub const SBE_TEMPLATE_ID: u16 = 201;
 pub const SBE_SCHEMA_ID: u16 = 1;
 pub const SBE_SCHEMA_VERSION: u16 = 1;
@@ -98,18 +98,20 @@ pub mod encoder {
             self.get_buf_mut().put_u8_at(offset, value);
         }
 
-        /// primitive field 'symbolID'
-        /// - min value: 0
-        /// - max value: -2
-        /// - null value: -1
-        /// - characterEncoding: null
-        /// - semanticType: null
+        /// primitive array field 'symbolID'
+        /// - min value: 32
+        /// - max value: 126
+        /// - null value: 0
+        /// - characterEncoding: US-ASCII
+        /// - semanticType: String
         /// - encodedOffset: 5
-        /// - encodedLength: 8
+        /// - encodedLength: 20
+        /// - version: 0
         #[inline]
-        pub fn symbol_id(&mut self, value: u64) {
+        pub fn symbol_id(&mut self, value: [u8; 20]) {
             let offset = self.offset + 5;
-            self.get_buf_mut().put_u64_at(offset, value);
+            let buf = self.get_buf_mut();
+            buf.put_bytes_at(offset, value);
         }
 
         /// primitive field 'timeResolution'
@@ -118,11 +120,11 @@ pub mod encoder {
         /// - null value: 255
         /// - characterEncoding: null
         /// - semanticType: null
-        /// - encodedOffset: 13
+        /// - encodedOffset: 25
         /// - encodedLength: 1
         #[inline]
         pub fn time_resolution(&mut self, value: u8) {
-            let offset = self.offset + 13;
+            let offset = self.offset + 25;
             self.get_buf_mut().put_u8_at(offset, value);
         }
 
@@ -132,11 +134,11 @@ pub mod encoder {
         /// - null value: 255
         /// - characterEncoding: null
         /// - semanticType: null
-        /// - encodedOffset: 14
+        /// - encodedOffset: 26
         /// - encodedLength: 1
         #[inline]
         pub fn data_type_id(&mut self, value: u8) {
-            let offset = self.offset + 14;
+            let offset = self.offset + 26;
             self.get_buf_mut().put_u8_at(offset, value);
         }
     }
@@ -228,22 +230,22 @@ pub mod decoder {
             self.get_buf().get_u8_at(self.offset + 4)
         }
 
-        /// primitive field - 'REQUIRED'
         #[inline]
-        pub fn symbol_id(&self) -> u64 {
-            self.get_buf().get_u64_at(self.offset + 5)
+        pub fn symbol_id(&self) -> [u8; 20] {
+            let buf = self.get_buf();
+            ReadBuf::get_bytes_at(buf.data, self.offset + 5)
         }
 
         /// primitive field - 'REQUIRED'
         #[inline]
         pub fn time_resolution(&self) -> u8 {
-            self.get_buf().get_u8_at(self.offset + 13)
+            self.get_buf().get_u8_at(self.offset + 25)
         }
 
         /// primitive field - 'REQUIRED'
         #[inline]
         pub fn data_type_id(&self) -> u8 {
-            self.get_buf().get_u8_at(self.offset + 14)
+            self.get_buf().get_u8_at(self.offset + 26)
         }
     }
 } // end decoder

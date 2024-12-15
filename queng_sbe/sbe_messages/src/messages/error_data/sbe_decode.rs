@@ -40,9 +40,7 @@ pub fn decode_client_error_message(buffer: &[u8]) -> SbeResult<DataErrorMessage>
     assert_eq!(message_type, MessageType::DataError);
 
     let client_id = csg.client_id();
-    let data_error_type_raw = csg
-        .data_error_type()
-        .expect("Failed to decode client error type");
+    let data_error_type_raw = csg.data_error_type();
 
     let data_error_type = DataErrorType::from(data_error_type_raw);
 

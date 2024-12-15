@@ -48,8 +48,10 @@ pub fn decode_data_bar_message(buffer: &[u8]) -> Result<OHLCVBar, SbeDecodeError
     let message_type = MessageType::from(sbe_message_type as u16);
     assert_eq!(message_type, MessageType::OHLCVBar);
 
-    let val = encoding_utils::int_to_str(csg.symbol_id()).expect("Failed to decode symbol ID");
-    let symbol_id = val;
+    let raw_string = String::from_utf8(csg.symbol_id().to_ascii_uppercase())
+        .expect("Failed to decode symbol_id");
+    // Remove trailing null characters https://stackoverflow.com/questions/49406517/how-to-remove-trailing-null-characters-from-string
+    let symbol_id = raw_string.trim().trim_matches(char::from(0)).to_string();
 
     let sbe_date_time = csg.date_time();
     let date_time: DateTime<Utc> = Utc.timestamp_micros(sbe_date_time).unwrap();

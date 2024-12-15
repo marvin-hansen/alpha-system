@@ -180,15 +180,10 @@ pub mod decoder {
             self.get_buf().get_u16_at(self.offset + 2)
         }
 
-        /// primitive field - 'OPTIONAL' { null_value: '255' }
+        /// primitive field - 'REQUIRED'
         #[inline]
-        pub fn client_error_type(&self) -> Option<u8> {
-            let value = self.get_buf().get_u8_at(self.offset + 4);
-            if value == 0xff_u8 {
-                None
-            } else {
-                Some(value)
-            }
+        pub fn client_error_type(&self) -> u8 {
+            self.get_buf().get_u8_at(self.offset + 4)
         }
     }
 } // end decoder

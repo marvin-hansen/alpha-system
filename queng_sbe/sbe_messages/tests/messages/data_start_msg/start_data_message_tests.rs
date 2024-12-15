@@ -54,10 +54,11 @@ fn test_encode() {
     assert!(enc.is_ok());
 
     let (limit, buffer) = enc.unwrap();
-    assert_eq!(limit, 23);
+    assert_eq!(limit, 35);
 
     let expected: Vec<u8> = vec![
-        15, 0, 201, 0, 1, 0, 1, 0, 201, 0, 1, 0, 1, 12, 4, 5, 0, 0, 0, 0, 0, 0, 1,
+        27, 0, 201, 0, 1, 0, 1, 0, 201, 0, 1, 0, 1, 65, 80, 80, 76, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 1,
     ];
     let actual = buffer;
 
@@ -67,7 +68,8 @@ fn test_encode() {
 #[test]
 fn test_decode() {
     let encoded: Vec<u8> = vec![
-        15, 0, 201, 0, 1, 0, 1, 0, 201, 0, 1, 0, 1, 12, 4, 5, 0, 0, 0, 0, 0, 0, 1,
+        27, 0, 201, 0, 1, 0, 1, 0, 201, 0, 1, 0, 1, 65, 80, 80, 76, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 1,
     ];
     let buffer = encoded.as_slice();
 

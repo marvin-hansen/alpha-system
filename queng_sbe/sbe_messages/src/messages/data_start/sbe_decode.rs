@@ -46,8 +46,12 @@ pub fn decode_start_data_message(buffer: &[u8]) -> SbeResult<StartDataMessage> {
 
     let client_id = csg.client_id();
     let exchange_id = ExchangeID::from(csg.exchange_id());
-    let symbol_id =
-        encoding_utils::int_to_str(csg.symbol_id()).expect("Failed to decode symbol ID");
+
+    let raw_string = String::from_utf8(csg.symbol_id().to_ascii_uppercase())
+        .expect("Failed to decode symbol_id");
+    // Remove trailing null characters https://stackoverflow.com/questions/49406517/how-to-remove-trailing-null-characters-from-string
+    let symbol_id = raw_string.trim().trim_matches(char::from(0)).to_string();
+
     let data_type_id = DataType::from(csg.data_type_id());
     let time_resolution = TimeResolution::from(csg.time_resolution());
 

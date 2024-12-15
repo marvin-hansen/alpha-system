@@ -7,8 +7,17 @@
                    description="Quant engine Schema"
                    byteOrder="littleEndian">
 
-    <!--   BASE TYPE DEFINITIONS -->
+
     <types>
+        <!--    MESSAGE HEADER DEFINITION -->
+        <composite name="messageHeader" description="Message identifiers and length of message root">
+            <type name="blockLength" primitiveType="uint16"/>
+            <type name="templateId" primitiveType="uint16"/>
+            <type name="schemaId" primitiveType="uint16"/>
+            <type name="version" primitiveType="uint16"/>
+        </composite>
+
+        <!--   PRIMITIVE TYPE DEFINITIONS -->
         <type name="Char" description="Char" primitiveType="char"/>
 
         <type name="Int8" description="int8" primitiveType="int8"/>
@@ -30,46 +39,68 @@
         <type name="uInt16NULL" presence="optional" nullValue="65535" primitiveType="uint16"/>
         <type name="uInt32NULL" presence="optional" nullValue="4294967295" primitiveType="uint32"/>
         <type name="uInt64NULL" presence="optional" nullValue="18446744073709551615" primitiveType="uint64"/>
-    </types>
 
-    <!--    TYPE ALIAS DEFINITIONS -->
-    <types>
-        <type name="Currency" description="Currency" length="3" primitiveType="char"/>
+        <!--   DECIMAL TYPE DEFINITIONS -->
+        <composite name="DecimalQty" description="A number representing quantity" semanticType="Qty">
+            <type name="mantissa" description="mantissa" primitiveType="int64"/>
+            <type name="exponent" description="exponent" presence="constant" primitiveType="int8">-9</type>
+        </composite>
+        <composite name="DecimalPrice" description="A number representing price" semanticType="PRICE">
+            <type name="mantissa" description="mantissa" primitiveType="int64"/>
+            <type name="exponent" description="exponent" presence="constant" primitiveType="int8">-9</type>
+        </composite>
+        <composite name="PRICENULL" description="Price NULL" semanticType="PRICENULL">
+            <type name="mantissa" description="mantissa" presence="optional" nullValue="9223372036854775807" primitiveType="int64"/>
+            <type name="exponent" description="exponent" presence="constant" primitiveType="int8">-9</type>
+        </composite>
+
+        <!--
+            Longest asset code: internationaldiamond
+            Longest asset code length: 20
+            Longest exchange_pair_code: AVAX_USDC-PERPETUAL
+            Longest exchange_pair_code length: 19
+            Longest instrument code: realtokens15860h-vene
+            Longest instrument code length: 21
+            Longest exchange code: zbcn
+            Longest exchange code length: 4
+        -->
+
+        <!--  ID TYPE DEFINITIONS-->
         <type name="ClientID" encodingType="uInt16NULL" primitiveType="uint16"/>
+        <!--  Represent Rust Enums-->
         <type name="DataTypeID" encodingType="uInt8NULL" primitiveType="uint8"/>
         <type name="ExchangeID" encodingType="uInt8NULL" primitiveType="uint8"/>
-        <type name="SymbolID" encodingType="uInt16NULL" primitiveType="uint64"/>
+
+        <type name="AssetID" description="Asset" length="20" primitiveType="char" semanticType="String"/>
+        <type name="SymbolID" description="Symbol" length="20" primitiveType="char" semanticType="String"/>
+
+        <!-- ERROR TYPE DEFINITIONS        -->
+        <type name="ClientErrorType" encodingType="uInt8NULL" primitiveType="uint8"/>
+        <type name="DataErrorType" encodingType="uInt8NULL" primitiveType="uint8"/>
+
+
+        <!--    TYPE ALIAS DEFINITIONS -->
+        <type name="Currency" description="Currency" length="3" primitiveType="char"/>
         <type name="Timestamp" encodingType="Int64NULL" primitiveType="int64"/>
         <type name="TimeResolution" encodingType="uInt8NULL" primitiveType="uint8"/>
 
-    </types>
-
-<!--    MESSAGE HEADER DEFINITION -->
-    <types>
-        <composite name="messageHeader" description="Message identifiers and length of message root">
-            <type name="blockLength" primitiveType="uint16"/>
-            <type name="templateId" primitiveType="uint16"/>
-            <type name="schemaId" primitiveType="uint16"/>
-            <type name="version" primitiveType="uint16"/>
-        </composite>
-    </types>
-
-    <!--    ENUM DEFINITIONS -->
-    <types>
-<!--        Message Types-->
+        <!--    ENUM DEFINITIONS -->
+        <!--        Message Types-->
         <enum name="MessageType" encodingType="uInt16NULL">
             <validValue name="UnknownMessageType">0</validValue>
-<!--            Client Message Types-->
+            <!--            Client Message Types-->
             <validValue name="ClientLogin">101</validValue>
             <validValue name="ClientLogout">102</validValue>
-<!--            Control Message Types-->
+            <!--            Control Message Types-->
             <validValue name="StartData">201</validValue>
             <validValue name="StopData">202</validValue>
             <validValue name="StopAllData">203</validValue>
-<!--            Data Message Types-->
+            <!--            Data Message Types-->
             <validValue name="DataBar">204</validValue>
             <validValue name="TradeBar">207</validValue>
-<!--            Error Message Types-->
+            <!--            Order Message Types-->
+
+            <!--            Error Message Types-->
             <validValue name="ClientError">801</validValue>
             <validValue name="DataError">802</validValue>
         </enum>
@@ -91,7 +122,7 @@
         <field name="messageType" id="1" type="MessageType"/>
         <field name="clientID" id="2" type="ClientID"/>
         <field name="exchangeID" id="3" type="ExchangeID"/>
-        <field name="symbolID" id="4" type="uint64"/>
+        <field name="symbolID" id="4" type="SymbolID"/>
         <field name="timeResolution" id="5" type="TimeResolution"/>
         <field name="dataTypeID" id="6" type="DataTypeID"/>
     </sbe:message>
@@ -100,7 +131,7 @@
         <field name="messageType" id="1" type="MessageType"/>
         <field name="clientID" id="2" type="ClientID"/>
         <field name="exchangeID" id="3" type="ExchangeID"/>
-        <field name="symbolID" id="4" type="uint64"/>
+        <field name="symbolID" id="4" type="SymbolID"/>
         <field name="dataTypeID" id="5" type="DataTypeID"/>
     </sbe:message>
 
@@ -112,7 +143,7 @@
 
     <sbe:message name="DataBar" id="204">
         <field name="messageType" id="1" type="MessageType"/>
-        <field name="symbolID" id="2" type="uint64"/>
+        <field name="symbolID" id="2" type="SymbolID"/>
         <field name="dateTime" id="3" type="Timestamp"/>
         <field name="openPrice" id="4" type="float"/>
         <field name="highPrice" id="5" type="float"/>
@@ -123,7 +154,7 @@
 
     <sbe:message name="TradeBar" id="207">
         <field name="messageType" id="1" type="MessageType"/>
-        <field name="symbolID" id="2" type="uint64"/>
+        <field name="symbolID" id="2" type="SymbolID"/>
         <field name="dateTime" id="3" type="Timestamp"/>
         <field name="price" id="4" type="float"/>
         <field name="volume" id="5" type="float"/>
@@ -134,13 +165,13 @@
     <sbe:message name="ClientError" id="801">
         <field name="messageType" id="1" type="MessageType"/>
         <field name="clientID" id="2" type="ClientID"/>
-        <field name="clientErrorType" id="3" type="uInt8NULL"/>
+        <field name="clientErrorType" id="3" type="ClientErrorType"/>
     </sbe:message>
 
     <sbe:message name="DataError" id="802">
         <field name="messageType" id="1" type="MessageType"/>
         <field name="clientID" id="2" type="ClientID"/>
-        <field name="dataErrorType" id="3" type="uInt8NULL"/>
+        <field name="dataErrorType" id="3" type="DataErrorType"/>
     </sbe:message>
 
 </sbe:messageSchema>

@@ -22,7 +22,7 @@ use sbe_bindings::{
 ///
 /// # Process
 ///
-/// - Create 28 byte buffer
+/// - Create 46 byte buffer
 /// - Create default `TradeBarEncoder`
 /// - Wrap buffer in `WriteBuf`
 /// - Encode header
@@ -36,7 +36,7 @@ use sbe_bindings::{
 /// - Return encoded size and buffer
 ///
 pub fn encode_trade_bar_message(bar: TradeBar) -> Result<(usize, Vec<u8>), SbeEncodeError> {
-    let mut buffer = vec![0u8; 34];
+    let mut buffer = vec![0u8; 46];
 
     let mut csg = TradeBarEncoder::default();
 
@@ -47,8 +47,10 @@ pub fn encode_trade_bar_message(bar: TradeBar) -> Result<(usize, Vec<u8>), SbeEn
     let value = SbeMessageType::TradeBar;
     csg.message_type(value);
 
-    let value = encoding_utils::str_to_int(bar.symbol_id()).expect("Failed to encode string");
-    csg.symbol_id(value);
+    // Convert string symbol id into fixed sized char [u8; 20]
+    let mut byte_array = [0u8; 20];
+    byte_array[..bar.symbol_id().len()].copy_from_slice(bar.symbol_id().as_bytes());
+    csg.symbol_id(byte_array);
 
     let date_time = bar.date_time().timestamp_micros();
     csg.date_time(date_time);

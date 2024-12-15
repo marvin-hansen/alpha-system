@@ -3,7 +3,7 @@ use crate::*;
 pub use decoder::DataBarDecoder;
 pub use encoder::DataBarEncoder;
 
-pub const SBE_BLOCK_LENGTH: u16 = 38;
+pub const SBE_BLOCK_LENGTH: u16 = 50;
 pub const SBE_TEMPLATE_ID: u16 = 204;
 pub const SBE_SCHEMA_ID: u16 = 1;
 pub const SBE_SCHEMA_VERSION: u16 = 1;
@@ -70,18 +70,20 @@ pub mod encoder {
             self.get_buf_mut().put_u16_at(offset, value as u16)
         }
 
-        /// primitive field 'symbolID'
-        /// - min value: 0
-        /// - max value: -2
-        /// - null value: -1
-        /// - characterEncoding: null
-        /// - semanticType: null
+        /// primitive array field 'symbolID'
+        /// - min value: 32
+        /// - max value: 126
+        /// - null value: 0
+        /// - characterEncoding: US-ASCII
+        /// - semanticType: String
         /// - encodedOffset: 2
-        /// - encodedLength: 8
+        /// - encodedLength: 20
+        /// - version: 0
         #[inline]
-        pub fn symbol_id(&mut self, value: u64) {
+        pub fn symbol_id(&mut self, value: [u8; 20]) {
             let offset = self.offset + 2;
-            self.get_buf_mut().put_u64_at(offset, value);
+            let buf = self.get_buf_mut();
+            buf.put_bytes_at(offset, value);
         }
 
         /// primitive field 'dateTime'
@@ -90,11 +92,11 @@ pub mod encoder {
         /// - null value: -9223372036854775808
         /// - characterEncoding: null
         /// - semanticType: null
-        /// - encodedOffset: 10
+        /// - encodedOffset: 22
         /// - encodedLength: 8
         #[inline]
         pub fn date_time(&mut self, value: i64) {
-            let offset = self.offset + 10;
+            let offset = self.offset + 22;
             self.get_buf_mut().put_i64_at(offset, value);
         }
 
@@ -104,11 +106,11 @@ pub mod encoder {
         /// - null value: NaN
         /// - characterEncoding: null
         /// - semanticType: null
-        /// - encodedOffset: 18
+        /// - encodedOffset: 30
         /// - encodedLength: 4
         #[inline]
         pub fn open_price(&mut self, value: f32) {
-            let offset = self.offset + 18;
+            let offset = self.offset + 30;
             self.get_buf_mut().put_f32_at(offset, value);
         }
 
@@ -118,11 +120,11 @@ pub mod encoder {
         /// - null value: NaN
         /// - characterEncoding: null
         /// - semanticType: null
-        /// - encodedOffset: 22
+        /// - encodedOffset: 34
         /// - encodedLength: 4
         #[inline]
         pub fn high_price(&mut self, value: f32) {
-            let offset = self.offset + 22;
+            let offset = self.offset + 34;
             self.get_buf_mut().put_f32_at(offset, value);
         }
 
@@ -132,11 +134,11 @@ pub mod encoder {
         /// - null value: NaN
         /// - characterEncoding: null
         /// - semanticType: null
-        /// - encodedOffset: 26
+        /// - encodedOffset: 38
         /// - encodedLength: 4
         #[inline]
         pub fn low_price(&mut self, value: f32) {
-            let offset = self.offset + 26;
+            let offset = self.offset + 38;
             self.get_buf_mut().put_f32_at(offset, value);
         }
 
@@ -146,11 +148,11 @@ pub mod encoder {
         /// - null value: NaN
         /// - characterEncoding: null
         /// - semanticType: null
-        /// - encodedOffset: 30
+        /// - encodedOffset: 42
         /// - encodedLength: 4
         #[inline]
         pub fn close_price(&mut self, value: f32) {
-            let offset = self.offset + 30;
+            let offset = self.offset + 42;
             self.get_buf_mut().put_f32_at(offset, value);
         }
 
@@ -160,11 +162,11 @@ pub mod encoder {
         /// - null value: NaN
         /// - characterEncoding: null
         /// - semanticType: null
-        /// - encodedOffset: 34
+        /// - encodedOffset: 46
         /// - encodedLength: 4
         #[inline]
         pub fn volume(&mut self, value: f32) {
-            let offset = self.offset + 34;
+            let offset = self.offset + 46;
             self.get_buf_mut().put_f32_at(offset, value);
         }
     }
@@ -244,46 +246,46 @@ pub mod decoder {
             self.get_buf().get_u16_at(self.offset).into()
         }
 
-        /// primitive field - 'REQUIRED'
         #[inline]
-        pub fn symbol_id(&self) -> u64 {
-            self.get_buf().get_u64_at(self.offset + 2)
+        pub fn symbol_id(&self) -> [u8; 20] {
+            let buf = self.get_buf();
+            ReadBuf::get_bytes_at(buf.data, self.offset + 2)
         }
 
         /// primitive field - 'REQUIRED'
         #[inline]
         pub fn date_time(&self) -> i64 {
-            self.get_buf().get_i64_at(self.offset + 10)
+            self.get_buf().get_i64_at(self.offset + 22)
         }
 
         /// primitive field - 'REQUIRED'
         #[inline]
         pub fn open_price(&self) -> f32 {
-            self.get_buf().get_f32_at(self.offset + 18)
-        }
-
-        /// primitive field - 'REQUIRED'
-        #[inline]
-        pub fn high_price(&self) -> f32 {
-            self.get_buf().get_f32_at(self.offset + 22)
-        }
-
-        /// primitive field - 'REQUIRED'
-        #[inline]
-        pub fn low_price(&self) -> f32 {
-            self.get_buf().get_f32_at(self.offset + 26)
-        }
-
-        /// primitive field - 'REQUIRED'
-        #[inline]
-        pub fn close_price(&self) -> f32 {
             self.get_buf().get_f32_at(self.offset + 30)
         }
 
         /// primitive field - 'REQUIRED'
         #[inline]
-        pub fn volume(&self) -> f32 {
+        pub fn high_price(&self) -> f32 {
             self.get_buf().get_f32_at(self.offset + 34)
+        }
+
+        /// primitive field - 'REQUIRED'
+        #[inline]
+        pub fn low_price(&self) -> f32 {
+            self.get_buf().get_f32_at(self.offset + 38)
+        }
+
+        /// primitive field - 'REQUIRED'
+        #[inline]
+        pub fn close_price(&self) -> f32 {
+            self.get_buf().get_f32_at(self.offset + 42)
+        }
+
+        /// primitive field - 'REQUIRED'
+        #[inline]
+        pub fn volume(&self) -> f32 {
+            self.get_buf().get_f32_at(self.offset + 46)
         }
     }
 } // end decoder

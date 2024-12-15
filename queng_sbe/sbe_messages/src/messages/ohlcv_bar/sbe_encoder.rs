@@ -22,7 +22,7 @@ use sbe_bindings::{
 ///
 /// # Process
 ///
-/// - Create 40 byte buffer
+/// - Create 58 byte buffer
 /// - Create default `DataBarEncoder`
 /// - Wrap buffer in `WriteBuf`
 /// - Encode header
@@ -37,8 +37,8 @@ use sbe_bindings::{
 /// - Return encoded size and buffer
 ///
 pub fn encode_data_bar_message(bar: OHLCVBar) -> Result<(usize, Vec<u8>), SbeEncodeError> {
-    // precise buffer size is 42 bytes for the entire message.
-    let mut buffer = vec![0u8; 46];
+    // precise buffer size is 58 bytes for the entire message.
+    let mut buffer = vec![0u8; 58];
 
     let mut csg = DataBarEncoder::default();
 
@@ -49,14 +49,14 @@ pub fn encode_data_bar_message(bar: OHLCVBar) -> Result<(usize, Vec<u8>), SbeEnc
 
     csg = csg.header(0).parent().expect("Failed to encode header");
 
-    let value = SbeMessageType::DataBar;
-    csg.message_type(value);
+    csg.message_type(SbeMessageType::DataBar);
 
-    let value = encoding_utils::str_to_int(bar.symbol_id()).expect("Failed to encode string");
-    csg.symbol_id(value);
+    // Convert string symbol id into fixed sized char [u8; 20]
+    let mut byte_array = [0u8; 20];
+    byte_array[..bar.symbol_id().len()].copy_from_slice(bar.symbol_id().as_bytes());
+    csg.symbol_id(byte_array);
 
-    let date_time = bar.date_time().timestamp_micros();
-    csg.date_time(date_time);
+    csg.date_time(bar.date_time().timestamp_micros());
 
     let open_price = bar
         .open()

@@ -20,7 +20,7 @@ impl StopDataMessage {
     ///
     /// # Process
     ///
-    /// - Create 16 byte buffer
+    /// - Create 34 byte buffer
     /// - Create default `StopDataMsgEncoder`
     /// - Wrap buffer in `WriteBuf`
     /// - Encode header
@@ -32,7 +32,7 @@ impl StopDataMessage {
     /// - Return encoded size and buffer
     ///
     pub fn encode(&self) -> Result<(usize, Vec<u8>), SbeEncodeError> {
-        let mut buffer = vec![0u8; 22];
+        let mut buffer = vec![0u8; 34];
 
         let mut csg = StopDataMsgEncoder::default();
 
@@ -46,17 +46,16 @@ impl StopDataMessage {
         let value = SbeMessageType::from(self.message_type as u16);
         csg.message_type(value);
 
-        let value = self.client_id;
-        csg.client_id(value);
+        csg.client_id(self.client_id);
 
-        let value = self.exchange_id as u8;
-        csg.exchange_id(value);
+        csg.exchange_id(self.exchange_id as u8);
 
-        let value = encoding_utils::str_to_int(&self.symbol_id).expect("Failed to encode string");
-        csg.symbol_id(value);
+        // Convert string symbol id into fixed sized char [u8; 20]
+        let mut byte_array = [0u8; 20];
+        byte_array[..self.symbol_id().len()].copy_from_slice(self.symbol_id().as_bytes());
+        csg.symbol_id(byte_array);
 
-        let value = self.data_type_id as u8;
-        csg.data_type_id(value);
+        csg.data_type_id(self.data_type_id as u8);
 
         let limit = csg.get_limit();
         Ok((limit, buffer))

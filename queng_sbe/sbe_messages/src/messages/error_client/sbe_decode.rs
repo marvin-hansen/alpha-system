@@ -39,9 +39,8 @@ pub fn decode_client_error_message(buffer: &[u8]) -> SbeResult<ClientErrorMessag
     assert_eq!(message_type, MessageType::ClientError);
 
     let client_id = csg.client_id();
-    let client_error_type_raw = csg
-        .client_error_type()
-        .expect("Failed to decode client error type");
+    let client_error_type_raw = csg.client_error_type();
+
     let client_error_type = ClientErrorType::from(client_error_type_raw);
 
     let message = ClientErrorMessage::new(client_id, client_error_type);
