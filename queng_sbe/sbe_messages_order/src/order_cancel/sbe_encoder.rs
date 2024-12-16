@@ -1,7 +1,5 @@
 use common_order::OrderCancel;
-use sbe_bindings::{
-    message_header_codec, Encoder, MessageType as SbeMessageType, OrderCancelEncoder, WriteBuf,
-};
+use sbe_bindings::{message_header_codec, Encoder, MessageType, OrderCancelEncoder, WriteBuf};
 use sbe_types::SbeEncodeError;
 
 pub(crate) fn encode_order_cancel_message(
@@ -19,7 +17,7 @@ pub(crate) fn encode_order_cancel_message(
 
     csg = csg.header(0).parent().expect("Failed to encode header");
 
-    csg.message_type(SbeMessageType::OrderCancel);
+    csg.message_type(MessageType::OrderCancel);
 
     csg.exchange_id(msg.exchange_id() as u8);
 
