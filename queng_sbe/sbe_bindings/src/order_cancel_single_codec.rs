@@ -1,10 +1,10 @@
 use crate::*;
 
-pub use decoder::ClientErrorDecoder;
-pub use encoder::ClientErrorEncoder;
+pub use decoder::OrderCancelSingleDecoder;
+pub use encoder::OrderCancelSingleEncoder;
 
-pub const SBE_BLOCK_LENGTH: u16 = 5;
-pub const SBE_TEMPLATE_ID: u16 = 801;
+pub const SBE_BLOCK_LENGTH: u16 = 35;
+pub const SBE_TEMPLATE_ID: u16 = 403;
 pub const SBE_SCHEMA_ID: u16 = 1;
 pub const SBE_SCHEMA_VERSION: u16 = 1;
 pub const SBE_SEMANTIC_VERSION: &str = "5.2";
@@ -13,21 +13,21 @@ pub mod encoder {
     use super::*;
 
     #[derive(Debug, Default)]
-    pub struct ClientErrorEncoder<'a> {
+    pub struct OrderCancelSingleEncoder<'a> {
         buf: WriteBuf<'a>,
         initial_offset: usize,
         offset: usize,
         limit: usize,
     }
 
-    impl<'a> Writer<'a> for ClientErrorEncoder<'a> {
+    impl<'a> Writer<'a> for OrderCancelSingleEncoder<'a> {
         #[inline]
         fn get_buf_mut(&mut self) -> &mut WriteBuf<'a> {
             &mut self.buf
         }
     }
 
-    impl<'a> Encoder<'a> for ClientErrorEncoder<'a> {
+    impl<'a> Encoder<'a> for OrderCancelSingleEncoder<'a> {
         #[inline]
         fn get_limit(&self) -> usize {
             self.limit
@@ -39,7 +39,7 @@ pub mod encoder {
         }
     }
 
-    impl<'a> ClientErrorEncoder<'a> {
+    impl<'a> OrderCancelSingleEncoder<'a> {
         pub fn wrap(mut self, buf: WriteBuf<'a>, offset: usize) -> Self {
             let limit = offset + SBE_BLOCK_LENGTH as usize;
             self.buf = buf;
@@ -70,32 +70,64 @@ pub mod encoder {
             self.get_buf_mut().put_u16_at(offset, value as u16)
         }
 
-        /// primitive field 'exchange_id'
-        /// - min value: 0
-        /// - max value: 65534
-        /// - null value: 65535
-        /// - characterEncoding: null
-        /// - semanticType: null
-        /// - encodedOffset: 2
-        /// - encodedLength: 2
-        #[inline]
-        pub fn exchange_id(&mut self, value: u16) {
-            let offset = self.offset + 2;
-            self.get_buf_mut().put_u16_at(offset, value);
-        }
-
-        /// primitive field 'clientErrorType'
+        /// primitive field 'exchangeID'
         /// - min value: 0
         /// - max value: 254
         /// - null value: 255
         /// - characterEncoding: null
         /// - semanticType: null
-        /// - encodedOffset: 4
+        /// - encodedOffset: 2
         /// - encodedLength: 1
         #[inline]
-        pub fn client_error_type(&mut self, value: u8) {
-            let offset = self.offset + 4;
+        pub fn exchange_id(&mut self, value: u8) {
+            let offset = self.offset + 2;
             self.get_buf_mut().put_u8_at(offset, value);
+        }
+
+        /// primitive field 'clientID'
+        /// - min value: 0
+        /// - max value: 65534
+        /// - null value: 65535
+        /// - characterEncoding: null
+        /// - semanticType: null
+        /// - encodedOffset: 3
+        /// - encodedLength: 2
+        #[inline]
+        pub fn client_id(&mut self, value: u16) {
+            let offset = self.offset + 3;
+            self.get_buf_mut().put_u16_at(offset, value);
+        }
+
+        /// primitive array field 'clientOrderID'
+        /// - min value: 32
+        /// - max value: 126
+        /// - null value: 0
+        /// - characterEncoding: US-ASCII
+        /// - semanticType: String
+        /// - encodedOffset: 5
+        /// - encodedLength: 10
+        /// - version: 0
+        #[inline]
+        pub fn client_order_id(&mut self, value: [u8; 10]) {
+            let offset = self.offset + 5;
+            let buf = self.get_buf_mut();
+            buf.put_bytes_at(offset, value);
+        }
+
+        /// primitive array field 'exchangeOrderID'
+        /// - min value: 32
+        /// - max value: 126
+        /// - null value: 0
+        /// - characterEncoding: US-ASCII
+        /// - semanticType: String
+        /// - encodedOffset: 15
+        /// - encodedLength: 20
+        /// - version: 0
+        #[inline]
+        pub fn exchange_order_id(&mut self, value: [u8; 20]) {
+            let offset = self.offset + 15;
+            let buf = self.get_buf_mut();
+            buf.put_bytes_at(offset, value);
         }
     }
 } // end encoder
@@ -104,7 +136,7 @@ pub mod decoder {
     use super::*;
 
     #[derive(Clone, Copy, Debug, Default)]
-    pub struct ClientErrorDecoder<'a> {
+    pub struct OrderCancelSingleDecoder<'a> {
         buf: ReadBuf<'a>,
         initial_offset: usize,
         offset: usize,
@@ -113,14 +145,14 @@ pub mod decoder {
         pub acting_version: u16,
     }
 
-    impl<'a> Reader<'a> for ClientErrorDecoder<'a> {
+    impl<'a> Reader<'a> for OrderCancelSingleDecoder<'a> {
         #[inline]
         fn get_buf(&self) -> &ReadBuf<'a> {
             &self.buf
         }
     }
 
-    impl<'a> Decoder<'a> for ClientErrorDecoder<'a> {
+    impl<'a> Decoder<'a> for OrderCancelSingleDecoder<'a> {
         #[inline]
         fn get_limit(&self) -> usize {
             self.limit
@@ -132,7 +164,7 @@ pub mod decoder {
         }
     }
 
-    impl<'a> ClientErrorDecoder<'a> {
+    impl<'a> OrderCancelSingleDecoder<'a> {
         pub fn wrap(
             mut self,
             buf: ReadBuf<'a>,
@@ -176,14 +208,26 @@ pub mod decoder {
 
         /// primitive field - 'REQUIRED'
         #[inline]
-        pub fn exchange_id(&self) -> u16 {
-            self.get_buf().get_u16_at(self.offset + 2)
+        pub fn exchange_id(&self) -> u8 {
+            self.get_buf().get_u8_at(self.offset + 2)
         }
 
         /// primitive field - 'REQUIRED'
         #[inline]
-        pub fn client_error_type(&self) -> u8 {
-            self.get_buf().get_u8_at(self.offset + 4)
+        pub fn client_id(&self) -> u16 {
+            self.get_buf().get_u16_at(self.offset + 3)
+        }
+
+        #[inline]
+        pub fn client_order_id(&self) -> [u8; 10] {
+            let buf = self.get_buf();
+            ReadBuf::get_bytes_at(buf.data, self.offset + 5)
+        }
+
+        #[inline]
+        pub fn exchange_order_id(&self) -> [u8; 20] {
+            let buf = self.get_buf();
+            ReadBuf::get_bytes_at(buf.data, self.offset + 15)
         }
     }
 } // end decoder

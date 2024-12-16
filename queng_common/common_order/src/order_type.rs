@@ -7,6 +7,8 @@ pub enum OrderType {
     #[default]
     Limit = 0x1_u8,
     Market = 0x2_u8,
+    Stop = 0x3_u8,
+    StopLimit = 0x4_u8,
 }
 
 impl From<OrderType> for u8 {
@@ -20,6 +22,8 @@ impl From<u8> for OrderType {
         match value {
             0x1_u8 => Self::Limit,
             0x2_u8 => Self::Market,
+            0x3_u8 => Self::Stop,
+            0x4_u8 => Self::StopLimit,
             _ => Self::Limit,
         }
     }

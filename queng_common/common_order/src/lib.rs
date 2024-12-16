@@ -3,6 +3,8 @@ mod balance_data;
 mod order_cancel_all;
 mod order_cancel_single;
 mod order_fill;
+mod order_id_client;
+mod order_id_exchange;
 mod order_reject;
 mod order_side;
 mod order_single_new;

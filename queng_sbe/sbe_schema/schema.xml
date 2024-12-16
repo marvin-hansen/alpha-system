@@ -40,6 +40,11 @@
         <type name="uInt32NULL" presence="optional" nullValue="4294967295" primitiveType="uint32"/>
         <type name="uInt64NULL" presence="optional" nullValue="18446744073709551615" primitiveType="uint64"/>
 
+        <!--    TYPE ALIAS DEFINITIONS -->
+        <type name="Currency" description="Currency" length="3" primitiveType="char"/>
+        <type name="Timestamp" encodingType="Int64NULL" primitiveType="int64"/>
+        <type name="TimeResolution" encodingType="uInt8NULL" primitiveType="uint8"/>
+
         <!--   DECIMAL TYPE DEFINITIONS -->
         <composite name="DecimalQty" description="A number representing quantity" semanticType="Qty">
             <type name="mantissa" description="mantissa" primitiveType="int64"/>
@@ -53,7 +58,10 @@
             <type name="mantissa" description="mantissa" presence="optional" nullValue="9223372036854775807" primitiveType="int64"/>
             <type name="exponent" description="exponent" presence="constant" primitiveType="int8">-9</type>
         </composite>
-
+        <composite name="optionalDecimalEncoding" description="Optional decimal with constant exponent">
+            <type name="mantissa" presence="optional" primitiveType="int64"/>
+            <type name="exponent" presence="constant" primitiveType="int8">-9</type>
+        </composite>
         <!--
             Longest asset code: internationaldiamond
             Longest asset code length: 20
@@ -79,31 +87,58 @@
         <type name="DataErrorType" encodingType="uInt8NULL" primitiveType="uint8"/>
 
 
-        <!--    TYPE ALIAS DEFINITIONS -->
-        <type name="Currency" description="Currency" length="3" primitiveType="char"/>
-        <type name="Timestamp" encodingType="Int64NULL" primitiveType="int64"/>
-        <type name="TimeResolution" encodingType="uInt8NULL" primitiveType="uint8"/>
+        <!--    ORDER TYPE DEFINITIONS. See common_order crate and sbe_messages_order for Rust type definitions -->
+        <type name="ClientOrderID" description="ClientOrderID" length="10" primitiveType="char" semanticType="String"/>
+        <type name="ExchangeOrderID" description="ExchangeOrderID" length="20" primitiveType="char" semanticType="String"/>
 
-        <!--    ENUM DEFINITIONS -->
-        <!--        Message Types-->
+        <enum name="OrderSide" encodingType="uint8">
+            <validValue name="Buy" description="Buy">1</validValue>
+            <validValue name="Sell" description="Sell">2</validValue>
+        </enum>
+
+        <enum name="OrderType" encodingType="uint8">
+            <validValue name="Market" description="Market">1</validValue>
+            <validValue name="Limit" description="Limit">2</validValue>
+            <validValue name="Stop" description="Stop Loss">3</validValue>
+            <validValue name="StopLimit" description="Stop Limit">4</validValue>
+        </enum>
+
+        <enum name="OrderTimeInForce" encodingType="uint8">
+            <validValue name="GoodTillCancel" description="GoodTillCancel">0</validValue>
+            <validValue name="GoodTillTimeExchange" description="GoodTillTimeExchange">1</validValue>
+            <validValue name="FillOrKill" description="FillOrKill">3</validValue>
+            <validValue name="ImmediateOrCancel" description="ImmediateOrCancel">4</validValue>
+            <validValue name="OneCancelOther" description="OneCancelOther">5</validValue>
+        </enum>
+
+        <!--    MESSAGE TYPE DEFINITIONS -->
         <enum name="MessageType" encodingType="uInt16NULL">
             <validValue name="UnknownMessageType">0</validValue>
+
             <!--            Client Message Types-->
             <validValue name="ClientLogin">101</validValue>
             <validValue name="ClientLogout">102</validValue>
+
             <!--            Control Message Types-->
             <validValue name="StartData">201</validValue>
             <validValue name="StopData">202</validValue>
             <validValue name="StopAllData">203</validValue>
+
             <!--            Data Message Types-->
             <validValue name="DataBar">204</validValue>
             <validValue name="TradeBar">207</validValue>
+
             <!--            Order Message Types-->
+            <validValue name="OrderSingleNew">401</validValue>
+            <validValue name="OrderSingleUpdate">402</validValue>
+            <validValue name="OrderCancelSingle">403</validValue>
+            <validValue name="OrderCancelAll">404</validValue>
 
             <!--            Error Message Types-->
             <validValue name="ClientError">801</validValue>
             <validValue name="DataError">802</validValue>
         </enum>
+
     </types>
 
     <!--   CLIENT MESSAGE DEFINITIONS -->
@@ -160,11 +195,60 @@
         <field name="volume" id="5" type="float"/>
     </sbe:message>
 
+    <!--   ORDER MESSAGE DEFINITIONS -->
+    <sbe:message name="OrderSingleNew" id="401">
+        <field name="messageType" id="1" type="MessageType"/>
+        <field name="exchangeID" id="2" type="ExchangeID"/>
+        <field name="clientID" id="3" type="ClientID"/>
+        <field name="clientOrderID" id="4" type="ClientOrderID"/>
+        <field name="symbolID" id="5" type="SymbolID"/>
+        <field name="symbolExchangeID" id="6" type="SymbolID"/>
+        <field name="orderType" id="7" type="OrderType"/>
+        <field name="orderSide" id="8" type="OrderSide"/>
+        <field name="timeInForce" id="9" type="OrderTimeInForce"/>
+        <field name="timeExpiry" id="10" type="optionalDecimalEncoding"/>
+        <field name="orderCreateTime" id="11" type="Timestamp"/>
+        <field name="orderQty" id="12" type="DecimalQty"/>
+        <field name="orderPrice" id="13" type="DecimalPrice"/>
+        <field name="orderStopPrice" id="14" type="optionalDecimalEncoding"/>
+    </sbe:message>
+
+    <sbe:message name="OrderSingleUpdate" id="402">
+        <field name="messageType" id="1" type="MessageType"/>
+        <field name="exchangeID" id="2" type="ExchangeID"/>
+        <field name="clientID" id="3" type="ClientID"/>
+        <field name="clientOrderID" id="4" type="ClientOrderID"/>
+        <field name="exchangeOrderID" id="5" type="ExchangeOrderID"/>
+        <field name="symbolID" id="6" type="SymbolID"/>
+        <field name="symbolExchangeID" id="7" type="SymbolID"/>
+        <field name="orderType" id="8" type="OrderType"/>
+        <field name="orderSide" id="9" type="OrderSide"/>
+        <field name="timeInForce" id="10" type="OrderTimeInForce"/>
+        <field name="timeExpiry" id="11" type="optionalDecimalEncoding"/>
+        <field name="orderUpdateCreateTime" id="12" type="Timestamp"/>
+        <field name="orderQty" id="13" type="DecimalQty"/>
+        <field name="orderPrice" id="14" type="DecimalPrice"/>
+        <field name="orderStopPrice" id="15" type="optionalDecimalEncoding"/>
+    </sbe:message>
+
+    <sbe:message name="OrderCancelSingle" id="403">
+        <field name="messageType" id="1" type="MessageType"/>
+        <field name="exchangeID" id="2" type="ExchangeID"/>
+        <field name="clientID" id="3" type="ClientID"/>
+        <field name="clientOrderID" id="4" type="ClientOrderID"/>
+        <field name="exchangeOrderID" id="5" type="ExchangeOrderID"/>
+    </sbe:message>
+
+    <sbe:message name="OrderCancelAll" id="404">
+        <field name="messageType" id="1" type="MessageType"/>
+        <field name="exchangeID" id="2" type="ExchangeID"/>
+        <field name="clientID" id="3" type="ClientID"/>
+    </sbe:message>
 
     <!--  ERROR MESSAGE DEFINITIONS -->
     <sbe:message name="ClientError" id="801">
         <field name="messageType" id="1" type="MessageType"/>
-        <field name="clientID" id="2" type="ClientID"/>
+        <field name="exchange_id" id="2" type="ClientID"/>
         <field name="clientErrorType" id="3" type="ClientErrorType"/>
     </sbe:message>
 

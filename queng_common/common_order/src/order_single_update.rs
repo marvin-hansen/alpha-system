@@ -1,3 +1,5 @@
+use crate::order_id_client::ClientOrderID;
+use crate::order_id_exchange::ExchangeOrderID;
 use crate::{OrderSide, OrderType, TimeInForce};
 use common_exchange::ExchangeID;
 use rust_decimal::Decimal;
@@ -6,8 +8,9 @@ use std::fmt::Display;
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct OrderSingleUpdate {
     exchange_id: ExchangeID,
-    client_order_id: String,
-    exchange_order_id: String,
+    client_id: u16,
+    client_order_id: ClientOrderID,
+    exchange_order_id: ExchangeOrderID,
     symbol_id: String,
     symbol_id_exchange: String,
     order_type: OrderType,
@@ -22,8 +25,10 @@ pub struct OrderSingleUpdate {
 impl OrderSingleUpdate {
     pub fn new(
         exchange_id: ExchangeID,
-        client_order_id: String,
-        exchange_order_id: String,
+        client_id: u16,
+
+        client_order_id: ClientOrderID,
+        exchange_order_id: ExchangeOrderID,
         symbol_id: String,
         symbol_id_exchange: String,
         order_type: OrderType,
@@ -35,6 +40,7 @@ impl OrderSingleUpdate {
     ) -> Self {
         Self {
             exchange_id,
+            client_id,
             client_order_id,
             exchange_order_id,
             symbol_id,
@@ -53,13 +59,15 @@ impl OrderSingleUpdate {
     pub fn exchange_id(&self) -> ExchangeID {
         self.exchange_id
     }
-
+    pub fn client_id(&self) -> u16 {
+        self.client_id
+    }
     pub fn client_order_id(&self) -> &str {
-        &self.client_order_id
+        &self.client_order_id.client_order_id()
     }
 
     pub fn exchange_order_id(&self) -> &str {
-        &self.exchange_order_id
+        &self.exchange_order_id.exchange_order_id()
     }
 
     pub fn symbol_id(&self) -> &str {

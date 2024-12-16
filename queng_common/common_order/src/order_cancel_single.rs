@@ -5,6 +5,7 @@ use std::fmt::Display;
 #[derive(Default, Debug, Clone, PartialEq, Eq)]
 pub struct OrderCancelSingle {
     exchange_id: ExchangeID,
+    client_id: u16,
     symbol_id: String,
     client_order_id: String,
     exchange_order_id: String,
@@ -13,12 +14,14 @@ pub struct OrderCancelSingle {
 impl OrderCancelSingle {
     pub fn new(
         exchange_id: ExchangeID,
+        client_id: u16,
         symbol_id: String,
         client_order_id: String,
         exchange_order_id: String,
     ) -> Self {
         Self {
             exchange_id,
+            client_id,
             symbol_id,
             client_order_id,
             exchange_order_id,
@@ -27,6 +30,9 @@ impl OrderCancelSingle {
 }
 
 impl OrderCancelSingle {
+    pub fn client_id(&self) -> u16 {
+        self.client_id
+    }
     pub fn exchange_id(&self) -> ExchangeID {
         self.exchange_id
     }

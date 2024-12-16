@@ -3,28 +3,24 @@ use std::fmt::Display;
 
 #[derive(Default, Debug, Clone, PartialEq, Eq)]
 pub struct OrderCancelAll {
+    client_id: u16,
     exchange_id: ExchangeID,
 }
 
 impl OrderCancelAll {
-    pub fn new(exchange_id: ExchangeID) -> Self {
-        Self { exchange_id }
-    }
-}
-
-impl From<ExchangeID> for OrderCancelAll {
-    fn from(exchange_id: ExchangeID) -> Self {
-        Self { exchange_id }
-    }
-}
-
-impl From<OrderCancelAll> for ExchangeID {
-    fn from(order_cancel_single: OrderCancelAll) -> Self {
-        order_cancel_single.exchange_id
+    pub fn new(client_id: u16, exchange_id: ExchangeID) -> Self {
+        Self {
+            client_id,
+            exchange_id,
+        }
     }
 }
 
 impl OrderCancelAll {
+    pub fn client_id(&self) -> u16 {
+        self.client_id
+    }
+
     pub fn exchange_id(&self) -> ExchangeID {
         self.exchange_id
     }
