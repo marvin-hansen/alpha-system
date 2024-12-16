@@ -7,7 +7,7 @@ fn test_order_new_single_with_expiry() {
     let expiry_time = 1639123200;
     let order = OrderCreate::new(
         ExchangeID::Binance,
-        001, // client_order_id
+        1, // client_order_id
         "test_order_2".to_string().into(),
         "ETH-USD".to_string(),
         "ETHUSD".to_string(),
@@ -27,7 +27,7 @@ fn test_order_new_single_with_expiry() {
 fn test_order_new_single_display() {
     let order = OrderCreate::new(
         ExchangeID::Binance,
-        001, // client_order_id
+        1, // client_order_id
         "test_order_3".to_string().into(),
         "BTC-USD".to_string(),
         "BTCUSD".to_string(),
@@ -54,7 +54,7 @@ fn test_order_new_single_display() {
 fn test_order_new_single_clone_and_eq() {
     let original = OrderCreate::new(
         ExchangeID::Binance,
-        001, // client_order_id
+        1, // client_order_id
         "test_order_5".to_string().into(),
         "BTC-USD".to_string(),
         "BTCUSD".to_string(),
@@ -90,7 +90,7 @@ fn test_order_new_single_clone_and_eq() {
 fn test_order_new_single_with_different_exchanges() {
     let binance_order = OrderCreate::new(
         ExchangeID::Binance,
-        001, // client_order_id
+        1, // client_order_id
         "binance_order".to_string().into(),
         "BTC-USD".to_string(),
         "BTCUSD".to_string(),
@@ -104,7 +104,7 @@ fn test_order_new_single_with_different_exchanges() {
 
     let kraken_order = OrderCreate::new(
         ExchangeID::Kraken,
-        001, // client_order_id
+        1, // client_order_id
         "kraken_order".to_string().into(),
         "BTC-USD".to_string(),
         "BTCUSD".to_string(),

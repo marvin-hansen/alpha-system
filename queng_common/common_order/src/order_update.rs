@@ -62,11 +62,11 @@ impl OrderUpdate {
         self.client_id
     }
     pub fn client_order_id(&self) -> &str {
-        &self.client_order_id.client_order_id()
+        self.client_order_id.client_order_id()
     }
 
     pub fn exchange_order_id(&self) -> &str {
-        &self.exchange_order_id.exchange_order_id()
+        self.exchange_order_id.exchange_order_id()
     }
 
     pub fn symbol_id(&self) -> &str {

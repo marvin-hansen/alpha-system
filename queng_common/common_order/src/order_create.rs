@@ -59,7 +59,7 @@ impl OrderCreate {
     }
 
     pub fn client_order_id(&self) -> &str {
-        &self.client_order_id.client_order_id()
+        self.client_order_id.client_order_id()
     }
 
     pub fn symbol_id(&self) -> &str {

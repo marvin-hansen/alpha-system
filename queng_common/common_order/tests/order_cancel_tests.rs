@@ -13,7 +13,7 @@ fn test_order_cancel_single_default() {
 fn test_order_cancel_single_display() {
     let cancel_order = OrderCancel::new(
         ExchangeID::Binance,
-        0001,
+        1,
         "client_order_id".to_string(),
         "exchange_order_id".to_string(),
     );
@@ -28,7 +28,7 @@ fn test_order_cancel_single_display() {
 fn test_order_cancel_single_debug() {
     let cancel_order = OrderCancel::new(
         ExchangeID::Binance,
-        0001,
+        1,
         "client_order_id".to_string(),
         "exchange_order_id".to_string(),
     );
@@ -43,7 +43,7 @@ fn test_order_cancel_single_debug() {
 fn test_order_cancel_single_clone_and_eq() {
     let original = OrderCancel::new(
         ExchangeID::Binance,
-        0001,
+        1,
         "client_order_id".to_string(),
         "exchange_order_id".to_string(),
     );
@@ -53,7 +53,7 @@ fn test_order_cancel_single_clone_and_eq() {
 
     let different = OrderCancel::new(
         ExchangeID::Binance,
-        0042,
+        42,
         "client_order_id".to_string(),
         "exchange_order_id".to_string(),
     );
@@ -64,14 +64,14 @@ fn test_order_cancel_single_clone_and_eq() {
 fn test_order_cancel_single_with_different_exchanges() {
     let binance_cancel = OrderCancel::new(
         ExchangeID::Binance,
-        0001,
+        1,
         "binance_client_order_id".to_string(),
         "binance_exchange_order_id".to_string(),
     );
 
     let kraken_cancel = OrderCancel::new(
         ExchangeID::Kraken,
-        0001,
+        1,
         "kraken_client_order_id".to_string(),
         "kraken_exchange_order_id".to_string(),
     );
