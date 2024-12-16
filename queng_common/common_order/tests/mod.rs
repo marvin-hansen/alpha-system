@@ -1,9 +1,10 @@
 mod order_cancel_all_tests;
-mod order_cancel_single_tests;
+mod order_cancel_tests;
+mod order_create_tests;
 mod order_fill_tests;
-mod order_new_single_tests;
 mod order_reject_tests;
 mod order_side_tests;
 mod order_status_tests;
 mod order_type_tests;
+mod order_update_tests;
 mod time_in_force_tests;

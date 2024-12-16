@@ -1,9 +1,9 @@
 use crate::*;
 
-pub use decoder::OrderCancelSingleDecoder;
-pub use encoder::OrderCancelSingleEncoder;
+pub use decoder::OrderCancelDecoder;
+pub use encoder::OrderCancelEncoder;
 
-pub const SBE_BLOCK_LENGTH: u16 = 35;
+pub const SBE_BLOCK_LENGTH: u16 = 39;
 pub const SBE_TEMPLATE_ID: u16 = 403;
 pub const SBE_SCHEMA_ID: u16 = 1;
 pub const SBE_SCHEMA_VERSION: u16 = 1;
@@ -13,21 +13,21 @@ pub mod encoder {
     use super::*;
 
     #[derive(Debug, Default)]
-    pub struct OrderCancelSingleEncoder<'a> {
+    pub struct OrderCancelEncoder<'a> {
         buf: WriteBuf<'a>,
         initial_offset: usize,
         offset: usize,
         limit: usize,
     }
 
-    impl<'a> Writer<'a> for OrderCancelSingleEncoder<'a> {
+    impl<'a> Writer<'a> for OrderCancelEncoder<'a> {
         #[inline]
         fn get_buf_mut(&mut self) -> &mut WriteBuf<'a> {
             &mut self.buf
         }
     }
 
-    impl<'a> Encoder<'a> for OrderCancelSingleEncoder<'a> {
+    impl<'a> Encoder<'a> for OrderCancelEncoder<'a> {
         #[inline]
         fn get_limit(&self) -> usize {
             self.limit
@@ -39,7 +39,7 @@ pub mod encoder {
         }
     }
 
-    impl<'a> OrderCancelSingleEncoder<'a> {
+    impl<'a> OrderCancelEncoder<'a> {
         pub fn wrap(mut self, buf: WriteBuf<'a>, offset: usize) -> Self {
             let limit = offset + SBE_BLOCK_LENGTH as usize;
             self.buf = buf;
@@ -105,10 +105,10 @@ pub mod encoder {
         /// - characterEncoding: US-ASCII
         /// - semanticType: String
         /// - encodedOffset: 5
-        /// - encodedLength: 10
+        /// - encodedLength: 14
         /// - version: 0
         #[inline]
-        pub fn client_order_id(&mut self, value: [u8; 10]) {
+        pub fn client_order_id(&mut self, value: [u8; 14]) {
             let offset = self.offset + 5;
             let buf = self.get_buf_mut();
             buf.put_bytes_at(offset, value);
@@ -120,12 +120,12 @@ pub mod encoder {
         /// - null value: 0
         /// - characterEncoding: US-ASCII
         /// - semanticType: String
-        /// - encodedOffset: 15
+        /// - encodedOffset: 19
         /// - encodedLength: 20
         /// - version: 0
         #[inline]
         pub fn exchange_order_id(&mut self, value: [u8; 20]) {
-            let offset = self.offset + 15;
+            let offset = self.offset + 19;
             let buf = self.get_buf_mut();
             buf.put_bytes_at(offset, value);
         }
@@ -136,7 +136,7 @@ pub mod decoder {
     use super::*;
 
     #[derive(Clone, Copy, Debug, Default)]
-    pub struct OrderCancelSingleDecoder<'a> {
+    pub struct OrderCancelDecoder<'a> {
         buf: ReadBuf<'a>,
         initial_offset: usize,
         offset: usize,
@@ -145,14 +145,14 @@ pub mod decoder {
         pub acting_version: u16,
     }
 
-    impl<'a> Reader<'a> for OrderCancelSingleDecoder<'a> {
+    impl<'a> Reader<'a> for OrderCancelDecoder<'a> {
         #[inline]
         fn get_buf(&self) -> &ReadBuf<'a> {
             &self.buf
         }
     }
 
-    impl<'a> Decoder<'a> for OrderCancelSingleDecoder<'a> {
+    impl<'a> Decoder<'a> for OrderCancelDecoder<'a> {
         #[inline]
         fn get_limit(&self) -> usize {
             self.limit
@@ -164,7 +164,7 @@ pub mod decoder {
         }
     }
 
-    impl<'a> OrderCancelSingleDecoder<'a> {
+    impl<'a> OrderCancelDecoder<'a> {
         pub fn wrap(
             mut self,
             buf: ReadBuf<'a>,
@@ -219,7 +219,7 @@ pub mod decoder {
         }
 
         #[inline]
-        pub fn client_order_id(&self) -> [u8; 10] {
+        pub fn client_order_id(&self) -> [u8; 14] {
             let buf = self.get_buf();
             ReadBuf::get_bytes_at(buf.data, self.offset + 5)
         }
@@ -227,7 +227,7 @@ pub mod decoder {
         #[inline]
         pub fn exchange_order_id(&self) -> [u8; 20] {
             let buf = self.get_buf();
-            ReadBuf::get_bytes_at(buf.data, self.offset + 15)
+            ReadBuf::get_bytes_at(buf.data, self.offset + 19)
         }
     }
 } // end decoder

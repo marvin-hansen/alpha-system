@@ -19,6 +19,11 @@ use std::fmt::Display;
 /// - `TradeBar` = `207_u16`
 /// - `FirstTradeBar` = `208_u16`
 /// - `LastTradeBar` = `209_u16`
+///     4xx = `OrderTypes`
+/// - `OrderCreate` = `401_u16`
+/// - `OrderUpdate` = `402_u16`
+/// - `OrderCancel` = `403_u16`
+/// - `OrderCancelAll` = `404_u16`
 ///    8xx = `ErrorTypes`
 /// - `ClientError` = `801_u16`
 /// - `DataError` = `802_u16`
@@ -52,6 +57,11 @@ pub enum MessageType {
     TradeBar = 207_u16,
     FirstTradeBar = 208_u16,
     LastTradeBar = 209_u16,
+    // Order Message Types
+    OrderCreate = 401_u16,
+    OrderUpdate = 402_u16,
+    OrderCancel = 403_u16,
+    OrderCancelAll = 404_u16,
     // Error Message Types
     ClientError = 801_u16,
     DataError = 802_u16,
@@ -106,6 +116,11 @@ impl From<u16> for MessageType {
             207_u16 => Self::TradeBar,
             208_u16 => Self::FirstTradeBar,
             209_u16 => Self::LastTradeBar,
+            // Order Message Types
+            401_u16 => Self::OrderCreate,
+            402_u16 => Self::OrderUpdate,
+            403_u16 => Self::OrderCancel,
+            404_u16 => Self::OrderCancelAll,
             // Error Message Types
             801_u16 => Self::ClientError,
             802_u16 => Self::DataError,
@@ -115,22 +130,7 @@ impl From<u16> for MessageType {
 }
 
 impl Display for MessageType {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        match self {
-            Self::ClientLogin => write!(f, "ClientLogin"),
-            Self::ClientLogout => write!(f, "ClientLogout"),
-            Self::StartData => write!(f, "StartData"),
-            Self::StopData => write!(f, "StopData"),
-            Self::StopAllData => write!(f, "StopAllData"),
-            Self::OHLCVBar => write!(f, "OHLCVBar"),
-            Self::FirstOHLCVBar => write!(f, "FirstOHLCVBar"),
-            Self::LastOHLCVBar => write!(f, "LastOHLCVBar"),
-            Self::TradeBar => write!(f, "TradeBar"),
-            Self::FirstTradeBar => write!(f, "FirstTradeBar"),
-            Self::LastTradeBar => write!(f, "LastTradeBar"),
-            Self::UnknownMessageType => write!(f, "UnknownMessageType"),
-            Self::ClientError => write!(f, "ClientError"),
-            Self::DataError => write!(f, "DataError"),
-        }
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{self:?}")
     }
 }

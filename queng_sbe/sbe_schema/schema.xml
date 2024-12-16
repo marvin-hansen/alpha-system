@@ -129,9 +129,9 @@
             <validValue name="TradeBar">207</validValue>
 
             <!--            Order Message Types-->
-            <validValue name="OrderSingleNew">401</validValue>
-            <validValue name="OrderSingleUpdate">402</validValue>
-            <validValue name="OrderCancelSingle">403</validValue>
+            <validValue name="OrderCreate">401</validValue>
+            <validValue name="OrderUpdate">402</validValue>
+            <validValue name="OrderCancel">403</validValue>
             <validValue name="OrderCancelAll">404</validValue>
 
             <!--            Error Message Types-->
@@ -196,46 +196,42 @@
     </sbe:message>
 
     <!--   ORDER MESSAGE DEFINITIONS -->
-    <sbe:message name="OrderSingleNew" id="401">
+    <sbe:message name="OrderCreate" id="401">
         <field name="messageType" id="1" type="MessageType"/>
         <field name="exchangeID" id="2" type="ExchangeID"/>
         <field name="clientID" id="3" type="ClientID"/>
         <field name="clientOrderID" id="4" type="ClientOrderID"/>
         <field name="symbolID" id="5" type="SymbolID"/>
-        <field name="symbolExchangeID" id="6" type="SymbolID"/>
-        <field name="orderType" id="7" type="OrderType"/>
-        <field name="orderSide" id="8" type="OrderSide"/>
-        <field name="timeInForce" id="9" type="OrderTimeInForce"/>
-        <field name="timeExpiry" id="10" type="optionalDecimalEncoding"/>
-        <field name="orderCreateTime" id="11" type="Timestamp"/>
-        <field name="orderQty" id="12" type="DecimalQty"/>
-        <field name="orderPrice" id="13" type="DecimalPrice"/>
-        <field name="orderStopPrice" id="14" type="optionalDecimalEncoding"/>
+        <field name="orderType" id="6" type="OrderType"/>
+        <field name="orderSide" id="7" type="OrderSide"/>
+        <field name="timeInForce" id="8" type="OrderTimeInForce"/>
+        <field name="timeExpiry" id="9" type="optionalDecimalEncoding"/>
+        <field name="orderQty" id="10" type="DecimalQty"/>
+        <field name="orderPrice" id="11" type="DecimalPrice"/>
+        <field name="orderStopPrice" id="12" type="optionalDecimalEncoding"/>
     </sbe:message>
 
-    <sbe:message name="OrderSingleUpdate" id="402">
+    <sbe:message name="OrderUpdate" id="402">
         <field name="messageType" id="1" type="MessageType"/>
         <field name="exchangeID" id="2" type="ExchangeID"/>
         <field name="clientID" id="3" type="ClientID"/>
         <field name="clientOrderID" id="4" type="ClientOrderID"/>
         <field name="exchangeOrderID" id="5" type="ExchangeOrderID"/>
         <field name="symbolID" id="6" type="SymbolID"/>
-        <field name="symbolExchangeID" id="7" type="SymbolID"/>
-        <field name="orderType" id="8" type="OrderType"/>
-        <field name="orderSide" id="9" type="OrderSide"/>
-        <field name="timeInForce" id="10" type="OrderTimeInForce"/>
-        <field name="timeExpiry" id="11" type="optionalDecimalEncoding"/>
-        <field name="orderUpdateCreateTime" id="12" type="Timestamp"/>
-        <field name="orderQty" id="13" type="DecimalQty"/>
-        <field name="orderPrice" id="14" type="DecimalPrice"/>
-        <field name="orderStopPrice" id="15" type="optionalDecimalEncoding"/>
+        <field name="orderType" id="7" type="OrderType"/>
+        <field name="orderSide" id="8" type="OrderSide"/>
+        <field name="timeInForce" id="9" type="OrderTimeInForce"/>
+        <field name="timeExpiry" id="10" type="optionalDecimalEncoding"/>
+        <field name="orderQty" id="11" type="DecimalQty"/>
+        <field name="orderPrice" id="12" type="DecimalPrice"/>
+        <field name="orderStopPrice" id="13" type="optionalDecimalEncoding"/>
     </sbe:message>
 
-    <sbe:message name="OrderCancelSingle" id="403">
+    <sbe:message name="OrderCancel" id="403">
         <field name="messageType" id="1" type="MessageType"/>
         <field name="exchangeID" id="2" type="ExchangeID"/>
         <field name="clientID" id="3" type="ClientID"/>
-        <field name="clientOrderID" id="4" type="ClientOrderID"/>
+        <field name="clientOrderID" id="4" type="ClientO14rderID"/>
         <field name="exchangeOrderID" id="5" type="ExchangeOrderID"/>
     </sbe:message>
 

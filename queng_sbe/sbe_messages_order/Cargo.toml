@@ -13,5 +13,7 @@ workspace = true
 
 
 [dependencies]
+common_exchange = { workspace = true }
+common_order = { workspace = true }
 sbe_bindings = { workspace = true }
 sbe_types  = { workspace = true }

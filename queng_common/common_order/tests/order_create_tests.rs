@@ -1,11 +1,11 @@
 use common_exchange::ExchangeID;
-use common_order::{OrderSide, OrderSingleNew, OrderType, TimeInForce};
+use common_order::{OrderCreate, OrderSide, OrderType, TimeInForce};
 use rust_decimal::Decimal;
 
 #[test]
 fn test_order_new_single_with_expiry() {
     let expiry_time = 1639123200;
-    let order = OrderSingleNew::new(
+    let order = OrderCreate::new(
         ExchangeID::Binance,
         001, // client_order_id
         "test_order_2".to_string().into(),
@@ -25,7 +25,7 @@ fn test_order_new_single_with_expiry() {
 
 #[test]
 fn test_order_new_single_display() {
-    let order = OrderSingleNew::new(
+    let order = OrderCreate::new(
         ExchangeID::Binance,
         001, // client_order_id
         "test_order_3".to_string().into(),
@@ -52,7 +52,7 @@ fn test_order_new_single_display() {
 }
 #[test]
 fn test_order_new_single_clone_and_eq() {
-    let original = OrderSingleNew::new(
+    let original = OrderCreate::new(
         ExchangeID::Binance,
         001, // client_order_id
         "test_order_5".to_string().into(),
@@ -69,7 +69,7 @@ fn test_order_new_single_clone_and_eq() {
     let cloned = original.clone();
     assert_eq!(original, cloned);
 
-    let different_order = OrderSingleNew::new(
+    let different_order = OrderCreate::new(
         ExchangeID::default(),
         042,                               // client_order_id
         "test_order_6".to_string().into(), // Different order ID
@@ -88,7 +88,7 @@ fn test_order_new_single_clone_and_eq() {
 
 #[test]
 fn test_order_new_single_with_different_exchanges() {
-    let binance_order = OrderSingleNew::new(
+    let binance_order = OrderCreate::new(
         ExchangeID::Binance,
         001, // client_order_id
         "binance_order".to_string().into(),
@@ -102,7 +102,7 @@ fn test_order_new_single_with_different_exchanges() {
         Decimal::new(500000000, 1),
     );
 
-    let kraken_order = OrderSingleNew::new(
+    let kraken_order = OrderCreate::new(
         ExchangeID::Kraken,
         001, // client_order_id
         "kraken_order".to_string().into(),

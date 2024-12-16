@@ -1,0 +1,24 @@
+load("@rules_rust//rust:defs.bzl", "rust_test_suite")
+
+rust_test_suite(
+    name = "order_cancel_tests",
+    srcs = glob([
+        "order_cancel/*_tests.rs",
+    ]),
+    tags = [
+        "sbe",
+        "unit-test",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        "//alias:sbe_messages_order",
+        # Internal crates
+        "//alias:common_exchange",
+        "//alias:common_order",
+        "//alias:sbe_messages_data",
+        # External crates
+        "//thirdparty/crates:rust_decimal",
+        "//thirdparty/crates:chrono",
+    ],
+)
