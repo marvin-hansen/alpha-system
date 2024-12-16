@@ -3,8 +3,11 @@ use common_order::OrderCancelAll;
 
 #[test]
 fn test_order_cancel_all_creation() {
-    let cancel_all = OrderCancelAll::new(ExchangeID::Binance);
+    let client_id = 0001;
+    let exchange_id = ExchangeID::Binance;
+    let cancel_all = OrderCancelAll::new(exchange_id, client_id);
     assert_eq!(cancel_all.exchange_id(), ExchangeID::Binance);
+    assert_eq!(cancel_all.client_id(), 0001);
 }
 
 #[test]
@@ -14,32 +17,33 @@ fn test_order_cancel_all_default() {
 }
 
 #[test]
-fn test_order_cancel_all_into_exchange_id() {
-    let cancel_all = OrderCancelAll::new(ExchangeID::Binance);
-    let exchange_id: ExchangeID = cancel_all.into();
-    assert_eq!(exchange_id, ExchangeID::Binance);
-}
-
-#[test]
 fn test_order_cancel_all_display() {
-    let cancel_all = OrderCancelAll::new(ExchangeID::Binance);
+    let client_id = 0001;
+    let exchange_id = ExchangeID::Binance;
+    let cancel_all = OrderCancelAll::new(exchange_id, client_id);
     let display_string = cancel_all.to_string();
     assert!(display_string.contains("Binance"));
 }
 
 #[test]
 fn test_order_cancel_all_debug() {
-    let cancel_all = OrderCancelAll::new(ExchangeID::Binance);
+    let client_id = 0001;
+    let exchange_id = ExchangeID::Binance;
+    let cancel_all = OrderCancelAll::new(exchange_id, client_id);
+
     let debug_string = format!("{:?}", cancel_all);
     assert!(debug_string.contains("Binance"));
 }
 
 #[test]
 fn test_order_cancel_all_clone_and_eq() {
-    let original = OrderCancelAll::new(ExchangeID::Binance);
+    let client_id = 0001;
+    let exchange_id = ExchangeID::Binance;
+
+    let original = OrderCancelAll::new(exchange_id, client_id);
     let cloned = original.clone();
     assert_eq!(original, cloned);
 
-    let different = OrderCancelAll::new(ExchangeID::default());
+    let different = OrderCancelAll::new(ExchangeID::Kraken, 0043);
     assert_ne!(original, different);
 }

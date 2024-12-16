@@ -8,7 +8,7 @@ pub struct OrderCancelAll {
 }
 
 impl OrderCancelAll {
-    pub fn new(client_id: u16, exchange_id: ExchangeID) -> Self {
+    pub fn new(exchange_id: ExchangeID, client_id: u16) -> Self {
         Self {
             client_id,
             exchange_id,

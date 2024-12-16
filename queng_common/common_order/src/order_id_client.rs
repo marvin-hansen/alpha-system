@@ -11,8 +11,8 @@ impl ClientOrderID {
             panic!("Client Order ID is empty");
         }
 
-        if client_order_id.len() > 10 {
-            panic!("Client Order ID is too long. Max length is 10");
+        if client_order_id.len() > 14 {
+            panic!("Client Order ID is too long. Max length is 14");
         }
 
         Self { client_order_id }

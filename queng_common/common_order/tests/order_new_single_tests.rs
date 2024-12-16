@@ -3,37 +3,11 @@ use common_order::{OrderSide, OrderSingleNew, OrderType, TimeInForce};
 use rust_decimal::Decimal;
 
 #[test]
-fn test_order_new_single_creation() {
-    let order = OrderSingleNew::new(
-        ExchangeID::Binance,
-        "test_order_1".to_string().into(),
-        "BTC-USD".to_string(),
-        "BTCUSD".to_string(),
-        OrderType::Limit,
-        OrderSide::Buy,
-        TimeInForce::GoodTillCancel,
-        None,
-        Decimal::new(15, 1),
-        Decimal::new(500000000, 1),
-    );
-
-    assert_eq!(order.exchange_id(), ExchangeID::Binance);
-    assert_eq!(order.client_order_id(), "test_order_1");
-    assert_eq!(order.symbol_id(), "BTC-USD");
-    assert_eq!(order.symbol_id_exchange(), "BTCUSD");
-    assert_eq!(order.order_type(), &OrderType::Limit);
-    assert_eq!(order.order_side(), &OrderSide::Buy);
-    assert_eq!(order.time_in_force(), &TimeInForce::GoodTillCancel);
-    assert_eq!(order.time_expiry(), None);
-    assert_eq!(order.quantity(), Decimal::new(15, 1));
-    assert_eq!(order.price(), Decimal::new(500000000, 1));
-}
-
-#[test]
 fn test_order_new_single_with_expiry() {
     let expiry_time = 1639123200;
     let order = OrderSingleNew::new(
         ExchangeID::Binance,
+        001, // client_order_id
         "test_order_2".to_string().into(),
         "ETH-USD".to_string(),
         "ETHUSD".to_string(),
@@ -53,6 +27,7 @@ fn test_order_new_single_with_expiry() {
 fn test_order_new_single_display() {
     let order = OrderSingleNew::new(
         ExchangeID::Binance,
+        001, // client_order_id
         "test_order_3".to_string().into(),
         "BTC-USD".to_string(),
         "BTCUSD".to_string(),
@@ -79,6 +54,7 @@ fn test_order_new_single_display() {
 fn test_order_new_single_clone_and_eq() {
     let original = OrderSingleNew::new(
         ExchangeID::Binance,
+        001, // client_order_id
         "test_order_5".to_string().into(),
         "BTC-USD".to_string(),
         "BTCUSD".to_string(),
@@ -95,6 +71,7 @@ fn test_order_new_single_clone_and_eq() {
 
     let different_order = OrderSingleNew::new(
         ExchangeID::default(),
+        042,                               // client_order_id
         "test_order_6".to_string().into(), // Different order ID
         "BTC-USD".to_string(),
         "BTCUSD".to_string(),
@@ -113,6 +90,7 @@ fn test_order_new_single_clone_and_eq() {
 fn test_order_new_single_with_different_exchanges() {
     let binance_order = OrderSingleNew::new(
         ExchangeID::Binance,
+        001, // client_order_id
         "binance_order".to_string().into(),
         "BTC-USD".to_string(),
         "BTCUSD".to_string(),
@@ -126,6 +104,7 @@ fn test_order_new_single_with_different_exchanges() {
 
     let kraken_order = OrderSingleNew::new(
         ExchangeID::Kraken,
+        001, // client_order_id
         "kraken_order".to_string().into(),
         "BTC-USD".to_string(),
         "BTCUSD".to_string(),

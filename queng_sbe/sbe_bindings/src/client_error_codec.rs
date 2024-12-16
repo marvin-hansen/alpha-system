@@ -70,7 +70,7 @@ pub mod encoder {
             self.get_buf_mut().put_u16_at(offset, value as u16)
         }
 
-        /// primitive field 'exchange_id'
+        /// primitive field 'clientID'
         /// - min value: 0
         /// - max value: 65534
         /// - null value: 65535
@@ -79,7 +79,7 @@ pub mod encoder {
         /// - encodedOffset: 2
         /// - encodedLength: 2
         #[inline]
-        pub fn exchange_id(&mut self, value: u16) {
+        pub fn client_id(&mut self, value: u16) {
             let offset = self.offset + 2;
             self.get_buf_mut().put_u16_at(offset, value);
         }
@@ -176,7 +176,7 @@ pub mod decoder {
 
         /// primitive field - 'REQUIRED'
         #[inline]
-        pub fn exchange_id(&self) -> u16 {
+        pub fn client_id(&self) -> u16 {
             self.get_buf().get_u16_at(self.offset + 2)
         }
 

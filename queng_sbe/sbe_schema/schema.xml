@@ -88,7 +88,7 @@
 
 
         <!--    ORDER TYPE DEFINITIONS. See common_order crate and sbe_messages_order for Rust type definitions -->
-        <type name="ClientOrderID" description="ClientOrderID" length="10" primitiveType="char" semanticType="String"/>
+        <type name="ClientOrderID" description="ClientOrderID" length="14" primitiveType="char" semanticType="String"/>
         <type name="ExchangeOrderID" description="ExchangeOrderID" length="20" primitiveType="char" semanticType="String"/>
 
         <enum name="OrderSide" encodingType="uint8">
@@ -248,7 +248,7 @@
     <!--  ERROR MESSAGE DEFINITIONS -->
     <sbe:message name="ClientError" id="801">
         <field name="messageType" id="1" type="MessageType"/>
-        <field name="exchange_id" id="2" type="ClientID"/>
+        <field name="clientID" id="2" type="ClientID"/>
         <field name="clientErrorType" id="3" type="ClientErrorType"/>
     </sbe:message>
 

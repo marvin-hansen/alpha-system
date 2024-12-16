@@ -1,9 +1,10 @@
 use common_data_bar::TradeBar;
 use rust_decimal::prelude::ToPrimitive;
 
-use sbe_bindings::{
-    Encoder, MessageType as SbeMessageType, TradeBarEncoder, WriteBuf, ENCODED_LENGTH,
-};
+use sbe_bindings::{Encoder, MessageType as SbeMessageType, TradeBarEncoder, WriteBuf};
+
+use sbe_bindings::message_header_codec::ENCODED_LENGTH;
+
 use sbe_types::SbeEncodeError;
 
 /// Encodes a `TradeBar` message to a byte buffer.
