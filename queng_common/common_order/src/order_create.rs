@@ -9,11 +9,10 @@ pub struct OrderCreate {
     exchange_id: ExchangeID,
     client_id: u16,
     client_order_id: ClientOrderID,
-    symbol_id: String,
     symbol_id_exchange: String,
     order_type: OrderType,
     order_side: OrderSide,
-    time_in_force: TimeInForce,
+    order_time_in_force: TimeInForce,
     // Expiration time. Conditionally required for orders with time_in_force = `GOOD_TILL_TIME_EXCHANGE`.
     time_expiry: Option<u64>,
     price: Decimal,
@@ -25,11 +24,10 @@ impl OrderCreate {
         exchange_id: ExchangeID,
         client_id: u16,
         client_order_id: ClientOrderID,
-        symbol_id: String,
         symbol_id_exchange: String,
         order_type: OrderType,
         order_side: OrderSide,
-        time_in_force: TimeInForce,
+        order_time_in_force: TimeInForce,
         time_expiry: Option<u64>,
         quantity: Decimal,
         price: Decimal,
@@ -38,11 +36,10 @@ impl OrderCreate {
             exchange_id,
             client_id,
             client_order_id,
-            symbol_id,
             symbol_id_exchange,
             order_type,
             order_side,
-            time_in_force,
+            order_time_in_force,
             time_expiry,
             price,
             quantity,
@@ -62,10 +59,6 @@ impl OrderCreate {
         self.client_order_id.client_order_id()
     }
 
-    pub fn symbol_id(&self) -> &str {
-        &self.symbol_id
-    }
-
     pub fn symbol_id_exchange(&self) -> &str {
         &self.symbol_id_exchange
     }
@@ -78,8 +71,8 @@ impl OrderCreate {
         &self.order_side
     }
 
-    pub fn time_in_force(&self) -> &TimeInForce {
-        &self.time_in_force
+    pub fn order_time_in_force(&self) -> &TimeInForce {
+        &self.order_time_in_force
     }
 
     pub fn time_expiry(&self) -> Option<u64> {

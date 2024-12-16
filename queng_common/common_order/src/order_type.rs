@@ -12,12 +12,21 @@ pub enum OrderType {
 }
 
 impl From<OrderType> for u8 {
+    #[inline]
     fn from(value: OrderType) -> Self {
         value as u8
     }
 }
 
+impl From<&OrderType> for u8 {
+    #[inline]
+    fn from(value: &OrderType) -> Self {
+        value.to_owned() as u8
+    }
+}
+
 impl From<u8> for OrderType {
+    #[inline]
     fn from(value: u8) -> Self {
         match value {
             0x1_u8 => Self::Limit,

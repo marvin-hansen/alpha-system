@@ -91,25 +91,9 @@
         <type name="ClientOrderID" description="ClientOrderID" length="14" primitiveType="char" semanticType="String"/>
         <type name="ExchangeOrderID" description="ExchangeOrderID" length="20" primitiveType="char" semanticType="String"/>
 
-        <enum name="OrderSide" encodingType="uint8">
-            <validValue name="Buy" description="Buy">1</validValue>
-            <validValue name="Sell" description="Sell">2</validValue>
-        </enum>
-
-        <enum name="OrderType" encodingType="uint8">
-            <validValue name="Market" description="Market">1</validValue>
-            <validValue name="Limit" description="Limit">2</validValue>
-            <validValue name="Stop" description="Stop Loss">3</validValue>
-            <validValue name="StopLimit" description="Stop Limit">4</validValue>
-        </enum>
-
-        <enum name="OrderTimeInForce" encodingType="uint8">
-            <validValue name="GoodTillCancel" description="GoodTillCancel">0</validValue>
-            <validValue name="GoodTillTimeExchange" description="GoodTillTimeExchange">1</validValue>
-            <validValue name="FillOrKill" description="FillOrKill">3</validValue>
-            <validValue name="ImmediateOrCancel" description="ImmediateOrCancel">4</validValue>
-            <validValue name="OneCancelOther" description="OneCancelOther">5</validValue>
-        </enum>
+        <type name="OrderSide" encodingType="uint8" primitiveType="uint8"/>
+        <type name="OrderType" encodingType="uint8" primitiveType="uint8"/>
+        <type name="OrderTimeInForce" encodingType="uint8" primitiveType="uint8"/>
 
         <!--    MESSAGE TYPE DEFINITIONS -->
         <enum name="MessageType" encodingType="uInt16NULL">
@@ -201,7 +185,7 @@
         <field name="exchangeID" id="2" type="ExchangeID"/>
         <field name="clientID" id="3" type="ClientID"/>
         <field name="clientOrderID" id="4" type="ClientOrderID"/>
-        <field name="symbolID" id="5" type="SymbolID"/>
+        <field name="exchangeSymbolID" id="5" type="SymbolID"/>
         <field name="orderType" id="6" type="OrderType"/>
         <field name="orderSide" id="7" type="OrderSide"/>
         <field name="timeInForce" id="8" type="OrderTimeInForce"/>
@@ -217,7 +201,7 @@
         <field name="clientID" id="3" type="ClientID"/>
         <field name="clientOrderID" id="4" type="ClientOrderID"/>
         <field name="exchangeOrderID" id="5" type="ExchangeOrderID"/>
-        <field name="symbolID" id="6" type="SymbolID"/>
+        <field name="exchangeSymbolID" id="6" type="SymbolID"/>
         <field name="orderType" id="7" type="OrderType"/>
         <field name="orderSide" id="8" type="OrderSide"/>
         <field name="timeInForce" id="9" type="OrderTimeInForce"/>
@@ -231,7 +215,7 @@
         <field name="messageType" id="1" type="MessageType"/>
         <field name="exchangeID" id="2" type="ExchangeID"/>
         <field name="clientID" id="3" type="ClientID"/>
-        <field name="clientOrderID" id="4" type="ClientO14rderID"/>
+        <field name="clientOrderID" id="4" type="ClientOrderID"/>
         <field name="exchangeOrderID" id="5" type="ExchangeOrderID"/>
     </sbe:message>
 

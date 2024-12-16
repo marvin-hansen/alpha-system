@@ -8,12 +8,21 @@ pub enum OrderSide {
 }
 
 impl From<OrderSide> for u8 {
+    #[inline]
     fn from(side: OrderSide) -> Self {
         side as u8
     }
 }
 
+impl From<&OrderSide> for u8 {
+    #[inline]
+    fn from(side: &OrderSide) -> Self {
+        side.to_owned() as u8
+    }
+}
+
 impl From<u8> for OrderSide {
+    #[inline]
     fn from(value: u8) -> Self {
         match value {
             0x1_u8 => Self::Buy,

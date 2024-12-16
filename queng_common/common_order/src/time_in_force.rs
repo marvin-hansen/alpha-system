@@ -19,6 +19,13 @@ impl From<TimeInForce> for u8 {
     }
 }
 
+impl From<&TimeInForce> for u8 {
+    #[inline]
+    fn from(value: &TimeInForce) -> Self {
+        value.to_owned() as u8
+    }
+}
+
 impl From<TimeInForce> for u16 {
     #[inline]
     fn from(value: TimeInForce) -> Self {

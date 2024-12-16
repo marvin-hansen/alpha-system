@@ -130,7 +130,7 @@ pub mod encoder {
             buf.put_bytes_at(offset, value);
         }
 
-        /// primitive array field 'symbolID'
+        /// primitive array field 'exchangeSymbolID'
         /// - min value: 32
         /// - max value: 126
         /// - null value: 0
@@ -140,31 +140,52 @@ pub mod encoder {
         /// - encodedLength: 20
         /// - version: 0
         #[inline]
-        pub fn symbol_id(&mut self, value: [u8; 20]) {
+        pub fn exchange_symbol_id(&mut self, value: [u8; 20]) {
             let offset = self.offset + 39;
             let buf = self.get_buf_mut();
             buf.put_bytes_at(offset, value);
         }
 
-        /// REQUIRED enum
+        /// primitive field 'orderType'
+        /// - min value: 0
+        /// - max value: 254
+        /// - null value: 255
+        /// - characterEncoding: null
+        /// - semanticType: null
+        /// - encodedOffset: 59
+        /// - encodedLength: 1
         #[inline]
-        pub fn order_type(&mut self, value: OrderType) {
+        pub fn order_type(&mut self, value: u8) {
             let offset = self.offset + 59;
-            self.get_buf_mut().put_u8_at(offset, value as u8)
+            self.get_buf_mut().put_u8_at(offset, value);
         }
 
-        /// REQUIRED enum
+        /// primitive field 'orderSide'
+        /// - min value: 0
+        /// - max value: 254
+        /// - null value: 255
+        /// - characterEncoding: null
+        /// - semanticType: null
+        /// - encodedOffset: 60
+        /// - encodedLength: 1
         #[inline]
-        pub fn order_side(&mut self, value: OrderSide) {
+        pub fn order_side(&mut self, value: u8) {
             let offset = self.offset + 60;
-            self.get_buf_mut().put_u8_at(offset, value as u8)
+            self.get_buf_mut().put_u8_at(offset, value);
         }
 
-        /// REQUIRED enum
+        /// primitive field 'timeInForce'
+        /// - min value: 0
+        /// - max value: 254
+        /// - null value: 255
+        /// - characterEncoding: null
+        /// - semanticType: null
+        /// - encodedOffset: 61
+        /// - encodedLength: 1
         #[inline]
-        pub fn time_in_force(&mut self, value: OrderTimeInForce) {
+        pub fn time_in_force(&mut self, value: u8) {
             let offset = self.offset + 61;
-            self.get_buf_mut().put_u8_at(offset, value as u8)
+            self.get_buf_mut().put_u8_at(offset, value);
         }
 
         /// COMPOSITE ENCODER
@@ -296,27 +317,27 @@ pub mod decoder {
         }
 
         #[inline]
-        pub fn symbol_id(&self) -> [u8; 20] {
+        pub fn exchange_symbol_id(&self) -> [u8; 20] {
             let buf = self.get_buf();
             ReadBuf::get_bytes_at(buf.data, self.offset + 39)
         }
 
-        /// REQUIRED enum
+        /// primitive field - 'REQUIRED'
         #[inline]
-        pub fn order_type(&self) -> OrderType {
-            self.get_buf().get_u8_at(self.offset + 59).into()
+        pub fn order_type(&self) -> u8 {
+            self.get_buf().get_u8_at(self.offset + 59)
         }
 
-        /// REQUIRED enum
+        /// primitive field - 'REQUIRED'
         #[inline]
-        pub fn order_side(&self) -> OrderSide {
-            self.get_buf().get_u8_at(self.offset + 60).into()
+        pub fn order_side(&self) -> u8 {
+            self.get_buf().get_u8_at(self.offset + 60)
         }
 
-        /// REQUIRED enum
+        /// primitive field - 'REQUIRED'
         #[inline]
-        pub fn time_in_force(&self) -> OrderTimeInForce {
-            self.get_buf().get_u8_at(self.offset + 61).into()
+        pub fn time_in_force(&self) -> u8 {
+            self.get_buf().get_u8_at(self.offset + 61)
         }
 
         /// COMPOSITE DECODER
