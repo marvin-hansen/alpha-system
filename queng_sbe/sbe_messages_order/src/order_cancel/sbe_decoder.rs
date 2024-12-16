@@ -4,6 +4,20 @@ use sbe_bindings::order_cancel_codec::SBE_TEMPLATE_ID;
 use sbe_bindings::{MessageHeaderDecoder, OrderCancelDecoder, ReadBuf};
 use sbe_types::{MessageType, SbeDecodeError};
 
+/// Decodes an SBE-encoded OrderCancel message back into its struct form.
+///
+/// # Arguments
+/// * `buffer` - A byte slice containing the encoded message
+///
+/// # Returns
+/// * `Result<OrderCancel, SbeDecodeError>` - Either:
+///   * The decoded OrderCancel struct containing order cancellation details
+///   * Or `SbeDecodeError` if decoding fails
+///
+/// # Details
+/// Validates message type, extracts and processes fields including exchange ID,
+/// client ID, client order ID, and exchange order ID. Handles UTF-8 string
+/// processing for order IDs.
 pub(crate) fn decode_order_cancel_message(buffer: &[u8]) -> Result<OrderCancel, SbeDecodeError> {
     let mut csg = OrderCancelDecoder::default();
     let buf = ReadBuf::new(buffer);

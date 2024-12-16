@@ -2,6 +2,20 @@ use common_order::OrderCancel;
 use sbe_bindings::{message_header_codec, Encoder, MessageType, OrderCancelEncoder, WriteBuf};
 use sbe_types::SbeEncodeError;
 
+/// Encodes an OrderCancel message into SBE (Simple Binary Encoding) format.
+///
+/// # Arguments
+/// * `msg` - An OrderCancel struct containing order cancellation details
+///
+/// # Returns
+/// * `Result<(usize, Vec<u8>), SbeEncodeError>` - A tuple containing:
+///   * `usize`: The size limit of the encoded message
+///   * `Vec<u8>`: The encoded message buffer as bytes
+///   * Or `SbeEncodeError` if encoding fails
+///
+/// # Details
+/// Encodes order details including exchange ID, client ID, client order ID,
+/// and exchange order ID into a fixed-size binary format using SBE.
 pub(crate) fn encode_order_cancel_message(
     msg: OrderCancel,
 ) -> Result<(usize, Vec<u8>), SbeEncodeError> {
