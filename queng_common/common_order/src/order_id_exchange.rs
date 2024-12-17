@@ -33,6 +33,12 @@ impl From<String> for ExchangeOrderID {
     }
 }
 
+impl From<&str> for ExchangeOrderID {
+    fn from(value: &str) -> Self {
+        Self::new(value.to_string())
+    }
+}
+
 impl From<ExchangeOrderID> for String {
     fn from(value: ExchangeOrderID) -> Self {
         value.exchange_order_id

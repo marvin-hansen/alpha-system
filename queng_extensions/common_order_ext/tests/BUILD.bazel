@@ -16,5 +16,6 @@ rust_test_suite(
         "//alias:common_order_ext",
         # Internal dependencies
         "//alias:common_order",
+        "//alias:encoding_utils",
     ],
 )

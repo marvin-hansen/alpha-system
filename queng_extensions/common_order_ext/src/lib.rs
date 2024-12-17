@@ -1,4 +1,6 @@
-pub(crate) mod client_order_id_ext;
+pub(crate) mod order_id_client_ext;
+pub(crate) mod order_id_exchange_ext;
 
-// Re-export client_order_id_ext
-pub use client_order_id_ext::*;
+// Re-exports
+pub use order_id_client_ext::*;
+pub use order_id_exchange_ext::*;
