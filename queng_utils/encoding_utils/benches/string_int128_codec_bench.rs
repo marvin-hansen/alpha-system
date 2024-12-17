@@ -1,5 +1,5 @@
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
-use encoding_utils::string_int128_codec::{decode_int128_to_str, encode_str_to_int128};
+use encoding_utils::{decode_int128_to_str, encode_str_to_int128};
 
 fn bench_encode_str_to_int128(c: &mut Criterion) {
     let mut group = c.benchmark_group("int128_encode");
