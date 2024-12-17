@@ -1,30 +1,41 @@
 use std::error::Error;
+use std::fmt;
 
+/// Represents errors that can occur during binary encoding operations.
+///
+/// This error type is used when converting strings to their binary representations
+/// fails due to invalid input characters, length constraints, or other encoding-related issues.
 #[derive(Debug, Clone)]
-pub struct BinaryEncodingError(pub String);
+pub struct BinaryEncodingError {
+    message: String,
+}
 
 impl BinaryEncodingError {
-    pub fn new(field0: String) -> Self {
-        Self(field0)
+    /// Creates a new BinaryEncodingError with the specified error message.
+    ///
+    /// # Arguments
+    /// * `message` - A description of what caused the encoding error
+    pub fn new(message: String) -> Self {
+        BinaryEncodingError { message }
     }
 }
 
-impl From<&str> for BinaryEncodingError {
-    fn from(value: &str) -> Self {
-        Self(value.to_string())
-    }
-}
-
-impl From<String> for BinaryEncodingError {
-    fn from(value: String) -> Self {
-        Self(value.to_string())
-    }
-}
-
-impl std::fmt::Display for BinaryEncodingError {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        write!(f, "BinaryEncodingError: {}", self.0)
+impl fmt::Display for BinaryEncodingError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "Binary encoding error: {}", self.message)
     }
 }
 
 impl Error for BinaryEncodingError {}
+
+impl From<&str> for BinaryEncodingError {
+    fn from(message: &str) -> Self {
+        BinaryEncodingError::new(message.to_string())
+    }
+}
+
+impl From<String> for BinaryEncodingError {
+    fn from(message: String) -> Self {
+        BinaryEncodingError::new(message)
+    }
+}

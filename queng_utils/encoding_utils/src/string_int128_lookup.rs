@@ -1,9 +1,38 @@
 const MAX_U128_CHARS: u64 = 64;
+
+/// Converts a byte character to its corresponding u64 value in the encoding scheme.
+///
+/// The encoding scheme maps:
+/// - Digits (0-9) to values 53-62
+/// - Uppercase letters (A-Z) to values 1-26
+/// - Lowercase letters (a-z) to values 27-52
+/// - Underscore (_) to value 63
+/// - Invalid characters to 0
+///
+/// # Arguments
+/// * `x` - The byte character to convert
+///
+/// # Returns
+/// The encoded u64 value, or 0 if the character is invalid
 #[inline(always)]
 pub fn lookup_u64(x: u8) -> u64 {
     LOOKUP_INT64.data[x as usize]
 }
 
+/// Converts an encoded u64 value back to its corresponding character.
+///
+/// The decoding scheme maps:
+/// - Values 53-62 to digits (0-9)
+/// - Values 1-26 to uppercase letters (A-Z)
+/// - Values 27-52 to lowercase letters (a-z)
+/// - Value 63 to underscore (_)
+/// - Invalid values to '\0'
+///
+/// # Arguments
+/// * `x` - The encoded value to convert
+///
+/// # Returns
+/// The decoded character, or '\0' if the value is invalid
 #[inline(always)]
 pub fn lookup_char(x: u64) -> char {
     LOOKUP_STR.data[x as usize]

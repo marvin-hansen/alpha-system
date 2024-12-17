@@ -8,7 +8,27 @@ const CHARS_PER_U64: usize = 10;
 const VALID_BITS_MASK: u64 = (1u64 << (BITS_PER_CHAR * CHARS_PER_U64)) - 1;
 const CHAR_MASK: u64 = (1u64 << BITS_PER_CHAR) - 1;
 
-/// Encodes up to 20 alphanumeric characters (plus underscore) into a pair of `u64` integers.
+/// Encodes a string into a pair of u64 integers using a space-efficient encoding scheme.
+///
+/// The encoding supports alphanumeric characters (A-Z, a-z, 0-9) and underscore (_).
+/// Each character is encoded into 6 bits, allowing for a maximum of 20 characters
+/// (10 characters per u64). This encoding scheme is particularly useful when you need
+/// to store strings in fixed-size integer fields while maintaining good performance.
+///
+/// # Arguments
+/// * `input` - The string to encode (max 20 characters)
+///
+/// # Returns
+/// * `Ok((u64, u64))` - A tuple containing the two encoded values
+/// * `Err(BinaryEncodingError)` - If the input is too long or contains invalid characters
+///
+/// # Example
+/// ```
+/// use encoding_utils::encode_str_to_pair_u64;
+///
+/// let result = encode_str_to_pair_u64("Hello_World123").unwrap();
+/// assert!(result.0 > 0 || result.1 > 0);
+/// ```
 #[inline(always)]
 pub fn encode_str_to_pair_u64(input: &str) -> Result<(u64, u64), BinaryEncodingError> {
     let len = input.len();
@@ -57,7 +77,29 @@ pub fn encode_str_to_pair_u64(input: &str) -> Result<(u64, u64), BinaryEncodingE
     Ok((first, second))
 }
 
-/// Decodes a pair of `u64` integers back into the original string.
+/// Decodes a pair of u64 integers back into the original string.
+///
+/// This function reverses the encoding performed by `encode_str_to_pair_u64`.
+/// It extracts 6 bits at a time from each u64 value and converts them back
+/// to their corresponding characters. The first u64 contains the first 10
+/// characters, and the second u64 contains the remaining characters.
+///
+/// # Arguments
+/// * `encoded` - A tuple containing the two u64 values to decode
+///
+/// # Returns
+/// * `Ok(String)` - The decoded string
+/// * `Err(BinaryDecodingError)` - If the input contains invalid encoded values
+///
+/// # Example
+/// ```
+/// use encoding_utils::{encode_str_to_pair_u64, decode_pair_64_to_str};
+///
+/// let original = "Hello_World123";
+/// let encoded = encode_str_to_pair_u64(original).unwrap();
+/// let decoded = decode_pair_64_to_str(encoded).unwrap();
+/// assert_eq!(original, decoded);
+/// ```
 #[inline(always)]
 pub fn decode_pair_64_to_str(encoded: (u64, u64)) -> Result<String, BinaryDecodingError> {
     let (first, second) = encoded;
