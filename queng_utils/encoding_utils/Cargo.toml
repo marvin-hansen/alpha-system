@@ -18,7 +18,15 @@ workspace = true
 criterion = { version = "0.5", features = ["html_reports"] }
 
 [[bench]]
+name = "string_int128_encoding_bench"
+harness = false
+
+[[bench]]
 name = "encoding_benchmark"
+harness = false
+
+[[bench]]
+name = "string_int64_pair_encoding_bench"
 harness = false
 
 [[example]]

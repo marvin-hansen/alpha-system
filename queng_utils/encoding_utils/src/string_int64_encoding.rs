@@ -5,7 +5,7 @@ const CHAR_MASK: u64 = (1 << BITS_PER_CHAR) - 1;
 const MAX_ENCODED_LENGTH: usize = 10; // Maximum safe length for u64 (64 bits / 6 bits per char = 10 chars)
 
 #[inline(always)]
-pub fn str_to_int64(s: &str) -> Option<u64> {
+pub fn encode_str_to_int64(s: &str) -> Option<u64> {
     if s.is_empty() {
         return Some(0);
     }
@@ -46,7 +46,7 @@ pub fn str_to_int64(s: &str) -> Option<u64> {
 }
 
 #[inline(always)]
-pub fn int64_to_str(n: u64) -> Option<String> {
+pub fn decode_int64_to_str(n: u64) -> Option<String> {
     if n == 0 {
         return Some(String::new());
     }
