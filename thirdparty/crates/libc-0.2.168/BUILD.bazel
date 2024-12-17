@@ -48,23 +48,11 @@ rust_library(
         "@rules_rust//rust/platform:aarch64-unknown-fuchsia": [
             "extra_traits",  # aarch64-unknown-fuchsia
         ],
-        "@rules_rust//rust/platform:aarch64-unknown-linux-gnu": [
-            "extra_traits",  # aarch64-unknown-linux-gnu
-        ],
-        "@rules_rust//rust/platform:aarch64-unknown-nixos-gnu": [
-            "extra_traits",  # aarch64-unknown-linux-gnu, aarch64-unknown-nixos-gnu
-        ],
         "@rules_rust//rust/platform:aarch64-unknown-nto-qnx710": [
             "extra_traits",  # aarch64-unknown-nto-qnx710
         ],
-        "@rules_rust//rust/platform:arm-unknown-linux-gnueabi": [
-            "extra_traits",  # arm-unknown-linux-gnueabi
-        ],
         "@rules_rust//rust/platform:armv7-linux-androideabi": [
             "extra_traits",  # armv7-linux-androideabi
-        ],
-        "@rules_rust//rust/platform:armv7-unknown-linux-gnueabi": [
-            "extra_traits",  # armv7-unknown-linux-gnueabi
         ],
         "@rules_rust//rust/platform:i686-apple-darwin": [
             "extra_traits",  # i686-apple-darwin
@@ -74,9 +62,6 @@ rust_library(
         ],
         "@rules_rust//rust/platform:i686-unknown-freebsd": [
             "extra_traits",  # i686-unknown-freebsd
-        ],
-        "@rules_rust//rust/platform:i686-unknown-linux-gnu": [
-            "extra_traits",  # i686-unknown-linux-gnu
         ],
         "@rules_rust//rust/platform:powerpc-unknown-linux-gnu": [
             "extra_traits",  # powerpc-unknown-linux-gnu
@@ -104,12 +89,6 @@ rust_library(
         ],
         "@rules_rust//rust/platform:x86_64-unknown-fuchsia": [
             "extra_traits",  # x86_64-unknown-fuchsia
-        ],
-        "@rules_rust//rust/platform:x86_64-unknown-linux-gnu": [
-            "extra_traits",  # x86_64-unknown-linux-gnu
-        ],
-        "@rules_rust//rust/platform:x86_64-unknown-nixos-gnu": [
-            "extra_traits",  # x86_64-unknown-linux-gnu, x86_64-unknown-nixos-gnu
         ],
         "//conditions:default": [],
     }),
@@ -207,23 +186,11 @@ cargo_build_script(
         "@rules_rust//rust/platform:aarch64-unknown-fuchsia": [
             "extra_traits",  # aarch64-unknown-fuchsia
         ],
-        "@rules_rust//rust/platform:aarch64-unknown-linux-gnu": [
-            "extra_traits",  # aarch64-unknown-linux-gnu
-        ],
-        "@rules_rust//rust/platform:aarch64-unknown-nixos-gnu": [
-            "extra_traits",  # aarch64-unknown-linux-gnu, aarch64-unknown-nixos-gnu
-        ],
         "@rules_rust//rust/platform:aarch64-unknown-nto-qnx710": [
             "extra_traits",  # aarch64-unknown-nto-qnx710
         ],
-        "@rules_rust//rust/platform:arm-unknown-linux-gnueabi": [
-            "extra_traits",  # arm-unknown-linux-gnueabi
-        ],
         "@rules_rust//rust/platform:armv7-linux-androideabi": [
             "extra_traits",  # armv7-linux-androideabi
-        ],
-        "@rules_rust//rust/platform:armv7-unknown-linux-gnueabi": [
-            "extra_traits",  # armv7-unknown-linux-gnueabi
         ],
         "@rules_rust//rust/platform:i686-apple-darwin": [
             "extra_traits",  # i686-apple-darwin
@@ -233,9 +200,6 @@ cargo_build_script(
         ],
         "@rules_rust//rust/platform:i686-unknown-freebsd": [
             "extra_traits",  # i686-unknown-freebsd
-        ],
-        "@rules_rust//rust/platform:i686-unknown-linux-gnu": [
-            "extra_traits",  # i686-unknown-linux-gnu
         ],
         "@rules_rust//rust/platform:powerpc-unknown-linux-gnu": [
             "extra_traits",  # powerpc-unknown-linux-gnu
@@ -263,12 +227,6 @@ cargo_build_script(
         ],
         "@rules_rust//rust/platform:x86_64-unknown-fuchsia": [
             "extra_traits",  # x86_64-unknown-fuchsia
-        ],
-        "@rules_rust//rust/platform:x86_64-unknown-linux-gnu": [
-            "extra_traits",  # x86_64-unknown-linux-gnu
-        ],
-        "@rules_rust//rust/platform:x86_64-unknown-nixos-gnu": [
-            "extra_traits",  # x86_64-unknown-linux-gnu, x86_64-unknown-nixos-gnu
         ],
         "//conditions:default": [],
     }),

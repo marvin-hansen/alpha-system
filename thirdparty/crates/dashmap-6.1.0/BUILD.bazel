@@ -81,7 +81,7 @@ rust_library(
     version = "6.1.0",
     deps = [
         "//thirdparty/crates/cfg-if-1.0.0:cfg_if",
-        "//thirdparty/crates/crossbeam-utils-0.8.20:crossbeam_utils",
+        "//thirdparty/crates/crossbeam-utils-0.8.21:crossbeam_utils",
         "//thirdparty/crates/hashbrown-0.14.5:hashbrown",
         "//thirdparty/crates/lock_api-0.4.12:lock_api",
         "//thirdparty/crates/once_cell-1.20.2:once_cell",

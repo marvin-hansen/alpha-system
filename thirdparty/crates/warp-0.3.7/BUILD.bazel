@@ -92,7 +92,7 @@ rust_library(
         "//thirdparty/crates/futures-util-0.3.31:futures_util",
         "//thirdparty/crates/headers-0.3.9:headers",
         "//thirdparty/crates/http-0.2.12:http",
-        "//thirdparty/crates/hyper-0.14.31:hyper",
+        "//thirdparty/crates/hyper-0.14.32:hyper",
         "//thirdparty/crates/log-0.4.22:log",
         "//thirdparty/crates/mime-0.3.17:mime",
         "//thirdparty/crates/mime_guess-2.0.5:mime_guess",

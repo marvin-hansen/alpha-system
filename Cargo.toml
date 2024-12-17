@@ -179,16 +179,7 @@ sbe_messages_order = { path = "queng_sbe/sbe_messages_order" }
 sbe_types = { path = "queng_sbe/sbe_types" }
 sbe_utils = { path = "queng_sbe/sbe_utils" }
 
-# Services
-# Core
-cmdb = { path = "queng_services/core/cmdb" }
-dbgw = { path = "queng_services/core/dbgw" }
-smdb = { path = "queng_services/core/smdb" }
-# IMS
-imdb = { path = "queng_services/ims/imdb/imdb_service" }
-binance_data = { path = "queng_services/ims_data/binance/binance_data" }
 # MDS
-mddb = { path = "queng_services/mds/mddb" }
 kaiko_client = { path = "queng_services/mds/kaiko/kaiko_client" }
 kaiko_proxy = { path = "queng_services/mds/kaiko/kaiko_proxy" }
 # Non-Bazel targets since CloudFlare workers are build with Wrangler
@@ -235,45 +226,38 @@ wait_utils = { path = "queng_utils/wait_utils" }
 # External crates
 # ==============
 #
-ahash = { version = "0.8.11", features = ["serde"] }
-anyhow = { version = "1.0.89" }
-barter-data = {version = "0.9.0"}
-base16ct = { version = "0.2.0", default-features = false, features = ["alloc"] }
-base64ct = { version = "1.6.0", default-features = false, features = ["alloc"] }
-binance-rs-async = { version = "1.3.3", default-features = false, features = ["rustls-tls"] }
+ahash = { version = "0.8", features = ["serde"] }
+anyhow = { version = "1.0" }
+base16ct = { version = "0.2", default-features = false, features = ["alloc"] }
 blake3 = { version = "1.5.4", default-features = false }
 bytes = {version = "1.8.0"}
 chrono = { version = "0.4.38", features = ["serde"] }
-crossbeam = {version = "0.8.4"}
-config-file = { version = "0.2.3" }
-ctrlc = { version = "3.4.5" }
-diesel = { version = "2.2.4", default-features = false, features = ["postgres", "pq-src", "r2d2"] }
+crossbeam = {version = "0.8"}
+diesel = { version = "2.2", default-features = false, features = ["postgres", "pq-src", "r2d2"] }
 diesel_migrations = { version = "2.2.0", default-features = false, features = ["postgres"] }
 enum_dispatch = {version = "0.3.13"}
 futures = { version = "0.3.31" }
 futures-util = {version = "0.3.31"}
 hickory-resolver = { version = "0.24.1", default-features = false, features = ["tokio-runtime"] }
-iggy = { version = "0.6.40" }
+iggy = { version = "0.6.51" }
 klickhouse = { version = "0.13.2" }
-lazy_static = { version = "1.4.0" }
 lru = { version = "0.12.4" }
 mimalloc = { version = "0.1.43" }
-prost = { version = "0.13.3" }
-prost-types = { version = "0.13.3", default-features = false }
-reqwest = { version = "0.12.9", default-features = false, features = ["rustls-tls", "json", "blocking", "gzip"] }
-rust_decimal = { version = "1.36.0" }
-rust_decimal_macros = { version = "1.36.0" }
-rustls = { version = "0.23.17", features = ["ring"] }
-serde = { version = "1.0.215", features = ["derive"] }
-serde_json = { version = "1.0.133" }
+prost = { version = "0.13" }
+reqwest = { version = "0.12", default-features = false, features = ["rustls-tls", "json", "blocking", "gzip"] }
+rust_decimal = { version = "1.36" }
+rust_decimal_macros = { version = "1.36" }
+rustls = { version = "0.23", features = ["ring"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = { version = "1.0" }
 sha3 = { version = "0.11.0-pre.4", default-features = false }
-trait-variant = {version = "0.1.2"}
-tokio = { version = "1.40.0", default-features = false, features = ["macros", "net", "rt-multi-thread", "signal", "time"] }
-tokio-tungstenite = { version = "0.24.0", features = ["rustls-tls-webpki-roots"]}
-tonic = { version = "0.12.3", features = ["transport"] }
-tonic-build = { version = "0.12.3" }
-tonic-health = { version = "0.12.3", default-features = false, features = ["transport"] }
-warp = "0.3.7"
+trait-variant = {version = "0.1"}
+tokio = { version = "1.42", default-features = false, features = ["macros", "net", "rt-multi-thread", "signal", "time"] }
+tokio-tungstenite = { version = "0.25", features = ["rustls-tls-webpki-roots"]}
+tonic = { version = "0.12", features = ["transport"] }
+tonic-build = { version = "0.12" }
+tonic-health = { version = "0.12", default-features = false, features = ["transport"] }
+warp = "0.3"
 # Depdendencies for cloudflare workers that are not build with Bazel
 console_error_panic_hook = { version = "0.1.1" }
 worker = { version = "0.5.0", default-features = false }

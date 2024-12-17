@@ -18,7 +18,7 @@ rust_library(
         allow_empty = False,
     ),
     aliases = {
-        "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types": "pki_types",
+        "//thirdparty/crates/rustls-pki-types-1.10.1:rustls_pki_types": "pki_types",
     },
     compile_data = glob(
         include = ["**"],
@@ -98,7 +98,7 @@ rust_library(
         "//thirdparty/crates/once_cell-1.20.2:once_cell",
         "//thirdparty/crates/ring-0.17.8:ring",
         "//thirdparty/crates/rustls-0.23.20:build_script_build",
-        "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",
+        "//thirdparty/crates/rustls-pki-types-1.10.1:rustls_pki_types",
         "//thirdparty/crates/rustls-webpki-0.102.8:webpki",
         "//thirdparty/crates/subtle-2.6.1:subtle",
         "//thirdparty/crates/zeroize-1.8.1:zeroize",

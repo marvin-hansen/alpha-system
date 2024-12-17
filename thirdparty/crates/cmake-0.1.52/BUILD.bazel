@@ -80,6 +80,6 @@ rust_library(
     }),
     version = "0.1.52",
     deps = [
-        "//thirdparty/crates/cc-1.2.3:cc",
+        "//thirdparty/crates/cc-1.2.4:cc",
     ],
 )

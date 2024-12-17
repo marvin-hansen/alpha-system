@@ -100,7 +100,7 @@ rust_library(
         "//thirdparty/crates/http-1.2.0:http",
         "//thirdparty/crates/http-body-1.0.1:http_body",
         "//thirdparty/crates/http-body-util-0.1.2:http_body_util",
-        "//thirdparty/crates/hyper-1.5.1:hyper",
+        "//thirdparty/crates/hyper-1.5.2:hyper",
         "//thirdparty/crates/hyper-timeout-0.5.2:hyper_timeout",
         "//thirdparty/crates/hyper-util-0.1.10:hyper_util",
         "//thirdparty/crates/percent-encoding-2.3.1:percent_encoding",

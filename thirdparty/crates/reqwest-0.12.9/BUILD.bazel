@@ -108,7 +108,7 @@ rust_library(
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # aarch64-apple-darwin
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/hyper-1.5.1:hyper",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/hyper-1.5.2:hyper",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/hyper-rustls-0.27.3:hyper_rustls",  # aarch64-apple-darwin
             "//thirdparty/crates/hyper-util-0.1.10:hyper_util",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/ipnet-2.10.1:ipnet",  # cfg(not(target_arch = "wasm32"))
@@ -119,7 +119,7 @@ rust_library(
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/rustls-0.23.20:rustls",  # aarch64-apple-darwin
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # aarch64-apple-darwin
-            "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # aarch64-apple-darwin
+            "//thirdparty/crates/rustls-pki-types-1.10.1:rustls_pki_types",  # aarch64-apple-darwin
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/tokio-rustls-0.26.1:tokio_rustls",  # aarch64-apple-darwin
             "//thirdparty/crates/tokio-util-0.7.13:tokio_util",  # aarch64-apple-darwin
@@ -130,7 +130,7 @@ rust_library(
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # aarch64-apple-ios
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/hyper-1.5.1:hyper",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/hyper-1.5.2:hyper",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/hyper-rustls-0.27.3:hyper_rustls",  # aarch64-apple-ios
             "//thirdparty/crates/hyper-util-0.1.10:hyper_util",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/ipnet-2.10.1:ipnet",  # cfg(not(target_arch = "wasm32"))
@@ -141,7 +141,7 @@ rust_library(
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/rustls-0.23.20:rustls",  # aarch64-apple-ios
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # aarch64-apple-ios
-            "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # aarch64-apple-ios
+            "//thirdparty/crates/rustls-pki-types-1.10.1:rustls_pki_types",  # aarch64-apple-ios
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/tokio-rustls-0.26.1:tokio_rustls",  # aarch64-apple-ios
             "//thirdparty/crates/tokio-util-0.7.13:tokio_util",  # aarch64-apple-ios
@@ -152,7 +152,7 @@ rust_library(
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # aarch64-apple-ios-sim
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/hyper-1.5.1:hyper",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/hyper-1.5.2:hyper",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/hyper-rustls-0.27.3:hyper_rustls",  # aarch64-apple-ios-sim
             "//thirdparty/crates/hyper-util-0.1.10:hyper_util",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/ipnet-2.10.1:ipnet",  # cfg(not(target_arch = "wasm32"))
@@ -163,7 +163,7 @@ rust_library(
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/rustls-0.23.20:rustls",  # aarch64-apple-ios-sim
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # aarch64-apple-ios-sim
-            "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # aarch64-apple-ios-sim
+            "//thirdparty/crates/rustls-pki-types-1.10.1:rustls_pki_types",  # aarch64-apple-ios-sim
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/tokio-rustls-0.26.1:tokio_rustls",  # aarch64-apple-ios-sim
             "//thirdparty/crates/tokio-util-0.7.13:tokio_util",  # aarch64-apple-ios-sim
@@ -174,7 +174,7 @@ rust_library(
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # aarch64-linux-android
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/hyper-1.5.1:hyper",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/hyper-1.5.2:hyper",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/hyper-rustls-0.27.3:hyper_rustls",  # aarch64-linux-android
             "//thirdparty/crates/hyper-util-0.1.10:hyper_util",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/ipnet-2.10.1:ipnet",  # cfg(not(target_arch = "wasm32"))
@@ -185,7 +185,7 @@ rust_library(
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/rustls-0.23.20:rustls",  # aarch64-linux-android
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # aarch64-linux-android
-            "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # aarch64-linux-android
+            "//thirdparty/crates/rustls-pki-types-1.10.1:rustls_pki_types",  # aarch64-linux-android
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/tokio-rustls-0.26.1:tokio_rustls",  # aarch64-linux-android
             "//thirdparty/crates/tokio-util-0.7.13:tokio_util",  # aarch64-linux-android
@@ -196,7 +196,7 @@ rust_library(
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # aarch64-pc-windows-msvc
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/hyper-1.5.1:hyper",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/hyper-1.5.2:hyper",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/hyper-rustls-0.27.3:hyper_rustls",  # aarch64-pc-windows-msvc
             "//thirdparty/crates/hyper-util-0.1.10:hyper_util",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/ipnet-2.10.1:ipnet",  # cfg(not(target_arch = "wasm32"))
@@ -207,7 +207,7 @@ rust_library(
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/rustls-0.23.20:rustls",  # aarch64-pc-windows-msvc
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # aarch64-pc-windows-msvc
-            "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # aarch64-pc-windows-msvc
+            "//thirdparty/crates/rustls-pki-types-1.10.1:rustls_pki_types",  # aarch64-pc-windows-msvc
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/tokio-rustls-0.26.1:tokio_rustls",  # aarch64-pc-windows-msvc
             "//thirdparty/crates/tokio-util-0.7.13:tokio_util",  # aarch64-pc-windows-msvc
@@ -219,7 +219,7 @@ rust_library(
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # aarch64-unknown-fuchsia
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/hyper-1.5.1:hyper",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/hyper-1.5.2:hyper",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/hyper-rustls-0.27.3:hyper_rustls",  # aarch64-unknown-fuchsia
             "//thirdparty/crates/hyper-util-0.1.10:hyper_util",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/ipnet-2.10.1:ipnet",  # cfg(not(target_arch = "wasm32"))
@@ -230,7 +230,7 @@ rust_library(
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/rustls-0.23.20:rustls",  # aarch64-unknown-fuchsia
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # aarch64-unknown-fuchsia
-            "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # aarch64-unknown-fuchsia
+            "//thirdparty/crates/rustls-pki-types-1.10.1:rustls_pki_types",  # aarch64-unknown-fuchsia
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/tokio-rustls-0.26.1:tokio_rustls",  # aarch64-unknown-fuchsia
             "//thirdparty/crates/tokio-util-0.7.13:tokio_util",  # aarch64-unknown-fuchsia
@@ -241,7 +241,7 @@ rust_library(
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # aarch64-unknown-linux-gnu
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/hyper-1.5.1:hyper",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/hyper-1.5.2:hyper",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/hyper-rustls-0.27.3:hyper_rustls",  # aarch64-unknown-linux-gnu
             "//thirdparty/crates/hyper-util-0.1.10:hyper_util",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/ipnet-2.10.1:ipnet",  # cfg(not(target_arch = "wasm32"))
@@ -252,7 +252,7 @@ rust_library(
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/rustls-0.23.20:rustls",  # aarch64-unknown-linux-gnu
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # aarch64-unknown-linux-gnu
-            "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # aarch64-unknown-linux-gnu
+            "//thirdparty/crates/rustls-pki-types-1.10.1:rustls_pki_types",  # aarch64-unknown-linux-gnu
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/tokio-rustls-0.26.1:tokio_rustls",  # aarch64-unknown-linux-gnu
             "//thirdparty/crates/tokio-util-0.7.13:tokio_util",  # aarch64-unknown-linux-gnu
@@ -263,7 +263,7 @@ rust_library(
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # aarch64-unknown-linux-gnu, aarch64-unknown-nixos-gnu
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/hyper-1.5.1:hyper",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/hyper-1.5.2:hyper",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/hyper-rustls-0.27.3:hyper_rustls",  # aarch64-unknown-linux-gnu, aarch64-unknown-nixos-gnu
             "//thirdparty/crates/hyper-util-0.1.10:hyper_util",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/ipnet-2.10.1:ipnet",  # cfg(not(target_arch = "wasm32"))
@@ -274,7 +274,7 @@ rust_library(
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/rustls-0.23.20:rustls",  # aarch64-unknown-linux-gnu, aarch64-unknown-nixos-gnu
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # aarch64-unknown-linux-gnu, aarch64-unknown-nixos-gnu
-            "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # aarch64-unknown-linux-gnu, aarch64-unknown-nixos-gnu
+            "//thirdparty/crates/rustls-pki-types-1.10.1:rustls_pki_types",  # aarch64-unknown-linux-gnu, aarch64-unknown-nixos-gnu
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/tokio-rustls-0.26.1:tokio_rustls",  # aarch64-unknown-linux-gnu, aarch64-unknown-nixos-gnu
             "//thirdparty/crates/tokio-util-0.7.13:tokio_util",  # aarch64-unknown-linux-gnu, aarch64-unknown-nixos-gnu
@@ -285,7 +285,7 @@ rust_library(
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # aarch64-unknown-nto-qnx710
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/hyper-1.5.1:hyper",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/hyper-1.5.2:hyper",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/hyper-rustls-0.27.3:hyper_rustls",  # aarch64-unknown-nto-qnx710
             "//thirdparty/crates/hyper-util-0.1.10:hyper_util",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/ipnet-2.10.1:ipnet",  # cfg(not(target_arch = "wasm32"))
@@ -296,7 +296,7 @@ rust_library(
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/rustls-0.23.20:rustls",  # aarch64-unknown-nto-qnx710
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # aarch64-unknown-nto-qnx710
-            "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # aarch64-unknown-nto-qnx710
+            "//thirdparty/crates/rustls-pki-types-1.10.1:rustls_pki_types",  # aarch64-unknown-nto-qnx710
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/tokio-rustls-0.26.1:tokio_rustls",  # aarch64-unknown-nto-qnx710
             "//thirdparty/crates/tokio-util-0.7.13:tokio_util",  # aarch64-unknown-nto-qnx710
@@ -307,7 +307,7 @@ rust_library(
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # arm-unknown-linux-gnueabi
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/hyper-1.5.1:hyper",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/hyper-1.5.2:hyper",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/hyper-rustls-0.27.3:hyper_rustls",  # arm-unknown-linux-gnueabi
             "//thirdparty/crates/hyper-util-0.1.10:hyper_util",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/ipnet-2.10.1:ipnet",  # cfg(not(target_arch = "wasm32"))
@@ -318,7 +318,7 @@ rust_library(
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/rustls-0.23.20:rustls",  # arm-unknown-linux-gnueabi
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # arm-unknown-linux-gnueabi
-            "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # arm-unknown-linux-gnueabi
+            "//thirdparty/crates/rustls-pki-types-1.10.1:rustls_pki_types",  # arm-unknown-linux-gnueabi
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/tokio-rustls-0.26.1:tokio_rustls",  # arm-unknown-linux-gnueabi
             "//thirdparty/crates/tokio-util-0.7.13:tokio_util",  # arm-unknown-linux-gnueabi
@@ -329,7 +329,7 @@ rust_library(
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # armv7-linux-androideabi
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/hyper-1.5.1:hyper",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/hyper-1.5.2:hyper",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/hyper-rustls-0.27.3:hyper_rustls",  # armv7-linux-androideabi
             "//thirdparty/crates/hyper-util-0.1.10:hyper_util",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/ipnet-2.10.1:ipnet",  # cfg(not(target_arch = "wasm32"))
@@ -340,7 +340,7 @@ rust_library(
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/rustls-0.23.20:rustls",  # armv7-linux-androideabi
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # armv7-linux-androideabi
-            "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # armv7-linux-androideabi
+            "//thirdparty/crates/rustls-pki-types-1.10.1:rustls_pki_types",  # armv7-linux-androideabi
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/tokio-rustls-0.26.1:tokio_rustls",  # armv7-linux-androideabi
             "//thirdparty/crates/tokio-util-0.7.13:tokio_util",  # armv7-linux-androideabi
@@ -351,7 +351,7 @@ rust_library(
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # armv7-unknown-linux-gnueabi
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/hyper-1.5.1:hyper",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/hyper-1.5.2:hyper",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/hyper-rustls-0.27.3:hyper_rustls",  # armv7-unknown-linux-gnueabi
             "//thirdparty/crates/hyper-util-0.1.10:hyper_util",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/ipnet-2.10.1:ipnet",  # cfg(not(target_arch = "wasm32"))
@@ -362,7 +362,7 @@ rust_library(
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/rustls-0.23.20:rustls",  # armv7-unknown-linux-gnueabi
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # armv7-unknown-linux-gnueabi
-            "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # armv7-unknown-linux-gnueabi
+            "//thirdparty/crates/rustls-pki-types-1.10.1:rustls_pki_types",  # armv7-unknown-linux-gnueabi
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/tokio-rustls-0.26.1:tokio_rustls",  # armv7-unknown-linux-gnueabi
             "//thirdparty/crates/tokio-util-0.7.13:tokio_util",  # armv7-unknown-linux-gnueabi
@@ -373,7 +373,7 @@ rust_library(
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # i686-apple-darwin
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/hyper-1.5.1:hyper",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/hyper-1.5.2:hyper",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/hyper-rustls-0.27.3:hyper_rustls",  # i686-apple-darwin
             "//thirdparty/crates/hyper-util-0.1.10:hyper_util",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/ipnet-2.10.1:ipnet",  # cfg(not(target_arch = "wasm32"))
@@ -384,7 +384,7 @@ rust_library(
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/rustls-0.23.20:rustls",  # i686-apple-darwin
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # i686-apple-darwin
-            "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # i686-apple-darwin
+            "//thirdparty/crates/rustls-pki-types-1.10.1:rustls_pki_types",  # i686-apple-darwin
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/tokio-rustls-0.26.1:tokio_rustls",  # i686-apple-darwin
             "//thirdparty/crates/tokio-util-0.7.13:tokio_util",  # i686-apple-darwin
@@ -395,7 +395,7 @@ rust_library(
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # i686-linux-android
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/hyper-1.5.1:hyper",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/hyper-1.5.2:hyper",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/hyper-rustls-0.27.3:hyper_rustls",  # i686-linux-android
             "//thirdparty/crates/hyper-util-0.1.10:hyper_util",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/ipnet-2.10.1:ipnet",  # cfg(not(target_arch = "wasm32"))
@@ -406,7 +406,7 @@ rust_library(
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/rustls-0.23.20:rustls",  # i686-linux-android
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # i686-linux-android
-            "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # i686-linux-android
+            "//thirdparty/crates/rustls-pki-types-1.10.1:rustls_pki_types",  # i686-linux-android
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/tokio-rustls-0.26.1:tokio_rustls",  # i686-linux-android
             "//thirdparty/crates/tokio-util-0.7.13:tokio_util",  # i686-linux-android
@@ -417,7 +417,7 @@ rust_library(
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # i686-pc-windows-msvc
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/hyper-1.5.1:hyper",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/hyper-1.5.2:hyper",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/hyper-rustls-0.27.3:hyper_rustls",  # i686-pc-windows-msvc
             "//thirdparty/crates/hyper-util-0.1.10:hyper_util",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/ipnet-2.10.1:ipnet",  # cfg(not(target_arch = "wasm32"))
@@ -428,7 +428,7 @@ rust_library(
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/rustls-0.23.20:rustls",  # i686-pc-windows-msvc
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # i686-pc-windows-msvc
-            "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # i686-pc-windows-msvc
+            "//thirdparty/crates/rustls-pki-types-1.10.1:rustls_pki_types",  # i686-pc-windows-msvc
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/tokio-rustls-0.26.1:tokio_rustls",  # i686-pc-windows-msvc
             "//thirdparty/crates/tokio-util-0.7.13:tokio_util",  # i686-pc-windows-msvc
@@ -440,7 +440,7 @@ rust_library(
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # i686-unknown-freebsd
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/hyper-1.5.1:hyper",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/hyper-1.5.2:hyper",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/hyper-rustls-0.27.3:hyper_rustls",  # i686-unknown-freebsd
             "//thirdparty/crates/hyper-util-0.1.10:hyper_util",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/ipnet-2.10.1:ipnet",  # cfg(not(target_arch = "wasm32"))
@@ -451,7 +451,7 @@ rust_library(
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/rustls-0.23.20:rustls",  # i686-unknown-freebsd
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # i686-unknown-freebsd
-            "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # i686-unknown-freebsd
+            "//thirdparty/crates/rustls-pki-types-1.10.1:rustls_pki_types",  # i686-unknown-freebsd
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/tokio-rustls-0.26.1:tokio_rustls",  # i686-unknown-freebsd
             "//thirdparty/crates/tokio-util-0.7.13:tokio_util",  # i686-unknown-freebsd
@@ -462,7 +462,7 @@ rust_library(
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # i686-unknown-linux-gnu
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/hyper-1.5.1:hyper",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/hyper-1.5.2:hyper",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/hyper-rustls-0.27.3:hyper_rustls",  # i686-unknown-linux-gnu
             "//thirdparty/crates/hyper-util-0.1.10:hyper_util",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/ipnet-2.10.1:ipnet",  # cfg(not(target_arch = "wasm32"))
@@ -473,7 +473,7 @@ rust_library(
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/rustls-0.23.20:rustls",  # i686-unknown-linux-gnu
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # i686-unknown-linux-gnu
-            "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # i686-unknown-linux-gnu
+            "//thirdparty/crates/rustls-pki-types-1.10.1:rustls_pki_types",  # i686-unknown-linux-gnu
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/tokio-rustls-0.26.1:tokio_rustls",  # i686-unknown-linux-gnu
             "//thirdparty/crates/tokio-util-0.7.13:tokio_util",  # i686-unknown-linux-gnu
@@ -484,7 +484,7 @@ rust_library(
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # powerpc-unknown-linux-gnu
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/hyper-1.5.1:hyper",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/hyper-1.5.2:hyper",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/hyper-rustls-0.27.3:hyper_rustls",  # powerpc-unknown-linux-gnu
             "//thirdparty/crates/hyper-util-0.1.10:hyper_util",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/ipnet-2.10.1:ipnet",  # cfg(not(target_arch = "wasm32"))
@@ -495,7 +495,7 @@ rust_library(
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/rustls-0.23.20:rustls",  # powerpc-unknown-linux-gnu
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # powerpc-unknown-linux-gnu
-            "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # powerpc-unknown-linux-gnu
+            "//thirdparty/crates/rustls-pki-types-1.10.1:rustls_pki_types",  # powerpc-unknown-linux-gnu
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/tokio-rustls-0.26.1:tokio_rustls",  # powerpc-unknown-linux-gnu
             "//thirdparty/crates/tokio-util-0.7.13:tokio_util",  # powerpc-unknown-linux-gnu
@@ -506,7 +506,7 @@ rust_library(
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # riscv32imc-unknown-none-elf
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/hyper-1.5.1:hyper",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/hyper-1.5.2:hyper",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/hyper-rustls-0.27.3:hyper_rustls",  # riscv32imc-unknown-none-elf
             "//thirdparty/crates/hyper-util-0.1.10:hyper_util",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/ipnet-2.10.1:ipnet",  # cfg(not(target_arch = "wasm32"))
@@ -517,7 +517,7 @@ rust_library(
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/rustls-0.23.20:rustls",  # riscv32imc-unknown-none-elf
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # riscv32imc-unknown-none-elf
-            "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # riscv32imc-unknown-none-elf
+            "//thirdparty/crates/rustls-pki-types-1.10.1:rustls_pki_types",  # riscv32imc-unknown-none-elf
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/tokio-rustls-0.26.1:tokio_rustls",  # riscv32imc-unknown-none-elf
             "//thirdparty/crates/tokio-util-0.7.13:tokio_util",  # riscv32imc-unknown-none-elf
@@ -528,7 +528,7 @@ rust_library(
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # riscv64gc-unknown-none-elf
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/hyper-1.5.1:hyper",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/hyper-1.5.2:hyper",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/hyper-rustls-0.27.3:hyper_rustls",  # riscv64gc-unknown-none-elf
             "//thirdparty/crates/hyper-util-0.1.10:hyper_util",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/ipnet-2.10.1:ipnet",  # cfg(not(target_arch = "wasm32"))
@@ -539,7 +539,7 @@ rust_library(
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/rustls-0.23.20:rustls",  # riscv64gc-unknown-none-elf
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # riscv64gc-unknown-none-elf
-            "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # riscv64gc-unknown-none-elf
+            "//thirdparty/crates/rustls-pki-types-1.10.1:rustls_pki_types",  # riscv64gc-unknown-none-elf
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/tokio-rustls-0.26.1:tokio_rustls",  # riscv64gc-unknown-none-elf
             "//thirdparty/crates/tokio-util-0.7.13:tokio_util",  # riscv64gc-unknown-none-elf
@@ -550,7 +550,7 @@ rust_library(
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # s390x-unknown-linux-gnu
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/hyper-1.5.1:hyper",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/hyper-1.5.2:hyper",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/hyper-rustls-0.27.3:hyper_rustls",  # s390x-unknown-linux-gnu
             "//thirdparty/crates/hyper-util-0.1.10:hyper_util",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/ipnet-2.10.1:ipnet",  # cfg(not(target_arch = "wasm32"))
@@ -561,7 +561,7 @@ rust_library(
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/rustls-0.23.20:rustls",  # s390x-unknown-linux-gnu
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # s390x-unknown-linux-gnu
-            "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # s390x-unknown-linux-gnu
+            "//thirdparty/crates/rustls-pki-types-1.10.1:rustls_pki_types",  # s390x-unknown-linux-gnu
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/tokio-rustls-0.26.1:tokio_rustls",  # s390x-unknown-linux-gnu
             "//thirdparty/crates/tokio-util-0.7.13:tokio_util",  # s390x-unknown-linux-gnu
@@ -572,7 +572,7 @@ rust_library(
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # thumbv7em-none-eabi
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/hyper-1.5.1:hyper",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/hyper-1.5.2:hyper",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/hyper-rustls-0.27.3:hyper_rustls",  # thumbv7em-none-eabi
             "//thirdparty/crates/hyper-util-0.1.10:hyper_util",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/ipnet-2.10.1:ipnet",  # cfg(not(target_arch = "wasm32"))
@@ -583,7 +583,7 @@ rust_library(
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/rustls-0.23.20:rustls",  # thumbv7em-none-eabi
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # thumbv7em-none-eabi
-            "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # thumbv7em-none-eabi
+            "//thirdparty/crates/rustls-pki-types-1.10.1:rustls_pki_types",  # thumbv7em-none-eabi
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/tokio-rustls-0.26.1:tokio_rustls",  # thumbv7em-none-eabi
             "//thirdparty/crates/tokio-util-0.7.13:tokio_util",  # thumbv7em-none-eabi
@@ -594,7 +594,7 @@ rust_library(
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # thumbv8m.main-none-eabi
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/hyper-1.5.1:hyper",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/hyper-1.5.2:hyper",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/hyper-rustls-0.27.3:hyper_rustls",  # thumbv8m.main-none-eabi
             "//thirdparty/crates/hyper-util-0.1.10:hyper_util",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/ipnet-2.10.1:ipnet",  # cfg(not(target_arch = "wasm32"))
@@ -605,7 +605,7 @@ rust_library(
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/rustls-0.23.20:rustls",  # thumbv8m.main-none-eabi
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # thumbv8m.main-none-eabi
-            "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # thumbv8m.main-none-eabi
+            "//thirdparty/crates/rustls-pki-types-1.10.1:rustls_pki_types",  # thumbv8m.main-none-eabi
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/tokio-rustls-0.26.1:tokio_rustls",  # thumbv8m.main-none-eabi
             "//thirdparty/crates/tokio-util-0.7.13:tokio_util",  # thumbv8m.main-none-eabi
@@ -634,7 +634,7 @@ rust_library(
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # x86_64-apple-darwin
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/hyper-1.5.1:hyper",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/hyper-1.5.2:hyper",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/hyper-rustls-0.27.3:hyper_rustls",  # x86_64-apple-darwin
             "//thirdparty/crates/hyper-util-0.1.10:hyper_util",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/ipnet-2.10.1:ipnet",  # cfg(not(target_arch = "wasm32"))
@@ -645,7 +645,7 @@ rust_library(
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/rustls-0.23.20:rustls",  # x86_64-apple-darwin
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # x86_64-apple-darwin
-            "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # x86_64-apple-darwin
+            "//thirdparty/crates/rustls-pki-types-1.10.1:rustls_pki_types",  # x86_64-apple-darwin
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/tokio-rustls-0.26.1:tokio_rustls",  # x86_64-apple-darwin
             "//thirdparty/crates/tokio-util-0.7.13:tokio_util",  # x86_64-apple-darwin
@@ -656,7 +656,7 @@ rust_library(
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # x86_64-apple-ios
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/hyper-1.5.1:hyper",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/hyper-1.5.2:hyper",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/hyper-rustls-0.27.3:hyper_rustls",  # x86_64-apple-ios
             "//thirdparty/crates/hyper-util-0.1.10:hyper_util",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/ipnet-2.10.1:ipnet",  # cfg(not(target_arch = "wasm32"))
@@ -667,7 +667,7 @@ rust_library(
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/rustls-0.23.20:rustls",  # x86_64-apple-ios
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # x86_64-apple-ios
-            "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # x86_64-apple-ios
+            "//thirdparty/crates/rustls-pki-types-1.10.1:rustls_pki_types",  # x86_64-apple-ios
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/tokio-rustls-0.26.1:tokio_rustls",  # x86_64-apple-ios
             "//thirdparty/crates/tokio-util-0.7.13:tokio_util",  # x86_64-apple-ios
@@ -678,7 +678,7 @@ rust_library(
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # x86_64-linux-android
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/hyper-1.5.1:hyper",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/hyper-1.5.2:hyper",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/hyper-rustls-0.27.3:hyper_rustls",  # x86_64-linux-android
             "//thirdparty/crates/hyper-util-0.1.10:hyper_util",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/ipnet-2.10.1:ipnet",  # cfg(not(target_arch = "wasm32"))
@@ -689,7 +689,7 @@ rust_library(
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/rustls-0.23.20:rustls",  # x86_64-linux-android
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # x86_64-linux-android
-            "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # x86_64-linux-android
+            "//thirdparty/crates/rustls-pki-types-1.10.1:rustls_pki_types",  # x86_64-linux-android
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/tokio-rustls-0.26.1:tokio_rustls",  # x86_64-linux-android
             "//thirdparty/crates/tokio-util-0.7.13:tokio_util",  # x86_64-linux-android
@@ -700,7 +700,7 @@ rust_library(
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # x86_64-pc-windows-msvc
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/hyper-1.5.1:hyper",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/hyper-1.5.2:hyper",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/hyper-rustls-0.27.3:hyper_rustls",  # x86_64-pc-windows-msvc
             "//thirdparty/crates/hyper-util-0.1.10:hyper_util",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/ipnet-2.10.1:ipnet",  # cfg(not(target_arch = "wasm32"))
@@ -711,7 +711,7 @@ rust_library(
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/rustls-0.23.20:rustls",  # x86_64-pc-windows-msvc
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # x86_64-pc-windows-msvc
-            "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # x86_64-pc-windows-msvc
+            "//thirdparty/crates/rustls-pki-types-1.10.1:rustls_pki_types",  # x86_64-pc-windows-msvc
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/tokio-rustls-0.26.1:tokio_rustls",  # x86_64-pc-windows-msvc
             "//thirdparty/crates/tokio-util-0.7.13:tokio_util",  # x86_64-pc-windows-msvc
@@ -723,7 +723,7 @@ rust_library(
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # x86_64-unknown-freebsd
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/hyper-1.5.1:hyper",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/hyper-1.5.2:hyper",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/hyper-rustls-0.27.3:hyper_rustls",  # x86_64-unknown-freebsd
             "//thirdparty/crates/hyper-util-0.1.10:hyper_util",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/ipnet-2.10.1:ipnet",  # cfg(not(target_arch = "wasm32"))
@@ -734,7 +734,7 @@ rust_library(
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/rustls-0.23.20:rustls",  # x86_64-unknown-freebsd
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # x86_64-unknown-freebsd
-            "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # x86_64-unknown-freebsd
+            "//thirdparty/crates/rustls-pki-types-1.10.1:rustls_pki_types",  # x86_64-unknown-freebsd
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/tokio-rustls-0.26.1:tokio_rustls",  # x86_64-unknown-freebsd
             "//thirdparty/crates/tokio-util-0.7.13:tokio_util",  # x86_64-unknown-freebsd
@@ -745,7 +745,7 @@ rust_library(
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # x86_64-unknown-fuchsia
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/hyper-1.5.1:hyper",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/hyper-1.5.2:hyper",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/hyper-rustls-0.27.3:hyper_rustls",  # x86_64-unknown-fuchsia
             "//thirdparty/crates/hyper-util-0.1.10:hyper_util",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/ipnet-2.10.1:ipnet",  # cfg(not(target_arch = "wasm32"))
@@ -756,7 +756,7 @@ rust_library(
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/rustls-0.23.20:rustls",  # x86_64-unknown-fuchsia
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # x86_64-unknown-fuchsia
-            "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # x86_64-unknown-fuchsia
+            "//thirdparty/crates/rustls-pki-types-1.10.1:rustls_pki_types",  # x86_64-unknown-fuchsia
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/tokio-rustls-0.26.1:tokio_rustls",  # x86_64-unknown-fuchsia
             "//thirdparty/crates/tokio-util-0.7.13:tokio_util",  # x86_64-unknown-fuchsia
@@ -767,7 +767,7 @@ rust_library(
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # x86_64-unknown-linux-gnu
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/hyper-1.5.1:hyper",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/hyper-1.5.2:hyper",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/hyper-rustls-0.27.3:hyper_rustls",  # x86_64-unknown-linux-gnu
             "//thirdparty/crates/hyper-util-0.1.10:hyper_util",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/ipnet-2.10.1:ipnet",  # cfg(not(target_arch = "wasm32"))
@@ -778,7 +778,7 @@ rust_library(
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/rustls-0.23.20:rustls",  # x86_64-unknown-linux-gnu
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # x86_64-unknown-linux-gnu
-            "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # x86_64-unknown-linux-gnu
+            "//thirdparty/crates/rustls-pki-types-1.10.1:rustls_pki_types",  # x86_64-unknown-linux-gnu
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/tokio-rustls-0.26.1:tokio_rustls",  # x86_64-unknown-linux-gnu
             "//thirdparty/crates/tokio-util-0.7.13:tokio_util",  # x86_64-unknown-linux-gnu
@@ -789,7 +789,7 @@ rust_library(
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # x86_64-unknown-linux-gnu, x86_64-unknown-nixos-gnu
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/hyper-1.5.1:hyper",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/hyper-1.5.2:hyper",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/hyper-rustls-0.27.3:hyper_rustls",  # x86_64-unknown-linux-gnu, x86_64-unknown-nixos-gnu
             "//thirdparty/crates/hyper-util-0.1.10:hyper_util",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/ipnet-2.10.1:ipnet",  # cfg(not(target_arch = "wasm32"))
@@ -800,7 +800,7 @@ rust_library(
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/rustls-0.23.20:rustls",  # x86_64-unknown-linux-gnu, x86_64-unknown-nixos-gnu
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # x86_64-unknown-linux-gnu, x86_64-unknown-nixos-gnu
-            "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # x86_64-unknown-linux-gnu, x86_64-unknown-nixos-gnu
+            "//thirdparty/crates/rustls-pki-types-1.10.1:rustls_pki_types",  # x86_64-unknown-linux-gnu, x86_64-unknown-nixos-gnu
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/tokio-rustls-0.26.1:tokio_rustls",  # x86_64-unknown-linux-gnu, x86_64-unknown-nixos-gnu
             "//thirdparty/crates/tokio-util-0.7.13:tokio_util",  # x86_64-unknown-linux-gnu, x86_64-unknown-nixos-gnu
@@ -811,7 +811,7 @@ rust_library(
             "//thirdparty/crates/futures-channel-0.3.31:futures_channel",  # x86_64-unknown-none
             "//thirdparty/crates/http-body-1.0.1:http_body",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/http-body-util-0.1.2:http_body_util",  # cfg(not(target_arch = "wasm32"))
-            "//thirdparty/crates/hyper-1.5.1:hyper",  # cfg(not(target_arch = "wasm32"))
+            "//thirdparty/crates/hyper-1.5.2:hyper",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/hyper-rustls-0.27.3:hyper_rustls",  # x86_64-unknown-none
             "//thirdparty/crates/hyper-util-0.1.10:hyper_util",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/ipnet-2.10.1:ipnet",  # cfg(not(target_arch = "wasm32"))
@@ -822,7 +822,7 @@ rust_library(
             "//thirdparty/crates/pin-project-lite-0.2.15:pin_project_lite",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/rustls-0.23.20:rustls",  # x86_64-unknown-none
             "//thirdparty/crates/rustls-pemfile-2.2.0:rustls_pemfile",  # x86_64-unknown-none
-            "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # x86_64-unknown-none
+            "//thirdparty/crates/rustls-pki-types-1.10.1:rustls_pki_types",  # x86_64-unknown-none
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
             "//thirdparty/crates/tokio-rustls-0.26.1:tokio_rustls",  # x86_64-unknown-none
             "//thirdparty/crates/tokio-util-0.7.13:tokio_util",  # x86_64-unknown-none

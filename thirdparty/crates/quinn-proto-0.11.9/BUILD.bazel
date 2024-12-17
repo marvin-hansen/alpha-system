@@ -93,13 +93,13 @@ rust_library(
         "//thirdparty/crates/rustls-0.23.20:rustls",
         "//thirdparty/crates/rustls-platform-verifier-0.4.0:rustls_platform_verifier",
         "//thirdparty/crates/slab-0.4.9:slab",
-        "//thirdparty/crates/thiserror-2.0.6:thiserror",
+        "//thirdparty/crates/thiserror-2.0.7:thiserror",
         "//thirdparty/crates/tinyvec-1.8.0:tinyvec",
         "//thirdparty/crates/tracing-0.1.41:tracing",
     ] + select({
         "@rules_rust//rust/platform:wasm32-unknown-unknown": [
             "//thirdparty/crates/getrandom-0.2.15:getrandom",  # cfg(all(target_family = "wasm", target_os = "unknown"))
-            "//thirdparty/crates/rustls-pki-types-1.10.0:rustls_pki_types",  # cfg(all(target_family = "wasm", target_os = "unknown"))
+            "//thirdparty/crates/rustls-pki-types-1.10.1:rustls_pki_types",  # cfg(all(target_family = "wasm", target_os = "unknown"))
             "//thirdparty/crates/web-time-1.1.0:web_time",  # cfg(all(target_family = "wasm", target_os = "unknown"))
         ],
         "//conditions:default": [],

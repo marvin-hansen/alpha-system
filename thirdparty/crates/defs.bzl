@@ -296,13 +296,10 @@ _NORMAL_DEPENDENCIES = {
             "ahash": Label("//thirdparty/crates/ahash-0.8.11:ahash"),
             "anyhow": Label("//thirdparty/crates/anyhow-1.0.94:anyhow"),
             "base16ct": Label("//thirdparty/crates/base16ct-0.2.0:base16ct"),
-            "base64ct": Label("//thirdparty/crates/base64ct-1.6.0:base64ct"),
-            "binance_rs_async": Label("//thirdparty/crates/binance-rs-async-1.3.3:binance"),
             "blake3": Label("//thirdparty/crates/blake3-1.5.5:blake3"),
             "bytes": Label("//thirdparty/crates/bytes-1.9.0:bytes"),
             "chrono": Label("//thirdparty/crates/chrono-0.4.39:chrono"),
             "crossbeam": Label("//thirdparty/crates/crossbeam-0.8.4:crossbeam"),
-            "ctrlc": Label("//thirdparty/crates/ctrlc-3.4.5:ctrlc"),
             "diesel": Label("//thirdparty/crates/diesel-2.2.6:diesel"),
             "diesel_migrations": Label("//thirdparty/crates/diesel_migrations-2.2.0:diesel_migrations"),
             "futures": Label("//thirdparty/crates/futures-0.3.31:futures"),
@@ -310,7 +307,6 @@ _NORMAL_DEPENDENCIES = {
             "hickory-resolver": Label("//thirdparty/crates/hickory-resolver-0.24.2:hickory_resolver"),
             "iggy": Label("//thirdparty/crates/iggy-0.6.51:iggy"),
             "klickhouse": Label("//thirdparty/crates/klickhouse-0.13.2:klickhouse"),
-            "lazy_static": Label("//thirdparty/crates/lazy_static-1.5.0:lazy_static"),
             "lru": Label("//thirdparty/crates/lru-0.12.5:lru"),
             "mimalloc": Label("//thirdparty/crates/mimalloc-0.1.43:mimalloc"),
             "prost": Label("//thirdparty/crates/prost-0.13.4:prost"),
@@ -324,11 +320,10 @@ _NORMAL_DEPENDENCIES = {
             "serde_json": Label("//thirdparty/crates/serde_json-1.0.133:serde_json"),
             "sha3": Label("//thirdparty/crates/sha3-0.11.0-pre.4:sha3"),
             "tokio": Label("//thirdparty/crates/tokio-1.42.0:tokio"),
-            "tokio-tungstenite": Label("//thirdparty/crates/tokio-tungstenite-0.24.0:tokio_tungstenite"),
+            "tokio-tungstenite": Label("//thirdparty/crates/tokio-tungstenite-0.25.0:tokio_tungstenite"),
             "tonic": Label("//thirdparty/crates/tonic-0.12.3:tonic"),
             "tonic-build": Label("//thirdparty/crates/tonic-build-0.12.3:tonic_build"),
             "tonic-health": Label("//thirdparty/crates/tonic-health-0.12.3:tonic_health"),
-            "url": Label("//thirdparty/crates/url-2.5.4:url"),
             "warp": Label("//thirdparty/crates/warp-0.3.7:warp"),
         },
     },
@@ -337,7 +332,6 @@ _NORMAL_DEPENDENCIES = {
 _NORMAL_ALIASES = {
     "": {
         _COMMON_CONDITION: {
-            "//thirdparty/crates/binance-rs-async-1.3.3:binance-rs-async": "binance_rs_async",
         },
     },
 }
