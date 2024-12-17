@@ -16,6 +16,7 @@ workspace = true
 # Internal crates
 common_exchange = { workspace = true }
 common_order = { workspace = true }
+common_order_ext = { workspace = true }
 sbe_bindings = { workspace = true }
 sbe_types  = { workspace = true }
 # External crates

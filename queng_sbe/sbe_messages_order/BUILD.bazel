@@ -15,6 +15,7 @@ rust_library(
         # Internal crates
         "//alias:common_exchange",
         "//alias:common_order",
+        "//alias:common_order_ext",
         "//alias:sbe_bindings",
         "//alias:sbe_types",
         # External crates
