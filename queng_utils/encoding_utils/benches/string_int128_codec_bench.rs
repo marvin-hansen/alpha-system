@@ -1,5 +1,5 @@
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
-use encoding_utils::string_int128_encoding::{decode_str_to_int128, encode_int128_to_str};
+use encoding_utils::string_int128_codec::{decode_str_to_int128, encode_int128_to_str};
 
 fn bench_encode_int128(c: &mut Criterion) {
     let test_values = [

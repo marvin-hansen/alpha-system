@@ -1,6 +1,6 @@
 use crate::error_decoding::BinaryDecodingError;
 use crate::error_encoding::BinaryEncodingError;
-use crate::string_int128_lookup::{lookup_char, lookup_u64};
+use crate::lookup_tables::{lookup_char, lookup_u64};
 
 const MAX_LENGTH: usize = 20;
 const BITS_PER_CHAR: usize = 6;

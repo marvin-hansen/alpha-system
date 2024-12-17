@@ -1,3 +1,2 @@
-mod string_int128_encoding_tests;
-mod string_int64_encoding_tests;
-mod string_int64_lookup_tests;
+mod string_int128_codec_tests;
+mod string_int64_codec_tests;

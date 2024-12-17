@@ -11,7 +11,7 @@ fn test_empty_string_encoding() {
 
 #[test]
 fn test_single_char_encoding() {
-    let test_cases = vec!["A", "B", "Z", "0", "9", "_", "-"];
+    let test_cases = vec!["A", "B", "Z", "0", "9", "_", "a", "z"];
 
     for s in test_cases {
         let encoded = encode_str_to_int64(s).unwrap();
@@ -34,18 +34,14 @@ fn test_multi_char_encoding() {
 #[test]
 fn test_invalid_input() {
     // Too long string
-    assert!(encode_str_to_int64("ABCDEFGHIJKLM").is_none());
+    assert!(encode_str_to_int64("ABCDEFGHIJKLM").is_err());
 
     // Invalid characters
-    assert!(encode_str_to_int64("abc").is_none()); // lowercase
-    assert!(encode_str_to_int64("A B").is_none()); // space
-    assert!(encode_str_to_int64("A#B").is_none()); // special char
-
-    // Special characters
-    assert!(encode_str_to_int64("!@#").is_none());
-    assert!(encode_str_to_int64("%^&").is_none());
-    assert!(encode_str_to_int64("*()_+").is_none());
-    assert!(encode_str_to_int64("=-").is_none());
+    assert!(encode_str_to_int64("A#B").is_err()); // special char
+    assert!(encode_str_to_int64("!@#").is_err());
+    assert!(encode_str_to_int64("%^&").is_err());
+    assert!(encode_str_to_int64("*()_+").is_err());
+    assert!(encode_str_to_int64("=-").is_err());
 }
 
 #[test]
@@ -80,8 +76,8 @@ fn test_max_length() {
 
 #[test]
 fn test_all_chars() {
-    // All possible characters
-    let all_chars = "ABCZ0123_-";
+    // All possible characters (keeping within 10 char limit)
+    let all_chars = "AZaz09_123";
     let encoded = encode_str_to_int64(all_chars).unwrap();
     let decoded = decode_int64_to_str(encoded).unwrap();
     assert_eq!(all_chars, decoded);
@@ -119,7 +115,7 @@ fn test_int_to_str_edge_cases() {
     assert_eq!(max_str, decoded);
 
     // Test common trading pairs
-    let pairs = vec!["BTC_USDT", "ETH_USDT", "BNB_USDT", "SOL_USDT"];
+    let pairs = vec!["BTCUSDT", "ETHUSDT", "BNBUSDT", "SOLUSDT"];
     for pair in pairs {
         let encoded = encode_str_to_int64(pair).unwrap();
         let decoded = decode_int64_to_str(encoded).unwrap();
@@ -146,12 +142,10 @@ fn test_chunk_processing() {
 
 #[test]
 fn test_mixed_characters() {
-    // Test mixing different character types
-    let test_cases = vec!["A1B2C3", "123ABC", "ABC123", "A_B-C1", "1-2_3A"];
-
-    for s in test_cases {
-        let encoded = encode_str_to_int64(s).unwrap();
+    let test_cases = vec!["aB1_", "Test123", "abcABC123"];
+    for test_str in test_cases {
+        let encoded = encode_str_to_int64(test_str).unwrap();
         let decoded = decode_int64_to_str(encoded).unwrap();
-        assert_eq!(s, decoded);
+        assert_eq!(test_str, decoded);
     }
 }

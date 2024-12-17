@@ -1,0 +1,195 @@
+use crate::error_decoding::BinaryDecodingError;
+use crate::error_encoding::BinaryEncodingError;
+use crate::lookup_tables::{lookup_char, lookup_u64};
+
+const BITS_PER_CHAR: u32 = 6;
+const CHAR_MASK: u64 = (1 << BITS_PER_CHAR) - 1;
+const MAX_ENCODED_LENGTH: usize = 10; // Maximum safe length for u64 (64 bits / 6 bits per char = 10 chars)
+
+/// Encodes a string into a 64-bit unsigned integer.
+///
+/// # Valid Characters
+/// The input string can only contain the following characters:
+/// - Uppercase letters (A-Z)
+/// - Lowercase letters (a-z)
+/// - Digits (0-9)
+/// - Underscore (_)
+///
+/// # Arguments
+/// * `s` - The string to encode. Must be at most 10 characters long and contain only valid characters.
+///
+/// # Returns
+/// * `Ok(u64)` - The encoded 64-bit unsigned integer
+/// * `Err(BinaryEncodingError)` - If the input string is too long or contains invalid characters
+///
+/// # Examples
+/// ```
+/// use encoding_utils::encode_str_to_int64;
+///
+/// let encoded = encode_str_to_int64("ABC123").unwrap();
+/// assert!(encode_str_to_int64("ABC#123").is_err()); // Invalid character '#'
+/// assert!(encode_str_to_int64("ABCDEFGHIJK").is_err()); // Too long (>10 chars)
+/// ```
+#[inline(always)]
+pub fn encode_str_to_int64(s: &str) -> Result<u64, BinaryEncodingError> {
+    if s.is_empty() {
+        return Ok(0);
+    }
+
+    if s.len() > MAX_ENCODED_LENGTH {
+        return Err(BinaryEncodingError::new(format!(
+            "String length {} exceeds maximum allowed length of {}",
+            s.len(),
+            MAX_ENCODED_LENGTH
+        )));
+    }
+
+    let bytes = s.as_bytes();
+    let mut result: u64 = 0;
+    let len = bytes.len();
+
+    // Validate all characters first
+    for (i, &byte) in bytes.iter().enumerate() {
+        if !((byte >= b'A' && byte <= b'Z')
+            || (byte >= b'a' && byte <= b'z')
+            || (byte >= b'0' && byte <= b'9')
+            || byte == b'_')
+        {
+            return Err(BinaryEncodingError::new(format!(
+                "Invalid character at position {}: {}",
+                i, byte as char
+            )));
+        }
+    }
+
+    // Process 4 characters at a time from left to right
+    let mut i = 0;
+    while i + 4 <= len {
+        let v1 = lookup_u64(bytes[i]);
+        let v2 = lookup_u64(bytes[i + 1]);
+        let v3 = lookup_u64(bytes[i + 2]);
+        let v4 = lookup_u64(bytes[i + 3]);
+
+        result = (result << (BITS_PER_CHAR * 4))
+            | ((v1 << (BITS_PER_CHAR * 3))
+                | (v2 << (BITS_PER_CHAR * 2))
+                | (v3 << BITS_PER_CHAR)
+                | v4);
+        i += 4;
+    }
+
+    // Handle remaining bytes
+    while i < len {
+        let v = lookup_u64(bytes[i]);
+        result = (result << BITS_PER_CHAR) | v;
+        i += 1;
+    }
+
+    Ok(result)
+}
+
+/// Decodes a 64-bit unsigned integer back into a string.
+///
+/// # Valid Output Characters
+/// The decoded string will only contain:
+/// - Uppercase letters (A-Z)
+/// - Lowercase letters (a-z)
+/// - Digits (0-9)
+/// - Underscore (_)
+///
+/// # Arguments
+/// * `n` - The 64-bit unsigned integer to decode
+///
+/// # Returns
+/// * `Ok(String)` - The decoded string
+/// * `Err(BinaryDecodingError)` - If the input integer contains invalid character mappings
+///
+/// # Examples
+/// ```
+/// use encoding_utils::{encode_str_to_int64, decode_int64_to_str};
+///
+/// // First encode a string to get a valid integer
+/// let encoded = encode_str_to_int64("ABC123").unwrap();
+/// let decoded = decode_int64_to_str(encoded).unwrap();
+/// assert_eq!(decoded, "ABC123");
+/// ```
+#[inline(always)]
+pub fn decode_int64_to_str(n: u64) -> Result<String, BinaryDecodingError> {
+    if n == 0 {
+        return Ok(String::new());
+    }
+
+    // Fast character count using leading zeros
+    let char_count = (64 - n.leading_zeros()).div_ceil(BITS_PER_CHAR);
+    let char_count = char_count as usize;
+
+    // Pre-allocate exact buffer size
+    let mut bytes = Vec::with_capacity(char_count);
+    unsafe {
+        bytes.set_len(char_count);
+    }
+
+    // Use bit manipulation for faster decoding
+    let mut value = n;
+
+    // Process 4 characters at a time from right to left
+    let mut i = char_count;
+    while i >= 4 {
+        i -= 4;
+        let chunk = value & ((1 << (BITS_PER_CHAR * 4)) - 1);
+        value >>= BITS_PER_CHAR * 4;
+
+        let c0 = chunk & CHAR_MASK;
+        let c1 = (chunk >> BITS_PER_CHAR) & CHAR_MASK;
+        let c2 = (chunk >> (BITS_PER_CHAR * 2)) & CHAR_MASK;
+        let c3 = (chunk >> (BITS_PER_CHAR * 3)) & CHAR_MASK;
+
+        let ch0 = lookup_char(c0);
+        let ch1 = lookup_char(c1);
+        let ch2 = lookup_char(c2);
+        let ch3 = lookup_char(c3);
+
+        // Validate each character
+        for (pos, ch) in [(i + 3, ch3), (i + 2, ch2), (i + 1, ch1), (i, ch0)] {
+            let c = ch as u8;
+            if !((c >= b'A' && c <= b'Z')
+                || (c >= b'a' && c <= b'z')
+                || (c >= b'0' && c <= b'9')
+                || c == b'_')
+            {
+                return Err(BinaryDecodingError::new(format!(
+                    "Invalid character at position {}: {}",
+                    pos, ch
+                )));
+            }
+        }
+
+        bytes[i] = ch3 as u8;
+        bytes[i + 1] = ch2 as u8;
+        bytes[i + 2] = ch1 as u8;
+        bytes[i + 3] = ch0 as u8;
+    }
+
+    // Handle remaining characters
+    while i > 0 {
+        i -= 1;
+        let c = value & CHAR_MASK;
+        let ch = lookup_char(c);
+        let c = ch as u8;
+        if !((c >= b'A' && c <= b'Z')
+            || (c >= b'a' && c <= b'z')
+            || (c >= b'0' && c <= b'9')
+            || c == b'_')
+        {
+            return Err(BinaryDecodingError::new(format!(
+                "Invalid character at position {}: {}",
+                i, ch
+            )));
+        }
+        bytes[i] = ch as u8;
+        value >>= BITS_PER_CHAR;
+    }
+
+    // Convert bytes to string (safe because we only used valid ASCII chars)
+    unsafe { Ok(String::from_utf8_unchecked(bytes)) }
+}

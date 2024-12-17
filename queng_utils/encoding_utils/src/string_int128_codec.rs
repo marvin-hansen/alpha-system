@@ -1,6 +1,6 @@
 use crate::error_decoding::BinaryDecodingError;
 use crate::error_encoding::BinaryEncodingError;
-use crate::string_int128_lookup::{lookup_char, lookup_u64};
+use crate::lookup_tables::{lookup_char, lookup_u64};
 
 const MAX_LENGTH_U128: usize = 20; // Maximum length for u128 in base64
 const BITS_PER_CHAR_U128: u32 = 6; // 64 possible values = 6 bits
@@ -21,7 +21,7 @@ const CHAR_MASK_U128: u128 = (1 << BITS_PER_CHAR_U128) - 1;
 ///
 /// # Example
 /// ```
-/// use encoding_utils::string_int128_encoding::encode_str_to_int128;
+/// use encoding_utils::string_int128_codec::encode_str_to_int128;
 ///
 /// let result = encode_str_to_int128("Hello123").unwrap();
 /// assert!(result > 0);
@@ -107,7 +107,7 @@ pub fn encode_str_to_int128(input: &str) -> Result<u128, BinaryEncodingError> {
 ///
 /// # Example
 /// ```
-/// use encoding_utils::string_int128_encoding::{encode_str_to_int128, decode_int128_to_str};
+/// use encoding_utils::string_int128_codec::{encode_str_to_int128, decode_int128_to_str};
 ///
 /// let original = "Hello123";
 /// let encoded = encode_str_to_int128(original).unwrap();
