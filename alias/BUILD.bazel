@@ -122,6 +122,11 @@ alias(
     actual = "//queng_extensions/cow_ext",
 )
 
+alias(
+    name = "common_order_ext",
+    actual = "//queng_extensions/common_order_ext",
+)
+
 ###############################################################################
 # Import
 ###############################################################################

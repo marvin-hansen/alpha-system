@@ -105,6 +105,7 @@ sliding_window = { path = "queng_datastructures/sliding_window" }
 
 # Extensions
 cow_ext = { path = "queng_extensions/cow_ext" }
+common_order_ext = { path = "queng_extensions/common_order_ext" }
 
 # Import
 # Core

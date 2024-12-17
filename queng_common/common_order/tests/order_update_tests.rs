@@ -71,7 +71,7 @@ fn test_order_update_clone_and_eq() {
     let different = OrderUpdate::new(
         ExchangeID::Kraken,
         2,
-        ClientOrderID::new("dif_cl_ord_id".to_string()),
+        ClientOrderID::new("diff_id".to_string()),
         ExchangeOrderID::new("diff_exc_order_id".to_string()),
         "ETH-EUR".to_string(),
         "ETHEUR".to_string(),

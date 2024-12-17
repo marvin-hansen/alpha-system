@@ -1,0 +1,17 @@
+[package]
+name = "common_order_ext"
+version = "0.1.0"
+edition.workspace = true
+rust-version.workspace = true
+readme.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+
+[lints]
+workspace = true
+
+[dependencies]
+common_order = { workspace = true }
+encoding_utils = { workspace = true }
+

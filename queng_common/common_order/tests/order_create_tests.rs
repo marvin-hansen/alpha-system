@@ -8,7 +8,7 @@ fn test_order_new_single_with_expiry() {
     let order = OrderCreate::new(
         ExchangeID::Binance,
         1, // client_order_id
-        "test_order_2".to_string().into(),
+        "cl_ord_id".to_string().into(),
         "ETHUSD".to_string(),
         OrderType::Market,
         OrderSide::Sell,
@@ -30,7 +30,7 @@ fn test_order_new_single_display() {
     let order = OrderCreate::new(
         ExchangeID::Binance,
         1, // client_order_id
-        "test_order_3".to_string().into(),
+        "cl_ord_id".to_string().into(),
         "BTCUSD".to_string(),
         OrderType::Limit,
         OrderSide::Buy,
@@ -47,7 +47,7 @@ fn test_order_new_single_display() {
     println!("Debug string: {}", debug_string);
 
     // Verify the display string contains all the important information
-    assert!(display_string.contains("test_order_3"));
+    assert!(display_string.contains("cl_ord_id"));
     assert!(display_string.contains("BTCUSD"));
 }
 #[test]
@@ -55,7 +55,7 @@ fn test_order_new_single_clone_and_eq() {
     let original = OrderCreate::new(
         ExchangeID::Binance,
         1, // client_order_id
-        "test_order_5".to_string().into(),
+        "ord_id".to_string().into(),
         "BTCUSD".to_string(),
         OrderType::Limit,
         OrderSide::Buy,
@@ -70,8 +70,8 @@ fn test_order_new_single_clone_and_eq() {
 
     let different_order = OrderCreate::new(
         ExchangeID::default(),
-        42,                                // client_order_id
-        "test_order_6".to_string().into(), // Different order ID
+        42,                           // client_id
+        "diff_id".to_string().into(), // Different order ID
         "BTCUSD".to_string(),
         OrderType::Limit,
         OrderSide::Buy,
@@ -88,8 +88,8 @@ fn test_order_new_single_clone_and_eq() {
 fn test_order_new_single_with_different_exchanges() {
     let binance_order = OrderCreate::new(
         ExchangeID::Binance,
-        1, // client_order_id
-        "binance_order".to_string().into(),
+        1,
+        "cl_ord_id".to_string().into(), // client_order_id
         "BTCUSD".to_string(),
         OrderType::Limit,
         OrderSide::Buy,
@@ -102,7 +102,7 @@ fn test_order_new_single_with_different_exchanges() {
     let kraken_order = OrderCreate::new(
         ExchangeID::Kraken,
         1, // client_order_id
-        "kraken_order".to_string().into(),
+        "cl_ord_id".to_string().into(),
         "BTCUSD".to_string(),
         OrderType::Limit,
         OrderSide::Buy,

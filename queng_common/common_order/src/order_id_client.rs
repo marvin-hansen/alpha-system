@@ -11,8 +11,8 @@ impl ClientOrderID {
             panic!("Client Order ID is empty");
         }
 
-        if client_order_id.len() > 14 {
-            panic!("Client Order ID is too long. Max length is 14");
+        if client_order_id.len() > 10 {
+            panic!("Client Order ID is too long. Max length is 10");
         }
 
         Self { client_order_id }
@@ -28,6 +28,12 @@ impl ClientOrderID {
 impl From<String> for ClientOrderID {
     fn from(value: String) -> Self {
         Self::new(value)
+    }
+}
+
+impl From<&str> for ClientOrderID {
+    fn from(value: &str) -> Self {
+        Self::new(value.to_string())
     }
 }
 
