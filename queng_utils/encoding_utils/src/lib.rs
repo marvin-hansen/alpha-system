@@ -27,8 +27,8 @@
 mod error_decoding;
 mod error_encoding;
 mod lookup_tables;
-pub mod string_int128_codec;
-pub mod string_int64_codec;
+mod string_int128_codec;
+mod string_int64_codec;
 mod string_int64_pair_codec;
 
 pub use error_decoding::BinaryDecodingError as DecodingError;

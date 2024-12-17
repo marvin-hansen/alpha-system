@@ -30,5 +30,13 @@ name = "string_int128_codec_bench"
 harness = false
 
 [[example]]
-name = "basic_usage"
-path = "examples/basic_usage.rs"
+name = "string_int64_example"
+path = "examples/string_int64_example.rs"
+
+[[example]]
+name = "string_int128_example"
+path = "examples/string_int128_example.rs"
+
+[[example]]
+name = "string_int64_pair_example"
+path = "examples/string_int64_pair_example.rs"

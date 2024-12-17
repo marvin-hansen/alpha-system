@@ -21,7 +21,7 @@ const CHAR_MASK_U128: u128 = (1 << BITS_PER_CHAR_U128) - 1;
 ///
 /// # Example
 /// ```
-/// use encoding_utils::string_int128_codec::encode_str_to_int128;
+/// use encoding_utils::encode_str_to_int128;
 ///
 /// let result = encode_str_to_int128("Hello123").unwrap();
 /// assert!(result > 0);
@@ -89,7 +89,7 @@ pub fn encode_str_to_int128(input: &str) -> Result<u128, BinaryEncodingError> {
 ///
 /// # Example
 /// ```
-/// use encoding_utils::string_int128_codec::{encode_str_to_int128, decode_int128_to_str};
+/// use encoding_utils::{encode_str_to_int128, decode_int128_to_str};
 ///
 /// let original = "Hello123";
 /// let encoded = encode_str_to_int128(original).unwrap();
@@ -148,8 +148,7 @@ pub fn decode_int128_to_str(input: u128) -> Result<String, BinaryDecodingError> 
         if !validate_char(c) {
             return Err(BinaryDecodingError::new(format!(
                 "Invalid character at position {}: {}",
-                len,
-                c as char
+                len, c as char
             )));
         }
         chars[len] = c;
