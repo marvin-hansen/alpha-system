@@ -8,7 +8,10 @@ const MAX_U128_CHARS: u64 = 64;
 /// - Underscore (_)
 #[inline(always)]
 pub fn validate_char(c: u8) -> bool {
-    (c >= b'A' && c <= b'Z') || (c >= b'a' && c <= b'z') || (c >= b'0' && c <= b'9') || c == b'_'
+    (b'A'..=b'Z').contains(&c)
+        || (b'a'..=b'z').contains(&c)
+        || (b'0'..=b'9').contains(&c)
+        || c == b'_'
 }
 
 /// Converts a byte character to its corresponding u64 value in the encoding scheme.

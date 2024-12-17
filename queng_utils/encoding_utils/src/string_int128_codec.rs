@@ -108,7 +108,7 @@ pub fn decode_int128_to_str(input: u128) -> Result<String, BinaryDecodingError> 
 
     // Calculate total characters based on highest set bit
     let total_bits = 128 - input.leading_zeros();
-    let char_count = (total_bits + BITS_PER_CHAR_U128 - 1) / BITS_PER_CHAR_U128;
+    let char_count = total_bits.div_ceil(BITS_PER_CHAR_U128);
     let mut remaining_bits = char_count * BITS_PER_CHAR_U128;
 
     // Process characters in chunks of 4 from most significant to least significant
