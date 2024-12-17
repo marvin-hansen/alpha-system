@@ -102,57 +102,62 @@ pub fn decode_int128_to_str(input: u128) -> Result<String, BinaryDecodingError> 
         return Ok(String::new());
     }
 
-    // Pre-allocate exact space needed
-    let char_count = (128 - input.leading_zeros()).div_ceil(BITS_PER_CHAR_U128) as usize;
-    let mut chars = Vec::with_capacity(char_count);
-    let mut current = input;
+    // Pre-allocate fixed-size array on stack
+    let mut chars = [0u8; MAX_LENGTH_U128];
+    let mut len = 0;
 
-    // Process 4 characters at a time
-    while current >= (1 << (BITS_PER_CHAR_U128 * 4)) {
-        let chunk = current & ((1 << (BITS_PER_CHAR_U128 * 4)) - 1);
-        current >>= BITS_PER_CHAR_U128 * 4;
+    // Calculate total characters based on highest set bit
+    let total_bits = 128 - input.leading_zeros();
+    let char_count = (total_bits + BITS_PER_CHAR_U128 - 1) / BITS_PER_CHAR_U128;
+    let mut remaining_bits = char_count * BITS_PER_CHAR_U128;
 
-        let ch0 = lookup_char((chunk & CHAR_MASK_U128) as u64);
-        let ch1 = lookup_char(((chunk >> BITS_PER_CHAR_U128) & CHAR_MASK_U128) as u64);
-        let ch2 = lookup_char(((chunk >> (BITS_PER_CHAR_U128 * 2)) & CHAR_MASK_U128) as u64);
-        let ch3 = lookup_char(((chunk >> (BITS_PER_CHAR_U128 * 3)) & CHAR_MASK_U128) as u64);
+    // Process characters in chunks of 4 from most significant to least significant
+    while remaining_bits >= BITS_PER_CHAR_U128 * 4 {
+        remaining_bits -= BITS_PER_CHAR_U128 * 4;
+        let chunk = (input >> remaining_bits) & ((1 << (BITS_PER_CHAR_U128 * 4)) - 1);
 
-        // Validate each character
-        for (pos, ch) in [(3, ch3), (2, ch2), (1, ch1), (0, ch0)] {
-            let c = ch as u8;
+        // Extract characters
+        let c0 = lookup_char(((chunk >> (BITS_PER_CHAR_U128 * 3)) & CHAR_MASK_U128) as u64) as u8;
+        let c1 = lookup_char(((chunk >> (BITS_PER_CHAR_U128 * 2)) & CHAR_MASK_U128) as u64) as u8;
+        let c2 = lookup_char(((chunk >> BITS_PER_CHAR_U128) & CHAR_MASK_U128) as u64) as u8;
+        let c3 = lookup_char((chunk & CHAR_MASK_U128) as u64) as u8;
+
+        // Validate all characters in chunk
+        for (i, &c) in [c0, c1, c2, c3].iter().enumerate() {
             if !validate_char(c) {
                 return Err(BinaryDecodingError::new(format!(
                     "Invalid character at position {}: {}",
-                    pos, ch
+                    len + i,
+                    c as char
                 )));
             }
         }
 
-        chars.push(ch0 as u8);
-        chars.push(ch1 as u8);
-        chars.push(ch2 as u8);
-        chars.push(ch3 as u8);
+        // Store characters
+        chars[len] = c0;
+        chars[len + 1] = c1;
+        chars[len + 2] = c2;
+        chars[len + 3] = c3;
+        len += 4;
     }
 
     // Handle remaining characters
-    let mut i = 0;
-    while current > 0 {
-        let c = lookup_char((current & CHAR_MASK_U128) as u64);
-        let ch = c as u8;
-        if !validate_char(ch) {
+    while remaining_bits > 0 {
+        remaining_bits -= BITS_PER_CHAR_U128;
+        let c = lookup_char(((input >> remaining_bits) & CHAR_MASK_U128) as u64) as u8;
+        if !validate_char(c) {
             return Err(BinaryDecodingError::new(format!(
                 "Invalid character at position {}: {}",
-                i, ch
+                len,
+                c as char
             )));
         }
-        chars.push(ch);
-        current >>= BITS_PER_CHAR_U128;
-        i += 1;
+        chars[len] = c;
+        len += 1;
     }
 
-    // Reverse the characters since we processed them in reverse order
-    chars.reverse();
-
-    // Add all characters to output
-    unsafe { Ok(String::from_utf8_unchecked(chars)) }
+    // Create string from validated characters
+    // SAFETY: We know all bytes in chars[..len] are valid ASCII characters
+    // as we validated them above
+    Ok(unsafe { String::from_utf8_unchecked(chars[..len].to_vec()) })
 }
