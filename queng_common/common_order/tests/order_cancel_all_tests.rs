@@ -44,6 +44,6 @@ fn test_order_cancel_all_clone_and_eq() {
     let cloned = original.clone();
     assert_eq!(original, cloned);
 
-    let different = OrderCancelAll::new(ExchangeID::Kraken, 0043);
+    let different = OrderCancelAll::new(ExchangeID::Kraken, 43);
     assert_ne!(original, different);
 }

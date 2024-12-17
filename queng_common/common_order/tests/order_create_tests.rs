@@ -70,7 +70,7 @@ fn test_order_new_single_clone_and_eq() {
 
     let different_order = OrderCreate::new(
         ExchangeID::default(),
-        042,                               // client_order_id
+        42,                                // client_order_id
         "test_order_6".to_string().into(), // Different order ID
         "BTCUSD".to_string(),
         OrderType::Limit,
