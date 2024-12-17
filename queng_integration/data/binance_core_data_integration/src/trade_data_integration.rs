@@ -55,7 +55,8 @@ impl ImsTradeDataIntegration for ImsBinanceDataIntegration {
                 let (_, mut read) = ws_stream.split();
                 while let Some(Ok(msg)) = read.next().await {
                     if let Message::Text(text) = msg {
-                        let bar = utils::extract_trade_bar_from_json(&text, &symbol_clone).await;
+                        let bar =
+                            utils::extract_trade_bar_from_json(text.as_str(), &symbol_clone).await;
 
                         if let Some(bar) = bar {
                             let (_, data) =

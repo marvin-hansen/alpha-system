@@ -1,5 +1,5 @@
 use criterion::{criterion_group, criterion_main, Criterion};
-use encoding_utils::string_int_encoding::{int_to_str, str_to_int};
+use encoding_utils::string_int_encoding::{int64_to_str, str_to_int64};
 
 fn bench_str_to_int(c: &mut Criterion) {
     let test_cases = [
@@ -12,7 +12,7 @@ fn bench_str_to_int(c: &mut Criterion) {
     let mut group = c.benchmark_group("str_to_int");
     for test_str in test_cases {
         group.bench_function(format!("encode_{}", test_str), |b| {
-            b.iter(|| str_to_int(test_str))
+            b.iter(|| str_to_int64(test_str))
         });
     }
     group.finish();
@@ -20,16 +20,16 @@ fn bench_str_to_int(c: &mut Criterion) {
 
 fn bench_int_to_str(c: &mut Criterion) {
     let test_cases = [
-        str_to_int("A").unwrap(),
-        str_to_int("ABC").unwrap(),
-        str_to_int("TEST_123").unwrap(),
-        str_to_int("ABCDEFGHIJ").unwrap(),
+        str_to_int64("A").unwrap(),
+        str_to_int64("ABC").unwrap(),
+        str_to_int64("TEST_123").unwrap(),
+        str_to_int64("ABCDEFGHIJ").unwrap(),
     ];
 
     let mut group = c.benchmark_group("int_to_str");
     for (i, &test_int) in test_cases.iter().enumerate() {
         group.bench_function(format!("decode_len_{}", i + 1), |b| {
-            b.iter(|| int_to_str(test_int))
+            b.iter(|| int64_to_str(test_int))
         });
     }
     group.finish();
@@ -42,8 +42,8 @@ fn bench_roundtrip(c: &mut Criterion) {
     for test_str in test_cases {
         group.bench_function(format!("roundtrip_{}", test_str), |b| {
             b.iter(|| {
-                let encoded = str_to_int(test_str).unwrap();
-                int_to_str(encoded).unwrap()
+                let encoded = str_to_int64(test_str).unwrap();
+                int64_to_str(encoded).unwrap()
             })
         });
     }

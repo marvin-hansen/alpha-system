@@ -1,7 +1,10 @@
+use crate::utils;
 use crate::ImsBinanceDataIntegration;
 use common_errors::MessageProcessingError;
+use futures_util::StreamExt;
 use sbe_messages_data::SbeOHLCVBar;
 use std::sync::Arc;
+use tokio_tungstenite::tungstenite::Message;
 use trait_data_integration::{EventProcessor, ImsDataIntegration, ImsOhlcvDataIntegration};
 
 impl ImsOhlcvDataIntegration for ImsBinanceDataIntegration {
@@ -34,15 +37,12 @@ impl ImsOhlcvDataIntegration for ImsBinanceDataIntegration {
 
             let symbol_clone = symbol.clone();
             let handle = tokio::spawn(async move {
-                use crate::utils;
-                use futures_util::StreamExt;
-                use tokio_tungstenite::tungstenite::Message;
-
                 let (_, mut read) = ws_stream.split();
                 while let Some(Ok(msg)) = read.next().await {
                     if let Message::Text(text) = msg {
                         // Process the OHLCV data
-                        let bar = utils::extract_ohlcv_bar_from_json(&text, &symbol_clone).await;
+                        let bar =
+                            utils::extract_ohlcv_bar_from_json(text.as_str(), &symbol_clone).await;
                         if let Some(bar) = bar {
                             let (_, data) =
                                 SbeOHLCVBar::encode(bar).expect("Failed to encode OHLCV data");
