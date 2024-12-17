@@ -1,9 +1,45 @@
 load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 
 rust_test_suite(
-    name = "tests",
+    name = "string_int64_codec",
     srcs = glob([
-        "*_tests.rs",
+        "string_int64_codec_tests.rs",
+    ]),
+    tags = [
+        "encoding_utils",
+        "unit-test",
+        "utils",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate under test
+        "//alias:encoding_utils",
+        # Internal crates
+    ],
+)
+
+rust_test_suite(
+    name = "string_int64_pair_codec",
+    srcs = glob([
+        "string_int64_pair_codec_tests.rs",
+    ]),
+    tags = [
+        "encoding_utils",
+        "unit-test",
+        "utils",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate under test
+        "//alias:encoding_utils",
+        # Internal crates
+    ],
+)
+
+rust_test_suite(
+    name = "string_int128_codec",
+    srcs = glob([
+        "string_int128_codec_tests.rs",
     ]),
     tags = [
         "encoding_utils",

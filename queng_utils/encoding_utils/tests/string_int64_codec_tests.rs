@@ -149,3 +149,64 @@ fn test_mixed_characters() {
         assert_eq!(test_str, decoded);
     }
 }
+
+#[test]
+fn test_encode_decode_roundtrip_special_cases() {
+    let test_cases = vec![
+        "A1B2C3D4",   // Mixed alphanumeric
+        "98765432",   // All digits
+        "ABCDEFGH",   // All uppercase
+        "A",          // Single character
+        "AB",         // Two characters
+        "1234567890", // 10 characters
+        "AAAAAAAAAA", // Repeated characters
+    ];
+
+    for input in test_cases {
+        let encoded = encode_str_to_int64(input).expect("Failed to encode");
+        let decoded = decode_int64_to_str(encoded).expect("Failed to decode");
+        assert_eq!(input, decoded, "Round trip failed for input: {}", input);
+    }
+}
+
+#[test]
+fn test_encode_with_special_patterns() {
+    let test_cases = vec![
+        "10101010", // Alternating digits
+        "ABABABAB", // Alternating letters
+        "A1A1A1A1", // Alternating letter-digit
+        "99999999", // Repeated digits
+        "ZZZZZZZZ", // Repeated letters at boundary
+    ];
+
+    for input in test_cases {
+        let result = encode_str_to_int64(input);
+        assert!(result.is_ok(), "Failed to encode valid input: {}", input);
+
+        // Verify round trip
+        let encoded = result.unwrap();
+        let decoded = decode_int64_to_str(encoded).expect("Failed to decode");
+        assert_eq!(input, decoded, "Round trip failed for input: {}", input);
+    }
+}
+
+#[test]
+fn test_boundary_value_encoding() {
+    // Test encoding of strings that should produce boundary values
+    let test_cases = vec![
+        "0",        // Minimum digit
+        "9",        // Maximum digit
+        "A",        // First letter
+        "Z",        // Last letter
+        "00000000", // All zeros
+        "99999999", // All nines
+        "AAAAAAAA", // All first letters
+        "ZZZZZZZZ", // All last letters
+    ];
+
+    for input in test_cases {
+        let encoded = encode_str_to_int64(input).expect("Failed to encode");
+        let decoded = decode_int64_to_str(encoded).expect("Failed to decode");
+        assert_eq!(input, decoded, "Round trip failed for input: {}", input);
+    }
+}
