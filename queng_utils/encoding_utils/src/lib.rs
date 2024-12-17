@@ -31,9 +31,9 @@ pub mod string_int128_codec;
 pub mod string_int64_codec;
 mod string_int64_pair_codec;
 
-//  Re exports
-pub use error_decoding::*;
-pub use error_encoding::*;
-pub use string_int128_codec::*;
-pub use string_int64_codec::*;
-pub use string_int64_pair_codec::*;
+pub use error_decoding::BinaryDecodingError as DecodingError;
+pub use error_encoding::BinaryEncodingError as EncodingError;
+pub use lookup_tables::validate_char;
+pub use string_int128_codec::{decode_int128_to_str, encode_str_to_int128};
+pub use string_int64_codec::{decode_int64_to_str, encode_str_to_int64};
+pub use string_int64_pair_codec::{decode_pair_64_to_str, encode_str_to_pair_u64};

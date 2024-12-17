@@ -1,6 +1,6 @@
 use crate::error_decoding::BinaryDecodingError;
 use crate::error_encoding::BinaryEncodingError;
-use crate::lookup_tables::{lookup_char, lookup_u64};
+use crate::lookup_tables::{lookup_char, lookup_u64, validate_char};
 
 const MAX_LENGTH_U128: usize = 20; // Maximum length for u128 in base64
 const BITS_PER_CHAR_U128: u32 = 6; // 64 possible values = 6 bits
@@ -41,27 +41,21 @@ pub fn encode_str_to_int128(input: &str) -> Result<u128, BinaryEncodingError> {
     let bytes = input.as_bytes();
     let len = bytes.len();
 
+    // Validate all characters first
+    for (i, &byte) in bytes.iter().enumerate() {
+        if !validate_char(byte) {
+            return Err(BinaryEncodingError::new(format!(
+                "Invalid character at position {}: {}",
+                i, byte as char
+            )));
+        }
+    }
+
     let mut result: u128 = 0;
     let mut i = 0;
 
     // Process 4 characters at a time
     while i + 4 <= len {
-        // Validate and decode each character
-        for j in 0..4 {
-            let c = bytes[i + j];
-            if !((c >= b'A' && c <= b'Z')
-                || (c >= b'a' && c <= b'z')
-                || (c >= b'0' && c <= b'9')
-                || c == b'_')
-            {
-                return Err(BinaryEncodingError::from(format!(
-                    "Invalid character at position {}: {}",
-                    i + j,
-                    c as char
-                )));
-            }
-        }
-
         let chunk = ((lookup_u64(bytes[i]) << (BITS_PER_CHAR_U128 * 3))
             | (lookup_u64(bytes[i + 1]) << (BITS_PER_CHAR_U128 * 2))
             | (lookup_u64(bytes[i + 2]) << BITS_PER_CHAR_U128)
@@ -73,19 +67,7 @@ pub fn encode_str_to_int128(input: &str) -> Result<u128, BinaryEncodingError> {
 
     // Handle remaining characters
     while i < len {
-        let c = bytes[i];
-        // Validate character
-        if !((c >= b'A' && c <= b'Z')
-            || (c >= b'a' && c <= b'z')
-            || (c >= b'0' && c <= b'9')
-            || c == b'_')
-        {
-            return Err(BinaryEncodingError::from(format!(
-                "Invalid character at position {}: {}",
-                i, c as char
-            )));
-        }
-        result = (result << BITS_PER_CHAR_U128) | lookup_u64(c) as u128;
+        result = (result << BITS_PER_CHAR_U128) | lookup_u64(bytes[i]) as u128;
         i += 1;
     }
 
@@ -130,22 +112,42 @@ pub fn decode_int128_to_str(input: u128) -> Result<String, BinaryDecodingError> 
         let chunk = current & ((1 << (BITS_PER_CHAR_U128 * 4)) - 1);
         current >>= BITS_PER_CHAR_U128 * 4;
 
-        let c0 = lookup_char((chunk & CHAR_MASK_U128) as u64);
-        let c1 = lookup_char(((chunk >> BITS_PER_CHAR_U128) & CHAR_MASK_U128) as u64);
-        let c2 = lookup_char(((chunk >> (BITS_PER_CHAR_U128 * 2)) & CHAR_MASK_U128) as u64);
-        let c3 = lookup_char(((chunk >> (BITS_PER_CHAR_U128 * 3)) & CHAR_MASK_U128) as u64);
+        let ch0 = lookup_char((chunk & CHAR_MASK_U128) as u64);
+        let ch1 = lookup_char(((chunk >> BITS_PER_CHAR_U128) & CHAR_MASK_U128) as u64);
+        let ch2 = lookup_char(((chunk >> (BITS_PER_CHAR_U128 * 2)) & CHAR_MASK_U128) as u64);
+        let ch3 = lookup_char(((chunk >> (BITS_PER_CHAR_U128 * 3)) & CHAR_MASK_U128) as u64);
 
-        chars.push(c0 as u8);
-        chars.push(c1 as u8);
-        chars.push(c2 as u8);
-        chars.push(c3 as u8);
+        // Validate each character
+        for (pos, ch) in [(3, ch3), (2, ch2), (1, ch1), (0, ch0)] {
+            let c = ch as u8;
+            if !validate_char(c) {
+                return Err(BinaryDecodingError::new(format!(
+                    "Invalid character at position {}: {}",
+                    pos, ch
+                )));
+            }
+        }
+
+        chars.push(ch0 as u8);
+        chars.push(ch1 as u8);
+        chars.push(ch2 as u8);
+        chars.push(ch3 as u8);
     }
 
     // Handle remaining characters
+    let mut i = 0;
     while current > 0 {
         let c = lookup_char((current & CHAR_MASK_U128) as u64);
-        chars.push(c as u8);
+        let ch = c as u8;
+        if !validate_char(ch) {
+            return Err(BinaryDecodingError::new(format!(
+                "Invalid character at position {}: {}",
+                i, ch
+            )));
+        }
+        chars.push(ch);
         current >>= BITS_PER_CHAR_U128;
+        i += 1;
     }
 
     // Reverse the characters since we processed them in reverse order

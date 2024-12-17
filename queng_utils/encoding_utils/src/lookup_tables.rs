@@ -1,11 +1,22 @@
 const MAX_U128_CHARS: u64 = 64;
 
+/// Validates if a character is valid for encoding.
+/// Valid characters are:
+/// - Uppercase letters (A-Z)
+/// - Lowercase letters (a-z)
+/// - Digits (0-9)
+/// - Underscore (_)
+#[inline(always)]
+pub fn validate_char(c: u8) -> bool {
+    (c >= b'A' && c <= b'Z') || (c >= b'a' && c <= b'z') || (c >= b'0' && c <= b'9') || c == b'_'
+}
+
 /// Converts a byte character to its corresponding u64 value in the encoding scheme.
 ///
 /// The encoding scheme maps:
-/// - Digits (0-9) to values 53-62
 /// - Uppercase letters (A-Z) to values 1-26
 /// - Lowercase letters (a-z) to values 27-52
+/// - Digits (0-9) to values 53-62
 /// - Underscore (_) to value 63
 /// - Invalid characters to 0
 ///
@@ -22,9 +33,9 @@ pub fn lookup_u64(x: u8) -> u64 {
 /// Converts an encoded u64 value back to its corresponding character.
 ///
 /// The decoding scheme maps:
-/// - Values 53-62 to digits (0-9)
 /// - Values 1-26 to uppercase letters (A-Z)
 /// - Values 27-52 to lowercase letters (a-z)
+/// - Values 53-62 to digits (0-9)
 /// - Value 63 to underscore (_)
 /// - Invalid values to '\0'
 ///

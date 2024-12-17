@@ -1,6 +1,6 @@
 use crate::error_decoding::BinaryDecodingError;
 use crate::error_encoding::BinaryEncodingError;
-use crate::lookup_tables::{lookup_char, lookup_u64};
+use crate::lookup_tables::{lookup_char, lookup_u64, validate_char};
 
 const MAX_LENGTH: usize = 20;
 const BITS_PER_CHAR: usize = 6;
@@ -42,6 +42,17 @@ pub fn encode_str_to_pair_u64(input: &str) -> Result<(u64, u64), BinaryEncodingE
     }
 
     let bytes = input.as_bytes();
+
+    // Validate all characters first
+    for (i, &byte) in bytes.iter().enumerate() {
+        if !validate_char(byte) {
+            return Err(BinaryEncodingError::new(format!(
+                "Invalid character at position {}: {}",
+                i, byte as char
+            )));
+        }
+    }
+
     let mut first: u64 = 0;
     let mut second: u64 = 0;
 
@@ -133,6 +144,14 @@ pub fn decode_pair_64_to_str(encoded: (u64, u64)) -> Result<String, BinaryDecodi
                 value
             )));
         }
+        let ch = c as u8;
+        if !validate_char(ch) {
+            return Err(BinaryDecodingError::new(format!(
+                "Invalid character at position {}: {}",
+                shift / BITS_PER_CHAR,
+                ch
+            )));
+        }
         result.push(c);
         shift += BITS_PER_CHAR;
     }
@@ -150,6 +169,14 @@ pub fn decode_pair_64_to_str(encoded: (u64, u64)) -> Result<String, BinaryDecodi
                 "Invalid encoded value at position {}: {}",
                 CHARS_PER_U64 + shift / BITS_PER_CHAR,
                 value
+            )));
+        }
+        let ch = c as u8;
+        if !validate_char(ch) {
+            return Err(BinaryDecodingError::new(format!(
+                "Invalid character at position {}: {}",
+                CHARS_PER_U64 + shift / BITS_PER_CHAR,
+                ch
             )));
         }
         result.push(c);

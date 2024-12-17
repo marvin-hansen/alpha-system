@@ -1,6 +1,6 @@
 use crate::error_decoding::BinaryDecodingError;
 use crate::error_encoding::BinaryEncodingError;
-use crate::lookup_tables::{lookup_char, lookup_u64};
+use crate::lookup_tables::{lookup_char, lookup_u64, validate_char};
 
 const BITS_PER_CHAR: u32 = 6;
 const CHAR_MASK: u64 = (1 << BITS_PER_CHAR) - 1;
@@ -50,11 +50,7 @@ pub fn encode_str_to_int64(s: &str) -> Result<u64, BinaryEncodingError> {
 
     // Validate all characters first
     for (i, &byte) in bytes.iter().enumerate() {
-        if !((byte >= b'A' && byte <= b'Z')
-            || (byte >= b'a' && byte <= b'z')
-            || (byte >= b'0' && byte <= b'9')
-            || byte == b'_')
-        {
+        if !validate_char(byte) {
             return Err(BinaryEncodingError::new(format!(
                 "Invalid character at position {}: {}",
                 i, byte as char
@@ -152,11 +148,7 @@ pub fn decode_int64_to_str(n: u64) -> Result<String, BinaryDecodingError> {
         // Validate each character
         for (pos, ch) in [(i + 3, ch3), (i + 2, ch2), (i + 1, ch1), (i, ch0)] {
             let c = ch as u8;
-            if !((c >= b'A' && c <= b'Z')
-                || (c >= b'a' && c <= b'z')
-                || (c >= b'0' && c <= b'9')
-                || c == b'_')
-            {
+            if !validate_char(c) {
                 return Err(BinaryDecodingError::new(format!(
                     "Invalid character at position {}: {}",
                     pos, ch
@@ -176,11 +168,7 @@ pub fn decode_int64_to_str(n: u64) -> Result<String, BinaryDecodingError> {
         let c = value & CHAR_MASK;
         let ch = lookup_char(c);
         let c = ch as u8;
-        if !((c >= b'A' && c <= b'Z')
-            || (c >= b'a' && c <= b'z')
-            || (c >= b'0' && c <= b'9')
-            || c == b'_')
-        {
+        if !validate_char(c) {
             return Err(BinaryDecodingError::new(format!(
                 "Invalid character at position {}: {}",
                 i, ch
