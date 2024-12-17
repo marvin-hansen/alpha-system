@@ -127,57 +127,36 @@ pub fn decode_int64_to_str(n: u64) -> Result<String, BinaryDecodingError> {
 
     // Use bit manipulation for faster decoding
     let mut value = n;
+    let mut i = char_count;
 
     // Process 4 characters at a time from right to left
-    let mut i = char_count;
     while i >= 4 {
         i -= 4;
         let chunk = value & ((1 << (BITS_PER_CHAR * 4)) - 1);
         value >>= BITS_PER_CHAR * 4;
 
+        // Extract characters using bit operations
         let c0 = chunk & CHAR_MASK;
         let c1 = (chunk >> BITS_PER_CHAR) & CHAR_MASK;
         let c2 = (chunk >> (BITS_PER_CHAR * 2)) & CHAR_MASK;
         let c3 = (chunk >> (BITS_PER_CHAR * 3)) & CHAR_MASK;
 
-        let ch0 = lookup_char(c0);
-        let ch1 = lookup_char(c1);
-        let ch2 = lookup_char(c2);
-        let ch3 = lookup_char(c3);
-
-        // Validate each character
-        for (pos, ch) in [(i + 3, ch3), (i + 2, ch2), (i + 1, ch1), (i, ch0)] {
-            let c = ch as u8;
-            if !validate_char(c) {
-                return Err(BinaryDecodingError::new(format!(
-                    "Invalid character at position {}: {}",
-                    pos, ch
-                )));
-            }
-        }
-
-        bytes[i] = ch3 as u8;
-        bytes[i + 1] = ch2 as u8;
-        bytes[i + 2] = ch1 as u8;
-        bytes[i + 3] = ch0 as u8;
+        // Convert to characters (lookup table ensures valid characters)
+        bytes[i] = lookup_char(c3) as u8;
+        bytes[i + 1] = lookup_char(c2) as u8;
+        bytes[i + 2] = lookup_char(c1) as u8;
+        bytes[i + 3] = lookup_char(c0) as u8;
     }
 
-    // Handle remaining characters
+    // Handle remaining characters (1-3)
+    let mut shift = 0;
     while i > 0 {
         i -= 1;
-        let c = value & CHAR_MASK;
-        let ch = lookup_char(c);
-        let c = ch as u8;
-        if !validate_char(c) {
-            return Err(BinaryDecodingError::new(format!(
-                "Invalid character at position {}: {}",
-                i, ch
-            )));
-        }
-        bytes[i] = ch as u8;
-        value >>= BITS_PER_CHAR;
+        let c = (value >> shift) & CHAR_MASK;
+        bytes[i] = lookup_char(c) as u8;
+        shift += BITS_PER_CHAR;
     }
 
-    // Convert bytes to string (safe because we only used valid ASCII chars)
-    unsafe { Ok(String::from_utf8_unchecked(bytes)) }
+    // Convert bytes to string (safe because lookup table ensures valid ASCII chars)
+    Ok(unsafe { String::from_utf8_unchecked(bytes) })
 }
