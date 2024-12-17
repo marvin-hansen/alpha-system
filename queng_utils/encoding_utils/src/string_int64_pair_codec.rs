@@ -126,62 +126,133 @@ pub fn decode_pair_64_to_str(encoded: (u64, u64)) -> Result<String, BinaryDecodi
         ));
     }
 
-    // Pre-allocate with exact capacity
-    let mut result = String::with_capacity(MAX_LENGTH);
+    // Pre-allocate buffer with exact size
+    let mut bytes = Vec::with_capacity(MAX_LENGTH);
+    unsafe {
+        bytes.set_len(MAX_LENGTH);
+    }
+    let mut len = 0;
 
-    // Decode first u64 (first 10 characters)
-    let mut shift = 0;
-    while shift < BITS_PER_CHAR * CHARS_PER_U64 {
-        let value = (first >> shift) & CHAR_MASK;
-        if value == 0 {
+    // Process first u64 (first 10 characters) in chunks of 4
+    let mut value = first;
+    let mut pos = 0;
+
+    // Process 4 chars at a time
+    while pos + 4 <= CHARS_PER_U64 {
+        // Extract 4 chars
+        let c0 = value & CHAR_MASK;
+        let c1 = (value >> BITS_PER_CHAR) & CHAR_MASK;
+        let c2 = (value >> (BITS_PER_CHAR * 2)) & CHAR_MASK;
+        let c3 = (value >> (BITS_PER_CHAR * 3)) & CHAR_MASK;
+        value >>= BITS_PER_CHAR * 4;
+
+        // Early exit if we hit a zero
+        if c0 == 0 {
             break;
         }
-        let c = lookup_char(value);
-        if c == '\0' {
-            return Err(BinaryDecodingError::from(format!(
-                "Invalid encoded value at position {}: {}",
-                shift / BITS_PER_CHAR,
-                value
-            )));
+
+        unsafe {
+            // SAFETY: We've pre-allocated MAX_LENGTH and pos is always < CHARS_PER_U64
+            *bytes.get_unchecked_mut(pos) = lookup_char(c0) as u8;
+            if c1 == 0 {
+                len = pos + 1;
+                break;
+            }
+            *bytes.get_unchecked_mut(pos + 1) = lookup_char(c1) as u8;
+            if c2 == 0 {
+                len = pos + 2;
+                break;
+            }
+            *bytes.get_unchecked_mut(pos + 2) = lookup_char(c2) as u8;
+            if c3 == 0 {
+                len = pos + 3;
+                break;
+            }
+            *bytes.get_unchecked_mut(pos + 3) = lookup_char(c3) as u8;
         }
-        let ch = c as u8;
-        if !validate_char(ch) {
-            return Err(BinaryDecodingError::new(format!(
-                "Invalid character at position {}: {}",
-                shift / BITS_PER_CHAR,
-                ch
-            )));
-        }
-        result.push(c);
-        shift += BITS_PER_CHAR;
+
+        pos += 4;
+        len = pos;
     }
 
-    // Decode second u64 (next 10 characters)
-    shift = 0;
-    while shift < BITS_PER_CHAR * CHARS_PER_U64 {
-        let value = (second >> shift) & CHAR_MASK;
-        if value == 0 {
+    // Handle remaining chars in first u64
+    while pos < CHARS_PER_U64 {
+        let c = value & CHAR_MASK;
+        value >>= BITS_PER_CHAR;
+        if c == 0 {
             break;
         }
-        let c = lookup_char(value);
-        if c == '\0' {
-            return Err(BinaryDecodingError::from(format!(
-                "Invalid encoded value at position {}: {}",
-                CHARS_PER_U64 + shift / BITS_PER_CHAR,
-                value
-            )));
+        unsafe {
+            // SAFETY: len is always < MAX_LENGTH since we're processing first u64
+            *bytes.get_unchecked_mut(pos) = lookup_char(c) as u8;
         }
-        let ch = c as u8;
-        if !validate_char(ch) {
-            return Err(BinaryDecodingError::new(format!(
-                "Invalid character at position {}: {}",
-                CHARS_PER_U64 + shift / BITS_PER_CHAR,
-                ch
-            )));
-        }
-        result.push(c);
-        shift += BITS_PER_CHAR;
+        pos += 1;
+        len = pos;
     }
 
-    Ok(result)
+    // Process second u64 if we have more characters
+    if second != 0 && len < MAX_LENGTH {
+        value = second;
+        pos = 0;
+
+        // Process 4 chars at a time
+        while pos + 4 <= CHARS_PER_U64 && len + pos + 4 <= MAX_LENGTH {
+            // Extract 4 chars
+            let c0 = value & CHAR_MASK;
+            let c1 = (value >> BITS_PER_CHAR) & CHAR_MASK;
+            let c2 = (value >> (BITS_PER_CHAR * 2)) & CHAR_MASK;
+            let c3 = (value >> (BITS_PER_CHAR * 3)) & CHAR_MASK;
+            value >>= BITS_PER_CHAR * 4;
+
+            // Early exit if we hit a zero
+            if c0 == 0 {
+                break;
+            }
+
+            unsafe {
+                // SAFETY: We've checked len + pos + 4 <= MAX_LENGTH
+                *bytes.get_unchecked_mut(len + pos) = lookup_char(c0) as u8;
+                if c1 == 0 {
+                    len += pos + 1;
+                    break;
+                }
+                *bytes.get_unchecked_mut(len + pos + 1) = lookup_char(c1) as u8;
+                if c2 == 0 {
+                    len += pos + 2;
+                    break;
+                }
+                *bytes.get_unchecked_mut(len + pos + 2) = lookup_char(c2) as u8;
+                if c3 == 0 {
+                    len += pos + 3;
+                    break;
+                }
+                *bytes.get_unchecked_mut(len + pos + 3) = lookup_char(c3) as u8;
+            }
+
+            pos += 4;
+            len += 4;
+        }
+
+        // Handle remaining chars in second u64
+        while pos < CHARS_PER_U64 && len < MAX_LENGTH {
+            let c = value & CHAR_MASK;
+            value >>= BITS_PER_CHAR;
+            if c == 0 {
+                break;
+            }
+            unsafe {
+                // SAFETY: We've checked len < MAX_LENGTH
+                *bytes.get_unchecked_mut(len) = lookup_char(c) as u8;
+            }
+            len += 1;
+            pos += 1;
+        }
+    }
+
+    // Truncate to actual length and convert to string
+    unsafe {
+        bytes.set_len(len);
+        // SAFETY: All bytes are valid ASCII from lookup table
+        Ok(String::from_utf8_unchecked(bytes))
+    }
 }
