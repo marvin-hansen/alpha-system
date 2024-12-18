@@ -1,2 +1,6 @@
+mod order_cancel_all_ext_tests;
+mod order_cancel_ext_tests;
+mod order_create_ext_tests;
 mod order_id_client_ext_tests;
 mod order_id_exchange_ext_tests;
+mod order_update_ext_tests;

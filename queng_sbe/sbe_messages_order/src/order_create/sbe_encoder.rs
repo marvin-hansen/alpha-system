@@ -2,9 +2,7 @@ use common_order::OrderCreate;
 use sbe_bindings::{message_header_codec, Encoder, MessageType, OrderCreateEncoder, WriteBuf};
 use sbe_types::SbeEncodeError;
 
-pub(crate) fn encode_order_create_message(
-    msg: OrderCreate,
-) -> Result<(usize, Vec<u8>), SbeEncodeError> {
+pub fn encode_order_create_message(msg: OrderCreate) -> Result<(usize, Vec<u8>), SbeEncodeError> {
     // precise buffer size
     let mut buffer = vec![0u8; 100];
 

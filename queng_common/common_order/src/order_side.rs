@@ -1,8 +1,9 @@
 use std::fmt;
 
-#[derive(Debug, Clone, Eq, PartialEq)]
+#[derive(Debug, Default, Clone, Eq, PartialEq)]
 #[repr(u8)]
 pub enum OrderSide {
+    #[default]
     Buy = 0x1_u8,
     Sell = 0x2_u8,
 }

@@ -11,7 +11,6 @@ fn test_order_update_new() {
     let client_order_id = ClientOrderID::new("cl_ord_id".to_string());
     let exchange_order_id = ExchangeOrderID::new("exchange_order_id".to_string());
     let symbol_id = "BTC-USD".to_string();
-    let symbol_id_exchange = "BTCUSD".to_string();
     let order_type = OrderType::Limit;
     let order_side = OrderSide::Buy;
     let time_in_force = TimeInForce::GoodTillCancel;
@@ -25,7 +24,6 @@ fn test_order_update_new() {
         client_order_id,
         exchange_order_id,
         symbol_id,
-        symbol_id_exchange,
         order_type,
         order_side,
         time_in_force,
@@ -39,7 +37,6 @@ fn test_order_update_new() {
     assert_eq!(order_update.client_order_id(), "cl_ord_id");
     assert_eq!(order_update.exchange_order_id(), "exchange_order_id");
     assert_eq!(order_update.symbol_id(), "BTC-USD");
-    assert_eq!(order_update.symbol_id_exchange(), "BTCUSD");
     assert_eq!(order_update.order_type(), &OrderType::Limit);
     assert_eq!(order_update.order_side(), &OrderSide::Buy);
     assert_eq!(order_update.time_in_force(), &TimeInForce::GoodTillCancel);
@@ -56,7 +53,6 @@ fn test_order_update_clone_and_eq() {
         ClientOrderID::new("cl_ord_id".to_string()),
         ExchangeOrderID::new("exchange_order_id".to_string()),
         "BTC-USD".to_string(),
-        "BTCUSD".to_string(),
         OrderType::Limit,
         OrderSide::Buy,
         TimeInForce::GoodTillCancel,
@@ -74,7 +70,6 @@ fn test_order_update_clone_and_eq() {
         ClientOrderID::new("diff_id".to_string()),
         ExchangeOrderID::new("diff_exc_order_id".to_string()),
         "ETH-EUR".to_string(),
-        "ETHEUR".to_string(),
         OrderType::Market,
         OrderSide::Sell,
         TimeInForce::FillOrKill,
@@ -93,7 +88,6 @@ fn test_order_update_display() {
         ClientOrderID::new("cl_ord_id".to_string()),
         ExchangeOrderID::new("exchange_order_id".to_string()),
         "BTC-USD".to_string(),
-        "BTCUSD".to_string(),
         OrderType::Limit,
         OrderSide::Buy,
         TimeInForce::GoodTillCancel,
@@ -106,5 +100,4 @@ fn test_order_update_display() {
     assert!(display_string.contains("cl_ord_id"));
     assert!(display_string.contains("exchange_order_id"));
     assert!(display_string.contains("BTC-USD"));
-    assert!(display_string.contains("BTCUSD"));
 }

@@ -5,14 +5,13 @@ use common_exchange::ExchangeID;
 use rust_decimal::Decimal;
 use std::fmt::Display;
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Default, Clone, PartialEq, Eq)]
 pub struct OrderUpdate {
     exchange_id: ExchangeID,
     client_id: u16,
     client_order_id: ClientOrderID,
     exchange_order_id: ExchangeOrderID,
     symbol_id: String,
-    symbol_id_exchange: String,
     order_type: OrderType,
     order_side: OrderSide,
     time_in_force: TimeInForce,
@@ -29,7 +28,6 @@ impl OrderUpdate {
         client_order_id: ClientOrderID,
         exchange_order_id: ExchangeOrderID,
         symbol_id: String,
-        symbol_id_exchange: String,
         order_type: OrderType,
         order_side: OrderSide,
         time_in_force: TimeInForce,
@@ -43,7 +41,6 @@ impl OrderUpdate {
             client_order_id,
             exchange_order_id,
             symbol_id,
-            symbol_id_exchange,
             order_type,
             order_side,
             time_in_force,
@@ -71,10 +68,6 @@ impl OrderUpdate {
 
     pub fn symbol_id(&self) -> &str {
         &self.symbol_id
-    }
-
-    pub fn symbol_id_exchange(&self) -> &str {
-        &self.symbol_id_exchange
     }
 
     pub fn order_type(&self) -> &OrderType {

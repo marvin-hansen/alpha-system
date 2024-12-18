@@ -18,9 +18,7 @@ use sbe_types::SbeDecodeError;
 /// # Details
 /// Validates message template ID and extracts basic fields including
 /// exchange ID and client ID from the SBE-encoded message.
-pub(crate) fn decode_order_cancel_all_message(
-    buffer: &[u8],
-) -> Result<OrderCancelAll, SbeDecodeError> {
+pub fn decode_order_cancel_all_message(buffer: &[u8]) -> Result<OrderCancelAll, SbeDecodeError> {
     let mut csg = OrderCancelAllDecoder::default();
     let buf = ReadBuf::new(buffer);
 

@@ -1,6 +1,6 @@
 use common_exchange::ExchangeID;
 use common_order::OrderCancel;
-use sbe_messages_order::SbeOrderCancelExtension;
+use sbe_messages_order::{decode_order_cancel_message, encode_order_cancel_message};
 
 #[test]
 fn test_encode_order_cancel_message() {
@@ -11,7 +11,7 @@ fn test_encode_order_cancel_message() {
         "exchange_order_id".to_string(),
     );
 
-    let result = cancel_order.encode_to_sbe();
+    let result = encode_order_cancel_message(cancel_order);
     assert!(result.is_ok());
 
     let (size, buffer) = result.unwrap();
@@ -35,7 +35,9 @@ fn test_decode_order_cancel_message() {
         100, 0, 0, 0,
     ];
 
-    let cancel_order = OrderCancel::decode_from_sbe(encoded.as_slice()).expect("Failed to decode");
+    let cancel_order = decode_order_cancel_message(encoded.as_slice());
+    assert!(cancel_order.is_ok());
+    let cancel_order = cancel_order.unwrap();
     assert_eq!(cancel_order.exchange_id(), ExchangeID::Binance);
     assert_eq!(cancel_order.client_id(), 1);
     assert_eq!(cancel_order.client_order_id(), "clt_order_id");

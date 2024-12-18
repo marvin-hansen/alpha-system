@@ -12,24 +12,24 @@ use encoding_utils::{decode_pair_64_to_str, encode_str_to_pair_u64, DecodingErro
 ///   Returns a `Result` containing the decoded `ExchangeOrderID` or a `DecodingError` if the
 ///   input integer cannot be decoded.
 pub trait ExchangeOrderIdExtension {
-    fn encode_to_binary(self) -> Result<(u64, u64), EncodingError>;
-    fn decode_from_binary(bin: (u64, u64)) -> Result<ExchangeOrderID, DecodingError>;
-}
-
-impl ExchangeOrderIdExtension for ExchangeOrderID {
     /// Encodes a `ExchangeOrderID` into a pair of 64-bit unsigned integers.
     ///
     /// Returns a `Result` containing the encoded value or an `EncodingError` if the
     /// exchange order ID is too long or contains invalid characters.
-    fn encode_to_binary(self) -> Result<(u64, u64), EncodingError> {
-        encode_str_to_pair_u64(self.exchange_order_id())
-    }
+    fn encode_to_binary(self) -> Result<(u64, u64), EncodingError>;
 
     /// Decodes a pair of 64-bit unsigned integers back into a `ExchangeOrderID`.
     ///
     /// Returns a `Result` containing the decoded `ExchangeOrderID` or a `DecodingError` if the
     /// input integer cannot be decoded.
     ///
+    fn decode_from_binary(bin: (u64, u64)) -> Result<ExchangeOrderID, DecodingError>;
+}
+
+impl ExchangeOrderIdExtension for ExchangeOrderID {
+    fn encode_to_binary(self) -> Result<(u64, u64), EncodingError> {
+        encode_str_to_pair_u64(self.exchange_order_id())
+    }
     fn decode_from_binary(bin: (u64, u64)) -> Result<ExchangeOrderID, DecodingError> {
         let decoded = decode_pair_64_to_str(bin)?;
         if decoded.is_empty() {

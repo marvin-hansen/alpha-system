@@ -1,3 +1,2 @@
-pub(crate) mod extension;
-mod sbe_decoder;
-mod sbe_encoder;
+pub(crate) mod sbe_decoder;
+pub(crate) mod sbe_encoder;

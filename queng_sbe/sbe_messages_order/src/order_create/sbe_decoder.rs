@@ -5,7 +5,7 @@ use sbe_bindings::order_create_codec::SBE_TEMPLATE_ID;
 use sbe_bindings::{MessageHeaderDecoder, OrderCreateDecoder, ReadBuf};
 use sbe_types::SbeDecodeError;
 
-pub(crate) fn decode_order_create_message(buffer: &[u8]) -> Result<OrderCreate, SbeDecodeError> {
+pub fn decode_order_create_message(buffer: &[u8]) -> Result<OrderCreate, SbeDecodeError> {
     let mut csg = OrderCreateDecoder::default();
     let buf = ReadBuf::new(buffer);
 
@@ -17,10 +17,10 @@ pub(crate) fn decode_order_create_message(buffer: &[u8]) -> Result<OrderCreate, 
 
     let client_id = csg.client_id();
 
-    let client_order_id = ClientOrderID::from(String::new()); // TODO
+    let client_order_id = ClientOrderID::from("Replace"); // TODO
 
     let exchange_symbol_id = String::new(); // TODO
-                                            //
+
     let order_type = OrderType::from(csg.order_type());
 
     let order_side = OrderSide::from(csg.order_side());
@@ -35,10 +35,10 @@ pub(crate) fn decode_order_create_message(buffer: &[u8]) -> Result<OrderCreate, 
     };
 
     let qty_decoder = csg.order_qty_decoder();
-    let quantity = Decimal::new(qty_decoder.mantissa(), qty_decoder.exponent() as u32);
+    let quantity = Decimal::new(qty_decoder.mantissa(), 9);
 
     let price_decoder = csg.order_price_decoder();
-    let price = Decimal::new(price_decoder.mantissa(), price_decoder.exponent() as u32);
+    let price = Decimal::new(price_decoder.mantissa(), 9);
 
     Ok(OrderCreate::new(
         exchange_id,

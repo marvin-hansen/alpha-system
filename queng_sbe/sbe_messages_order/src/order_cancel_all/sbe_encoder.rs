@@ -16,7 +16,7 @@ use sbe_types::SbeEncodeError;
 /// # Details
 /// Encodes basic order cancellation details including exchange ID and client ID
 /// into a fixed-size binary format using SBE.
-pub(crate) fn encode_order_cancel_all_message(
+pub fn encode_order_cancel_all_message(
     msg: OrderCancelAll,
 ) -> Result<(usize, Vec<u8>), SbeEncodeError> {
     // precise buffer size

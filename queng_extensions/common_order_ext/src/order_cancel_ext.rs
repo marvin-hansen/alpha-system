@@ -1,4 +1,3 @@
-use crate::order_cancel::{sbe_decoder, sbe_encoder};
 use common_order::OrderCancel;
 use sbe_types::{SbeDecodeError, SbeEncodeError};
 
@@ -7,29 +6,6 @@ use sbe_types::{SbeDecodeError, SbeEncodeError};
 /// This trait adds encoding and decoding capabilities to the OrderCancel type,
 /// allowing conversion between the struct and its binary SBE representation.
 ///
-/// # Example
-/// ```
-/// use common_exchange::ExchangeID;
-/// use common_order::OrderCancel;
-/// use sbe_messages_order::SbeOrderCancelExtension;
-///
-/// # fn main() -> Result<(), Box<dyn std::error::Error>> {
-/// // Create an order cancel message
-/// let order = OrderCancel::new(
-///     ExchangeID::Binance,
-///     1234,
-///     "ord123".to_string(),     // client_order_id (max 14 chars)
-///     "exch456".to_string(),    // exchange_order_id (max 20 chars)
-/// );
-///
-/// // Encode the order to SBE binary format
-/// let (size, encoded_data) = order.encode_to_sbe()?;
-///
-/// // Decode the binary data back to OrderCancel
-/// let decoded_order = OrderCancel::decode_from_sbe(&encoded_data)?;
-/// # Ok(())
-/// # }
-/// ```
 pub trait SbeOrderCancelExtension {
     /// Encodes the OrderCancel message into its SBE binary format.
     ///
@@ -53,10 +29,10 @@ pub trait SbeOrderCancelExtension {
 
 impl SbeOrderCancelExtension for OrderCancel {
     fn encode_to_sbe(self) -> Result<(usize, Vec<u8>), SbeEncodeError> {
-        sbe_encoder::encode_order_cancel_message(self)
+        sbe_messages_order::encode_order_cancel_message(self)
     }
 
     fn decode_from_sbe(buf: &[u8]) -> Result<OrderCancel, SbeDecodeError> {
-        sbe_decoder::decode_order_cancel_message(buf)
+        sbe_messages_order::decode_order_cancel_message(buf)
     }
 }

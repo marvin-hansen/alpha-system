@@ -15,7 +15,10 @@ rust_test_suite(
         # Crate to test
         "//alias:common_order_ext",
         # Internal dependencies
+        "//alias:common_exchange",
         "//alias:common_order",
         "//alias:encoding_utils",
+        # External dependencies
+        "//thirdparty/crates:rust_decimal",
     ],
 )

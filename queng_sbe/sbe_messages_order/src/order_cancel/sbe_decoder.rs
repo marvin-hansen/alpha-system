@@ -18,7 +18,7 @@ use sbe_types::{MessageType, SbeDecodeError};
 /// Validates message type, extracts and processes fields including exchange ID,
 /// client ID, client order ID, and exchange order ID. Handles UTF-8 string
 /// processing for order IDs.
-pub(crate) fn decode_order_cancel_message(buffer: &[u8]) -> Result<OrderCancel, SbeDecodeError> {
+pub fn decode_order_cancel_message(buffer: &[u8]) -> Result<OrderCancel, SbeDecodeError> {
     let mut csg = OrderCancelDecoder::default();
     let buf = ReadBuf::new(buffer);
 

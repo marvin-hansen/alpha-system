@@ -14,4 +14,12 @@ workspace = true
 [dependencies]
 common_order = { workspace = true }
 encoding_utils = { workspace = true }
+sbe_messages_order = { workspace = true }
+sbe_types = { workspace = true }
+
+[dev-dependencies]
+# For testing
+common_exchange = { workspace = true }
+rust_decimal = {workspace = true}
+
 
