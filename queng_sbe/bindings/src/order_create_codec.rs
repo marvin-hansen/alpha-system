@@ -3,14 +3,16 @@ use crate::*;
 pub use decoder::OrderCreateDecoder;
 pub use encoder::OrderCreateEncoder;
 
+pub use crate::SBE_SCHEMA_ID;
+pub use crate::SBE_SCHEMA_VERSION;
+pub use crate::SBE_SEMANTIC_VERSION;
+
 pub const SBE_BLOCK_LENGTH: u16 = 80;
 pub const SBE_TEMPLATE_ID: u16 = 401;
-pub const SBE_SCHEMA_ID: u16 = 1;
-pub const SBE_SCHEMA_VERSION: u16 = 1;
-pub const SBE_SEMANTIC_VERSION: &str = "5.2";
 
 pub mod encoder {
     use super::*;
+    use message_header_codec::*;
 
     #[derive(Debug, Default)]
     pub struct OrderCreateEncoder<'a> {
@@ -65,7 +67,7 @@ pub mod encoder {
 
         /// REQUIRED enum
         #[inline]
-        pub fn message_type(&mut self, value: MessageType) {
+        pub fn message_type(&mut self, value: message_type::MessageType) {
             let offset = self.offset;
             self.get_buf_mut().put_u16_at(offset, value as u16)
         }
@@ -78,6 +80,7 @@ pub mod encoder {
         /// - semanticType: null
         /// - encodedOffset: 2
         /// - encodedLength: 1
+        /// - version: 0
         #[inline]
         pub fn exchange_id(&mut self, value: u8) {
             let offset = self.offset + 2;
@@ -92,6 +95,7 @@ pub mod encoder {
         /// - semanticType: null
         /// - encodedOffset: 3
         /// - encodedLength: 2
+        /// - version: 0
         #[inline]
         pub fn client_id(&mut self, value: u16) {
             let offset = self.offset + 3;
@@ -106,6 +110,7 @@ pub mod encoder {
         /// - semanticType: null
         /// - encodedOffset: 5
         /// - encodedLength: 8
+        /// - version: 0
         #[inline]
         pub fn client_order_id(&mut self, value: u64) {
             let offset = self.offset + 5;
@@ -114,9 +119,11 @@ pub mod encoder {
 
         /// COMPOSITE ENCODER
         #[inline]
-        pub fn exchange_symbol_id_encoder(self) -> BinaryString20Encoder<Self> {
+        pub fn exchange_symbol_id_encoder(
+            self,
+        ) -> binary_string_20_codec::BinaryString20Encoder<Self> {
             let offset = self.offset + 13;
-            BinaryString20Encoder::default().wrap(self, offset)
+            binary_string_20_codec::BinaryString20Encoder::default().wrap(self, offset)
         }
 
         /// primitive field 'orderType'
@@ -127,6 +134,7 @@ pub mod encoder {
         /// - semanticType: null
         /// - encodedOffset: 29
         /// - encodedLength: 1
+        /// - version: 0
         #[inline]
         pub fn order_type(&mut self, value: u8) {
             let offset = self.offset + 29;
@@ -141,6 +149,7 @@ pub mod encoder {
         /// - semanticType: null
         /// - encodedOffset: 30
         /// - encodedLength: 1
+        /// - version: 0
         #[inline]
         pub fn order_side(&mut self, value: u8) {
             let offset = self.offset + 30;
@@ -155,6 +164,7 @@ pub mod encoder {
         /// - semanticType: null
         /// - encodedOffset: 31
         /// - encodedLength: 1
+        /// - version: 0
         #[inline]
         pub fn time_in_force(&mut self, value: u8) {
             let offset = self.offset + 31;
@@ -163,36 +173,41 @@ pub mod encoder {
 
         /// COMPOSITE ENCODER
         #[inline]
-        pub fn time_expiry_encoder(self) -> OptionalRustDecimalEncoder<Self> {
+        pub fn time_expiry_encoder(
+            self,
+        ) -> optional_rust_decimal_codec::OptionalRustDecimalEncoder<Self> {
             let offset = self.offset + 32;
-            OptionalRustDecimalEncoder::default().wrap(self, offset)
+            optional_rust_decimal_codec::OptionalRustDecimalEncoder::default().wrap(self, offset)
         }
 
         /// COMPOSITE ENCODER
         #[inline]
-        pub fn order_qty_encoder(self) -> RustDecimalEncoder<Self> {
+        pub fn order_qty_encoder(self) -> rust_decimal_codec::RustDecimalEncoder<Self> {
             let offset = self.offset + 44;
-            RustDecimalEncoder::default().wrap(self, offset)
+            rust_decimal_codec::RustDecimalEncoder::default().wrap(self, offset)
         }
 
         /// COMPOSITE ENCODER
         #[inline]
-        pub fn order_price_encoder(self) -> RustDecimalEncoder<Self> {
+        pub fn order_price_encoder(self) -> rust_decimal_codec::RustDecimalEncoder<Self> {
             let offset = self.offset + 56;
-            RustDecimalEncoder::default().wrap(self, offset)
+            rust_decimal_codec::RustDecimalEncoder::default().wrap(self, offset)
         }
 
         /// COMPOSITE ENCODER
         #[inline]
-        pub fn order_stop_price_encoder(self) -> OptionalRustDecimalEncoder<Self> {
+        pub fn order_stop_price_encoder(
+            self,
+        ) -> optional_rust_decimal_codec::OptionalRustDecimalEncoder<Self> {
             let offset = self.offset + 68;
-            OptionalRustDecimalEncoder::default().wrap(self, offset)
+            optional_rust_decimal_codec::OptionalRustDecimalEncoder::default().wrap(self, offset)
         }
     }
 } // end encoder
 
 pub mod decoder {
     use super::*;
+    use message_header_codec::*;
 
     #[derive(Clone, Copy, Debug, Default)]
     pub struct OrderCreateDecoder<'a> {
@@ -202,6 +217,13 @@ pub mod decoder {
         limit: usize,
         pub acting_block_length: u16,
         pub acting_version: u16,
+    }
+
+    impl<'a> ActingVersion for OrderCreateDecoder<'a> {
+        #[inline]
+        fn acting_version(&self) -> u16 {
+            self.acting_version
+        }
     }
 
     impl<'a> Reader<'a> for OrderCreateDecoder<'a> {
@@ -246,14 +268,14 @@ pub mod decoder {
             self.limit - self.offset
         }
 
-        pub fn header(self, mut header: MessageHeaderDecoder<ReadBuf<'a>>) -> Self {
+        pub fn header(self, mut header: MessageHeaderDecoder<ReadBuf<'a>>, offset: usize) -> Self {
             debug_assert_eq!(SBE_TEMPLATE_ID, header.template_id());
             let acting_block_length = header.block_length();
             let acting_version = header.version();
 
             self.wrap(
                 header.parent().unwrap(),
-                message_header_codec::ENCODED_LENGTH,
+                offset + message_header_codec::ENCODED_LENGTH,
                 acting_block_length,
                 acting_version,
             )
@@ -261,7 +283,7 @@ pub mod decoder {
 
         /// REQUIRED enum
         #[inline]
-        pub fn message_type(&self) -> MessageType {
+        pub fn message_type(&self) -> message_type::MessageType {
             self.get_buf().get_u16_at(self.offset).into()
         }
 
@@ -285,9 +307,11 @@ pub mod decoder {
 
         /// COMPOSITE DECODER
         #[inline]
-        pub fn exchange_symbol_id_decoder(self) -> BinaryString20Decoder<Self> {
+        pub fn exchange_symbol_id_decoder(
+            self,
+        ) -> binary_string_20_codec::BinaryString20Decoder<Self> {
             let offset = self.offset + 13;
-            BinaryString20Decoder::default().wrap(self, offset)
+            binary_string_20_codec::BinaryString20Decoder::default().wrap(self, offset)
         }
 
         /// primitive field - 'REQUIRED'
@@ -310,30 +334,34 @@ pub mod decoder {
 
         /// COMPOSITE DECODER
         #[inline]
-        pub fn time_expiry_decoder(self) -> OptionalRustDecimalDecoder<Self> {
+        pub fn time_expiry_decoder(
+            self,
+        ) -> optional_rust_decimal_codec::OptionalRustDecimalDecoder<Self> {
             let offset = self.offset + 32;
-            OptionalRustDecimalDecoder::default().wrap(self, offset)
+            optional_rust_decimal_codec::OptionalRustDecimalDecoder::default().wrap(self, offset)
         }
 
         /// COMPOSITE DECODER
         #[inline]
-        pub fn order_qty_decoder(self) -> RustDecimalDecoder<Self> {
+        pub fn order_qty_decoder(self) -> rust_decimal_codec::RustDecimalDecoder<Self> {
             let offset = self.offset + 44;
-            RustDecimalDecoder::default().wrap(self, offset)
+            rust_decimal_codec::RustDecimalDecoder::default().wrap(self, offset)
         }
 
         /// COMPOSITE DECODER
         #[inline]
-        pub fn order_price_decoder(self) -> RustDecimalDecoder<Self> {
+        pub fn order_price_decoder(self) -> rust_decimal_codec::RustDecimalDecoder<Self> {
             let offset = self.offset + 56;
-            RustDecimalDecoder::default().wrap(self, offset)
+            rust_decimal_codec::RustDecimalDecoder::default().wrap(self, offset)
         }
 
         /// COMPOSITE DECODER
         #[inline]
-        pub fn order_stop_price_decoder(self) -> OptionalRustDecimalDecoder<Self> {
+        pub fn order_stop_price_decoder(
+            self,
+        ) -> optional_rust_decimal_codec::OptionalRustDecimalDecoder<Self> {
             let offset = self.offset + 68;
-            OptionalRustDecimalDecoder::default().wrap(self, offset)
+            optional_rust_decimal_codec::OptionalRustDecimalDecoder::default().wrap(self, offset)
         }
     }
 } // end decoder

@@ -8,8 +8,8 @@ fn test_order_new_single_with_expiry() {
     let order = OrderCreate::new(
         ExchangeID::Binance,
         1, // client_order_id
-        "cl_ord_id".to_string().into(),
-        "ETHUSD".to_string(),
+        "cl_ord_id".into(),
+        "ETHUSD".into(),
         OrderType::Market,
         OrderSide::Sell,
         TimeInForce::GoodTillTimeExchange,
@@ -30,8 +30,8 @@ fn test_order_new_single_display() {
     let order = OrderCreate::new(
         ExchangeID::Binance,
         1, // client_order_id
-        "cl_ord_id".to_string().into(),
-        "BTCUSD".to_string(),
+        "cl_ord_id".into(),
+        "BTCUSD".into(),
         OrderType::Limit,
         OrderSide::Buy,
         TimeInForce::GoodTillCancel,
@@ -55,8 +55,8 @@ fn test_order_new_single_clone_and_eq() {
     let original = OrderCreate::new(
         ExchangeID::Binance,
         1, // client_order_id
-        "ord_id".to_string().into(),
-        "BTCUSD".to_string(),
+        "ord_id".into(),
+        "BTCUSD".into(),
         OrderType::Limit,
         OrderSide::Buy,
         TimeInForce::GoodTillCancel,
@@ -70,9 +70,9 @@ fn test_order_new_single_clone_and_eq() {
 
     let different_order = OrderCreate::new(
         ExchangeID::default(),
-        42,                           // client_id
-        "diff_id".to_string().into(), // Different order ID
-        "BTCUSD".to_string(),
+        42,               // client_id
+        "diff_id".into(), // Different order ID
+        "BTCUSD".into(),
         OrderType::Limit,
         OrderSide::Buy,
         TimeInForce::GoodTillCancel,
@@ -89,8 +89,8 @@ fn test_order_new_single_with_different_exchanges() {
     let binance_order = OrderCreate::new(
         ExchangeID::Binance,
         1,
-        "cl_ord_id".to_string().into(), // client_order_id
-        "BTCUSD".to_string(),
+        "cl_ord_id".into(), // client_order_id
+        "BTCUSD".into(),
         OrderType::Limit,
         OrderSide::Buy,
         TimeInForce::GoodTillCancel,
@@ -102,8 +102,8 @@ fn test_order_new_single_with_different_exchanges() {
     let kraken_order = OrderCreate::new(
         ExchangeID::Kraken,
         1, // client_order_id
-        "cl_ord_id".to_string().into(),
-        "BTCUSD".to_string(),
+        "cl_ord_id".into(),
+        "BTCUSD".into(),
         OrderType::Limit,
         OrderSide::Buy,
         TimeInForce::GoodTillCancel,

@@ -9,7 +9,7 @@ fn test_order_update_extension() {
         1, // client_order_id
         "cl_ord_id".to_string().into(),
         "exchange_oder_id".into(),
-        "BTCUSD".to_string(),
+        "BTCUSD".into(),
         OrderType::Limit,
         OrderSide::Buy,
         TimeInForce::GoodTillCancel,

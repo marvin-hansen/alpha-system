@@ -1,5 +1,5 @@
 use crate::order_id_client::ClientOrderID;
-use crate::{OrderSide, OrderType, TimeInForce};
+use crate::{OrderExchangeSymbol, OrderSide, OrderType, TimeInForce};
 use common_exchange::ExchangeID;
 use rust_decimal::Decimal;
 use std::fmt::Display;
@@ -9,7 +9,7 @@ pub struct OrderCreate {
     exchange_id: ExchangeID,
     client_id: u16,
     client_order_id: ClientOrderID,
-    symbol_id_exchange: String,
+    symbol_id_exchange: OrderExchangeSymbol,
     order_type: OrderType,
     order_side: OrderSide,
     order_time_in_force: TimeInForce,
@@ -24,7 +24,7 @@ impl OrderCreate {
         exchange_id: ExchangeID,
         client_id: u16,
         client_order_id: ClientOrderID,
-        symbol_id_exchange: String,
+        symbol_id_exchange: OrderExchangeSymbol,
         order_type: OrderType,
         order_side: OrderSide,
         order_time_in_force: TimeInForce,
@@ -55,11 +55,11 @@ impl OrderCreate {
         self.client_id
     }
 
-    pub fn client_order_id(&self) -> &str {
-        self.client_order_id.client_order_id()
+    pub fn client_order_id(&self) -> &ClientOrderID {
+        &self.client_order_id
     }
 
-    pub fn symbol_id_exchange(&self) -> &str {
+    pub fn symbol_id_exchange(&self) -> &OrderExchangeSymbol {
         &self.symbol_id_exchange
     }
 

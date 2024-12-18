@@ -1,5 +1,7 @@
 use common_exchange::ExchangeID;
-use common_order::{ClientOrderID, OrderCreate, OrderSide, OrderType, TimeInForce};
+use common_order::{
+    ClientOrderID, OrderCreate, OrderExchangeSymbol, OrderSide, OrderType, TimeInForce,
+};
 use rust_decimal::Decimal;
 use sbe_bindings::order_create_codec::SBE_TEMPLATE_ID;
 use sbe_bindings::{MessageHeaderDecoder, OrderCreateDecoder, ReadBuf};
@@ -17,9 +19,12 @@ pub fn decode_order_create_message(buffer: &[u8]) -> Result<OrderCreate, SbeDeco
 
     let client_id = csg.client_id();
 
-    let client_order_id = ClientOrderID::from("Replace"); // TODO
+    let client_order_id = ClientOrderID::from(csg.client_order_id());
 
-    let exchange_symbol_id = String::new(); // TODO
+    let decoder = csg.exchange_symbol_id_decoder();
+
+    let (first, second) = (decoder.first(), decoder.second());
+    let exchange_symbol_id = OrderExchangeSymbol::from((first, second));
 
     let order_type = OrderType::from(csg.order_type());
 
@@ -28,17 +33,17 @@ pub fn decode_order_create_message(buffer: &[u8]) -> Result<OrderCreate, SbeDeco
     let order_time_in_force = TimeInForce::from(csg.time_in_force());
 
     let time_expiry_decoder = csg.time_expiry_decoder();
-    let time_expiry = if time_expiry_decoder.mantissa().is_some() {
-        Some(time_expiry_decoder.mantissa().unwrap() as u64)
+    let time_expiry = if time_expiry_decoder.num().is_some() {
+        Some(time_expiry_decoder.num().unwrap() as u64)
     } else {
         None
     };
 
     let qty_decoder = csg.order_qty_decoder();
-    let quantity = Decimal::new(qty_decoder.mantissa(), 9);
+    let quantity = Decimal::new(qty_decoder.num(), qty_decoder.scale());
 
     let price_decoder = csg.order_price_decoder();
-    let price = Decimal::new(price_decoder.mantissa(), 9);
+    let price = Decimal::new(price_decoder.num(), price_decoder.scale());
 
     Ok(OrderCreate::new(
         exchange_id,

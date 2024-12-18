@@ -8,7 +8,7 @@ use rust_decimal::Decimal;
 fn test_order_update_new() {
     let exchange_id = ExchangeID::Binance;
     let client_id = 1;
-    let client_order_id = ClientOrderID::new("cl_ord_id".to_string());
+    let client_order_id = ClientOrderID::new("cl_ord_id");
     let exchange_order_id = ExchangeOrderID::new("exchange_order_id".to_string());
     let symbol_id = "BTC-USD".to_string();
     let order_type = OrderType::Limit;
@@ -50,7 +50,7 @@ fn test_order_update_clone_and_eq() {
     let original = OrderUpdate::new(
         ExchangeID::Binance,
         1,
-        ClientOrderID::new("cl_ord_id".to_string()),
+        ClientOrderID::new("cl_ord_id"),
         ExchangeOrderID::new("exchange_order_id".to_string()),
         "BTC-USD".to_string(),
         OrderType::Limit,
@@ -67,7 +67,7 @@ fn test_order_update_clone_and_eq() {
     let different = OrderUpdate::new(
         ExchangeID::Kraken,
         2,
-        ClientOrderID::new("diff_id".to_string()),
+        ClientOrderID::new("diff_id"),
         ExchangeOrderID::new("diff_exc_order_id".to_string()),
         "ETH-EUR".to_string(),
         OrderType::Market,
@@ -85,7 +85,7 @@ fn test_order_update_display() {
     let order_update = OrderUpdate::new(
         ExchangeID::Binance,
         1,
-        ClientOrderID::new("cl_ord_id".to_string()),
+        ClientOrderID::new("cl_ord_id"),
         ExchangeOrderID::new("exchange_order_id".to_string()),
         "BTC-USD".to_string(),
         OrderType::Limit,

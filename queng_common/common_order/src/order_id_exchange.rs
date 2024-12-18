@@ -1,6 +1,9 @@
+use encoding_utils::encode_str_to_pair_u64;
+
 #[derive(Default, Debug, Clone, PartialEq, Eq)]
 pub struct ExchangeOrderID {
     exchange_order_id: String,
+    exchange_order_id_binary: (u64, u64),
 }
 
 impl ExchangeOrderID {
@@ -17,13 +20,23 @@ impl ExchangeOrderID {
             panic!("Exchange Order ID is too long. Max length is 20");
         }
 
-        Self { exchange_order_id }
+        let exchange_order_id_binary =
+            encode_str_to_pair_u64(&exchange_order_id).expect("Failed to encode Exchange Order ID");
+
+        Self {
+            exchange_order_id,
+            exchange_order_id_binary,
+        }
     }
 }
 
 impl ExchangeOrderID {
     pub fn exchange_order_id(&self) -> &str {
         &self.exchange_order_id
+    }
+
+    pub fn exchange_order_id_binary(&self) -> &(u64, u64) {
+        &self.exchange_order_id_binary
     }
 }
 

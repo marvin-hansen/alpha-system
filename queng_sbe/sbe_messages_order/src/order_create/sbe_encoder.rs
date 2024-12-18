@@ -1,5 +1,7 @@
 use common_order::OrderCreate;
-use sbe_bindings::{message_header_codec, Encoder, MessageType, OrderCreateEncoder, WriteBuf};
+use sbe_bindings::{
+    message_header_codec, BinaryString20Encoder, Encoder, MessageType, OrderCreateEncoder, WriteBuf,
+};
 use sbe_types::SbeEncodeError;
 
 pub fn encode_order_create_message(msg: OrderCreate) -> Result<(usize, Vec<u8>), SbeEncodeError> {
@@ -21,16 +23,20 @@ pub fn encode_order_create_message(msg: OrderCreate) -> Result<(usize, Vec<u8>),
 
     csg.client_id(msg.client_id());
 
-    // Convert string symbol id into fixed sized char [u8; 14]
-    let mut byte_array = [0u8; 14];
-    byte_array[..msg.client_order_id().len()].copy_from_slice(msg.client_order_id().as_bytes());
-    csg.client_order_id(byte_array);
+    csg.client_order_id(msg.client_order_id().client_order_id_binary());
 
-    // Convert string symbol id into fixed sized char [u8; 20]
-    let mut byte_array = [0u8; 20];
-    byte_array[..msg.symbol_id_exchange().len()]
-        .copy_from_slice(msg.symbol_id_exchange().as_bytes());
-    csg.exchange_symbol_id(byte_array);
+    let (first, second) = msg.symbol_id_exchange().exchange_order_id_binary();
+
+    let mut symbol_id_encoder: BinaryString20Encoder<OrderCreateEncoder> =
+        BinaryString20Encoder::default();
+    //
+    //
+    symbol_id_encoder.first(first);
+    symbol_id_encoder.second(second);
+
+    symbol_id_encoder
+        .parent()
+        .expect("Failed to encode symbol id");
 
     csg.order_type(msg.order_type().into());
 

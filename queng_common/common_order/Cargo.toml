@@ -15,6 +15,7 @@ workspace = true
 [dependencies]
 # Internal crates
 common_exchange = {workspace = true}
+encoding_utils = { workspace = true }
 # External crates
 chrono = { workspace = true }
 rust_decimal = { workspace = true }

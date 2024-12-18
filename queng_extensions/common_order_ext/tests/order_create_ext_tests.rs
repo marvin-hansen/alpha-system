@@ -1,5 +1,7 @@
 use common_exchange::ExchangeID;
-use common_order::{OrderCreate, OrderSide, OrderType, TimeInForce};
+use common_order::{
+    ClientOrderID, OrderCreate, OrderExchangeSymbol, OrderSide, OrderType, TimeInForce,
+};
 use common_order_ext::SbeOrderCreateExtension;
 use rust_decimal::Decimal;
 
@@ -8,8 +10,8 @@ fn test_order_create_extension() {
     let order = OrderCreate::new(
         ExchangeID::Binance,
         1, // client_order_id
-        "cl_ord_id".to_string().into(),
-        "BTCUSD".to_string(),
+        ClientOrderID::new("cl_ord_id"),
+        OrderExchangeSymbol::new("BTCUSD"),
         OrderType::Limit,
         OrderSide::Buy,
         TimeInForce::GoodTillCancel,
@@ -21,7 +23,14 @@ fn test_order_create_extension() {
     // Full encoding / decoding test suite is in
     // queng_sbe/sbe_messages_order/tests/order_create
 
-    let encoded = order.clone().encode_to_sbe().unwrap();
-    let decoded = OrderCreate::decode_from_sbe(encoded.1.as_slice()).unwrap();
+    let result = order.clone().encode_to_sbe();
+    assert!(result.is_ok());
+
+    let (_, encoded) = result.unwrap();
+
+    let result = OrderCreate::decode_from_sbe(encoded.as_slice());
+    assert!(result.is_ok());
+
+    let decoded = result.unwrap();
     assert_eq!(order.client_id(), decoded.client_id());
 }

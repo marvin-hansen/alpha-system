@@ -1,33 +1,35 @@
 use crate::*;
 
-pub use decoder::OrderCreateDecoder;
-pub use encoder::OrderCreateEncoder;
+pub use decoder::OrderUpdateDecoder;
+pub use encoder::OrderUpdateEncoder;
 
-pub const SBE_BLOCK_LENGTH: u16 = 80;
-pub const SBE_TEMPLATE_ID: u16 = 401;
-pub const SBE_SCHEMA_ID: u16 = 1;
-pub const SBE_SCHEMA_VERSION: u16 = 1;
-pub const SBE_SEMANTIC_VERSION: &str = "5.2";
+pub use crate::SBE_SCHEMA_ID;
+pub use crate::SBE_SCHEMA_VERSION;
+pub use crate::SBE_SEMANTIC_VERSION;
+
+pub const SBE_BLOCK_LENGTH: u16 = 94;
+pub const SBE_TEMPLATE_ID: u16 = 402;
 
 pub mod encoder {
     use super::*;
+    use message_header_codec::*;
 
     #[derive(Debug, Default)]
-    pub struct OrderCreateEncoder<'a> {
+    pub struct OrderUpdateEncoder<'a> {
         buf: WriteBuf<'a>,
         initial_offset: usize,
         offset: usize,
         limit: usize,
     }
 
-    impl<'a> Writer<'a> for OrderCreateEncoder<'a> {
+    impl<'a> Writer<'a> for OrderUpdateEncoder<'a> {
         #[inline]
         fn get_buf_mut(&mut self) -> &mut WriteBuf<'a> {
             &mut self.buf
         }
     }
 
-    impl<'a> Encoder<'a> for OrderCreateEncoder<'a> {
+    impl<'a> Encoder<'a> for OrderUpdateEncoder<'a> {
         #[inline]
         fn get_limit(&self) -> usize {
             self.limit
@@ -39,7 +41,7 @@ pub mod encoder {
         }
     }
 
-    impl<'a> OrderCreateEncoder<'a> {
+    impl<'a> OrderUpdateEncoder<'a> {
         pub fn wrap(mut self, buf: WriteBuf<'a>, offset: usize) -> Self {
             let limit = offset + SBE_BLOCK_LENGTH as usize;
             self.buf = buf;
@@ -65,7 +67,7 @@ pub mod encoder {
 
         /// REQUIRED enum
         #[inline]
-        pub fn message_type(&mut self, value: MessageType) {
+        pub fn message_type(&mut self, value: message_type::MessageType) {
             let offset = self.offset;
             self.get_buf_mut().put_u16_at(offset, value as u16)
         }
@@ -78,6 +80,7 @@ pub mod encoder {
         /// - semanticType: null
         /// - encodedOffset: 2
         /// - encodedLength: 1
+        /// - version: 0
         #[inline]
         pub fn exchange_id(&mut self, value: u8) {
             let offset = self.offset + 2;
@@ -92,31 +95,59 @@ pub mod encoder {
         /// - semanticType: null
         /// - encodedOffset: 3
         /// - encodedLength: 2
+        /// - version: 0
         #[inline]
         pub fn client_id(&mut self, value: u16) {
             let offset = self.offset + 3;
             self.get_buf_mut().put_u16_at(offset, value);
         }
 
-        /// primitive field 'clientOrderID'
-        /// - min value: 0
-        /// - max value: -2
-        /// - null value: -1
-        /// - characterEncoding: null
-        /// - semanticType: null
+        /// primitive array field 'clientOrderID'
+        /// - min value: 32
+        /// - max value: 126
+        /// - null value: 0
+        /// - characterEncoding: US-ASCII
+        /// - semanticType: String
         /// - encodedOffset: 5
-        /// - encodedLength: 8
+        /// - encodedLength: 14
+        /// - version: 0
         #[inline]
-        pub fn client_order_id(&mut self, value: u64) {
+        pub fn client_order_id(&mut self, value: &[u8; 14]) {
             let offset = self.offset + 5;
-            self.get_buf_mut().put_u64_at(offset, value);
+            let buf = self.get_buf_mut();
+            buf.put_bytes_at(offset, value);
         }
 
-        /// COMPOSITE ENCODER
+        /// primitive array field 'exchangeOrderID'
+        /// - min value: 32
+        /// - max value: 126
+        /// - null value: 0
+        /// - characterEncoding: US-ASCII
+        /// - semanticType: String
+        /// - encodedOffset: 19
+        /// - encodedLength: 20
+        /// - version: 0
         #[inline]
-        pub fn exchange_symbol_id_encoder(self) -> BinaryString20Encoder<Self> {
-            let offset = self.offset + 13;
-            BinaryString20Encoder::default().wrap(self, offset)
+        pub fn exchange_order_id(&mut self, value: &[u8; 20]) {
+            let offset = self.offset + 19;
+            let buf = self.get_buf_mut();
+            buf.put_bytes_at(offset, value);
+        }
+
+        /// primitive array field 'exchangeSymbolID'
+        /// - min value: 32
+        /// - max value: 126
+        /// - null value: 0
+        /// - characterEncoding: US-ASCII
+        /// - semanticType: String
+        /// - encodedOffset: 39
+        /// - encodedLength: 20
+        /// - version: 0
+        #[inline]
+        pub fn exchange_symbol_id(&mut self, value: &[u8; 20]) {
+            let offset = self.offset + 39;
+            let buf = self.get_buf_mut();
+            buf.put_bytes_at(offset, value);
         }
 
         /// primitive field 'orderType'
@@ -125,11 +156,12 @@ pub mod encoder {
         /// - null value: 255
         /// - characterEncoding: null
         /// - semanticType: null
-        /// - encodedOffset: 29
+        /// - encodedOffset: 59
         /// - encodedLength: 1
+        /// - version: 0
         #[inline]
         pub fn order_type(&mut self, value: u8) {
-            let offset = self.offset + 29;
+            let offset = self.offset + 59;
             self.get_buf_mut().put_u8_at(offset, value);
         }
 
@@ -139,11 +171,12 @@ pub mod encoder {
         /// - null value: 255
         /// - characterEncoding: null
         /// - semanticType: null
-        /// - encodedOffset: 30
+        /// - encodedOffset: 60
         /// - encodedLength: 1
+        /// - version: 0
         #[inline]
         pub fn order_side(&mut self, value: u8) {
-            let offset = self.offset + 30;
+            let offset = self.offset + 60;
             self.get_buf_mut().put_u8_at(offset, value);
         }
 
@@ -153,49 +186,57 @@ pub mod encoder {
         /// - null value: 255
         /// - characterEncoding: null
         /// - semanticType: null
-        /// - encodedOffset: 31
+        /// - encodedOffset: 61
         /// - encodedLength: 1
+        /// - version: 0
         #[inline]
         pub fn time_in_force(&mut self, value: u8) {
-            let offset = self.offset + 31;
+            let offset = self.offset + 61;
             self.get_buf_mut().put_u8_at(offset, value);
         }
 
         /// COMPOSITE ENCODER
         #[inline]
-        pub fn time_expiry_encoder(self) -> OptionalRustDecimalEncoder<Self> {
-            let offset = self.offset + 32;
-            OptionalRustDecimalEncoder::default().wrap(self, offset)
+        pub fn time_expiry_encoder(
+            self,
+        ) -> optional_decimal_encoding_codec::OptionalDecimalEncodingEncoder<Self> {
+            let offset = self.offset + 62;
+            optional_decimal_encoding_codec::OptionalDecimalEncodingEncoder::default()
+                .wrap(self, offset)
         }
 
         /// COMPOSITE ENCODER
         #[inline]
-        pub fn order_qty_encoder(self) -> RustDecimalEncoder<Self> {
-            let offset = self.offset + 44;
-            RustDecimalEncoder::default().wrap(self, offset)
+        pub fn order_qty_encoder(self) -> decimal_qty_codec::DecimalQtyEncoder<Self> {
+            let offset = self.offset + 70;
+            decimal_qty_codec::DecimalQtyEncoder::default().wrap(self, offset)
         }
 
         /// COMPOSITE ENCODER
         #[inline]
-        pub fn order_price_encoder(self) -> RustDecimalEncoder<Self> {
-            let offset = self.offset + 56;
-            RustDecimalEncoder::default().wrap(self, offset)
+        pub fn order_price_encoder(self) -> decimal_price_codec::DecimalPriceEncoder<Self> {
+            let offset = self.offset + 78;
+            decimal_price_codec::DecimalPriceEncoder::default().wrap(self, offset)
         }
 
         /// COMPOSITE ENCODER
         #[inline]
-        pub fn order_stop_price_encoder(self) -> OptionalRustDecimalEncoder<Self> {
-            let offset = self.offset + 68;
-            OptionalRustDecimalEncoder::default().wrap(self, offset)
+        pub fn order_stop_price_encoder(
+            self,
+        ) -> optional_decimal_encoding_codec::OptionalDecimalEncodingEncoder<Self> {
+            let offset = self.offset + 86;
+            optional_decimal_encoding_codec::OptionalDecimalEncodingEncoder::default()
+                .wrap(self, offset)
         }
     }
 } // end encoder
 
 pub mod decoder {
     use super::*;
+    use message_header_codec::*;
 
     #[derive(Clone, Copy, Debug, Default)]
-    pub struct OrderCreateDecoder<'a> {
+    pub struct OrderUpdateDecoder<'a> {
         buf: ReadBuf<'a>,
         initial_offset: usize,
         offset: usize,
@@ -204,14 +245,21 @@ pub mod decoder {
         pub acting_version: u16,
     }
 
-    impl<'a> Reader<'a> for OrderCreateDecoder<'a> {
+    impl<'a> ActingVersion for OrderUpdateDecoder<'a> {
+        #[inline]
+        fn acting_version(&self) -> u16 {
+            self.acting_version
+        }
+    }
+
+    impl<'a> Reader<'a> for OrderUpdateDecoder<'a> {
         #[inline]
         fn get_buf(&self) -> &ReadBuf<'a> {
             &self.buf
         }
     }
 
-    impl<'a> Decoder<'a> for OrderCreateDecoder<'a> {
+    impl<'a> Decoder<'a> for OrderUpdateDecoder<'a> {
         #[inline]
         fn get_limit(&self) -> usize {
             self.limit
@@ -223,7 +271,7 @@ pub mod decoder {
         }
     }
 
-    impl<'a> OrderCreateDecoder<'a> {
+    impl<'a> OrderUpdateDecoder<'a> {
         pub fn wrap(
             mut self,
             buf: ReadBuf<'a>,
@@ -246,14 +294,14 @@ pub mod decoder {
             self.limit - self.offset
         }
 
-        pub fn header(self, mut header: MessageHeaderDecoder<ReadBuf<'a>>) -> Self {
+        pub fn header(self, mut header: MessageHeaderDecoder<ReadBuf<'a>>, offset: usize) -> Self {
             debug_assert_eq!(SBE_TEMPLATE_ID, header.template_id());
             let acting_block_length = header.block_length();
             let acting_version = header.version();
 
             self.wrap(
                 header.parent().unwrap(),
-                message_header_codec::ENCODED_LENGTH,
+                offset + message_header_codec::ENCODED_LENGTH,
                 acting_block_length,
                 acting_version,
             )
@@ -261,7 +309,7 @@ pub mod decoder {
 
         /// REQUIRED enum
         #[inline]
-        pub fn message_type(&self) -> MessageType {
+        pub fn message_type(&self) -> message_type::MessageType {
             self.get_buf().get_u16_at(self.offset).into()
         }
 
@@ -277,63 +325,74 @@ pub mod decoder {
             self.get_buf().get_u16_at(self.offset + 3)
         }
 
-        /// primitive field - 'REQUIRED'
         #[inline]
-        pub fn client_order_id(&self) -> u64 {
-            self.get_buf().get_u64_at(self.offset + 5)
+        pub fn client_order_id(&self) -> [u8; 14] {
+            let buf = self.get_buf();
+            ReadBuf::get_bytes_at(buf.data, self.offset + 5)
         }
 
-        /// COMPOSITE DECODER
         #[inline]
-        pub fn exchange_symbol_id_decoder(self) -> BinaryString20Decoder<Self> {
-            let offset = self.offset + 13;
-            BinaryString20Decoder::default().wrap(self, offset)
+        pub fn exchange_order_id(&self) -> [u8; 20] {
+            let buf = self.get_buf();
+            ReadBuf::get_bytes_at(buf.data, self.offset + 19)
+        }
+
+        #[inline]
+        pub fn exchange_symbol_id(&self) -> [u8; 20] {
+            let buf = self.get_buf();
+            ReadBuf::get_bytes_at(buf.data, self.offset + 39)
         }
 
         /// primitive field - 'REQUIRED'
         #[inline]
         pub fn order_type(&self) -> u8 {
-            self.get_buf().get_u8_at(self.offset + 29)
+            self.get_buf().get_u8_at(self.offset + 59)
         }
 
         /// primitive field - 'REQUIRED'
         #[inline]
         pub fn order_side(&self) -> u8 {
-            self.get_buf().get_u8_at(self.offset + 30)
+            self.get_buf().get_u8_at(self.offset + 60)
         }
 
         /// primitive field - 'REQUIRED'
         #[inline]
         pub fn time_in_force(&self) -> u8 {
-            self.get_buf().get_u8_at(self.offset + 31)
+            self.get_buf().get_u8_at(self.offset + 61)
         }
 
         /// COMPOSITE DECODER
         #[inline]
-        pub fn time_expiry_decoder(self) -> OptionalRustDecimalDecoder<Self> {
-            let offset = self.offset + 32;
-            OptionalRustDecimalDecoder::default().wrap(self, offset)
+        pub fn time_expiry_decoder(
+            self,
+        ) -> optional_decimal_encoding_codec::OptionalDecimalEncodingDecoder<Self> {
+            let offset = self.offset + 62;
+            optional_decimal_encoding_codec::OptionalDecimalEncodingDecoder::default()
+                .wrap(self, offset)
         }
 
         /// COMPOSITE DECODER
         #[inline]
-        pub fn order_qty_decoder(self) -> RustDecimalDecoder<Self> {
-            let offset = self.offset + 44;
-            RustDecimalDecoder::default().wrap(self, offset)
+        pub fn order_qty_decoder(self) -> decimal_qty_codec::DecimalQtyDecoder<Self> {
+            let offset = self.offset + 70;
+            decimal_qty_codec::DecimalQtyDecoder::default().wrap(self, offset)
         }
 
         /// COMPOSITE DECODER
         #[inline]
-        pub fn order_price_decoder(self) -> RustDecimalDecoder<Self> {
-            let offset = self.offset + 56;
-            RustDecimalDecoder::default().wrap(self, offset)
+        pub fn order_price_decoder(self) -> decimal_price_codec::DecimalPriceDecoder<Self> {
+            let offset = self.offset + 78;
+            decimal_price_codec::DecimalPriceDecoder::default().wrap(self, offset)
         }
 
         /// COMPOSITE DECODER
         #[inline]
-        pub fn order_stop_price_decoder(self) -> OptionalRustDecimalDecoder<Self> {
-            let offset = self.offset + 68;
-            OptionalRustDecimalDecoder::default().wrap(self, offset)
+        pub fn order_stop_price_decoder(
+            self,
+        ) -> optional_decimal_encoding_codec::OptionalDecimalEncodingDecoder<Self> {
+            let offset = self.offset + 86;
+            optional_decimal_encoding_codec::OptionalDecimalEncodingDecoder::default()
+                .wrap(self, offset)
         }
     }
 } // end decoder

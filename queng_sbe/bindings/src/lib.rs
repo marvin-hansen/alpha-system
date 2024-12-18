@@ -1,8 +1,8 @@
 #![forbid(unsafe_code)]
-#![allow(dead_code)]
-#![allow(ambiguous_glob_reexports)]
-#![allow(clippy::upper_case_acronyms)]
+#![allow(clippy::all)]
 #![allow(non_camel_case_types)]
+#![allow(ambiguous_glob_reexports)]
+
 use ::core::convert::TryInto;
 
 pub mod binary_string_20_codec;
@@ -27,27 +27,9 @@ pub mod stop_all_data_msg_codec;
 pub mod stop_data_msg_codec;
 pub mod trade_bar_codec;
 
-pub use crate::binary_string_20_codec::*;
-pub use crate::client_error_codec::*;
-pub use crate::client_login_codec::*;
-pub use crate::client_logout_codec::*;
-pub use crate::data_bar_codec::*;
-pub use crate::data_error_codec::*;
-pub use crate::decimal_price_codec::*;
-pub use crate::decimal_qty_codec::*;
-pub use crate::message_header_codec::*;
-pub use crate::message_type::*;
-pub use crate::optional_decimal_encoding_codec::*;
-pub use crate::optional_rust_decimal_codec::*;
-pub use crate::order_cancel_all_codec::*;
-pub use crate::order_cancel_codec::*;
-pub use crate::order_create_codec::*;
-pub use crate::order_update_codec::*;
-pub use crate::rust_decimal_codec::*;
-pub use crate::start_data_msg_codec::*;
-pub use crate::stop_all_data_msg_codec::*;
-pub use crate::stop_data_msg_codec::*;
-pub use crate::trade_bar_codec::*;
+pub const SBE_SCHEMA_ID: u16 = 1;
+pub const SBE_SCHEMA_VERSION: u16 = 1;
+pub const SBE_SEMANTIC_VERSION: &str = "5.2";
 
 pub type SbeResult<T> = core::result::Result<T, SbeErr>;
 
@@ -78,6 +60,10 @@ pub trait Encoder<'a>: Writer<'a> {
     fn set_limit(&mut self, limit: usize);
 }
 
+pub trait ActingVersion {
+    fn acting_version(&self) -> u16;
+}
+
 pub trait Reader<'a>: Sized {
     fn get_buf(&self) -> &ReadBuf<'a>;
 }
@@ -97,15 +83,11 @@ impl<'a> Reader<'a> for ReadBuf<'a> {
         self
     }
 }
+#[allow(dead_code)]
 impl<'a> ReadBuf<'a> {
     #[inline]
     pub fn new(data: &'a [u8]) -> Self {
         Self { data }
-    }
-
-    #[inline]
-    fn get_bytes<const COUNT: usize>(slice: &[u8]) -> [u8; COUNT] {
-        slice.try_into().expect("slice with incorrect length")
     }
 
     #[inline]
@@ -181,8 +163,8 @@ impl<'a> WriteBuf<'a> {
     }
 
     #[inline]
-    pub fn put_bytes_at<const COUNT: usize>(&mut self, index: usize, bytes: [u8; COUNT]) -> usize {
-        self.data[index..index + COUNT].copy_from_slice(&bytes);
+    pub fn put_bytes_at<const COUNT: usize>(&mut self, index: usize, bytes: &[u8; COUNT]) -> usize {
+        self.data[index..index + COUNT].copy_from_slice(bytes);
         COUNT
     }
 
@@ -193,47 +175,47 @@ impl<'a> WriteBuf<'a> {
 
     #[inline]
     pub fn put_i8_at(&mut self, index: usize, value: i8) {
-        self.put_bytes_at(index, i8::to_le_bytes(value));
+        self.put_bytes_at(index, &i8::to_le_bytes(value));
     }
 
     #[inline]
     pub fn put_i16_at(&mut self, index: usize, value: i16) {
-        self.put_bytes_at(index, i16::to_le_bytes(value));
+        self.put_bytes_at(index, &i16::to_le_bytes(value));
     }
 
     #[inline]
     pub fn put_i32_at(&mut self, index: usize, value: i32) {
-        self.put_bytes_at(index, i32::to_le_bytes(value));
+        self.put_bytes_at(index, &i32::to_le_bytes(value));
     }
 
     #[inline]
     pub fn put_i64_at(&mut self, index: usize, value: i64) {
-        self.put_bytes_at(index, i64::to_le_bytes(value));
+        self.put_bytes_at(index, &i64::to_le_bytes(value));
     }
 
     #[inline]
     pub fn put_u16_at(&mut self, index: usize, value: u16) {
-        self.put_bytes_at(index, u16::to_le_bytes(value));
+        self.put_bytes_at(index, &u16::to_le_bytes(value));
     }
 
     #[inline]
     pub fn put_u32_at(&mut self, index: usize, value: u32) {
-        self.put_bytes_at(index, u32::to_le_bytes(value));
+        self.put_bytes_at(index, &u32::to_le_bytes(value));
     }
 
     #[inline]
     pub fn put_u64_at(&mut self, index: usize, value: u64) {
-        self.put_bytes_at(index, u64::to_le_bytes(value));
+        self.put_bytes_at(index, &u64::to_le_bytes(value));
     }
 
     #[inline]
     pub fn put_f32_at(&mut self, index: usize, value: f32) {
-        self.put_bytes_at(index, f32::to_le_bytes(value));
+        self.put_bytes_at(index, &f32::to_le_bytes(value));
     }
 
     #[inline]
     pub fn put_f64_at(&mut self, index: usize, value: f64) {
-        self.put_bytes_at(index, f64::to_le_bytes(value));
+        self.put_bytes_at(index, &f64::to_le_bytes(value));
     }
 
     #[inline]
