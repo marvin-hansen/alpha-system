@@ -11,7 +11,7 @@ impl OrderExchangeSymbol {
     pub fn new(exchange_symbol_id: &str) -> Self {
         println!("exchange_symbol_id: {}", exchange_symbol_id);
 
-        if exchange_symbol_id.len() == 0 {
+        if exchange_symbol_id.is_empty() {
             panic!("Exchange Symbol is empty");
         }
 
@@ -19,8 +19,8 @@ impl OrderExchangeSymbol {
             panic!("Exchange Symbol is too long. Max length is 20");
         }
 
-        let exchange_symbol_id_binary = encode_str_to_pair_u64(&exchange_symbol_id)
-            .expect("Failed to encode Exchange Order ID");
+        let exchange_symbol_id_binary =
+            encode_str_to_pair_u64(exchange_symbol_id).expect("Failed to encode Exchange Order ID");
 
         println!(
             "exchange_symbol_id_binary: ({}, {})",

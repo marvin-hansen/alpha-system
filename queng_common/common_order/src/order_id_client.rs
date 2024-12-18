@@ -10,7 +10,7 @@ impl ClientOrderID {
     /// Client Order ID is a unique identifier for an order, set by the client.
     ///
     pub fn new(client_order_id: &str) -> Self {
-        if client_order_id.len() == 0 {
+        if client_order_id.is_empty() {
             panic!("Client Order ID is empty");
         }
 
@@ -19,7 +19,7 @@ impl ClientOrderID {
         }
 
         let client_order_id_binary =
-            encode_str_to_int64(&client_order_id).expect("Failed to encode client order ID");
+            encode_str_to_int64(client_order_id).expect("Failed to encode client order ID");
 
         Self {
             client_order_id: client_order_id.to_string(),
