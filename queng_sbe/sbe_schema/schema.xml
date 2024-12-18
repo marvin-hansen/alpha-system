@@ -1,22 +1,15 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <sbe:messageSchema xmlns:sbe="http://fixprotocol.io/2016/sbe"
+                   xmlns:xi="http://www.w3.org/2001/XInclude"
                    package="bindings"
                    id="1"
                    version="1"
                    semanticVersion="5.2"
                    description="Quant engine Schema"
                    byteOrder="littleEndian">
-
+    <xi:include href="common-types.xml"/>
 
     <types>
-        <!--    MESSAGE HEADER DEFINITION -->
-        <composite name="messageHeader" description="Message identifiers and length of message root">
-            <type name="blockLength" primitiveType="uint16"/>
-            <type name="templateId" primitiveType="uint16"/>
-            <type name="schemaId" primitiveType="uint16"/>
-            <type name="version" primitiveType="uint16"/>
-        </composite>
-
         <!--   PRIMITIVE TYPE DEFINITIONS -->
         <type name="Char" description="Char" primitiveType="char"/>
 
@@ -55,14 +48,11 @@
         <!--    TYPE ALIAS DEFINITIONS -->
         <type name="Currency" description="Currency" length="3" primitiveType="char"/>
         <type name="Timestamp" encodingType="Int64NULL" primitiveType="int64"/>
+        <type name="OptionalTimestamp" presence="optional" encodingType="uInt64NULL" primitiveType="uint64"/>
         <type name="TimeResolution" encodingType="uInt8NULL" primitiveType="uint8"/>
 
         <!--   Binary String TYPE DEFINITIONS -->
         <type name="BinaryString10" encodingType="uInt64NULL" primitiveType="uint64"/>
-        <composite name="BinaryString20" semanticType="binaryString20">
-            <type name="first" description="first half of binary string with total length 20" primitiveType="uint64"/>
-            <type name="second" description="second half of binary string with total length 20" primitiveType="uint64"/>
-        </composite>
 
         <!--   DECIMAL TYPE DEFINITIONS -->
         <composite name="DecimalQty" description="A number representing quantity" semanticType="Qty">
@@ -117,6 +107,10 @@
         <!--    ORDER TYPE DEFINITIONS. See common_order crate and sbe_messages_order for Rust type definitions -->
         <type name="ClientOrderID" description="ClientOrderID" length="14" primitiveType="char" semanticType="String"/>
         <type name="ExchangeOrderID" description="ExchangeOrderID" length="20" primitiveType="char" semanticType="String"/>
+        <composite name="OrderExchangeSymbolID">
+            <type name="first" primitiveType="uint64"/>
+            <type name="second" primitiveType="uint64"/>
+        </composite>
 
         <type name="OrderSide" encodingType="uint8" primitiveType="uint8"/>
         <type name="OrderType" encodingType="uint8" primitiveType="uint8"/>
@@ -212,11 +206,11 @@
         <field name="exchangeID" id="2" type="ExchangeID"/>
         <field name="clientID" id="3" type="ClientID"/>
         <field name="clientOrderID" id="4" type="BinaryString10"/>
-        <field name="exchangeSymbolID" id="5" type="BinaryString20"/>
+        <field name="exchangeSymbolID" id="5" type="OrderExchangeSymbolID"/>
         <field name="orderType" id="6" type="OrderType"/>
         <field name="orderSide" id="7" type="OrderSide"/>
         <field name="timeInForce" id="8" type="OrderTimeInForce"/>
-        <field name="timeExpiry" id="9" type="OptionalRustDecimal"/>
+        <field name="timeExpiry" id="9" type="OptionalTimestamp"/>
         <field name="orderQty" id="10" type="RustDecimal"/>
         <field name="orderPrice" id="11" type="RustDecimal"/>
         <field name="orderStopPrice" id="12" type="OptionalRustDecimal"/>

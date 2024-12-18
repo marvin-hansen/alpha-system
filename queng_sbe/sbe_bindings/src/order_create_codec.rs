@@ -7,7 +7,7 @@ pub use crate::SBE_SCHEMA_ID;
 pub use crate::SBE_SCHEMA_VERSION;
 pub use crate::SBE_SEMANTIC_VERSION;
 
-pub const SBE_BLOCK_LENGTH: u16 = 80;
+pub const SBE_BLOCK_LENGTH: u16 = 76;
 pub const SBE_TEMPLATE_ID: u16 = 401;
 
 pub mod encoder {
@@ -121,9 +121,10 @@ pub mod encoder {
         #[inline]
         pub fn exchange_symbol_id_encoder(
             self,
-        ) -> binary_string_20_codec::BinaryString20Encoder<Self> {
+        ) -> order_exchange_symbol_id_codec::OrderExchangeSymbolIDEncoder<Self> {
             let offset = self.offset + 13;
-            binary_string_20_codec::BinaryString20Encoder::default().wrap(self, offset)
+            order_exchange_symbol_id_codec::OrderExchangeSymbolIDEncoder::default()
+                .wrap(self, offset)
         }
 
         /// primitive field 'orderType'
@@ -171,26 +172,32 @@ pub mod encoder {
             self.get_buf_mut().put_u8_at(offset, value);
         }
 
-        /// COMPOSITE ENCODER
+        /// primitive field 'timeExpiry'
+        /// - min value: 0
+        /// - max value: -2
+        /// - null value: -1
+        /// - characterEncoding: null
+        /// - semanticType: null
+        /// - encodedOffset: 32
+        /// - encodedLength: 8
+        /// - version: 0
         #[inline]
-        pub fn time_expiry_encoder(
-            self,
-        ) -> optional_rust_decimal_codec::OptionalRustDecimalEncoder<Self> {
+        pub fn time_expiry(&mut self, value: u64) {
             let offset = self.offset + 32;
-            optional_rust_decimal_codec::OptionalRustDecimalEncoder::default().wrap(self, offset)
+            self.get_buf_mut().put_u64_at(offset, value);
         }
 
         /// COMPOSITE ENCODER
         #[inline]
         pub fn order_qty_encoder(self) -> rust_decimal_codec::RustDecimalEncoder<Self> {
-            let offset = self.offset + 44;
+            let offset = self.offset + 40;
             rust_decimal_codec::RustDecimalEncoder::default().wrap(self, offset)
         }
 
         /// COMPOSITE ENCODER
         #[inline]
         pub fn order_price_encoder(self) -> rust_decimal_codec::RustDecimalEncoder<Self> {
-            let offset = self.offset + 56;
+            let offset = self.offset + 52;
             rust_decimal_codec::RustDecimalEncoder::default().wrap(self, offset)
         }
 
@@ -199,7 +206,7 @@ pub mod encoder {
         pub fn order_stop_price_encoder(
             self,
         ) -> optional_rust_decimal_codec::OptionalRustDecimalEncoder<Self> {
-            let offset = self.offset + 68;
+            let offset = self.offset + 64;
             optional_rust_decimal_codec::OptionalRustDecimalEncoder::default().wrap(self, offset)
         }
     }
@@ -309,9 +316,10 @@ pub mod decoder {
         #[inline]
         pub fn exchange_symbol_id_decoder(
             self,
-        ) -> binary_string_20_codec::BinaryString20Decoder<Self> {
+        ) -> order_exchange_symbol_id_codec::OrderExchangeSymbolIDDecoder<Self> {
             let offset = self.offset + 13;
-            binary_string_20_codec::BinaryString20Decoder::default().wrap(self, offset)
+            order_exchange_symbol_id_codec::OrderExchangeSymbolIDDecoder::default()
+                .wrap(self, offset)
         }
 
         /// primitive field - 'REQUIRED'
@@ -332,26 +340,28 @@ pub mod decoder {
             self.get_buf().get_u8_at(self.offset + 31)
         }
 
-        /// COMPOSITE DECODER
+        /// primitive field - 'OPTIONAL' { null_value: '-1' }
         #[inline]
-        pub fn time_expiry_decoder(
-            self,
-        ) -> optional_rust_decimal_codec::OptionalRustDecimalDecoder<Self> {
-            let offset = self.offset + 32;
-            optional_rust_decimal_codec::OptionalRustDecimalDecoder::default().wrap(self, offset)
+        pub fn time_expiry(&self) -> Option<u64> {
+            let value = self.get_buf().get_u64_at(self.offset + 32);
+            if value == 0xffffffffffffffff_u64 {
+                None
+            } else {
+                Some(value)
+            }
         }
 
         /// COMPOSITE DECODER
         #[inline]
         pub fn order_qty_decoder(self) -> rust_decimal_codec::RustDecimalDecoder<Self> {
-            let offset = self.offset + 44;
+            let offset = self.offset + 40;
             rust_decimal_codec::RustDecimalDecoder::default().wrap(self, offset)
         }
 
         /// COMPOSITE DECODER
         #[inline]
         pub fn order_price_decoder(self) -> rust_decimal_codec::RustDecimalDecoder<Self> {
-            let offset = self.offset + 56;
+            let offset = self.offset + 52;
             rust_decimal_codec::RustDecimalDecoder::default().wrap(self, offset)
         }
 
@@ -360,7 +370,7 @@ pub mod decoder {
         pub fn order_stop_price_decoder(
             self,
         ) -> optional_rust_decimal_codec::OptionalRustDecimalDecoder<Self> {
-            let offset = self.offset + 68;
+            let offset = self.offset + 64;
             optional_rust_decimal_codec::OptionalRustDecimalDecoder::default().wrap(self, offset)
         }
     }

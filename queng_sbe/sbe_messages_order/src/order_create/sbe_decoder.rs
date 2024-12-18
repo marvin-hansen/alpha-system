@@ -34,9 +34,8 @@ pub fn decode_order_create_message(buffer: &[u8]) -> Result<OrderCreate, SbeDeco
 
     let order_time_in_force = TimeInForce::from(csg.time_in_force());
 
-    let time_expiry_decoder = csg.time_expiry_decoder();
-    let time_expiry = if time_expiry_decoder.num().is_some() {
-        Some(time_expiry_decoder.num().unwrap() as u64)
+    let time_expiry = if csg.time_expiry().is_some() {
+        Some(csg.time_expiry().unwrap())
     } else {
         None
     };

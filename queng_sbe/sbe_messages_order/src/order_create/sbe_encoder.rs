@@ -1,7 +1,8 @@
 use common_order::OrderCreate;
+use rust_decimal::prelude::ToPrimitive;
 use sbe_bindings::{
-    binary_string_20_codec::BinaryString20Encoder, message_header_codec, message_type::MessageType,
-    order_create_codec::OrderCreateEncoder, Encoder, WriteBuf,
+    message_header_codec, message_type::MessageType, order_create_codec::OrderCreateEncoder,
+    Encoder, WriteBuf,
 };
 use sbe_types::SbeEncodeError;
 
@@ -15,7 +16,6 @@ pub fn encode_order_create_message(msg: OrderCreate) -> Result<(usize, Vec<u8>),
         WriteBuf::new(buffer.as_mut_slice()),
         message_header_codec::ENCODED_LENGTH,
     );
-
     csg = csg.header(0).parent().expect("Failed to encode header");
 
     csg.message_type(MessageType::OrderCreate);
@@ -28,14 +28,14 @@ pub fn encode_order_create_message(msg: OrderCreate) -> Result<(usize, Vec<u8>),
 
     let (first, second) = msg.symbol_id_exchange().exchange_order_id_binary();
 
-    let mut symbol_id_encoder: BinaryString20Encoder<OrderCreateEncoder> =
-        BinaryString20Encoder::default();
-    //
-    //
+    // Self (csg) moves into symbol_id_encoder
+    let mut symbol_id_encoder = csg.exchange_symbol_id_encoder();
+
     symbol_id_encoder.first(first);
     symbol_id_encoder.second(second);
 
-    symbol_id_encoder
+    // Move Self (csg) from symbol_id_encoder back into csg.
+    csg = symbol_id_encoder
         .parent()
         .expect("Failed to encode symbol id");
 
@@ -45,15 +45,29 @@ pub fn encode_order_create_message(msg: OrderCreate) -> Result<(usize, Vec<u8>),
 
     csg.time_in_force(msg.order_time_in_force().into());
 
-    // if let Some(time_expiry) = msg.time_expiry() {
-    //     csg.timeExpiry(time_expiry);
-    //     // csg.time_expiry_encoder().e
-    // }
+    if let Some(time_expiry) = msg.time_expiry() {
+        csg.time_expiry(time_expiry);
+    }
 
-    // csg.order_price_encoder()
+    let mut qty_encoder = csg.order_qty_encoder();
+    qty_encoder.num(
+        msg.quantity()
+            .to_i64()
+            .expect("Failed to convert quantity decimal to i64"),
+    );
+    qty_encoder.scale(msg.quantity().scale());
+    csg = qty_encoder.parent().expect("Failed to encode order qty");
 
-    // let mut price = csg.order_price_encoder();
-    // price.mantissa()
+    let mut price_encoder = csg.order_price_encoder();
+    price_encoder.num(
+        msg.price()
+            .to_i64()
+            .expect("Failed to convert price decimal to i64"),
+    );
+    price_encoder.scale(msg.price().scale());
+    csg = price_encoder
+        .parent()
+        .expect("Failed to encode order price");
 
     let limit = csg.get_limit();
     Ok((limit, buffer))

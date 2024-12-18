@@ -1,7 +1,7 @@
 use crate::*;
 
-pub use decoder::BinaryString20Decoder;
-pub use encoder::BinaryString20Encoder;
+pub use decoder::OrderExchangeSymbolIDDecoder;
+pub use encoder::OrderExchangeSymbolIDEncoder;
 
 pub const ENCODED_LENGTH: usize = 16;
 
@@ -9,12 +9,12 @@ pub mod encoder {
     use super::*;
 
     #[derive(Debug, Default)]
-    pub struct BinaryString20Encoder<P> {
+    pub struct OrderExchangeSymbolIDEncoder<P> {
         parent: Option<P>,
         offset: usize,
     }
 
-    impl<'a, P> Writer<'a> for BinaryString20Encoder<P>
+    impl<'a, P> Writer<'a> for OrderExchangeSymbolIDEncoder<P>
     where
         P: Writer<'a> + Default,
     {
@@ -28,7 +28,7 @@ pub mod encoder {
         }
     }
 
-    impl<'a, P> BinaryString20Encoder<P>
+    impl<'a, P> OrderExchangeSymbolIDEncoder<P>
     where
         P: Writer<'a> + Default,
     {
@@ -79,12 +79,12 @@ pub mod decoder {
     use super::*;
 
     #[derive(Debug, Default)]
-    pub struct BinaryString20Decoder<P> {
+    pub struct OrderExchangeSymbolIDDecoder<P> {
         parent: Option<P>,
         offset: usize,
     }
 
-    impl<'a, P> ActingVersion for BinaryString20Decoder<P>
+    impl<'a, P> ActingVersion for OrderExchangeSymbolIDDecoder<P>
     where
         P: Reader<'a> + ActingVersion + Default,
     {
@@ -94,7 +94,7 @@ pub mod decoder {
         }
     }
 
-    impl<'a, P> Reader<'a> for BinaryString20Decoder<P>
+    impl<'a, P> Reader<'a> for OrderExchangeSymbolIDDecoder<P>
     where
         P: Reader<'a> + Default,
     {
@@ -104,7 +104,7 @@ pub mod decoder {
         }
     }
 
-    impl<'a, P> BinaryString20Decoder<P>
+    impl<'a, P> OrderExchangeSymbolIDDecoder<P>
     where
         P: Reader<'a> + Default,
     {

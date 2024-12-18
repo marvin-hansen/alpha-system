@@ -5,7 +5,6 @@
 
 use ::core::convert::TryInto;
 
-pub mod binary_string_20_codec;
 pub mod client_error_codec;
 pub mod client_login_codec;
 pub mod client_logout_codec;
@@ -20,6 +19,7 @@ pub mod optional_rust_decimal_codec;
 pub mod order_cancel_all_codec;
 pub mod order_cancel_codec;
 pub mod order_create_codec;
+pub mod order_exchange_symbol_id_codec;
 pub mod order_update_codec;
 pub mod rust_decimal_codec;
 pub mod start_data_msg_codec;
