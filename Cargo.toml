@@ -104,8 +104,9 @@ ring_buffer = { path = "queng_datastructures/ring_buffer" }
 sliding_window = { path = "queng_datastructures/sliding_window" }
 
 # Extensions
-cow_ext = { path = "queng_extensions/cow_ext" }
+common_data_bar_ext = { path = "queng_extensions/common_data_bar_ext" }
 common_order_ext = { path = "queng_extensions/common_order_ext" }
+cow_ext = { path = "queng_extensions/cow_ext" }
 
 # Import
 # Core

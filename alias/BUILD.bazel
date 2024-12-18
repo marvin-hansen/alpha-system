@@ -118,13 +118,18 @@ alias(
 ###############################################################################
 
 alias(
-    name = "cow_ext",
-    actual = "//queng_extensions/cow_ext",
+    name = "common_data_bar_ext",
+    actual = "//queng_extensions/common_data_bar_ext",
 )
 
 alias(
     name = "common_order_ext",
     actual = "//queng_extensions/common_order_ext",
+)
+
+alias(
+    name = "cow_ext",
+    actual = "//queng_extensions/cow_ext",
 )
 
 ###############################################################################

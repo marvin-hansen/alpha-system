@@ -6,18 +6,16 @@ rust_test_suite(
         "*_tests.rs",
     ]),
     tags = [
-        "common_order_ext",
+        "common_data_bar_ext",
         "extensions",
         "unit-test",
     ],
     visibility = ["//visibility:public"],
     deps = [
         # Crate to test
-        "//alias:common_order_ext",
+        "//alias:common_data_bar_ext",
         # Internal dependencies
-        "//alias:common_exchange",
-        "//alias:common_order",
-        "//alias:encoding_utils",
+        "//alias:common_data_bar",
         # External dependencies
         "//thirdparty/crates:rust_decimal",
     ],

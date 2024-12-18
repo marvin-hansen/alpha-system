@@ -1,6 +1,7 @@
 use crate::ImsBinanceDataIntegration;
+use common_data_bar::TradeBar;
+use common_data_bar_ext::SbeTradeBarExtension;
 use common_errors::MessageProcessingError;
-use sbe_messages_data::SbeTradeBar;
 use std::sync::Arc;
 use trait_data_integration::{EventProcessor, ImsDataIntegration, ImsTradeDataIntegration};
 
@@ -60,7 +61,7 @@ impl ImsTradeDataIntegration for ImsBinanceDataIntegration {
 
                         if let Some(bar) = bar {
                             let (_, data) =
-                                SbeTradeBar::encode(bar).expect("Failed to encode OHLCV data");
+                                TradeBar::encode_to_sbe(bar).expect("Failed to encode OHLCV data");
                             if let Err(e) = processor.process(&[data]).await {
                                 eprintln!("Error processing OHLCV data: {}", e);
                                 break;
