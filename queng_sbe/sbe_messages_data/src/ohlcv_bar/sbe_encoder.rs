@@ -2,7 +2,8 @@ use common_data_bar::OHLCVBar;
 use rust_decimal::prelude::ToPrimitive;
 
 use sbe_bindings::{
-    message_header_codec, DataBarEncoder, Encoder, MessageType as SbeMessageType, WriteBuf,
+    data_bar_codec::DataBarEncoder, message_header_codec,
+    message_type::MessageType as SbeMessageType, Encoder, WriteBuf,
 };
 use sbe_types::SbeEncodeError;
 
@@ -54,7 +55,7 @@ pub fn encode_data_bar_message(bar: OHLCVBar) -> Result<(usize, Vec<u8>), SbeEnc
     // Convert string symbol id into fixed sized char [u8; 20]
     let mut byte_array = [0u8; 20];
     byte_array[..bar.symbol_id().len()].copy_from_slice(bar.symbol_id().as_bytes());
-    csg.symbol_id(byte_array);
+    csg.symbol_id(&byte_array);
 
     csg.date_time(bar.date_time().timestamp_micros());
 

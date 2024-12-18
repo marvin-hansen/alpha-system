@@ -51,6 +51,7 @@ pub mod encoder {
         /// - semanticType: null
         /// - encodedOffset: 0
         /// - encodedLength: 8
+        /// - version: 0
         #[inline]
         pub fn mantissa(&mut self, value: i64) {
             let offset = self.offset;
@@ -68,6 +69,16 @@ pub mod decoder {
     pub struct DecimalQtyDecoder<P> {
         parent: Option<P>,
         offset: usize,
+    }
+
+    impl<'a, P> ActingVersion for DecimalQtyDecoder<P>
+    where
+        P: Reader<'a> + ActingVersion + Default,
+    {
+        #[inline]
+        fn acting_version(&self) -> u16 {
+            self.parent.as_ref().unwrap().acting_version()
+        }
     }
 
     impl<'a, P> Reader<'a> for DecimalQtyDecoder<P>

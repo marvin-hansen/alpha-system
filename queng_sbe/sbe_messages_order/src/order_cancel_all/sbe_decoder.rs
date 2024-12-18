@@ -1,7 +1,10 @@
 use common_exchange::ExchangeID;
 use common_order::OrderCancelAll;
 use sbe_bindings::order_cancel_all_codec::SBE_TEMPLATE_ID;
-use sbe_bindings::{MessageHeaderDecoder, OrderCancelAllDecoder, ReadBuf};
+use sbe_bindings::{
+    message_header_codec::MessageHeaderDecoder, order_cancel_all_codec::OrderCancelAllDecoder,
+    ReadBuf,
+};
 
 use sbe_types::SbeDecodeError;
 
@@ -24,7 +27,7 @@ pub fn decode_order_cancel_all_message(buffer: &[u8]) -> Result<OrderCancelAll, 
 
     let header = MessageHeaderDecoder::default().wrap(buf, 0);
     assert_eq!(SBE_TEMPLATE_ID, header.template_id());
-    csg = csg.header(header);
+    csg = csg.header(header, 0);
 
     let exchange_id = ExchangeID::from(csg.exchange_id());
 

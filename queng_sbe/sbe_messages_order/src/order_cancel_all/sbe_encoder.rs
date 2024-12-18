@@ -1,5 +1,8 @@
 use common_order::OrderCancelAll;
-use sbe_bindings::{message_header_codec, Encoder, MessageType, OrderCancelAllEncoder, WriteBuf};
+use sbe_bindings::{
+    message_header_codec, message_type::MessageType, order_cancel_all_codec::OrderCancelAllEncoder,
+    Encoder, WriteBuf,
+};
 use sbe_types::SbeEncodeError;
 
 /// Encodes an OrderCancelAll message into SBE (Simple Binary Encoding) format.

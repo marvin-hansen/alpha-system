@@ -3,14 +3,16 @@ use crate::*;
 pub use decoder::DataBarDecoder;
 pub use encoder::DataBarEncoder;
 
+pub use crate::SBE_SCHEMA_ID;
+pub use crate::SBE_SCHEMA_VERSION;
+pub use crate::SBE_SEMANTIC_VERSION;
+
 pub const SBE_BLOCK_LENGTH: u16 = 50;
 pub const SBE_TEMPLATE_ID: u16 = 204;
-pub const SBE_SCHEMA_ID: u16 = 1;
-pub const SBE_SCHEMA_VERSION: u16 = 1;
-pub const SBE_SEMANTIC_VERSION: &str = "5.2";
 
 pub mod encoder {
     use super::*;
+    use message_header_codec::*;
 
     #[derive(Debug, Default)]
     pub struct DataBarEncoder<'a> {
@@ -65,7 +67,7 @@ pub mod encoder {
 
         /// REQUIRED enum
         #[inline]
-        pub fn message_type(&mut self, value: MessageType) {
+        pub fn message_type(&mut self, value: message_type::MessageType) {
             let offset = self.offset;
             self.get_buf_mut().put_u16_at(offset, value as u16)
         }
@@ -80,7 +82,7 @@ pub mod encoder {
         /// - encodedLength: 20
         /// - version: 0
         #[inline]
-        pub fn symbol_id(&mut self, value: [u8; 20]) {
+        pub fn symbol_id(&mut self, value: &[u8; 20]) {
             let offset = self.offset + 2;
             let buf = self.get_buf_mut();
             buf.put_bytes_at(offset, value);
@@ -94,6 +96,7 @@ pub mod encoder {
         /// - semanticType: null
         /// - encodedOffset: 22
         /// - encodedLength: 8
+        /// - version: 0
         #[inline]
         pub fn date_time(&mut self, value: i64) {
             let offset = self.offset + 22;
@@ -101,13 +104,14 @@ pub mod encoder {
         }
 
         /// primitive field 'openPrice'
-        /// - min value: 1.401298464324817E-45
+        /// - min value: -3.4028234663852886E38
         /// - max value: 3.4028234663852886E38
         /// - null value: NaN
         /// - characterEncoding: null
         /// - semanticType: null
         /// - encodedOffset: 30
         /// - encodedLength: 4
+        /// - version: 0
         #[inline]
         pub fn open_price(&mut self, value: f32) {
             let offset = self.offset + 30;
@@ -115,13 +119,14 @@ pub mod encoder {
         }
 
         /// primitive field 'highPrice'
-        /// - min value: 1.401298464324817E-45
+        /// - min value: -3.4028234663852886E38
         /// - max value: 3.4028234663852886E38
         /// - null value: NaN
         /// - characterEncoding: null
         /// - semanticType: null
         /// - encodedOffset: 34
         /// - encodedLength: 4
+        /// - version: 0
         #[inline]
         pub fn high_price(&mut self, value: f32) {
             let offset = self.offset + 34;
@@ -129,13 +134,14 @@ pub mod encoder {
         }
 
         /// primitive field 'lowPrice'
-        /// - min value: 1.401298464324817E-45
+        /// - min value: -3.4028234663852886E38
         /// - max value: 3.4028234663852886E38
         /// - null value: NaN
         /// - characterEncoding: null
         /// - semanticType: null
         /// - encodedOffset: 38
         /// - encodedLength: 4
+        /// - version: 0
         #[inline]
         pub fn low_price(&mut self, value: f32) {
             let offset = self.offset + 38;
@@ -143,13 +149,14 @@ pub mod encoder {
         }
 
         /// primitive field 'closePrice'
-        /// - min value: 1.401298464324817E-45
+        /// - min value: -3.4028234663852886E38
         /// - max value: 3.4028234663852886E38
         /// - null value: NaN
         /// - characterEncoding: null
         /// - semanticType: null
         /// - encodedOffset: 42
         /// - encodedLength: 4
+        /// - version: 0
         #[inline]
         pub fn close_price(&mut self, value: f32) {
             let offset = self.offset + 42;
@@ -157,13 +164,14 @@ pub mod encoder {
         }
 
         /// primitive field 'volume'
-        /// - min value: 1.401298464324817E-45
+        /// - min value: -3.4028234663852886E38
         /// - max value: 3.4028234663852886E38
         /// - null value: NaN
         /// - characterEncoding: null
         /// - semanticType: null
         /// - encodedOffset: 46
         /// - encodedLength: 4
+        /// - version: 0
         #[inline]
         pub fn volume(&mut self, value: f32) {
             let offset = self.offset + 46;
@@ -174,6 +182,7 @@ pub mod encoder {
 
 pub mod decoder {
     use super::*;
+    use message_header_codec::*;
 
     #[derive(Clone, Copy, Debug, Default)]
     pub struct DataBarDecoder<'a> {
@@ -183,6 +192,13 @@ pub mod decoder {
         limit: usize,
         pub acting_block_length: u16,
         pub acting_version: u16,
+    }
+
+    impl<'a> ActingVersion for DataBarDecoder<'a> {
+        #[inline]
+        fn acting_version(&self) -> u16 {
+            self.acting_version
+        }
     }
 
     impl<'a> Reader<'a> for DataBarDecoder<'a> {
@@ -227,14 +243,14 @@ pub mod decoder {
             self.limit - self.offset
         }
 
-        pub fn header(self, mut header: MessageHeaderDecoder<ReadBuf<'a>>) -> Self {
+        pub fn header(self, mut header: MessageHeaderDecoder<ReadBuf<'a>>, offset: usize) -> Self {
             debug_assert_eq!(SBE_TEMPLATE_ID, header.template_id());
             let acting_block_length = header.block_length();
             let acting_version = header.version();
 
             self.wrap(
                 header.parent().unwrap(),
-                message_header_codec::ENCODED_LENGTH,
+                offset + message_header_codec::ENCODED_LENGTH,
                 acting_block_length,
                 acting_version,
             )
@@ -242,7 +258,7 @@ pub mod decoder {
 
         /// REQUIRED enum
         #[inline]
-        pub fn message_type(&self) -> MessageType {
+        pub fn message_type(&self) -> message_type::MessageType {
             self.get_buf().get_u16_at(self.offset).into()
         }
 

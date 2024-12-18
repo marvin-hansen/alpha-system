@@ -1,6 +1,8 @@
 use crate::ClientLoginMessage;
-use sbe_bindings::MessageType as SbeMessageType;
-use sbe_bindings::{message_header_codec, ClientLoginEncoder, Encoder, WriteBuf};
+use sbe_bindings::message_type::MessageType as SbeMessageType;
+use sbe_bindings::{
+    client_login_codec::ClientLoginEncoder, message_header_codec, Encoder, WriteBuf,
+};
 use sbe_types::SbeEncodeError;
 
 impl ClientLoginMessage {

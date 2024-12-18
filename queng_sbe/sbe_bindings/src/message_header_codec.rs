@@ -51,6 +51,7 @@ pub mod encoder {
         /// - semanticType: null
         /// - encodedOffset: 0
         /// - encodedLength: 2
+        /// - version: 0
         #[inline]
         pub fn block_length(&mut self, value: u16) {
             let offset = self.offset;
@@ -65,6 +66,7 @@ pub mod encoder {
         /// - semanticType: null
         /// - encodedOffset: 2
         /// - encodedLength: 2
+        /// - version: 0
         #[inline]
         pub fn template_id(&mut self, value: u16) {
             let offset = self.offset + 2;
@@ -79,6 +81,7 @@ pub mod encoder {
         /// - semanticType: null
         /// - encodedOffset: 4
         /// - encodedLength: 2
+        /// - version: 0
         #[inline]
         pub fn schema_id(&mut self, value: u16) {
             let offset = self.offset + 4;
@@ -93,6 +96,7 @@ pub mod encoder {
         /// - semanticType: null
         /// - encodedOffset: 6
         /// - encodedLength: 2
+        /// - version: 0
         #[inline]
         pub fn version(&mut self, value: u16) {
             let offset = self.offset + 6;
@@ -108,6 +112,16 @@ pub mod decoder {
     pub struct MessageHeaderDecoder<P> {
         parent: Option<P>,
         offset: usize,
+    }
+
+    impl<'a, P> ActingVersion for MessageHeaderDecoder<P>
+    where
+        P: Reader<'a> + ActingVersion + Default,
+    {
+        #[inline]
+        fn acting_version(&self) -> u16 {
+            self.parent.as_ref().unwrap().acting_version()
+        }
     }
 
     impl<'a, P> Reader<'a> for MessageHeaderDecoder<P>

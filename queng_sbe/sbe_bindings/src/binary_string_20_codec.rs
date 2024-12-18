@@ -51,6 +51,7 @@ pub mod encoder {
         /// - semanticType: null
         /// - encodedOffset: 0
         /// - encodedLength: 8
+        /// - version: 0
         #[inline]
         pub fn first(&mut self, value: u64) {
             let offset = self.offset;
@@ -65,6 +66,7 @@ pub mod encoder {
         /// - semanticType: null
         /// - encodedOffset: 8
         /// - encodedLength: 8
+        /// - version: 0
         #[inline]
         pub fn second(&mut self, value: u64) {
             let offset = self.offset + 8;
@@ -80,6 +82,16 @@ pub mod decoder {
     pub struct BinaryString20Decoder<P> {
         parent: Option<P>,
         offset: usize,
+    }
+
+    impl<'a, P> ActingVersion for BinaryString20Decoder<P>
+    where
+        P: Reader<'a> + ActingVersion + Default,
+    {
+        #[inline]
+        fn acting_version(&self) -> u16 {
+            self.parent.as_ref().unwrap().acting_version()
+        }
     }
 
     impl<'a, P> Reader<'a> for BinaryString20Decoder<P>

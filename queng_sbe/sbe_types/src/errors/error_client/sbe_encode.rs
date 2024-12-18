@@ -1,6 +1,8 @@
 use crate::{ClientErrorMessage, SbeEncodeError};
-use sbe_bindings::MessageType as SbeMessageType;
-use sbe_bindings::{message_header_codec, ClientErrorEncoder, Encoder, WriteBuf};
+use sbe_bindings::message_type::MessageType as SbeMessageType;
+use sbe_bindings::{
+    client_error_codec::ClientErrorEncoder, message_header_codec, Encoder, WriteBuf,
+};
 
 /// Encodes a `ClientErrorMessage` to a byte buffer.
 ///

@@ -1,6 +1,8 @@
 use crate::StopDataMessage;
-use sbe_bindings::MessageType as SbeMessageType;
-use sbe_bindings::{message_header_codec, Encoder, StopDataMsgEncoder, WriteBuf};
+use sbe_bindings::message_type::MessageType as SbeMessageType;
+use sbe_bindings::{
+    message_header_codec, stop_data_msg_codec::StopDataMsgEncoder, Encoder, WriteBuf,
+};
 use sbe_types::SbeEncodeError;
 
 impl StopDataMessage {
@@ -53,7 +55,7 @@ impl StopDataMessage {
         // Convert string symbol id into fixed sized char [u8; 20]
         let mut byte_array = [0u8; 20];
         byte_array[..self.symbol_id().len()].copy_from_slice(self.symbol_id().as_bytes());
-        csg.symbol_id(byte_array);
+        csg.symbol_id(&byte_array);
 
         csg.data_type_id(self.data_type_id as u8);
 

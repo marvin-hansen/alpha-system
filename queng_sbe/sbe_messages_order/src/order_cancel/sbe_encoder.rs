@@ -1,5 +1,8 @@
 use common_order::OrderCancel;
-use sbe_bindings::{message_header_codec, Encoder, MessageType, OrderCancelEncoder, WriteBuf};
+use sbe_bindings::{
+    message_header_codec, message_type::MessageType, order_cancel_codec::OrderCancelEncoder,
+    Encoder, WriteBuf,
+};
 use sbe_types::SbeEncodeError;
 
 /// Encodes an OrderCancel message into SBE (Simple Binary Encoding) format.
@@ -38,12 +41,12 @@ pub fn encode_order_cancel_message(msg: OrderCancel) -> Result<(usize, Vec<u8>),
     let mut byte_array = [0u8; 14];
     byte_array[..msg.client_order_id().len()].copy_from_slice(msg.client_order_id().as_bytes());
 
-    csg.client_order_id(byte_array);
+    csg.client_order_id(&byte_array);
 
     let mut byte_array = [0u8; 20];
     byte_array[..msg.exchange_order_id().len()].copy_from_slice(msg.exchange_order_id().as_bytes());
 
-    csg.exchange_order_id(byte_array);
+    csg.exchange_order_id(&byte_array);
 
     let limit = csg.get_limit();
     Ok((limit, buffer))

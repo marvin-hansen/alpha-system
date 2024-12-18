@@ -1,6 +1,9 @@
 use crate::{DataErrorMessage, DataErrorType, MessageType};
 use sbe_bindings::data_error_codec::SBE_TEMPLATE_ID;
-use sbe_bindings::{DataErrorDecoder, MessageHeaderDecoder, ReadBuf, SbeResult};
+use sbe_bindings::{
+    data_error_codec::DataErrorDecoder, message_header_codec::MessageHeaderDecoder, ReadBuf,
+    SbeResult,
+};
 
 /// Decodes a `DataErrorMessage` from a byte buffer.
 ///
@@ -33,7 +36,7 @@ pub fn decode_client_error_message(buffer: &[u8]) -> SbeResult<DataErrorMessage>
     let header = MessageHeaderDecoder::default().wrap(buf, 0);
     assert_eq!(SBE_TEMPLATE_ID, header.template_id());
 
-    csg = csg.header(header);
+    csg = csg.header(header, 0);
 
     let sbe_message_type = csg.message_type();
     let message_type = MessageType::from(sbe_message_type as u16);

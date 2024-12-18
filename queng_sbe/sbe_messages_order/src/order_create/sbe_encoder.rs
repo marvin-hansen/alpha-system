@@ -1,6 +1,7 @@
 use common_order::OrderCreate;
 use sbe_bindings::{
-    message_header_codec, BinaryString20Encoder, Encoder, MessageType, OrderCreateEncoder, WriteBuf,
+    binary_string_20_codec::BinaryString20Encoder, message_header_codec, message_type::MessageType,
+    order_create_codec::OrderCreateEncoder, Encoder, WriteBuf,
 };
 use sbe_types::SbeEncodeError;
 

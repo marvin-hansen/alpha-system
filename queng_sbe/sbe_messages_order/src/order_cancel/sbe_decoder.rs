@@ -1,7 +1,9 @@
 use common_exchange::ExchangeID;
 use common_order::OrderCancel;
 use sbe_bindings::order_cancel_codec::SBE_TEMPLATE_ID;
-use sbe_bindings::{MessageHeaderDecoder, OrderCancelDecoder, ReadBuf};
+use sbe_bindings::{
+    message_header_codec::MessageHeaderDecoder, order_cancel_codec::OrderCancelDecoder, ReadBuf,
+};
 use sbe_types::{MessageType, SbeDecodeError};
 
 /// Decodes an SBE-encoded OrderCancel message back into its struct form.
@@ -24,7 +26,7 @@ pub fn decode_order_cancel_message(buffer: &[u8]) -> Result<OrderCancel, SbeDeco
 
     let header = MessageHeaderDecoder::default().wrap(buf, 0);
     assert_eq!(SBE_TEMPLATE_ID, header.template_id());
-    csg = csg.header(header);
+    csg = csg.header(header, 0);
 
     let sbe_message_type = csg.message_type();
     let message_type = MessageType::from(sbe_message_type as u16);

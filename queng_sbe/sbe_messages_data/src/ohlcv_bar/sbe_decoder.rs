@@ -3,7 +3,9 @@ use common_data_bar::OHLCVBar;
 use rust_decimal::prelude::FromPrimitive;
 use rust_decimal::Decimal;
 use sbe_bindings::data_bar_codec::SBE_TEMPLATE_ID;
-use sbe_bindings::{DataBarDecoder, MessageHeaderDecoder, ReadBuf};
+use sbe_bindings::{
+    data_bar_codec::DataBarDecoder, message_header_codec::MessageHeaderDecoder, ReadBuf,
+};
 use sbe_types::{MessageType, SbeDecodeError};
 
 /// Decodes an `OHLCVBar` message from a byte buffer.
@@ -41,7 +43,7 @@ pub fn decode_data_bar_message(buffer: &[u8]) -> Result<OHLCVBar, SbeDecodeError
 
     let header = MessageHeaderDecoder::default().wrap(buf, 0);
     assert_eq!(SBE_TEMPLATE_ID, header.template_id());
-    csg = csg.header(header);
+    csg = csg.header(header, 0);
 
     let sbe_message_type = csg.message_type();
     let message_type = MessageType::from(sbe_message_type as u16);

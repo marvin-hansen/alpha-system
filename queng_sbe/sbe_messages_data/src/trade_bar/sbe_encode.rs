@@ -1,7 +1,10 @@
 use common_data_bar::TradeBar;
 use rust_decimal::prelude::ToPrimitive;
 
-use sbe_bindings::{Encoder, MessageType as SbeMessageType, TradeBarEncoder, WriteBuf};
+use sbe_bindings::{
+    message_type::MessageType as SbeMessageType, trade_bar_codec::TradeBarEncoder, Encoder,
+    WriteBuf,
+};
 
 use sbe_bindings::message_header_codec::ENCODED_LENGTH;
 
@@ -51,7 +54,7 @@ pub fn encode_trade_bar_message(bar: TradeBar) -> Result<(usize, Vec<u8>), SbeEn
     // Convert string symbol id into fixed sized char [u8; 20]
     let mut byte_array = [0u8; 20];
     byte_array[..bar.symbol_id().len()].copy_from_slice(bar.symbol_id().as_bytes());
-    csg.symbol_id(byte_array);
+    csg.symbol_id(&byte_array);
 
     let date_time = bar.date_time().timestamp_micros();
     csg.date_time(date_time);

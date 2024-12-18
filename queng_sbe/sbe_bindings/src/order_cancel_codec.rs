@@ -3,14 +3,16 @@ use crate::*;
 pub use decoder::OrderCancelDecoder;
 pub use encoder::OrderCancelEncoder;
 
+pub use crate::SBE_SCHEMA_ID;
+pub use crate::SBE_SCHEMA_VERSION;
+pub use crate::SBE_SEMANTIC_VERSION;
+
 pub const SBE_BLOCK_LENGTH: u16 = 39;
 pub const SBE_TEMPLATE_ID: u16 = 403;
-pub const SBE_SCHEMA_ID: u16 = 1;
-pub const SBE_SCHEMA_VERSION: u16 = 1;
-pub const SBE_SEMANTIC_VERSION: &str = "5.2";
 
 pub mod encoder {
     use super::*;
+    use message_header_codec::*;
 
     #[derive(Debug, Default)]
     pub struct OrderCancelEncoder<'a> {
@@ -65,7 +67,7 @@ pub mod encoder {
 
         /// REQUIRED enum
         #[inline]
-        pub fn message_type(&mut self, value: MessageType) {
+        pub fn message_type(&mut self, value: message_type::MessageType) {
             let offset = self.offset;
             self.get_buf_mut().put_u16_at(offset, value as u16)
         }
@@ -78,6 +80,7 @@ pub mod encoder {
         /// - semanticType: null
         /// - encodedOffset: 2
         /// - encodedLength: 1
+        /// - version: 0
         #[inline]
         pub fn exchange_id(&mut self, value: u8) {
             let offset = self.offset + 2;
@@ -92,6 +95,7 @@ pub mod encoder {
         /// - semanticType: null
         /// - encodedOffset: 3
         /// - encodedLength: 2
+        /// - version: 0
         #[inline]
         pub fn client_id(&mut self, value: u16) {
             let offset = self.offset + 3;
@@ -108,7 +112,7 @@ pub mod encoder {
         /// - encodedLength: 14
         /// - version: 0
         #[inline]
-        pub fn client_order_id(&mut self, value: [u8; 14]) {
+        pub fn client_order_id(&mut self, value: &[u8; 14]) {
             let offset = self.offset + 5;
             let buf = self.get_buf_mut();
             buf.put_bytes_at(offset, value);
@@ -124,7 +128,7 @@ pub mod encoder {
         /// - encodedLength: 20
         /// - version: 0
         #[inline]
-        pub fn exchange_order_id(&mut self, value: [u8; 20]) {
+        pub fn exchange_order_id(&mut self, value: &[u8; 20]) {
             let offset = self.offset + 19;
             let buf = self.get_buf_mut();
             buf.put_bytes_at(offset, value);
@@ -134,6 +138,7 @@ pub mod encoder {
 
 pub mod decoder {
     use super::*;
+    use message_header_codec::*;
 
     #[derive(Clone, Copy, Debug, Default)]
     pub struct OrderCancelDecoder<'a> {
@@ -143,6 +148,13 @@ pub mod decoder {
         limit: usize,
         pub acting_block_length: u16,
         pub acting_version: u16,
+    }
+
+    impl<'a> ActingVersion for OrderCancelDecoder<'a> {
+        #[inline]
+        fn acting_version(&self) -> u16 {
+            self.acting_version
+        }
     }
 
     impl<'a> Reader<'a> for OrderCancelDecoder<'a> {
@@ -187,14 +199,14 @@ pub mod decoder {
             self.limit - self.offset
         }
 
-        pub fn header(self, mut header: MessageHeaderDecoder<ReadBuf<'a>>) -> Self {
+        pub fn header(self, mut header: MessageHeaderDecoder<ReadBuf<'a>>, offset: usize) -> Self {
             debug_assert_eq!(SBE_TEMPLATE_ID, header.template_id());
             let acting_block_length = header.block_length();
             let acting_version = header.version();
 
             self.wrap(
                 header.parent().unwrap(),
-                message_header_codec::ENCODED_LENGTH,
+                offset + message_header_codec::ENCODED_LENGTH,
                 acting_block_length,
                 acting_version,
             )
@@ -202,7 +214,7 @@ pub mod decoder {
 
         /// REQUIRED enum
         #[inline]
-        pub fn message_type(&self) -> MessageType {
+        pub fn message_type(&self) -> message_type::MessageType {
             self.get_buf().get_u16_at(self.offset).into()
         }
 

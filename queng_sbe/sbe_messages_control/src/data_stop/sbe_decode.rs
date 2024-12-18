@@ -1,5 +1,8 @@
 use common_exchange::ExchangeID;
-use sbe_bindings::{MessageHeaderDecoder, ReadBuf, SbeResult, StopDataMsgDecoder};
+use sbe_bindings::{
+    message_header_codec::MessageHeaderDecoder, stop_data_msg_codec::StopDataMsgDecoder, ReadBuf,
+    SbeResult,
+};
 
 use crate::StopDataMessage;
 use sbe_bindings::stop_data_msg_codec::SBE_TEMPLATE_ID;
@@ -37,7 +40,7 @@ pub fn decode_stop_data_message(buffer: &[u8]) -> SbeResult<StopDataMessage> {
 
     let header = MessageHeaderDecoder::default().wrap(buf, 0);
     assert_eq!(SBE_TEMPLATE_ID, header.template_id());
-    csg = csg.header(header);
+    csg = csg.header(header, 0);
 
     let sbe_message_type = csg.message_type();
     let message_type = MessageType::from(sbe_message_type as u16);

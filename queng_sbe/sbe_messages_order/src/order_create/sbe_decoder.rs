@@ -4,7 +4,9 @@ use common_order::{
 };
 use rust_decimal::Decimal;
 use sbe_bindings::order_create_codec::SBE_TEMPLATE_ID;
-use sbe_bindings::{MessageHeaderDecoder, OrderCreateDecoder, ReadBuf};
+use sbe_bindings::{
+    message_header_codec::MessageHeaderDecoder, order_create_codec::OrderCreateDecoder, ReadBuf,
+};
 use sbe_types::SbeDecodeError;
 
 pub fn decode_order_create_message(buffer: &[u8]) -> Result<OrderCreate, SbeDecodeError> {
@@ -13,7 +15,7 @@ pub fn decode_order_create_message(buffer: &[u8]) -> Result<OrderCreate, SbeDeco
 
     let header = MessageHeaderDecoder::default().wrap(buf, 0);
     assert_eq!(SBE_TEMPLATE_ID, header.template_id());
-    csg = csg.header(header);
+    csg = csg.header(header, 0);
 
     let exchange_id = ExchangeID::from(csg.exchange_id());
 

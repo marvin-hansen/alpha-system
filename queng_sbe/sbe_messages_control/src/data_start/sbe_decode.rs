@@ -1,7 +1,10 @@
 use crate::StartDataMessage;
 use common_data_bar::TimeResolution;
 use common_exchange::ExchangeID;
-use sbe_bindings::{MessageHeaderDecoder, ReadBuf, SbeResult, StartDataMsgDecoder};
+use sbe_bindings::{
+    message_header_codec::MessageHeaderDecoder, start_data_msg_codec::StartDataMsgDecoder, ReadBuf,
+    SbeResult,
+};
 
 use sbe_bindings::start_data_msg_codec::SBE_TEMPLATE_ID;
 use sbe_types::{DataType, MessageType};
@@ -39,7 +42,7 @@ pub fn decode_start_data_message(buffer: &[u8]) -> SbeResult<StartDataMessage> {
 
     let header = MessageHeaderDecoder::default().wrap(buf, 0);
     assert_eq!(SBE_TEMPLATE_ID, header.template_id());
-    csg = csg.header(header);
+    csg = csg.header(header, 0);
 
     let sbe_message_type = csg.message_type();
     let message_type = MessageType::from(sbe_message_type as u16);

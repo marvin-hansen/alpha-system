@@ -3,7 +3,9 @@ use common_data_bar::TradeBar;
 use rust_decimal::prelude::FromPrimitive;
 use rust_decimal::Decimal;
 use sbe_bindings::trade_bar_codec::SBE_TEMPLATE_ID;
-use sbe_bindings::{MessageHeaderDecoder, ReadBuf, TradeBarDecoder};
+use sbe_bindings::{
+    message_header_codec::MessageHeaderDecoder, trade_bar_codec::TradeBarDecoder, ReadBuf,
+};
 use sbe_types::{MessageType, SbeDecodeError};
 
 /// Decodes a `TradeBar` message from a byte buffer.
@@ -38,7 +40,7 @@ pub fn decode_trade_bar_message(buffer: &[u8]) -> Result<TradeBar, SbeDecodeErro
 
     let header = MessageHeaderDecoder::default().wrap(buf, 0);
     assert_eq!(SBE_TEMPLATE_ID, header.template_id());
-    csg = csg.header(header);
+    csg = csg.header(header, 0);
 
     let sbe_message_type = csg.message_type();
     let message_type = MessageType::from(sbe_message_type as u16);

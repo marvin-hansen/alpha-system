@@ -1,12 +1,15 @@
 use common_order::OrderUpdate;
-use sbe_bindings::{message_header_codec, MessageType, OrderCreateEncoder, WriteBuf};
+use sbe_bindings::{
+    message_header_codec, message_type::MessageType, order_update_codec::OrderUpdateEncoder,
+    WriteBuf,
+};
 use sbe_types::SbeEncodeError;
 
 pub fn encode_order_update_message(msg: OrderUpdate) -> Result<(usize, Vec<u8>), SbeEncodeError> {
     // precise buffer size
     let mut buffer = vec![0u8; 100];
 
-    let mut csg = OrderCreateEncoder::default();
+    let mut csg = OrderUpdateEncoder::default();
 
     csg = csg.wrap(
         WriteBuf::new(buffer.as_mut_slice()),

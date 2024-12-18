@@ -1,6 +1,8 @@
 use crate::ClientLogoutMessage;
-use sbe_bindings::MessageType as SbeMessageType;
-use sbe_bindings::{message_header_codec, ClientLogoutEncoder, Encoder, WriteBuf};
+use sbe_bindings::message_type::MessageType as SbeMessageType;
+use sbe_bindings::{
+    client_logout_codec::ClientLogoutEncoder, message_header_codec, Encoder, WriteBuf,
+};
 use sbe_types::SbeEncodeError;
 
 impl ClientLogoutMessage {
