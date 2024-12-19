@@ -9,8 +9,9 @@ members = [
     "queng_import/*/*",
     "queng_infra/*/*",
     "queng_integration/data/*",
-    "queng_integration/traits/*",
+    "queng_integration/traits/*", "queng_macros/data_integration_macro",
     "queng_message/*",
+    "queng_macros/*",
     "queng_proto/*",
     "queng_sbe/*",
     "queng_services/core/*/*",
@@ -149,6 +150,9 @@ vex_data_integration = { path = "queng_integration/data/vex_data_integration" }
 # Traits
 trait_data_integration = { path = "queng_integration/traits/trait_data_integration" }
 trait_exec_integration = { path = "queng_integration/traits/trait_exec_integration" }
+
+# Macros
+data_integration_macro = { path = "queng_macros/data_integration_macro" }
 
 # Mesasge bus
 message_consumer = { path = "queng_message/message_consumer" }

@@ -11,6 +11,7 @@ use trait_data_integration::{
 };
 
 #[derive(Default)]
+// #[derive(DataIntegration)]
 pub struct BinanceSpotDataIntegration {
     integration_id: ExchangeDataIntegrationID,
     integration: ImsBinanceSpotDataIntegration,
