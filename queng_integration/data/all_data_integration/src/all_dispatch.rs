@@ -1,6 +1,9 @@
-use crate::BinanceCoinFuturesDataIntegration;
-use crate::BinanceSpotDataIntegration;
 use crate::BinanceUsdFuturesDataIntegration;
+use crate::{BinanceCoinFuturesDataIntegration, BinanceSpotTestnetDataIntegration};
+use crate::{
+    BinanceCoinFuturesTestnetDataIntegration, BinanceSpotDataIntegration,
+    BinanceUsdFuturesTestnetDataIntegration,
+};
 use common_data_bar::TimeResolution;
 use common_errors::MessageProcessingError;
 use enum_dispatch::enum_dispatch;
@@ -12,9 +15,15 @@ use trait_data_integration::EventProcessor;
 #[enum_dispatch]
 pub enum DataIntegration {
     // These Enum values must match exactly the name of the struct type of the integration.
+    // Binance Live
     BinanceSpotDataIntegration,
     BinanceUsdFuturesDataIntegration,
     BinanceCoinFuturesDataIntegration,
+    // Binance Testnet
+    BinanceSpotTestnetDataIntegration,
+    BinanceUsdFuturesTestnetDataIntegration,
+    BinanceCoinFuturesTestnetDataIntegration,
+    //
 }
 
 #[enum_dispatch(DataIntegration)]

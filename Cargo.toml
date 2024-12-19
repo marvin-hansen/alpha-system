@@ -224,7 +224,10 @@ wait_utils = { path = "queng_utils/wait_utils" }
 # ==============
 # External crates
 # ==============
-
+# Dependencies for macros
+syn = { version = "2.0", features = ["full", "extra-traits"] }
+quote = "1.0"
+# Regular dependencies
 base16ct = { version = "0.2", default-features = false, features = ["alloc"] }
 blake3 = { version = "1.5.4", default-features = false }
 bytes = {version = "1.8.0"}

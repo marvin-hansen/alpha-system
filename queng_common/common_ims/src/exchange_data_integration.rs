@@ -9,6 +9,8 @@ pub enum ExchangeDataIntegrationID {
     BinanceUsdFuturesData = 2,
     BinanceCoinFuturesData = 3,
     BinanceSpotTestnetData = 4,
+    BinanceUsdFuturesTestnetData = 5,
+    BinanceCoinFuturesTestnetData = 6,
 }
 
 impl From<u8> for ExchangeDataIntegrationID {
@@ -19,6 +21,8 @@ impl From<u8> for ExchangeDataIntegrationID {
             2 => ExchangeDataIntegrationID::BinanceUsdFuturesData,
             3 => ExchangeDataIntegrationID::BinanceCoinFuturesData,
             4 => ExchangeDataIntegrationID::BinanceSpotTestnetData,
+            5 => ExchangeDataIntegrationID::BinanceUsdFuturesTestnetData,
+            6 => ExchangeDataIntegrationID::BinanceCoinFuturesTestnetData,
             _ => panic!("Invalid exchange data integration"),
         }
     }
@@ -38,6 +42,8 @@ impl From<u16> for ExchangeDataIntegrationID {
             2 => ExchangeDataIntegrationID::BinanceUsdFuturesData,
             3 => ExchangeDataIntegrationID::BinanceCoinFuturesData,
             4 => ExchangeDataIntegrationID::BinanceSpotTestnetData,
+            5 => ExchangeDataIntegrationID::BinanceUsdFuturesTestnetData,
+            6 => ExchangeDataIntegrationID::BinanceCoinFuturesTestnetData,
             _ => panic!("Invalid exchange data integration"),
         }
     }
@@ -46,25 +52,6 @@ impl From<u16> for ExchangeDataIntegrationID {
 impl From<ExchangeDataIntegrationID> for u16 {
     fn from(val: ExchangeDataIntegrationID) -> Self {
         val as u16
-    }
-}
-
-impl From<u32> for ExchangeDataIntegrationID {
-    fn from(value: u32) -> Self {
-        match value {
-            0 => ExchangeDataIntegrationID::NullVal,
-            1 => ExchangeDataIntegrationID::BinanceSpotData,
-            2 => ExchangeDataIntegrationID::BinanceUsdFuturesData,
-            3 => ExchangeDataIntegrationID::BinanceCoinFuturesData,
-            4 => ExchangeDataIntegrationID::BinanceSpotTestnetData,
-            _ => panic!("Invalid exchange data integration"),
-        }
-    }
-}
-
-impl From<ExchangeDataIntegrationID> for u32 {
-    fn from(val: ExchangeDataIntegrationID) -> Self {
-        val as u32
     }
 }
 

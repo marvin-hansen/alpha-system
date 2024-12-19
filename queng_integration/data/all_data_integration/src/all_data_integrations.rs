@@ -1,7 +1,10 @@
 use crate::all_dispatch::DataIntegration;
 use crate::binance_spot_data::BinanceSpotDataIntegration;
-use crate::BinanceCoinFuturesDataIntegration;
-use crate::BinanceUsdFuturesDataIntegration;
+use crate::{BinanceCoinFuturesDataIntegration, BinanceSpotTestnetDataIntegration};
+use crate::{
+    BinanceCoinFuturesTestnetDataIntegration, BinanceUsdFuturesDataIntegration,
+    BinanceUsdFuturesTestnetDataIntegration,
+};
 use common_ims::ExchangeDataIntegrationID;
 
 /// Returns a `DataIntegration` instance based on the provided `ExchangeDataIntegration` enum value.
@@ -23,6 +26,7 @@ pub fn get_data_integration(
     exchange_data_integration: ExchangeDataIntegrationID,
 ) -> DataIntegration {
     match exchange_data_integration {
+        // Binance Live
         ExchangeDataIntegrationID::BinanceSpotData => {
             DataIntegration::from(BinanceSpotDataIntegration::new())
         }
@@ -31,6 +35,16 @@ pub fn get_data_integration(
         }
         ExchangeDataIntegrationID::BinanceCoinFuturesData => {
             DataIntegration::from(BinanceCoinFuturesDataIntegration::new())
+        }
+        // Binance Testnet
+        ExchangeDataIntegrationID::BinanceSpotTestnetData => {
+            DataIntegration::from(BinanceSpotTestnetDataIntegration::new())
+        }
+        ExchangeDataIntegrationID::BinanceUsdFuturesTestnetData => {
+            DataIntegration::from(BinanceUsdFuturesTestnetDataIntegration::new())
+        }
+        ExchangeDataIntegrationID::BinanceCoinFuturesTestnetData => {
+            DataIntegration::from(BinanceCoinFuturesTestnetDataIntegration::new())
         }
         _ => {
             panic!("Invalid exchange data integration");

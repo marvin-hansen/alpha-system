@@ -9,23 +9,23 @@ use syn::{parse_macro_input, DeriveInput};
 /// - `integration: ImsBinanceSpotDataIntegration`
 ///
 /// # Example
-/// ```rust
+/// ```text
 /// use data_integration_macro::DataIntegration;
 ///
 /// #[derive(DataIntegration)]
 /// pub struct BinanceSpotDataIntegration {
 ///     // The struct must have the fields below to work
-///     //integration_id: ExchangeDataIntegrationID,
-///     //integration: ImsBinanceSpotDataIntegration,
+///     integration_id: ExchangeDataIntegrationID,
+///     integration: ImsBinanceSpotDataIntegration,
 /// }
 /// ```
+///
 #[proc_macro_derive(DataIntegration)]
 pub fn derive_data_integration(input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as DeriveInput);
     let name = &input.ident;
 
     let expanded = quote! {
-        #[async_trait::async_trait]
         impl DataIntegrationTrait for #name {
             async fn id(&self) -> Result<String, Error> {
                 Ok(self.integration_id.to_string())
