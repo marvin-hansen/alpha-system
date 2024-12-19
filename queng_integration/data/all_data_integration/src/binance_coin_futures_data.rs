@@ -1,5 +1,6 @@
 use crate::DataIntegrationTrait;
 use binance_coin_futures_data_integration::ImsBinanceCoinFuturesDataIntegration;
+use common_data_bar::TimeResolution;
 use common_errors::MessageProcessingError;
 use common_ims::ExchangeDataIntegrationID;
 use std::collections::HashSet;
@@ -51,12 +52,15 @@ impl DataIntegrationTrait for BinanceCoinFuturesDataIntegration {
     async fn start_ohlcv_data<P>(
         &self,
         symbols: &[String],
+        time_resolution: TimeResolution,
         processor: Arc<P>,
     ) -> Result<(), MessageProcessingError>
     where
         P: EventProcessor + Send + Sync + 'static,
     {
-        self.integration.start_ohlcv_data(symbols, processor).await
+        self.integration
+            .start_ohlcv_data(symbols, time_resolution, processor)
+            .await
     }
 
     async fn stop_ohlcv_data(&self, symbols: &[String]) -> Result<(), MessageProcessingError> {

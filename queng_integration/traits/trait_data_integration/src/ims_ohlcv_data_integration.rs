@@ -1,3 +1,4 @@
+use common_data_bar::TimeResolution;
 use common_errors::MessageProcessingError;
 use std::sync::Arc;
 
@@ -25,6 +26,7 @@ pub trait LocalImsOhlcvDataIntegration {
     async fn start_ohlcv_data<P>(
         &self,
         symbols: &[String],
+        time_resolution: TimeResolution,
         processor: Arc<P>,
     ) -> Result<(), MessageProcessingError>
     where

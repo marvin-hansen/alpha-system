@@ -1,6 +1,6 @@
 use crate::utils;
 use crate::ImsBinanceDataIntegration;
-use common_data_bar::OHLCVBar;
+use common_data_bar::{OHLCVBar, TimeResolution};
 use common_data_bar_ext::SbeOHLCVBarExtension;
 use common_errors::MessageProcessingError;
 use futures_util::StreamExt;
@@ -13,6 +13,7 @@ impl ImsOhlcvDataIntegration for ImsBinanceDataIntegration {
     async fn start_ohlcv_data<P>(
         &self,
         symbols: &[String],
+        time_resolution: TimeResolution,
         processor: Arc<P>,
     ) -> Result<(), MessageProcessingError>
     where
@@ -31,7 +32,7 @@ impl ImsOhlcvDataIntegration for ImsBinanceDataIntegration {
                 continue;
             }
 
-            let stream_name = format!("{}@kline_1m", symbol);
+            let stream_name = format!("{}@kline_{}", symbol, time_resolution);
 
             let ws_stream = self.connect_websocket(&stream_name).await?;
             let processor = Arc::clone(&processor);

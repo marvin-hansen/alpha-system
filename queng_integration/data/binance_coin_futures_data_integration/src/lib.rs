@@ -1,4 +1,5 @@
 use binance_core_data_integration::ImsBinanceDataIntegration;
+use common_data_bar::TimeResolution;
 use common_errors::MessageProcessingError;
 use std::collections::HashSet;
 use std::sync::Arc;
@@ -102,12 +103,15 @@ impl ImsOhlcvDataIntegration for ImsBinanceCoinFuturesDataIntegration {
     async fn start_ohlcv_data<P>(
         &self,
         symbols: &[String],
+        time_resolution: TimeResolution,
         processor: Arc<P>,
     ) -> Result<(), MessageProcessingError>
     where
         P: EventProcessor + Send + Sync + 'static,
     {
-        self.integration.start_ohlcv_data(symbols, processor).await
+        self.integration
+            .start_ohlcv_data(symbols, time_resolution, processor)
+            .await
     }
 
     /// Stops OHLCV data streams for the specified symbols in Binance Coin-M Futures.

@@ -1,6 +1,7 @@
 use crate::BinanceCoinFuturesDataIntegration;
 use crate::BinanceSpotDataIntegration;
 use crate::BinanceUsdFuturesDataIntegration;
+use common_data_bar::TimeResolution;
 use common_errors::MessageProcessingError;
 use enum_dispatch::enum_dispatch;
 use std::collections::HashSet;
@@ -35,6 +36,7 @@ pub trait LocalDataIntegrationTrait {
     async fn start_ohlcv_data<P>(
         &self,
         symbols: &[String],
+        time_resolution: TimeResolution,
         processor: Arc<P>,
     ) -> Result<(), MessageProcessingError>
     where
