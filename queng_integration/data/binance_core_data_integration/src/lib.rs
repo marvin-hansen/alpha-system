@@ -2,17 +2,40 @@ mod ims_integration;
 mod ohlcv_data_integration;
 mod trade_data_integration;
 mod utils;
+mod utils_connect;
 
-use common_errors::MessageProcessingError;
 use reqwest::Client;
 use std::collections::{HashMap, HashSet};
 use std::time::Duration;
 use tokio::sync::RwLock;
 use tokio::task::JoinHandle;
 use tokio::time::Instant;
-use tokio_tungstenite::tungstenite::protocol::WebSocketConfig;
 
-const SYMBOL_CACHE_DURATION: Duration = Duration::from_secs(7200); // 120 minutes
+/// Duration between symbol cache refreshes.
+///
+/// This value determines how often the symbol cache is refreshed from the Binance API.
+/// The cache is used to validate symbols and map them to their corresponding OHLCV and trade
+/// data streams.
+pub(crate) const SYMBOL_CACHE_DURATION: Duration = Duration::from_secs(7200); // 120 minutes
+
+/// Maximum time to wait between reconnect attempts.
+///
+/// When the WebSocket connection is lost, the integration will attempt to reconnect to the Binance
+/// API. If the reconnection fails, it will wait for the specified duration before trying again.
+pub(crate) const RECONNECT_INTERVAL: Duration = Duration::from_secs(12 * 3600); // 12 hours
+
+/// Maximum number of reconnect attempts.
+///
+/// When the WebSocket connection is lost and the reconnection fails, the integration will attempt to
+/// reconnect up to the specified number of times. If the maximum number of attempts is reached, the
+/// integration will stop.
+pub(crate) const MAX_RECONNECT_ATTEMPTS: u32 = 5;
+
+/// Time to wait between reconnect attempts.
+///
+/// When the WebSocket connection is lost, the integration will wait for the specified duration
+/// before attempting to reconnect.
+pub(crate) const RECONNECT_DELAY: Duration = Duration::from_secs(5);
 
 /// A Binance data integration implementation that provides real-time trade and OHLCV data streams.
 ///
@@ -50,36 +73,5 @@ impl ImsBinanceDataIntegration {
             trade_handlers: RwLock::new(HashMap::with_capacity(50)),
             ohlcv_handlers: RwLock::new(HashMap::with_capacity(50)),
         }
-    }
-}
-
-impl ImsBinanceDataIntegration {
-    /// Establishes a WebSocket connection to the Binance streaming API.
-    ///
-    /// # Arguments
-    /// * `stream_name` - The name of the stream to connect to (e.g., "btcusdt@trade")
-    ///
-    /// # Returns
-    /// - `Ok(WebSocketStream)`: Connected WebSocket stream
-    /// - `Err(MessageProcessingError)`: If connection fails
-    ///
-    async fn connect_websocket(
-        &self,
-        stream_name: &str,
-    ) -> Result<
-        tokio_tungstenite::WebSocketStream<
-            tokio_tungstenite::MaybeTlsStream<tokio::net::TcpStream>,
-        >,
-        MessageProcessingError,
-    > {
-        let url = format!("{}/{}", self.api_wss_url, stream_name);
-        let (ws_stream, _) = tokio_tungstenite::connect_async_with_config(
-            url,
-            Some(WebSocketConfig::default()),
-            true,
-        )
-        .await
-        .map_err(|e| MessageProcessingError::new(format!("WebSocket connection failed: {}", e)))?;
-        Ok(ws_stream)
     }
 }
