@@ -8,6 +8,7 @@
 //! 5. Stop trade data streams
 
 use binance_usd_futures_data_integration::ImsBinanceUsdFuturesDataIntegration;
+use common_data_bar::TimeResolution;
 use common_errors::MessageProcessingError;
 use sbe_messages_data::{SbeOHLCVBar, SbeTradeBar};
 use sbe_types::MessageType;
@@ -91,7 +92,10 @@ async fn main() -> Result<(), MessageProcessingError> {
     println!("✓ Trade data stream started successfully!");
 
     println!("\nStarting OHLCV data stream...");
-    if let Err(e) = integration.start_ohlcv_data(&test_symbols, processor).await {
+    if let Err(e) = integration
+        .start_ohlcv_data(&test_symbols, TimeResolution::FiveMin, processor)
+        .await
+    {
         eprintln!("✗ Failed to start OHLCV data stream: {}", e);
         // Make sure to stop trade stream if OHLCV stream fails
         integration.stop_all_trade_data().await?;
