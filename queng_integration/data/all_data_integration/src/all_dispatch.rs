@@ -11,6 +11,7 @@ use trait_data_integration::EventProcessor;
 
 #[enum_dispatch]
 pub enum DataIntegration {
+    // These Enum values must match exactly the name of the struct type of the integration.
     BinanceSpotDataIntegration,
     BinanceUsdFuturesDataIntegration,
     BinanceCoinFuturesDataIntegration,
