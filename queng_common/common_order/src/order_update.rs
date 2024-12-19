@@ -22,6 +22,7 @@ pub struct OrderUpdate {
 }
 
 impl OrderUpdate {
+    #[allow(clippy::too_many_arguments)]
     pub fn new(
         exchange_id: ExchangeID,
         client_id: u16,

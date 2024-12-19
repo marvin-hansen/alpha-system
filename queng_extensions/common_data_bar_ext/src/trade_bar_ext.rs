@@ -35,7 +35,7 @@ pub trait SbeTradeBarExtension {
     /// # Errors
     ///
     /// Returns Err if decoding fails
-    fn decode_from_sbe(encoded: &Vec<u8>) -> Result<TradeBar, SbeDecodeError>;
+    fn decode_from_sbe(encoded: &[u8]) -> Result<TradeBar, SbeDecodeError>;
 }
 
 impl SbeTradeBarExtension for TradeBar {
@@ -43,7 +43,7 @@ impl SbeTradeBarExtension for TradeBar {
         SbeTradeBar::encode(self)
     }
 
-    fn decode_from_sbe(encoded: &Vec<u8>) -> Result<TradeBar, SbeDecodeError> {
+    fn decode_from_sbe(encoded: &[u8]) -> Result<TradeBar, SbeDecodeError> {
         SbeTradeBar::decode(encoded)
     }
 }

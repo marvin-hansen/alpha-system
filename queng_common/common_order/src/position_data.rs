@@ -20,6 +20,7 @@ pub struct PositionData {
 }
 
 impl PositionData {
+    #[allow(clippy::too_many_arguments)]
     pub fn new(
         symbol_id: String,
         exchange_symbol_id: String,
