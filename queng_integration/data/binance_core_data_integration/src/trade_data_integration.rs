@@ -71,7 +71,9 @@ impl ImsTradeDataIntegration for ImsBinanceDataIntegration {
                 }
             });
 
-            handlers.insert(symbol, handle);
+            handlers.insert(symbol.clone(), handle);
+            // Add symbol to active trade symbols list
+            self.symbols_active_trade.write().await.push(symbol);
         }
 
         Ok(())
@@ -113,7 +115,12 @@ impl ImsTradeDataIntegration for ImsBinanceDataIntegration {
             // Remove and abort the handler for this symbol
             if let Some(handle) = handlers.remove(&symbol) {
                 handle.abort();
-                stopped_symbols.push(symbol);
+                stopped_symbols.push(symbol.clone());
+                // Remove symbol from active trade symbols list
+                let mut active_symbols = self.symbols_active_trade.write().await;
+                if let Some(pos) = active_symbols.iter().position(|s| s == &symbol) {
+                    active_symbols.remove(pos);
+                }
             }
         }
 
@@ -143,6 +150,8 @@ impl ImsTradeDataIntegration for ImsBinanceDataIntegration {
         let mut handlers = self.trade_handlers.write().await;
         for (_, handle) in handlers.drain() {
             handle.abort();
+            // Clear active trade symbols list when stopping all streams
+            self.symbols_active_trade.write().await.clear();
         }
         Ok(())
     }
