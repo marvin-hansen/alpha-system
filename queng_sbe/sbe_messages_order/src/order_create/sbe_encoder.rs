@@ -50,6 +50,7 @@ pub fn encode_order_create_message(msg: OrderCreate) -> Result<(usize, Vec<u8>),
     let mut qty_encoder = csg.order_qty_encoder();
     qty_encoder.num(
         msg.quantity()
+            .mantissa()
             .to_i64()
             .expect("Failed to convert quantity decimal to i64"),
     );
@@ -59,6 +60,7 @@ pub fn encode_order_create_message(msg: OrderCreate) -> Result<(usize, Vec<u8>),
     let mut price_encoder = csg.order_price_encoder();
     price_encoder.num(
         msg.price()
+            .mantissa()
             .to_i64()
             .expect("Failed to convert price decimal to i64"),
     );

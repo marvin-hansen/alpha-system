@@ -8,7 +8,7 @@ pub use crate::SBE_SCHEMA_VERSION;
 pub use crate::SBE_SEMANTIC_VERSION;
 
 pub const SBE_BLOCK_LENGTH: u16 = 38;
-pub const SBE_TEMPLATE_ID: u16 = 207;
+pub const SBE_TEMPLATE_ID: u16 = 205;
 
 pub mod encoder {
     use super::*;

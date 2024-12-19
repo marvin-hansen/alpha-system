@@ -1,4 +1,4 @@
-use encoding_utils::encode_str_to_pair_u64;
+use encoding_utils::{decode_pair_64_to_str, encode_str_to_pair_u64};
 
 #[derive(Default, Debug, Clone, PartialEq, Eq)]
 pub struct ExchangeOrderID {
@@ -55,6 +55,21 @@ impl From<&str> for ExchangeOrderID {
 impl From<ExchangeOrderID> for String {
     fn from(value: ExchangeOrderID) -> Self {
         value.exchange_order_id
+    }
+}
+
+impl From<ExchangeOrderID> for (u64, u64) {
+    fn from(value: ExchangeOrderID) -> Self {
+        value.exchange_order_id_binary
+    }
+}
+
+impl From<(u64, u64)> for ExchangeOrderID {
+    fn from(value: (u64, u64)) -> Self {
+        let exchange_order_id =
+            decode_pair_64_to_str((value.0, value.1)).expect("Failed to decode Exchange Order ID");
+
+        Self::new(exchange_order_id)
     }
 }
 

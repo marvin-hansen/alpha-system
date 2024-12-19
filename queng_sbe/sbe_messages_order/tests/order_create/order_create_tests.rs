@@ -29,8 +29,8 @@ fn test_encode_order_create_message() {
 
     let expected: Vec<u8> = vec![
         67, 0, 145, 1, 1, 0, 1, 0, 145, 1, 4, 1, 0, 228, 247, 147, 162, 247, 151, 39, 0, 129, 144,
-        48, 135, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 9, 179, 97, 0, 0, 0, 0, 2, 0, 0,
-        0, 0, 0, 0, 0, 1, 128, 195, 201, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        48, 135, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 9, 179, 97, 0, 0, 0, 0, 20, 0, 0,
+        0, 0, 0, 0, 0, 1, 0, 163, 225, 17, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     ];
     let actual = buffer;
     assert_eq!(expected, actual);
@@ -40,8 +40,8 @@ fn test_encode_order_create_message() {
 fn test_decode_order_create_message() {
     let encoded: Vec<u8> = vec![
         67, 0, 145, 1, 1, 0, 1, 0, 145, 1, 4, 1, 0, 228, 247, 147, 162, 247, 151, 39, 0, 129, 144,
-        48, 135, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 9, 179, 97, 0, 0, 0, 0, 2, 0, 0,
-        0, 0, 0, 0, 0, 1, 128, 195, 201, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        48, 135, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 9, 179, 97, 0, 0, 0, 0, 20, 0, 0,
+        0, 0, 0, 0, 0, 1, 0, 163, 225, 17, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     ];
 
     let order = decode_order_create_message(encoded.as_slice());
@@ -59,4 +59,7 @@ fn test_decode_order_create_message() {
         &TimeInForce::GoodTillTimeExchange
     );
     assert_eq!(order.time_expiry(), Some(1639123200));
+
+    assert_eq!(order.quantity(), Decimal::new(20, 1));
+    assert_eq!(order.price(), Decimal::new(300000000, 1));
 }

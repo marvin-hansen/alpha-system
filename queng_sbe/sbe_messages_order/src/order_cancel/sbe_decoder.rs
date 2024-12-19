@@ -1,5 +1,5 @@
 use common_exchange::ExchangeID;
-use common_order::OrderCancel;
+use common_order::{ClientOrderID, ExchangeOrderID, OrderCancel};
 use sbe_bindings::order_cancel_codec::SBE_TEMPLATE_ID;
 use sbe_bindings::{
     message_header_codec::MessageHeaderDecoder, order_cancel_codec::OrderCancelDecoder, ReadBuf,
@@ -36,11 +36,10 @@ pub fn decode_order_cancel_message(buffer: &[u8]) -> Result<OrderCancel, SbeDeco
 
     let client_id = csg.client_id();
 
-    let raw_string = String::from_utf8(csg.client_order_id().to_vec()).expect("Invalid UTF-8");
-    let client_order_id = raw_string.trim_matches(char::from(0)).to_string();
+    let client_order_id = ClientOrderID::from(csg.client_order_id());
 
-    let raw_string = String::from_utf8(csg.exchange_order_id().to_vec()).expect("Invalid UTF-8");
-    let exchange_order_id = raw_string.trim_matches(char::from(0)).to_string();
+    let decoder = csg.exchange_order_id_decoder();
+    let exchange_order_id = ExchangeOrderID::from((decoder.first(), decoder.second()));
 
     Ok(OrderCancel::new(
         exchange_id,

@@ -21,7 +21,7 @@ use sbe_types::SbeEncodeError;
 /// and exchange order ID into a fixed-size binary format using SBE.
 pub fn encode_order_cancel_message(msg: OrderCancel) -> Result<(usize, Vec<u8>), SbeEncodeError> {
     // precise buffer size
-    let mut buffer = vec![0u8; 47];
+    let mut buffer = vec![0u8; 37];
 
     let mut csg = OrderCancelEncoder::default();
 
@@ -38,15 +38,19 @@ pub fn encode_order_cancel_message(msg: OrderCancel) -> Result<(usize, Vec<u8>),
 
     csg.client_id(msg.client_id());
 
-    let mut byte_array = [0u8; 14];
-    byte_array[..msg.client_order_id().len()].copy_from_slice(msg.client_order_id().as_bytes());
+    csg.client_order_id(msg.client_order_id().client_order_id_binary());
 
-    csg.client_order_id(&byte_array);
+    let mut encoder = csg.exchange_order_id_encoder();
+    let (first, second) = msg
+        .exchange_order_id()
+        .exchange_order_id_binary()
+        .to_owned();
+    encoder.first(first);
+    encoder.second(second);
 
-    let mut byte_array = [0u8; 20];
-    byte_array[..msg.exchange_order_id().len()].copy_from_slice(msg.exchange_order_id().as_bytes());
-
-    csg.exchange_order_id(&byte_array);
+    csg = encoder
+        .parent()
+        .expect("Failed to encode exchange order id");
 
     let limit = csg.get_limit();
     Ok((limit, buffer))

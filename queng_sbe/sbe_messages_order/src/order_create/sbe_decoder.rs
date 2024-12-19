@@ -24,9 +24,7 @@ pub fn decode_order_create_message(buffer: &[u8]) -> Result<OrderCreate, SbeDeco
     let client_order_id = ClientOrderID::from(csg.client_order_id());
 
     let decoder = csg.exchange_symbol_id_decoder();
-
-    let (first, second) = (decoder.first(), decoder.second());
-    let exchange_symbol_id = OrderExchangeSymbol::from((first, second));
+    let exchange_symbol_id = OrderExchangeSymbol::from((decoder.first(), decoder.second()));
 
     let order_type = OrderType::from(csg.order_type());
 
@@ -35,7 +33,13 @@ pub fn decode_order_create_message(buffer: &[u8]) -> Result<OrderCreate, SbeDeco
     let order_time_in_force = TimeInForce::from(csg.time_in_force());
 
     let time_expiry = if csg.time_expiry().is_some() {
-        Some(csg.time_expiry().unwrap())
+        let val = csg.time_expiry().unwrap();
+
+        if val == 0 {
+            None
+        } else {
+            Some(val)
+        }
     } else {
         None
     };

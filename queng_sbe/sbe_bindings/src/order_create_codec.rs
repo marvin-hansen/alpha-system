@@ -189,25 +189,25 @@ pub mod encoder {
 
         /// COMPOSITE ENCODER
         #[inline]
-        pub fn order_qty_encoder(self) -> rust_decimal_codec::RustDecimalEncoder<Self> {
+        pub fn order_qty_encoder(self) -> decimal_qty_codec::DecimalQtyEncoder<Self> {
             let offset = self.offset + 40;
-            rust_decimal_codec::RustDecimalEncoder::default().wrap(self, offset)
+            decimal_qty_codec::DecimalQtyEncoder::default().wrap(self, offset)
         }
 
         /// COMPOSITE ENCODER
         #[inline]
-        pub fn order_price_encoder(self) -> rust_decimal_codec::RustDecimalEncoder<Self> {
+        pub fn order_price_encoder(self) -> decimal_price_codec::DecimalPriceEncoder<Self> {
             let offset = self.offset + 49;
-            rust_decimal_codec::RustDecimalEncoder::default().wrap(self, offset)
+            decimal_price_codec::DecimalPriceEncoder::default().wrap(self, offset)
         }
 
         /// COMPOSITE ENCODER
         #[inline]
         pub fn order_stop_price_encoder(
             self,
-        ) -> optional_rust_decimal_codec::OptionalRustDecimalEncoder<Self> {
+        ) -> decimal_optional_codec::DecimalOptionalEncoder<Self> {
             let offset = self.offset + 58;
-            optional_rust_decimal_codec::OptionalRustDecimalEncoder::default().wrap(self, offset)
+            decimal_optional_codec::DecimalOptionalEncoder::default().wrap(self, offset)
         }
     }
 } // end encoder
@@ -353,25 +353,25 @@ pub mod decoder {
 
         /// COMPOSITE DECODER
         #[inline]
-        pub fn order_qty_decoder(self) -> rust_decimal_codec::RustDecimalDecoder<Self> {
+        pub fn order_qty_decoder(self) -> decimal_qty_codec::DecimalQtyDecoder<Self> {
             let offset = self.offset + 40;
-            rust_decimal_codec::RustDecimalDecoder::default().wrap(self, offset)
+            decimal_qty_codec::DecimalQtyDecoder::default().wrap(self, offset)
         }
 
         /// COMPOSITE DECODER
         #[inline]
-        pub fn order_price_decoder(self) -> rust_decimal_codec::RustDecimalDecoder<Self> {
+        pub fn order_price_decoder(self) -> decimal_price_codec::DecimalPriceDecoder<Self> {
             let offset = self.offset + 49;
-            rust_decimal_codec::RustDecimalDecoder::default().wrap(self, offset)
+            decimal_price_codec::DecimalPriceDecoder::default().wrap(self, offset)
         }
 
         /// COMPOSITE DECODER
         #[inline]
         pub fn order_stop_price_decoder(
             self,
-        ) -> optional_rust_decimal_codec::OptionalRustDecimalDecoder<Self> {
+        ) -> decimal_optional_codec::DecimalOptionalDecoder<Self> {
             let offset = self.offset + 58;
-            optional_rust_decimal_codec::OptionalRustDecimalDecoder::default().wrap(self, offset)
+            decimal_optional_codec::DecimalOptionalDecoder::default().wrap(self, offset)
         }
     }
 } // end decoder

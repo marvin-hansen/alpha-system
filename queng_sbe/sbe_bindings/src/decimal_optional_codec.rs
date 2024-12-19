@@ -1,7 +1,7 @@
 use crate::*;
 
-pub use decoder::OptionalRustDecimalDecoder;
-pub use encoder::OptionalRustDecimalEncoder;
+pub use decoder::DecimalOptionalDecoder;
+pub use encoder::DecimalOptionalEncoder;
 
 pub const ENCODED_LENGTH: usize = 9;
 
@@ -9,12 +9,12 @@ pub mod encoder {
     use super::*;
 
     #[derive(Debug, Default)]
-    pub struct OptionalRustDecimalEncoder<P> {
+    pub struct DecimalOptionalEncoder<P> {
         parent: Option<P>,
         offset: usize,
     }
 
-    impl<'a, P> Writer<'a> for OptionalRustDecimalEncoder<P>
+    impl<'a, P> Writer<'a> for DecimalOptionalEncoder<P>
     where
         P: Writer<'a> + Default,
     {
@@ -28,7 +28,7 @@ pub mod encoder {
         }
     }
 
-    impl<'a, P> OptionalRustDecimalEncoder<P>
+    impl<'a, P> DecimalOptionalEncoder<P>
     where
         P: Writer<'a> + Default,
     {
@@ -79,12 +79,12 @@ pub mod decoder {
     use super::*;
 
     #[derive(Debug, Default)]
-    pub struct OptionalRustDecimalDecoder<P> {
+    pub struct DecimalOptionalDecoder<P> {
         parent: Option<P>,
         offset: usize,
     }
 
-    impl<'a, P> ActingVersion for OptionalRustDecimalDecoder<P>
+    impl<'a, P> ActingVersion for DecimalOptionalDecoder<P>
     where
         P: Reader<'a> + ActingVersion + Default,
     {
@@ -94,7 +94,7 @@ pub mod decoder {
         }
     }
 
-    impl<'a, P> Reader<'a> for OptionalRustDecimalDecoder<P>
+    impl<'a, P> Reader<'a> for DecimalOptionalDecoder<P>
     where
         P: Reader<'a> + Default,
     {
@@ -104,7 +104,7 @@ pub mod decoder {
         }
     }
 
-    impl<'a, P> OptionalRustDecimalDecoder<P>
+    impl<'a, P> DecimalOptionalDecoder<P>
     where
         P: Reader<'a> + Default,
     {

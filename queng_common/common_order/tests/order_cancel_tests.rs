@@ -2,20 +2,12 @@ use common_exchange::ExchangeID;
 use common_order::OrderCancel;
 
 #[test]
-fn test_order_cancel_single_default() {
-    let default_cancel = OrderCancel::default();
-    assert_eq!(default_cancel.exchange_id(), ExchangeID::default());
-    assert_eq!(default_cancel.client_order_id(), "");
-    assert_eq!(default_cancel.exchange_order_id(), "");
-}
-
-#[test]
 fn test_order_cancel_single_display() {
     let cancel_order = OrderCancel::new(
         ExchangeID::Binance,
         1,
-        "cl_ord_id".to_string(),
-        "exchange_order_id".to_string(),
+        "cl_ord_id".into(),
+        "exchange_order_id".into(),
     );
 
     let display_string = cancel_order.to_string();
@@ -29,8 +21,8 @@ fn test_order_cancel_single_debug() {
     let cancel_order = OrderCancel::new(
         ExchangeID::Binance,
         1,
-        "cl_ord_id".to_string(),
-        "exchange_order_id".to_string(),
+        "cl_ord_id".into(),
+        "exchange_order_id".into(),
     );
 
     let debug_string = format!("{:?}", cancel_order);
@@ -44,8 +36,8 @@ fn test_order_cancel_single_clone_and_eq() {
     let original = OrderCancel::new(
         ExchangeID::Binance,
         1,
-        "cl_ord_id".to_string(),
-        "exchange_order_id".to_string(),
+        "cl_ord_id".into(),
+        "exchange_order_id".into(),
     );
 
     let cloned = original.clone();
@@ -54,8 +46,8 @@ fn test_order_cancel_single_clone_and_eq() {
     let different = OrderCancel::new(
         ExchangeID::Binance,
         42,
-        "cl_ord_id".to_string(),
-        "exchange_order_id".to_string(),
+        "cl_ord_id".into(),
+        "exchange_order_id".into(),
     );
     assert_ne!(original, different);
 }
@@ -65,15 +57,15 @@ fn test_order_cancel_single_with_different_exchanges() {
     let binance_cancel = OrderCancel::new(
         ExchangeID::Binance,
         1,
-        "binance_cl_ord_id".to_string(),
-        "binance_exchange_order_id".to_string(),
+        "cl_ord_id".into(),
+        "binance_order_id".into(),
     );
 
     let kraken_cancel = OrderCancel::new(
         ExchangeID::Kraken,
         1,
-        "kraken_cl_ord_id".to_string(),
-        "kraken_exchange_order_id".to_string(),
+        "dif_ord_id".into(),
+        "kraken_order_id".into(),
     );
     assert_eq!(binance_cancel.exchange_id(), ExchangeID::Binance);
     assert_ne!(binance_cancel, kraken_cancel);

@@ -7,7 +7,7 @@ pub use crate::SBE_SCHEMA_ID;
 pub use crate::SBE_SCHEMA_VERSION;
 pub use crate::SBE_SEMANTIC_VERSION;
 
-pub const SBE_BLOCK_LENGTH: u16 = 39;
+pub const SBE_BLOCK_LENGTH: u16 = 29;
 pub const SBE_TEMPLATE_ID: u16 = 403;
 
 pub mod encoder {
@@ -102,36 +102,28 @@ pub mod encoder {
             self.get_buf_mut().put_u16_at(offset, value);
         }
 
-        /// primitive array field 'clientOrderID'
-        /// - min value: 32
-        /// - max value: 126
-        /// - null value: 0
-        /// - characterEncoding: US-ASCII
-        /// - semanticType: String
+        /// primitive field 'clientOrderID'
+        /// - min value: 0
+        /// - max value: -2
+        /// - null value: -1
+        /// - characterEncoding: null
+        /// - semanticType: null
         /// - encodedOffset: 5
-        /// - encodedLength: 14
+        /// - encodedLength: 8
         /// - version: 0
         #[inline]
-        pub fn client_order_id(&mut self, value: &[u8; 14]) {
+        pub fn client_order_id(&mut self, value: u64) {
             let offset = self.offset + 5;
-            let buf = self.get_buf_mut();
-            buf.put_bytes_at(offset, value);
+            self.get_buf_mut().put_u64_at(offset, value);
         }
 
-        /// primitive array field 'exchangeOrderID'
-        /// - min value: 32
-        /// - max value: 126
-        /// - null value: 0
-        /// - characterEncoding: US-ASCII
-        /// - semanticType: String
-        /// - encodedOffset: 19
-        /// - encodedLength: 20
-        /// - version: 0
+        /// COMPOSITE ENCODER
         #[inline]
-        pub fn exchange_order_id(&mut self, value: &[u8; 20]) {
-            let offset = self.offset + 19;
-            let buf = self.get_buf_mut();
-            buf.put_bytes_at(offset, value);
+        pub fn exchange_order_id_encoder(
+            self,
+        ) -> exchange_order_id_codec::ExchangeOrderIDEncoder<Self> {
+            let offset = self.offset + 13;
+            exchange_order_id_codec::ExchangeOrderIDEncoder::default().wrap(self, offset)
         }
     }
 } // end encoder
@@ -230,16 +222,19 @@ pub mod decoder {
             self.get_buf().get_u16_at(self.offset + 3)
         }
 
+        /// primitive field - 'REQUIRED'
         #[inline]
-        pub fn client_order_id(&self) -> [u8; 14] {
-            let buf = self.get_buf();
-            ReadBuf::get_bytes_at(buf.data, self.offset + 5)
+        pub fn client_order_id(&self) -> u64 {
+            self.get_buf().get_u64_at(self.offset + 5)
         }
 
+        /// COMPOSITE DECODER
         #[inline]
-        pub fn exchange_order_id(&self) -> [u8; 20] {
-            let buf = self.get_buf();
-            ReadBuf::get_bytes_at(buf.data, self.offset + 19)
+        pub fn exchange_order_id_decoder(
+            self,
+        ) -> exchange_order_id_codec::ExchangeOrderIDDecoder<Self> {
+            let offset = self.offset + 13;
+            exchange_order_id_codec::ExchangeOrderIDDecoder::default().wrap(self, offset)
         }
     }
 } // end decoder

@@ -1,20 +1,20 @@
 use crate::*;
 
-pub use decoder::RustDecimalDecoder;
-pub use encoder::RustDecimalEncoder;
+pub use decoder::ExchangeOrderIDDecoder;
+pub use encoder::ExchangeOrderIDEncoder;
 
-pub const ENCODED_LENGTH: usize = 9;
+pub const ENCODED_LENGTH: usize = 16;
 
 pub mod encoder {
     use super::*;
 
     #[derive(Debug, Default)]
-    pub struct RustDecimalEncoder<P> {
+    pub struct ExchangeOrderIDEncoder<P> {
         parent: Option<P>,
         offset: usize,
     }
 
-    impl<'a, P> Writer<'a> for RustDecimalEncoder<P>
+    impl<'a, P> Writer<'a> for ExchangeOrderIDEncoder<P>
     where
         P: Writer<'a> + Default,
     {
@@ -28,7 +28,7 @@ pub mod encoder {
         }
     }
 
-    impl<'a, P> RustDecimalEncoder<P>
+    impl<'a, P> ExchangeOrderIDEncoder<P>
     where
         P: Writer<'a> + Default,
     {
@@ -43,34 +43,34 @@ pub mod encoder {
             self.parent.take().ok_or(SbeErr::ParentNotSet)
         }
 
-        /// primitive field 'num'
-        /// - min value: -9223372036854775807
-        /// - max value: 9223372036854775807
-        /// - null value: -9223372036854775808
+        /// primitive field 'first'
+        /// - min value: 0
+        /// - max value: -2
+        /// - null value: -1
         /// - characterEncoding: null
         /// - semanticType: null
         /// - encodedOffset: 0
         /// - encodedLength: 8
         /// - version: 0
         #[inline]
-        pub fn num(&mut self, value: i64) {
+        pub fn first(&mut self, value: u64) {
             let offset = self.offset;
-            self.get_buf_mut().put_i64_at(offset, value);
+            self.get_buf_mut().put_u64_at(offset, value);
         }
 
-        /// primitive field 'scale'
+        /// primitive field 'second'
         /// - min value: 0
-        /// - max value: 254
-        /// - null value: 255
+        /// - max value: -2
+        /// - null value: -1
         /// - characterEncoding: null
         /// - semanticType: null
         /// - encodedOffset: 8
-        /// - encodedLength: 1
+        /// - encodedLength: 8
         /// - version: 0
         #[inline]
-        pub fn scale(&mut self, value: u8) {
+        pub fn second(&mut self, value: u64) {
             let offset = self.offset + 8;
-            self.get_buf_mut().put_u8_at(offset, value);
+            self.get_buf_mut().put_u64_at(offset, value);
         }
     }
 } // end encoder mod
@@ -79,12 +79,12 @@ pub mod decoder {
     use super::*;
 
     #[derive(Debug, Default)]
-    pub struct RustDecimalDecoder<P> {
+    pub struct ExchangeOrderIDDecoder<P> {
         parent: Option<P>,
         offset: usize,
     }
 
-    impl<'a, P> ActingVersion for RustDecimalDecoder<P>
+    impl<'a, P> ActingVersion for ExchangeOrderIDDecoder<P>
     where
         P: Reader<'a> + ActingVersion + Default,
     {
@@ -94,7 +94,7 @@ pub mod decoder {
         }
     }
 
-    impl<'a, P> Reader<'a> for RustDecimalDecoder<P>
+    impl<'a, P> Reader<'a> for ExchangeOrderIDDecoder<P>
     where
         P: Reader<'a> + Default,
     {
@@ -104,7 +104,7 @@ pub mod decoder {
         }
     }
 
-    impl<'a, P> RustDecimalDecoder<P>
+    impl<'a, P> ExchangeOrderIDDecoder<P>
     where
         P: Reader<'a> + Default,
     {
@@ -121,14 +121,14 @@ pub mod decoder {
 
         /// primitive field - 'REQUIRED'
         #[inline]
-        pub fn num(&self) -> i64 {
-            self.get_buf().get_i64_at(self.offset)
+        pub fn first(&self) -> u64 {
+            self.get_buf().get_u64_at(self.offset)
         }
 
         /// primitive field - 'REQUIRED'
         #[inline]
-        pub fn scale(&self) -> u8 {
-            self.get_buf().get_u8_at(self.offset + 8)
+        pub fn second(&self) -> u64 {
+            self.get_buf().get_u64_at(self.offset + 8)
         }
     }
 } // end decoder mod

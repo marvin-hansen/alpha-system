@@ -51,32 +51,18 @@
         <type name="OptionalTimestamp" presence="optional" encodingType="uInt64NULL" primitiveType="uint64"/>
         <type name="TimeResolution" encodingType="uInt8NULL" primitiveType="uint8"/>
 
-        <!--   Binary String TYPE DEFINITIONS -->
-        <type name="BinaryString10" encodingType="uInt64NULL" primitiveType="uint64"/>
-
         <!--   DECIMAL TYPE DEFINITIONS -->
-        <composite name="DecimalQty" description="A number representing quantity" semanticType="Qty">
-            <type name="mantissa" description="mantissa" primitiveType="int64"/>
-            <type name="exponent" description="exponent" presence="constant" primitiveType="int8">-9</type>
-        </composite>
-        <composite name="DecimalPrice" description="A number representing price" semanticType="PRICE">
-            <type name="mantissa" description="mantissa" primitiveType="int64"/>
-            <type name="exponent" description="exponent" presence="constant" primitiveType="int8">-9</type>
-        </composite>
-        <composite name="PRICENULL" description="Price NULL" semanticType="PRICENULL">
-            <type name="mantissa" description="mantissa" presence="optional" nullValue="9223372036854775807" primitiveType="int64"/>
-            <type name="exponent" description="exponent" presence="constant" primitiveType="int8">-9</type>
-        </composite>
-        <composite name="optionalDecimalEncoding" description="Optional decimal with constant exponent">
-            <type name="mantissa" presence="optional" primitiveType="int64"/>
-            <type name="exponent" presence="constant" primitiveType="int8">-9</type>
-        </composite>
-        <!--   RUST DECIMAL TYPE DEFINITIONS -->
-        <composite name="RustDecimal" description="A number representing the Decimal Type in Rust" semanticType="Qty">
+        <composite name="DecimalQty" description="A number representing quantity as Rust decimal">
             <type name="num" description="the number" primitiveType="int64"/>
             <type name="scale" description="the scale" primitiveType="uint8"/>
         </composite>
-        <composite name="OptionalRustDecimal" description="Optional Rust decimal">
+
+        <composite name="DecimalPrice" description="A number representing price as Rust decimal">
+            <type name="num" description="the number" primitiveType="int64"/>
+            <type name="scale" description="the scale" primitiveType="uint8"/>
+        </composite>
+
+        <composite name="DecimalOptional" description="Optional Rust decimal">
             <type name="num" presence="optional" primitiveType="int64"/>
             <type name="scale" presence="optional" primitiveType="uint8"/>
         </composite>
@@ -105,8 +91,12 @@
         <type name="DataErrorType" encodingType="uInt8NULL" primitiveType="uint8"/>
 
         <!--    ORDER TYPE DEFINITIONS. See common_order crate and sbe_messages_order for Rust type definitions -->
-        <type name="ClientOrderID" description="ClientOrderID" length="14" primitiveType="char" semanticType="String"/>
-        <type name="ExchangeOrderID" description="ExchangeOrderID" length="20" primitiveType="char" semanticType="String"/>
+        <type name="ClientOrderID" encodingType="uInt64NULL" primitiveType="uint64"/>
+        <composite name="ExchangeOrderID">
+            <type name="first" primitiveType="uint64"/>
+            <type name="second" primitiveType="uint64"/>
+        </composite>
+
         <composite name="OrderExchangeSymbolID">
             <type name="first" primitiveType="uint64"/>
             <type name="second" primitiveType="uint64"/>
@@ -131,7 +121,7 @@
 
             <!--            Data Message Types-->
             <validValue name="DataBar">204</validValue>
-            <validValue name="TradeBar">207</validValue>
+            <validValue name="TradeBar">205</validValue>
 
             <!--            Order Message Types-->
             <validValue name="OrderCreate">401</validValue>
@@ -192,7 +182,7 @@
         <field name="volume" id="8" type="float"/>
     </sbe:message>
 
-    <sbe:message name="TradeBar" id="207">
+    <sbe:message name="TradeBar" id="205">
         <field name="messageType" id="1" type="MessageType"/>
         <field name="symbolID" id="2" type="SymbolID"/>
         <field name="dateTime" id="3" type="Timestamp"/>
@@ -205,15 +195,15 @@
         <field name="messageType" id="1" type="MessageType"/>
         <field name="exchangeID" id="2" type="ExchangeID"/>
         <field name="clientID" id="3" type="ClientID"/>
-        <field name="clientOrderID" id="4" type="BinaryString10"/>
+        <field name="clientOrderID" id="4" type="ClientOrderID"/>
         <field name="exchangeSymbolID" id="5" type="OrderExchangeSymbolID"/>
         <field name="orderType" id="6" type="OrderType"/>
         <field name="orderSide" id="7" type="OrderSide"/>
         <field name="timeInForce" id="8" type="OrderTimeInForce"/>
         <field name="timeExpiry" id="9" type="OptionalTimestamp"/>
-        <field name="orderQty" id="10" type="RustDecimal"/>
-        <field name="orderPrice" id="11" type="RustDecimal"/>
-        <field name="orderStopPrice" id="12" type="OptionalRustDecimal"/>
+        <field name="orderQty" id="10" type="DecimalQty"/>
+        <field name="orderPrice" id="11" type="DecimalPrice"/>
+        <field name="orderStopPrice" id="12" type="DecimalOptional"/>
     </sbe:message>
 
     <sbe:message name="OrderUpdate" id="402">
@@ -222,14 +212,14 @@
         <field name="clientID" id="3" type="ClientID"/>
         <field name="clientOrderID" id="4" type="ClientOrderID"/>
         <field name="exchangeOrderID" id="5" type="ExchangeOrderID"/>
-        <field name="exchangeSymbolID" id="6" type="SymbolID"/>
+        <field name="exchangeSymbolID" id="6" type="OrderExchangeSymbolID"/>
         <field name="orderType" id="7" type="OrderType"/>
         <field name="orderSide" id="8" type="OrderSide"/>
         <field name="timeInForce" id="9" type="OrderTimeInForce"/>
-        <field name="timeExpiry" id="10" type="optionalDecimalEncoding"/>
+        <field name="timeExpiry" id="10" type="OptionalTimestamp"/>
         <field name="orderQty" id="11" type="DecimalQty"/>
         <field name="orderPrice" id="12" type="DecimalPrice"/>
-        <field name="orderStopPrice" id="13" type="optionalDecimalEncoding"/>
+        <field name="orderStopPrice" id="13" type="DecimalOptional"/>
     </sbe:message>
 
     <sbe:message name="OrderCancel" id="403">

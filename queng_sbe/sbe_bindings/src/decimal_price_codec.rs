@@ -3,7 +3,7 @@ use crate::*;
 pub use decoder::DecimalPriceDecoder;
 pub use encoder::DecimalPriceEncoder;
 
-pub const ENCODED_LENGTH: usize = 8;
+pub const ENCODED_LENGTH: usize = 9;
 
 pub mod encoder {
     use super::*;
@@ -43,7 +43,7 @@ pub mod encoder {
             self.parent.take().ok_or(SbeErr::ParentNotSet)
         }
 
-        /// primitive field 'mantissa'
+        /// primitive field 'num'
         /// - min value: -9223372036854775807
         /// - max value: 9223372036854775807
         /// - null value: -9223372036854775808
@@ -53,12 +53,25 @@ pub mod encoder {
         /// - encodedLength: 8
         /// - version: 0
         #[inline]
-        pub fn mantissa(&mut self, value: i64) {
+        pub fn num(&mut self, value: i64) {
             let offset = self.offset;
             self.get_buf_mut().put_i64_at(offset, value);
         }
 
-        // skipping CONSTANT exponent
+        /// primitive field 'scale'
+        /// - min value: 0
+        /// - max value: 254
+        /// - null value: 255
+        /// - characterEncoding: null
+        /// - semanticType: null
+        /// - encodedOffset: 8
+        /// - encodedLength: 1
+        /// - version: 0
+        #[inline]
+        pub fn scale(&mut self, value: u8) {
+            let offset = self.offset + 8;
+            self.get_buf_mut().put_u8_at(offset, value);
+        }
     }
 } // end encoder mod
 
@@ -108,14 +121,14 @@ pub mod decoder {
 
         /// primitive field - 'REQUIRED'
         #[inline]
-        pub fn mantissa(&self) -> i64 {
+        pub fn num(&self) -> i64 {
             self.get_buf().get_i64_at(self.offset)
         }
 
-        /// CONSTANT
+        /// primitive field - 'REQUIRED'
         #[inline]
-        pub fn exponent(&self) -> i8 {
-            -9
+        pub fn scale(&self) -> u8 {
+            self.get_buf().get_u8_at(self.offset + 8)
         }
     }
 } // end decoder mod

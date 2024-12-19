@@ -1,3 +1,4 @@
+use crate::{ClientOrderID, ExchangeOrderID};
 use common_exchange::ExchangeID;
 use std::fmt;
 use std::fmt::Display;
@@ -6,16 +7,16 @@ use std::fmt::Display;
 pub struct OrderCancel {
     exchange_id: ExchangeID,
     client_id: u16,
-    client_order_id: String,
-    exchange_order_id: String,
+    client_order_id: ClientOrderID,
+    exchange_order_id: ExchangeOrderID,
 }
 
 impl OrderCancel {
     pub fn new(
         exchange_id: ExchangeID,
         client_id: u16,
-        client_order_id: String,
-        exchange_order_id: String,
+        client_order_id: ClientOrderID,
+        exchange_order_id: ExchangeOrderID,
     ) -> Self {
         Self {
             exchange_id,
@@ -34,11 +35,11 @@ impl OrderCancel {
         self.exchange_id
     }
 
-    pub fn client_order_id(&self) -> &str {
+    pub fn client_order_id(&self) -> &ClientOrderID {
         &self.client_order_id
     }
 
-    pub fn exchange_order_id(&self) -> &str {
+    pub fn exchange_order_id(&self) -> &ExchangeOrderID {
         &self.exchange_order_id
     }
 }
