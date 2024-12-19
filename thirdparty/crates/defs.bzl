@@ -294,7 +294,6 @@ _NORMAL_DEPENDENCIES = {
     "": {
         _COMMON_CONDITION: {
             "ahash": Label("//thirdparty/crates/ahash-0.8.11:ahash"),
-            "anyhow": Label("//thirdparty/crates/anyhow-1.0.94:anyhow"),
             "base16ct": Label("//thirdparty/crates/base16ct-0.2.0:base16ct"),
             "blake3": Label("//thirdparty/crates/blake3-1.5.5:blake3"),
             "bytes": Label("//thirdparty/crates/bytes-1.9.0:bytes"),
@@ -320,7 +319,7 @@ _NORMAL_DEPENDENCIES = {
             "serde_json": Label("//thirdparty/crates/serde_json-1.0.133:serde_json"),
             "sha3": Label("//thirdparty/crates/sha3-0.11.0-pre.4:sha3"),
             "tokio": Label("//thirdparty/crates/tokio-1.42.0:tokio"),
-            "tokio-tungstenite": Label("//thirdparty/crates/tokio-tungstenite-0.25.0:tokio_tungstenite"),
+            "tokio-tungstenite": Label("//thirdparty/crates/tokio-tungstenite-0.26.0:tokio_tungstenite"),
             "tonic": Label("//thirdparty/crates/tonic-0.12.3:tonic"),
             "tonic-build": Label("//thirdparty/crates/tonic-build-0.12.3:tonic_build"),
             "tonic-health": Label("//thirdparty/crates/tonic-health-0.12.3:tonic_health"),

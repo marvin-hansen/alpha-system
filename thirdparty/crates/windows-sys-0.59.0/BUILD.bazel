@@ -39,7 +39,6 @@ rust_library(
         "Win32_System_Console",
         "Win32_System_IO",
         "Win32_System_SystemInformation",
-        "Win32_System_Threading",
         "default",
     ],
     crate_root = "src/lib.rs",

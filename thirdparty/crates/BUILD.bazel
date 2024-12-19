@@ -37,12 +37,6 @@ alias(
 )
 
 alias(
-    name = "anyhow",
-    actual = "//thirdparty/crates/anyhow-1.0.94:anyhow",
-    tags = ["manual"],
-)
-
-alias(
     name = "base16ct",
     actual = "//thirdparty/crates/base16ct-0.2.0:base16ct",
     tags = ["manual"],
@@ -206,7 +200,7 @@ alias(
 
 alias(
     name = "tokio-tungstenite",
-    actual = "//thirdparty/crates/tokio-tungstenite-0.25.0:tokio_tungstenite",
+    actual = "//thirdparty/crates/tokio-tungstenite-0.26.0:tokio_tungstenite",
     tags = ["manual"],
 )
 

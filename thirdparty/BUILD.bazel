@@ -34,10 +34,6 @@ crates_vendor(
             package = "ahash",
             version = "0.8",
         ),
-        "anyhow": crate.spec(
-            package = "anyhow",
-            version = "1.0",
-        ),
         "base16ct": crate.spec(
             default_features = False,
             features = ["alloc"],
@@ -186,7 +182,7 @@ crates_vendor(
         "tokio-tungstenite": crate.spec(
             features = ["rustls-tls-webpki-roots"],
             package = "tokio-tungstenite",
-            version = "0.25",
+            version = "0.26.0",
         ),
         "tonic": crate.spec(
             features = ["transport"],
