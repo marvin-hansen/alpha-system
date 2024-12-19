@@ -8,12 +8,7 @@ pub enum ExchangeDataIntegrationID {
     BinanceSpotData = 1,
     BinanceUsdFuturesData = 2,
     BinanceCoinFuturesData = 3,
-}
-
-impl Display for ExchangeDataIntegrationID {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{:?}", self)
-    }
+    BinanceSpotTestnetData = 4,
 }
 
 impl From<u8> for ExchangeDataIntegrationID {
@@ -23,6 +18,7 @@ impl From<u8> for ExchangeDataIntegrationID {
             1 => ExchangeDataIntegrationID::BinanceSpotData,
             2 => ExchangeDataIntegrationID::BinanceUsdFuturesData,
             3 => ExchangeDataIntegrationID::BinanceCoinFuturesData,
+            4 => ExchangeDataIntegrationID::BinanceSpotTestnetData,
             _ => panic!("Invalid exchange data integration"),
         }
     }
@@ -41,6 +37,7 @@ impl From<u16> for ExchangeDataIntegrationID {
             1 => ExchangeDataIntegrationID::BinanceSpotData,
             2 => ExchangeDataIntegrationID::BinanceUsdFuturesData,
             3 => ExchangeDataIntegrationID::BinanceCoinFuturesData,
+            4 => ExchangeDataIntegrationID::BinanceSpotTestnetData,
             _ => panic!("Invalid exchange data integration"),
         }
     }
@@ -59,6 +56,7 @@ impl From<u32> for ExchangeDataIntegrationID {
             1 => ExchangeDataIntegrationID::BinanceSpotData,
             2 => ExchangeDataIntegrationID::BinanceUsdFuturesData,
             3 => ExchangeDataIntegrationID::BinanceCoinFuturesData,
+            4 => ExchangeDataIntegrationID::BinanceSpotTestnetData,
             _ => panic!("Invalid exchange data integration"),
         }
     }
@@ -67,5 +65,11 @@ impl From<u32> for ExchangeDataIntegrationID {
 impl From<ExchangeDataIntegrationID> for u32 {
     fn from(val: ExchangeDataIntegrationID) -> Self {
         val as u32
+    }
+}
+
+impl Display for ExchangeDataIntegrationID {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{:?}", self)
     }
 }

@@ -31,6 +31,8 @@ pub struct ImsBinanceDataIntegration {
     api_base_url: String,
     api_wss_url: String,
     http_client: Client,
+    symbols_active_trade: RwLock<Vec<String>>,
+    symbols_active_ohlcv: RwLock<Vec<String>>,
     symbol_cache: RwLock<Option<(HashSet<String>, Instant)>>,
     trade_handlers: RwLock<HashMap<String, JoinHandle<()>>>,
     ohlcv_handlers: RwLock<HashMap<String, JoinHandle<()>>>,
@@ -42,9 +44,11 @@ impl ImsBinanceDataIntegration {
             api_base_url: api_base_url.to_string(),
             api_wss_url: api_wss_url.to_string(),
             http_client: Client::new(),
+            symbols_active_trade: RwLock::new(Vec::with_capacity(50)),
+            symbols_active_ohlcv: RwLock::new(Vec::with_capacity(50)),
             symbol_cache: RwLock::new(None),
-            trade_handlers: RwLock::new(HashMap::new()),
-            ohlcv_handlers: RwLock::new(HashMap::new()),
+            trade_handlers: RwLock::new(HashMap::with_capacity(50)),
+            ohlcv_handlers: RwLock::new(HashMap::with_capacity(50)),
         }
     }
 }
