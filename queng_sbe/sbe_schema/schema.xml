@@ -74,11 +74,11 @@
         <!--   RUST DECIMAL TYPE DEFINITIONS -->
         <composite name="RustDecimal" description="A number representing the Decimal Type in Rust" semanticType="Qty">
             <type name="num" description="the number" primitiveType="int64"/>
-            <type name="scale" description="the scale" primitiveType="uint32"/>
+            <type name="scale" description="the scale" primitiveType="uint8"/>
         </composite>
         <composite name="OptionalRustDecimal" description="Optional Rust decimal">
             <type name="num" presence="optional" primitiveType="int64"/>
-            <type name="scale" presence="optional" primitiveType="uint32"/>
+            <type name="scale" presence="optional" primitiveType="uint8"/>
         </composite>
         <!--
             Longest asset code: internationaldiamond

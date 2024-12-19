@@ -8,7 +8,7 @@ use sbe_types::SbeEncodeError;
 
 pub fn encode_order_create_message(msg: OrderCreate) -> Result<(usize, Vec<u8>), SbeEncodeError> {
     // precise buffer size
-    let mut buffer = vec![0u8; 100];
+    let mut buffer = vec![0u8; 75];
 
     let mut csg = OrderCreateEncoder::default();
 
@@ -26,11 +26,9 @@ pub fn encode_order_create_message(msg: OrderCreate) -> Result<(usize, Vec<u8>),
 
     csg.client_order_id(msg.client_order_id().client_order_id_binary());
 
-    let (first, second) = msg.symbol_id_exchange().exchange_order_id_binary();
-
     // Self (csg) moves into symbol_id_encoder
     let mut symbol_id_encoder = csg.exchange_symbol_id_encoder();
-
+    let (first, second) = msg.symbol_id_exchange().exchange_order_id_binary();
     symbol_id_encoder.first(first);
     symbol_id_encoder.second(second);
 
@@ -55,7 +53,7 @@ pub fn encode_order_create_message(msg: OrderCreate) -> Result<(usize, Vec<u8>),
             .to_i64()
             .expect("Failed to convert quantity decimal to i64"),
     );
-    qty_encoder.scale(msg.quantity().scale());
+    qty_encoder.scale(msg.quantity().scale() as u8);
     csg = qty_encoder.parent().expect("Failed to encode order qty");
 
     let mut price_encoder = csg.order_price_encoder();
@@ -64,7 +62,7 @@ pub fn encode_order_create_message(msg: OrderCreate) -> Result<(usize, Vec<u8>),
             .to_i64()
             .expect("Failed to convert price decimal to i64"),
     );
-    price_encoder.scale(msg.price().scale());
+    price_encoder.scale(msg.price().scale() as u8);
     csg = price_encoder
         .parent()
         .expect("Failed to encode order price");

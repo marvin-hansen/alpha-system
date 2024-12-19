@@ -7,7 +7,7 @@ pub use crate::SBE_SCHEMA_ID;
 pub use crate::SBE_SCHEMA_VERSION;
 pub use crate::SBE_SEMANTIC_VERSION;
 
-pub const SBE_BLOCK_LENGTH: u16 = 76;
+pub const SBE_BLOCK_LENGTH: u16 = 67;
 pub const SBE_TEMPLATE_ID: u16 = 401;
 
 pub mod encoder {
@@ -197,7 +197,7 @@ pub mod encoder {
         /// COMPOSITE ENCODER
         #[inline]
         pub fn order_price_encoder(self) -> rust_decimal_codec::RustDecimalEncoder<Self> {
-            let offset = self.offset + 52;
+            let offset = self.offset + 49;
             rust_decimal_codec::RustDecimalEncoder::default().wrap(self, offset)
         }
 
@@ -206,7 +206,7 @@ pub mod encoder {
         pub fn order_stop_price_encoder(
             self,
         ) -> optional_rust_decimal_codec::OptionalRustDecimalEncoder<Self> {
-            let offset = self.offset + 64;
+            let offset = self.offset + 58;
             optional_rust_decimal_codec::OptionalRustDecimalEncoder::default().wrap(self, offset)
         }
     }
@@ -361,7 +361,7 @@ pub mod decoder {
         /// COMPOSITE DECODER
         #[inline]
         pub fn order_price_decoder(self) -> rust_decimal_codec::RustDecimalDecoder<Self> {
-            let offset = self.offset + 52;
+            let offset = self.offset + 49;
             rust_decimal_codec::RustDecimalDecoder::default().wrap(self, offset)
         }
 
@@ -370,7 +370,7 @@ pub mod decoder {
         pub fn order_stop_price_decoder(
             self,
         ) -> optional_rust_decimal_codec::OptionalRustDecimalDecoder<Self> {
-            let offset = self.offset + 64;
+            let offset = self.offset + 58;
             optional_rust_decimal_codec::OptionalRustDecimalDecoder::default().wrap(self, offset)
         }
     }

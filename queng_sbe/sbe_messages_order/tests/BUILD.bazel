@@ -1,7 +1,7 @@
 load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 
 rust_test_suite(
-    name = "order_cancel_tests",
+    name = "order_cancel",
     srcs = glob([
         "order_cancel/*_tests.rs",
     ]),
@@ -24,9 +24,55 @@ rust_test_suite(
 )
 
 rust_test_suite(
-    name = "order_cancel_all_tests",
+    name = "order_cancel_all",
     srcs = glob([
         "order_cancel_all/*_tests.rs",
+    ]),
+    tags = [
+        "sbe",
+        "unit-test",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        "//alias:sbe_messages_order",
+        # Internal crates
+        "//alias:common_exchange",
+        "//alias:common_order",
+        "//alias:sbe_messages_data",
+        # External crates
+        "//thirdparty/crates:rust_decimal",
+        "//thirdparty/crates:chrono",
+    ],
+)
+
+rust_test_suite(
+    name = "order_create",
+    srcs = glob([
+        "order_create/*_tests.rs",
+    ]),
+    tags = [
+        "sbe",
+        "unit-test",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        "//alias:sbe_messages_order",
+        # Internal crates
+        "//alias:common_exchange",
+        "//alias:common_order",
+        "//alias:sbe_messages_data",
+        # External crates
+        "//thirdparty/crates:rust_decimal",
+        "//thirdparty/crates:chrono",
+    ],
+)
+
+rust_test_suite(
+    name = "order_update",
+    srcs = glob([
+        "order_update/*_tests.rs",
     ]),
     tags = [
         "sbe",

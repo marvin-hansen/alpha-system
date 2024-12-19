@@ -3,7 +3,7 @@ use crate::*;
 pub use decoder::RustDecimalDecoder;
 pub use encoder::RustDecimalEncoder;
 
-pub const ENCODED_LENGTH: usize = 12;
+pub const ENCODED_LENGTH: usize = 9;
 
 pub mod encoder {
     use super::*;
@@ -60,17 +60,17 @@ pub mod encoder {
 
         /// primitive field 'scale'
         /// - min value: 0
-        /// - max value: 4294967294
-        /// - null value: 4294967295
+        /// - max value: 254
+        /// - null value: 255
         /// - characterEncoding: null
         /// - semanticType: null
         /// - encodedOffset: 8
-        /// - encodedLength: 4
+        /// - encodedLength: 1
         /// - version: 0
         #[inline]
-        pub fn scale(&mut self, value: u32) {
+        pub fn scale(&mut self, value: u8) {
             let offset = self.offset + 8;
-            self.get_buf_mut().put_u32_at(offset, value);
+            self.get_buf_mut().put_u8_at(offset, value);
         }
     }
 } // end encoder mod
@@ -127,8 +127,8 @@ pub mod decoder {
 
         /// primitive field - 'REQUIRED'
         #[inline]
-        pub fn scale(&self) -> u32 {
-            self.get_buf().get_u32_at(self.offset + 8)
+        pub fn scale(&self) -> u8 {
+            self.get_buf().get_u8_at(self.offset + 8)
         }
     }
 } // end decoder mod

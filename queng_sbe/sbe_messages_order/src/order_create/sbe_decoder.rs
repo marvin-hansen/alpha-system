@@ -41,10 +41,10 @@ pub fn decode_order_create_message(buffer: &[u8]) -> Result<OrderCreate, SbeDeco
     };
 
     let qty_decoder = csg.order_qty_decoder();
-    let quantity = Decimal::new(qty_decoder.num(), qty_decoder.scale());
+    let quantity = Decimal::new(qty_decoder.num(), qty_decoder.scale() as u32);
 
     let price_decoder = csg.order_price_decoder();
-    let price = Decimal::new(price_decoder.num(), price_decoder.scale());
+    let price = Decimal::new(price_decoder.num(), price_decoder.scale() as u32);
 
     Ok(OrderCreate::new(
         exchange_id,
