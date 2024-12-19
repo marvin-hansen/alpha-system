@@ -28,6 +28,24 @@ crates_vendor(
     },
     mode = "local",
     packages = {
+        #
+        # Dependencies for macros
+        "syn": crate.spec(
+            default_features = True,
+            features = [
+                "full",
+                "extra-traits",
+            ],
+            package = "syn",
+            version = "2.0",
+        ),
+        "quote": crate.spec(
+            default_features = True,
+            package = "quote",
+            version = "1.0",
+        ),
+        #
+        # Regular dependencies
         "ahash": crate.spec(
             default_features = False,
             features = ["serde"],

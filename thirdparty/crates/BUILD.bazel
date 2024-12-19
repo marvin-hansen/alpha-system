@@ -151,6 +151,12 @@ alias(
 )
 
 alias(
+    name = "quote",
+    actual = "//thirdparty/crates/quote-1.0.37:quote",
+    tags = ["manual"],
+)
+
+alias(
     name = "reqwest",
     actual = "//thirdparty/crates/reqwest-0.12.9:reqwest",
     tags = ["manual"],
@@ -189,6 +195,12 @@ alias(
 alias(
     name = "sha3",
     actual = "//thirdparty/crates/sha3-0.11.0-pre.4:sha3",
+    tags = ["manual"],
+)
+
+alias(
+    name = "syn",
+    actual = "//thirdparty/crates/syn-2.0.90:syn",
     tags = ["manual"],
 )
 

@@ -85,7 +85,7 @@ rust_library(
     }),
     version = "0.5.9",
     deps = [
-        "//thirdparty/crates/libc-0.2.168:libc",
+        "//thirdparty/crates/libc-0.2.169:libc",
         "//thirdparty/crates/quinn-udp-0.5.9:build_script_build",
         "//thirdparty/crates/socket2-0.5.8:socket2",
         "//thirdparty/crates/tracing-0.1.41:tracing",
