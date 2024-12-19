@@ -52,11 +52,7 @@ pub enum MessageType {
     StopData = 202_u16,
     StopAllData = 203_u16,
     OHLCVBar = 204_u16,
-    FirstOHLCVBar = 205_u16,
-    LastOHLCVBar = 206_u16,
-    TradeBar = 207_u16,
-    FirstTradeBar = 208_u16,
-    LastTradeBar = 209_u16,
+    TradeBar = 205_u16,
     // Order Message Types
     OrderCreate = 401_u16,
     OrderUpdate = 402_u16,
@@ -84,9 +80,7 @@ pub enum MessageType {
 /// - 202 -> `StopData`
 /// - 203 -> `StopAllData`
 /// - 204 -> `OHLCVBar`
-/// - 205 -> `FirstOHLCVBar`
-/// - 206 -> `LastOHLCVBar`
-/// - 207 -> `TradeBar`
+/// - 205 -> `TradeBar`
 /// - 208 -> `FirstTradeBar`
 /// - 209 -> `LastTradeBar`
 /// - 801 -> `ClientError`
@@ -111,11 +105,7 @@ impl From<u16> for MessageType {
             202_u16 => Self::StopData,
             203_u16 => Self::StopAllData,
             204_u16 => Self::OHLCVBar,
-            205_u16 => Self::FirstOHLCVBar,
-            206_u16 => Self::LastOHLCVBar,
-            207_u16 => Self::TradeBar,
-            208_u16 => Self::FirstTradeBar,
-            209_u16 => Self::LastTradeBar,
+            205_u16 => Self::TradeBar,
             // Order Message Types
             401_u16 => Self::OrderCreate,
             402_u16 => Self::OrderUpdate,
