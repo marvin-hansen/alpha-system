@@ -1,4 +1,5 @@
 use binance_spot_data_integration::ImsBinanceSpotDataIntegration;
+use common_data_bar::TimeResolution;
 use common_errors::MessageProcessingError;
 use sbe_messages_data::{SbeOHLCVBar, SbeTradeBar};
 use sbe_types::MessageType;
@@ -90,7 +91,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // Step 3: Start OHLCV data stream
     println!("\nStarting OHLCV data stream...");
-    if let Err(e) = integration.start_ohlcv_data(&symbols, processor).await {
+    if let Err(e) = integration
+        .start_ohlcv_data(&symbols, TimeResolution::OneMin, processor)
+        .await
+    {
         eprintln!("✗ Failed to start OHLCV data stream: {}", e);
         // Make sure to stop trade stream if OHLCV stream fails
         integration.stop_all_trade_data().await?;
