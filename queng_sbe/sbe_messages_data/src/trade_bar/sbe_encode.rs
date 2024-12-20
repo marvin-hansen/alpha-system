@@ -39,7 +39,8 @@ use sbe_types::SbeEncodeError;
 /// - Encode volume
 /// - Return encoded size and buffer
 ///
-pub fn encode_trade_bar_message(bar: TradeBar) -> Result<(usize, Vec<u8>), SbeEncodeError> {
+#[inline]
+pub(crate) fn encode_trade_bar_message(bar: TradeBar) -> Result<(usize, Vec<u8>), SbeEncodeError> {
     let mut buffer = vec![0u8; 56];
 
     let mut csg = TradeBarEncoder::default();

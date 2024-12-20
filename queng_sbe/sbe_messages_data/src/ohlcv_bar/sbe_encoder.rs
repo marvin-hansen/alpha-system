@@ -37,7 +37,8 @@ use sbe_types::SbeEncodeError;
 /// - Encode and convert volume to  SBE Decimal
 /// - Return encoded size and buffer
 ///
-pub fn encode_data_bar_message(bar: OHLCVBar) -> Result<(usize, Vec<u8>), SbeEncodeError> {
+#[inline]
+pub(crate) fn encode_data_bar_message(bar: OHLCVBar) -> Result<(usize, Vec<u8>), SbeEncodeError> {
     // precise buffer size is 58 bytes for the entire message.
     let mut buffer = vec![0u8; 83];
 

@@ -14,9 +14,9 @@ rust_library(
     deps = [
         # Internal crates
         "//alias:common_data_bar",
+        "//alias:common_data_bar_ext",
         "//alias:common_errors",
         "//alias:binance_core_data_integration",
-        "//alias:sbe_messages_data",
         "//alias:sbe_types",
         "//alias:trait_data_integration",
         # External crates

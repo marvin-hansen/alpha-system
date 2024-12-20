@@ -24,7 +24,7 @@ tokio = {workspace = true}
 
 
 [dev-dependencies]
-sbe_messages_data = {workspace = true}
+common_data_bar_ext = {workspace = true}
 sbe_types = {workspace = true}
 
 

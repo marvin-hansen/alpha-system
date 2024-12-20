@@ -50,6 +50,7 @@ pub(crate) const RECONNECT_DELAY: Duration = Duration::from_secs(5);
 /// - Thread-safe connection management
 /// - Automatic cleanup of terminated connections
 ///
+#[derive(Default)]
 pub struct ImsBinanceDataIntegration {
     api_base_url: String,
     api_wss_url: String,

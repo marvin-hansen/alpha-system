@@ -8,9 +8,9 @@
 //! 5. Stop trade data streams
 
 use binance_usd_futures_data_integration::ImsBinanceUsdFuturesDataIntegration;
-use common_data_bar::TimeResolution;
+use common_data_bar::{OHLCVBar, TimeResolution, TradeBar};
+use common_data_bar_ext::{SbeOHLCVBarExtension, SbeTradeBarExtension};
 use common_errors::MessageProcessingError;
-use sbe_messages_data::{SbeOHLCVBar, SbeTradeBar};
 use sbe_types::MessageType;
 use std::sync::Arc;
 use std::time::Duration;
@@ -37,14 +37,14 @@ impl EventProcessor for PrintEventProcessor {
         // Decode and print SBE message relative to its message type
         match message_type {
             MessageType::TradeBar => {
-                let bar =
-                    SbeTradeBar::decode(raw_message).expect("Failed to decode trade bar message");
+                let bar = TradeBar::decode_from_sbe(raw_message)
+                    .expect("Failed to decode trade bar message");
                 println!("Received trade data:");
                 println!("{}", bar);
             }
             MessageType::OHLCVBar => {
-                let bar =
-                    SbeOHLCVBar::decode(raw_message).expect("Failed to decode OHLCV bar message");
+                let bar = OHLCVBar::decode_from_sbe(raw_message)
+                    .expect("Failed to decode OHLCV bar message");
                 println!("Received OHLCV data:");
                 println!("{}", bar);
             }

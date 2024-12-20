@@ -33,7 +33,8 @@ use sbe_types::{MessageType, SbeDecodeError};
 /// - Decode volume as SBE decimal and convert to Decimal
 /// - Create and return `TradeBar`
 ///
-pub fn decode_trade_bar_message(buffer: &[u8]) -> Result<TradeBar, SbeDecodeError> {
+#[inline]
+pub(crate) fn decode_trade_bar_message(buffer: &[u8]) -> Result<TradeBar, SbeDecodeError> {
     let mut csg = TradeBarDecoder::default();
     let buf = ReadBuf::new(buffer);
 

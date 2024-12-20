@@ -1,5 +1,4 @@
 use common_data_bar::TradeBar;
-use sbe_messages_data::SbeTradeBar;
 use sbe_types::{SbeDecodeError, SbeEncodeError};
 
 /// Extension trait for `TradeBar` that provides SBE encoding and decoding
@@ -40,10 +39,10 @@ pub trait SbeTradeBarExtension {
 
 impl SbeTradeBarExtension for TradeBar {
     fn encode_to_sbe(self) -> Result<(usize, Vec<u8>), SbeEncodeError> {
-        SbeTradeBar::encode(self)
+        sbe_messages_data::encode_trade_bar_message(self)
     }
 
     fn decode_from_sbe(encoded: &[u8]) -> Result<TradeBar, SbeDecodeError> {
-        SbeTradeBar::decode(encoded)
+        sbe_messages_data::decode_trade_bar_message(encoded)
     }
 }

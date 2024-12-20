@@ -1,7 +1,6 @@
 use chrono::{DateTime, Utc};
 use common_data_bar::TradeBar;
 use rust_decimal::Decimal;
-use sbe_messages_data::SbeTradeBar;
 use std::str::FromStr;
 
 // Default uses utc::now() for date_time, which is not deterministic,
@@ -20,16 +19,10 @@ fn get_trade_bar() -> TradeBar {
 }
 
 #[test]
-fn test_new() {
-    let trade_bar = SbeTradeBar::new();
-    assert_eq!(trade_bar, SbeTradeBar::default());
-}
-
-#[test]
 fn test_encode_data_bar_message() {
     let bar = get_trade_bar();
 
-    let result = SbeTradeBar::encode(bar);
+    let result = sbe_messages_data::encode_trade_bar_message(bar);
 
     assert!(result.is_ok()); // Assert encode passes
 
@@ -55,7 +48,7 @@ fn test_decode_trade_bar_message() {
         0, 0, 0, 0,
     ];
 
-    let message = SbeTradeBar::decode(&encoded).unwrap();
+    let message = sbe_messages_data::decode_trade_bar_message(&encoded).unwrap();
 
     let symbol_id = "APPL".to_string();
     assert_eq!(message.symbol_id(), symbol_id);

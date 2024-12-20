@@ -36,7 +36,8 @@ use sbe_types::{MessageType, SbeDecodeError};
 /// - Decode and parse volume
 /// - Create and return `OHLCVBar`
 ///
-pub fn decode_data_bar_message(buffer: &[u8]) -> Result<OHLCVBar, SbeDecodeError> {
+#[inline]
+pub(crate) fn decode_data_bar_message(buffer: &[u8]) -> Result<OHLCVBar, SbeDecodeError> {
     let mut csg = DataBarDecoder::default();
     let buf = ReadBuf::new(buffer);
 

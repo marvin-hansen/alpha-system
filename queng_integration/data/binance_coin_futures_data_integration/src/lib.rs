@@ -17,6 +17,7 @@ const API_WSS_URL: &str = "wss://dstream.binance.com/ws";
 const TESTNET_API_BASE_URL: &str = "https://testnet.binancefuture.com/api/v3";
 const TESTNET_API_WSS_URL: &str = "wss://dstream.binancefuture.com";
 
+#[derive(Default)]
 pub struct ImsBinanceCoinFuturesDataIntegration {
     integration: ImsBinanceDataIntegration,
 }
@@ -32,12 +33,6 @@ impl ImsBinanceCoinFuturesDataIntegration {
         Self {
             integration: ImsBinanceDataIntegration::new(TESTNET_API_BASE_URL, TESTNET_API_WSS_URL),
         }
-    }
-}
-
-impl Default for ImsBinanceCoinFuturesDataIntegration {
-    fn default() -> Self {
-        Self::new()
     }
 }
 

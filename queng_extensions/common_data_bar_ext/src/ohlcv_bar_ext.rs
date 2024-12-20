@@ -1,5 +1,4 @@
 use common_data_bar::OHLCVBar;
-use sbe_messages_data::SbeOHLCVBar;
 use sbe_types::{SbeDecodeError, SbeEncodeError};
 
 /// Provides an extension trait for `OHLCVBar` to encode and decode into an SBE message.
@@ -32,9 +31,9 @@ pub trait SbeOHLCVBarExtension {
 
 impl SbeOHLCVBarExtension for OHLCVBar {
     fn encode_to_sbe(self) -> Result<(usize, Vec<u8>), SbeEncodeError> {
-        SbeOHLCVBar::encode(self)
+        sbe_messages_data::encode_data_bar_message(self)
     }
     fn decode_from_sbe(buffer: &[u8]) -> Result<OHLCVBar, SbeDecodeError> {
-        SbeOHLCVBar::decode(buffer)
+        sbe_messages_data::decode_data_bar_message(buffer)
     }
 }
