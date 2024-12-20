@@ -152,6 +152,7 @@ trait_data_integration = { path = "queng_integration/traits/trait_data_integrati
 trait_exec_integration = { path = "queng_integration/traits/trait_exec_integration" }
 
 # Macros
+binance_data_integration_macro = { path = "queng_macros/binance_data_integration_macro" }
 data_integration_macro = { path = "queng_macros/data_integration_macro" }
 
 # Mesasge bus
