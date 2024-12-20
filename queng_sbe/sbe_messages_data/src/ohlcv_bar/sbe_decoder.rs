@@ -1,6 +1,5 @@
 use chrono::{DateTime, TimeZone, Utc};
 use common_data_bar::OHLCVBar;
-use rust_decimal::prelude::FromPrimitive;
 use rust_decimal::Decimal;
 use sbe_bindings::data_bar_codec::SBE_TEMPLATE_ID;
 use sbe_bindings::{
@@ -49,33 +48,37 @@ pub fn decode_data_bar_message(buffer: &[u8]) -> Result<OHLCVBar, SbeDecodeError
     let message_type = MessageType::from(sbe_message_type as u16);
     assert_eq!(message_type, MessageType::OHLCVBar);
 
+    // Decode symbol_id
     let raw_string = String::from_utf8(csg.symbol_id().to_ascii_uppercase())
         .expect("Failed to decode symbol_id");
     // Remove trailing null characters https://stackoverflow.com/questions/49406517/how-to-remove-trailing-null-characters-from-string
     let symbol_id = raw_string.trim().trim_matches(char::from(0)).to_string();
 
+    // Decode date_time
     let sbe_date_time = csg.date_time();
     let date_time: DateTime<Utc> = Utc.timestamp_micros(sbe_date_time).unwrap();
 
-    let sbe_open_price = csg.open_price();
-    let open =
-        Decimal::from_f32(sbe_open_price).expect("[FileManager]: Failed to parse open price");
+    // Decode open price
+    let decoder = csg.open_price_decoder();
+    let open = Decimal::new(decoder.num(), decoder.scale() as u32);
 
-    let sbe_high_price = csg.high_price();
-    let high =
-        Decimal::from_f32(sbe_high_price).expect("[FileManager]: Failed to parse high price");
+    // Decode high price
+    let decoder = csg.high_price_decoder();
+    let high = Decimal::new(decoder.num(), decoder.scale() as u32);
 
-    let sbe_low_price = csg.low_price();
-    let low = Decimal::from_f32(sbe_low_price).expect("[FileManager]: Failed to parse low price");
+    // Decode low price
+    let decoder = csg.low_price_decoder();
+    let low = Decimal::new(decoder.num(), decoder.scale() as u32);
 
-    let sbe_close_price = csg.close_price();
-    let close =
-        Decimal::from_f32(sbe_close_price).expect("[FileManager]: Failed to parse close price");
+    // Decode close price
+    let decoder = csg.close_price_decoder();
+    let close = Decimal::new(decoder.num(), decoder.scale() as u32);
 
-    let sbe_volume = csg.volume();
-    let volume = Decimal::from_f32(sbe_volume).expect("[FileManager]: Failed to parse volume");
+    // Decode volume
+    let decoder = csg.volume_decoder();
+    let volume = Decimal::new(decoder.num(), decoder.scale() as u32);
 
-    let data_bar = OHLCVBar::new(symbol_id, date_time, open, high, low, close, volume);
-
-    Ok(data_bar)
+    Ok(OHLCVBar::new(
+        symbol_id, date_time, open, high, low, close, volume,
+    ))
 }

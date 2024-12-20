@@ -1,6 +1,5 @@
 use chrono::{DateTime, TimeZone, Utc};
 use common_data_bar::TradeBar;
-use rust_decimal::prelude::FromPrimitive;
 use rust_decimal::Decimal;
 use sbe_bindings::trade_bar_codec::SBE_TEMPLATE_ID;
 use sbe_bindings::{
@@ -30,8 +29,8 @@ use sbe_types::{MessageType, SbeDecodeError};
 /// - Decode and validate `message_type`
 /// - Decode `symbol_id`
 /// - Decode `date_time` as timestamp and create `DateTime`
-/// - Decode price as f32 and convert to Decimal
-/// - Decode volume as f32 and convert to Decimal
+/// - Decode price as SBE decimal and convert to Decimal
+/// - Decode volume as SBE decimal and convert to Decimal
 /// - Create and return `TradeBar`
 ///
 pub fn decode_trade_bar_message(buffer: &[u8]) -> Result<TradeBar, SbeDecodeError> {
@@ -54,13 +53,11 @@ pub fn decode_trade_bar_message(buffer: &[u8]) -> Result<TradeBar, SbeDecodeErro
     let sbe_date_time = csg.date_time();
     let date_time: DateTime<Utc> = Utc.timestamp_micros(sbe_date_time).unwrap();
 
-    let sbe_price = csg.price();
-    let price = Decimal::from_f32(sbe_price).expect("[FileManager]: Failed to parse open price");
+    let price_decoder = csg.price_decoder();
+    let price = Decimal::new(price_decoder.num(), price_decoder.scale() as u32);
 
-    let sbe_volume = csg.volume();
-    let volume = Decimal::from_f32(sbe_volume).expect("[FileManager]: Failed to parse volume");
+    let volume_decoder = csg.volume_decoder();
+    let volume = Decimal::new(volume_decoder.num(), volume_decoder.scale() as u32);
 
-    let trade_bar = TradeBar::new(symbol_id, date_time, price, volume);
-
-    Ok(trade_bar)
+    Ok(TradeBar::new(symbol_id, date_time, price, volume))
 }

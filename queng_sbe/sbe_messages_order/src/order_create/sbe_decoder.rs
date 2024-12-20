@@ -30,10 +30,10 @@ pub fn decode_order_create_message(buffer: &[u8]) -> Result<OrderCreate, SbeDeco
 
     let order_side = OrderSide::from(csg.order_side());
 
-    let order_time_in_force = TimeInForce::from(csg.time_in_force());
+    let order_time_in_force = TimeInForce::from(csg.order_time_in_force());
 
-    let time_expiry = if csg.time_expiry().is_some() {
-        let val = csg.time_expiry().unwrap();
+    let order_time_expiry = if csg.order_time_expiry().is_some() {
+        let val = csg.order_time_expiry().unwrap();
 
         if val == 0 {
             None
@@ -45,10 +45,10 @@ pub fn decode_order_create_message(buffer: &[u8]) -> Result<OrderCreate, SbeDeco
     };
 
     let qty_decoder = csg.order_qty_decoder();
-    let quantity = Decimal::new(qty_decoder.num(), qty_decoder.scale() as u32);
+    let order_quantity = Decimal::new(qty_decoder.num(), qty_decoder.scale() as u32);
 
     let price_decoder = csg.order_price_decoder();
-    let price = Decimal::new(price_decoder.num(), price_decoder.scale() as u32);
+    let order_price = Decimal::new(price_decoder.num(), price_decoder.scale() as u32);
 
     Ok(OrderCreate::new(
         exchange_id,
@@ -58,8 +58,8 @@ pub fn decode_order_create_message(buffer: &[u8]) -> Result<OrderCreate, SbeDeco
         order_type,
         order_side,
         order_time_in_force,
-        time_expiry,
-        quantity,
-        price,
+        order_time_expiry,
+        order_quantity,
+        order_price,
     ))
 }

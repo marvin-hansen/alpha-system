@@ -7,7 +7,7 @@ pub use crate::SBE_SCHEMA_ID;
 pub use crate::SBE_SCHEMA_VERSION;
 pub use crate::SBE_SEMANTIC_VERSION;
 
-pub const SBE_BLOCK_LENGTH: u16 = 38;
+pub const SBE_BLOCK_LENGTH: u16 = 48;
 pub const SBE_TEMPLATE_ID: u16 = 205;
 
 pub mod encoder {
@@ -103,34 +103,18 @@ pub mod encoder {
             self.get_buf_mut().put_i64_at(offset, value);
         }
 
-        /// primitive field 'price'
-        /// - min value: -3.4028234663852886E38
-        /// - max value: 3.4028234663852886E38
-        /// - null value: NaN
-        /// - characterEncoding: null
-        /// - semanticType: null
-        /// - encodedOffset: 30
-        /// - encodedLength: 4
-        /// - version: 0
+        /// COMPOSITE ENCODER
         #[inline]
-        pub fn price(&mut self, value: f32) {
+        pub fn price_encoder(self) -> decimal_price_codec::DecimalPriceEncoder<Self> {
             let offset = self.offset + 30;
-            self.get_buf_mut().put_f32_at(offset, value);
+            decimal_price_codec::DecimalPriceEncoder::default().wrap(self, offset)
         }
 
-        /// primitive field 'volume'
-        /// - min value: -3.4028234663852886E38
-        /// - max value: 3.4028234663852886E38
-        /// - null value: NaN
-        /// - characterEncoding: null
-        /// - semanticType: null
-        /// - encodedOffset: 34
-        /// - encodedLength: 4
-        /// - version: 0
+        /// COMPOSITE ENCODER
         #[inline]
-        pub fn volume(&mut self, value: f32) {
-            let offset = self.offset + 34;
-            self.get_buf_mut().put_f32_at(offset, value);
+        pub fn volume_encoder(self) -> decimal_volume_codec::DecimalVolumeEncoder<Self> {
+            let offset = self.offset + 39;
+            decimal_volume_codec::DecimalVolumeEncoder::default().wrap(self, offset)
         }
     }
 } // end encoder
@@ -229,16 +213,18 @@ pub mod decoder {
             self.get_buf().get_i64_at(self.offset + 22)
         }
 
-        /// primitive field - 'REQUIRED'
+        /// COMPOSITE DECODER
         #[inline]
-        pub fn price(&self) -> f32 {
-            self.get_buf().get_f32_at(self.offset + 30)
+        pub fn price_decoder(self) -> decimal_price_codec::DecimalPriceDecoder<Self> {
+            let offset = self.offset + 30;
+            decimal_price_codec::DecimalPriceDecoder::default().wrap(self, offset)
         }
 
-        /// primitive field - 'REQUIRED'
+        /// COMPOSITE DECODER
         #[inline]
-        pub fn volume(&self) -> f32 {
-            self.get_buf().get_f32_at(self.offset + 34)
+        pub fn volume_decoder(self) -> decimal_volume_codec::DecimalVolumeDecoder<Self> {
+            let offset = self.offset + 39;
+            decimal_volume_codec::DecimalVolumeDecoder::default().wrap(self, offset)
         }
     }
 } // end decoder

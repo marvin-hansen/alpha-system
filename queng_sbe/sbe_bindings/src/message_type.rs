@@ -15,6 +15,7 @@ pub enum MessageType {
     OrderCancelAll = 0x194_u16,
     ClientError = 0x321_u16,
     DataError = 0x322_u16,
+    OrderError = 0x323_u16,
     #[default]
     NullVal = 0xffff_u16,
 }
@@ -36,6 +37,7 @@ impl From<u16> for MessageType {
             0x194_u16 => Self::OrderCancelAll,
             0x321_u16 => Self::ClientError,
             0x322_u16 => Self::DataError,
+            0x323_u16 => Self::OrderError,
             _ => Self::NullVal,
         }
     }
@@ -58,6 +60,7 @@ impl From<MessageType> for u16 {
             MessageType::OrderCancelAll => 0x194_u16,
             MessageType::ClientError => 0x321_u16,
             MessageType::DataError => 0x322_u16,
+            MessageType::OrderError => 0x323_u16,
             MessageType::NullVal => 0xffff_u16,
         }
     }
@@ -82,6 +85,7 @@ impl core::str::FromStr for MessageType {
             "OrderCancelAll" => Ok(Self::OrderCancelAll),
             "ClientError" => Ok(Self::ClientError),
             "DataError" => Ok(Self::DataError),
+            "OrderError" => Ok(Self::OrderError),
             _ => Ok(Self::NullVal),
         }
     }
@@ -104,6 +108,7 @@ impl core::fmt::Display for MessageType {
             Self::OrderCancelAll => write!(f, "OrderCancelAll"),
             Self::ClientError => write!(f, "ClientError"),
             Self::DataError => write!(f, "DataError"),
+            Self::OrderError => write!(f, "OrderError"),
             Self::NullVal => write!(f, "NullVal"),
         }
     }

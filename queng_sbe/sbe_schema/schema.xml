@@ -10,27 +10,31 @@
     <xi:include href="common-types.xml"/>
 
     <types>
+        <!--        -->
+        <!--  TYPE DEFINITIONS  -->
+        <!--        -->
+
         <!--   PRIMITIVE TYPE DEFINITIONS -->
-        <type name="Char" description="Char" primitiveType="char"/>
+        <type name="CHAR" description="char" primitiveType="char"/>
 
         <type name="Int8" description="int8" primitiveType="int8"/>
-        <type name="Int16" description="int16" primitiveType="int16"/>
-        <type name="Int32" description="int32" primitiveType="int32"/>
-        <type name="Int64" description="int64" primitiveType="int64"/>
-
         <type name="Int8NULL" presence="optional" nullValue="127" primitiveType="int8"/>
-        <type name="Int16NULL" presence="optional" nullValue="32767" primitiveType="int16"/>
-        <type name="Int32NULL" presence="optional" nullValue="2147483647" primitiveType="int32"/>
-        <type name="Int64NULL" presence="optional" nullValue="9223372036854775807" primitiveType="int64"/>
-
         <type name="uInt8" description="uInt8" primitiveType="uint8"/>
-        <type name="uInt16" description="uInt8" primitiveType="uint16"/>
-        <type name="uInt32" description="uInt32" primitiveType="uint32"/>
-        <type name="uInt64" description="uInt64" primitiveType="uint64"/>
-
         <type name="uInt8NULL" presence="optional" nullValue="255" primitiveType="uint8"/>
+
+        <type name="Int16" description="int16" primitiveType="int16"/>
+        <type name="Int16NULL" presence="optional" nullValue="32767" primitiveType="int16"/>
+        <type name="uInt16" description="uInt8" primitiveType="uint16"/>
         <type name="uInt16NULL" presence="optional" nullValue="65535" primitiveType="uint16"/>
+
+        <type name="Int32" description="int32" primitiveType="int32"/>
+        <type name="Int32NULL" presence="optional" nullValue="2147483647" primitiveType="int32"/>
+        <type name="uInt32" description="uInt32" primitiveType="uint32"/>
         <type name="uInt32NULL" presence="optional" nullValue="4294967295" primitiveType="uint32"/>
+
+        <type name="Int64" description="int64" primitiveType="int64"/>
+        <type name="Int64NULL" presence="optional" nullValue="9223372036854775807" primitiveType="int64"/>
+        <type name="uInt64" description="uInt64" primitiveType="uint64"/>
         <type name="uInt64NULL" presence="optional" nullValue="18446744073709551615" primitiveType="uint64"/>
 
         <!--   128bit INTEGER TYPE DEFINITIONS -->
@@ -40,24 +44,53 @@
         </composite>
 
         <composite name="Int128" semanticType="int128">
-            <type name="signed" description="Sign indicates if value is negative (-1). Otherwise positive (1)" primitiveType="int8"/>
+            <type name="signed" description="Sign indicates if value is negative (-1). Otherwise positive (1)"
+                  primitiveType="int8"/>
             <type name="first" description="first half of 128 bit" primitiveType="uint64"/>
             <type name="second" description="second half of 128 bit" primitiveType="uint64"/>
         </composite>
 
+        <!--   FLOAT TYPE DEFINITIONS -->
+        <composite name="FLOAT" description="Decimal">
+            <type name="mantissa" description="mantissa" primitiveType="int64"/>
+            <type name="exponent" description="exponent" presence="constant" primitiveType="int8">-7</type>
+        </composite>
+
         <!--    TYPE ALIAS DEFINITIONS -->
         <type name="Currency" description="Currency" length="3" primitiveType="char"/>
+        <type name="CFICode" length="6" primitiveType="char" semanticType="String"/>
         <type name="Timestamp" encodingType="Int64NULL" primitiveType="int64"/>
         <type name="OptionalTimestamp" presence="optional" encodingType="uInt64NULL" primitiveType="uint64"/>
         <type name="TimeResolution" encodingType="uInt8NULL" primitiveType="uint8"/>
 
         <!--   DECIMAL TYPE DEFINITIONS -->
-        <composite name="DecimalQty" description="A number representing quantity as Rust decimal">
+        <!--   Fixed sized Decimal types with exponent 9 from the FIX 5.2 standard -->
+        <composite name="Decimal9" description="Decimal with constant exponent -9" >
+            <type name="mantissa" description="mantissa" primitiveType="int64"/>
+            <type name="exponent" description="exponent" presence="constant" primitiveType="int8">-9</type>
+        </composite>
+        <composite name="Decimal9NULL" description="Optional Decimal with constant exponent -9 " >
+            <type name="mantissa" description="mantissa" presence="optional" nullValue="9223372036854775807"
+                  primitiveType="int64"/>
+            <type name="exponent" description="exponent" presence="constant" primitiveType="int8">-9</type>
+        </composite>
+        <composite name="PRICE9" description="Price with constant exponent -9">
+            <type name="mantissa" description="mantissa" primitiveType="int64"/>
+            <type name="exponent" description="exponent" presence="constant" primitiveType="int8">-9</type>
+        </composite>
+        <composite name="PRICENULL9" description="Optional Price with constant exponent -9">
+            <type name="mantissa" description="mantissa" presence="optional" nullValue="9223372036854775807"
+                  primitiveType="int64"/>
+            <type name="exponent" description="exponent" presence="constant" primitiveType="int8">-9</type>
+        </composite>
+
+        <!--        Variable sized Decimal types with exponent in range [0, 255] (u8) for internal use-->
+        <composite name="DecimalPrice" description="A number representing price as Rust decimal">
             <type name="num" description="the number" primitiveType="int64"/>
             <type name="scale" description="the scale" primitiveType="uint8"/>
         </composite>
 
-        <composite name="DecimalPrice" description="A number representing price as Rust decimal">
+        <composite name="DecimalQty" description="A number representing quantity as Rust decimal">
             <type name="num" description="the number" primitiveType="int64"/>
             <type name="scale" description="the scale" primitiveType="uint8"/>
         </composite>
@@ -66,29 +99,36 @@
             <type name="num" presence="optional" primitiveType="int64"/>
             <type name="scale" presence="optional" primitiveType="uint8"/>
         </composite>
-        <!--
-            Longest asset code: internationaldiamond
-            Longest asset code length: 20
-            Longest exchange_pair_code: AVAX_USDC-PERPETUAL
-            Longest exchange_pair_code length: 19
-            Longest instrument code: realtokens15860h-vene
-            Longest instrument code length: 21
-            Longest exchange code: zbcn
-            Longest exchange code length: 4
-        -->
+
+        <composite name="DecimalVolume" description="A number representing volume as Rust decimal">
+            <type name="num" description="the number" primitiveType="int64"/>
+            <type name="scale" description="the scale" primitiveType="uint8"/>
+        </composite>
 
         <!--  ID TYPE DEFINITIONS-->
-        <type name="ClientID" encodingType="uInt16NULL" primitiveType="uint16"/>
+
+        <!--
+        Longest asset code: internationaldiamond
+        Longest asset code length: 20
+        Longest exchange code: zbcn
+        Longest exchange code length: 4
+        Longest instrument code: realtokens15860h-vene
+        Longest instrument code length: 21
+
+        -->
         <!--  Represent Rust Enums-->
+        <type name="AssetID" description="Asset" length="20" primitiveType="char" semanticType="String"/>
+        <type name="ClientID" encodingType="uInt16NULL" primitiveType="uint16"/>
         <type name="DataTypeID" encodingType="uInt8NULL" primitiveType="uint8"/>
         <type name="ExchangeID" encodingType="uInt8NULL" primitiveType="uint8"/>
-
-        <type name="AssetID" description="Asset" length="20" primitiveType="char" semanticType="String"/>
+        <!-- InstrumentID maps to a binary string codec of max size 20 represented as two uint64   -->
+        <composite name="InstrumentID">
+            <type name="first" primitiveType="uint64"/>
+            <type name="second" primitiveType="uint64"/>
+        </composite>
+        <!-- Replace String with binary string codec...    -->
         <type name="SymbolID" description="Symbol" length="20" primitiveType="char" semanticType="String"/>
 
-        <!-- ERROR TYPE DEFINITIONS        -->
-        <type name="ClientErrorType" encodingType="uInt8NULL" primitiveType="uint8"/>
-        <type name="DataErrorType" encodingType="uInt8NULL" primitiveType="uint8"/>
 
         <!--    ORDER TYPE DEFINITIONS. See common_order crate and sbe_messages_order for Rust type definitions -->
         <type name="ClientOrderID" encodingType="uInt64NULL" primitiveType="uint64"/>
@@ -106,35 +146,45 @@
         <type name="OrderType" encodingType="uint8" primitiveType="uint8"/>
         <type name="OrderTimeInForce" encodingType="uint8" primitiveType="uint8"/>
 
+        <!-- ERROR TYPE DEFINITIONS        -->
+        <type name="ClientErrorType" encodingType="uInt8NULL" primitiveType="uint8"/>
+        <type name="DataErrorType" encodingType="uInt8NULL" primitiveType="uint8"/>
+        <type name="OrderErrorType" encodingType="uInt8NULL" primitiveType="uint8"/>
+
         <!--    MESSAGE TYPE DEFINITIONS -->
         <enum name="MessageType" encodingType="uInt16NULL">
             <validValue name="UnknownMessageType">0</validValue>
 
-            <!--            Client Message Types-->
+            <!-- Client Message Types-->
             <validValue name="ClientLogin">101</validValue>
             <validValue name="ClientLogout">102</validValue>
 
-            <!--            Control Message Types-->
+            <!-- Control Message Types-->
             <validValue name="StartData">201</validValue>
             <validValue name="StopData">202</validValue>
             <validValue name="StopAllData">203</validValue>
 
-            <!--            Data Message Types-->
+            <!-- Data Message Types-->
             <validValue name="DataBar">204</validValue>
             <validValue name="TradeBar">205</validValue>
 
-            <!--            Order Message Types-->
+            <!-- Order Message Types-->
             <validValue name="OrderCreate">401</validValue>
             <validValue name="OrderUpdate">402</validValue>
             <validValue name="OrderCancel">403</validValue>
             <validValue name="OrderCancelAll">404</validValue>
 
-            <!--            Error Message Types-->
+            <!-- Error Message Types-->
             <validValue name="ClientError">801</validValue>
             <validValue name="DataError">802</validValue>
+            <validValue name="OrderError">803</validValue>
         </enum>
 
     </types>
+
+    <!--        -->
+    <!-- Message Definitions    -->
+    <!--        -->
 
     <!--   CLIENT MESSAGE DEFINITIONS -->
     <sbe:message name="ClientLogin" id="101">
@@ -175,19 +225,19 @@
         <field name="messageType" id="1" type="MessageType"/>
         <field name="symbolID" id="2" type="SymbolID"/>
         <field name="dateTime" id="3" type="Timestamp"/>
-        <field name="openPrice" id="4" type="float"/>
-        <field name="highPrice" id="5" type="float"/>
-        <field name="lowPrice" id="6" type="float"/>
-        <field name="closePrice" id="7" type="float"/>
-        <field name="volume" id="8" type="float"/>
+        <field name="openPrice" id="4" type="DecimalPrice"/>
+        <field name="highPrice" id="5" type="DecimalPrice"/>
+        <field name="lowPrice" id="6" type="DecimalPrice"/>
+        <field name="closePrice" id="7" type="DecimalPrice"/>
+        <field name="volume" id="8" type="DecimalVolume"/>
     </sbe:message>
 
     <sbe:message name="TradeBar" id="205">
         <field name="messageType" id="1" type="MessageType"/>
         <field name="symbolID" id="2" type="SymbolID"/>
         <field name="dateTime" id="3" type="Timestamp"/>
-        <field name="price" id="4" type="float"/>
-        <field name="volume" id="5" type="float"/>
+        <field name="price" id="4" type="DecimalPrice"/>
+        <field name="volume" id="5" type="DecimalVolume"/>
     </sbe:message>
 
     <!--   ORDER MESSAGE DEFINITIONS -->
@@ -199,8 +249,8 @@
         <field name="exchangeSymbolID" id="5" type="OrderExchangeSymbolID"/>
         <field name="orderType" id="6" type="OrderType"/>
         <field name="orderSide" id="7" type="OrderSide"/>
-        <field name="timeInForce" id="8" type="OrderTimeInForce"/>
-        <field name="timeExpiry" id="9" type="OptionalTimestamp"/>
+        <field name="orderTimeInForce" id="8" type="OrderTimeInForce"/>
+        <field name="orderTimeExpiry" id="9" type="OptionalTimestamp"/>
         <field name="orderQty" id="10" type="DecimalQty"/>
         <field name="orderPrice" id="11" type="DecimalPrice"/>
         <field name="orderStopPrice" id="12" type="DecimalOptional"/>
@@ -247,6 +297,14 @@
         <field name="messageType" id="1" type="MessageType"/>
         <field name="clientID" id="2" type="ClientID"/>
         <field name="dataErrorType" id="3" type="DataErrorType"/>
+    </sbe:message>
+
+    <sbe:message name="OrderError" id="803">
+        <field name="messageType" id="1" type="MessageType"/>
+        <field name="clientID" id="2" type="ClientID"/>
+        <field name="clientOrderID" id="3" type="ClientOrderID"/>
+        <field name="exchangeOrderID" id="4" type="ExchangeOrderID"/>
+        <field name="orderErrorType" id="5" type="OrderErrorType"/>
     </sbe:message>
 
 </sbe:messageSchema>

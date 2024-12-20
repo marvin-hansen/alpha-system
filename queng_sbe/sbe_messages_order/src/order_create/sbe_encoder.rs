@@ -41,10 +41,10 @@ pub fn encode_order_create_message(msg: OrderCreate) -> Result<(usize, Vec<u8>),
 
     csg.order_side(msg.order_side().into());
 
-    csg.time_in_force(msg.order_time_in_force().into());
+    csg.order_time_in_force(msg.order_time_in_force().into());
 
     if let Some(time_expiry) = msg.time_expiry() {
-        csg.time_expiry(time_expiry);
+        csg.order_time_expiry(time_expiry);
     }
 
     let mut qty_encoder = csg.order_qty_encoder();

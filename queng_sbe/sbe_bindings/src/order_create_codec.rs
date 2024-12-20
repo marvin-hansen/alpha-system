@@ -157,7 +157,7 @@ pub mod encoder {
             self.get_buf_mut().put_u8_at(offset, value);
         }
 
-        /// primitive field 'timeInForce'
+        /// primitive field 'orderTimeInForce'
         /// - min value: 0
         /// - max value: 254
         /// - null value: 255
@@ -167,12 +167,12 @@ pub mod encoder {
         /// - encodedLength: 1
         /// - version: 0
         #[inline]
-        pub fn time_in_force(&mut self, value: u8) {
+        pub fn order_time_in_force(&mut self, value: u8) {
             let offset = self.offset + 31;
             self.get_buf_mut().put_u8_at(offset, value);
         }
 
-        /// primitive field 'timeExpiry'
+        /// primitive field 'orderTimeExpiry'
         /// - min value: 0
         /// - max value: -2
         /// - null value: -1
@@ -182,7 +182,7 @@ pub mod encoder {
         /// - encodedLength: 8
         /// - version: 0
         #[inline]
-        pub fn time_expiry(&mut self, value: u64) {
+        pub fn order_time_expiry(&mut self, value: u64) {
             let offset = self.offset + 32;
             self.get_buf_mut().put_u64_at(offset, value);
         }
@@ -336,13 +336,13 @@ pub mod decoder {
 
         /// primitive field - 'REQUIRED'
         #[inline]
-        pub fn time_in_force(&self) -> u8 {
+        pub fn order_time_in_force(&self) -> u8 {
             self.get_buf().get_u8_at(self.offset + 31)
         }
 
         /// primitive field - 'OPTIONAL' { null_value: '-1' }
         #[inline]
-        pub fn time_expiry(&self) -> Option<u64> {
+        pub fn order_time_expiry(&self) -> Option<u64> {
             let value = self.get_buf().get_u64_at(self.offset + 32);
             if value == 0xffffffffffffffff_u64 {
                 None

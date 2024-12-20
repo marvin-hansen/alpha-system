@@ -33,14 +33,14 @@ use sbe_types::SbeEncodeError;
 /// - Encode `message_type`
 /// - Encode `symbol_id`
 /// - Encode `date_time` as timestamp
-/// - Convert price to f32
+/// - Convert price to SBE decimal
 /// - Encode price
-/// - Convert volume to f32
+/// - Convert volume to SBE decimal
 /// - Encode volume
 /// - Return encoded size and buffer
 ///
 pub fn encode_trade_bar_message(bar: TradeBar) -> Result<(usize, Vec<u8>), SbeEncodeError> {
-    let mut buffer = vec![0u8; 46];
+    let mut buffer = vec![0u8; 56];
 
     let mut csg = TradeBarEncoder::default();
 
@@ -59,17 +59,30 @@ pub fn encode_trade_bar_message(bar: TradeBar) -> Result<(usize, Vec<u8>), SbeEn
     let date_time = bar.date_time().timestamp_micros();
     csg.date_time(date_time);
 
-    let price = bar
-        .price()
-        .to_f32()
-        .expect("Failed to convert price to f32");
-    csg.price(price);
+    let mut price_encoder = csg.price_encoder();
+    price_encoder.num(
+        bar.price()
+            .mantissa()
+            .to_i64()
+            .expect("Failed to convert price decimal to i64"),
+    );
+    price_encoder.scale(bar.price().scale() as u8);
+    csg = price_encoder
+        .parent()
+        .expect("Failed to encode trade price");
 
-    let volume = bar
-        .volume()
-        .to_f32()
-        .expect("Failed to convert volume to u64");
-    csg.volume(volume);
+    let mut volume_encoder = csg.volume_encoder();
+
+    volume_encoder.num(
+        bar.volume()
+            .mantissa()
+            .to_i64()
+            .expect("Failed to convert volume decimal to i64"),
+    );
+    volume_encoder.scale(bar.volume().scale() as u8);
+    csg = volume_encoder
+        .parent()
+        .expect("Failed to encode trade volume");
 
     let limit = csg.get_limit();
     Ok((limit, buffer))
