@@ -11,7 +11,7 @@
 ###############################################################################
 
 # Prevents an OOM. See https://github.com/bazelbuild/bazel/issues/21803
-common --experimental_worker_for_repo_fetching=off
+# common --experimental_worker_for_repo_fetching=off
 
 ###############################################################################
 ## Build configuration
