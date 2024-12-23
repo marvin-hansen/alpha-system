@@ -12,11 +12,8 @@ workspace = true
 [dependencies]
 # Internal crates
 common_ims = { workspace = true }
-common_metadata = {workspace = true}
 proto_imdb = {workspace = true}
 proto_imdb_utils = {workspace = true}
 
 # Exteral crates
-tokio = { workspace = true }
 tonic = { workspace = true }
-prost = { workspace = true }

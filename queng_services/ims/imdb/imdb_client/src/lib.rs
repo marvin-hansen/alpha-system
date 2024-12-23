@@ -1,5 +1,9 @@
 mod error;
+mod imdb_client_trait;
 mod imdb_integrations;
+mod imdb_mock;
+
+pub use imdb_client_trait::ImdbClientTrait;
 
 use proto_imdb::proto::imdb_service_client::ImdbServiceClient;
 use std::fmt::Error;

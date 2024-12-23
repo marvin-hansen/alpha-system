@@ -3,6 +3,7 @@ use common_ims::ExchangeID;
 use container_specs_postgres::postgres_db_container_config;
 use docker_utils::DockerUtil;
 use imdb_client::IMDBClient;
+use imdb_client::ImdbClientTrait;
 use integration_import::IntegrationImportManager;
 use service_import::ServiceImportManager;
 use service_utils::ServiceUtil;

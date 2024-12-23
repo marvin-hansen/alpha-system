@@ -5,6 +5,7 @@ use common_service::print_utils;
 use config_manager::CfgManager;
 use iggy::client::{Client, UserClient};
 use imdb_client::IMDBClient;
+use imdb_client::ImdbClientTrait;
 use smdb_client::SMDBClient;
 use tokio::time::Instant;
 
@@ -64,13 +65,13 @@ pub async fn start(
         .expect("Failed to get MDDB host");
 
     dbg_print("Construct IMDB client");
-    let client = IMDBClient::new(host, port)
+    let imdb_client = IMDBClient::new(host, port)
         .await
         .expect("Failed to create IMDB client");
 
     dbg_print("Get integration form IMDB");
     let integration_id = "ims-data-binance".to_string();
-    let exists = client
+    let exists = imdb_client
         .check_if_integration_exists(integration_id.clone())
         .await
         .expect("Failed to get integration");
@@ -146,7 +147,7 @@ pub async fn start(
     };
 
     dbg_print("Set integration online on IMDB");
-    client
+    imdb_client
         .set_integration_online(integration_id.clone())
         .await
         .expect("Failed to set integration online");
@@ -191,7 +192,7 @@ pub async fn start(
         .expect("Failed to shutdown service");
 
     dbg_print("Set integration offline on IMDB");
-    client
+    imdb_client
         .set_integration_offline(integration_id.clone())
         .await
         .expect("Failed to set integration offline on IMDB");

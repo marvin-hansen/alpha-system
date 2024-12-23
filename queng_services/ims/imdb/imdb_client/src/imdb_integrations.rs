@@ -1,4 +1,5 @@
 use crate::error::IMDBClientError;
+use crate::imdb_client_trait::ImdbClientTrait;
 use crate::IMDBClient;
 use common_ims::{ExchangeID, IntegrationConfig};
 use proto_imdb::proto::ProtoIntegrationConfig;
@@ -10,7 +11,7 @@ use proto_imdb_utils::{
     get_set_integration_online_request, integration_config_from_proto,
 };
 
-impl IMDBClient {
+impl ImdbClientTrait for IMDBClient {
     /// Counts the total number of integrations in the database
     ///
     /// # Errors
@@ -19,7 +20,7 @@ impl IMDBClient {
     /// # Returns
     /// * `Result<u64, IMDBClientError>` - The total number of integrations, or an error if the operation fails
     ///
-    pub async fn count_integrations(&self) -> Result<u64, IMDBClientError> {
+    async fn count_integrations(&self) -> Result<u64, IMDBClientError> {
         let mut client = self.client.clone();
         let request = get_count_integration_request();
 
@@ -28,7 +29,6 @@ impl IMDBClient {
             Err(e) => Err(IMDBClientError(e.to_string())),
         }
     }
-
     /// Checks if an integration with the given ID exists in the database
     ///
     /// # Arguments
@@ -40,7 +40,7 @@ impl IMDBClient {
     /// # Returns
     /// * `Result<bool, IMDBClientError>` - `true` if the integration exists, `false` if the integration does not exist, or an error if the operation fails
     ///
-    pub async fn check_if_integration_exists(
+    async fn check_if_integration_exists(
         &self,
         integration_id: String,
     ) -> Result<bool, IMDBClientError> {
@@ -51,7 +51,6 @@ impl IMDBClient {
             Err(e) => Err(IMDBClientError(e.to_string())),
         }
     }
-
     /// Checks if an integration with the given ID is online in the database
     ///
     /// # Arguments
@@ -63,7 +62,7 @@ impl IMDBClient {
     /// # Returns
     /// * `Result<bool, IMDBClientError>` - `true` if the integration is online, `false` if the integration is offline, or an error if the operation fails
     ///
-    pub async fn check_if_integration_online(
+    async fn check_if_integration_online(
         &self,
         integration_id: String,
     ) -> Result<bool, IMDBClientError> {
@@ -74,7 +73,6 @@ impl IMDBClient {
             Err(e) => Err(IMDBClientError(e.to_string())),
         }
     }
-
     /// Retrieves an integration from the database by its ID
     ///
     /// # Arguments
@@ -86,7 +84,7 @@ impl IMDBClient {
     /// # Returns
     /// * `Result<Option<IntegrationConfig>, IMDBClientError>` - `Ok(Some(IntegrationConfig))` if the integration was found, `Ok(None)` if the integration was not found, or an error if the operation fails
     ///
-    pub async fn get_integration(
+    async fn get_integration(
         &self,
         integration_id: String,
     ) -> Result<Option<IntegrationConfig>, IMDBClientError> {
@@ -104,7 +102,6 @@ impl IMDBClient {
             Err(e) => Err(IMDBClientError(e.to_string())),
         }
     }
-
     /// Gets all integrations from the database
     ///
     /// # Errors
@@ -113,7 +110,7 @@ impl IMDBClient {
     /// # Returns
     /// * `Result<Vec<IntegrationConfig>, IMDBClientError>` - `Ok(Vec<IntegrationConfig>)` if the operation was successful, or an error if it failed
     ///
-    pub async fn get_all_integrations(&self) -> Result<Vec<IntegrationConfig>, IMDBClientError> {
+    async fn get_all_integrations(&self) -> Result<Vec<IntegrationConfig>, IMDBClientError> {
         let mut client = self.client.clone();
         let request = get_all_integrations_request();
         match client.get_all_integration_configs(request).await {
@@ -134,7 +131,6 @@ impl IMDBClient {
             Err(e) => Err(IMDBClientError(e.to_string())),
         }
     }
-
     /// Gets all integrations for a specific exchange from the database
     ///
     /// # Arguments
@@ -146,7 +142,7 @@ impl IMDBClient {
     /// # Returns
     /// * `Result<Vec<IntegrationConfig>, IMDBClientError>` - `Ok(Vec<IntegrationConfig>)` if the operation was successful, or an error if it failed
     ///
-    pub async fn get_all_integrations_by_exchange(
+    async fn get_all_integrations_by_exchange(
         &self,
         exchange_id: ExchangeID,
     ) -> Result<Vec<IntegrationConfig>, IMDBClientError> {
@@ -173,7 +169,6 @@ impl IMDBClient {
             Err(e) => Err(IMDBClientError(e.to_string())),
         }
     }
-
     /// Gets all online integrations from the database
     ///
     /// # Errors
@@ -182,9 +177,7 @@ impl IMDBClient {
     /// # Returns
     /// * `Result<Vec<IntegrationConfig>, IMDBClientError>` - `Ok(Vec<IntegrationConfig>)` if the operation was successful, or an error if it failed
     ///
-    pub async fn get_all_online_integrations(
-        &self,
-    ) -> Result<Vec<IntegrationConfig>, IMDBClientError> {
+    async fn get_all_online_integrations(&self) -> Result<Vec<IntegrationConfig>, IMDBClientError> {
         let mut client = self.client.clone();
         let request = get_all_online_integrations_request();
         match client.get_all_online_integration_configs(request).await {
@@ -205,7 +198,6 @@ impl IMDBClient {
             Err(e) => Err(IMDBClientError(e.to_string())),
         }
     }
-
     /// Gets all offline integrations from the database
     ///
     /// # Errors
@@ -214,7 +206,7 @@ impl IMDBClient {
     /// # Returns
     /// * `Result<Vec<IntegrationConfig>, IMDBClientError>` - `Ok(Vec<IntegrationConfig>)` if the operation was successful, or an error if it failed
     ///
-    pub async fn get_all_offline_integrations(
+    async fn get_all_offline_integrations(
         &self,
     ) -> Result<Vec<IntegrationConfig>, IMDBClientError> {
         let mut client = self.client.clone();
@@ -238,7 +230,6 @@ impl IMDBClient {
             Err(e) => Err(IMDBClientError(e.to_string())),
         }
     }
-
     /// Sets the integration with the given ID to online
     ///
     /// # Arguments
@@ -250,10 +241,7 @@ impl IMDBClient {
     /// # Returns
     /// * `Result<(), IMDBClientError>` - `Ok(())` if the operation was successful, or an error if it failed
     ///
-    pub async fn set_integration_online(
-        &self,
-        integration_id: String,
-    ) -> Result<(), IMDBClientError> {
+    async fn set_integration_online(&self, integration_id: String) -> Result<(), IMDBClientError> {
         let mut client = self.client.clone();
         let request = get_set_integration_online_request(&integration_id);
         match client.set_integration_online(request).await {
@@ -268,7 +256,6 @@ impl IMDBClient {
             Err(e) => Err(IMDBClientError(e.to_string())),
         }
     }
-
     /// Sets the integration with the given ID to offline
     ///
     /// # Arguments
@@ -280,10 +267,7 @@ impl IMDBClient {
     /// # Returns
     /// * `Result<(), IMDBClientError>` - `Ok(())` if the operation was successful, or an error if it failed
     ///
-    pub async fn set_integration_offline(
-        &self,
-        integration_id: String,
-    ) -> Result<(), IMDBClientError> {
+    async fn set_integration_offline(&self, integration_id: String) -> Result<(), IMDBClientError> {
         let mut client = self.client.clone();
         let request = get_set_integration_offline_request(&integration_id);
         match client.set_integration_offline(request).await {
