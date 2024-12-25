@@ -14,7 +14,8 @@ bazel_dep(name = "rules_oci", version = "2.2.0")
 bazel_dep(name = "rules_pkg", version = "1.0.1")
 bazel_dep(name = "rules_python", version = "1.0.0")
 bazel_dep(name = "rules_proto", version = "7.1.0")
-bazel_dep(name = "rules_rust", version = "0.54.1")
+bazel_dep(name = "rules_rust", version = "0.56.0")
+bazel_dep(name = "rules_rust_prost", version = "0.56.0")
 
 # Toolchains
 bazel_dep(name = "toolchains_protoc", version = "0.3.6", dev_dependency = True)
@@ -102,14 +103,6 @@ rust.toolchain(
 use_repo(rust, "rust_toolchains")
 
 register_toolchains("@rust_toolchains//:all")
-
-###############################################################################
-# Proto Toolchain
-# https://github.com/bazelbuild/rules_rust/tree/main/examples/bzlmod/proto_with_toolchain
-###############################################################################
-register_toolchains("@rules_rust//proto/protobuf:default-proto-toolchain")
-
-register_toolchains("@//build/prost_toolchain")
 
 ###############################################################################
 # Python toolchain
