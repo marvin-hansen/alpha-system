@@ -76,7 +76,6 @@ rust_library(
         "@rules_rust//rust/platform:thumbv7em-none-eabi": [],
         "@rules_rust//rust/platform:thumbv8m.main-none-eabi": [],
         "@rules_rust//rust/platform:wasm32-unknown-unknown": [],
-        "@rules_rust//rust/platform:wasm32-wasi": [],
         "@rules_rust//rust/platform:wasm32-wasip1": [],
         "@rules_rust//rust/platform:x86_64-apple-darwin": [],
         "@rules_rust//rust/platform:x86_64-apple-ios": [],
@@ -612,12 +611,6 @@ rust_library(
             "//thirdparty/crates/webpki-roots-0.26.7:webpki_roots",  # thumbv8m.main-none-eabi
         ],
         "@rules_rust//rust/platform:wasm32-unknown-unknown": [
-            "//thirdparty/crates/js-sys-0.3.76:js_sys",  # cfg(target_arch = "wasm32")
-            "//thirdparty/crates/wasm-bindgen-0.2.99:wasm_bindgen",  # cfg(target_arch = "wasm32")
-            "//thirdparty/crates/wasm-bindgen-futures-0.4.49:wasm_bindgen_futures",  # cfg(target_arch = "wasm32")
-            "//thirdparty/crates/web-sys-0.3.76:web_sys",  # cfg(target_arch = "wasm32")
-        ],
-        "@rules_rust//rust/platform:wasm32-wasi": [
             "//thirdparty/crates/js-sys-0.3.76:js_sys",  # cfg(target_arch = "wasm32")
             "//thirdparty/crates/wasm-bindgen-0.2.99:wasm_bindgen",  # cfg(target_arch = "wasm32")
             "//thirdparty/crates/wasm-bindgen-futures-0.4.49:wasm_bindgen_futures",  # cfg(target_arch = "wasm32")

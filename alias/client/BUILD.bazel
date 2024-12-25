@@ -11,21 +11,6 @@ alias(
 )
 
 alias(
-    name = "dbgw_cmdb_client",
-    actual = "//queng_services/core/dbgw/dbgw_cmdb_client",
-)
-
-alias(
-    name = "dbgw_mddb_client",
-    actual = "//queng_services/core/dbgw/dbgw_mddb_client",
-)
-
-alias(
-    name = "dbgw_smdb_client",
-    actual = "//queng_services/core/dbgw/dbgw_smdb_client",
-)
-
-alias(
     name = "smdb_client",
     actual = "//queng_services/core/smdb/smdb_client",
 )

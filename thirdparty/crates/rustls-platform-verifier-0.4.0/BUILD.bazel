@@ -65,7 +65,6 @@ rust_library(
         "@rules_rust//rust/platform:thumbv7em-none-eabi": [],
         "@rules_rust//rust/platform:thumbv8m.main-none-eabi": [],
         "@rules_rust//rust/platform:wasm32-unknown-unknown": [],
-        "@rules_rust//rust/platform:wasm32-wasi": [],
         "@rules_rust//rust/platform:wasm32-wasip1": [],
         "@rules_rust//rust/platform:x86_64-apple-darwin": [],
         "@rules_rust//rust/platform:x86_64-apple-ios": [],
@@ -170,10 +169,6 @@ rust_library(
             "//thirdparty/crates/rustls-webpki-0.102.8:webpki",  # cfg(all(unix, not(target_os = "android"), not(target_vendor = "apple"), not(target_arch = "wasm32")))
         ],
         "@rules_rust//rust/platform:wasm32-unknown-unknown": [
-            "//thirdparty/crates/rustls-webpki-0.102.8:webpki",  # cfg(target_arch = "wasm32")
-            "//thirdparty/crates/webpki-root-certs-0.26.7:webpki_root_certs",  # cfg(target_arch = "wasm32")
-        ],
-        "@rules_rust//rust/platform:wasm32-wasi": [
             "//thirdparty/crates/rustls-webpki-0.102.8:webpki",  # cfg(target_arch = "wasm32")
             "//thirdparty/crates/webpki-root-certs-0.26.7:webpki_root_certs",  # cfg(target_arch = "wasm32")
         ],

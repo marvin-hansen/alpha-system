@@ -104,6 +104,9 @@ use_repo(rust, "rust_toolchains")
 
 register_toolchains("@rust_toolchains//:all")
 
+# Custom Prost toolchain
+register_toolchains("@//build/prost_toolchain")
+
 ###############################################################################
 # Python toolchain
 # https://github.com/bazelbuild/rules_python

@@ -65,9 +65,6 @@ codegen-units = 1 # Reduce Parallel Code Generation Units to Increase Optimizati
 
 # Servide clients
 cmdb_client = { path = "queng_services/core/cmdb/cmdb_client" }
-dbgw_cmdb_client = { path = "queng_services/core/dbgw/dbgw_cmdb_client" }
-dbgw_mddb_client = { path = "queng_services/core/dbgw/dbgw_mddb_client" }
-dbgw_smdb_client = { path = "queng_services/core/dbgw/dbgw_smdb_client" }
 imdb_client = { path = "queng_services/ims/imdb/imdb_client" }
 ims_data_client = { path = "queng_services/ims_data/ims_clients/ims_data_client" }
 mddb_client = { path = "queng_services/mds/mddb/mddb_client" }
@@ -244,7 +241,7 @@ iggy = { version = "0.6.51" }
 klickhouse = { version = "0.13.2" }
 lru = { version = "0.12.4" }
 mimalloc = { version = "0.1.43" }
-prost = { version = "0.13" }
+prost = { version = "0.13.4" }
 reqwest = { version = "0.12", default-features = false, features = ["rustls-tls", "json", "blocking", "gzip"] }
 rust_decimal = { version = "1.36" }
 rust_decimal_macros = { version = "1.36" }
@@ -255,9 +252,9 @@ sha3 = { version = "0.11.0-pre.4", default-features = false }
 trait-variant = {version = "0.1"}
 tokio = { version = "1.42", default-features = false, features = ["macros", "net", "rt-multi-thread", "signal", "time"] }
 tokio-tungstenite = { version = "0.26.0", features = ["rustls-tls-webpki-roots"]}
-tonic = { version = "0.12", features = ["transport"] }
-tonic-build = { version = "0.12" }
-tonic-health = { version = "0.12", default-features = false, features = ["transport"] }
+tonic = { version = "0.12.1", features = ["transport"] }
+tonic-build = { version = "0.12.1" }
+tonic-health = { version = "0.12.3", default-features = false, features = ["transport"] }
 warp = { version = "0.3" }
 # Depdendencies for cloudflare workers that are not build with Bazel
 console_error_panic_hook = { version = "0.1.1" }

@@ -128,20 +128,20 @@ crates_vendor(
         ),
         "prost": crate.spec(
             package = "prost",
-            version = "0.13",
+            version = "0.13.4",
         ),
         "prost-types": crate.spec(
             default_features = False,
             package = "prost-types",
-            version = "0.13",
+            version = "0.13.4",
         ),
         "protoc-gen-prost": crate.spec(
             package = "protoc-gen-prost",
-            version = "0.3",
+            version = "0.4.0",
         ),
         "protoc-gen-tonic": crate.spec(
             package = "protoc-gen-tonic",
-            version = "0.4",
+            version = "0.4.0",
         ),
         "reqwest": crate.spec(
             default_features = False,
@@ -205,17 +205,17 @@ crates_vendor(
         "tonic": crate.spec(
             features = ["transport"],
             package = "tonic",
-            version = "0.12",
+            version = "0.12.1",
         ),
         "tonic-build": crate.spec(
             package = "tonic-build",
-            version = "0.12",
+            version = "0.12.1",
         ),
         "tonic-health": crate.spec(
             default_features = False,
             features = ["transport"],
             package = "tonic-health",
-            version = "0.12",
+            version = "0.12.3",
         ),
         "warp": crate.spec(
             package = "warp",

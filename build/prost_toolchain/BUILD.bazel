@@ -19,7 +19,7 @@ rust_library_group(
 # https://github.com/bazelbuild/rules_rust/blob/main/examples/bzlmod/proto_with_toolchain/build/prost_toolchain/BUILD.bazel
 rust_prost_toolchain(
     name = "prost_toolchain_impl",
-    prost_plugin = "//thirdparty/crates:protoc-gen-prost-0.4.0__protoc-gen-prost",
+    prost_plugin = "//thirdparty/crates:protoc-gen-prost__protoc-gen-prost",
     prost_runtime = ":prost_runtime",
     prost_types = "//thirdparty/crates:prost-types",
     tonic_plugin = "//thirdparty/crates:protoc-gen-tonic__protoc-gen-tonic",
@@ -29,5 +29,5 @@ rust_prost_toolchain(
 toolchain(
     name = "prost_toolchain",
     toolchain = "prost_toolchain_impl",
-    toolchain_type = "@rules_rust//proto/prost:toolchain_type",
+    toolchain_type = "@rules_rust_prost//:toolchain_type",
 )

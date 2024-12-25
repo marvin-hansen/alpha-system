@@ -72,7 +72,6 @@ rust_library(
         "@rules_rust//rust/platform:thumbv7em-none-eabi": [],
         "@rules_rust//rust/platform:thumbv8m.main-none-eabi": [],
         "@rules_rust//rust/platform:wasm32-unknown-unknown": [],
-        "@rules_rust//rust/platform:wasm32-wasi": [],
         "@rules_rust//rust/platform:wasm32-wasip1": [],
         "@rules_rust//rust/platform:x86_64-apple-darwin": [],
         "@rules_rust//rust/platform:x86_64-apple-ios": [],
@@ -189,11 +188,6 @@ rust_library(
             "//thirdparty/crates/tokio-1.42.0:tokio",  # cfg(not(target_arch = "wasm32"))
         ],
         "@rules_rust//rust/platform:wasm32-unknown-unknown": [
-            "//thirdparty/crates/getrandom-0.2.15:getrandom",  # cfg(target_arch = "wasm32")
-            "//thirdparty/crates/parking_lot-0.11.2:parking_lot",  # cfg(target_arch = "wasm32")
-            "//thirdparty/crates/wasm-timer-0.2.5:wasm_timer",  # cfg(target_arch = "wasm32")
-        ],
-        "@rules_rust//rust/platform:wasm32-wasi": [
             "//thirdparty/crates/getrandom-0.2.15:getrandom",  # cfg(target_arch = "wasm32")
             "//thirdparty/crates/parking_lot-0.11.2:parking_lot",  # cfg(target_arch = "wasm32")
             "//thirdparty/crates/wasm-timer-0.2.5:wasm_timer",  # cfg(target_arch = "wasm32")
