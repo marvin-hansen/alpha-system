@@ -104,7 +104,7 @@ alias(
 
 alias(
     name = "iggy",
-    actual = "//thirdparty/crates/iggy-0.6.51:iggy",
+    actual = "//thirdparty/crates/iggy-0.6.61:iggy",
     tags = ["manual"],
 )
 
@@ -188,7 +188,7 @@ alias(
 
 alias(
     name = "serde_json",
-    actual = "//thirdparty/crates/serde_json-1.0.133:serde_json",
+    actual = "//thirdparty/crates/serde_json-1.0.134:serde_json",
     tags = ["manual"],
 )
 
@@ -200,7 +200,7 @@ alias(
 
 alias(
     name = "syn",
-    actual = "//thirdparty/crates/syn-2.0.90:syn",
+    actual = "//thirdparty/crates/syn-2.0.91:syn",
     tags = ["manual"],
 )
 
@@ -212,7 +212,7 @@ alias(
 
 alias(
     name = "tokio-tungstenite",
-    actual = "//thirdparty/crates/tokio-tungstenite-0.26.0:tokio_tungstenite",
+    actual = "//thirdparty/crates/tokio-tungstenite-0.26.1:tokio_tungstenite",
     tags = ["manual"],
 )
 

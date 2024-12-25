@@ -87,7 +87,7 @@ rust_library(
     }),
     version = "0.7.0",
     deps = [
-        "//thirdparty/crates/anyhow-1.0.94:anyhow",
+        "//thirdparty/crates/anyhow-1.0.95:anyhow",
         "//thirdparty/crates/futures-0.3.31:futures",
         "//thirdparty/crates/http-1.2.0:http",
         "//thirdparty/crates/reqwest-0.12.9:reqwest",

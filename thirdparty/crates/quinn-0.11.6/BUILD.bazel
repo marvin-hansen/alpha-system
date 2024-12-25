@@ -99,7 +99,7 @@ rust_library(
         "//thirdparty/crates/rustc-hash-2.1.0:rustc_hash",
         "//thirdparty/crates/rustls-0.23.20:rustls",
         "//thirdparty/crates/socket2-0.5.8:socket2",
-        "//thirdparty/crates/thiserror-2.0.8:thiserror",
+        "//thirdparty/crates/thiserror-2.0.9:thiserror",
         "//thirdparty/crates/tokio-1.42.0:tokio",
         "//thirdparty/crates/tracing-0.1.41:tracing",
     ],

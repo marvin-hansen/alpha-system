@@ -29,6 +29,9 @@ Current crate:
 
 **Code Example**
 
+**Usage Example**
+
+
 ### Non-Functional Requirements
 
 **Performance**
