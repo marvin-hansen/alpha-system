@@ -1,14 +1,14 @@
 load("@rules_oci//oci:defs.bzl", "oci_push")
 load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_doc", "rust_doc_test")
-load("//:build/binary.bzl", "build_binary_opt")
+load("//:build/binary.bzl", "build_rust_ffi_binary_opt")
 load("//:build/container.bzl", "build_multi_arch_image", "git_with_timestamp_tag")
 
 ###############################################################################
 # Rust Binary
 ###############################################################################
 
-# Build optimized binary
-build_binary_opt(
+# Build optimized binary with optimization across FFI due to libpg dependency
+build_rust_ffi_binary_opt(
     name = "dbgw",
     srcs = glob([
         "src/**/*.rs",
