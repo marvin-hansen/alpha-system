@@ -8,7 +8,9 @@ def build_binary_opt(name, srcs, deps = [], visibility = ["//visibility:public"]
         crate_root = "src/main.rs",
         rustc_flags = select({
             "//:release": [
+                #  Somehow the standard Rust lto flag doesn't work anymore beginning with rules rust 0.56.0
                 "-Clink-arg=-flto",
+                "-Clink-arg=-s",
                 "-Ccodegen-units=1",
                 "-Cpanic=abort",
                 "-Copt-level=3",
