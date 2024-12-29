@@ -9,7 +9,7 @@ def build_binary_opt(name, srcs, deps = [], visibility = ["//visibility:public"]
         rustc_flags = select({
             "//:release": [
                 "-Clto=true",
-                # "-Cembed-bitcode",
+                "-Cembed-bitcode=yes",
                 "-Ccodegen-units=1",
                 "-Cpanic=abort",
                 "-Copt-level=3",
