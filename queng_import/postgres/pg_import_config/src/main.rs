@@ -29,6 +29,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .await
         .expect("Failed to import configs");
 
+    // Print the number of imported configs
     let nr_of_configs = config_import_manager.count_db_portfolios().await;
     pg_import_print_utils::print_stop_header(nr_of_configs, "PortfolioConfig", true);
 

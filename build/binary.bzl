@@ -8,8 +8,7 @@ def build_binary_opt(name, srcs, deps = [], visibility = ["//visibility:public"]
         crate_root = "src/main.rs",
         rustc_flags = select({
             "//:release": [
-                "-Clto=true",
-                "-Cembed-bitcode=yes",
+                "-Clink-arg=-flto",
                 "-Ccodegen-units=1",
                 "-Cpanic=abort",
                 "-Copt-level=3",
