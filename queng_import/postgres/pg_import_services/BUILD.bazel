@@ -15,13 +15,9 @@ build_binary_opt(
     ]),
     deps = [
         # Custom Memory Allocator
-        "//thirdparty/crates:mimalloc",
+        # "//thirdparty/crates:mimalloc",
         # Internal crates
-        "//alias:environment_manager",
-        "//alias:pg_smdb_manager",
-        "//alias:postgres_config_manager",
         "//alias:pg_import_print_utils",
-        "//alias:service_specs_all",
         "//alias:service_import",
         # External crates
         "//thirdparty/crates:tokio",

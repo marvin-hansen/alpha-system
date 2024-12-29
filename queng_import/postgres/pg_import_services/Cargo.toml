@@ -13,11 +13,7 @@ workspace = true
 # Custom Memory Allocator
 mimalloc = { workspace = true }
 # Internal crates
-environment_manager = { workspace = true }
-pg_smdb_manager = { workspace = true }
-postgres_config_manager = {workspace = true}
 pg_import_print_utils = { workspace = true }
-service_specs_all = { workspace = true }
 service_import = { workspace = true }
 # External crates
 tokio = { workspace = true }

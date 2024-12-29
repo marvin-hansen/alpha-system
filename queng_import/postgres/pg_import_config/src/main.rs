@@ -1,10 +1,9 @@
 use config_import::ConfigImportManager;
-use mimalloc::MiMalloc;
 use std::error::Error;
 use std::process::exit;
 
-#[global_allocator]
-static GLOBAL: MiMalloc = MiMalloc;
+// #[global_allocator]
+// static GLOBAL: MiMalloc = MiMalloc;
 
 const DBG: bool = true;
 
