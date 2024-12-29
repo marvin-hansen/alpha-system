@@ -15,7 +15,7 @@ build_binary_opt(
     ]),
     deps = [
         # Custom Memory Allocator
-        #"//thirdparty/crates:mimalloc",
+        "//thirdparty/crates:mimalloc",
         # Internal crates
         "//alias:environment_manager",
         "//alias:config_import",

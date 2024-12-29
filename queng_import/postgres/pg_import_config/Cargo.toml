@@ -11,7 +11,7 @@ authors.workspace = true
 workspace = true
 [dependencies]
 # Custom Memory Allocator
-#mimalloc = { workspace = true }
+mimalloc = { workspace = true }
 # Internal crates
 config_import = { workspace = true }
 pg_import_print_utils = { workspace = true }
