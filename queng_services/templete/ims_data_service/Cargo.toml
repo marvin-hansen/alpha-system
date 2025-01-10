@@ -11,7 +11,6 @@ authors.workspace = true
 workspace = true
 [dependencies]
 # Internal crates
-all_data_integration = { workspace = true }
 common_config = { workspace = true }
 common_data_bar = { workspace = true }
 common_errors = { workspace = true }

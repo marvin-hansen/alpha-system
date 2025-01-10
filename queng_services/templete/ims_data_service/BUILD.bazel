@@ -9,7 +9,6 @@ rust_library(
     visibility = ["//visibility:public"],
     deps = [
         # Internal crates
-        "//alias:all_data_integration",
         "//alias:common_config",
         "//alias:common_data_bar",
         "//alias:common_errors",

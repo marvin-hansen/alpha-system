@@ -138,7 +138,6 @@ postgres_migrations = { path = "queng_infra/postgres/postgres_migrations" }
 
 # Integration
 # Data integration
-all_data_integration = { path = "queng_integration/data/all_data_integration" }
 binance_core_data_integration = { path = "queng_integration/data/binance_core_data_integration" }
 binance_spot_data_integration = { path = "queng_integration/data/binance_spot_data_integration" }
 binance_usd_futures_data_integration = { path = "queng_integration/data/binance_usd_futures_data_integration" }
@@ -233,7 +232,6 @@ chrono = { version = "0.4.38", features = ["serde"] }
 crossbeam = {version = "0.8"}
 diesel = { version = "2.2", default-features = false, features = ["postgres", "pq-src", "r2d2"] }
 diesel_migrations = { version = "2.2.0", default-features = false, features = ["postgres"] }
-enum_dispatch = {version = "0.3.13"}
 futures = { version = "0.3.31" }
 futures-util = {version = "0.3.31"}
 hickory-resolver = { version = "0.24.1", default-features = false, features = ["tokio-runtime"] }

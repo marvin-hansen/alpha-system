@@ -1,7 +1,4 @@
 #[cfg(test)]
-mod exchange_data_integration_tests;
-
-#[cfg(test)]
 mod integration_config_tests;
 
 #[cfg(test)]

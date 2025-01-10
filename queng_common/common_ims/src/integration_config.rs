@@ -1,5 +1,5 @@
 use crate::integration_message_config::IntegrationMessageConfig;
-use crate::{ExchangeDataIntegrationID, ImsIntegrationType};
+use crate::ImsIntegrationType;
 pub use common_exchange::ExchangeID;
 use std::fmt::Display;
 
@@ -87,19 +87,6 @@ impl IntegrationConfig {
 
     pub fn set_offline(&mut self) {
         self.online = false;
-    }
-}
-
-impl IntegrationConfig {
-    pub fn exchange_data_integration_id(&self) -> Option<ExchangeDataIntegrationID> {
-        if self.ims_integration_type == ImsIntegrationType::Data {
-            match self.exchange_id {
-                ExchangeID::Binance => Some(ExchangeDataIntegrationID::BinanceSpotData),
-                _ => Some(ExchangeDataIntegrationID::NullVal),
-            }
-        } else {
-            None
-        }
     }
 }
 

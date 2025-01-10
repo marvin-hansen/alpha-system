@@ -24,9 +24,7 @@ pub async fn start(
     iggy_config: &IggyConfig,
     cfg_manager: CfgManager,
 ) -> Result<(), Box<dyn std::error::Error>> {
-    let data_integration = integration_config
-        .exchange_data_integration_id()
-        .expect("Failed to get data integration id");
+    let data_integration = integration_config.integration_id();
     let svc_name = &format!("IMS {data_integration} Service");
     let dbg_print = |msg: &str| {
         if dbg {
