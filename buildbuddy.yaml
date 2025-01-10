@@ -24,5 +24,5 @@ actions:
       - "run   -c opt //:push --config=remote"
     resource_requests:
       cpu: 4  # Default plus one
-      memory: "8GB" # Default
+      memory: "12GB" # Default plus 4
       disk: "40GB"  # 2xDefault
