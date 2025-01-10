@@ -6,7 +6,7 @@ use rust_decimal::Decimal;
 fn test_order_new_single_with_expiry() {
     let expiry_time = 1639123200;
     let order = OrderCreate::new(
-        ExchangeID::Binance,
+        ExchangeID::BinanceSpot,
         1, // client_order_id
         "cl_ord_id".into(),
         "ETHUSD".into(),
@@ -28,7 +28,7 @@ fn test_order_new_single_with_expiry() {
 #[test]
 fn test_order_new_single_display() {
     let order = OrderCreate::new(
-        ExchangeID::Binance,
+        ExchangeID::BinanceSpot,
         1, // client_order_id
         "cl_ord_id".into(),
         "BTCUSD".into(),
@@ -53,7 +53,7 @@ fn test_order_new_single_display() {
 #[test]
 fn test_order_new_single_clone_and_eq() {
     let original = OrderCreate::new(
-        ExchangeID::Binance,
+        ExchangeID::BinanceSpot,
         1, // client_order_id
         "ord_id".into(),
         "BTCUSD".into(),
@@ -87,7 +87,7 @@ fn test_order_new_single_clone_and_eq() {
 #[test]
 fn test_order_new_single_with_different_exchanges() {
     let binance_order = OrderCreate::new(
-        ExchangeID::Binance,
+        ExchangeID::BinanceSpot,
         1,
         "cl_ord_id".into(), // client_order_id
         "BTCUSD".into(),
@@ -113,6 +113,6 @@ fn test_order_new_single_with_different_exchanges() {
     );
 
     assert_ne!(binance_order, kraken_order);
-    assert_eq!(binance_order.exchange_id(), ExchangeID::Binance);
+    assert_eq!(binance_order.exchange_id(), ExchangeID::BinanceSpot);
     assert_eq!(kraken_order.exchange_id(), ExchangeID::Kraken);
 }

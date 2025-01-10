@@ -7,7 +7,7 @@ use rust_decimal::Decimal;
 
 #[test]
 fn test_order_update_new() {
-    let exchange_id = ExchangeID::Binance;
+    let exchange_id = ExchangeID::BinanceSpot;
     let client_id = 1;
     let client_order_id = "cl_ord_id".into();
     let exchange_order_id = "exchange_order_id".into();
@@ -61,7 +61,7 @@ fn test_order_update_new() {
 #[test]
 fn test_order_update_clone_and_eq() {
     let original = OrderUpdate::new(
-        ExchangeID::Binance,
+        ExchangeID::BinanceSpot,
         1,
         "cl_ord_id".into(),
         "exchange_order_id".into(),
@@ -96,7 +96,7 @@ fn test_order_update_clone_and_eq() {
 #[test]
 fn test_order_update_display() {
     let order_update = OrderUpdate::new(
-        ExchangeID::Binance,
+        ExchangeID::BinanceSpot,
         1,
         "cl_ord_id".into(),
         "exchange_order_id".into(),

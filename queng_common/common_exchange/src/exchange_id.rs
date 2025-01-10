@@ -8,7 +8,12 @@ pub enum ExchangeID {
     Kraken = 1_u8,
     COINBASE = 2_u8,
     VEX = 3_u8,
-    Binance = 4_u8,
+    BinanceSpot = 4_u8,
+    BinanceSpotTestnet = 5_u8,
+    BinanceCoinMarginFuture = 6_u8,
+    BinanceCoinMarginFutureTestnet = 7_u8,
+    BinanceUsdMarginFuture = 8_u8,
+    BinanceUsdMarginFutureTestnet = 9_u8,
 }
 
 // Convert an ExchangeID to an i32
@@ -44,7 +49,12 @@ impl From<u8> for ExchangeID {
             1 => Self::Kraken,
             2 => Self::COINBASE,
             3 => Self::VEX,
-            4 => Self::Binance,
+            4 => Self::BinanceSpot,
+            5 => Self::BinanceSpotTestnet,
+            6 => Self::BinanceCoinMarginFuture,
+            7 => Self::BinanceCoinMarginFutureTestnet,
+            8 => Self::BinanceUsdMarginFuture,
+            9 => Self::BinanceUsdMarginFutureTestnet,
             _ => Self::NullVal,
         }
     }
@@ -59,7 +69,12 @@ impl From<u16> for ExchangeID {
             0x1_u16 => Self::Kraken,
             0x2_u16 => Self::COINBASE,
             0x3_u16 => Self::VEX,
-            0x4_u16 => Self::Binance,
+            4_u16 => Self::BinanceSpot,
+            5_u16 => Self::BinanceSpotTestnet,
+            6_u16 => Self::BinanceCoinMarginFuture,
+            7_u16 => Self::BinanceCoinMarginFutureTestnet,
+            8_u16 => Self::BinanceUsdMarginFuture,
+            9_u16 => Self::BinanceUsdMarginFutureTestnet,
             _ => Self::NullVal,
         }
     }
@@ -74,7 +89,12 @@ impl From<u32> for ExchangeID {
             0x1_u32 => Self::Kraken,
             0x2_u32 => Self::COINBASE,
             0x3_u32 => Self::VEX,
-            0x4_u32 => Self::Binance,
+            0x4_u32 => Self::BinanceSpot,
+            0x5_u32 => Self::BinanceSpotTestnet,
+            0x6_u32 => Self::BinanceCoinMarginFuture,
+            0x7_u32 => Self::BinanceCoinMarginFutureTestnet,
+            0x8_u32 => Self::BinanceUsdMarginFuture,
+            0x9_u32 => Self::BinanceUsdMarginFutureTestnet,
             _ => Self::NullVal,
         }
     }
@@ -89,7 +109,12 @@ impl From<i32> for ExchangeID {
             0x1_i32 => Self::Kraken,
             0x2_i32 => Self::COINBASE,
             0x3_i32 => Self::VEX,
-            0x4_i32 => Self::Binance,
+            0x4_i32 => Self::BinanceSpot,
+            0x5_i32 => Self::BinanceSpotTestnet,
+            0x6_i32 => Self::BinanceCoinMarginFuture,
+            0x7_i32 => Self::BinanceCoinMarginFutureTestnet,
+            0x8_i32 => Self::BinanceUsdMarginFuture,
+            0x9_i32 => Self::BinanceUsdMarginFutureTestnet,
             _ => Self::NullVal,
         }
     }

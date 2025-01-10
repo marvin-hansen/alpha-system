@@ -7,7 +7,7 @@ fn test_order_cancel_extension() {
     // Full encoding / decoding test suite is in
     // queng_sbe/sbe_messages_order/tests/order_cancel
     let order_cancel = OrderCancel::new(
-        ExchangeID::Binance,
+        ExchangeID::BinanceSpot,
         1,
         ClientOrderID::from("clt_ord_id"),
         ExchangeOrderID::from("exchange_order_id"),

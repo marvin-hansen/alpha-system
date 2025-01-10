@@ -3,26 +3,29 @@ use common_ims::IntegrationMessageConfig;
 
 #[test]
 fn test_new_config_name_format() {
-    let exchange_id = ExchangeID::Binance;
+    let exchange_id = ExchangeID::BinanceSpot;
     let id = 123;
     let version = 1;
     let config = IntegrationMessageConfig::new(id, version, exchange_id);
 
-    assert_eq!(config.name(), "Binance-integration-123");
+    assert_eq!(config.name(), "BinanceSpot-integration-123");
 }
 
 #[test]
 fn test_channel_name_generation() {
     let version = 1;
 
-    let config = IntegrationMessageConfig::new(1, version, ExchangeID::Binance);
+    let config = IntegrationMessageConfig::new(1, version, ExchangeID::BinanceSpot);
 
-    assert_eq!(config.control_channel(), "Binance-integration-1-control");
-    assert_eq!(config.data_channel(), "Binance-integration-1-data");
-    assert_eq!(config.error_channel(), "Binance-integration-1-error");
+    assert_eq!(
+        config.control_channel(),
+        "BinanceSpot-integration-1-control"
+    );
+    assert_eq!(config.data_channel(), "BinanceSpot-integration-1-data");
+    assert_eq!(config.error_channel(), "BinanceSpot-integration-1-error");
     assert_eq!(
         config.execution_channel(),
-        "Binance-integration-1-execution"
+        "BinanceSpot-integration-1-execution"
     );
 }
 

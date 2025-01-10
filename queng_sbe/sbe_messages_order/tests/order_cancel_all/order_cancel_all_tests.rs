@@ -4,7 +4,7 @@ use sbe_messages_order::{decode_order_cancel_all_message, encode_order_cancel_al
 
 #[test]
 fn test_encode_order_cancel_all_message() {
-    let cancel_all = OrderCancelAll::new(ExchangeID::Binance, 1);
+    let cancel_all = OrderCancelAll::new(ExchangeID::BinanceSpot, 1);
 
     let result = encode_order_cancel_all_message(cancel_all);
     assert!(result.is_ok());
@@ -23,6 +23,6 @@ fn test_decode_order_cancel_all_message() {
     let encoded: [u8; 13] = [5, 0, 148, 1, 1, 0, 1, 0, 148, 1, 4, 1, 0];
 
     let cancel_all = decode_order_cancel_all_message(&encoded).expect("Failed to decode");
-    assert_eq!(cancel_all.exchange_id(), ExchangeID::Binance);
+    assert_eq!(cancel_all.exchange_id(), ExchangeID::BinanceSpot);
     assert_eq!(cancel_all.client_id(), 1);
 }

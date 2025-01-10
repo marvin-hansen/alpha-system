@@ -310,12 +310,23 @@ alias(
     actual = "//queng_infra/postgres/postgres_migrations",
 )
 
+
 ###############################################################################
 # Integration
 ###############################################################################
 
 # Data Integration
 ##################
+
+alias(
+    name = "binance_coin_futures_data_integration",
+    actual = "//queng_integration/data/binance_coin_futures_data_integration",
+)
+
+alias(
+    name = "binance_coin_futures_testnet_data_integration",
+    actual = "//queng_integration/data/binance_coin_futures_testnet_data_integration",
+)
 
 alias(
     name = "binance_core_data_integration",
@@ -328,18 +339,18 @@ alias(
 )
 
 alias(
+    name = "binance_spot_testnet_data_integration",
+    actual = "//queng_integration/data/binance_spot_testnet_data_integration",
+)
+
+alias(
     name = "binance_usd_futures_data_integration",
     actual = "//queng_integration/data/binance_usd_futures_data_integration",
 )
 
 alias(
-    name = "binance_coin_futures_data_integration",
-    actual = "//queng_integration/data/binance_coin_futures_data_integration",
-)
-
-alias(
-    name = "vex_data_integration",
-    actual = "//queng_integration/data/vex_data_integration",
+    name = "binance_usd_futures_testnet_data_integration",
+    actual = "//queng_integration/data/binance_usd_futures_testnet_data_integration",
 )
 
 # Traits

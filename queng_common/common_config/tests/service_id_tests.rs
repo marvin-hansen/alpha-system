@@ -15,8 +15,8 @@ fn test_from_i32() {
     assert_eq!(ServiceID::from(0x4_i32), ServiceID::QDGW);
     assert_eq!(ServiceID::from(0x5_i32), ServiceID::MDDB);
     assert_eq!(ServiceID::from(0x6_i32), ServiceID::VEX);
-    assert_eq!(ServiceID::from(0x7_i32), ServiceID::ImsDataBinance);
-    assert_eq!(ServiceID::from(0x8_i32), ServiceID::KaikoProxy);
+    assert_eq!(ServiceID::from(0x7_i32), ServiceID::ImsData);
+    assert_eq!(ServiceID::from(0x8_i32), ServiceID::ImsExec);
 }
 
 #[test]
@@ -28,8 +28,8 @@ fn test_from_u8() {
     assert_eq!(ServiceID::from(4), ServiceID::QDGW);
     assert_eq!(ServiceID::from(5), ServiceID::MDDB);
     assert_eq!(ServiceID::from(6), ServiceID::VEX);
-    assert_eq!(ServiceID::from(7), ServiceID::ImsDataBinance);
-    assert_eq!(ServiceID::from(8), ServiceID::KaikoProxy);
+    assert_eq!(ServiceID::from(7), ServiceID::ImsData);
+    assert_eq!(ServiceID::from(8), ServiceID::ImsExec);
 }
 
 #[test]
@@ -41,10 +41,8 @@ fn test_from_string() {
     assert_eq!(ServiceID::from_string("QDGW"), Some(ServiceID::QDGW));
     assert_eq!(ServiceID::from_string("MDDB"), Some(ServiceID::MDDB));
     assert_eq!(ServiceID::from_string("VEX"), Some(ServiceID::VEX));
-    assert_eq!(
-        ServiceID::from_string("ImsDataBinance"),
-        Some(ServiceID::ImsDataBinance)
-    );
+    assert_eq!(ServiceID::from_string("ImsData"), Some(ServiceID::ImsData));
+    assert_eq!(ServiceID::from_string("ImsExec"), Some(ServiceID::ImsExec));
     assert_eq!(
         ServiceID::from_string("KaikoProxy"),
         Some(ServiceID::KaikoProxy)
@@ -78,8 +76,8 @@ fn test_debug() {
     let e = ServiceID::VEX;
     assert_eq!(format!("{e:?}"), "VEX");
 
-    let e = ServiceID::ImsDataBinance;
-    assert_eq!(format!("{e:?}"), "ImsDataBinance");
+    let e = ServiceID::ImsData;
+    assert_eq!(format!("{e:?}"), "ImsData");
 
     let e = ServiceID::KaikoProxy;
     assert_eq!(format!("{e:?}"), "KaikoProxy");

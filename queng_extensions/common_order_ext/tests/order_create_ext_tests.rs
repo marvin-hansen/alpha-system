@@ -8,7 +8,7 @@ use rust_decimal::Decimal;
 #[test]
 fn test_order_create_extension() {
     let order = OrderCreate::new(
-        ExchangeID::Binance,
+        ExchangeID::BinanceSpot,
         1, // client_order_id
         ClientOrderID::new("cl_ord_id"),
         OrderExchangeSymbol::new("BTCUSD"),

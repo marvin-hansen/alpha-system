@@ -9,7 +9,7 @@ use sbe_messages_order::{decode_order_update_message, encode_order_update_messag
 #[test]
 fn test_encode_order_update_message() {
     let order_update = OrderUpdate::new(
-        ExchangeID::Binance,
+        ExchangeID::BinanceSpot,
         1,
         "cl_ord_id".into(),
         "exchange_order_id".into(),
@@ -52,7 +52,7 @@ fn test_decode_order_update_message() {
     assert!(result.is_ok());
 
     let order_update = result.unwrap();
-    assert_eq!(order_update.exchange_id(), ExchangeID::Binance);
+    assert_eq!(order_update.exchange_id(), ExchangeID::BinanceSpot);
     assert_eq!(order_update.client_id(), 1);
     assert_eq!(
         order_update.client_order_id(),

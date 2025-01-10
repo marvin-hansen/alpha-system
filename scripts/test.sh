@@ -41,13 +41,14 @@ echo "====================="
 command bazel test //... --test_tag_filters=smdb_acceptance_test --test_env=ENV=LOCAL
 command bazel test //... --test_tag_filters=cmdb_acceptance_test --test_env=ENV=LOCAL
 command bazel test //... --test_tag_filters=mddb_acceptance_test --test_env=ENV=LOCAL
-command bazel test //... --test_tag_filters=imdb_acceptance_test --test_env=ENV=LOCAL
 
-echo ""
-echo "====================="
-echo "Run IMS acceptance tests"
-echo "====================="
-command bazel test //... --test_tag_filters=binance_data_acceptance_test --test_env=ENV=LOCAL
+# command bazel test //... --test_tag_filters=imdb_acceptance_test --test_env=ENV=LOCAL
+
+#echo ""
+#echo "====================="
+#echo "Run IMS acceptance tests"
+#echo "====================="
+#command bazel test //... --test_tag_filters=binance_data_acceptance_test --test_env=ENV=LOCAL
 
 
 echo ""

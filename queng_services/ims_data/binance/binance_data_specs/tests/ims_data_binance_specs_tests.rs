@@ -6,7 +6,7 @@ fn test_ims_data_binance_config() {
     let service_config = ims_data_binance_config();
 
     // Test all the accessors for the ServiceConfig struct
-    assert_eq!(service_config.svc_id(), &ServiceID::ImsDataBinance);
+    assert_eq!(service_config.svc_id(), &ServiceID::ImsData);
     assert_eq!(service_config.name(), "ims-service-Binance");
     assert_eq!(service_config.version(), 1);
     assert!(!service_config.online());

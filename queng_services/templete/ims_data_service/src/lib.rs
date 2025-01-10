@@ -8,6 +8,7 @@ use imdb_client::IMDBClient;
 use imdb_client::ImdbClientTrait;
 use smdb_client::SMDBClient;
 use tokio::time::Instant;
+use trait_data_integration::ImsDataIntegration;
 
 mod auth;
 mod data;
@@ -18,12 +19,16 @@ mod service;
 mod shutdown;
 mod utils;
 
-pub async fn start(
+pub async fn start<Integration>(
     dbg: bool,
+    ims_integration: Integration,
     integration_config: &IntegrationConfig,
     iggy_config: &IggyConfig,
     cfg_manager: CfgManager,
-) -> Result<(), Box<dyn std::error::Error>> {
+) -> Result<(), Box<dyn std::error::Error>>
+where
+    Integration: ImsDataIntegration,
+{
     let data_integration = integration_config.integration_id();
     let svc_name = &format!("IMS {data_integration} Service");
     let dbg_print = |msg: &str| {

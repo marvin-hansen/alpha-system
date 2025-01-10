@@ -3,12 +3,12 @@ use common_ims::{ImsIntegrationType, IntegrationConfig, IntegrationMessageConfig
 
 #[test]
 fn test_new_integration_config_online_default() {
-    let msg_config = IntegrationMessageConfig::new(1, 1, ExchangeID::Binance);
+    let msg_config = IntegrationMessageConfig::new(1, 1, ExchangeID::BinanceSpot);
     let config = IntegrationConfig::new(
         "test-integration".to_string(),
         1,
         ImsIntegrationType::Data,
-        ExchangeID::Binance,
+        ExchangeID::BinanceSpot,
         msg_config,
     );
 
@@ -17,12 +17,12 @@ fn test_new_integration_config_online_default() {
 
 #[test]
 fn test_integration_config_display() {
-    let msg_config = IntegrationMessageConfig::new(1, 1, ExchangeID::Binance);
+    let msg_config = IntegrationMessageConfig::new(1, 1, ExchangeID::BinanceSpot);
     let config = IntegrationConfig::new(
         "test-integration".to_string(),
         1,
         ImsIntegrationType::Data,
-        ExchangeID::Binance,
+        ExchangeID::BinanceSpot,
         msg_config,
     );
 

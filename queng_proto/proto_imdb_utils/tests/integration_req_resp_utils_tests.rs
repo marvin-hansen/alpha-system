@@ -104,7 +104,7 @@ fn test_get_integration_request_with_empty_id() {
 
 #[test]
 fn test_get_all_integrations_by_exchange_request_with_valid_exchange_id() {
-    let exchange_id = ExchangeID::Binance;
+    let exchange_id = ExchangeID::BinanceSpot;
     let request = get_all_integrations_by_exchange_request(exchange_id);
     assert_eq!(request.exchange_id, exchange_id as i32);
 }
@@ -185,8 +185,8 @@ fn create_valid_integration_config() -> IntegrationConfig {
         "valid_integration_id".to_string(),
         1,
         ImsIntegrationType::Data,
-        ExchangeID::Binance,
-        IntegrationMessageConfig::new(100, 12, ExchangeID::Binance),
+        ExchangeID::BinanceSpot,
+        IntegrationMessageConfig::new(100, 12, ExchangeID::BinanceSpot),
     )
 }
 

@@ -56,8 +56,8 @@ async fn test_create_integration_config_success() {
         "test-id".to_string(),
         1,
         ImsIntegrationType::Data,
-        ExchangeID::Binance,
-        IntegrationMessageConfig::new(1, 1, ExchangeID::Binance),
+        ExchangeID::BinanceSpot,
+        IntegrationMessageConfig::new(1, 1, ExchangeID::BinanceSpot),
     );
 
     let result = IntegrationConfig::create(conn, &config);
@@ -67,7 +67,7 @@ async fn test_create_integration_config_success() {
     let result = result.unwrap();
     assert_eq!(result.integration_id(), "test-id".to_string());
     assert_eq!(result.ims_integration_type(), ImsIntegrationType::Data);
-    assert_eq!(result.exchange_id(), ExchangeID::Binance);
+    assert_eq!(result.exchange_id(), ExchangeID::BinanceSpot);
 }
 #[tokio::test]
 async fn test_insert_integration_config_collection() {
@@ -88,8 +88,8 @@ async fn test_insert_integration_config_collection() {
             "test-id-1".to_string(),
             1,
             ImsIntegrationType::Data,
-            ExchangeID::Binance,
-            IntegrationMessageConfig::new(1, 1, ExchangeID::Binance),
+            ExchangeID::BinanceSpot,
+            IntegrationMessageConfig::new(1, 1, ExchangeID::BinanceSpot),
         ),
         CommonIntegrationConfig::new(
             "test-id-2".to_string(),
@@ -152,8 +152,8 @@ async fn test_count_integration_config() {
         "test-id".to_string(),
         1,
         ImsIntegrationType::Data,
-        ExchangeID::Binance,
-        IntegrationMessageConfig::new(1, 1, ExchangeID::Binance),
+        ExchangeID::BinanceSpot,
+        IntegrationMessageConfig::new(1, 1, ExchangeID::BinanceSpot),
     );
 
     let result = IntegrationConfig::create(conn, &config);
@@ -200,8 +200,8 @@ async fn test_check_if_integration_config_online() {
         "online-config".to_string(),
         1,
         ImsIntegrationType::Data,
-        ExchangeID::Binance,
-        IntegrationMessageConfig::new(1, 1, ExchangeID::Binance),
+        ExchangeID::BinanceSpot,
+        IntegrationMessageConfig::new(1, 1, ExchangeID::BinanceSpot),
     );
     online_config.set_online();
 
@@ -251,8 +251,8 @@ async fn test_get_integration_config() {
         "test-integration".to_string(),
         1,
         ImsIntegrationType::Data,
-        ExchangeID::Binance,
-        IntegrationMessageConfig::new(1, 1, ExchangeID::Binance),
+        ExchangeID::BinanceSpot,
+        IntegrationMessageConfig::new(1, 1, ExchangeID::BinanceSpot),
     );
 
     // Insert config
@@ -313,8 +313,8 @@ async fn test_get_all_integration_configs() {
             "config-1".to_string(),
             1,
             ImsIntegrationType::Data,
-            ExchangeID::Binance,
-            IntegrationMessageConfig::new(1, 1, ExchangeID::Binance),
+            ExchangeID::BinanceSpot,
+            IntegrationMessageConfig::new(1, 1, ExchangeID::BinanceSpot),
         ),
         CommonIntegrationConfig::new(
             "config-2".to_string(),
@@ -327,8 +327,8 @@ async fn test_get_all_integration_configs() {
             "config-3".to_string(),
             3,
             ImsIntegrationType::Data,
-            ExchangeID::Binance,
-            IntegrationMessageConfig::new(3, 1, ExchangeID::Binance),
+            ExchangeID::BinanceSpot,
+            IntegrationMessageConfig::new(3, 1, ExchangeID::BinanceSpot),
         ),
     ];
 
@@ -376,8 +376,8 @@ async fn test_get_configs_for_valid_exchange() {
             "config-1".to_string(),
             1,
             ImsIntegrationType::Data,
-            ExchangeID::Binance,
-            IntegrationMessageConfig::new(1, 1, ExchangeID::Binance),
+            ExchangeID::BinanceSpot,
+            IntegrationMessageConfig::new(1, 1, ExchangeID::BinanceSpot),
         ),
         CommonIntegrationConfig::new(
             "config-2".to_string(),
@@ -390,8 +390,8 @@ async fn test_get_configs_for_valid_exchange() {
             "config-3".to_string(),
             3,
             ImsIntegrationType::Data,
-            ExchangeID::Binance,
-            IntegrationMessageConfig::new(3, 1, ExchangeID::Binance),
+            ExchangeID::BinanceSpot,
+            IntegrationMessageConfig::new(3, 1, ExchangeID::BinanceSpot),
         ),
     ];
 
@@ -402,7 +402,7 @@ async fn test_get_configs_for_valid_exchange() {
     let stored_configs = IntegrationConfig::get_all_integration_configs(conn).unwrap();
     assert_eq!(stored_configs.len(), 3);
 
-    let param_exchange_id = ExchangeID::Binance as i32;
+    let param_exchange_id = ExchangeID::BinanceSpot as i32;
     let results =
         IntegrationConfig::get_all_integration_configs_by_exchange(conn, param_exchange_id);
 
@@ -431,8 +431,8 @@ async fn test_get_all_online_integration_configs() {
         "online-1".to_string(),
         1,
         ImsIntegrationType::Data,
-        ExchangeID::Binance,
-        IntegrationMessageConfig::new(1, 1, ExchangeID::Binance),
+        ExchangeID::BinanceSpot,
+        IntegrationMessageConfig::new(1, 1, ExchangeID::BinanceSpot),
     );
     online_config1.set_online();
 
@@ -449,8 +449,8 @@ async fn test_get_all_online_integration_configs() {
         "offline-1".to_string(),
         3,
         ImsIntegrationType::Data,
-        ExchangeID::Binance,
-        IntegrationMessageConfig::new(3, 1, ExchangeID::Binance),
+        ExchangeID::BinanceSpot,
+        IntegrationMessageConfig::new(3, 1, ExchangeID::BinanceSpot),
     );
 
     // Insert configs
@@ -493,8 +493,8 @@ async fn test_get_all_online_integration_configs_empty() {
         "offline-1".to_string(),
         1,
         ImsIntegrationType::Data,
-        ExchangeID::Binance,
-        IntegrationMessageConfig::new(1, 1, ExchangeID::Binance),
+        ExchangeID::BinanceSpot,
+        IntegrationMessageConfig::new(1, 1, ExchangeID::BinanceSpot),
     );
 
     IntegrationConfig::create(conn, &offline_config).unwrap();
@@ -524,8 +524,8 @@ async fn test_get_all_offline_integration_configs() {
         "online-1".to_string(),
         1,
         ImsIntegrationType::Data,
-        ExchangeID::Binance,
-        IntegrationMessageConfig::new(1, 1, ExchangeID::Binance),
+        ExchangeID::BinanceSpot,
+        IntegrationMessageConfig::new(1, 1, ExchangeID::BinanceSpot),
     );
     online_config.set_online();
 
@@ -541,8 +541,8 @@ async fn test_get_all_offline_integration_configs() {
         "offline-2".to_string(),
         3,
         ImsIntegrationType::Data,
-        ExchangeID::Binance,
-        IntegrationMessageConfig::new(3, 1, ExchangeID::Binance),
+        ExchangeID::BinanceSpot,
+        IntegrationMessageConfig::new(3, 1, ExchangeID::BinanceSpot),
     );
 
     // Insert configs
@@ -583,8 +583,8 @@ async fn test_get_all_offline_integration_configs_empty() {
         "online-1".to_string(),
         1,
         ImsIntegrationType::Data,
-        ExchangeID::Binance,
-        IntegrationMessageConfig::new(1, 1, ExchangeID::Binance),
+        ExchangeID::BinanceSpot,
+        IntegrationMessageConfig::new(1, 1, ExchangeID::BinanceSpot),
     );
     online_config.set_online();
 
@@ -611,8 +611,8 @@ async fn test_update_integration_config() {
         "test-integration".to_string(),
         1,
         ImsIntegrationType::Data,
-        ExchangeID::Binance,
-        IntegrationMessageConfig::new(1, 1, ExchangeID::Binance),
+        ExchangeID::BinanceSpot,
+        IntegrationMessageConfig::new(1, 1, ExchangeID::BinanceSpot),
     );
     initial_config.set_online();
 
@@ -667,8 +667,8 @@ async fn test_update_integration_config_not_found() {
         "nonexistent".to_string(),
         1,
         ImsIntegrationType::Data,
-        ExchangeID::Binance,
-        IntegrationMessageConfig::new(1, 1, ExchangeID::Binance),
+        ExchangeID::BinanceSpot,
+        IntegrationMessageConfig::new(1, 1, ExchangeID::BinanceSpot),
     );
 
     let result = IntegrationConfig::update_integration_config(conn, config);
@@ -693,8 +693,8 @@ async fn test_update_integration_config_partial() {
         "test-partial".to_string(),
         1,
         ImsIntegrationType::Data,
-        ExchangeID::Binance,
-        IntegrationMessageConfig::new(1, 1, ExchangeID::Binance),
+        ExchangeID::BinanceSpot,
+        IntegrationMessageConfig::new(1, 1, ExchangeID::BinanceSpot),
     );
 
     IntegrationConfig::create(conn, &initial_config).unwrap();
@@ -733,8 +733,8 @@ async fn test_delete_integration_config() {
         "test-delete".to_string(),
         1,
         ImsIntegrationType::Data,
-        ExchangeID::Binance,
-        IntegrationMessageConfig::new(1, 1, ExchangeID::Binance),
+        ExchangeID::BinanceSpot,
+        IntegrationMessageConfig::new(1, 1, ExchangeID::BinanceSpot),
     );
 
     IntegrationConfig::create(conn, &config).unwrap();
@@ -788,8 +788,8 @@ async fn test_delete_multiple_integration_configs() {
             "config-1".to_string(),
             1,
             ImsIntegrationType::Data,
-            ExchangeID::Binance,
-            IntegrationMessageConfig::new(1, 1, ExchangeID::Binance),
+            ExchangeID::BinanceSpot,
+            IntegrationMessageConfig::new(1, 1, ExchangeID::BinanceSpot),
         ),
         CommonIntegrationConfig::new(
             "config-2".to_string(),

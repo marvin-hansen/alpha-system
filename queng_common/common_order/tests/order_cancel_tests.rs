@@ -4,7 +4,7 @@ use common_order::OrderCancel;
 #[test]
 fn test_order_cancel_single_display() {
     let cancel_order = OrderCancel::new(
-        ExchangeID::Binance,
+        ExchangeID::BinanceSpot,
         1,
         "cl_ord_id".into(),
         "exchange_order_id".into(),
@@ -19,7 +19,7 @@ fn test_order_cancel_single_display() {
 #[test]
 fn test_order_cancel_single_debug() {
     let cancel_order = OrderCancel::new(
-        ExchangeID::Binance,
+        ExchangeID::BinanceSpot,
         1,
         "cl_ord_id".into(),
         "exchange_order_id".into(),
@@ -34,7 +34,7 @@ fn test_order_cancel_single_debug() {
 #[test]
 fn test_order_cancel_single_clone_and_eq() {
     let original = OrderCancel::new(
-        ExchangeID::Binance,
+        ExchangeID::BinanceSpot,
         1,
         "cl_ord_id".into(),
         "exchange_order_id".into(),
@@ -44,7 +44,7 @@ fn test_order_cancel_single_clone_and_eq() {
     assert_eq!(original, cloned);
 
     let different = OrderCancel::new(
-        ExchangeID::Binance,
+        ExchangeID::BinanceSpot,
         42,
         "cl_ord_id".into(),
         "exchange_order_id".into(),
@@ -55,7 +55,7 @@ fn test_order_cancel_single_clone_and_eq() {
 #[test]
 fn test_order_cancel_single_with_different_exchanges() {
     let binance_cancel = OrderCancel::new(
-        ExchangeID::Binance,
+        ExchangeID::BinanceSpot,
         1,
         "cl_ord_id".into(),
         "binance_order_id".into(),
@@ -67,7 +67,7 @@ fn test_order_cancel_single_with_different_exchanges() {
         "dif_ord_id".into(),
         "kraken_order_id".into(),
     );
-    assert_eq!(binance_cancel.exchange_id(), ExchangeID::Binance);
+    assert_eq!(binance_cancel.exchange_id(), ExchangeID::BinanceSpot);
     assert_ne!(binance_cancel, kraken_cancel);
 
     assert_eq!(kraken_cancel.exchange_id(), ExchangeID::Kraken);

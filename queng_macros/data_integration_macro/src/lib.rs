@@ -1,83 +1,133 @@
+//! Procedural macros for implementing IMS data integration traits.
+//!
+//! This crate provides derive macros that automatically implement data integration
+//! traits for structs containing an IMS integration field.
+
 use proc_macro::TokenStream;
 use quote::quote;
 use syn::{parse_macro_input, DeriveInput};
 
-/// A derive macro that implements the DataIntegrationTrait for a struct.
+/// Automatically implements IMS data integration traits for a struct.
 ///
-/// The struct must have two fields:
-/// - `integration_id: ExchangeDataIntegrationID`
-/// - `integration: ImsBinanceSpotDataIntegration`
+/// This derive macro generates implementations for the following traits:
+/// - `ImsDataIntegration`
+/// - `ImsSymbolIntegration`
+/// - `ImsTradeDataIntegration`
+/// - `ImsOhlcvDataIntegration`
+///
+/// # Requirements
+///
+/// The struct must have a field named `integration` of type `ImsBinanceDataIntegration`.
+/// All trait method implementations will delegate to this field.
 ///
 /// # Example
-/// ```text
-/// use data_integration_macro::DataIntegration;
 ///
-/// #[derive(DataIntegration)]
-/// pub struct BinanceSpotDataIntegration {
-///     // The struct must have the fields below to work
-///     integration_id: ExchangeDataIntegrationID,
-///     integration: ImsBinanceSpotDataIntegration,
+/// ```text
+/// use data_integration_macro::ImsDataIntegration;
+///
+/// #[derive(ImsDataIntegration)]
+/// pub struct ImsBinanceSpotDataIntegration {
+///     integration: ImsBinanceDataIntegration,
 /// }
 /// ```
 ///
-#[proc_macro_derive(DataIntegration)]
-pub fn derive_data_integration(input: TokenStream) -> TokenStream {
+/// This will generate implementations for all required traits, with methods
+/// delegating to the corresponding methods on the `integration` field.
+///
+/// # Generated Implementations
+///
+/// The macro generates the following trait implementations:
+///
+/// ```text
+/// impl ImsDataIntegration for ImsBinanceSpotDataIntegration {}
+///
+/// impl ImsSymbolIntegration for ImsBinanceSpotDataIntegration {
+///     // Methods delegating to self.integration
+/// }
+///
+/// impl ImsTradeDataIntegration for ImsBinanceSpotDataIntegration {
+///     // Methods delegating to self.integration
+/// }
+///
+/// impl ImsOhlcvDataIntegration for ImsBinanceSpotDataIntegration {
+///     // Methods delegating to self.integration
+/// }
+/// ```
+#[proc_macro_derive(ImsDataIntegrationImpl)]
+pub fn ims_data_integration(input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as DeriveInput);
     let name = &input.ident;
 
     let expanded = quote! {
-        impl DataIntegrationTrait for #name {
-            async fn id(&self) -> Result<String, Error> {
-                Ok(self.integration_id.to_string())
+
+        impl ImsDataIntegration for #name {}
+
+        impl ImsSymbolIntegration for #name {
+            fn get_exchange_symbols(
+                &self,
+            ) -> impl Future<Output = Result<HashSet<String>, MessageProcessingError>> + Send {
+                self.integration.get_exchange_symbols()
             }
 
-            async fn start_trade_data<P>(
+            fn validate_symbols(
+                &self,
+                symbols: &[String],
+            ) -> impl Future<Output = Result<bool, MessageProcessingError>> + Send {
+                self.integration.validate_symbols(symbols)
+            }
+        }
+
+        impl ImsTradeDataIntegration for #name {
+            fn start_trade_data<P>(
                 &self,
                 symbols: &[String],
                 processor: Arc<P>,
-            ) -> Result<(), MessageProcessingError>
+            ) -> impl Future<Output = Result<(), MessageProcessingError>> + Send
             where
                 P: EventProcessor + Send + Sync + 'static,
             {
-                self.integration.start_trade_data(symbols, processor).await
+                self.integration.start_trade_data(symbols, processor)
             }
 
-            async fn stop_trade_data(&self, symbols: &[String]) -> Result<(), MessageProcessingError> {
-                self.integration.stop_trade_data(symbols).await
+            fn stop_trade_data(
+                &self,
+                symbols: &[String],
+            ) -> impl Future<Output = Result<(), MessageProcessingError>> + Send {
+                self.integration.stop_trade_data(symbols)
             }
 
-            async fn stop_all_trade_data(&self) -> Result<(), MessageProcessingError> {
-                self.integration.stop_all_trade_data().await
+            fn stop_all_trade_data(
+                &self,
+            ) -> impl Future<Output = Result<(), MessageProcessingError>> + Send {
+                self.integration.stop_all_trade_data()
             }
+        }
 
-            async fn start_ohlcv_data<P>(
+        impl ImsOhlcvDataIntegration for #name {
+            fn start_ohlcv_data<P>(
                 &self,
                 symbols: &[String],
                 time_resolution: TimeResolution,
                 processor: Arc<P>,
-            ) -> Result<(), MessageProcessingError>
+            ) -> impl Future<Output = Result<(), MessageProcessingError>> + Send
             where
                 P: EventProcessor + Send + Sync + 'static,
             {
                 self.integration
                     .start_ohlcv_data(symbols, time_resolution, processor)
-                    .await
             }
 
-            async fn stop_ohlcv_data(&self, symbols: &[String]) -> Result<(), MessageProcessingError> {
-                self.integration.stop_ohlcv_data(symbols).await
+            fn stop_ohlcv_data(
+                &self,
+                symbols: &[String],
+            ) -> impl Future<Output = Result<(), MessageProcessingError>> + Send {
+                self.integration.stop_ohlcv_data(symbols)
             }
 
-            async fn stop_all_ohlcv_data(&self) -> Result<(), MessageProcessingError> {
-                self.integration.stop_all_ohlcv_data().await
-            }
-
-            async fn get_exchange_symbols(&self) -> Result<HashSet<String>, MessageProcessingError> {
-                self.integration.get_exchange_symbols().await
-            }
-
-            async fn validate_symbols(&self, symbols: &[String]) -> Result<bool, MessageProcessingError> {
-                self.integration.validate_symbols(symbols).await
+            fn stop_all_ohlcv_data(
+                &self,
+            ) -> impl Future<Output = Result<(), MessageProcessingError>> + Send {
+                self.integration.stop_all_ohlcv_data()
             }
         }
     };

@@ -5,7 +5,7 @@ use rust_decimal::Decimal;
 #[test]
 fn test_order_update_extension() {
     let _order = OrderUpdate::new(
-        ExchangeID::Binance,
+        ExchangeID::BinanceSpot,
         1, // client_order_id
         "cl_ord_id".to_string().into(),
         "exchange_oder_id".into(),

@@ -1,4 +1,5 @@
-mod ims_integration;
+mod ims_api_urls;
+mod ims_symbol_integration;
 mod ohlcv_data_integration;
 mod trade_data_integration;
 mod utils;
@@ -10,6 +11,10 @@ use std::time::Duration;
 use tokio::sync::RwLock;
 use tokio::task::JoinHandle;
 use tokio::time::Instant;
+use trait_data_integration::ImsDataIntegration;
+
+// Re-export the ims_api_urls module
+pub use crate::ims_api_urls::*;
 
 /// Duration between symbol cache refreshes.
 ///
@@ -76,3 +81,7 @@ impl ImsBinanceDataIntegration {
         }
     }
 }
+
+// This is the super-trait of ImsDataIntegration. The sub-trait implementations
+// are spread across the modules in files named after the corresponding integration sub-traits.
+impl ImsDataIntegration for ImsBinanceDataIntegration {}

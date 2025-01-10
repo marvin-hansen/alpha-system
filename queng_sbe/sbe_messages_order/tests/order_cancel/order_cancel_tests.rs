@@ -5,7 +5,7 @@ use sbe_messages_order::{decode_order_cancel_message, encode_order_cancel_messag
 #[test]
 fn test_encode_order_cancel_message() {
     let cancel_order = OrderCancel::new(
-        ExchangeID::Binance,
+        ExchangeID::BinanceSpot,
         1,
         ClientOrderID::from("clt_ord_id"),
         ExchangeOrderID::from("exchange_order_id"),
@@ -36,7 +36,7 @@ fn test_decode_order_cancel_message() {
     let cancel_order = decode_order_cancel_message(encoded.as_slice());
     assert!(cancel_order.is_ok());
     let cancel_order = cancel_order.unwrap();
-    assert_eq!(cancel_order.exchange_id(), ExchangeID::Binance);
+    assert_eq!(cancel_order.exchange_id(), ExchangeID::BinanceSpot);
     assert_eq!(cancel_order.client_id(), 1);
     assert_eq!(
         cancel_order.client_order_id(),

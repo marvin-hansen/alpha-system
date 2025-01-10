@@ -1,7 +1,7 @@
 load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library")
 
 rust_library(
-    name = "binance_coin_futures_data_integration",
+    name = "binance_coin_futures_testnet_data_integration",
     srcs = glob([
         "src/**",
     ]),
@@ -11,7 +11,7 @@ rust_library(
         "//alias/macro:data_integration_macro",
     ],
     tags = [
-        "binance_coin_futures_data_integration",
+        "binance_coin_futures_testnet_data_integration",
         "data_integration",
     ],
     visibility = ["//visibility:public"],
@@ -31,14 +31,14 @@ rust_library(
 
 rust_doc(
     name = "doc",
-    crate = ":binance_coin_futures_data_integration",
+    crate = ":binance_coin_futures_testnet_data_integration",
     tags = ["doc"],
     visibility = ["//visibility:public"],
 )
 
 rust_doc_test(
     name = "doc_test",
-    crate = ":binance_coin_futures_data_integration",
+    crate = ":binance_coin_futures_testnet_data_integration",
     tags = ["doc-test"],
     visibility = ["//visibility:public"],
 )

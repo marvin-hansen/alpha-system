@@ -175,7 +175,7 @@ async fn test_imdb_integrations(client: &IMDBClient) {
     assert!(!integrations.is_empty());
 
     // Test get_all_integrations_by_exchange
-    let exchange_id = ExchangeID::Binance;
+    let exchange_id = ExchangeID::BinanceSpot;
     let res = client.get_all_integrations_by_exchange(exchange_id).await;
     assert!(res.is_ok());
 

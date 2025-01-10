@@ -11,18 +11,26 @@ use shared_service_specs::{health_endpoint, ims_endpoint, metric_endpoint};
 /// # Returns
 /// A `IntegrationConfig` instance with the specific settings for the Binance data integration in the IMS system.
 ///
-pub fn binance_ims_data_integration_config() -> IntegrationConfig {
+pub fn binance_ims_data_integration_config(exchange_id: ExchangeID) -> IntegrationConfig {
     IntegrationConfig::new(
-        "ims-data-binance".to_string(),
+        format!("{}-data", exchange_id.to_string()),
         1,
         ImsIntegrationType::Data,
-        ExchangeID::Binance,
-        IntegrationMessageConfig::new(1, 1, ExchangeID::Binance),
+        exchange_id,
+        IntegrationMessageConfig::new(1, 1, exchange_id),
     )
 }
 
-pub fn ims_data_iggy_config() -> IggyConfig {
-    IggyConfig::new(IggyUser::default(), "127.0.0.1:8090", 1, 1, 1, 1, true)
+pub fn ims_data_iggy_config(exchange_id: ExchangeID) -> IggyConfig {
+    IggyConfig::new(
+        IggyUser::default(),
+        "127.0.0.1:8090",
+        exchange_id as u32,
+        1,
+        1,
+        1,
+        true,
+    )
 }
 
 /// Configures the service for Binance data in the IMS system.
@@ -50,7 +58,7 @@ pub fn ims_data_iggy_config() -> IggyConfig {
 ///
 #[must_use]
 pub fn ims_data_binance_config() -> ServiceConfig {
-    ims_service_config("Binance", ServiceID::ImsDataBinance)
+    ims_service_config("Binance", ServiceID::ImsData)
 }
 
 fn ims_service_config(exchange_id: &str, service_id: ServiceID) -> ServiceConfig {

@@ -30,6 +30,8 @@ sbe_messages_data = {workspace = true}
 sbe_types = { workspace = true }
 sbe_utils = { workspace = true }
 smdb_client = { workspace = true }
+trait_data_integration = { workspace = true }
+
 
 # External crates
 iggy = { workspace = true }

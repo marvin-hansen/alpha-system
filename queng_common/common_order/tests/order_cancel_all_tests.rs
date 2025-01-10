@@ -4,9 +4,9 @@ use common_order::OrderCancelAll;
 #[test]
 fn test_order_cancel_all_creation() {
     let client_id = 1;
-    let exchange_id = ExchangeID::Binance;
+    let exchange_id = ExchangeID::BinanceSpot;
     let cancel_all = OrderCancelAll::new(exchange_id, client_id);
-    assert_eq!(cancel_all.exchange_id(), ExchangeID::Binance);
+    assert_eq!(cancel_all.exchange_id(), ExchangeID::BinanceSpot);
     assert_eq!(cancel_all.client_id(), 1);
 }
 
@@ -19,7 +19,7 @@ fn test_order_cancel_all_default() {
 #[test]
 fn test_order_cancel_all_display() {
     let client_id = 1;
-    let exchange_id = ExchangeID::Binance;
+    let exchange_id = ExchangeID::BinanceSpot;
     let cancel_all = OrderCancelAll::new(exchange_id, client_id);
     let display_string = cancel_all.to_string();
     assert!(display_string.contains("Binance"));
@@ -28,7 +28,7 @@ fn test_order_cancel_all_display() {
 #[test]
 fn test_order_cancel_all_debug() {
     let client_id = 1;
-    let exchange_id = ExchangeID::Binance;
+    let exchange_id = ExchangeID::BinanceSpot;
     let cancel_all = OrderCancelAll::new(exchange_id, client_id);
 
     let debug_string = format!("{:?}", cancel_all);
@@ -38,7 +38,7 @@ fn test_order_cancel_all_debug() {
 #[test]
 fn test_order_cancel_all_clone_and_eq() {
     let client_id = 1;
-    let exchange_id = ExchangeID::Binance;
+    let exchange_id = ExchangeID::BinanceSpot;
 
     let original = OrderCancelAll::new(exchange_id, client_id);
     let cloned = original.clone();

@@ -9,7 +9,7 @@ members = [
     "queng_import/*/*",
     "queng_infra/*/*",
     "queng_integration/data/*",
-    "queng_integration/traits/*", "queng_macros/data_integration_macro",
+    "queng_integration/traits/*",
     "queng_message/*",
     "queng_macros/*",
     "queng_proto/*",
@@ -111,11 +111,7 @@ service_import = { path = "queng_import/core/service_import" }
 kaiko_download = { path = "queng_import/kaiko/kaiko_download" }
 kaiko_import = { path = "queng_import/kaiko/kaiko_import" }
 kaiko_test_utils = { path = "queng_import/kaiko/kaiko_test_utils" }
-# Postgres DB
-pg_import_config = { path = "queng_import/postgres/pg_import_config" }
-pg_import_integrations = { path = "queng_import/postgres/pg_import_integrations" }
-pg_import_metadata = { path = "queng_import/postgres/pg_import_metadata" }
-pg_import_services = { path = "queng_import/postgres/pg_import_services" }
+# Utils
 pg_import_print_utils = { path = "queng_import/postgres/pg_import_print_utils" }
 
 # Infra
@@ -138,17 +134,20 @@ postgres_migrations = { path = "queng_infra/postgres/postgres_migrations" }
 
 # Integration
 # Data integration
+# Data integration
+binance_coin_futures_data_integration = { path = "queng_integration/data/binance_coin_futures_data_integration" }
+binance_coin_futures_testnet_data_integration = { path = "queng_integration/data/binance_coin_futures_testnet_data_integration" }
 binance_core_data_integration = { path = "queng_integration/data/binance_core_data_integration" }
 binance_spot_data_integration = { path = "queng_integration/data/binance_spot_data_integration" }
+binance_spot_testnet_data_integration = { path = "queng_integration/data/binance_spot_testnet_data_integration" }
 binance_usd_futures_data_integration = { path = "queng_integration/data/binance_usd_futures_data_integration" }
-binance_coin_futures_data_integration = { path = "queng_integration/data/binance_coin_futures_data_integration" }
-vex_data_integration = { path = "queng_integration/data/vex_data_integration" }
-# Traits
+binance_usd_futures_testnet_data_integration = { path = "queng_integration/data/binance_usd_futures_testnet_data_integration" }
+# Integration Traits
 trait_data_integration = { path = "queng_integration/traits/trait_data_integration" }
+
 trait_exec_integration = { path = "queng_integration/traits/trait_exec_integration" }
 
 # Macros
-binance_data_integration_macro = { path = "queng_macros/binance_data_integration_macro" }
 data_integration_macro = { path = "queng_macros/data_integration_macro" }
 
 # Mesasge bus

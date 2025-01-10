@@ -8,7 +8,7 @@ fn test_encode_order_create_message() {
     let expiry_time = 1639123200;
 
     let order = OrderCreate::new(
-        ExchangeID::Binance,
+        ExchangeID::BinanceSpot,
         1, // client_order_id
         "cl_ord_id".into(),
         "ETHUSD".into(),
@@ -48,7 +48,7 @@ fn test_decode_order_create_message() {
     assert!(order.is_ok());
 
     let order = order.unwrap();
-    assert_eq!(order.exchange_id(), ExchangeID::Binance);
+    assert_eq!(order.exchange_id(), ExchangeID::BinanceSpot);
     assert_eq!(order.client_id(), 1);
     assert_eq!(order.client_order_id().client_order_id(), "cl_ord_id");
     assert_eq!(order.symbol_id_exchange().exchange_order_id(), "ETHUSD");
