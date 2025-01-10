@@ -204,7 +204,6 @@ dbgw_specs = { path = "queng_services/core/dbgw/dbgw_specs" }
 smdb_specs = { path = "queng_services/core/smdb/smdb_specs" }
 imdb_specs = { path = "queng_services/ims/imdb/imdb_specs" }
 mddb_specs = { path = "queng_services/mds/mddb/mddb_specs" }
-binance_data_specs = { path = "queng_services/ims_data/binance/binance_data_specs" }
 ims_data_vex_specs = { path = "queng_services/ims_data/vex/ims_data_vex_specs" }
 shared_service_specs = { path = "queng_specs/service_specs/shared_service_specs" }
 service_specs_all = { path = "queng_specs/service_specs/service_specs_all" }

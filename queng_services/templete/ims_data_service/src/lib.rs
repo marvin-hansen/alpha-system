@@ -1,6 +1,6 @@
 use crate::service::Service;
-use common_ims::IggyConfig;
-use common_ims::IntegrationConfig;
+use common_config::ServiceID;
+use common_exchange::ExchangeID;
 use common_service::print_utils;
 use config_manager::CfgManager;
 use iggy::client::{Client, UserClient};
@@ -11,6 +11,7 @@ use tokio::time::Instant;
 use trait_data_integration::ImsDataIntegration;
 
 mod auth;
+mod config;
 mod data;
 mod handle;
 mod health_check;
@@ -21,22 +22,30 @@ mod utils;
 
 pub async fn start<Integration>(
     dbg: bool,
+    exchange_id: ExchangeID,
     ims_integration: Integration,
-    integration_config: &IntegrationConfig,
-    iggy_config: &IggyConfig,
-    cfg_manager: CfgManager,
 ) -> Result<(), Box<dyn std::error::Error>>
 where
     Integration: ImsDataIntegration,
 {
-    let data_integration = integration_config.integration_id();
-    let svc_name = &format!("IMS {data_integration} Service");
     let dbg_print = |msg: &str| {
         if dbg {
-            println!("[{svc_name}]: {msg}");
+            println!("[{exchange_id}]: {msg}");
         }
     };
+    //
     let start = Instant::now();
+    //
+    dbg_print("build config files");
+    let integration_config = &config::ims_data_integration_config(exchange_id);
+    let iggy_config = &config::ims_data_iggy_config(exchange_id);
+    let cfg_manager = CfgManager::new(
+        ServiceID::Default,
+        config::ims_data_service_config(exchange_id),
+    )
+    .await;
+    let data_integration = integration_config.integration_id();
+    let svc_name = &format!("IMS {data_integration} Service");
 
     dbg_print("get SMDB endpoint from auto config");
     let (smdb_host, smdb_port) = cfg_manager

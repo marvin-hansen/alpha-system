@@ -7,20 +7,17 @@ load("//:build/container.bzl", "build_multi_arch_image", "git_with_timestamp_tag
 # Rust Binary
 ###############################################################################
 build_binary_opt(
-    name = "binance_data",
+    name = "binance_spot_testnet",
     srcs = glob([
         "src/*.rs",
     ]),
     deps = [
-        # Service specs
-        "//alias:binance_data_specs",
-        # Internal crates
-        "//alias:common_config",
-        "//alias:common_exchange",
-        "//alias:config_manager",
-        "//alias/service:ims_data_service",
         # Custom Memory Allocator
         "//thirdparty/crates:mimalloc",
+        # Internal crates
+        "//alias:binance_spot_testnet_data_integration",
+        "//alias:common_exchange",
+        "//alias/service:ims_data_service",
         # External crates
         "//thirdparty/crates:rustls",
         "//thirdparty/crates:tokio",
@@ -32,14 +29,14 @@ build_binary_opt(
 ###############################################################################
 rust_doc(
     name = "doc",
-    crate = ":binance_data",
+    crate = ":binance_spot_testnet",
     tags = ["doc"],
     visibility = ["//visibility:public"],
 )
 
 rust_doc_test(
     name = "doc_test",
-    crate = ":binance_data",
+    crate = ":binance_spot_testnet",
     tags = ["doc-test"],
     visibility = ["//visibility:public"],
 )
@@ -49,9 +46,9 @@ rust_doc_test(
 ###############################################################################
 build_multi_arch_image(
     name = "image_index",
-    srcs = ["binance_data"],
+    srcs = ["binance_spot_testnet"],
     base = "//images/base_image",
-    entry_point = "binance_data",
+    entry_point = "binance_spot_testnet",
     exposed_ports = [
         "7070",
         "8080",
@@ -72,6 +69,6 @@ oci_push(
     name = "push",
     image = ":image_index",
     remote_tags = ":remote_tag",
-    repository = "asia-northeast1-docker.pkg.dev/future-309012/image-repo/binance_data",
+    repository = "asia-northeast1-docker.pkg.dev/future-309012/image-repo/binance_spot_testnet",
     visibility = ["//visibility:public"],
 )

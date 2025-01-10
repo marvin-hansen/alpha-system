@@ -565,11 +565,6 @@ alias(
 
 # IMS Data sepcs
 alias(
-    name = "binance_data_specs",
-    actual = "//queng_services/ims_data/binance/binance_data_specs",
-)
-
-alias(
     name = "ims_data_vex_specs",
     actual = "//queng_services/ims_data/vex/ims_data_vex_specs",
 )

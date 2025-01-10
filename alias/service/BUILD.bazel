@@ -101,11 +101,11 @@ alias(
 ###############################################################################
 
 alias(
-    name = "binance_data",
-    actual = "//queng_services/ims_data/binance/binance_data:binance_data",
+    name = "binance_spot",
+    actual = "//queng_services/ims_data/binance/binance_spot",
 )
 
 alias(
-    name = "binance_data_push",
-    actual = "//queng_services/ims_data/binance/binance_data:push",
+    name = "binance_spot_push",
+    actual = "//queng_services/ims_data/binance/binance_spot:push",
 )

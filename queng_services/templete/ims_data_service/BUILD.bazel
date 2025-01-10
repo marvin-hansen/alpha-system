@@ -24,6 +24,7 @@ rust_library(
         "//alias:sbe_messages_client",
         "//alias:sbe_messages_control",
         "//alias:sbe_messages_data",
+        "//alias:shared_service_specs",
         "//alias:sbe_types",
         "//alias:sbe_utils",
         "//alias/client:smdb_client",

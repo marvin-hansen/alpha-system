@@ -36,7 +36,7 @@ multirun(
         "smdb_push",
         # IMS Services
         "push_imdb",
-        "push_binance_data",
+        "push_binance_spot",
         # MDS Services
         "push_kaiko_proxy",
         "push_mddb",
@@ -82,17 +82,6 @@ command(
     command = "//alias/service:smdb_push",
 )
 
-# IMS Data Services
-command(
-    name = "push_imdb",
-    command = "//alias/service:imdb_push",
-)
-
-command(
-    name = "push_binance_data",
-    command = "//alias/service:binance_data_push",
-)
-
 # MDS Services
 command(
     name = "push_kaiko_proxy",
@@ -103,3 +92,16 @@ command(
     name = "push_mddb",
     command = "//alias/service:mddb_push",
 )
+
+
+# IMS Data Services
+command(
+    name = "push_imdb",
+    command = "//alias/service:imdb_push",
+)
+
+command(
+    name = "push_binance_spot",
+    command = "//alias/service:binance_spot_push",
+)
+

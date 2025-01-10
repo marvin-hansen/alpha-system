@@ -12,3 +12,4 @@ workspace = true
 [dependencies]
 # Internal crates
 common_config = {workspace = true}
+common_ims = {workspace = true}

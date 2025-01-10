@@ -27,6 +27,7 @@ message_stream = { workspace = true }
 sbe_messages_client = {workspace = true}
 sbe_messages_control = {workspace = true}
 sbe_messages_data = {workspace = true}
+shared_service_specs = { workspace = true }
 sbe_types = { workspace = true }
 sbe_utils = { workspace = true }
 smdb_client = { workspace = true }

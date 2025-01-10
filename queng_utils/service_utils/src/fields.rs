@@ -1,11 +1,3 @@
 pub const PATH: &str = "queng_utils/service_utils";
 
-pub const BINARIES: [&str; 7] = [
-    "dbgw",
-    "smdb",
-    "cmdb",
-    "imdb",
-    "mddb",
-    "kaiko_proxy",
-    "binance_data",
-];
+pub const BINARIES: [&str; 6] = ["dbgw", "smdb", "cmdb", "imdb", "mddb", "kaiko_proxy"];

@@ -14,7 +14,7 @@ rust_library(
     deps = [
         # Internal crates
         "//alias:common_ims",
-        "//alias:binance_data_specs",
+        "//alias:shared_service_specs",
     ],
 )
 

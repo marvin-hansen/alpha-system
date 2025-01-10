@@ -1,5 +1,5 @@
-use binance_data_specs::binance_ims_data_integration_config;
 use common_ims::{ExchangeID, IntegrationConfig};
+use shared_service_specs::ims_data_integration_config;
 
 /// This module provides a public function to return a vector of `IntegrationConfig` instances.
 ///
@@ -9,11 +9,11 @@ use common_ims::{ExchangeID, IntegrationConfig};
 #[must_use]
 pub fn get_all_integration_configs() -> Vec<IntegrationConfig> {
     vec![
-        binance_ims_data_integration_config(ExchangeID::BinanceSpot),
-        binance_ims_data_integration_config(ExchangeID::BinanceSpotTestnet),
-        binance_ims_data_integration_config(ExchangeID::BinanceCoinMarginFuture),
-        binance_ims_data_integration_config(ExchangeID::BinanceCoinMarginFutureTestnet),
-        binance_ims_data_integration_config(ExchangeID::BinanceUsdMarginFuture),
-        binance_ims_data_integration_config(ExchangeID::BinanceUsdMarginFutureTestnet),
+        ims_data_integration_config(ExchangeID::BinanceSpot),
+        ims_data_integration_config(ExchangeID::BinanceSpotTestnet),
+        ims_data_integration_config(ExchangeID::BinanceCoinMarginFuture),
+        ims_data_integration_config(ExchangeID::BinanceCoinMarginFutureTestnet),
+        ims_data_integration_config(ExchangeID::BinanceUsdMarginFuture),
+        ims_data_integration_config(ExchangeID::BinanceUsdMarginFutureTestnet),
     ]
 }
