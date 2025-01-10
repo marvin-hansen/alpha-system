@@ -7,7 +7,7 @@ use std::fmt::Error;
 static GLOBAL: MiMalloc = MiMalloc;
 
 const DBG: bool = true;
-const EXCHANGE_ID: ExchangeID = ExchangeID::BinanceSpot;
+const EXCHANGE_ID: ExchangeID = ExchangeID::BinanceCoinMarginFuture;
 
 #[tokio::main]
 async fn main() -> Result<(), Error> {

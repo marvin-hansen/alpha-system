@@ -99,4 +99,3 @@ copy_file(
     out = "imdb",
     is_executable = True,
 )
-

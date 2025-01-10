@@ -93,7 +93,6 @@ command(
     command = "//alias/service:mddb_push",
 )
 
-
 # IMS Data Services
 command(
     name = "push_imdb",
@@ -104,4 +103,3 @@ command(
     name = "push_binance_spot",
     command = "//alias/service:binance_spot_push",
 )
-

@@ -1,4 +1,4 @@
-use binance_coin_futures_testnet_data_integration::ImsBinanceCoinFuturesTestnetDataIntegration;
+use binance_usd_futures_data_integration::ImsBinanceUsdFuturesDataIntegration;
 use common_exchange::ExchangeID;
 use mimalloc::MiMalloc;
 use std::fmt::Error;
@@ -7,7 +7,7 @@ use std::fmt::Error;
 static GLOBAL: MiMalloc = MiMalloc;
 
 const DBG: bool = true;
-const EXCHANGE_ID: ExchangeID = ExchangeID::BinanceCoinMarginFutureTestnet;
+const EXCHANGE_ID: ExchangeID = ExchangeID::BinanceUsdMarginFuture;
 
 #[tokio::main]
 async fn main() -> Result<(), Error> {
@@ -16,13 +16,9 @@ async fn main() -> Result<(), Error> {
         .install_default()
         .expect("Failed to install default rustls crypto provider");
 
-    ims_data_service::start(
-        DBG,
-        EXCHANGE_ID,
-        ImsBinanceCoinFuturesTestnetDataIntegration::new(),
-    )
-    .await
-    .expect("Failed to start Binance IMS Data service");
+    ims_data_service::start(DBG, EXCHANGE_ID, ImsBinanceUsdFuturesDataIntegration::new())
+        .await
+        .expect("Failed to start Binance IMS Data service");
 
     Ok(())
 }
