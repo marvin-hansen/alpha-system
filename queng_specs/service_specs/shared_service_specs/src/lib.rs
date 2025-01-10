@@ -12,7 +12,7 @@ use common_ims::{IggyConfig, IggyUser};
 ///
 pub fn ims_data_integration_config(exchange_id: ExchangeID) -> IntegrationConfig {
     IntegrationConfig::new(
-        format!("{}-data", exchange_id.to_string()),
+        format!("{}-data", exchange_id),
         1,
         ImsIntegrationType::Data,
         exchange_id,
