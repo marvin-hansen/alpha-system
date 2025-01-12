@@ -200,7 +200,7 @@ crates_vendor(
         "tokio-tungstenite": crate.spec(
             features = ["rustls-tls-webpki-roots"],
             package = "tokio-tungstenite",
-            version = "0.26.0",
+            version = "0.26.1",
         ),
         "tonic": crate.spec(
             features = ["transport"],
