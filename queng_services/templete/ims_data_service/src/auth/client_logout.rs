@@ -2,8 +2,9 @@ use crate::service::Service;
 use common_errors::MessageProcessingError;
 use iggy::client::Client;
 use sbe_types::ClientErrorType;
+use trait_data_integration::ImsDataIntegration;
 
-impl Service {
+impl<Integration: ImsDataIntegration> Service<Integration> {
     //
     /// Logs a client out by shutting down the message stream and removing the client from the hashmap of client data producers.
     ///

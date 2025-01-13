@@ -2,8 +2,9 @@ use crate::service::Service;
 use common_errors::MessageProcessingError;
 use common_exchange::ExchangeID;
 use sbe_types::DataErrorType;
+use trait_data_integration::ImsDataIntegration;
 
-impl Service {
+impl<Integration: ImsDataIntegration> Service<Integration> {
     pub async fn stop_data(
         &self,
         client_id: u16,

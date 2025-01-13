@@ -1,7 +1,8 @@
 use crate::service::Service;
 use common_errors::MessageProcessingError;
+use trait_data_integration::ImsDataIntegration;
 
-impl Service {
+impl<Integration: ImsDataIntegration> Service<Integration> {
     //
     /// Checks if a client with the specified ID is logged in.
     ///

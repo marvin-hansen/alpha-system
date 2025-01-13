@@ -26,7 +26,7 @@ pub async fn start<Integration>(
     ims_integration: Integration,
 ) -> Result<(), Box<dyn std::error::Error>>
 where
-    Integration: ImsDataIntegration,
+    Integration: ImsDataIntegration + Send + Sync + 'static,
 {
     let dbg_print = |msg: &str| {
         if dbg {
@@ -142,6 +142,7 @@ where
         Service::with_debug(
             &consumer_client,
             &producer_client,
+            ims_integration,
             integration_config,
             iggy_config,
         )
@@ -151,6 +152,7 @@ where
         Service::new(
             &consumer_client,
             &producer_client,
+            ims_integration,
             integration_config,
             iggy_config,
         )

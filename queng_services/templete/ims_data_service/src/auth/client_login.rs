@@ -2,8 +2,9 @@ use crate::service::Service;
 use common_errors::MessageProcessingError;
 use message_stream::MessageStream;
 use sbe_types::ClientErrorType;
+use trait_data_integration::ImsDataIntegration;
 
-impl Service {
+impl<Integration: ImsDataIntegration> Service<Integration> {
     //
     /// Logs a client in by validating the client ID and creating a new message stream.
     ///

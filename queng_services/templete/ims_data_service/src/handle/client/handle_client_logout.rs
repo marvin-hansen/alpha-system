@@ -1,8 +1,9 @@
 use crate::service::Service;
 use common_errors::MessageProcessingError;
 use sbe_messages_client::ClientLogoutMessage;
+use trait_data_integration::ImsDataIntegration;
 
-impl Service {
+impl<Integration: ImsDataIntegration> Service<Integration> {
     /// Handles a client logout message.
     ///
     /// Logs out the client by shutting down the message stream and removing the client from the hashmap of client data producers.

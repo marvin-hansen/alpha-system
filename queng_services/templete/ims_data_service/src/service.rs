@@ -6,6 +6,7 @@ use message_producer::MessageProducer;
 use message_stream::MessageStream;
 use std::collections::HashMap;
 use std::error::Error;
+use trait_data_integration::ImsDataIntegration;
 
 type Guarded<T> = std::sync::Arc<tokio::sync::RwLock<T>>;
 
@@ -13,18 +14,19 @@ type Guarded<T> = std::sync::Arc<tokio::sync::RwLock<T>>;
 ///
 /// The server manages message consumption and production for both control and data channels,
 /// maintaining thread-safe access to shared resources using Tokio's async-aware locks.
-pub struct Service {
+pub struct Service<Integration: ImsDataIntegration> {
     dbg: bool,
     exchange_id: ExchangeID,
     consumer: Guarded<MessageConsumer>,
     producer: Guarded<MessageProducer>,
     iggy_config: IggyConfig,
+    ims_integration: Integration,
     integration_config: IntegrationConfig,
     client_configs: Guarded<HashMap<u16, IggyConfig>>,
     client_producers: Guarded<HashMap<u16, MessageStream>>,
 }
 
-impl Service {
+impl<Integration: ImsDataIntegration> Service<Integration> {
     /// Creates a new server instance with debugging disabled.
     ///
     /// # Arguments
@@ -41,6 +43,7 @@ impl Service {
     pub async fn new(
         consumer_client: &IggyClient,
         producer_client: &IggyClient,
+        ims_integration: Integration,
         integration_config: &IntegrationConfig,
         iggy_config: &IggyConfig,
     ) -> Result<Self, Box<dyn Error>> {
@@ -48,6 +51,7 @@ impl Service {
             false,
             consumer_client,
             producer_client,
+            ims_integration,
             integration_config,
             iggy_config,
         )
@@ -70,6 +74,7 @@ impl Service {
     pub async fn with_debug(
         consumer_client: &IggyClient,
         producer_client: &IggyClient,
+        ims_integration: Integration,
         integration_config: &IntegrationConfig,
         iggy_config: &IggyConfig,
     ) -> Result<Self, Box<dyn Error>> {
@@ -77,6 +82,7 @@ impl Service {
             true,
             consumer_client,
             producer_client,
+            ims_integration,
             integration_config,
             iggy_config,
         )
@@ -84,11 +90,12 @@ impl Service {
     }
 }
 
-impl Service {
+impl<Integration: ImsDataIntegration> Service<Integration> {
     async fn build(
         dbg: bool,
         consumer_client: &IggyClient,
         producer_client: &IggyClient,
+        ims_integration: Integration,
         integration_config: &IntegrationConfig,
         iggy_config: &IggyConfig,
     ) -> Result<Self, Box<dyn Error>> {
@@ -134,6 +141,7 @@ impl Service {
             consumer,
             producer,
             iggy_config: iggy_config.clone(),
+            ims_integration,
             integration_config: integration_config.clone(),
             client_configs,
             client_producers,
@@ -141,7 +149,7 @@ impl Service {
     }
 }
 
-impl Service {
+impl<Integration: ImsDataIntegration> Service<Integration> {
     pub fn dbg(&self) -> bool {
         self.dbg
     }
@@ -174,7 +182,7 @@ impl Service {
     }
 }
 
-impl Service {
+impl<Integration: ImsDataIntegration> Service<Integration> {
     pub(crate) fn dbg_print(&self, msg: &str) {
         if self.dbg {
             println!("[IMSData/Server]: {msg}");

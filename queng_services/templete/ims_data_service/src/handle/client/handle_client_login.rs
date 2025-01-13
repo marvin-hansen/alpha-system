@@ -1,8 +1,9 @@
 use crate::service::Service;
 use common_errors::MessageProcessingError;
 use sbe_messages_client::ClientLoginMessage;
+use trait_data_integration::ImsDataIntegration;
 
-impl Service {
+impl<Integration: ImsDataIntegration> Service<Integration> {
     /// Handles a client login message by validating the client ID and logging them in.
     ///
     /// Gets the client's control channel, checks if they are not already logged in, and logs them in if allowed.

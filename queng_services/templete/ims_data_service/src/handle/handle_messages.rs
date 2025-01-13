@@ -4,8 +4,9 @@ use iggy::models::messages::PolledMessage;
 use sbe_messages_client::{ClientLoginMessage, ClientLogoutMessage};
 use sbe_messages_control::{StartDataMessage, StopAllDataMessage, StopDataMessage};
 use sbe_types::MessageType;
+use trait_data_integration::ImsDataIntegration;
 
-impl Service {
+impl<Integration: ImsDataIntegration> Service<Integration> {
     /// Handles a single message by processing it and sending it to the appropriate
     /// manager for further processing.
     ///

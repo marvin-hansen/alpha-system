@@ -1,8 +1,9 @@
 use crate::service::Service;
 use common_errors::MessageProcessingError;
 use sbe_messages_control::StartDataMessage;
+use trait_data_integration::ImsDataIntegration;
 
-impl Service {
+impl<Integration: ImsDataIntegration> Service<Integration> {
     /// Handle a start data message from a client. This involves verifying the message
     /// and then calling the start_data method of the service.
     ///

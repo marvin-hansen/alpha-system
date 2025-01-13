@@ -1,8 +1,12 @@
 use crate::service::Service;
 use common_errors::MessageProcessingError;
 use futures_util::StreamExt;
+use trait_data_integration::ImsDataIntegration;
 
-impl Service {
+impl<Integration> Service<Integration>
+where
+    Integration: ImsDataIntegration + Send + Sync + 'static,
+{
     /// Starts the data service in an infinite loop.
     ///
     /// The service will consume messages from the control topic and handle them
