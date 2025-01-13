@@ -36,7 +36,7 @@ async fn main() -> Result<(), ImsDataIntegrationError> {
         Ok(_) => println!("✓ Symbols validated successfully!"),
         Err(e) => {
             eprintln!("✗ Symbol validation failed: {}", e);
-            return Err(e.into());
+            return Err(e);
         }
     }
 
@@ -47,7 +47,7 @@ async fn main() -> Result<(), ImsDataIntegrationError> {
         .await
     {
         eprintln!("✗ Failed to start trade data stream: {}", e);
-        return Err(e.into());
+        return Err(e);
     }
     println!("✓ Trade data stream started successfully!");
 
@@ -60,7 +60,7 @@ async fn main() -> Result<(), ImsDataIntegrationError> {
         eprintln!("✗ Failed to start OHLCV data stream: {}", e);
         // Make sure to stop trade stream if OHLCV stream fails
         integration.stop_all_trade_data().await?;
-        return Err(e.into());
+        return Err(e);
     }
     println!("✓ OHLCV data stream started successfully!");
 
