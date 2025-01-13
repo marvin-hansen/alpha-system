@@ -25,15 +25,9 @@ impl SymbolManager {
         exchange_id: u16,
         symbol_id: u16,
     ) -> Result<String, LookupError> {
-        let symbol = match self.get_symbol(symbol_id) {
-            Ok(symbol) => symbol,
-            Err(err) => return Err(err),
-        };
+        let symbol = self.get_symbol(symbol_id)?;
 
-        let exchange_name = match self.get_exchange_name(exchange_id) {
-            Ok(exchange) => exchange,
-            Err(err) => return Err(err),
-        };
+        let exchange_name = self.get_exchange_name(exchange_id)?;
 
         let symbol_table_name = format!("{exchange_name}_{symbol}");
 
@@ -53,10 +47,7 @@ impl SymbolManager {
     ///
     pub fn get_symbol_table(&mut self, exchange_id: u16) -> Result<String, LookupError> {
         //
-        let exchange_name = match self.get_exchange_name(exchange_id) {
-            Ok(exchange) => exchange,
-            Err(err) => return Err(err),
-        };
+        let exchange_name = self.get_exchange_name(exchange_id)?;
 
         let symbol_table_name = format!("{exchange_name}_symbols");
 

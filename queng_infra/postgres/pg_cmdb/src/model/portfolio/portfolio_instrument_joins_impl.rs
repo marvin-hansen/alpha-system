@@ -66,23 +66,15 @@ impl Portfolio {
         // Reading data from many-to-many or m:n relations
         // https://diesel.rs/guides/relations.html
 
-        let portfolio = match crate::schema::cmdb::portfolio::table
+        let portfolio = crate::schema::cmdb::portfolio::table
             .filter(crate::schema::cmdb::portfolio::portfolio_id.eq(param_portfolio_id))
             .select(Self::as_select())
-            .get_result(db)
-        {
-            Ok(res) => res,
-            Err(e) => return Err(e),
-        };
+            .get_result(db)?;
 
-        let instruments = match PortfolioInstrument::belonging_to(&portfolio)
+        let instruments = PortfolioInstrument::belonging_to(&portfolio)
             .inner_join(crate::schema::cmdb::instrument::table)
             .select(Instrument::as_select())
-            .load(db)
-        {
-            Ok(res) => res,
-            Err(e) => return Err(e),
-        };
+            .load(db)?;
 
         // Convert from Vec<PortfolioConfig> to Vec<CommonPortfolioConfig>
         Ok(Self::to_common_portfolio(&portfolio, &instruments))

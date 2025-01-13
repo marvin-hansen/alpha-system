@@ -66,7 +66,7 @@ impl ImsOhlcvDataIntegration for ImsBinanceDataIntegration {
             let stream_name = format!("{}@kline_{}", symbol, time_resolution);
             let ws_stream =
                 utils_connect::connect_websocket_static(&stream_name, api_url.clone()).await?;
-            let processor = Arc::clone(&processor);
+            let processor = Arc::clone(processor);
 
             let symbol_clone = symbol.clone();
             let stream_name = format!("{}@kline_{}", symbol_clone, time_resolution);

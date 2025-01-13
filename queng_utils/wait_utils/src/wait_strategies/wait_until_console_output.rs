@@ -40,7 +40,7 @@ pub fn wait_until_console_output(
 
         // Example: docker logs apiproxy-7777
         // https://docs.docker.com/reference/cli/docker/container/logs/
-        let output = match Command::new("docker")
+        let output = Command::new("docker")
             .arg("logs")
             .arg(container_id)
             .output()
@@ -48,10 +48,7 @@ pub fn wait_until_console_output(
                 WaitStrategyError::from(format!(
                     "[start_container]: Failed to run docker logs for container: {container_id} Error: {e}"
                 ))
-            }) {
-            Ok(o) => o,
-            Err(e) => return Err(e),
-        };
+            })?;
 
         if output.status.success() {
             if dbg {
