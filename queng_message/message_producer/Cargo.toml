@@ -12,6 +12,7 @@ workspace = true
 [dependencies]
 # Internal crates
 message_shared = {workspace = true}
+trait_data_integration = {workspace = true}
 
 # External crates
 bytes = { workspace = true }

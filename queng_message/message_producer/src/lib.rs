@@ -1,5 +1,5 @@
+mod event_processor;
 mod getters;
-mod send;
 
 use iggy::clients::client::IggyClient;
 use iggy::clients::producer::IggyProducer;
@@ -9,11 +9,13 @@ use iggy::messages::send_messages::Partitioning;
 use iggy::utils::duration::IggyDuration;
 use message_shared::Args;
 use std::str::FromStr;
+use std::sync::Arc;
 
+#[derive(Clone)]
 pub struct MessageProducer {
     stream_id: Identifier,
     topic_id: Identifier,
-    producer: IggyProducer,
+    producer: Arc<IggyProducer>,
 }
 
 impl MessageProducer {
@@ -69,7 +71,7 @@ impl MessageProducer {
         Ok(Self {
             stream_id,
             topic_id,
-            producer,
+            producer: Arc::new(producer),
         })
     }
 }

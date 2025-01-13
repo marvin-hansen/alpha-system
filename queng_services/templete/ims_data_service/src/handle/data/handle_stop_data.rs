@@ -3,7 +3,7 @@ use common_errors::MessageProcessingError;
 use sbe_messages_control::StopDataMessage;
 use trait_data_integration::ImsDataIntegration;
 
-impl<Integration: ImsDataIntegration> Service<Integration> {
+impl<Integration: ImsDataIntegration + 'static> Service<Integration> {
     /// Handles a stop data message from a client. This involves verifying the message
     /// and then calling the stop_data method of the service.
     ///
@@ -18,10 +18,14 @@ impl<Integration: ImsDataIntegration> Service<Integration> {
     ) -> Result<(), MessageProcessingError> {
         self.dbg_print("handle_start_data");
         let client_id = *start_data_message.client_id();
+        let data_type = start_data_message.data_type_id();
         let exchange_id = start_data_message.exchange_id();
         let symbols = Vec::from(["BTCUSD".to_string()]);
 
-        match self.stop_data(client_id, exchange_id, &symbols).await {
+        match self
+            .stop_data(client_id, data_type, exchange_id, &symbols)
+            .await
+        {
             Ok(_) => {}
             Err((error_type, err)) => {
                 // Print error

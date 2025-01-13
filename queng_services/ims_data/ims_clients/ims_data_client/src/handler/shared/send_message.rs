@@ -1,5 +1,5 @@
 use crate::{ImsDataClient, ImsDataClientError};
-use message_shared::SendMessage;
+use trait_data_integration::EventProcessor;
 
 impl ImsDataClient {
     /// Sends a message to the control topic.

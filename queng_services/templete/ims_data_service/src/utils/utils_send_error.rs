@@ -1,8 +1,7 @@
 use crate::service::Service;
 use common_errors::MessageProcessingError;
-use message_shared::SendMessage;
 use sbe_types::{ClientErrorType, DataErrorType};
-use trait_data_integration::ImsDataIntegration;
+use trait_data_integration::{EventProcessor, ImsDataIntegration};
 
 impl<Integration: ImsDataIntegration> Service<Integration> {
     /// Sends a `ClientError` message to the given producer.

@@ -2,6 +2,7 @@ use binance_spot_data_integration::ImsBinanceSpotDataIntegration;
 use common_data_bar::{OHLCVBar, TimeResolution, TradeBar};
 use common_data_bar_ext::{SbeOHLCVBarExtension, SbeTradeBarExtension};
 use sbe_types::MessageType;
+use std::future::Future;
 use std::sync::Arc;
 use tokio::time::Duration;
 use trait_data_integration::{
@@ -122,5 +123,23 @@ impl EventProcessor for PrintEventProcessor {
         }
 
         Ok(())
+    }
+
+    fn send_one_message(
+        &self,
+        _bytes: Vec<u8>,
+    ) -> impl Future<Output = Result<(), ImsDataIntegrationError>> + Send {
+        Err(ImsDataIntegrationError::NotSupportedError(
+            "Not supported".to_string(),
+        ))
+    }
+
+    fn send_batch_messages(
+        &self,
+        _bytes_batch: &[Vec<u8>],
+    ) -> impl Future<Output = Result<(), ImsDataIntegrationError>> + Send {
+        Err(ImsDataIntegrationError::NotSupportedError(
+            "Not supported".to_string(),
+        ))
     }
 }

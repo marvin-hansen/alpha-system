@@ -9,6 +9,7 @@ impl<Integration: ImsDataIntegration> Service<Integration> {
         &self,
         client_id: u16,
         exchange_id: &ExchangeID,
+        symbols: &[String],
     ) -> Result<(), (DataErrorType, MessageProcessingError)> {
         self.dbg_print(&format!(
             "Checking if client with id {} is logged in",
@@ -48,10 +49,31 @@ impl<Integration: ImsDataIntegration> Service<Integration> {
             }
         };
 
+        match self.verify_symbols(symbols).await {
+            Ok(_) => {}
+            Err(e) => return Err((DataErrorType::UnknownDataError, e)),
+        }
+
         Ok(())
     }
 
     pub(crate) fn verify_exchange_id(&self, exchange_id: &ExchangeID) -> bool {
         self.exchange_id() == *exchange_id
+    }
+
+    pub(crate) async fn verify_symbols(
+        &self,
+        symbols: &[String],
+    ) -> Result<(), MessageProcessingError> {
+        if symbols.is_empty() {
+            return Ok(());
+        }
+
+        let integration = self.ims_integration().read().await;
+
+        match integration.validate_symbols(symbols).await {
+            Ok(_) => Ok(()),
+            Err(e) => Err(MessageProcessingError::new(e.to_string())),
+        }
     }
 }

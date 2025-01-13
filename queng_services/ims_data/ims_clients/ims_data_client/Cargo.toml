@@ -27,6 +27,9 @@ sbe_messages_control = {workspace = true}
 sbe_messages_client = {workspace = true}
 sbe_messages_data = {workspace = true}
 sbe_types = {workspace = true}
+trait_data_integration = {workspace = true}
+
+
 
 # Exteral crates
 bytes = { workspace = true }

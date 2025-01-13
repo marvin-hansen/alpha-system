@@ -11,8 +11,11 @@ pub enum ImsDataIntegrationError {
     FailedToStopDataStream(String),
     FailedToStopAllDataStream(String),
     FailedToProcessDataMessage(String),
-    SymbolNotFound(String),
+    FailedToSendDataMessage(String),
+    FailedToSendBatchDataMessage(String),
+    SymbolNotFoundError(String),
     ShutdownError(String),
+    NotSupportedError(String),
     UnknownError(String),
 }
 
@@ -74,11 +77,28 @@ impl std::fmt::Display for ImsDataIntegrationError {
                     msg
                 )
             }
-            ImsDataIntegrationError::SymbolNotFound(msg) => {
+            ImsDataIntegrationError::FailedToSendDataMessage(msg) => {
+                write!(
+                    f,
+                    "[ImsDataIntegrationError]: Failed to send data message: {}",
+                    msg
+                )
+            }
+            ImsDataIntegrationError::FailedToSendBatchDataMessage(msg) => {
+                write!(
+                    f,
+                    "[ImsDataIntegrationError]: Failed to send batch data message: {}",
+                    msg
+                )
+            }
+            ImsDataIntegrationError::SymbolNotFoundError(msg) => {
                 write!(f, "[ImsDataIntegrationError]: Symbol not found: {}", msg)
             }
             ImsDataIntegrationError::ShutdownError(msg) => {
                 write!(f, "[ImsDataIntegrationError]: Shutdown error: {}", msg)
+            }
+            ImsDataIntegrationError::NotSupportedError(msg) => {
+                write!(f, "[ImsDataIntegrationError]: Not supported error: {}", msg)
             }
             ImsDataIntegrationError::UnknownError(msg) => {
                 write!(f, "[ImsDataIntegrationError]: Unknown error: {}", msg)

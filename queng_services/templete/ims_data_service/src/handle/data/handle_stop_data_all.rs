@@ -3,7 +3,7 @@ use common_errors::MessageProcessingError;
 use sbe_messages_control::StopAllDataMessage;
 use trait_data_integration::ImsDataIntegration;
 
-impl<Integration: ImsDataIntegration> Service<Integration> {
+impl<Integration: ImsDataIntegration + 'static> Service<Integration> {
     /// Handles a stop all data message from a client. This involves verifying the message
     /// and then calling the stop_all_data method of the service.
     ///

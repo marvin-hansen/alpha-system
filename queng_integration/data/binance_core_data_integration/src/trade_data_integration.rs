@@ -212,7 +212,7 @@ impl ImsTradeDataIntegration for ImsBinanceDataIntegration {
 
         // If any symbols were not found in trade_handlers, return an error
         if !not_found_symbols.is_empty() {
-            return Err(ImsDataIntegrationError::SymbolNotFound(format!(
+            return Err(ImsDataIntegrationError::SymbolNotFoundError(format!(
                 "The following symbols were not active trade streams: {:?}",
                 not_found_symbols
             )));
