@@ -20,7 +20,7 @@ pub struct Service<Integration: ImsDataIntegration> {
     consumer: Guarded<MessageConsumer>,
     producer: Guarded<MessageProducer>,
     iggy_config: IggyConfig,
-    ims_integration: Integration,
+    ims_integration: Guarded<Integration>,
     integration_config: IntegrationConfig,
     client_configs: Guarded<HashMap<u16, IggyConfig>>,
     client_producers: Guarded<HashMap<u16, MessageStream>>,
@@ -133,6 +133,7 @@ impl<Integration: ImsDataIntegration> Service<Integration> {
         dbg_print("Create HashMaps");
         let client_configs = std::sync::Arc::new(tokio::sync::RwLock::new(HashMap::new()));
         let client_producers = std::sync::Arc::new(tokio::sync::RwLock::new(HashMap::new()));
+        let ims_integration = std::sync::Arc::new(tokio::sync::RwLock::new(ims_integration));
 
         dbg_print("Create Service");
         Ok(Self {
@@ -162,6 +163,10 @@ impl<Integration: ImsDataIntegration> Service<Integration> {
         &self.iggy_config
     }
 
+    pub fn ims_integration(&self) -> &Guarded<Integration> {
+        &self.ims_integration
+    }
+
     pub fn integration_config(&self) -> &IntegrationConfig {
         &self.integration_config
     }
@@ -173,6 +178,7 @@ impl<Integration: ImsDataIntegration> Service<Integration> {
     pub fn client_producers(&self) -> &Guarded<HashMap<u16, MessageStream>> {
         &self.client_producers
     }
+
     pub fn consumer(&self) -> &Guarded<MessageConsumer> {
         &self.consumer
     }

@@ -1,4 +1,4 @@
-use common_errors::MessageProcessingError;
+use crate::ImsDataIntegrationError;
 
 /// Trait to define an `EventProcessor` that can be used to process events
 /// in a local context.
@@ -9,5 +9,5 @@ use common_errors::MessageProcessingError;
 #[allow(dead_code)] // Clippy can't see that the trait is used
 #[trait_variant::make(EventProcessor: Send)]
 pub trait LocalEventProcessor {
-    async fn process(&self, data: &[Vec<u8>]) -> Result<(), MessageProcessingError>;
+    async fn process(&self, data: &[Vec<u8>]) -> Result<(), ImsDataIntegrationError>;
 }

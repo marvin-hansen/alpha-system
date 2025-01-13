@@ -65,14 +65,14 @@ pub fn ims_data_integration(input: TokenStream) -> TokenStream {
         impl ImsSymbolIntegration for #name {
             fn get_exchange_symbols(
                 &self,
-            ) -> impl Future<Output = Result<HashSet<String>, MessageProcessingError>> + Send {
+            ) -> impl Future<Output = Result<HashSet<String>, ImsDataIntegrationError>> + Send {
                 self.integration.get_exchange_symbols()
             }
 
             fn validate_symbols(
                 &self,
                 symbols: &[String],
-            ) -> impl Future<Output = Result<bool, MessageProcessingError>> + Send {
+            ) -> impl Future<Output = Result<bool, ImsDataIntegrationError>> + Send {
                 self.integration.validate_symbols(symbols)
             }
         }
@@ -82,7 +82,7 @@ pub fn ims_data_integration(input: TokenStream) -> TokenStream {
                 &self,
                 symbols: &[String],
                 processor: &Arc<P>,
-            ) -> impl Future<Output = Result<(), MessageProcessingError>> + Send
+            ) -> impl Future<Output = Result<(), ImsDataIntegrationError>> + Send
             where
                 P: EventProcessor + Send + Sync + 'static,
             {
@@ -92,13 +92,13 @@ pub fn ims_data_integration(input: TokenStream) -> TokenStream {
             fn stop_trade_data(
                 &self,
                 symbols: &[String],
-            ) -> impl Future<Output = Result<(), MessageProcessingError>> + Send {
+            ) -> impl Future<Output = Result<(), ImsDataIntegrationError>> + Send {
                 self.integration.stop_trade_data(symbols)
             }
 
             fn stop_all_trade_data(
                 &self,
-            ) -> impl Future<Output = Result<(), MessageProcessingError>> + Send {
+            ) -> impl Future<Output = Result<(), ImsDataIntegrationError>> + Send {
                 self.integration.stop_all_trade_data()
             }
         }
@@ -109,7 +109,7 @@ pub fn ims_data_integration(input: TokenStream) -> TokenStream {
                 symbols: &[String],
                 time_resolution: TimeResolution,
                 processor: &Arc<P>,
-            ) -> impl Future<Output = Result<(), MessageProcessingError>> + Send
+            ) -> impl Future<Output = Result<(), ImsDataIntegrationError>> + Send
             where
                 P: EventProcessor + Send + Sync + 'static,
             {
@@ -120,16 +120,25 @@ pub fn ims_data_integration(input: TokenStream) -> TokenStream {
             fn stop_ohlcv_data(
                 &self,
                 symbols: &[String],
-            ) -> impl Future<Output = Result<(), MessageProcessingError>> + Send {
+            ) -> impl Future<Output = Result<(), ImsDataIntegrationError>> + Send {
                 self.integration.stop_ohlcv_data(symbols)
             }
 
             fn stop_all_ohlcv_data(
                 &self,
-            ) -> impl Future<Output = Result<(), MessageProcessingError>> + Send {
+            ) -> impl Future<Output = Result<(), ImsDataIntegrationError>> + Send {
                 self.integration.stop_all_ohlcv_data()
             }
         }
+
+        impl ImsShutdownIntegration for #name {
+            fn shutdown(
+                &self,
+            ) -> impl Future<Output = Result<(), ImsDataIntegrationError>> + Send {
+                self.integration.shutdown()
+            }
+        }
+
     };
 
     TokenStream::from(expanded)

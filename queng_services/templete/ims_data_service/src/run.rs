@@ -33,7 +33,12 @@ where
                 }
             }
 
-            drop(consumer_guard)
+            drop(consumer_guard);
+
+            // We shutdown the integration service here after exiting the loop
+            // because self moved into the Tokio task
+            self.dbg_print("Shutdown integration service");
+            self.shutdown().await.expect("Failed to shutdown service");
         });
 
         Ok(())

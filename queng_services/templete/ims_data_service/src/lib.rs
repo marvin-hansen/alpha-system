@@ -197,13 +197,26 @@ where
         }
     }
 
-    dbg_print("Shutdown server");
-    shutdown::shutdown_and_cleanup(dbg, &producer_client, iggy_config)
+    dbg_print("Shutdown iggy producer");
+    dbg_print("Deleting streams and topics");
+    message_shared::cleanup(&producer_client, iggy_config)
         .await
-        .expect("Failed to shutdown service");
-    shutdown::shutdown(&consumer_client)
+        .expect("Failed to clean up iggy");
+
+    dbg_print("Logging out user");
+    message_shared::logout_user(&producer_client)
         .await
-        .expect("Failed to shutdown service");
+        .expect("Failed to logout user");
+
+    dbg_print("Shutting down iggy client");
+    message_shared::shutdown(&producer_client)
+        .await
+        .expect("Failed to shutdown iggy consumer");
+
+    dbg_print("Shutdown iggy consumer");
+    message_shared::shutdown(&consumer_client)
+        .await
+        .expect("Failed to shutdown iggy consumer");
 
     dbg_print("Set integration offline on IMDB");
     imdb_client

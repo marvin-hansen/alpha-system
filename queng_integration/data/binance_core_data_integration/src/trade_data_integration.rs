@@ -2,13 +2,14 @@ use crate::{utils, MAX_RECONNECT_ATTEMPTS, RECONNECT_DELAY, RECONNECT_INTERVAL};
 use crate::{utils_connect, ImsBinanceDataIntegration};
 use common_data_bar::TradeBar;
 use common_data_bar_ext::SbeTradeBarExtension;
-use common_errors::MessageProcessingError;
 use futures_util::StreamExt;
 use std::sync::Arc;
 use std::time::Duration;
 use tokio::time::{sleep, Instant};
 use tokio_tungstenite::tungstenite::Message;
-use trait_data_integration::{EventProcessor, ImsSymbolIntegration, ImsTradeDataIntegration};
+use trait_data_integration::{
+    EventProcessor, ImsDataIntegrationError, ImsSymbolIntegration, ImsTradeDataIntegration,
+};
 
 impl ImsTradeDataIntegration for ImsBinanceDataIntegration {
     /// Starts real-time trade data streams for the specified symbols.
@@ -30,7 +31,7 @@ impl ImsTradeDataIntegration for ImsBinanceDataIntegration {
     ///
     /// # Returns
     /// - `Ok(())`: If all streams are started successfully
-    /// - `Err(MessageProcessingError)`: If symbol validation fails or connection errors occur
+    /// - `Err(ImsDataIntegrationError)`: If symbol validation fails or connection errors occur
     ///
     /// # Connection Management
     /// - Automatic reconnection every 12 hours
@@ -42,7 +43,7 @@ impl ImsTradeDataIntegration for ImsBinanceDataIntegration {
         &self,
         symbols: &[String],
         processor: &Arc<P>,
-    ) -> Result<(), MessageProcessingError>
+    ) -> Result<(), ImsDataIntegrationError>
     where
         P: EventProcessor + Send + Sync + 'static,
     {
@@ -171,14 +172,14 @@ impl ImsTradeDataIntegration for ImsBinanceDataIntegration {
     ///
     /// # Returns
     /// - `Ok(())`: If all specified streams are stopped successfully
-    /// - `Err(MessageProcessingError)`: If any symbols are not found in active streams
+    /// - `Err(ImsDataIntegrationError)`: If any symbols are not found in active streams
     ///
     /// # Resource Management
     /// - Aborts WebSocket connection tasks
     /// - Cleans up handler storage
     /// - Updates active symbols tracking
     ///
-    async fn stop_trade_data(&self, symbols: &[String]) -> Result<(), MessageProcessingError> {
+    async fn stop_trade_data(&self, symbols: &[String]) -> Result<(), ImsDataIntegrationError> {
         // If no symbols provided, do nothing
         if symbols.is_empty() {
             return Ok(());
@@ -211,7 +212,7 @@ impl ImsTradeDataIntegration for ImsBinanceDataIntegration {
 
         // If any symbols were not found in trade_handlers, return an error
         if !not_found_symbols.is_empty() {
-            return Err(MessageProcessingError::new(format!(
+            return Err(ImsDataIntegrationError::SymbolNotFound(format!(
                 "The following symbols were not active trade streams: {:?}",
                 not_found_symbols
             )));
@@ -233,20 +234,24 @@ impl ImsTradeDataIntegration for ImsBinanceDataIntegration {
     ///
     /// # Returns
     /// - `Ok(())`: If all streams are stopped successfully
-    /// - `Err(MessageProcessingError)`: If cleanup fails
+    /// - `Err(ImsDataIntegrationError)`: If cleanup fails
     ///
     /// # Resource Management
     /// - Aborts all WebSocket connection tasks
     /// - Clears handler storage
     /// - Clears active symbols tracking
     ///
-    async fn stop_all_trade_data(&self) -> Result<(), MessageProcessingError> {
+    async fn stop_all_trade_data(&self) -> Result<(), ImsDataIntegrationError> {
         let mut handlers = self.trade_handlers.write().await;
         for (_, handle) in handlers.drain() {
             handle.abort();
-            // Clear active trade symbols list when stopping all streams
-            self.symbols_active_trade.write().await.clear();
         }
+
+        // Clear trade handlers
+        self.trade_handlers.write().await.clear();
+        // Clear active trade symbols list when stopping all streams
+        self.symbols_active_trade.write().await.clear();
+
         Ok(())
     }
 }

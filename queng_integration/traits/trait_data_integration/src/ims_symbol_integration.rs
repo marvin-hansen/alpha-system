@@ -1,4 +1,4 @@
-use common_errors::MessageProcessingError;
+use crate::ImsDataIntegrationError;
 use std::collections::HashSet;
 
 #[allow(dead_code)] // Clippy can't see that the trait is used
@@ -8,9 +8,9 @@ pub trait LocalImsSymbolIntegration {
     ///
     /// # Returns
     /// - `Ok(HashSet<String>)`: Set of valid trading symbols
-    /// - `Err(MessageProcessingError)`: If API call fails or response is invalid
+    /// - `Err(ImsDataIntegrationError)`: If API call fails or response is invalid
     ///
-    async fn get_exchange_symbols(&self) -> Result<HashSet<String>, MessageProcessingError>;
+    async fn get_exchange_symbols(&self) -> Result<HashSet<String>, ImsDataIntegrationError>;
 
     /// Validate a list of symbols.
     ///
@@ -19,6 +19,6 @@ pub trait LocalImsSymbolIntegration {
     ///
     /// The method takes a `&[String]` of symbols to validate and returns a
     /// `Result` of `bool`. The `Result` is `Ok` if all symbols are valid,
-    /// otherwise it is `Err` with an `MessageProcessingError`.
-    async fn validate_symbols(&self, symbols: &[String]) -> Result<bool, MessageProcessingError>;
+    /// otherwise it is `Err` with an `ImsDataIntegrationError`.
+    async fn validate_symbols(&self, symbols: &[String]) -> Result<bool, ImsDataIntegrationError>;
 }

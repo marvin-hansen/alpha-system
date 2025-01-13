@@ -1,5 +1,5 @@
+use crate::ImsDataIntegrationError;
 use common_data_bar::TimeResolution;
-use common_errors::MessageProcessingError;
 use std::sync::Arc;
 
 #[allow(dead_code)] // Clippy can't see that the trait is used
@@ -21,14 +21,14 @@ pub trait LocalImsOhlcvDataIntegration {
     /// from multiple threads.
     ///
     /// The method returns a `Result` of `()`. If the method is successful, the
-    /// `Result` is `Ok`, otherwise it is `Err` with a `MessageProcessingError`.
+    /// `Result` is `Ok`, otherwise it is `Err` with a `ImsDataIntegrationError`.
     ///
     async fn start_ohlcv_data<P>(
         &self,
         symbols: &[String],
         time_resolution: TimeResolution,
         processor: &Arc<P>,
-    ) -> Result<(), MessageProcessingError>
+    ) -> Result<(), ImsDataIntegrationError>
     where
         P: crate::EventProcessor + Send + Sync + 'static;
 
@@ -39,16 +39,16 @@ pub trait LocalImsOhlcvDataIntegration {
     /// The method takes a `&[String]` of symbols to stop fetching data for.
     ///
     /// The method returns a `Result` of `()`. If the method is successful, the
-    /// `Result` is `Ok`, otherwise it is `Err` with a `MessageProcessingError`.
+    /// `Result` is `Ok`, otherwise it is `Err` with a `ImsDataIntegrationError`.
     ///
-    async fn stop_ohlcv_data(&self, symbols: &[String]) -> Result<(), MessageProcessingError>;
+    async fn stop_ohlcv_data(&self, symbols: &[String]) -> Result<(), ImsDataIntegrationError>;
 
     /// Stop fetching OHLCV data from all symbols.
     ///
     /// This method is used to stop fetching OHLCV data from an exchange for all symbols.
     ///
     /// The method returns a `Result` of `()`. If the method is successful, the
-    /// `Result` is `Ok`, otherwise it is `Err` with a `MessageProcessingError`.
+    /// `Result` is `Ok`, otherwise it is `Err` with a `ImsDataIntegrationError`.
     ///
-    async fn stop_all_ohlcv_data(&self) -> Result<(), MessageProcessingError>;
+    async fn stop_all_ohlcv_data(&self) -> Result<(), ImsDataIntegrationError>;
 }

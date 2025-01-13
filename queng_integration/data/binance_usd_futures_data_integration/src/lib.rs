@@ -1,6 +1,5 @@
 use binance_core_data_integration::*;
 use common_data_bar::TimeResolution;
-use common_errors::MessageProcessingError;
 use data_integration_macro::ImsDataIntegrationImpl;
 use std::collections::HashSet;
 use std::future::Future;

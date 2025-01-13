@@ -1,4 +1,4 @@
-use common_errors::MessageProcessingError;
+use crate::ImsDataIntegrationError;
 use std::sync::Arc;
 
 #[allow(dead_code)] // Clippy can't see that the trait is used
@@ -20,13 +20,13 @@ pub trait LocalImsTradeDataIntegration {
     /// from multiple threads.
     ///
     /// The method returns a `Result` of `()`. If the method is successful, the
-    /// `Result` is `Ok`, otherwise it is `Err` with a `MessageProcessingError`.
+    /// `Result` is `Ok`, otherwise it is `Err` with a `ImsDataIntegrationError`.
     ///
     async fn start_trade_data<P>(
         &self,
         symbols: &[String],
         processor: &Arc<P>,
-    ) -> Result<(), MessageProcessingError>
+    ) -> Result<(), ImsDataIntegrationError>
     where
         P: crate::EventProcessor + Send + Sync + 'static;
 
@@ -37,16 +37,16 @@ pub trait LocalImsTradeDataIntegration {
     /// The method takes a `&[String]` of symbols to stop fetching data for.
     ///
     /// The method returns a `Result` of `()`. If the method is successful, the
-    /// `Result` is `Ok`, otherwise it is `Err` with a `MessageProcessingError`.
+    /// `Result` is `Ok`, otherwise it is `Err` with a `ImsDataIntegrationError`.
     ///
-    async fn stop_trade_data(&self, symbols: &[String]) -> Result<(), MessageProcessingError>;
+    async fn stop_trade_data(&self, symbols: &[String]) -> Result<(), ImsDataIntegrationError>;
 
     /// Stop fetching trade data from all symbols.
     ///
     /// This method is used to stop fetching trade data from an exchange for all symbols.
     ///
     /// The method returns a `Result` of `()`. If the method is successful, the
-    /// `Result` is `Ok`, otherwise it is `Err` with a `MessageProcessingError`.
+    /// `Result` is `Ok`, otherwise it is `Err` with a `ImsDataIntegrationError`.
     ///
-    async fn stop_all_trade_data(&self) -> Result<(), MessageProcessingError>;
+    async fn stop_all_trade_data(&self) -> Result<(), ImsDataIntegrationError>;
 }

@@ -1,12 +1,12 @@
 use binance_spot_data_integration::ImsBinanceSpotDataIntegration;
 use common_data_bar::{OHLCVBar, TimeResolution, TradeBar};
 use common_data_bar_ext::{SbeOHLCVBarExtension, SbeTradeBarExtension};
-use common_errors::MessageProcessingError;
 use sbe_types::MessageType;
 use std::sync::Arc;
 use tokio::time::Duration;
 use trait_data_integration::{
-    EventProcessor, ImsOhlcvDataIntegration, ImsSymbolIntegration, ImsTradeDataIntegration,
+    EventProcessor, ImsDataIntegrationError, ImsOhlcvDataIntegration, ImsSymbolIntegration,
+    ImsTradeDataIntegration,
 };
 
 /// This example demonstrates how to use the Binance data integration to:
@@ -16,7 +16,7 @@ use trait_data_integration::{
 /// 4. Process incoming data
 /// 5. Gracefully stop all streams
 #[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error>> {
+async fn main() -> Result<(), ImsDataIntegrationError> {
     // Initialize rustls crypto provider for secure WebSocket connections
     // https://github.com/snapview/tokio-tungstenite/issues/353
     rustls::crypto::ring::default_provider()
@@ -94,7 +94,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 struct PrintEventProcessor;
 
 impl EventProcessor for PrintEventProcessor {
-    async fn process(&self, data: &[Vec<u8>]) -> Result<(), MessageProcessingError> {
+    async fn process(&self, data: &[Vec<u8>]) -> Result<(), ImsDataIntegrationError> {
         let raw_message = data
             .first()
             .expect("Failed to get first element")
