@@ -10,9 +10,7 @@ use smdb_client::SMDBClient;
 use tokio::time::Instant;
 use trait_data_integration::ImsDataIntegration;
 
-mod auth;
 mod config;
-mod data;
 mod handle;
 mod health_check;
 mod run;
