@@ -25,7 +25,7 @@ pub trait LocalImsTradeDataIntegration {
     async fn start_trade_data<P>(
         &self,
         symbols: &[String],
-        processor: Arc<P>,
+        processor: &Arc<P>,
     ) -> Result<(), MessageProcessingError>
     where
         P: crate::EventProcessor + Send + Sync + 'static;

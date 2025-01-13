@@ -41,7 +41,7 @@ impl ImsTradeDataIntegration for ImsBinanceDataIntegration {
     async fn start_trade_data<P>(
         &self,
         symbols: &[String],
-        processor: Arc<P>,
+        processor: &Arc<P>,
     ) -> Result<(), MessageProcessingError>
     where
         P: EventProcessor + Send + Sync + 'static,

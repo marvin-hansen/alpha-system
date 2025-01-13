@@ -27,7 +27,7 @@ pub trait LocalImsOhlcvDataIntegration {
         &self,
         symbols: &[String],
         time_resolution: TimeResolution,
-        processor: Arc<P>,
+        processor: &Arc<P>,
     ) -> Result<(), MessageProcessingError>
     where
         P: crate::EventProcessor + Send + Sync + 'static;

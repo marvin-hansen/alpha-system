@@ -43,7 +43,7 @@ impl ImsOhlcvDataIntegration for ImsBinanceDataIntegration {
         &self,
         symbols: &[String],
         time_resolution: TimeResolution,
-        processor: Arc<P>,
+        processor: &Arc<P>,
     ) -> Result<(), MessageProcessingError>
     where
         P: EventProcessor + Send + Sync + 'static,

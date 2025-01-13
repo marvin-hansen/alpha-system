@@ -81,7 +81,7 @@ pub fn ims_data_integration(input: TokenStream) -> TokenStream {
             fn start_trade_data<P>(
                 &self,
                 symbols: &[String],
-                processor: Arc<P>,
+                processor: &Arc<P>,
             ) -> impl Future<Output = Result<(), MessageProcessingError>> + Send
             where
                 P: EventProcessor + Send + Sync + 'static,
@@ -108,7 +108,7 @@ pub fn ims_data_integration(input: TokenStream) -> TokenStream {
                 &self,
                 symbols: &[String],
                 time_resolution: TimeResolution,
-                processor: Arc<P>,
+                processor: &Arc<P>,
             ) -> impl Future<Output = Result<(), MessageProcessingError>> + Send
             where
                 P: EventProcessor + Send + Sync + 'static,
