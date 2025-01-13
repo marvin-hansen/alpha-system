@@ -11,7 +11,6 @@ use binance_coin_futures_data_integration::ImsBinanceCoinFuturesDataIntegration;
 use common_data_bar::{OHLCVBar, TimeResolution, TradeBar};
 use common_data_bar_ext::{SbeOHLCVBarExtension, SbeTradeBarExtension};
 use sbe_types::MessageType;
-use std::future::Future;
 use std::sync::Arc;
 use std::time::Duration;
 use tokio::time;
@@ -125,19 +124,16 @@ impl EventProcessor for PrintEventProcessor {
         Ok(())
     }
 
-    fn send_one_message(
-        &self,
-        _bytes: Vec<u8>,
-    ) -> impl Future<Output = Result<(), ImsDataIntegrationError>> + Send {
+    async fn send_one_message(&self, _bytes: Vec<u8>) -> Result<(), ImsDataIntegrationError> {
         Err(ImsDataIntegrationError::NotSupportedError(
             "Not supported".to_string(),
         ))
     }
 
-    fn send_batch_messages(
+    async fn send_batch_messages(
         &self,
         _bytes_batch: &[Vec<u8>],
-    ) -> impl Future<Output = Result<(), ImsDataIntegrationError>> + Send {
+    ) -> Result<(), ImsDataIntegrationError> {
         Err(ImsDataIntegrationError::NotSupportedError(
             "Not supported".to_string(),
         ))
