@@ -20,8 +20,6 @@ config_manager = { workspace = true }
 wait_utils = {workspace = true}
 # External crates
 tokio = { workspace = true }
-tonic = { workspace = true }
-tonic-health = { workspace = true }
 
 [dev-dependencies]
 docker_utils = {workspace = true}
