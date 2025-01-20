@@ -18,7 +18,7 @@ fn get_service_start_config(program: &'static str, host: String, port: u16) -> S
         .build()
 }
 
-pub const ROOT_PATH: &str = "queng_services/core/smdb/smdb_tests/tests";
+pub const ROOT_PATH: &str = "queng_system_core/smdb/smdb_tests/tests";
 pub const BINARIES: [&str; 2] = ["dbgw", "smdb"];
 
 #[tokio::test]

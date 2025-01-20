@@ -14,12 +14,12 @@ members = [
     "queng_macros/*",
     "queng_proto/*",
     "queng_sbe/*",
-    "queng_services/core/*/*",
-    "queng_services/ims/*/*",
-    "queng_services/ims_data/*/*",
-    "queng_services/mds/*/*",
-    "queng_services/templete/*",
     "queng_specs/*/*",
+    "queng_system_core/*/*",
+    "queng_system_ims/*/*",
+    "queng_system_ims_data/*/*",
+    "queng_system_mds/*/*",
+    "queng_template/*",
     "queng_utils/*",
 ]
 exclude = [
@@ -28,35 +28,10 @@ exclude = [
 
 [workspace.package]
 edition = "2021"
-rust-version = "1.82.0"
+rust-version = "1.84.0"
 readme = "README.md"
 repository = "https://github.com/marvin-hansen/quant-engine"
 authors = ["Marvin Hansen <marvin.hansen@gmail.com>"]
-
-# Linting with clippy
-[workspace.lints.clippy]
-all = "warn"
-
-# Linting strict mode
-[workspace.lints.rust]
-# Warnings
-deprecated-safe = "warn"
-deprecated_safe_2024 = "warn"
-
-# Optimize all crates
-[profile.release]
-opt-level = 3
-strip = true  # Automatically strip debug symbols from the binary
-lto = true    # Enable Link Time Optimization (LTO)
-codegen-units = 1 # Reduce Parallel Code Generation Units to Increase Optimization
-
-# There's a Cargo feature named profile-overrides
-# that lets you override the optimization level of dependencies.
-# https://docs.rust-embedded.org/book/unsorted/speed-vs-size.html
-[profile.release.package."*"]
-opt-level = 3
-strip = 'debuginfo'  # Automatically strip debug infos from the binary to reduce size
-codegen-units = 1 # Reduce Parallel Code Generation Units to Increase Optimization
 
 [workspace.dependencies]
 # ==============
@@ -64,11 +39,14 @@ codegen-units = 1 # Reduce Parallel Code Generation Units to Increase Optimizati
 # ==============
 
 # Servide clients
-cmdb_client = { path = "queng_services/core/cmdb/cmdb_client" }
-imdb_client = { path = "queng_services/ims/imdb/imdb_client" }
-ims_data_client = { path = "queng_services/ims_data/ims_clients/ims_data_client" }
-mddb_client = { path = "queng_services/mds/mddb/mddb_client" }
-smdb_client = { path = "queng_services/core/smdb/smdb_client" }
+# Core
+cmdb_client = { path = "queng_system_core/cmdb/cmdb_client" }
+smdb_client = { path = "queng_system_core/smdb/smdb_client" }
+# IMS
+imdb_client = { path = "queng_system_ims/imdb/imdb_client" }
+ims_data_client = { path = "queng_system_ims/ims_clients/ims_data_client" }
+# MDS
+mddb_client = { path = "queng_system_mds/mddb/mddb_client" }
 
 # Common
 common_config = { path = "queng_common/common_config" }
@@ -174,14 +152,14 @@ sbe_types = { path = "queng_sbe/sbe_types" }
 sbe_utils = { path = "queng_sbe/sbe_utils" }
 
 # MDS
-kaiko_client = { path = "queng_services/mds/kaiko/kaiko_client" }
-kaiko_proxy = { path = "queng_services/mds/kaiko/kaiko_proxy" }
+kaiko_client = { path = "queng_system_mds/kaiko/kaiko_client" }
+kaiko_proxy = { path = "queng_system_mds/kaiko/kaiko_proxy" }
 # Non-Bazel targets since CloudFlare workers are build with Wrangler
-kaiko_cdn = { path = "queng_services/mds/kaiko/kaiko_cdn" }
-kaiko_cdn_auth = { path = "queng_services/mds/kaiko/kaiko_cdn_auth" }
+kaiko_cdn = { path = "queng_system_mds/kaiko/kaiko_cdn" }
+kaiko_cdn_auth = { path = "queng_system_mds/kaiko/kaiko_cdn_auth" }
 # Service template
-grpc_service = { path = "queng_services/templete/grpc_service" }
-ims_data_service = { path = "queng_services/templete/ims_data_service" }
+grpc_service = { path = "queng_template/grpc_service" }
+ims_data_service = { path = "queng_template/ims_data_service" }
 
 # Specs
 # Config specs
@@ -197,12 +175,11 @@ db_specs_postgres = { path = "queng_specs/database_specs/db_specs_postgres" }
 # Integration specs
 integration_specs_all = { path = "queng_specs/integration_specs/integration_specs_all" }
 # Service specs
-cmdb_specs = { path = "queng_services/core/cmdb/cmdb_specs" }
-dbgw_specs = { path = "queng_services/core/dbgw/dbgw_specs" }
-smdb_specs = { path = "queng_services/core/smdb/smdb_specs" }
-imdb_specs = { path = "queng_services/ims/imdb/imdb_specs" }
-mddb_specs = { path = "queng_services/mds/mddb/mddb_specs" }
-ims_data_vex_specs = { path = "queng_services/ims_data/vex/ims_data_vex_specs" }
+cmdb_specs = { path = "queng_system_core/cmdb/cmdb_specs" }
+dbgw_specs = { path = "queng_system_core/dbgw/dbgw_specs" }
+smdb_specs = { path = "queng_system_core/smdb/smdb_specs" }
+imdb_specs = { path = "queng_system_ims/imdb/imdb_specs" }
+mddb_specs = { path = "queng_system_mds/mddb/mddb_specs" }
 shared_service_specs = { path = "queng_specs/service_specs/shared_service_specs" }
 service_specs_all = { path = "queng_specs/service_specs/service_specs_all" }
 
@@ -254,3 +231,31 @@ warp = { version = "0.3" }
 console_error_panic_hook = { version = "0.1.1" }
 worker = { version = "0.5.0", default-features = false }
 worker-macros = { version = "0.5.0" }
+
+
+# Linting with clippy
+[workspace.lints.clippy]
+all = "warn"
+
+# Linting strict mode
+[workspace.lints.rust]
+# Warnings
+deprecated-safe = "warn"
+deprecated_safe_2024 = "warn"
+
+
+# Optimize all crates
+[profile.release]
+opt-level = 3
+strip = true  # Automatically strip debug symbols from the binary
+lto = true    # Enable Link Time Optimization (LTO)
+codegen-units = 1 # Reduce Parallel Code Generation Units to Increase Optimization
+
+
+# There's a Cargo feature named profile-overrides
+# that lets you override the optimization level of dependencies.
+# https://docs.rust-embedded.org/book/unsorted/speed-vs-size.html
+[profile.release.package."*"]
+opt-level = 3
+strip = 'debuginfo'  # Automatically strip debug infos from the binary to reduce size
+codegen-units = 1 # Reduce Parallel Code Generation Units to Increase Optimization

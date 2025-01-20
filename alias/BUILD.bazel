@@ -158,7 +158,7 @@ alias(
 
 alias(
     name = "kaiko_cdn_auth",
-    actual = "//queng_services/mds/kaiko/kaiko_cdn_auth",
+    actual = "//queng_system_mds/kaiko/kaiko_cdn_auth",
 )
 
 alias(
@@ -539,35 +539,29 @@ alias(
 # Core service specs
 alias(
     name = "cmdb_specs",
-    actual = "//queng_services/core/cmdb/cmdb_specs",
+    actual = "//queng_system_core/cmdb/cmdb_specs",
 )
 
 alias(
     name = "dbgw_specs",
-    actual = "//queng_services/core/dbgw/dbgw_specs",
+    actual = "//queng_system_core/dbgw/dbgw_specs",
 )
 
 alias(
     name = "smdb_specs",
-    actual = "//queng_services/core/smdb/smdb_specs",
+    actual = "//queng_system_core/smdb/smdb_specs",
 )
 
 # IMS service specs
 alias(
     name = "imdb_specs",
-    actual = "//queng_services/ims/imdb/imdb_specs",
-)
-
-# IMS Data sepcs
-alias(
-    name = "ims_data_vex_specs",
-    actual = "//queng_services/ims_data/vex/ims_data_vex_specs",
+    actual = "//queng_system_ims/imdb/imdb_specs",
 )
 
 # MDS service specs
 alias(
     name = "mddb_specs",
-    actual = "//queng_services/mds/mddb/mddb_specs",
+    actual = "//queng_system_mds/mddb/mddb_specs",
 )
 
 # Shared service specs

@@ -21,7 +21,7 @@ fn get_service_start_config(program: &'static str, host: String, port: u16) -> S
         .build()
 }
 
-pub const ROOT_PATH: &str = "queng_services/ims/imdb/imdb_tests/tests";
+pub const ROOT_PATH: &str = "queng_system_ims/imdb/imdb_tests/tests";
 
 pub const BINARIES: [&str; 3] = ["dbgw", "smdb", "imdb"];
 

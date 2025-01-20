@@ -7,12 +7,12 @@ package(default_visibility = ["//visibility:public"])
 
 alias(
     name = "cmdb_client",
-    actual = "//queng_services/core/cmdb/cmdb_client",
+    actual = "//queng_system_core/cmdb/cmdb_client",
 )
 
 alias(
     name = "smdb_client",
-    actual = "//queng_services/core/smdb/smdb_client",
+    actual = "//queng_system_core/smdb/smdb_client",
 )
 
 ###############################################################################
@@ -21,12 +21,12 @@ alias(
 
 alias(
     name = "kaiko_client",
-    actual = "//queng_services/mds/kaiko/kaiko_client",
+    actual = "//queng_system_mds/kaiko/kaiko_client",
 )
 
 alias(
     name = "mddb_client",
-    actual = "//queng_services/mds/mddb/mddb_client",
+    actual = "//queng_system_mds/mddb/mddb_client",
 )
 
 ###############################################################################
@@ -35,11 +35,11 @@ alias(
 
 alias(
     name = "imdb_client",
-    actual = "//queng_services/ims/imdb/imdb_client",
+    actual = "//queng_system_ims/imdb/imdb_client",
 )
 
 alias(
     name = "ims_data_client",
-    actual = "//queng_services/ims_data/ims_clients/ims_data_client",
+    actual = "//queng_system_ims/ims_clients/ims_data_client",
 )
 
