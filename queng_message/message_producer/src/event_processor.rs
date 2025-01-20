@@ -28,7 +28,9 @@ impl EventProcessor for MessageProducer {
         // Send the message
         match self.producer.send_one(message).await {
             Ok(()) => Ok(()),
-            Err(e) => Err(ImsDataIntegrationError::FailedToSendDataMessage { 0: e.to_string() }),
+            Err(e) => Err(ImsDataIntegrationError::FailedToSendDataMessage(
+                e.to_string(),
+            )),
         }
     }
 
@@ -57,7 +59,9 @@ impl EventProcessor for MessageProducer {
         // Send the message batch
         match self.producer.send(messages).await {
             Ok(()) => Ok(()),
-            Err(e) => Err(ImsDataIntegrationError::FailedToSendDataMessage { 0: e.to_string() }),
+            Err(e) => Err(ImsDataIntegrationError::FailedToSendDataMessage(
+                e.to_string(),
+            )),
         }
     }
 }

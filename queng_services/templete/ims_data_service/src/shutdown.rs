@@ -14,7 +14,7 @@ impl<Integration: ImsDataIntegration> Service<Integration> {
         for (client_id, _) in client_db.iter() {
             self.client_logout(*client_id)
                 .await
-                .expect(format!("Failed to log out client {client_id}").as_str());
+                .unwrap_or_else(|_| panic!("Failed to log out client {client_id}"));
         }
 
         self.dbg_print("Shutdown integration service");
