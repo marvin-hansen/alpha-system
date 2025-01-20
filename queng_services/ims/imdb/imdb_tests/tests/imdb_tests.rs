@@ -1,44 +1,63 @@
-use common_config::ServiceID;
 use common_ims::ExchangeID;
+use config_manager::CfgManager;
 use container_specs_postgres::postgres_db_container_config;
 use docker_utils::DockerUtil;
 use imdb_client::IMDBClient;
 use imdb_client::ImdbClientTrait;
 use integration_import::IntegrationImportManager;
 use service_import::ServiceImportManager;
-use service_utils::ServiceUtil;
+use service_utils::{ServiceStartConfig, ServiceUtil};
 use std::time::Duration;
-use wait_utils::WaitStrategy;
 
-async fn get_service_wait_strategy(host: String, port: u16) -> WaitStrategy {
+fn get_service_wait_strategy(host: String, port: u16) -> service_utils::WaitStrategy {
     let url = format!("http://{host}:{port}");
-    WaitStrategy::WaitForGrpcHealthCheck(url, 10)
+    service_utils::WaitStrategy::WaitForGrpcHealthCheck(url, 10)
 }
+
+fn get_service_start_config(program: &'static str, host: String, port: u16) -> ServiceStartConfig {
+    ServiceStartConfig::builder()
+        .program(program)
+        .wait_strategy(get_service_wait_strategy(host, port))
+        .build()
+}
+
+pub const ROOT_PATH: &str = "queng_services/ims/imdb/imdb_tests/tests";
+
+pub const BINARIES: [&str; 3] = ["dbgw", "smdb", "imdb"];
 
 #[tokio::test]
 async fn test_imdb() {
     let docker_util = DockerUtil::with_debug().expect("Failed to get DockerUtil");
-    // Start service util
-    let res = ServiceUtil::with_debug().await;
-    dbg!(&res);
-    assert!(res.is_ok());
-    let svc_util = res.unwrap();
-
-    // Get config manger for automatic configuration
-    let config_manager = svc_util.config_manager();
 
     // Start or reuse a test postgres database container
     let pg_container_config = postgres_db_container_config();
     let result = docker_util.get_or_start_container_config(&pg_container_config);
-    dbg!(&result);
+    if result.is_err() {
+        dbg!(&result);
+    }
     assert!(result.is_ok());
     let (pg_container_id, _) = result.unwrap();
+    dbg!("✅ Postgres container ID: {pg_container_id} started");
 
-    // Test if service data is already imported in the DB; if not, do so.
+    dbg!("Start service util");
+    let res = ServiceUtil::with_debug(ROOT_PATH, Vec::from(BINARIES)).await;
+    if res.is_err() {
+        dbg!(&res);
+    }
+    assert!(res.is_ok());
+    let svc_util = res.unwrap();
+    dbg!("✅ service util started");
+
+    dbg!("Start config manager");
+    let config_manager = CfgManager::default_with_debug();
+    dbg!("✅ config manager started");
+
+    dbg!("Test if service data is already imported in the DB; if not, do so.");
     let service_import_manager = ServiceImportManager::with_debug().await;
     let imported = service_import_manager.check_if_already_imported().await;
 
     if !imported {
+        dbg!("Import service data into the DB");
         service_import_manager
             .import_services()
             .await
@@ -47,6 +66,7 @@ async fn test_imdb() {
 
     let imported = service_import_manager.check_if_already_imported().await;
     assert!(imported);
+    dbg!("✅ Service data imported");
 
     // Test if integration data has already been imported in the DB; if not, do so.
     let integration_import_manager = IntegrationImportManager::with_debug().await;
@@ -55,6 +75,7 @@ async fn test_imdb() {
         .check_if_integrations_imported()
         .await;
     if !imported {
+        dbg!("Import integration data into the DB");
         integration_import_manager
             .import_integration_configs()
             .await
@@ -65,39 +86,57 @@ async fn test_imdb() {
         .check_if_integrations_imported()
         .await;
     assert!(imported);
+    dbg!("✅ Integration data imported");
 
     dbg!("Start DBGW service - depends on Database");
-    let service_id = ServiceID::DBGW;
     let (host, port) = config_manager
         .get_dbgw_host_port()
         .await
         .expect("Failed to get host and port for DBGW");
-    let wait_strategy = get_service_wait_strategy(host, port).await;
-    let result = svc_util.start_service(&service_id, &wait_strategy).await;
-    dbg!(&result);
+
+    dbg!(&host);
+    dbg!(&port);
+
+    let dbgw_start_config = get_service_start_config("dbgw", host, port);
+    let result = svc_util.start_service_from_config(dbgw_start_config).await;
+    if result.is_err() {
+        dbg!(&result);
+    }
     assert!(result.is_ok());
+    dbg!("✅ DBGW service started");
 
     dbg!("Start SMDB service - depends on DBGW");
-    let service_id = ServiceID::SMDB;
     let (host, port) = config_manager
         .get_smdb_host_port()
         .await
         .expect("Failed to get host and port for DBGW");
-    let wait_strategy = get_service_wait_strategy(host, port).await;
-    let result = svc_util.start_service(&service_id, &wait_strategy).await;
-    assert!(result.is_ok());
 
-    dbg!("Start IMDB - depends on SMDB");
-    let service_id = ServiceID::IMDB;
+    dbg!(&host);
+    dbg!(&port);
+
+    let smdb_start_config = get_service_start_config("smdb", host, port);
+    let result = svc_util.start_service_from_config(smdb_start_config).await;
+    if result.is_err() {
+        dbg!(&result);
+    }
+    assert!(result.is_ok());
+    dbg!("✅ SMDB service started");
+
+    dbg!("Start IMDB service - depends on SMDB");
     let (host, port) = config_manager
         .get_imdb_host_port()
         .await
         .expect("Failed to get host and port for DBGW");
-    let wait_strategy = get_service_wait_strategy(host, port).await;
-    let result = svc_util.start_service(&service_id, &wait_strategy).await;
-    assert!(result.is_ok());
 
-    // Configure IMDB client
+    let imdb_start_config = get_service_start_config("imdb", host, port);
+    let result = svc_util.start_service_from_config(imdb_start_config).await;
+    if result.is_err() {
+        dbg!(&result);
+    }
+    assert!(result.is_ok());
+    dbg!("✅ IMDB service started");
+
+    dbg!("Configure IMDB client");
     let (host, port) = config_manager
         .get_imdb_host_port()
         .await
@@ -115,6 +154,7 @@ async fn test_imdb() {
     let client = IMDBClient::new(host, port)
         .await
         .expect("Failed to create IMDB client");
+    dbg!("✅ IMDB client started");
 
     // Test IMDB service with IMDB client
     test_imdb_integrations(&client).await;
@@ -135,7 +175,7 @@ async fn test_imdb_integrations(client: &IMDBClient) {
     assert!(count > 0);
 
     // Test check_if_integration_exists
-    let integration_id = "ims-data-binance".to_string();
+    let integration_id = "BinanceSpot-data".to_string();
     let res = client
         .check_if_integration_exists(integration_id.clone())
         .await;
@@ -146,7 +186,7 @@ async fn test_imdb_integrations(client: &IMDBClient) {
     assert!(exists);
 
     // Test check_if_integration_online
-    let integration_id = "ims-data-binance".to_string();
+    let integration_id = "BinanceSpot-data".to_string();
     let res = client
         .check_if_integration_online(integration_id.clone())
         .await;
@@ -157,7 +197,7 @@ async fn test_imdb_integrations(client: &IMDBClient) {
     assert!(!online);
 
     // Test get_integration
-    let integration_id = "ims-data-binance".to_string();
+    let integration_id = "BinanceSpot-data".to_string();
     let res = client.get_integration(integration_id.clone()).await;
     assert!(res.is_ok());
 
@@ -199,7 +239,7 @@ async fn test_imdb_integrations(client: &IMDBClient) {
     assert!(!integrations.is_empty());
 
     // Test set_integration_online
-    let integration_id = "ims-data-binance".to_string();
+    let integration_id = "BinanceSpot-data".to_string();
 
     // Test if integration is offline, which it is by default.
     let res = client

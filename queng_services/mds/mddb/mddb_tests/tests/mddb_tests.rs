@@ -1,46 +1,65 @@
-use common_config::ServiceID;
+use config_manager::CfgManager;
 use container_specs_postgres::postgres_db_container_config;
 use docker_utils::DockerUtil;
 use mddb_client::MDDBClient;
 use metadata_import::MetadataImportManager;
 use service_import::ServiceImportManager;
-use service_utils::ServiceUtil;
-use wait_utils::WaitStrategy;
+use service_utils::{ServiceStartConfig, ServiceUtil};
 
 const ASSETS_SAMPLE_SIZE: usize = 50;
 const EXCHANGES_SAMPLE_SIZE: usize = 50;
 //  We need to import more instruments b/c the first 50 do not have FIGI ID's assigned.
 const INSTRUMENTS_SAMPLE_SIZE: usize = 500;
 
-async fn get_service_wait_strategy(host: String, port: u16) -> WaitStrategy {
+fn get_service_wait_strategy(host: String, port: u16) -> service_utils::WaitStrategy {
     let url = format!("http://{host}:{port}");
-    WaitStrategy::WaitForGrpcHealthCheck(url, 10)
+    service_utils::WaitStrategy::WaitForGrpcHealthCheck(url, 10)
 }
+
+fn get_service_start_config(program: &'static str, host: String, port: u16) -> ServiceStartConfig {
+    ServiceStartConfig::builder()
+        .program(program)
+        .wait_strategy(get_service_wait_strategy(host, port))
+        .build()
+}
+
+pub const ROOT_PATH: &str = "queng_services/mds/mddb/mddb_tests/tests";
+
+pub const BINARIES: [&str; 3] = ["dbgw", "smdb", "mddb"];
 
 #[tokio::test]
 async fn test_mddb() {
     let docker_util = DockerUtil::with_debug().expect("Failed to get DockerUtil");
-    // Start service util
-    let res = ServiceUtil::with_debug().await;
-    dbg!(&res);
-    assert!(res.is_ok());
-    let svc_util = res.unwrap();
-
-    // Get config manger for automatic configuration
-    let config_manager = svc_util.config_manager();
 
     // Start or reuse a test postgres database container
     let pg_container_config = postgres_db_container_config();
     let result = docker_util.get_or_start_container_config(&pg_container_config);
-    dbg!(&result);
+    if result.is_err() {
+        dbg!(&result);
+    }
     assert!(result.is_ok());
     let (pg_container_id, _) = result.unwrap();
+    dbg!("✅ Postgres container ID: {pg_container_id} started");
 
-    // Test if service data is already imported in the DB; if not, do so.
+    dbg!("Start service util");
+    let res = ServiceUtil::with_debug(ROOT_PATH, Vec::from(BINARIES)).await;
+    if res.is_err() {
+        dbg!(&res);
+    }
+    assert!(res.is_ok());
+    let svc_util = res.unwrap();
+    dbg!("✅ service util started");
+
+    dbg!("Start config manager");
+    let config_manager = CfgManager::default_with_debug();
+    dbg!("✅ config manager started");
+
+    dbg!("Test if service data is already imported in the DB; if not, do so.");
     let service_import_manager = ServiceImportManager::with_debug().await;
     let imported = service_import_manager.check_if_already_imported().await;
 
     if !imported {
+        dbg!("Import service data into the DB");
         service_import_manager
             .import_services()
             .await
@@ -49,6 +68,7 @@ async fn test_mddb() {
 
     let imported = service_import_manager.check_if_already_imported().await;
     assert!(imported);
+    dbg!("✅ Service data imported");
 
     //Determine workflow for metadata import
     let meta_data_import_manager = MetadataImportManager::with_debug().await;
@@ -72,37 +92,54 @@ async fn test_mddb() {
         .expect("Failed to execute workflow");
 
     dbg!("Start DBGW service - depends on Database");
-    let service_id = ServiceID::DBGW;
     let (host, port) = config_manager
         .get_dbgw_host_port()
         .await
         .expect("Failed to get host and port for DBGW");
-    let wait_strategy = get_service_wait_strategy(host, port).await;
-    let result = svc_util.start_service(&service_id, &wait_strategy).await;
-    dbg!(&result);
+
+    dbg!(&host);
+    dbg!(&port);
+
+    let dbgw_start_config = get_service_start_config("dbgw", host, port);
+    let result = svc_util.start_service_from_config(dbgw_start_config).await;
+    if result.is_err() {
+        dbg!(&result);
+    }
     assert!(result.is_ok());
+    dbg!("✅ DBGW service started");
 
     dbg!("Start SMDB service - depends on DBGW");
-    let service_id = ServiceID::SMDB;
     let (host, port) = config_manager
         .get_smdb_host_port()
         .await
         .expect("Failed to get host and port for DBGW");
-    let wait_strategy = get_service_wait_strategy(host, port).await;
-    let result = svc_util.start_service(&service_id, &wait_strategy).await;
-    assert!(result.is_ok());
 
-    // Start MDDB service - depends on SMDB
-    let service_id = ServiceID::MDDB;
+    dbg!(&host);
+    dbg!(&port);
+
+    let smdb_start_config = get_service_start_config("smdb", host, port);
+    let result = svc_util.start_service_from_config(smdb_start_config).await;
+    if result.is_err() {
+        dbg!(&result);
+    }
+    assert!(result.is_ok());
+    dbg!("✅ SMDB service started");
+
+    dbg!("Start MDDB service - depends on SMDB");
     let (host, port) = config_manager
         .get_mddb_host_port()
         .await
-        .expect("Failed to get host and port for DBGW");
-    let wait_strategy = get_service_wait_strategy(host, port).await;
-    let result = svc_util.start_service(&service_id, &wait_strategy).await;
-    assert!(result.is_ok());
+        .expect("Failed to get host and port for MDDB");
 
-    // Configure MDDB client
+    let mddb_start_config = get_service_start_config("mddb", host, port);
+    let result = svc_util.start_service_from_config(mddb_start_config).await;
+    if result.is_err() {
+        dbg!(&result);
+    }
+    assert!(result.is_ok());
+    dbg!("✅ MDDB service started");
+
+    dbg!("Configure MDDB client");
     let (host, port) = config_manager
         .get_mddb_host_port()
         .await
@@ -114,6 +151,7 @@ async fn test_mddb() {
     let client = MDDBClient::new(host, port)
         .await
         .expect("Failed to create MDDB client");
+    dbg!("✅ MDDB client started");
 
     // Test MDDB Assets methods.
     test_metadata_assets_api(&client).await;

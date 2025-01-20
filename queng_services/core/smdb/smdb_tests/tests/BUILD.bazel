@@ -1,10 +1,16 @@
+load("@aspect_bazel_lib//lib:copy_file.bzl", "copy_file")
 load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 
 rust_test_suite(
-    name = "smdb_tests",
+    name = "tests",
     srcs = glob([
         "*_tests.rs",
     ]),
+    data = [
+        # copy core services
+        ":copy_core_dbgw",
+        ":copy_core_smdb",
+    ],
     exec_properties = {
         # Tell BuildBuddy to run this test using a Firecracker microVM.
         "test.workload-isolation-type": "firecracker",
@@ -27,12 +33,27 @@ rust_test_suite(
         "//alias/client:smdb_client",
         # Internal crates
         "//alias:common_config",
+        "//alias:config_manager",
         "//alias:container_specs_postgres",
         "//alias:docker_utils",
         "//alias:service_import",
-        "//alias:service_utils",
-        "//alias:wait_utils",
         # External crates
+        # "//thirdparty/crates:docker_utils",
+        "//thirdparty/crates:service_utils",
         "//thirdparty/crates:tokio",
     ],
+)
+
+copy_file(
+    name = "copy_core_dbgw",
+    src = "//alias/service:dbgw",
+    out = "dbgw",
+    is_executable = True,
+)
+
+copy_file(
+    name = "copy_core_smdb",
+    src = "//alias/service:smdb",
+    out = "smdb",
+    is_executable = True,
 )

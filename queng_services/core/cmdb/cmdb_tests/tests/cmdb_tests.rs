@@ -1,41 +1,59 @@
 use cmdb_client::CmdbClient;
-use common_config::ServiceID;
+use config_manager::CfgManager;
 use container_specs_postgres::postgres_db_container_config;
 use docker_utils::DockerUtil;
 use service_import::ServiceImportManager;
-use service_utils::ServiceUtil;
-use wait_utils::WaitStrategy;
+use service_utils::*;
 
-async fn get_service_wait_strategy(host: String, port: u16) -> WaitStrategy {
+fn get_service_wait_strategy(host: String, port: u16) -> WaitStrategy {
     let url = format!("http://{host}:{port}");
     WaitStrategy::WaitForGrpcHealthCheck(url, 10)
 }
+
+fn get_service_start_config(program: &'static str, host: String, port: u16) -> ServiceStartConfig {
+    ServiceStartConfig::builder()
+        .program(program)
+        .wait_strategy(get_service_wait_strategy(host, port))
+        .build()
+}
+
+pub const ROOT_PATH: &str = "queng_services/core/cmdb/cmdb_tests/tests";
+
+pub const BINARIES: [&str; 3] = ["dbgw", "smdb", "cmdb"];
 
 #[tokio::test]
 async fn test_cmdb() {
     let docker_util = DockerUtil::with_debug().expect("Failed to get DockerUtil");
 
-    // Start or reuse a test postgres database container
+    dbg!("Start or reuse a test postgres database container");
     let pg_container_config = postgres_db_container_config();
     let result = docker_util.get_or_start_container_config(&pg_container_config);
-    dbg!(&result);
+    if result.is_err() {
+        dbg!(&result);
+    }
     assert!(result.is_ok());
     let (pg_container_id, _) = result.unwrap();
+    dbg!("✅ Postgres container ID: {pg_container_id} started");
 
-    // Start service util
-    let res = ServiceUtil::with_debug().await;
-    dbg!(&res);
+    dbg!("Start service util");
+    let res = ServiceUtil::with_debug(ROOT_PATH, Vec::from(BINARIES)).await;
+    if res.is_err() {
+        dbg!(&res);
+    }
     assert!(res.is_ok());
     let svc_util = res.unwrap();
+    dbg!("✅ service util started");
 
-    // Get config manger for automatic configuration
-    let config_manager = svc_util.config_manager();
+    dbg!("Start config manager");
+    let config_manager = CfgManager::default_with_debug();
+    dbg!("✅ config manager started");
 
-    // Test if service data is already imported in the DB; if not, do so.
+    dbg!("Test if service data is already imported in the DB; if not, do so.");
     let service_import_manager = ServiceImportManager::with_debug().await;
     let imported = service_import_manager.check_if_already_imported().await;
 
     if !imported {
+        dbg!("Import service data into the DB");
         service_import_manager
             .import_services()
             .await
@@ -44,39 +62,60 @@ async fn test_cmdb() {
 
     let imported = service_import_manager.check_if_already_imported().await;
     assert!(imported);
+    dbg!("✅ Service data imported");
 
     dbg!("Start DBGW service - depends on Database");
-    let service_id = ServiceID::DBGW;
     let (host, port) = config_manager
         .get_dbgw_host_port()
         .await
         .expect("Failed to get host and port for DBGW");
-    let wait_strategy = get_service_wait_strategy(host, port).await;
-    let result = svc_util.start_service(&service_id, &wait_strategy).await;
-    dbg!(&result);
+
+    dbg!(&host);
+    dbg!(&port);
+
+    let dbgw_start_config = get_service_start_config("dbgw", host, port);
+    let result = svc_util.start_service_from_config(dbgw_start_config).await;
+    if result.is_err() {
+        dbg!(&result);
+    }
     assert!(result.is_ok());
+    dbg!("✅ DBGW service started");
 
     dbg!("Start SMDB service - depends on DBGW");
-    let service_id = ServiceID::SMDB;
     let (host, port) = config_manager
         .get_smdb_host_port()
         .await
         .expect("Failed to get host and port for DBGW");
-    let wait_strategy = get_service_wait_strategy(host, port).await;
-    let result = svc_util.start_service(&service_id, &wait_strategy).await;
-    assert!(result.is_ok());
 
-    // Start CMDDB service - depends on SMDB and DBGW
-    let service_id = ServiceID::CMDB;
+    dbg!(&host);
+    dbg!(&port);
+
+    let smdb_start_config = get_service_start_config("smdb", host, port);
+    let result = svc_util.start_service_from_config(smdb_start_config).await;
+    if result.is_err() {
+        dbg!(&result);
+    }
+    assert!(result.is_ok());
+    dbg!("✅ SMDB service started");
+
+    dbg!("Start CMDB service - depends on SMDB and DBGW");
     let (host, port) = config_manager
         .get_cmdb_host_port()
         .await
         .expect("Failed to get host and port for DBGW");
-    let wait_strategy = get_service_wait_strategy(host, port).await;
-    let result = svc_util.start_service(&service_id, &wait_strategy).await;
-    assert!(result.is_ok());
 
-    // Configure CMDB client
+    dbg!(&host);
+    dbg!(&port);
+
+    let cmdb_start_config = get_service_start_config("cmdb", host, port);
+    let result = svc_util.start_service_from_config(cmdb_start_config).await;
+    if result.is_err() {
+        dbg!(&result);
+    }
+    assert!(result.is_ok());
+    dbg!("✅ CMDB service started");
+
+    dbg!("Configure CMDB client");
     let (cmdb_host, cmdb_port) = config_manager
         .get_cmdb_host_port()
         .await
@@ -86,6 +125,7 @@ async fn test_cmdb() {
 
     // Construct CMDB client
     let cmdb_client = CmdbClient::new(cmdb_host, cmdb_port).await;
+    dbg!("✅ CMDB client started");
 
     // Test create_portfolio_config  - Success!
     let portfolio_config = portfolio_specs::get_test_portfolio_config();

@@ -20,13 +20,12 @@ path = "src/fake_lib.rs"
 imdb_client = {workspace = true}
 # Internal crates
 common_config = {workspace = true}
-common_env = {workspace = true}
 common_ims = {workspace = true}
+config_manager = { workspace = true }
 container_specs_postgres = {workspace = true}
-docker_utils = {workspace = true}
 integration_import = {workspace = true}
 service_import  = {workspace = true}
-service_utils = {workspace = true}
-wait_utils = { workspace = true }
 # External crates
+docker_utils = { workspace = true }
+service_utils = { workspace = true }
 tokio = {workspace = true}

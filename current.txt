@@ -1,1 +1,1 @@
-//alias/service:ims_data_service
+//queng_services/ims/imdb/imdb_tests/tests
