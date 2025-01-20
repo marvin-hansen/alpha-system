@@ -79,10 +79,10 @@ rust_proc_macro(
     }),
     version = "0.2.0",
     deps = [
-        "//thirdparty/crates/indexmap-2.7.0:indexmap",
-        "//thirdparty/crates/proc-macro2-1.0.92:proc_macro2",
-        "//thirdparty/crates/quote-1.0.37:quote",
+        "//thirdparty/crates/indexmap-2.7.1:indexmap",
+        "//thirdparty/crates/proc-macro2-1.0.93:proc_macro2",
+        "//thirdparty/crates/quote-1.0.38:quote",
         "//thirdparty/crates/regex-1.11.1:regex",
-        "//thirdparty/crates/syn-2.0.91:syn",
+        "//thirdparty/crates/syn-2.0.96:syn",
     ],
 )

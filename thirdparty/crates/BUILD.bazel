@@ -79,6 +79,12 @@ alias(
 )
 
 alias(
+    name = "docker_utils",
+    actual = "//thirdparty/crates/docker_utils-0.2.1:docker_utils",
+    tags = ["manual"],
+)
+
+alias(
     name = "enum_dispatch",
     actual = "//thirdparty/crates/enum_dispatch-0.3.13:enum_dispatch",
     tags = ["manual"],
@@ -104,7 +110,7 @@ alias(
 
 alias(
     name = "iggy",
-    actual = "//thirdparty/crates/iggy-0.6.61:iggy",
+    actual = "//thirdparty/crates/iggy-0.6.71:iggy",
     tags = ["manual"],
 )
 
@@ -152,13 +158,13 @@ alias(
 
 alias(
     name = "quote",
-    actual = "//thirdparty/crates/quote-1.0.37:quote",
+    actual = "//thirdparty/crates/quote-1.0.38:quote",
     tags = ["manual"],
 )
 
 alias(
     name = "reqwest",
-    actual = "//thirdparty/crates/reqwest-0.12.9:reqwest",
+    actual = "//thirdparty/crates/reqwest-0.12.12:reqwest",
     tags = ["manual"],
 )
 
@@ -176,19 +182,25 @@ alias(
 
 alias(
     name = "rustls",
-    actual = "//thirdparty/crates/rustls-0.23.20:rustls",
+    actual = "//thirdparty/crates/rustls-0.23.21:rustls",
     tags = ["manual"],
 )
 
 alias(
     name = "serde",
-    actual = "//thirdparty/crates/serde-1.0.216:serde",
+    actual = "//thirdparty/crates/serde-1.0.217:serde",
     tags = ["manual"],
 )
 
 alias(
     name = "serde_json",
-    actual = "//thirdparty/crates/serde_json-1.0.134:serde_json",
+    actual = "//thirdparty/crates/serde_json-1.0.137:serde_json",
+    tags = ["manual"],
+)
+
+alias(
+    name = "service_utils",
+    actual = "//thirdparty/crates/service_utils-0.1.2:service_utils",
     tags = ["manual"],
 )
 
@@ -200,13 +212,13 @@ alias(
 
 alias(
     name = "syn",
-    actual = "//thirdparty/crates/syn-2.0.91:syn",
+    actual = "//thirdparty/crates/syn-2.0.96:syn",
     tags = ["manual"],
 )
 
 alias(
     name = "tokio",
-    actual = "//thirdparty/crates/tokio-1.42.0:tokio",
+    actual = "//thirdparty/crates/tokio-1.43.0:tokio",
     tags = ["manual"],
 )
 

@@ -87,7 +87,7 @@ rust_library(
     }),
     version = "2.2.6",
     deps = [
-        "//thirdparty/crates/bitflags-2.6.0:bitflags",
+        "//thirdparty/crates/bitflags-2.8.0:bitflags",
         "//thirdparty/crates/byteorder-1.5.0:byteorder",
         "//thirdparty/crates/itoa-1.0.14:itoa",
         "//thirdparty/crates/pq-sys-0.6.3:pq_sys",

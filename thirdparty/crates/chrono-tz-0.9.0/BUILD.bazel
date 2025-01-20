@@ -86,7 +86,7 @@ rust_library(
     deps = [
         "//thirdparty/crates/chrono-0.4.39:chrono",
         "//thirdparty/crates/chrono-tz-0.9.0:build_script_build",
-        "//thirdparty/crates/phf-0.11.2:phf",
+        "//thirdparty/crates/phf-0.11.3:phf",
     ],
 )
 

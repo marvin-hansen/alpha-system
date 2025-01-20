@@ -79,7 +79,7 @@ rust_library(
     }),
     version = "0.8.10",
     deps = [
-        "//thirdparty/crates/log-0.4.22:log",
+        "//thirdparty/crates/log-0.4.25:log",
         "//thirdparty/crates/parking_lot-0.12.3:parking_lot",
         "//thirdparty/crates/scheduled-thread-pool-0.2.7:scheduled_thread_pool",
     ],

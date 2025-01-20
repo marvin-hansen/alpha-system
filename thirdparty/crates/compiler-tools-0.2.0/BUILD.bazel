@@ -86,6 +86,6 @@ rust_library(
     version = "0.2.0",
     deps = [
         "//thirdparty/crates/regex-1.11.1:regex",
-        "//thirdparty/crates/serde-1.0.216:serde",
+        "//thirdparty/crates/serde-1.0.217:serde",
     ],
 )

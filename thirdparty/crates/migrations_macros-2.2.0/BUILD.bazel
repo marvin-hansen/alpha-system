@@ -83,7 +83,7 @@ rust_proc_macro(
     version = "2.2.0",
     deps = [
         "//thirdparty/crates/migrations_internals-2.2.0:migrations_internals",
-        "//thirdparty/crates/proc-macro2-1.0.92:proc_macro2",
-        "//thirdparty/crates/quote-1.0.37:quote",
+        "//thirdparty/crates/proc-macro2-1.0.93:proc_macro2",
+        "//thirdparty/crates/quote-1.0.38:quote",
     ],
 )

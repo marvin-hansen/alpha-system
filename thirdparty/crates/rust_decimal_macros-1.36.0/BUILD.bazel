@@ -82,7 +82,7 @@ rust_proc_macro(
     }),
     version = "1.36.0",
     deps = [
-        "//thirdparty/crates/quote-1.0.37:quote",
+        "//thirdparty/crates/quote-1.0.38:quote",
         "//thirdparty/crates/rust_decimal-1.36.0:rust_decimal",
     ],
 )

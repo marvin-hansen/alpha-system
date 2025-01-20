@@ -80,7 +80,7 @@ rust_library(
     version = "0.3.0",
     deps = [
         "//thirdparty/crates/parse-zoneinfo-0.3.1:parse_zoneinfo",
-        "//thirdparty/crates/phf-0.11.2:phf",
-        "//thirdparty/crates/phf_codegen-0.11.2:phf_codegen",
+        "//thirdparty/crates/phf-0.11.3:phf",
+        "//thirdparty/crates/phf_codegen-0.11.3:phf_codegen",
     ],
 )

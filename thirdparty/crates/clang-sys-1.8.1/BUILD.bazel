@@ -93,7 +93,7 @@ rust_library(
     version = "1.8.1",
     deps = [
         "//thirdparty/crates/clang-sys-1.8.1:build_script_build",
-        "//thirdparty/crates/glob-0.3.1:glob",
+        "//thirdparty/crates/glob-0.3.2:glob",
         "//thirdparty/crates/libc-0.2.169:libc",
         "//thirdparty/crates/libloading-0.8.6:libloading",
     ],
@@ -160,7 +160,7 @@ cargo_build_script(
     version = "1.8.1",
     visibility = ["//visibility:private"],
     deps = [
-        "//thirdparty/crates/glob-0.3.1:glob",
+        "//thirdparty/crates/glob-0.3.2:glob",
     ],
 )
 
