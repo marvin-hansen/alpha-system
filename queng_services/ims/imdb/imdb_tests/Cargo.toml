@@ -19,7 +19,6 @@ path = "src/fake_lib.rs"
 # Crate under test
 imdb_client = {workspace = true}
 # Internal crates
-common_config = {workspace = true}
 common_ims = {workspace = true}
 config_manager = { workspace = true }
 container_specs_postgres = {workspace = true}

@@ -13,6 +13,6 @@ rust_test_suite(
     deps = [
         # Crate to test
         "//alias:container_specs_postgres",
-        # Internal crates
+        # External crates
     ],
 )

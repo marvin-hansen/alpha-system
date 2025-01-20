@@ -1,5 +1,5 @@
-use common_container::ContainerConfig;
-use common_container::WaitStrategy::WaitForDuration;
+use docker_utils::WaitStrategy::WaitForDuration;
+use docker_utils::*;
 
 /// Constructs the configuration for a `ClickHouse` container.
 ///

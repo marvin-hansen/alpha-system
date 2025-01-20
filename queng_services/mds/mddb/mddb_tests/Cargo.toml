@@ -28,5 +28,4 @@ metadata_import = {workspace = true}
 docker_utils = { workspace = true }
 service_utils = { workspace = true }
 tokio = {workspace = true}
-wait_utils = { workspace = true }
 

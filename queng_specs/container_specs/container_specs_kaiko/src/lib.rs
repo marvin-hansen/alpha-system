@@ -1,4 +1,4 @@
-use common_container::{ContainerConfig, WaitStrategy};
+use docker_utils::{ContainerConfig, WaitStrategy};
 
 /// Constructs the configuration for an API proxy container.
 ///

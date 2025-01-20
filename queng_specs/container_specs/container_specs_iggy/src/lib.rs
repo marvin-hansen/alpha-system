@@ -1,4 +1,4 @@
-use common_container::{ContainerConfig, WaitStrategy};
+use docker_utils::{ContainerConfig, WaitStrategy};
 
 pub fn iggy_container_config() -> ContainerConfig<'static> {
     ContainerConfig::new(

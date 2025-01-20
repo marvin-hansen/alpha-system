@@ -17,6 +17,6 @@ path = "src/fake_lib.rs"
 kaiko_client = {workspace = true}
 # Internal crates
 container_specs_kaiko = {workspace = true}
-docker_utils = {workspace = true}
 # External crates
+docker_utils = { workspace = true }
 tokio = { workspace = true }

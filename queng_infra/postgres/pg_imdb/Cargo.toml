@@ -16,12 +16,12 @@ common_ims = {workspace = true}
 postgres_migrations = {workspace = true}
 
 # External crates
+docker_utils = { workspace = true }
 diesel = { workspace = true }
 diesel_migrations = { workspace = true }
 
 [dev-dependencies]
 # For testing
 container_specs_postgres = {workspace = true}
-docker_utils = {workspace = true}
 postgres_migrations = {workspace = true}
 tokio = {workspace = true}

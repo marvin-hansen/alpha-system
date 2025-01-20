@@ -15,14 +15,13 @@ workspace = true
 common_errors = {workspace = true}
 common_metadata = {workspace = true}
 # External crates
+docker_utils = { workspace = true }
 klickhouse = { workspace = true }
 serde = { workspace = true }
-serde_json = { workspace = true }
 tokio = { workspace = true }
 
 
 [dev-dependencies]
 # For testing
 container_specs_clickhouse = {workspace = true}
-docker_utils = {workspace = true}
 tokio = {workspace = true}

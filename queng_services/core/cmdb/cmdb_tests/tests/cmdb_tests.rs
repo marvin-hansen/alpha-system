@@ -27,7 +27,7 @@ async fn test_cmdb() {
 
     dbg!("Start or reuse a test postgres database container");
     let pg_container_config = postgres_db_container_config();
-    let result = docker_util.get_or_start_container_config(&pg_container_config);
+    let result = docker_util.get_or_start_container(&pg_container_config);
     if result.is_err() {
         dbg!(&result);
     }

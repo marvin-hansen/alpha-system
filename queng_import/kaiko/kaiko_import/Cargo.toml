@@ -21,9 +21,6 @@ tokio = { workspace = true }
 # For testing
 environment_manager = { workspace = true }
 container_specs_postgres = {workspace = true}
-diesel = {workspace = true}
 docker_utils = {workspace = true}
-pg_mddb = { workspace = true }
-postgres_migrations = {workspace = true}
 postgres_config_manager = {workspace = true}
 kaiko_test_utils = {workspace = true}

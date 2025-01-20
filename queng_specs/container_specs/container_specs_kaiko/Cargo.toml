@@ -9,6 +9,8 @@ authors.workspace = true
 
 [lints]
 workspace = true
+
+
 [dependencies]
 # Internal crates
-common_container = {workspace = true}
+docker_utils = { workspace = true }

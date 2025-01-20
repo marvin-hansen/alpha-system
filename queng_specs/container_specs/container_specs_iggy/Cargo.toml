@@ -13,4 +13,4 @@ workspace = true
 
 
 [dependencies]
-common_container = {workspace = true}
+docker_utils = { workspace = true }

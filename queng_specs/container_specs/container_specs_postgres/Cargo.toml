@@ -11,4 +11,5 @@ authors.workspace = true
 workspace = true
 
 [dependencies]
-common_container = {workspace = true}
+# External crates
+docker_utils = { workspace = true }

@@ -210,10 +210,8 @@ service_specs_all = { path = "queng_specs/service_specs/service_specs_all" }
 
 # Utils
 crypto_utils = { path = "queng_utils/crypto_utils" }
-docker_utils = { path = "queng_utils/docker_utils" }
 encoding_utils = { path = "queng_utils/encoding_utils" }
 math_utils = { path = "queng_utils/math_utils" }
-#service_utils = { path = "queng_utils/service_utils" }
 wait_utils = { path = "queng_utils/wait_utils" }
 
 # ==============
@@ -223,8 +221,8 @@ wait_utils = { path = "queng_utils/wait_utils" }
 syn = { version = "2.0", features = ["full", "extra-traits"] }
 quote = "1.0"
 # Dependencies that I maintained
+docker_utils = { version = "0.2" }
 service_utils = { version = "0.1" }
-
 
 # Regular dependencies
 base16ct = { version = "0.2", default-features = false, features = ["alloc"] }

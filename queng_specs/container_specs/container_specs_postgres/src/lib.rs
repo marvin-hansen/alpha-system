@@ -1,4 +1,4 @@
-use common_container::{ContainerConfig, WaitStrategy};
+use docker_utils::{ContainerConfig, WaitStrategy};
 
 #[must_use]
 pub fn postgres_db_container_config() -> ContainerConfig<'static> {
