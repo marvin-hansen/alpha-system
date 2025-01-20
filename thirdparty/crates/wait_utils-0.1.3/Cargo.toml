@@ -12,16 +12,27 @@
 [package]
 edition = "2021"
 rust-version = "1.82.0"
-name = "docker_utils"
-version = "0.2.1"
+name = "wait_utils"
+version = "0.1.3"
 authors = ["Marvin Hansen <marvin.hansen@gmail.com>"]
 build = false
+exclude = [
+    "*.bazel",
+    "*/*.bazel",
+    "*.bazel.*",
+    "BUILD",
+    "BUILD.bazel",
+    "MODULE.bazel",
+    ".bazelignore",
+    ".bazelrc",
+    "tests/**/*",
+]
 autolib = false
 autobins = false
 autoexamples = false
 autotests = false
 autobenches = false
-description = "Utilities for integration testsing with Docker"
+description = "Utilities for implementing wait loops using varies wait strategies"
 homepage = "https://github.com/marvin-hansen/buildutils"
 readme = "README.md"
 categories = ["development-tools::build-utils"]
@@ -29,23 +40,8 @@ license = "MIT"
 repository = "https://github.com/marvin-hansen/buildutils"
 
 [lib]
-name = "docker_utils"
+name = "wait_utils"
 path = "src/lib.rs"
-
-[[test]]
-name = "container_config_tests"
-path = "tests/container_config_tests.rs"
-
-[[test]]
-name = "docker_util_tests"
-path = "tests/docker_util_tests.rs"
-
-[[test]]
-name = "mod"
-path = "tests/mod.rs"
-
-[dependencies.bon]
-version = "3.3"
 
 [dependencies.tokio]
 version = "1"
@@ -58,8 +54,14 @@ features = [
 ]
 default-features = false
 
-[dependencies.wait_utils]
-version = "0.1"
+[dependencies.tonic]
+version = "0.12.1"
+features = ["transport"]
+
+[dependencies.tonic-health]
+version = "0.12.3"
+features = ["transport"]
+default-features = false
 
 [lints.clippy]
 all = "warn"

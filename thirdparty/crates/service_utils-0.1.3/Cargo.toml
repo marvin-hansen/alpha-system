@@ -13,9 +13,20 @@
 edition = "2021"
 rust-version = "1.82.0"
 name = "service_utils"
-version = "0.1.2"
+version = "0.1.3"
 authors = ["Marvin Hansen <marvin.hansen@gmail.com>"]
 build = false
+exclude = [
+    "*.bazel",
+    "*/*.bazel",
+    "*.bazel.*",
+    "BUILD",
+    "BUILD.bazel",
+    "MODULE.bazel",
+    ".bazelignore",
+    ".bazelrc",
+    "tests/**/*",
+]
 autolib = false
 autobins = false
 autoexamples = false
@@ -31,14 +42,6 @@ repository = "https://github.com/marvin-hansen/buildutils"
 [lib]
 name = "service_utils"
 path = "src/lib.rs"
-
-[[test]]
-name = "mod"
-path = "tests/mod.rs"
-
-[[test]]
-name = "service_config_test"
-path = "tests/service_config_test.rs"
 
 [dependencies.bon]
 version = "3.3"

@@ -11,7 +11,7 @@ load("@rules_rust//rust:defs.bzl", "rust_library")
 package(default_visibility = ["//visibility:public"])
 
 rust_library(
-    name = "docker_utils",
+    name = "service_utils",
     srcs = glob(
         include = ["**/*.rs"],
         allow_empty = False,
@@ -35,7 +35,7 @@ rust_library(
     ],
     tags = [
         "cargo-bazel",
-        "crate-name=docker_utils",
+        "crate-name=service_utils",
         "manual",
         "noclippy",
         "norustfmt",
@@ -77,10 +77,9 @@ rust_library(
         "@rules_rust//rust/platform:x86_64-unknown-none": [],
         "//conditions:default": ["@platforms//:incompatible"],
     }),
-    version = "0.2.1",
+    version = "0.1.3",
     deps = [
         "//thirdparty/crates/bon-3.3.2:bon",
-        "//thirdparty/crates/tokio-1.43.0:tokio",
-        "//thirdparty/crates/wait_utils-0.1.2:wait_utils",
+        "//thirdparty/crates/wait_utils-0.1.3:wait_utils",
     ],
 )
