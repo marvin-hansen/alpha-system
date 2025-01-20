@@ -12,7 +12,6 @@ async fn setup_ci_env() {
     let container_config = api_proxy_container_config();
     ci_env
         .setup_container(&container_config)
-        .await
         .expect("Failed to setup ci api proxy container");
 }
 

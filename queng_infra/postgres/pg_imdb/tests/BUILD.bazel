@@ -26,7 +26,7 @@ rust_test_suite(
         # Internal crates
         "//alias:common_ims",
         "//alias:container_specs_postgres",
-        "//alias:docker_utils",
+        "//thirdparty/crates:docker_utils",
         "//alias:postgres_migrations",
         # External crates
         "//thirdparty/crates:tokio",

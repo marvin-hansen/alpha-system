@@ -27,7 +27,7 @@ async fn test_smdb() {
 
     // Start or reuse a test postgres database container
     let pg_container_config = postgres_db_container_config();
-    let result = docker_util.get_or_start_container_config(&pg_container_config);
+    let result = docker_util.setup_container(&pg_container_config);
     if result.is_err() {
         dbg!(&result);
     }
@@ -355,7 +355,8 @@ async fn test_smdb() {
     drop(smdb_client);
 
     // Stop and remove container
-    let result = docker_util.stop_container(&pg_container_id);
+    let delete_container = true;
+    let result = docker_util.stop_container(&pg_container_id, delete_container);
     dbg!(&result);
     assert!(result.is_ok());
 }

@@ -37,7 +37,7 @@ rust_test_suite(
         "//alias:common_env",
         "//alias:container_specs_postgres",
         "//alias:container_specs_kaiko",
-        "//alias:docker_utils",
+        "//thirdparty/crates:docker_utils",
         "//alias:service_import",
         "//alias:metadata_import",
         # External crates

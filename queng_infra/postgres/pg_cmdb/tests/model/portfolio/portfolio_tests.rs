@@ -34,7 +34,7 @@ async fn all_setup() {
 
     // Start or reuse a test postgres container
     let container_config = postgres_db_container_config();
-    let result = env.get_or_start_container_config(&container_config); // dbg!(&result);
+    let result = env.get_or_start_container(&container_config); // dbg!(&result);
     assert!(result.is_ok());
 }
 

@@ -11,13 +11,12 @@ async fn setup_ci_env() {
     unsafe { env::set_var("ENV", "CI") };
 
     // Create new DockerUtil
-    let ci_env = DockerUtil::with_debug().expect("Failed to get DockerUtil");
+    let docker_util = DockerUtil::with_debug().expect("Failed to get DockerUtil");
 
     // Initiate CI container
     let container_config = clickhouse_container_config();
-    ci_env
+    docker_util
         .setup_container(&container_config)
-        .await
         .expect("Failed to setup ci api proxy container");
 }
 

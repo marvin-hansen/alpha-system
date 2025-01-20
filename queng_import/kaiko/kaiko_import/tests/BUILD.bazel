@@ -30,7 +30,7 @@ rust_test_suite(
         # Internal crates
         "//alias:common_metadata",
         # Test utils
-        "//alias:docker_utils",
+        "//thirdparty/crates:docker_utils",
         "//alias:environment_manager",
         "//alias:container_specs_postgres",
         "//alias:pg_mddb_manager",
@@ -71,7 +71,7 @@ rust_test_suite(
         # Internal crates
         "//alias:common_metadata",
         # Test utils
-        "//alias:docker_utils",
+        "//thirdparty/crates:docker_utils",
         "//alias:environment_manager",
         "//alias:container_specs_postgres",
         "//alias:pg_mddb_manager",
@@ -111,7 +111,7 @@ rust_test_suite(
         # Internal crates
         "//alias:common_metadata",
         # Test utils
-        "//alias:docker_utils",
+        "//thirdparty/crates:docker_utils",
         "//alias:environment_manager",
         "//alias:container_specs_postgres",
         "//alias:pg_mddb_manager",
@@ -151,7 +151,7 @@ rust_test_suite(
         # Internal crates
         "//alias:common_metadata",
         # Test utils
-        "//alias:docker_utils",
+        "//thirdparty/crates:docker_utils",
         "//alias:environment_manager",
         "//alias:container_specs_postgres",
         "//alias:pg_mddb_manager",

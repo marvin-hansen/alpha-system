@@ -13,7 +13,5 @@ rust_test_suite(
     deps = [
         # Crate to test
         "//alias:container_specs_iggy",
-        # Internal crates
-        "//alias:common_container",
     ],
 )

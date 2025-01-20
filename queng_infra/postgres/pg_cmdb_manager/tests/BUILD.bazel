@@ -25,7 +25,7 @@ rust_test_suite(
         "//alias:pg_cmdb_manager",
         # Internal crates
         "//alias:container_specs_postgres",
-        "//alias:docker_utils",
+        "//thirdparty/crates:docker_utils",
         "//alias:postgres_migrations",
         # External crates
         "//thirdparty/crates:tokio",

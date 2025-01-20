@@ -49,7 +49,7 @@ rust_test_suite(
         "//alias:common_metadata",
         "//alias:container_specs_postgres",
         "//alias:postgres_migrations",
-        "//alias:docker_utils",
+        "//thirdparty/crates:docker_utils",
         # External crates
         "//thirdparty/crates:diesel",
         "//thirdparty/crates:diesel_migrations",
@@ -84,7 +84,7 @@ rust_test_suite(
         "//alias:common_metadata",
         "//alias:container_specs_postgres",
         "//alias:postgres_migrations",
-        "//alias:docker_utils",
+        "//thirdparty/crates:docker_utils",
         # External crates
         "//thirdparty/crates:diesel",
         "//thirdparty/crates:diesel_migrations",
@@ -119,7 +119,7 @@ rust_test_suite(
         "//alias:common_metadata",
         "//alias:container_specs_postgres",
         "//alias:postgres_migrations",
-        "//alias:docker_utils",
+        "//thirdparty/crates:docker_utils",
         # External crates
         "//thirdparty/crates:diesel",
         "//thirdparty/crates:diesel_migrations",
@@ -154,7 +154,7 @@ rust_test_suite(
         "//alias:common_metadata",
         "//alias:container_specs_postgres",
         "//alias:postgres_migrations",
-        "//alias:docker_utils",
+        "//thirdparty/crates:docker_utils",
         # External crates
         "//thirdparty/crates:diesel",
         "//thirdparty/crates:diesel_migrations",
