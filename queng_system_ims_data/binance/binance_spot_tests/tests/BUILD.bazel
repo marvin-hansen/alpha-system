@@ -38,4 +38,3 @@ copy_file(
     out = "ims_data_service",
     is_executable = True,
 )
-
