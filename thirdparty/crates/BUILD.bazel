@@ -37,6 +37,12 @@ alias(
 )
 
 alias(
+    name = "async-trait",
+    actual = "//thirdparty/crates/async-trait-0.1.85:async_trait",
+    tags = ["manual"],
+)
+
+alias(
     name = "base16ct",
     actual = "//thirdparty/crates/base16ct-0.2.0:base16ct",
     tags = ["manual"],
@@ -110,7 +116,7 @@ alias(
 
 alias(
     name = "iggy",
-    actual = "//thirdparty/crates/iggy-0.6.71:iggy",
+    actual = "//thirdparty/crates/iggy-0.6.80:iggy",
     tags = ["manual"],
 )
 

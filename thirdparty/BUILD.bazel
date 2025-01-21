@@ -39,7 +39,11 @@ crates_vendor(
             version = "0.1",
         ),
         #
-        # Dependencies for macros
+        # Proc macros dependencies
+        "async-trait": crate.spec(
+            package = "async-trait",
+            version = "0.1",
+        ),
         "syn": crate.spec(
             default_features = True,
             features = [

@@ -6,13 +6,12 @@
 #     bazel run @@//thirdparty:crates_vendor
 ###############################################################################
 
-load("@rules_rust//cargo:defs.bzl", "cargo_build_script")
 load("@rules_rust//rust:defs.bzl", "rust_library")
 
 package(default_visibility = ["//visibility:public"])
 
 rust_library(
-    name = "klickhouse",
+    name = "clap",
     srcs = glob(
         include = ["**/*.rs"],
         allow_empty = False,
@@ -30,28 +29,26 @@ rust_library(
         ],
     ),
     crate_features = [
-        "compression",
+        "color",
         "default",
         "derive",
-        "klickhouse_derive",
-        "lz4",
-        "serde",
-        "serde_json",
+        "error-context",
+        "help",
+        "std",
+        "suggestions",
+        "usage",
     ],
     crate_root = "src/lib.rs",
     edition = "2021",
     proc_macro_deps = [
-        "//thirdparty/crates/async-trait-0.1.85:async_trait",
-        "//thirdparty/crates/compiler-tools-derive-0.2.0:compiler_tools_derive",
-        "//thirdparty/crates/klickhouse_derive-0.13.0:klickhouse_derive",
-        "//thirdparty/crates/paste-1.0.15:paste",
+        "//thirdparty/crates/clap_derive-4.5.24:clap_derive",
     ],
     rustc_flags = [
         "--cap-lints=allow",
     ],
     tags = [
         "cargo-bazel",
-        "crate-name=klickhouse",
+        "crate-name=clap",
         "manual",
         "noclippy",
         "norustfmt",
@@ -93,89 +90,8 @@ rust_library(
         "@rules_rust//rust/platform:x86_64-unknown-none": [],
         "//conditions:default": ["@platforms//:incompatible"],
     }),
-    version = "0.13.2",
+    version = "4.5.27",
     deps = [
-        "//thirdparty/crates/chrono-0.4.39:chrono",
-        "//thirdparty/crates/chrono-tz-0.9.0:chrono_tz",
-        "//thirdparty/crates/cityhash-rs-1.0.1:cityhash_rs",
-        "//thirdparty/crates/compiler-tools-0.2.0:compiler_tools",
-        "//thirdparty/crates/futures-util-0.3.31:futures_util",
-        "//thirdparty/crates/indexmap-2.7.1:indexmap",
-        "//thirdparty/crates/klickhouse-0.13.2:build_script_build",
-        "//thirdparty/crates/log-0.4.25:log",
-        "//thirdparty/crates/lz4-1.28.1:lz4",
-        "//thirdparty/crates/serde-1.0.217:serde",
-        "//thirdparty/crates/serde_json-1.0.137:serde_json",
-        "//thirdparty/crates/thiserror-1.0.69:thiserror",
-        "//thirdparty/crates/tokio-1.43.0:tokio",
-        "//thirdparty/crates/tokio-stream-0.1.17:tokio_stream",
-        "//thirdparty/crates/uuid-1.12.1:uuid",
+        "//thirdparty/crates/clap_builder-4.5.27:clap_builder",
     ],
-)
-
-cargo_build_script(
-    name = "_bs",
-    srcs = glob(
-        include = ["**/*.rs"],
-        allow_empty = False,
-    ),
-    compile_data = glob(
-        include = ["**"],
-        allow_empty = True,
-        exclude = [
-            "**/* *",
-            "**/*.rs",
-            ".tmp_git_root/**/*",
-            "BUILD",
-            "BUILD.bazel",
-            "WORKSPACE",
-            "WORKSPACE.bazel",
-        ],
-    ),
-    crate_features = [
-        "compression",
-        "default",
-        "derive",
-        "klickhouse_derive",
-        "lz4",
-        "serde",
-        "serde_json",
-    ],
-    crate_name = "build_script_build",
-    crate_root = "build.rs",
-    data = glob(
-        include = ["**"],
-        allow_empty = True,
-        exclude = [
-            "**/* *",
-            ".tmp_git_root/**/*",
-            "BUILD",
-            "BUILD.bazel",
-            "WORKSPACE",
-            "WORKSPACE.bazel",
-        ],
-    ),
-    edition = "2021",
-    pkg_name = "klickhouse",
-    rustc_flags = [
-        "--cap-lints=allow",
-    ],
-    tags = [
-        "cargo-bazel",
-        "crate-name=klickhouse",
-        "manual",
-        "noclippy",
-        "norustfmt",
-    ],
-    version = "0.13.2",
-    visibility = ["//visibility:private"],
-    deps = [
-        "//thirdparty/crates/rustc_version-0.4.1:rustc_version",
-    ],
-)
-
-alias(
-    name = "build_script_build",
-    actual = ":_bs",
-    tags = ["manual"],
 )

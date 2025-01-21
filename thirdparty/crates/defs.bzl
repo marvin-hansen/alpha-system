@@ -305,7 +305,7 @@ _NORMAL_DEPENDENCIES = {
             "futures": Label("//thirdparty/crates/futures-0.3.31:futures"),
             "futures-util": Label("//thirdparty/crates/futures-util-0.3.31:futures_util"),
             "hickory-resolver": Label("//thirdparty/crates/hickory-resolver-0.24.2:hickory_resolver"),
-            "iggy": Label("//thirdparty/crates/iggy-0.6.71:iggy"),
+            "iggy": Label("//thirdparty/crates/iggy-0.6.80:iggy"),
             "klickhouse": Label("//thirdparty/crates/klickhouse-0.13.2:klickhouse"),
             "lru": Label("//thirdparty/crates/lru-0.12.5:lru"),
             "mimalloc": Label("//thirdparty/crates/mimalloc-0.1.43:mimalloc"),
@@ -352,6 +352,7 @@ _NORMAL_DEV_ALIASES = {
 _PROC_MACRO_DEPENDENCIES = {
     "": {
         _COMMON_CONDITION: {
+            "async-trait": Label("//thirdparty/crates/async-trait-0.1.85:async_trait"),
             "enum_dispatch": Label("//thirdparty/crates/enum_dispatch-0.3.13:enum_dispatch"),
             "rust_decimal_macros": Label("//thirdparty/crates/rust_decimal_macros-1.36.0:rust_decimal_macros"),
             "trait-variant": Label("//thirdparty/crates/trait-variant-0.1.2:trait_variant"),
