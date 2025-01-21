@@ -1,1 +1,1 @@
-//alias/client:smdb_client
+//alias/client:imdb_client

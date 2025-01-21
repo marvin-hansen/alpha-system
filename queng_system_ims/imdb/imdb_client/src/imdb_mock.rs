@@ -1,10 +1,9 @@
-use crate::error::IMDBClientError;
-use crate::ImdbClientTrait;
+use crate::imdb_error::IMDBClientError;
+use crate::{IMDBCMockClient, ImdbClientTrait};
+use async_trait::async_trait;
 use common_ims::{ExchangeID, IntegrationConfig};
 
-#[derive(Debug, Clone)]
-pub struct IMDBCMockClient {}
-
+#[async_trait]
 impl ImdbClientTrait for IMDBCMockClient {
     async fn count_integrations(&self) -> Result<u64, IMDBClientError> {
         Ok(1)
@@ -56,7 +55,10 @@ impl ImdbClientTrait for IMDBCMockClient {
         Ok(())
     }
 
-    async fn set_integration_offline(&self, integration_id: String) -> Result<(), IMDBClientError> {
+    async fn set_integration_offline(
+        &self,
+        _integration_id: String,
+    ) -> Result<(), IMDBClientError> {
         Ok(())
     }
 }

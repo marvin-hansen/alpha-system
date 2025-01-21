@@ -1,6 +1,8 @@
-use crate::error::IMDBClientError;
+use crate::imdb_error::IMDBClientError;
+use async_trait::async_trait;
 use common_ims::{ExchangeID, IntegrationConfig};
 
+#[async_trait]
 pub trait ImdbClientTrait {
     /// Counts the total number of integrations in the database
     ///

@@ -16,4 +16,5 @@ proto_imdb = {workspace = true}
 proto_imdb_utils = {workspace = true}
 
 # Exteral crates
+async-trait = { workspace = true }
 tonic = { workspace = true }

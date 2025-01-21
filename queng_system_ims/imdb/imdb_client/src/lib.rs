@@ -1,9 +1,10 @@
-mod error;
 mod imdb_client_trait;
+mod imdb_error;
 mod imdb_integrations;
 mod imdb_mock;
 
-pub use imdb_client_trait::ImdbClientTrait;
+pub use imdb_client_trait::*;
+pub use imdb_error::*;
 
 use proto_imdb::proto::imdb_service_client::ImdbServiceClient;
 use std::fmt::Error;
@@ -44,5 +45,15 @@ impl IMDBClient {
         let client = ImdbServiceClient::new(channel);
 
         Ok(Self { client })
+    }
+}
+
+#[derive(Debug, Clone, Copy)]
+
+pub struct IMDBCMockClient {}
+
+impl IMDBCMockClient {
+    pub fn new() -> Self {
+        Self {}
     }
 }

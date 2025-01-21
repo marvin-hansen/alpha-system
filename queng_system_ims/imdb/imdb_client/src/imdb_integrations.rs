@@ -1,6 +1,7 @@
-use crate::error::IMDBClientError;
 use crate::imdb_client_trait::ImdbClientTrait;
+use crate::imdb_error::IMDBClientError;
 use crate::IMDBClient;
+use async_trait::async_trait;
 use common_ims::{ExchangeID, IntegrationConfig};
 use proto_imdb::proto::ProtoIntegrationConfig;
 use proto_imdb_utils::{
@@ -11,6 +12,7 @@ use proto_imdb_utils::{
     get_set_integration_online_request, integration_config_from_proto,
 };
 
+#[async_trait]
 impl ImdbClientTrait for IMDBClient {
     /// Counts the total number of integrations in the database
     ///
