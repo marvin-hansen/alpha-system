@@ -86,6 +86,15 @@ pub struct IMDBCMockClient {
 }
 
 impl IMDBCMockClient {
+    /// Creates a new IMDB mock client instance.
+    ///
+    /// # Arguments
+    /// * `host` - The host address of the IMDB server
+    /// * `port` - The port number of the IMDB server
+    ///
+    /// # Returns
+    /// * `Result<Self, Error>` - A new mock IMDB client instance on success, or an Error on failure
+    ///
     pub async fn new(host: String, port: u16) -> Result<Self, Error> {
         Ok(Self {
             integration_message_config: IntegrationMessageConfig::default(),

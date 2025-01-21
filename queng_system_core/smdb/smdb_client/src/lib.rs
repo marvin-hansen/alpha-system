@@ -1,4 +1,5 @@
 use proto_smdb::proto::smdb_service_client::SmdbServiceClient;
+use std::fmt::Error;
 use tonic::transport::{Channel, Uri};
 
 mod mock_impl;
@@ -15,6 +16,19 @@ pub struct SMDBClient {
 }
 
 impl SMDBClient {
+    /// Creates a new SMDB client instance by establishing a connection to the specified host and port.
+    ///
+    /// # Arguments
+    /// * `host` - The host address of the SMDB server
+    /// * `smdb_port` - The port number of the SMDB server
+    ///
+    /// # Returns
+    /// * `Self` - A new SMDB client instance on success
+    ///
+    /// # Panics
+    /// * If URI parsing fails
+    /// * If connection to SMDB server fails
+    ///
     pub async fn new(host: String, smdb_port: u16) -> Self {
         let s = format!("http://{host}:{smdb_port}");
         let uri = s
@@ -33,11 +47,31 @@ impl SMDBClient {
     }
 }
 
-#[derive(Debug, Clone, Copy)]
-pub struct SMDBCMockClient {}
+#[allow(dead_code)] // Ignore the unused field in the struct
+#[derive(Debug, Clone)]
+pub struct SMDBCMockClient {
+    host: String,
+    port: u16,
+}
 
 impl SMDBCMockClient {
-    pub async fn new(_host: String, _smdb_port: u16) -> Self {
-        Self {}
+    /// Creates a new SMDB mock client instance with the specified host and port.
+    ///
+    /// # Arguments
+    /// * `host` - The host address of the SMDB server
+    /// * `port` - The port number of the SMDB server
+    ///
+    /// # Returns
+    /// * `Result<Self, Error>` - A new SMDB client instance on success, or an Error on failure
+    pub async fn new(host: String, port: u16) -> Result<Self, Error> {
+        Ok(Self { host, port })
+    }
+
+    pub fn host(&self) -> &str {
+        &self.host
+    }
+
+    pub fn port(&self) -> u16 {
+        self.port
     }
 }
