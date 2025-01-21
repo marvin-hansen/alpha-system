@@ -198,6 +198,7 @@ quote = "1.0"
 docker_utils = { version = "0.2" }
 service_utils = { version = "0.1" }
 # Regular dependencies
+async-trait = { version = "0.1" }
 base16ct = { version = "0.2", default-features = false, features = ["alloc"] }
 blake3 = { version = "1.5.4", default-features = false }
 bytes = {version = "1.8.0"}

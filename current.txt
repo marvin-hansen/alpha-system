@@ -1,1 +1,1 @@
-//queng_services/ims/imdb/imdb_tests/tests
+//alias/client:smdb_client

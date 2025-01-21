@@ -6,7 +6,7 @@ use config_manager::CfgManager;
 use iggy::client::{Client, UserClient};
 use imdb_client::IMDBClient;
 use imdb_client::ImdbClientTrait;
-use smdb_client::SMDBClient;
+use smdb_client::*;
 use tokio::time::Instant;
 use trait_data_integration::ImsDataIntegration;
 

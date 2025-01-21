@@ -1,7 +1,7 @@
 use common_config::ServiceID;
 use common_service::{print_utils, shutdown_utils};
 use config_manager::CfgManager;
-use smdb_client::SMDBClient;
+use smdb_client::*;
 use std::convert::Infallible;
 use std::error::Error;
 use tokio::time::Instant;

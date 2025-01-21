@@ -1,9 +1,10 @@
+use crate::{SMDBClient, SMDBError, SmdbClientTrait};
+use async_trait::async_trait;
 use common_config::ServiceID;
 use proto_smdb::proto::{MultiServicesRequest, SingleServiceRequest};
 
-use crate::{SMDBClient, SMDBError};
-
-impl SMDBClient {
+#[async_trait]
+impl SmdbClientTrait for SMDBClient {
     /// Checks if a service with the given ID exists in the SMDB.
     ///
     /// # Arguments
@@ -15,7 +16,7 @@ impl SMDBClient {
     /// A `Result` that contains a boolean indicating whether the service exists or an
     /// `SMDBError` on failure.
     ///
-    pub async fn check_if_service_id_exists(&self, id: ServiceID) -> Result<bool, SMDBError> {
+    async fn check_if_service_id_exists(&self, id: ServiceID) -> Result<bool, SMDBError> {
         let request = tonic::Request::new(SingleServiceRequest {
             service_id: id as i32,
         });
@@ -27,7 +28,6 @@ impl SMDBClient {
             Err(e) => Err(SMDBError(e.to_string())),
         }
     }
-
     /// Checks if multiple services with the given IDs exist in the SMDB.
     ///
     /// # Arguments
@@ -39,10 +39,7 @@ impl SMDBClient {
     /// A `Result` that contains a boolean indicating whether all the services exist or an
     /// `SMDBError` on failure.
     ///
-    pub async fn check_if_services_exists(
-        &self,
-        services: Vec<ServiceID>,
-    ) -> Result<bool, SMDBError> {
+    async fn check_if_services_exists(&self, services: Vec<ServiceID>) -> Result<bool, SMDBError> {
         let services_id = services.iter().map(|s| s.to_owned() as i32).collect();
 
         let request = tonic::Request::new(MultiServicesRequest { services_id });
@@ -54,8 +51,7 @@ impl SMDBClient {
             Err(e) => Err(SMDBError(e.to_string())),
         }
     }
-
-    pub async fn check_if_service_id_online(&self, id: ServiceID) -> Result<bool, SMDBError> {
+    async fn check_if_service_id_online(&self, id: ServiceID) -> Result<bool, SMDBError> {
         let request = tonic::Request::new(SingleServiceRequest {
             service_id: id as i32,
         });
@@ -67,7 +63,6 @@ impl SMDBClient {
             Err(e) => Err(SMDBError(e.to_string())),
         }
     }
-
     /// Checks if multiple services with the given IDs are online in the SMDB.
     ///
     /// # Arguments
@@ -79,10 +74,7 @@ impl SMDBClient {
     /// A `Result` that contains a boolean indicating whether all the services are online or an
     /// `SMDBError` on failure.
     ///
-    pub async fn check_if_services_online(
-        &self,
-        services: Vec<ServiceID>,
-    ) -> Result<bool, SMDBError> {
+    async fn check_if_services_online(&self, services: Vec<ServiceID>) -> Result<bool, SMDBError> {
         let services_id = services.iter().map(|s| s.to_owned() as i32).collect();
 
         let request = tonic::Request::new(MultiServicesRequest { services_id });
@@ -94,7 +86,6 @@ impl SMDBClient {
             Err(e) => Err(SMDBError(e.to_string())),
         }
     }
-
     /// Sets a service with the given ID online in the SMDB.
     ///
     /// # Arguments
@@ -106,7 +97,7 @@ impl SMDBClient {
     /// A `Result` that contains a boolean indicating whether the service was successfully set online or an
     /// `SMDBError` on failure.
     ///
-    pub async fn set_service_online(&self, id: ServiceID) -> Result<bool, SMDBError> {
+    async fn set_service_online(&self, id: ServiceID) -> Result<bool, SMDBError> {
         let request = tonic::Request::new(SingleServiceRequest {
             service_id: id as i32,
         });
@@ -118,7 +109,6 @@ impl SMDBClient {
             Err(e) => Err(SMDBError(e.to_string())),
         }
     }
-
     /// Sets a service with the given ID offline in the SMDB.
     ///
     /// # Arguments
@@ -130,7 +120,7 @@ impl SMDBClient {
     /// A `Result` that contains a boolean indicating whether the service was successfully set offline or an
     /// `SMDBError` on failure.
     ///
-    pub async fn set_service_offline(&self, id: ServiceID) -> Result<bool, SMDBError> {
+    async fn set_service_offline(&self, id: ServiceID) -> Result<bool, SMDBError> {
         let request = tonic::Request::new(SingleServiceRequest {
             service_id: id as i32,
         });

@@ -1,11 +1,13 @@
-use std::error::Error;
-use std::fmt;
-
+use proto_smdb::proto::smdb_service_client::SmdbServiceClient;
 use tonic::transport::{Channel, Uri};
 
-use proto_smdb::proto::smdb_service_client::SmdbServiceClient;
+mod mock_impl;
+mod smdb_client_trait;
+mod smdb_error;
+mod smdb_impl;
 
-mod prv_smdb;
+pub use smdb_client_trait::SmdbClientTrait;
+pub use smdb_error::*;
 
 #[derive(Debug, Clone)]
 pub struct SMDBClient {
@@ -31,13 +33,11 @@ impl SMDBClient {
     }
 }
 
-#[derive(Debug)]
-pub struct SMDBError(pub String);
+#[derive(Debug, Clone, Copy)]
+pub struct SMDBCMockClient {}
 
-impl Error for SMDBError {}
-
-impl fmt::Display for SMDBError {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "SMDBError: {}", self.0)
+impl SMDBCMockClient {
+    pub async fn new(_host: String, _smdb_port: u16) -> Self {
+        Self {}
     }
 }

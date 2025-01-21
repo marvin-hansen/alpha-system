@@ -4,7 +4,7 @@ use container_specs_postgres::postgres_db_container_config;
 use docker_utils::DockerUtil;
 use service_import::ServiceImportManager;
 use service_utils::*;
-use smdb_client::SMDBClient;
+use smdb_client::*;
 
 fn get_service_wait_strategy(host: String, port: u16) -> WaitStrategy {
     let url = format!("http://{host}:{port}");
