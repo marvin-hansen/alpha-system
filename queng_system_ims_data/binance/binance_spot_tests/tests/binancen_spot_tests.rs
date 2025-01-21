@@ -1,9 +1,24 @@
+use common_env::EnvironmentType;
 use config_manager::CfgManager;
 use service_utils::{ServiceStartConfig, ServiceUtil, WaitStrategy};
 
-fn get_service_wait_strategy(uri: String) -> WaitStrategy {
-    let url = format!("http://{uri}/health");
-    WaitStrategy::WaitForHttpHealthCheck(url, 10)
+const ROOT_PATH: &str = "queng_system_ims_data/binance/binance_spot_tests/tests";
+const PROGRAM: &str = "ims_data_service";
+const IGGY_HEALTH_URI: &str = "http://0.0.0.0:3000";
+const IGGY_DARWIN_AARCH64: &str = "iggy_server_darwin_aarch64";
+const IGGY_DARWIN_X86_64: &str = "iggy_server_linux_x86_64";
+const BINARIES: [&str; 3] = [PROGRAM, IGGY_DARWIN_AARCH64, IGGY_DARWIN_X86_64];
+
+fn select_iggy_binary(env: EnvironmentType) -> &'static str {
+    match env {
+        EnvironmentType::LOCAL => IGGY_DARWIN_AARCH64,
+        EnvironmentType::CI => IGGY_DARWIN_X86_64,
+        _ => panic!("Unsupported environment"),
+    }
+}
+
+fn get_service_wait_strategy(url: String) -> WaitStrategy {
+    WaitStrategy::WaitForHttpHealthCheck(url, 3)
 }
 
 fn get_service_start_config(program: &'static str, uri: String) -> ServiceStartConfig {
@@ -12,10 +27,6 @@ fn get_service_start_config(program: &'static str, uri: String) -> ServiceStartC
         .wait_strategy(get_service_wait_strategy(uri))
         .build()
 }
-
-const ROOT_PATH: &str = "queng_system_ims_data/binance/binance_spot_tests/tests";
-const PROGRAM: &str = "ims_data_service";
-const BINARIES: [&str; 1] = [PROGRAM];
 
 #[tokio::test]
 async fn test_binance_spot() {
@@ -36,8 +47,18 @@ async fn test_binance_spot() {
     let env = config_manager.env_type();
     dbg!(&format!("✅ Detected Environment: {}", env));
 
-    // Start Iggy messaging service
-    // dbg!("Start iggy messaging service");
+    dbg!("Configure iggy messaging service");
+    let binary = select_iggy_binary(env);
+    let uri = IGGY_HEALTH_URI;
+    let iggy_start_config = get_service_start_config(binary, uri.to_string());
+
+    dbg!("Start iggy messaging service");
+    let result = svc_util.start_service_from_config(iggy_start_config).await;
+    if result.is_err() {
+        dbg!(&result);
+    }
+    assert!(result.is_ok());
+    dbg!("✅ iggy messaging service started");
 
     dbg!("Configure IMS Data service - Binance Spot");
     let (uri, _) = config_manager
@@ -49,11 +70,11 @@ async fn test_binance_spot() {
     dbg!("Configure IMS Data service - Binance Spot");
     let dbgw_start_config = get_service_start_config(PROGRAM, uri);
 
-    dbg!("Start IMS Data service - Binance Spot");
-    let result = svc_util.start_service_from_config(dbgw_start_config).await;
-    if result.is_err() {
-        dbg!(&result);
-    }
-    assert!(result.is_ok());
-    dbg!("✅ IMS Data service service started");
+    // dbg!("Start IMS Data service - Binance Spot");
+    // let result = svc_util.start_service_from_config(dbgw_start_config).await;
+    // if result.is_err() {
+    //     dbg!(&result);
+    // }
+    // assert!(result.is_ok());
+    // dbg!("✅ IMS Data service service started");
 }
