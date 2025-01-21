@@ -13,7 +13,7 @@
 edition = "2021"
 rust-version = "1.82.0"
 name = "service_utils"
-version = "0.1.4"
+version = "0.1.5"
 authors = ["Marvin Hansen <marvin.hansen@gmail.com>"]
 build = false
 exclude = [
