@@ -1,5 +1,6 @@
+use common_config::*;
+use enum_dispatch::enum_dispatch;
 use proto_smdb::proto::smdb_service_client::SmdbServiceClient;
-use std::fmt::Error;
 use tonic::transport::{Channel, Uri};
 
 mod mock_impl;
@@ -7,8 +8,32 @@ mod smdb_client_trait;
 mod smdb_error;
 mod smdb_impl;
 
-pub use smdb_client_trait::SmdbClientTrait;
+pub use smdb_client_trait::*;
 pub use smdb_error::*;
+
+/// A dispatch enum for selecting the type of SMDB client to use. This is useful for testing as it allows us to
+/// switch between a real IMDB client and a mock client.
+///
+/// # Usage
+/// ```rust, no_run
+/// use smdb_client::*;
+///
+///async fn run() {
+/// let host = "127.0.0.1".to_string();
+/// let port = 7070;
+/// let real_client: SMDBClientSelector = SMDBClient::new(host.clone(), port).await.into();
+/// let mock_client: SMDBClientSelector = SMDBCMockClient::new(host.clone(), port).await.into();
+///}
+/// ```
+///
+// https://crates.io/crates/enum-dispatch
+#[enum_dispatch]
+pub enum SMDBClientSelector {
+    /// The real SMDB client
+    SMDBClient,
+    /// The mock SMDB client
+    SMDBCMockClient,
+}
 
 #[derive(Debug, Clone)]
 pub struct SMDBClient {
@@ -50,6 +75,9 @@ impl SMDBClient {
 #[allow(dead_code)] // Ignore the unused field in the struct
 #[derive(Debug, Clone)]
 pub struct SMDBCMockClient {
+    // This field is not used; however,  without it, the auto code formatter would
+    // remove the common_config import, which then causes the enum_dispatch macro to fail compilation.
+    service_id: ServiceID,
     host: String,
     port: u16,
 }
@@ -63,8 +91,12 @@ impl SMDBCMockClient {
     ///
     /// # Returns
     /// * `Result<Self, Error>` - A new SMDB client instance on success, or an Error on failure
-    pub async fn new(host: String, port: u16) -> Result<Self, Error> {
-        Ok(Self { host, port })
+    pub async fn new(host: String, port: u16) -> Self {
+        Self {
+            service_id: ServiceID::Default,
+            host,
+            port,
+        }
     }
 
     pub fn host(&self) -> &str {

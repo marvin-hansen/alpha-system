@@ -1,8 +1,10 @@
 use crate::SMDBError;
 use async_trait::async_trait;
 use common_config::ServiceID;
+use enum_dispatch::enum_dispatch;
 
 #[async_trait]
+#[enum_dispatch(SMDBClientSelector)]
 pub trait SmdbClientTrait {
     /// Checks if a service with the given ID exists in the SMDB.
     ///

@@ -12,7 +12,7 @@ use enum_dispatch::enum_dispatch;
 use proto_imdb::proto::imdb_service_client::ImdbServiceClient;
 use tonic::transport::{Channel, Uri};
 
-/// An enum for selecting the type of IMDB client to use. This is useful for testing as it allows us to
+/// A dispatch enum for selecting the type of IMDB client to use. This is useful for testing as it allows us to
 /// switch between a real IMDB client and a mock client.
 ///
 /// # Usage
@@ -79,7 +79,6 @@ impl IMDBClient {
 pub struct IMDBCMockClient {
     // This field is not used; however,  without it, the auto code formatter would
     // remove the common_ims import, which then causes the enum_dispatch macro to fail compilation.
-    // Thus the mock field in the mock client.
     integration_message_config: IntegrationMessageConfig,
     host: String,
     port: u16,
