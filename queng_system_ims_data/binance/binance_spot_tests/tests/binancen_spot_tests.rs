@@ -70,11 +70,11 @@ async fn test_binance_spot() {
     dbg!("Configure IMS Data service - Binance Spot");
     let dbgw_start_config = get_service_start_config(PROGRAM, uri);
 
-    // dbg!("Start IMS Data service - Binance Spot");
-    // let result = svc_util.start_service_from_config(dbgw_start_config).await;
-    // if result.is_err() {
-    //     dbg!(&result);
-    // }
-    // assert!(result.is_ok());
-    // dbg!("✅ IMS Data service service started");
+    dbg!("Start IMS Data service - Binance Spot");
+    let result = svc_util.start_service_from_config(dbgw_start_config).await;
+    if result.is_err() {
+        dbg!(&result);
+    }
+    assert!(result.is_ok());
+    dbg!("✅ IMS Data service service started");
 }
