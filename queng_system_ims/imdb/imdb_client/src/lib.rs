@@ -1,14 +1,40 @@
 mod imdb_client_trait;
 mod imdb_error;
-mod imdb_integrations;
+mod imdb_impl;
 mod imdb_mock;
 
 pub use imdb_client_trait::*;
 pub use imdb_error::*;
-
-use proto_imdb::proto::imdb_service_client::ImdbServiceClient;
 use std::fmt::Error;
+
+use common_ims::*;
+use enum_dispatch::enum_dispatch;
+use proto_imdb::proto::imdb_service_client::ImdbServiceClient;
 use tonic::transport::{Channel, Uri};
+
+/// An enum for selecting the type of IMDB client to use. This is useful for testing as it allows us to
+/// switch between a real IMDB client and a mock client.
+///
+/// # Usage
+/// ```rust, no_run
+/// use imdb_client::*;
+///
+///async fn run() {
+/// let host = "127.0.0.1".to_string();
+/// let port = 7070;
+/// let real_client: IMDBClientSelector = IMDBClient::new(host.clone(), port).await.unwrap().into();
+/// let mock_client: IMDBClientSelector = IMDBCMockClient::new(host.clone(), port).await.unwrap().into();
+///}
+/// ```
+///
+// https://crates.io/crates/enum-dispatch
+#[enum_dispatch]
+pub enum IMDBClientSelector {
+    /// The real IMDB client
+    IMDBClient,
+    /// The mock IMDB client
+    IMDBCMockClient,
+}
 
 #[derive(Debug, Clone)]
 pub struct IMDBClient {
@@ -48,12 +74,31 @@ impl IMDBClient {
     }
 }
 
-#[derive(Debug, Clone, Copy)]
-
-pub struct IMDBCMockClient {}
+#[allow(dead_code)] // Ignore the unused field in the struct
+#[derive(Debug, Clone)]
+pub struct IMDBCMockClient {
+    // This field is not used; however,  without it, the auto code formatter would
+    // remove the common_ims import, which then causes the enum_dispatch macro to fail compilation.
+    // Thus the mock field in the mock client.
+    integration_message_config: IntegrationMessageConfig,
+    host: String,
+    port: u16,
+}
 
 impl IMDBCMockClient {
-    pub fn new() -> Self {
-        Self {}
+    pub async fn new(host: String, port: u16) -> Result<Self, Error> {
+        Ok(Self {
+            integration_message_config: IntegrationMessageConfig::default(),
+            host,
+            port,
+        })
+    }
+
+    pub fn host(&self) -> &str {
+        &self.host
+    }
+
+    pub fn port(&self) -> u16 {
+        self.port
     }
 }

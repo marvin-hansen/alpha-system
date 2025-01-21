@@ -44,6 +44,15 @@ crates_vendor(
             package = "async-trait",
             version = "0.1",
         ),
+        "enum_dispatch": crate.spec(
+            package = "enum_dispatch",
+            version = "0.3",
+        ),
+        "trait-variant": crate.spec(
+            default_features = False,
+            package = "trait-variant",
+            version = "0.1",
+        ),
         "syn": crate.spec(
             default_features = True,
             features = [
@@ -105,10 +114,6 @@ crates_vendor(
             features = ["postgres"],
             package = "diesel_migrations",
             version = "2.2",
-        ),
-        "enum_dispatch": crate.spec(
-            package = "enum_dispatch",
-            version = "0.3",
         ),
         "futures": crate.spec(
             package = "futures",
@@ -193,11 +198,6 @@ crates_vendor(
             default_features = False,
             package = "sha3",
             version = "0.11.0-pre.4",
-        ),
-        "trait-variant": crate.spec(
-            default_features = False,
-            package = "trait-variant",
-            version = "0.1",
         ),
         "tokio": crate.spec(
             default_features = False,

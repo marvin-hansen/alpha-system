@@ -191,14 +191,16 @@ math_utils = { path = "queng_utils/math_utils" }
 # ==============
 # External crates
 # ==============
-# Dependencies for macros
+# Proc Macro Dependencies
+async-trait = { version = "0.1" }
+enum_dispatch = { version = "0.3" }
+trait-variant = { version = "0.1" }
 syn = { version = "2.0", features = ["full", "extra-traits"] }
 quote = "1.0"
 # Dependencies that I maintained
 docker_utils = { version = "0.2" }
 service_utils = { version = "0.1" }
 # Regular dependencies
-async-trait = { version = "0.1" }
 base16ct = { version = "0.2", default-features = false, features = ["alloc"] }
 blake3 = { version = "1.5.4", default-features = false }
 bytes = {version = "1.8.0"}
@@ -221,7 +223,6 @@ rustls = { version = "0.23", features = ["ring"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = { version = "1.0" }
 sha3 = { version = "0.11.0-pre.4", default-features = false }
-trait-variant = {version = "0.1"}
 tokio = { version = "1.42", default-features = false, features = ["macros", "net", "rt-multi-thread", "signal", "time"] }
 tokio-tungstenite = { version = "0.26", features = ["rustls-tls-webpki-roots"]}
 tonic = { version = "0.12.1", features = ["transport"] }

@@ -6,9 +6,10 @@ rust_library(
         "src/**",
     ]),
     crate_root = "src/lib.rs",
-        proc_macro_deps = [
-            "//thirdparty/crates:async-trait",
-        ],
+    proc_macro_deps = [
+        "//thirdparty/crates:async-trait",
+        "//thirdparty/crates:enum_dispatch",
+    ],
     tags = ["client"],
     visibility = ["//visibility:public"],
     deps = [
