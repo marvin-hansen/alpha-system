@@ -18,8 +18,7 @@ path = "src/fake_lib.rs"
 
 # For testing
 [dev-dependencies]
-
-smdb_client = { workspace = true }
+config_manager = { workspace = true }
 # External crates
 service_utils = { workspace = true }
 tokio = { workspace = true }

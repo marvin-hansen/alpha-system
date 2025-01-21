@@ -1,0 +1,41 @@
+load("@aspect_bazel_lib//lib:copy_file.bzl", "copy_file")
+load("@rules_rust//rust:defs.bzl", "rust_test_suite")
+
+rust_test_suite(
+    name = "tests",
+    srcs = glob([
+        "*_tests.rs",
+    ]),
+    data = [
+        # copy ims data service
+        ":copy_ims_data_binance_spot",
+    ],
+    tags = [
+        # The first tag is for local testing, which must be in sequential order b/c there is just one DB
+        # Run with bazel test //... --test_tag_filters=binance_spot_acceptance_test --test_env=ENV=LOCAL
+        "binance_spot_acceptance_test",
+        # The second tag is for acceptance testing on the CI, which runs in parallel.
+        # "acceptance_test",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate under test
+        "//alias/service:binance_spot",
+        # Internal crates
+        "//alias:config_manager",
+        # External crates
+        "//thirdparty/crates:service_utils",
+        "//thirdparty/crates:tokio",
+    ],
+)
+
+# Copy iggy server required for test
+
+# Copy binary to test
+copy_file(
+    name = "copy_ims_data_binance_spot",
+    src = "//alias/service:binance_spot",
+    out = "ims_data_service",
+    is_executable = True,
+)
+
