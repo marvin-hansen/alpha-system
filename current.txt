@@ -1,1 +1,1 @@
-//alias/client:smdb_client
+//alias/service:ims_data_service

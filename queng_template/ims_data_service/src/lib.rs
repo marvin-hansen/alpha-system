@@ -4,12 +4,12 @@ use common_exchange::ExchangeID;
 use common_service::print_utils;
 use config_manager::CfgManager;
 use iggy::client::{Client, UserClient};
-use imdb_client::IMDBClient;
-use imdb_client::ImdbClientTrait;
+use imdb_client::*;
 use smdb_client::*;
 use tokio::time::Instant;
 use trait_data_integration::ImsDataIntegration;
 
+mod client_builder;
 mod config;
 mod handle;
 mod health_check;
@@ -45,19 +45,24 @@ where
     let data_integration = integration_config.integration_id();
     let svc_name = &format!("IMS {data_integration} Service");
 
+    let env = cfg_manager.env_type();
+    dbg_print(&format!("Detected Environment: {}", &env));
+
     dbg_print("get SMDB endpoint from auto config");
     let (smdb_host, smdb_port) = cfg_manager
         .get_smdb_host_port()
         .await
         .expect("Failed to get host and port for DBGW");
 
+    dbg_print("Construct SMDB client");
+    let smdb_client = client_builder::select_smdb_client(&env, smdb_host, smdb_port).await;
+
     dbg_print("get dependencies from auto config");
     let dependencies = cfg_manager.get_service_dependencies();
 
     dbg_print("Checking whether all dependencies are online");
-    let smdb_manager = SMDBClient::new(smdb_host, smdb_port).await;
     for d in &dependencies {
-        let available = smdb_manager
+        let available = smdb_client
             .check_if_service_id_exists(*d)
             .await
             .expect(" Failed to check if service dependency exists");
@@ -75,9 +80,7 @@ where
         .expect("Failed to get MDDB host");
 
     dbg_print("Construct IMDB client");
-    let imdb_client = IMDBClient::new(host, port)
-        .await
-        .expect("Failed to create IMDB client");
+    let imdb_client = client_builder::select_imdb_client(&env, host, port).await;
 
     dbg_print("Get integration form IMDB");
     let integration_id = "ims-data-binance".to_string();
@@ -166,7 +169,7 @@ where
 
     // Free up some memory before starting the service,
     drop(cfg_manager);
-    drop(smdb_manager);
+    drop(smdb_client);
     drop(dependencies);
 
     // Print service start header

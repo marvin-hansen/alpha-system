@@ -12,6 +12,7 @@ rust_library(
         "//alias:common_config",
         "//alias:common_data_bar",
         "//alias:common_errors",
+        "//alias:common_env",
         "//alias:common_exchange",
         "//alias:common_ims",
         "//alias:common_service",
