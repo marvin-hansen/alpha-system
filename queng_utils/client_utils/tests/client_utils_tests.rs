@@ -13,24 +13,30 @@ async fn test_select_smdb_client() {
     // Test with EnvironmentType::CI
     let client = client_utils::select_smdb_client(&EnvironmentType::CI, host.clone(), port).await;
     match client {
-        SMDBClientSelector::SMDBCMockClient(_) => assert!(true),
-        _ => assert!(false, "Expected SMDBCMockClient"),
+        SMDBClientSelector::SMDBCMockClient(_) => {}
+        _ => {
+            panic!("Expected SMDBCMockClient");
+        }
     }
 
     // Test with other EnvironmentType
     let client =
         client_utils::select_smdb_client(&EnvironmentType::LOCAL, host.clone(), port).await;
     match client {
-        SMDBClientSelector::SMDBCMockClient(_) => assert!(true),
-        _ => assert!(false, "Expected SMDBCMockClient"),
+        SMDBClientSelector::SMDBCMockClient(_) => {}
+        _ => {
+            panic!("Expected SMDBCMockClient");
+        }
     }
 
     // Test with EnvironmentType::UNKNOWN
     let client =
         client_utils::select_smdb_client(&EnvironmentType::UNKNOWN, host.clone(), port).await;
     match client {
-        SMDBClientSelector::SMDBCMockClient(_) => assert!(true),
-        _ => assert!(false, "Expected SMDBCMockClient"),
+        SMDBClientSelector::SMDBCMockClient(_) => {}
+        _ => {
+            panic!("Expected SMDBCMockClient");
+        }
     }
 }
 
@@ -47,23 +53,23 @@ async fn test_select_imdb_client() {
     let client = client_utils::select_imdb_client(&env, host.clone(), port).await;
 
     match client {
-        IMDBClientSelector::IMDBCMockClient(_) => assert!(true),
-        _ => assert!(false, "Expected IMDBCMockClient"),
+        IMDBClientSelector::IMDBCMockClient(_) => {}
+        _ => panic!("Expected IMDBCMockClient"),
     }
 
     // Test with EnvironmentType::LOCAL
     let env = EnvironmentType::LOCAL;
     let client = client_utils::select_imdb_client(&env, host.clone(), port).await;
     match client {
-        IMDBClientSelector::IMDBCMockClient(_) => assert!(true),
-        _ => assert!(false, "Expected IMDBCMockClient"),
+        IMDBClientSelector::IMDBCMockClient(_) => {}
+        _ => panic!("Expected IMDBCMockClient"),
     }
 
     // Test with EnvironmentType::UNKNOWN
     let env = EnvironmentType::UNKNOWN;
     let client = client_utils::select_imdb_client(&env, host.clone(), port).await;
     match client {
-        IMDBClientSelector::IMDBCMockClient(_) => assert!(true),
-        _ => assert!(false, "Expected IMDBClient"),
+        IMDBClientSelector::IMDBCMockClient(_) => {}
+        _ => panic!("Expected IMDBCMockClient"),
     }
 }
