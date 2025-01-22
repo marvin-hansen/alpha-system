@@ -6,25 +6,21 @@ const ROOT_PATH: &str = "queng_system_ims_data/binance/binance_spot_tests/tests"
 const PROGRAM: &str = "ims_data_service";
 const IGGY_HEALTH_URI: &str = "http://0.0.0.0:3000";
 const IGGY_DARWIN_AARCH64: &str = "iggy_server_darwin_aarch64";
-const IGGY_DARWIN_X86_64: &str = "iggy_server_linux_x86_64";
-const BINARIES: [&str; 3] = [PROGRAM, IGGY_DARWIN_AARCH64, IGGY_DARWIN_X86_64];
+const IGGY_LINUX_X86_64: &str = "iggy_server_linux_x86_64";
+const BINARIES: [&str; 3] = [PROGRAM, IGGY_DARWIN_AARCH64, IGGY_LINUX_X86_64];
 
 fn select_iggy_binary(env: EnvironmentType) -> &'static str {
     match env {
         EnvironmentType::LOCAL => IGGY_DARWIN_AARCH64,
-        EnvironmentType::CI => IGGY_DARWIN_X86_64,
+        EnvironmentType::CI => IGGY_LINUX_X86_64,
         _ => panic!("Unsupported environment"),
     }
 }
 
-fn get_service_wait_strategy(url: String) -> WaitStrategy {
-    WaitStrategy::WaitForHttpHealthCheck(url, 3)
-}
-
-fn get_service_start_config(program: &'static str, uri: String) -> ServiceStartConfig {
+fn get_service_start_config(program: &'static str, url: String) -> ServiceStartConfig {
     ServiceStartConfig::builder()
         .program(program)
-        .wait_strategy(get_service_wait_strategy(uri))
+        .wait_strategy(WaitStrategy::WaitForHttpHealthCheck(url, 5))
         .build()
 }
 

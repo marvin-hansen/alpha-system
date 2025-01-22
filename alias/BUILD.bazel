@@ -575,6 +575,11 @@ alias(
 ###############################################################################
 
 alias(
+    name = "client_utils",
+    actual = "//queng_utils/client_utils",
+)
+
+alias(
     name = "crypto_utils",
     actual = "//queng_utils/crypto_utils",
 )

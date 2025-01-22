@@ -9,7 +9,6 @@ use smdb_client::*;
 use tokio::time::Instant;
 use trait_data_integration::ImsDataIntegration;
 
-mod client_builder;
 mod config;
 mod handle;
 mod health_check;
@@ -55,7 +54,7 @@ where
         .expect("Failed to get host and port for DBGW");
 
     dbg_print("Construct SMDB client");
-    let smdb_client = client_builder::select_smdb_client(&env, smdb_host, smdb_port).await;
+    let smdb_client = client_utils::select_smdb_client(&env, smdb_host, smdb_port).await;
 
     dbg_print("get dependencies from auto config");
     let dependencies = cfg_manager.get_service_dependencies();
@@ -80,7 +79,7 @@ where
         .expect("Failed to get MDDB host");
 
     dbg_print("Construct IMDB client");
-    let imdb_client = client_builder::select_imdb_client(&env, host, port).await;
+    let imdb_client = client_utils::select_imdb_client(&env, host, port).await;
 
     dbg_print("Get integration form IMDB");
     let integration_id = "ims-data-binance".to_string();

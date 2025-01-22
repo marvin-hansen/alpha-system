@@ -184,6 +184,7 @@ shared_service_specs = { path = "queng_specs/service_specs/shared_service_specs"
 service_specs_all = { path = "queng_specs/service_specs/service_specs_all" }
 
 # Utils
+client_utils = { path = "queng_utils/client_utils" }
 crypto_utils = { path = "queng_utils/crypto_utils" }
 encoding_utils = { path = "queng_utils/encoding_utils" }
 math_utils = { path = "queng_utils/math_utils" }

@@ -1,0 +1,36 @@
+load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library", "rust_test_suite")
+
+rust_library(
+    name = "client_utils",
+    srcs = glob([
+        "src/**",
+    ]),
+    crate_root = "src/lib.rs",
+    tags = [
+        "client_utils",
+        "utils",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Internal crates
+        "//alias:common_env",
+        "//alias/client:imdb_client",
+        "//alias/client:smdb_client",
+        # External crates
+        "//thirdparty/crates:tokio",
+    ],
+)
+
+rust_doc(
+    name = "doc",
+    crate = ":client_utils",
+    tags = ["doc"],
+    visibility = ["//visibility:public"],
+)
+
+rust_doc_test(
+    name = "doc_test",
+    crate = ":client_utils",
+    tags = ["doc-test"],
+    visibility = ["//visibility:public"],
+)

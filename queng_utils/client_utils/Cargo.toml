@@ -1,0 +1,22 @@
+[package]
+name = "client_utils"
+version = "0.1.0"
+edition.workspace = true
+rust-version.workspace = true
+readme.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+
+[lints]
+workspace = true
+
+
+[dependencies]
+# Internal crates
+common_env = { workspace = true }
+imdb_client = { workspace = true }
+smdb_client = { workspace = true }
+
+[dev-dependencies]
+tokio = { workspace = true }

@@ -14,6 +14,9 @@ pub use smdb_error::*;
 /// A dispatch enum for selecting the type of SMDB client to use. This is useful for testing as it allows us to
 /// switch between a real IMDB client and a mock client.
 ///
+/// !!!! NOTE: The SMDBClientSelector is exposed via the client_util crate for context dependent client selection.
+/// !!!! Use the client_util crate instead of directly importing this module when you need to select clients dynamically.
+///
 /// # Usage
 /// ```rust, no_run
 /// use smdb_client::*;

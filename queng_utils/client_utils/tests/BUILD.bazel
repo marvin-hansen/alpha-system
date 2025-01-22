@@ -1,0 +1,23 @@
+load("@rules_rust//rust:defs.bzl", "rust_test_suite")
+
+rust_test_suite(
+    name = "tests",
+    srcs = glob([
+        "*_tests.rs",
+    ]),
+    tags = [
+        "client_utils",
+        "unit-test",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate under test
+        "//alias:client_utils",
+        # Internal crates
+        "//alias/client:smdb_client",
+        "//alias/client:imdb_client",
+        "//alias:common_env",
+        # External crates
+        "//thirdparty/crates:tokio",
+    ],
+)
