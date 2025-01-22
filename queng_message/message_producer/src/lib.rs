@@ -71,6 +71,7 @@ impl MessageProducer {
             .build();
 
         dbg_print("Initializing producer");
+        //
         // @FIXME:
         // [MessageProducer]: Failed to init producer: StreamNameAlreadyExists("")
         //
