@@ -111,12 +111,16 @@ impl<Integration: ImsDataIntegration> Service<Integration> {
         let stream_id = integration_config.control_channel();
         let topic_id = integration_config.control_channel();
 
+        dbg_print(&format!("stream_id: {stream_id}"));
+        dbg_print(&format!("topic_id: {topic_id}"));
+
         dbg_print("Create MessageProducer");
         let producer =
-            MessageProducer::from_client(producer_client, stream_id.clone(), topic_id.clone())
+            MessageProducer::from_client(dbg, producer_client, stream_id.clone(), topic_id.clone())
                 .await
                 .expect("Failed to create producer");
         let producer = std::sync::Arc::new(tokio::sync::RwLock::new(producer));
+        dbg_print("MessageProducer created");
 
         dbg_print("Create MessageConsumer");
         let consumer = MessageConsumer::from_client(
@@ -128,6 +132,7 @@ impl<Integration: ImsDataIntegration> Service<Integration> {
         .await
         .expect("[Service]: Failed to create consumer");
         let consumer = std::sync::Arc::new(tokio::sync::RwLock::new(consumer));
+        dbg_print("MessageConsumer crated");
 
         // Create a new HashMap to store data producers for each client
         dbg_print("Create HashMaps");

@@ -88,6 +88,7 @@ impl ImsDataClient {
 
         dbg_print("Create control MessageProducer");
         let control_producer = MessageProducer::from_client(
+            dbg,
             &control_client,
             control_stream_id.clone(),
             control_topic_id.clone(),

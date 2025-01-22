@@ -2,7 +2,7 @@ use common_env::EnvironmentType;
 use config_manager::CfgManager;
 use service_utils::{ServiceStartConfig, ServiceUtil, WaitStrategy};
 
-const ROOT_PATH: &str = "queng_system_ims_data/binance/binance_spot_tests/tests";
+const ROOT_PATH: &str = "queng_system_ims_data/binance_tests/binance_spot_tests/tests";
 const PROGRAM: &str = "ims_data_service";
 const IGGY_HEALTH_URI: &str = "http://0.0.0.0:3000";
 const IGGY_DARWIN_AARCH64: &str = "iggy_server_darwin_aarch64";

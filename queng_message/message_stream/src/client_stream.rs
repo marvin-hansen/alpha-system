@@ -14,10 +14,35 @@ pub struct MessageStream {
 }
 
 impl MessageStream {
+    /// Creates a new `MessageStream` instance with debugging disabled.
+    ///
+    /// # Arguments
+    ///
+    /// * `client_id` - The client ID to use for this instance.
+    ///
+    /// # Returns
+    ///
+    /// A `Result` containing the newly created `MessageStream` instance or an error.
+    ///
     pub async fn new(client_id: u16) -> Result<Self, Error> {
-        Self::build(client_id).await
+        Self::build(false, client_id).await
     }
-    async fn build(client_id: u16) -> Result<Self, Error> {
+
+    /// Creates a new `MessageStream` instance with debugging enabled.
+    ///
+    /// # Arguments
+    ///
+    /// * `client_id` - The client ID to use for this instance.
+    ///
+    /// # Returns
+    ///
+    /// A `Result` containing the newly created `MessageStream` instance or an error.
+    ///
+    pub async fn with_debug(client_id: u16) -> Result<Self, Error> {
+        Self::build(true, client_id).await
+    }
+
+    async fn build(dbg: bool, client_id: u16) -> Result<Self, Error> {
         let user = IggyUser::default();
         let iggy_config = IggyConfig::from_client_id(user, client_id);
         let stream_id = iggy_config.stream_id();
@@ -37,10 +62,14 @@ impl MessageStream {
             .await
             .expect("Failed to login user");
 
-        let iggy_producer =
-            MessageProducer::from_client(&iggy_client, stream_name.clone(), topic_name.clone())
-                .await
-                .expect("Failed to create producer");
+        let iggy_producer = MessageProducer::from_client(
+            dbg,
+            &iggy_client,
+            stream_name.clone(),
+            topic_name.clone(),
+        )
+        .await
+        .expect("Failed to create producer");
 
         Ok(Self {
             client_id,
