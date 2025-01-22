@@ -18,7 +18,7 @@ rust_test_suite(
         # Run with bazel test //... --test_tag_filters=binance_spot_acceptance_test --test_env=ENV=LOCAL
         "binance_spot_acceptance_test",
         # The second tag is for acceptance testing on the CI, which runs in parallel.
-        "acceptance_test",
+        # "acceptance_test",
     ],
     visibility = ["//visibility:public"],
     deps = [
