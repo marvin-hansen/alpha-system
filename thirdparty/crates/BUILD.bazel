@@ -379,14 +379,14 @@ alias(
 )
 
 alias(
-    name = "service_utils-0.1.5",
-    actual = "//thirdparty/crates/service_utils-0.1.5:service_utils",
+    name = "service_utils-0.1.6",
+    actual = "//thirdparty/crates/service_utils-0.1.6:service_utils",
     tags = ["manual"],
 )
 
 alias(
     name = "service_utils",
-    actual = "//thirdparty/crates/service_utils-0.1.5:service_utils",
+    actual = "//thirdparty/crates/service_utils-0.1.6:service_utils",
     tags = ["manual"],
 )
 
