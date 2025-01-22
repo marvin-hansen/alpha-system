@@ -319,7 +319,7 @@ _NORMAL_DEPENDENCIES = {
             "rustls": Label("//thirdparty/crates/rustls-0.23.21:rustls"),
             "serde": Label("//thirdparty/crates/serde-1.0.217:serde"),
             "serde_json": Label("//thirdparty/crates/serde_json-1.0.137:serde_json"),
-            "service_utils": Label("//thirdparty/crates/service_utils-0.1.6:service_utils"),
+            "service_utils": Label("//thirdparty/crates/service_utils-0.2.0:service_utils"),
             "sha3": Label("//thirdparty/crates/sha3-0.11.0-pre.4:sha3"),
             "syn": Label("//thirdparty/crates/syn-2.0.96:syn"),
             "tokio": Label("//thirdparty/crates/tokio-1.43.0:tokio"),

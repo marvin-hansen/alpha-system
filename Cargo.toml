@@ -203,7 +203,7 @@ syn = { version = "2.0", features = ["full", "extra-traits"] }
 quote = "1.0"
 # Dependencies that I maintained
 docker_utils = { version = "0.2" }
-service_utils = { version = "0.1" }
+service_utils = { version = "0.2" }
 # Regular dependencies
 base16ct = { version = "0.2", default-features = false, features = ["alloc"] }
 blake3 = { version = "1.5.4", default-features = false }
