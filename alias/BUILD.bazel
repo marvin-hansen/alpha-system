@@ -594,3 +594,11 @@ alias(
     actual = "//queng_utils/math_utils",
 )
 
+###############################################################################
+# Utils Tests
+###############################################################################
+
+alias(
+    name = "iggy_test_utils",
+    actual = "//queng_utils_test/iggy_test_utils",
+)

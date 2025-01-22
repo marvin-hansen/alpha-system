@@ -19,7 +19,7 @@ path = "src/fake_lib.rs"
 # For testing
 [dev-dependencies]
 config_manager = { workspace = true }
-common_env = { workspace = true }
+iggy_test_utils = { workspace = true }
 # External crates
 service_utils = { workspace = true }
 tokio = { workspace = true }

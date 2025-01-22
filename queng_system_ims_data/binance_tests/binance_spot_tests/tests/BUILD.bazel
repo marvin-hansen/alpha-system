@@ -26,7 +26,7 @@ rust_test_suite(
         "//alias/service:binance_spot",
         # Internal crates
         "//alias:config_manager",
-        "//alias:common_env",
+        "//alias:iggy_test_utils",
         # External crates
         "//thirdparty/crates:service_utils",
         "//thirdparty/crates:tokio",

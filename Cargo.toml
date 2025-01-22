@@ -21,6 +21,7 @@ members = [
     "queng_system_mds/*/*",
     "queng_template/*",
     "queng_utils/*",
+    "queng_utils_test/*",
 ]
 exclude = [
     "queng_sbe/sbe_schema",
@@ -188,6 +189,8 @@ client_utils = { path = "queng_utils/client_utils" }
 crypto_utils = { path = "queng_utils/crypto_utils" }
 encoding_utils = { path = "queng_utils/encoding_utils" }
 math_utils = { path = "queng_utils/math_utils" }
+# Test utils
+iggy_test_utils = { path = "queng_utils_test/iggy_test_utils" }
 
 # ==============
 # External crates
