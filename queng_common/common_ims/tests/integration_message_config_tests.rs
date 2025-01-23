@@ -8,7 +8,7 @@ fn test_new_config_name_format() {
     let version = 1;
     let config = IntegrationMessageConfig::new(id, version, exchange_id);
 
-    assert_eq!(config.name(), "BinanceSpot-integration-123");
+    assert_eq!(config.name(), "binancespot-integration-123");
 }
 
 #[test]
@@ -19,13 +19,13 @@ fn test_channel_name_generation() {
 
     assert_eq!(
         config.control_channel(),
-        "BinanceSpot-integration-1-control"
+        "binancespot-integration-1-control"
     );
-    assert_eq!(config.data_channel(), "BinanceSpot-integration-1-data");
-    assert_eq!(config.error_channel(), "BinanceSpot-integration-1-error");
+    assert_eq!(config.data_channel(), "binancespot-integration-1-data");
+    assert_eq!(config.error_channel(), "binancespot-integration-1-error");
     assert_eq!(
         config.execution_channel(),
-        "BinanceSpot-integration-1-execution"
+        "binancespot-integration-1-execution"
     );
 }
 
@@ -40,5 +40,5 @@ fn test_getter_methods_return_original_values() {
     assert_eq!(config.id(), id);
     assert_eq!(config.exchange_id(), exchange_id);
     assert_eq!(config.version(), &version);
-    assert_eq!(config.name(), "Kraken-integration-456");
+    assert_eq!(config.name(), "kraken-integration-456");
 }
