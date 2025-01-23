@@ -176,7 +176,7 @@ async fn test_imdb_integrations(client: &IMDBClient) {
     assert!(count > 0);
 
     // Test check_if_integration_exists
-    let integration_id = "BinanceSpot-data".to_string();
+    let integration_id = "binancespot-data".to_string();
     let res = client
         .check_if_integration_exists(integration_id.clone())
         .await;
@@ -187,7 +187,7 @@ async fn test_imdb_integrations(client: &IMDBClient) {
     assert!(exists);
 
     // Test check_if_integration_online
-    let integration_id = "BinanceSpot-data".to_string();
+    let integration_id = "binancespot-data".to_string();
     let res = client
         .check_if_integration_online(integration_id.clone())
         .await;
@@ -198,7 +198,7 @@ async fn test_imdb_integrations(client: &IMDBClient) {
     assert!(!online);
 
     // Test get_integration
-    let integration_id = "BinanceSpot-data".to_string();
+    let integration_id = "binancespot-data".to_string();
     let res = client.get_integration(integration_id.clone()).await;
     assert!(res.is_ok());
 
@@ -240,7 +240,7 @@ async fn test_imdb_integrations(client: &IMDBClient) {
     assert!(!integrations.is_empty());
 
     // Test set_integration_online
-    let integration_id = "BinanceSpot-data".to_string();
+    let integration_id = "binancespot-data".to_string();
 
     // Test if integration is offline, which it is by default.
     let res = client

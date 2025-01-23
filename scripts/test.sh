@@ -35,7 +35,14 @@ command bazel test //... --test_tag_filters=integration_test --test_env=ENV=LOCA
 
 echo ""
 echo "====================="
-echo "Run acceptance tests"
+echo "Run IMS acceptance tests"
+echo "====================="
+# local testing must be in sequential order b/c there is just one DB container available
+command bazel test //... --test_tag_filters=ims-acceptance_test --test_env=ENV=LOCAL
+
+echo ""
+echo "====================="
+echo "Run Core acceptance tests"
 echo "====================="
 # local testing must be in sequential order b/c there is just one DB container available
 command bazel test //... --test_tag_filters=smdb_acceptance_test --test_env=ENV=LOCAL
