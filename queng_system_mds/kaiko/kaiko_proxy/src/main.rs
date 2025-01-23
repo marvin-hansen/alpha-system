@@ -85,6 +85,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let http_signal = shutdown_utils::signal_handler("http server");
     let (_, http_server) =
         warp::serve(routes).bind_with_graceful_shutdown(([127, 0, 0, 1], PORT_HTTP), http_signal);
+
     let http_handle = tokio::spawn(http_server);
 
     print_duration("[main]: Starting server took", &start.elapsed());

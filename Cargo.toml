@@ -215,7 +215,7 @@ diesel_migrations = { version = "2.2.0", default-features = false, features = ["
 futures = { version = "0.3.31" }
 futures-util = {version = "0.3.31"}
 hickory-resolver = { version = "0.24.1", default-features = false, features = ["tokio-runtime"] }
-iggy = { version = "0.6.51" }
+iggy = { version = "0.6" }
 klickhouse = { version = "0.13.2" }
 lru = { version = "0.12.4" }
 mimalloc = { version = "0.1.43" }

@@ -40,12 +40,12 @@ multirun(
         "kaiko_proxy_push",
         "mddb_push",
         # IMS Data integrations
-#        "binance_coin_future_push",
-#        "binance_coin_future_testnet_push",
-#        "binance_spot_push",
-#        "binance_spot_testnet_push",
-#        "binance_usd_future_push",
-#        "binance_usd_future_testnet_push",
+        #        "binance_coin_future_push",
+        #        "binance_coin_future_testnet_push",
+        #        "binance_spot_push",
+        #        "binance_spot_testnet_push",
+        #        "binance_usd_future_push",
+        #        "binance_usd_future_testnet_push",
     ],
     jobs = 0,  # Set to 0 to run in parallel
     visibility = ["//visibility:public"],

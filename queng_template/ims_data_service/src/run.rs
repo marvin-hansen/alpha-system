@@ -1,6 +1,8 @@
 use crate::service::Service;
 use common_errors::MessageProcessingError;
 use futures_util::StreamExt;
+use std::future::Future;
+use tokio::{pin, select};
 use trait_data_integration::ImsDataIntegration;
 
 impl<Integration> Service<Integration>
@@ -16,30 +18,41 @@ where
     ///
     /// The function will return an error if the service cannot be started.
     ///
-    pub async fn run(self) -> Result<(), MessageProcessingError> {
-        tokio::spawn(async move {
-            let mut consumer_guard = self.consumer().write().await;
-            let consumer = consumer_guard.consumer_mut();
+    pub(crate) async fn run(
+        self,
+        signal: impl Future<Output = ()> + Send + 'static,
+    ) -> Result<(), MessageProcessingError> {
+        self.dbg_print("Running integration service");
+        // When call .await on a &mut _ reference, pin the future. https://docs.rs/tokio/latest/tokio/macro.pin.html#examples
+        let signal_future = signal;
+        pin!(signal_future);
 
-            while let Some(message) = consumer.next().await {
-                if let Ok(received_message) = message {
-                    dbg!(
-                    "Received event at offset: {}, current: {}, from stream: {stream}, topic: {topic}",
-                    received_message.message.offset, received_message.current_offset
-                );
-                    self.handle_message(received_message.message)
-                        .await
-                        .expect("Failed to handle message");
-                }
-            }
+        let mut consumer_guard = self.consumer().write().await;
+        let consumer = consumer_guard.consumer_mut();
 
-            drop(consumer_guard);
+        loop {
+            select! {
+            _ = &mut signal_future => {break;}
 
-            // We shutdown the integration service here after exiting the loop
-            // because self moved into the Tokio task
-            self.dbg_print("Shutdown integration service");
-            self.shutdown().await.expect("Failed to shutdown service");
-        });
+            received_message = consumer.next() => {
+                    match received_message {
+
+                        Some(Ok(message)) => {
+                                    self.handle_message(message.message).await.expect("Failed to handle message");
+                        },
+                        Some(Err(e)) => {
+                            println!("[Service/run]: Error polling messages from iggy message bus: {}", e);
+                            break;
+                        }
+
+                        None => {}
+                    }
+                } // end match polled messages
+            } // end select
+        } // end loop
+
+        self.dbg_print("Shutting down integration service");
+        self.shutdown().await.expect("Failed to shutdown service");
 
         Ok(())
     }

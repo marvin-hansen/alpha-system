@@ -7,6 +7,8 @@ use iggy::error::IggyError;
 use iggy::identifier::Identifier;
 use iggy::messages::send_messages::Partitioning;
 use iggy::utils::duration::IggyDuration;
+use iggy::utils::expiry::IggyExpiry;
+use iggy::utils::topic_size::MaxTopicSize;
 use message_shared::Args;
 use std::str::FromStr;
 use std::sync::Arc;
@@ -58,7 +60,17 @@ impl MessageProducer {
         let topic_id = Identifier::from_str_value(&args.topic_id)
             .expect("[MessageProducer]: Invalid topic id");
 
-        dbg_print("Creating producer");
+        dbg_print(&format!(
+            "[MessageProducer]: stream_id: {}",
+            &stream_id.as_string()
+        ));
+
+        dbg_print(&format!(
+            "[MessageProducer]: topic_id: {}",
+            &topic_id.as_string()
+        ));
+
+        dbg_print("Building producer");
         let mut producer = client
             .producer(&args.stream_id, &args.topic_id)
             .expect("[MessageProducer]: Failed to create producer")
@@ -68,13 +80,16 @@ impl MessageProducer {
                     .expect("[MessageProducer]: Invalid interval format"),
             )
             .partitioning(Partitioning::balanced())
+            .create_topic_if_not_exists(
+                3,
+                None,
+                IggyExpiry::ServerDefault,
+                MaxTopicSize::ServerDefault,
+            )
+            .create_stream_if_not_exists()
             .build();
 
         dbg_print("Initializing producer");
-        //
-        // @FIXME:
-        // [MessageProducer]: Failed to init producer: StreamNameAlreadyExists("")
-        //
         producer
             .init()
             .await

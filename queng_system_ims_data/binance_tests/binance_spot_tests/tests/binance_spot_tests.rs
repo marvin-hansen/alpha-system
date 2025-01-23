@@ -3,14 +3,15 @@ use iggy_test_utils::{iggy_start_config_builder, IGGY_DARWIN_AARCH64, IGGY_LINUX
 use service_utils::{ServiceStartConfig, ServiceUtil, WaitStrategy};
 
 const ROOT_PATH: &str = "queng_system_ims_data/binance_tests/binance_spot_tests/tests";
+
 const PROGRAM: &str = "ims_data_service";
 
 const BINARIES: [&str; 3] = [PROGRAM, IGGY_DARWIN_AARCH64, IGGY_LINUX_X86_64];
 
-fn get_service_start_config(program: &'static str, url: String) -> ServiceStartConfig {
+fn get_service_start_config(health_url: String) -> ServiceStartConfig {
     ServiceStartConfig::builder()
-        .program(program)
-        .wait_strategy(WaitStrategy::WaitForHttpHealthCheck(url, 5))
+        .program(PROGRAM)
+        .wait_strategy(WaitStrategy::WaitForHttpHealthCheck(health_url, 5))
         .build()
 }
 
@@ -52,7 +53,7 @@ async fn test_binance_spot() {
     dbg!(&format!(" IMS Data service uri: {uri}"));
 
     dbg!("Configure IMS Data service - Binance Spot");
-    let _dbgw_start_config = get_service_start_config(PROGRAM, uri);
+    let _dbgw_start_config = get_service_start_config(uri);
 
     // dbg!("Start IMS Data service - Binance Spot");
     // let result = svc_util.start_service_from_config(dbgw_start_config).await;

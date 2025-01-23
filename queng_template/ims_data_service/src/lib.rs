@@ -1,13 +1,15 @@
+use crate::health_check::health_handler::health_handler;
 use crate::service::Service;
 use common_config::ServiceID;
 use common_exchange::ExchangeID;
-use common_service::print_utils;
+use common_service::{print_utils, shutdown_utils};
 use config_manager::CfgManager;
 use iggy::client::{Client, UserClient};
 use imdb_client::*;
 use smdb_client::*;
 use tokio::time::Instant;
 use trait_data_integration::ImsDataIntegration;
+use warp::Filter;
 
 mod config;
 mod handle;
@@ -128,37 +130,51 @@ where
         .await
         .expect("Failed to login user");
 
-    dbg_print("Configuring metrics endpoint");
-    let (metrics_addr, _) = cfg_manager
-        .get_metrics_socket_addr_uri()
-        .expect("DBGW: Failed to get metric host, uri, and port");
-    dbg_print(&metrics_addr);
+    dbg_print("Configuring health endpoint");
+    // let (_, _) = cfg_manager
+    //     .get_metrics_socket_addr_uri()
+    //     .expect("DBGW: Failed to get metric host, uri, and port");
+    // dbg_print(&metrics_addr);
 
-    dbg_print("Construct health endpoint server");
-    let http_server = health_check::health_handler::get_http_health_server(metrics_addr).await;
+    let port_http = 8080;
+
+    dbg_print("Configure health check route");
+    let health_check = warp::get()
+        .and(warp::path("health"))
+        .and(warp::path::end())
+        .and_then(health_handler);
+
+    dbg_print("Configure service routes");
+    let routes = health_check;
+
+    dbg_print("Configure http service");
+    let http_signal = shutdown_utils::signal_handler("http server");
+    let (_, http_server) =
+        warp::serve(routes).bind_with_graceful_shutdown(([0, 0, 0, 0], port_http), http_signal);
 
     dbg_print("Construct server");
-    let server = if dbg {
-        Service::with_debug(
-            &consumer_client,
-            &producer_client,
-            ims_integration,
-            integration_config,
-            iggy_config,
-        )
-        .await
-        .expect("Failed to build new service")
-    } else {
-        Service::new(
-            &consumer_client,
-            &producer_client,
-            ims_integration,
-            integration_config,
-            iggy_config,
-        )
-        .await
-        .expect("Failed to build new service")
-    };
+    let server = Service::build_service(
+        dbg,
+        &consumer_client,
+        &producer_client,
+        ims_integration,
+        integration_config,
+        iggy_config,
+    )
+    .await
+    .expect("Failed to build new service");
+
+    dbg_print("Freeing up memory");
+    drop(cfg_manager);
+    drop(smdb_client);
+    drop(dependencies);
+
+    dbg_print("Starting message service");
+    let service_signal = shutdown_utils::signal_handler("messaging server");
+    let service_handle = tokio::spawn(server.run(service_signal));
+
+    dbg_print("Starting http server");
+    let http_handle = tokio::spawn(http_server);
 
     dbg_print("Set integration online on IMDB");
     imdb_client
@@ -166,63 +182,26 @@ where
         .await
         .expect("Failed to set integration online");
 
-    // Free up some memory before starting the service,
-    drop(cfg_manager);
-    drop(smdb_client);
-    drop(dependencies);
-
     // Print service start header
     print_utils::print_duration("Starting service took:", &start.elapsed());
     print_utils::print_start_header_simple(svc_name, &service_addr);
-
-    server.run().await.expect("Failed to run service");
-    http_server.await;
-
-    #[cfg(unix)]
-    let (mut ctrl_c, mut sigterm) = {
-        use tokio::signal::unix::{signal, SignalKind};
-        (
-            signal(SignalKind::interrupt())?,
-            signal(SignalKind::terminate())?,
-        )
-    };
-
-    #[cfg(unix)]
-    tokio::select! {
-        _ = ctrl_c.recv() => {
-            dbg_print("Received SIGINT. Shutting down {NAME} {VERSION}...");
-        },
-        _ = sigterm.recv() => {
-            dbg_print("Received SIGTERM. Shutting down {NAME} {VERSION}...");
+    match tokio::try_join!(http_handle, service_handle) {
+        Ok(_) => {}
+        Err(e) => {
+            println!("IMS Data Integration Service: Failed to start server: {e:?}");
         }
     }
 
-    dbg_print("Shutdown iggy producer");
-    dbg_print("Deleting streams and topics");
-    message_shared::cleanup(&producer_client, iggy_config)
-        .await
-        .expect("Failed to clean up iggy");
-
-    dbg_print("Logging out user");
-    message_shared::logout_user(&producer_client)
-        .await
-        .expect("Failed to logout user");
-
-    dbg_print("Shutting down iggy client");
-    message_shared::shutdown(&producer_client)
-        .await
-        .expect("Failed to shutdown iggy consumer");
-
-    dbg_print("Shutdown iggy consumer");
-    message_shared::shutdown(&consumer_client)
-        .await
-        .expect("Failed to shutdown iggy consumer");
+    dbg_print("Shutting down messaging clients");
+    shutdown::shutdown_iggy(&dbg_print, &producer_client, &consumer_client).await;
 
     dbg_print("Set integration offline on IMDB");
     imdb_client
         .set_integration_offline(integration_id.clone())
         .await
         .expect("Failed to set integration offline on IMDB");
+
+    print_utils::print_stop_header(&ServiceID::Default);
 
     Ok(())
 }

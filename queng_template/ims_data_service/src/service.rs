@@ -27,6 +27,25 @@ pub struct Service<Integration: ImsDataIntegration> {
 }
 
 impl<Integration: ImsDataIntegration> Service<Integration> {
+    pub async fn build_service(
+        dbg: bool,
+        consumer_client: &IggyClient,
+        producer_client: &IggyClient,
+        ims_integration: Integration,
+        integration_config: &IntegrationConfig,
+        iggy_config: &IggyConfig,
+    ) -> Result<Self, Box<dyn Error>> {
+        Self::build(
+            dbg,
+            consumer_client,
+            producer_client,
+            ims_integration,
+            integration_config,
+            iggy_config,
+        )
+        .await
+    }
+
     /// Creates a new server instance with debugging disabled.
     ///
     /// # Arguments
@@ -198,5 +217,32 @@ impl<Integration: ImsDataIntegration> Service<Integration> {
         if self.dbg {
             println!("[IMSData/Server]: {msg}");
         }
+    }
+}
+
+impl<Integration: ImsDataIntegration> Service<Integration> {
+    pub(crate) async fn shutdown(&self) -> Result<(), std::fmt::Error> {
+        let client_db = self.client_producers().read().await;
+
+        if client_db.is_empty() {
+            return Ok(());
+        }
+
+        self.dbg_print("Logging out all remaining clients");
+        for (client_id, _) in client_db.iter() {
+            self.client_logout(*client_id)
+                .await
+                .unwrap_or_else(|_| panic!("Failed to log out client {client_id}"));
+        }
+
+        self.dbg_print("Shutdown integration service");
+        self.ims_integration()
+            .read()
+            .await
+            .shutdown()
+            .await
+            .expect("Failed to shutdown integration service");
+
+        Ok(())
     }
 }

@@ -1,30 +1,28 @@
-use crate::service::Service;
-use std::fmt::Error;
-use trait_data_integration::ImsDataIntegration;
+use iggy::clients::client::IggyClient;
 
-impl<Integration: ImsDataIntegration> Service<Integration> {
-    pub(crate) async fn shutdown(&self) -> Result<(), Error> {
-        let client_db = self.client_producers().read().await;
+pub(crate) async fn shutdown_iggy(
+    dbg_print: &dyn Fn(&str),
+    producer_client: &IggyClient,
+    consumer_client: &IggyClient,
+) {
+    // dbg_print("Shutdown iggy producer");
+    // dbg_print("Deleting producer streams and topics");
+    // message_shared::cleanup(&producer_client, iggy_config)
+    //     .await
+    //     .expect("Failed to clean up iggy");
 
-        if client_db.is_empty() {
-            return Ok(());
-        }
+    dbg_print("Logging out iggy user");
+    message_shared::logout_user(&producer_client)
+        .await
+        .expect("Failed to logout user");
 
-        self.dbg_print("Logging out all remaining clients");
-        for (client_id, _) in client_db.iter() {
-            self.client_logout(*client_id)
-                .await
-                .unwrap_or_else(|_| panic!("Failed to log out client {client_id}"));
-        }
+    dbg_print("Shutting down iggy producer client");
+    message_shared::shutdown(&producer_client)
+        .await
+        .expect("Failed to shutdown iggy producer client");
 
-        self.dbg_print("Shutdown integration service");
-        self.ims_integration()
-            .read()
-            .await
-            .shutdown()
-            .await
-            .expect("Failed to shutdown integration service");
-
-        Ok(())
-    }
+    dbg_print("Shutdown iggy consumer client");
+    message_shared::shutdown(&consumer_client)
+        .await
+        .expect("Failed to shutdown iggy consumer client");
 }

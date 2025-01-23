@@ -185,8 +185,8 @@
     "https://bcr.bazel.build/modules/stardoc/0.7.1/MODULE.bazel": "3548faea4ee5dda5580f9af150e79d0f6aea934fc60c1cc50f4efdd9420759e7",
     "https://bcr.bazel.build/modules/stardoc/0.7.2/MODULE.bazel": "fc152419aa2ea0f51c29583fab1e8c99ddefd5b3778421845606ee628629e0e5",
     "https://bcr.bazel.build/modules/stardoc/0.7.2/source.json": "58b029e5e901d6802967754adf0a9056747e8176f017cfe3607c0851f4d42216",
-    "https://bcr.bazel.build/modules/toolchains_llvm/1.3.0/MODULE.bazel": "6e02731e51f7eb2ec4b01c5e79e722bf738a631f6e03d9b4917cbf2cb027bee1",
-    "https://bcr.bazel.build/modules/toolchains_llvm/1.3.0/source.json": "4ce0373a89c6df34dd37cd67285bb871d8e225d30dcb67dd093e077a04bbbb71",
+    "https://bcr.bazel.build/modules/toolchains_llvm/1.2.0/MODULE.bazel": "7b271b71e50de47fa47159a7f58165e80fcebe1196c014a14af0a08a867d1635",
+    "https://bcr.bazel.build/modules/toolchains_llvm/1.2.0/source.json": "0328cfc67075d6a016980be4011bbc1dcfba933e357568002542dff22abdd3a1",
     "https://bcr.bazel.build/modules/toolchains_musl/0.1.20/MODULE.bazel": "cd23ead91352fde0751fb923fcf6fbf03a5d91842ba8af699535810db9ec198c",
     "https://bcr.bazel.build/modules/toolchains_musl/0.1.20/source.json": "3773f78152ec161e3b769ebb09e29fadd63143f3fba99298e5f8051c122e8435",
     "https://bcr.bazel.build/modules/toolchains_protoc/0.3.6/MODULE.bazel": "33add32ebda5f8167b3086585d0f7720086d24b764a06b99c02cf705889ae9bb",
@@ -1314,7 +1314,7 @@
     },
     "@@toolchains_llvm+//toolchain/extensions:llvm.bzl%llvm": {
       "general": {
-        "bzlTransitiveDigest": "2eLMaPh4QKrn3wPljYBu5jSkkp9DfCf4yGKTR9lBN3c=",
+        "bzlTransitiveDigest": "2UD8x0LHy2fgOvBmCL8R0HPa9/omkySg1/dsFBzYcH8=",
         "usagesDigest": "vYWvrGtDPxOkbdnLBZTwRhECyN80LhH8TIy8U6nz6hM=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
@@ -1328,7 +1328,6 @@
               "distribution": "auto",
               "exec_arch": "",
               "exec_os": "",
-              "libclang_rt": {},
               "llvm_mirror": "",
               "llvm_version": "",
               "llvm_versions": {
@@ -1353,7 +1352,6 @@
               "absolute_paths": false,
               "archive_flags": {},
               "compile_flags": {},
-              "conly_flags": {},
               "coverage_compile_flags": {},
               "coverage_link_flags": {},
               "cxx_builtin_include_directories": {},

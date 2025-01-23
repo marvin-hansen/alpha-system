@@ -10,7 +10,7 @@ actions:
   #        branches:
   #          - "main"
     # When adding new bazel commands, also update scripts/test.sh script with the same command for local testing
-    bazel_commands:
+    steps:
       # Setup & Authenticate
       - "run -c opt //:buildbuddy_setup_docker_auth --verbose_failures"
       # Build all targets with remote. Do NOT disable remote, otherwise the missing lib .. makes the workflow build fail.

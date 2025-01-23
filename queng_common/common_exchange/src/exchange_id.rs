@@ -122,6 +122,31 @@ impl From<i32> for ExchangeID {
 
 impl Display for ExchangeID {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{self:?}")
+        match self {
+            ExchangeID::NullVal => write!(f, "{}", "NullVal".to_ascii_lowercase()),
+            ExchangeID::Kraken => write!(f, "{}", "Kraken".to_ascii_lowercase()),
+            ExchangeID::COINBASE => write!(f, "{}", "Coinbase".to_ascii_lowercase()),
+            ExchangeID::VEX => write!(f, "{}", "VEX".to_ascii_lowercase()),
+            ExchangeID::BinanceSpot => write!(f, "{}", "BinanceSpot".to_ascii_lowercase()),
+            ExchangeID::BinanceSpotTestnet => {
+                write!(f, "{}", "BinanceSpotTestnet".to_ascii_lowercase())
+            }
+            ExchangeID::BinanceCoinMarginFuture => {
+                write!(f, "{}", "BinanceCoinMarginFuture".to_ascii_lowercase())
+            }
+            ExchangeID::BinanceCoinMarginFutureTestnet => write!(
+                f,
+                "{}",
+                "BinanceCoinMarginFutureTestnet".to_ascii_lowercase()
+            ),
+            ExchangeID::BinanceUsdMarginFuture => {
+                write!(f, "{}", "BinanceUsdMarginFuture".to_ascii_lowercase())
+            }
+            ExchangeID::BinanceUsdMarginFutureTestnet => write!(
+                f,
+                "{}",
+                "BinanceUsdMarginFutureTestnet".to_ascii_lowercase()
+            ),
+        }
     }
 }
