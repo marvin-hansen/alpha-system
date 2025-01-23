@@ -1,1 +1,1 @@
-mod binancen_spot_tests;
+mod binance_spot_tests;
