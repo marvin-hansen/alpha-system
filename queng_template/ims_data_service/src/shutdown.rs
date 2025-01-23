@@ -12,17 +12,17 @@ pub(crate) async fn shutdown_iggy(
     //     .expect("Failed to clean up iggy");
 
     dbg_print("Logging out iggy user");
-    message_shared::logout_user(&producer_client)
+    message_shared::logout_user(producer_client)
         .await
         .expect("Failed to logout user");
 
     dbg_print("Shutting down iggy producer client");
-    message_shared::shutdown(&producer_client)
+    message_shared::shutdown(producer_client)
         .await
         .expect("Failed to shutdown iggy producer client");
 
     dbg_print("Shutdown iggy consumer client");
-    message_shared::shutdown(&consumer_client)
+    message_shared::shutdown(consumer_client)
         .await
         .expect("Failed to shutdown iggy consumer client");
 }
