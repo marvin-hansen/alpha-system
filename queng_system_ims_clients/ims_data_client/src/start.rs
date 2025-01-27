@@ -1,7 +1,7 @@
 use crate::{ImsDataClient, ImsDataClientError};
 use futures_util::StreamExt;
 use iggy::clients::consumer::IggyConsumer;
-use trait_data_integration::EventProcessor;
+use trait_event_processor::EventProcessor;
 impl ImsDataClient {
     pub(crate) async fn start_consume_data_messages(
         &self,
@@ -12,7 +12,7 @@ impl ImsDataClient {
             while let Some(received_message) = consumer.next().await {
                 match received_message {
                     Ok(message) => data_event_processor
-                        .send_one_message(message.message.payload.to_vec())
+                        .process_one_event(message.message.payload.to_vec())
                         .await
                         .expect("[ImsDataClient]: Failed to process message"),
                     Err(e) => {

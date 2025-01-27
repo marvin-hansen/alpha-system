@@ -5,6 +5,7 @@ use std::collections::HashSet;
 use std::future::Future;
 use std::sync::Arc;
 use trait_data_integration::*;
+use trait_event_processor::*;
 
 // All integration traits implementations are generated using the `ImsDataIntegrationImpl` macro
 #[derive(Default, ImsDataIntegrationImpl)]

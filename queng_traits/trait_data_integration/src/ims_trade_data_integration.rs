@@ -1,5 +1,6 @@
 use crate::ImsDataIntegrationError;
 use std::sync::Arc;
+use trait_event_processor::EventProcessor;
 
 #[allow(dead_code)] // Clippy can't see that the trait is used
 #[trait_variant::make(ImsTradeDataIntegration: Send)]
@@ -28,7 +29,7 @@ pub trait LocalImsTradeDataIntegration {
         processor: &Arc<P>,
     ) -> Result<(), ImsDataIntegrationError>
     where
-        P: crate::EventProcessor + Send + Sync + 'static;
+        P: EventProcessor + Send + Sync + 'static;
 
     /// Stop fetching trade data from the specified symbols.
     ///

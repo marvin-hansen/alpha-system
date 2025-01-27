@@ -8,8 +8,9 @@ use std::time::Duration;
 use tokio::time::{sleep, Instant};
 use tokio_tungstenite::tungstenite::Message;
 use trait_data_integration::{
-    EventProcessor, ImsDataIntegrationError, ImsSymbolIntegration, ImsTradeDataIntegration,
+    ImsDataIntegrationError, ImsSymbolIntegration, ImsTradeDataIntegration,
 };
+use trait_event_processor::EventProcessor;
 
 impl ImsTradeDataIntegration for ImsBinanceDataIntegration {
     /// Starts real-time trade data streams for the specified symbols.
@@ -92,8 +93,11 @@ impl ImsTradeDataIntegration for ImsBinanceDataIntegration {
                                     if let Some(bar) = bar {
                                         let (_, data) = TradeBar::encode_to_sbe(bar)
                                             .expect("Failed to encode trade data");
-                                        if let Err(e) = processor.process(&[data]).await {
-                                            eprintln!("Error processing trade data: {}", e);
+                                        if let Err(e) = processor.process_one_event(data).await {
+                                            eprintln!(
+                                                "Error processing trade data: {}",
+                                                e.to_string()
+                                            );
                                             return;
                                         }
                                     }

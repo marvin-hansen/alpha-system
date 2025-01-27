@@ -10,7 +10,6 @@ rust_library(
         "//thirdparty/crates:trait-variant",
     ],
     tags = [
-        "integration",
         "trait",
         "trait_exec_integration",
     ],

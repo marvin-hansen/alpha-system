@@ -5,9 +5,9 @@ use sbe_types::MessageType;
 use std::sync::Arc;
 use tokio::time::Duration;
 use trait_data_integration::{
-    EventProcessor, ImsDataIntegrationError, ImsOhlcvDataIntegration, ImsSymbolIntegration,
-    ImsTradeDataIntegration,
+    ImsDataIntegrationError, ImsOhlcvDataIntegration, ImsSymbolIntegration, ImsTradeDataIntegration,
 };
+use trait_event_processor::{EventProcessingError, EventProcessor};
 
 /// This example demonstrates how to use the Binance data integration to:
 /// 1. Validate trading symbols
@@ -94,11 +94,8 @@ async fn main() -> Result<(), ImsDataIntegrationError> {
 struct PrintEventProcessor;
 
 impl EventProcessor for PrintEventProcessor {
-    async fn process(&self, data: &[Vec<u8>]) -> Result<(), ImsDataIntegrationError> {
-        let raw_message = data
-            .first()
-            .expect("Failed to get first element")
-            .as_slice();
+    async fn process_one_event(&self, bytes: Vec<u8>) -> Result<(), EventProcessingError> {
+        let raw_message = bytes.as_slice();
         // Determine SBE message type based on the second byte
         let message_type = MessageType::from(u16::from(raw_message[2]));
 
@@ -124,13 +121,7 @@ impl EventProcessor for PrintEventProcessor {
         Ok(())
     }
 
-    async fn send_one_message(&self, _bytes: Vec<u8>) -> Result<(), ImsDataIntegrationError> {
-        Err(ImsDataIntegrationError::NotSupportedError(
-            "Not supported".to_string(),
-        ))
-    }
-
-    async fn send_batch_messages(
+    async fn process_event_batch(
         &self,
         _bytes_batch: &[Vec<u8>],
     ) -> Result<(), ImsDataIntegrationError> {

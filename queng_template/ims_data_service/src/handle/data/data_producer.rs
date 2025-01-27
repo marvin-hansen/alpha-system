@@ -1,6 +1,7 @@
 use crate::service::Service;
 use common_errors::MessageProcessingError;
-use trait_data_integration::{EventProcessor, ImsDataIntegration};
+use trait_data_integration::ImsDataIntegration;
+use trait_event_processor::EventProcessor;
 
 impl<Integration: ImsDataIntegration> Service<Integration> {
     pub(crate) async fn get_data_producer(

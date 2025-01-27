@@ -181,6 +181,7 @@ service_specs_all = { path = "queng_specs/service_specs/service_specs_all" }
 
 # Traits
 trait_data_integration = { path = "queng_traits/trait_data_integration" }
+trait_event_processor = { path = "queng_traits/trait_event_processor" }
 trait_exec_integration = { path = "queng_traits/trait_exec_integration" }
 
 # Utils

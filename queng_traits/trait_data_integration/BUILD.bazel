@@ -10,7 +10,6 @@ rust_library(
         "//thirdparty/crates:trait-variant",
     ],
     tags = [
-        "integration",
         "trait",
         "trait_data_integration",
     ],
@@ -18,6 +17,7 @@ rust_library(
     deps = [
         # Internal crates
         "//alias:common_data_bar",
+        "//alias:trait_event_processor",
     ],
 )
 

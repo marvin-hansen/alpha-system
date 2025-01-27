@@ -1,5 +1,5 @@
 use crate::{ImsDataClient, ImsDataClientError};
-use trait_data_integration::EventProcessor;
+use trait_event_processor::*;
 
 impl ImsDataClient {
     /// Sends a message to the control topic.
@@ -13,7 +13,7 @@ impl ImsDataClient {
     /// If the message fails to send, it will return an `ImsDataClientError` with the error message.
     ///
     pub(crate) async fn send_one_message(&self, bytes: Vec<u8>) -> Result<(), ImsDataClientError> {
-        match self.control_producer.send_one_message(bytes).await {
+        match self.control_producer.process_one_event(bytes).await {
             Ok(_) => Ok(()),
             Err(e) => Err(ImsDataClientError(e.to_string())),
         }

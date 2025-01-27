@@ -8,8 +8,9 @@ use std::time::Duration;
 use tokio::time::{sleep, Instant};
 use tokio_tungstenite::tungstenite::Message;
 use trait_data_integration::{
-    EventProcessor, ImsDataIntegrationError, ImsOhlcvDataIntegration, ImsSymbolIntegration,
+    ImsDataIntegrationError, ImsOhlcvDataIntegration, ImsSymbolIntegration,
 };
+use trait_event_processor::EventProcessor;
 
 impl ImsOhlcvDataIntegration for ImsBinanceDataIntegration {
     /// Starts real-time OHLCV (candlestick) data streams for the specified symbols.
@@ -94,8 +95,11 @@ impl ImsOhlcvDataIntegration for ImsBinanceDataIntegration {
                                     if let Some(bar) = bar {
                                         let (_, data) = OHLCVBar::encode_to_sbe(bar)
                                             .expect("Failed to encode OHLCV data");
-                                        if let Err(e) = processor.process(&[data]).await {
-                                            eprintln!("Error processing OHLCV data: {}", e);
+                                        if let Err(e) = processor.process_one_event(data).await {
+                                            eprintln!(
+                                                "Error processing OHLCV data: {}",
+                                                e.to_string()
+                                            );
                                             return;
                                         }
                                     }

@@ -9,6 +9,8 @@ authors.workspace = true
 
 [lints]
 workspace = true
+
+
 [dependencies]
 # Internal crates
 common_config = { workspace = true }
@@ -31,6 +33,7 @@ sbe_types = { workspace = true }
 sbe_utils = { workspace = true }
 smdb_client = { workspace = true }
 trait_data_integration = { workspace = true }
+trait_event_processor = { workspace = true }
 
 
 # External crates

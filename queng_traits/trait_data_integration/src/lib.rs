@@ -1,11 +1,11 @@
-mod event_processor;
+// mod event_processor;
 mod ims_data_error;
 mod ims_ohlcv_data_integration;
 mod ims_shutdown_integration;
 mod ims_symbol_integration;
 mod ims_trade_data_integration;
 
-pub use event_processor::EventProcessor;
+// pub use event_processor::EventProcessor;
 pub use ims_data_error::ImsDataIntegrationError;
 pub use ims_ohlcv_data_integration::ImsOhlcvDataIntegration;
 pub use ims_shutdown_integration::ImsShutdownIntegration;

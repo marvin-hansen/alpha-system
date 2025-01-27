@@ -567,6 +567,11 @@ alias(
 )
 
 alias(
+    name = "trait_event_processor",
+    actual = "//queng_traits/trait_event_processor",
+)
+
+alias(
     name = "trait_exec_integration",
     actual = "//queng_traits/trait_exec_integration",
 )

@@ -1,7 +1,8 @@
 use crate::service::Service;
 use common_errors::MessageProcessingError;
 use sbe_types::{ClientErrorType, DataErrorType};
-use trait_data_integration::{EventProcessor, ImsDataIntegration};
+use trait_data_integration::ImsDataIntegration;
+use trait_event_processor::EventProcessor;
 
 impl<Integration: ImsDataIntegration> Service<Integration> {
     /// Sends a `ClientError` message to the given producer.
@@ -69,7 +70,7 @@ impl<Integration: ImsDataIntegration> Service<Integration> {
         self.producer()
             .read()
             .await
-            .send_one_message(bytes)
+            .process_one_event(bytes)
             .await
             .expect("Failed to send error message");
 

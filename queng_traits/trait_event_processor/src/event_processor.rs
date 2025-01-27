@@ -1,4 +1,4 @@
-use crate::ImsDataIntegrationError;
+use crate::EventProcessingError;
 
 /// Trait to define an `EventProcessor` that can be used to process events
 /// in a local context.
@@ -9,9 +9,6 @@ use crate::ImsDataIntegrationError;
 #[allow(dead_code)] // Clippy can't see that the trait is used
 #[trait_variant::make(EventProcessor: Send)]
 pub trait LocalEventProcessor {
-    /// Process a single byte message.
-    async fn process(&self, data: &[Vec<u8>]) -> Result<(), ImsDataIntegrationError>;
-
     /// Send a single byte message.
     ///
     /// The message is provided as a `Vec<u8>`.
@@ -19,7 +16,7 @@ pub trait LocalEventProcessor {
     /// # Errors
     ///
     /// Returns an error if the message cannot be sent.
-    async fn send_one_message(&self, bytes: Vec<u8>) -> Result<(), ImsDataIntegrationError>;
+    async fn process_one_event(&self, bytes: Vec<u8>) -> Result<(), EventProcessingError>;
     /// Send a batch of byte messages.
     ///
     /// The messages are provided as a `Vec` of `Vec<u8>`.
@@ -27,27 +24,23 @@ pub trait LocalEventProcessor {
     /// # Errors
     ///
     /// Returns an error if any of the messages cannot be sent.
-    async fn send_batch_messages(
+    async fn process_event_batch(
         &self,
         bytes_batch: &[Vec<u8>],
-    ) -> Result<(), ImsDataIntegrationError>;
+    ) -> Result<(), EventProcessingError>;
 }
 
 // Default implementation for `&T`
 // https://users.rust-lang.org/t/hashmap-get-dereferenced/33558
 impl<T: EventProcessor + Send + Sync> EventProcessor for &T {
-    async fn process(&self, data: &[Vec<u8>]) -> Result<(), ImsDataIntegrationError> {
-        (**self).process(data).await
+    async fn process_one_event(&self, bytes: Vec<u8>) -> Result<(), EventProcessingError> {
+        (**self).process_one_event(bytes).await
     }
 
-    async fn send_one_message(&self, bytes: Vec<u8>) -> Result<(), ImsDataIntegrationError> {
-        (**self).send_one_message(bytes).await
-    }
-
-    async fn send_batch_messages(
+    async fn process_event_batch(
         &self,
         bytes_batch: &[Vec<u8>],
-    ) -> Result<(), ImsDataIntegrationError> {
-        (**self).send_batch_messages(bytes_batch).await
+    ) -> Result<(), EventProcessingError> {
+        (**self).process_event_batch(bytes_batch).await
     }
 }

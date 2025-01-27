@@ -1,6 +1,7 @@
 use crate::ImsDataIntegrationError;
 use common_data_bar::TimeResolution;
 use std::sync::Arc;
+use trait_event_processor::EventProcessor;
 
 #[allow(dead_code)] // Clippy can't see that the trait is used
 #[trait_variant::make(ImsOhlcvDataIntegration: Send)]
@@ -30,7 +31,7 @@ pub trait LocalImsOhlcvDataIntegration {
         processor: &Arc<P>,
     ) -> Result<(), ImsDataIntegrationError>
     where
-        P: crate::EventProcessor + Send + Sync + 'static;
+        P: EventProcessor + Send + Sync + 'static;
 
     /// Stop fetching OHLCV data from a list of symbols.
     ///

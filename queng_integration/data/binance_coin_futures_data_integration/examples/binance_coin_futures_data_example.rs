@@ -15,15 +15,15 @@ use std::sync::Arc;
 use std::time::Duration;
 use tokio::time;
 use trait_data_integration::{
-    EventProcessor, ImsDataIntegrationError, ImsOhlcvDataIntegration, ImsSymbolIntegration,
-    ImsTradeDataIntegration,
+    ImsDataIntegrationError, ImsOhlcvDataIntegration, ImsSymbolIntegration, ImsTradeDataIntegration,
 };
+use trait_event_processor::EventProcessor;
 
 /// Main example function demonstrating Binance Coin Futures data integration
 #[tokio::main]
 async fn main() -> Result<(), ImsDataIntegrationError> {
     // Initialize rustls crypto provider for secure WebSocket connections
-    // https://github.com/snapview/tokio-tungstenite/issues/353
+    // https://github.com/snapview/tokio-tungstenite/iasync fn process(&self, data: &[Vec<u8>]) -> Result<(), ImsDataIntegrationError> ;ssues/353
     rustls::crypto::ring::default_provider()
         .install_default()
         .expect("Failed to install default rustls crypto provider");
@@ -91,11 +91,9 @@ async fn main() -> Result<(), ImsDataIntegrationError> {
 struct PrintEventProcessor;
 
 impl EventProcessor for PrintEventProcessor {
-    async fn process(&self, data: &[Vec<u8>]) -> Result<(), ImsDataIntegrationError> {
-        let raw_message = data
-            .first()
-            .expect("Failed to get first element")
-            .as_slice();
+    async fn process_one_event(&self, bytes: Vec<u8>) -> Result<(), ImsDataIntegrationError> {
+        let raw_message = bytes.as_slice();
+
         // Determine SBE message type based on the second byte
         let message_type = MessageType::from(u16::from(raw_message[2]));
 
@@ -124,13 +122,7 @@ impl EventProcessor for PrintEventProcessor {
         Ok(())
     }
 
-    async fn send_one_message(&self, _bytes: Vec<u8>) -> Result<(), ImsDataIntegrationError> {
-        Err(ImsDataIntegrationError::NotSupportedError(
-            "Not supported".to_string(),
-        ))
-    }
-
-    async fn send_batch_messages(
+    async fn process_event_batch(
         &self,
         _bytes_batch: &[Vec<u8>],
     ) -> Result<(), ImsDataIntegrationError> {
