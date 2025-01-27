@@ -4,7 +4,4 @@ set -o nounset
 set -o pipefail
 
 # Builds all images
-command bazel build -c opt  //:image
-
-# Pushes all tagged images to registry
-command bazel run -c opt //:push
+command bazel build //:push --test_env=ENV=LOCAL

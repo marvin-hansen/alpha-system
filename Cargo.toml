@@ -16,7 +16,7 @@ members = [
     "queng_sbe/*",
     "queng_specs/*/*",
     "queng_system_core/*/*",
-    "queng_system_ims/*/*",
+    "queng_system_ims_clients/*",
     "queng_system_ims_data/*/*",
     "queng_system_mds/*/*",
     "queng_template/*",
@@ -43,9 +43,8 @@ authors = ["Marvin Hansen <marvin.hansen@gmail.com>"]
 # Core
 cmdb_client = { path = "queng_system_core/cmdb/cmdb_client" }
 smdb_client = { path = "queng_system_core/smdb/smdb_client" }
-# IMS
-imdb_client = { path = "queng_system_ims/imdb/imdb_client" }
-ims_data_client = { path = "queng_system_ims/ims_clients/ims_data_client" }
+imdb_client = { path = "queng_system_core/imdb/imdb_client" }
+ims_data_client = { path = "queng_system_ims_clients/ims_data_client" }
 # MDS
 mddb_client = { path = "queng_system_mds/mddb/mddb_client" }
 
@@ -179,7 +178,7 @@ integration_specs_all = { path = "queng_specs/integration_specs/integration_spec
 cmdb_specs = { path = "queng_system_core/cmdb/cmdb_specs" }
 dbgw_specs = { path = "queng_system_core/dbgw/dbgw_specs" }
 smdb_specs = { path = "queng_system_core/smdb/smdb_specs" }
-imdb_specs = { path = "queng_system_ims/imdb/imdb_specs" }
+imdb_specs = { path = "queng_system_core/imdb/imdb_specs" }
 mddb_specs = { path = "queng_system_mds/mddb/mddb_specs" }
 shared_service_specs = { path = "queng_specs/service_specs/shared_service_specs" }
 service_specs_all = { path = "queng_specs/service_specs/service_specs_all" }

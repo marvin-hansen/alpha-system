@@ -41,6 +41,17 @@ alias(
     actual = "//queng_system_core/dbgw/dbgw_service:push",
 )
 
+alias(
+    name = "imdb",
+    actual = "//queng_system_core/imdb/imdb_service:imdb",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "imdb_push",
+    actual = "//queng_system_core/imdb/imdb_service:push",
+    visibility = ["//visibility:public"],
+)
 
 alias(
     name = "smdb",
@@ -80,21 +91,6 @@ alias(
     actual = "//queng_system_mds/mddb/mddb_service:push",
 )
 
-###############################################################################
-# IMS Services
-###############################################################################
-
-alias(
-    name = "imdb",
-    actual = "//queng_system_ims/imdb/imdb_service:imdb",
-    visibility = ["//visibility:public"],
-)
-
-alias(
-    name = "imdb_push",
-    actual = "//queng_system_ims/imdb/imdb_service:push",
-    visibility = ["//visibility:public"],
-)
 
 ###############################################################################
 # IMS Data Services

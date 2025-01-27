@@ -56,6 +56,8 @@ impl ImsDataClient {
     ) -> Result<Self, ImsDataClientError> {
         Self::build(true, client_id, integration_config).await
     }
+
+    // Builds a new `ImsDataClient` instance.
     pub async fn build(
         dbg: bool,
         client_id: u16,

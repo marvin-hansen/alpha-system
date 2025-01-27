@@ -11,6 +11,11 @@ alias(
 )
 
 alias(
+    name = "imdb_client",
+    actual = "//queng_system_core/imdb/imdb_client",
+)
+
+alias(
     name = "smdb_client",
     actual = "//queng_system_core/smdb/smdb_client",
 )
@@ -33,13 +38,9 @@ alias(
 # IMS Clients
 ###############################################################################
 
-alias(
-    name = "imdb_client",
-    actual = "//queng_system_ims/imdb/imdb_client",
-)
 
 alias(
     name = "ims_data_client",
-    actual = "//queng_system_ims/ims_clients/ims_data_client",
+    actual = "//queng_system_ims_clients/ims_data_client",
 )
 

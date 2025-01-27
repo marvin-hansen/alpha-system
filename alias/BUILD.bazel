@@ -552,10 +552,9 @@ alias(
     actual = "//queng_system_core/smdb/smdb_specs",
 )
 
-# IMS service specs
 alias(
     name = "imdb_specs",
-    actual = "//queng_system_ims/imdb/imdb_specs",
+    actual = "//queng_system_core/imdb/imdb_specs",
 )
 
 # MDS service specs
