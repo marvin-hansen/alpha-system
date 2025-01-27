@@ -236,7 +236,8 @@ warp = { version = "0.3" }
 console_error_panic_hook = { version = "0.1" }
 worker = { version = "0.5", default-features = false }
 worker-macros = { version = "0.5" }
-
+# Dev dependencies
+criterion = { version = "0.5", features = ["html_reports"] }
 
 # Linting with clippy
 [workspace.lints.clippy]
