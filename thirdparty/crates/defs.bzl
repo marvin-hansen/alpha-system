@@ -305,7 +305,7 @@ _NORMAL_DEPENDENCIES = {
             "futures": Label("//thirdparty/crates/futures-0.3.31:futures"),
             "futures-util": Label("//thirdparty/crates/futures-util-0.3.31:futures_util"),
             "hickory-resolver": Label("//thirdparty/crates/hickory-resolver-0.24.2:hickory_resolver"),
-            "iggy": Label("//thirdparty/crates/iggy-0.6.80:iggy"),
+            "iggy": Label("//thirdparty/crates/iggy-0.6.90:iggy"),
             "klickhouse": Label("//thirdparty/crates/klickhouse-0.13.2:klickhouse"),
             "lru": Label("//thirdparty/crates/lru-0.12.5:lru"),
             "mimalloc": Label("//thirdparty/crates/mimalloc-0.1.43:mimalloc"),

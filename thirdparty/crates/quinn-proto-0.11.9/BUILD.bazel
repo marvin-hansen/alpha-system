@@ -100,7 +100,7 @@ rust_library(
     ] + select({
         "@rules_rust//rust/platform:wasm32-unknown-unknown": [
             "//thirdparty/crates/getrandom-0.2.15:getrandom",  # cfg(all(target_family = "wasm", target_os = "unknown"))
-            "//thirdparty/crates/rustls-pki-types-1.10.1:rustls_pki_types",  # cfg(all(target_family = "wasm", target_os = "unknown"))
+            "//thirdparty/crates/rustls-pki-types-1.11.0:rustls_pki_types",  # cfg(all(target_family = "wasm", target_os = "unknown"))
             "//thirdparty/crates/web-time-1.1.0:web_time",  # cfg(all(target_family = "wasm", target_os = "unknown"))
         ],
         "//conditions:default": [],

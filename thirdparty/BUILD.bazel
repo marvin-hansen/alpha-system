@@ -84,7 +84,7 @@ crates_vendor(
         "blake3": crate.spec(
             default_features = True,
             package = "blake3",
-            version = "1.5.4",
+            version = "1.5",
         ),
         "bytes": crate.spec(
             default_features = True,
@@ -147,20 +147,20 @@ crates_vendor(
         ),
         "prost": crate.spec(
             package = "prost",
-            version = "0.13.4",
+            version = "0.13",
         ),
         "prost-types": crate.spec(
             default_features = False,
             package = "prost-types",
-            version = "0.13.4",
+            version = "0.13",
         ),
         "protoc-gen-prost": crate.spec(
             package = "protoc-gen-prost",
-            version = "0.4.0",
+            version = "0.4",
         ),
         "protoc-gen-tonic": crate.spec(
             package = "protoc-gen-tonic",
-            version = "0.4.0",
+            version = "0.4",
         ),
         "reqwest": crate.spec(
             default_features = False,
@@ -214,22 +214,22 @@ crates_vendor(
         "tokio-tungstenite": crate.spec(
             features = ["rustls-tls-webpki-roots"],
             package = "tokio-tungstenite",
-            version = "0.26.1",
+            version = "0.26",
         ),
         "tonic": crate.spec(
             features = ["transport"],
             package = "tonic",
-            version = "0.12.1",
+            version = "0.12",
         ),
         "tonic-build": crate.spec(
             package = "tonic-build",
-            version = "0.12.1",
+            version = "0.12",
         ),
         "tonic-health": crate.spec(
             default_features = False,
             features = ["transport"],
             package = "tonic-health",
-            version = "0.12.3",
+            version = "0.12",
         ),
         "warp": crate.spec(
             package = "warp",

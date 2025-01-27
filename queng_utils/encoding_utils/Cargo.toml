@@ -15,7 +15,7 @@ workspace = true
 [dependencies]
 
 [dev-dependencies]
-criterion = { version = "0.5", features = ["html_reports"] }
+criterion = {workspace = true}
 
 [[bench]]
 name = "string_int64_codec_bench"
