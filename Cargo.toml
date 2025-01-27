@@ -9,7 +9,6 @@ members = [
     "queng_import/*/*",
     "queng_infra/*/*",
     "queng_integration/data/*",
-    "queng_integration/traits/*",
     "queng_message/*",
     "queng_macros/*",
     "queng_proto/*",
@@ -20,6 +19,7 @@ members = [
     "queng_system_ims_data/*/*",
     "queng_system_mds/*/*",
     "queng_template/*",
+    "queng_traits/*",
     "queng_utils/*",
     "queng_utils_test/*",
 ]
@@ -118,10 +118,6 @@ binance_spot_data_integration = { path = "queng_integration/data/binance_spot_da
 binance_spot_testnet_data_integration = { path = "queng_integration/data/binance_spot_testnet_data_integration" }
 binance_usd_futures_data_integration = { path = "queng_integration/data/binance_usd_futures_data_integration" }
 binance_usd_futures_testnet_data_integration = { path = "queng_integration/data/binance_usd_futures_testnet_data_integration" }
-# Integration Traits
-trait_data_integration = { path = "queng_integration/traits/trait_data_integration" }
-
-trait_exec_integration = { path = "queng_integration/traits/trait_exec_integration" }
 
 # Macros
 data_integration_macro = { path = "queng_macros/data_integration_macro" }
@@ -183,6 +179,10 @@ mddb_specs = { path = "queng_system_mds/mddb/mddb_specs" }
 shared_service_specs = { path = "queng_specs/service_specs/shared_service_specs" }
 service_specs_all = { path = "queng_specs/service_specs/service_specs_all" }
 
+# Traits
+trait_data_integration = { path = "queng_traits/trait_data_integration" }
+trait_exec_integration = { path = "queng_traits/trait_exec_integration" }
+
 # Utils
 client_utils = { path = "queng_utils/client_utils" }
 crypto_utils = { path = "queng_utils/crypto_utils" }
@@ -205,18 +205,18 @@ docker_utils = { version = "0.2" }
 service_utils = { version = "0.2" }
 # Regular dependencies
 base16ct = { version = "0.2", default-features = false, features = ["alloc"] }
-blake3 = { version = "1.5.4", default-features = false }
-bytes = {version = "1.8.0"}
-chrono = { version = "0.4.38", features = ["serde"] }
+blake3 = { version = "1.5", default-features = false }
+bytes = { version = "1.8" }
+chrono = { version = "0.4", features = ["serde"] }
 crossbeam = {version = "0.8"}
 diesel = { version = "2.2", default-features = false, features = ["postgres", "pq-src", "r2d2"] }
-diesel_migrations = { version = "2.2.0", default-features = false, features = ["postgres"] }
-futures = { version = "0.3.31" }
-futures-util = {version = "0.3.31"}
-hickory-resolver = { version = "0.24.1", default-features = false, features = ["tokio-runtime"] }
+diesel_migrations = { version = "2.2", default-features = false, features = ["postgres"] }
+futures = { version = "0.3" }
+futures-util = { version = "0.3" }
+hickory-resolver = { version = "0.24", default-features = false, features = ["tokio-runtime"] }
 iggy = { version = "0.6" }
-klickhouse = { version = "0.13.2" }
-lru = { version = "0.12.4" }
+klickhouse = { version = "0.13" }
+lru = { version = "0.12" }
 mimalloc = { version = "0.1.43" }
 prost = { version = "0.13.4" }
 reqwest = { version = "0.12", default-features = false, features = ["rustls-tls", "json", "blocking", "gzip"] }
@@ -228,14 +228,14 @@ serde_json = { version = "1.0" }
 sha3 = { version = "0.11.0-pre.4", default-features = false }
 tokio = { version = "1.42", default-features = false, features = ["macros", "net", "rt-multi-thread", "signal", "time"] }
 tokio-tungstenite = { version = "0.26", features = ["rustls-tls-webpki-roots"]}
-tonic = { version = "0.12.1", features = ["transport"] }
-tonic-build = { version = "0.12.1" }
-tonic-health = { version = "0.12.3", default-features = false, features = ["transport"] }
+tonic = { version = "0.12", features = ["transport"] }
+tonic-build = { version = "0.12" }
+tonic-health = { version = "0.12", default-features = false, features = ["transport"] }
 warp = { version = "0.3" }
 # Depdendencies for cloudflare workers that are not build with Bazel
-console_error_panic_hook = { version = "0.1.1" }
-worker = { version = "0.5.0", default-features = false }
-worker-macros = { version = "0.5.0" }
+console_error_panic_hook = { version = "0.1" }
+worker = { version = "0.5", default-features = false }
+worker-macros = { version = "0.5" }
 
 
 # Linting with clippy

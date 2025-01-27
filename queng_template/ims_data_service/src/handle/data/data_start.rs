@@ -43,6 +43,7 @@ impl<Integration: ImsDataIntegration + 'static> Service<Integration> {
                     .get_data_producer(client_id)
                     .await
                     .expect("Failed to get data producer");
+
                 let processor = Arc::new(processor);
                 match integration.start_trade_data(symbols, &processor).await {
                     Ok(_) => {}

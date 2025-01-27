@@ -348,19 +348,6 @@ alias(
     actual = "//queng_integration/data/binance_usd_futures_testnet_data_integration",
 )
 
-# Traits
-##############
-
-alias(
-    name = "trait_data_integration",
-    actual = "//queng_integration/traits/trait_data_integration",
-)
-
-alias(
-    name = "trait_exec_integration",
-    actual = "//queng_integration/traits/trait_exec_integration",
-)
-
 ###############################################################################
 # Message
 ###############################################################################
@@ -567,6 +554,21 @@ alias(
 alias(
     name = "shared_service_specs",
     actual = "//queng_specs/service_specs/shared_service_specs",
+)
+
+
+###############################################################################
+# Traits
+###############################################################################
+
+alias(
+    name = "trait_data_integration",
+    actual = "//queng_traits/trait_data_integration",
+)
+
+alias(
+    name = "trait_exec_integration",
+    actual = "//queng_traits/trait_exec_integration",
 )
 
 ###############################################################################
