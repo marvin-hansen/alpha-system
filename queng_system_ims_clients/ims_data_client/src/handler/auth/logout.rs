@@ -8,7 +8,7 @@ impl ImsDataClient {
     ///
     /// If the message fails to send, it will return an `ImsDataClientError` with the error message.
     ///
-    pub async fn logout(&self) -> Result<(), ImsDataClientError> {
+    pub(crate) async fn client_logout(&self) -> Result<(), ImsDataClientError> {
         self.dbg_print("logout");
 
         self.dbg_print("Construct logout message");

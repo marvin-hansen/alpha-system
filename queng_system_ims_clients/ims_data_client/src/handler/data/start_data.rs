@@ -1,1 +1,40 @@
+use crate::{ImsDataClient, ImsDataClientError};
+use common_data_bar::TimeResolution;
+use sbe_messages_control::StartDataMessage;
+use sbe_types::DataType;
+use trait_data_integration::EventProcessor;
 
+impl ImsDataClient {
+    pub(crate) async fn client_start_trade_data(
+        &self,
+        symbol_id: String,
+        data_type_id: DataType,
+        event_processor: &(impl EventProcessor + Send + Sync + 'static),
+    ) -> Result<(), ImsDataClientError> {
+        self.dbg_print("start_trade_data");
+
+        // self.dbg_print("Register event processor");
+        // event_processor.register_event_processor();
+
+        self.dbg_print("Construct start_trade_data message");
+        let start_data_message = StartDataMessage::new(
+            self.client_id,
+            self.exchange_id,
+            symbol_id,
+            TimeResolution::NoValue,
+            data_type_id,
+        );
+
+        self.dbg_print("Encode SBE message");
+        let (_, message) = start_data_message
+            .encode()
+            .expect("[ImsDataClient/start_data]: Failed to encode start_trade_data message");
+
+        self.dbg_print("Send start_data message");
+        self.send_one_message(message)
+            .await
+            .expect("[ImsDataClient/start_data]: Failed to send start_trade_data message!");
+
+        Ok(())
+    }
+}

@@ -1,7 +1,9 @@
+mod api;
 mod handler;
-mod shtudown;
+mod shutdown;
 mod types;
 
+use common_exchange::ExchangeID;
 use common_ims::IntegrationConfig;
 use common_ims::{IggyConfig, IggyUser};
 use iggy::client::{Client, UserClient};
@@ -14,8 +16,11 @@ pub struct ImsDataClient {
     dbg: bool,
     client_id: u16,
     control_client: IggyClient,
+    data_client: IggyClient,
+    data_consumer: MessageConsumer,
     control_consumer: MessageConsumer,
     control_producer: MessageProducer,
+    exchange_id: ExchangeID,
     iggy_config: IggyConfig,
     integration_config: IntegrationConfig,
 }
@@ -69,11 +74,16 @@ impl ImsDataClient {
             }
         };
 
+        dbg_print("Get exchange id");
+        let exchange_id = integration_config.exchange_id();
+
         dbg_print("Create Identifiers for control stream and topic");
         let control_stream_id = integration_config.control_channel();
         let control_topic_id = integration_config.control_channel();
+        let data_stream_id = integration_config.data_channel();
+        let data_topic_id = integration_config.data_channel();
 
-        dbg_print("Create Iggy user and config");
+        dbg_print("Create control channel, config, and client");
         let user = IggyUser::default();
         let iggy_config = IggyConfig::from_client_id(user, client_id);
         let control_client =
@@ -108,12 +118,33 @@ impl ImsDataClient {
         .await
         .expect("[Service]: Failed to create consumer");
 
+        dbg_print("Create data channel, config, and client");
+        let user = IggyUser::default();
+        let iggy_config = IggyConfig::from_client_id(user, client_id);
+        let data_client =
+            message_shared::build_client(data_stream_id.clone(), data_topic_id.clone())
+                .await
+                .expect("Failed to build client");
+
+        dbg_print("Create data MessageConsumer");
+        let data_consumer = MessageConsumer::from_client(
+            &data_client,
+            "data_consumer",
+            data_stream_id.clone(),
+            data_topic_id.clone(),
+        )
+        .await
+        .expect("[Service]: Failed to create consumer");
+
         Ok(Self {
             dbg,
             client_id,
             control_client,
+            data_client,
+            data_consumer,
             control_consumer,
             control_producer,
+            exchange_id,
             iggy_config,
             integration_config,
         })
@@ -134,12 +165,24 @@ impl ImsDataClient {
         &self.control_client
     }
 
+    pub fn data_client(&self) -> &IggyClient {
+        &self.data_client
+    }
+
+    pub fn data_consumer(&self) -> &MessageConsumer {
+        &self.data_consumer
+    }
+
     pub fn control_consumer(&self) -> &MessageConsumer {
         &self.control_consumer
     }
 
     pub fn control_producer(&self) -> &MessageProducer {
         &self.control_producer
+    }
+
+    pub fn exchange_id(&self) -> ExchangeID {
+        self.exchange_id
     }
 
     pub fn iggy_config(&self) -> &IggyConfig {

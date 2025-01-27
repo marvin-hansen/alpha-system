@@ -8,7 +8,7 @@ impl ImsDataClient {
     ///
     /// If the message fails to send, it will return an `ImsDataClientError` with the error message.
     ///
-    pub async fn login(&self) -> Result<(), ImsDataClientError> {
+    pub(crate) async fn client_login(&self) -> Result<(), ImsDataClientError> {
         self.dbg_print("login");
 
         self.dbg_print("Construct login message");
