@@ -1,6 +1,6 @@
 use crate::{ImsDataClient, ImsDataClientError};
+use common_data_bar::TimeResolution;
 use sbe_types::DataType;
-use trait_data_integration::EventProcessor;
 
 impl ImsDataClient {
     /// Logs in the client via control channel.
@@ -29,19 +29,38 @@ impl ImsDataClient {
     ///
     /// * `symbol_id` - String symbol ID
     /// * `data_type_id` - `DataType` data type ID
-    /// * `event_processor` - `EventProcessor` event processor
     ///
     /// # Errors
     ///
     /// If the message fails to send, it will return an `ImsDataClientError` with the error message.
     ///
-    pub async fn start_data(
+    pub async fn start_trade_data(
         &self,
         symbol_id: String,
         data_type_id: DataType,
-        event_processor: &(impl EventProcessor + Send + Sync + 'static),
     ) -> Result<(), ImsDataClientError> {
-        self.client_start_data(symbol_id, data_type_id, event_processor)
+        self.client_start_trade_data(symbol_id, data_type_id).await
+    }
+
+    /// Starts OHLCV data for a given symbol, data type, and time resolution.
+    ///
+    /// # Arguments
+    ///
+    /// * `symbol_id` - String symbol ID
+    /// * `data_type_id` - `DataType` data type ID
+    /// * `time_resolution` - `TimeResolution` for the OHLCV data
+    ///
+    /// # Errors
+    ///
+    /// If the message fails to send, it will return an `ImsDataClientError` with the error message.
+    ///
+    pub async fn start_ohlcv_data(
+        &self,
+        symbol_id: String,
+        data_type_id: DataType,
+        time_resolution: TimeResolution,
+    ) -> Result<(), ImsDataClientError> {
+        self.client_start_ohlcv_data(symbol_id, data_type_id, time_resolution)
             .await
     }
 

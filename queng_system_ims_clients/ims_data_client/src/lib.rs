@@ -40,6 +40,7 @@ impl ImsDataClient {
     pub async fn new(
         client_id: u16,
         integration_config: IntegrationConfig,
+        // data_event_processor: &(impl EventProcessor + Send + Sync + 'static)
     ) -> Result<Self, ImsDataClientError> {
         Self::build(false, client_id, integration_config).await
     }
@@ -58,6 +59,7 @@ impl ImsDataClient {
     pub async fn with_debug(
         client_id: u16,
         integration_config: IntegrationConfig,
+        // data_event_processor: &(impl EventProcessor + Send + Sync + 'static)
     ) -> Result<Self, ImsDataClientError> {
         Self::build(true, client_id, integration_config).await
     }
@@ -67,6 +69,7 @@ impl ImsDataClient {
         dbg: bool,
         client_id: u16,
         integration_config: IntegrationConfig,
+        // data_event_processor: &(impl EventProcessor + Send + Sync + 'static)
     ) -> Result<Self, ImsDataClientError> {
         let dbg_print = |msg: &str| {
             if dbg {
