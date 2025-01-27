@@ -41,7 +41,7 @@ where
                                     self.handle_message(message.message).await.expect("Failed to handle message");
                         },
                         Some(Err(e)) => {
-                            println!("[Service/run]: Error polling messages from iggy message bus: {}", e);
+                            eprintln!("[Service/run]: Error polling messages from iggy message bus: {}", e);
                             break;
                         }
 
