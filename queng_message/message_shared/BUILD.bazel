@@ -6,7 +6,7 @@ rust_library(
         "src/**",
     ]),
     crate_root = "src/lib.rs",
-    proc_macro_deps = [    ],
+    proc_macro_deps = [],
     tags = [
         "infra",
         "message_bus",
