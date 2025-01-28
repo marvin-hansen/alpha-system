@@ -1,3 +1,4 @@
+use crate::fields::DEFAULT_DNS;
 use common_config::{ServiceConfig, ServiceID, SvcEnvConfig};
 use common_env::EnvironmentType;
 use environment_manager::EnvironmentManager;
@@ -6,18 +7,14 @@ use smdb_specs::smdb_service_config;
 
 mod build_utils;
 mod cfg_getters;
+mod cfg_ims_data;
 mod cfg_svc;
 mod cfg_svc_health_check;
 mod cfg_svc_metrics;
 mod dns;
 mod dns_resolve;
 mod env;
-
-// https://stackoverflow.com/questions/20778771/what-is-the-difference-between-0-0-0-0-127-0-0-1-and-localhost
-const DEFAULT_HOST: &str = "0.0.0.0";
-
-// https://www.dnsperf.com/#!dns-resolvers
-pub(crate) const DEFAULT_DNS: &str = "1.1.1.1";
+mod fields;
 
 /// Struct that holds the configuration for a specific service.
 #[derive(Debug)]
@@ -46,7 +43,6 @@ impl Default for CfgManager {
     /// configuration is `smdb_service_config()`.
     ///
     /// Debug mode is disabled by default.
-    #[must_use]
     fn default() -> Self {
         Self::build(false, ServiceID::Default, smdb_service_config())
     }
@@ -220,7 +216,7 @@ impl CfgManager {
     ///
     /// Returns the detected `EnvironmentType`.
     ///
-    #[must_use]
+    #[inline]
     pub fn detect_env_type(dbg: bool) -> EnvironmentType {
         let config_manager = if dbg {
             println!("[CfgManager]: Debug mode enabled");

@@ -1,5 +1,5 @@
 [package]
-name = "binance_spot_tests"
+name = "binance_usd_future_tests"
 version = "0.1.0"
 edition.workspace = true
 rust-version.workspace = true

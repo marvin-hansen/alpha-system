@@ -4,12 +4,10 @@ use common_errors::InitError;
 use crate::CfgManager;
 
 impl CfgManager {
-    #[must_use]
     pub const fn get_svc_id(&self) -> ServiceID {
         self.svc
     }
 
-    #[must_use]
     pub fn get_svc_config(&self) -> ServiceConfig {
         self.svc_config.clone()
     }

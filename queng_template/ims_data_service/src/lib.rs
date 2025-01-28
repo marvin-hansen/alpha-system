@@ -131,12 +131,9 @@ where
         .expect("Failed to login user");
 
     dbg_print("Configuring health endpoint");
-    // let (_, _) = cfg_manager
-    //     .get_metrics_socket_addr_uri()
-    //     .expect("DBGW: Failed to get metric host, uri, and port");
-    // dbg_print(&metrics_addr);
-
-    let port_http = 8080;
+    let port_http = cfg_manager
+        .get_ims_data_svc_port(exchange_id)
+        .expect("Failed to get port");
 
     dbg_print("Configure health check route");
     let health_check = warp::get()

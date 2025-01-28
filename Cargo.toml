@@ -217,7 +217,6 @@ futures-util = { version = "0.3" }
 hickory-resolver = { version = "0.24", default-features = false, features = ["tokio-runtime"] }
 iggy = { version = "0.6" }
 klickhouse = { version = "0.13" }
-lru = { version = "0.12" }
 mimalloc = { version = "0.1.43" }
 prost = { version = "0.13.4" }
 reqwest = { version = "0.12", default-features = false, features = ["rustls-tls", "json", "blocking", "gzip"] }

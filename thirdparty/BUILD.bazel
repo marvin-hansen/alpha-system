@@ -29,7 +29,7 @@ crates_vendor(
     mode = "local",
     packages = {
         #
-        # Dependencies that I maintained
+        # Dependencies for integration tests
         "docker_utils": crate.spec(
             package = "docker_utils",
             version = "0.2",

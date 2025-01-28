@@ -1,4 +1,4 @@
-use crate::{DEFAULT_DNS, DEFAULT_HOST};
+use crate::fields::{DEFAULT_DNS, DEFAULT_HOST};
 use common_config::{ServiceConfig, ServiceID, SvcEnvConfig};
 use common_env::EnvironmentType;
 use hickory_resolver::config::{NameServerConfig, Protocol, ResolverConfig, ResolverOpts};
