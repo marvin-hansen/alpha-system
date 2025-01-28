@@ -118,9 +118,7 @@ impl EventProcessor for PrintEventProcessor {
     async fn process_event_batch(
         &self,
         _bytes_batch: &[Vec<u8>],
-    ) -> Result<(), ImsDataIntegrationError> {
-        Err(ImsDataIntegrationError::NotSupportedError(
-            "Not supported".to_string(),
-        ))
+    ) -> Result<(), EventProcessorError> {
+        Err(EventProcessorError::new("Not supported".to_string()))
     }
 }
