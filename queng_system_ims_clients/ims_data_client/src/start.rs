@@ -6,7 +6,7 @@ impl ImsDataClient {
     pub(crate) async fn start_consume_data_messages(
         &self,
         consumer: &'static mut IggyConsumer,
-        data_event_processor: &'static (impl EventProcessor + Send + Sync),
+        data_event_processor: &'static (impl EventProcessor + Sync),
     ) -> Result<(), ImsDataClientError> {
         let data_handler = tokio::spawn(async move {
             while let Some(received_message) = consumer.next().await {

@@ -4,10 +4,7 @@ use trait_event_consumer::EventConsumer;
 //
 // https://discord.com/channels/1144142576266530928/1144142577369628684/1333360421842980866
 impl MessageConsumer {
-    pub fn consume_messages(
-        mut self,
-        data_event_processor: &'static (impl EventConsumer + Send + Sync),
-    ) {
+    pub fn consume_messages(mut self, data_event_processor: &'static (impl EventConsumer + Sync)) {
         self.dbg_print("consume_messages");
 
         tokio::spawn(async move {
