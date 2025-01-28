@@ -1,7 +1,7 @@
 use crate::MessageProducer;
 use bytes::Bytes;
 use iggy::messages::send_messages::Message;
-use trait_event_processor::{EventProcessingError, EventProcessor};
+use trait_event_processor::{EventProcessor, EventProcessorError};
 
 impl EventProcessor for MessageProducer {
     /// Send a single byte message.
@@ -12,19 +12,16 @@ impl EventProcessor for MessageProducer {
     ///
     /// Returns an error if the message cannot be sent.
     ///
-    async fn process_one_event(&self, bytes: Vec<u8>) -> Result<(), EventProcessingError> {
-        // SBE messages serialize into Vec<u8> bytes.
-        // Most SBE messages are smaller than 24 bytes and therefore
-        // cannot be casted directly into an iggy messages.
+    async fn process_one_event(&self, bytes: Vec<u8>) -> Result<(), EventProcessorError> {
+        self.dbg_print("process_one_event");
 
-        // Convert the SBE bytes into a new message with auto-generated ID, payload and no headers.
-        // The SBE headers from the paylod are used instead.
+        self.dbg_print("converting SBE message to iggy message");
         let message = Message::new(None, Bytes::from(bytes), None);
 
-        // Send the message
+        self.dbg_print("sending iggy message");
         match self.producer.send_one(message).await {
             Ok(()) => Ok(()),
-            Err(e) => Err(EventProcessingError::new(e.to_string())),
+            Err(e) => Err(EventProcessorError::new(e.to_string())),
         }
     }
 
@@ -39,21 +36,20 @@ impl EventProcessor for MessageProducer {
     async fn process_event_batch(
         &self,
         bytes_batch: &[Vec<u8>],
-    ) -> Result<(), EventProcessingError> {
-        // SBE messages serialize into Vec<u8> bytes; hence a vector of Vec<u8>
-        // represents a collection of SBE messages
+    ) -> Result<(), EventProcessorError> {
+        self.dbg_print("process_event_batch");
 
-        // Convert a byte array into a vector of messages
+        self.dbg_print("converting SBE message batch to iggy messages");
         let messages: Vec<Message> = bytes_batch
             .iter()
             // Convert the SBE bytes into a new message with auto-generated ID, payload, and no headers.
             .map(|bytes| Message::new(None, Bytes::from(bytes.to_owned()), None))
             .collect();
 
-        // Send the message batch
+        self.dbg_print("sending iggy message batch");
         match self.producer.send(messages).await {
             Ok(()) => Ok(()),
-            Err(e) => Err(EventProcessingError::new(e.to_string())),
+            Err(e) => Err(EventProcessorError::new(e.to_string())),
         }
     }
 }

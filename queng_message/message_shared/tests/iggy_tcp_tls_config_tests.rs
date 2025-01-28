@@ -1,8 +1,8 @@
-use common_message::ImsTcpTlsConfig;
+use message_shared::IggyTcpTLSConfig;
 
 #[test]
-fn test_ims_tcp_tls_config_new() {
-    let config = ImsTcpTlsConfig::new(
+fn test_tcp_tls_config_new() {
+    let config = IggyTcpTLSConfig::new(
         "127.0.0.1:8090".to_string(),
         true,
         "example.com".to_string(),
@@ -16,8 +16,8 @@ fn test_ims_tcp_tls_config_new() {
 }
 
 #[test]
-fn test_ims_tcp_tls_config_default() {
-    let config = ImsTcpTlsConfig::default();
+fn test_tcp_tls_config_default() {
+    let config = IggyTcpTLSConfig::default();
     assert_eq!(config.tcp_server_address(), "127.0.0.1:8090");
     assert!(!config.tcp_tls_enabled());
     assert_eq!(config.tcp_tls_domain(), "localhost");
@@ -25,8 +25,8 @@ fn test_ims_tcp_tls_config_default() {
 }
 
 #[test]
-fn test_ims_tcp_tls_config_display() {
-    let config = ImsTcpTlsConfig::new(
+fn test_tcp_tls_config_display() {
+    let config = IggyTcpTLSConfig::new(
         "127.0.0.1:8090".to_string(),
         true,
         "example.com".to_string(),
@@ -39,8 +39,8 @@ fn test_ims_tcp_tls_config_display() {
 }
 
 #[test]
-fn test_ims_tcp_tls_config_without_ca_file() {
-    let config = ImsTcpTlsConfig::new(
+fn test_tcp_tls_config_without_ca_file() {
+    let config = IggyTcpTLSConfig::new(
         "127.0.0.1:8090".to_string(),
         true,
         "example.com".to_string(),
@@ -50,14 +50,14 @@ fn test_ims_tcp_tls_config_without_ca_file() {
 }
 
 #[test]
-fn test_ims_tcp_tls_config_equality() {
-    let config1 = ImsTcpTlsConfig::new(
+fn test_tcp_tls_config_equality() {
+    let config1 = IggyTcpTLSConfig::new(
         "127.0.0.1:8090".to_string(),
         true,
         "example.com".to_string(),
         Some("ca.pem".to_string()),
     );
-    let config2 = ImsTcpTlsConfig::new(
+    let config2 = IggyTcpTLSConfig::new(
         "127.0.0.1:8090".to_string(),
         true,
         "example.com".to_string(),

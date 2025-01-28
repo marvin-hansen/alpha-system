@@ -1,18 +1,18 @@
 load("@rules_rust//rust:defs.bzl", "rust_test_suite")
 
 rust_test_suite(
-    name = "symbol_manager_tests",
+    name = "tests",
     srcs = glob([
         "*_tests.rs",
     ]),
     tags = [
-        "components",
-        "symbol_manager",
+        "common",
+        "common_message",
         "unit-test",
     ],
     visibility = ["//visibility:public"],
     deps = [
         # Crate to test
-        "//alias:symbol_manager",
+        "//alias:message_shared",
     ],
 )

@@ -2,20 +2,20 @@ use std::error::Error;
 use std::fmt;
 
 #[derive(Debug, Clone)]
-pub struct EventProcessingError(pub String);
+pub struct EventProcessorError(pub String);
 
-impl EventProcessingError {
+impl EventProcessorError {
     #[inline]
     pub const fn new(field0: String) -> Self {
         Self(field0)
     }
 }
 
-impl Error for EventProcessingError {}
+impl Error for EventProcessorError {}
 
-impl fmt::Display for EventProcessingError {
+impl fmt::Display for EventProcessorError {
     #[inline]
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "EventProcessingError: {}", self.0)
+        write!(f, "EventProcessorError: {}", self.0)
     }
 }

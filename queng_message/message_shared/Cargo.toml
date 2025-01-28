@@ -12,8 +12,6 @@ workspace = true
 
 [dependencies]
 # Internal crates
-common_ims = {workspace = true}
-common_message = {workspace = true}
+
 # External crates
 iggy = {workspace = true}
-trait-variant  = {workspace = true}

@@ -143,6 +143,7 @@ impl<Integration: ImsDataIntegration> Service<Integration> {
 
         dbg_print("Create MessageConsumer");
         let consumer = MessageConsumer::from_client(
+            dbg,
             consumer_client,
             "control_consumer",
             stream_id.clone(),

@@ -120,6 +120,7 @@ impl ImsDataClient {
 
         dbg_print("[ImsDataClient]: Create control MessageConsumer");
         let control_consumer = MessageConsumer::from_client(
+            dbg,
             &control_client,
             "control_consumer",
             control_stream_id.clone(),
@@ -138,6 +139,7 @@ impl ImsDataClient {
 
         dbg_print("[ImsDataClient]: Create data MessageConsumer");
         let data_consumer = MessageConsumer::from_client(
+            dbg,
             &data_client,
             "data_consumer",
             data_stream_id.clone(),

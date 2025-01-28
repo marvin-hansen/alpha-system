@@ -89,11 +89,6 @@ alias(
     actual = "//queng_components/pattern_manager",
 )
 
-alias(
-    name = "symbol_manager",
-    actual = "//queng_components/symbol_manager",
-)
-
 ###############################################################################
 # Datastrucures
 ###############################################################################
@@ -564,6 +559,11 @@ alias(
 alias(
     name = "trait_data_integration",
     actual = "//queng_traits/trait_data_integration",
+)
+
+alias(
+    name = "trait_event_consumer",
+    actual = "//queng_traits/trait_event_consumer",
 )
 
 alias(

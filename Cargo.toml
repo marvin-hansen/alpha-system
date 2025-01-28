@@ -67,7 +67,6 @@ common_trade = { path = "queng_common/common_trade" }
 config_manager = { path = "queng_components/config_manager" }
 environment_manager = { path = "queng_components/environment_manager" }
 pattern_manager = { path = "queng_components/pattern_manager" }
-symbol_manager = { path = "queng_components/symbol_manager" }
 
 # Datastructures
 ring_buffer = { path = "queng_datastructures/ring_buffer" }
@@ -181,6 +180,7 @@ service_specs_all = { path = "queng_specs/service_specs/service_specs_all" }
 
 # Traits
 trait_data_integration = { path = "queng_traits/trait_data_integration" }
+trait_event_consumer = { path = "queng_traits/trait_event_consumer" }
 trait_event_processor = { path = "queng_traits/trait_event_processor" }
 trait_exec_integration = { path = "queng_traits/trait_exec_integration" }
 

@@ -12,7 +12,6 @@ workspace = true
 [dependencies]
 # Internal crates
 message_shared = {workspace = true}
-trait_data_integration = {workspace = true}
 trait_event_processor = { workspace = true }
 
 # External crates

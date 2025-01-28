@@ -8,7 +8,7 @@ use tokio::time;
 use trait_data_integration::{
     ImsDataIntegrationError, ImsOhlcvDataIntegration, ImsSymbolIntegration, ImsTradeDataIntegration,
 };
-use trait_event_processor::{EventProcessingError, EventProcessor};
+use trait_event_processor::{EventProcessor, EventProcessorError};
 
 /// Example demonstrating the usage of Binance USD Futures Data Integration
 ///
@@ -88,7 +88,7 @@ async fn main() -> Result<(), ImsDataIntegrationError> {
 struct PrintEventProcessor;
 
 impl EventProcessor for PrintEventProcessor {
-    async fn process_one_event(&self, bytes: Vec<u8>) -> Result<(), EventProcessingError> {
+    async fn process_one_event(&self, bytes: Vec<u8>) -> Result<(), EventProcessorError> {
         let raw_message = bytes.as_slice();
         // Determine SBE message type based on the second byte
         let message_type = MessageType::from(u16::from(raw_message[2]));

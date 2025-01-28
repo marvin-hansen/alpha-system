@@ -8,12 +8,14 @@ use iggy::utils::duration::IggyDuration;
 use message_shared::Args;
 use std::str::FromStr;
 
+mod event_consumer;
 mod getters;
 
 pub struct MessageConsumer {
+    dbg: bool,
+    consumer: IggyConsumer,
     stream_id: Identifier,
     topic_id: Identifier,
-    consumer: IggyConsumer,
 }
 
 impl MessageConsumer {
@@ -21,6 +23,7 @@ impl MessageConsumer {
     ///
     /// # Arguments
     ///
+    /// * `dbg` - A boolean flag to enable debug printing.
     /// * `client` - The `IggyClient` to use for creating the consumer.
     /// * `consumer_name` - The name of the consumer.
     /// * `stream_id` - The identifier of the stream.
@@ -31,28 +34,28 @@ impl MessageConsumer {
     /// A `Result` wrapping the `MessageConsumer` instance or an `IggyError`.
     ///
     pub async fn from_client(
+        dbg: bool,
         client: &IggyClient,
         consumer_name: &str,
         stream_id: String,
         topic_id: String,
     ) -> Result<Self, IggyError> {
         let args = Args::new(stream_id, topic_id);
-        Self::build(args, client, consumer_name).await
+        Self::build(dbg, args, client, consumer_name).await
     }
 }
 
 impl MessageConsumer {
     async fn build(
+        dbg: bool,
         args: Args,
         client: &IggyClient,
         consumer_name: &str,
     ) -> Result<Self, IggyError> {
-        // dbg!("Creating identifiers");
         let stream_id = Identifier::from_str_value(&args.stream_id)
             .expect("[MessageConsumer]: Invalid stream id");
         let topic_id = Identifier::from_str_value(&args.topic_id).expect("Invalid topic id");
 
-        // dbg!("Building consumer");
         let mut consumer = match ConsumerKind::from_code(args.consumer_kind)
             .expect("[MessageConsumer]: Invalid consumer kind")
         {
@@ -79,16 +82,24 @@ impl MessageConsumer {
         .batch_size(args.messages_per_batch)
         .build();
 
-        // dbg!("Initializing consumer");
         consumer
             .init()
             .await
             .expect("[MessageConsumer]: Failed to initialize consumer");
 
         Ok(Self {
+            dbg,
+            consumer,
             stream_id,
             topic_id,
-            consumer,
         })
+    }
+}
+
+impl MessageConsumer {
+    pub(crate) fn dbg_print(&self, msg: &str) {
+        if self.dbg {
+            println!("[MessageConsumer]: {msg}");
+        }
     }
 }

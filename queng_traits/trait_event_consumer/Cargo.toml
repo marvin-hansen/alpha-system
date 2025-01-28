@@ -1,5 +1,5 @@
 [package]
-name = "symbol_manager"
+name = "trait_event_consumer"
 version = "0.1.0"
 edition.workspace = true
 rust-version.workspace = true
@@ -7,16 +7,13 @@ readme.workspace = true
 repository.workspace = true
 authors.workspace = true
 
+
 [lints]
 workspace = true
-
-[lib]
-name = "symbol_manager"
-path = "src/lib.rs"
 
 
 [dependencies]
 # Internal crates
-common_errors = { workspace = true }
+
 # External crates
-lru =  { workspace = true }
+trait-variant = { workspace = true }

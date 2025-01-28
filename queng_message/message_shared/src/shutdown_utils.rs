@@ -1,6 +1,6 @@
-use common_ims::IggyConfig;
 use iggy::client::{Client, StreamClient, TopicClient, UserClient};
 use iggy::clients::client::IggyClient;
+use iggy::identifier::Identifier;
 use std::error::Error;
 
 /// Cleans up an Iggy client, deleting the topic and stream.
@@ -14,16 +14,17 @@ use std::error::Error;
 ///
 /// A `Result` containing a `()` on success or an error on failure.
 ///
-pub async fn cleanup(client: &IggyClient, iggy_config: &IggyConfig) -> Result<(), Box<dyn Error>> {
-    match client
-        .delete_topic(&iggy_config.stream_id(), &iggy_config.topic_id())
-        .await
-    {
+pub async fn cleanup(
+    client: &IggyClient,
+    stream_id: &Identifier,
+    topic_id: &Identifier,
+) -> Result<(), Box<dyn Error>> {
+    match client.delete_topic(stream_id, topic_id).await {
         Ok(_) => (),
         Err(err) => return Err(Box::from(err)),
     }
 
-    match client.delete_stream(&iggy_config.stream_id()).await {
+    match client.delete_stream(stream_id).await {
         Ok(_) => (),
         Err(err) => return Err(Box::from(err)),
     }

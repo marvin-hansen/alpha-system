@@ -1,4 +1,4 @@
-mod event_processor;
+mod event_producer;
 mod getters;
 
 use iggy::clients::client::IggyClient;
@@ -26,6 +26,7 @@ impl MessageProducer {
     ///
     /// # Arguments
     ///
+    /// * `dbg` - A boolean flag to enable debug printing.
     /// * `client` - The `IggyClient` to use for authentication and communication.
     /// * `stream_id` - The identifier of the stream.
     /// * `topic_id` - The identifier of the topic.

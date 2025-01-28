@@ -1,7 +1,7 @@
 use std::fmt::Display;
 
 #[derive(Debug, Clone, Eq, PartialEq)]
-pub struct ImsTcpTlsConfig {
+pub struct IggyTcpTLSConfig {
     // The  client address for the TCP transport
     tcp_server_address: String,
     // Flag to enable TLS for the TCP transport
@@ -12,7 +12,7 @@ pub struct ImsTcpTlsConfig {
     tcp_tls_ca_file: Option<String>,
 }
 
-impl ImsTcpTlsConfig {
+impl IggyTcpTLSConfig {
     /// Creates a new `TcpTlsConfig` instance.
     ///
     /// # Arguments
@@ -26,7 +26,6 @@ impl ImsTcpTlsConfig {
     ///
     /// A `TcpTlsConfig` instance.
     ///
-    #[must_use]
     pub const fn new(
         tcp_server_address: String,
         tcp_tls_enabled: bool,
@@ -42,29 +41,29 @@ impl ImsTcpTlsConfig {
     }
 }
 
-impl ImsTcpTlsConfig {
-    #[must_use]
+impl IggyTcpTLSConfig {
+    #[inline]
     pub fn tcp_server_address(&self) -> &str {
         &self.tcp_server_address
     }
 
-    #[must_use]
+    #[inline]
     pub const fn tcp_tls_enabled(&self) -> bool {
         self.tcp_tls_enabled
     }
 
-    #[must_use]
+    #[inline]
     pub fn tcp_tls_domain(&self) -> &str {
         &self.tcp_tls_domain
     }
 
-    #[must_use]
+    #[inline]
     pub const fn tcp_tls_ca_file(&self) -> &Option<String> {
         &self.tcp_tls_ca_file
     }
 }
 
-impl Default for ImsTcpTlsConfig {
+impl Default for IggyTcpTLSConfig {
     fn default() -> Self {
         Self {
             tcp_server_address: "127.0.0.1:8090".to_string(),
@@ -75,11 +74,11 @@ impl Default for ImsTcpTlsConfig {
     }
 }
 
-impl Display for ImsTcpTlsConfig {
+impl Display for IggyTcpTLSConfig {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(
             f,
-            "TcpTlsConfig: \n tcp_server_address: {}, \n tcp_tls_enabled: {}, \n  tcp_tls_domain: {}",
+            "IggyTcpTLSConfig: \n tcp_server_address: {}, \n tcp_tls_enabled: {}, \n  tcp_tls_domain: {}",
             self.tcp_server_address, self.tcp_tls_enabled, self.tcp_tls_domain
         )
     }
