@@ -5,8 +5,7 @@ mod start;
 mod types;
 
 use common_exchange::ExchangeID;
-use common_ims::IntegrationConfig;
-use common_ims::{IggyConfig, IggyUser};
+use common_ims::{IggyConfig, IggyUser, IntegrationConfig};
 use iggy::client::{Client, UserClient};
 use iggy::clients::client::IggyClient;
 use message_consumer::MessageConsumer;
