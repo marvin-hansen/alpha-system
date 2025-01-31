@@ -1316,7 +1316,7 @@
     "@@toolchains_llvm+//toolchain/extensions:llvm.bzl%llvm": {
       "general": {
         "bzlTransitiveDigest": "2UD8x0LHy2fgOvBmCL8R0HPa9/omkySg1/dsFBzYcH8=",
-        "usagesDigest": "vYWvrGtDPxOkbdnLBZTwRhECyN80LhH8TIy8U6nz6hM=",
+        "usagesDigest": "ESjXu+QSKJHG9RsNFQ44AHZnUl9JON5adHL7ZUysltM=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -1332,17 +1332,24 @@
               "llvm_mirror": "",
               "llvm_version": "",
               "llvm_versions": {
-                "": "16.0.0",
-                "darwin-aarch64": "18.1.8"
+                "": "19.1.6"
               },
               "netrc": "",
               "sha256": {
-                "darwin-aarch64": "41d8dea52d18c4e8b90c4fcd31965f9f297df9f40a38a33d60748dbe7f8330b8"
+                "darwin-aarch64": "94ed965925dbdc25b29e6fcfa9a84b28d915d5c9da7c71405fc20bbcf8396bd1",
+                "linux-x86_64": "",
+                "linux-aarch64": ""
               },
               "strip_prefix": {},
               "urls": {
                 "darwin-aarch64": [
-                  "https://github.com/MaterializeInc/toolchains/releases/download/clang-18.1.8-4/darwin_aarch64.tar.zst"
+                  "https://github.com/MaterializeInc/toolchains/releases/download/clang-19.1.6-1/darwin_aarch64.tar.zst"
+                ],
+                "linux-x86_64": [
+                  "https://github.com/marvin-hansen/buildbuddy-clang/releases/download/clang-19.1.6-x86-64/linux_x86_64.tar.zst"
+                ],
+                "linux-aarch64": [
+                  "https://github.com/marvin-hansen/buildbuddy-clang/releases/download/clang-19.1.6-arm64/linux_aarch64.tar.zst"
                 ]
               }
             }
@@ -1366,8 +1373,7 @@
               "link_flags": {},
               "link_libs": {},
               "llvm_versions": {
-                "": "16.0.0",
-                "darwin-aarch64": "18.1.8"
+                "": "19.1.6"
               },
               "opt_compile_flags": {},
               "opt_link_flags": {},
