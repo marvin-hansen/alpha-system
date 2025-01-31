@@ -66,10 +66,10 @@ llvm = use_extension("@toolchains_llvm//toolchain/extensions:llvm.bzl", "llvm")
 llvm.toolchain(
     name = "llvm_toolchain",
     llvm_versions = {
-        "": "18.1.8-5",
+        "": "19.1.6-1",
     },
     sha256 = {
-        "darwin-aarch64": "d28437d58615ccae434c289bcf5e0d10f031c732d7b60a5090541dbbbd381a01",
+        "darwin-aarch64": "94ed965925dbdc25b29e6fcfa9a84b28d915d5c9da7c71405fc20bbcf8396bd1",
         "linux-x86_64": "",
         "linux-aarch64": "",
     },
@@ -78,9 +78,9 @@ llvm.toolchain(
         "linux-aarch64": "stdc++",
     },
     urls = {
-        "darwin-aarch64": ["https://github.com/MaterializeInc/toolchains/releases/download/clang-18.1.8-5/darwin_aarch64.tar.zst"],
-        "linux-x86_64": ["https://github.com/MaterializeInc/toolchains/releases/download/clang-18.1.8-5/linux_x86_64.tar.zst"],
-        "linux-aarch64": ["https://github.com/MaterializeInc/toolchains/releases/download/clang-18.1.8-5/linux_aarch64.tar.zst"],
+        "darwin-aarch64": ["https://github.com/MaterializeInc/toolchains/releases/download/clang-19.1.6-1/darwin_aarch64.tar.zst"],
+        "linux-x86_64": ["https://github.com/MaterializeInc/toolchains/releases/download/clang-19.1.6-1/linux_x86_64.tar.zst"],
+        "linux-aarch64": ["https://github.com/MaterializeInc/toolchains/releases/download/clang-19.1.6-1/linux_aarch64.tar.zst"],
     },
 )
 use_repo(llvm, "llvm_toolchain", "llvm_toolchain_llvm")
