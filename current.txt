@@ -1,1 +1,1 @@
-//alias/service:ims_data_service
+//alias/client:ims_data_client
