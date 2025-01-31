@@ -33,6 +33,7 @@ platform(
         "@platforms//os:linux",
         "@platforms//cpu:x86_64",
     ],
+    exec_properties = {"container-image": "docker://ghcr.io/marvin-hansen/rbe-custom/rbe:latest"},
 )
 
 # Platform for cross compilation on CI.
@@ -42,6 +43,7 @@ platform(
         "@platforms//os:linux",
         "@platforms//cpu:aarch64",
     ],
+    exec_properties = {"container-image": "docker://ghcr.io/marvin-hansen/rbe-custom/rbe:latest"},
 )
 
 ###############################################################################
