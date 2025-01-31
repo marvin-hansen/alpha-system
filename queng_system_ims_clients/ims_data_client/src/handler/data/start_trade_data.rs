@@ -7,7 +7,6 @@ impl ImsDataClient {
     pub(crate) async fn client_start_trade_data(
         &self,
         symbol_id: String,
-        data_type_id: DataType,
     ) -> Result<(), ImsDataClientError> {
         self.dbg_print("start_trade_data");
 
@@ -17,7 +16,7 @@ impl ImsDataClient {
             self.exchange_id,
             symbol_id,
             TimeResolution::NoValue,
-            data_type_id,
+            DataType::TradeData,
         );
 
         self.dbg_print("Encode SBE message");

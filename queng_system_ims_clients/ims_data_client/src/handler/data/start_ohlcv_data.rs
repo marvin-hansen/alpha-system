@@ -7,7 +7,6 @@ impl ImsDataClient {
     pub(crate) async fn client_start_ohlcv_data(
         &self,
         symbol_id: String,
-        data_type_id: DataType,
         time_resolution: TimeResolution,
     ) -> Result<(), ImsDataClientError> {
         self.dbg_print("Construct start_ohlcv_data message");
@@ -16,7 +15,7 @@ impl ImsDataClient {
             self.exchange_id,
             symbol_id,
             time_resolution,
-            data_type_id,
+            DataType::OHLCVData,
         );
 
         self.dbg_print("Encode SBE message");

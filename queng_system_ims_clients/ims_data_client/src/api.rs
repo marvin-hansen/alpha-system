@@ -28,18 +28,13 @@ impl ImsDataClient {
     /// # Arguments
     ///
     /// * `symbol_id` - String symbol ID
-    /// * `data_type_id` - `DataType` data type ID
     ///
     /// # Errors
     ///
     /// If the message fails to send, it will return an `ImsDataClientError` with the error message.
     ///
-    pub async fn start_trade_data(
-        &self,
-        symbol_id: String,
-        data_type_id: DataType,
-    ) -> Result<(), ImsDataClientError> {
-        self.client_start_trade_data(symbol_id, data_type_id).await
+    pub async fn start_trade_data(&self, symbol_id: String) -> Result<(), ImsDataClientError> {
+        self.client_start_trade_data(symbol_id).await
     }
 
     /// Starts OHLCV data for a given symbol, data type, and time resolution.
@@ -47,7 +42,6 @@ impl ImsDataClient {
     /// # Arguments
     ///
     /// * `symbol_id` - String symbol ID
-    /// * `data_type_id` - `DataType` data type ID
     /// * `time_resolution` - `TimeResolution` for the OHLCV data
     ///
     /// # Errors
@@ -57,30 +51,38 @@ impl ImsDataClient {
     pub async fn start_ohlcv_data(
         &self,
         symbol_id: String,
-        data_type_id: DataType,
         time_resolution: TimeResolution,
     ) -> Result<(), ImsDataClientError> {
-        self.client_start_ohlcv_data(symbol_id, data_type_id, time_resolution)
+        self.client_start_ohlcv_data(symbol_id, time_resolution)
             .await
     }
 
-    /// Stops data for a given symbol and data type.
+    /// Stops trade data for a given symbol
     ///
     /// # Arguments
     ///
     /// * `symbol_id` - String symbol ID
-    /// * `data_type_id` - `DataType` data type ID
     ///
     /// # Errors
     ///
     /// If the message fails to send, it will return an `ImsDataClientError` with the error message.
     ///
-    pub async fn stop_data(
-        &self,
-        symbol_id: String,
-        data_type_id: DataType,
-    ) -> Result<(), ImsDataClientError> {
-        self.client_stop_data(symbol_id, data_type_id).await
+    pub async fn stop_trade_data(&self, symbol_id: String) -> Result<(), ImsDataClientError> {
+        self.client_stop_data(symbol_id, DataType::TradeData).await
+    }
+
+    /// Stops OHLCV data for a given symbol
+    ///
+    /// # Arguments
+    ///
+    /// * `symbol_id` - String symbol ID
+    ///
+    /// # Errors
+    ///
+    /// If the message fails to send, it will return an `ImsDataClientError` with the error message.
+    ///
+    pub async fn stop_ohlcv_data(&self, symbol_id: String) -> Result<(), ImsDataClientError> {
+        self.client_stop_data(symbol_id, DataType::OHLCVData).await
     }
 
     /// Stops all data streams.
