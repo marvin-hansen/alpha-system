@@ -5,7 +5,7 @@ docker pull --platform=linux/amd64 ghcr.io/marvin-hansen/rbe-custom/rbe:latest
 
 ## Start the docker image
 
-docker run -d -i --name=bb --platform=linux/amd64 ghcr.io/marvin-hansen/rbe-custom/rbe
+docker run -d -i --name=bb_x86 --platform=linux/amd64 ghcr.io/marvin-hansen/rbe-custom/rbe
 
 ## Connect to the docker image
 
