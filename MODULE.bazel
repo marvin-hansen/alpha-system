@@ -33,7 +33,7 @@ git_override(
 bazel_dep(name = "libpq", version = "0.0.1")
 git_override(
     module_name = "libpq",
-    commit = "84ce14a248e583146e76fe6899a004cb2310f75c",
+    commit = "f0b3df432f9460c0ad90aef3b8479b5ff97e28ca",
     remote = "https://github.com/brainhivenl/libpq",
 )
 
