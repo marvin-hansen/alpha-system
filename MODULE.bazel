@@ -66,7 +66,7 @@ llvm = use_extension("@toolchains_llvm//toolchain/extensions:llvm.bzl", "llvm")
 llvm.toolchain(
     name = "llvm_toolchain",
     llvm_versions = {
-        "": "16.0.0",
+        "": "18.1.8",
         "darwin-aarch64": "18.1.8",
     },
     sha256 = {
