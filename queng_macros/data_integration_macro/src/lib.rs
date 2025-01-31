@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 //! Procedural macros for implementing IMS data integration traits.
 //!
 //! This crate provides derive macros that automatically implement data integration

@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 mod abstract_trait;
 mod base_pattern;
 mod extra_pattern;

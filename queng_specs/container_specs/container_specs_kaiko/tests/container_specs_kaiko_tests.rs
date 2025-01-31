@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use container_specs_kaiko::api_proxy_container_config;
 
 #[test]

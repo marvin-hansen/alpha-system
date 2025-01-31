@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
 use encoding_utils::{decode_pair_64_to_str, encode_str_to_pair_u64};
 

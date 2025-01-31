@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use common_metadata::{InstrumentMetadata, MetaAsset, MetaExchange, MetaInstrument};
 
 pub fn get_test_asset(code: String) -> MetaAsset {

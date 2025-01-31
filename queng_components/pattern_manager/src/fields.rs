@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023. Marvin Hansen <marvin.hansen@gmail.com> All rights reserved.
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
  */
 
 pub const ONE: f64 = 1.0;

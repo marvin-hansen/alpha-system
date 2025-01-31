@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use docker_utils::{ContainerConfig, WaitStrategy};
 
 pub fn iggy_container_config() -> ContainerConfig<'static> {

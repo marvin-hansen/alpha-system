@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::fields::ACTIVE_EXCHANGES;
 use crate::init::InitManager;
 use common_errors::InitError;

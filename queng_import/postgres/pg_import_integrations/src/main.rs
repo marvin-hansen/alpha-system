@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use integration_import::IntegrationImportManager;
 use mimalloc::MiMalloc;
 use std::error::Error;

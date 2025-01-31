@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 mod connection;
 
 use diesel::r2d2::R2D2Connection;

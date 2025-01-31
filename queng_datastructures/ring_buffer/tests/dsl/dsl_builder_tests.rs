@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use ring_buffer::*;
 use std::panic::catch_unwind;
 

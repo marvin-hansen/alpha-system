@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 pub(crate) mod unsafe_storage_array;
 pub(crate) mod unsafe_storage_vec;
 

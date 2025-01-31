@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 #![forbid(unsafe_code)]
 #![allow(clippy::all)]
 #![allow(non_camel_case_types)]

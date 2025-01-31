@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::OHLCVBar;
 
 /// Holds OHLCV bars aggregated at different time scales.

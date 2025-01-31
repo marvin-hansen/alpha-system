@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use common_env::EnvironmentType;
 use db_specs_postgres::get_postgres_config;
 

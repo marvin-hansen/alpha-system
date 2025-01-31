@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::db::metadata::{Metadata, INSTRUMENTS_TABLE};
 use crate::error::ClickHouseUtilError;
 

@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 //! Producer module for the ring buffer implementation.
 //!
 //! This module provides two types of producers for the ring buffer:

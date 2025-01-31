@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::balance_data::BalanceData;
 use common_exchange::ExchangeID;
 use std::fmt::Display;

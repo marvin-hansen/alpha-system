@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::fields::{CDN_AUTH_HEADER_KEY, CDN_RO_AUTH_KEY};
 use common_errors::DownloadError;
 use reqwest::Client;

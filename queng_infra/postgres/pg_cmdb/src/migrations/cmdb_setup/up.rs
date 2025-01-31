@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 pub const SCHEMA_UP: &str = r#"
 -- Your SQL goes here
 CREATE SCHEMA IF NOT EXISTS cmdb;

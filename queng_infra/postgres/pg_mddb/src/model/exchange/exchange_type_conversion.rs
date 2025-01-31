@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::model::exchange::Exchange;
 use crate::{CreateExchange, UpdateExchange};
 use common_metadata::MetaExchange;

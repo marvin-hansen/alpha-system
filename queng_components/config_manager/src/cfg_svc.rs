@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use cmdb_specs::cmdb_service_config;
 use common_config::ServiceID::{CMDB, DBGW, IMDB, MDDB, SMDB};
 use common_config::{ServiceID, SvcEnvConfig};

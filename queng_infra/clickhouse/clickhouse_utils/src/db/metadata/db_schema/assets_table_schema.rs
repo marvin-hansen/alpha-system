@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::db::metadata::Metadata;
 use crate::db::metadata::ASSETS_TABLE;
 use crate::db::metadata::DB_NAME;

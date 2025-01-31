@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::model::instrument::{Instrument, UpdateInstrument};
 use crate::schema::mddb::instruments::table as instruments_table;
 use crate::Connection;

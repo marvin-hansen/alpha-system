@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::fields::{CDN_PROXY_URL, CI_PROXY_URL, CLUSTER_PROXY_URL, LOCAL_PROXY_URL};
 use crate::init::InitManager;
 use crate::utils::util_client;

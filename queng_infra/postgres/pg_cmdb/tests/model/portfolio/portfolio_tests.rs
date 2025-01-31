@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use common_exchange::AccountType;
 use common_exchange::PortfolioConfig as CommonPortfolioConfig;
 use container_specs_postgres::postgres_db_container_config;

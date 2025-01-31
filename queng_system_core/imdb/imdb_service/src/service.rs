@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use proto_imdb::proto::db_gateway_imdb_service_client::DbGatewayImdbServiceClient;
 use proto_imdb::proto::imdb_service_server::ImdbService;
 use proto_imdb::proto::{

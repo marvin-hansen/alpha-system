@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::model::stat::{CreateStat, Stat};
 use crate::schema::mddb::stats::dsl::stats as stats_table;
 use crate::schema::mddb::stats::stats_id;

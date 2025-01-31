@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::{ImsDataClient, ImsDataClientError};
 use common_data_bar::TimeResolution;
 use sbe_messages_control::StartDataMessage;

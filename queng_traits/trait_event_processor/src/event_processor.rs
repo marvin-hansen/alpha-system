@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::EventProcessorError;
 
 /// Trait to define an `EventProcessor` that can be used to process events

@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::types::TradeRow;
 use crate::{ClickhouseDBManager, FN_NAME};
 use common_database::sanitize_utils;

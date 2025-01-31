@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::model::instrument::Instrument;
 
 use common_exchange::Instrument as CommonInstrument;

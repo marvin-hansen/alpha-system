@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 pub const DIESEL_DOWN: &str = r"
 -- This file was automatically created by Diesel to setup helper functions
 -- and other internal bookkeeping. This file is safe to edit, any future

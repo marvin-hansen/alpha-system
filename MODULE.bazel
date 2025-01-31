@@ -79,9 +79,9 @@ llvm.toolchain(
         "linux-aarch64": "stdc++",
     },
     urls = {
-         "darwin-aarch64": ["https://github.com/MaterializeInc/toolchains/releases/download/clang-19.1.6-1/darwin_aarch64.tar.zst"],
-         "linux-x86_64":   ["https://github.com/marvin-hansen/buildbuddy-clang/releases/download/clang-19.1.6-x86-64/linux_x86_64.tar.zst"],
-         "linux-aarch64":  ["https://github.com/marvin-hansen/buildbuddy-clang/releases/download/clang-19.1.6-arm64/linux_aarch64.tar.zst"],
+        "darwin-aarch64": ["https://github.com/MaterializeInc/toolchains/releases/download/clang-19.1.6-1/darwin_aarch64.tar.zst"],
+        "linux-x86_64": ["https://github.com/marvin-hansen/buildbuddy-clang/releases/download/clang-19.1.6-x86-64/linux_x86_64.tar.zst"],
+        "linux-aarch64": ["https://github.com/marvin-hansen/buildbuddy-clang/releases/download/clang-19.1.6-arm64/linux_aarch64.tar.zst"],
     },
 )
 use_repo(llvm, "llvm_toolchain", "llvm_toolchain_llvm")

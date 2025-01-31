@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::{Ask, Bid};
 use chrono::{DateTime, Utc};
 use std::fmt::{Display, Formatter};

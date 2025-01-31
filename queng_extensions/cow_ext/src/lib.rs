@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use std::borrow::Cow;
 
 /// Extension trait for performing efficient shallow cloning operations on string types.

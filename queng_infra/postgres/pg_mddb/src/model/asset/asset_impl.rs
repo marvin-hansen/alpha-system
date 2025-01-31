@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::model::asset::Asset;
 use crate::schema::mddb::assets::asset_code;
 use crate::schema::mddb::assets::dsl::assets as assets_table;

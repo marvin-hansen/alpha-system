@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use common_ims::ExchangeID;
 use common_ims::IntegrationMessageConfig;
 

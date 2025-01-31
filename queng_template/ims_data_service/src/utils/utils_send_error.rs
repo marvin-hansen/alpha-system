@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::service::Service;
 use common_errors::MessageProcessingError;
 use sbe_types::{ClientErrorType, DataErrorType};

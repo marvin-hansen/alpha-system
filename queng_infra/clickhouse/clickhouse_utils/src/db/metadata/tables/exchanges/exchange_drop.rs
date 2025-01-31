@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::db::metadata::{Metadata, EXCHANGES_TABLE};
 use crate::error::ClickHouseUtilError;
 

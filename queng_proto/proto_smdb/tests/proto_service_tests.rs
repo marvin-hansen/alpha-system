@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use proto_smdb::proto::{ProtoEndpoint, ProtoServiceConfig};
 
 #[test]

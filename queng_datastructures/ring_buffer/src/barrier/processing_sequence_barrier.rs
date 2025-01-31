@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::*;
 use std::sync::{
     atomic::{AtomicBool, Ordering},

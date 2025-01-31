@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use clickhouse_utils::ClickhouseUtil;
 
 use container_specs_clickhouse::clickhouse_container_config;

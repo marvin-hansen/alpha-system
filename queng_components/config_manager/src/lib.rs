@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::fields::DEFAULT_DNS;
 use common_config::{ServiceConfig, ServiceID, SvcEnvConfig};
 use common_env::EnvironmentType;
@@ -19,6 +23,7 @@ mod fields;
 /// Struct that holds the configuration for a specific service.
 #[derive(Debug)]
 pub struct CfgManager {
+    /// Debug mode
     dbg: bool,
     /// Type of the environment (e.g., development, testing, production).
     env_type: EnvironmentType,

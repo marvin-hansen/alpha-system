@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::PostgresSMDBManager;
 use common_config::{Endpoint, ServiceConfig, ServiceID};
 use common_errors::PostgresDBError;

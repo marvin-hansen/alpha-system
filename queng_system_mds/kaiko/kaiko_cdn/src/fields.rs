@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 // Binding to the cloudflare KV namespace
 pub const METADATA_KV: &str = "METADATA";
 pub const ASSETS_KEY: &str = "assets";

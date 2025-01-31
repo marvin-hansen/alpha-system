@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use common_config::{ProtocolType, ServiceID};
 use dbgw_specs::dbgw_service_config;
 

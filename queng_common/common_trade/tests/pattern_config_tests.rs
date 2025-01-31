@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use common_trade::{PatternConfig, PatternType};
 
 fn get_pattern_config() -> PatternConfig {

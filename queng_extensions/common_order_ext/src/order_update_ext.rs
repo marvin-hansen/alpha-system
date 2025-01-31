@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use common_order::OrderUpdate;
 use sbe_types::{SbeDecodeError, SbeEncodeError};
 

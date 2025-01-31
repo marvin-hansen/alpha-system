@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use common_database::sanitize_utils::sanitize_table_name;
 use common_errors::SanitizeError;
 

@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crossbeam::atomic::AtomicCell;
 
 use ring_buffer::*;

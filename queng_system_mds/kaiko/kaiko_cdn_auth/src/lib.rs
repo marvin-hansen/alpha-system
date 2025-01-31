@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 // The http authentication header
 pub const AUTH_HEADER_KEY: &str = "auth-key";
 // The http authentication read only access key for all get methods

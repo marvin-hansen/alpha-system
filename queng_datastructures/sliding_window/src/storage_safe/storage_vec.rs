@@ -1,5 +1,6 @@
-// SPDX-License-Identifier: MIT
-// Copyright (c) "2023" . The DeepCausality Authors. All Rights Reserved.
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
 use crate::WindowStorage;
 
 /// A highly optimized vector-based sliding window implementation using only safe Rust.

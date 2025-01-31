@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use common_exchange::ExchangeID;
 use sbe_bindings::{
     message_header_codec::MessageHeaderDecoder, stop_all_data_msg_codec::StopAllDataMsgDecoder,

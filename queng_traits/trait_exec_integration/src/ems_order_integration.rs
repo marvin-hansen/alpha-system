@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use common_errors::MessageProcessingError;
 use common_order::{OrderCancel, OrderCancelAll, OrderCreate, OrderUpdate};
 

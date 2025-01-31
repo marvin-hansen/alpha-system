@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use kaiko_download::{download_meta_data, download_meta_data_stats};
 
 #[tokio::test]

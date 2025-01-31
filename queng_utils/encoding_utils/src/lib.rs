@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 //! A high-performance library for encoding strings into fixed-size integers.
 //!
 //! This crate provides efficient implementations for encoding strings into various

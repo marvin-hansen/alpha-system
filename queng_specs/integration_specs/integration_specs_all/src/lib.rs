@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use common_ims::{ExchangeID, IntegrationConfig};
 use shared_service_specs::ims_data_integration_config;
 

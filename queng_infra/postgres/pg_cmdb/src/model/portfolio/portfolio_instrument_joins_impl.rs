@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::model::instrument::Instrument;
 use crate::model::portfolio::Portfolio;
 use crate::model::portfolio_instrument::PortfolioInstrument;

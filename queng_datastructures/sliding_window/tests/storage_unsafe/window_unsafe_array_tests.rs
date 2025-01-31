@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use sliding_window::{SlidingWindow, UnsafeArrayStorage, WindowStorage};
 
 const SIZE: usize = 4;

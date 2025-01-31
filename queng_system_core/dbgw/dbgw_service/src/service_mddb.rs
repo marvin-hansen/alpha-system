@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::DBG;
 use pg_mddb_manager::PostgresMDDBManager;
 use proto_mddb::proto::db_gateway_mddb_service_server::DbGatewayMddbService;

@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use common_metadata::MetaStats;
 use container_specs_postgres::postgres_db_container_config;
 use diesel::Connection;

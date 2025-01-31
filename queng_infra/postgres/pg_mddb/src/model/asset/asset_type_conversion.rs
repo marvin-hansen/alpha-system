@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::model::asset::Asset;
 use crate::UpdateAsset;
 use common_metadata::MetaAsset;

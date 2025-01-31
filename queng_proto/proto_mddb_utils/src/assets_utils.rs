@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use common_metadata::{AssetMetadata, MetaAsset};
 
 /// Converts a `MetaAsset` to its protobuf representation.

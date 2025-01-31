@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 mod instrument_impl;
 mod instrument_queries;
 mod instrument_type_conversion;

@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 mod ims_api_urls;
 mod ims_shutdown_integration;
 mod ims_symbol_integration;

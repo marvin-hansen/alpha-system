@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use chrono::{DateTime, Utc};
 use common_data_bar::TradeBar;
 use rust_decimal::Decimal;

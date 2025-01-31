@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use common_exchange::PortfolioConfig;
 use proto_cmdb::proto::{MultiPortfolioRequest, SinglePortfolioRequest};
 use proto_cmdb_utils::portfolio_proto_utils::{

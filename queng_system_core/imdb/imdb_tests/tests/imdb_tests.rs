@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use common_ims::ExchangeID;
 use config_manager::CfgManager;
 use container_specs_postgres::postgres_db_container_config;

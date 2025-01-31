@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::health_check::health_handler::health_handler;
 use crate::service::Service;
 use common_config::ServiceID;

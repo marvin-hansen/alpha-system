@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 // Request
 
 use crate::integration_utils::integration_config_to_proto;

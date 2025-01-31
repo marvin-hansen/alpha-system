@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use sliding_window::{SlidingWindow, UnsafeVectorStorage};
 
 // Maximum number of elements held in the sliding window.

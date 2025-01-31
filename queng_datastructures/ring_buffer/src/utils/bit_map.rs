@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::sequence::atomic_sequence::Sequence;
 use crate::utils::logarithm::log2;
 use std::num::NonZeroUsize;

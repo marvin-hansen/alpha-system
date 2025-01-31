@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 pub(crate) mod config_types;
 pub use crate::config_types::endpoint::*;
 pub use crate::config_types::endpoint_host::*;

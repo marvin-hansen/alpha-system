@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::TradeBar;
 
 impl std::fmt::Display for TradeBar {

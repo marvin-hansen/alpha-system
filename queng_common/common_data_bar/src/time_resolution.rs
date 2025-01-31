@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use std::fmt;
 
 #[derive(Debug, Default, Copy, Clone, Eq, PartialEq, Hash)]

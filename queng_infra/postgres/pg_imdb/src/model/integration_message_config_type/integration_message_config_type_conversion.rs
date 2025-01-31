@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::model::integration_message_config_type::MessageConfig;
 use common_ims::{ExchangeID, IntegrationMessageConfig};
 

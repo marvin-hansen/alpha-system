@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+  ~ Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+  -->
+
 <messageSchema package="Examples"
                id="14"
                description="Test dictionary"

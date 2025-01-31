@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::PostgresMDDBManager;
 use common_errors::PostgresDBError;
 use common_metadata::MetaInstrument;

@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use std::fmt::{Display, Formatter};
 
 // Type is u16 for direct conversion from proto integer. The smallest possible integer in proto is 16B.

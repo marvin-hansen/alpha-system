@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::types::worflow_op::{MetaDataDBWOp, WorkflowOp};
 use crate::{print_utils, workflow};
 use common_metadata::MetaDataSet;

@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use common_exchange::ExchangeID;
 use common_order::OrderCancelAll;
 use sbe_bindings::order_cancel_all_codec::SBE_TEMPLATE_ID;

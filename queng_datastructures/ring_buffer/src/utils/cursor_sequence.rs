@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::sequence::atomic_sequence::{AtomicSequence, Sequence};
 use std::borrow::Borrow;
 

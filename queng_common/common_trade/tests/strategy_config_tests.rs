@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use common_trade::{PatternConfig, StrategyConfig, TradeEntryType, TradeStrategyType};
 
 fn get_strategy_config() -> StrategyConfig {

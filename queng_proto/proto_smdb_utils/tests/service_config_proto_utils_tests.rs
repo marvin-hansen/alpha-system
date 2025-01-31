@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use common_config::{Endpoint, ServiceConfig, ServiceID};
 use proto_smdb::proto::{ProtoEndpoint, ProtoServiceConfig};
 use proto_smdb_utils::service_config_proto_utils::{

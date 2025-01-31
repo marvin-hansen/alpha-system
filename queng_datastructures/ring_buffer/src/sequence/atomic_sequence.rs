@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use std::mem::size_of;
 use std::sync::atomic::{AtomicU64, Ordering};
 

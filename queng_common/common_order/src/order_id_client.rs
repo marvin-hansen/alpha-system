@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use encoding_utils::{decode_int64_to_str, encode_str_to_int64};
 
 #[derive(Default, Debug, Clone, PartialEq, Eq)]

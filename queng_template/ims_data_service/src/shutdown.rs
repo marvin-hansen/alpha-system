@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use iggy::clients::client::IggyClient;
 
 pub(crate) async fn shutdown_iggy(

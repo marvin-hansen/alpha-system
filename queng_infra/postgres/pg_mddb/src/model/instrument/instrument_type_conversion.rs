@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::model::instrument::Instrument;
 use crate::{CreateInstrument, UpdateInstrument};
 use common_metadata::{InstrumentMetadata, MetaInstrument};

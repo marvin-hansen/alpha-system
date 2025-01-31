@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 #[test]
 fn test_sha512_digest() {
     let s = String::from("Hello Hash");

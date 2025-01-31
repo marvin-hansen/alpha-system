@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::fields::{AUTH_HEADER_KEY, EXCHANGES_KEY, METADATA_KV, RO_AUTH_KEY, RW_AUTH_KEY};
 
 use crate::http_response::HttpResponse;

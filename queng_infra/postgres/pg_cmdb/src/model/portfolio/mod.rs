@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use diesel::{AsChangeset, Identifiable, Insertable, Queryable, Selectable};
 
 mod portfolio_impl;

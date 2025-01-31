@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use common_config::{ProtocolType, ServiceID};
 use mddb_specs::mddb_service_config;
 

@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use binance_core_data_integration::*;
 use common_data_bar::TimeResolution;
 use data_integration_macro::ImsDataIntegrationImpl;

@@ -1,2 +1,6 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 mod proto_integration_config_tests;
 mod proto_integration_messge_conf_tests;

@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use criterion::{black_box, criterion_group, BenchmarkId, Criterion};
 
 use sliding_window::{

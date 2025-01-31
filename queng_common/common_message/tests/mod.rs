@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 #[cfg(test)]
 mod ims_stream_user_tests;
 #[cfg(test)]

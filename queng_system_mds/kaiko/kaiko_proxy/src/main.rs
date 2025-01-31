@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use std::error::Error;
 use std::sync::Arc;
 use std::time::Duration;

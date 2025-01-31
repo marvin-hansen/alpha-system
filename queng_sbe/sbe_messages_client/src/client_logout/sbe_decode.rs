@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::ClientLogoutMessage;
 use sbe_bindings::client_logout_codec::SBE_TEMPLATE_ID;
 use sbe_bindings::{

@@ -1,23 +1,15 @@
 #!/usr/bin/env bash
 
+#
+# Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+#
+
 # This script downloads the Flux OpenAPI schemas, then it validates the
 # Flux custom resources and the kustomize overlays using kubeconform.
 # This script is meant to be run locally and in CI before the changes
 # are merged on the main branch that's synced by Flux.
 
-# Copyright 2023 The Flux authors. All rights reserved.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+
 
 # Prerequisites
 # - yq v4.34

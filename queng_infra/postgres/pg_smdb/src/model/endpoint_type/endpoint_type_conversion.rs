@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::model::endpoint_type::Endpoint;
 use crate::model::protocol_type::ProtocolType;
 use common_config::Endpoint as CommonEndpoint;

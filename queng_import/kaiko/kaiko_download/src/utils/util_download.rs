@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::utils::DownloadUtils;
 use common_errors::DownloadError;
 use common_metadata::{

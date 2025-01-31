@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::position_data::PositionData;
 use common_exchange::ExchangeID;
 use std::fmt::Display;

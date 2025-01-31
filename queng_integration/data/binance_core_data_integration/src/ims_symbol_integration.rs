@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::{ImsBinanceDataIntegration, SYMBOL_CACHE_DURATION};
 use serde_json::Value;
 use std::collections::HashSet;

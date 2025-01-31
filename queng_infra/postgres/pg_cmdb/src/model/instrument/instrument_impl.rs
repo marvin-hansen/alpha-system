@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::model::instrument::{CreateInstrument, Instrument, UpdateInstrument};
 use crate::schema::cmdb::instrument::dsl::{code, instrument};
 use crate::Connection;

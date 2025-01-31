@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 #[derive(Debug)]
 pub struct MasterSymbolRow {
     pub data: Vec<String>,

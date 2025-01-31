@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::MessageProducer;
 use bytes::Bytes;
 use iggy::messages::send_messages::Message;

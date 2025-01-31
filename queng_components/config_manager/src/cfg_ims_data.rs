@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::fields::{DEFAULT_HOST, DEFAULT_IMS_PORT};
 use crate::CfgManager;
 use common_env::EnvironmentType;

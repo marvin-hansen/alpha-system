@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use common_config::{Endpoint, ProtocolType, ServiceConfig, ServiceID};
 use common_ims::{ExchangeID, ImsIntegrationType, IntegrationConfig, IntegrationMessageConfig};
 use common_ims::{IggyConfig, IggyUser};

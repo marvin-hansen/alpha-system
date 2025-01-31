@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 /// Creates a new custom reqwest client.
 pub fn get_client() -> reqwest::Client {
     // Enable gzip compressions for requests and responses to reduce download time.

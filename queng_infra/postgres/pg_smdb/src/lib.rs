@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::migrations::EMBEDDED_MIGRATIONS;
 
 use diesel_migrations::EmbeddedMigrations;

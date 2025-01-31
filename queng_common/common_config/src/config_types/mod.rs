@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 pub mod endpoint;
 pub mod endpoint_host;
 pub mod metric_config;

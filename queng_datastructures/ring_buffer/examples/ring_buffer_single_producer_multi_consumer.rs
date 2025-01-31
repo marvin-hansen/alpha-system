@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 //! Single Producer Multiple Consumer Ring Buffer Example
 //!
 //! This example shows how to process events through multiple consumers in parallel:

@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::{ImsDataClient, ImsDataClientError};
 use futures_util::StreamExt;
 use iggy::clients::consumer::IggyConsumer;

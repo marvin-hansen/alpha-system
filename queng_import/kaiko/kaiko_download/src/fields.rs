@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 pub const BASE_URL: &str = "https://reference-data-api.kaiko.io/v1/";
 pub const CDN_PROXY_URL: &str = kaiko_cdn_auth::CDN_PROXY_URL;
 pub const CDN_AUTH_HEADER_KEY: &str = kaiko_cdn_auth::AUTH_HEADER_KEY;

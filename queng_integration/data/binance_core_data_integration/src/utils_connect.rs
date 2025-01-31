@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use tokio_tungstenite::{connect_async, WebSocketStream};
 use trait_data_integration::ImsDataIntegrationError;
 

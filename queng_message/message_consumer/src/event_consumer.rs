@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::MessageConsumer;
 use futures_util::stream::StreamExt;
 use trait_event_consumer::EventConsumer;

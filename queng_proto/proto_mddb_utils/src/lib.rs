@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 mod assets_req_resp_utils;
 mod assets_utils;
 mod exchanges_req_resp_utils;

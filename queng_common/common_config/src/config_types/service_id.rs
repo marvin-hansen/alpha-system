@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use std::fmt::{Display, Formatter};
 
 /// An u8 encoded Enum that represents the unique ID of a service.

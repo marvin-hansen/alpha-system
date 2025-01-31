@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::order_id_client::ClientOrderID;
 use crate::{OrderExchangeSymbol, OrderSide, OrderType, TimeInForce};
 use common_exchange::ExchangeID;

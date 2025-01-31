@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::{DataErrorMessage, SbeEncodeError};
 use sbe_bindings::message_type::MessageType as SbeMessageType;
 use sbe_bindings::{data_error_codec::DataErrorEncoder, message_header_codec, Encoder, WriteBuf};

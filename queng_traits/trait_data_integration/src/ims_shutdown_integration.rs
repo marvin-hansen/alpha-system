@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::ImsDataIntegrationError;
 
 #[allow(dead_code)] // Clippy can't see that the trait is used

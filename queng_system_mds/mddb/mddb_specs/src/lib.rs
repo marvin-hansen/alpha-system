@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use common_config::{ServiceConfig, ServiceID};
 use shared_service_specs::{default_grpc_service_endpoint, health_endpoint, metric_endpoint};
 

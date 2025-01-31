@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 const MAX_U128_CHARS: u64 = 64;
 
 /// Validates if a character is valid for encoding.

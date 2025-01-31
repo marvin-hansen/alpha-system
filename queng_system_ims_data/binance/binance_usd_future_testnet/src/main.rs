@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use binance_usd_futures_testnet_data_integration::ImsBinanceUsdFuturesTestnetDataIntegration;
 use common_exchange::ExchangeID;
 use mimalloc::MiMalloc;

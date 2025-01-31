@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::StopAllDataMessage;
 use common_exchange::ExchangeID;
 use sbe_types::MessageType;

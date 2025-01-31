@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::*;
 
 /// A thread-based executor that manages and runs a collection of tasks concurrently.

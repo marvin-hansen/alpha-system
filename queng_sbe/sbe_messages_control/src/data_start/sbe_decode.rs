@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::StartDataMessage;
 use common_data_bar::TimeResolution;
 use common_exchange::ExchangeID;

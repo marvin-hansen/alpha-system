@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use container_specs_postgres::postgres_db_container_config;
 
 //  When you update the Dockertag, also update the postgres.sh script in scripts/ folder

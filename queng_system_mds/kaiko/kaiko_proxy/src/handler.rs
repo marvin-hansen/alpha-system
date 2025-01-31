@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::MetaDataStore;
 
 pub async fn get_assets_handler(store: MetaDataStore) -> Result<impl warp::Reply, warp::Rejection> {

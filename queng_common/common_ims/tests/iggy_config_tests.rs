@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use common_ims::{IggyConfig, IggyUser};
 use iggy::identifier::Identifier;
 

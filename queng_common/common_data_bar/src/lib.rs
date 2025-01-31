@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 mod data_type;
 mod ohlcv_bar;
 mod sampled_bars;

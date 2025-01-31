@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use common_exchange::{AccountType, Instrument, PortfolioConfig};
 use proto_cmdb::proto::{ProtoInstrument, ProtoPortfolioConfig};
 use std::fmt::Error;

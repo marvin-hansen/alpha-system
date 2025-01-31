@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use environment_manager::EnvironmentManager;
 use pg_mddb_manager::PostgresMDDBManager;
 use postgres_config_manager::PostgresConfigManager;

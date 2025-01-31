@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use common_env::EnvironmentType;
 use imdb_client::IMDBClientSelector;
 use smdb_client::SMDBClientSelector;

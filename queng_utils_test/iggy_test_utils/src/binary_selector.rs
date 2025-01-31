@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::fields::IGGY_HEALTH_URI;
 use crate::{IGGY_DARWIN_AARCH64, IGGY_LINUX_X86_64};
 use common_env::EnvironmentType;

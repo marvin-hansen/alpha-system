@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::utils_shared;
 use common_metadata::MetaDataSet;
 // Note, full and partial import test may run concurrently hence require different testdata

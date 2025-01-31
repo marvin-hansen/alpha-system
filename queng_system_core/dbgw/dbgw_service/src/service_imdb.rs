@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::DBG;
 use pg_imdb_manager::PostgresIMDBManager;
 use proto_imdb::proto::db_gateway_imdb_service_server::DbGatewayImdbService;

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023. Marvin Hansen <marvin.hansen@gmail.com> All rights reserved.
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
  */
 use crate::abstract_trait::PatternTrait;
 use crate::fields::{ONE_HUNDRED, POINT_FIVE};

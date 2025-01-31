@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::PostgresIMDBManager;
 use common_errors::PostgresDBError;
 use common_ims::IntegrationConfig as ImsIntegrationConfig;

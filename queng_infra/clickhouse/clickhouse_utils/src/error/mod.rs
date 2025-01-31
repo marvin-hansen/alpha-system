@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 mod clickhouse_query_error;
 mod clickhouse_util_error;
 

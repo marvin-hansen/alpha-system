@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 //! Multiple Producer Multiple Consumer Ring Buffer Example
 //!
 //! This example demonstrates the most complex ring buffer configuration:

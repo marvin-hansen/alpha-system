@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 /// Module containing common data types used across SBE messages.
 ///
 /// This includes enums representing:  

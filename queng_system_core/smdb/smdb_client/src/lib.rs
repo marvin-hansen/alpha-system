@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use common_config::*;
 use enum_dispatch::enum_dispatch;
 use proto_smdb::proto::smdb_service_client::SmdbServiceClient;

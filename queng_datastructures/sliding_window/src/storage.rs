@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 /// Trait defining the interface for a sliding window data structure
 ///
 /// # Type Parameters

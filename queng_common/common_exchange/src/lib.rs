@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 mod account_type;
 mod exchange_id;
 mod fiat_iso_code;

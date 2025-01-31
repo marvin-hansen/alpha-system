@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use rust_decimal::Decimal;
 use std::fmt::Display;
 

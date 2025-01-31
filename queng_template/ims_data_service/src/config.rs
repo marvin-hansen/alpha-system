@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use common_config::ServiceConfig;
 use common_ims::IggyConfig;
 use common_ims::{ExchangeID, IntegrationConfig};

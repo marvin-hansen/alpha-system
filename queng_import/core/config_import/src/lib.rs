@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 mod import_portfolio_configs;
 
 use common_exchange::PortfolioConfig;

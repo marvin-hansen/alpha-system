@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 // @generated automatically by Diesel CLI.
 
 pub mod smdb {

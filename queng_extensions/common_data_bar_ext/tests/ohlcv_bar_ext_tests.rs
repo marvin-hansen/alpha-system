@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use common_data_bar::OHLCVBar;
 use common_data_bar_ext::SbeOHLCVBarExtension;
 

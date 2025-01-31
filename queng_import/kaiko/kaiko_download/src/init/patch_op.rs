@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use std::fmt::{Display, Formatter};
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 #[repr(u8)]

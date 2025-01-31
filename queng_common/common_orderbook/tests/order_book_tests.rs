@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use chrono::Utc;
 use common_orderbook::{Ask, Bid, Orderbook};
 

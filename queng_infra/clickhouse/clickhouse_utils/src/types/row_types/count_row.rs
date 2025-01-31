@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use klickhouse::Row;
 use serde::{Deserialize, Serialize};
 use std::fmt::Display;

@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use common_ims::IntegrationConfig;
 use environment_manager::EnvironmentManager;
 use pg_imdb_manager::PostgresIMDBManager;

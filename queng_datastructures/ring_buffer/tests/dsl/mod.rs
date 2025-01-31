@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 mod dsl_barrier_tests;
 mod dsl_builder_tests;
 mod dsl_event_handler_tests;

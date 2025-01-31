@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use common_exchange::ExchangeID;
 use common_order::{OrderCreate, OrderSide, OrderType, TimeInForce};
 use rust_decimal::Decimal;

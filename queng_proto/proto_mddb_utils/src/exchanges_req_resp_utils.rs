@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::exchanges_utils;
 use common_metadata::MetaExchange;
 use proto_mddb::proto::{

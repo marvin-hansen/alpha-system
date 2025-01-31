@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use common_exchange::AccountType::Spot;
 use common_exchange::Instrument as CommonInstrument;
 use common_exchange::PortfolioConfig as CommonPortfolioConfig;

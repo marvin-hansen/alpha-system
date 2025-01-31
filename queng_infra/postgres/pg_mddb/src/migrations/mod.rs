@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 pub mod diesel_initial_setup;
 pub mod mddb_setup;
 

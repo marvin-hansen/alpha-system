@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use common_config::{ServiceID, SvcEnvConfig};
 
 fn get_svc_env_config(service_id: ServiceID) -> SvcEnvConfig {

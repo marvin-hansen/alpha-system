@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::db::metadata::{Metadata, DB_NAME, INSTRUMENTS_TABLE};
 use common_metadata::{InstrumentMetadata, MetaInstrument};
 use std::error::Error;

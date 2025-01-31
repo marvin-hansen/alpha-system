@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::abstract_trait::PatternTrait;
 use crate::fields::{
     ONE, ONE_HUNDRED, ONE_POINT_FIVE, POINT_FIVE, POINT_SEVEN_FIVE, POINT_TWO, THREE,

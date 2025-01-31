@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use chrono::{DateTime, TimeZone, Utc};
 use klickhouse::{DateTime64, Row};
 use rust_decimal::prelude::FromPrimitive;

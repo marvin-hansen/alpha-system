@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 //! # Schema Module
 //!
 //! This module contains the schema definitions for the `clickhouse_utils` crate.

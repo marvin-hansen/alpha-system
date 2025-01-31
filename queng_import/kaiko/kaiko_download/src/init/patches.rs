@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::init::patch_op::PatchOp;
 use crate::init::patch_op::PatchOp::{PatchBaseAsset, PatchClass, PatchQuoteAsset};
 

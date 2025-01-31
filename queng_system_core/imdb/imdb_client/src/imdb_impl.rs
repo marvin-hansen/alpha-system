@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::imdb_client_trait::ImdbClientTrait;
 use crate::imdb_error::IMDBClientError;
 use crate::IMDBClient;

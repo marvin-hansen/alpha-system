@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 mod pattern_config;
 mod pattern_type;
 mod strategy_config;

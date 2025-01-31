@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::MessageConsumer;
 use iggy::clients::consumer::IggyConsumer;
 use iggy::identifier::Identifier;

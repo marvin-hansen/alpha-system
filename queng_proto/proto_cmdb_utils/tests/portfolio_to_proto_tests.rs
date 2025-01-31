@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use common_exchange::{AccountType, Instrument, PortfolioConfig};
 use proto_cmdb_utils::portfolio_proto_utils::{instrument_to_proto, portfolio_config_to_proto};
 

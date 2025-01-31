@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 pub(crate) mod ohlcv_bar_ext;
 pub(crate) mod trade_bar_ext;
 

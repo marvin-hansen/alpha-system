@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use common_config::HostEndpoint;
 use proto_smdb::proto::db_gateway_smdb_service_client::DbGatewaySmdbServiceClient as DBGWClient;
 use tonic::transport::{Channel, Uri};

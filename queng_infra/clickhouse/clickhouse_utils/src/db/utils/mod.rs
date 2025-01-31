@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::error::ClickHouseQueryError;
 use crate::types::{CountRow, ExistsDBRow, ExistsRow};
 use klickhouse::{Client, KlickhouseError};

@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use proto_cmdb::proto::cmdb_service_server::CmdbService;
 use proto_cmdb::proto::{
     CreatePortfolioResponse, DeletePortfolioResponse, MultiPortfolioRequest, ProtoPortfolioConfig,

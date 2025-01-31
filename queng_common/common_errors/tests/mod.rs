@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 #[cfg(test)]
 mod dbgw_error_tests;
 #[cfg(test)]

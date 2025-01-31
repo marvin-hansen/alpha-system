@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 //! Example demonstrating the usage of Binance Coin Futures Data Integration
 //!
 //! This example shows how to:

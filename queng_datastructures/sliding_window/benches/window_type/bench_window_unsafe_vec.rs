@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::window_type::fields::{MULT, SIZE};
 
 use criterion::criterion_group;

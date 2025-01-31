@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 //! Single Producer Single Consumer Ring Buffer Example
 //!
 //! This example demonstrates the simplest ring buffer configuration with:

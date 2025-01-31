@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use pg_cmdb_manager::PostgresCMDBManager;
 use proto_cmdb::proto::db_gateway_cmdb_service_server::DbGatewayCmdbService;
 

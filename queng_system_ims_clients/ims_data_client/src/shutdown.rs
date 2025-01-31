@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::{ImsDataClient, ImsDataClientError};
 use iggy::client::{Client, StreamClient, TopicClient};
 use iggy::identifier::Identifier;

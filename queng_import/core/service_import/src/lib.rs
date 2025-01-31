@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use common_config::ServiceConfig;
 use environment_manager::EnvironmentManager;
 use pg_smdb_manager::PostgresSMDBManager;

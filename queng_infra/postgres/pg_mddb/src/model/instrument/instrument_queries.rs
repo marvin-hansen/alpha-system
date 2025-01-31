@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::schema::mddb::instruments::{
     instrument_base_asset, instrument_exchange_pair_code, instrument_exchanges_code,
     instrument_figi, instrument_pair_figi, instrument_quote_asset, table as instruments_table,

@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use proto_mddb::proto::db_gateway_mddb_service_client::DbGatewayMddbServiceClient;
 use proto_mddb::proto::mddb_service_server::MddbService;
 use proto_mddb::proto::{

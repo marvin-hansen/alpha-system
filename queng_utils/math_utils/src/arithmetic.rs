@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 #[must_use]
 pub fn abs(x: f64) -> f64 {
     x.abs()

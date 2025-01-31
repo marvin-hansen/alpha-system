@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use kaiko_import::WorkflowOpAll;
 use metadata_import::MetadataImportManager;
 use mimalloc::MiMalloc;

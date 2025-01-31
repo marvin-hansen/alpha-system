@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use common_order::OrderCancel;
 use sbe_bindings::{
     message_header_codec, message_type::MessageType, order_cancel_codec::OrderCancelEncoder,
