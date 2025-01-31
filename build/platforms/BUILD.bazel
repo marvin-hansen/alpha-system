@@ -1,7 +1,7 @@
 ###############################################################################
 # Imports
 ###############################################################################
-load("@toolchains_buildbuddy//:rules.bzl", "UBUNTU20_04_IMAGE")
+load("@toolchains_buildbuddy//:rules.bzl", "UBUNTU22_04_IMAGE")
 
 ###############################################################################
 # Platform
@@ -67,6 +67,6 @@ platform(
 platform(
     name = "linux_x86_64_remote",
     constraint_values = ["@platforms//cpu:x86_64"],
-    exec_properties = {"container-image": "docker://ghcr.io/marvin-hansen/rbe-custom/rbe:latest"},
+    # exec_properties = {"container-image": "docker://ghcr.io/marvin-hansen/rbe-custom/rbe:latest"},
     parents = [":linux"],
 )
