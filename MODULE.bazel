@@ -60,19 +60,17 @@ use_repo(buildbuddy, "buildbuddy_toolchain")
 
 ###############################################################################
 # LLVM toolchain #
-# https://github.com/marvin-hansen/buildbuddy-clang/releases
-# https://github.com/MaterializeInc/toolchains/releases
+# https://github.com/bazel-contrib/toolchains_llvm/blob/master/toolchain/internal/llvm_distributions.bzl
 ###############################################################################
 llvm = use_extension("@toolchains_llvm//toolchain/extensions:llvm.bzl", "llvm")
 llvm.toolchain(
     name = "llvm_toolchain",
     llvm_versions = {
-        "": "19.1.6",
+        "": "17.0.6",
+        "darwin-aarch64": "19.1.6",
     },
     sha256 = {
-        "darwin-aarch64": "94ed965925dbdc25b29e6fcfa9a84b28d915d5c9da7c71405fc20bbcf8396bd1",
-        "linux-x86_64": "a23d498699b22944be3a5a0470c0cfb229f801bbc1e460432617f8d08d0d57ea",
-        "linux-aarch64": "",
+        "darwin-aarch64": "41d8dea52d18c4e8b90c4fcd31965f9f297df9f40a38a33d60748dbe7f8330b8",
     },
     stdlib = {
         "linux-x86_64": "stdc++",
@@ -80,8 +78,6 @@ llvm.toolchain(
     },
     urls = {
          "darwin-aarch64": ["https://github.com/MaterializeInc/toolchains/releases/download/clang-19.1.6-1/darwin_aarch64.tar.zst"],
-         "linux-x86_64":   ["https://github.com/marvin-hansen/buildbuddy-clang/releases/download/clang-19.1.6-x86-64/linux_x86_64.tar.zst"],
-         "linux-aarch64":  ["https://github.com/marvin-hansen/buildbuddy-clang/releases/download/clang-19.1.6-arm64/linux_aarch64.tar.zst"],
     },
 )
 use_repo(llvm, "llvm_toolchain", "llvm_toolchain_llvm")
