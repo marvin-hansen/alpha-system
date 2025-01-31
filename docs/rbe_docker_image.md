@@ -9,7 +9,7 @@ docker run -d -i --name=bb_x86 --platform=linux/amd64 ghcr.io/marvin-hansen/rbe-
 
 ## Connect to the docker image
 
-docker exec -it rbe bash
+docker exec -it bb_x86 bash
 
 ## Install basics
 
