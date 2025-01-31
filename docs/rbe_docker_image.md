@@ -11,6 +11,10 @@ docker run -d -i --name=bb --platform=linux/amd64 ghcr.io/marvin-hansen/rbe-cust
 
 docker exec -it rbe bash
 
+## Install basics
+
+apt-get install make
+
 ## Install GH CLI 
 
 (type -p wget >/dev/null || (  apt update &&   apt-get install wget -y)) \
@@ -26,17 +30,17 @@ apt install gh
 
 gh auth login
 
-## Fast clone the repo:
-
-git clone --depth=1 https://github.com/marvin-hansen/quant-engine/
-
 ## Install bazelisk
 
  wget https://github.com/bazelbuild/bazelisk/releases/download/v1.8.1/bazelisk-linux-amd64
 
  chmod +x bazelisk-linux-amd64
 
-  mv bazelisk-linux-amd64 /usr/local/bin/bazel
+mv bazelisk-linux-amd64 /usr/local/bin/bazel
+
+## Fast clone the repo:
+
+git clone --depth=1 https://github.com/marvin-hansen/quant-engine/
 
 # make sure you get the binary available in $PATH
  which bazel
@@ -44,4 +48,5 @@ git clone --depth=1 https://github.com/marvin-hansen/quant-engine/
 
 ## Build
 
+cd quant-engine
 make build 
