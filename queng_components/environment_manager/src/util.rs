@@ -96,7 +96,7 @@ pub(crate) fn detect_platform_type(dbg: bool) -> PlatformType {
     }
 
     let output = std::process::Command::new("uname")
-        .arg("-v")
+        .arg("-a")
         .output()
         .expect("Failed to execute uname -v command");
 
@@ -112,8 +112,6 @@ pub(crate) fn detect_platform_type(dbg: bool) -> PlatformType {
     // Test if output is arm64 and Darwin for PlatformType::MacOSAarch64
     if stdout.contains("x86_64") && stdout.contains("Linux") {
         PlatformType::LinuxX86_64
-    } else if stdout.contains("SMP PREEMPT_DYNAMIC") {
-        PlatformType::LinuxX86_64 // BuildBuddy CI platform
     } else if stdout.contains("aarch64") && stdout.contains("Linux") {
         PlatformType::LinuxAarch64
     } else if stdout.contains("RELEASE_ARM64") && stdout.contains("Darwin") {
