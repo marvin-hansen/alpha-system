@@ -40,8 +40,13 @@ impl EnvironmentManager {
     }
 
     fn build(dbg: bool) -> Self {
-        let env_type = util::detect_env_type(false);
-        let platform_type = util::detect_platform_type(false);
+        let env_type = util::detect_env_type(dbg);
+        let platform_type = util::detect_platform_type(dbg);
+
+        if dbg{
+            println!("[EnvironmentManager]: Environment type: {env_type:?}");
+            println!("[EnvironmentManager]: Platform type: {platform_type:?}");
+        }
 
         Self {
             dbg,
