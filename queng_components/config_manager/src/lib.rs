@@ -186,9 +186,9 @@ impl CfgManager {
     pub fn build(dbg: bool, svc: ServiceID, svc_config: ServiceConfig) -> Self {
         let env_manager = if dbg {
             println!("[CfgManager]: Debug mode enabled");
-            EnvironmentManager::new()
-        } else {
             EnvironmentManager::with_debug()
+        } else {
+            EnvironmentManager::new()
         };
         //
         let env_type = env_manager.env_type();
