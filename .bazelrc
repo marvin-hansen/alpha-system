@@ -84,11 +84,11 @@ build:linux --extra_execution_platforms=//build/platforms:linux-x86_64
 common:remote-shared --jobs=120
 common:remote-shared --remote_timeout=600
 common:remote-shared --remote_download_minimal
-common:remote-shared --experimental_remote_cache_compression
+common:remote-shared --remote_cache_compression
 common:remote-shared --verbose_failures
 
 # Avoid inflating blobs smaller than 100 bytes with ZSTD compression.
-common:remote-shared --experimental_remote_cache_compression_threshold=100
+common:remote-shared --remote_cache_compression_threshold=100
 
 # Remote host platform
 # https://github.com/buildbuddy-io/buildbuddy/blob/8579ca30f1a1f401ed8279d99d9b47ec5637873f/.bazelrc#L30
