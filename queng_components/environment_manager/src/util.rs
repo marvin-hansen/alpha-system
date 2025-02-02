@@ -98,7 +98,7 @@ pub(crate) fn detect_platform_type(dbg: bool) -> PlatformType {
     let output = std::process::Command::new("uname")
         .arg("-a")
         .output()
-        .expect("Failed to execute uname -v command");
+        .expect("Failed to execute uname -a command to detect host platform");
 
     let stdout = String::from_utf8_lossy(&output.stdout);
 
