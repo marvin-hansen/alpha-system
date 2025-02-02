@@ -38,12 +38,12 @@ async fn test_binance_spot() {
     let config_manager = CfgManager::default_with_debug();
     dbg!("✅ config manager started");
 
-    dbg!("Detect Environment");
-    let env = config_manager.env_type();
-    dbg!(&format!("✅ Detected Environment: {}", env));
+    dbg!("Detect Platform");
+    let platform = config_manager.platform_type();
+    dbg!(&format!("✅ Detected Platform: {}", platform));
 
     dbg!("Configure iggy messaging service");
-    let iggy_start_config = iggy_start_config_builder(env);
+    let iggy_start_config = iggy_start_config_builder(platform);
 
     dbg!("Start iggy messaging service");
     let result = svc_util.start_service_from_config(iggy_start_config).await;
