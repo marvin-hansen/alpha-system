@@ -39,7 +39,7 @@ fn env_is_set(key: &str) -> bool {
 ///
 pub(crate) fn detect_env_type(dbg: bool) -> EnvironmentType {
     if dbg {
-        println!("[EnvironmentManager]: Debug mode enabled");
+        println!("[EnvironmentManager]: detect_env_type");
     }
 
     let key = "ENV";
@@ -92,7 +92,7 @@ pub(crate) fn detect_env_type(dbg: bool) -> EnvironmentType {
 ///
 pub(crate) fn detect_platform_type(dbg: bool) -> PlatformType {
     if dbg {
-        println!("[EnvironmentManager]: Debug mode enabled");
+        println!("[EnvironmentManager]: detect_platform_type");
     }
 
     let output = std::process::Command::new("uname")
@@ -107,10 +107,13 @@ pub(crate) fn detect_platform_type(dbg: bool) -> PlatformType {
     }
 
     // Test if output is x86_64 and linux for PlatformType::LinuxX86_64
+    // Test if output is SMP PREEMPT_DYNAMIC for BuildBuddy CI PlatformType::LinuxX86_64
     // Test if output is aarch64 and linux for PlatformType::LinuxAarch64
     // Test if output is arm64 and Darwin for PlatformType::MacOSAarch64
     if stdout.contains("x86_64") && stdout.contains("Linux") {
         PlatformType::LinuxX86_64
+    } else if stdout.contains("SMP PREEMPT_DYNAMIC") {
+        PlatformType::LinuxX86_64 // BuildBuddy CI platform
     } else if stdout.contains("aarch64") && stdout.contains("Linux") {
         PlatformType::LinuxAarch64
     } else if stdout.contains("RELEASE_ARM64") && stdout.contains("Darwin") {
