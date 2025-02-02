@@ -4,8 +4,14 @@
 
 use crate::CfgManager;
 use common_env::EnvironmentType;
+use common_platform::PlatformType;
 
 impl CfgManager {
+    #[inline]
+    pub const fn platform_type(&self) -> PlatformType {
+        self.platform_type
+    }
+
     #[inline]
     pub const fn env_type(&self) -> EnvironmentType {
         self.env_type

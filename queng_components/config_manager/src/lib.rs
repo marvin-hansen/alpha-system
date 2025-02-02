@@ -5,6 +5,7 @@
 use crate::fields::DEFAULT_DNS;
 use common_config::{ServiceConfig, ServiceID, SvcEnvConfig};
 use common_env::EnvironmentType;
+use common_platform::PlatformType;
 use environment_manager::EnvironmentManager;
 use hickory_resolver::TokioAsyncResolver;
 use smdb_specs::smdb_service_config;
@@ -27,6 +28,8 @@ pub struct CfgManager {
     dbg: bool,
     /// Type of the environment (e.g., development, testing, production).
     env_type: EnvironmentType,
+    /// Type of the platform (e.g., Linux, Windows, macOS).
+    platform_type: PlatformType,
     /// Resolver for the internal (cluster) DNS server.
     internal_dns_resolver: TokioAsyncResolver,
     internal_dns_server: String,
@@ -181,9 +184,16 @@ impl CfgManager {
     ///
     #[must_use]
     pub fn build(dbg: bool, svc: ServiceID, svc_config: ServiceConfig) -> Self {
+        let env_manager = if dbg {
+            println!("[CfgManager]: Debug mode enabled");
+            EnvironmentManager::new()
+        } else {
+            EnvironmentManager::with_debug()
+        };
         //
-        let env_type = Self::detect_env_type(dbg);
+        let env_type = env_manager.env_type();
         let svc_env_config = build_utils::get_svc_env_config(dbg, svc, &svc_config);
+        let platform_type = env_manager.platform_type();
 
         // Build the cluster internal DNS server
         let internal_dns_server = build_utils::get_internal_dns_server(dbg, &env_type);
@@ -197,6 +207,7 @@ impl CfgManager {
         Self {
             dbg,
             env_type,
+            platform_type,
             internal_dns_resolver,
             internal_dns_server,
             external_dns_resolver,
@@ -205,32 +216,6 @@ impl CfgManager {
             svc_config,
             svc_env_config,
         }
-    }
-
-    ///
-    /// Detects the environment type based on the value of the "ENV" environment variable.
-    ///
-    /// * If the variable is set to "CI", returns `EnvironmentType::CI`.
-    /// * If set to "CLUSTER", returns `EnvironmentType::CLUSTER`.
-    /// * If set to "LOCAL", returns `EnvironmentType::LOCAL`.
-    /// * If set to "UNKNOWN" or any other value, returns `EnvironmentType::UNKNOWN`.
-    ///
-    /// Prints debug messages if the 'dbg' parameter is true.
-    ///
-    /// Panics if unable to read the "ENV" environment variable.
-    ///
-    /// Returns the detected `EnvironmentType`.
-    ///
-    #[inline]
-    pub fn detect_env_type(dbg: bool) -> EnvironmentType {
-        let config_manager = if dbg {
-            println!("[CfgManager]: Debug mode enabled");
-            EnvironmentManager::new()
-        } else {
-            EnvironmentManager::with_debug()
-        };
-
-        config_manager.env_type()
     }
 }
 
