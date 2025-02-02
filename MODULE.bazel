@@ -19,7 +19,7 @@ bazel_dep(name = "rules_rust_prost", version = "0.57.1")
 bazel_dep(name = "rules_shell", version = "0.4.0")
 
 # Toolchains
-bazel_dep(name = "toolchains_protoc", version = "0.3.6", dev_dependency = True)
+bazel_dep(name = "toolchains_protoc", version = "0.3.7", dev_dependency = True)
 bazel_dep(name = "toolchains_llvm", version = "1.2.0", dev_dependency = True)
 bazel_dep(name = "toolchains_musl", version = "0.1.20", dev_dependency = True)
 bazel_dep(name = "toolchains_buildbuddy", dev_dependency = True)
@@ -33,7 +33,7 @@ git_override(
 bazel_dep(name = "libpq", version = "0.0.1")
 git_override(
     module_name = "libpq",
-    commit = "84ce14a248e583146e76fe6899a004cb2310f75c",
+    commit = "f0b3df432f9460c0ad90aef3b8479b5ff97e28ca",
     remote = "https://github.com/brainhivenl/libpq",
 )
 
