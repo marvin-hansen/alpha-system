@@ -2,13 +2,12 @@
  * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
  */
 
+use crate::Args;
 use iggy::client_provider;
 use iggy::client_provider::ClientProviderConfig;
 use iggy::clients::client::IggyClient;
 use iggy::error::IggyError;
 use std::sync::Arc;
-
-use crate::Args;
 
 /// Builds an Iggy client using the provided stream and topic identifiers.
 ///
@@ -21,10 +20,14 @@ use crate::Args;
 ///
 /// A `Result` wrapping the `IggyClient` instance or an `IggyError`.
 ///
-pub async fn build_client(stream_id: String, topic_id: String) -> Result<IggyClient, IggyError> {
+pub async fn build_client(
+    stream_id: String,
+    topic_id: String,
+    connect: bool,
+) -> Result<IggyClient, IggyError> {
     let args = Args::new(stream_id, topic_id);
 
-    build_client_from_args(args.to_sdk_args()).await
+    build_client_from_args(args.to_sdk_args(), connect).await
 }
 
 /// Builds an Iggy client using the provided `Args`.
@@ -37,22 +40,26 @@ pub async fn build_client(stream_id: String, topic_id: String) -> Result<IggyCli
 ///
 /// A `Result` wrapping the `IggyClient` instance or an `IggyError`.
 ///
-pub async fn build_client_from_args(args: iggy::args::Args) -> Result<IggyClient, IggyError> {
+pub async fn build_client_from_args(
+    args: iggy::args::Args,
+    connect: bool,
+) -> Result<IggyClient, IggyError> {
     // Build client provider configuration
     let client_provider_config = Arc::new(
         ClientProviderConfig::from_args(args).expect("Failed to create client provider config"),
     );
 
     // Build client_provider
-    let client = client_provider::get_raw_client(client_provider_config, false)
-        .await
-        .expect("Failed to create client");
+    let client = match client_provider::get_raw_client(client_provider_config, connect).await {
+        Ok(client) => client,
+        Err(e) => return Err(IggyError::ClientNotFound(42)),
+    };
 
     // Build client
-    let client = IggyClient::builder()
-        .with_client(client)
-        .build()
-        .expect("Failed to create client");
+    let client = match IggyClient::builder().with_client(client).build() {
+        Ok(client) => client,
+        Err(e) => return Err(e),
+    };
 
     Ok(client)
 }

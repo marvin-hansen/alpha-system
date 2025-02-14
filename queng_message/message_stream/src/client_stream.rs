@@ -55,9 +55,10 @@ impl MessageStream {
         let stream_name = iggy_config.stream_name().to_string();
         let topic_name = iggy_config.topic_name().to_string();
 
-        let iggy_client = message_shared::build_client(stream_name.clone(), topic_name.clone())
-            .await
-            .expect("Failed to build client");
+        let iggy_client =
+            message_shared::build_client(stream_name.clone(), topic_name.clone(), true)
+                .await
+                .expect("Failed to build client");
 
         iggy_client.connect().await.expect("Failed to connect");
 

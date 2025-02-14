@@ -97,7 +97,7 @@ impl ImsDataClient {
         let user = IggyUser::default();
         let iggy_config = IggyConfig::from_client_id(user, client_id);
         let control_client =
-            message_shared::build_client(control_stream_id.clone(), control_topic_id.clone())
+            message_shared::build_client(control_stream_id.clone(), control_topic_id.clone(), true)
                 .await
                 .expect("[ImsDataClient]: Failed to build client");
 
@@ -136,7 +136,7 @@ impl ImsDataClient {
         let user = IggyUser::default();
         let iggy_config = IggyConfig::from_client_id(user, client_id);
         let data_client =
-            message_shared::build_client(data_stream_id.clone(), data_topic_id.clone())
+            message_shared::build_client(data_stream_id.clone(), data_topic_id.clone(), true)
                 .await
                 .expect("[ImsDataClient]: Failed to build client for data channel");
 

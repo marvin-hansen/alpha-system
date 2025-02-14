@@ -107,7 +107,7 @@ where
     let topic_id = integration_config.control_channel();
 
     dbg_print("Construct iggy producer client");
-    let producer_client = message_shared::build_client(stream_id.clone(), topic_id.clone())
+    let producer_client = message_shared::build_client(stream_id.clone(), topic_id.clone(), true)
         .await
         .expect("Failed to build client");
 
@@ -121,7 +121,7 @@ where
         .expect("Failed to login user");
 
     dbg_print("Construct iggy consumer");
-    let consumer_client = message_shared::build_client(stream_id.clone(), topic_id.clone())
+    let consumer_client = message_shared::build_client(stream_id.clone(), topic_id.clone(), true)
         .await
         .expect("Failed to build client");
 
