@@ -11,7 +11,7 @@ impl<Integration: ImsDataIntegration> Service<Integration> {
     pub(crate) async fn get_data_producer(
         &self,
         client_id: u16,
-    ) -> Result<impl EventProcessor, MessageProcessingError> {
+    ) -> Result<impl EventProcessor + use<Integration>, MessageProcessingError> {
         let client_data_producers = self.client_producers().write().await;
 
         let exists = match self.check_client_login(client_id).await {

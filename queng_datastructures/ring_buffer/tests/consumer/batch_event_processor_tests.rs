@@ -54,15 +54,17 @@ impl DataProvider<TestData> for TestDataProvider {
     }
 
     unsafe fn get_mut(&self, sequence: Sequence) -> &mut TestData {
-        if sequence as usize >= self.data.len() {
-            panic!(
-                "Sequence {} is out of bounds (len: {})",
-                sequence,
-                self.data.len()
-            );
+        unsafe {
+            if sequence as usize >= self.data.len() {
+                panic!(
+                    "Sequence {} is out of bounds (len: {})",
+                    sequence,
+                    self.data.len()
+                );
+            }
+            let ptr = self.data.as_ptr().add(sequence as usize) as *mut TestData;
+            &mut *ptr
         }
-        let ptr = self.data.as_ptr().add(sequence as usize) as *mut TestData;
-        &mut *ptr
     }
 
     unsafe fn get(&self, sequence: Sequence) -> &TestData {

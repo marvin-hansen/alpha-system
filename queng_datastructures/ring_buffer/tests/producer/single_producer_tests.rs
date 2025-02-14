@@ -30,15 +30,19 @@ impl TestDataProvider {
 
 impl DataProvider<TestData> for TestDataProvider {
     unsafe fn get(&self, sequence: Sequence) -> &TestData {
-        let cell = &self.data[sequence as usize % self.data.len()];
-        // Safety: AtomicCell guarantees thread-safe access
-        &*cell.as_ptr()
+        unsafe {
+            let cell = &self.data[sequence as usize % self.data.len()];
+            // Safety: AtomicCell guarantees thread-safe access
+            &*cell.as_ptr()
+        }
     }
 
     unsafe fn get_mut(&self, sequence: Sequence) -> &mut TestData {
-        let cell = &self.data[sequence as usize % self.data.len()];
-        // Safety: AtomicCell guarantees thread-safe access
-        &mut *cell.as_ptr()
+        unsafe {
+            let cell = &self.data[sequence as usize % self.data.len()];
+            // Safety: AtomicCell guarantees thread-safe access
+            &mut *cell.as_ptr()
+        }
     }
 
     fn buffer_size(&self) -> usize {

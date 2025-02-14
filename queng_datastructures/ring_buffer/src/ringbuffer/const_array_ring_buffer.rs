@@ -149,8 +149,10 @@ where
     /// - Caller must ensure the sequence number is valid
     #[inline(always)]
     unsafe fn get_mut(&self, sequence: Sequence) -> &mut T {
-        let index = sequence as usize & self.mask;
-        &mut *self.data.get_unchecked(index).get()
+        unsafe {
+            let index = sequence as usize & self.mask;
+            &mut *self.data.get_unchecked(index).get()
+        }
     }
 
     /// Gets a reference to the element at the given sequence number.
@@ -162,8 +164,10 @@ where
     /// - Caller must ensure the sequence number is valid
     #[inline(always)]
     unsafe fn get(&self, sequence: Sequence) -> &T {
-        let index = sequence as usize & self.mask;
-        &*self.data.get_unchecked(index).get()
+        unsafe {
+            let index = sequence as usize & self.mask;
+            &*self.data.get_unchecked(index).get()
+        }
     }
 }
 
