@@ -37,7 +37,7 @@ async fn test_cmdb() {
     }
     assert!(result.is_ok());
     let (pg_container_id, _) = result.unwrap();
-    format!("✅ Postgres container ID: {pg_container_id} started");
+    println!("✅ Postgres container ID: {pg_container_id} started");
 
     dbg!("Start service util");
     let res = ServiceUtil::with_debug(ROOT_PATH, Vec::from(BINARIES)).await;

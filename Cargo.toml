@@ -249,7 +249,7 @@ all = "warn"
 # Warnings
 deprecated-safe = "warn"
 deprecated_safe_2024 = "warn"
-rust-2024-incompatible-pat = "warn"
+rust-2024-compatibility = "warn"
 
 
 # Optimize all crates
