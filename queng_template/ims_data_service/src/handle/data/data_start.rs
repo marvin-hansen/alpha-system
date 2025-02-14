@@ -55,7 +55,7 @@ impl<Integration: ImsDataIntegration + 'static> Service<Integration> {
                         return Err((
                             DataErrorType::DataStartError,
                             MessageProcessingError::new(e.to_string()),
-                        ))
+                        ));
                     }
                 };
             }
@@ -75,7 +75,7 @@ impl<Integration: ImsDataIntegration + 'static> Service<Integration> {
                         return Err((
                             DataErrorType::DataStartError,
                             MessageProcessingError::new(e.to_string()),
-                        ))
+                        ));
                     }
                 };
             }

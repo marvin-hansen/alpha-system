@@ -9,8 +9,8 @@ use common_metadata::{
     MetaAsset, MetaAssetRoot, MetaExchange, MetaExchangesRoot, MetaInstrument, MetaInstrumentsRoot,
     MetaStats,
 };
-use reqwest::header::{HeaderMap, HeaderValue};
 use reqwest::Client;
+use reqwest::header::{HeaderMap, HeaderValue};
 
 const API_URL: &str = "https://reference-data-api.kaiko.io/v1/";
 const API_PROXY_URL: &str = "http://localhost:7777/";

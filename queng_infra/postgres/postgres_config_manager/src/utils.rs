@@ -8,7 +8,9 @@ pub fn get_value_from_env(key: &str) -> String {
         Err(e) => {
             panic!(
                 "{} {}",
-                format_args!("[PostgresConfigManager]: Failed to read {key} environment variable. Ensure {key} is set:"),
+                format_args!(
+                    "[PostgresConfigManager]: Failed to read {key} environment variable. Ensure {key} is set:"
+                ),
                 e
             );
         }

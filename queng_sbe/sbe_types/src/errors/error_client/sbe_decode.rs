@@ -5,8 +5,8 @@
 use crate::{ClientErrorMessage, ClientErrorType, MessageType};
 use sbe_bindings::client_error_codec::SBE_TEMPLATE_ID;
 use sbe_bindings::{
-    client_error_codec::ClientErrorDecoder, message_header_codec::MessageHeaderDecoder, ReadBuf,
-    SbeResult,
+    ReadBuf, SbeResult, client_error_codec::ClientErrorDecoder,
+    message_header_codec::MessageHeaderDecoder,
 };
 
 /// Decodes a `ClientErrorMessage` from a byte buffer.

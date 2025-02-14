@@ -21,20 +21,27 @@ impl Error for ClickHouseQueryError {}
 impl fmt::Display for ClickHouseQueryError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            Self::QueryFailed(e) =>
-                write!(f, "Query to DB failed: {e}"),
+            Self::QueryFailed(e) => write!(f, "Query to DB failed: {e}"),
 
-            Self::InvalidTableName(e) =>
-                write!(f, "Invalid table name provided: Only use alphanumeric characters and underscores as table name. Error: {e}"),
+            Self::InvalidTableName(e) => write!(
+                f,
+                "Invalid table name provided: Only use alphanumeric characters and underscores as table name. Error: {e}"
+            ),
 
-            Self::EmptyTableName(e) =>
-                write!(f, "Empty table name provided: Table must have a name. Error: {e}"),
+            Self::EmptyTableName(e) => write!(
+                f,
+                "Empty table name provided: Table must have a name. Error: {e}"
+            ),
 
-            Self::TableNameTooLong(e) =>
-                write!(f, "Table name exceeds maximum length: Table can only be 63 characters long. Error: {e}"),
+            Self::TableNameTooLong(e) => write!(
+                f,
+                "Table name exceeds maximum length: Table can only be 63 characters long. Error: {e}"
+            ),
 
-            Self::TableDoesNotExist(table_name, e) =>
-                write!(f, "Table does not exist: Table {table_name} does not exist. Error: {e}"),
+            Self::TableDoesNotExist(table_name, e) => write!(
+                f,
+                "Table does not exist: Table {table_name} does not exist. Error: {e}"
+            ),
         }
     }
 }

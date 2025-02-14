@@ -2,9 +2,9 @@
  * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
  */
 
+use crate::IMDBClient;
 use crate::imdb_client_trait::ImdbClientTrait;
 use crate::imdb_error::IMDBClientError;
-use crate::IMDBClient;
 use async_trait::async_trait;
 use common_ims::{ExchangeID, IntegrationConfig};
 use proto_imdb::proto::ProtoIntegrationConfig;

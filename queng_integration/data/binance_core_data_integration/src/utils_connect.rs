@@ -2,7 +2,7 @@
  * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
  */
 
-use tokio_tungstenite::{connect_async, WebSocketStream};
+use tokio_tungstenite::{WebSocketStream, connect_async};
 use trait_data_integration::ImsDataIntegrationError;
 
 /// Connects to the Binance WebSocket server with the specified stream name.

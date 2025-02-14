@@ -22,7 +22,7 @@ async fn all_setup() {
     // Start or reuse a test postgres container
     let container_config = postgres_db_container_config();
     let result = env.get_or_start_container(&container_config); // dbg!(&result);
-                                                                // dbg!(&result);
+    // dbg!(&result);
     assert!(result.is_ok());
 }
 
@@ -467,9 +467,11 @@ async fn test_get_all_online_integration_configs() {
     assert_eq!(online_configs.len(), 2);
 
     // Verify all returned configs are online
-    assert!(online_configs
-        .iter()
-        .all(common_ims::IntegrationConfig::online));
+    assert!(
+        online_configs
+            .iter()
+            .all(common_ims::IntegrationConfig::online)
+    );
 
     // Verify correct configs returned
     let config_ids: Vec<String> = online_configs

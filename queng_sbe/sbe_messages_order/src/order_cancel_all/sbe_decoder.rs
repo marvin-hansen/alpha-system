@@ -6,8 +6,8 @@ use common_exchange::ExchangeID;
 use common_order::OrderCancelAll;
 use sbe_bindings::order_cancel_all_codec::SBE_TEMPLATE_ID;
 use sbe_bindings::{
-    message_header_codec::MessageHeaderDecoder, order_cancel_all_codec::OrderCancelAllDecoder,
-    ReadBuf,
+    ReadBuf, message_header_codec::MessageHeaderDecoder,
+    order_cancel_all_codec::OrderCancelAllDecoder,
 };
 
 use sbe_types::SbeDecodeError;

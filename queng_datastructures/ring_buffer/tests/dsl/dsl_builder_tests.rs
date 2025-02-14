@@ -78,8 +78,8 @@ fn test_builder_with_multi_producer() {
 
 #[test]
 fn test_nested_barrier_scopes() {
-    use std::sync::atomic::{AtomicU64, Ordering};
     use std::sync::Arc;
+    use std::sync::atomic::{AtomicU64, Ordering};
 
     // Create a shared counter that both handlers will update
     let total_count = Arc::new(AtomicU64::new(0));

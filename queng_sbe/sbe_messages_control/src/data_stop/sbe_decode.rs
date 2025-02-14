@@ -4,8 +4,8 @@
 
 use common_exchange::ExchangeID;
 use sbe_bindings::{
-    message_header_codec::MessageHeaderDecoder, stop_data_msg_codec::StopDataMsgDecoder, ReadBuf,
-    SbeResult,
+    ReadBuf, SbeResult, message_header_codec::MessageHeaderDecoder,
+    stop_data_msg_codec::StopDataMsgDecoder,
 };
 
 use crate::StopDataMessage;

@@ -9,7 +9,7 @@ use common_order::{
 use rust_decimal::Decimal;
 use sbe_bindings::order_create_codec::SBE_TEMPLATE_ID;
 use sbe_bindings::{
-    message_header_codec::MessageHeaderDecoder, order_create_codec::OrderCreateDecoder, ReadBuf,
+    ReadBuf, message_header_codec::MessageHeaderDecoder, order_create_codec::OrderCreateDecoder,
 };
 use sbe_types::SbeDecodeError;
 
@@ -39,11 +39,7 @@ pub fn decode_order_create_message(buffer: &[u8]) -> Result<OrderCreate, SbeDeco
     let order_time_expiry = if csg.order_time_expiry().is_some() {
         let val = csg.order_time_expiry().unwrap();
 
-        if val == 0 {
-            None
-        } else {
-            Some(val)
-        }
+        if val == 0 { None } else { Some(val) }
     } else {
         None
     };

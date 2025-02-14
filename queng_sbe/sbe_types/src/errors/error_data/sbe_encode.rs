@@ -4,7 +4,7 @@
 
 use crate::{DataErrorMessage, SbeEncodeError};
 use sbe_bindings::message_type::MessageType as SbeMessageType;
-use sbe_bindings::{data_error_codec::DataErrorEncoder, message_header_codec, Encoder, WriteBuf};
+use sbe_bindings::{Encoder, WriteBuf, data_error_codec::DataErrorEncoder, message_header_codec};
 
 impl DataErrorMessage {
     /// Encodes a `DataErrorMessage` to a byte buffer.

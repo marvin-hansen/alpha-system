@@ -48,7 +48,7 @@ impl<Integration: ImsDataIntegration> Service<Integration> {
                         "Failed to check if client with id {} is logged in due to error: { }",
                         client_id, err
                     )),
-                ))
+                ));
             }
         };
 
@@ -88,7 +88,7 @@ impl<Integration: ImsDataIntegration> Service<Integration> {
                         "Failed to create message stream for client with id {} due to error: { }",
                         client_id, err
                     )),
-                ))
+                ));
             }
         };
 

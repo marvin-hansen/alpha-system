@@ -45,6 +45,10 @@ impl MetaDataDBRecords {
 
 impl Display for MetaDataDBRecords {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "NumberDataBaseRecords {{ number_db_assets: {}, number_db_exchanges: {}, number_db_instruments: {} }}", self.number_db_assets, self.number_db_exchanges, self.number_db_instruments)
+        write!(
+            f,
+            "NumberDataBaseRecords {{ number_db_assets: {}, number_db_exchanges: {}, number_db_instruments: {} }}",
+            self.number_db_assets, self.number_db_exchanges, self.number_db_instruments
+        )
     }
 }

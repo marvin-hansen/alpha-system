@@ -5,8 +5,8 @@
 use common_order::OrderCreate;
 use rust_decimal::prelude::ToPrimitive;
 use sbe_bindings::{
-    message_header_codec, message_type::MessageType, order_create_codec::OrderCreateEncoder,
-    Encoder, WriteBuf,
+    Encoder, WriteBuf, message_header_codec, message_type::MessageType,
+    order_create_codec::OrderCreateEncoder,
 };
 use sbe_types::SbeEncodeError;
 

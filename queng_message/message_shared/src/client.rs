@@ -52,7 +52,7 @@ pub async fn build_client_from_args(
     // Build client_provider
     let client = match client_provider::get_raw_client(client_provider_config, connect).await {
         Ok(client) => client,
-        Err(e) => return Err(IggyError::ClientNotFound(42)),
+        Err(_) => return Err(IggyError::ClientNotFound(42)),
     };
 
     // Build client

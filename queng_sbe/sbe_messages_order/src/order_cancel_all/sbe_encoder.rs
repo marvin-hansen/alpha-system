@@ -4,8 +4,8 @@
 
 use common_order::OrderCancelAll;
 use sbe_bindings::{
-    message_header_codec, message_type::MessageType, order_cancel_all_codec::OrderCancelAllEncoder,
-    Encoder, WriteBuf,
+    Encoder, WriteBuf, message_header_codec, message_type::MessageType,
+    order_cancel_all_codec::OrderCancelAllEncoder,
 };
 use sbe_types::SbeEncodeError;
 

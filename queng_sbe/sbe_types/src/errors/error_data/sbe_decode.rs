@@ -5,8 +5,8 @@
 use crate::{DataErrorMessage, DataErrorType, MessageType};
 use sbe_bindings::data_error_codec::SBE_TEMPLATE_ID;
 use sbe_bindings::{
-    data_error_codec::DataErrorDecoder, message_header_codec::MessageHeaderDecoder, ReadBuf,
-    SbeResult,
+    ReadBuf, SbeResult, data_error_codec::DataErrorDecoder,
+    message_header_codec::MessageHeaderDecoder,
 };
 
 /// Decodes a `DataErrorMessage` from a byte buffer.

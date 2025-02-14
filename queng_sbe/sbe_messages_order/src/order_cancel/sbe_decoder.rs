@@ -6,7 +6,7 @@ use common_exchange::ExchangeID;
 use common_order::{ClientOrderID, ExchangeOrderID, OrderCancel};
 use sbe_bindings::order_cancel_codec::SBE_TEMPLATE_ID;
 use sbe_bindings::{
-    message_header_codec::MessageHeaderDecoder, order_cancel_codec::OrderCancelDecoder, ReadBuf,
+    ReadBuf, message_header_codec::MessageHeaderDecoder, order_cancel_codec::OrderCancelDecoder,
 };
 use sbe_types::{MessageType, SbeDecodeError};
 

@@ -38,8 +38,8 @@ pub async fn get_or_wait_for_postgres_connection(
             _ => {
                 if start_time.elapsed() > timeout {
                     return Err(PostgresDBError::ConnectionFailed(format!(
-                    "Failed to connect to Postgres server at: {database_url} after several retries for 90 seconds"
-                )));
+                        "Failed to connect to Postgres server at: {database_url} after several retries for 90 seconds"
+                    )));
                 }
                 sleep(retry_interval).await;
             }

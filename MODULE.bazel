@@ -64,8 +64,9 @@ use_repo(buildbuddy, "buildbuddy_toolchain")
 # https://github.com/MaterializeInc/toolchains/releases
 ###############################################################################
 LLVM_VERSIONS = {
-        "": "19.1.6",
+    "": "19.1.6",
 }
+
 llvm = use_extension("@toolchains_llvm//toolchain/extensions:llvm.bzl", "llvm")
 llvm.toolchain(
     name = "llvm_toolchain",

@@ -110,18 +110,20 @@ impl StrategyConfig {
 
 impl Display for StrategyConfig {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "StrategyConfig {{ strategy_id: {}, strategy_name: {}, strategy_description: {}, strategy_type: {:?}, intraday: {}, day_to_filter: {}, trade_entry_type: {:?}, pattern_config: {:?}, profit_target: {}, stop_target: {}, max_nr_bars: {} }}",
-               self.strategy_id,
-               self.strategy_name,
-               self.strategy_description,
-               self.strategy_type,
-               self.intraday,
-               self.day_to_filter,
-               self.trade_entry_type,
-               self.pattern_config,
-               self.profit_target,
-               self.stop_target,
-               self.max_nr_bars
+        write!(
+            f,
+            "StrategyConfig {{ strategy_id: {}, strategy_name: {}, strategy_description: {}, strategy_type: {:?}, intraday: {}, day_to_filter: {}, trade_entry_type: {:?}, pattern_config: {:?}, profit_target: {}, stop_target: {}, max_nr_bars: {} }}",
+            self.strategy_id,
+            self.strategy_name,
+            self.strategy_description,
+            self.strategy_type,
+            self.intraday,
+            self.day_to_filter,
+            self.trade_entry_type,
+            self.pattern_config,
+            self.profit_target,
+            self.stop_target,
+            self.max_nr_bars
         )
     }
 }

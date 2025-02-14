@@ -10,7 +10,7 @@ mod handle_instruments;
 mod handle_stats;
 mod http_response;
 
-use worker::{event, Context, Env, Request, Response, Result, Router};
+use worker::{Context, Env, Request, Response, Result, Router, event};
 
 #[allow(clippy::future_not_send)]
 #[event(fetch)]

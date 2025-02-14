@@ -114,11 +114,7 @@ impl Display for PostgresDBConfig {
         write!(
             f,
             "PostgresDBConfig {{\n  port: {},\n  host: {},\n  user: {},\n  database: {}\n max_connections: {}\n}}",
-            self.pg_port,
-            self.pg_host,
-            self.pg_user,
-            self.pg_database,
-            self.pg_max_connections,
+            self.pg_port, self.pg_host, self.pg_user, self.pg_database, self.pg_max_connections,
         )
     }
 }
