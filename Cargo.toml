@@ -29,7 +29,7 @@ exclude = [
 
 [workspace.package]
 edition = "2024"
-rust-version = "1.84.0"
+rust-version = "1.85.0"
 readme = "README.md"
 repository = "https://github.com/marvin-hansen/quant-engine"
 authors = ["Marvin Hansen <marvin.hansen@gmail.com>"]
