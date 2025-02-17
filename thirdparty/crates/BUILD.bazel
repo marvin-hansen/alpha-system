@@ -43,14 +43,14 @@ alias(
 )
 
 alias(
-    name = "async-trait-0.1.85",
-    actual = "//thirdparty/crates/async-trait-0.1.85:async_trait",
+    name = "async-trait-0.1.86",
+    actual = "//thirdparty/crates/async-trait-0.1.86:async_trait",
     tags = ["manual"],
 )
 
 alias(
     name = "async-trait",
-    actual = "//thirdparty/crates/async-trait-0.1.85:async_trait",
+    actual = "//thirdparty/crates/async-trait-0.1.86:async_trait",
     tags = ["manual"],
 )
 
@@ -79,14 +79,14 @@ alias(
 )
 
 alias(
-    name = "bytes-1.9.0",
-    actual = "//thirdparty/crates/bytes-1.9.0:bytes",
+    name = "bytes-1.10.0",
+    actual = "//thirdparty/crates/bytes-1.10.0:bytes",
     tags = ["manual"],
 )
 
 alias(
     name = "bytes",
-    actual = "//thirdparty/crates/bytes-1.9.0:bytes",
+    actual = "//thirdparty/crates/bytes-1.10.0:bytes",
     tags = ["manual"],
 )
 
@@ -115,14 +115,14 @@ alias(
 )
 
 alias(
-    name = "diesel-2.2.6",
-    actual = "//thirdparty/crates/diesel-2.2.6:diesel",
+    name = "diesel-2.2.7",
+    actual = "//thirdparty/crates/diesel-2.2.7:diesel",
     tags = ["manual"],
 )
 
 alias(
     name = "diesel",
-    actual = "//thirdparty/crates/diesel-2.2.6:diesel",
+    actual = "//thirdparty/crates/diesel-2.2.7:diesel",
     tags = ["manual"],
 )
 
@@ -187,26 +187,26 @@ alias(
 )
 
 alias(
-    name = "hickory-resolver-0.24.2",
-    actual = "//thirdparty/crates/hickory-resolver-0.24.2:hickory_resolver",
+    name = "hickory-resolver-0.24.3",
+    actual = "//thirdparty/crates/hickory-resolver-0.24.3:hickory_resolver",
     tags = ["manual"],
 )
 
 alias(
     name = "hickory-resolver",
-    actual = "//thirdparty/crates/hickory-resolver-0.24.2:hickory_resolver",
+    actual = "//thirdparty/crates/hickory-resolver-0.24.3:hickory_resolver",
     tags = ["manual"],
 )
 
 alias(
-    name = "iggy-0.6.90",
-    actual = "//thirdparty/crates/iggy-0.6.90:iggy",
+    name = "iggy-0.6.200",
+    actual = "//thirdparty/crates/iggy-0.6.200:iggy",
     tags = ["manual"],
 )
 
 alias(
     name = "iggy",
-    actual = "//thirdparty/crates/iggy-0.6.90:iggy",
+    actual = "//thirdparty/crates/iggy-0.6.200:iggy",
     tags = ["manual"],
 )
 
@@ -247,26 +247,38 @@ alias(
 )
 
 alias(
-    name = "prost-0.13.4",
-    actual = "//thirdparty/crates/prost-0.13.4:prost",
+    name = "pq-sys-0.6.3",
+    actual = "//thirdparty/crates/pq-sys-0.6.3:pq_sys",
+    tags = ["manual"],
+)
+
+alias(
+    name = "pq-sys",
+    actual = "//thirdparty/crates/pq-sys-0.6.3:pq_sys",
+    tags = ["manual"],
+)
+
+alias(
+    name = "prost-0.13.5",
+    actual = "//thirdparty/crates/prost-0.13.5:prost",
     tags = ["manual"],
 )
 
 alias(
     name = "prost",
-    actual = "//thirdparty/crates/prost-0.13.4:prost",
+    actual = "//thirdparty/crates/prost-0.13.5:prost",
     tags = ["manual"],
 )
 
 alias(
-    name = "prost-types-0.13.4",
-    actual = "//thirdparty/crates/prost-types-0.13.4:prost_types",
+    name = "prost-types-0.13.5",
+    actual = "//thirdparty/crates/prost-types-0.13.5:prost_types",
     tags = ["manual"],
 )
 
 alias(
     name = "prost-types",
-    actual = "//thirdparty/crates/prost-types-0.13.4:prost_types",
+    actual = "//thirdparty/crates/prost-types-0.13.5:prost_types",
     tags = ["manual"],
 )
 
@@ -343,14 +355,14 @@ alias(
 )
 
 alias(
-    name = "rustls-0.23.21",
-    actual = "//thirdparty/crates/rustls-0.23.21:rustls",
+    name = "rustls-0.23.23",
+    actual = "//thirdparty/crates/rustls-0.23.23:rustls",
     tags = ["manual"],
 )
 
 alias(
     name = "rustls",
-    actual = "//thirdparty/crates/rustls-0.23.21:rustls",
+    actual = "//thirdparty/crates/rustls-0.23.23:rustls",
     tags = ["manual"],
 )
 
@@ -367,14 +379,14 @@ alias(
 )
 
 alias(
-    name = "serde_json-1.0.137",
-    actual = "//thirdparty/crates/serde_json-1.0.137:serde_json",
+    name = "serde_json-1.0.138",
+    actual = "//thirdparty/crates/serde_json-1.0.138:serde_json",
     tags = ["manual"],
 )
 
 alias(
     name = "serde_json",
-    actual = "//thirdparty/crates/serde_json-1.0.137:serde_json",
+    actual = "//thirdparty/crates/serde_json-1.0.138:serde_json",
     tags = ["manual"],
 )
 
@@ -403,14 +415,14 @@ alias(
 )
 
 alias(
-    name = "syn-2.0.96",
-    actual = "//thirdparty/crates/syn-2.0.96:syn",
+    name = "syn-2.0.98",
+    actual = "//thirdparty/crates/syn-2.0.98:syn",
     tags = ["manual"],
 )
 
 alias(
     name = "syn",
-    actual = "//thirdparty/crates/syn-2.0.96:syn",
+    actual = "//thirdparty/crates/syn-2.0.98:syn",
     tags = ["manual"],
 )
 

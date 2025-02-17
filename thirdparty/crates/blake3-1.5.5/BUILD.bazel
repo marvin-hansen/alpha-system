@@ -146,7 +146,7 @@ cargo_build_script(
     version = "1.5.5",
     visibility = ["//visibility:private"],
     deps = [
-        "//thirdparty/crates/cc-1.2.10:cc",
+        "//thirdparty/crates/cc-1.2.14:cc",
     ],
 )
 

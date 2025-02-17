@@ -123,6 +123,11 @@ crates_vendor(
             package = "futures-util",
             version = "0.3",
         ),
+        "pq-sys": crate.spec(
+            package = "pq-sys",
+            # pegged to 0.6.3 because 0.7 doesn't compile.
+            version = "0.6.3",
+        ),
         "hickory-resolver": crate.spec(
             default_features = False,
             features = ["tokio-runtime"],
@@ -131,7 +136,7 @@ crates_vendor(
         ),
         "iggy": crate.spec(
             package = "iggy",
-            version = "0.6",
+            version = "0.6.200",
         ),
         "klickhouse": crate.spec(
             package = "klickhouse",
@@ -183,7 +188,8 @@ crates_vendor(
         ),
         "rustls": crate.spec(
             package = "rustls",
-            version = "0.23",
+            version = "0.23.23",
+             features = ["ring"]
         ),
         "serde": crate.spec(
             features = ["derive"],
