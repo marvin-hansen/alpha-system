@@ -2,9 +2,9 @@
  * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
  */
 
+use crate::ClickhouseDBManager;
 use crate::error::ClickHouseDBError;
 use crate::types::SymbolRow;
-use crate::ClickhouseDBManager;
 use common_database::sanitize_utils;
 
 impl ClickhouseDBManager {

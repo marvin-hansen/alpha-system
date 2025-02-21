@@ -2,8 +2,8 @@
  * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
  */
 
-use crate::fields::{DEFAULT_HOST, DEFAULT_IMS_PORT};
 use crate::CfgManager;
+use crate::fields::{DEFAULT_HOST, DEFAULT_IMS_PORT};
 use common_env::EnvironmentType;
 use common_errors::InitError;
 use common_exchange::ExchangeID;

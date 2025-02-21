@@ -2,7 +2,7 @@
  * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
  */
 
-use criterion::{black_box, criterion_group, Criterion};
+use criterion::{Criterion, black_box, criterion_group};
 use ring_buffer::*;
 use std::num::NonZeroUsize;
 

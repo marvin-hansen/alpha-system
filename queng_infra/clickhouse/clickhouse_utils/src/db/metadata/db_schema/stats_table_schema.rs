@@ -2,8 +2,8 @@
  * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
  */
 
-use crate::db::metadata::Metadata;
 use crate::db::metadata::DB_NAME;
+use crate::db::metadata::Metadata;
 use crate::db::metadata::STATS_TABLE;
 impl Metadata {
     pub(crate) fn generate_create_stats_table_ddl(&self) -> String {

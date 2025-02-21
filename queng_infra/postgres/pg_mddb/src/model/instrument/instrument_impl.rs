@@ -2,9 +2,9 @@
  * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
  */
 
+use crate::Connection;
 use crate::model::instrument::{Instrument, UpdateInstrument};
 use crate::schema::mddb::instruments::table as instruments_table;
-use crate::Connection;
 use common_metadata::MetaInstrument;
 use diesel::result::Error::DatabaseError;
 use diesel::{ExpressionMethods, OptionalExtension, QueryDsl, QueryResult, RunQueryDsl};

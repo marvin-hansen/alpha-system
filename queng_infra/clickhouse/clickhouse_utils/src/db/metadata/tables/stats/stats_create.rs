@@ -2,8 +2,8 @@
  * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
  */
 
-use crate::db::metadata::Metadata;
 use crate::ClickHouseUtilError;
+use crate::db::metadata::Metadata;
 
 impl Metadata {
     /// Creates the stats table in the metadata database if it does not already exist.

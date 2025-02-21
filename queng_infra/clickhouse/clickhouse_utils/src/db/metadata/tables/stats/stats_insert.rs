@@ -2,7 +2,7 @@
  * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
  */
 
-use crate::db::metadata::{Metadata, DB_NAME, STATS_TABLE};
+use crate::db::metadata::{DB_NAME, Metadata, STATS_TABLE};
 use common_metadata::MetaStats;
 use std::error::Error;
 

@@ -12,9 +12,9 @@ use imdb_specs::imdb_service_config;
 use mddb_specs::mddb_service_config;
 use smdb_specs::smdb_service_config;
 
+use crate::CfgManager;
 use crate::build_utils as utils;
 use crate::fields::DEFAULT_HOST;
-use crate::CfgManager;
 
 impl CfgManager {
     /// Returns the host and port of the service.

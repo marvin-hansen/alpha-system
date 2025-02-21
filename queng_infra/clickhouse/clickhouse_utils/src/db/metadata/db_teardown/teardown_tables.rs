@@ -2,8 +2,8 @@
  * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
  */
 
-use crate::db::metadata::Metadata;
 use crate::ClickHouseUtilError;
+use crate::db::metadata::Metadata;
 
 impl Metadata {
     /// Drops all metadata tables in `ClickHouse`.

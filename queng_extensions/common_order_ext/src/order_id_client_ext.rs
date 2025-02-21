@@ -3,7 +3,7 @@
  */
 
 use common_order::ClientOrderID;
-use encoding_utils::{decode_int64_to_str, encode_str_to_int64, DecodingError, EncodingError};
+use encoding_utils::{DecodingError, EncodingError, decode_int64_to_str, encode_str_to_int64};
 
 /// Extension trait for encoding and decoding a `ClientOrderID` to a single 64-bit unsigned integer.
 ///

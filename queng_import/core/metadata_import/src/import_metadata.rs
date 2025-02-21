@@ -2,8 +2,8 @@
  * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
  */
 
-use crate::{MetadataImportManager, AUTO_DETECT_PROXY};
-use kaiko_import::{determine_workflow, execute_workflow, MetaDataDBWOp, WorkflowOpAll};
+use crate::{AUTO_DETECT_PROXY, MetadataImportManager};
+use kaiko_import::{MetaDataDBWOp, WorkflowOpAll, determine_workflow, execute_workflow};
 use std::error::Error;
 
 impl MetadataImportManager {

@@ -2,8 +2,8 @@
  * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
  */
 
-use crate::model::stat::Stat;
 use crate::CreateStat;
+use crate::model::stat::Stat;
 use common_metadata::MetaStats;
 
 impl Stat {

@@ -2,8 +2,8 @@
  * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
  */
 
-use crate::db::metadata::{Metadata, DB_NAME, DB_TABLES};
 use crate::ClickHouseUtilError;
+use crate::db::metadata::{DB_NAME, DB_TABLES, Metadata};
 
 impl Metadata {
     /// Creates all the metadata tables in the database.

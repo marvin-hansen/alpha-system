@@ -2,8 +2,8 @@
  * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
  */
 
-use crate::error::ClickHouseUtilError;
 use crate::ClickhouseUtil;
+use crate::error::ClickHouseUtilError;
 
 impl ClickhouseUtil {
     /// Asynchronously drops the metadata and specs databases.

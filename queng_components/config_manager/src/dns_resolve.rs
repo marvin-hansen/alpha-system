@@ -3,8 +3,8 @@
  */
 
 use crate::CfgManager;
-use hickory_resolver::error::ResolveError;
 use hickory_resolver::TokioAsyncResolver;
+use hickory_resolver::error::ResolveError;
 use std::net::IpAddr;
 
 impl CfgManager {

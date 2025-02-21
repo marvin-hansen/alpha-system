@@ -2,14 +2,14 @@
  * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
  */
 
-use crate::{utils, MAX_RECONNECT_ATTEMPTS, RECONNECT_DELAY, RECONNECT_INTERVAL};
-use crate::{utils_connect, ImsBinanceDataIntegration};
+use crate::{ImsBinanceDataIntegration, utils_connect};
+use crate::{MAX_RECONNECT_ATTEMPTS, RECONNECT_DELAY, RECONNECT_INTERVAL, utils};
 use common_data_bar::TradeBar;
 use common_data_bar_ext::SbeTradeBarExtension;
 use futures_util::StreamExt;
 use std::sync::Arc;
 use std::time::Duration;
-use tokio::time::{sleep, Instant};
+use tokio::time::{Instant, sleep};
 use tokio_tungstenite::tungstenite::Message;
 use trait_data_integration::{
     ImsDataIntegrationError, ImsSymbolIntegration, ImsTradeDataIntegration,

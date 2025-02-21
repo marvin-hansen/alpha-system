@@ -3,7 +3,7 @@
  */
 
 use crate::db::common_ddl::ddl_db;
-use crate::db::metadata::{Metadata, DB_NAME};
+use crate::db::metadata::{DB_NAME, Metadata};
 use crate::db::utils;
 use crate::error::ClickHouseQueryError;
 

@@ -2,8 +2,8 @@
  * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
  */
 
-use crate::integration_message_config::IntegrationMessageConfig;
 use crate::ImsIntegrationType;
+use crate::integration_message_config::IntegrationMessageConfig;
 pub use common_exchange::ExchangeID;
 use std::fmt::Display;
 

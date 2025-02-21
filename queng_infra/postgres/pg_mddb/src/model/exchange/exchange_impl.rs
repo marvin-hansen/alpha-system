@@ -2,10 +2,10 @@
  * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
  */
 
+use crate::Connection;
 use crate::model::exchange::{CreateExchange, Exchange, UpdateExchange};
 use crate::schema::mddb::exchanges::dsl::exchanges as exchanges_table;
 use crate::schema::mddb::exchanges::exchange_id;
-use crate::Connection;
 use common_metadata::MetaExchange;
 use diesel::result::Error;
 use diesel::result::Error::DatabaseError;

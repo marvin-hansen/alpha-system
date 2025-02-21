@@ -2,13 +2,13 @@
  * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
  */
 
+use crate::Connection;
 use crate::model::integration_config::{
     CreateIntegrationConfig, IntegrationConfig, UpdateIntegrationConfig,
 };
 use crate::schema::imdb::integration_config::dsl::{
     exchange_id, integration_config, integration_id, online,
 };
-use crate::Connection;
 use common_ims::IntegrationConfig as CommonIntegrationConfig;
 use diesel::dsl::{delete, insert_into};
 use diesel::prelude::*;

@@ -4,8 +4,8 @@
 
 use chrono::{DateTime, TimeZone, Utc};
 use klickhouse::{DateTime64, Row};
-use rust_decimal::prelude::FromPrimitive;
 use rust_decimal::Decimal;
+use rust_decimal::prelude::FromPrimitive;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, PartialEq, Row, Serialize, Deserialize)]

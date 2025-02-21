@@ -2,7 +2,7 @@
  * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
  */
 
-use crate::db::metadata::{Metadata, DB_NAME, EXCHANGES_TABLE};
+use crate::db::metadata::{DB_NAME, EXCHANGES_TABLE, Metadata};
 use crate::error::ClickHouseUtilError;
 
 impl Metadata {

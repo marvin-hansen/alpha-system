@@ -5,8 +5,8 @@
 use crate::*;
 use std::cell::Cell;
 use std::sync::{
-    atomic::{AtomicBool, Ordering},
     Arc,
+    atomic::{AtomicBool, Ordering},
 };
 
 /// A producer that writes events to the ring buffer.

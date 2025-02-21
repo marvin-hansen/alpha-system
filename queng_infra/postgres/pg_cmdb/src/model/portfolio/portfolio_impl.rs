@@ -2,6 +2,7 @@
  * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
  */
 
+use crate::Connection as PGConnection;
 use crate::model::instrument::{CreateInstrument, Instrument};
 use crate::model::portfolio::{CreatePortfolio, Portfolio, UpdatePortfolio};
 use crate::model::portfolio_instrument::{CreatePortfolioInstrument, PortfolioInstrument};
@@ -9,7 +10,6 @@ use crate::schema::cmdb::instrument::dsl::instrument;
 use crate::schema::cmdb::portfolio::dsl::{portfolio, portfolio_id};
 use crate::schema::cmdb::portfolio::table as portfolio_table;
 use crate::schema::cmdb::portfolio_instrument::dsl::portfolio_instrument;
-use crate::Connection as PGConnection;
 use common_exchange::PortfolioConfig as CommonPortfolioConfig;
 use diesel::result::{DatabaseErrorKind, Error};
 use diesel::{Connection, ExpressionMethods, QueryDsl, QueryResult, RunQueryDsl};

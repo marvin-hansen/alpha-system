@@ -3,7 +3,7 @@
  */
 
 use common_order::ExchangeOrderID;
-use encoding_utils::{decode_pair_64_to_str, encode_str_to_pair_u64, DecodingError, EncodingError};
+use encoding_utils::{DecodingError, EncodingError, decode_pair_64_to_str, encode_str_to_pair_u64};
 
 /// Extension trait for encoding and decoding a `ExchangeOrderID` to a pair of 64-bit unsigned integers.
 ///

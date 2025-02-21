@@ -5,8 +5,8 @@
 mod integration_config;
 
 use common_errors::PostgresDBError;
-use diesel::r2d2::{ConnectionManager, Pool, PooledConnection};
 use diesel::PgConnection;
+use diesel::r2d2::{ConnectionManager, Pool, PooledConnection};
 use pg_imdb::run_imdb_db_migration;
 use std::fmt::{Display, Formatter};
 

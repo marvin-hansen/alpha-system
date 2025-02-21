@@ -2,7 +2,7 @@
  * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
  */
 
-use crate::db::metadata::{Metadata, ASSETS_TABLE, DB_NAME};
+use crate::db::metadata::{ASSETS_TABLE, DB_NAME, Metadata};
 use crate::error::ClickHouseUtilError;
 use common_metadata::{AssetMetadata, MetaAsset};
 

@@ -2,7 +2,7 @@
  * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
  */
 
-use crate::{min_cursor_sequence, AtomicSequence, Sequence, WaitStrategy};
+use crate::{AtomicSequence, Sequence, WaitStrategy, min_cursor_sequence};
 use std::borrow::Borrow;
 
 pub struct SpinLoopWaitStrategy;

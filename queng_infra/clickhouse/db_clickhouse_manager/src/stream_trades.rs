@@ -5,8 +5,8 @@
 use crate::types::TradeRow;
 use crate::{ClickhouseDBManager, FN_NAME};
 use common_database::sanitize_utils;
-use futures::stream::BoxStream;
 use futures::StreamExt;
+use futures::stream::BoxStream;
 use klickhouse::KlickhouseError;
 
 impl ClickhouseDBManager {

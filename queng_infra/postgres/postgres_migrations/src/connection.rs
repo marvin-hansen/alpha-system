@@ -5,7 +5,7 @@
 use common_errors::PostgresDBError;
 use diesel::{Connection, PgConnection};
 use std::time::Duration;
-use tokio::time::{sleep, Instant};
+use tokio::time::{Instant, sleep};
 
 pub const DB_TEST_URL: &str = "postgres://postgres:postgres@localhost/postgres";
 

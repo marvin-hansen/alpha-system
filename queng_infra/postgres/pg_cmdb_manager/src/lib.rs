@@ -3,8 +3,8 @@
  */
 
 use common_errors::PostgresDBError;
-use diesel::r2d2::{ConnectionManager, Pool, PooledConnection};
 use diesel::PgConnection;
+use diesel::r2d2::{ConnectionManager, Pool, PooledConnection};
 use pg_cmdb::run_cmdb_db_migration;
 use std::fmt::Display;
 

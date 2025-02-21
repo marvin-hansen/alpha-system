@@ -4,13 +4,13 @@
 
 mod connection;
 
-use diesel::r2d2::R2D2Connection;
 use diesel::PgConnection;
+use diesel::r2d2::R2D2Connection;
 use diesel_migrations::{EmbeddedMigrations, MigrationHarness};
 use std::error::Error;
 
 // Re-exports
-pub use crate::connection::{get_or_wait_for_postgres_connection, DB_TEST_URL};
+pub use crate::connection::{DB_TEST_URL, get_or_wait_for_postgres_connection};
 
 // Alias for a pooled database connection.
 pub type ConnectionPool =

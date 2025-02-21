@@ -2,9 +2,9 @@
  * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
  */
 
+use crate::init::InitManager;
 use crate::init::patch_op::PatchOp::{PatchBaseAsset, PatchClass, PatchQuoteAsset};
 use crate::init::patches::INSTRUMENT_PATCHES;
-use crate::init::InitManager;
 use common_metadata::MetaInstrument;
 
 impl InitManager {

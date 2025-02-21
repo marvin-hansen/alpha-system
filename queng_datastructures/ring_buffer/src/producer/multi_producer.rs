@@ -5,8 +5,8 @@
 use crate::*;
 use std::num::NonZeroUsize;
 use std::sync::{
-    atomic::{AtomicBool, Ordering},
     Arc,
+    atomic::{AtomicBool, Ordering},
 };
 
 /// A sequencer that supports multiple concurrent producers.

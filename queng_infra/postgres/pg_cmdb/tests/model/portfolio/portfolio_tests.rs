@@ -8,7 +8,7 @@ use container_specs_postgres::postgres_db_container_config;
 use diesel::Connection;
 use docker_utils::DockerUtil;
 use pg_cmdb::model::portfolio::Portfolio;
-use postgres_migrations::{get_or_wait_for_postgres_connection, DB_TEST_URL};
+use postgres_migrations::{DB_TEST_URL, get_or_wait_for_postgres_connection};
 
 fn get_test_portfolio() -> CommonPortfolioConfig {
     CommonPortfolioConfig::new(

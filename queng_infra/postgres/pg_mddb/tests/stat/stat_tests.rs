@@ -7,7 +7,7 @@ use container_specs_postgres::postgres_db_container_config;
 use diesel::Connection;
 use docker_utils::DockerUtil;
 use pg_mddb::Stat;
-use postgres_migrations::{get_or_wait_for_postgres_connection, DB_TEST_URL};
+use postgres_migrations::{DB_TEST_URL, get_or_wait_for_postgres_connection};
 
 fn get_test_meta_stats() -> MetaStats {
     let download_timestamp = "2023-10-01T12:00:00Z".to_string();

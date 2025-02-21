@@ -3,8 +3,8 @@
  */
 
 use crate::fields::{DEX, NON_TRADE_INSTRUMENT_ID, NON_UNIQUE_EXCHANGE_INSTRUMENT_ID};
-use crate::init::patches::INSTRUMENT_PATCHES;
 use crate::init::InitManager;
+use crate::init::patches::INSTRUMENT_PATCHES;
 use common_errors::InitError;
 use common_metadata::MetaInstrument;
 

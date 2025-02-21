@@ -2,7 +2,7 @@
  * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
  */
 
-use criterion::{criterion_group, Criterion};
+use criterion::{Criterion, criterion_group};
 
 use sliding_window::{SlidingWindow, VectorStorage};
 
