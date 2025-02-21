@@ -241,8 +241,8 @@ fn test_small_size() {
         dats: bool,
     }
 
-    fn get_sliding_window(
-    ) -> SlidingWindow<UnsafeArrayStorage<SmallData, SIZE, CAPACITY>, SmallData> {
+    fn get_sliding_window()
+    -> SlidingWindow<UnsafeArrayStorage<SmallData, SIZE, CAPACITY>, SmallData> {
         sliding_window::new_with_unsafe_array_storage()
     }
 

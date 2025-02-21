@@ -19,5 +19,5 @@ pub trait LocalEmsOrderIntegration {
 
     /// Cancel all remaining orders
     async fn cancel_all_orders(&self, order: &OrderCancelAll)
-        -> Result<(), MessageProcessingError>;
+    -> Result<(), MessageProcessingError>;
 }

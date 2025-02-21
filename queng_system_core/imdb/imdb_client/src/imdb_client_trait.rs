@@ -106,7 +106,7 @@ pub trait ImdbClientTrait {
     /// * `Result<Vec<IntegrationConfig>, IMDBClientError>` - `Ok(Vec<IntegrationConfig>)` if the operation was successful, or an error if it failed
     ///
     async fn get_all_offline_integrations(&self)
-        -> Result<Vec<IntegrationConfig>, IMDBClientError>;
+    -> Result<Vec<IntegrationConfig>, IMDBClientError>;
     /// Sets the integration with the given ID to online
     ///
     /// # Arguments

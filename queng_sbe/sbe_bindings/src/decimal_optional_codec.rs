@@ -139,11 +139,7 @@ pub mod decoder {
         #[inline]
         pub fn scale(&self) -> Option<u8> {
             let value = self.get_buf().get_u8_at(self.offset + 8);
-            if value == 0xff_u8 {
-                None
-            } else {
-                Some(value)
-            }
+            if value == 0xff_u8 { None } else { Some(value) }
         }
     }
 } // end decoder mod

@@ -2,7 +2,7 @@
  * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
  */
 
-use criterion::{black_box, criterion_group, criterion_main, Criterion};
+use criterion::{Criterion, black_box, criterion_group, criterion_main};
 use encoding_utils::{decode_int64_to_str, encode_str_to_int64};
 
 fn bench_encode_str_to_int64(c: &mut Criterion) {

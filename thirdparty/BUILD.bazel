@@ -187,9 +187,9 @@ crates_vendor(
             version = "1.36",
         ),
         "rustls": crate.spec(
+            features = ["ring"],
             package = "rustls",
             version = "0.23.23",
-             features = ["ring"]
         ),
         "serde": crate.spec(
             features = ["derive"],

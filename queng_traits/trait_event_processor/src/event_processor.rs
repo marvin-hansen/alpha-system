@@ -29,7 +29,7 @@ pub trait LocalEventProcessor {
     ///
     /// Returns an error if any of the messages cannot be sent.
     async fn process_event_batch(&self, bytes_batch: &[Vec<u8>])
-        -> Result<(), EventProcessorError>;
+    -> Result<(), EventProcessorError>;
 }
 
 // Default implementation for `&T`
