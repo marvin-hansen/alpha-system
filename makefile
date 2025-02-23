@@ -45,30 +45,30 @@ help:
 
 .PHONY: run
 run:
-	@source scripts/run_default.sh
+	@source build/scripts/run_default.sh
 
 
 .PHONY: cmdb
 cmdb:
-	@source scripts/run_cmdb.sh
+	@source build/scripts/run_cmdb.sh
 
 
 .PHONY: dbgw
 dbgw:
-	@source scripts/run_dbgw.sh
+	@source build/scripts/run_dbgw.sh
 
 .PHONY: proxy
 proxy:
-	@source scripts/run_proxy.sh
+	@source build/scripts/run_proxy.sh
 
 .PHONY: mddb
 mddb:
-	@source scripts/run_mddb.sh
+	@source build/scripts/run_mddb.sh
 
 
 .PHONY: smdb
 smdb:
-	@source scripts/run_smdb.sh
+	@source build/scripts/run_smdb.sh
 
 
 # "---------------------------------------------------------"
@@ -78,21 +78,21 @@ smdb:
 
 .PHONY: gcp
 gcp:
-	@source scripts/cloud/configure-gcloud.sh
+	@source build/scripts/cloud/configure-gcloud.sh
 
 
 .PHONY: artifactory
 artifactory:
-	@source scripts/cloud/configure-artifactory.sh
+	@source build/scripts/cloud/configure-artifactory.sh
 
 .PHONY: cluster
 cluster:
-	@source scripts/cloud/configure-cluster.sh
+	@source build/scripts/cloud/configure-cluster.sh
 
 
 .PHONY: cluster-dns
 cluster-dns:
-	@source scripts/configure-cluster-dns.sh
+	@source build/scripts/configure-cluster-dns.sh
 
 
 # "---------------------------------------------------------"
@@ -102,86 +102,86 @@ cluster-dns:
 
 .PHONY: build
 build:
-	@source scripts/build.sh
+	@source build/scripts/build.sh
 
 
 .PHONY: current
 current:
-	@source scripts/current.sh
+	@source build/scripts/current.sh
 
 
 .PHONY: rebuild
 rebuild:
-	@source scripts/rebuild.sh
+	@source build/scripts/rebuild.sh
 
 
 .PHONY: check
 check:
-	@source scripts/check.sh
+	@source build/scripts/check.sh
 
 
 .PHONY: container
 container:
-	@source scripts/container.sh
+	@source build/scripts/container.sh
 
 
 .PHONY: doc
 doc:
-	@source scripts/doc.sh
+	@source build/scripts/doc.sh
 
 
 .PHONY: lint
 lint:
-	@source scripts/lint.sh
+	@source build/scripts/lint.sh
 
 
 .PHONY: fix
 fix:
-	@source scripts/fix.sh
+	@source build/scripts/fix.sh
 
 
 .PHONY: format
 format:
-	@source scripts/format.sh
+	@source build/scripts/format.sh
 
 
 .PHONY: import
 import:
-	@source scripts/import.sh
+	@source build/scripts/import.sh
 
 
 .PHONY: install
 install:
-	@source scripts/install_deps.sh
+	@source build/scripts/install_deps.sh
 
 
 .PHONY: release
 release:
-	@source scripts/release.sh
+	@source build/scripts/release.sh
 
 
 .PHONY: push
 push:
-	@source scripts/push.sh
+	@source build/scripts/push.sh
 
 .PHONY: postgres
 postgres:
-	@source scripts/postgres.sh
+	@source build/scripts/postgres.sh
 
 .PHONY: update
 update:
-	@source scripts/update.sh
+	@source build/scripts/update.sh
 
 
 .PHONY: test
 test:
-	@source scripts/test.sh
+	@source build/scripts/test.sh
 
 
 .PHONY: sbe
 sbe:
-	@source scripts/sbe.sh
+	@source build/scripts/sbe.sh
 
 .PHONY: vendor
 vendor:
-	@source scripts/vendor.sh
+	@source build/scripts/vendor.sh
