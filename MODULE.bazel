@@ -46,7 +46,7 @@ git_override(
 apk = use_extension("@rules_apko//apko:extensions.bzl", "apko")
 apk.translate_lock(
     name = "base_image",
-    lock = "//images/base_image:apko.lock.json",
+    lock = "//build/images/base_image:apko.lock.json",
 )
 use_repo(apk, "base_image")
 

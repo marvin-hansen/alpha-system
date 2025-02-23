@@ -54,7 +54,7 @@ rust_doc_test(
 build_multi_arch_image(
     name = "image_index",
     srcs = [":kaiko_proxy"],
-    base = "//images/base_image",
+    base = "//build/images/base_image",
     entry_point = "kaiko_proxy",
     exposed_ports = ["7777"],
     platforms = [

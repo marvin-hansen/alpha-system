@@ -235,9 +235,9 @@
     "@@rules_apko+//apko:extensions.bzl%apko": {
       "general": {
         "bzlTransitiveDigest": "nLxLVvOZ+s+aoVQgm6NIDgCYsq3DEBAkscu+Juto+5Y=",
-        "usagesDigest": "nQ6E55Tb39xZw3rraDylIJPD6jvMVS0ebMoVgJ70xOk=",
+        "usagesDigest": "XvWdoxp69MFXm0jzQGDLG+xXL8/jEzxU6NZI/vEez4w=",
         "recordedFileInputs": {
-          "@@//images/base_image/apko.lock.json": "04ab2d7c2a44216a68d79c24a8fce047e5ced57f64ba5564f271353607f9c359"
+          "@@//build/images/base_image/apko.lock.json": "04ab2d7c2a44216a68d79c24a8fce047e5ced57f64ba5564f271353607f9c359"
         },
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -686,7 +686,7 @@
             "repoRuleId": "@@rules_apko+//apko:translate_lock.bzl%translate_apko_lock",
             "attributes": {
               "target_name": "base_image",
-              "lock": "@@//images/base_image:apko.lock.json"
+              "lock": "@@//build/images/base_image:apko.lock.json"
             }
           },
           "apko_darwin_amd64": {

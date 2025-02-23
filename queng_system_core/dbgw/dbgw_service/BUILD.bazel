@@ -72,7 +72,7 @@ rust_doc_test(
 build_multi_arch_image(
     name = "image_index",
     srcs = ["dbgw"],
-    base = "//images/base_image",
+    base = "//build/images/base_image",
     entry_point = "dbgw",
     exposed_ports = [
         "7070",

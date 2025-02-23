@@ -46,7 +46,7 @@ rust_doc_test(
 build_multi_arch_image(
     name = "image_index",
     srcs = ["pg_import_metadata"],
-    base = "//images/base_image",
+    base = "//build/images/base_image",
     entry_point = "pg_import_metadata",
     exposed_ports = [],
     platforms = [

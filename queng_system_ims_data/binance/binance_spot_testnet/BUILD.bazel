@@ -47,7 +47,7 @@ rust_doc_test(
 build_multi_arch_image(
     name = "image_index",
     srcs = ["binance_spot_testnet"],
-    base = "//images/base_image",
+    base = "//build/images/base_image",
     entry_point = "binance_spot_testnet",
     exposed_ports = [
         "7070",

@@ -55,7 +55,7 @@ rust_doc_test(
 build_multi_arch_image(
     name = "image_index",
     srcs = ["mddb"],
-    base = "//images/base_image",
+    base = "//build/images/base_image",
     entry_point = "mddb",
     exposed_ports = [
         "7070",

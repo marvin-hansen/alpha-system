@@ -56,7 +56,7 @@ rust_doc_test(
 build_multi_arch_image(
     name = "image_index",
     srcs = ["imdb"],
-    base = "//images/base_image",
+    base = "//build/images/base_image",
     entry_point = "imdb",
     exposed_ports = [
         "7070",
