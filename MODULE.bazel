@@ -14,8 +14,8 @@ bazel_dep(name = "rules_oci", version = "2.2.2")
 bazel_dep(name = "rules_pkg", version = "1.0.1")
 bazel_dep(name = "rules_python", version = "1.2.0")
 bazel_dep(name = "rules_proto", version = "7.1.0")
-bazel_dep(name = "rules_rust", version = "0.57.1")
-bazel_dep(name = "rules_rust_prost", version = "0.57.1")
+bazel_dep(name = "rules_rust", version = "0.58.0")
+bazel_dep(name = "rules_rust_prost", version = "0.58.0")
 bazel_dep(name = "rules_shell", version = "0.4.0")
 
 # Toolchains
@@ -63,14 +63,11 @@ use_repo(buildbuddy, "buildbuddy_toolchain")
 # https://github.com/marvin-hansen/buildbuddy-clang/releases
 # https://github.com/MaterializeInc/toolchains/releases
 ###############################################################################
-LLVM_VERSIONS = {
-    "": "19.1.6",
-}
-
+LLVM_VERSION = "19.1.6"
 llvm = use_extension("@toolchains_llvm//toolchain/extensions:llvm.bzl", "llvm")
 llvm.toolchain(
     name = "llvm_toolchain",
-    llvm_versions = LLVM_VERSIONS,
+    llvm_version = LLVM_VERSION,
     sha256 = {
         "darwin-aarch64": "94ed965925dbdc25b29e6fcfa9a84b28d915d5c9da7c71405fc20bbcf8396bd1",
         "darwin-x86_64": "9395b07fd5018816bcaee84522d9c9386fdbefe62fdf8afff89b57e1b7095463",
