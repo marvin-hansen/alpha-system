@@ -215,7 +215,7 @@ diesel = { version = "2.2", default-features = false, features = ["postgres", "p
 diesel_migrations = { version = "2.2", default-features = false, features = ["postgres"] }
 futures = { version = "0.3" }
 futures-util = { version = "0.3" }
-hickory-resolver = { version = "0.24", default-features = false, features = ["tokio-runtime"] }
+hickory-resolver = { version = "0.25", default-features = false, features = ["tokio-runtime"] }
 iggy = { version = "0.6.200" }
 klickhouse = { version = "0.13" }
 mimalloc = { version = "0.1.43" }
