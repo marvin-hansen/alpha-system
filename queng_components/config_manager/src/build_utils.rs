@@ -5,8 +5,10 @@
 use crate::fields::{DEFAULT_DNS, DEFAULT_HOST};
 use common_config::{ServiceConfig, ServiceID, SvcEnvConfig};
 use common_env::EnvironmentType;
-use hickory_resolver::TokioAsyncResolver;
-use hickory_resolver::config::{NameServerConfig, Protocol, ResolverConfig, ResolverOpts};
+use hickory_resolver::config::*;
+use hickory_resolver::name_server::TokioConnectionProvider;
+use hickory_resolver::proto::xfer::Protocol;
+use hickory_resolver::{Resolver, TokioResolver};
 use std::net::SocketAddr;
 
 ///
@@ -20,13 +22,18 @@ use std::net::SocketAddr;
 ///
 /// A `TokioAsyncResolver` configured with Cloudflare resolver settings.
 ///
-pub fn build_external_dns_resolver(dbg: bool) -> TokioAsyncResolver {
+pub fn build_external_dns_resolver(dbg: bool) -> TokioResolver {
     if dbg {
         println!("[CfgManager]: build_external_dns_resolver");
     }
 
-    let external_resolver_config = ResolverConfig::cloudflare();
-    TokioAsyncResolver::tokio(external_resolver_config, ResolverOpts::default())
+    let resolver = Resolver::builder_with_config(
+        ResolverConfig::cloudflare(),
+        TokioConnectionProvider::default(),
+    )
+    .build();
+
+    resolver
 }
 
 ///
@@ -41,7 +48,7 @@ pub fn build_external_dns_resolver(dbg: bool) -> TokioAsyncResolver {
 ///
 /// A `TokioAsyncResolver` configured with the specified address and default resolver options.
 ///
-pub fn build_internal_dns_resolver(dbg: bool, address: &str) -> TokioAsyncResolver {
+pub fn build_internal_dns_resolver(dbg: bool, address: &str) -> TokioResolver {
     if dbg {
         println!("[CfgManager]: build_internal_dns_resolver");
     }
@@ -55,7 +62,10 @@ pub fn build_internal_dns_resolver(dbg: bool, address: &str) -> TokioAsyncResolv
     let mut config = ResolverConfig::new();
     config.add_name_server(name_server);
 
-    TokioAsyncResolver::tokio(config.clone(), ResolverOpts::default())
+    let resolver =
+        Resolver::builder_with_config(config, TokioConnectionProvider::default()).build();
+
+    resolver
 }
 
 ///

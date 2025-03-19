@@ -158,6 +158,7 @@ impl Args {
             http_retries: self.http_retries,
             username: self.username.clone(),
             password: self.password.clone(),
+            tcp_nodelay: false,
             tcp_server_address: self.tcp_server_address.clone(),
             tcp_reconnection_enabled: self.tcp_reconnection_enabled,
             tcp_reconnection_max_retries: self.tcp_reconnection_max_retries,

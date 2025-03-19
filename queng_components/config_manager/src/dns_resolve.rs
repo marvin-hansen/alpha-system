@@ -3,8 +3,7 @@
  */
 
 use crate::CfgManager;
-use hickory_resolver::TokioAsyncResolver;
-use hickory_resolver::error::ResolveError;
+use hickory_resolver::{ResolveError, TokioResolver};
 use std::net::IpAddr;
 
 impl CfgManager {
@@ -29,10 +28,7 @@ impl CfgManager {
 /**
  * Resolves a hostname using the specified DNS resolver.
  */
-pub async fn resolve_address(
-    resolver: &TokioAsyncResolver,
-    host: &str,
-) -> Result<IpAddr, ResolveError> {
+pub async fn resolve_address(resolver: &TokioResolver, host: &str) -> Result<IpAddr, ResolveError> {
     // resolve host asynchronously
     // https://docs.rs/hickory-resolver/latest/hickory_resolver/#using-the-tokioasync-resolver
     let response = match resolver.lookup_ip(host).await {

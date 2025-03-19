@@ -7,7 +7,7 @@ use common_config::{ServiceConfig, ServiceID, SvcEnvConfig};
 use common_env::EnvironmentType;
 use common_platform::PlatformType;
 use environment_manager::EnvironmentManager;
-use hickory_resolver::TokioAsyncResolver;
+use hickory_resolver::TokioResolver;
 use smdb_specs::smdb_service_config;
 
 mod build_utils;
@@ -31,10 +31,10 @@ pub struct CfgManager {
     /// Type of the platform (e.g., Linux, Windows, macOS).
     platform_type: PlatformType,
     /// Resolver for the internal (cluster) DNS server.
-    internal_dns_resolver: TokioAsyncResolver,
+    internal_dns_resolver: TokioResolver,
     internal_dns_server: String,
     /// Resolver for the external (Internet) DNS server.
-    external_dns_resolver: TokioAsyncResolver,
+    external_dns_resolver: TokioResolver,
     external_dns_server: String,
     /// ID of the service.
     svc: ServiceID,
