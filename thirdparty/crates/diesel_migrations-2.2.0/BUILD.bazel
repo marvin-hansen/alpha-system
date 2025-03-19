@@ -6,9 +6,15 @@
 #     bazel run @@//thirdparty:crates_vendor
 ###############################################################################
 
+load("@rules_rust//cargo:defs.bzl", "cargo_toml_env_vars")
 load("@rules_rust//rust:defs.bzl", "rust_library")
 
 package(default_visibility = ["//visibility:public"])
+
+cargo_toml_env_vars(
+    name = "cargo_toml_env_vars",
+    src = "Cargo.toml",
+)
 
 rust_library(
     name = "diesel_migrations",
@@ -35,6 +41,9 @@ rust_library(
     edition = "2021",
     proc_macro_deps = [
         "//thirdparty/crates/migrations_macros-2.2.0:migrations_macros",
+    ],
+    rustc_env_files = [
+        ":cargo_toml_env_vars",
     ],
     rustc_flags = [
         "--cap-lints=allow",
@@ -87,7 +96,7 @@ rust_library(
     }),
     version = "2.2.0",
     deps = [
-        "//thirdparty/crates/diesel-2.2.7:diesel",
+        "//thirdparty/crates/diesel-2.2.8:diesel",
         "//thirdparty/crates/migrations_internals-2.2.0:migrations_internals",
     ],
 )

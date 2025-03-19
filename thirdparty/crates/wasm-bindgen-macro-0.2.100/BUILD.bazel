@@ -6,9 +6,15 @@
 #     bazel run @@//thirdparty:crates_vendor
 ###############################################################################
 
+load("@rules_rust//cargo:defs.bzl", "cargo_toml_env_vars")
 load("@rules_rust//rust:defs.bzl", "rust_proc_macro")
 
 package(default_visibility = ["//visibility:public"])
+
+cargo_toml_env_vars(
+    name = "cargo_toml_env_vars",
+    src = "Cargo.toml",
+)
 
 rust_proc_macro(
     name = "wasm_bindgen_macro",
@@ -30,6 +36,9 @@ rust_proc_macro(
     ),
     crate_root = "src/lib.rs",
     edition = "2021",
+    rustc_env_files = [
+        ":cargo_toml_env_vars",
+    ],
     rustc_flags = [
         "--cap-lints=allow",
     ],
@@ -81,7 +90,7 @@ rust_proc_macro(
     }),
     version = "0.2.100",
     deps = [
-        "//thirdparty/crates/quote-1.0.38:quote",
+        "//thirdparty/crates/quote-1.0.40:quote",
         "//thirdparty/crates/wasm-bindgen-macro-support-0.2.100:wasm_bindgen_macro_support",
     ],
 )

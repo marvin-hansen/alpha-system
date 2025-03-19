@@ -6,9 +6,15 @@
 #     bazel run @@//thirdparty:crates_vendor
 ###############################################################################
 
+load("@rules_rust//cargo:defs.bzl", "cargo_toml_env_vars")
 load("@rules_rust//rust:defs.bzl", "rust_library")
 
 package(default_visibility = ["//visibility:public"])
+
+cargo_toml_env_vars(
+    name = "cargo_toml_env_vars",
+    src = "Cargo.toml",
+)
 
 rust_library(
     name = "async_dropper",
@@ -37,7 +43,10 @@ rust_library(
     edition = "2021",
     proc_macro_deps = [
         "//thirdparty/crates/async-dropper-derive-0.3.1:async_dropper_derive",
-        "//thirdparty/crates/async-trait-0.1.86:async_trait",
+        "//thirdparty/crates/async-trait-0.1.88:async_trait",
+    ],
+    rustc_env_files = [
+        ":cargo_toml_env_vars",
     ],
     rustc_flags = [
         "--cap-lints=allow",
@@ -92,6 +101,6 @@ rust_library(
     deps = [
         "//thirdparty/crates/async-dropper-simple-0.2.6:async_dropper_simple",
         "//thirdparty/crates/futures-0.3.31:futures",
-        "//thirdparty/crates/tokio-1.43.0:tokio",
+        "//thirdparty/crates/tokio-1.44.1:tokio",
     ],
 )

@@ -6,9 +6,15 @@
 #     bazel run @@//thirdparty:crates_vendor
 ###############################################################################
 
+load("@rules_rust//cargo:defs.bzl", "cargo_toml_env_vars")
 load("@rules_rust//rust:defs.bzl", "rust_library")
 
 package(default_visibility = ["//visibility:public"])
+
+cargo_toml_env_vars(
+    name = "cargo_toml_env_vars",
+    src = "Cargo.toml",
+)
 
 rust_library(
     name = "security_framework_sys",
@@ -39,6 +45,9 @@ rust_library(
     ],
     crate_root = "src/lib.rs",
     edition = "2021",
+    rustc_env_files = [
+        ":cargo_toml_env_vars",
+    ],
     rustc_flags = [
         "--cap-lints=allow",
     ],
@@ -91,6 +100,6 @@ rust_library(
     version = "2.14.0",
     deps = [
         "//thirdparty/crates/core-foundation-sys-0.8.7:core_foundation_sys",
-        "//thirdparty/crates/libc-0.2.169:libc",
+        "//thirdparty/crates/libc-0.2.171:libc",
     ],
 )

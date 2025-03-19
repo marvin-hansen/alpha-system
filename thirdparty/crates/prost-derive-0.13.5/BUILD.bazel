@@ -6,9 +6,15 @@
 #     bazel run @@//thirdparty:crates_vendor
 ###############################################################################
 
+load("@rules_rust//cargo:defs.bzl", "cargo_toml_env_vars")
 load("@rules_rust//rust:defs.bzl", "rust_proc_macro")
 
 package(default_visibility = ["//visibility:public"])
+
+cargo_toml_env_vars(
+    name = "cargo_toml_env_vars",
+    src = "Cargo.toml",
+)
 
 rust_proc_macro(
     name = "prost_derive",
@@ -30,6 +36,9 @@ rust_proc_macro(
     ),
     crate_root = "src/lib.rs",
     edition = "2021",
+    rustc_env_files = [
+        ":cargo_toml_env_vars",
+    ],
     rustc_flags = [
         "--cap-lints=allow",
     ],
@@ -81,10 +90,10 @@ rust_proc_macro(
     }),
     version = "0.13.5",
     deps = [
-        "//thirdparty/crates/anyhow-1.0.95:anyhow",
+        "//thirdparty/crates/anyhow-1.0.97:anyhow",
         "//thirdparty/crates/itertools-0.14.0:itertools",
-        "//thirdparty/crates/proc-macro2-1.0.93:proc_macro2",
-        "//thirdparty/crates/quote-1.0.38:quote",
-        "//thirdparty/crates/syn-2.0.98:syn",
+        "//thirdparty/crates/proc-macro2-1.0.94:proc_macro2",
+        "//thirdparty/crates/quote-1.0.40:quote",
+        "//thirdparty/crates/syn-2.0.100:syn",
     ],
 )

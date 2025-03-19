@@ -6,9 +6,15 @@
 #     bazel run @@//thirdparty:crates_vendor
 ###############################################################################
 
+load("@rules_rust//cargo:defs.bzl", "cargo_toml_env_vars")
 load("@rules_rust//rust:defs.bzl", "rust_library")
 
 package(default_visibility = ["//visibility:public"])
+
+cargo_toml_env_vars(
+    name = "cargo_toml_env_vars",
+    src = "Cargo.toml",
+)
 
 rust_library(
     name = "bon",
@@ -32,7 +38,10 @@ rust_library(
     edition = "2021",
     proc_macro_deps = [
         "//thirdparty/crates/bon-macros-2.3.0:bon_macros",
-        "//thirdparty/crates/rustversion-1.0.19:rustversion",
+        "//thirdparty/crates/rustversion-1.0.20:rustversion",
+    ],
+    rustc_env_files = [
+        ":cargo_toml_env_vars",
     ],
     rustc_flags = [
         "--cap-lints=allow",

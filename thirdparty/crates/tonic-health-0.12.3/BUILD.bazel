@@ -6,9 +6,15 @@
 #     bazel run @@//thirdparty:crates_vendor
 ###############################################################################
 
+load("@rules_rust//cargo:defs.bzl", "cargo_toml_env_vars")
 load("@rules_rust//rust:defs.bzl", "rust_library")
 
 package(default_visibility = ["//visibility:public"])
+
+cargo_toml_env_vars(
+    name = "cargo_toml_env_vars",
+    src = "Cargo.toml",
+)
 
 rust_library(
     name = "tonic_health",
@@ -33,6 +39,9 @@ rust_library(
     ],
     crate_root = "src/lib.rs",
     edition = "2021",
+    rustc_env_files = [
+        ":cargo_toml_env_vars",
+    ],
     rustc_flags = [
         "--cap-lints=allow",
     ],
@@ -86,7 +95,7 @@ rust_library(
     deps = [
         "//thirdparty/crates/async-stream-0.3.6:async_stream",
         "//thirdparty/crates/prost-0.13.5:prost",
-        "//thirdparty/crates/tokio-1.43.0:tokio",
+        "//thirdparty/crates/tokio-1.44.1:tokio",
         "//thirdparty/crates/tokio-stream-0.1.17:tokio_stream",
         "//thirdparty/crates/tonic-0.12.3:tonic",
     ],

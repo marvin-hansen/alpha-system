@@ -6,10 +6,19 @@
 #     bazel run @@//thirdparty:crates_vendor
 ###############################################################################
 
-load("@rules_rust//cargo:defs.bzl", "cargo_build_script")
+load(
+    "@rules_rust//cargo:defs.bzl",
+    "cargo_build_script",
+    "cargo_toml_env_vars",
+)
 load("@rules_rust//rust:defs.bzl", "rust_library")
 
 package(default_visibility = ["//visibility:public"])
+
+cargo_toml_env_vars(
+    name = "cargo_toml_env_vars",
+    src = "Cargo.toml",
+)
 
 rust_library(
     name = "lz4_sys",
@@ -31,6 +40,9 @@ rust_library(
     ),
     crate_root = "src/lib.rs",
     edition = "2015",
+    rustc_env_files = [
+        ":cargo_toml_env_vars",
+    ],
     rustc_flags = [
         "--cap-lints=allow",
     ],
@@ -82,7 +94,7 @@ rust_library(
     }),
     version = "1.11.1+lz4-1.10.0",
     deps = [
-        "//thirdparty/crates/libc-0.2.169:libc",
+        "//thirdparty/crates/libc-0.2.171:libc",
         "//thirdparty/crates/lz4-sys-1.11.1-lz4-1.10.0:build_script_build",
     ],
 )
@@ -136,7 +148,7 @@ cargo_build_script(
     version = "1.11.1+lz4-1.10.0",
     visibility = ["//visibility:private"],
     deps = [
-        "//thirdparty/crates/cc-1.2.14:cc",
+        "//thirdparty/crates/cc-1.2.16:cc",
     ],
 )
 

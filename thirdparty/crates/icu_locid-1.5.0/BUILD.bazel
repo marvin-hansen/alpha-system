@@ -6,9 +6,15 @@
 #     bazel run @@//thirdparty:crates_vendor
 ###############################################################################
 
+load("@rules_rust//cargo:defs.bzl", "cargo_toml_env_vars")
 load("@rules_rust//rust:defs.bzl", "rust_library")
 
 package(default_visibility = ["//visibility:public"])
+
+cargo_toml_env_vars(
+    name = "cargo_toml_env_vars",
+    src = "Cargo.toml",
+)
 
 rust_library(
     name = "icu_locid",
@@ -35,6 +41,9 @@ rust_library(
     edition = "2021",
     proc_macro_deps = [
         "//thirdparty/crates/displaydoc-0.2.5:displaydoc",
+    ],
+    rustc_env_files = [
+        ":cargo_toml_env_vars",
     ],
     rustc_flags = [
         "--cap-lints=allow",
@@ -87,7 +96,7 @@ rust_library(
     }),
     version = "1.5.0",
     deps = [
-        "//thirdparty/crates/litemap-0.7.4:litemap",
+        "//thirdparty/crates/litemap-0.7.5:litemap",
         "//thirdparty/crates/tinystr-0.7.6:tinystr",
         "//thirdparty/crates/writeable-0.5.5:writeable",
         "//thirdparty/crates/zerovec-0.10.4:zerovec",

@@ -6,9 +6,15 @@
 #     bazel run @@//thirdparty:crates_vendor
 ###############################################################################
 
+load("@rules_rust//cargo:defs.bzl", "cargo_toml_env_vars")
 load("@rules_rust//rust:defs.bzl", "rust_library")
 
 package(default_visibility = ["//visibility:public"])
+
+cargo_toml_env_vars(
+    name = "cargo_toml_env_vars",
+    src = "Cargo.toml",
+)
 
 rust_library(
     name = "byte_unit",
@@ -36,6 +42,9 @@ rust_library(
     ],
     crate_root = "src/lib.rs",
     edition = "2021",
+    rustc_env_files = [
+        ":cargo_toml_env_vars",
+    ],
     rustc_flags = [
         "--cap-lints=allow",
     ],
@@ -87,8 +96,8 @@ rust_library(
     }),
     version = "5.1.6",
     deps = [
-        "//thirdparty/crates/rust_decimal-1.36.0:rust_decimal",
-        "//thirdparty/crates/serde-1.0.217:serde",
+        "//thirdparty/crates/rust_decimal-1.37.0:rust_decimal",
+        "//thirdparty/crates/serde-1.0.219:serde",
         "//thirdparty/crates/utf8-width-0.1.7:utf8_width",
     ],
 )
