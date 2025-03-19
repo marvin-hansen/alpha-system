@@ -216,7 +216,7 @@ diesel_migrations = { version = "2.2", default-features = false, features = ["po
 futures = { version = "0.3" }
 futures-util = { version = "0.3" }
 hickory-resolver = { version = "0.25.1" }
-iggy = { version = "0.6.200" }
+iggy = { version = "0.6.203" }
 klickhouse = { version = "0.13" }
 mimalloc = { version = "0.1.43" }
 prost = { version = "0.13.4" }
