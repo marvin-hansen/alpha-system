@@ -129,10 +129,7 @@ crates_vendor(
             version = "0.6.3",
         ),
         "hickory-resolver": crate.spec(
-            default_features = False,
-            features = ["tokio-runtime"],
-            package = "hickory-resolver",
-            version = "0.24",
+            version = "0.25.1",
         ),
         "iggy": crate.spec(
             package = "iggy",
