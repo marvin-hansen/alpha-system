@@ -44,6 +44,11 @@ crates_vendor(
             package = "async-trait",
             version = "0.1",
         ),
+        "bon": crate.spec(
+            default_features = False,
+            package = "bon",
+            version = "3.3.2",
+        ),
         "enum_dispatch": crate.spec(
             package = "enum_dispatch",
             version = "0.3",
@@ -135,6 +140,10 @@ crates_vendor(
             package = "lru",
             version = "0.12",
         ),
+        "memmap2": crate.spec(
+            package = "memmap2",
+            version = "0.9",
+        ),
         "mimalloc": crate.spec(
             package = "mimalloc",
             version = "0.1",
@@ -180,6 +189,14 @@ crates_vendor(
             package = "rustls",
             version = "0.23.23",
         ),
+        "rkyv": crate.spec(
+            features = [
+                "little_endian",
+                "unaligned",
+            ],
+            package = "rkyv",
+            version = "0.8",
+        ),
         "serde": crate.spec(
             features = ["derive"],
             package = "serde",
@@ -193,6 +210,10 @@ crates_vendor(
             default_features = False,
             package = "sha3",
             version = "0.11.0-pre.4",
+        ),
+        "tempfile": crate.spec(
+            package = "tempfile",
+            version = "3.19",
         ),
         "tokio": crate.spec(
             default_features = False,

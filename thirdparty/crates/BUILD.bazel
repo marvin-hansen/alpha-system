@@ -79,6 +79,18 @@ alias(
 )
 
 alias(
+    name = "bon-3.5.1",
+    actual = "//thirdparty/crates/bon-3.5.1:bon",
+    tags = ["manual"],
+)
+
+alias(
+    name = "bon",
+    actual = "//thirdparty/crates/bon-3.5.1:bon",
+    tags = ["manual"],
+)
+
+alias(
     name = "bytes-1.10.1",
     actual = "//thirdparty/crates/bytes-1.10.1:bytes",
     tags = ["manual"],
@@ -211,6 +223,18 @@ alias(
 )
 
 alias(
+    name = "memmap2-0.9.5",
+    actual = "//thirdparty/crates/memmap2-0.9.5:memmap2",
+    tags = ["manual"],
+)
+
+alias(
+    name = "memmap2",
+    actual = "//thirdparty/crates/memmap2-0.9.5:memmap2",
+    tags = ["manual"],
+)
+
+alias(
     name = "mimalloc-0.1.44",
     actual = "//thirdparty/crates/mimalloc-0.1.44:mimalloc",
     tags = ["manual"],
@@ -307,6 +331,18 @@ alias(
 )
 
 alias(
+    name = "rkyv-0.8.10",
+    actual = "//thirdparty/crates/rkyv-0.8.10:rkyv",
+    tags = ["manual"],
+)
+
+alias(
+    name = "rkyv",
+    actual = "//thirdparty/crates/rkyv-0.8.10:rkyv",
+    tags = ["manual"],
+)
+
+alias(
     name = "rust_decimal-1.37.1",
     actual = "//thirdparty/crates/rust_decimal-1.37.1:rust_decimal",
     tags = ["manual"],
@@ -399,6 +435,18 @@ alias(
 alias(
     name = "syn",
     actual = "//thirdparty/crates/syn-2.0.100:syn",
+    tags = ["manual"],
+)
+
+alias(
+    name = "tempfile-3.19.1",
+    actual = "//thirdparty/crates/tempfile-3.19.1:tempfile",
+    tags = ["manual"],
+)
+
+alias(
+    name = "tempfile",
+    actual = "//thirdparty/crates/tempfile-3.19.1:tempfile",
     tags = ["manual"],
 )
 
