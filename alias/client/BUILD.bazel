@@ -39,8 +39,3 @@ alias(
 ###############################################################################
 
 
-alias(
-    name = "ims_data_client",
-    actual = "//alpha_system/ims_clients/ims_data_client",
-)
-

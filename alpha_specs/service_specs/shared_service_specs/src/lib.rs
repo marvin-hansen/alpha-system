@@ -4,7 +4,6 @@
 
 use common_config::{Endpoint, ProtocolType, ServiceConfig, ServiceID};
 use common_ims::{ExchangeID, ImsIntegrationType, IntegrationConfig, IntegrationMessageConfig};
-use common_ims::{IggyConfig, IggyUser};
 
 /// Returns the configuration for the Binance data integration in the IMS system.
 ///
@@ -21,18 +20,6 @@ pub fn ims_data_integration_config(exchange_id: ExchangeID) -> IntegrationConfig
         ImsIntegrationType::Data,
         exchange_id,
         IntegrationMessageConfig::new(1, 1, exchange_id),
-    )
-}
-
-pub fn ims_data_iggy_config(exchange_id: ExchangeID) -> IggyConfig {
-    IggyConfig::new(
-        IggyUser::default(),
-        "127.0.0.1:8090",
-        exchange_id as u32,
-        1,
-        1,
-        1,
-        true,
     )
 }
 

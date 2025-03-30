@@ -8,7 +8,6 @@ use common_config::ServiceID;
 use common_exchange::ExchangeID;
 use common_service::{print_utils, shutdown_utils};
 use config_manager::CfgManager;
-use iggy::client::{Client, UserClient};
 use imdb_client::*;
 use smdb_client::*;
 use tokio::time::Instant;
@@ -16,7 +15,6 @@ use trait_data_integration::ImsDataIntegration;
 use warp::Filter;
 
 mod config;
-mod handle;
 mod health_check;
 mod run;
 mod service;
@@ -41,7 +39,6 @@ where
     //
     dbg_print("build config files");
     let integration_config = &config::ims_data_integration_config(exchange_id);
-    let iggy_config = &config::ims_data_iggy_config(exchange_id);
     let cfg_manager = CfgManager::new(
         ServiceID::Default,
         config::ims_data_service_config(exchange_id),
@@ -103,37 +100,6 @@ where
         .await
         .expect("Failed to get service host and port");
 
-    let stream_id = integration_config.control_channel();
-    let topic_id = integration_config.control_channel();
-
-    dbg_print("Construct iggy producer client");
-    let producer_client = message_shared::build_client(stream_id.clone(), topic_id.clone(), true)
-        .await
-        .expect("Failed to build client");
-
-    dbg_print("Connecting producer");
-    producer_client.connect().await.expect("Failed to connect");
-
-    dbg_print("Login producer");
-    producer_client
-        .login_user(iggy_config.user().username(), iggy_config.user().password())
-        .await
-        .expect("Failed to login user");
-
-    dbg_print("Construct iggy consumer");
-    let consumer_client = message_shared::build_client(stream_id.clone(), topic_id.clone(), true)
-        .await
-        .expect("Failed to build client");
-
-    dbg_print("Connecting consumer");
-    consumer_client.connect().await.expect("Failed to connect");
-
-    dbg_print("Login consumer");
-    consumer_client
-        .login_user(iggy_config.user().username(), iggy_config.user().password())
-        .await
-        .expect("Failed to login user");
-
     dbg_print("Configuring health endpoint");
     let port_http = cfg_manager
         .get_ims_data_svc_port(exchange_id)
@@ -154,16 +120,9 @@ where
         warp::serve(routes).bind_with_graceful_shutdown(([0, 0, 0, 0], port_http), http_signal);
 
     dbg_print("Construct server");
-    let server = Service::build_service(
-        dbg,
-        &consumer_client,
-        &producer_client,
-        ims_integration,
-        integration_config,
-        iggy_config,
-    )
-    .await
-    .expect("Failed to build new service");
+    let server = Service::build_service(dbg, ims_integration, integration_config)
+        .await
+        .expect("Failed to build new service");
 
     dbg_print("Freeing up memory");
     drop(cfg_manager);
@@ -177,12 +136,6 @@ where
     dbg_print("Starting http server");
     let http_handle = tokio::spawn(http_server);
 
-    dbg_print("Set integration online on IMDB");
-    imdb_client
-        .set_integration_online(integration_id.clone())
-        .await
-        .expect("Failed to set integration online");
-
     // Print service start header
     print_utils::print_duration("Starting service took:", &start.elapsed());
     print_utils::print_start_header_simple(svc_name, &service_addr);
@@ -192,15 +145,6 @@ where
             println!("IMS Data Integration Service: Failed to start server: {e:?}");
         }
     }
-
-    dbg_print("Shutting down messaging clients");
-    shutdown::shutdown_iggy(&dbg_print, &producer_client, &consumer_client).await;
-
-    dbg_print("Set integration offline on IMDB");
-    imdb_client
-        .set_integration_offline(integration_id.clone())
-        .await
-        .expect("Failed to set integration offline on IMDB");
 
     print_utils::print_stop_header(&ServiceID::Default);
 

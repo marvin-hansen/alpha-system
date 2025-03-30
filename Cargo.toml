@@ -10,12 +10,10 @@ members = [
     "alpha_infra/postgres/*",
     "alpha_integration/data/*",
     "alpha_macros/*",
-    "queng_message/*",
     "alpha_proto/*",
     "alpha_sbe/*",
     "alpha_specs/*/*",
     "alpha_system/core/*/*",
-    "alpha_system/ims_clients/*",
     "alpha_system/ims_data/*/*",
     "alpha_system/mds/*/*",
     "alpha_system/template/*",
@@ -56,10 +54,8 @@ common_env = { path = "alpha_common/common_env" }
 common_errors = { path = "alpha_common/common_errors" }
 common_exchange = { path = "alpha_common/common_exchange" }
 common_ims = { path = "alpha_common/common_ims" }
-common_message = { path = "alpha_common/common_message" }
 common_metadata = { path = "alpha_common/common_metadata" }
 common_order = { path = "alpha_common/common_order" }
-common_orderbook = { path = "alpha_common/common_orderbook" }
 common_platform = { path = "alpha_common/common_platform" }
 common_service = { path = "alpha_common/common_service" }
 common_trade = { path = "alpha_common/common_trade" }
@@ -119,12 +115,6 @@ binance_usd_futures_testnet_data_integration = { path = "alpha_integration/data/
 # Macros
 data_integration_macro = { path = "alpha_macros/data_integration_macro" }
 
-# Mesasge bus
-message_consumer = { path = "queng_message/message_consumer" }
-message_producer = { path = "queng_message/message_producer" }
-message_shared = { path = "queng_message/message_shared" }
-message_stream = { path = "queng_message/message_stream" }
-
 # Proto
 proto_cmdb = { path = "alpha_proto/proto_cmdb" }
 proto_cmdb_utils = { path = "alpha_proto/proto_cmdb_utils" }
@@ -163,7 +153,6 @@ container_specs_iggy = { path = "alpha_specs/container_specs/container_specs_igg
 container_specs_kaiko = { path = "alpha_specs/container_specs/container_specs_kaiko" }
 container_specs_postgres = { path = "alpha_specs/container_specs/container_specs_postgres" }
 # DB specs
-db_specs_clickhouse = { path = "alpha_specs/database_specs/db_specs_clickhouse" }
 db_specs_postgres = { path = "alpha_specs/database_specs/db_specs_postgres" }
 # Integration specs
 integration_specs_all = { path = "alpha_specs/integration_specs/integration_specs_all" }
@@ -213,13 +202,11 @@ diesel_migrations = { version = "2.2", default-features = false, features = ["po
 futures = { version = "0.3" }
 futures-util = { version = "0.3" }
 hickory-resolver = { version = "0.25.1" }
-iggy = { version = "0.6.203" }
-klickhouse = { version = "0.13" }
 mimalloc = { version = "0.1.43" }
 prost = { version = "0.13.4" }
 reqwest = { version = "0.12", default-features = false, features = ["rustls-tls", "json", "blocking", "gzip"] }
 rust_decimal = { version = "1.36" }
-rust_decimal_macros = { version = "1.36" }
+#rust_decimal_macros = { version = "1.36" }
 rustls = { version = "0.23.23", features = ["ring"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = { version = "1.0" }

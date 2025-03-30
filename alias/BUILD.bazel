@@ -41,11 +41,6 @@ alias(
 )
 
 alias(
-    name = "common_message",
-    actual = "//alpha_common/common_message",
-)
-
-alias(
     name = "common_metadata",
     actual = "//alpha_common/common_metadata",
 )
@@ -53,11 +48,6 @@ alias(
 alias(
     name = "common_order",
     actual = "//alpha_common/common_order",
-)
-
-alias(
-    name = "common_orderbook",
-    actual = "//alpha_common/common_orderbook",
 )
 
 alias(
@@ -332,30 +322,6 @@ alias(
 )
 
 ###############################################################################
-# Message
-###############################################################################
-
-alias(
-    name = "message_consumer",
-    actual = "//queng_message/message_consumer",
-)
-
-alias(
-    name = "message_producer",
-    actual = "//queng_message/message_producer",
-)
-
-alias(
-    name = "message_shared",
-    actual = "//queng_message/message_shared",
-)
-
-alias(
-    name = "message_stream",
-    actual = "//queng_message/message_stream",
-)
-
-###############################################################################
 # Proto
 ###############################################################################
 
@@ -467,12 +433,6 @@ alias(
 alias(
     name = "container_specs_postgres",
     actual = "//alpha_specs/container_specs/container_specs_postgres",
-)
-
-# Database Specs
-alias(
-    name = "db_specs_clickhouse",
-    actual = "//alpha_specs/database_specs/db_specs_clickhouse",
 )
 
 # DB Specs

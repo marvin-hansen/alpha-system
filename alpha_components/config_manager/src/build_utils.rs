@@ -27,13 +27,11 @@ pub fn build_external_dns_resolver(dbg: bool) -> TokioResolver {
         println!("[CfgManager]: build_external_dns_resolver");
     }
 
-    let resolver = Resolver::builder_with_config(
+    Resolver::builder_with_config(
         ResolverConfig::cloudflare(),
         TokioConnectionProvider::default(),
     )
-    .build();
-
-    resolver
+    .build()
 }
 
 ///
@@ -62,10 +60,7 @@ pub fn build_internal_dns_resolver(dbg: bool, address: &str) -> TokioResolver {
     let mut config = ResolverConfig::new();
     config.add_name_server(name_server);
 
-    let resolver =
-        Resolver::builder_with_config(config, TokioConnectionProvider::default()).build();
-
-    resolver
+    Resolver::builder_with_config(config, TokioConnectionProvider::default()).build()
 }
 
 ///

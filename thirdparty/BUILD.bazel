@@ -131,14 +131,6 @@ crates_vendor(
         "hickory-resolver": crate.spec(
             version = "0.25.1",
         ),
-        "iggy": crate.spec(
-            package = "iggy",
-            version = "0.6.200",
-        ),
-        "klickhouse": crate.spec(
-            package = "klickhouse",
-            version = "0.13",
-        ),
         "lru": crate.spec(
             package = "lru",
             version = "0.12",

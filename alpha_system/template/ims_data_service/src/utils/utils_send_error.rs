@@ -6,7 +6,6 @@ use crate::service::Service;
 use common_errors::MessageProcessingError;
 use sbe_types::{ClientErrorType, DataErrorType};
 use trait_data_integration::ImsDataIntegration;
-use trait_event_processor::EventProcessor;
 
 impl<Integration: ImsDataIntegration> Service<Integration> {
     /// Sends a `ClientError` message to the given producer.
@@ -58,25 +57,15 @@ impl<Integration: ImsDataIntegration> Service<Integration> {
         data_error: DataErrorType,
     ) -> Result<(), MessageProcessingError> {
         // Encode message as SBE binary
-        let message = sbe_utils::encode_data_error(client_id, data_error)
+        let _message = sbe_utils::encode_data_error(client_id, data_error)
             .expect("Failed to encode data error message");
 
         // Send message
-        self.send_error(message)
-            .await
-            .expect("Failed to send error message");
-
         Ok(())
     }
 
-    pub(crate) async fn send_error(&self, bytes: Vec<u8>) -> Result<(), MessageProcessingError> {
+    pub(crate) async fn send_error(&self, _bytes: Vec<u8>) -> Result<(), MessageProcessingError> {
         // Send message
-        self.producer()
-            .read()
-            .await
-            .process_one_event(bytes)
-            .await
-            .expect("Failed to send error message");
 
         Ok(())
     }

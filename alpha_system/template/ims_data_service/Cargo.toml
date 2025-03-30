@@ -22,10 +22,7 @@ common_service = { workspace = true }
 config_manager = { workspace = true }
 client_utils = { workspace = true }
 imdb_client = { workspace = true }
-message_consumer = { workspace = true }
-message_producer = { workspace = true }
-message_shared = { workspace = true }
-message_stream = { workspace = true }
+
 sbe_messages_client = {workspace = true}
 sbe_messages_control = {workspace = true}
 shared_service_specs = { workspace = true }
@@ -37,7 +34,5 @@ trait_event_processor = { workspace = true }
 
 
 # External crates
-iggy = { workspace = true }
 tokio = { workspace = true }
-futures-util = { workspace = true }
 warp = { workspace = true }
