@@ -1,0 +1,61 @@
+load("@rules_rust//rust:defs.bzl", "rust_test_suite")
+
+rust_test_suite(
+    name = "binary_utils",
+    srcs = glob([
+        "binary_utils/*_test.rs",
+    ]),
+    tags = [
+        "binary_protocol",
+        "unit-test",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        "//alias:binary_protocol",
+        # Internal dependencies
+        "//alias:stream_errors",
+        # External dependencies
+        "//thirdparty/crates:rkyv",
+    ],
+)
+
+rust_test_suite(
+    name = "commands",
+    srcs = glob([
+        "commands/*/*_test.rs",
+    ]),
+    tags = [
+        "binary_protocol",
+        "unit-test",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        "//alias:binary_protocol",
+        # Internal dependencies
+        "//alias:stream_errors",
+        # External dependencies
+        "//thirdparty/crates:rkyv",
+    ],
+)
+
+rust_test_suite(
+    name = "traits",
+    srcs = glob([
+        "traits/*_test.rs",
+    ]),
+    tags = [
+        "binary_protocol",
+        "unit-test",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Crate to test
+        "//alias:binary_protocol",
+        # Internal dependencies
+        "//alias:stream_errors",
+        # External dependencies
+        "//thirdparty/crates:rkyv",
+    ],
+)
