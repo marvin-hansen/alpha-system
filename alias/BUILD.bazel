@@ -414,17 +414,6 @@ alias(
     actual = "//alpha_specs/config_specs/portfolio_specs",
 )
 
-# Container Specs
-alias(
-    name = "container_specs_clickhouse",
-    actual = "//alpha_specs/container_specs/container_specs_clickhouse",
-)
-
-alias(
-    name = "container_specs_iggy",
-    actual = "//alpha_specs/container_specs/container_specs_iggy",
-)
-
 alias(
     name = "container_specs_kaiko",
     actual = "//alpha_specs/container_specs/container_specs_kaiko",
