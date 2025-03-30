@@ -18,6 +18,7 @@ members = [
     "alpha_system/core/*/*",
     "alpha_system/ims_data/*/*",
     "alpha_system/mds/*/*",
+    "alpha_system/messaging/*",
     "alpha_system/template/*",
     "alpha_traits/*",
     "alpha_transport/*",

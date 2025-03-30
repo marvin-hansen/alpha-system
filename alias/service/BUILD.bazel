@@ -91,6 +91,14 @@ alias(
     actual = "//alpha_system/mds/mddb/mddb_service:push",
 )
 
+###############################################################################
+# Messaging services
+###############################################################################
+
+alias(
+    name = "alpha_registry",
+    actual = "//alpha_system/messaging/alpha_registry",
+)
 
 ###############################################################################
 # IMS Data Services
