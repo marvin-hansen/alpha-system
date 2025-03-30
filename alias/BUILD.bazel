@@ -7,72 +7,72 @@ package(default_visibility = ["//visibility:public"])
 
 alias(
     name = "common_config",
-    actual = "//queng_common/common_config",
+    actual = "//alpha_common/common_config",
 )
 
 alias(
     name = "common_data_bar",
-    actual = "//queng_common/common_data_bar",
+    actual = "//alpha_common/common_data_bar",
 )
 
 alias(
     name = "common_database",
-    actual = "//queng_common/common_database",
+    actual = "//alpha_common/common_database",
 )
 
 alias(
     name = "common_env",
-    actual = "//queng_common/common_env",
+    actual = "//alpha_common/common_env",
 )
 
 alias(
     name = "common_errors",
-    actual = "//queng_common/common_errors",
+    actual = "//alpha_common/common_errors",
 )
 
 alias(
     name = "common_exchange",
-    actual = "//queng_common/common_exchange",
+    actual = "//alpha_common/common_exchange",
 )
 
 alias(
     name = "common_ims",
-    actual = "//queng_common/common_ims",
+    actual = "//alpha_common/common_ims",
 )
 
 alias(
     name = "common_message",
-    actual = "//queng_common/common_message",
+    actual = "//alpha_common/common_message",
 )
 
 alias(
     name = "common_metadata",
-    actual = "//queng_common/common_metadata",
+    actual = "//alpha_common/common_metadata",
 )
 
 alias(
     name = "common_order",
-    actual = "//queng_common/common_order",
+    actual = "//alpha_common/common_order",
 )
 
 alias(
     name = "common_orderbook",
-    actual = "//queng_common/common_orderbook",
+    actual = "//alpha_common/common_orderbook",
 )
 
 alias(
     name = "common_platform",
-    actual = "//queng_common/common_platform",
+    actual = "//alpha_common/common_platform",
 )
 
 alias(
     name = "common_service",
-    actual = "//queng_common/common_service",
+    actual = "//alpha_common/common_service",
 )
 
 alias(
     name = "common_trade",
-    actual = "//queng_common/common_trade",
+    actual = "//alpha_common/common_trade",
 )
 
 ###############################################################################
@@ -81,17 +81,17 @@ alias(
 
 alias(
     name = "config_manager",
-    actual = "//queng_components/config_manager",
+    actual = "//alpha_components/config_manager",
 )
 
 alias(
     name = "environment_manager",
-    actual = "//queng_components/environment_manager",
+    actual = "//alpha_components/environment_manager",
 )
 
 alias(
     name = "pattern_manager",
-    actual = "//queng_components/pattern_manager",
+    actual = "//alpha_components/pattern_manager",
 )
 
 ###############################################################################
@@ -100,12 +100,12 @@ alias(
 
 alias(
     name = "ring_buffer",
-    actual = "//queng_datastructures/ring_buffer",
+    actual = "//alpha_datastructures/ring_buffer",
 )
 
 alias(
     name = "sliding_window",
-    actual = "//queng_datastructures/sliding_window",
+    actual = "//alpha_datastructures/sliding_window",
 )
 
 ###############################################################################
@@ -114,17 +114,17 @@ alias(
 
 alias(
     name = "common_data_bar_ext",
-    actual = "//queng_extensions/common_data_bar_ext",
+    actual = "//alpha_extensions/common_data_bar_ext",
 )
 
 alias(
     name = "common_order_ext",
-    actual = "//queng_extensions/common_order_ext",
+    actual = "//alpha_extensions/common_order_ext",
 )
 
 alias(
     name = "cow_ext",
-    actual = "//queng_extensions/cow_ext",
+    actual = "//alpha_extensions/cow_ext",
 )
 
 ###############################################################################
@@ -135,22 +135,22 @@ alias(
 ##############
 alias(
     name = "config_import",
-    actual = "//queng_import/core/config_import",
+    actual = "//alpha_import/core/config_import",
 )
 
 alias(
     name = "integration_import",
-    actual = "//queng_import/core/integration_import",
+    actual = "//alpha_import/core/integration_import",
 )
 
 alias(
     name = "metadata_import",
-    actual = "//queng_import/core/metadata_import",
+    actual = "//alpha_import/core/metadata_import",
 )
 
 alias(
     name = "service_import",
-    actual = "//queng_import/core/service_import",
+    actual = "//alpha_import/core/service_import",
 )
 
 ## Kaiko import
@@ -158,22 +158,22 @@ alias(
 
 alias(
     name = "kaiko_cdn_auth",
-    actual = "//queng_system_mds/kaiko/kaiko_cdn_auth",
+    actual = "//alpha_system/mds/kaiko/kaiko_cdn_auth",
 )
 
 alias(
     name = "kaiko_download",
-    actual = "//queng_import/kaiko/kaiko_download",
+    actual = "//alpha_import/kaiko/kaiko_download",
 )
 
 alias(
     name = "kaiko_import",
-    actual = "//queng_import/kaiko/kaiko_import",
+    actual = "//alpha_import/kaiko/kaiko_import",
 )
 
 alias(
     name = "kaiko_test_utils",
-    actual = "//queng_import/kaiko/kaiko_test_utils",
+    actual = "//alpha_import/kaiko/kaiko_test_utils",
     visibility = ["//visibility:public"],
 )
 
@@ -182,48 +182,48 @@ alias(
 
 alias(
     name = "pg_import_config",
-    actual = "//queng_import/postgres/pg_import_config",
+    actual = "//alpha_import/postgres/pg_import_config",
 )
 
 alias(
     name = "pg_import_config_push",
-    actual = "//queng_import/postgres/pg_import_config:push",
+    actual = "//alpha_import/postgres/pg_import_config:push",
 )
 
 alias(
     name = "pg_import_integrations",
-    actual = "//queng_import/postgres/pg_import_integrations",
+    actual = "//alpha_import/postgres/pg_import_integrations",
 )
 
 alias(
     name = "pg_import_integrations_push",
-    actual = "//queng_import/postgres/pg_import_integrations:push",
+    actual = "//alpha_import/postgres/pg_import_integrations:push",
 )
 
 alias(
     name = "pg_import_metadata",
-    actual = "//queng_import/postgres/pg_import_metadata",
+    actual = "//alpha_import/postgres/pg_import_metadata",
 )
 
 alias(
     name = "pg_import_metadata_push",
-    actual = "//queng_import/postgres/pg_import_metadata:push",
+    actual = "//alpha_import/postgres/pg_import_metadata:push",
 )
 
 alias(
     name = "pg_import_services",
-    actual = "//queng_import/postgres/pg_import_services",
+    actual = "//alpha_import/postgres/pg_import_services",
 )
 
 alias(
     name = "pg_import_services_push",
-    actual = "//queng_import/postgres/pg_import_services:push",
+    actual = "//alpha_import/postgres/pg_import_services:push",
 )
 
 
 alias(
     name = "pg_import_print_utils",
-    actual = "//queng_import/postgres/pg_import_print_utils",
+    actual = "//alpha_import/postgres/pg_import_print_utils",
 )
 
 ###############################################################################
@@ -234,75 +234,75 @@ alias(
 ##############
 alias(
     name = "clickhouse_config_manager",
-    actual = "//queng_infra/clickhouse/clickhouse_config_manager",
+    actual = "//alpha_infra/clickhouse/clickhouse_config_manager",
 )
 
 alias(
     name = "clickhouse_utils",
-    actual = "//queng_infra/clickhouse/clickhouse_utils",
+    actual = "//alpha_infra/clickhouse/clickhouse_utils",
 )
 
 alias(
     name = "db_clickhouse_manager",
-    actual = "//queng_infra/clickhouse/db_clickhouse_manager",
+    actual = "//alpha_infra/clickhouse/db_clickhouse_manager",
 )
 
 # Postgres
 ##############
 alias(
     name = "pg_cmdb",
-    actual = "//queng_infra/postgres/pg_cmdb",
+    actual = "//alpha_infra/postgres/pg_cmdb",
 
 )
 
 alias(
     name = "pg_cmdb_manager",
-    actual = "//queng_infra/postgres/pg_cmdb_manager",
+    actual = "//alpha_infra/postgres/pg_cmdb_manager",
 )
 
 alias(
     name = "pg_imdb",
-    actual = "//queng_infra/postgres/pg_imdb",
+    actual = "//alpha_infra/postgres/pg_imdb",
 )
 
 alias(
     name = "pg_imdb_manager",
-    actual = "//queng_infra/postgres/pg_imdb_manager",
+    actual = "//alpha_infra/postgres/pg_imdb_manager",
 )
 
 alias(
     name = "pg_mddb",
-    actual = "//queng_infra/postgres/pg_mddb",
+    actual = "//alpha_infra/postgres/pg_mddb",
 )
 
 alias(
     name = "pg_mddb_manager",
-    actual = "//queng_infra/postgres/pg_mddb_manager",
+    actual = "//alpha_infra/postgres/pg_mddb_manager",
 )
 
 alias(
     name = "pg_smdb",
-    actual = "//queng_infra/postgres/pg_smdb",
+    actual = "//alpha_infra/postgres/pg_smdb",
 )
 
 alias(
     name = "pg_smdb_manager",
-    actual = "//queng_infra/postgres/pg_smdb_manager",
+    actual = "//alpha_infra/postgres/pg_smdb_manager",
 )
 
 alias(
     name = "postgres_common",
-    actual = "//queng_infra/postgres/postgres_common",
+    actual = "//alpha_infra/postgres/postgres_common",
 )
 
 alias(
     name = "postgres_config_manager",
-    actual = "//queng_infra/postgres/postgres_config_manager",
+    actual = "//alpha_infra/postgres/postgres_config_manager",
 )
 
 alias(
     name = "postgres_migrations",
-    actual = "//queng_infra/postgres/postgres_migrations",
+    actual = "//alpha_infra/postgres/postgres_migrations",
 )
 
 
@@ -315,37 +315,37 @@ alias(
 
 alias(
     name = "binance_coin_futures_data_integration",
-    actual = "//queng_integration/data/binance_coin_futures_data_integration",
+    actual = "//alpha_integration/data/binance_coin_futures_data_integration",
 )
 
 alias(
     name = "binance_coin_futures_testnet_data_integration",
-    actual = "//queng_integration/data/binance_coin_futures_testnet_data_integration",
+    actual = "//alpha_integration/data/binance_coin_futures_testnet_data_integration",
 )
 
 alias(
     name = "binance_core_data_integration",
-    actual = "//queng_integration/data/binance_core_data_integration",
+    actual = "//alpha_integration/data/binance_core_data_integration",
 )
 
 alias(
     name = "binance_spot_data_integration",
-    actual = "//queng_integration/data/binance_spot_data_integration",
+    actual = "//alpha_integration/data/binance_spot_data_integration",
 )
 
 alias(
     name = "binance_spot_testnet_data_integration",
-    actual = "//queng_integration/data/binance_spot_testnet_data_integration",
+    actual = "//alpha_integration/data/binance_spot_testnet_data_integration",
 )
 
 alias(
     name = "binance_usd_futures_data_integration",
-    actual = "//queng_integration/data/binance_usd_futures_data_integration",
+    actual = "//alpha_integration/data/binance_usd_futures_data_integration",
 )
 
 alias(
     name = "binance_usd_futures_testnet_data_integration",
-    actual = "//queng_integration/data/binance_usd_futures_testnet_data_integration",
+    actual = "//alpha_integration/data/binance_usd_futures_testnet_data_integration",
 )
 
 ###############################################################################
@@ -378,42 +378,42 @@ alias(
 
 alias(
     name = "proto_cmdb",
-    actual = "//queng_proto/proto_cmdb:proto_cmdb_bindings",
+    actual = "//alpha_proto/proto_cmdb:proto_cmdb_bindings",
 )
 
 alias(
     name = "proto_cmdb_utils",
-    actual = "//queng_proto/proto_cmdb_utils",
+    actual = "//alpha_proto/proto_cmdb_utils",
 )
 
 alias(
     name = "proto_imdb",
-    actual = "//queng_proto/proto_imdb:proto_imdb_bindings",
+    actual = "//alpha_proto/proto_imdb:proto_imdb_bindings",
 )
 
 alias(
     name = "proto_imdb_utils",
-    actual = "//queng_proto/proto_imdb_utils",
+    actual = "//alpha_proto/proto_imdb_utils",
 )
 
 alias(
     name = "proto_mddb",
-    actual = "//queng_proto/proto_mddb:proto_mddb_bindings",
+    actual = "//alpha_proto/proto_mddb:proto_mddb_bindings",
 )
 
 alias(
     name = "proto_mddb_utils",
-    actual = "//queng_proto/proto_mddb_utils",
+    actual = "//alpha_proto/proto_mddb_utils",
 )
 
 alias(
     name = "proto_smdb",
-    actual = "//queng_proto/proto_smdb:proto_smdb_bindings",
+    actual = "//alpha_proto/proto_smdb:proto_smdb_bindings",
 )
 
 alias(
     name = "proto_smdb_utils",
-    actual = "//queng_proto/proto_smdb_utils",
+    actual = "//alpha_proto/proto_smdb_utils",
 )
 
 ###############################################################################
@@ -422,138 +422,125 @@ alias(
 
 alias(
     name = "sbe_bindings",
-    actual = "//queng_sbe/sbe_bindings"
+    actual = "//alpha_sbe/sbe_bindings"
 )
 
 alias(
     name = "sbe_messages_client",
-    actual = "//queng_sbe/sbe_messages_client"
+    actual = "//alpha_sbe/sbe_messages_client"
 )
 
 alias(
     name = "sbe_messages_control",
-    actual = "//queng_sbe/sbe_messages_control"
+    actual = "//alpha_sbe/sbe_messages_control"
 )
 
 alias(
     name = "sbe_messages_data",
-    actual = "//queng_sbe/sbe_messages_data"
+    actual = "//alpha_sbe/sbe_messages_data"
 )
 
 alias(
     name = "sbe_messages_order",
-    actual = "//queng_sbe/sbe_messages_order"
+    actual = "//alpha_sbe/sbe_messages_order"
 )
 
 alias(
     name = "sbe_types",
-    actual = "//queng_sbe/sbe_types"
+    actual = "//alpha_sbe/sbe_types"
 )
 
 alias(
     name = "sbe_utils",
-    actual = "//queng_sbe/sbe_utils"
+    actual = "//alpha_sbe/sbe_utils"
 )
 
 ###############################################################################
-# Config Specs
+# Specs
 ###############################################################################
 
 # portfolio specs
 alias(
     name = "portfolio_specs",
-    actual = "//queng_specs/config_specs/portfolio_specs",
+    actual = "//alpha_specs/config_specs/portfolio_specs",
 )
 
-###############################################################################
 # Container Specs
-###############################################################################
-
 alias(
     name = "container_specs_clickhouse",
-    actual = "//queng_specs/container_specs/container_specs_clickhouse",
+    actual = "//alpha_specs/container_specs/container_specs_clickhouse",
 )
 
 alias(
     name = "container_specs_iggy",
-    actual = "//queng_specs/container_specs/container_specs_iggy",
+    actual = "//alpha_specs/container_specs/container_specs_iggy",
 )
 
 alias(
     name = "container_specs_kaiko",
-    actual = "//queng_specs/container_specs/container_specs_kaiko",
+    actual = "//alpha_specs/container_specs/container_specs_kaiko",
 )
 
 alias(
     name = "container_specs_postgres",
-    actual = "//queng_specs/container_specs/container_specs_postgres",
+    actual = "//alpha_specs/container_specs/container_specs_postgres",
 )
 
-###############################################################################
 # Database Specs
-###############################################################################
-
-# DB Specs
 alias(
     name = "db_specs_clickhouse",
-    actual = "//queng_specs/database_specs/db_specs_clickhouse",
+    actual = "//alpha_specs/database_specs/db_specs_clickhouse",
 )
 
 # DB Specs
 alias(
     name = "db_specs_postgres",
-    actual = "//queng_specs/database_specs/db_specs_postgres",
+    actual = "//alpha_specs/database_specs/db_specs_postgres",
 )
 
-###############################################################################
 # Integration. Specs
-###############################################################################
-
 alias(
     name = "integration_specs_all",
-    actual = "//queng_specs/integration_specs/integration_specs_all",
+    actual = "//alpha_specs/integration_specs/integration_specs_all",
 )
 
-###############################################################################
 # Service Specs
-###############################################################################
-
 alias(
     name = "service_specs_all",
-    actual = "//queng_specs/service_specs/service_specs_all",
+    actual = "//alpha_specs/service_specs/service_specs_all",
 )
 
 # Core service specs
 alias(
     name = "cmdb_specs",
-    actual = "//queng_system_core/cmdb/cmdb_specs",
+    actual = "//alpha_system/core/cmdb/cmdb_specs",
 )
 
 alias(
     name = "dbgw_specs",
-    actual = "//queng_system_core/dbgw/dbgw_specs",
+    actual = "//alpha_system/core/dbgw/dbgw_specs",
 )
 
 alias(
     name = "smdb_specs",
-    actual = "//queng_system_core/smdb/smdb_specs",
+    actual = "//alpha_system/core/smdb/smdb_specs",
 )
 
 alias(
     name = "imdb_specs",
-    actual = "//queng_system_core/imdb/imdb_specs",
+    actual = "//alpha_system/core/imdb/imdb_specs",
 )
 
 # MDS service specs
-alias(
+alias(  
     name = "mddb_specs",
-    actual = "//queng_system_mds/mddb/mddb_specs",
+    actual = "//alpha_system/mds/mddb/mddb_specs",
 )
 
 # Shared service specs
 alias(
     name = "shared_service_specs",
-    actual = "//queng_specs/service_specs/shared_service_specs",
+    actual = "//alpha_specs/service_specs/shared_service_specs",
 )
 
 
@@ -563,22 +550,22 @@ alias(
 
 alias(
     name = "trait_data_integration",
-    actual = "//queng_traits/trait_data_integration",
+    actual = "//alpha_traits/trait_data_integration",
 )
 
 alias(
     name = "trait_event_consumer",
-    actual = "//queng_traits/trait_event_consumer",
+    actual = "//alpha_traits/trait_event_consumer",
 )
 
 alias(
     name = "trait_event_processor",
-    actual = "//queng_traits/trait_event_processor",
+    actual = "//alpha_traits/trait_event_processor",
 )
 
 alias(
     name = "trait_exec_integration",
-    actual = "//queng_traits/trait_exec_integration",
+    actual = "//alpha_traits/trait_exec_integration",
 )
 
 ###############################################################################
@@ -587,22 +574,22 @@ alias(
 
 alias(
     name = "client_utils",
-    actual = "//queng_utils/client_utils",
+    actual = "//alpha_utils/client_utils",
 )
 
 alias(
     name = "crypto_utils",
-    actual = "//queng_utils/crypto_utils",
+    actual = "//alpha_utils/crypto_utils",
 )
 
 alias(
     name = "encoding_utils",
-    actual = "//queng_utils/encoding_utils",
+    actual = "//alpha_utils/encoding_utils",
 )
 
 alias(
     name = "math_utils",
-    actual = "//queng_utils/math_utils",
+    actual = "//alpha_utils/math_utils",
 )
 
 ###############################################################################
@@ -611,5 +598,5 @@ alias(
 
 alias(
     name = "iggy_test_utils",
-    actual = "//queng_utils_test/iggy_test_utils",
+    actual = "//alpha_utils_test/iggy_test_utils",
 )

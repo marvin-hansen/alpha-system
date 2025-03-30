@@ -1,0 +1,24 @@
+{
+  "name": "kaiko_cdn",
+  "type": "module",
+  "collaborators": [
+    "Marvin Hansen <marvin.hansen@gmail.com>"
+  ],
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marvin-hansen/quant-engine"
+  },
+  "files": [
+    "index_bg.wasm",
+    "index.js",
+    "index_bg.js",
+    "index.d.ts"
+  ],
+  "main": "index.js",
+  "types": "index.d.ts",
+  "sideEffects": [
+    "./index.js",
+    "./snippets/*"
+  ]
+}

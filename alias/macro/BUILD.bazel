@@ -7,5 +7,5 @@ package(default_visibility = ["//visibility:public"])
 
 alias(
     name = "data_integration_macro",
-    actual = "//queng_macros/data_integration_macro",
+    actual = "//alpha_macros/data_integration_macro",
 )

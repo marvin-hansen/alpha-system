@@ -7,12 +7,12 @@ package(default_visibility = ["//visibility:public"])
 
 alias(
     name = "grpc_service",
-    actual = "//queng_template/grpc_service",
+    actual = "//alpha_system/template/grpc_service",
 )
 
 alias(
     name = "ims_data_service",
-    actual = "//queng_template/ims_data_service",
+    actual = "//alpha_system/template/ims_data_service",
 )
 
 ###############################################################################
@@ -22,45 +22,45 @@ alias(
 # The service aliases are used in scripts/run_*.sh to start each service
 alias(
     name = "cmdb",
-    actual = "//queng_system_core/cmdb/cmdb_service:cmdb",
+    actual = "//alpha_system/core/cmdb/cmdb_service:cmdb",
 )
 
 # The push aliases are used in the root folder BUILD file to build & push containers
 alias(
     name = "cmdb_push",
-    actual = "//queng_system_core/cmdb/cmdb_service:push",
+    actual = "//alpha_system/core/cmdb/cmdb_service:push",
 )
 
 alias(
     name = "dbgw",
-    actual = "//queng_system_core/dbgw/dbgw_service:dbgw",
+    actual = "//alpha_system/core/dbgw/dbgw_service:dbgw",
 )
 
 alias(
     name = "dbgw_push",
-    actual = "//queng_system_core/dbgw/dbgw_service:push",
+    actual = "//alpha_system/core/dbgw/dbgw_service:push",
 )
 
 alias(
     name = "imdb",
-    actual = "//queng_system_core/imdb/imdb_service:imdb",
+    actual = "//alpha_system/core/imdb/imdb_service:imdb",
     visibility = ["//visibility:public"],
 )
 
 alias(
     name = "imdb_push",
-    actual = "//queng_system_core/imdb/imdb_service:push",
+    actual = "//alpha_system/core/imdb/imdb_service:push",
     visibility = ["//visibility:public"],
 )
 
 alias(
     name = "smdb",
-    actual = "//queng_system_core/smdb/smdb_service:smdb",
+    actual = "//alpha_system/core/smdb/smdb_service:smdb",
 )
 
 alias(
     name = "smdb_push",
-    actual = "//queng_system_core/smdb/smdb_service:push",
+    actual = "//alpha_system/core/smdb/smdb_service:push",
     visibility = ["//visibility:public"],
 )
 
@@ -70,25 +70,25 @@ alias(
 
 alias(
     name = "kaiko_proxy",
-    actual = "//queng_system_mds/kaiko/kaiko_proxy:kaiko_proxy",
+    actual = "//alpha_system/mds/kaiko/kaiko_proxy:kaiko_proxy",
     visibility = ["//visibility:public"],
 )
 
 alias(
     name = "kaiko_proxy_push",
-    actual = "//queng_system_mds/kaiko/kaiko_proxy:push",
+    actual = "//alpha_system/mds/kaiko/kaiko_proxy:push",
     visibility = ["//visibility:public"],
 )
 
 alias(
     name = "mddb",
-    actual = "//queng_system_mds/mddb/mddb_service:mddb",
+    actual = "//alpha_system/mds/mddb/mddb_service:mddb",
     visibility = ["//visibility:public"],
 )
 
 alias(
     name = "mddb_push",
-    actual = "//queng_system_mds/mddb/mddb_service:push",
+    actual = "//alpha_system/mds/mddb/mddb_service:push",
 )
 
 
@@ -98,60 +98,60 @@ alias(
 
 alias(
     name = "binance_coin_future",
-    actual = "//queng_system_ims_data/binance/binance_coin_future",
+    actual = "//alpha_system/ims_data/binance/binance_coin_future",
 )
 
 alias(
     name = "binance_coin_future_push",
-    actual = "//queng_system_ims_data/binance/binance_coin_future:push",
+    actual = "//alpha_system/ims_data/binance/binance_coin_future:push",
 )
 
 alias(
     name = "binance_coin_future_testnet",
-    actual = "//queng_system_ims_data/binance/binance_coin_future_testnet",
+    actual = "//alpha_system/ims_data/binance/binance_coin_future_testnet",
 )
 
 alias(
     name = "binance_coin_future_testnet_push",
-    actual = "//queng_system_ims_data/binance/binance_coin_future_testnet:push",
+    actual = "//alpha_system/ims_data/binance/binance_coin_future_testnet:push",
 )
 
 alias(
     name = "binance_spot",
-    actual = "//queng_system_ims_data/binance/binance_spot",
+    actual = "//alpha_system/ims_data/binance/binance_spot",
 )
 
 alias(
     name = "binance_spot_push",
-    actual = "//queng_system_ims_data/binance/binance_spot:push",
+    actual = "//alpha_system/ims_data/binance/binance_spot:push",
 )
 
 alias(
     name = "binance_spot_testnet",
-    actual = "//queng_system_ims_data/binance/binance_spot_testnet",
+    actual = "//alpha_system/ims_data/binance/binance_spot_testnet",
 )
 
 alias(
     name = "binance_spot_testnet_push",
-    actual = "//queng_system_ims_data/binance/binance_spot_testnet:push",
+    actual = "//alpha_system/ims_data/binance/binance_spot_testnet:push",
 )
 
 alias(
     name = "binance_usd_future",
-    actual = "//queng_system_ims_data/binance/binance_usd_future",
+    actual = "//alpha_system/ims_data/binance/binance_usd_future",
 )
 
 alias(
     name = "binance_usd_future_push",
-    actual = "//queng_system_ims_data/binance/binance_usd_future:push",
+    actual = "//alpha_system/ims_data/binance/binance_usd_future:push",
 )
 
 alias(
     name = "binance_usd_future_testnet",
-    actual = "//queng_system_ims_data/binance/binance_usd_future_testnet",
+    actual = "//alpha_system/ims_data/binance/binance_usd_future_testnet",
 )
 
 alias(
     name = "binance_usd_future_testnet_push",
-    actual = "//queng_system_ims_data/binance/binance_usd_future_testnet:push",
+    actual = "//alpha_system/ims_data/binance/binance_usd_future_testnet:push",
 )

@@ -2,29 +2,29 @@
 resolver = "2"
 
 members = [
-    "queng_common/*",
-    "queng_components/*",
-    "queng_datastructures/*",
-    "queng_extensions/*",
-    "queng_import/*/*",
-    "queng_infra/*/*",
-    "queng_integration/data/*",
+    "alpha_common/*",
+    "alpha_components/*",
+    "alpha_datastructures/*",
+    "alpha_extensions/*",
+    "alpha_import/*/*",
+    "alpha_infra/*/*",
+    "alpha_integration/data/*",
+    "alpha_macros/*",
     "queng_message/*",
-    "queng_macros/*",
-    "queng_proto/*",
-    "queng_sbe/*",
-    "queng_specs/*/*",
-    "queng_system_core/*/*",
-    "queng_system_ims_clients/*",
-    "queng_system_ims_data/*/*",
-    "queng_system_mds/*/*",
-    "queng_template/*",
-    "queng_traits/*",
-    "queng_utils/*",
-    "queng_utils_test/*",
+    "alpha_proto/*",
+    "alpha_sbe/*",
+    "alpha_specs/*/*",
+    "alpha_system/core/*/*",
+    "alpha_system/ims_clients/*",
+    "alpha_system/ims_data/*/*",
+    "alpha_system/mds/*/*",
+    "alpha_system/template/*",
+    "alpha_traits/*",
+    "alpha_utils/*",
+    "alpha_utils_test/*",
 ]
 exclude = [
-    "queng_sbe/sbe_schema",
+    "alpha_sbe/sbe_schema",
 ]
 
 [workspace.package]
@@ -41,86 +41,83 @@ authors = ["Marvin Hansen <marvin.hansen@gmail.com>"]
 
 # Servide clients
 # Core
-cmdb_client = { path = "queng_system_core/cmdb/cmdb_client" }
-smdb_client = { path = "queng_system_core/smdb/smdb_client" }
-imdb_client = { path = "queng_system_core/imdb/imdb_client" }
-ims_data_client = { path = "queng_system_ims_clients/ims_data_client" }
+cmdb_client = { path = "alpha_system/core/cmdb/cmdb_client" }
+smdb_client = { path = "alpha_system/core/smdb/smdb_client" }
+imdb_client = { path = "alpha_system/core/imdb/imdb_client" }
+ims_data_client = { path = "alpha_system/ims_clients/ims_data_client" }
 # MDS
-mddb_client = { path = "queng_system_mds/mddb/mddb_client" }
+mddb_client = { path = "alpha_system/mds/mddb/mddb_client" }
 
 # Common
-common_config = { path = "queng_common/common_config" }
-common_data_bar = { path = "queng_common/common_data_bar" }
-common_database = { path = "queng_common/common_database" }
-common_env = { path = "queng_common/common_env" }
-common_errors = { path = "queng_common/common_errors" }
-common_exchange = { path = "queng_common/common_exchange" }
-common_ims = { path = "queng_common/common_ims" }
-common_message = { path = "queng_common/common_message" }
-common_metadata = { path = "queng_common/common_metadata" }
-common_order = { path = "queng_common/common_order" }
-common_orderbook = { path = "queng_common/common_orderbook" }
-common_platform = { path = "queng_common/common_platform" }
-common_service = { path = "queng_common/common_service" }
-common_trade = { path = "queng_common/common_trade" }
+common_config = { path = "alpha_common/common_config" }
+common_data_bar = { path = "alpha_common/common_data_bar" }
+common_database = { path = "alpha_common/common_database" }
+common_env = { path = "alpha_common/common_env" }
+common_errors = { path = "alpha_common/common_errors" }
+common_exchange = { path = "alpha_common/common_exchange" }
+common_ims = { path = "alpha_common/common_ims" }
+common_message = { path = "alpha_common/common_message" }
+common_metadata = { path = "alpha_common/common_metadata" }
+common_order = { path = "alpha_common/common_order" }
+common_orderbook = { path = "alpha_common/common_orderbook" }
+common_platform = { path = "alpha_common/common_platform" }
+common_service = { path = "alpha_common/common_service" }
+common_trade = { path = "alpha_common/common_trade" }
 
 # Components
-config_manager = { path = "queng_components/config_manager" }
-environment_manager = { path = "queng_components/environment_manager" }
-pattern_manager = { path = "queng_components/pattern_manager" }
+config_manager = { path = "alpha_components/config_manager" }
+environment_manager = { path = "alpha_components/environment_manager" }
+pattern_manager = { path = "alpha_components/pattern_manager" }
 
 # Datastructures
-ring_buffer = { path = "queng_datastructures/ring_buffer" }
-sliding_window = { path = "queng_datastructures/sliding_window" }
+ring_buffer = { path = "alpha_datastructures/ring_buffer" }
+sliding_window = { path = "alpha_datastructures/sliding_window" }
 
 # Extensions
-common_data_bar_ext = { path = "queng_extensions/common_data_bar_ext" }
-common_order_ext = { path = "queng_extensions/common_order_ext" }
-cow_ext = { path = "queng_extensions/cow_ext" }
+common_data_bar_ext = { path = "alpha_extensions/common_data_bar_ext" }
+common_order_ext = { path = "alpha_extensions/common_order_ext" }
+cow_ext = { path = "alpha_extensions/cow_ext" }
 
 # Import
 # Core
-config_import = { path = "queng_import/core/config_import" }
-integration_import = { path = "queng_import/core/integration_import" }
-metadata_import = { path = "queng_import/core/metadata_import" }
-service_import = { path = "queng_import/core/service_import" }
+config_import = { path = "alpha_import/core/config_import" }
+integration_import = { path = "alpha_import/core/integration_import" }
+metadata_import = { path = "alpha_import/core/metadata_import" }
+service_import = { path = "alpha_import/core/service_import" }
 # Kaiko
-kaiko_download = { path = "queng_import/kaiko/kaiko_download" }
-kaiko_import = { path = "queng_import/kaiko/kaiko_import" }
-kaiko_test_utils = { path = "queng_import/kaiko/kaiko_test_utils" }
+kaiko_download = { path = "alpha_import/kaiko/kaiko_download" }
+kaiko_import = { path = "alpha_import/kaiko/kaiko_import" }
+kaiko_test_utils = { path = "alpha_import/kaiko/kaiko_test_utils" }
 # Utils
-pg_import_print_utils = { path = "queng_import/postgres/pg_import_print_utils" }
+pg_import_print_utils = { path = "alpha_import/postgres/pg_import_print_utils" }
 
 # Infra
-# Clickhouse DB
-clickhouse_config_manager = { path = "queng_infra/clickhouse/clickhouse_config_manager" }
-clickhouse_utils = { path = "queng_infra/clickhouse/clickhouse_utils" }
-db_clickhouse_manager = { path = "queng_infra/clickhouse/db_clickhouse_manager" }
+
 # Postgres DB
-pg_cmdb = { path = "queng_infra/postgres/pg_cmdb" }
-pg_imdb = { path = "queng_infra/postgres/pg_imdb" }
-pg_mddb = { path = "queng_infra/postgres/pg_mddb" }
-pg_smdb = { path = "queng_infra/postgres/pg_smdb" }
-pg_cmdb_manager = { path = "queng_infra/postgres/pg_cmdb_manager" }
-pg_imdb_manager = { path = "queng_infra/postgres/pg_imdb_manager" }
-pg_mddb_manager = { path = "queng_infra/postgres/pg_mddb_manager" }
-pg_smdb_manager = { path = "queng_infra/postgres/pg_smdb_manager" }
-postgres_common = { path = "queng_infra/postgres/postgres_common" }
-postgres_config_manager = { path = "queng_infra/postgres/postgres_config_manager" }
-postgres_migrations = { path = "queng_infra/postgres/postgres_migrations" }
+pg_cmdb = { path = "alpha_infra/postgres/pg_cmdb" }
+pg_imdb = { path = "alpha_infra/postgres/pg_imdb" }
+pg_mddb = { path = "alpha_infra/postgres/pg_mddb" }
+pg_smdb = { path = "alpha_infra/postgres/pg_smdb" }
+pg_cmdb_manager = { path = "alpha_infra/postgres/pg_cmdb_manager" }
+pg_imdb_manager = { path = "alpha_infra/postgres/pg_imdb_manager" }
+pg_mddb_manager = { path = "alpha_infra/postgres/pg_mddb_manager" }
+pg_smdb_manager = { path = "alpha_infra/postgres/pg_smdb_manager" }
+postgres_common = { path = "alpha_infra/postgres/postgres_common" }
+postgres_config_manager = { path = "alpha_infra/postgres/postgres_config_manager" }
+postgres_migrations = { path = "alpha_infra/postgres/postgres_migrations" }
 
 # Integration
 # Data integration
-binance_coin_futures_data_integration = { path = "queng_integration/data/binance_coin_futures_data_integration" }
-binance_coin_futures_testnet_data_integration = { path = "queng_integration/data/binance_coin_futures_testnet_data_integration" }
-binance_core_data_integration = { path = "queng_integration/data/binance_core_data_integration" }
-binance_spot_data_integration = { path = "queng_integration/data/binance_spot_data_integration" }
-binance_spot_testnet_data_integration = { path = "queng_integration/data/binance_spot_testnet_data_integration" }
-binance_usd_futures_data_integration = { path = "queng_integration/data/binance_usd_futures_data_integration" }
-binance_usd_futures_testnet_data_integration = { path = "queng_integration/data/binance_usd_futures_testnet_data_integration" }
+binance_coin_futures_data_integration = { path = "alpha_integration/data/binance_coin_futures_data_integration" }
+binance_coin_futures_testnet_data_integration = { path = "alpha_integration/data/binance_coin_futures_testnet_data_integration" }
+binance_core_data_integration = { path = "alpha_integration/data/binance_core_data_integration" }
+binance_spot_data_integration = { path = "alpha_integration/data/binance_spot_data_integration" }
+binance_spot_testnet_data_integration = { path = "alpha_integration/data/binance_spot_testnet_data_integration" }
+binance_usd_futures_data_integration = { path = "alpha_integration/data/binance_usd_futures_data_integration" }
+binance_usd_futures_testnet_data_integration = { path = "alpha_integration/data/binance_usd_futures_testnet_data_integration" }
 
 # Macros
-data_integration_macro = { path = "queng_macros/data_integration_macro" }
+data_integration_macro = { path = "alpha_macros/data_integration_macro" }
 
 # Mesasge bus
 message_consumer = { path = "queng_message/message_consumer" }
@@ -129,69 +126,69 @@ message_shared = { path = "queng_message/message_shared" }
 message_stream = { path = "queng_message/message_stream" }
 
 # Proto
-proto_cmdb = { path = "queng_proto/proto_cmdb" }
-proto_cmdb_utils = { path = "queng_proto/proto_cmdb_utils" }
-proto_imdb = { path = "queng_proto/proto_imdb" }
-proto_imdb_utils = { path = "queng_proto/proto_imdb_utils" }
-proto_mddb = { path = "queng_proto/proto_mddb" }
-proto_mddb_utils = { path = "queng_proto/proto_mddb_utils" }
-proto_smdb = { path = "queng_proto/proto_smdb" }
-proto_smdb_utils = { path = "queng_proto/proto_smdb_utils" }
+proto_cmdb = { path = "alpha_proto/proto_cmdb" }
+proto_cmdb_utils = { path = "alpha_proto/proto_cmdb_utils" }
+proto_imdb = { path = "alpha_proto/proto_imdb" }
+proto_imdb_utils = { path = "alpha_proto/proto_imdb_utils" }
+proto_mddb = { path = "alpha_proto/proto_mddb" }
+proto_mddb_utils = { path = "alpha_proto/proto_mddb_utils" }
+proto_smdb = { path = "alpha_proto/proto_smdb" }
+proto_smdb_utils = { path = "alpha_proto/proto_smdb_utils" }
 
 # SBE
-sbe_bindings = { path = "queng_sbe/sbe_bindings" }
-sbe_messages_client = { path = "queng_sbe/sbe_messages_client" }
-sbe_messages_control = { path = "queng_sbe/sbe_messages_control" }
-sbe_messages_data = { path = "queng_sbe/sbe_messages_data" }
-sbe_messages_order = { path = "queng_sbe/sbe_messages_order" }
-sbe_types = { path = "queng_sbe/sbe_types" }
-sbe_utils = { path = "queng_sbe/sbe_utils" }
+sbe_bindings = { path = "alpha_sbe/sbe_bindings" }
+sbe_messages_client = { path = "alpha_sbe/sbe_messages_client" }
+sbe_messages_control = { path = "alpha_sbe/sbe_messages_control" }
+sbe_messages_data = { path = "alpha_sbe/sbe_messages_data" }
+sbe_messages_order = { path = "alpha_sbe/sbe_messages_order" }
+sbe_types = { path = "alpha_sbe/sbe_types" }
+sbe_utils = { path = "alpha_sbe/sbe_utils" }
 
 # MDS
-kaiko_client = { path = "queng_system_mds/kaiko/kaiko_client" }
-kaiko_proxy = { path = "queng_system_mds/kaiko/kaiko_proxy" }
+kaiko_client = { path = "alpha_system/mds/kaiko/kaiko_client" }
+kaiko_proxy = { path = "alpha_system/mds/kaiko/kaiko_proxy" }
 # Non-Bazel targets since CloudFlare workers are build with Wrangler
-kaiko_cdn = { path = "queng_system_mds/kaiko/kaiko_cdn" }
-kaiko_cdn_auth = { path = "queng_system_mds/kaiko/kaiko_cdn_auth" }
+kaiko_cdn = { path = "alpha_system/mds/kaiko/kaiko_cdn" }
+kaiko_cdn_auth = { path = "alpha_system/mds/kaiko/kaiko_cdn_auth" }
 # Service template
-grpc_service = { path = "queng_template/grpc_service" }
-ims_data_service = { path = "queng_template/ims_data_service" }
+grpc_service = { path = "alpha_system/template/grpc_service" }
+ims_data_service = { path = "alpha_system/template/ims_data_service" }
 
 # Specs
 # Config specs
-portfolio_specs = { path = "queng_specs/config_specs/portfolio_specs" }
+portfolio_specs = { path = "alpha_specs/config_specs/portfolio_specs" }
 # Container specs
-container_specs_clickhouse = { path = "queng_specs/container_specs/container_specs_clickhouse" }
-container_specs_iggy = { path = "queng_specs/container_specs/container_specs_iggy" }
-container_specs_kaiko = { path = "queng_specs/container_specs/container_specs_kaiko" }
-container_specs_postgres = { path = "queng_specs/container_specs/container_specs_postgres" }
+container_specs_clickhouse = { path = "alpha_specs/container_specs/container_specs_clickhouse" }
+container_specs_iggy = { path = "alpha_specs/container_specs/container_specs_iggy" }
+container_specs_kaiko = { path = "alpha_specs/container_specs/container_specs_kaiko" }
+container_specs_postgres = { path = "alpha_specs/container_specs/container_specs_postgres" }
 # DB specs
-db_specs_clickhouse = { path = "queng_specs/database_specs/db_specs_clickhouse" }
-db_specs_postgres = { path = "queng_specs/database_specs/db_specs_postgres" }
+db_specs_clickhouse = { path = "alpha_specs/database_specs/db_specs_clickhouse" }
+db_specs_postgres = { path = "alpha_specs/database_specs/db_specs_postgres" }
 # Integration specs
-integration_specs_all = { path = "queng_specs/integration_specs/integration_specs_all" }
+integration_specs_all = { path = "alpha_specs/integration_specs/integration_specs_all" }
 # Service specs
-cmdb_specs = { path = "queng_system_core/cmdb/cmdb_specs" }
-dbgw_specs = { path = "queng_system_core/dbgw/dbgw_specs" }
-smdb_specs = { path = "queng_system_core/smdb/smdb_specs" }
-imdb_specs = { path = "queng_system_core/imdb/imdb_specs" }
-mddb_specs = { path = "queng_system_mds/mddb/mddb_specs" }
-shared_service_specs = { path = "queng_specs/service_specs/shared_service_specs" }
-service_specs_all = { path = "queng_specs/service_specs/service_specs_all" }
+cmdb_specs = { path = "alpha_system/core/cmdb/cmdb_specs" }
+dbgw_specs = { path = "alpha_system/core/dbgw/dbgw_specs" }
+smdb_specs = { path = "alpha_system/core/smdb/smdb_specs" }
+imdb_specs = { path = "alpha_system/core/imdb/imdb_specs" }
+mddb_specs = { path = "alpha_system/mds/mddb/mddb_specs" }
+shared_service_specs = { path = "alpha_specs/service_specs/shared_service_specs" }
+service_specs_all = { path = "alpha_specs/service_specs/service_specs_all" }
 
 # Traits
-trait_data_integration = { path = "queng_traits/trait_data_integration" }
-trait_event_consumer = { path = "queng_traits/trait_event_consumer" }
-trait_event_processor = { path = "queng_traits/trait_event_processor" }
-trait_exec_integration = { path = "queng_traits/trait_exec_integration" }
+trait_data_integration = { path = "alpha_traits/trait_data_integration" }
+trait_event_consumer = { path = "alpha_traits/trait_event_consumer" }
+trait_event_processor = { path = "alpha_traits/trait_event_processor" }
+trait_exec_integration = { path = "alpha_traits/trait_exec_integration" }
 
 # Utils
-client_utils = { path = "queng_utils/client_utils" }
-crypto_utils = { path = "queng_utils/crypto_utils" }
-encoding_utils = { path = "queng_utils/encoding_utils" }
-math_utils = { path = "queng_utils/math_utils" }
+client_utils = { path = "alpha_utils/client_utils" }
+crypto_utils = { path = "alpha_utils/crypto_utils" }
+encoding_utils = { path = "alpha_utils/encoding_utils" }
+math_utils = { path = "alpha_utils/math_utils" }
 # Test utils
-iggy_test_utils = { path = "queng_utils_test/iggy_test_utils" }
+iggy_test_utils = { path = "alpha_utils_test/iggy_test_utils" }
 
 # ==============
 # External crates
