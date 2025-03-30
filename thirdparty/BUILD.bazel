@@ -211,6 +211,10 @@ crates_vendor(
             package = "tokio-tungstenite",
             version = "0.26",
         ),
+        "tonic": crate.spec(
+            package = "tonic",
+            version = "0.12",
+        ),
         "tonic-build": crate.spec(
             package = "tonic-build",
             version = "0.12",

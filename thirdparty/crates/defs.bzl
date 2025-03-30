@@ -323,6 +323,7 @@ _NORMAL_DEPENDENCIES = {
             "syn": Label("//thirdparty/crates/syn-2.0.100:syn"),
             "tokio": Label("//thirdparty/crates/tokio-1.44.1:tokio"),
             "tokio-tungstenite": Label("//thirdparty/crates/tokio-tungstenite-0.26.2:tokio_tungstenite"),
+            "tonic": Label("//thirdparty/crates/tonic-0.12.3:tonic"),
             "tonic-build": Label("//thirdparty/crates/tonic-build-0.12.3:tonic_build"),
             "tonic-health": Label("//thirdparty/crates/tonic-health-0.12.3:tonic_health"),
             "warp": Label("//thirdparty/crates/warp-0.3.7:warp"),

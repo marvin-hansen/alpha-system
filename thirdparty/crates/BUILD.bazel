@@ -427,6 +427,18 @@ alias(
 )
 
 alias(
+    name = "tonic-0.12.3",
+    actual = "//thirdparty/crates/tonic-0.12.3:tonic",
+    tags = ["manual"],
+)
+
+alias(
+    name = "tonic",
+    actual = "//thirdparty/crates/tonic-0.12.3:tonic",
+    tags = ["manual"],
+)
+
+alias(
     name = "tonic-build-0.12.3",
     actual = "//thirdparty/crates/tonic-build-0.12.3:tonic_build",
     tags = ["manual"],

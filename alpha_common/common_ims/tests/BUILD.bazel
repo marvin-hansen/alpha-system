@@ -17,6 +17,5 @@ rust_test_suite(
         # Internal crates
         "//alias:common_exchange",
         # External crates
-        "//thirdparty/crates:iggy",
     ],
 )
