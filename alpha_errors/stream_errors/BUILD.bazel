@@ -1,0 +1,29 @@
+load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library")
+
+rust_library(
+    name = "stream_errors",
+    srcs = glob([
+        "src/*.rs",
+    ]),
+    crate_root = "src/lib.rs",
+    tags = [
+        "errors",
+        "stream_errors",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [],
+)
+
+rust_doc(
+    name = "doc",
+    crate = ":stream_errors",
+    tags = ["doc"],
+    visibility = ["//visibility:public"],
+)
+
+rust_doc_test(
+    name = "doc_test",
+    crate = ":stream_errors",
+    tags = ["doc-test"],
+    visibility = ["//visibility:public"],
+)

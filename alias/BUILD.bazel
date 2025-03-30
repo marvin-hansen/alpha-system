@@ -26,11 +26,6 @@ alias(
 )
 
 alias(
-    name = "common_errors",
-    actual = "//alpha_common/common_errors",
-)
-
-alias(
     name = "common_exchange",
     actual = "//alpha_common/common_exchange",
 )
@@ -96,6 +91,20 @@ alias(
 alias(
     name = "sliding_window",
     actual = "//alpha_datastructures/sliding_window",
+)
+
+###############################################################################
+# Errors
+###############################################################################
+
+alias(
+    name = "common_errors",
+    actual = "//alpha_errors/common_errors",
+)
+
+alias(
+    name = "stream_errors",
+    actual = "//alpha_errors/stream_errors",
 )
 
 ###############################################################################

@@ -5,6 +5,7 @@ members = [
     "alpha_common/*",
     "alpha_components/*",
     "alpha_datastructures/*",
+    "alpha_errors/*",
     "alpha_extensions/*",
     "alpha_import/*/*",
     "alpha_infra/postgres/*",
@@ -42,7 +43,7 @@ authors = ["Marvin Hansen <marvin.hansen@gmail.com>"]
 cmdb_client = { path = "alpha_system/core/cmdb/cmdb_client" }
 smdb_client = { path = "alpha_system/core/smdb/smdb_client" }
 imdb_client = { path = "alpha_system/core/imdb/imdb_client" }
-ims_data_client = { path = "alpha_system/ims_clients/ims_data_client" }
+
 # MDS
 mddb_client = { path = "alpha_system/mds/mddb/mddb_client" }
 
@@ -51,7 +52,6 @@ common_config = { path = "alpha_common/common_config" }
 common_data_bar = { path = "alpha_common/common_data_bar" }
 common_database = { path = "alpha_common/common_database" }
 common_env = { path = "alpha_common/common_env" }
-common_errors = { path = "alpha_common/common_errors" }
 common_exchange = { path = "alpha_common/common_exchange" }
 common_ims = { path = "alpha_common/common_ims" }
 common_metadata = { path = "alpha_common/common_metadata" }
@@ -68,6 +68,10 @@ pattern_manager = { path = "alpha_components/pattern_manager" }
 # Datastructures
 ring_buffer = { path = "alpha_datastructures/ring_buffer" }
 sliding_window = { path = "alpha_datastructures/sliding_window" }
+
+# Errors
+common_errors = { path = "alpha_errors/common_errors" }
+stream_errors = { path = "alpha_errors/stream_errors" }
 
 # Extensions
 common_data_bar_ext = { path = "alpha_extensions/common_data_bar_ext" }
@@ -113,6 +117,7 @@ binance_usd_futures_data_integration = { path = "alpha_integration/data/binance_
 binance_usd_futures_testnet_data_integration = { path = "alpha_integration/data/binance_usd_futures_testnet_data_integration" }
 
 # Macros
+byte_serialization_macro = { path = "alpha_macros/byte_serialization_macro" }
 data_integration_macro = { path = "alpha_macros/data_integration_macro" }
 
 # Proto

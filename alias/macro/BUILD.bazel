@@ -6,6 +6,11 @@ package(default_visibility = ["//visibility:public"])
 ###############################################################################
 
 alias(
+    name = "byte_serialization_macro",
+    actual = "//alpha_macros/byte_serialization_macro",
+)
+
+alias(
     name = "data_integration_macro",
     actual = "//alpha_macros/data_integration_macro",
 )
