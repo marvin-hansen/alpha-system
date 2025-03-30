@@ -28,7 +28,7 @@ rust_library(
     ),
     aliases = {
         "//thirdparty/crates/quinn-proto-0.11.10:quinn_proto": "proto",
-        "//thirdparty/crates/quinn-udp-0.5.10:quinn_udp": "udp",
+        "//thirdparty/crates/quinn-udp-0.5.11:quinn_udp": "udp",
     },
     compile_data = glob(
         include = ["**"],
@@ -42,14 +42,6 @@ rust_library(
             "WORKSPACE.bazel",
         ],
     ),
-    crate_features = [
-        "default",
-        "log",
-        "platform-verifier",
-        "ring",
-        "runtime-tokio",
-        "rustls-ring",
-    ],
     crate_root = "src/lib.rs",
     edition = "2021",
     rustc_env_files = [
@@ -110,9 +102,8 @@ rust_library(
         "//thirdparty/crates/pin-project-lite-0.2.16:pin_project_lite",
         "//thirdparty/crates/quinn-0.11.7:build_script_build",
         "//thirdparty/crates/quinn-proto-0.11.10:quinn_proto",
-        "//thirdparty/crates/quinn-udp-0.5.10:quinn_udp",
+        "//thirdparty/crates/quinn-udp-0.5.11:quinn_udp",
         "//thirdparty/crates/rustc-hash-2.1.1:rustc_hash",
-        "//thirdparty/crates/rustls-0.23.25:rustls",
         "//thirdparty/crates/thiserror-2.0.12:thiserror",
         "//thirdparty/crates/tokio-1.44.1:tokio",
         "//thirdparty/crates/tracing-0.1.41:tracing",
@@ -248,14 +239,6 @@ cargo_build_script(
             "WORKSPACE.bazel",
         ],
     ),
-    crate_features = [
-        "default",
-        "log",
-        "platform-verifier",
-        "ring",
-        "runtime-tokio",
-        "rustls-ring",
-    ],
     crate_name = "build_script_build",
     crate_root = "build.rs",
     data = glob(

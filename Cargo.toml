@@ -148,8 +148,6 @@ ims_data_service = { path = "alpha_system/template/ims_data_service" }
 # Config specs
 portfolio_specs = { path = "alpha_specs/config_specs/portfolio_specs" }
 # Container specs
-container_specs_clickhouse = { path = "alpha_specs/container_specs/container_specs_clickhouse" }
-container_specs_iggy = { path = "alpha_specs/container_specs/container_specs_iggy" }
 container_specs_kaiko = { path = "alpha_specs/container_specs/container_specs_kaiko" }
 container_specs_postgres = { path = "alpha_specs/container_specs/container_specs_postgres" }
 # DB specs

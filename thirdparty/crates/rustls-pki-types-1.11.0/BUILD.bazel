@@ -38,13 +38,7 @@ rust_library(
         "alloc",
         "default",
         "std",
-    ] + select({
-        "@rules_rust//rust/platform:wasm32-unknown-unknown": [
-            "web",  # wasm32-unknown-unknown
-            "web-time",  # wasm32-unknown-unknown
-        ],
-        "//conditions:default": [],
-    }),
+    ],
     crate_root = "src/lib.rs",
     edition = "2021",
     rustc_env_files = [
@@ -100,10 +94,4 @@ rust_library(
         "//conditions:default": ["@platforms//:incompatible"],
     }),
     version = "1.11.0",
-    deps = select({
-        "@rules_rust//rust/platform:wasm32-unknown-unknown": [
-            "//thirdparty/crates/web-time-1.1.0:web_time",  # wasm32-unknown-unknown
-        ],
-        "//conditions:default": [],
-    }),
 )

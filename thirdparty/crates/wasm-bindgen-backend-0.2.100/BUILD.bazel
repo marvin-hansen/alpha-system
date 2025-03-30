@@ -91,7 +91,7 @@ rust_library(
     version = "0.2.100",
     deps = [
         "//thirdparty/crates/bumpalo-3.17.0:bumpalo",
-        "//thirdparty/crates/log-0.4.26:log",
+        "//thirdparty/crates/log-0.4.27:log",
         "//thirdparty/crates/proc-macro2-1.0.94:proc_macro2",
         "//thirdparty/crates/quote-1.0.40:quote",
         "//thirdparty/crates/syn-2.0.100:syn",

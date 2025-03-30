@@ -110,93 +110,93 @@ rust_library(
         "//thirdparty/crates/serde-1.0.219:serde",
     ] + select({
         "@rules_rust//rust/platform:aarch64-apple-darwin": [
-            "//thirdparty/crates/iana-time-zone-0.1.61:iana_time_zone",  # aarch64-apple-darwin
+            "//thirdparty/crates/iana-time-zone-0.1.62:iana_time_zone",  # aarch64-apple-darwin
         ],
         "@rules_rust//rust/platform:aarch64-apple-ios": [
-            "//thirdparty/crates/iana-time-zone-0.1.61:iana_time_zone",  # aarch64-apple-ios
+            "//thirdparty/crates/iana-time-zone-0.1.62:iana_time_zone",  # aarch64-apple-ios
         ],
         "@rules_rust//rust/platform:aarch64-apple-ios-sim": [
-            "//thirdparty/crates/iana-time-zone-0.1.61:iana_time_zone",  # aarch64-apple-ios-sim
+            "//thirdparty/crates/iana-time-zone-0.1.62:iana_time_zone",  # aarch64-apple-ios-sim
         ],
         "@rules_rust//rust/platform:aarch64-linux-android": [
             "//thirdparty/crates/android-tzdata-0.1.1:android_tzdata",  # aarch64-linux-android
-            "//thirdparty/crates/iana-time-zone-0.1.61:iana_time_zone",  # aarch64-linux-android
+            "//thirdparty/crates/iana-time-zone-0.1.62:iana_time_zone",  # aarch64-linux-android
         ],
         "@rules_rust//rust/platform:aarch64-pc-windows-msvc": [
             "//thirdparty/crates/windows-link-0.1.1:windows_link",  # aarch64-pc-windows-msvc
         ],
         "@rules_rust//rust/platform:aarch64-unknown-fuchsia": [
-            "//thirdparty/crates/iana-time-zone-0.1.61:iana_time_zone",  # aarch64-unknown-fuchsia
+            "//thirdparty/crates/iana-time-zone-0.1.62:iana_time_zone",  # aarch64-unknown-fuchsia
         ],
         "@rules_rust//rust/platform:aarch64-unknown-linux-gnu": [
-            "//thirdparty/crates/iana-time-zone-0.1.61:iana_time_zone",  # aarch64-unknown-linux-gnu
+            "//thirdparty/crates/iana-time-zone-0.1.62:iana_time_zone",  # aarch64-unknown-linux-gnu
         ],
         "@rules_rust//rust/platform:aarch64-unknown-nixos-gnu": [
-            "//thirdparty/crates/iana-time-zone-0.1.61:iana_time_zone",  # aarch64-unknown-linux-gnu, aarch64-unknown-nixos-gnu
+            "//thirdparty/crates/iana-time-zone-0.1.62:iana_time_zone",  # aarch64-unknown-linux-gnu, aarch64-unknown-nixos-gnu
         ],
         "@rules_rust//rust/platform:aarch64-unknown-nto-qnx710": [
-            "//thirdparty/crates/iana-time-zone-0.1.61:iana_time_zone",  # aarch64-unknown-nto-qnx710
+            "//thirdparty/crates/iana-time-zone-0.1.62:iana_time_zone",  # aarch64-unknown-nto-qnx710
         ],
         "@rules_rust//rust/platform:arm-unknown-linux-gnueabi": [
-            "//thirdparty/crates/iana-time-zone-0.1.61:iana_time_zone",  # arm-unknown-linux-gnueabi
+            "//thirdparty/crates/iana-time-zone-0.1.62:iana_time_zone",  # arm-unknown-linux-gnueabi
         ],
         "@rules_rust//rust/platform:armv7-linux-androideabi": [
             "//thirdparty/crates/android-tzdata-0.1.1:android_tzdata",  # armv7-linux-androideabi
-            "//thirdparty/crates/iana-time-zone-0.1.61:iana_time_zone",  # armv7-linux-androideabi
+            "//thirdparty/crates/iana-time-zone-0.1.62:iana_time_zone",  # armv7-linux-androideabi
         ],
         "@rules_rust//rust/platform:armv7-unknown-linux-gnueabi": [
-            "//thirdparty/crates/iana-time-zone-0.1.61:iana_time_zone",  # armv7-unknown-linux-gnueabi
+            "//thirdparty/crates/iana-time-zone-0.1.62:iana_time_zone",  # armv7-unknown-linux-gnueabi
         ],
         "@rules_rust//rust/platform:i686-apple-darwin": [
-            "//thirdparty/crates/iana-time-zone-0.1.61:iana_time_zone",  # i686-apple-darwin
+            "//thirdparty/crates/iana-time-zone-0.1.62:iana_time_zone",  # i686-apple-darwin
         ],
         "@rules_rust//rust/platform:i686-linux-android": [
             "//thirdparty/crates/android-tzdata-0.1.1:android_tzdata",  # i686-linux-android
-            "//thirdparty/crates/iana-time-zone-0.1.61:iana_time_zone",  # i686-linux-android
+            "//thirdparty/crates/iana-time-zone-0.1.62:iana_time_zone",  # i686-linux-android
         ],
         "@rules_rust//rust/platform:i686-pc-windows-msvc": [
             "//thirdparty/crates/windows-link-0.1.1:windows_link",  # i686-pc-windows-msvc
         ],
         "@rules_rust//rust/platform:i686-unknown-freebsd": [
-            "//thirdparty/crates/iana-time-zone-0.1.61:iana_time_zone",  # i686-unknown-freebsd
+            "//thirdparty/crates/iana-time-zone-0.1.62:iana_time_zone",  # i686-unknown-freebsd
         ],
         "@rules_rust//rust/platform:i686-unknown-linux-gnu": [
-            "//thirdparty/crates/iana-time-zone-0.1.61:iana_time_zone",  # i686-unknown-linux-gnu
+            "//thirdparty/crates/iana-time-zone-0.1.62:iana_time_zone",  # i686-unknown-linux-gnu
         ],
         "@rules_rust//rust/platform:powerpc-unknown-linux-gnu": [
-            "//thirdparty/crates/iana-time-zone-0.1.61:iana_time_zone",  # powerpc-unknown-linux-gnu
+            "//thirdparty/crates/iana-time-zone-0.1.62:iana_time_zone",  # powerpc-unknown-linux-gnu
         ],
         "@rules_rust//rust/platform:s390x-unknown-linux-gnu": [
-            "//thirdparty/crates/iana-time-zone-0.1.61:iana_time_zone",  # s390x-unknown-linux-gnu
+            "//thirdparty/crates/iana-time-zone-0.1.62:iana_time_zone",  # s390x-unknown-linux-gnu
         ],
         "@rules_rust//rust/platform:wasm32-unknown-unknown": [
             "//thirdparty/crates/js-sys-0.3.77:js_sys",  # wasm32-unknown-unknown
             "//thirdparty/crates/wasm-bindgen-0.2.100:wasm_bindgen",  # wasm32-unknown-unknown
         ],
         "@rules_rust//rust/platform:x86_64-apple-darwin": [
-            "//thirdparty/crates/iana-time-zone-0.1.61:iana_time_zone",  # x86_64-apple-darwin
+            "//thirdparty/crates/iana-time-zone-0.1.62:iana_time_zone",  # x86_64-apple-darwin
         ],
         "@rules_rust//rust/platform:x86_64-apple-ios": [
-            "//thirdparty/crates/iana-time-zone-0.1.61:iana_time_zone",  # x86_64-apple-ios
+            "//thirdparty/crates/iana-time-zone-0.1.62:iana_time_zone",  # x86_64-apple-ios
         ],
         "@rules_rust//rust/platform:x86_64-linux-android": [
             "//thirdparty/crates/android-tzdata-0.1.1:android_tzdata",  # x86_64-linux-android
-            "//thirdparty/crates/iana-time-zone-0.1.61:iana_time_zone",  # x86_64-linux-android
+            "//thirdparty/crates/iana-time-zone-0.1.62:iana_time_zone",  # x86_64-linux-android
         ],
         "@rules_rust//rust/platform:x86_64-pc-windows-msvc": [
             "//thirdparty/crates/windows-link-0.1.1:windows_link",  # x86_64-pc-windows-msvc
         ],
         "@rules_rust//rust/platform:x86_64-unknown-freebsd": [
-            "//thirdparty/crates/iana-time-zone-0.1.61:iana_time_zone",  # x86_64-unknown-freebsd
+            "//thirdparty/crates/iana-time-zone-0.1.62:iana_time_zone",  # x86_64-unknown-freebsd
         ],
         "@rules_rust//rust/platform:x86_64-unknown-fuchsia": [
-            "//thirdparty/crates/iana-time-zone-0.1.61:iana_time_zone",  # x86_64-unknown-fuchsia
+            "//thirdparty/crates/iana-time-zone-0.1.62:iana_time_zone",  # x86_64-unknown-fuchsia
         ],
         "@rules_rust//rust/platform:x86_64-unknown-linux-gnu": [
-            "//thirdparty/crates/iana-time-zone-0.1.61:iana_time_zone",  # x86_64-unknown-linux-gnu
+            "//thirdparty/crates/iana-time-zone-0.1.62:iana_time_zone",  # x86_64-unknown-linux-gnu
         ],
         "@rules_rust//rust/platform:x86_64-unknown-nixos-gnu": [
-            "//thirdparty/crates/iana-time-zone-0.1.61:iana_time_zone",  # x86_64-unknown-linux-gnu, x86_64-unknown-nixos-gnu
+            "//thirdparty/crates/iana-time-zone-0.1.62:iana_time_zone",  # x86_64-unknown-linux-gnu, x86_64-unknown-nixos-gnu
         ],
         "//conditions:default": [],
     }),

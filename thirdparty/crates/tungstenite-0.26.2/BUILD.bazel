@@ -104,7 +104,7 @@ rust_library(
         "//thirdparty/crates/data-encoding-2.8.0:data_encoding",
         "//thirdparty/crates/http-1.3.1:http",
         "//thirdparty/crates/httparse-1.10.1:httparse",
-        "//thirdparty/crates/log-0.4.26:log",
+        "//thirdparty/crates/log-0.4.27:log",
         "//thirdparty/crates/rand-0.9.0:rand",
         "//thirdparty/crates/rustls-0.23.25:rustls",
         "//thirdparty/crates/rustls-pki-types-1.11.0:rustls_pki_types",

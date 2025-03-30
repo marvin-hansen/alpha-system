@@ -35,8 +35,6 @@ rust_library(
         ],
     ),
     crate_features = [
-        "getrandom",
-        "rand_core",
         "std",
     ],
     crate_root = "src/lib.rs",
@@ -96,7 +94,6 @@ rust_library(
     version = "0.1.6",
     deps = [
         "//thirdparty/crates/generic-array-0.14.7:generic_array",
-        "//thirdparty/crates/rand_core-0.6.4:rand_core",
         "//thirdparty/crates/typenum-1.18.0:typenum",
     ],
 )

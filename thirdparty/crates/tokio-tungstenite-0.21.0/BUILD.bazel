@@ -97,7 +97,7 @@ rust_library(
     version = "0.21.0",
     deps = [
         "//thirdparty/crates/futures-util-0.3.31:futures_util",
-        "//thirdparty/crates/log-0.4.26:log",
+        "//thirdparty/crates/log-0.4.27:log",
         "//thirdparty/crates/tokio-1.44.1:tokio",
         "//thirdparty/crates/tungstenite-0.21.0:tungstenite",
     ],

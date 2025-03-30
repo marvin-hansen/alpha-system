@@ -54,13 +54,7 @@ rust_library(
         "WorkerGlobalScope",
         "default",
         "std",
-    ] + select({
-        "@rules_rust//rust/platform:wasm32-unknown-unknown": [
-            "Performance",  # wasm32-unknown-unknown
-            "PerformanceTiming",  # wasm32-unknown-unknown
-        ],
-        "//conditions:default": [],
-    }),
+    ],
     crate_root = "src/lib.rs",
     edition = "2021",
     rustc_env_files = [

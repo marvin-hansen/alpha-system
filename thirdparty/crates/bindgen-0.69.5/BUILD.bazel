@@ -108,7 +108,7 @@ rust_library(
         "//thirdparty/crates/itertools-0.12.1:itertools",
         "//thirdparty/crates/lazy_static-1.5.0:lazy_static",
         "//thirdparty/crates/lazycell-1.3.0:lazycell",
-        "//thirdparty/crates/log-0.4.26:log",
+        "//thirdparty/crates/log-0.4.27:log",
         "//thirdparty/crates/prettyplease-0.2.31:prettyplease",
         "//thirdparty/crates/proc-macro2-1.0.94:proc_macro2",
         "//thirdparty/crates/quote-1.0.40:quote",

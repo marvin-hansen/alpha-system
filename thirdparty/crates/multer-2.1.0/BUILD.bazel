@@ -102,7 +102,7 @@ rust_library(
         "//thirdparty/crates/futures-util-0.3.31:futures_util",
         "//thirdparty/crates/http-0.2.12:http",
         "//thirdparty/crates/httparse-1.10.1:httparse",
-        "//thirdparty/crates/log-0.4.26:log",
+        "//thirdparty/crates/log-0.4.27:log",
         "//thirdparty/crates/memchr-2.7.4:memchr",
         "//thirdparty/crates/mime-0.3.17:mime",
         "//thirdparty/crates/multer-2.1.0:build_script_build",

@@ -199,30 +199,6 @@ alias(
 )
 
 alias(
-    name = "iggy-0.6.203",
-    actual = "//thirdparty/crates/iggy-0.6.203:iggy",
-    tags = ["manual"],
-)
-
-alias(
-    name = "iggy",
-    actual = "//thirdparty/crates/iggy-0.6.203:iggy",
-    tags = ["manual"],
-)
-
-alias(
-    name = "klickhouse-0.13.2",
-    actual = "//thirdparty/crates/klickhouse-0.13.2:klickhouse",
-    tags = ["manual"],
-)
-
-alias(
-    name = "klickhouse",
-    actual = "//thirdparty/crates/klickhouse-0.13.2:klickhouse",
-    tags = ["manual"],
-)
-
-alias(
     name = "lru-0.12.5",
     actual = "//thirdparty/crates/lru-0.12.5:lru",
     tags = ["manual"],
@@ -331,26 +307,26 @@ alias(
 )
 
 alias(
-    name = "rust_decimal-1.37.0",
-    actual = "//thirdparty/crates/rust_decimal-1.37.0:rust_decimal",
+    name = "rust_decimal-1.37.1",
+    actual = "//thirdparty/crates/rust_decimal-1.37.1:rust_decimal",
     tags = ["manual"],
 )
 
 alias(
     name = "rust_decimal",
-    actual = "//thirdparty/crates/rust_decimal-1.37.0:rust_decimal",
+    actual = "//thirdparty/crates/rust_decimal-1.37.1:rust_decimal",
     tags = ["manual"],
 )
 
 alias(
-    name = "rust_decimal_macros-1.37.0",
-    actual = "//thirdparty/crates/rust_decimal_macros-1.37.0:rust_decimal_macros",
+    name = "rust_decimal_macros-1.37.1",
+    actual = "//thirdparty/crates/rust_decimal_macros-1.37.1:rust_decimal_macros",
     tags = ["manual"],
 )
 
 alias(
     name = "rust_decimal_macros",
-    actual = "//thirdparty/crates/rust_decimal_macros-1.37.0:rust_decimal_macros",
+    actual = "//thirdparty/crates/rust_decimal_macros-1.37.1:rust_decimal_macros",
     tags = ["manual"],
 )
 
@@ -447,18 +423,6 @@ alias(
 alias(
     name = "tokio-tungstenite",
     actual = "//thirdparty/crates/tokio-tungstenite-0.26.2:tokio_tungstenite",
-    tags = ["manual"],
-)
-
-alias(
-    name = "tonic-0.12.3",
-    actual = "//thirdparty/crates/tonic-0.12.3:tonic",
-    tags = ["manual"],
-)
-
-alias(
-    name = "tonic",
-    actual = "//thirdparty/crates/tonic-0.12.3:tonic",
     tags = ["manual"],
 )
 

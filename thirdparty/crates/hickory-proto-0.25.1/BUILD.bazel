@@ -108,7 +108,7 @@ rust_library(
         "//thirdparty/crates/futures-util-0.3.31:futures_util",
         "//thirdparty/crates/idna-1.0.3:idna",
         "//thirdparty/crates/ipnet-2.11.0:ipnet",
-        "//thirdparty/crates/once_cell-1.21.1:once_cell",
+        "//thirdparty/crates/once_cell-1.21.3:once_cell",
         "//thirdparty/crates/rand-0.9.0:rand",
         "//thirdparty/crates/ring-0.17.14:ring",
         "//thirdparty/crates/thiserror-2.0.12:thiserror",

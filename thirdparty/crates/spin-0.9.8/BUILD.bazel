@@ -22,9 +22,6 @@ rust_library(
         include = ["**/*.rs"],
         allow_empty = False,
     ),
-    aliases = {
-        "//thirdparty/crates/lock_api-0.4.12:lock_api": "lock_api_crate",
-    },
     compile_data = glob(
         include = ["**"],
         allow_empty = True,
@@ -38,14 +35,7 @@ rust_library(
         ],
     ),
     crate_features = [
-        "barrier",
-        "default",
-        "lazy",
-        "lock_api",
-        "lock_api_crate",
         "mutex",
-        "once",
-        "rwlock",
         "spin_mutex",
     ],
     crate_root = "src/lib.rs",
@@ -103,7 +93,4 @@ rust_library(
         "//conditions:default": ["@platforms//:incompatible"],
     }),
     version = "0.9.8",
-    deps = [
-        "//thirdparty/crates/lock_api-0.4.12:lock_api",
-    ],
 )

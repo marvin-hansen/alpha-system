@@ -38,15 +38,12 @@ rust_library(
         "bytes",
         "default",
         "fs",
-        "full",
         "io-std",
         "io-util",
         "libc",
         "macros",
         "mio",
         "net",
-        "parking_lot",
-        "process",
         "rt",
         "rt-multi-thread",
         "signal",
@@ -128,7 +125,6 @@ rust_library(
     deps = [
         "//thirdparty/crates/bytes-1.10.1:bytes",
         "//thirdparty/crates/mio-1.0.3:mio",
-        "//thirdparty/crates/parking_lot-0.12.3:parking_lot",
         "//thirdparty/crates/pin-project-lite-0.2.16:pin_project_lite",
     ] + select({
         "@rules_rust//rust/platform:aarch64-apple-darwin": [
