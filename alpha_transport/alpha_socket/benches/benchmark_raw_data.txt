@@ -1,0 +1,89 @@
+    Hardware Overview:
+
+      Model Name: MacBook Pro
+      Model Identifier: Mac15,8
+      Chip: Apple M3 Max
+      Total Number of Cores: 16 (12 performance and 4 efficiency)
+      Memory: 128 GB
+
+Benchmarking Unix Socket Latency: Write 128 Bytes/single: Collecting 100 samples in estimated 5.0022 s (8.8M iterations)
+
+Latency Histogram:
+Min:    208 ns
+Max:    3125 ns
+Mean:    277.23 ns
+Std Dev: 3215.67 ns
+p50:     250 ns
+p90:     333 ns
+p99:     375 ns
+p99.9:   417 ns
+p99.99:  3125 ns
+
+Latency Histogram:
+Min:    208 ns
+Max:    1208 ns
+Mean:    268.88 ns
+Std Dev: 1850.59 ns
+p50:     250 ns
+p90:     292 ns
+p99:     375 ns
+p99.9:   459 ns
+p99.99:  1208 ns
+
+Latency Histogram:
+Min:    208 ns
+Max:    2833 ns
+Mean:    265.78 ns
+Std Dev: 3181.18 ns
+p50:     250 ns
+p90:     292 ns
+p99:     375 ns
+p99.9:   417 ns
+p99.99:  2833 ns
+
+Unix Socket Latency: Write 128 Bytes/single
+                        time:   [565.32 ns 566.08 ns 566.95 ns]
+Found 7 outliers among 100 measurements (7.00%)
+  5 (5.00%) high mild
+  2 (2.00%) high severe
+
+
+Benchmarking Alpha Socket Latency: Write 128 Bytes/single: Collecting 100 samples in estimated 5.0002 s (98M iterations)
+
+Latency Histogram:
+Min:    0 ns
+Max:    250 ns
+Mean:    12.97 ns
+Std Dev: 2733.93 ns
+p50:     0 ns
+p90:     42 ns
+p99:     42 ns
+p99.9:   42 ns
+p99.99:  250 ns
+
+Latency Histogram:
+Min:    0 ns
+Max:    209 ns
+Mean:    12.81 ns
+Std Dev: 3970.02 ns
+p50:     0 ns
+p90:     42 ns
+p99:     42 ns
+p99.9:   167 ns
+p99.99:  209 ns
+
+Latency Histogram:
+Min:    0 ns
+Max:    1875 ns
+Mean:    12.94 ns
+Std Dev: 5070.25 ns
+p50:     0 ns
+p90:     42 ns
+p99:     42 ns
+p99.9:   42 ns
+p99.99:  208 ns
+
+Alpha Socket Latency: Write 128 Bytes/single
+                        time:   [50.448 ns 50.627 ns 50.850 ns]
+Found 5 outliers among 100 measurements (5.00%)
+  5 (5.00%) high mild

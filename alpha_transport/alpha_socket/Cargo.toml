@@ -1,0 +1,40 @@
+[package]
+name = "alpha_socket"
+version = "0.1.0"
+edition.workspace = true
+rust-version.workspace = true
+readme.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+[dependencies]
+# Internal dependencies
+binary_protocol = {workspace = true}
+stream_errors = {workspace = true}
+
+# External dependencies
+bytes = {workspace = true}
+memmap2 = {workspace = true}
+tempfile = {workspace = true}
+
+
+[dev-dependencies]
+criterion = {workspace = true}
+hdrhistogram = {workspace = true}
+
+[[bench]]
+name = "alpha_socket_benches"
+harness = false
+
+[[example]]
+name = "echo_client"
+path = "examples/echo/client/main.rs"
+
+[[example]]
+name = "echo_server"
+path = "examples/echo/server/main.rs"
+
+[lints]
+workspace = true
+
+

@@ -1,0 +1,37 @@
+load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_doc_test", "rust_library")
+
+rust_library(
+    name = "alpha_socket",
+    srcs = glob([
+        "src/**",
+    ]),
+    crate_root = "src/lib.rs",
+    tags = [
+        "alpha_socket",
+        "errors",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        # Internal crates
+        "//alias:binary_protocol",
+        "//alias:stream_errors",
+        # External crates
+        "//thirdparty/crates:bytes",
+        "//thirdparty/crates:memmap2",
+        "//thirdparty/crates:tempfile",
+    ],
+)
+
+rust_doc(
+    name = "doc",
+    crate = ":alpha_socket",
+    tags = ["doc"],
+    visibility = ["//visibility:public"],
+)
+
+rust_doc_test(
+    name = "doc_test",
+    crate = ":alpha_socket",
+    tags = ["doc-test"],
+    visibility = ["//visibility:public"],
+)

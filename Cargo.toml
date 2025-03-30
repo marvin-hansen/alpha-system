@@ -20,6 +20,7 @@ members = [
     "alpha_system/mds/*/*",
     "alpha_system/template/*",
     "alpha_traits/*",
+    "alpha_transport/*",
     "alpha_utils/*",
     "alpha_utils_test/*",
 ]
@@ -131,6 +132,9 @@ proto_mddb_utils = { path = "alpha_proto/proto_mddb_utils" }
 proto_smdb = { path = "alpha_proto/proto_smdb" }
 proto_smdb_utils = { path = "alpha_proto/proto_smdb_utils" }
 
+# Protocol
+binary_protocol = { path = "alpha_protocol/binary_protocol" }
+
 # SBE
 sbe_bindings = { path = "alpha_sbe/sbe_bindings" }
 sbe_messages_client = { path = "alpha_sbe/sbe_messages_client" }
@@ -174,6 +178,9 @@ trait_data_integration = { path = "alpha_traits/trait_data_integration" }
 trait_event_consumer = { path = "alpha_traits/trait_event_consumer" }
 trait_event_processor = { path = "alpha_traits/trait_event_processor" }
 trait_exec_integration = { path = "alpha_traits/trait_exec_integration" }
+
+# Tranport
+alpha_socket = { path = "alpha_transport/alpha_socket" }
 
 # Utils
 client_utils = { path = "alpha_utils/client_utils" }
