@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::RingBuffer;
 use std::io;
 use std::io::{ErrorKind, Write};

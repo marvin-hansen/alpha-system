@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::ring_buffer::HEADER_SIZE;
 use crate::{RingBuffer, RingBufferHeader};
 use std::path::PathBuf;

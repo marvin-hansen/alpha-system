@@ -1,6 +1,12 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 mod getters;
 mod read;
+mod read_batch;
 mod write;
+mod write_batch;
 
 use memmap2::{MmapMut, MmapOptions};
 use std::fs::OpenOptions;
