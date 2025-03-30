@@ -23,7 +23,7 @@ fn test_order_update_extension() {
     );
 
     // Full encoding / decoding test suite is in
-    // queng_sbe/sbe_messages_order/tests/order_update
+    // alpha_sbe/sbe_messages_order/tests/order_update
 
     // let (_, encoded) = order.clone().encode_to_sbe().unwrap();
     // let decoded = OrderUpdate::decode_from_sbe(encoded.as_slice()).unwrap();

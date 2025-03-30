@@ -7,7 +7,7 @@ members = [
     "alpha_datastructures/*",
     "alpha_extensions/*",
     "alpha_import/*/*",
-    "alpha_infra/*/*",
+    "alpha_infra/postgres/*",
     "alpha_integration/data/*",
     "alpha_macros/*",
     "queng_message/*",

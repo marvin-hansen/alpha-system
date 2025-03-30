@@ -106,10 +106,10 @@ It serves as the foundation for shared functionality across the entire system, e
 
 Each component can be included individually in your Cargo.toml:
 
-```toml
+```toml 
 [dependencies]
-common_exchange = { path = "path/to/queng_common/common_exchange" }
-common_data_bar = { path = "path/to/queng_common/common_data_bar" }
+common_exchange = { path = "path/to/alpha_common/common_exchange" }
+common_data_bar = { path = "path/to/alpha_common/common_data_bar" }
 # ... other components as needed
 ```
 

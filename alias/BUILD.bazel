@@ -230,23 +230,6 @@ alias(
 # Infra
 ###############################################################################
 
-# Clickhouse
-##############
-alias(
-    name = "clickhouse_config_manager",
-    actual = "//alpha_infra/clickhouse/clickhouse_config_manager",
-)
-
-alias(
-    name = "clickhouse_utils",
-    actual = "//alpha_infra/clickhouse/clickhouse_utils",
-)
-
-alias(
-    name = "db_clickhouse_manager",
-    actual = "//alpha_infra/clickhouse/db_clickhouse_manager",
-)
-
 # Postgres
 ##############
 alias(

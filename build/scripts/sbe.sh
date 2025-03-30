@@ -17,7 +17,7 @@ command java --version >/dev/null 2>&1 || {
 }
 
 #  https://github.com/real-logic/simple-binary-encoding?tab=readme-ov-file
-command java --add-opens java.base/jdk.internal.misc=ALL-UNNAMED -Dsbe.xinclude.aware=true -Dsbe.generate.ir=true -Dsbe.target.language=Rust -Dsbe.target.namespace=sbe -Dsbe.output.dir=queng_sbe/ -Dsbe.errorLog=yes -jar tools/sbe/sbe-all-1.35.0.jar queng_sbe/sbe_schema/schema.xml
+command java --add-opens java.base/jdk.internal.misc=ALL-UNNAMED -Dsbe.xinclude.aware=true -Dsbe.generate.ir=true -Dsbe.target.language=Rust -Dsbe.target.namespace=sbe -Dsbe.output.dir=queng_sbe/ -Dsbe.errorLog=yes -jar tools/sbe/sbe-all-1.35.0.jar alpha_sbe/sbe_schema/schema.xml
 
 # Check if folder queng_sbe/sbe_bindings exists, and if so remove it
 if [ -d "queng_sbe/sbe_bindings" ]; then
