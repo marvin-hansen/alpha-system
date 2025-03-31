@@ -1,4 +1,4 @@
-pub(crate) mod alpha_stream;
+pub(crate) mod alpha_socket;
 mod binary_protocol;
 
 // Constants used in both, AlphaSocket and AlphaListener

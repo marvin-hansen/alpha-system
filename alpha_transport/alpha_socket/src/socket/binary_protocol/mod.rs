@@ -1,17 +1,17 @@
-use crate::AlphaStream;
+use crate::AlphaSocket;
 use binary_protocol::{BinaryClient, BinaryProtocol, Client, ConnectionClient};
 use bytes::{Bytes, BytesMut};
 use std::io::{Read, Write};
 use std::path::Path;
 use stream_errors::{ClientError, StreamError};
 
-impl BinaryClient for AlphaStream {}
+impl BinaryClient for AlphaSocket {}
 
-impl Client for AlphaStream {}
+impl Client for AlphaSocket {}
 
-impl ConnectionClient for AlphaStream {
+impl ConnectionClient for AlphaSocket {
     fn connect<P: AsRef<Path>>(&self, path: P) -> Result<(), ClientError> {
-        match AlphaStream::connect(path) {
+        match AlphaSocket::connect(path) {
             Ok(_) => Ok(()),
             Err(e) => {
                 eprintln!("Error: {}", e);
@@ -21,7 +21,7 @@ impl ConnectionClient for AlphaStream {
     }
 
     fn shutdown(&self) -> Result<(), ClientError> {
-        match AlphaStream::shutdown(self) {
+        match AlphaSocket::shutdown(self) {
             Ok(()) => Ok(()),
             Err(e) => {
                 eprintln!("Error: {}", e);
@@ -31,7 +31,7 @@ impl ConnectionClient for AlphaStream {
     }
 }
 
-impl BinaryProtocol for AlphaStream {
+impl BinaryProtocol for AlphaSocket {
     fn send_all(&mut self, buf: &mut [u8]) -> Result<(), StreamError> {
         match self.write_all(buf) {
             Ok(()) => Ok(()),

@@ -1,1 +1,1 @@
-//alias/client:ims_data_client
+//alias:alpha_socket

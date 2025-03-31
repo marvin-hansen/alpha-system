@@ -1,5 +1,5 @@
 use alpha_socket::AlphaListener;
-use alpha_socket::AlphaStream;
+use alpha_socket::AlphaSocket;
 use std::sync::{Arc, Mutex};
 use std::thread;
 use std::time::Duration;
@@ -69,7 +69,7 @@ fn test_unix_stream_echo() {
     );
 
     // Connect client with retry
-    let mut client = AlphaStream::connect(&socket_path).expect("Failed to connect");
+    let mut client = AlphaSocket::connect(&socket_path).expect("Failed to connect");
 
     // Send test data
     let test_data = b"Hello, AlphaSocket!";
@@ -140,7 +140,7 @@ fn test_unix_stream_multiple_messages() {
     );
 
     // Connect client
-    let mut client = AlphaStream::connect(&socket_path).expect("Failed to connect");
+    let mut client = AlphaSocket::connect(&socket_path).expect("Failed to connect");
 
     // Send 5 test messages (all same length for array type)
     let messages = [
@@ -228,7 +228,7 @@ fn test_unix_stream_concurrent_clients() {
             // Wait to ensure the server is ready
             thread::sleep(Duration::from_millis(100 * i as u64));
 
-            let mut client = match AlphaStream::connect(&client_path) {
+            let mut client = match AlphaSocket::connect(&client_path) {
                 Ok(c) => c,
                 Err(e) => panic!("Client {} failed to connect: {}", i, e),
             };
@@ -270,7 +270,7 @@ fn test_alpha_stream_pair() {
 
     // Create a pair of connected streams
     println!("Creating stream pair");
-    let (mut client, mut server) = AlphaStream::pair().expect("Failed to create stream pair");
+    let (mut client, mut server) = AlphaSocket::pair().expect("Failed to create stream pair");
     println!("Stream pair created successfully");
 
     // Test data to send

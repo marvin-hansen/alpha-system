@@ -1,5 +1,5 @@
-use crate::socket_stream::{DEFAULT_BUFFER_SIZE, DEFAULT_TIMEOUT_MS};
-use crate::{AlphaStream, RingBuffer, RingBufferHeader};
+use crate::socket::{DEFAULT_BUFFER_SIZE, DEFAULT_TIMEOUT_MS};
+use crate::{AlphaSocket, RingBuffer, RingBufferHeader};
 use std::fs::{File, OpenOptions};
 use std::io::ErrorKind;
 use std::os::unix::fs::OpenOptionsExt;
@@ -85,7 +85,7 @@ impl AlphaListener {
     }
 
     /// Accept a single connection
-    pub fn accept(&self) -> io::Result<AlphaStream> {
+    pub fn accept(&self) -> io::Result<AlphaSocket> {
         // Wait for client to create its write buffer
         let client_write_path = &self.client_write_path;
         let start = Instant::now();
@@ -108,7 +108,7 @@ impl AlphaListener {
         // Keep socket file open
         let keep_alive = File::open(&self.path)?;
 
-        Ok(AlphaStream::new(read_buffer, write_buffer, keep_alive))
+        Ok(AlphaSocket::new(read_buffer, write_buffer, keep_alive))
     }
 
     /// Creates a new independently owned handle to the underlying socket.
@@ -159,9 +159,9 @@ pub struct Incoming {
 }
 
 impl Iterator for Incoming {
-    type Item = io::Result<AlphaStream>;
+    type Item = io::Result<AlphaSocket>;
 
-    fn next(&mut self) -> Option<io::Result<AlphaStream>> {
+    fn next(&mut self) -> Option<io::Result<AlphaSocket>> {
         Some(self.listener.accept())
     }
 }

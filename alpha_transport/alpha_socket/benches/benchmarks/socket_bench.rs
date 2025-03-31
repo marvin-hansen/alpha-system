@@ -1,5 +1,5 @@
 use crate::benchmarks::utils;
-use alpha_socket::AlphaStream;
+use alpha_socket::AlphaSocket;
 use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
 use hdrhistogram::Histogram;
 use std::io::{Read, Write};
@@ -44,7 +44,7 @@ fn benchmark_unix_stream_latency(c: &mut Criterion) {
 }
 
 fn benchmark_alpha_stream_latency(c: &mut Criterion) {
-    let (mut client_stream, mut server_stream) = AlphaStream::pair().unwrap();
+    let (mut client_stream, mut server_stream) = AlphaSocket::pair().unwrap();
     let mut read_buf = vec![0u8; DATA_SIZE];
 
     c.bench_with_input(

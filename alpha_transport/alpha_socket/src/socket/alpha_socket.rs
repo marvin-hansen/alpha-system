@@ -1,4 +1,4 @@
-use crate::socket_stream::{DEFAULT_BUFFER_SIZE, DEFAULT_TIMEOUT_MS};
+use crate::socket::{DEFAULT_BUFFER_SIZE, DEFAULT_TIMEOUT_MS};
 use crate::{RingBuffer, RingBufferHeader};
 use std::fs::{File, OpenOptions};
 use std::io::{ErrorKind, Read, Write};
@@ -10,13 +10,13 @@ use std::{io, thread};
 /// A Unix domain socket stream implementation using AlphaSocket technology
 ///
 /// This stream can be used to read and write data to a Unix domain socket
-pub struct AlphaStream {
+pub struct AlphaSocket {
     read_buffer: RingBuffer,
     write_buffer: RingBuffer,
     _keep_alive: File, // Keep socket file open for the lifetime of the stream
 }
 
-impl AlphaStream {
+impl AlphaSocket {
     pub fn new(read_buffer: RingBuffer, write_buffer: RingBuffer, keep_alive: File) -> Self {
         Self {
             read_buffer,
@@ -25,13 +25,13 @@ impl AlphaStream {
         }
     }
 }
-impl Read for AlphaStream {
+impl Read for AlphaSocket {
     fn read(&mut self, buf: &mut [u8]) -> io::Result<usize> {
         self.read_buffer.read(buf)
     }
 }
 
-impl Write for AlphaStream {
+impl Write for AlphaSocket {
     fn write(&mut self, buf: &[u8]) -> io::Result<usize> {
         self.write_buffer.write(buf)
     }
@@ -41,7 +41,7 @@ impl Write for AlphaStream {
     }
 }
 
-impl AlphaStream {
+impl AlphaSocket {
     pub fn read_with_retry(&mut self, buf: &mut [u8], max_retries: usize) -> io::Result<usize> {
         let mut attempt = 0;
         let sleep_time = Duration::from_micros(500);
@@ -179,9 +179,9 @@ impl AlphaStream {
     /// # Examples
     ///
     /// ```
-    /// use alpha_socket::AlphaStream;
+    /// use alpha_socket::AlphaSocket;
     ///
-    /// let (stream1, stream2) = AlphaStream::pair().expect("Failed to create stream pair");
+    /// let (stream1, stream2) = AlphaSocket::pair().expect("Failed to create stream pair");
     /// ```
     pub fn pair() -> io::Result<(Self, Self)> {
         // Create a temporary directory
@@ -242,7 +242,7 @@ impl AlphaStream {
     }
 }
 
-impl Drop for AlphaStream {
+impl Drop for AlphaSocket {
     fn drop(&mut self) {
         // Clean up client write buffer file
         let write_path = self.write_buffer.path();

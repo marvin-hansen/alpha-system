@@ -1,4 +1,4 @@
-use alpha_socket::AlphaStream;
+use alpha_socket::AlphaSocket;
 use std::io::{Read, Write};
 use std::thread;
 use std::time::Duration;
@@ -10,7 +10,7 @@ fn main() -> std::io::Result<()> {
     thread::sleep(Duration::from_millis(100));
 
     // Connect to the socket
-    let mut socket = AlphaStream::connect(PATH)?;
+    let mut socket = AlphaSocket::connect(PATH)?;
 
     // Write to the socket
     let message = b"Hello world";

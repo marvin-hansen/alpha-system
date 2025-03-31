@@ -1,5 +1,5 @@
 use alpha_socket::AlphaListener;
-use alpha_socket::AlphaStream;
+use alpha_socket::AlphaSocket;
 use std::io::{Read, Write};
 use std::sync::Arc;
 use std::sync::atomic::{AtomicBool, Ordering};
@@ -95,7 +95,7 @@ fn test_basic_connection() {
 
         // Connect to server
         println!("Client: Connecting to socket...");
-        let mut stream = AlphaStream::connect(&socket_path).unwrap();
+        let mut stream = AlphaSocket::connect(&socket_path).unwrap();
         println!("Client: Connected successfully");
 
         // Prepare message
