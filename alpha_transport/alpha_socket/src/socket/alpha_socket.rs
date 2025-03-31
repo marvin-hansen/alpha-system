@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use crate::socket::{DEFAULT_BUFFER_SIZE, DEFAULT_TIMEOUT_MS};
 use crate::{RingBuffer, RingBufferHeader};
 use std::fs::{File, OpenOptions};

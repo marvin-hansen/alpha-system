@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use alpha_socket::AlphaListener;
 use alpha_socket::AlphaSocket;
 use std::sync::{Arc, Mutex};

@@ -1,4 +1,5 @@
 pub(crate) mod alpha_socket;
+pub(crate) mod alpha_socket_with_archiver;
 mod binary_protocol;
 
 // Constants used in both, AlphaSocket and AlphaListener

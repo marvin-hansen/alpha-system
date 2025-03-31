@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
+ */
+
 use alpha_socket::RingBuffer;
 use std::io::{Read, Write};
 use tempfile::tempdir;
