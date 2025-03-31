@@ -67,14 +67,14 @@ impl AlphaListener {
         server_write_file.sync_all()?;
 
         // Create an empty client write buffer file to signal readiness
-        // let client_write_file = OpenOptions::new()
-        //     .read(true)
-        //     .write(true)
-        //     .create(true)
-        //     .mode(0o666)
-        //     .truncate(true)
-        //     .open(&client_write_path)?;
-        // client_write_file.sync_all()?;
+        let client_write_file = OpenOptions::new()
+            .read(true)
+            .write(true)
+            .create(true)
+            .mode(0o666)
+            .truncate(true)
+            .open(&client_write_path)?;
+        client_write_file.sync_all()?;
 
         Ok(Self {
             path,

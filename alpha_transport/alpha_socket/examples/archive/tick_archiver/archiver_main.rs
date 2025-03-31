@@ -1,27 +1,25 @@
 use alpha_socket::{AlphaListener, AlphaSocket};
 use std::io::{self, BufRead, BufReader};
-use std::process;
 use std::sync::{
     Arc,
     atomic::{AtomicBool, Ordering},
 };
 use std::time::Duration;
+use std::{process, thread};
+
+const PATH: &str = "/tmp/alpha_archiver.sock";
 
 fn main() -> io::Result<()> {
     println!("Starting Tick Data Archiver...");
 
-    // Socket path
-    let archiver_path = "/tmp/alpha_archiver";
-
     // Remove any existing socket file
-    let _ = std::fs::remove_file(archiver_path);
+    let _ = std::fs::remove_file(PATH);
 
-    // Bind the socket using AlphaListener
-    println!("Binding to archiver socket at {}...", archiver_path);
-    let listener = AlphaListener::bind(archiver_path)?;
-    println!("Archiver socket created at {}", archiver_path);
+    // Bind to the socket
+    let listener = AlphaListener::bind(PATH)?;
+    println!("Listening on {}", PATH);
 
-    // Setup signal handling to gracefully shutdown on Ctrl-C
+    println!("Setup signal handling to gracefully shutdown on Ctrl-C");
     let running = Arc::new(AtomicBool::new(true));
     let r = running.clone();
     ctrlc::set_handler(move || {
@@ -30,27 +28,24 @@ fn main() -> io::Result<()> {
     })
     .expect("Error setting Ctrl-C handler");
 
-    // Accept connections in the main thread to ensure it's ready immediately
-    println!("Accept connections...");
-    for stream in listener.incoming() {
+    println!("Waiting for client connection...");
+    loop {
         if !running.load(Ordering::SeqCst) {
-            println!("Shutting down server...");
             break;
         }
-        match stream {
-            Ok(stream) => {
-                // Pass the running flag to the client handler
-                let client_running = running.clone();
-                handle_client(stream, client_running)
-                    .unwrap_or_else(|error| eprintln!("{:?}", error));
+
+        match listener.accept() {
+            Ok(stream) => handle_client(stream, running.clone())?,
+            Err(ref e) if e.kind() == io::ErrorKind::TimedOut => {
+                thread::sleep(Duration::from_millis(50));
+                continue;
             }
-            Err(err) => {
-                eprintln!("Error accepting connection: {:?}", err);
-            }
+            Err(e) => return Err(e),
         }
     }
 
-    println!("Got it! Exiting...");
+    println!("Server shutting down...");
+    let _ = std::fs::remove_file(PATH);
     process::exit(0);
 }
 
