@@ -30,6 +30,7 @@ impl AlphaListener {
         let server_write_path = path.with_extension("server-write");
         let _ = std::fs::remove_file(&server_write_path);
 
+        // Create client write buffer path
         let client_write_path = path.with_extension("client-write");
         let _ = std::fs::remove_file(&client_write_path);
 
@@ -66,14 +67,14 @@ impl AlphaListener {
         server_write_file.sync_all()?;
 
         // Create an empty client write buffer file to signal readiness
-        let client_write_file = OpenOptions::new()
-            .read(true)
-            .write(true)
-            .create(true)
-            .mode(0o666)
-            .truncate(true)
-            .open(&client_write_path)?;
-        client_write_file.sync_all()?;
+        // let client_write_file = OpenOptions::new()
+        //     .read(true)
+        //     .write(true)
+        //     .create(true)
+        //     .mode(0o666)
+        //     .truncate(true)
+        //     .open(&client_write_path)?;
+        // client_write_file.sync_all()?;
 
         Ok(Self {
             path,

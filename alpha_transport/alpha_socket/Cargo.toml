@@ -9,22 +9,37 @@ authors.workspace = true
 
 [dependencies]
 # Internal dependencies
-binary_protocol = {workspace = true}
-stream_errors = {workspace = true}
+binary_protocol = { workspace = true }
+stream_errors = { workspace = true }
 
 # External dependencies
-bytes = {workspace = true}
-memmap2 = {workspace = true}
-tempfile = {workspace = true}
+bytes = { workspace = true }
+memmap2 = { workspace = true }
+tempfile = { workspace = true }
+serde_json = { workspace = true }
 
 
 [dev-dependencies]
-criterion = {workspace = true}
-hdrhistogram = {workspace = true}
+ctrlc = { workspace = true }
+criterion = { workspace = true }
+hdrhistogram = { workspace = true }
+serde = { workspace = true }
 
 [[bench]]
 name = "alpha_socket_benches"
 harness = false
+
+[[example]]
+name = "tick_archiver"
+path = "examples/archive/tick_archiver/archiver_main.rs"
+
+[[example]]
+name = "tick_client"
+path = "examples/archive/tick_client/client_main.rs"
+
+[[example]]
+name = "tick_server"
+path = "examples/archive/tick_server/server_main.rs"
 
 [[example]]
 name = "echo_client"
