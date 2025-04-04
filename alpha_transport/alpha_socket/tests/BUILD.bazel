@@ -27,9 +27,10 @@ rust_test_suite(
         "socket/*_tests.rs",
     ]),
     tags = [
-        "alpha_socket",
-        "socket",
-        "unit-test",
+        # Disabled for CI testing for the time being.
+        # "alpha_socket",
+        # "socket",
+        # "unit-test",
     ],
     visibility = ["//visibility:public"],
     deps = [

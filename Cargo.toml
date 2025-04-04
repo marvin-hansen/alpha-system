@@ -211,8 +211,9 @@ bytes = { version = "1.8" }
 ctrlc = { version = "3.4" }
 chrono = { version = "0.4", features = ["serde"] }
 crossbeam = {version = "0.8"}
-diesel = { version = "2.2", default-features = false, features = ["postgres", "r2d2"] }
-# pq-sys = { version = "0.7.1", features = ["bundled_without_openssl"] }
+# diesel = { version = "2.2.8", default-features = false, features = ["postgres", "pq-src", "r2d2"] }
+diesel = { version = "2.2.8", features = ["postgres", "r2d2"] }
+pq-src = { version = "0.3.5+libpq-17.4" }
 diesel_migrations = { version = "2.2", default-features = false, features = ["postgres"] }
 futures = { version = "0.3" }
 futures-util = { version = "0.3" }
