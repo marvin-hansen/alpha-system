@@ -149,7 +149,7 @@ sbe_utils = { path = "alpha_sbe/sbe_utils" }
 kaiko_client = { path = "alpha_system/mds/kaiko/kaiko_client" }
 kaiko_proxy = { path = "alpha_system/mds/kaiko/kaiko_proxy" }
 # Non-Bazel targets since CloudFlare workers are build with Wrangler
-kaiko_cdn = { path = "alpha_system/mds/kaiko/kaiko_cdn" }
+# kaiko_cdn = { path = "alpha_system/mds/kaiko/kaiko_cdn" }
 kaiko_cdn_auth = { path = "alpha_system/mds/kaiko/kaiko_cdn_auth" }
 # Service template
 grpc_service = { path = "alpha_system/template/grpc_service" }
@@ -176,12 +176,12 @@ service_specs_all = { path = "alpha_specs/service_specs/service_specs_all" }
 
 # Traits
 trait_data_integration = { path = "alpha_traits/trait_data_integration" }
-trait_event_consumer = { path = "alpha_traits/trait_event_consumer" }
+# trait_event_consumer = { path = "alpha_traits/trait_event_consumer" }
 trait_event_processor = { path = "alpha_traits/trait_event_processor" }
-trait_exec_integration = { path = "alpha_traits/trait_exec_integration" }
+# trait_exec_integration = { path = "alpha_traits/trait_exec_integration" }
 
 # Tranport
-alpha_socket = { path = "alpha_transport/alpha_socket" }
+# alpha_socket = { path = "alpha_transport/alpha_socket" }
 
 # Utils
 client_utils = { path = "alpha_utils/client_utils" }
@@ -211,7 +211,8 @@ bytes = { version = "1.8" }
 ctrlc = { version = "3.4" }
 chrono = { version = "0.4", features = ["serde"] }
 crossbeam = {version = "0.8"}
-diesel = { version = "2.2", default-features = false, features = ["postgres", "pq-src", "r2d2"] }
+diesel = { version = "2.2", default-features = false, features = ["postgres", "r2d2"] }
+# pq-sys = { version = "0.7.1", features = ["bundled_without_openssl"] }
 diesel_migrations = { version = "2.2", default-features = false, features = ["postgres"] }
 futures = { version = "0.3" }
 futures-util = { version = "0.3" }
