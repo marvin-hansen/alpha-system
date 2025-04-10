@@ -99,6 +99,6 @@ rust_library(
         "//thirdparty/crates/futures-core-0.3.31:futures_core",
         "//thirdparty/crates/futures-sink-0.3.31:futures_sink",
         "//thirdparty/crates/pin-project-lite-0.2.16:pin_project_lite",
-        "//thirdparty/crates/tokio-1.44.1:tokio",
+        "//thirdparty/crates/tokio-1.44.2:tokio",
     ],
 )

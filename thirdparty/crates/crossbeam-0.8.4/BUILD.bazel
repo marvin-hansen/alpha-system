@@ -99,7 +99,7 @@ rust_library(
     }),
     version = "0.8.4",
     deps = [
-        "//thirdparty/crates/crossbeam-channel-0.5.14:crossbeam_channel",
+        "//thirdparty/crates/crossbeam-channel-0.5.15:crossbeam_channel",
         "//thirdparty/crates/crossbeam-deque-0.8.6:crossbeam_deque",
         "//thirdparty/crates/crossbeam-epoch-0.9.18:crossbeam_epoch",
         "//thirdparty/crates/crossbeam-queue-0.3.12:crossbeam_queue",

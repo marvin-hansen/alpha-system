@@ -95,7 +95,7 @@ rust_library(
     version = "0.4.1",
     deps = [
         "//thirdparty/crates/heck-0.5.0:heck",
-        "//thirdparty/crates/prettyplease-0.2.31:prettyplease",
+        "//thirdparty/crates/prettyplease-0.2.32:prettyplease",
         "//thirdparty/crates/proc-macro2-1.0.94:proc_macro2",
         "//thirdparty/crates/prost-0.13.5:prost",
         "//thirdparty/crates/prost-build-0.13.5:prost_build",
@@ -184,7 +184,7 @@ rust_binary(
     deps = [
         ":protoc_gen_tonic",
         "//thirdparty/crates/heck-0.5.0:heck",
-        "//thirdparty/crates/prettyplease-0.2.31:prettyplease",
+        "//thirdparty/crates/prettyplease-0.2.32:prettyplease",
         "//thirdparty/crates/proc-macro2-1.0.94:proc_macro2",
         "//thirdparty/crates/prost-0.13.5:prost",
         "//thirdparty/crates/prost-build-0.13.5:prost_build",

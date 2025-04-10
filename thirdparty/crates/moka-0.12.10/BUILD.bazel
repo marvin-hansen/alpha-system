@@ -98,13 +98,13 @@ rust_library(
     }),
     version = "0.12.10",
     deps = [
-        "//thirdparty/crates/crossbeam-channel-0.5.14:crossbeam_channel",
+        "//thirdparty/crates/crossbeam-channel-0.5.15:crossbeam_channel",
         "//thirdparty/crates/crossbeam-epoch-0.9.18:crossbeam_epoch",
         "//thirdparty/crates/crossbeam-utils-0.8.21:crossbeam_utils",
         "//thirdparty/crates/moka-0.12.10:build_script_build",
         "//thirdparty/crates/parking_lot-0.12.3:parking_lot",
         "//thirdparty/crates/portable-atomic-1.11.0:portable_atomic",
-        "//thirdparty/crates/smallvec-1.14.0:smallvec",
+        "//thirdparty/crates/smallvec-1.15.0:smallvec",
         "//thirdparty/crates/tagptr-0.2.0:tagptr",
         "//thirdparty/crates/thiserror-1.0.69:thiserror",
         "//thirdparty/crates/uuid-1.16.0:uuid",
@@ -150,6 +150,9 @@ cargo_build_script(
     ),
     edition = "2021",
     pkg_name = "moka",
+    rustc_env_files = [
+        ":cargo_toml_env_vars",
+    ],
     rustc_flags = [
         "--cap-lints=allow",
     ],

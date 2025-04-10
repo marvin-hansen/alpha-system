@@ -95,10 +95,10 @@ rust_library(
     }),
     version = "0.4.22",
     deps = [
-        "//thirdparty/crates/flate2-1.1.0:flate2",
+        "//thirdparty/crates/flate2-1.1.1:flate2",
         "//thirdparty/crates/futures-core-0.3.31:futures_core",
         "//thirdparty/crates/memchr-2.7.4:memchr",
         "//thirdparty/crates/pin-project-lite-0.2.16:pin_project_lite",
-        "//thirdparty/crates/tokio-1.44.1:tokio",
+        "//thirdparty/crates/tokio-1.44.2:tokio",
     ],
 )

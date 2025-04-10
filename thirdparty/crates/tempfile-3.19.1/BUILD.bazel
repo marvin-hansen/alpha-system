@@ -99,19 +99,19 @@ rust_library(
     ] + select({
         "@rules_rust//rust/platform:aarch64-apple-darwin": [
             "//thirdparty/crates/getrandom-0.3.2:getrandom",  # aarch64-apple-darwin
-            "//thirdparty/crates/rustix-1.0.3:rustix",  # cfg(any(unix, target_os = "wasi"))
+            "//thirdparty/crates/rustix-1.0.5:rustix",  # cfg(any(unix, target_os = "wasi"))
         ],
         "@rules_rust//rust/platform:aarch64-apple-ios": [
             "//thirdparty/crates/getrandom-0.3.2:getrandom",  # aarch64-apple-ios
-            "//thirdparty/crates/rustix-1.0.3:rustix",  # cfg(any(unix, target_os = "wasi"))
+            "//thirdparty/crates/rustix-1.0.5:rustix",  # cfg(any(unix, target_os = "wasi"))
         ],
         "@rules_rust//rust/platform:aarch64-apple-ios-sim": [
             "//thirdparty/crates/getrandom-0.3.2:getrandom",  # aarch64-apple-ios-sim
-            "//thirdparty/crates/rustix-1.0.3:rustix",  # cfg(any(unix, target_os = "wasi"))
+            "//thirdparty/crates/rustix-1.0.5:rustix",  # cfg(any(unix, target_os = "wasi"))
         ],
         "@rules_rust//rust/platform:aarch64-linux-android": [
             "//thirdparty/crates/getrandom-0.3.2:getrandom",  # aarch64-linux-android
-            "//thirdparty/crates/rustix-1.0.3:rustix",  # cfg(any(unix, target_os = "wasi"))
+            "//thirdparty/crates/rustix-1.0.5:rustix",  # cfg(any(unix, target_os = "wasi"))
         ],
         "@rules_rust//rust/platform:aarch64-pc-windows-msvc": [
             "//thirdparty/crates/getrandom-0.3.2:getrandom",  # aarch64-pc-windows-msvc
@@ -119,39 +119,39 @@ rust_library(
         ],
         "@rules_rust//rust/platform:aarch64-unknown-fuchsia": [
             "//thirdparty/crates/getrandom-0.3.2:getrandom",  # aarch64-unknown-fuchsia
-            "//thirdparty/crates/rustix-1.0.3:rustix",  # cfg(any(unix, target_os = "wasi"))
+            "//thirdparty/crates/rustix-1.0.5:rustix",  # cfg(any(unix, target_os = "wasi"))
         ],
         "@rules_rust//rust/platform:aarch64-unknown-linux-gnu": [
             "//thirdparty/crates/getrandom-0.3.2:getrandom",  # aarch64-unknown-linux-gnu
-            "//thirdparty/crates/rustix-1.0.3:rustix",  # cfg(any(unix, target_os = "wasi"))
+            "//thirdparty/crates/rustix-1.0.5:rustix",  # cfg(any(unix, target_os = "wasi"))
         ],
         "@rules_rust//rust/platform:aarch64-unknown-nixos-gnu": [
             "//thirdparty/crates/getrandom-0.3.2:getrandom",  # aarch64-unknown-linux-gnu, aarch64-unknown-nixos-gnu
-            "//thirdparty/crates/rustix-1.0.3:rustix",  # cfg(any(unix, target_os = "wasi"))
+            "//thirdparty/crates/rustix-1.0.5:rustix",  # cfg(any(unix, target_os = "wasi"))
         ],
         "@rules_rust//rust/platform:aarch64-unknown-nto-qnx710": [
             "//thirdparty/crates/getrandom-0.3.2:getrandom",  # aarch64-unknown-nto-qnx710
-            "//thirdparty/crates/rustix-1.0.3:rustix",  # cfg(any(unix, target_os = "wasi"))
+            "//thirdparty/crates/rustix-1.0.5:rustix",  # cfg(any(unix, target_os = "wasi"))
         ],
         "@rules_rust//rust/platform:arm-unknown-linux-gnueabi": [
             "//thirdparty/crates/getrandom-0.3.2:getrandom",  # arm-unknown-linux-gnueabi
-            "//thirdparty/crates/rustix-1.0.3:rustix",  # cfg(any(unix, target_os = "wasi"))
+            "//thirdparty/crates/rustix-1.0.5:rustix",  # cfg(any(unix, target_os = "wasi"))
         ],
         "@rules_rust//rust/platform:armv7-linux-androideabi": [
             "//thirdparty/crates/getrandom-0.3.2:getrandom",  # armv7-linux-androideabi
-            "//thirdparty/crates/rustix-1.0.3:rustix",  # cfg(any(unix, target_os = "wasi"))
+            "//thirdparty/crates/rustix-1.0.5:rustix",  # cfg(any(unix, target_os = "wasi"))
         ],
         "@rules_rust//rust/platform:armv7-unknown-linux-gnueabi": [
             "//thirdparty/crates/getrandom-0.3.2:getrandom",  # armv7-unknown-linux-gnueabi
-            "//thirdparty/crates/rustix-1.0.3:rustix",  # cfg(any(unix, target_os = "wasi"))
+            "//thirdparty/crates/rustix-1.0.5:rustix",  # cfg(any(unix, target_os = "wasi"))
         ],
         "@rules_rust//rust/platform:i686-apple-darwin": [
             "//thirdparty/crates/getrandom-0.3.2:getrandom",  # i686-apple-darwin
-            "//thirdparty/crates/rustix-1.0.3:rustix",  # cfg(any(unix, target_os = "wasi"))
+            "//thirdparty/crates/rustix-1.0.5:rustix",  # cfg(any(unix, target_os = "wasi"))
         ],
         "@rules_rust//rust/platform:i686-linux-android": [
             "//thirdparty/crates/getrandom-0.3.2:getrandom",  # i686-linux-android
-            "//thirdparty/crates/rustix-1.0.3:rustix",  # cfg(any(unix, target_os = "wasi"))
+            "//thirdparty/crates/rustix-1.0.5:rustix",  # cfg(any(unix, target_os = "wasi"))
         ],
         "@rules_rust//rust/platform:i686-pc-windows-msvc": [
             "//thirdparty/crates/getrandom-0.3.2:getrandom",  # i686-pc-windows-msvc
@@ -159,35 +159,35 @@ rust_library(
         ],
         "@rules_rust//rust/platform:i686-unknown-freebsd": [
             "//thirdparty/crates/getrandom-0.3.2:getrandom",  # i686-unknown-freebsd
-            "//thirdparty/crates/rustix-1.0.3:rustix",  # cfg(any(unix, target_os = "wasi"))
+            "//thirdparty/crates/rustix-1.0.5:rustix",  # cfg(any(unix, target_os = "wasi"))
         ],
         "@rules_rust//rust/platform:i686-unknown-linux-gnu": [
             "//thirdparty/crates/getrandom-0.3.2:getrandom",  # i686-unknown-linux-gnu
-            "//thirdparty/crates/rustix-1.0.3:rustix",  # cfg(any(unix, target_os = "wasi"))
+            "//thirdparty/crates/rustix-1.0.5:rustix",  # cfg(any(unix, target_os = "wasi"))
         ],
         "@rules_rust//rust/platform:powerpc-unknown-linux-gnu": [
             "//thirdparty/crates/getrandom-0.3.2:getrandom",  # powerpc-unknown-linux-gnu
-            "//thirdparty/crates/rustix-1.0.3:rustix",  # cfg(any(unix, target_os = "wasi"))
+            "//thirdparty/crates/rustix-1.0.5:rustix",  # cfg(any(unix, target_os = "wasi"))
         ],
         "@rules_rust//rust/platform:s390x-unknown-linux-gnu": [
             "//thirdparty/crates/getrandom-0.3.2:getrandom",  # s390x-unknown-linux-gnu
-            "//thirdparty/crates/rustix-1.0.3:rustix",  # cfg(any(unix, target_os = "wasi"))
+            "//thirdparty/crates/rustix-1.0.5:rustix",  # cfg(any(unix, target_os = "wasi"))
         ],
         "@rules_rust//rust/platform:wasm32-wasip1": [
             "//thirdparty/crates/getrandom-0.3.2:getrandom",  # wasm32-wasip1
-            "//thirdparty/crates/rustix-1.0.3:rustix",  # cfg(any(unix, target_os = "wasi"))
+            "//thirdparty/crates/rustix-1.0.5:rustix",  # cfg(any(unix, target_os = "wasi"))
         ],
         "@rules_rust//rust/platform:x86_64-apple-darwin": [
             "//thirdparty/crates/getrandom-0.3.2:getrandom",  # x86_64-apple-darwin
-            "//thirdparty/crates/rustix-1.0.3:rustix",  # cfg(any(unix, target_os = "wasi"))
+            "//thirdparty/crates/rustix-1.0.5:rustix",  # cfg(any(unix, target_os = "wasi"))
         ],
         "@rules_rust//rust/platform:x86_64-apple-ios": [
             "//thirdparty/crates/getrandom-0.3.2:getrandom",  # x86_64-apple-ios
-            "//thirdparty/crates/rustix-1.0.3:rustix",  # cfg(any(unix, target_os = "wasi"))
+            "//thirdparty/crates/rustix-1.0.5:rustix",  # cfg(any(unix, target_os = "wasi"))
         ],
         "@rules_rust//rust/platform:x86_64-linux-android": [
             "//thirdparty/crates/getrandom-0.3.2:getrandom",  # x86_64-linux-android
-            "//thirdparty/crates/rustix-1.0.3:rustix",  # cfg(any(unix, target_os = "wasi"))
+            "//thirdparty/crates/rustix-1.0.5:rustix",  # cfg(any(unix, target_os = "wasi"))
         ],
         "@rules_rust//rust/platform:x86_64-pc-windows-msvc": [
             "//thirdparty/crates/getrandom-0.3.2:getrandom",  # x86_64-pc-windows-msvc
@@ -195,19 +195,19 @@ rust_library(
         ],
         "@rules_rust//rust/platform:x86_64-unknown-freebsd": [
             "//thirdparty/crates/getrandom-0.3.2:getrandom",  # x86_64-unknown-freebsd
-            "//thirdparty/crates/rustix-1.0.3:rustix",  # cfg(any(unix, target_os = "wasi"))
+            "//thirdparty/crates/rustix-1.0.5:rustix",  # cfg(any(unix, target_os = "wasi"))
         ],
         "@rules_rust//rust/platform:x86_64-unknown-fuchsia": [
             "//thirdparty/crates/getrandom-0.3.2:getrandom",  # x86_64-unknown-fuchsia
-            "//thirdparty/crates/rustix-1.0.3:rustix",  # cfg(any(unix, target_os = "wasi"))
+            "//thirdparty/crates/rustix-1.0.5:rustix",  # cfg(any(unix, target_os = "wasi"))
         ],
         "@rules_rust//rust/platform:x86_64-unknown-linux-gnu": [
             "//thirdparty/crates/getrandom-0.3.2:getrandom",  # x86_64-unknown-linux-gnu
-            "//thirdparty/crates/rustix-1.0.3:rustix",  # cfg(any(unix, target_os = "wasi"))
+            "//thirdparty/crates/rustix-1.0.5:rustix",  # cfg(any(unix, target_os = "wasi"))
         ],
         "@rules_rust//rust/platform:x86_64-unknown-nixos-gnu": [
             "//thirdparty/crates/getrandom-0.3.2:getrandom",  # x86_64-unknown-linux-gnu, x86_64-unknown-nixos-gnu
-            "//thirdparty/crates/rustix-1.0.3:rustix",  # cfg(any(unix, target_os = "wasi"))
+            "//thirdparty/crates/rustix-1.0.5:rustix",  # cfg(any(unix, target_os = "wasi"))
         ],
         "//conditions:default": [],
     }),

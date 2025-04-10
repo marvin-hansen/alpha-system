@@ -67,26 +67,26 @@ alias(
 )
 
 alias(
-    name = "blake3-1.7.0",
-    actual = "//thirdparty/crates/blake3-1.7.0:blake3",
+    name = "blake3-1.8.1",
+    actual = "//thirdparty/crates/blake3-1.8.1:blake3",
     tags = ["manual"],
 )
 
 alias(
     name = "blake3",
-    actual = "//thirdparty/crates/blake3-1.7.0:blake3",
+    actual = "//thirdparty/crates/blake3-1.8.1:blake3",
     tags = ["manual"],
 )
 
 alias(
-    name = "bon-3.5.1",
-    actual = "//thirdparty/crates/bon-3.5.1:bon",
+    name = "bon-3.5.2",
+    actual = "//thirdparty/crates/bon-3.5.2:bon",
     tags = ["manual"],
 )
 
 alias(
     name = "bon",
-    actual = "//thirdparty/crates/bon-3.5.1:bon",
+    actual = "//thirdparty/crates/bon-3.5.2:bon",
     tags = ["manual"],
 )
 
@@ -127,14 +127,14 @@ alias(
 )
 
 alias(
-    name = "diesel-2.2.8",
-    actual = "//thirdparty/crates/diesel-2.2.8:diesel",
+    name = "diesel-2.2.9",
+    actual = "//thirdparty/crates/diesel-2.2.9:diesel",
     tags = ["manual"],
 )
 
 alias(
     name = "diesel",
-    actual = "//thirdparty/crates/diesel-2.2.8:diesel",
+    actual = "//thirdparty/crates/diesel-2.2.9:diesel",
     tags = ["manual"],
 )
 
@@ -235,14 +235,14 @@ alias(
 )
 
 alias(
-    name = "mimalloc-0.1.44",
-    actual = "//thirdparty/crates/mimalloc-0.1.44:mimalloc",
+    name = "mimalloc-0.1.46",
+    actual = "//thirdparty/crates/mimalloc-0.1.46:mimalloc",
     tags = ["manual"],
 )
 
 alias(
     name = "mimalloc",
-    actual = "//thirdparty/crates/mimalloc-0.1.44:mimalloc",
+    actual = "//thirdparty/crates/mimalloc-0.1.46:mimalloc",
     tags = ["manual"],
 )
 
@@ -451,14 +451,14 @@ alias(
 )
 
 alias(
-    name = "tokio-1.44.1",
-    actual = "//thirdparty/crates/tokio-1.44.1:tokio",
+    name = "tokio-1.44.2",
+    actual = "//thirdparty/crates/tokio-1.44.2:tokio",
     tags = ["manual"],
 )
 
 alias(
     name = "tokio",
-    actual = "//thirdparty/crates/tokio-1.44.1:tokio",
+    actual = "//thirdparty/crates/tokio-1.44.2:tokio",
     tags = ["manual"],
 )
 

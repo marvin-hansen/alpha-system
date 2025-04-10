@@ -100,7 +100,7 @@ rust_library(
         "//thirdparty/crates/multimap-0.10.0:multimap",
         "//thirdparty/crates/once_cell-1.21.3:once_cell",
         "//thirdparty/crates/petgraph-0.7.1:petgraph",
-        "//thirdparty/crates/prettyplease-0.2.31:prettyplease",
+        "//thirdparty/crates/prettyplease-0.2.32:prettyplease",
         "//thirdparty/crates/prost-0.13.5:prost",
         "//thirdparty/crates/prost-types-0.13.5:prost_types",
         "//thirdparty/crates/regex-1.11.1:regex",

@@ -105,116 +105,116 @@ rust_library(
         "//thirdparty/crates/quinn-udp-0.5.11:quinn_udp",
         "//thirdparty/crates/rustc-hash-2.1.1:rustc_hash",
         "//thirdparty/crates/thiserror-2.0.12:thiserror",
-        "//thirdparty/crates/tokio-1.44.1:tokio",
+        "//thirdparty/crates/tokio-1.44.2:tokio",
         "//thirdparty/crates/tracing-0.1.41:tracing",
     ] + select({
         "@rules_rust//rust/platform:aarch64-apple-darwin": [
-            "//thirdparty/crates/socket2-0.5.8:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
+            "//thirdparty/crates/socket2-0.5.9:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
         ],
         "@rules_rust//rust/platform:aarch64-apple-ios": [
-            "//thirdparty/crates/socket2-0.5.8:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
+            "//thirdparty/crates/socket2-0.5.9:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
         ],
         "@rules_rust//rust/platform:aarch64-apple-ios-sim": [
-            "//thirdparty/crates/socket2-0.5.8:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
+            "//thirdparty/crates/socket2-0.5.9:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
         ],
         "@rules_rust//rust/platform:aarch64-linux-android": [
-            "//thirdparty/crates/socket2-0.5.8:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
+            "//thirdparty/crates/socket2-0.5.9:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
         ],
         "@rules_rust//rust/platform:aarch64-pc-windows-msvc": [
-            "//thirdparty/crates/socket2-0.5.8:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
+            "//thirdparty/crates/socket2-0.5.9:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
         ],
         "@rules_rust//rust/platform:aarch64-unknown-fuchsia": [
-            "//thirdparty/crates/socket2-0.5.8:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
+            "//thirdparty/crates/socket2-0.5.9:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
         ],
         "@rules_rust//rust/platform:aarch64-unknown-linux-gnu": [
-            "//thirdparty/crates/socket2-0.5.8:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
+            "//thirdparty/crates/socket2-0.5.9:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
         ],
         "@rules_rust//rust/platform:aarch64-unknown-nixos-gnu": [
-            "//thirdparty/crates/socket2-0.5.8:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
+            "//thirdparty/crates/socket2-0.5.9:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
         ],
         "@rules_rust//rust/platform:aarch64-unknown-nto-qnx710": [
-            "//thirdparty/crates/socket2-0.5.8:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
+            "//thirdparty/crates/socket2-0.5.9:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
         ],
         "@rules_rust//rust/platform:aarch64-unknown-uefi": [
-            "//thirdparty/crates/socket2-0.5.8:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
+            "//thirdparty/crates/socket2-0.5.9:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
         ],
         "@rules_rust//rust/platform:arm-unknown-linux-gnueabi": [
-            "//thirdparty/crates/socket2-0.5.8:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
+            "//thirdparty/crates/socket2-0.5.9:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
         ],
         "@rules_rust//rust/platform:armv7-linux-androideabi": [
-            "//thirdparty/crates/socket2-0.5.8:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
+            "//thirdparty/crates/socket2-0.5.9:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
         ],
         "@rules_rust//rust/platform:armv7-unknown-linux-gnueabi": [
-            "//thirdparty/crates/socket2-0.5.8:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
+            "//thirdparty/crates/socket2-0.5.9:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
         ],
         "@rules_rust//rust/platform:i686-apple-darwin": [
-            "//thirdparty/crates/socket2-0.5.8:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
+            "//thirdparty/crates/socket2-0.5.9:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
         ],
         "@rules_rust//rust/platform:i686-linux-android": [
-            "//thirdparty/crates/socket2-0.5.8:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
+            "//thirdparty/crates/socket2-0.5.9:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
         ],
         "@rules_rust//rust/platform:i686-pc-windows-msvc": [
-            "//thirdparty/crates/socket2-0.5.8:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
+            "//thirdparty/crates/socket2-0.5.9:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
         ],
         "@rules_rust//rust/platform:i686-unknown-freebsd": [
-            "//thirdparty/crates/socket2-0.5.8:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
+            "//thirdparty/crates/socket2-0.5.9:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
         ],
         "@rules_rust//rust/platform:i686-unknown-linux-gnu": [
-            "//thirdparty/crates/socket2-0.5.8:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
+            "//thirdparty/crates/socket2-0.5.9:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
         ],
         "@rules_rust//rust/platform:powerpc-unknown-linux-gnu": [
-            "//thirdparty/crates/socket2-0.5.8:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
+            "//thirdparty/crates/socket2-0.5.9:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
         ],
         "@rules_rust//rust/platform:riscv32imc-unknown-none-elf": [
-            "//thirdparty/crates/socket2-0.5.8:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
+            "//thirdparty/crates/socket2-0.5.9:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
         ],
         "@rules_rust//rust/platform:riscv64gc-unknown-none-elf": [
-            "//thirdparty/crates/socket2-0.5.8:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
+            "//thirdparty/crates/socket2-0.5.9:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
         ],
         "@rules_rust//rust/platform:s390x-unknown-linux-gnu": [
-            "//thirdparty/crates/socket2-0.5.8:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
+            "//thirdparty/crates/socket2-0.5.9:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
         ],
         "@rules_rust//rust/platform:thumbv7em-none-eabi": [
-            "//thirdparty/crates/socket2-0.5.8:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
+            "//thirdparty/crates/socket2-0.5.9:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
         ],
         "@rules_rust//rust/platform:thumbv8m.main-none-eabi": [
-            "//thirdparty/crates/socket2-0.5.8:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
+            "//thirdparty/crates/socket2-0.5.9:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
         ],
         "@rules_rust//rust/platform:wasm32-unknown-unknown": [
             "//thirdparty/crates/web-time-1.1.0:web_time",  # cfg(all(target_family = "wasm", target_os = "unknown"))
         ],
         "@rules_rust//rust/platform:wasm32-wasip1": [
-            "//thirdparty/crates/socket2-0.5.8:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
+            "//thirdparty/crates/socket2-0.5.9:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
         ],
         "@rules_rust//rust/platform:x86_64-apple-darwin": [
-            "//thirdparty/crates/socket2-0.5.8:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
+            "//thirdparty/crates/socket2-0.5.9:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
         ],
         "@rules_rust//rust/platform:x86_64-apple-ios": [
-            "//thirdparty/crates/socket2-0.5.8:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
+            "//thirdparty/crates/socket2-0.5.9:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
         ],
         "@rules_rust//rust/platform:x86_64-linux-android": [
-            "//thirdparty/crates/socket2-0.5.8:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
+            "//thirdparty/crates/socket2-0.5.9:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
         ],
         "@rules_rust//rust/platform:x86_64-pc-windows-msvc": [
-            "//thirdparty/crates/socket2-0.5.8:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
+            "//thirdparty/crates/socket2-0.5.9:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
         ],
         "@rules_rust//rust/platform:x86_64-unknown-freebsd": [
-            "//thirdparty/crates/socket2-0.5.8:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
+            "//thirdparty/crates/socket2-0.5.9:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
         ],
         "@rules_rust//rust/platform:x86_64-unknown-fuchsia": [
-            "//thirdparty/crates/socket2-0.5.8:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
+            "//thirdparty/crates/socket2-0.5.9:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
         ],
         "@rules_rust//rust/platform:x86_64-unknown-linux-gnu": [
-            "//thirdparty/crates/socket2-0.5.8:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
+            "//thirdparty/crates/socket2-0.5.9:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
         ],
         "@rules_rust//rust/platform:x86_64-unknown-nixos-gnu": [
-            "//thirdparty/crates/socket2-0.5.8:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
+            "//thirdparty/crates/socket2-0.5.9:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
         ],
         "@rules_rust//rust/platform:x86_64-unknown-none": [
-            "//thirdparty/crates/socket2-0.5.8:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
+            "//thirdparty/crates/socket2-0.5.9:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
         ],
         "@rules_rust//rust/platform:x86_64-unknown-uefi": [
-            "//thirdparty/crates/socket2-0.5.8:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
+            "//thirdparty/crates/socket2-0.5.9:socket2",  # cfg(not(all(target_family = "wasm", target_os = "unknown")))
         ],
         "//conditions:default": [],
     }),
@@ -255,6 +255,9 @@ cargo_build_script(
     ),
     edition = "2021",
     pkg_name = "quinn",
+    rustc_env_files = [
+        ":cargo_toml_env_vars",
+    ],
     rustc_flags = [
         "--cap-lints=allow",
     ],

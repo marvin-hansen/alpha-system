@@ -95,10 +95,10 @@ rust_library(
     }),
     version = "0.22.24",
     deps = [
-        "//thirdparty/crates/indexmap-2.8.0:indexmap",
+        "//thirdparty/crates/indexmap-2.9.0:indexmap",
         "//thirdparty/crates/serde-1.0.219:serde",
         "//thirdparty/crates/serde_spanned-0.6.8:serde_spanned",
         "//thirdparty/crates/toml_datetime-0.6.8:toml_datetime",
-        "//thirdparty/crates/winnow-0.7.4:winnow",
+        "//thirdparty/crates/winnow-0.7.6:winnow",
     ],
 )

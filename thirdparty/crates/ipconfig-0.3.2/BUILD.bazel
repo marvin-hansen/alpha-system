@@ -103,17 +103,17 @@ rust_library(
         "//thirdparty/crates/winreg-0.50.0:winreg",
     ] + select({
         "@rules_rust//rust/platform:aarch64-pc-windows-msvc": [
-            "//thirdparty/crates/socket2-0.5.8:socket2",  # cfg(windows)
+            "//thirdparty/crates/socket2-0.5.9:socket2",  # cfg(windows)
             "//thirdparty/crates/widestring-1.2.0:widestring",  # cfg(windows)
             "//thirdparty/crates/windows-sys-0.48.0:windows_sys",  # cfg(windows)
         ],
         "@rules_rust//rust/platform:i686-pc-windows-msvc": [
-            "//thirdparty/crates/socket2-0.5.8:socket2",  # cfg(windows)
+            "//thirdparty/crates/socket2-0.5.9:socket2",  # cfg(windows)
             "//thirdparty/crates/widestring-1.2.0:widestring",  # cfg(windows)
             "//thirdparty/crates/windows-sys-0.48.0:windows_sys",  # cfg(windows)
         ],
         "@rules_rust//rust/platform:x86_64-pc-windows-msvc": [
-            "//thirdparty/crates/socket2-0.5.8:socket2",  # cfg(windows)
+            "//thirdparty/crates/socket2-0.5.9:socket2",  # cfg(windows)
             "//thirdparty/crates/widestring-1.2.0:widestring",  # cfg(windows)
             "//thirdparty/crates/windows-sys-0.48.0:windows_sys",  # cfg(windows)
         ],
@@ -161,6 +161,9 @@ cargo_build_script(
     ),
     edition = "2018",
     pkg_name = "ipconfig",
+    rustc_env_files = [
+        ":cargo_toml_env_vars",
+    ],
     rustc_flags = [
         "--cap-lints=allow",
     ],

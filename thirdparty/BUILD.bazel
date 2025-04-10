@@ -112,7 +112,7 @@ crates_vendor(
                 "r2d2",
             ],
             package = "diesel",
-            version = "2.2",
+            version = "2.2.9",
         ),
         "diesel_migrations": crate.spec(
             default_features = False,

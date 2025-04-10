@@ -118,7 +118,7 @@ rust_library(
         "//thirdparty/crates/pin-project-lite-0.2.16:pin_project_lite",
         "//thirdparty/crates/rand-0.8.5:rand",
         "//thirdparty/crates/slab-0.4.9:slab",
-        "//thirdparty/crates/tokio-1.44.1:tokio",
+        "//thirdparty/crates/tokio-1.44.2:tokio",
         "//thirdparty/crates/tokio-util-0.7.14:tokio_util",
         "//thirdparty/crates/tower-layer-0.3.3:tower_layer",
         "//thirdparty/crates/tower-service-0.3.3:tower_service",

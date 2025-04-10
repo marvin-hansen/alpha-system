@@ -91,6 +91,6 @@ rust_library(
     version = "0.7.1",
     deps = [
         "//thirdparty/crates/fixedbitset-0.5.7:fixedbitset",
-        "//thirdparty/crates/indexmap-2.8.0:indexmap",
+        "//thirdparty/crates/indexmap-2.9.0:indexmap",
     ],
 )
