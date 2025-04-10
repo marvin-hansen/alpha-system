@@ -91,18 +91,6 @@ alias(
 )
 
 alias(
-    name = "bytes-1.10.1",
-    actual = "//thirdparty/crates/bytes-1.10.1:bytes",
-    tags = ["manual"],
-)
-
-alias(
-    name = "bytes",
-    actual = "//thirdparty/crates/bytes-1.10.1:bytes",
-    tags = ["manual"],
-)
-
-alias(
     name = "chrono-0.4.40",
     actual = "//thirdparty/crates/chrono-0.4.40:chrono",
     tags = ["manual"],
@@ -327,18 +315,6 @@ alias(
 alias(
     name = "reqwest",
     actual = "//thirdparty/crates/reqwest-0.12.15:reqwest",
-    tags = ["manual"],
-)
-
-alias(
-    name = "rkyv-0.8.10",
-    actual = "//thirdparty/crates/rkyv-0.8.10:rkyv",
-    tags = ["manual"],
-)
-
-alias(
-    name = "rkyv",
-    actual = "//thirdparty/crates/rkyv-0.8.10:rkyv",
     tags = ["manual"],
 )
 

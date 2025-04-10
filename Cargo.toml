@@ -12,7 +12,6 @@ members = [
     "alpha_integration/data/*",
     "alpha_macros/*",
     "alpha_proto/*",
-    "alpha_protocol/*",
     "alpha_sbe/*",
     "alpha_specs/*/*",
     "alpha_system/core/*/*",
@@ -120,7 +119,6 @@ binance_usd_futures_data_integration = { path = "alpha_integration/data/binance_
 binance_usd_futures_testnet_data_integration = { path = "alpha_integration/data/binance_usd_futures_testnet_data_integration" }
 
 # Macros
-byte_serialization_macro = { path = "alpha_macros/byte_serialization_macro" }
 data_integration_macro = { path = "alpha_macros/data_integration_macro" }
 
 # Proto
@@ -132,9 +130,6 @@ proto_mddb = { path = "alpha_proto/proto_mddb" }
 proto_mddb_utils = { path = "alpha_proto/proto_mddb_utils" }
 proto_smdb = { path = "alpha_proto/proto_smdb" }
 proto_smdb_utils = { path = "alpha_proto/proto_smdb_utils" }
-
-# Protocol
-binary_protocol = { path = "alpha_protocol/binary_protocol" }
 
 # SBE
 sbe_bindings = { path = "alpha_sbe/sbe_bindings" }
@@ -207,7 +202,6 @@ service_utils = { version = "0.2" }
 # Regular dependencies
 base16ct = { version = "0.2", default-features = false, features = ["alloc"] }
 blake3 = { version = "1.5", default-features = false }
-bytes = { version = "1.8" }
 ctrlc = { version = "3.4" }
 chrono = { version = "0.4", features = ["serde"] }
 crossbeam = {version = "0.8"}
@@ -223,7 +217,6 @@ reqwest = { version = "0.12", default-features = false, features = ["rustls-tls"
 rust_decimal = { version = "1.36" }
 #rust_decimal_macros = { version = "1.36" }
 rustls = { version = "0.23.23", features = ["ring"] }
-rkyv = { version = "0.8", features = ["little_endian", "unaligned"] }  # Bazel
 serde = { version = "1.0", features = ["derive"] }
 serde_json = { version = "1.0" }
 sha3 = { version = "0.11.0-pre.4", default-features = false }

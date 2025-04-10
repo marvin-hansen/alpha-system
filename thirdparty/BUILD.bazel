@@ -91,11 +91,6 @@ crates_vendor(
             package = "blake3",
             version = "1.5",
         ),
-        "bytes": crate.spec(
-            default_features = True,
-            package = "bytes",
-            version = "1.8",
-        ),
         "chrono": crate.spec(
             features = ["serde"],
             package = "chrono",
@@ -188,14 +183,6 @@ crates_vendor(
             features = ["ring"],
             package = "rustls",
             version = "0.23.23",
-        ),
-        "rkyv": crate.spec(
-            features = [
-                "little_endian",
-                "unaligned",
-            ],
-            package = "rkyv",
-            version = "0.8",
         ),
         "serde": crate.spec(
             features = ["derive"],
