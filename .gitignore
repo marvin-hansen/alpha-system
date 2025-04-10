@@ -39,5 +39,3 @@ Cargo.lock
 .DS_Store
 */.DS_Store
 
-# windsurf rules
-.windsurfrules
