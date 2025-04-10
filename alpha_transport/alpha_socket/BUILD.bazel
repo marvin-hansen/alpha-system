@@ -13,10 +13,8 @@ rust_library(
     visibility = ["//visibility:public"],
     deps = [
         # Internal crates
-        "//alias:binary_protocol",
-        "//alias:stream_errors",
+
         # External crates
-        "//thirdparty/crates:bytes",
         "//thirdparty/crates:memmap2",
         "//thirdparty/crates:tempfile",
     ],

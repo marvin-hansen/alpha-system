@@ -9,11 +9,9 @@ authors.workspace = true
 
 [dependencies]
 # Internal dependencies
-binary_protocol = { workspace = true }
-stream_errors = { workspace = true }
+
 
 # External dependencies
-bytes = { workspace = true }
 memmap2 = { workspace = true }
 tempfile = { workspace = true }
 serde_json = { workspace = true }

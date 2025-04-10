@@ -5,10 +5,6 @@ package(default_visibility = ["//visibility:public"])
 # Macros
 ###############################################################################
 
-alias(
-    name = "byte_serialization_macro",
-    actual = "//alpha_macros/byte_serialization_macro",
-)
 
 alias(
     name = "data_integration_macro",
