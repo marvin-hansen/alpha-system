@@ -21,7 +21,7 @@ impl<Integration: ImsDataIntegration> Service<Integration> {
     /// Returns a `Result` with `()` if successful, otherwise returns a
     /// `MessageProcessingError` on failure to send.
     ///
-    pub(crate) async fn send_client_error(
+    pub(crate) async fn _send_client_error(
         &self,
         client_id: u16,
         client_error: ClientErrorType,
@@ -51,7 +51,7 @@ impl<Integration: ImsDataIntegration> Service<Integration> {
     /// Returns a `Result` with `()` if successful, otherwise returns a
     /// `MessageProcessingError` on failure to send.
     ///
-    pub(crate) async fn send_data_error(
+    pub(crate) async fn _send_data_error(
         &self,
         client_id: u16,
         data_error: DataErrorType,

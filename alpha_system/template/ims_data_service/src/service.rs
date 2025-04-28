@@ -2,7 +2,6 @@
  * Copyright (c) "2025" . Marvin Hansen All Rights Reserved.
  */
 
-use common_exchange::ExchangeID;
 use common_ims::IntegrationConfig;
 
 use std::error::Error;
@@ -17,9 +16,9 @@ type Guarded<T> = std::sync::Arc<tokio::sync::RwLock<T>>;
 /// maintaining thread-safe access to shared resources using Tokio's async-aware locks.
 pub struct Service<Integration: ImsDataIntegration> {
     dbg: bool,
-    exchange_id: ExchangeID,
+    // exchange_id: ExchangeID,
     ims_integration: Guarded<Integration>,
-    integration_config: IntegrationConfig,
+    // integration_config: IntegrationConfig,
 }
 
 impl<Integration: ImsDataIntegration> Service<Integration> {
@@ -36,7 +35,7 @@ impl<Integration: ImsDataIntegration> Service<Integration> {
     async fn build(
         dbg: bool,
         ims_integration: Integration,
-        integration_config: &IntegrationConfig,
+        _integration_config: &IntegrationConfig,
     ) -> Result<Self, Box<dyn Error>> {
         let dbg_print = |msg: &str| {
             if dbg {
@@ -44,14 +43,14 @@ impl<Integration: ImsDataIntegration> Service<Integration> {
             }
         };
 
-        let exchange_id = integration_config.exchange_id();
+        // let exchange_id = integration_config.exchange_id();
 
         dbg_print("Create Service");
         Ok(Self {
             dbg,
-            exchange_id,
+            // exchange_id,
             ims_integration: Arc::new(tokio::sync::RwLock::new(ims_integration)),
-            integration_config: integration_config.clone(),
+            // integration_config: integration_config.clone(),
         })
     }
 }
