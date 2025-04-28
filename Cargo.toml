@@ -209,7 +209,7 @@ diesel = { version = "2.2.9", default-features = false, features = ["postgres", 
 diesel_migrations = { version = "2.2", default-features = false, features = ["postgres"] }
 futures = { version = "0.3" }
 futures-util = { version = "0.3" }
-hickory-resolver = { version = "0.25.1" }
+hickory-resolver = { version = "0.25" }
 memmap2 = {version = "0.9"}  # Bazel
 mimalloc = { version = "0.1.44" }
 prost = { version = "0.13.4" }

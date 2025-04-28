@@ -4,13 +4,13 @@ module(name = "quant-engine")
 # Bazel Dependencies
 # https://registry.bazel.build/
 ###############################################################################
-bazel_dep(name = "aspect_bazel_lib", version = "2.14.0")
+bazel_dep(name = "aspect_bazel_lib", version = "2.15.3")
 bazel_dep(name = "bazel_skylib", version = "1.7.1")
 bazel_dep(name = "platforms", version = "0.0.11")
-bazel_dep(name = "protobuf", version = "30.1")
+bazel_dep(name = "protobuf", version = "30.2")
 bazel_dep(name = "rules_apko", version = "1.4.0")
 bazel_dep(name = "rules_multirun", version = "0.11.0")
-bazel_dep(name = "rules_oci", version = "2.2.5")
+bazel_dep(name = "rules_oci", version = "2.2.6")
 bazel_dep(name = "rules_pkg", version = "1.1.0")
 bazel_dep(name = "rules_python", version = "1.3.0")
 bazel_dep(name = "rules_proto", version = "7.1.0")
@@ -19,7 +19,7 @@ bazel_dep(name = "rules_rust_prost", version = "0.60.0")
 bazel_dep(name = "rules_shell", version = "0.4.0")
 
 # Toolchains
-bazel_dep(name = "toolchains_protoc", version = "0.3.7", dev_dependency = True)
+bazel_dep(name = "toolchains_protoc", version = "0.4.0", dev_dependency = True)
 bazel_dep(name = "toolchains_llvm", version = "1.2.0", dev_dependency = True)
 bazel_dep(name = "toolchains_musl", version = "0.1.20", dev_dependency = True)
 bazel_dep(name = "toolchains_buildbuddy", dev_dependency = True)
@@ -30,11 +30,11 @@ git_override(
 )
 
 # https://github.com/brainhivenl/libpq
-bazel_dep(name = "libpq", version = "0.0.1")
+bazel_dep(name = "libpq", version = "0.0.3")
 git_override(
     module_name = "libpq",
-    commit = "61297f05290390fed420a929e5b37647d7331931",
-    remote = "https://github.com/aran/bazel-libpq",
+    commit = "9889a84990c52c3d7aeafdfac3456728f857e658",
+    remote = "https://github.com/brainhivenl/libpq",
 )
 
 ###############################################################################
