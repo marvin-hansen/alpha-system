@@ -1,5 +1,6 @@
 .cargo
 .git
+.github
 target
 target-bzl
 target-bzl/bin

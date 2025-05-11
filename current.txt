@@ -1,1 +1,1 @@
-//alias:alpha_socket
+//alias:common_config
