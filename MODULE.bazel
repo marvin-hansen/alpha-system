@@ -96,7 +96,7 @@ register_toolchains("@llvm_toolchain//:all")
 ###############################################################################
 RUST_EDITION = "2024"
 
-RUST_VERSION = "1.86.0"
+RUST_VERSION = "1.87.0"
 
 rust = use_extension("@rules_rust//rust:extensions.bzl", "rust")
 rust.toolchain(
