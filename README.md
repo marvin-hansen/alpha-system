@@ -10,6 +10,8 @@ It showcases
 * Secure Container builds with Apko Images 
 * Parallel container publishing with multi-run 
 
+Integration tests are located in a dedicated crate next to each service under the folder alpha_system. The services are organized in groups i.e. core for all core services so under alpha_system/core/name you find a crate name_tests where the end to end integration tests are located.  
+
 ## 🛠️ Cargo & Make
 
 Cargo works as expected, but in addition to cargo, a makefile exists
