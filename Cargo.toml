@@ -163,7 +163,7 @@ tonic-health = { version = "0.12", default-features = false, features = ["transp
 warp = { version = "0.3" }
 
 # Dev dependencies
-criterion = { version = "0.5", features = ["html_reports"] }
+criterion = { version = "0.7", features = ["html_reports"] }
 
 # Linting with clippy
 [workspace.lints.clippy]
