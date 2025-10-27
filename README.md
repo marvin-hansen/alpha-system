@@ -38,3 +38,7 @@ After all dependencies have been installed, the following commands are ready to 
 ```
 
 The scripts called by each make command are located in the [script folder.](build/scripts)
+
+## Testing
+
+The only way to run the entire test suite is via the `make test` command that calls the `test.sh` script. The reason is that the integraiton tests must be executed in strict order on a local machine. For integration tests on a CI service like BuildBuddy, the buildbuddy.yaml file holds the required configuration. When each task execute runs a docker demon, the all integration tets are executed in parallel.
