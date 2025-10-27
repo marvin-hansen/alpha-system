@@ -39,7 +39,6 @@ rust_test_suite(
         "//alias:container_specs_kaiko",
         "//thirdparty/crates:docker_utils",
         "//alias:service_import",
-        "//alias:metadata_import",
         # External crates
         # "//thirdparty/crates:docker_utils",
         "//thirdparty/crates:service_utils",

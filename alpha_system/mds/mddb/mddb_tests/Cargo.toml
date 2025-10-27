@@ -20,10 +20,9 @@ path = "src/fake_lib.rs"
 mddb_client = {workspace = true}
 # Internal crates
 config_manager = { workspace = true }
-common_config = {workspace = true}
 container_specs_postgres = {workspace = true}
 service_import  = {workspace = true}
-metadata_import = {workspace = true}
+
 # External crates
 docker_utils = { workspace = true }
 service_utils = { workspace = true }

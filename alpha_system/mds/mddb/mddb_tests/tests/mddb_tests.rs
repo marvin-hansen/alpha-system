@@ -6,7 +6,6 @@ use config_manager::CfgManager;
 use container_specs_postgres::postgres_db_container_config;
 use docker_utils::DockerUtil;
 use mddb_client::MDDBClient;
-use metadata_import::MetadataImportManager;
 use service_import::ServiceImportManager;
 use service_utils::{ServiceStartConfig, ServiceUtil};
 
@@ -73,27 +72,6 @@ async fn test_mddb() {
     let imported = service_import_manager.check_if_already_imported().await;
     assert!(imported);
     dbg!("✅ Service data imported");
-
-    //Determine workflow for metadata import
-    let meta_data_import_manager = MetadataImportManager::with_debug().await;
-
-    // Import a sample of 50 metadata records for each type
-    let workflow = meta_data_import_manager
-        .determine_workflow(Some((
-            ASSETS_SAMPLE_SIZE,
-            EXCHANGES_SAMPLE_SIZE,
-            INSTRUMENTS_SAMPLE_SIZE,
-        )))
-        .await
-        .expect("Failed to determine workflow");
-
-    dbg!(&workflow);
-
-    // Execute workflow
-    meta_data_import_manager
-        .execute_workflow(&workflow)
-        .await
-        .expect("Failed to execute workflow");
 
     dbg!("Start DBGW service - depends on Database");
     let (host, port) = config_manager

@@ -1,5 +1,14 @@
-# Quant-Engine
+# Alpha System
 
+A demo system for building multi-crate Rust systems with Bazel.
+
+It showcases
+
+* Cross compilation to Intel and Arm
+* Proto / gRPC / Protobuf integration 
+* End to end integration tests with Service and DockerUtils 
+* Secure Container builds with Apko Images 
+* Parallel container publishing with multi-run 
 
 ## 🛠️ Cargo & Make
 
@@ -28,4 +37,4 @@ After all dependencies have been installed, the following commands are ready to 
     make test           Runs all tests across all crates.
 ```
 
-The scripts called by each make command are located in the [script folder.](scripts)
+The scripts called by each make command are located in the [script folder.](build/scripts)

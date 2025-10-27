@@ -3,7 +3,7 @@
  */
 
 use crate::IntegrationImportManager;
-use std::io::{Error, ErrorKind};
+use std::io::Error;
 
 impl IntegrationImportManager {
     /// Import integration configs
@@ -60,7 +60,7 @@ impl IntegrationImportManager {
                     .expect("Failed to count integrations") as usize;
 
             if post_import_count != expected_count {
-                return Err(Error::new(ErrorKind::Other, "Failed to import integrations").into());
+                return Err(Error::other("Failed to import integrations").into());
             }
         }
 

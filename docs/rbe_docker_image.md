@@ -32,11 +32,11 @@ gh auth login
 
 ## Install bazelisk
 
- wget https://github.com/bazelbuild/bazelisk/releases/download/v1.8.1/bazelisk-linux-amd64
+wget https://github.com/bazelbuild/bazelisk/releases/download/v1.27.0/bazelisk-linux-amd64
 
  chmod +x bazelisk-linux-amd64
 
-mv bazelisk-linux-amd64 /usr/local/bin/bazel
+sudo mv bazelisk-linux-amd64 /usr/local/bin/bazel
 
 ## Fast clone the repo:
 

@@ -4,23 +4,15 @@ resolver = "2"
 members = [
     "alpha_common/*",
     "alpha_components/*",
-    "alpha_datastructures/*",
     "alpha_errors/*",
-    "alpha_extensions/*",
     "alpha_import/*/*",
     "alpha_infra/postgres/*",
-    "alpha_integration/data/*",
-    "alpha_macros/*",
     "alpha_proto/*",
     "alpha_sbe/*",
     "alpha_specs/*/*",
     "alpha_system/core/*/*",
-    "alpha_system/ims_data/*/*",
     "alpha_system/mds/*/*",
-    "alpha_system/messaging/*",
     "alpha_system/template/*",
-    "alpha_traits/*",
-    "alpha_transport/*",
     "alpha_utils/*",
     "alpha_utils_test/*",
 ]
@@ -30,7 +22,7 @@ exclude = [
 
 [workspace.package]
 edition = "2024"
-rust-version = "1.87.0"
+rust-version = "1.90.0"
 readme = "README.md"
 repository = "https://github.com/marvin-hansen/quant-engine"
 authors = ["Marvin Hansen <marvin.hansen@gmail.com>"]
@@ -60,36 +52,20 @@ common_metadata = { path = "alpha_common/common_metadata" }
 common_order = { path = "alpha_common/common_order" }
 common_platform = { path = "alpha_common/common_platform" }
 common_service = { path = "alpha_common/common_service" }
-common_trade = { path = "alpha_common/common_trade" }
 
 # Components
 config_manager = { path = "alpha_components/config_manager" }
 environment_manager = { path = "alpha_components/environment_manager" }
-pattern_manager = { path = "alpha_components/pattern_manager" }
-
-# Datastructures
-ring_buffer = { path = "alpha_datastructures/ring_buffer" }
-sliding_window = { path = "alpha_datastructures/sliding_window" }
 
 # Errors
 common_errors = { path = "alpha_errors/common_errors" }
-stream_errors = { path = "alpha_errors/stream_errors" }
-
-# Extensions
-common_data_bar_ext = { path = "alpha_extensions/common_data_bar_ext" }
-common_order_ext = { path = "alpha_extensions/common_order_ext" }
-cow_ext = { path = "alpha_extensions/cow_ext" }
 
 # Import
 # Core
 config_import = { path = "alpha_import/core/config_import" }
 integration_import = { path = "alpha_import/core/integration_import" }
-metadata_import = { path = "alpha_import/core/metadata_import" }
 service_import = { path = "alpha_import/core/service_import" }
-# Kaiko
-kaiko_download = { path = "alpha_import/kaiko/kaiko_download" }
-kaiko_import = { path = "alpha_import/kaiko/kaiko_import" }
-kaiko_test_utils = { path = "alpha_import/kaiko/kaiko_test_utils" }
+
 # Utils
 pg_import_print_utils = { path = "alpha_import/postgres/pg_import_print_utils" }
 
@@ -107,19 +83,6 @@ pg_smdb_manager = { path = "alpha_infra/postgres/pg_smdb_manager" }
 postgres_common = { path = "alpha_infra/postgres/postgres_common" }
 postgres_config_manager = { path = "alpha_infra/postgres/postgres_config_manager" }
 postgres_migrations = { path = "alpha_infra/postgres/postgres_migrations" }
-
-# Integration
-# Data integration
-binance_coin_futures_data_integration = { path = "alpha_integration/data/binance_coin_futures_data_integration" }
-binance_coin_futures_testnet_data_integration = { path = "alpha_integration/data/binance_coin_futures_testnet_data_integration" }
-binance_core_data_integration = { path = "alpha_integration/data/binance_core_data_integration" }
-binance_spot_data_integration = { path = "alpha_integration/data/binance_spot_data_integration" }
-binance_spot_testnet_data_integration = { path = "alpha_integration/data/binance_spot_testnet_data_integration" }
-binance_usd_futures_data_integration = { path = "alpha_integration/data/binance_usd_futures_data_integration" }
-binance_usd_futures_testnet_data_integration = { path = "alpha_integration/data/binance_usd_futures_testnet_data_integration" }
-
-# Macros
-data_integration_macro = { path = "alpha_macros/data_integration_macro" }
 
 # Proto
 proto_cmdb = { path = "alpha_proto/proto_cmdb" }
@@ -140,15 +103,8 @@ sbe_messages_order = { path = "alpha_sbe/sbe_messages_order" }
 sbe_types = { path = "alpha_sbe/sbe_types" }
 sbe_utils = { path = "alpha_sbe/sbe_utils" }
 
-# MDS
-kaiko_client = { path = "alpha_system/mds/kaiko/kaiko_client" }
-kaiko_proxy = { path = "alpha_system/mds/kaiko/kaiko_proxy" }
-# Non-Bazel targets since CloudFlare workers are build with Wrangler
-# kaiko_cdn = { path = "alpha_system/mds/kaiko/kaiko_cdn" }
-kaiko_cdn_auth = { path = "alpha_system/mds/kaiko/kaiko_cdn_auth" }
 # Service template
 grpc_service = { path = "alpha_system/template/grpc_service" }
-ims_data_service = { path = "alpha_system/template/ims_data_service" }
 
 # Specs
 # Config specs
@@ -169,15 +125,6 @@ mddb_specs = { path = "alpha_system/mds/mddb/mddb_specs" }
 shared_service_specs = { path = "alpha_specs/service_specs/shared_service_specs" }
 service_specs_all = { path = "alpha_specs/service_specs/service_specs_all" }
 
-# Traits
-trait_data_integration = { path = "alpha_traits/trait_data_integration" }
-# trait_event_consumer = { path = "alpha_traits/trait_event_consumer" }
-trait_event_processor = { path = "alpha_traits/trait_event_processor" }
-# trait_exec_integration = { path = "alpha_traits/trait_exec_integration" }
-
-# Tranport
-# alpha_socket = { path = "alpha_transport/alpha_socket" }
-
 # Utils
 client_utils = { path = "alpha_utils/client_utils" }
 crypto_utils = { path = "alpha_utils/crypto_utils" }
@@ -191,49 +138,32 @@ iggy_test_utils = { path = "alpha_utils_test/iggy_test_utils" }
 # ==============
 # Proc Macro Dependencies
 async-trait = { version = "0.1" }
-bon = { version = "3.3.2", default-features = false }  # Bazel
 enum_dispatch = { version = "0.3" }
-trait-variant = { version = "0.1" }
-syn = { version = "2.0", features = ["full", "extra-traits"] }
-quote = "1.0"
 # Dependencies that I maintain
 docker_utils = { version = "0.2" }
 service_utils = { version = "0.2" }
 # Regular dependencies
 base16ct = { version = "0.2", default-features = false, features = ["alloc"] }
 blake3 = { version = "1.5", default-features = false }
-ctrlc = { version = "3.4" }
 chrono = { version = "0.4", features = ["serde"] }
-crossbeam = {version = "0.8"}
 diesel = { version = "2.2.9", default-features = false, features = ["postgres", "pq-src", "r2d2"] }
 diesel_migrations = { version = "2.2", default-features = false, features = ["postgres"] }
-futures = { version = "0.3" }
-futures-util = { version = "0.3" }
 hickory-resolver = { version = "0.25" }
-memmap2 = {version = "0.9"}  # Bazel
 mimalloc = { version = "0.1.44" }
 prost = { version = "0.13.4" }
 reqwest = { version = "0.12", default-features = false, features = ["rustls-tls", "json", "blocking", "gzip"] }
 rust_decimal = { version = "1.36" }
 #rust_decimal_macros = { version = "1.36" }
-rustls = { version = "0.23.23", features = ["ring"] }
 serde = { version = "1.0", features = ["derive"] }
-serde_json = { version = "1.0" }
 sha3 = { version = "0.11.0-pre.4", default-features = false }
-tempfile = { version = "3.19" }
 tokio = { version = "1.42", default-features = false, features = ["macros", "net", "rt-multi-thread", "signal", "time"] }
-tokio-tungstenite = { version = "0.26", features = ["rustls-tls-webpki-roots"]}
 tonic = { version = "0.12", features = ["transport"] }
 tonic-build = { version = "0.12" }
 tonic-health = { version = "0.12", default-features = false, features = ["transport"] }
 warp = { version = "0.3" }
-# Depdendencies for cloudflare workers that are not build with Bazel
-console_error_panic_hook = { version = "0.1" }
-worker = { version = "0.5", default-features = false }
-worker-macros = { version = "0.5" }
+
 # Dev dependencies
 criterion = { version = "0.5", features = ["html_reports"] }
-hdrhistogram = {version = "7.5"}
 
 # Linting with clippy
 [workspace.lints.clippy]

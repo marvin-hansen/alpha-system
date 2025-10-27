@@ -10,11 +10,6 @@ alias(
     actual = "//alpha_system/template/grpc_service",
 )
 
-alias(
-    name = "ims_data_service",
-    actual = "//alpha_system/template/ims_data_service",
-)
-
 ###############################################################################
 # Core Services
 ###############################################################################
@@ -69,18 +64,6 @@ alias(
 ###############################################################################
 
 alias(
-    name = "kaiko_proxy",
-    actual = "//alpha_system/mds/kaiko/kaiko_proxy:kaiko_proxy",
-    visibility = ["//visibility:public"],
-)
-
-alias(
-    name = "kaiko_proxy_push",
-    actual = "//alpha_system/mds/kaiko/kaiko_proxy:push",
-    visibility = ["//visibility:public"],
-)
-
-alias(
     name = "mddb",
     actual = "//alpha_system/mds/mddb/mddb_service:mddb",
     visibility = ["//visibility:public"],
@@ -89,77 +72,4 @@ alias(
 alias(
     name = "mddb_push",
     actual = "//alpha_system/mds/mddb/mddb_service:push",
-)
-
-###############################################################################
-# Messaging services
-###############################################################################
-
-alias(
-    name = "alpha_registry",
-    actual = "//alpha_system/messaging/alpha_registry",
-)
-
-###############################################################################
-# IMS Data Services
-###############################################################################
-
-alias(
-    name = "binance_coin_future",
-    actual = "//alpha_system/ims_data/binance/binance_coin_future",
-)
-
-alias(
-    name = "binance_coin_future_push",
-    actual = "//alpha_system/ims_data/binance/binance_coin_future:push",
-)
-
-alias(
-    name = "binance_coin_future_testnet",
-    actual = "//alpha_system/ims_data/binance/binance_coin_future_testnet",
-)
-
-alias(
-    name = "binance_coin_future_testnet_push",
-    actual = "//alpha_system/ims_data/binance/binance_coin_future_testnet:push",
-)
-
-alias(
-    name = "binance_spot",
-    actual = "//alpha_system/ims_data/binance/binance_spot",
-)
-
-alias(
-    name = "binance_spot_push",
-    actual = "//alpha_system/ims_data/binance/binance_spot:push",
-)
-
-alias(
-    name = "binance_spot_testnet",
-    actual = "//alpha_system/ims_data/binance/binance_spot_testnet",
-)
-
-alias(
-    name = "binance_spot_testnet_push",
-    actual = "//alpha_system/ims_data/binance/binance_spot_testnet:push",
-)
-
-alias(
-    name = "binance_usd_future",
-    actual = "//alpha_system/ims_data/binance/binance_usd_future",
-)
-
-alias(
-    name = "binance_usd_future_push",
-    actual = "//alpha_system/ims_data/binance/binance_usd_future:push",
-)
-
-alias(
-    name = "binance_usd_future_testnet",
-    actual = "//alpha_system/ims_data/binance/binance_usd_future_testnet",
-)
-
-alias(
-    name = "binance_usd_future_testnet_push",
-    actual = "//alpha_system/ims_data/binance/binance_usd_future_testnet:push",
 )

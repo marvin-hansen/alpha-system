@@ -68,7 +68,7 @@ impl Endpoint {
 
 impl Endpoint {
     #[must_use]
-    pub fn host_endpoint(&self) -> HostEndpoint {
+    pub fn host_endpoint(&'_ self) -> HostEndpoint<'_> {
         HostEndpoint::new(self.uri(), self.port() as u16)
     }
 }

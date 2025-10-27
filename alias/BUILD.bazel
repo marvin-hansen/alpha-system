@@ -55,10 +55,6 @@ alias(
     actual = "//alpha_common/common_service",
 )
 
-alias(
-    name = "common_trade",
-    actual = "//alpha_common/common_trade",
-)
 
 ###############################################################################
 # Components
@@ -74,25 +70,6 @@ alias(
     actual = "//alpha_components/environment_manager",
 )
 
-alias(
-    name = "pattern_manager",
-    actual = "//alpha_components/pattern_manager",
-)
-
-###############################################################################
-# Datastrucures
-###############################################################################
-
-alias(
-    name = "ring_buffer",
-    actual = "//alpha_datastructures/ring_buffer",
-)
-
-alias(
-    name = "sliding_window",
-    actual = "//alpha_datastructures/sliding_window",
-)
-
 ###############################################################################
 # Errors
 ###############################################################################
@@ -100,30 +77,6 @@ alias(
 alias(
     name = "common_errors",
     actual = "//alpha_errors/common_errors",
-)
-
-alias(
-    name = "stream_errors",
-    actual = "//alpha_errors/stream_errors",
-)
-
-###############################################################################
-# Extensions
-###############################################################################
-
-alias(
-    name = "common_data_bar_ext",
-    actual = "//alpha_extensions/common_data_bar_ext",
-)
-
-alias(
-    name = "common_order_ext",
-    actual = "//alpha_extensions/common_order_ext",
-)
-
-alias(
-    name = "cow_ext",
-    actual = "//alpha_extensions/cow_ext",
 )
 
 ###############################################################################
@@ -143,37 +96,8 @@ alias(
 )
 
 alias(
-    name = "metadata_import",
-    actual = "//alpha_import/core/metadata_import",
-)
-
-alias(
     name = "service_import",
     actual = "//alpha_import/core/service_import",
-)
-
-## Kaiko import
-##############
-
-alias(
-    name = "kaiko_cdn_auth",
-    actual = "//alpha_system/mds/kaiko/kaiko_cdn_auth",
-)
-
-alias(
-    name = "kaiko_download",
-    actual = "//alpha_import/kaiko/kaiko_download",
-)
-
-alias(
-    name = "kaiko_import",
-    actual = "//alpha_import/kaiko/kaiko_import",
-)
-
-alias(
-    name = "kaiko_test_utils",
-    actual = "//alpha_import/kaiko/kaiko_test_utils",
-    visibility = ["//visibility:public"],
 )
 
 ## Postgres import
@@ -200,16 +124,6 @@ alias(
 )
 
 alias(
-    name = "pg_import_metadata",
-    actual = "//alpha_import/postgres/pg_import_metadata",
-)
-
-alias(
-    name = "pg_import_metadata_push",
-    actual = "//alpha_import/postgres/pg_import_metadata:push",
-)
-
-alias(
     name = "pg_import_services",
     actual = "//alpha_import/postgres/pg_import_services",
 )
@@ -218,7 +132,6 @@ alias(
     name = "pg_import_services_push",
     actual = "//alpha_import/postgres/pg_import_services:push",
 )
-
 
 alias(
     name = "pg_import_print_utils",
@@ -285,49 +198,6 @@ alias(
 alias(
     name = "postgres_migrations",
     actual = "//alpha_infra/postgres/postgres_migrations",
-)
-
-
-###############################################################################
-# Integration
-###############################################################################
-
-# Data Integration
-##################
-
-alias(
-    name = "binance_coin_futures_data_integration",
-    actual = "//alpha_integration/data/binance_coin_futures_data_integration",
-)
-
-alias(
-    name = "binance_coin_futures_testnet_data_integration",
-    actual = "//alpha_integration/data/binance_coin_futures_testnet_data_integration",
-)
-
-alias(
-    name = "binance_core_data_integration",
-    actual = "//alpha_integration/data/binance_core_data_integration",
-)
-
-alias(
-    name = "binance_spot_data_integration",
-    actual = "//alpha_integration/data/binance_spot_data_integration",
-)
-
-alias(
-    name = "binance_spot_testnet_data_integration",
-    actual = "//alpha_integration/data/binance_spot_testnet_data_integration",
-)
-
-alias(
-    name = "binance_usd_futures_data_integration",
-    actual = "//alpha_integration/data/binance_usd_futures_data_integration",
-)
-
-alias(
-    name = "binance_usd_futures_testnet_data_integration",
-    actual = "//alpha_integration/data/binance_usd_futures_testnet_data_integration",
 )
 
 ###############################################################################
@@ -482,40 +352,6 @@ alias(
 alias(
     name = "shared_service_specs",
     actual = "//alpha_specs/service_specs/shared_service_specs",
-)
-
-
-###############################################################################
-# Traits
-###############################################################################
-
-alias(
-    name = "trait_data_integration",
-    actual = "//alpha_traits/trait_data_integration",
-)
-
-alias(
-    name = "trait_event_consumer",
-    actual = "//alpha_traits/trait_event_consumer",
-)
-
-alias(
-    name = "trait_event_processor",
-    actual = "//alpha_traits/trait_event_processor",
-)
-
-alias(
-    name = "trait_exec_integration",
-    actual = "//alpha_traits/trait_exec_integration",
-)
-
-###############################################################################
-# Transport
-###############################################################################
-
-alias(
-    name = "alpha_socket",
-    actual = "//alpha_transport/alpha_socket",
 )
 
 ###############################################################################

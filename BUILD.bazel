@@ -28,7 +28,6 @@ multirun(
         # Import tools
         "pg_import_config_push",
         "pg_import_integrations_push",
-        "pg_import_metadata_push",
         "pg_import_services_push",
         # Core services
         "cmdb_push",
@@ -37,15 +36,7 @@ multirun(
         # IMS Services
         "imdb_push",
         # MDS Services
-        "kaiko_proxy_push",
         "mddb_push",
-        # IMS Data integrations
-        #        "binance_coin_future_push",
-        #        "binance_coin_future_testnet_push",
-        #        "binance_spot_push",
-        #        "binance_spot_testnet_push",
-        #        "binance_usd_future_push",
-        #        "binance_usd_future_testnet_push",
     ],
     jobs = 0,  # Set to 0 to run in parallel
     visibility = ["//visibility:public"],
@@ -60,11 +51,6 @@ command(
 command(
     name = "pg_import_integrations_push",
     command = "//alias:pg_import_integrations_push",
-)
-
-command(
-    name = "pg_import_metadata_push",
-    command = "//alias:pg_import_metadata_push",
 )
 
 command(
@@ -88,50 +74,7 @@ command(
     command = "//alias/service:smdb_push",
 )
 
-# MDS Services
-command(
-    name = "kaiko_proxy_push",
-    command = "//alias/service:kaiko_proxy_push",
-)
-
 command(
     name = "mddb_push",
     command = "//alias/service:mddb_push",
-)
-
-# IMS Data Services
-command(
-    name = "imdb_push",
-    command = "//alias/service:imdb_push",
-)
-
-# IMS Data integrations
-command(
-    name = "binance_coin_future_push",
-    command = "//alias/service:binance_coin_future_push",
-)
-
-command(
-    name = "binance_coin_future_testnet_push",
-    command = "//alias/service:binance_coin_future_testnet_push",
-)
-
-command(
-    name = "binance_spot_push",
-    command = "//alias/service:binance_spot_push",
-)
-
-command(
-    name = "binance_spot_testnet_push",
-    command = "//alias/service:binance_spot_testnet_push",
-)
-
-command(
-    name = "binance_usd_future_push",
-    command = "//alias/service:binance_usd_future_push",
-)
-
-command(
-    name = "binance_usd_future_testnet_push",
-    command = "//alias/service:binance_usd_future_testnet_push",
 )
