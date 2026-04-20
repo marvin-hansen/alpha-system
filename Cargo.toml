@@ -143,7 +143,7 @@ enum_dispatch = { version = "0.3" }
 docker_utils = { version = "0.2" }
 service_utils = { version = "0.2" }
 # Regular dependencies
-base16ct = { version = "0.2", default-features = false, features = ["alloc"] }
+base16ct = { version = "0.3", default-features = false, features = ["alloc"] }
 blake3 = { version = "1.5", default-features = false }
 chrono = { version = "0.4", features = ["serde"] }
 diesel = { version = "2.2.9", default-features = false, features = ["postgres", "pq-src", "r2d2"] }
