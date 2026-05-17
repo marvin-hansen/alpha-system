@@ -150,7 +150,7 @@ diesel = { version = "2.2.9", default-features = false, features = ["postgres", 
 diesel_migrations = { version = "2.2", default-features = false, features = ["postgres"] }
 hickory-resolver = { version = "0.25" }
 mimalloc = { version = "0.1.44" }
-prost = { version = "0.13.4" }
+prost = { version = "0.14.1" }
 reqwest = { version = "0.12", default-features = false, features = ["rustls-tls", "json", "blocking", "gzip"] }
 rust_decimal = { version = "1.36" }
 #rust_decimal_macros = { version = "1.36" }
